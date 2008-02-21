@@ -24,7 +24,7 @@ namespace AdExpress.Private.Informations{
 	/// <summary>
 	/// Information sur la recherche produit
 	/// </summary>
-	public partial class ProductLevelsSearch : TNS.AdExpress.Web.UI.WebPage{
+	public partial class ProductLevelsSearch : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		///<directed>True</directed>
 		///  <supplierCardinality>0..1</supplierCardinality>

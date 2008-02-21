@@ -26,7 +26,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Module infos/news
 	/// </summary>
-	public partial class InfoNews : TNS.AdExpress.Web.UI.WebPage{
+	public partial class InfoNews : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variable MMI
 		/// <summary>

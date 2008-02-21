@@ -24,7 +24,7 @@ namespace AdExpress.Private.Universe{
 	/// <summary>
 	/// Détail d'un Univers
 	/// </summary>
-	public partial class UniverseDetailPopUp : TNS.AdExpress.Web.UI.WebPage{
+	public partial class UniverseDetailPopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
 	
 	
 		#region Variables MMI

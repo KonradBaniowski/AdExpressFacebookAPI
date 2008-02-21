@@ -43,7 +43,7 @@ namespace AdExpress.Private.Results
 	///	On peut passer un autre paramètre optionnel à la page: zoomDate qui donne une période à couvrir.
 	///	Si ce paramètre est absent, on considère les dates présentes en session
 	/// </summary>
-	public partial class MediaCreationsByParutionResults  :  TNS.AdExpress.Web.UI.WebPage{ 
+	public partial class MediaCreationsByParutionResults  :  TNS.AdExpress.Web.UI.PrivateWebPage{ 
 	
 		#region Variables		
 		/// <summary>

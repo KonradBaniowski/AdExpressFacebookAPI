@@ -22,7 +22,7 @@ using TNS.Classification.Universe;
 /// <summary>
 /// Class to register or upadte client's universes 
 /// </summary>
-public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.WebPage {
+public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.PrivateWebPage {
 
 	#region Variables
 	/// <summary>

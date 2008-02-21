@@ -31,7 +31,7 @@ namespace AdExpress.Private.Results.Excel{
 	/// <summary>
 	/// Affiche les créations média par parution, au format excel.
 	/// </summary>
-	public partial class MediaCreationsByParution :  TNS.AdExpress.Web.UI.WebPage{
+	public partial class MediaCreationsByParution :  TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables
 		/// <summary>

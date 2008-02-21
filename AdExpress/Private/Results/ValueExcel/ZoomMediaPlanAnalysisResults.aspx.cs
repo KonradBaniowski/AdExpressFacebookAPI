@@ -32,7 +32,7 @@ namespace AdExpress.Private.Results.ValueExcel{
 	/// <summary>
 	/// Description résumée de selectionModule.
 	/// </summary>
-	public partial class ZoomMediaPlanAnalysisResults :  TNS.AdExpress.Web.UI.WebPage{	
+	public partial class ZoomMediaPlanAnalysisResults :  TNS.AdExpress.Web.UI.PrivateWebPage{	
 		
 		#region Variables
 		//		/// <summary>

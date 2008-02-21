@@ -33,7 +33,7 @@ namespace AdExpress.Private.Results.Jpeg{
 	/// <summary>
 	/// Affiche le graphique du portefeuille d'un support (format jpeg)
 	/// </summary>
-	public partial class PortofolioResultsExport : TNS.AdExpress.Web.UI.WebPage{	
+	public partial class PortofolioResultsExport : TNS.AdExpress.Web.UI.PrivateWebPage{	
 	
 		#region Variables		
 		/// <summary>

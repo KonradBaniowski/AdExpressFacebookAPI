@@ -29,7 +29,7 @@ namespace AdExpress.Private.Informations{
 	/// <summary>
 	/// Page d'information sur les modalités de mise à jour des données 
 	/// </summary>
-	public partial class DataUpdate : TNS.AdExpress.Web.UI.WebPage{
+    public partial class DataUpdate:TNS.AdExpress.Web.UI.PrivateWebPage {
 
 		#region Constantes
 		/// <summary>

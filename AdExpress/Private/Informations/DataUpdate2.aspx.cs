@@ -16,7 +16,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Translation;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 
-public partial class Private_Informations_DataUpdate2 : TNS.AdExpress.Web.UI.WebPage {
+public partial class Private_Informations_DataUpdate2:TNS.AdExpress.Web.UI.PrivateWebPage {
 
     #region Constantes
     /// <summary>

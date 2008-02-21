@@ -60,7 +60,7 @@ namespace TNS.AdExpress.Web.UI{
 	/// </code>
 	/// </example>
 	/// <exception cref="TNS.AdExpress.Web.Exceptions.CustomerWebException">Exception lancée lors d'une erreur, s'il on est en mode debug.</exception>
-	public class WebPage: System.Web.UI.Page{
+	public class PrivateWebPage: System.Web.UI.Page{
 
 		#region Variables
 
@@ -110,7 +110,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public WebPage(){
+		public PrivateWebPage(){
 			// Gestion des évènements
 			base.Load +=new EventHandler(WebPage_Load);
 			base.Unload += new EventHandler(WebPage_Unload);

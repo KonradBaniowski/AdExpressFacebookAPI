@@ -31,7 +31,7 @@ namespace AdExpress.Private.Results.Jpeg{
 	/// <summary>
 	/// Description résumée de SectorDataResultsExport.
 	/// </summary>
-	public partial class SectorDataResultsExport :  TNS.AdExpress.Web.UI.WebPage{
+	public partial class SectorDataResultsExport :  TNS.AdExpress.Web.UI.PrivateWebPage{
 		
 		#region Variables
 		/// <summary>

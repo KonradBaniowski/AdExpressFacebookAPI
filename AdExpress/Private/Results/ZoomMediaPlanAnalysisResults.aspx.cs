@@ -36,7 +36,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page de zoom sur un plan média
 	/// </summary>
-	public partial class ZoomMediaPlanAnalysisResults : TNS.AdExpress.Web.UI.WebPage{	
+	public partial class ZoomMediaPlanAnalysisResults : TNS.AdExpress.Web.UI.PrivateWebPage{	
 	
 		#region Variables MMI
 		/// <summary>

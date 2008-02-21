@@ -27,7 +27,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Description résumée de AdNetTrackMediaSchedule2.
 	/// </summary>
-	public partial class AdNetTrackMediaSchedule2 : TNS.AdExpress.Web.UI.WebPage{
+	public partial class AdNetTrackMediaSchedule2 : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		public string _result="";
 

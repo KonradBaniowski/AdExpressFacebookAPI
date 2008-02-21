@@ -38,7 +38,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Liste des créations pour l'alerte concurrentielle
 	/// </summary>
-	public partial class CompetitorAlertCreationsResults : TNS.AdExpress.Web.UI.WebPage{
+	public partial class CompetitorAlertCreationsResults : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables
 		/// <summary>

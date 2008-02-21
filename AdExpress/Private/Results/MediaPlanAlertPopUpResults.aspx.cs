@@ -42,7 +42,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Pop up qui affiche l'alerte plan média
 	/// </summary>
-	public partial class MediaPlanAlertPopUpResults :  TNS.AdExpress.Web.UI.WebPage{
+	public partial class MediaPlanAlertPopUpResults :  TNS.AdExpress.Web.UI.PrivateWebPage{
 		
 		#region Variables	
 		/// <summary>

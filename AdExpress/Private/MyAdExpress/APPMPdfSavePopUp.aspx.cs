@@ -22,7 +22,7 @@ namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Fenêtre de génération d'un pdf via Anubis
 	/// </summary>
-	public partial class APPMPdfSavePopUp : TNS.AdExpress.Web.UI.WebPage{
+	public partial class APPMPdfSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Varaibles MMI
 		/// <summary>

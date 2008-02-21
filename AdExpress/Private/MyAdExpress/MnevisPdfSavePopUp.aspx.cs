@@ -21,7 +21,7 @@ namespace AdExpress.Private.MyAdExpress {
 	/// <summary>
 	/// Description résumée de MnevisPdfSavePopUp.
 	/// </summary>
-	public partial class MnevisPdfSavePopUp : TNS.AdExpress.Web.UI.WebPage {
+	public partial class MnevisPdfSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage {
 
 		#region Varaibles MMI
 		/// <summary>

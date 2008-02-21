@@ -26,7 +26,7 @@ namespace TNS.AdExpress.Web.UI{
 	/// <summary>
 	/// Page mère des page Web de résultats
 	/// </summary>
-	public class ResultWebPage: WebPage{
+	public class ResultWebPage: PrivateWebPage{
 
 		#region Constructeurs
 		/// <summary>

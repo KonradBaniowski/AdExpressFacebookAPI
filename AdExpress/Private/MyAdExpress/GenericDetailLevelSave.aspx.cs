@@ -27,7 +27,7 @@ namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Sauvegarde d'un niveau de détail
 	/// </summary>
-	public partial class GenericDetailLevelSave : TNS.AdExpress.Web.UI.WebPage{
+	public partial class GenericDetailLevelSave : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables
 

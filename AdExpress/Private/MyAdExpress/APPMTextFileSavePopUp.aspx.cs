@@ -22,7 +22,7 @@ namespace AdExpress.Private.MyAdExpress
 	/// <summary>
 	/// Description résumée de APPMTextFileSavePopUp.
 	/// </summary>
-	public partial class APPMTextFileSavePopUp : TNS.AdExpress.Web.UI.WebPage{
+	public partial class APPMTextFileSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Varaibles MMI
 		/// <summary>

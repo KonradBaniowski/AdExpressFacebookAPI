@@ -24,7 +24,7 @@ namespace AdExpress.Private.MyAdExpress
 	/// <summary>
 	/// Description résumée de APPMExcelSavePopUp.
 	/// </summary>
-	public partial class APPMExcelSavePopUp : TNS.AdExpress.Web.UI.WebPage
+	public partial class APPMExcelSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage
 	{
 		#region Varaibles MMI
 		/// <summary>

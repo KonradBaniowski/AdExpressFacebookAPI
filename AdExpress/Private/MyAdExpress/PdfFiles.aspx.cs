@@ -34,7 +34,7 @@ namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Page "Mon téléchargement" pour la mise à disposition des fichiers PDF de l'APPM
 	/// </summary>
-	public partial class PdfFiles : TNS.AdExpress.Web.UI.WebPage{
+	public partial class PdfFiles : TNS.AdExpress.Web.UI.PrivateWebPage{
 		
 		#region MMI
 		/// <summary>

@@ -14,7 +14,7 @@ namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Supprime un univers sauvegardé
 	/// </summary>
-	public partial class GenericDetailLevelRemove: TNS.AdExpress.Web.UI.WebPage{
+	public partial class GenericDetailLevelRemove: TNS.AdExpress.Web.UI.PrivateWebPage{
 	
 		#region Variables
 

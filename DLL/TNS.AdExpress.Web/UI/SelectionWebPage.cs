@@ -28,7 +28,7 @@ namespace TNS.AdExpress.Web.UI {
 	/// </summary>
 	///  <since>02/08/2006</since>
 	///  <author>G. Facon</author>
-	public class SelectionWebPage : WebPage {
+	public class SelectionWebPage : PrivateWebPage {
 
 		#region Constructeur
 		///<author>G. Facon</author>

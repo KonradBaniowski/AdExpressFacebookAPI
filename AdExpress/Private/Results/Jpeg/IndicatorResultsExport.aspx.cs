@@ -29,7 +29,7 @@ namespace AdExpress.Private.Results.Jpeg{
 	/// <summary>
 	/// Export jpeg 
 	/// </summary>
-	public partial class IndicatorResultsExport : TNS.AdExpress.Web.UI.WebPage{	
+	public partial class IndicatorResultsExport : TNS.AdExpress.Web.UI.PrivateWebPage{	
 
 		#region Variables
 		/// <summary>

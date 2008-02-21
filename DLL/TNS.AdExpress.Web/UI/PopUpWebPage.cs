@@ -14,7 +14,7 @@ namespace TNS.AdExpress.Web.UI{
 	/// <summary>
 	/// Page mère des page Web de résultats s'affichant dans des popup
 	/// </summary>
-	public class PopUpWebPage : WebPage{
+	public class PopUpWebPage : PrivateWebPage{
 
 		#region Constructeurs
 		/// <summary>

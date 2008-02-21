@@ -40,7 +40,7 @@ namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Page avec la liste des sessions sauvegardées
 	/// </summary>
-	public partial class SearchSession : TNS.AdExpress.Web.UI.WebPage{
+	public partial class SearchSession : TNS.AdExpress.Web.UI.PrivateWebPage{
 		
 		#region MMI
 		/// <summary>

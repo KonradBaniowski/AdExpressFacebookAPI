@@ -28,7 +28,7 @@ namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Gestion de Mon AdExpress.
 	/// </summary>
-	public partial class PersonnalizeSession : TNS.AdExpress.Web.UI.WebPage{   
+	public partial class PersonnalizeSession : TNS.AdExpress.Web.UI.PrivateWebPage{   
 		
 		#region MMI
 		/// <summary>

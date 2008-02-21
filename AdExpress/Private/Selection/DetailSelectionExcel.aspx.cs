@@ -26,7 +26,7 @@ namespace AdExpress.Private.Selection{
 	/// <summary>
 	/// Description résumée de DetailSelectionExcel.
 	/// </summary>
-	public partial class DetailSelectionExcel : TNS.AdExpress.Web.UI.WebPage{
+	public partial class DetailSelectionExcel : TNS.AdExpress.Web.UI.PrivateWebPage{
 	
 		#region Variables MMI
 		/// <summary>

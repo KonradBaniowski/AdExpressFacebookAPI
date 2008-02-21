@@ -21,7 +21,7 @@ namespace Private.Results {
     /// <summary>
     /// Creatives WebPage
     /// </summary>
-    public partial class Creatives : TNS.AdExpress.Web.UI.WebPage {
+    public partial class Creatives : TNS.AdExpress.Web.UI.PrivateWebPage {
 
         #region Variables
         /// <summary>

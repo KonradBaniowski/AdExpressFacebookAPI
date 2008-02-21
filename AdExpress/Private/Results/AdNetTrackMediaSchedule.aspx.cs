@@ -36,7 +36,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page du Plan Média AdNetTrack
 	/// </summary>
-	public partial class AdNetTrackMediaSchedule : TNS.AdExpress.Web.UI.WebPage{
+	public partial class AdNetTrackMediaSchedule : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables MMI
 		

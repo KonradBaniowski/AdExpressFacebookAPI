@@ -31,7 +31,7 @@ namespace AdExpress.Private.Results.Jpeg
 	/// <summary>
 	/// This page is used to generate JPEG for the APPM Charts.
 	/// </summary>
-	public partial class APPMResultsExport : TNS.AdExpress.Web.UI.WebPage
+	public partial class APPMResultsExport : TNS.AdExpress.Web.UI.PrivateWebPage
 	{
 		#region Variables		
 		/// <summary>

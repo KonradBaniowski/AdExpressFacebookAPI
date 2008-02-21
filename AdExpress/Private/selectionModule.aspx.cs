@@ -30,7 +30,7 @@ namespace AdExpress{
 	/// <summary>
 	/// Sélection d'un module
 	/// </summary>
-	public partial class selectionModule : TNS.AdExpress.Web.UI.WebPage{
+	public partial class selectionModule : TNS.AdExpress.Web.UI.PrivateWebPage{
 	
 		#region Variables
 		/// <summary>

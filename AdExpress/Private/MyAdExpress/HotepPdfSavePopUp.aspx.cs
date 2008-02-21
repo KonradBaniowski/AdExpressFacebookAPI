@@ -22,7 +22,7 @@ namespace AdExpress.Private.MyAdExpress
 	/// <summary>
 	/// Description résumée de HotepPdfSavePopUp.
 	/// </summary>
-	public partial class HotepPdfSavePopUp : TNS.AdExpress.Web.UI.WebPage
+	public partial class HotepPdfSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage
 	{
 
 		#region Varaibles MMI

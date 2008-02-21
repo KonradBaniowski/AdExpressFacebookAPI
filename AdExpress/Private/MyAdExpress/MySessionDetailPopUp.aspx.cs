@@ -33,7 +33,7 @@ namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Détail d'une Session
 	/// </summary>
-	public partial class MySessionDetailPopUp : TNS.AdExpress.Web.UI.WebPage{
+	public partial class MySessionDetailPopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region MMI
 		/// <summary>

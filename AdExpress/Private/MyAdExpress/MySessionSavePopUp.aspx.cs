@@ -29,7 +29,7 @@ namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Sauvegarde d'une session
 	/// </summary>
-	public partial class MySessionSavePopUp : TNS.AdExpress.Web.UI.WebPage{
+	public partial class MySessionSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region MMI
 		/// <summary>

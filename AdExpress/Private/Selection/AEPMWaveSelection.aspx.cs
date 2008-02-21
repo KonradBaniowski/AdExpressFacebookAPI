@@ -26,7 +26,7 @@ namespace AdExpress.Private.Selection
 	/// <summary>
 	/// Affiche les vagues AEPM à sélectionner
 	/// </summary>
-	public partial class AEPMWaveSelection : TNS.AdExpress.Web.UI.WebPage{	
+	public partial class AEPMWaveSelection : TNS.AdExpress.Web.UI.PrivateWebPage{	
 		
 		#region variables MMI
 		/// <summary>

@@ -36,7 +36,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// ZoomCompetitorMediaPlanAnalysisResults display monthly competitor analysis detail 
 	/// </summary>
-	public partial class ZoomCompetitorMediaPlanAnalysisResults : TNS.AdExpress.Web.UI.WebPage{
+	public partial class ZoomCompetitorMediaPlanAnalysisResults : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region variables MMI
 		/// <summary>

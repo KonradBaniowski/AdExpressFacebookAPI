@@ -28,7 +28,7 @@ namespace AdExpress.Private.Universe{
 	/// <summary>
 	/// Personnaliser les Univers
 	/// </summary>
-	public partial class PersonnalizeUniverse : TNS.AdExpress.Web.UI.WebPage{
+	public partial class PersonnalizeUniverse : TNS.AdExpress.Web.UI.PrivateWebPage{
 		
 		#region Variables MMI
 		/// <summary>

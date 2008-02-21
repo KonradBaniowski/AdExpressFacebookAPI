@@ -27,7 +27,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	///  Pop-up Zoom du plan media
 	/// </summary>
-	public partial class APPMInsertion : TNS.AdExpress.Web.UI.WebPage{
+	public partial class APPMInsertion : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables
 		/// <summary>

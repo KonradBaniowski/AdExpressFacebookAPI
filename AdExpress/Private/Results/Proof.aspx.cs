@@ -23,7 +23,7 @@ namespace AdExpress.Private.Results
 	/// <summary>
 	/// Pop Up justificatif presse
 	/// </summary>
-	public partial class Proof :  TNS.AdExpress.Web.UI.WebPage{
+	public partial class Proof :  TNS.AdExpress.Web.UI.PrivateWebPage{
 		
 	
 		#region Variables

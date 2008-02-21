@@ -39,7 +39,7 @@ namespace AdExpress.Private.Results
 {
 
 
-    public partial class MediaSchedulePopUp : TNS.AdExpress.Web.UI.WebPage
+    public partial class MediaSchedulePopUp : TNS.AdExpress.Web.UI.PrivateWebPage
     {
 
         #region Variables

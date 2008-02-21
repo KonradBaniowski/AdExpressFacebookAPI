@@ -36,7 +36,7 @@ namespace AdExpress.Private.Universe{
 	/// <summary>
 	/// Sauvegarde d'un univers
 	/// </summary>
-	public partial class SaveUniverse : TNS.AdExpress.Web.UI.WebPage{
+	public partial class SaveUniverse : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables MMI
 		/// <summary>

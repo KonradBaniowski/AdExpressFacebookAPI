@@ -32,7 +32,7 @@ namespace AdExpress.Private.Results.Excel{
 	/// <summary>
 	/// Description résumée de IndicatorSeasonalityResults.
 	/// </summary>
-	public partial class IndicatorSeasonalityResults : TNS.AdExpress.Web.UI.WebPage{		
+	public partial class IndicatorSeasonalityResults : TNS.AdExpress.Web.UI.PrivateWebPage{		
 		#region variables
 		/// <summary>
 		/// Code HTML des résultats

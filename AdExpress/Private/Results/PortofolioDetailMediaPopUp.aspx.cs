@@ -29,7 +29,7 @@ namespace AdExpress.Private.Results {
 	/// <summary>
 	/// Pop Up affiche le détail média d'un portefeuille
 	/// </summary>
-	public partial class PortofolioDetailMediaPopUp : TNS.AdExpress.Web.UI.WebPage{
+	public partial class PortofolioDetailMediaPopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables
 		/// <summary>

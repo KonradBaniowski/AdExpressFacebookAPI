@@ -25,7 +25,7 @@ namespace AdExpress.Private.Results.Excel{
 	/// <summary>
 	/// Description résumée de CompetitorAlertCreationsExcel.
 	/// </summary>
-	public partial class CompetitorAlertCreations : TNS.AdExpress.Web.UI.WebPage{
+	public partial class CompetitorAlertCreations : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables
 		/// <summary>

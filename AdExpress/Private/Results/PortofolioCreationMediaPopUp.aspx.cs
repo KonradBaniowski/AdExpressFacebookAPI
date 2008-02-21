@@ -25,7 +25,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Pop up affichant le détail du chemin de fer d'un support
 	/// </summary>
-	public partial class PortofolioCreationMediaPopUp :  TNS.AdExpress.Web.UI.WebPage{
+	public partial class PortofolioCreationMediaPopUp :  TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables
 		/// <summary>

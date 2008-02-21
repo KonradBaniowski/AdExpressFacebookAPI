@@ -22,7 +22,7 @@ namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Description résumée de MiysisPdfSavePopUp.
 	/// </summary>
-	public partial class MiysisPdfSavePopUp : TNS.AdExpress.Web.UI.WebPage{
+	public partial class MiysisPdfSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Varaibles MMI
 		/// <summary>

@@ -29,7 +29,7 @@ namespace AdExpress.Private.MyAdExpress
 	/// <summary>
 	/// Page de demande d'export de résultat au format PDF
 	/// </summary>
-	public partial class PdfSavePopUp : TNS.AdExpress.Web.UI.WebPage { 
+	public partial class PdfSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage { 
 
 		#region Variables
 

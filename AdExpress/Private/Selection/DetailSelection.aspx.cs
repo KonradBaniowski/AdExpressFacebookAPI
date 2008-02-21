@@ -37,7 +37,7 @@ namespace AdExpress.Private.Selection{
 	/// <summary>
 	/// Rappel des sélections
 	/// </summary>
-	public partial class DetailSelection : TNS.AdExpress.Web.UI.WebPage{
+	public partial class DetailSelection : TNS.AdExpress.Web.UI.PrivateWebPage{
 
 		#region Variables MMI
 		/// <summary>
