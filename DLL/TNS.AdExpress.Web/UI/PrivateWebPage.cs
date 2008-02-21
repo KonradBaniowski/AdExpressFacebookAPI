@@ -60,7 +60,7 @@ namespace TNS.AdExpress.Web.UI{
 	/// </code>
 	/// </example>
 	/// <exception cref="TNS.AdExpress.Web.Exceptions.CustomerWebException">Exception lancée lors d'une erreur, s'il on est en mode debug.</exception>
-	public class PrivateWebPage: System.Web.UI.Page{
+	public class PrivateWebPage: WebPage{
 
 		#region Variables
 
@@ -70,11 +70,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		///  <supplierCardinality>1</supplierCardinality>
 		///  <directed>True</directed>
-		protected WebSession _webSession = null;
-		/// <summary>
-		/// Langue du site
-		/// </summary>
-		public int _siteLanguage = 33;		
+		protected WebSession _webSession = null;		
 		/// <summary>
 		/// Url suivante
 		/// </summary>
