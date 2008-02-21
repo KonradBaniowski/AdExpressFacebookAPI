@@ -1229,7 +1229,7 @@
     <Compile Include="UI\SelectionWebPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UI\WebPage.cs">
+    <Compile Include="UI\PrivateWebPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
