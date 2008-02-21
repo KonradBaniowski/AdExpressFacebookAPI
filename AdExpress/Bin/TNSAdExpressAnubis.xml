@@ -1,0 +1,2075 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TNS.AdExpress.Anubis</name>
+    </assembly>
+    <members>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.RequestsSystemException">
+            <summary>
+            Exception de la couche Accès aux requêtes clients
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsSystemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsSystemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsSystemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.ReportingPluginErrorMessageException">
+            <summary>
+            Description résumée de ReportingPluginErrorMessageException.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ReportingPluginErrorMessageException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ReportingPluginErrorMessageException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ReportingPluginErrorMessageException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationDataAccessException">
+            <summary>
+            Exception du chargement de la configuration du reseau du serveur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationDataAccessException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationDataAccessException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationDataAccessException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.DataAccess.Configuration.PluginsDataAccess">
+            <summary>
+            Description résumée de PluginsDataAccess.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Configuration.PluginsDataAccess.GetPlugins(TNS.FrameWork.DB.Common.IDataSource)">
+            <summary>
+            Charge la liste des plug-ins à traiter à partir d'un fichier XML
+            </summary>
+            <returns>Liste des plug-ins</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.ClientSystemException">
+            <summary>
+            Exception du serveur de demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ClientSystemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ClientSystemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ClientSystemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.RequestsUpdateSystemException">
+            <summary>
+            Exception du serveur de demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsUpdateSystemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsUpdateSystemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsUpdateSystemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.PoolItemException">
+            <summary>
+            Exception d'une demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolItemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolItemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolItemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Common.Core.PoolItem">
+            <summary>
+            Description résumée de PoolItem.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Core.PoolItem.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.StartWork">
+            <summary>
+            Lancement du module
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.StopWorkerJob">
+            <summary>
+            Arrêt du module
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.MessageAlert">
+            <summary>
+            Message d'une alerte
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Error">
+            <summary>
+            Erreur
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.SendReport">
+            <summary>
+            Envoie des rapports
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.IPlugin">
+            <summary>
+            Interface à implémenté pour un plug-in de l'alerte
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.GetPluginName">
+            <summary>
+            Obtient le nom du plug-in
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.Treatement(System.String,TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
+            <summary>
+            Lance le traitement du résultat
+            </summary>
+            <param name="confifurationFilePath">Chemin de configuration du plug-in</param>
+            <param name="dataSource">Source de données pour charger la session</param>
+            <param name="navSessionId">Identifiant de la session à traiter</param>
+            <remarks>
+            Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
+            </remarks>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.AbortTreatement">
+            <summary>
+            Arrête le traitement du job
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.OnStartWork">
+            <summary>
+            Lancement du module
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.OnStopWorkerJob">
+            <summary>
+            Arrêt du module
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.OnMessageAlert">
+            <summary>
+            Message d'une alerte
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.OnError">
+            <summary>
+            Erreur
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.IPlugin.OnSendReport">
+            <summary>
+            Envoie des rapports
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Configuration.PluginsSystem">
+            <summary>
+            Description résumée de PluginsSystem.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Configuration.PluginsSystem.GetPluginsToLoad(TNS.FrameWork.DB.Common.IDataSource)">
+            <summary>
+            Chargement de la liste des plug-ins à lancer
+            </summary>
+            <param name="dataSource">Source de données</param>
+            <returns>Liste des plug-ins</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.RequestsDataAccessException">
+            <summary>
+            Exception de la couche d'accès aux données des requêtes clients
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsDataAccessException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsDataAccessException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsDataAccessException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.ServerSystemException">
+            <summary>
+            Exception du serveur de demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ServerSystemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ServerSystemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ServerSystemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.PoolEmptyException">
+            <summary>
+            Exception de la liste des demandes de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolEmptyException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolEmptyException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolEmptyException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Common.Configuration.Plugin">
+            <summary>
+            Description résumée de Plugin.
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.Plugin._name">
+            <summary>
+            Nom du plugin
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.Plugin._resultType">
+            <summary>
+            Type de résultat que génère le plug-in
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.Plugin._assemblyName">
+            <summary>
+            Nom de l'assembly
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.Plugin._class">
+            <summary>
+            Classe qui doit être utilisée
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.Plugin._configurationFilePath">
+            <summary>
+            Chemin du fichier de configuration du plug-in
+            </summary>
+            <remarks>
+            Le chemin doit être relatif par rapport à l'application
+            </remarks>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.Plugin._resultLongevity">
+            <summary>
+            Longévité du résultat généré. Pour une persistance infinie, -1
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.Plugin._resultsRoot">
+            <summary>
+            Chemin d'accès aux résultats du plugin
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Configuration.Plugin.#ctor(System.String,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="name">Nom du plugin</param>
+            <param name="resultType">Type de résultat</param>
+            <param name="assemblyName">Nom de l'assembly</param>
+            <param name="classe">Classe qui doit être utilisée</param>
+            <param name="configurationFilePath">Chemin de configuration du plug-in (Le chemin doit être relatif par rapport à l'application)</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Configuration.Plugin.#ctor(System.String,System.Int32,System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="name">Nom du plugin</param>
+            <param name="resultType">Type de résultat</param>
+            <param name="assemblyName">Nom de l'assembly</param>
+            <param name="classe">Classe qui doit être utilisée</param>
+            <param name="configurationFilePath">Chemin de configuration du plug-in (Le chemin doit être relatif par rapport à l'application)</param>
+            <param name="resultLongevity">Longévité, persistance d'un résultat généré par ce plugin</param>
+            <param name="resultsRoot">Racine du résultat</param>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.Plugin.Name">
+            <summary>
+            Obtient le nom du Plugin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.Plugin.ResultType">
+            <summary>
+            Obtient le type de résultat du Plugin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.Plugin.AssemblyName">
+            <summary>
+            Obtient le nom de l'assembly
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.Plugin.Class">
+            <summary>
+            Obtient le nom de la classe de démarrage
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.Plugin.ConfigurationFilePath">
+            <summary>
+            Obtient le chemin du fichier de configuration du plug-in
+            </summary>
+            <remarks>
+            Le chemin doit être relatif par rapport à l'application
+            </remarks>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.Plugin.ResultLongevity">
+            <summary>
+            Obtient la longévité du résultat du Plugin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.Plugin.ResultsRoot">
+            <summary>
+            Obtient le chemin des fichiers de résultats du plugin
+            </summary>
+            <remarks>
+            Chemin absolu
+            </remarks>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.ParameterSystemException">
+            <summary>
+            Exception du serveur de demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ParameterSystemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ParameterSystemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ParameterSystemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationSystemException">
+            <summary>
+            Exception du chargement de la configuration du reseau du serveur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationSystemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationSystemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationSystemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.DataAccess.Configuration.AnubisConfigDataAccess">
+            <summary>
+            Description résumée de PluginsDataAccess.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Configuration.AnubisConfigDataAccess.Load(TNS.FrameWork.DB.Common.IDataSource,TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig)">
+            <summary>
+            Load Anubis configuration
+            </summary>
+            <param name="dataSrc">Data Source</param>
+            <param name="cfg">Configuration à charger</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem">
+            <summary>
+            Distribution des demandes
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem._myThread">
+            <summary>
+            Thread qui traite l'alerte
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem._stop">
+            <summary>
+            Indicate if the thread must stop
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem._config">
+            <summary>
+            Data Source relative to configuration
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem._requestList">
+            <summary>
+            Liste des demandes
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem._datasource">
+            <summary>
+            Source de données
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem._plugins">
+            <summary>
+            Liste des plug-ins qui peuvent traiter des résultats
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem._jobsList">
+            <summary>
+            Nombre d'ouvrier
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem._jobsTime">
+            <summary>
+            Start time for each job
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.#ctor(TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig,System.Collections.Hashtable,System.Data.DataTable,TNS.FrameWork.DB.Common.IDataSource)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="config">Configuration</param>
+            <param name="plugins">Liste des plug-ins</param>
+            <param name="requestList">Liste des demandes</param>
+            <param name="dataSource">Source de données</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.Treatement">
+            <summary>
+            Lance le traitement de l'alerte
+            </summary>
+            <remarks>
+            Le traitement se charge de charger les données nécessaires à son execution et de lancer les alertes
+            </remarks>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.AbortServer">
+            <summary>
+            Arrêt brutal du serveur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StopServer">
+            <summary>
+            Signal to server to finish pending jobs and to stop
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.ComputeTreatement">
+            <summary>
+            Traitement
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.plugin_OnStartWork(System.Int64,System.String)">
+            <summary>
+            Un traitement de résultat c'est lancé
+            </summary>
+            <param name="navSessionId">Session statique</param>
+            <param name="message">Message de lancement</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.plugin_OnStopWorkerJob(System.Int64,System.String,System.String,System.String)">
+            <summary>
+            Un traitement de résultat c'est terminé
+            </summary>
+            <param name="navSessionId">Résultat traité</param>
+            <param name="resultFilePath">Chemin du gichier de résultat</param>
+            <param name="mail">Mail d'envoi</param>
+            <param name="evtMessage">Message de l'evènement</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.plugin_OnError(System.Int64,System.String,System.Exception)">
+            <summary>
+            Erreur pendant l'execution d'un job
+            </summary>
+            <param name="navSessionId">Identifiant du résultat</param>
+            <param name="message">Message</param>
+            <param name="e">Exception</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.plugin_OnMessageAlert(System.Int64,System.String)">
+            <summary>
+            Message provenant d'un plug-in
+            </summary>
+            <param name="navSessionId">Identifiant du résultat</param>
+            <param name="message">Message</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.plugin_OnSendReport(System.String,System.TimeSpan,System.DateTime,System.String,System.Collections.ArrayList,System.Collections.ArrayList,System.String,System.String,System.Int32,System.Int64)">
+            <summary>
+            Envoie d'un rapport
+            </summary>
+            <param name="reportTitle">Titre du rapport</param>
+            <param name="duration">Temps d'exécution</param>
+            <param name="endExecutionDateTime">Heure de fin</param>
+            <param name="reportCore">Le corps du rapport</param>
+            <param name="mailList">La liste des mails</param>
+            <param name="errorList">la liste des erreurs</param>
+            <param name="from">l'expediteur du mail</param>
+            <param name="mailServer">le serveur du mail</param>
+            <param name="mailPort">le port utilisé pour l'envoie de mail</param>
+            <param name="navSessionId">Id session</param>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnStartJob">
+            <summary>
+            Lancement d'un traitement d'un job
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnStopJob">
+            <summary>
+            Lancement fin d'un traitement d'un job
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnErrorJob">
+            <summary>
+            Lancement fin d'un traitement d'un job
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.OnWarningJob">
+            <summary>
+            Lancement d'un avertissement
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.RunningJobCount">
+            <summary>
+            Obtient le nombre de process qui traite une demande
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.JobList">
+            <summary>
+            Get the list of running jobs
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StartJob">
+            <summary>
+            Un job a été Distribué
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StopJob">
+            <summary>
+            Un job a été Traité
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.ErrorJob">
+            <summary>
+            Un job a été Traité
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.WarningJob">
+            <summary>
+            Avertissement
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.RequestsRulesException">
+            <summary>
+            Exception de la couche métier des demandes clients
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsRulesException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsRulesException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.RequestsRulesException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.DataAccess.RequestsDataAccess">
+            <summary>
+            Gestion des listes de demandes
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.RequestsDataAccess.Get(TNS.FrameWork.DB.Common.IDataSource,System.String,System.Collections.Hashtable)">
+            <summary>
+            Obtient la liste des demandes à traiter
+            </summary>
+            <param name="dataSource">Source de données</param>
+            <param name="notIn">Condition not in</param>
+            <param name="plgLst">Liste des plugins acceptables par Anubis (Si null, pas de limitation)</param>
+            <returns>liste des demandes à traiter</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.RequestsDataAccess.DeleteOldRequests(TNS.FrameWork.DB.Common.IDataSource,System.Collections.Hashtable)">
+            <summary>
+            Supprime les résultats périmés suivant chaque plug in
+            </summary>
+            <param name="dataSource">Source de données</param>
+            <param name="plugLst">Liste des plugins à nettoyer</param>
+            <returns>Liste des fichiers à détruire sous la forme(nom, login,type de résultat)</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.DataAccess.Network.ConfigurationDataAccess">
+            <summary>
+            Chargement du fichier de configuration du reseau pour le serveur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Network.ConfigurationDataAccess.Load(System.String)">
+            <summary>
+            Méthode static qui charge le fichier de configuration du reseau pour le serveur
+            </summary>
+            <param name="xmlFilePath">Chemin du fichier XML</param>	
+            <returns>Configuration du reseau pour le serveur</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem">
+            <summary>
+            Gestion des paramètres de résultats
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Anubis.Constantes.Result.type)">
+            <summary>
+            Sauvegarde l'état de la session client du site Web pour générer un résultat PDF
+            </summary>
+            <param name="webSession">Session du client</param>
+            <param name="resultType">Type du résultat</param>
+            <returns>Identifiant de la sauvegarde</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Anubis.Constantes.Result.type,System.String)">
+            <summary>
+            Sauvegarde l'état de la session client du site Web pour générer un résultat PDF (ou texte,...)
+            </summary>
+            <param name="webSession">Session du client</param>
+            <param name="resultType">Type du résultat</param>
+            <param name="fileName">Nom du fichier</param>
+            <returns>Identifiant de la sauvegarde</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(TNS.AdExpress.Web.Core.Result.ProofDetail,TNS.AdExpress.Anubis.Constantes.Result.type,System.String)">
+            <summary>
+            Sauvegarde les paramètres nécessaires au résultats d'une fiche justificative PDF
+            </summary>
+            <param name="pDetail">Paramètres d'une fiche justificatives du client</param>
+            <param name="resultType">Type du résultat</param>
+            <param name="fileName">Nom du fichier</param>
+            <returns>Identifiant de la sauvegarde</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Load(System.Int64)">
+            <summary>
+            Méthode pour la récupération et la "deserialization" d'un objet WebSession à partir du champ BLOB de la table des static_nav_sessions
+            </summary>
+            <param name="idStaticNavSession">Identifiant</param>
+            <returns>Paramètres pour générer un résultat</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.LoadProofDetail(System.Int64)">
+            <summary>
+            Méthode pour la récupération et la "deserialization" d'un objet ProofDetail à partir du champ BLOB de la table des static_nav_sessions
+            </summary>
+            <param name="idStaticNavSession">Identifiant</param>
+            <returns>Paramètres pour générer un résultat</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.LoadObject(System.Int64)">
+            <summary>
+            Méthode pour la récupération et la "deserialization" de n'importe quel objet à partir du champ BLOB de la table des static_nav_sessions
+            </summary>
+            <param name="idStaticNavSession">Identifiant</param>
+            <returns>Un objet</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.ChangeStatus(TNS.FrameWork.DB.Common.IDataSource,System.Int64,TNS.AdExpress.Anubis.Constantes.Result.status)">
+            <summary>
+            Changement 
+            </summary>
+            <param name="dataSource">Source de données</param>
+            <param name="idStaticNavSession">Demande à mettre à jour</param>
+            <param name="pdfStatus">Nouveau Statut</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.RegisterFile(TNS.FrameWork.DB.Common.IDataSource,System.Int64,System.String)">
+            <summary>
+            Register the physical file name associated to a session and update the staut to done
+            </summary>
+            <param name="dataSource">Data Source</param>
+            <param name="idStaticNavSession">User session</param>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.GetRequestDetails(TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
+            <summary>
+            Get all details of the request idStaticNavSession apart from the blob field
+            </summary>
+            <param name="dataSource">Data Source</param>
+            <param name="idStaticNavSession">Session ID to get</param>
+            <returns>DataSet containing all fields of the request except from the blob filed</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.DeleteRequest(TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
+            <summary>
+            Delete a request 
+            </summary>
+            <param name="dataSource">Data Source</param>
+            <param name="idStaticNavSession">Session ID to delete</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ConfigurationSystem">
+            <summary>
+            Chargement de la configuration du reseau pour le serveur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ConfigurationSystem.Load(System.String)">
+            <summary>
+            Chargement de la configuration du reseau pour le serveur
+            </summary>
+            <param name="xmlFilePath">Chemin du fichier de configuration</param>
+            <returns>Configuration du reseau</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Rules.RequestsRules">
+            <summary>
+            Couche métier de gestion des requêtes clients
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Rules.RequestsRules.DeleteOldRequests(TNS.FrameWork.DB.Common.IDataSource,System.Collections.Hashtable)">
+            <summary>
+            Supprime les résultats ayant dépassé la date de péremption déterminée par le plugin générateur du résultat.
+            </summary>
+            <param name="dataSource">Source de données</param>
+            <param name="plugLst">Listes des plugins dont on veut supprimer les résultats périmés</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.ReportingSystemException">
+            <summary>
+            Description résumée de ReportingSystemException.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ReportingSystemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ReportingSystemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ReportingSystemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf">
+            <summary>
+            Classe de base pour générer un résultat de type PDF
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf._leftMargin">
+            <summary>
+            Pdf left Margin
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf._rightMargin">
+            <summary>
+            Pdf left Margin
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf._topMargin">
+            <summary>
+            Pdf left Margin
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf._bottomMargin">
+            <summary>
+            Pdf left Margin
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.poLandScapeWaterMk">
+            <summary>
+            LandScape pages watermark index
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.poPortraitWaterMk">
+            <summary>
+            Portrait pages watermark index
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf._headerHeight">
+            <summary>
+            Size of the headers
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf._footerHeight">
+            <summary>
+            Size of the footers
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.#ctor">
+            <summary>
+            Constructeur (default values : 
+            leftMargin=15;
+            rightMargin=15;
+            topMargin=15;
+            bottomMargin=15;
+            headerHeight=50;
+            footerHeight=20;
+            )
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.Init(System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Initialize the PDF (Create it and get it ready for building process)
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.AddHeadersAndFooters(System.String,TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition,System.String,System.Int32,System.Int32,System.Drawing.Color,System.Drawing.Font,System.Boolean,TNS.AdExpress.Web.Core.Sessions.WebSession)">
+            <summary>
+            Add Header and footer to the page between i and j
+            </summary>
+            <param name="image">Image location on the header</param>
+            <param name="position">Image position on the header</param>
+            <param name="title">Title in the header</param>
+            <param name="fromPage">Beginning page</param>
+            <param name="fontColor">Font Color</param>
+            <param name="toPage">End page</param>
+            <param name="font">Police</param>
+            <param name="withCopyright">Indication du CopyRight</param>
+            <param name="_webSession">La WebSession</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.AddHeadersAndFooters(System.String,System.String,System.String,System.Int32,System.Int32,System.Drawing.Color,System.Drawing.Font)">
+            <summary>
+            Add Header and footer to the page between i and j
+            </summary>
+            <param name="leftImage">Image located on the left of the header</param>
+            <param name="rightImage">Image located on the right of the header</param>
+            <param name="title">Title in the header</param>
+            <param name="fromPage">Beginning page</param>
+            <param name="fontColor">Font Color</param>
+            <param name="toPage">End page</param>
+            <param name="font">Police</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.GetWaterMark(System.String,System.String,System.String,System.Drawing.Color,System.Drawing.Font)">
+            <summary>
+            Create a watermark for the current page or return it if it already exists
+            </summary>
+            <param name="leftImage">Image located on the left of the header</param>
+            <param name="rightImage">Image located on the right of the header</param>
+            <param name="title">Title located in the header</param>
+            <param name="fontColor">Font color of the watermark</param>
+            <param name="font">Font of the headers and footers</param>
+            <returns>Index of the watermark in th epdf document</returns>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.LeftMargin">
+            <summary>
+            Get the size of the left margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.RightMargin">
+            <summary>
+            Get the size of the right margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.TopMargin">
+            <summary>
+            Get the size of the top margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.BottomMargin">
+            <summary>
+            Get the size of the bottom margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.WorkZoneTop">
+            <summary>
+            Get Beginning of the work zone of the document (topMargin+headerSize)
+            </summary>					  
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.WorkZoneBottom">
+            <summary>
+            Get End of the work zone of the document (topMargin+headerSize)
+            </summary>					  
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition">
+            <summary>
+            indique la position de l'image
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition.rightImage">
+            <summary>
+            Image located on the right of the header
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.Pdf.imagePosition.leftImage">
+            <summary>
+            Image located on the left of the header
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.PluginsDataAccessException">
+            <summary>
+            Exception du serveur de demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PluginsDataAccessException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PluginsDataAccessException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PluginsDataAccessException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.FunctionsException">
+            <summary>
+            Exception lors de l'exécution d'une fontions tools
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.FunctionsException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.FunctionsException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.FunctionsException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem">
+            <summary>
+            Keep list of works to run up to date
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem._myThread">
+            <summary>
+            Thread qui traite l'alerte
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem._stop">
+            <summary>
+            The thread must stop  if true
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem._config">
+            <summary>
+            Data Source relative to configuration
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem._dataSource">
+            <summary>
+            Data Source relative to data access
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem._requestsDt">
+            <summary>
+            DataTable to keep up to date
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem._runNb">
+            <summary>
+            Nombre d'update effectué.
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem._plgLst">
+            <summary>
+            Listes des requêtes (plug ins ) autorisées
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.#ctor(TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig,System.Data.DataTable,TNS.FrameWork.DB.Common.IDataSource,System.Collections.Hashtable)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="config">Configuration</param>
+            <param name="requestsDt">Données</param>
+            <param name="dataSource">Source de données</param>
+            <param name="plgLst">Listes des tyês de requêtes / Plugins autoriosées, si null, pas de limitation</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.Treatement">
+            <summary>
+            Lance le traitement de l'alerte
+            </summary>
+            <remarks>
+            Le traitement se charge de charger les données nécessaires à son execution et de lancer les alertes
+            </remarks>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.StopServer">
+            <summary>
+            Arrêt du serveur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.ComputeTreatement">
+            <summary>
+            Partie utile du serveur : mis à jour de la liste de jobs à effectuer.
+            Si ComputeTreatement en est à sa première exécution (donc qu'il n'y a pas eu d'erreur), elle se lance immédiatement.
+            Sinon, elle attend 
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.OnNewLines">
+            <summary>
+            Le datatable contenant les demandes a été recalculé
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.OnError">
+            <summary>
+            Thrown when an error occured
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.NewLines">
+            <summary>
+            Le datatable contenant les demandes a été recalculé
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.Error">
+            <summary>
+            An error occured
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.ReportingPluginBaseDataAccessException">
+            <summary>
+            Description résumée de ReportingPluginBaseDataAccessException.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ReportingPluginBaseDataAccessException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ReportingPluginBaseDataAccessException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ReportingPluginBaseDataAccessException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.NetworkWebClientConfigurationException">
+            <summary>
+            Exception de la configuration du reseau du serveur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkWebClientConfigurationException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkWebClientConfigurationException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkWebClientConfigurationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem">
+            <summary>
+            Serveur acceptant les demandes clients
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem._myThread">
+            <summary>
+            Thread du serveur
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem._serverConfiguration">
+            <summary>
+            Configuration reseau du serveur
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.waitForConnection">
+            <summary>
+            Le serveur doit il attendre des connexions
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="xmlFilePath">Chemin du fichier de configuration du serveur de demande de résultat</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.Treatement">
+            <summary>
+            Lancement du serveur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.ComputeTreatement">
+            <summary>
+            Execution du serveur
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerStart">
+            <summary>
+            Evènement du démarrage du serveur reseau
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerStop">
+            <summary>
+            arrêt du serveur reseau
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerError">
+            <summary>
+            Erreur du serveur reseau
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerNewConnection">
+            <summary>
+            Nouvelle connexion
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerStartHandler">
+            <summary>
+            Démarrage du serveur reseau
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerStopHandler">
+            <summary>
+            arrêt du serveur reseau
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerErrorHandler">
+            <summary>
+            Erreur du serveur reseau
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ServerSystem.NetworkServerNewConnectionHandler">
+            <summary>
+            Nouvelle connexion
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.PdfException">
+            <summary>
+            Exception lors de la génération d'un fichier PDF
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PdfException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PdfException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PdfException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Common.Parameters.Generic">
+            <summary>
+            Paramètres Client générique pour construire un resultat PDF
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Parameters.Generic._idSession">
+            <summary>
+            Identifiant de session
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Parameters.Generic._siteLanguage">
+            <summary>
+            Langage du site
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Parameters.Generic._resultType">
+            <summary>
+            Type de resultat PDF à générer
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Parameters.Generic.#ctor(TNS.AdExpress.Anubis.Constantes.Result.type)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="resultType">Type de résultat</param>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Parameters.Generic.IdSession">
+            <summary>
+            Obtient ou définit l'identifiant de session
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Parameters.Generic.SiteLanguage">
+            <summary>
+            Obtient ou définit la langue choisie par l'utilisateur
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Parameters.Generic.ResultType">
+            <summary>
+            Obtient le type de resultats pour générer le PDF
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.PluginException">
+            <summary>
+            Exception du serveur de demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PluginException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PluginException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PluginException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationException">
+            <summary>
+            Exception de la configuration du reseau du serveur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.NetworkConfigurationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.DataAccess.Result.ParameterDataAccess">
+            <summary>
+            Gestion des paramètres de résultats dans la base de données
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Result.ParameterDataAccess.Save(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Anubis.Constantes.Result.type)">
+            <summary>
+            Sauvegarde des paramètres d'un résultat PDF à partir de la base de données
+            </summary>
+            <param name="webSession">Session client à sauvegarder</param>
+            <param name="resultType">Type de résultat</param>
+            <returns>Identifiant correspondant à la session sauvegardée</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Result.ParameterDataAccess.Save(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.AdExpress.Anubis.Constantes.Result.type,System.String)">
+            <summary>
+            Sauvegarde des paramètres d'un résultat (PDF;Texte;...) à partir de la base de données
+            </summary>
+            <param name="webSession">Session client à sauvegarder</param>
+            <param name="resultType">Type de résultat</param>
+            <param name="fileName">Nom du fichier</param>
+            <returns>Identifiant correspondant à la session sauvegardée</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Result.ParameterDataAccess.Save(TNS.AdExpress.Web.Core.Result.ProofDetail,TNS.AdExpress.Anubis.Constantes.Result.type,System.String)">
+            <summary>
+            Sauvegarde des paramètres d'un résultat (PDF;Texte;...) à partir de la base de données
+            </summary>
+            <param name="proofDetail">Paramètres d'une fiche justificative  à sauvegarder</param>
+            <param name="resultType">Type de résultat</param>
+            <param name="fileName">Nom du fichier</param>
+            <returns>Identifiant correspondant à la session sauvegardée</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Result.ParameterDataAccess.Load(System.Int64)">
+            <summary>
+            Méthode pour la récupération et la "deserialization" d'un objet WebSession à partir du champ BLOB de la table des static_nav_sessions
+            </summary>
+            <returns>Retourne l'objet récupéré ou null si il y a eu un problème non géré</returns>
+            <param name="idStaticNavSession">Identifiant de la session sauvegardée</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Result.ParameterDataAccess.ChangeStatus(TNS.FrameWork.DB.Common.IDataSource,System.Int64,TNS.AdExpress.Anubis.Constantes.Result.status)">
+            <summary>
+            Changement de status
+            </summary>
+            <param name="dataSource">Source de données</param>
+            <param name="idStaticNavSession">Demande à mettre à jour</param>
+            <param name="pdfStatus">Nouveau Statut</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Result.ParameterDataAccess.RegisterFile(TNS.FrameWork.DB.Common.IDataSource,System.Int64,System.String)">
+            <summary>
+            Register the physical file name associated to a session and update the staut to done
+            </summary>
+            <param name="dataSource">Data Source</param>
+            <param name="idStaticNavSession">User session</param>
+            <param name="fileName">File Name</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Result.ParameterDataAccess.GetRequestDetails(TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
+            <summary>
+            Get all details of the request idStaticNavSession apart from the blob field
+            </summary>
+            <param name="dataSource">Data Source</param>
+            <param name="idStaticNavSession">Session ID to get</param>
+            <returns>DataSet containing all fields of the request except from the blob filed</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.DataAccess.Result.ParameterDataAccess.DeleteRequest(TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
+            <summary>
+            Delete a customer request
+            </summary>
+            <param name="dataSource">Data Source</param>
+            <param name="idStaticNavSession">Session ID to delete</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig">
+            <summary>
+            Static class containing every cifiguration elements for anubis
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig._jobInterval">
+            <summary>
+            Interval de temps pour le refresh de la liste des demandes
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig._jobsNumber">
+            <summary>
+            Nombre d'ouvrier pour traiter les demandes
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig._distributionInterval">
+            <summary>
+            Interval de temps d'attente avant l'analyse des demandes à traiter
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig._tracePath">
+            <summary>
+            Path for the log files
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig._updateErrorDelay">
+            <summary>
+            Interval de temps avant de relancer une requête de mis à jour des jobs suite à une erreur du serveur.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig.#ctor(TNS.FrameWork.DB.Common.IDataSource)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="dataSource">Source de données</param>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig.JobInterval">
+            <summary>
+            Obtient l'interval de temps pour le refrsh de la liste des demandes
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig.UpdateErrorDelay">
+            <summary>
+            Get/Set l'interval de temps avant de relancer le serveur de mis à jour des jobs suite à une erreur
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig.JobsNumber">
+            <summary>
+            Obtient le nombre d'ouvrier pour traiter les demandes
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig.DistributionInterval">
+            <summary>
+            Obtient l'interval de temps d'attente avant l'analyse des demandes à traiter
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Configuration.AnubisConfig.TracePath">
+            <summary>
+            Get the file to acces the log file
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.RequestsSystem">
+            <summary>
+            Point d'accès aux requêtes clients
+            
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.RequestsSystem.Get(TNS.FrameWork.DB.Common.IDataSource,System.String,System.Collections.Hashtable)">
+            <summary>
+            Obtient la liste des requêtes à traiter
+            </summary>
+            <param name="dataSource">Source de données</param>
+            <param name="notIn">Identifiant Session à exclure</param>
+            <param name="plgLst">Liste des types de requêtes autorisées (Si null, pas de limitation)</param>
+            <returns>liste des requêtes à traiter</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.RequestsSystem.DeleteOldRequests(TNS.FrameWork.DB.Common.IDataSource,System.Collections.Hashtable)">
+            <summary>
+            Supprime les résultats ayant dépassé la date de péremption déterminée par le plugin générateur du résultat.
+            </summary>
+            <param name="dataSource">Source de données</param>
+            <param name="plugLst">Listes des plugins dont on veut supprimer les résultats périmés</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.SendReportException">
+            <summary>
+            Description résumée de SendReportException.
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.SendReportException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.SendReportException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.SendReportException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.PoolException">
+            <summary>
+            Exception de la liste des demandes de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.AnubisConfigDataAccessException">
+            <summary>
+            Exception du serveur de demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.AnubisConfigDataAccessException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.AnubisConfigDataAccessException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.AnubisConfigDataAccessException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Common.Parameters.Appm">
+            <summary>
+            Paramètre pour les résultats Bilan de campagne (APPM)
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Parameters.Appm.#ctor(TNS.AdExpress.Anubis.Constantes.Result.type)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="resultType">Type de résultat</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration">
+            <summary>
+            Contient la configuration réseau du serveur
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration._name">
+            <summary>
+            Nom du serveur
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration._ip">
+            <summary>
+            Adresse Ip
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration._port">
+            <summary>
+            Port de connexion
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration.Init(System.String,System.String,System.Int32)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="name">Nom du serveur</param>
+            <param name="ip">Adresse Ip</param>
+            <param name="port">Port de connexion</param>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration.Name">
+            <summary>
+            Obtient le nom du serveur
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration.IP">
+            <summary>
+            Obtient l'adresse IP du serveur
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration.Port">
+            <summary>
+            Obtient le port du serveur
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase">
+            <summary>
+            Description résumée de ReportingPluginBase.
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase._reportTitle">
+            <summary>
+            Le titre du rapport
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase._duration">
+            <summary>
+            Le temps d'exécution
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase._endExecutionDateTime">
+            <summary>
+            L'heure de fin d'exécution
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase._reportCore">
+            <summary>
+            Le corps du rapports
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase._mailList">
+            <summary>
+            Liste des mails
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase._errorList">
+            <summary>
+            Liste des erreurs survenues lors du traitement
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase.LoadReportingConfig(System.String)">
+            <summary>
+            Chargement de la configuration
+            </summary>
+            <param name="configurationFilePath">Le chemin du fichier de configuration</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.ReportingPluginBase.AddErrorMessage(System.String)">
+            <summary>
+            Gestion des erreurs
+            </summary>
+            <param name="message">Message d'erreur</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.ParameterDataAccessException">
+            <summary>
+            Exception du serveur de demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ParameterDataAccessException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ParameterDataAccessException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.ParameterDataAccessException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.DistributionSystemException">
+            <summary>
+            Exception du serveur de demande de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.DistributionSystemException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.DistributionSystemException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.DistributionSystemException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Common.Functions">
+            <summary>
+            Usefull tools
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Functions.GetRandomString(System.Int32,System.Int32)">
+            <summary>
+            Generate a string with random size and random caracters authorized in a file name
+            </summary>
+            <param name="maxL">Minimal length of the string</param>
+            <param name="minL">Maximal Length of the string (0 or less for no limit)</param>
+            <returns>Random String</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Functions.GetRandomInteger(System.Int32,System.Int32)">
+            <summary>
+            Determine a random integer between i and j included
+            </summary>
+            <param name="min">Minimal value</param>
+            <param name="max">Maximal value (0 or less for no limit)</param>
+            <returns>Random integer</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Functions.GetRandomIntegerAbove(System.Int32)">
+            <summary>
+            Determine a random integer equal or superior to min
+            </summary>
+            <param name="min">Minimal value</param>
+            <returns>Random number</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Functions.GetRandomIntegerUnder(System.Int32)">
+            <summary>
+            Determine a random integer equal or inferior to max
+            </summary>
+            <param name="max">Maximal value</param>
+            <returns>Random number</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Functions.GetHtmlFile(System.String)">
+            <summary>
+            Create a html file with a complete header, ready to receive html code after body
+            </summary>
+            <param name="path">File path</param>
+            <returns>link so as to write text in the file</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Functions.CloseHtmlFile(System.IO.StreamWriter)">
+            <summary>
+            Append HTML terminaison tags (/form>/body>/HTML>) and close the file
+            </summary>
+            <param name="sw">StreamWriter on a html file</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Functions.CleanWorkDirectory(System.String)">
+            <summary>
+            Suppress a directory and its content
+            </summary>
+            <param name="path">Directory path to delete</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem">
+            <summary>
+            Liste des demandes de résultats
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem._list">
+            <summary>
+            Liste des demandes de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.#cctor">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.Init">
+            <summary>
+            Initialise l'objet
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.Get">
+            <summary>
+            Obtient une demande
+            </summary>
+            <returns>Demande</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.Put(TNS.AdExpress.Anubis.Common.Core.PoolItem)">
+            <summary>
+            Ajoute une demande
+            </summary>
+            <param name="poolItem">Demande à ajouter</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.Count">
+            <summary>
+            Obtient le nombre d'éléments dans la liste
+            </summary>
+            <returns>nombre d'éléments dans la liste</returns>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.ConnectionNumberChanged">
+            <summary>
+            Evènement indiquant que le nombre d'éléments dans la liste à changé
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.Error">
+            <summary>
+            Evènement indiquant qu'il y a une erreur
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.ConnectionNumberChangedHandler">
+            <summary>
+            Le nombre de connection change
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Core.PoolSystem.ErrorHandler">
+            <summary>
+            Erreur
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Exceptions.PoolFatalException">
+            <summary>
+            Exception de la liste des demandes de résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolFatalException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolFatalException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Exceptions.PoolFatalException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">Message d'erreur</param>
+            <param name="innerException">Exception source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Common.Network.Configuration">
+            <summary>
+            Contient la configuration réseau du serveur
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Network.Configuration._name">
+            <summary>
+            Nom du serveur
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Network.Configuration._ip">
+            <summary>
+            Adresse Ip
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Common.Network.Configuration._port">
+            <summary>
+            Port de connexion
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Common.Network.Configuration.#ctor(System.String,System.String,System.Int32)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="name">Nom du serveur</param>
+            <param name="ip">Adresse Ip</param>
+            <param name="port">Port de connexion</param>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Network.Configuration.Name">
+            <summary>
+            Obtient le nom du serveur
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Network.Configuration.IP">
+            <summary>
+            Obtient l'adresse IP du serveur
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Common.Network.Configuration.Port">
+            <summary>
+            Obtient le port du serveur
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem">
+            <summary>
+            Description résumée de ReportingSystem.
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.LOGO_PATH">
+            <summary>
+            Nom de l'image "logo_Tns.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.DEGRA_COIN_GH">
+            <summary>
+             Nom de l'image "degra_coinGH.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.PIXEL">
+            <summary>
+             Nom de l'image "pixel.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.DEGRA_FOND_VERTI_HAUT">
+            <summary>
+            Nom de l'image "degra_fond_verti_haut.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.DEGRA_COIN_DH">
+            <summary>
+            Nom de l'image "degra_coinDH.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.DEGRA_FOND_HORI_G">
+            <summary>
+            Nom de l'image "degra_fond_hori_G.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.DEGRA_FOND_HORI_D">
+            <summary>
+            Nom de l'image "degra_fond_hori_D.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.DEGRA_COIN_GB">
+            <summary>
+            Nom de l'image "degra_coinGB.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.DEGRA_FOND_VERTI_BAS">
+            <summary>
+            Nom de l'image "degra_fond_verti_bas.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.DEGRA_COIN_DB">
+            <summary>
+            Nom de l'image "degra_coinDB.gif"
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._directoryPath">
+            <summary>
+            Chemin du répertoire qui contient les images
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._reportTitle">
+            <summary>
+            Le titre du rapport
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._duration">
+            <summary>
+            Le temps d'exécution
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._endExecutionDateTime">
+            <summary>
+            L'heure de fin d'exécution
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._reportCore">
+            <summary>
+            Le corps du rapports
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._mailList">
+            <summary>
+            Liste des mails
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._errorList">
+            <summary>
+            Liste des erreurs survenues lors du traitement
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._from">
+            <summary>
+            L'expediteur du mail
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._mailServer">
+            <summary>
+            Le serveur de mail
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._mailPort">
+            <summary>
+            Le port utilisé pour l'envoie de mail
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem._navSessionId">
+            <summary>
+            Id Session
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.#ctor(System.String,System.TimeSpan,System.DateTime,System.String,System.Collections.ArrayList,System.Collections.ArrayList,System.String,System.String,System.Int32,System.Int64)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="reportTitle">Titre du rapport</param>
+            <param name="duration">Durée d'exécution</param>
+            <param name="endExecutionDateTime">Date de fin du traitement</param>
+            <param name="reportCore">le corps du rapport</param>
+            <param name="mailList">La liste des mails</param>
+            <param name="errorList">La liste des erreurs</param>
+            <param name="from">l'expediteur du mail</param>
+            <param name="mailServer">le serveur du mail</param>
+            <param name="mailPort">le port utilisé pour l'envoie de mail</param>
+            <param name="navSessionId">Id session</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.SetReport">
+            <summary>
+            Création d'un rapport
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.SendReport(System.String)">
+            <summary>
+            Envoie d'un rapport
+            </summary>
+            <param name="html">Le code html du rapport</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Result.ReportingSystem.mail_mailKoHandler(System.Object,System.String)">
+            <summary>
+            Rise exception when the customer mail has not been sent
+            </summary>
+            <param name="source">Error source></param>
+            <param name="message">Error message</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.BusinessFacade.Network.ClientSystem">
+            <summary>
+            Client Reseau
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ClientSystem.#ctor">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.BusinessFacade.Network.ClientSystem.Send(System.String,System.Int32,System.Int64,TNS.AdExpress.Anubis.Constantes.Result.type)">
+            <summary>
+            Envoie une demande résultat au serveur
+            </summary>
+            <param name="ip">Adresse IP du serveur</param>
+            <param name="port">Port du serveur</param>
+            <param name="idStaticNavSession">Session sauvegardée du client</param>
+            <param name="resultType">Type de résultat souhaité</param>
+            <returns>Code du serveur</returns>
+        </member>
+    </members>
+</doc>
