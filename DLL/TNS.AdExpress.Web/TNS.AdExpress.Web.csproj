@@ -1,0 +1,1303 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</ProjectGuid>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>TNS.AdExpress.Web</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TNS.AdExpress.Web</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>TNSAdExpressWeb.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DundasWebChart, Version=5.5.0.1697, Culture=neutral, PublicKeyToken=90d06b0c62d592d0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\DundasWebChart.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=9.2.0.700, Culture=neutral, PublicKeyToken=89b483f429c47342">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\Oracle.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.Classification.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Date.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Net, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Tools, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.20658, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.WebResultUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Global\Loading\LoadingSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\APPMSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\CompetitorSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\DashBoardSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\DynamicSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\GadSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\InfoNewsSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\MarketShareSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\MediaPlanSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\PdfFilesSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\PortofolioSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\ProofSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\SectorDataSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Results\SponsorshipSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Selections\Grp\WavesSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Selections\Medias\MediaPublicationDatesSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Selections\Periods\RecapBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Selections\Products\GroupSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Selections\Products\SectorsSelectedBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\Creatives\Comparers.cs" />
+    <Compile Include="Common\Results\Creatives\CreativeAdNetTrack.cs" />
+    <Compile Include="Common\Results\Creatives\CreativeTV.cs" />
+    <Compile Include="Common\Results\Creatives\CreativeRadio.cs" />
+    <Compile Include="Common\Results\Creatives\CreativeOutdoor.cs" />
+    <Compile Include="Common\Results\Creatives\CreativeMailing.cs" />
+    <Compile Include="Common\Results\Creatives\CreativePresse.cs" />
+    <Compile Include="Common\Results\Creatives\CreativeComparer.cs" />
+    <Compile Include="Common\Results\Creatives\CreativeItem.cs" />
+    <Compile Include="Common\Results\ExportAPPMVersionItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\ExportMDVersionItem.cs" />
+    <Compile Include="Common\Results\ExportOutdoorVersionItem.cs" />
+    <Compile Include="Common\Results\ExportVersionItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\FilesItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\GroupItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\GroupItemWithIndex.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\InfoNewsItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\MediaPlanItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\MediaPlanResultData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\RecursiveHashTable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\ResultData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\SelectionGroup.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Results\SelectionSubGroup.cs" />
+    <Compile Include="Common\Results\VersionItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Functions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\MyAdExpress\MySessionDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\MyAdExpress\MySessionsDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\AlertsInsertionsCreationsDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\AffinitiesDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\AnalyseFamilyInterestPlanDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\InsertPlanDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\LocationPlanTypesDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\MediaPlanDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\PDVPlanDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\PeriodicityPlanDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\ProofDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\SectorDataAverageDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\SectorDataSeasonalityDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\SectorDataSynthesisDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\SupportPlanDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\SynthesisDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\VisualChoiceDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\APPM\ZoomMediaPlanDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\CompetitorAlertCreationDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\CompetitorDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\CompetitorMediaInsertionsCreationDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\CompetitorMediaPlanAlertDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\CompetitorMediaPlanAnalysisDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\CreativesDataAccess.cs" />
+    <Compile Include="DataAccess\Results\DashBoardDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\DynamicDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\DynamicTablesDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\FilesItemDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\GadDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\GenericMediaPlanDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\GenericMediaScheduleDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IndicatorDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\IndicatorSynthesisDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\InfoNewsDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\MediaAgencyDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\MediaInsertionsCreationDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\MediaPlanAlertDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\MediaPlanAnalysisDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\MediaPlanDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\PortofolioAnalysisDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\PortofolioDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\PortofolioDetailMediaDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\ProofDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\SearchLevelDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\TendenciesDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\TvSponsorshipDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\VehicleDetailDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Results\VersionDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Grp\TargetListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Grp\WaveListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Medias\CountryListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Medias\MediaPublicationDatesDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Medias\TitleListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Medias\VehicleListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Periods\PortofolioAnalysisDateDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Periods\PortofolioDateDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Periods\RecapDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Products\AdvertiserListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Products\GroupDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Products\ProductClassificationListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Products\ProductListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Products\RecapAdvertiserDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Products\RecapProductClassificationListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Products\SearchWordDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Products\SectorsSelectedDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Programs\ProgramTypeListDataAccess.cs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Programs\SponsorshipFormListDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Selections\Slogans\SloganDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AdvertiserListException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AffinitiesDataAccessExeption.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AffinitiesRulesExcpetion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AffinitiesUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AlertsInsertionsCreationsDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AlertsInsertionsCreationsRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AnalyseFamilyInterestPlaDataAccesnException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AnalyseFamilyInterestPlanChartUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AnalyseFamilyInterestPlanRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AnalyseFamilyInterestPlanUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\APPMBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\APPMDateSelectionException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\APPMMediaPlanDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\APPMMediaPlanRulesExcpetion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\APPMMediaPlanUIExcpetion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CalculationTypeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorAlertCreationsResultsUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorAlertDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorMediaPlanAlertDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorMediaPlanAlertRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorMediaPlanAlerUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorMediaPlanAnalysisDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorMediaPlanAnalysisRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompetitorUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CreativeRulesException.cs" />
+    <Compile Include="Exceptions\PortofolioDetailMediaException.cs" />
+    <Compile Include="Exceptions\UnauthorizedAccessException.cs" />
+    <Compile Include="Exceptions\CountryListDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CustomerWebException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DashBoardDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DashBoardMediaSelectionException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DashBoardRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DashBoardSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DashBoardUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DeliveryFrequencyException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DirectoryDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DynamicDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DynamicRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DynamicSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DynamicTableRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DynamicTablesDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DynamicTablesUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DynamicUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ExcelWebPageException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ExtendedHashTableException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FilesItemDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FilesItemRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FilesItemSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FunctionsDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FunctionsException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FunctionsUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\GadDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\GadSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\GroupDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\IndicateurNoveltyRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\IndicatorMediaStrategyException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\IndicatorSeasonalityException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\IndicatorSynthesisRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\InfoNewsRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\InfoNewsUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\InsertPlanDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\LoadingSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\LocationPlanTypesDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\LocationPlanTypesRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\LocationPlanTypesUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MarketShareRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MarketShareSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MarketShareUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaAgencyException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaCreationDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaInsertionsCreationsRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaInsertionsCreationsUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPlanAlertDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPlanAnalysisDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPlanAnalysisRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPlanDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPlanRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPlanSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPlanUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPublicationDatesDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPublicationDatesRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaPublicationDatesSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaSelectionWebControlException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MyAdExpressDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\NoDataException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PdfFilesSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PDVPlanChartUIExcpetion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PDVPlanDataAccessExcpetion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PDVPlanRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PDVPlanUIExcpetion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PeriodicityPlanChartUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PeriodicityPlanDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PeriodicityPlanRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PeriodicityPlanUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PortofolioAnalysisDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PortofolioDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PortofolioDateException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PortofolioDetailMediaDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PortofolioSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PortofolioUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProductClassificationListDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProductListDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProgramTypeListException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProofDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProofRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProofSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\RecapAdvertiserDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\RecapDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\RecapProductClassificationListDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SeasonalityPlanChartUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorAnalysisIndicatorDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorDataAffinitiesRulesExcpetion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorDataAverageDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorDataAverageRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorDataAverageUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorDataSeasonalityDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorDataSeasonalityRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorDataSynthesisDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorDataSynthesisRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorDataSynthesisUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorsSelectedBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SectorsSelectedDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SloganDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SponsorshipSystemException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SQLGeneratorException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SupportPlanDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SynthesisDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SynthesisRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SynthesisUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TendenciesDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TitleListDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TvSponsorshipDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TvSponsorshipRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\VehicleDetailDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\VehicleListDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\VersionDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\VersionUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\VisualChoiceDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\WaveListDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\WaveRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\WebDBException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\WebPageException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\CalculationType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\CheckedText.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\Cookies.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\CreativeErrorTreatment.cs" />
+    <Compile Include="Functions\Dates.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\DetailSelectionScript.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\DisplayTreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\DisplayUniverse.cs" />
+    <Compile Include="Functions\MediaDetailLevel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\Modules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\ProductDetailLevel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\Rights.cs" />
+    <Compile Include="Functions\Script.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\Sort.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\sqlRightGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\Text.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\Units.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\AlertsInsertionsCreationsRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\AffintiesRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\AnalyseFamilyInterestPlanRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\InsertionPlanRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\LocationPlanTypesRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\MediaPlanRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\PDVPlanRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\PeriodicityPlanRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\ProofRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\SectorDataAffintiesRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\SectorDataAverageRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\SectorDataSeasonalityRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\SectorDataSynthesisRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\SupportPlanRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\SynthesisRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\APPM\ZoomMediaPlanRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\CompetitorAlertCreationsRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\CompetitorMediaPlanAlertRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\CompetitorMediaPlanAnalysisRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\CompetitorRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\CreativeRules.cs" />
+    <Compile Include="Rules\Results\DashBoardRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\DynamicRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\DynamicTablesRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\FilesItemRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\GenericMediaPlanRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\IndicatorEvolutionRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\IndicatorMediaStrategyRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\IndicatorNoveltyRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\IndicatorPalmaresRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\IndicatorSeasonalityRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\IndicatorSynthesisRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\InfoNewsRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\MarketShareRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\MediaInsertionsCreationsRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\MediaPlanAlertRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\MediaPlanAnalysisRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\MediaPlanRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\PortofolioRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\ProofRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\TendenciesRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Results\TvSponsorshipRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Selections\Grp\WavesRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Selections\Medias\MediaPublicationDatesRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\ErrorEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\ExcelWebPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\Functions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Global\Loading\LoadingUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\HtmlHeader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\MyAdExpress\MySessionsUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\PopUpWebPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\AffinitiesUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\AnalyseFamilyInterestPlanChartUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\AnalyseFamilyInterestPlanUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\APPMChartUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\InsertionPlanUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\LocationPlanTypesUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\MediaPlanUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\PDVPlanChartUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\PDVPlanUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\PeriodicityPlanChartUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\PeriodicityPlanUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\ProofUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\SectorDataAverageUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\SectorDataSynthesisUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\SupportPlanUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\SynthesisUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\APPM\ZoomMediaPlanUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\CompetitorAlertCreationsResultsUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\CompetitorMediaPlanAlertUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\CompetitorMediaPlanAnalysisUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\CompetitorUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\DashBoardUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\DynamicTablesUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\DynamicUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\FilesItemUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\GenericMediaPlanAlertUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\GenericMediaPlanAnalysisUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\GenericMediaScheduleUI.cs" />
+    <Compile Include="UI\Results\IndicatorChartUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\IndicatorEvolutionUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\IndicatorMediaStrategyUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\IndicatorNoveltyUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\IndicatorPalmaresUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\IndicatorSeasonalityUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\IndicatorSynthesisUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\InfoNewsUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MarketShareUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaInsertionsCreationsResultsUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanAlertUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanAnalysisUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanVersions\ExportVersionsVehicleUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanVersions\VersionDetailUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanVersions\VersionPressAPPMUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanVersions\VersionPressUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanVersions\VersionRadioUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanVersions\VersionsPluriMediaUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanVersions\VersionsVehicleUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\MediaPlanVersions\VersionTvUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\PortofolioChartUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\PortofolioUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Results\TendenciesUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\ResultWebPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\Selections\Periods\PortofolioDateUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\SelectionWebPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\WebPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS.CONSTANTES\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.ADEXPRESS.CLASSIFICATION\TNS.AdExpress.Classification.csproj">
+      <Project>{85908D78-32C1-4C1B-9E17-0D957B849DFA}</Project>
+      <Name>TNS.AdExpress.Classification</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.ADEXPRESS.WEB.CORE\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.ADEXPRESS\TNS.AdExpress.csproj">
+      <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
+      <Name>TNS.AdExpress</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ModelSupport\default.txaPackage" />
+    <None Include="ModelSupport\default.txvpck" />
+    <None Include="ModelSupport\TNS\AdExpress\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\default.txvpck" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\BusinessFacade\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Common\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Common\default.txvpck" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Common\Results\Creatives\Comparers\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Common\Results\Creatives\Comparers\default.txvpck" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Common\Results\Creatives\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Common\Results\Creatives\default.txvpck" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Common\Results\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Common\Results\default.txvpck" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Controls\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Core\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\DataAccess\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\DataAccess\Results\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\default.txvpck" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Exceptions\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Functions\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\Rules\default.txaPackage" />
+    <None Include="ModelSupport\TNS\AdExpress\Web\UI\default.txaPackage" />
+    <None Include="ModelSupport\TNS\default.txaPackage" />
+    <None Include="ModelSupport\TNS\default.txvpck" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataAccess\Univers\" />
+    <Folder Include="Rules\Selections\Modules\" />
+    <Folder Include="UI\Selections\Medias\" />
+    <Folder Include="UI\Selections\Modules\" />
+    <Folder Include="UI\Selections\Products\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,146 @@
+#region Informations
+// Auteur: G. Facon
+// Date de création: 17/11/2006
+// Date de modification:
+#endregion
+
+using System;
+using System.Text;
+using CstDB = TNS.AdExpress.Constantes.Customer.DB;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Web.Core;
+using TNS.FrameWork.WebResultUI;
+
+namespace TNS.AdExpress.Web.Core.Result{
+	/// <summary>
+	/// Cellule contenant un niveau de détail pour AdExpress
+	/// </summary> 
+	/// <remarks>
+	/// La Cellule est capable de gérer l'affichage du Gad spécifiquement à AdExpress
+	/// </remarks>
+	[System.Serializable]
+	public class AdExpressCellLevel:CellLevel{
+
+		#region Variables
+		/// <summary>
+		/// Session du client
+		/// </summary>
+		protected WebSession _webSession;
+		/// <summary>
+		/// Adresse d'appelle du plan media
+		/// </summary>
+		protected string _link="javascript:OpenGad('{0}','{1}','{2}');";
+		/// <summary>
+		/// Niveau de détail générique
+		/// </summary>
+		protected GenericDetailLevel _genericDetailLevel = null;
+		#endregion
+
+		#region Constructeur
+		/// <summary>
+		/// Constructeur
+		/// </summary>
+		/// <param name="id">identifiant de l'élément du niveau</param>
+		/// <param name="label">Libellé du niveau</param>
+		/// <param name="level">Niveau de profondeur du niveau</param>
+		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+		public AdExpressCellLevel(long id, string label, int level,long lineIndexInResultTable) : base(id,label,level,lineIndexInResultTable){
+		}
+		/// <summary>
+		/// Constructeur
+		/// </summary>
+		/// <param name="id">identifiant de l'élément du niveau</param>
+		/// <param name="label">Libellé du niveau</param>
+		/// <param name="parentLevel">Niveau supérieur</param>
+		/// <param name="level">Niveau de profondeur du niveau</param>
+		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+		public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level,long lineIndexInResultTable) : base(id,label,parentLevel,level,lineIndexInResultTable){
+		}
+		/// <summary>
+		/// Constructeur
+		/// </summary>
+		/// <param name="id">identifiant de l'élément du niveau</param>
+		/// <param name="label">Libellé du niveau</param>
+		/// <param name="level">Niveau de profondeur du niveau</param>
+		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+		/// <param name="webSession">Session du client</param>
+		public AdExpressCellLevel(long id, string label, int level,long lineIndexInResultTable,WebSession webSession) : base(id,label,level,lineIndexInResultTable){
+			if(webSession==null)throw(new ArgumentNullException("L'objet WebSession est null"));
+			_webSession=webSession;
+		}
+		/// <summary>
+		/// Constructeur
+		/// </summary>
+		/// <param name="id">identifiant de l'élément du niveau</param>
+		/// <param name="label">Libellé du niveau</param>
+		/// <param name="parentLevel">Niveau supérieur</param>
+		/// <param name="level">Niveau de profondeur du niveau</param>
+		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+		/// <param name="webSession">Session du client</param>
+		public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level,long lineIndexInResultTable,WebSession webSession) : base(id,label,parentLevel,level,lineIndexInResultTable){
+			if(webSession==null)throw(new ArgumentNullException("L'objet WebSession est null"));
+			_webSession=webSession;
+		}
+		/// <summary>
+		/// Constructeur
+		/// </summary>
+		/// <param name="id">identifiant de l'élément du niveau</param>
+		/// <param name="label">Libellé du niveau</param>
+		/// <param name="parentLevel">Niveau supérieur</param>
+		/// <param name="level">Niveau de profondeur du niveau</param>
+		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="genericDetailLevel">Niveau de détail générique</param>
+		public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level,long lineIndexInResultTable,WebSession webSession,GenericDetailLevel genericDetailLevel) : base(id,label,parentLevel,level,lineIndexInResultTable){
+			if(webSession==null)throw(new ArgumentNullException("L'objet WebSession est null"));
+			if(genericDetailLevel==null)throw(new ArgumentNullException("L'objet GenericDetailLevel est null"));
+			_webSession=webSession;
+			_genericDetailLevel =genericDetailLevel;
+		}
+		#endregion
+
+		#region Implémentation de ICell (par héritage de Cell)
+
+		/// <summary>
+		/// Rendu de code HTML
+		/// </summary>
+		/// <returns>Code HTML</returns>
+		public override string Render(){
+			return Render(_cssClass);
+		}
+
+		/// <summary>
+		/// Rendu de code HTML
+		/// </summary>
+		/// <returns>Code HTML</returns>
+		public override string Render(string cssClass){
+			StringBuilder html = new StringBuilder(100); 
+			if(_genericDetailLevel == null)  _genericDetailLevel = _webSession.GenericProductDetailLevel;
+			if( (_webSession != null && _addressId>0 
+				&& _genericDetailLevel.GetDetailLevelItemInformation(this.Level).Equals(DetailLevelItemInformation.Levels.advertiser)
+				)
+				|| (_webSession == null && _addressId>0 )){
+
+				html.AppendFormat("<td "+ ((cssClass.Length>0)?" class=\"" + cssClass + "\"":""));
+				html.Append("align=\"left\">");
+				html.AppendFormat("<a class=\"gad\" href=\""+_link+"\">", _webSession.IdSession, _label, _addressId);
+				for(int i = 0; i < _level; i++)
+					html.Append("&nbsp;");
+				html.AppendFormat("> {0}</a></td>",this._label);
+				if (_newGroup)
+					html.Insert(0,this.RenderSeparator());
+			}
+			else{
+				html.AppendFormat("<td "+ ((cssClass.Length>0)?" class=\"" + cssClass + "\"":""));
+				html.Append("align=\"left\">");
+				for(int i = 0; i < _level; i++)
+					html.Append("&nbsp;");
+				html.AppendFormat("{0}</td>",this._label);
+				if (_newGroup)
+					html.Insert(0,this.RenderSeparator());
+			}
+			return html.ToString();
+		}
+		#endregion
+	}
+}

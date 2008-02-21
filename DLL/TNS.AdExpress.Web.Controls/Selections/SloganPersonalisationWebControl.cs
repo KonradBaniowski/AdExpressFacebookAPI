@@ -1,0 +1,612 @@
+#region Informations
+// Auteur: D. Mussuma
+// Date de création: 31/05/2006
+// Date de modification:  
+#endregion
+
+using System;
+using System.IO;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.ComponentModel;
+using System.Data;
+
+using Oracle.DataAccess.Client;
+using TNS.AdExpress.Web.Controls.Exceptions;
+using TNS.AdExpress.Web.DataAccess.Selections.Slogans;
+using TNS.AdExpress.Web.Core.Sessions;
+using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
+using TNS.AdExpress.Web.Core.Translation;
+using DBConstantesClassification=TNS.AdExpress.Constantes.Classification.DB;
+using VhCstes=TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
+using TableName=TNS.AdExpress.Constantes.Classification.DB.Table.name;
+using WebFunctions=TNS.AdExpress.Web.Functions;
+using WebConstantes= TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Web.Controls.Buttons;
+
+namespace TNS.AdExpress.Web.Controls.Selections {
+	/// <summary>
+	/// Composant de sélection des versions en fonction du produit et du média
+	/// </summary>
+	public class SloganPersonalisationWebControl :  System.Web.UI.WebControls.CheckBoxList {
+		
+		#region Variables
+		/// <summary>
+		/// Session du client
+		/// </summary>
+		protected WebSession webSession=null; 
+		/// <summary>
+		/// Dataset contenant la liste des médias
+		/// </summary>
+		protected DataSet dsSloganList;
+		/// <summary>
+		/// Vrai si possède des slogans à traiter
+		/// </summary>
+		public bool hasSlogans=false;
+		/// <summary>
+		/// Valider la sélection
+		/// </summary>
+		public ImageButtonRollOverWebControl _validateButton;
+
+		/// <summary>
+		/// Zoom date
+		/// </summary>
+		protected string _zoomDate = "";
+
+		/// <summary>
+		/// Period type
+		/// </summary>
+		protected Constantes.Web.CustomerSessions.Period.Type _periodType;
+		#endregion
+	
+		#region Accesseurs
+		/// <summary>
+		/// Définit la session à utiliser
+		/// </summary>
+		public virtual WebSession CustomerWebSession {
+			set{webSession = value;}
+		}
+
+		/// <summary>
+		/// Zoom date
+		/// </summary>
+		public string ZoomDate {
+			set { _zoomDate = value; }
+		}
+
+		/// <summary>
+		/// Period type
+		/// </summary>
+		public Constantes.Web.CustomerSessions.Period.Type PeriodType {
+			set { _periodType = value; }
+		}
+		#endregion
+
+		#region Constructeur
+		/// <summary>
+		/// Constructeur
+		/// </summary>
+		public SloganPersonalisationWebControl():base() {
+			this.EnableViewState=true;
+		}
+		#endregion
+
+		#region Evènements
+		
+		#region Onload
+		/// <summary>
+		/// OnLoad
+		/// </summary>
+		/// <param name="e">arguments</param>
+		protected override void OnLoad(EventArgs e) {	
+
+			#region Obtention des données
+//			if(!Page.IsPostBack){
+				if( webSession != null) {
+					string periodBeginning;
+					string periodEnd;
+
+					if((webSession.DetailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.dayly && webSession.PeriodBeginningDate.Length<8)
+						|| webSession.CurrentModule==Constantes.Web.Module.Name.BILAN_CAMPAGNE
+						|| webSession.CurrentModule==Constantes.Web.Module.Name.JUSTIFICATIFS_PRESSE){
+						periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+						periodEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+					}
+					else{
+						periodBeginning=webSession.PeriodBeginningDate;
+						periodEnd=webSession.PeriodEndDate;
+		
+					}
+
+					if (_zoomDate != null && _zoomDate.Length > 0) {
+						if (_zoomDate.Length < 8) {
+							periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(_zoomDate, _periodType).ToString("yyyyMMdd");
+							periodEnd = WebFunctions.Dates.getPeriodEndDate(_zoomDate, _periodType).ToString("yyyyMMdd");
+						}
+						else periodBeginning = periodEnd = _zoomDate;						 
+					}
+					//Chargement des données
+					if(WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession))
+						dsSloganList = SloganDataAccess.GetData(webSession,periodBeginning,periodEnd);		
+				}
+				else throw (new WebControlInitializationException("Impossible d'initialiser le composant, la session n'est pas définie"));
+
+			#endregion
+
+			#region Script
+			// Cochage/Decochage des checkbox pères, fils et concurrents
+			if (!Page.ClientScript.IsClientScriptBlockRegistered("CheckAllChilds")) {
+				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"CheckAllChilds",WebFunctions.Script.CheckAllChilds());
+			}
+			// Ouverture/fermeture des fenêtres pères
+			if (!Page.ClientScript.IsClientScriptBlockRegistered("DivDisplayer")) {
+				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"DivDisplayer",WebFunctions.Script.DivDisplayer());
+			}
+			// fermer/ouvrir tous les calques
+			if (!Page.ClientScript.IsClientScriptBlockRegistered("ExpandColapseAllDivs")) {
+				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"ExpandColapseAllDivs",WebFunctions.Script.ExpandColapseAllDivs());
+			}	
+			// Sélection de tous les fils
+			if (!Page.ClientScript.IsClientScriptBlockRegistered("SelectAllChilds")) {
+				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"SelectAllChilds",WebFunctions.Script.SelectAllChilds());
+			}	
+			// Intégration automatique
+			if (!Page.ClientScript.IsClientScriptBlockRegistered("GroupIntegration")) {
+				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"GroupIntegration",WebFunctions.Script.GroupIntegration());
+			}
+			// Sélection de tous les 
+			if (!Page.ClientScript.IsClientScriptBlockRegistered("AllGroupIntegration")) {
+				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"AllGroupIntegration",WebFunctions.Script.AllGroupIntegration());
+			}	
+			// Affichage de l'image taille réelle
+			if (!Page.ClientScript.IsClientScriptBlockRegistered("ViewAdZoom")){
+				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"ViewAdZoom",WebFunctions.Script.ViewAdZoom());
+			}
+			//script d'ouverture d'une popUp de téléchargement
+			if (!Page.ClientScript.IsClientScriptBlockRegistered("openDownload")){
+				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"openDownload",WebFunctions.Script.OpenDownload());
+			}
+			if (!Page.ClientScript.IsClientScriptBlockRegistered("openPressCreation")){
+				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"openPressCreation",WebFunctions.Script.OpenPressCreation());
+			}
+			#endregion
+		}
+		#endregion
+
+		#region Prerender
+		/// <summary>
+		/// Contruction des éléments du cheboxlist
+		/// </summary>
+		/// <param name="e">arguments</param>
+		protected override void OnPreRender(EventArgs e){		
+				
+			#region Variables locales
+			//Variables media
+			Int64 IdVehicle = 0;
+			Int64 oldIdVehicle = 0;
+				
+			//Variables produits
+			Int64 IdProduct = 0;
+			Int64 oldIdProduct = 0;	
+			
+			//Variables versions
+			Int64 IdSlogan = -1;
+			Int64 oldIdSlogan = -1;	
+			
+			//Variables annonceur
+			Int64 IdAvertiser = 0;
+			Int64 oldIdAdvertiser =-1;	
+
+			bool isNewAdvertiser=false;
+			bool isNewProduct=false;
+			bool isNewVehicle=false;
+			#endregion
+				
+			//Initialisation de la liste d'items
+			this.Items.Clear();
+			
+			if(WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession)){
+				//Construction de la liste de checkbox	
+				if(dsSloganList != null && dsSloganList.Tables[0].Rows.Count>0){
+					foreach(DataRow currentRow in dsSloganList.Tables[0].Rows) {	
+						if(currentRow["id_slogan"]!=null && Int64.Parse(currentRow["id_slogan"].ToString())!= 0 ){
+							if ((IdAvertiser = Int64.Parse(currentRow["id_advertiser"].ToString())) != oldIdAdvertiser){
+								oldIdAdvertiser =IdAvertiser;
+								isNewAdvertiser=true;
+							}
+							//Ajout d'un produit
+							if ((IdProduct = Int64.Parse(currentRow["id_product"].ToString())) != oldIdProduct){							
+								oldIdProduct = IdProduct;
+								isNewProduct=true;
+							}
+
+							//Ajout d'un média (vehicle)
+							if ((IdVehicle = Int64.Parse(currentRow["id_vehicle"].ToString())) != oldIdVehicle){							
+								oldIdVehicle = IdVehicle;
+								isNewVehicle =true;					
+							}
+
+							//Ajout d'une version
+
+							if (Int64.Parse(currentRow["id_slogan"].ToString())!= 0 && (( IdSlogan = Int64.Parse(currentRow["id_slogan"].ToString())) != oldIdSlogan  )
+								||(isNewVehicle) || (isNewProduct) || (isNewAdvertiser) ) {
+								oldIdSlogan = IdSlogan ;
+								this.Items.Add(new System.Web.UI.WebControls.ListItem(IdSlogan.ToString(),"slg_"+IdSlogan)); 
+							}
+							isNewVehicle=isNewProduct=isNewAdvertiser=false;
+					
+						}
+					}
+					if(this.Items.Count>0)hasSlogans=true;
+				}
+			}								
+		}
+		#endregion
+
+		#region Render
+		/// <summary> 
+		/// Génère ce contrôle dans le paramètre de sortie spécifié.
+		/// </summary>
+		/// <param name="output"> Le writer HTML vers lequel écrire </param>
+		protected override void Render(HtmlTextWriter output) {
+			System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
+			//			int insertIndex = 0;
+			//			string productList="";
+		
+			string[] fileList = null;			
+
+			#region Construction du code HTML
+			if(WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession) && dsSloganList != null && dsSloganList.Tables[0].Rows.Count>0 && hasSlogans) {
+				
+				#region variables locales
+				//Hastable de versions
+				//				Hashtable slogans = null;
+				Int64 i = 0;
+//				int indexGp = -1;
+
+				//variables du niveau  Annonceur
+				Int64 idAdvertiserOld=-1;
+				Int64 idAdvertiser;										
+				int startAdvertiser=-1;		
+				string advertiserIds = "";	
+				bool isNewAdvertiser=false;
+			
+				//variables du niveau produit
+				Int64 idProductOld=-1;
+				Int64 idProduct;										
+				int startProduct=-1;	
+				bool isNewProduct=false;
+
+				//variables du niveau media (vehicle)
+				Int64 idVehicleOld=-1;
+				Int64 idVehicle;										
+				int startVehicle=-1;
+				bool isNewVehicle=false;
+				
+				//variables du niveau slogans
+				int numColumn = 0;
+				string checkBox="";																	
+				Int64 idSloganOld=-1;
+				Int64 idSlogan=-1;
+				#endregion
+
+				#region Debut Tableau global 
+				output.Write("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td bgColor=\"#ffffff\"><table  vAlign=\"top\">");		
+				//				output.Write("<a href=\"javascript: ExpandColapseAllDivs('");
+				output.Write("<a href=\"javascript: SelectAllChilds('selectAllSlogans");
+				//				insertIndex = t.Length;
+				output.Write("')\" class=\"roll04\" >"+GestionWeb.GetWebWord(816,webSession.SiteLanguage)+"</a>");								
+				output.Write("<tr><td vAlign=\"top\">");
+				output.Write("<DIV id=selectAllSlogans>");//Ouverture calque permettant de sélectionner tous les éléménts
+				#endregion
+
+				#region Foreach  Dataset des versions
+				foreach(DataRow currentRow in dsSloganList.Tables[0].Rows) {
+
+					#region Pour chaque slogan
+					if(currentRow["id_slogan"]!=null && Int64.Parse(currentRow["id_slogan"].ToString())!=0){
+						//Initialisation des identifiants parents
+						idAdvertiser=Int64.Parse(currentRow["id_advertiser"].ToString());
+						idProduct=Int64.Parse(currentRow["id_product"].ToString());
+						idVehicle=Int64.Parse(currentRow["id_vehicle"].ToString());
+						idSlogan = Int64.Parse(currentRow["id_slogan"].ToString());
+				
+						#region Fermeture media
+						if ((idVehicle!= idVehicleOld && startVehicle==0) || (idProduct!= idProductOld && startProduct==0) 
+							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0) ) {	
+							//					if (idVehicle!= idVehicleOld && startVehicle==0) {			
+							//							if (numColumn!=0) {
+							if (numColumn==1) {
+								output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
+								output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
+								output.Write("</tr>");
+							}else if(numColumn==2 ) {
+								output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
+								output.Write("</tr>");
+							}
+							output.Write("</table><tr height=\"5\"><td></td></tr></div></td></tr></table></td></tr>");
+						}
+						#endregion
+
+						#region Fermeture produit
+						//					if (idProduct!= idProductOld && startProduct==0) {
+						if ((idProduct!= idProductOld && startProduct==0) 
+							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0)
+							){
+							startVehicle=-1;
+							//						idSloganOld = -1;
+							output.Write("</table></div></td></tr></table></td></tr>");
+						}
+						#endregion 
+					
+						#region Fermeture Annonceur
+						if (idAdvertiser!= idAdvertiserOld && startAdvertiser==0) {
+							//						startVehicle=-1;
+							startProduct=-1;						
+							output.Write("</table></div></td></tr></table>");
+						}
+						#endregion
+
+						#region Nouvel annonceur
+						if (idAdvertiser!= idAdvertiserOld) {
+							//bordure du haut de tableau
+							if (idAdvertiserOld == -1)output.Write("<table style=\"border-top :#644883 1px solid; border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_"+idAdvertiser+"');\" style=\"cursor : hand\">");
+							else output.Write("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_"+idAdvertiser+"');\" style=\"cursor : hand\">");
+							idAdvertiserOld=idAdvertiser;
+							startAdvertiser=0;
+							output.Write("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">&nbsp;&nbsp;&nbsp;"+currentRow["advertiser"].ToString());
+							output.Write("</td>");
+							output.Write("<td align=\"right\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
+							output.Write("</tr><tr><td colspan=\"2\"><div style=\"MARGIN-LEFT: 0px; background-color:#B1A3C1;display ='none';\" id=\"ad_"+idAdvertiser+"\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+							//lien tous selectionner
+							output.Write("<tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('ad_"+idAdvertiser+"')\" title=\""+GestionWeb.GetWebWord(817,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(817,webSession.SiteLanguage)+"</a></td></tr>");
+							advertiserIds+="ad_"+idAdvertiser+",";
+							isNewAdvertiser = true;
+						}
+						#endregion
+
+						#region Nouveau produit
+						if ((idProduct!= idProductOld) 
+							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0)
+							){
+							//						if (idProduct!= idProductOld) {
+							//bordure du haut de tableau
+							if (startProduct == -1)output.Write("<tr><td ><table style=\"background-color:#B1A3C1; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad"+idAdvertiser+"pr_"+idProduct+"');\" style=\"cursor : hand\">");
+							else output.Write("<tr><td ><table style=\"background-color:#B1A3C1; border-top :#644883 1px solid;\" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad"+idAdvertiser+"pr_"+idProduct+"');\" style=\"cursor : hand\">");
+							idProductOld=idProduct;
+							startProduct=0;
+							output.Write("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">");
+							output.Write("&nbsp;&nbsp;"+currentRow["product"].ToString()+"</td>");
+							output.Write("<td align=\"right\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");
+							output.Write("</tr><tr><td colspan=\"2\"><DIV style=\"background-color:#D0C8DA; MARGIN-LEFT: 5px\" id=\"ad"+idAdvertiser+"pr_"+idProduct+"\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+							//lien tous selectionner
+							output.Write("<tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('ad"+idAdvertiser+"pr_"+idProduct+"')\" title=\""+GestionWeb.GetWebWord(944,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(944,webSession.SiteLanguage)+"</a></td></tr>");
+											
+							isNewProduct=true;
+						}
+						#endregion
+
+						#region Nouveau media (vehicle)
+						if ((idVehicle!= idVehicleOld) || (isNewProduct) 
+							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0) ) {
+							//						if (idVehicle!= idVehicleOld) {
+							numColumn = 0;
+							//bordure du haut de tableau#
+							output.Write("<tr><td ><table style=\"background-color:#D0C8DA; border-top :#ffffff 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"643\"><tr width=100%>");
+							idVehicleOld=idVehicle;
+							startVehicle=0;
+							output.Write("<td align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
+							output.Write("&nbsp;");			
+							output.Write(currentRow["vehicle"].ToString()+"</td>");
+							output.Write("<td align=\"right\" width=100% onClick=\"javascript : DivDisplayer('ad"+idAdvertiser+"pr"+idProduct+"vh_"+idVehicle+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");
+							output.Write("</tr><tr><td colspan=\"2\"><DIV style=\"MARGIN-LEFT: 0px\" id=\"ad"+idAdvertiser+"pr"+idProduct+"vh_"+idVehicle+"\"><table cellpadding=0 cellspacing=0 border=\"0\" bgColor=\"#E1E0DA\" width=\"100%\"><tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('ad"+idAdvertiser+"pr"+idProduct+"vh_"+idVehicle+"')\" class=\"roll04\"  >"+GestionWeb.GetWebWord(1932,webSession.SiteLanguage)+"</a></td></tr>");						
+							isNewVehicle=true;
+						}
+						#endregion
+
+						if (( idSlogan!=idSloganOld ) ||(isNewVehicle) || (isNewProduct) 
+							|| (isNewAdvertiser) && idSlogan!=0) {
+
+							#region versions (fils de media)
+							string vignettes="";
+							string sloganDetail="";
+							string imagesList="";
+							bool first=true;
+							string pathWeb = string.Empty;
+							string dateField = "date_media_num";
+
+							//if( webSession.CustomerLogin.GetFlag(Flags.ID_CREATION_ACCESS_FLAG)!=null){//droit créations
+							if (webSession.CustomerLogin.ShowCreatives((DBConstantesClassification.Vehicles.names)idVehicle)) {//droit créations
+								if(currentRow["sloganFile"]!=null && currentRow["sloganFile"].ToString().Length > 0){
+									
+									switch ((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString())) {
+										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press :
+										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+											#region Construction de la liste des images presse
+											fileList = currentRow["sloganFile"].ToString().Split(',');
+
+											if (webSession.CurrentModule == Constantes.Web.Module.Name.BILAN_CAMPAGNE) dateField = "date_cover_num";
+
+											string pathWebImagette = WebConstantes.CreationServerPathes.IMAGES + "/" + currentRow["id_media"].ToString() + "/" + currentRow[dateField].ToString() + "/imagette/";
+											pathWeb = WebConstantes.CreationServerPathes.IMAGES + "/" + currentRow["id_media"].ToString() + "/" + currentRow[dateField].ToString() + "/";
+											string pathImagette = WebConstantes.CreationServerPathes.LOCAL_PATH_IMAGE + currentRow["id_media"].ToString() + @"\" + currentRow[dateField].ToString() + @"\imagette\";
+											
+											if (fileList != null) {
+												for (int j = 0; j < fileList.Length; j++) {
+
+													//												if(File.Exists(fileImagePath)){
+													vignettes += "<img src='" + pathWebImagette + fileList[j] + "' border=\"0\" width=\"50\" height=\"64\" >";
+													if (first) imagesList = pathWeb + fileList[j];
+													else { imagesList += "," + pathWeb + fileList[j]; }
+													first = false;
+													//												}
+												}
+
+												if (vignettes.Length > 0) {
+													vignettes = "<a href=\"javascript:openPressCreation('" + imagesList.Replace("/Imagette", "") + "');\">" + vignettes + "</a>";
+													vignettes += "\n<br>";
+												}
+
+											}
+											else vignettes = GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "<br>";
+											#endregion
+											break;
+										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio :
+											if(currentRow["sloganFile"]!=null && currentRow["sloganFile"].ToString().CompareTo("")!=0)
+											vignettes = "<a href=\"javascript:openDownload('" + currentRow["sloganFile"].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/Images/Common/Picto_Radio.gif\"></a>";
+											break;
+										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv :
+										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others :
+											if (currentRow["sloganFile"] != null && currentRow["sloganFile"].ToString().CompareTo("") != 0)
+											vignettes = "<a href=\"javascript:openDownload('" + currentRow["sloganFile"].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/Images/Common/Picto_pellicule.gif\"></a>";
+											break;
+
+										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing :
+										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+
+											
+
+											#region Construction de la liste des images du marketing direct ou de la publicité extérieure
+											fileList = currentRow["sloganFile"].ToString().Split(',');
+											string idAssociatedFile = currentRow["sloganFile"].ToString();
+
+											
+
+#if Debug
+											//////visuels disponible
+											//fileList = "25427945001.jpg".Split(',');
+											//idAssociatedFile = "25427945001.jpg";
+#endif
+											
+
+											if ((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString()) == DBConstantesClassification.Vehicles.names.directMarketing)
+											pathWeb = WebConstantes.CreationServerPathes.IMAGES_MD;
+											else pathWeb = WebConstantes.CreationServerPathes.IMAGES_OUTDOOR;
+											string dir1 = idAssociatedFile.Substring(idAssociatedFile.Length - 8, 1);
+											pathWeb = string.Format(@"{0}/{1}", pathWeb, dir1);
+											string dir2 = idAssociatedFile.Substring(idAssociatedFile.Length - 9, 1);
+											pathWeb = string.Format(@"{0}/{1}", pathWeb, dir2);
+											string dir3 = idAssociatedFile.Substring(idAssociatedFile.Length - 10, 1);
+											pathWeb = string.Format(@"{0}/{1}/imagette/", pathWeb, dir3);
+
+											if (fileList != null) {
+												for (int j = 0; j < fileList.Length; j++) {
+													vignettes += "<img src='" + pathWeb + fileList[j] + "' border=\"0\" width=\"50\" height=\"64\" >";
+													if (first) imagesList = pathWeb + fileList[j];
+													else { imagesList += "," + pathWeb + fileList[j]; }
+													first = false;												
+												}
+
+												if (vignettes.Length > 0) {
+													vignettes = "<a href=\"javascript:openPressCreation('" + imagesList.Replace("/Imagette", "") + "');\">" + vignettes + "</a>";
+													vignettes += "\n<br>";
+												}
+
+											}
+											else vignettes = GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "<br>";
+											#endregion
+											break;
+									}
+
+								}
+							}
+							sloganDetail="\n<table border=\"0\" width=\"50\" height=\"64\" class=\"txtViolet10\">";										
+							if(vignettes.Length>0){
+								sloganDetail+="\n<tr><td   nowrap align=\"center\">";
+								sloganDetail+=vignettes;
+								sloganDetail+="\n</td></tr>";
+							}
+							sloganDetail+="\n<tr><td  nowrap align=\"center\">";
+							sloganDetail+=currentRow["id_slogan"].ToString();
+							if (currentRow["advertDimension"] != null) {
+								if ((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString()) != DBConstantesClassification.Vehicles.names.directMarketing 
+									||((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString()) == DBConstantesClassification.Vehicles.names.directMarketing && webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_POIDS_MARKETING_DIRECT) != null))
+								sloganDetail += " - " + currentRow["advertDimension"].ToString();
+							}
+							sloganDetail+="\n</td></tr>";
+							sloganDetail+="\n</table>";
+						
+							if(numColumn==0) {								
+								output.Write("<tr>");
+								output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">");								
+								output.Write("<input type=\"checkbox\" "+checkBox+" name=\"SloganPersonalisationWebControl1$"+i+"\" id=\"SloganPersonalisationWebControl1_"+i+"\" value=slg_"+currentRow["id_slogan"]+">"+sloganDetail);
+								output.Write("</td>");								
+								numColumn++;
+								i++;
+								
+							}
+							else if(numColumn==1 ) {
+								output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">");								
+								output.Write("<input type=\"checkbox\" "+checkBox+" name=\"SloganPersonalisationWebControl1$"+i+"\" id=\"SloganPersonalisationWebControl1_"+i+"\" value=slg_"+currentRow["id_slogan"]+">"+sloganDetail);
+								output.Write("</td>");								
+								numColumn++;
+								i++;
+								
+							}
+							else {
+								output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">");								
+								output.Write("<input type=\"checkbox\" "+checkBox+" name=\"SloganPersonalisationWebControl1$"+i+"\" id=\"SloganPersonalisationWebControl1_"+i+"\" value=slg_"+currentRow["id_slogan"]+">"+sloganDetail);
+								output.Write("</td></tr>");
+								numColumn=0;
+								i++;
+								
+							}
+							idSloganOld=idSlogan;
+							#endregion
+						}
+						isNewProduct=false;
+						isNewAdvertiser=false;
+						isNewVehicle=false;
+					}
+					#endregion
+				}
+				#endregion
+				
+				#region Fermeture Tableau global
+				//				if (numColumn!=0) {
+				if (numColumn==1) {
+					output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
+					output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
+					output.Write("</tr>");
+				}else if(numColumn==2 ) {
+					output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
+					output.Write("</tr>");
+				}
+				output.Write("</table></div></td></tr></table></td></tr>      </table></div></td></tr></table></td></tr>         </table></div></td></tr></table></td></tr></table></td>");			
+				output.Write(" </DIV>");//Fermeture calque permettant de sélectionner tous les éléménts
+				output.Write("</tr>");
+				if(advertiserIds!=null && advertiserIds.Length>0){
+					advertiserIds = advertiserIds.Remove(advertiserIds.Length-1, 1);
+					//					t.Insert(insertIndex, advertiserIds);
+				}
+				#endregion
+
+				#region bouton valider
+				
+//				output.Write("<tr valign=\"top\" bgcolor=\"#ffffff\"><td>&nbsp;</td></tr>");
+//				output.Write("<tr height=\"100%\" valign=\"top\">");
+//				output.Write("<td background=\"/Images/Common/dupli_fond.gif\" align=\"right\">	");
+//				_validateButton.RenderControl(output);
+//				output.Write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+				#endregion
+			}
+			else {
+				output.Write("<tr><td bgcolor=\"#ffffff\" class=\"txtGris11Bold\"><div align=\"center\" class=\"txtGris11Bold\">"+GestionWeb.GetWebWord(177,webSession.SiteLanguage)
+					+"</div><br> </td>  </tr>");
+			}
+			#endregion
+
+			output.Write(t.ToString());
+		}
+		#endregion
+
+		#endregion
+
+
+		#region Méthodes privées
+		
+		#endregion
+		
+	}
+}

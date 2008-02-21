@@ -1,0 +1,64 @@
+BODY {
+	FONT-FAMILY: Arial, Helvetica, sans-serif;
+}
+
+.Window {
+	/*width: 200px;*/
+	BORDER-RIGHT: 1px solid #644883;
+	BORDER-TOP: 1px solid #644883;
+	BORDER-LEFT: 1px solid #644883;
+	BORDER-BOTTOM: 1px solid #644883;
+	/*BACKGROUND-COLOR: #DED8E5;*/
+	BACKGROUND-COLOR: #FFFFFF;
+}
+
+.Control {
+	/*BACKGROUND-COLOR: #DED8E5*/
+	BACKGROUND-COLOR: #FFFFFF
+}
+
+.GrabCaption {
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 12px; 
+	CURSOR: move;
+	COLOR: #644883;
+	BACKGROUND-COLOR: #ffffff
+}
+
+.ExpandCaption {
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 10px; 
+	CURSOR: n-resize;
+	/*CURSOR: hand;*/
+	COLOR: #ffffff;
+}
+
+.MenuElement {
+	FONT-SIZE: 12px;
+	BACKGROUND-COLOR: #ffffff;
+	PADDING: 2px
+}
+
+.TopLine {
+	BORDER-BOTTOM: 1px solid #644883
+}
+
+.BottomLine {
+	BORDER-TOP: 0px solid #644883;
+	FONT-SIZE: 10px;
+	COLOR: #644883;
+	BACKGROUND-COLOR: #ffffff
+}
+
+a {
+	text-decoration: none;
+	color:#ff0099;
+}
+a:hover {
+	text-decoration: none;
+}
+
+table{
+	FONT-FAMILY: Arial, Helvetica, sans-serif;
+	FONT-SIZE: 11px; 
+}
