@@ -38,7 +38,8 @@ namespace TNS.AdExpress.Web.UI {
                     // TODO Put Default siteLanguage
                 }
             }
-            catch(System.Exception) { // TODO Put Default siteLanguage }
+            catch(System.Exception) { // TODO Put Default siteLanguage 
+            }
         }
         #endregion
     }
