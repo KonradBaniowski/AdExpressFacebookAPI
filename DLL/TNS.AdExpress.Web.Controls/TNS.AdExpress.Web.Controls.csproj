@@ -78,24 +78,27 @@
   <ItemGroup>
     <Reference Include="AjaxPro.2, Version=6.10.6.2, Culture=neutral, PublicKeyToken=4735ae9824c7d3ec, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\AjaxPro.2.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\AjaxPro.2.dll</HintPath>
+    </Reference>
+    <Reference Include="AjaxPro.JSON.2, Version=6.10.6.2, Culture=neutral, PublicKeyToken=4735ae9824c7d3ec, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\AjaxPro.JSON.2.dll</HintPath>
     </Reference>
     <Reference Include="DundasWebChart, Version=6.0.0.1722, Culture=neutral, PublicKeyToken=90d06b0c62d592d0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\DundasWebChart.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\DundasWebChart.dll</HintPath>
     </Reference>
     <Reference Include="obout_ASPTreeView_2_NET, Version=2.0.37.0, Culture=neutral, PublicKeyToken=6fd96a95fc486c7d">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\obout_ASPTreeView_2_NET.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\obout_ASPTreeView_2_NET.dll</HintPath>
     </Reference>
     <Reference Include="obout_SlideMenu3_Pro_NET, Version=3.3.1.5, Culture=neutral, PublicKeyToken=cabe53a497e8b042, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\obout_SlideMenu3_Pro_NET.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\obout_SlideMenu3_Pro_NET.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.DataAccess, Version=9.2.0.700, Culture=neutral, PublicKeyToken=89b483f429c47342">
+    <Reference Include="Oracle.DataAccess, Version=2.102.2.20, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\Oracle.DataAccess.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -121,39 +124,35 @@
     </Reference>
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.Classification.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Classification.WebControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.Classification.WebControls.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.WebControls.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Librairies\TNS.FrameWork\Fwk 2.0\1.1.0.0\bin\Release\TNS.FrameWork.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Librairies\TNS.FrameWork.Date\Fwk 2.0\1.0.0.0\bin\Release\TNS.FrameWork.Date.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.Date.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Librairies\TNS.FrameWork.DB\Fwk 2.0\1.0.2.0\bin\Release\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.20658, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.25849, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.Isis.Constantes, Version=1.0.2656.23227, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.Isis.Constantes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Librairies\TNS.Isis.Constantes\Fwk 2.0\1.0.0.0\Release\TNS.Isis.Constantes.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Isis.Constantes.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.Isis.Right, Version=1.1.2656.26718, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.Isis.Right, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Librairies\TNS.Isis.Right\Fwk 2.0\1.1.0.0\Release\TNS.Isis.Right.dll</HintPath>
-    </Reference>
-    <Reference Include="TortugaDN">
-      <Name>TortugaDN</Name>
-      <HintPath>\\hera\Prog_Sources\Versionning\Librairies\Tortuga\Fwk 1.1\1.0.3.0\TortugaDN.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Isis.Right.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

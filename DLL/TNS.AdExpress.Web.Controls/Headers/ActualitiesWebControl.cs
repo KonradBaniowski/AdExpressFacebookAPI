@@ -10,7 +10,6 @@ using System.Collections;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
-using Tortuga;
 using TNS.AdExpress.Web.Core.Translation;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
