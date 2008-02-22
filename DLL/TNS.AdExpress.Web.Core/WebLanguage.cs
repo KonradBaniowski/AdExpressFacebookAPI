@@ -19,7 +19,7 @@ namespace TNS.AdExpress.Web.Core {
         /// Language Id
         /// </summary>
         /// <example>France = 33</example>
-        private Int64 _id;
+        private int _id;
         /// <summary>
         /// Language name
         /// </summary>
@@ -57,7 +57,7 @@ namespace TNS.AdExpress.Web.Core {
         /// <param name="imageSourceText">Language Image</param>
         /// <param name="localization">Localisation text string id</param>
         /// <param name="charset">Charset used for the language</param>
-        public WebLanguage(Int64 id,string imageSourceText,string localization,string charset) {
+        public WebLanguage(int id,string imageSourceText,string localization,string charset) {
             if(id<0) throw (new ArgumentException("The language Id cannot be inferior to 0"));
             _id=id;
             if(imageSourceText!=null) _imageSourceText=imageSourceText;
@@ -78,7 +78,8 @@ namespace TNS.AdExpress.Web.Core {
         /// <param name="localization">Localisation text string id</param>
         /// <param name="classificationLanguageId">Classification language Id</param>
         /// <param name="charset">Charset used for the language</param>
-        public WebLanguage(Int64 id,string name,string imageSourceText,string localization,Int64 classificationLanguageId,string charset):this(id,imageSourceText,localization,charset) {
+        public WebLanguage(int id,string name,string imageSourceText,string localization,Int64 classificationLanguageId,string charset)
+            : this(id,imageSourceText,localization,charset) {
             if(name!=null&&name.Length>0) _name=name;
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
             _classificationLanguageId=classificationLanguageId;
@@ -90,7 +91,7 @@ namespace TNS.AdExpress.Web.Core {
         /// <summary>
         /// Get Language Id
         /// </summary>
-        public Int64 Id {
+        public int Id {
             get {return (_id);}
         }
         /// <summary>

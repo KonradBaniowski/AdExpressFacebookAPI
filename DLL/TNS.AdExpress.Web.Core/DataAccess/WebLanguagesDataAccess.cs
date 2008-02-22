@@ -74,7 +74,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             #region Variables
             Dictionary<Int64,WebLanguage> languages=new Dictionary<Int64,WebLanguage>();
             XmlTextReader reader=null;
-            Int64 id;
+            int id;
             string name="";
             string imageSourceText="";
             string localization;
@@ -92,7 +92,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
                         switch(reader.LocalName) {
                             case "language":
                                 if(reader.GetAttribute("id")==null || reader.GetAttribute("id").Length==0) throw (new InvalidXmlValueException("Invalid id parameter"));
-                                id=Int64.Parse(reader.GetAttribute("id"));
+                                id=int.Parse(reader.GetAttribute("id"));
                                 if(reader.GetAttribute("localization")==null || reader.GetAttribute("localization").Length==0) throw (new XmlNullValueException("Invalid localization parameter"));
                                 localization=reader.GetAttribute("localization");
                                 if(reader.GetAttribute("name")!=null) name=reader.GetAttribute("name");

@@ -21,7 +21,7 @@ namespace TNS.AdExpress.Web.Core {
         /// <summary>
         /// Default Language
         /// </summary>
-        protected static Int64 _defaultLanguage;
+        protected static int _defaultLanguage;
         /// <summary>
         /// Allowed languages List 
         /// </summary>
@@ -44,7 +44,7 @@ namespace TNS.AdExpress.Web.Core {
         /// <summary>
         /// Get Default Language
         /// </summary>
-        public static Int64 DefaultLanguage {
+        public static int DefaultLanguage {
             get { return _defaultLanguage; }
         }
         /// <summary>
