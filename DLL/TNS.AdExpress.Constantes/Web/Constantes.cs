@@ -1170,6 +1170,11 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// Fichier de configuration des branches d'univers
 		/// </summary>
 		public const string UNIVERSE_BRANCHES_CONFIGURATION_PATH = @"config\UniverseBranches.xml";
+        /// <summary>
+        /// Web Languages configuration file
+        /// </summary>
+        public const string WEBLANGUAGES_CONFIGURATION_PATH = @"config\WebLanguages.xml";
+
 	}
 	#endregion
 

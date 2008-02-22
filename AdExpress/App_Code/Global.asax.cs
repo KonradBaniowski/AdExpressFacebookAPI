@@ -43,6 +43,8 @@ namespace AdExpress {
 		protected void Application_Start(Object sender, EventArgs e){
 		
 			try{
+                //Langues 
+                Int64 dd=WebApplicationParameters.DefaultLanguage;
 				// Initialisation des listes de texte
 				GestionWeb.Init();
 				// Initialisation des descriptions des éléments de niveaux de détail

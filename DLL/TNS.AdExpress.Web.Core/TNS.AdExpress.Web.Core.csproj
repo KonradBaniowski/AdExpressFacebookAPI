@@ -427,6 +427,7 @@
     <Compile Include="Translation\WordList.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WebApplicationParameters.cs" />
     <Compile Include="WebLanguage.cs" />
     <Compile Include="WebRight.cs">
       <SubType>Code</SubType>
