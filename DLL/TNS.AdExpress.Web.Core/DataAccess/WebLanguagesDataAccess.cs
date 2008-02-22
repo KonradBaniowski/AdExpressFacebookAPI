@@ -78,7 +78,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             string name="";
             string imageSourceText="";
             string localization;
-            Int64 classificationLanguageId;
+            int classificationLanguageId;
             string charset="";
             #endregion
 
@@ -99,7 +99,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
                                 if(reader.GetAttribute("charset")!=null) charset=reader.GetAttribute("charset");
                                 if(reader.GetAttribute("imageSourceText")!=null) imageSourceText=reader.GetAttribute("imageSourceText");
                                 if(reader.GetAttribute("classificationLanguageId")!=null && reader.GetAttribute("classificationLanguageId").Length>0)
-                                    classificationLanguageId=Int64.Parse(reader.GetAttribute("classificationLanguageId"));
+                                    classificationLanguageId=int.Parse(reader.GetAttribute("classificationLanguageId"));
                                 else
                                     classificationLanguageId=id;
                                 languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset));

@@ -26,6 +26,12 @@ namespace TNS.AdExpress.Web.Core {
         /// Allowed languages List 
         /// </summary>
         protected static Dictionary<Int64,WebLanguage> _allowedLanguages;
+        /// <summary>
+        /// Themes List 
+        /// </summary>
+        /// <remarks>The key is the site language</remarks>
+        protected static Dictionary<Int64,WebTheme> _themes;
+
 
         #endregion
         
@@ -37,6 +43,7 @@ namespace TNS.AdExpress.Web.Core {
             //Initialization
             _defaultLanguage=WebLanguagesDataAccess.LoadDefaultLanguage(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_PATH));
             _allowedLanguages=WebLanguagesDataAccess.LoadLanguages(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_PATH));
+            _themes=WebThemesDataAccess.LoadThemes(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBTHEMES_CONFIGURATION_PATH));
         }
         #endregion
 
@@ -52,6 +59,13 @@ namespace TNS.AdExpress.Web.Core {
         /// </summary>
         public static Dictionary<Int64,WebLanguage> AllowedLanguages {
             get { return _allowedLanguages; }
+        }
+
+        /// <summary>
+        /// Get themes List 
+        /// </summary>
+        public static Dictionary<Int64,WebTheme> Themes {
+            get { return _themes; }
         }
 
         #endregion

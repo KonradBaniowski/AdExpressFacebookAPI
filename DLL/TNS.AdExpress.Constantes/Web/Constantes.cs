@@ -1174,6 +1174,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Web Languages configuration file
         /// </summary>
         public const string WEBLANGUAGES_CONFIGURATION_PATH = @"config\WebLanguages.xml";
+        /// <summary>
+        /// Web themes configuration file
+        /// </summary>
+        public const string WEBTHEMES_CONFIGURATION_PATH = @"config\WebThemes.xml";
 
 	}
 	#endregion

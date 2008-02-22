@@ -39,7 +39,7 @@ namespace TNS.AdExpress.Web.Core {
         /// Classification language id
         /// By default, if it is not configured the constructor sets it to the language Id
         /// </summary>
-        private Int64 _classificationLanguageId;
+        private int _classificationLanguageId;
         /// <summary>
         /// Charset used for the language
         /// By default, the charset is set to iso-8859-1
@@ -78,7 +78,7 @@ namespace TNS.AdExpress.Web.Core {
         /// <param name="localization">Localisation text string id</param>
         /// <param name="classificationLanguageId">Classification language Id</param>
         /// <param name="charset">Charset used for the language</param>
-        public WebLanguage(int id,string name,string imageSourceText,string localization,Int64 classificationLanguageId,string charset)
+        public WebLanguage(int id,string name,string imageSourceText,string localization,int classificationLanguageId,string charset)
             : this(id,imageSourceText,localization,charset) {
             if(name!=null&&name.Length>0) _name=name;
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
@@ -115,7 +115,7 @@ namespace TNS.AdExpress.Web.Core {
         /// <summary>
         /// Get Classification language id
         /// </summary>
-        public Int64 ClassificationLanguageId {
+        public int ClassificationLanguageId {
             get { return (_classificationLanguageId); }
         }
         /// <summary>
