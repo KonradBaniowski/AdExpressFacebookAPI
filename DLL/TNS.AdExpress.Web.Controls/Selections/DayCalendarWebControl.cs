@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Text;
 using TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Web.Core;
 using TNS.FrameWork.Date;
 using CustomerWebConstantes=TNS.AdExpress.Constantes.Web.CustomerSessions;
 
@@ -52,27 +53,6 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Titre de la fin de période en français
 		/// </summary>
 		private const string TITLE_DATE_END_PICTURE="Ending_date.gif";
-		/// <summary>
-		/// Couleur de la bordure
-		/// </summary>
-		private const string TABLE_BORDER_COLOR="#9D9885";
-		/// <summary>
-		/// Couleur de fond
-		/// </summary>
-		private const string TABLE_COLOR="#FFFFFF";
-		/// <summary>
-		/// Couleur de la font
-		/// </summary>
-		private const string FONT_COLOR="#644883";
-		/// <summary>
-		/// Couleur de fond de la date sélectionnée
-		/// </summary>
-		private const string TABLE_COLOR_SELECTED_DATE="#644883";
-		/// <summary>
-		/// Couleur de la font de la date sélectionnée
-		/// </summary>
-		private const string FONT_COLOR_SELECTED_DATE="#FFFFFF";
-
 		#endregion
 
 		#region Variables
@@ -96,7 +76,6 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Type de date sélectionnée
 		/// </summary>
 		protected CustomerWebConstantes.Period.Type selectedDateType;
-
 		/// <summary>
 		/// Langue utilisé
 		/// </summary>
@@ -109,11 +88,30 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Calendrier en mémoire
 		/// </summary>
 		private DayCalendar memoryCalendar=null;
-
 		/// <summary>
 		/// Etendu d'une période
 		/// </summary>
 		private int _periodLength = 3;
+        /// <summary>
+        /// Border color
+        /// </summary>
+        private string _tableBorderColor = "#9D9885";
+        /// <summary>
+        /// Table color
+        /// </summary>
+        private string _tableColor = "#FFFFFF";
+        /// <summary>
+        /// Font color
+        /// </summary>
+        private string _fontColor = "#644883";
+        /// <summary>
+        /// Table color for selected date
+        /// </summary>
+        private string _tableColorSelectedDate = "#644883";
+        /// <summary>
+        /// Font color for selected date
+        /// </summary>
+        private string _fontColorSelectedDate = "#FFFFFF";
 		#endregion
 
 		#region Constructeur
@@ -177,6 +175,45 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			}
 		}
 
+        /// <summary>
+        /// Get or Set Table border color
+        /// </summary>
+        public string TableBorderColor {
+            get { return _tableBorderColor; }
+            set { _tableBorderColor = value; }
+        }
+
+        /// <summary>
+        /// Get or Set Table color
+        /// </summary>
+        public string TableColor {
+            get { return _tableColor; }
+            set { _tableColor = value; }
+        }
+
+        /// <summary>
+        /// Get or Set Font color
+        /// </summary>
+        public string FontColor {
+            get { return _fontColor; }
+            set { _fontColor = value; }
+        }
+
+        /// <summary>
+        /// Get or Set Table color for selected date
+        /// </summary>
+        public string TableColorSelectedDate {
+            get { return _tableColorSelectedDate; }
+            set { _tableColorSelectedDate = value; }
+        }
+
+        /// <summary>
+        /// Get or Set Font color for selected date
+        /// </summary>
+        public string FontColorSelectedDate {
+            get { return _fontColorSelectedDate; }
+            set { _fontColorSelectedDate = value; }
+        }
 		#endregion
 
 		#region Evènements
@@ -250,18 +287,19 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output){
 			string dateSelectedString="&nbsp;";
+            string themeName = WebApplicationParameters.Themes[language].Name;
 			StringBuilder htmlBuilder=new StringBuilder(6500);
 			if(isDateSelected()){
 				dateSelectedString=DateString.YYYYMMDDToDD_MM_YYYY(selectedDate,language);
 			}
 
-			htmlBuilder.Append("<table cellspacing=1 cellpadding=0 border=0 bgcolor="+TABLE_BORDER_COLOR+">");
+			htmlBuilder.Append("<table cellspacing=1 cellpadding=0 border=0 bgcolor="+_tableBorderColor+">");
 			string tmpHTML="";
 			
 			// Titre
 			string titleImage=this.getTitle();
 			if(titleImage.Length>0){
-				tmpHTML="<td colspan=7><img src=\"/Images/"+language+"/Calendar/"+titleImage+"\"></td>";
+                tmpHTML = "<td colspan=7><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/" + titleImage + "\"></td>";
 			}
 			else{
 			tmpHTML="<td colspan=7>&nbsp;</td>";
@@ -274,28 +312,28 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			if(selectedMonth>startMonth){
 				if(int.Parse(this.selectedMonth.ToString().Substring(4,2))==01)	previousMonth=(int.Parse(this.selectedMonth.ToString().Substring(0,4))-1).ToString()+"12";
 				else previousMonth=(this.selectedMonth-1).ToString();
-				left_arrow_HTML="<td align=\"left\"><a href=\"javascript:__doPostBack('"+this.ID+"','"+previousMonth+"')\"><img border=0 src=\"/Images/"+language+"/Calendar/Arrow_left_up.gif\"></a></td>";
+                left_arrow_HTML = "<td align=\"left\"><a href=\"javascript:__doPostBack('" + this.ID + "','" + previousMonth + "')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Arrow_left_up.gif\"></a></td>";
 			}
 			else
 				left_arrow_HTML="<td><img width=\"11px\" src=\"/Images/Common/pixel.gif\"></td>";
 			if(selectedMonth<stopMonth){
 				if(int.Parse(this.selectedMonth.ToString().Substring(4,2))==12)	nextMonth=(int.Parse(this.selectedMonth.ToString().Substring(0,4))+1).ToString()+"01";
 				else nextMonth=(this.selectedMonth+1).ToString();
-				right_arrow_HTML="<td align=\"right\"><a href=\"javascript:__doPostBack('"+this.ID+"','"+nextMonth+"')\"><img border=0 src=\"/Images/"+language+"/Calendar/Arrow_right_up.gif\"></a></td>";
+                right_arrow_HTML = "<td align=\"right\"><a href=\"javascript:__doPostBack('" + this.ID + "','" + nextMonth + "')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Arrow_right_up.gif\"></a></td>";
 			}
 			else
 				right_arrow_HTML="<td><img width=\"11px\" src=\"/Images/Common/pixel.gif\"></td>";
 
 
-			htmlBuilder.Append("<tr bgcolor="+TABLE_COLOR+">");
+			htmlBuilder.Append("<tr bgcolor="+_tableColor+">");
 			htmlBuilder.Append(tmpHTML);
 			htmlBuilder.Append("</tr><tr>");
 			// Sélection des mois
 			htmlBuilder.Append("<td colspan=7>");
-			htmlBuilder.Append("<table width=\"100%\"cellspacing=0 cellpadding=0 border=0 bgcolor="+TABLE_COLOR+">");
+			htmlBuilder.Append("<table width=\"100%\"cellspacing=0 cellpadding=0 border=0 bgcolor="+_tableColor+">");
 			htmlBuilder.Append("<tr>");
 			htmlBuilder.Append(left_arrow_HTML);
-			htmlBuilder.Append("<td colspan=3 align=\"center\"><font size=1 color="+FONT_COLOR+" face=\"Arial\">"+MonthString.Get(int.Parse(this.selectedMonth.ToString().Substring(4,2)),language,0)+"&nbsp;"+this.selectedMonth.ToString().Substring(0,4)+"</font></td>");
+			htmlBuilder.Append("<td colspan=3 align=\"center\"><font size=1 color="+_fontColor+" face=\"Arial\">"+MonthString.Get(int.Parse(this.selectedMonth.ToString().Substring(4,2)),language,0)+"&nbsp;"+this.selectedMonth.ToString().Substring(0,4)+"</font></td>");
 			htmlBuilder.Append(right_arrow_HTML);
 			htmlBuilder.Append("</tr>");
 			htmlBuilder.Append("</table>");
@@ -303,13 +341,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			htmlBuilder.Append("</tr>");
 			// Nom de colonnes
 			htmlBuilder.Append("<tr>");
-			htmlBuilder.Append("<td><img src=\"/Images/"+Language.ToString()+"/Calendar/Day_1.gif\" border=0></td>");
-			htmlBuilder.Append("<td><img src=\"/Images/"+Language.ToString()+"/Calendar/Day_2.gif\" border=0></td>");
-			htmlBuilder.Append("<td><img src=\"/Images/"+Language.ToString()+"/Calendar/Day_3.gif\" border=0></td>");
-			htmlBuilder.Append("<td><img src=\"/Images/"+Language.ToString()+"/Calendar/Day_4.gif\" border=0></td>");
-			htmlBuilder.Append("<td><img src=\"/Images/"+Language.ToString()+"/Calendar/Day_5.gif\" border=0></td>");
-			htmlBuilder.Append("<td><img src=\"/Images/"+Language.ToString()+"/Calendar/Day_6.gif\" border=0></td>");
-			htmlBuilder.Append("<td><img src=\"/Images/"+Language.ToString()+"/Calendar/Day_7.gif\" border=0></td>");
+            htmlBuilder.Append("<td><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Day_1.gif\" border=0></td>");
+            htmlBuilder.Append("<td><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Day_2.gif\" border=0></td>");
+            htmlBuilder.Append("<td><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Day_3.gif\" border=0></td>");
+            htmlBuilder.Append("<td><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Day_4.gif\" border=0></td>");
+            htmlBuilder.Append("<td><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Day_5.gif\" border=0></td>");
+            htmlBuilder.Append("<td><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Day_6.gif\" border=0></td>");
+            htmlBuilder.Append("<td><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Day_7.gif\" border=0></td>");
 			htmlBuilder.Append("</tr>");
 			int i,j;
 			if(memoryCalendar==null) memoryCalendar=new DayCalendar(this.selectedMonth);
@@ -318,13 +356,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				htmlBuilder.Append("<tr>");
 				for(j=0;j<days.GetLength(1);j++){
 					if(days[i,j]!=0)
-						htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedMonth).ToString()+days[i,j].ToString("00")+"')\"><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/"+days[i,j]+".gif\"></a></td>");
+                        htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('" + this.ID + "','" + (this.selectedMonth).ToString() + days[i, j].ToString("00") + "')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/" + days[i, j] + ".gif\"></a></td>");
 					else
 						htmlBuilder.Append("<td bgcolor=\"#9378B3\"><img width=\"27\" height=\"13\" src=\"/Images/Common/pixel.gif\"></td>");
 				}
 				htmlBuilder.Append("</tr>");
 			}
-			htmlBuilder.Append("<tr><td colspan=7  bgcolor="+TABLE_COLOR_SELECTED_DATE+"><font size=1 color="+FONT_COLOR_SELECTED_DATE+" face=\"Arial\">"+dateSelectedString+"</font></td></tr>");
+			htmlBuilder.Append("<tr><td colspan=7  bgcolor="+_tableColorSelectedDate+"><font size=1 color="+_fontColorSelectedDate+" face=\"Arial\">"+dateSelectedString+"</font></td></tr>");
 			htmlBuilder.Append("</table>");
 			output.Write(htmlBuilder.ToString());
 		}

@@ -24,7 +24,8 @@ namespace AdExpress{
 	/// <summary>
 	/// Page d'accueil
 	/// </summary>
-	public partial class index : System.Web.UI.Page{
+	//public partial class index : System.Web.UI.Page{
+    public partial class index : TNS.AdExpress.Web.UI.WebPage {
 
 		#region Variables MMI
 		/// <summary>
@@ -53,10 +54,10 @@ namespace AdExpress{
 		///  <directed>True</directed>
 		///  <supplierCardinality>1</supplierCardinality>
 		protected WebSession _webSession = null;
-		/// <summary>
-		/// Langue du site
-		/// </summary>
-		public int _siteLanguage=TNS.AdExpress.Constantes.DB.Language.FRENCH;
+        ///// <summary>
+        ///// Langue du site
+        ///// </summary>
+        //public int _siteLanguage=TNS.AdExpress.Constantes.DB.Language.FRENCH;
 		/// <summary>
 		/// Identifiant de la nouvelle langue
 		/// </summary>
@@ -106,16 +107,16 @@ namespace AdExpress{
 				#region Textes et langage du site
 				_setLanguage = string.Empty;
 				if(Page.Request.QueryString.Get("siteLanguage")!=null){
-					_siteLanguage=int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
-					_setLanguage = string.Format("setPermanentCookie(\"{1}\",{0});", _siteLanguage, Cookies.LANGUAGE);
+                    //_siteLanguage=int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
+                    _setLanguage = string.Format("setPermanentCookie(\"{1}\",{0});", _siteLanguage, Cookies.LANGUAGE);
 				}
 				//Modification de la langue pour les Textes AdExpress
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_siteLanguage);
 				//langage de l'entête
 				HeaderWebControl1.Language = _siteLanguage;
 				//Bouton valider
-				ImageButtonRollOverWebControl1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				ImageButtonRollOverWebControl1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//ImageButtonRollOverWebControl1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//ImageButtonRollOverWebControl1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 				#endregion
 
 			}

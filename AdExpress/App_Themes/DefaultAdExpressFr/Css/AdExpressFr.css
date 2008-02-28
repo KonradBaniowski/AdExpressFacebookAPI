@@ -1,0 +1,207 @@
+﻿/* Back ground style*/
+.imageBackGround{
+background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_fond.gif);
+}
+.arrowBackGround{
+background-image:url(/App_Themes/DefaultAdExpressFr/images/Common/button/bt_arrow_down.gif);
+background-repeat:no-repeat;
+background-position:right;
+width:15px;
+height:15px;
+}
+.logoCoteDroitBackGround{
+	background:url(/App_Themes/DefaultAdExpressFr/Images/Common/logo_cote_droit.gif);
+}
+.whiteBackGround{
+	background-color : #FFFFFF;
+}
+.violetBackGround{
+	background-color : #644883;
+}
+.paleVioletBackGround{
+	background-color : #DED8E5;
+}
+.pinkBackGround{
+	background-color : #FF0099;
+}
+.dupli3BackGround{
+background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_3.gif);
+}
+.dupli1BackGround{
+background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_1.gif);
+}
+.headerBackGround{
+background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
+}
+/* Body Style*/
+.bodyStyle{
+	background-image: none; 
+	margin: 0px; 
+	background-color: #ffffff;
+}
+/* Border style */
+.portofolioSynthesisBorder{
+	border-right: #644883 1px solid; 
+	border-top: #644883 1px solid; 
+	border-left: #644883 1px solid; 
+	border-bottom: #644883 1px solid;
+	font-size: 16px;
+}
+.listMediaHeaderBorder{
+	border-bottom :#644883 1px solid; 
+	border-left :#644883 1px solid; 
+	border-right :#644883 1px solid;
+}
+.listMediaHeaderBorderNone{
+	border-bottom: #ffffff 0px solid; 
+	border-left: #ffffff 0px solid; 
+	border-right: #ffffff 0px solid; 
+}
+.listMediaBorder{
+	border-top :#644883 1px solid; 
+	border-left :#644883 1px solid; 
+	border-right :#644883 1px solid; 
+	border-bottom :#644883 1px solid;
+}
+/* Cursor */
+.cursorHand{
+	cursor : pointer;
+}
+/*Text style*/
+.txtViolet11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+}
+.txtViolet12Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #644883;
+	font-weight: bold;
+}
+.txtViolet11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: normal;
+}
+.txtViolet10{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #644883;
+	font-weight: normal;
+}
+.txtNoir11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	font-weight: bold;
+}
+.txtNoir11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	font-weight: normal;
+}
+.txtBlanc11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	font-weight: normal;
+}
+.txtGris11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #999999;
+	font-weight: bold;
+}
+.txtNowrap{
+	white-space:nowrap;
+}
+.titleUppercase{
+	padding-right: 5px; 
+	padding-left: 5px; 
+	text-transform: uppercase;
+	height: 14px
+}
+.paragraphePadding{
+	padding-right: 5px; 
+	padding-left: 5px; 
+	padding-bottom: 5px;
+	padding-top: 5px
+}
+.paragraphePaddingHeader{
+	padding-left: 10px; 
+	padding-bottom: 40px; 
+	padding-top: 4px
+}
+
+/*Commun header (flash, menu)*/
+table.header{
+	background-color:#644883;
+	COLOR: #FFFFFF;
+	font-weight:bold;
+	border:0;
+	margin:0;
+}
+td.headerLeft{
+	background-color:#644883;
+}
+/*Site links*/
+a.roll01, a.roll01:active, a.roll01:visited {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ font-weight: bold;
+ color : #ffffff;
+ text-decoration : none;
+}
+a.roll01:hover {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #FF05B6;
+ font-weight: bold;
+ text-decoration : none;
+}
+a.roll03, a.roll03:active, a.roll03:visited {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ font-weight: bold;
+ color : #999999;
+ text-decoration : none;
+}
+a.roll03:hover {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #000000;
+ font-weight: bold;
+ text-decoration : none;
+}
+a.roll04{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #FF05B6;
+	font-weight: normal;
+	text-decoration : none;
+}
+
+a.roll04:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #9378B3;
+	font-weight: normal;
+}
+a.txtGroupViolet11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	text-decoration : none;	
+}
+a.txtGroupViolet11Bold:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FF05B6;
+	font-weight: bold;
+	text-decoration : none;	
+}

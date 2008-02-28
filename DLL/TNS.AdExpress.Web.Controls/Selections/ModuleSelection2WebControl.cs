@@ -6,6 +6,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
@@ -72,6 +73,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 		/// Taille de la colonne de droite
 		/// </summary>
 		protected Unit _columnInformationWidth = new Unit("45%");
+        /// <summary>
+        /// Description images list
+        /// </summary>
+        protected string _descriptionImageList = string.Empty;
 		#endregion
 
 		#region Accesseurs
@@ -172,6 +177,17 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			get { return (_columnInformationWidth); }
 			set { _columnInformationWidth = value; }
 		}
+        /// <summary>
+        /// Get or Set the description images list
+        /// </summary>
+        [Bindable(true),
+		Category("Apparence"),
+		DefaultValue(""),
+        ThemeableAttribute(true)]
+        public string DescriptionImageList {
+            get { return (_descriptionImageList); }
+            set { _descriptionImageList = value; }
+        }
 		#endregion
 
 		#region Evènements
@@ -216,6 +232,9 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			string htmlModules = "";
 			string html = "";
 			bool first = true;
+            Hashtable descriptionImagesModulesList = new Hashtable();
+            string[] imageModuleList = null;
+            string[] imageModuleString = null;
 
 			if (webSession != null) {
 				Int64 idGroupModuleOld = -1;
@@ -224,6 +243,12 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				Int64 idModuleCategory = -1;
 				Int64 idModule;
 				string moduleLabel = null;
+
+                imageModuleList = _descriptionImageList.Split(',');
+                foreach (string imageModule in imageModuleList) {
+                    imageModuleString = imageModule.Split(':');
+                    descriptionImagesModulesList.Add(Convert.ToInt64(imageModuleString[0]), imageModuleString[1]);
+                }
 
 				html += "\r\n<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"" + this.Width.ToString() + "\">";
 
@@ -275,7 +300,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 					moduleLabel = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(idModule), webSession.SiteLanguage);
 					htmlModules += "\r\n<tr><td>&nbsp;&nbsp;" + ((_imageModuleUrlPath.Length > 0) ? "&nbsp;<img src=\"" + _imageModuleUrlPath + "\">" : "") 
                         + "&nbsp;<a class=\"Tips1\" href=\"" + this.Parent.Page.Request.RawUrl.ToString() + "&m=" + idModule + "\"  "//onclick=\"return false;\" " 
-                        + InformationModuleHtml(idModule) + " >" + moduleLabel + "</a></td></tr>";
+                        + InformationModuleHtml(idModule, (string)descriptionImagesModulesList[idModule]) + " >" + moduleLabel + "</a></td></tr>";
 
 					if (idGroupModuleOld != idGroupModule && moduleGroupInformation.Length == 0) {
 						idGroupModuleOld = idGroupModule;
@@ -302,22 +327,24 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 		/// Ecriture du code html pour l'affichage des informations d'un module (au passage de la souris)
 		/// </summary>
 		/// <param name="moduleId">Identifiant du module</param>
+        /// <param name="descriptionImagePath">Description image path</param>
 		/// <returns>HTML</returns>
-        private string InformationModuleHtml(Int64 moduleId) {
+        private string InformationModuleHtml(Int64 moduleId, string descriptionImagePath) {
             StringBuilder t = new StringBuilder(1000);
 
             string moduleLabel = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(moduleId), webSession.SiteLanguage);
             string moduleDescription = GestionWeb.GetWebWord((int)ModulesList.GetModuleDescriptionWebTextId(moduleId), webSession.SiteLanguage);
-            string imagePath = ModulesList.GetModuleDescriptionImageName(moduleId);
+            //string imagePath = ModulesList.GetModuleDescriptionImageName(moduleId);
 
             // Exemple : <a href="#" onclick="return false;" class="Tips" title="::<table bgcolor=#644883 border=0 cellpadding=0 cellspacing=1 width=100% class=moduleTableInfoBulle><tr><td colspan=2 class=title>Bilan forces/potentiels</td></tr><tr><td style=padding-left:10px><img src=images/06.png width=40 height=40></td><td><div align=justify>Diagnostiquer les points forts / faibles du portefeuille d\'un support: analyse des niveaux de part de marché de secteurs / annonceurs versus la moyenne</div></td></tr></table>">Tendances</a>
 
-            t.Append(" title=\"::<table bgcolor=#644883 border=0 cellpadding=0 cellspacing=1 width=100% class=moduleTableInfoBulle>");
+            t.Append(" title=\"::<table border=0 cellpadding=0 cellspacing=1 width=100% class=moduleTableInfoBulle>");
             t.Append("<tr>");
             t.Append("<td colspan=2 class=title>" + (Convertion.ToHtmlString(moduleLabel)).Replace("'", "\'") + "</td>");
             t.Append("</tr>");
             t.Append("<tr>");
-            t.Append("<td style=padding-left:10px>" + ((imagePath.Length > 0) ? "<img src=" + imagePath + ">" : "&nbsp;") + "</td>");
+            //t.Append("<td style=padding-left:10px>" + ((imagePath.Length > 0) ? "<img src=" + imagePath + ">" : "&nbsp;") + "</td>");
+            t.Append("<td style=padding-left:10px>" + ((descriptionImagePath.Length > 0) ? "<img src=" + descriptionImagePath + ">" : "&nbsp;") + "</td>");
             t.Append("<td>");
             t.Append("<div align=justify>" + (Convertion.ToHtmlString(moduleDescription)).Replace("'", "\'") + "</div>");
             t.Append("</td>");

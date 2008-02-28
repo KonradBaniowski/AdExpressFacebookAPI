@@ -196,8 +196,8 @@ namespace AdExpress.Private.Selection{
 				#region Boutons RollOver
 				//if (PortofolioDetailVehicleSelectionWebControl.isEmptyList==false) {
 					
-				validImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//validImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 				if (PortofolioDetailVehicleSelectionWebControl.IsEmptyListPortofolio==true) {
 					validImageButtonRollOverWebControl.Visible=false;
 				}else

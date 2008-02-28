@@ -12,12 +12,14 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.UI {
     /// <summary>
     /// Base class for public and private AdExpress page
     /// </summary>
     public class WebPage: System.Web.UI.Page {
+
         #region Variables
         /// <summary>
         /// Langue du site
@@ -35,12 +37,29 @@ namespace TNS.AdExpress.Web.UI {
                     _siteLanguage=int.Parse(HttpContext.Current.Request.QueryString.Get("sitelanguage"));
                 }
                 else {
-                    // TODO Put Default siteLanguage
+                    _siteLanguage = WebApplicationParameters.DefaultLanguage;
                 }
             }
-            catch(System.Exception) { // TODO Put Default siteLanguage 
+            catch(System.Exception) {
+                _siteLanguage = WebApplicationParameters.DefaultLanguage;
             }
         }
+        #endregion
+
+        #region Events
+
+        #region On PreInit
+        /// <summary>
+        /// On preinit event
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnPreInit(EventArgs e) {
+            // TODO Gestion des exceptions
+            this.Theme = WebApplicationParameters.Themes[_siteLanguage].Name;
+            
+        }
+        #endregion
+
         #endregion
     }
 }

@@ -32,6 +32,22 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// Couleur de fond du composant
 		/// </summary>
 		protected string _backgroundColor="#ffffff";
+        /// <summary>
+        /// Animation flash path
+        /// </summary>
+        protected string _flashPath = string.Empty;
+        /// <summary>
+        /// Flash Replacement path
+        /// </summary>
+        protected string _flashReplacementPath = string.Empty;
+        /// <summary>
+        /// Animation flash one line path
+        /// </summary>
+        protected string _flashOneLinePath = string.Empty;
+        /// <summary>
+        /// Flash one line replacement path
+        /// </summary>
+        protected string _flashOneLineReplacementPath = string.Empty;
 		#endregion
 		
 		#region Accesseurs
@@ -66,6 +82,38 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			get{return(_backgroundColor);}
 			set{_backgroundColor=value;}
 		}
+
+        /// <summary>
+        /// Set or Get animation flash path
+        /// </summary>
+        public string FlashPath {
+            get { return (_flashPath); }
+            set { _flashPath = value; }
+        }
+
+        /// <summary>
+        /// Set or Get Flash Replacement path
+        /// </summary>
+        public string FlashReplacementPath {
+            get { return (_flashReplacementPath); }
+            set { _flashReplacementPath = value; }
+        }
+
+        /// <summary>
+        /// Set or Get Animation flash one line path
+        /// </summary>
+        public string FlashOneLinePath {
+            get { return (_flashOneLinePath); }
+            set { _flashOneLinePath = value; }
+        }
+
+        /// <summary>
+        /// Set or Get Flash one line replacement path
+        /// </summary>
+        public string FlashOneLineReplacementPath {
+            get { return (_flashOneLineReplacementPath); }
+            set { _flashOneLineReplacementPath = value; }
+        }
 		#endregion
 
 		#region Evènements
@@ -102,18 +150,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n<tr><td><IMG height=10 src=\"/images/Common/pixel.gif\" width=\"1\"></td></tr>");
 				output.Write("\n<tr><td>");
 
-				output.Write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"#FF0099\"><tr><td>");
+                output.Write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"pinkBackGround\"><tr><td>");
 				output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
 				output.Write("\nif(hasRightFlashVersion==true){");
 				output.Write("\ndocument.writeln('<object id=\"infoOptionFlash\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"185\" height=\"48\" VIEWASTEXT>');");
-				output.Write("\ndocument.writeln('<param name=\"movie\" value=\"/Flash/"+language+"/infoOptions.swf\">');");
+				output.Write("\ndocument.writeln('<param name=\"movie\" value=\""+_flashPath+"\">');");
 				output.Write("\ndocument.writeln('<param name=\"quality\" value=\"high\">');");
 				output.Write("\ndocument.writeln('<param name=\"menu\" value=\"false\">');");
 				output.Write("\ndocument.writeln('<param name=\"wmode\" value=\"transparent\">');");
-				output.Write("\ndocument.writeln('<embed src=\"/Flash/"+language+"/infoOptions.swf\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"185\" height=\"48\"></embed>');");
+				output.Write("\ndocument.writeln('<embed src=\""+_flashPath+"\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"185\" height=\"48\"></embed>');");
 				output.Write("\ndocument.writeln('</object></td>');");
 				output.Write("\n}\nelse{");
-				output.Write("\ndocument.writeln('<img src=\"/Images/"+language+"/FlashReplacement/infoOptions.gif\"></td>');");
+				output.Write("\ndocument.writeln('<img src=\""+_flashReplacementPath+"\"></td>');");
 				output.Write("\n}");
 				output.Write("\n</script>");
 				/* Remarque pour la ligne ci-dessous :
@@ -130,19 +178,19 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			}
 			else{
 				// Design sur une ligne du composant situé en haut des pops up
-				output.Write("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#DED8E5\">");
+                output.Write("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"paleVioletBackGround\">");
 				output.Write("\n<tr><td>");
 				output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
 				output.Write("\nif(hasRightFlashVersion==true){");
 				output.Write("\ndocument.writeln('<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"400\" height=\"20\">');");
-				output.Write("\ndocument.writeln('<param name=\"movie\" value=\"/Flash/"+language+"/infoOptionsOneLine.swf\">');");
+				output.Write("\ndocument.writeln('<param name=\"movie\" value=\""+_flashOneLinePath+"\">');");
 				output.Write("\ndocument.writeln('<param name=\"quality\" value=\"high\">');");
 				output.Write("\ndocument.writeln('<param name=\"menu\" value=\"false\">');");
 				output.Write("\ndocument.writeln('<param name=\"wmode\" value=\"transparent\">');");
-				output.Write("\ndocument.writeln('<embed src=\"/Flash/"+language+"/infoOptionsOneLine.swf\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"400\" height=\"20\"></embed>');");
+                output.Write("\ndocument.writeln('<embed src=\""+_flashOneLinePath+"\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"400\" height=\"20\"></embed>');");
 				output.Write("\ndocument.writeln('</object></td>');");
 				output.Write("\n}\nelse{");
-				output.Write("\ndocument.writeln('<img src=\"/Images/"+language+"/FlashReplacement/infoOptionsOneLine.gif\"></td>');");
+				output.Write("\ndocument.writeln('<img src=\""+_flashOneLineReplacementPath+"\"></td>');");
 				output.Write("\n}");
 				output.Write("\n</script>");
 				/* Remarque pour la ligne ci-dessous :

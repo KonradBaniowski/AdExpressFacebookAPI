@@ -134,20 +134,20 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 				
 						day=GetDayOfWeek(webSession,dayDT.DayOfWeek.ToString())+" "+dt.Rows[i][0].ToString().Substring(6,2);
 						//Premier
-						if(parent!=oldParent && start!=0){					
-					
-							t.Append("<table style=\"border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; border-bottom :#644883 1px solid; \" class=\"txtViolet11Bold\" cellpadding=0 cellspacing=0   width="+width+">");
-							t.Append("<tr onClick=\"showHideContent1('"+parent+"');\" style=\"cursor : hand\">");
-							t.Append("<td align=\"left\" height=\"10\" width=\"100%\" valign=\"middle\">");					
-							t.Append("<label ID=\""+dt.Rows[i][0]+"\">&nbsp;");
+						if(parent!=oldParent && start!=0){
+
+                            t.Append("<table class=\"listMediaBorder txtViolet11Bold\" cellpadding=0 cellspacing=0 width=" + width + ">");
+							t.Append("<tr onClick=\"showHideContent1('"+parent+"');\" class=\"cursorHand\">");
+                            t.Append("<td align=\"left\" height=\"10\" width=\"100%\" valign=\"middle\" class=\"arrowBackGround\">");					
+							t.Append("<label ID=\""+dt.Rows[i][0]+"\" class=\"txtNowrap\">&nbsp;");
 							t.Append(""+date+"");
 							t.Append("</label>");
 							t.Append("</td>");
-							t.Append("<td  ><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");	
+							//t.Append("<td  ><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");	
 							t.Append("</tr>");
 							t.Append("</table>");
-							t.Append("<div id=\""+parent+"Content1\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
-							t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width="+width+">");
+                            t.Append("<div id=\"" + parent + "Content1\" class=\"listMediaHeaderBorderNone\" style=\"display: none; width: 100%;\">");
+                            t.Append("<table class=\"listMediaHeaderBorder paleVioletBackGround\" width=" + width + ">");
 							oldParent=parent;
 					
 							start=0;
@@ -157,18 +157,18 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 						else if (parent!=oldParent){				
 							t.Append("</table>");
 							t.Append("</div>");
-							t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+width+">");
-							t.Append("<tr onClick=\"showHideContent1('"+parent+"');\" style=\"cursor : hand\">");
-							t.Append("<td align=\"left\" height=\"10\" width=\"100%\" valign=\"middle\">");					
-							t.Append("<label ID=\""+dt.Rows[i][0]+"\">&nbsp;");
+                            t.Append("<table class=\"listMediaHeaderBorder txtViolet11Bold\" cellpadding=0 cellspacing=0 width=" + width + ">");
+							t.Append("<tr onClick=\"showHideContent1('"+parent+"');\" class=\"cursorHand\">");
+                            t.Append("<td align=\"left\" height=\"10\" width=\"100%\" valign=\"middle\" class=\"arrowBackGround\">");					
+							t.Append("<label ID=\""+dt.Rows[i][0]+"\" class=\"txtNowrap\">&nbsp;");
 							t.Append(""+date+"");
 							t.Append("</label>");
 							t.Append("</td>");
-							t.Append("<td ><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
+							//t.Append("<td ><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
 							t.Append("</tr>");
 							t.Append("</table>");
-							t.Append("<div id=\""+parent+"Content1\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
-							t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width="+width+">");
+							t.Append("<div id=\""+parent+"Content1\"  class=\"listMediaHeaderBorderNone\" style=\"display: none; width: 100%;\">");
+							t.Append("<table class=\"listMediaHeaderBorder paleVioletBackGround\" width="+width+">");
 
 							oldParent=parent;
 							compteur=0;

@@ -245,7 +245,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			
 
 			//Titre du support
-			t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;font-size: 16px\">"+support+"</td></tr>");	
+            t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" class=\"portofolioSynthesisBorder\">" + support + "</td></tr>");	
 			// Date de début et fin de vague pour affichage
 			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.outdoor)
 			{

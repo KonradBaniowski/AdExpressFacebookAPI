@@ -1,0 +1,47 @@
+﻿<%--
+Modèle d'apparence par défaut. Les apparences sont fournies uniquement à titre d'exemple.
+
+1. Apparence de contrôle nommée. Le SkinId doit être défini de manière unique, car
+ un type de contrôle d’un même thème ne peut pas compter de SkinId dupliqués.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Apparence par défaut. Le SkinId n'est pas défini. Une seule apparence 
+de contrôle par défaut par type de contrôle est autorisée dans le même thème.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+
+<asp:image runat="server" ImageUrl="Images/Common/logo_cote_gauche.gif" SkinID="logo_cote_gauche" />
+<asp:image runat="server" ImageUrl="Images/Common/pixel.gif" SkinID="pixel" />
+<asp:image runat="server" ImageUrl="Images/Common/plus_sous_logo.gif" SkinID="plus_sous_logo" />
+<asp:image runat="server" ImageUrl="Images/Common/logo_cote_droit.gif" SkinID="logo_cote_droit" />
+<asp:image runat="server" ImageUrl="Images/Common/croix.gif" SkinID="croix" />
+<asp:image runat="server" ImageUrl="Images/Common/logoTNShome.gif" SkinID="logoTNShome" />
+<asp:image runat="server" ImageUrl="Images/Culture/logo/LogoAdexpress.gif" SkinID="LogoAdexpress" />
+<asp:image runat="server" ImageUrl="Images/Culture/logo/logo.gif" SkinID="logo" />
+
+<%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrButtons" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrSelections" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
+
+<ctrHeader:HeaderWebControl runat="server" language="33" FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Common/HeaderStrip.swf" MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Common/FlashReplacement/HeaderStrip.gif" />
+<ctrHeader:FlashWebControl runat="server" FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Culture/anime6.swf" MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/HomeAnime.gif"/>
+<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/valider_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/valider_down.gif" SkinID="validateButton" />
+<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/Button/ok_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/Button/ok_down.gif" SkinID="okButton"/>
+<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_down.gif" SkinID="initializeButton" />
+<ctrHeader:actualitieswebcontrol runat="server" ImageUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/AdExpressVisu.gif" TitleCss="actualities" RssTitleCss="txtViolet11Bold" RssDescriptionCss="txtViolet11" ImageRssUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/iconRss.gif" />
+<ctrSelections:moduleselection2webcontrol runat="server" ModuleGroupWithBackgroundCss="moduleGroupWithBackgroung" ModuleSubGroupCss="moduleSubGroup" ModuleGroupInformationCss="moduleGroupInformation" ModuleGroupCss="moduleGroup" ModuleCss="Tips1" ImageModuleUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/arrowModule.gif" 
+DescriptionImageList="198:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMedia.png,199:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMediaConcurrentiel.png,277:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Concurrentiels.png,280:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Potentiel.png,
+282:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Portefeuille.png,196:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMedia.png,184:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMediaConcurrentiel.png,278:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Concurrentiels.png,197:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Dynamique.png,
+281:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Potentiel.png,1950:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Justificatifs.png,283:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Portefeuille.png,194:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauDynamique.png,195:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Indicateurs.png,
+450:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Tendances.png,475:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,601:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,602:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,1036:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,
+546:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Programmes.png"/>
+<ctrHeader:ModuleTitleWebControl runat="server" BlockFlechePath="/App_Themes/DefaultAdExpressFr/Images/Common/block_fleche.gif" BlockDupliPath="/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif" TitleUppercaseCss="titleUppercase" />
+<ctrHeader:mediasellerwebcontrol runat="server" BlockFlechePath="/App_Themes/DefaultAdExpressFr/Images/Common/block_fleche.gif" BlockDupliPath="/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif" TitleUppercaseCss="titleUppercase" CommonCssClass="txtNoir11Bold" />
+<ctrHeader:InformationWebControl runat="server" FlashPath="/App_Themes/DefaultAdExpressFr/Flash/Culture/infoOptions.swf" FlashReplacementPath="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/infoOptions.gif" FlashOneLinePath="/App_Themes/DefaultAdExpressFr/Flash/Culture/infoOptionsOneLine.swf" FlashOneLineReplacementPath="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/infoOptionsOneLine.gif" />
+<ctrSelections:OneVehicleSelectionWebControl runat="server" CssClass="txtViolet11Bold" />
+<ctrSelections:daycalendarwebcontrol runat="server" TableBorderColor="#9D9885" TableColor="#FFFFFF" FontColor="#644883" TableColorSelectedDate="#644883" FontColorSelectedDate="#FFFFFF" />
+<ctrSelections:datelistwebcontrol runat="server" CssClass="txtNoir11" />

@@ -325,7 +325,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),WebFunction.Script.NEW_WINDOW_REGISTER,WebFunction.Script.OpenNewWindow());
 			}
 
-			if(! Page.ClientScript.IsClientScriptBlockRegistered("MenuCSS"))Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"MenuCSS",GetMenuCss());
+			//if(! Page.ClientScript.IsClientScriptBlockRegistered("MenuCSS"))Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"MenuCSS",GetMenuCss());
 			if(! Page.ClientScript.IsClientScriptBlockRegistered("MenuJavaScript"))Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"MenuJavaScript",GetMenuJavaScript());
 			if(! Page.ClientScript.IsClientScriptBlockRegistered("AddJsEvent"))Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"AddJsEvent",WebFunction.Script.AddJsEvent());
 			base.OnPreRender (e);

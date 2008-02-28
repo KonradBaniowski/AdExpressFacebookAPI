@@ -113,9 +113,15 @@ namespace TNS.AdExpress.Web.UI{
 			try{
 				// Chargement de la session du client
 				 _webSession=(WebSession)WebSession.Load(HttpContext.Current.Request.QueryString.Get("idSession"));
-				// On obtient les informations sur le modules
-				_currentModule=WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);	
-																									
+
+                 if (_webSession != null) {
+
+                     // On obtient les informations sur le modules
+                     _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
+                     if (HttpContext.Current.Request.QueryString.Get("sitelanguage") != null)_webSession.SiteLanguage = _siteLanguage;
+                     // Définition de la langue à utiliser
+                     else _siteLanguage = _webSession.SiteLanguage;
+                 }
 			}
 			catch(System.Exception){}
 		}
@@ -141,9 +147,6 @@ namespace TNS.AdExpress.Web.UI{
 				Response.Flush();
 				Response.End();
 			}
-
-			// Définition de la langue à utiliser
-			_siteLanguage = _webSession.SiteLanguage;
 
 			#region Customer Informations
 			// Use for custom error in Ajax

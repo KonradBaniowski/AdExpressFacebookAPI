@@ -50,10 +50,17 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 		/// Indique le menu qui est actif
 		/// </summary>
 		private int activeMenu = -1;
+        /// <summary>
+        /// Flash URL
+        /// </summary>
+        private string flashUrl = string.Empty;
+        /// <summary>
+        /// Missing Flash URL
+        /// </summary>
+        private string missingFlashUrl = string.Empty;
 		#endregion
 
 		#region Accesseurs
-
 		/// <summary>
 		/// Obtient ou définit propriété de langage
 		/// </summary>
@@ -83,6 +90,21 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			set { activeMenu = value; }
 		}
 
+        /// <summary>
+        /// SET or GET flash URL
+        /// </summary>
+        public string FlashUrl {
+            get { return flashUrl; }
+            set { flashUrl = value; }
+        }
+        
+        /// <summary>
+        /// SET or GET missing flash URL
+        /// </summary>
+        public string MissingFlashUrl {
+            get { return missingFlashUrl; }
+            set { missingFlashUrl = value; }
+        }
 		#endregion
 
 		#region Evènements
@@ -131,8 +153,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("\ndocument.writeln('<PARAM NAME=\"_cx\" VALUE=\"19394\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"_cy\" VALUE=\"820\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"FlashVars\" VALUE=\"\">');");
-			output.Write("\ndocument.writeln('<PARAM NAME=\"Movie\" VALUE=\"" + ((Header)headers[pageType.ToString()]).FlashUrl + "\"');");
-			output.Write("\ndocument.writeln('<PARAM NAME=\"Src\" VALUE=\"" + ((Header)headers[pageType.ToString()]).FlashUrl + "\">');");
+            output.Write("\ndocument.writeln('<PARAM NAME=\"Movie\" VALUE=\"" + flashUrl + "\"');");
+            output.Write("\ndocument.writeln('<PARAM NAME=\"Src\" VALUE=\"" + flashUrl + "\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"WMode\" VALUE=\"Window\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"Play\" VALUE=\"-1\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"Loop\" VALUE=\"-1\">');");
@@ -148,11 +170,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("\ndocument.writeln('<PARAM NAME=\"SWRemote\" VALUE=\"\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"MovieData\" VALUE=\"\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"SeamlessTabbing\" VALUE=\"1\">');");
-			output.Write("\ndocument.writeln('<embed src=\"" + ((Header)headers[pageType.ToString()]).FlashUrl + "\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\"');");
+            output.Write("\ndocument.writeln('<embed src=\"" + flashUrl + "\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\"');");
 			output.Write("\ndocument.writeln('type=\"application/x-shockwave-flash\" width=\"733\" height=\"31\"> </embed>');");
 			output.Write("\ndocument.writeln('</OBJECT>');");
 			output.Write("\n}\nelse{");
-			output.Write("\ndocument.writeln('<img src=\"" + ((Header)headers[pageType.ToString()]).MissingFlashUrl + "\" width=\"733\" height=\"31\">');");
+            output.Write("\ndocument.writeln('<img src=\"" + missingFlashUrl + "\" width=\"733\" height=\"31\">');");
 			output.Write("\n}");
 			output.Write("\n</script>");
 			output.Write("\n</td>");
@@ -161,11 +183,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("\n</td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
-			output.Write("\n<td colspan=\"2\" background=\"/Images/Common/dupli_1.gif\"><IMG height=\"1\" src=\"/Images/pixel.gif\" width=\"1\"></td>");
+            output.Write("\n<td colspan=\"2\" class=\"dupli1BackGround\"><IMG height=\"1\" src=\"/Images/pixel.gif\" width=\"1\"></td>");
 			output.Write("\n</tr>");
-			output.Write("\n<tr class=\"txtBlanc11\" style=\"BACKGROUND-IMAGE: url(" + ((Header)headers[pageType.ToString()]).ImgUrl + ")\">");
+            output.Write("\n<tr class=\"txtBlanc11 headerBackGround\">");
 			output.Write("\n<td>");
-			output.Write("\n<p style=\"PADDING-LEFT: 10px; PADDING-BOTTOM: 40px; PADDING-TOP: 4px\">");
+            output.Write("\n<p class=\"paragraphePaddingHeader\">");
 			int i = 0;
 			string menus = "";
 			string href = "";
@@ -243,7 +265,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 						link = this.Parent.Page.Request.Url.AbsolutePath.ToString() + "?siteLanguage=" + TNS.AdExpress.Constantes.DB.Language.ENGLISH;
 						break;
 				}
-				output.Write("\n<td align=\"right\">\n<p style=\"PADDING-LEFT: 10px; PADDING-BOTTOM: 40px; PADDING-TOP: 4px\">| <a class=\"roll01\" href=\"" + link + "\">" + langButton + " </a></p>\n</td>");
+                output.Write("\n<td align=\"right\">\n<p class=\"paragraphePaddingHeader\">| <a class=\"roll01\" href=\"" + link + "\">" + langButton + " </a></p>\n</td>");
 			}
 			output.Write("\n</tr>");
 			output.Write("\n</table>");
