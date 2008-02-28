@@ -16,6 +16,7 @@ using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Medias;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Constantes.Web;
 
 using TNS.Classification;
 
@@ -48,25 +49,25 @@ namespace AdExpress {
 				// Initialisation des listes de texte
 				GestionWeb.Init();
 				// Initialisation des descriptions des éléments de niveaux de détail
-				DetailLevelItemsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_DETAIL_LEVEL_ITEMS_CONFIGURATION_PATH)); 
+                DetailLevelItemsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.GENERIC_DETAIL_LEVEL_ITEMS_CONFIGURATION_FILENAME)); 
 				// Initialisation des descriptions des niveaux de détail
-				DetailLevelsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_DETAIL_LEVEL_CONFIGURATION_PATH)); 				
+                DetailLevelsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.GENERIC_DETAIL_LEVEL_CONFIGURATION_FILENAME)); 				
 				// Initialisation des descriptions des colonnes génériques 
-				GenericColumnItemsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_PATH)); 
+                GenericColumnItemsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME)); 
 				// Initialisation des descriptions des colonnes génériques prédéfinis
-				GenericColumnsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_PATH));
+                GenericColumnsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
 				// Initialisation des descriptions des niveaux de détail pour les insertions
-				InsertionDetailInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.MEDIA_PLANS_INSERTION_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_PATH));
+                InsertionDetailInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MEDIA_PLANS_INSERTION_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
                 //Initialisation des colonnes par defaut pour le détail média du module portefeuille
-                PortofolioDetailMediaColumnsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory + TNS.AdExpress.Constantes.Web.ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION));
+                PortofolioDetailMediaColumnsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION_FILENAME));
 				// Chargement des niveaux de détail AdNetTrack
-				AdNetTrackDetailLevelsDescription.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.ADNETTRACK_DETAIL_LEVEL_CONFIGURATION_PATH));
+                AdNetTrackDetailLevelsDescription.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.ADNETTRACK_DETAIL_LEVEL_CONFIGURATION_FILENAME));
 				// Chargement des noms de modules et des catégories de modules
-				ModulesList.Init(TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CONFIGURATION_PATH, TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_PATH);
+                ModulesList.Init(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CONFIGURATION_FILENAME,WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME);
 //				TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel t=(TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel) ModulesList.GetModule(198).DefaultMediaDetailLevels[1]; 
 //				string g=t.GetLabel(33);
 				// Chargement des noms d'entetes
-				HeaderRules.Init(TNS.AdExpress.Constantes.Web.ConfigurationFile.HEADER_CONFIGURATION_PATH);
+                HeaderRules.Init(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.HEADER_CONFIGURATION_FILENAME);
 				// Initialisation du cache des login
 				//Logins.init();
 				// Chargement de la configuration du serveur
@@ -90,13 +91,13 @@ namespace AdExpress {
 //			  CssStylesList.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.CSS_CONFIGURATION_PATH)); 
 			
 				//Charge les niveaux d'univers
-				TNS.Classification.Universe.UniverseLevels.getInstance(new TNS.FrameWork.DB.Common.XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory + TNS.AdExpress.Constantes.Web.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_PATH));
+				TNS.Classification.Universe.UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
 
 				//Charge les styles personnalisés des niveaux d'univers
-				TNS.Classification.Universe.UniverseLevelsCustomStyles.getInstance(new TNS.FrameWork.DB.Common.XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory + TNS.AdExpress.Constantes.Web.ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_PATH));
+                TNS.Classification.Universe.UniverseLevelsCustomStyles.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_FILENAME));
 
 				//Charge la hierachie de niveau d'univers
-				TNS.Classification.Universe.UniverseBranches.getInstance(new TNS.FrameWork.DB.Common.XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory + TNS.AdExpress.Constantes.Web.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_PATH));
+                TNS.Classification.Universe.UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
 
 			}
 			catch(System.Exception error){

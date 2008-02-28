@@ -137,6 +137,7 @@
     <Compile Include="Tracking\Constantes.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Web\ConfigurationFile.cs" />
     <Compile Include="Web\Constantes.cs">
       <SubType>Code</SubType>
     </Compile>

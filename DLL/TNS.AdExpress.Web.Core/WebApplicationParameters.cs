@@ -17,7 +17,29 @@ namespace TNS.AdExpress.Web.Core {
     /// </summary>
     public class WebApplicationParameters {
 
+        #region Constante
+        /// <summary>
+        /// Name of the configuration directory
+        /// </summary>
+        private const string CONFIGARION_DIRECTORY_NAME="Configuration";
+        #endregion
+
         #region variables
+        /// <summary>
+        /// Web site name
+        /// </summary>
+        protected static string _webSiteName;
+        /// <summary>
+        /// Configuration directory root
+        /// </summary>
+        private static string _configurationDirectoryRoot;
+        /// <summary>
+        /// Configuration directory root of the country
+        /// </summary>
+        private static string _countryConfigurationDirectoryRoot;
+        
+        
+	
         /// <summary>
         /// Default Language
         /// </summary>
@@ -41,13 +63,35 @@ namespace TNS.AdExpress.Web.Core {
         /// </summary>
         static WebApplicationParameters() {
             //Initialization
-            _defaultLanguage=WebLanguagesDataAccess.LoadDefaultLanguage(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_PATH));
-            _allowedLanguages=WebLanguagesDataAccess.LoadLanguages(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_PATH));
-            _themes=WebThemesDataAccess.LoadThemes(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBTHEMES_CONFIGURATION_PATH));
+            _configurationDirectoryRoot=AppDomain.CurrentDomain.BaseDirectory+CONFIGARION_DIRECTORY_NAME+@"\";
+            _webSiteName=WebParamtersDataAccess.LoadSiteName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
+            _countryConfigurationDirectoryRoot=_configurationDirectoryRoot+WebParamtersDataAccess.LoadDirectoryName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME))+@"\";
+            _defaultLanguage=WebLanguagesDataAccess.LoadDefaultLanguage(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
+            _allowedLanguages=WebLanguagesDataAccess.LoadLanguages(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
+            _themes=WebThemesDataAccess.LoadThemes(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBTHEMES_CONFIGURATION_FILENAME));
         }
         #endregion
 
         #region Accessors
+        /// <summary>
+        /// Get Web site name
+        /// </summary>
+        public static string WebSiteName {
+            get { return _webSiteName; }
+        }
+        /// <summary>
+        /// Get configuration directory root
+        /// </summary>
+        public static string ConfigurationDirectoryRoot {
+            get { return _configurationDirectoryRoot; }
+        }
+        /// <summary>
+        /// Get country configuration directory root
+        /// </summary>
+        public static string CountryConfigurationDirectoryRoot {
+            get { return _countryConfigurationDirectoryRoot; }
+        }
+        
         /// <summary>
         /// Get Default Language
         /// </summary>

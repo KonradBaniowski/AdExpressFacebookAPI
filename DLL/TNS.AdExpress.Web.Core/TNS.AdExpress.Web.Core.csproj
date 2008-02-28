@@ -136,6 +136,7 @@
     <Compile Include="CustomerPeriod.cs" />
     <Compile Include="DataAccess\ClassificationList\SearchLevelDataAccess.cs" />
     <Compile Include="DataAccess\WebLanguagesDataAccess.cs" />
+    <Compile Include="DataAccess\WebParamtersDataAccess.cs" />
     <Compile Include="DataAccess\WebThemesDataAccess.cs" />
     <Compile Include="Exceptions\WebThemesDataAccessException.cs" />
     <Compile Include="Exceptions\InvalidXmlValueException.cs" />

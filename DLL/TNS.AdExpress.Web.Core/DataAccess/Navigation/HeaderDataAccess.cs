@@ -48,7 +48,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Navigation{
             bool displayInPopUp = false;
 			XmlTextReader reader=null;
 			try{
-				string path=AppDomain.CurrentDomain.BaseDirectory+@"config\"+pathXMLFile;
+				string path=pathXMLFile;
 				if(File.Exists(path)){
 					reader=new XmlTextReader(path);
 					string name="";

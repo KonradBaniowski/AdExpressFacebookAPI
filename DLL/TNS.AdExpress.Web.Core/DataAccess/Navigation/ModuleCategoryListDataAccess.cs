@@ -31,7 +31,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Navigation{
 			XmlTextReader Reader=null;
 			HtModuleCategory.Clear();
 			try{
-				string path=AppDomain.CurrentDomain.BaseDirectory+@"config\"+pathXMLFile;
+				string path=pathXMLFile;
 				if(File.Exists(path)){
 					Reader=new XmlTextReader(path);
 

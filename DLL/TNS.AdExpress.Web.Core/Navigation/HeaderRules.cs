@@ -43,7 +43,7 @@ namespace TNS.AdExpress.Web.Core.Navigation{
 		/// <summary>
 		/// Initialise la classe
 		/// </summary>
-		/// <param name="pathXMLFile">Chemin du fichier xml</param>
+		/// <param name="pathXMLFile">Xml File name</param>
 		public static void Init(string pathXMLFile){
 			HeaderDataAccess.Load(pathXMLFile, _headers);
 		}

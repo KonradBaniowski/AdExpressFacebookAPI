@@ -38,7 +38,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Navigation{
 			int moduleType = 0;
 			OptionalPageInformation currentSelectionPage = null, currentSubSelectionPage = null; 
 			try{
-				string path=AppDomain.CurrentDomain.BaseDirectory+@"config\"+pathXMLFile;
+				string path=pathXMLFile;
 				if(File.Exists(path)){
 					Reader=new XmlTextReader(path);
 					bool allowRecall=true;
