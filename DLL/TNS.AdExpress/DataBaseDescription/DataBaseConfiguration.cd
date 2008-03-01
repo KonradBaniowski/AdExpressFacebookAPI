@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TNS.AdExpress.DataBaseDescription.CustomerConnection">
+    <Position X="3.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\Connection.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAUAAEZAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_id" />
+      <Field Name="_type" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TNS.AdExpress.DataBaseDescription.DataBase">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAACAAABAAAAAAAABBAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_customerConnections" />
+      <Field Name="_schemas" />
+      <Field Name="_tables" />
+    </ShowAsCollectionAssociation>
+    <AssociationLine Name="_customerConnections" Type="TNS.AdExpress.DataBaseDescription.CustomerConnection">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.576" Y="0.256" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="_schemas" Type="TNS.AdExpress.DataBaseDescription.Schema" ManuallyRouted="true">
+      <Path>
+        <Point X="4.75" Y="7.027" />
+        <Point X="4.75" Y="8" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="_tables" Type="TNS.AdExpress.DataBaseDescription.Table" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="6.862" />
+        <Point X="7.75" Y="6.862" />
+        <Point X="7.75" Y="2.027" />
+      </Path>
+    </AssociationLine>
+  </Class>
+  <Class Name="TNS.AdExpress.DataBaseDescription.Schema">
+    <Position X="4" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\Schema.cs</FileName>
+      <HashCode>AAACIAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_id" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TNS.AdExpress.DataBaseDescription.Table">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\Tables.cs</FileName>
+      <HashCode>AAACIABAAAAAAAAAAABAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_id" />
+      <Field Name="_schema" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TNS.AdExpress.DataBaseDescription.DefaultConnection">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\DefaultConnection.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAAAAAABAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_id" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="TNS.AdExpress.DataBaseDescription.CustomerConnectionIds">
+    <Position X="5.25" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.AdExpress.DataBaseDescription.SchemaIds">
+    <Position X="7.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.AdExpress.DataBaseDescription.TableIds">
+    <Position X="9.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+      <HashCode>UJVIomlEUo6TQUHorAFcKAmCMRLxgE2XQHgNDlYiFW0=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.AdExpress.DataBaseDescription.DatabaseTypes">
+    <Position X="1" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAABAAACAAQ=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.AdExpress.DataBaseDescription.DefaultConnectionIds">
+    <Position X="0.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+      <HashCode>QAAAAgAAAAIAAAAAAEEAQAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

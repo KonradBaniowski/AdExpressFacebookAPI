@@ -109,15 +109,9 @@
     <Compile Include="BusinessFacade\SqlGeneratorSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\IDataSource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\OracleDataSource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\XmlReaderDataSource.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="DataBaseDescription\DefaultConnection.cs" />
+    <Compile Include="DataBaseDescription\DataBase.cs" />
+    <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="DataAccess\Customer\RightDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -139,6 +133,8 @@
     <Compile Include="Rules\Customer\Right.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataBaseDescription\Schema.cs" />
+    <Compile Include="DataBaseDescription\Tables.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
@@ -152,6 +148,9 @@
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataBaseDescription\DataBaseConfiguration.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
