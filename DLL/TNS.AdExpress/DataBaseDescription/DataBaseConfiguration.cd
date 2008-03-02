@@ -18,25 +18,19 @@
       <HashCode>AAAQEAAAAAAAAAAIAAAAAAAACAAABAAAAAAAAABAAAA=</HashCode>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Field Name="_customerConnections" />
       <Field Name="_schemas" />
       <Field Name="_tables" />
     </ShowAsCollectionAssociation>
-    <AssociationLine Name="_customerConnections" Type="TNS.AdExpress.DataBaseDescription.CustomerConnection">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.083" Y="0.268" />
-      </MemberNameLabel>
-    </AssociationLine>
     <AssociationLine Name="_schemas" Type="TNS.AdExpress.DataBaseDescription.Schema" ManuallyRouted="true">
       <Path>
-        <Point X="4.75" Y="7.192" />
+        <Point X="4.75" Y="7.356" />
         <Point X="4.75" Y="8" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="_tables" Type="TNS.AdExpress.DataBaseDescription.Table" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="5.5" Y="7.009" />
-        <Point X="7.75" Y="7.009" />
+        <Point X="5.5" Y="7.155" />
+        <Point X="7.75" Y="7.155" />
         <Point X="7.75" Y="2.902" />
       </Path>
     </AssociationLine>

@@ -13,7 +13,6 @@ using TNS.AdExpress.Anubis.Common.Configuration;
 using TNS.AdExpress.Anubis.Constantes;
 using TNS.AdExpress.Anubis.Exceptions;
 
-using TNS.AdExpress.Common;
 using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 

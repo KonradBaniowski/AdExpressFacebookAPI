@@ -16,7 +16,6 @@ using TNS.AdExpress.Anubis.DataAccess;
 using TNS.AdExpress.Anubis.Exceptions;
 using TNS.FrameWork.DB.Common;
 
-using TNS.AdExpress.Common;
 
 namespace TNS.AdExpress.Anubis.Rules{
 	/// <summary>

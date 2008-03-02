@@ -20,7 +20,6 @@ using AnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Common;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using TNS.FrameWork.DB.Common;

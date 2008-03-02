@@ -11,7 +11,6 @@ using System;
 using System.Collections;
 using System.Data;
 
-using TNS.AdExpress.Common;
 using TNS.AdExpress.Anubis.DataAccess;
 using TNS.AdExpress.Anubis.Rules;
 using TNS.FrameWork.DB.Common;

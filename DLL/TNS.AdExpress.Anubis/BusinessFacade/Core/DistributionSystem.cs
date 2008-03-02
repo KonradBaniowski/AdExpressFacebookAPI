@@ -16,8 +16,6 @@ using System.Collections;
 using System.Data;
 using System.Threading;
 
-using TNS.AdExpress.Common;
-
 using TNS.AdExpress.Web.BusinessFacade.Selections.Medias;
 
 using AnubisConfiguration=TNS.AdExpress.Anubis.Common.Configuration;

@@ -14,7 +14,6 @@ using System.Data;
 using System.Timers;
 using System.Threading;
 
-using TNS.AdExpress.Common;
 using TNS.AdExpress.Anubis.Common.Configuration;
 using TNS.AdExpress.Anubis.DataAccess;
 using TNS.AdExpress.Anubis.Exceptions;

@@ -277,23 +277,31 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// <summary>
         /// Default connections list
         /// </summary>
-        private Dictionary<DefaultConnectionIds,DefaultConnection> _defaultConnections;        
+        private static Dictionary<DefaultConnectionIds,DefaultConnection> _defaultConnections;        
         /// <summary>
         /// Customer Connections List
         /// </summary>
-        private Dictionary<CustomerConnectionIds,CustomerConnection> _customerConnections;
+        private static Dictionary<CustomerConnectionIds,CustomerConnection> _customerConnections;
         /// <summary>
         /// Schemas List
         /// </summary>
-        private Dictionary<SchemaIds,Schema> _schemas;
+        private static Dictionary<SchemaIds,Schema> _schemas;
         /// <summary>
         /// Tables List
         /// </summary>
-        private Dictionary<TableIds,Table> _tables;
+        private static Dictionary<TableIds,Table> _tables;
         
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public DataBase() {
+            
+
+        }
+        /*
         /// <summary>
         /// Constructor
         /// </summary>
@@ -311,6 +319,7 @@ namespace TNS.AdExpress.DataBaseDescription {
             if(schemas==null || schemas.Count==0) throw (new ArgumentException("Invalid schemas parameter"));
             if(tables==null || tables.Count==0) throw (new ArgumentException("Invalid tables parameter"));
         } 
+        */
         #endregion
 
         #region Accessors

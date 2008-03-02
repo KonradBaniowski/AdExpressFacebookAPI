@@ -29,7 +29,6 @@ using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using BusinessFacadeResults=TNS.AdExpress.Web.BusinessFacade.Results;
-using TNS.AdExpress.Common;
 #endregion
 
 namespace AdExpress.Private.Results{
