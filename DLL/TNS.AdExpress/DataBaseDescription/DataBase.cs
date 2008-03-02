@@ -1,3 +1,9 @@
+#region Information
+//  Author : G. Facon, G. Ragneau
+//  Creation  date: 29/02/2008
+//  Modifications:
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,6 +12,11 @@ using TNS.FrameWork.DB.Common;
 namespace TNS.AdExpress.DataBaseDescription {
 
     #region Enums
+
+    #region Database types
+    /// <summary>
+    /// Database types
+    /// </summary>
     public enum DatabaseTypes {
         /// <summary>
         /// Oracle
@@ -23,14 +34,25 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// SQL Server
         /// </summary>
         sqlServer=3
-    }
+    } 
+    #endregion
+
+    #region Customer Connection Ids
+    /// <summary>
+    /// Customer Connection Ids
+    /// </summary>
     public enum CustomerConnectionIds {
         /// <summary>
         /// AdExpress Data
         /// </summary>
         adexpr03=0,
-    }
+    } 
+    #endregion
 
+    #region Default Connection Ids
+    /// <summary>
+    /// Default Connection Ids
+    /// </summary>
     public enum DefaultConnectionIds {
         /// <summary>
         /// Session
@@ -60,11 +82,45 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// Use to retreive publication date
         /// </summary>
         publication=6,
-    }
+    } 
+    #endregion
 
+    #region Schema Ids
+    /// <summary>
+    /// Schema Ids
+    /// </summary>
     public enum SchemaIds {
-    }
+        /// <summary>
+        /// AdExpr03
+        /// </summary>
+        adexpr03=0,
+        /// <summary>
+        /// Chronopresse
+        /// </summary>
+        appm01=1,
+        /// <summary>
+        /// Right (Mau)
+        /// </summary>
+        mau01=2,
+        /// <summary>
+        /// Mou
+        /// </summary>
+        mou01=3,
+        /// <summary>
+        /// Product class analysis
+        /// </summary>
+        recap01=4,
+        /// <summary>
+        /// Web
+        /// </summary>
+        webnav01=5,
+    } 
+    #endregion
 
+    #region Table Ids
+    /// <summary>
+    /// Table Ids
+    /// </summary>
     public enum TableIds {
         /// <summary>
         /// List saved levels
@@ -207,34 +263,55 @@ namespace TNS.AdExpress.DataBaseDescription {
         alertUniverse=117,
         alertUniverseDetail=118,
         country=119,
-    }
+    } 
     #endregion
 
+    #endregion
 
+    /// <summary>
+    /// Database description
+    /// </summary>
     public class DataBase {
 
         #region Variables
-
         /// <summary>
-        /// Connection List
+        /// Default connections list
+        /// </summary>
+        private Dictionary<DefaultConnectionIds,DefaultConnection> _defaultConnections;        
+        /// <summary>
+        /// Customer Connections List
         /// </summary>
         private Dictionary<CustomerConnectionIds,CustomerConnection> _customerConnections;
         /// <summary>
-        /// Schema List
+        /// Schemas List
         /// </summary>
         private Dictionary<SchemaIds,Schema> _schemas;
         /// <summary>
         /// Tables List
         /// </summary>
         private Dictionary<TableIds,Table> _tables;
+        
         #endregion
-        private System.Collections.Generic.Dictionary<TNS.AdExpress.DataBaseDescription.CustomerConnectionIds,TNS.AdExpress.DataBaseDescription.DefaultConnection> _defaultConnections;
 
-        /// <param name="databaseType">Database type</param>
-        /// <param name="source">Data source</param>
-        public DataBase(IDataSource source) {
-            throw new System.NotImplementedException();
-        }
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="defaultConnections">Default connections list</param>
+        /// <param name="customerConnections">Customer Connections List</param>
+        /// <param name="schemas">Schemas List</param>
+        /// <param name="tables">Tables List</param>
+        public DataBase(Dictionary<DefaultConnectionIds,DefaultConnection> defaultConnections,
+                        Dictionary<CustomerConnectionIds,CustomerConnection> customerConnections,
+                        Dictionary<SchemaIds,Schema> schemas,
+                        Dictionary<TableIds,Table> tables
+            ) {
+            if(defaultConnections==null || defaultConnections.Count==0) throw (new ArgumentException("Invalid defaultConnections parameter"));
+            if(customerConnections==null || customerConnections.Count==0) throw (new ArgumentException("Invalid customerConnections parameter"));
+            if(schemas==null || schemas.Count==0) throw (new ArgumentException("Invalid schemas parameter"));
+            if(tables==null || tables.Count==0) throw (new ArgumentException("Invalid tables parameter"));
+        } 
+        #endregion
 
         #region Accessors
 
@@ -242,10 +319,23 @@ namespace TNS.AdExpress.DataBaseDescription {
 
         #region Public Methodes
         /// <summary>
-        /// Get Database Connection
+        /// Get default database connection
         /// </summary>
-        /// <param name="connectionId">Connection Id</param>
-        public IDataSource GetConnection(CustomerConnectionIds connectionId) {
+        /// <param name="defaultConnectionId">Connection Id</param>
+        public IDataSource GetDefaultConnection(DefaultConnectionIds defaultConnectionId) {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get customer database connection
+        /// </summary>
+        /// <param name="login">Customer login</param>
+        /// <param name="password">Customer password</param>
+        /// <param name="customerConnectionId">Connection Id</param>
+        /// <returns></returns>
+        public IDataSource GetCustomerConnection(string login,string password,CustomerConnectionIds customerConnectionId) {
+            if(login==null ||login.Length==0) throw (new ArgumentException("Invalid login parameter"));
+            if(password==null ||password.Length==0) throw (new ArgumentException("Invalid password parameter"));
             throw new System.NotImplementedException();
         }
         #endregion

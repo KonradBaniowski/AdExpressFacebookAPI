@@ -5,18 +5,17 @@
     <Position X="3.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <FileName>DataBaseDescription\Connection.cs</FileName>
-      <HashCode>AAAAAAAAAAAAgAUAAEZAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAIAAAAACogUAAEZIAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_id" />
-      <Field Name="_type" />
     </ShowAsAssociation>
   </Class>
   <Class Name="TNS.AdExpress.DataBaseDescription.DataBase">
-    <Position X="4" Y="5.5" Width="1.5" />
+    <Position X="3.5" Y="5.5" Width="2" />
     <TypeIdentifier>
       <FileName>DataBaseDescription\DataBase.cs</FileName>
-      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAACAAABAAAAAAAABBAAAA=</HashCode>
+      <HashCode>AAAQEAAAAAAAAAAIAAAAAAAACAAABAAAAAAAAABAAAA=</HashCode>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Field Name="_customerConnections" />
@@ -25,20 +24,20 @@
     </ShowAsCollectionAssociation>
     <AssociationLine Name="_customerConnections" Type="TNS.AdExpress.DataBaseDescription.CustomerConnection">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-1.576" Y="0.256" />
+        <Position X="0.083" Y="0.268" />
       </MemberNameLabel>
     </AssociationLine>
     <AssociationLine Name="_schemas" Type="TNS.AdExpress.DataBaseDescription.Schema" ManuallyRouted="true">
       <Path>
-        <Point X="4.75" Y="7.027" />
+        <Point X="4.75" Y="7.192" />
         <Point X="4.75" Y="8" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="_tables" Type="TNS.AdExpress.DataBaseDescription.Table" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="5.5" Y="6.862" />
-        <Point X="7.75" Y="6.862" />
-        <Point X="7.75" Y="2.027" />
+        <Point X="5.5" Y="7.009" />
+        <Point X="7.75" Y="7.009" />
+        <Point X="7.75" Y="2.902" />
       </Path>
     </AssociationLine>
   </Class>
@@ -46,7 +45,7 @@
     <Position X="4" Y="8" Width="1.5" />
     <TypeIdentifier>
       <FileName>DataBaseDescription\Schema.cs</FileName>
-      <HashCode>AAACIAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAQBBAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_id" />
@@ -56,7 +55,7 @@
     <Position X="7" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>DataBaseDescription\Tables.cs</FileName>
-      <HashCode>AAACIABAAAAAAAAAAABAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAABAEAAAACAAQBBAAAAAAAAAAAAAQAQAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_id" />
@@ -74,7 +73,7 @@
     </ShowAsAssociation>
   </Class>
   <Enum Name="TNS.AdExpress.DataBaseDescription.CustomerConnectionIds">
-    <Position X="5.25" Y="3.25" Width="2" />
+    <Position X="5.5" Y="4.5" Width="2" />
     <TypeIdentifier>
       <FileName>DataBaseDescription\DataBase.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
@@ -84,7 +83,7 @@
     <Position X="7.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <FileName>DataBaseDescription\DataBase.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AACAAAIAAIAAAAAABAAAABAAAAAAAAAAAABAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Enum>
   <Enum Name="TNS.AdExpress.DataBaseDescription.TableIds">
@@ -94,15 +93,8 @@
       <HashCode>UJVIomlEUo6TQUHorAFcKAmCMRLxgE2XQHgNDlYiFW0=</HashCode>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="TNS.AdExpress.DataBaseDescription.DatabaseTypes">
-    <Position X="1" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>DataBaseDescription\DataBase.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAABAAACAAQ=</HashCode>
-    </TypeIdentifier>
-  </Enum>
   <Enum Name="TNS.AdExpress.DataBaseDescription.DefaultConnectionIds">
-    <Position X="0.5" Y="2.5" Width="2" />
+    <Position X="0.5" Y="3.5" Width="2" />
     <TypeIdentifier>
       <FileName>DataBaseDescription\DataBase.cs</FileName>
       <HashCode>QAAAAgAAAAIAAAAAAEEAQAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
