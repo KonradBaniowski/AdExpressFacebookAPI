@@ -121,12 +121,15 @@
     <Compile Include="Exceptions\AdExpressCustomerException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\InvalidXmlValueException.cs" />
     <Compile Include="Exceptions\OracleDataSourceException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\SqlGeneratorSystemException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\XmlEmptyValueException.cs" />
+    <Compile Include="Exceptions\XmlNullValueException.cs" />
     <Compile Include="Exceptions\XmlReaderDataSourceException.cs">
       <SubType>Code</SubType>
     </Compile>

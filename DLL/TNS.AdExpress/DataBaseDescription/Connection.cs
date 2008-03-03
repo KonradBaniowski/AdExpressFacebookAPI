@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TNS.FrameWork.DB.Common;
+using TNS.FrameWork.DB.Constantes;
 
 namespace TNS.AdExpress.DataBaseDescription {
 
@@ -40,7 +41,7 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// <summary>
         /// Database type
         /// </summary>
-        private IDataSource _type;
+        private DatabaseTypes _type;
         /// <summary>
         /// Max pool size
         /// </summary>
@@ -90,7 +91,7 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// <summary>
         /// Database type
         /// </summary>
-        private IDataSource Type {
+        private DatabaseTypes Type {
             set { _type=value; }
         }
         /// <summary>
