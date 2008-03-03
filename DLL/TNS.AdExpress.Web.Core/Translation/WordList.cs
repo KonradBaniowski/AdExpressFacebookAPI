@@ -10,6 +10,7 @@ using System;
 using System.Data;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Web.Core.DataAccess.Translation;
+using TNS.AdExpress.DataBaseDescription;
 
 
 namespace TNS.AdExpress.Web.Core.Translation{
@@ -38,7 +39,7 @@ namespace TNS.AdExpress.Web.Core.Translation{
 		/// Constructeur
 		/// </summary>
 		/// <param name="langueSite">Identifiant de la langue du site AdExpress</param>
-		public WordList(int langueSite):base(TNS.AdExpress.Constantes.DB.Connection.TRADUCTION_CONNECTION_STRING){
+		public WordList(int langueSite):base(WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.translation)){
 			try{
 				_idLanguage=langueSite;
 				_list=this.GetList(langueSite);

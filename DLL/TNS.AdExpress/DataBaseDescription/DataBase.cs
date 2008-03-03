@@ -664,7 +664,7 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// </summary>
         /// <param name="defaultConnectionId">Connection Id</param>
         public IDataSource GetDefaultConnection(DefaultConnectionIds defaultConnectionId) {
-            throw new System.NotImplementedException();
+            return (_defaultConnections[defaultConnectionId].GetDataSource());
         }
 
         /// <summary>

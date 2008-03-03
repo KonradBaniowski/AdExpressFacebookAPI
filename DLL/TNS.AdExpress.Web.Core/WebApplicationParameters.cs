@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TNS.AdExpress.DataBaseDescription;
 using TNS.AdExpress.Web.Core.DataAccess;
 using TNS.FrameWork.DB.Common;
 
@@ -37,7 +38,10 @@ namespace TNS.AdExpress.Web.Core {
         /// Configuration directory root of the country
         /// </summary>
         private static string _countryConfigurationDirectoryRoot;
-        
+        /// <summary>
+        /// Database description
+        /// </summary>
+        private static DataBase _dataBase;
         
 	
         /// <summary>
@@ -69,6 +73,7 @@ namespace TNS.AdExpress.Web.Core {
             _defaultLanguage=WebLanguagesDataAccess.LoadDefaultLanguage(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
             _allowedLanguages=WebLanguagesDataAccess.LoadLanguages(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
             _themes=WebThemesDataAccess.LoadThemes(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBTHEMES_CONFIGURATION_FILENAME));
+            _dataBase=new DataBase(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
         }
         #endregion
 
@@ -110,6 +115,13 @@ namespace TNS.AdExpress.Web.Core {
         /// </summary>
         public static Dictionary<Int64,WebTheme> Themes {
             get { return _themes; }
+        }
+
+        /// <summary>
+        /// Get Database description
+        /// </summary>
+        public static DataBase DataBaseDescription{
+            get { return _dataBase; }
         }
 
         #endregion

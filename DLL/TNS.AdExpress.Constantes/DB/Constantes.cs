@@ -141,7 +141,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les textes du site AdExpress
 		/// </summary>
-		public const string TRADUCTION_CONNECTION_STRING="User Id=admin_web; Password=zepabony9; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120";
+		//public const string TRADUCTION_CONNECTION_STRING="User Id=admin_web; Password=zepabony9; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120";
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les testes de développement
 		/// </summary>

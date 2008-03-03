@@ -46,6 +46,7 @@ namespace AdExpress {
 			try{
                 //Langues 
                 Int64 dd=WebApplicationParameters.DefaultLanguage;
+                IDataSource tt= WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.DataBaseDescription.DefaultConnectionIds.session);
 				// Initialisation des listes de texte
 				GestionWeb.Init();
 				// Initialisation des descriptions des éléments de niveaux de détail

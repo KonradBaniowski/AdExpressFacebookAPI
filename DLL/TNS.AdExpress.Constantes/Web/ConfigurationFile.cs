@@ -77,6 +77,10 @@ namespace TNS.AdExpress.Constantes.Web {
         /// Web parameters configuration file
         /// </summary>
         public const string WEBPARAMETERS_CONFIGURATION_FILENAME = @"WebParameters.xml";
+        /// <summary>
+        /// Web parameters configuration file
+        /// </summary>
+        public const string DATABASE_CONFIGURATION_FILENAME = @"Database.xml";
 
     }
 }
