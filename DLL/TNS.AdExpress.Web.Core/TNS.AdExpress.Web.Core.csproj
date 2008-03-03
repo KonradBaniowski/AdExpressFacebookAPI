@@ -139,11 +139,8 @@
     <Compile Include="DataAccess\WebParamtersDataAccess.cs" />
     <Compile Include="DataAccess\WebThemesDataAccess.cs" />
     <Compile Include="Exceptions\WebThemesDataAccessException.cs" />
-    <Compile Include="Exceptions\InvalidXmlValueException.cs" />
     <Compile Include="Exceptions\WebLanguagesDataAccessException.cs" />
     <Compile Include="Exceptions\SearchLevelDataAccessException.cs" />
-    <Compile Include="Exceptions\XmlEmptyValueException.cs" />
-    <Compile Include="Exceptions\XmlNullValueException.cs" />
     <Compile Include="Result\CellInsertionMediaScheduleLink.cs" />
     <Compile Include="Result\CellAdExpressImageLink.cs" />
     <Compile Include="Result\CellOneLevelInsertionsLink.cs" />
