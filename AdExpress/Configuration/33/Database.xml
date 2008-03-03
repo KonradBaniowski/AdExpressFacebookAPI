@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <database>
   <customerConnections>
-    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId=""  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
+    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
   </customerConnections>
   <defaultConnections>
-    <defaultConnection enumId="0" description="Session" dataBaseEnumId="" userId="mou01_session_1" password="sessionmolle1"     dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
-    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="" userId="admin_web" password="zepabony9"           dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
-    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="" userId="recap01" password="itulatif8"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>  
-    <defaultConnection enumId="3" description="APPM (Chronopresse)" dataBaseEnumId="grp" userId="rpgdoom3" password=""          dataSource="PITAFR02.PIGE" connectionTimeOut="120"/>
-    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="" userId="adexpr03_proc_7" password="pushit76"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false"/>
-    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="" userId="adexpr03_proc_8" password="lnampt8"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false"/>
-    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="" userId="user_web" password="zebony8"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
+    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="mou01_session_1" password="sessionmolle1"     dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
+    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
+    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
+    <defaultConnection enumId="3" description="APPM (Chronopresse)" dataBaseEnumId="2" login="grp" password="rpgdoom3"          dataSource="PITAFR02.PIGE" connectionTimeOut="120"/>
+    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false"/>
+    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false"/>
+    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
   </defaultConnections>
   <schemas>
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr"/>
