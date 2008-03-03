@@ -121,6 +121,7 @@
     <Compile Include="Exceptions\AdExpressCustomerException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\DefaultConnectionException.cs" />
     <Compile Include="Exceptions\InvalidXmlValueException.cs" />
     <Compile Include="Exceptions\OracleDataSourceException.cs">
       <SubType>Code</SubType>

@@ -7,6 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Exceptions;
 
 namespace TNS.AdExpress.DataBaseDescription {
     /// <summary>
@@ -22,7 +24,7 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// <summary>
         /// Database user name
         /// </summary>
-        private string _userId;
+        private string _login;
         /// <summary>
         /// Database password
         /// </summary>
@@ -39,5 +41,39 @@ namespace TNS.AdExpress.DataBaseDescription {
         } 
         #endregion
 
+        #region Accessors
+        /// <summary>
+        /// Set Login
+        /// </summary>
+        public string Login {
+            set { _login=value; }
+        }
+        /// <summary>
+        /// Set password
+        /// </summary>
+        public string Password {
+            set { _password=value; }
+        } 
+        #endregion
+
+
+        #region Public Methods
+        /// <summary>
+        /// Get IDataSource
+        /// </summary>
+        public IDataSource GetDataSource() {
+            try{
+                SourceFactory sourceFactory=new SourceFactory(_type,_login,_password,_dataSource);
+                sourceFactory.ConnectionTimeOut=_connectionTimeOut;
+                sourceFactory.DecrPoolSize=_decrPoolSize;
+                sourceFactory.MaxPoolSize=_maxPoolSize;
+                sourceFactory.Pooling=_pooling;
+                return(sourceFactory.GetIDataSource());
+            }
+            catch(System.Exception err){
+                throw(new DefaultConnectionException("Impossible to retreive default connection",err));
+            }
+        } 
+        #endregion
     }
 }

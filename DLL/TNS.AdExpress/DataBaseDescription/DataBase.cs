@@ -8,34 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.XmlLoader;
 
 namespace TNS.AdExpress.DataBaseDescription {
 
     #region Enums
-
-    #region Database types
-    /// <summary>
-    /// Database types
-    /// </summary>
-    public enum DatabaseTypes {
-        /// <summary>
-        /// Oracle
-        /// </summary>
-        oracle=0,
-        /// <summary>
-        /// MySql
-        /// </summary>
-        mySQL=1,
-        /// <summary>
-        /// Posgres
-        /// </summary>
-        postgres=2,
-        /// <summary>
-        /// SQL Server
-        /// </summary>
-        sqlServer=3
-    } 
-    #endregion
 
     #region Customer Connection Ids
     /// <summary>
@@ -648,19 +625,19 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// <summary>
         /// Default connections list
         /// </summary>
-        private static Dictionary<DefaultConnectionIds,DefaultConnection> _defaultConnections;        
+        private Dictionary<DefaultConnectionIds,DefaultConnection> _defaultConnections;        
         /// <summary>
         /// Customer Connections List
         /// </summary>
-        private static Dictionary<CustomerConnectionIds,CustomerConnection> _customerConnections;
+        private Dictionary<CustomerConnectionIds,CustomerConnection> _customerConnections;
         /// <summary>
         /// Schemas List
         /// </summary>
-        private static Dictionary<SchemaIds,Schema> _schemas;
+        private Dictionary<SchemaIds,Schema> _schemas;
         /// <summary>
         /// Tables List
         /// </summary>
-        private static Dictionary<TableIds,Table> _tables;
+        private Dictionary<TableIds,Table> _tables;
         
         #endregion
 
@@ -668,29 +645,13 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public DataBase() {
+        /// <param name="source">Data source</param>
+        public DataBase(IDataSource source) {
+            _customerConnections=DataBaseDescriptionXL.LoadCustomerConnections(source);
+            _defaultConnections=DataBaseDescriptionXL.LoadDefaultConnections(source);
             
 
         }
-        /*
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="defaultConnections">Default connections list</param>
-        /// <param name="customerConnections">Customer Connections List</param>
-        /// <param name="schemas">Schemas List</param>
-        /// <param name="tables">Tables List</param>
-        public DataBase(Dictionary<DefaultConnectionIds,DefaultConnection> defaultConnections,
-                        Dictionary<CustomerConnectionIds,CustomerConnection> customerConnections,
-                        Dictionary<SchemaIds,Schema> schemas,
-                        Dictionary<TableIds,Table> tables
-            ) {
-            if(defaultConnections==null || defaultConnections.Count==0) throw (new ArgumentException("Invalid defaultConnections parameter"));
-            if(customerConnections==null || customerConnections.Count==0) throw (new ArgumentException("Invalid customerConnections parameter"));
-            if(schemas==null || schemas.Count==0) throw (new ArgumentException("Invalid schemas parameter"));
-            if(tables==null || tables.Count==0) throw (new ArgumentException("Invalid tables parameter"));
-        } 
-        */
         #endregion
 
         #region Accessors

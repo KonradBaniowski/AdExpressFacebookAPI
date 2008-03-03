@@ -21,6 +21,7 @@ namespace TNS.AdExpress.XmlLoader{
     /// </summary>
     public class DataBaseDescriptionXL {
 
+        #region Load customer connections
         /// <summary>
         /// Load customer connections
         /// </summary>
@@ -29,34 +30,47 @@ namespace TNS.AdExpress.XmlLoader{
         /// </example>
         /// <param name="source">source</param>
         /// <returns>Customer connections list</returns>
-        public static Dictionary<CustomerConnectionIds,CustomerConnection> LoadCustomerConnections(IDataSource dataSource) {
+        public static Dictionary<CustomerConnectionIds,CustomerConnection> LoadCustomerConnections(IDataSource source) {
             #region Variables
-            Dictionary<CustomerConnectionIds,CustomerConnection> themes=new Dictionary<CustomerConnectionIds,CustomerConnection>();
+            Dictionary<CustomerConnectionIds,CustomerConnection> list=new Dictionary<CustomerConnectionIds,CustomerConnection>();
             XmlTextReader reader=null;
-            
-            CustomerConnectionIds customerConnection;
-            DatabaseTypes dataSourceTypes;
+
+            CustomerConnection customerConnection=null;
+            CustomerConnectionIds customerConnectionId;
+            DataSource.Type dataSourceTypes;
             string dataSourceParameter="";
-            int connectionTimeOut=-1;
-            bool pooling;
-            int decrPoolSize=-1;
-            int maxPoolSize=-1;
-            
+
             #endregion
 
             try {
-                reader=(XmlTextReader)dataSource.GetSource();
+                source.Open();
+                reader=(XmlTextReader)source.GetSource();
                 while(reader.Read()) {
                     if(reader.NodeType==XmlNodeType.Element) {
 
                         switch(reader.LocalName) {
                             case "customerConnection":
+                                customerConnection=null;
+                                dataSourceParameter="";
                                 if(reader.GetAttribute("enumId")==null || reader.GetAttribute("enumId").Length==0) throw (new InvalidXmlValueException("Invalid enumId (connection parameter id) parameter"));
-                                customerConnection=(CustomerConnectionIds)int.Parse(reader.GetAttribute("enumId"));
-                                if(reader.GetAttribute("dataBaseEnumId")==null || reader.GetAttribute("dataBaseEnumId").Length==0) throw (new XmlNullValueException("Invalid dataBaseEnumId parameter"));
-                                dataSourceTypes=(DatabaseTypes)int.Parse(reader.GetAttribute("dataBaseEnumId"));
+                                customerConnectionId=(CustomerConnectionIds)int.Parse(reader.GetAttribute("enumId"));
+                                if(reader.GetAttribute("dataBaseEnumId")==null || reader.GetAttribute("dataBaseEnumId").Length==0) throw (new InvalidXmlValueException("Invalid dataBaseEnumId parameter"));
+                                dataSourceTypes=(DataSource.Type)int.Parse(reader.GetAttribute("dataBaseEnumId"));
+                                if(reader.GetAttribute("dataSource")==null || reader.GetAttribute("dataSource").Length==0) throw (new InvalidXmlValueException("Invalid dataSource parameter"));
+                                dataSourceParameter=reader.GetAttribute("dataSource");
+                                customerConnection=new CustomerConnection(customerConnectionId);
+                                customerConnection.Type=dataSourceTypes;
+                                customerConnection.DataSource=dataSourceParameter;
+                                if(reader.GetAttribute("connectionTimeOut")!=null)
+                                    customerConnection.ConnectionTimeOut=int.Parse(reader.GetAttribute("connectionTimeOut"));
+                                if(reader.GetAttribute("decrPoolSize")!=null)
+                                    customerConnection.DecrPoolSize=int.Parse(reader.GetAttribute("decrPoolSize"));
+                                if(reader.GetAttribute("maxPoolSize")!=null)
+                                    customerConnection.MaxPoolSize=int.Parse(reader.GetAttribute("maxPoolSize"));
+                                if(reader.GetAttribute("pooling")!=null)
+                                    customerConnection.Pooling=bool.Parse(reader.GetAttribute("pooling"));
+                                list.Add(customerConnectionId,customerConnection);
 
-                                //themes.Add(siteLanguage,new WebTheme(id,name,siteLanguage));
                                 break;
                         }
                     }
@@ -66,15 +80,98 @@ namespace TNS.AdExpress.XmlLoader{
             catch(System.Exception err) {
 
                 #region Close the file
-                if(dataSource.GetSource()!=null) dataSource.Close();
+                if(source.GetSource()!=null) source.Close();
                 #endregion
 
                 throw (new Exception(" Error : ",err));
             }
             #endregion
 
-            dataSource.Close();
-            return (null);
+            source.Close();
+            return (list);
+        } 
+        #endregion
+
+        #region Load default connections
+        /// <summary>
+        /// Load default connections
+        /// </summary>
+        /// <example>
+        /// <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" userId="xxx" password="xxx" dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
+        /// </example>
+        /// <param name="source">source</param>
+        /// <returns>Customer connections list</returns>
+        public static Dictionary<DefaultConnectionIds,DefaultConnection> LoadDefaultConnections(IDataSource source) {
+            #region Variables
+            Dictionary<DefaultConnectionIds,DefaultConnection> list=new Dictionary<DefaultConnectionIds,DefaultConnection>();
+            XmlTextReader reader=null;
+
+            DefaultConnection defaultConnection=null;
+            DefaultConnectionIds defaultConnectionId;
+            DataSource.Type dataSourceTypes;
+            string dataSourceParameter="";
+            string login="";
+            string password="";
+
+            #endregion
+
+            try {
+                source.Open();
+                reader=(XmlTextReader)source.GetSource();
+                
+                while(reader.Read()) {
+                    if(reader.NodeType==XmlNodeType.Element) {
+
+                        switch(reader.LocalName) {
+                            case "defaultConnection":
+                                defaultConnection=null;
+                                dataSourceParameter="";
+                                login="";
+                                password="";
+                                if(reader.GetAttribute("enumId")==null || reader.GetAttribute("enumId").Length==0) throw (new InvalidXmlValueException("Invalid enumId (connection parameter id) parameter"));
+                                defaultConnectionId=(DefaultConnectionIds)int.Parse(reader.GetAttribute("enumId"));
+                                if(reader.GetAttribute("dataBaseEnumId")==null || reader.GetAttribute("dataBaseEnumId").Length==0) throw (new InvalidXmlValueException("Invalid dataBaseEnumId parameter"));
+                                dataSourceTypes=(DataSource.Type)int.Parse(reader.GetAttribute("dataBaseEnumId"));
+                                if(reader.GetAttribute("dataSource")==null || reader.GetAttribute("dataSource").Length==0) throw (new InvalidXmlValueException("Invalid dataSource parameter"));
+                                dataSourceParameter=reader.GetAttribute("dataSource");
+                                if(reader.GetAttribute("login")==null || reader.GetAttribute("login").Length==0) throw (new InvalidXmlValueException("Invalid login parameter"));
+                                login=reader.GetAttribute("login");
+                                if(reader.GetAttribute("password")==null || reader.GetAttribute("password").Length==0) throw (new InvalidXmlValueException("Invalid password parameter"));
+                                password=reader.GetAttribute("password");
+                                defaultConnection=new DefaultConnection(defaultConnectionId);
+                                defaultConnection.Type=dataSourceTypes;
+                                defaultConnection.DataSource=dataSourceParameter;
+                                defaultConnection.Login=login;
+                                defaultConnection.Password=password;
+                                if(reader.GetAttribute("connectionTimeOut")!=null)
+                                    defaultConnection.ConnectionTimeOut=int.Parse(reader.GetAttribute("connectionTimeOut"));
+                                if(reader.GetAttribute("decrPoolSize")!=null)
+                                    defaultConnection.DecrPoolSize=int.Parse(reader.GetAttribute("decrPoolSize"));
+                                if(reader.GetAttribute("maxPoolSize")!=null)
+                                    defaultConnection.MaxPoolSize=int.Parse(reader.GetAttribute("maxPoolSize"));
+                                if(reader.GetAttribute("pooling")!=null)
+                                    defaultConnection.Pooling=bool.Parse(reader.GetAttribute("pooling"));
+                                list.Add(defaultConnectionId,defaultConnection);
+
+                                break;
+                        }
+                    }
+                }
+            }
+            #region Error Management
+            catch(System.Exception err) {
+
+                #region Close the file
+                if(source.GetSource()!=null) source.Close();
+                #endregion
+
+                throw (new Exception(" Error : ",err));
+            }
+            #endregion
+
+            source.Close();
+            return (list);
         }
+        #endregion
     }
 }

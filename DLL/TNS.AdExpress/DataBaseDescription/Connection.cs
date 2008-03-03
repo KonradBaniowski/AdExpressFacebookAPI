@@ -21,31 +21,31 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// <summary>
         /// Connection Id
         /// </summary>
-        private CustomerConnectionIds _id;
+        protected CustomerConnectionIds _id;
         /// <summary>
         /// DataSource
         /// </summary>
-        private string _dataSource;
+        protected string _dataSource;
         /// <summary>
         /// Connection Timeout
         /// </summary>
-        private int _connectionTimeOut;
+        protected int _connectionTimeOut=-1;
         /// <summary>
         /// Pooling
         /// </summary>
-        private bool _pooling;
+        protected bool _pooling=false;
         /// <summary>
         /// Pool size
         /// </summary>
-        private int _decrPoolSize;
+        protected int _decrPoolSize=-1;
         /// <summary>
         /// Database type
         /// </summary>
-        private DatabaseTypes _type;
+        protected DataSource.Type _type;
         /// <summary>
         /// Max pool size
         /// </summary>
-        private int _maxPoolSize;
+        protected int _maxPoolSize=-1;
         #endregion
 
         #region Constructor
@@ -67,37 +67,37 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// <summary>
         /// DataSource
         /// </summary>
-        private string DataSource {
+        public string DataSource {
             set { _dataSource=value; }
         }
         /// <summary>
         /// Connection Timeout
         /// </summary>
-        private int ConnectionTimeOut {
+        public int ConnectionTimeOut {
             set { _connectionTimeOut=value; }
         }
         /// <summary>
         /// Pooling
         /// </summary>
-        private bool Pooling {
+        public bool Pooling {
             set { _pooling=value; }
         }
         /// <summary>
         /// Pool size
         /// </summary>
-        private int DecrPoolSize {
+        public int DecrPoolSize {
             set { _decrPoolSize=value; }
         }
         /// <summary>
         /// Database type
         /// </summary>
-        private DatabaseTypes Type {
+        public DataSource.Type Type {
             set { _type=value; }
         }
         /// <summary>
         /// Max pool size
         /// </summary>
-        private int MaxPoolSize {
+        public int MaxPoolSize {
             set { _maxPoolSize=value; }
         }
 
