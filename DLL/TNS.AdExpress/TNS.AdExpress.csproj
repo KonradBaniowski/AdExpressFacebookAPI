@@ -135,6 +135,7 @@
     </Compile>
     <Compile Include="DataBaseDescription\Schema.cs" />
     <Compile Include="DataBaseDescription\Tables.cs" />
+    <Compile Include="XmlLoader\DataBaseDescriptionXL.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
