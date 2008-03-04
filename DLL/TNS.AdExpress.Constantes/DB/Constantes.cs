@@ -137,7 +137,11 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour ramener les date de parution
 		/// </summary>
-		public const string PUBLICATION_DATES_CONNECTION_STRING="User Id=user_web; Password=zebony8; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120";		
+		public const string PUBLICATION_DATES_CONNECTION_STRING="User Id=user_web; Password=zebony8; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120";
+        /// <summary>
+        /// Chaîne de connexion à la base de données pour les textes du site AdExpress
+        /// </summary>
+        public const string WEB_ADMINISTRATION_CONNECTION_STRING="User Id=admin_web; Password=zepabony9; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120";
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les textes du site AdExpress
 		/// </summary>
@@ -153,7 +157,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les sessions
 		/// </summary>
-		public const string SESSION_CONNECTION_STRING_TEST="User Id=gfacon; Password=sandie5; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120"; 
+		//public const string SESSION_CONNECTION_STRING_TEST="User Id=gfacon; Password=sandie5; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120"; 
 		/// <summary>
 		/// Chaîne de connexion à la base de données utilisée dans les droits
 		/// </summary>
@@ -174,20 +178,6 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Chaîne de connexion à la base de données pour HERMES (Indicateurs AdExpress)
 		/// </summary>
 		public const string HERMES_CONNECTION_STRING="User Id=adexpr03_proc_8; Password=lnampt8; Data Source=adexpr03.pige; Pooling=False;Connection Timeout=120;";
-
-		//		/// <summary>
-		//		/// Chaîne connexion à la base de données pour les procédures stockées
-		//		/// </summary>
-		//		public const string STORED_PROC_CONNECTION_STRING="User Id=ADEXPRESS3_PROC_1; Password=tpimpon4 ; Data Source=adexpr04.pige ;Pooling=false;Connection Timeout=120";
-		//		/// <summary>
-		//		/// Login de connexion aux procedures stockées
-		//		/// </summary>
-		//		public const string STORED_PROC_LOGIN="ADEXPRESS3_PROC_1";
-		//		/// <summary>
-		//		/// Password de connexion aux procedures stockées
-		//		/// </summary>
-		//		public const string STORED_PROC_PASSWORD="tpimpon4";
-
 		#endregion
 	}
 

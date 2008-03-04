@@ -59,6 +59,10 @@ namespace TNS.AdExpress.DataBaseDescription {
         /// Use to retreive publication date
         /// </summary>
         publication=6,
+        /// <summary>
+        /// Web Administration
+        /// </summary>
+        webAdministration=7,
     } 
     #endregion
 

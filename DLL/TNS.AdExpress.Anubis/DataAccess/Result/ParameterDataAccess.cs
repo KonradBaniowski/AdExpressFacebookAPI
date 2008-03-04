@@ -256,8 +256,8 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 			
 			#region Ouverture de la base de données
 			//TODO : develop IDataSource for blob loading
-			OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING_TEST);
-			//OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING);
+			//OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING_TEST);
+            OracleConnection cnx = new OracleConnection(Connection.WEB_ADMINISTRATION_CONNECTION_STRING);
 			try{
 				cnx.Open();
 			}
