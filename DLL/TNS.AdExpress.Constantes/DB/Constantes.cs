@@ -137,11 +137,11 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour ramener les date de parution
 		/// </summary>
-		public const string PUBLICATION_DATES_CONNECTION_STRING="User Id=user_web; Password=zebony8; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120";
+		//public const string PUBLICATION_DATES_CONNECTION_STRING="User Id=user_web; Password=zebony8; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120";
         /// <summary>
         /// Chaîne de connexion à la base de données pour les textes du site AdExpress
         /// </summary>
-        public const string WEB_ADMINISTRATION_CONNECTION_STRING="User Id=admin_web; Password=zepabony9; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120";
+        //public const string WEB_ADMINISTRATION_CONNECTION_STRING="User Id=admin_web; Password=zepabony9; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120";
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les textes du site AdExpress
 		/// </summary>
@@ -153,7 +153,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les sessions
 		/// </summary>
-		public const string SESSION_CONNECTION_STRING="User Id=mou01_session_1; Password=sessionmolle1; Data Source=adexpr03.pige;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120"; 
+		//public const string SESSION_CONNECTION_STRING="User Id=mou01_session_1; Password=sessionmolle1; Data Source=adexpr03.pige;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120"; 
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les sessions
 		/// </summary>
@@ -165,19 +165,19 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les Recap
 		/// </summary>
-		public const string RECAP_CONNECTION_STRING="User Id=recap01; Password=itulatif8; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120"; 
+		//public const string RECAP_CONNECTION_STRING="User Id=recap01; Password=itulatif8; Data Source=adexpr03.pige;Pooling=true;Pooling=true; Max Pool Size=150; Decr Pool Size=20;Connection Timeout=120"; 
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les GRP
 		/// </summary>
-		public const string GRP_CONNECTION_STRING="User Id=grp; Password=rpgdoom3; Data Source=PITAFR02.PIGE;Connection Timeout=120";
+		//public const string GRP_CONNECTION_STRING="User Id=grp; Password=rpgdoom3; Data Source=PITAFR02.PIGE;Connection Timeout=120";
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour GEB (alertes portefeuille)
 		/// </summary>
-		public const string GEB_CONNECTION_STRING="User Id=adexpr03_proc_7; Password=pushit76; Data Source=adexpr03.pige; Pooling=False;Connection Timeout=120;";
+		//public const string GEB_CONNECTION_STRING="User Id=adexpr03_proc_7; Password=pushit76; Data Source=adexpr03.pige; Pooling=False;Connection Timeout=120;";
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour HERMES (Indicateurs AdExpress)
 		/// </summary>
-		public const string HERMES_CONNECTION_STRING="User Id=adexpr03_proc_8; Password=lnampt8; Data Source=adexpr03.pige; Pooling=False;Connection Timeout=120;";
+		//public const string HERMES_CONNECTION_STRING="User Id=adexpr03_proc_8; Password=lnampt8; Data Source=adexpr03.pige; Pooling=False;Connection Timeout=120;";
 		#endregion
 	}
 

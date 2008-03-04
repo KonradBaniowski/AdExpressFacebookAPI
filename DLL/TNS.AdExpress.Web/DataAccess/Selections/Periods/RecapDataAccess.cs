@@ -11,6 +11,8 @@ using Oracle.DataAccess.Client;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using WebException=TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 
@@ -37,7 +39,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 
 			#region Execution de la requête
 			try{
-				IDataSource source=new OracleDataSource(DBConstantes.Connection.RECAP_CONNECTION_STRING);
+                IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 				DataSet ds = source.Fill(sql.ToString());
 				return(int.Parse(ds.Tables[0].Rows[0]["current_year"].ToString()));
 			}

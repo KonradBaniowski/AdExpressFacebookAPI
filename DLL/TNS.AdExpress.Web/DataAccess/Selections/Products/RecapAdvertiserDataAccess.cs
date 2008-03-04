@@ -21,6 +21,8 @@ using TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 	/// <summary>
@@ -139,7 +141,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			#endregion
 			
 			#region Execution de la requête
-			IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+            IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 			try{
 //				return(webSession.Source.Fill(sql.ToString()));
 				return(dataSource.Fill(sql.ToString()));

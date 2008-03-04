@@ -24,6 +24,8 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using DateFunctions = TNS.FrameWork.Date;
 using FrameWorkConstantes= TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
 #endregion
 
 
@@ -356,7 +358,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					#endregion
 		
 					#region Execution de la requête
-					IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+                    IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 					try{
 						ds=dataSource.Fill(sql.ToString());
 					}
@@ -619,7 +621,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					#endregion
 		
 					#region Execution de la requête
-					IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+                    IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 					try{
 						ds=dataSource.Fill(sql.ToString());
 					}
@@ -928,7 +930,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			if(WebFunctions.CheckedText.IsStringEmpty(sql.ToString().Trim())){
 				#region Execution de la requête
-				IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+                IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 				try{
 					ds=dataSource.Fill(sql.ToString());
 				}
@@ -1043,7 +1045,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#endregion
 
 			#region Execution de la requête
-			IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+            IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 			try{
 				ds=dataSource.Fill(sql.ToString());
 			}
@@ -1161,7 +1163,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#endregion
 
 			#region Execution de la requête
-			IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+            IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 			try{
 				ds=dataSource.Fill(sql.ToString());
 			}
@@ -1466,7 +1468,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					#endregion
 
 					#region Execution de la requête
-					IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+                    IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 					try{
 						ds=dataSource.Fill(sql.ToString());
 					}
@@ -1635,7 +1637,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				#endregion
 
 				#region Execution de la requête
-				IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+                IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 				try{
 					return(dataSource.Fill(sql.ToString()));
 				}
@@ -1721,7 +1723,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql+=" and r2.TOTAL_N>0 ";
 				
 				#region Exécution de la requête
-				IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+                IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 				try{
 					ds=dataSource.Fill(sql.ToString());
 				}
@@ -2051,7 +2053,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql+=" and r2.total_N>0 ";
 
 				#region Execution de la requête
-				IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+                IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 				try{
 					ds=dataSource.Fill(sql.ToString());
 				}
@@ -2354,71 +2356,15 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql+=" ) ";
 
 			#endregion
-
-			#region ouverture de la base de données
-			OracleConnection connection = new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING);
-			
-			bool DBToClosed=false;
-			if (connection.State==System.Data.ConnectionState.Closed){
-				DBToClosed=true;
-				try{
-					connection.Open();
-				}
-			
-				catch(Exception e){
-					throw(new SectorAnalysisIndicatorDataAccessException("Impossible de se connecter à la base de données avec le login "+webSession.CustomerLogin.IdLogin+" :"+e.Message));
-				}
-			}
-			#endregion
-
-			OracleCommand sqlOracleCommand1=null;
-			OracleDataReader sqlOracleDataReader1=null;
-			try{
-				sqlOracleCommand1=new OracleCommand(sql,connection);
-				sqlOracleDataReader1=sqlOracleCommand1.ExecuteReader();
-
-				if(sqlOracleDataReader1.Read()){
-					if(sqlOracleDataReader1[0]!=System.DBNull.Value){
-						total=long.Parse(sqlOracleDataReader1[0].ToString());
-					}
-						
-				}
-			}
-				#region Traitement d'erreur du chargement des données
-			catch(System.Exception e){
-				try{
-					// Fermeture de la base de données
-					if (sqlOracleDataReader1!=null){
-						sqlOracleDataReader1.Close();
-						sqlOracleDataReader1.Dispose();
-					}
-					if(sqlOracleCommand1!=null) sqlOracleCommand1.Dispose();
-					if (DBToClosed) connection.Close();
-				}
-
-				catch(System.Exception et){
-					throw(new SectorAnalysisIndicatorDataAccessException("Message d'erreur:"+et.Message));
-				}
-				throw(new SectorAnalysisIndicatorDataAccessException("Message d'erreur :"+e.Message));
-			}
-			#endregion		
-
-			#region Fermeture de la base de données
-			try{
-				// Fermeture de la base de données
-				if (sqlOracleDataReader1!=null){
-					sqlOracleDataReader1.Close();
-					sqlOracleDataReader1.Dispose();
-				}
-				if(sqlOracleCommand1!=null)sqlOracleCommand1.Dispose();
-				if (DBToClosed) connection.Close();
-			}
-			catch(Exception e){
-				throw(new SectorAnalysisIndicatorDataAccessException("Message d'erreur :"+e.Message));
-			}
-			#endregion		
-		
-			return total;
+            try {
+                IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+                DataSet ds = source.Fill(sql.ToString());
+                total=long.Parse(ds.Tables[0].Rows[0][0].ToString());
+            }
+            catch(System.Exception err) {
+                throw (new SectorAnalysisIndicatorDataAccessException("Impossible to sum the Total getTotalForPeriod",err));
+            }
+			return (total);
 		}
 
 		#endregion
@@ -2515,70 +2461,15 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#endregion
 
-			#region ouverture de la base de données
-			OracleConnection connection = new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING);
-			
-			bool DBToClosed=false;
-			if (connection.State==System.Data.ConnectionState.Closed){
-				DBToClosed=true;
-				try{
-					connection.Open();
-				}
-			
-				catch(Exception e){
-					throw(new SectorAnalysisIndicatorDataAccessException("Impossible de se connecter à la base de données avec le login "+webSession.CustomerLogin.IdLogin+" :"+e.Message));
-				}
-			}
-			#endregion
-
-			OracleCommand sqlOracleCommand1=null;
-			OracleDataReader sqlOracleDataReader1=null;
-			try{
-				sqlOracleCommand1=new OracleCommand(sql,connection);
-				sqlOracleDataReader1=sqlOracleCommand1.ExecuteReader();
-
-				if(sqlOracleDataReader1.Read()){
-					if(sqlOracleDataReader1[0]!=System.DBNull.Value){
-						total=long.Parse(sqlOracleDataReader1[0].ToString());
-					}
-						
-				}
-			}
-				#region Traitement d'erreur du chargement des données
-			catch(System.Exception e){
-				try{
-					// Fermeture de la base de données
-					if (sqlOracleDataReader1!=null){
-						sqlOracleDataReader1.Close();
-						sqlOracleDataReader1.Dispose();
-					}
-					if(sqlOracleCommand1!=null) sqlOracleCommand1.Dispose();
-					if (DBToClosed) connection.Close();
-				}
-
-				catch(System.Exception et){
-					throw(new SectorAnalysisIndicatorDataAccessException("Message d'erreur:"+et.Message));
-				}
-				throw(new SectorAnalysisIndicatorDataAccessException("Message d'erreur :"+e.Message));
-			}
-			#endregion		
-
-			#region Fermeture de la base de données
-			try{
-				// Fermeture de la base de données
-				if (sqlOracleDataReader1!=null){
-					sqlOracleDataReader1.Close();
-					sqlOracleDataReader1.Dispose();
-				}
-				if(sqlOracleCommand1!=null)sqlOracleCommand1.Dispose();
-				if (DBToClosed) connection.Close();
-			}
-			catch(Exception e){
-				throw(new SectorAnalysisIndicatorDataAccessException("Message d'erreur :"+e.Message));
-			}
-			#endregion		
-		
-			return total;
+            try {
+                IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+                DataSet ds = source.Fill(sql.ToString());
+                total=long.Parse(ds.Tables[0].Rows[0][0].ToString());
+            }
+            catch(System.Exception err) {
+                throw (new SectorAnalysisIndicatorDataAccessException("Impossible to sum the Total getTotalForMonth",err));
+            }
+            return (total);
 		}
 
 		#endregion
@@ -2904,7 +2795,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		
 			if(WebFunctions.CheckedText.IsStringEmpty(sql.ToString().Trim())){
 				#region Execution de la requête
-				IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+				IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
 				try{
 					ds=dataSource.Fill(sql.ToString());
 				}

@@ -28,6 +28,9 @@ using ConstantesFrameWork = TNS.AdExpress.Constantes.FrameWork;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Web.DataAccess{
 	/// <summary>
@@ -90,8 +93,8 @@ namespace TNS.AdExpress.Web.DataAccess{
 			#endregion
 
 			#region Exécution de la requete
-			//			ds = ExecuteQuery(sql, webSession, DBConstantes.Connection.RECAP_CONNECTION_STRING);
-			ds = ExecuteQuery(sql,DBConstantes.Connection.RECAP_CONNECTION_STRING);
+            IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+			ds = source.Fill(sql);
 
 			#endregion
 

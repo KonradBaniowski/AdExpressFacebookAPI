@@ -26,6 +26,8 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.DB.Common;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -90,7 +92,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#endregion
 
 			#region Execution de la requête		
-			IDataSource dataSource=new OracleDataSource(new OracleConnection(DBCst.Connection.RECAP_CONNECTION_STRING));
+            IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 			try{
 				return(dataSource.Fill(sql.ToString()));
 			}

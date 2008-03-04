@@ -20,6 +20,8 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.Core.Navigation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 {
@@ -39,7 +41,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 		{
 			#region variables
 			StringBuilder sql = new StringBuilder(350);
-			IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.PUBLICATION_DATES_CONNECTION_STRING));
+            IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.publication);
 			#endregion
 
 			#region Construction of the query

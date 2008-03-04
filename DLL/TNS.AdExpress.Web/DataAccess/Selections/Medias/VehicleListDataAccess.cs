@@ -17,6 +17,8 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 	/// <summary>
@@ -1056,7 +1058,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			
 			#region Execution de la requête
 			try{
-				IDataSource source=new OracleDataSource(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING);
+                IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 				return(source.Fill(sql.ToString()));
 			}
 			catch(System.Exception err){

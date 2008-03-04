@@ -34,6 +34,7 @@ using CoreConstantes = TNS.AdExpress.Constantes.Web.Core;
 using TNS.FrameWork.WebResultUI;
 using TNS.Isis.Right.Common;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.DataBaseDescription;
 
 
 namespace TNS.AdExpress.Web.Core.Sessions {
@@ -2301,7 +2302,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 			#endregion
 
 			#region Ouverture de la base de données
-			OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING);
+            OracleConnection cnx = ((OracleConnection)WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.session).GetSource());
 			try {
 				cnx.Open();
 			}
@@ -2326,8 +2327,8 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 
 				//create anonymous PL/SQL command
 				string block = " BEGIN " +
-					" DELETE " + Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
-					" INSERT INTO " + Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + "(id_nav_session, nav_session) VALUES(" + this.idSession + ", :1); " +
+					" DELETE " + TNS.AdExpress.Constantes.DB.Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
+					" INSERT INTO " + TNS.AdExpress.Constantes.DB.Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + "(id_nav_session, nav_session) VALUES(" + this.idSession + ", :1); " +
 					" END; ";
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = cnx;
@@ -2394,7 +2395,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		public static Object Load(string idWebSession) {
 
 			#region Ouverture de la base de données
-			OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING);
+            OracleConnection cnx = ((OracleConnection)WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.session).GetSource());
 			try {
 				cnx.Open();
 			}
@@ -2415,7 +2416,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				i = 1;
 				//create anonymous PL/SQL command
 				string block = " BEGIN " +
-					" SELECT nav_session INTO :1 FROM " + Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE id_nav_session = " + idWebSession + "; " +
+					" SELECT nav_session INTO :1 FROM " + TNS.AdExpress.Constantes.DB.Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE id_nav_session = " + idWebSession + "; " +
 					" END; ";
 				i = 2;
 				sqlCommand = new OracleCommand(block);

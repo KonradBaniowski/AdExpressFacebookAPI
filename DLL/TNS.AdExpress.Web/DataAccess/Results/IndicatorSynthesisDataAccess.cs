@@ -20,6 +20,10 @@ using TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork.DB.Common;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Results
 {
@@ -188,7 +192,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 				#endregion
 
 				#region Execution de la requête
-				IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+                IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 			
 				return dataSource.Fill(sql.ToString()).Tables[0];
 			
@@ -263,7 +267,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 				#endregion
 
 				#region Execution de la requête
-				IDataSource dataSource=new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));			
+                IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 			
 				return dataSource.Fill(sql.ToString()).Tables[0];
 			
 				#endregion

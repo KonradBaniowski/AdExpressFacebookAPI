@@ -25,6 +25,8 @@ using TNS.AdExpress.Web.Core.Navigation;
 using TNS.AdExpress.Web.Core.Translation;
 using TNS.FrameWork.DB.Common;
 using FWKConstantes = TNS.AdExpress.Constantes.FrameWork;
+using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.Functions {
 	/// <summary>
@@ -1037,7 +1039,7 @@ namespace TNS.AdExpress.Web.Functions {
 			#endregion
 
 			#region Execution de la requête
-			IDataSource dataSource = new OracleDataSource(new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING));
+            IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
 			try {
 				ds = dataSource.Fill(sql.ToString());
 			}

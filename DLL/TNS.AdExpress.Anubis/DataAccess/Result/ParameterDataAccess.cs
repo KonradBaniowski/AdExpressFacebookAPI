@@ -23,6 +23,8 @@ using TNS.AdExpress.Constantes.DB;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.DataBaseDescription;
 
 
 namespace TNS.AdExpress.Anubis.DataAccess.Result{
@@ -91,9 +93,9 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 					//" NEW_ID NUMBER;"+
 					" BEGIN "+
 					//" DELETE " + Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
-					" Select " + Schema.UNIVERS_SCHEMA + ".SEQ_STATIC_NAV_SESSION.NEXTVAL into :new_id from dual;"+
+					" Select " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + ".SEQ_STATIC_NAV_SESSION.NEXTVAL into :new_id from dual;"+
 					
-					" INSERT INTO " + Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION + "(id_login,id_static_nav_session, static_nav_session,id_pdf_result_type,pdf_user_filename,status,date_creation,date_modification) VALUES("+webSession.CustomerLogin.IdLogin+", :new_id, :blobtodb,"+resultType.GetHashCode()+",'"+fileName+"',0,sysdate,sysdate); " +
+					" INSERT INTO " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION + "(id_login,id_static_nav_session, static_nav_session,id_pdf_result_type,pdf_user_filename,status,date_creation,date_modification) VALUES("+webSession.CustomerLogin.IdLogin+", :new_id, :blobtodb,"+resultType.GetHashCode()+",'"+fileName+"',0,sysdate,sysdate); " +
 					//" RETURN(NEW_ID);"+
 					" END; ";
 				sqlCommand = new OracleCommand(block);
@@ -191,9 +193,9 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 					//" NEW_ID NUMBER;"+
 					" BEGIN "+
 					//" DELETE " + Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
-					" Select " + Schema.UNIVERS_SCHEMA + ".SEQ_STATIC_NAV_SESSION.NEXTVAL into :new_id from dual;"+
+					" Select " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + ".SEQ_STATIC_NAV_SESSION.NEXTVAL into :new_id from dual;"+
 					
-					" INSERT INTO " + Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION + "(id_login,id_static_nav_session, static_nav_session,id_pdf_result_type,pdf_user_filename,status,date_creation,date_modification) VALUES("+proofDetail.CustomerWebSession.CustomerLogin.IdLogin+", :new_id, :blobtodb,"+resultType.GetHashCode()+",'"+fileName+"',0,sysdate,sysdate); " +
+					" INSERT INTO " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION + "(id_login,id_static_nav_session, static_nav_session,id_pdf_result_type,pdf_user_filename,status,date_creation,date_modification) VALUES("+proofDetail.CustomerWebSession.CustomerLogin.IdLogin+", :new_id, :blobtodb,"+resultType.GetHashCode()+",'"+fileName+"',0,sysdate,sysdate); " +
 					//" RETURN(NEW_ID);"+
 					" END; ";
 				sqlCommand = new OracleCommand(block);
@@ -257,7 +259,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 			#region Ouverture de la base de données
 			//TODO : develop IDataSource for blob loading
 			//OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING_TEST);
-            OracleConnection cnx = new OracleConnection(Connection.WEB_ADMINISTRATION_CONNECTION_STRING);
+            OracleConnection cnx = (OracleConnection)WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.webAdministration).GetSource();
 			try{
 				cnx.Open();
 			}
@@ -276,7 +278,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 				binaryData = new byte[0];
 				//create PL/SQL command
 				string block = " BEGIN "+
-					" SELECT static_nav_session INTO :1 FROM " + Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION+ " WHERE id_static_nav_session = " + idStaticNavSession.ToString() + "; " +
+					" SELECT static_nav_session INTO :1 FROM " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION+ " WHERE id_static_nav_session = " + idStaticNavSession.ToString() + "; " +
 					" END; ";
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = cnx;

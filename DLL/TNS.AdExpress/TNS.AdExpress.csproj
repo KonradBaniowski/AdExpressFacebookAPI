@@ -109,12 +109,10 @@
     <Compile Include="BusinessFacade\SqlGeneratorSystem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataAccess\Customer\RightDataAccess.cs" />
     <Compile Include="DataBaseDescription\DefaultConnection.cs" />
     <Compile Include="DataBaseDescription\DataBase.cs" />
     <Compile Include="DataBaseDescription\Connection.cs" />
-    <Compile Include="DataAccess\Customer\RightDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Exceptions\AdExpressCustomerDBException.cs">
       <SubType>Code</SubType>
     </Compile>
