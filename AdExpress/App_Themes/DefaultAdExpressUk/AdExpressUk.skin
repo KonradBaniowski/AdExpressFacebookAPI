@@ -21,6 +21,21 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/logoTNShome.gif" SkinID="logoTNShome" />
 <asp:image runat="server" ImageUrl="Images/Culture/logo/LogoAdexpress.gif" SkinID="LogoAdexpress" />
 <asp:image runat="server" ImageUrl="Images/Culture/logo/logo.gif" SkinID="logo" />
+<asp:image runat="server" ImageUrl="Images/Common/Result/bt_detail_up.gif" SkinID="bt_detail" />
+
+<%-- Icons du menu contextuel --%>
+<asp:image runat="server" ImageUrl="Images/Common/Menu/selectedMenuIcon.gif" SkinID="selected" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/productMenuIcon.gif" SkinID="product" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/mediaMenuIcon.gif" SkinID="media" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/calendarMenuIcon.gif" SkinID="calendar" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/resultMenuIcon.gif" SkinID="result" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/excelMenuIcon.gif" SkinID="excel" />
+
+<%-- Boutons --%>
+<asp:image runat="server" ImageUrl="Images/Culture/Button/valider_up.gif" SkinID="valider" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/save_up.gif" SkinID="save" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/bt_delete_up.gif" SkinID="delete" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/ok_up.gif" SkinID="ok" />
 
 <%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrButtons" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
