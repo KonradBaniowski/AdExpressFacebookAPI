@@ -8,12 +8,13 @@ using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using TNS.AdExpress.Web.UI;
 
 namespace AdExpress.Private.Helps{
 	/// <summary>
 	/// Page d'aide de OneVehicleSelectionHelp.aspx
 	/// </summary>
-	public partial class OneVehicleSelectionHelp : System.Web.UI.Page{
+	public partial class OneVehicleSelectionHelp : WebPage{
 				
 		#region Variables
 		/// <summary>

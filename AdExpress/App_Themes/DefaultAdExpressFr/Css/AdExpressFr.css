@@ -45,6 +45,11 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_1.gif);
 .headerBackGround{
 background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
 }
+.darkBackGround{
+	BACKGROUND-ATTACHMENT: fixed; 
+	BACKGROUND-IMAGE: url(/App_Themes/DefaultAdExpressUk/Images/Common/dark_back.bmp); 
+	BACKGROUND-REPEAT: repeat-x
+}
 /* Body Style*/
 .bodyStyle{
 	background-image: none; 
@@ -210,6 +215,12 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #999999;
+	font-weight: bold;
+}
+.txtBlanc14Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
 	font-weight: bold;
 }
 .pinkTextColor{

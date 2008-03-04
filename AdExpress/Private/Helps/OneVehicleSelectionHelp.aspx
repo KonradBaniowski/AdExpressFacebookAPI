@@ -2,25 +2,23 @@
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<title>AdExpress</title>
 		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<LINK href="/Css/AdExpress.css" type="text/css" rel="stylesheet">
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT">
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
-	<body style="BACKGROUND-ATTACHMENT: fixed; BACKGROUND-IMAGE: url(/Images/Common/dark_back.bmp); BACKGROUND-REPEAT: repeat-x"
-		bottomMargin="25" bgColor="#ffffff" leftMargin="0" topMargin="25" rightMargin="0">
+	<body class="darkBackGround whiteBackGround" bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0">
 		<form id="Form1" method="post" runat="server">
-			<table cellSpacing="0" cellPadding="0" width="98%" align="center" bgColor="#ffffff" border="0">
+			<table cellSpacing="0" cellPadding="0" width="98%" align="center" class="whiteBackGround" border="0">
 				<TR>
 					<td colSpan="2">
-						<table cellPadding="0" width="100%" bgColor="#644883" border="0">
+						<table cellPadding="0" width="100%" class="violetBackGround" border="0">
 							<tr>
 								<td align="left"><font class="txtBlanc14Bold">&nbsp;
 										<cc1:adexpresstext language="33" id="titleAdExpressText" runat="server" Code="993"></cc1:adexpresstext></font></td>
