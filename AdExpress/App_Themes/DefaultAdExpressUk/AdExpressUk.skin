@@ -26,6 +26,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrButtons" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrSelections" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrResults" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="webUiResults" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
 
 
 <ctrHeader:HeaderWebControl runat="server" language="44" FlashUrl="/App_Themes/DefaultAdExpressUk/Flash/Common/HeaderStrip.swf" MissingFlashUrl="/App_Themes/DefaultAdExpressUk/Images/Common/FlashReplacement/HeaderStrip.gif" />
@@ -49,3 +50,4 @@ DescriptionImageList="198:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle
 <ctrResults:resultwebcontrol runat="server" CssDetailSelectionBordelLevel="dsBorderLevel" CssDetailSelectionL1="dsLv1" CssDetailSelectionL2="dsLv2" CssDetailSelectionL3="dsLv3" CssDetailSelectionTitle="dsTitle" CssDetailSelectionTitleData="dsTitleData"
  CssDetailSelectionTitleGlobal="dsTitleGlobal" CssLHeader="h2" BackgroudColorL1="#A5CC8F" CssL1="lv1" HighlightBackgroundColorL1="#FFFFFF" HighlightBackgroundColorL3="#FFFFFF" BackgroudColorL2="#C8E6C3" CssL2="lv2" CssL3="lv3" HighlightBackgroundColorL2="#FFFFFF" 
  BackgroudColorL3="#EEFFEC" ImgBtnCroiOverPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_croi3_in.gif" ImgBtnCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_croi3.gif" ImgBtnDeCroiOverPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3_in.gif" ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3.gif" CssLTotal="lv0" SkinID="portofolioResultTable" />
+<webUiResults:PortofolioChartUI runat="server" PieColors="#FF05B6,#9D9885,#F1F1F1,#4D964B,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#000000" PieLineColor="Black" DefaultBorderLineColor="#C0C0C0" ChartBorderLineColor="#000000" TitleColor="#C8E6C3"  />
