@@ -26,6 +26,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrButtons" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrSelections" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrResults" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="webUiResults" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
 
 <ctrHeader:HeaderWebControl runat="server" language="33" FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Common/HeaderStrip.swf" MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Common/FlashReplacement/HeaderStrip.gif" />
 <ctrHeader:FlashWebControl runat="server" FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Culture/anime6.swf" MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/HomeAnime.gif"/>
@@ -45,3 +47,8 @@ DescriptionImageList="198:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle
 <ctrSelections:OneVehicleSelectionWebControl runat="server" CssClass="txtViolet11Bold" />
 <ctrSelections:daycalendarwebcontrol runat="server" TableBorderColor="#9D9885" TableColor="#FFFFFF" FontColor="#644883" TableColorSelectedDate="#644883" FontColorSelectedDate="#FFFFFF" />
 <ctrSelections:datelistwebcontrol runat="server" CssClass="txtNoir11" />
+<ctrResults:resultwebcontrol runat="server" CssDetailSelectionBordelLevel="dsBorderLevel" CssDetailSelectionL1="dsLv1" CssDetailSelectionL2="dsLv2" CssDetailSelectionL3="dsLv3" CssDetailSelectionTitle="dsTitle" CssDetailSelectionTitleData="dsTitleData"
+ CssDetailSelectionTitleGlobal="dsTitleGlobal" CssLHeader="h2" BackgroudColorL1="#B1A3C1" CssL1="lv1" HighlightBackgroundColorL1="#FFFFFF" HighlightBackgroundColorL3="#FFFFFF" BackgroudColorL2="#D0C8DA" CssL2="lv2" CssL3="lv3" HighlightBackgroundColorL2="#FFFFFF" 
+ BackgroudColorL3="#E1E0DA" ImgBtnCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3_in.gif" ImgBtnCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3.gif" ImgBtnDeCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3_in.gif" ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3.gif" CssLTotal="lv0" SkinID="portofolioResultTable" />
+ <webUiResults:PortofolioChartUI runat="server" PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" PieLineColor="Black" DefaultBorderLineColor="#C0C0C0" ChartBorderLineColor="#634984" TitleColor="#644883"  />
+ 

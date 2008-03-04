@@ -18,11 +18,23 @@ height:15px;
 .violetBackGround{
 	background-color : #FF0000;
 }
+.violetBackGroundV2{
+	background-color : #FFFF33;
+}
+.violetBackGroundV3{
+	background-color : #DCE6C3;
+}
 .paleVioletBackGround{
+	background-color : #C8E6C3;
+}
+.paleVioletBackGroundV2{
 	background-color : #C8E6C3;
 }
 .pinkBackGround{
 	background-color : #000000;
+}
+.greyBackGround{
+	background-color : #DCE6C3;
 }
 .dupli3BackGround{
 background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_3.gif);
@@ -39,7 +51,45 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 	margin: 0px; 
 	background-color: #ffffff
 }
+/* Generic Media Level Detail Selection Header */
+.GenericMediaLevelDetailSelectionHeader{
+	background-color:#FFFFFF;
+	border-right: #487583 1px solid; 
+	border-top: #487583 1px solid; 
+	border-left: #487583 1px solid; 
+	border-bottom: #487583 1px solid;
+}
+.GenericMediaLevelDetailSelectionSection{
+	border-right : #487583 1px solid;
+	border-left : #487583 1px solid; 
+	border-bottom : #487583 1px solid;
+	background-color:#C8E6C3;
+	padding-left:2px;
+	vertical-align:top;
+}
 /* Border style */
+.portofolioSynthesisBorderHeader{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #FFFFFF;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #525A3E;
+	padding-left:5px;
+	padding-right:5px;
+	border-right: #FF0000 1px solid; 
+	border-top: #FF0000 1px solid; 
+	border-left: #FF0000 1px solid; 
+	border-bottom: #FF0000 1px solid;
+	font-size: 16px;
+}
+.portofolioSynthesisBorder{
+	border-right: #FF0000 1px solid; 
+	border-top: #FF0000 1px solid; 
+	border-left: #FF0000 1px solid; 
+	border-bottom: #FF0000 1px solid;
+	font-size: 12px
+}
 .listMediaHeaderBorder{
 	border-bottom :#644883 1px solid; 
 	border-left :#644883 1px solid; 
@@ -55,6 +105,36 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 	border-left :#644883 1px solid; 
 	border-right :#644883 1px solid; 
 	border-bottom :#644883 1px solid;
+}
+.violetBorder{
+	border-color : #FF0000;
+	border-top :#FF0000 1px solid; 
+	border-left :#FF0000 1px solid; 
+	border-right :#FF0000 1px solid; 
+	border-bottom :#FF0000 1px solid;
+}
+.violetRightBorder{
+	border-right:solid 1px #B1A3C1; 
+	width:10px;
+}
+.violetRightBottomBorder{
+	border-bottom:solid 1px #B1A3C1;
+	border-right:solid 1px #B1A3C1;
+	height:5px;
+	font-size:5px;
+}
+.greyRightBorder{
+	border-right:solid 1px #808080; 
+	width:10px;
+}
+.greyRightBottomBorder{
+	border-bottom:solid 1px #808080;
+	border-right:solid 1px #808080;
+	height:5px;
+	font-size:5px;
+}
+.greyBorder{
+	border : solid 1px #808080;
 }
 /* Cursor */
 .cursorHand{
@@ -102,6 +182,18 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 	font-size: 11px;
 	color: #ffffff;
 	font-weight: normal;
+}
+.txtBlanc11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	font-weight: bold;
+}
+.txtBlanc12Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #ffffff;
+	font-weight: bold;
 }
 .txtGris11Bold{
 	font-family: Arial, Helvetica, sans-serif;
@@ -160,7 +252,7 @@ a.roll03, a.roll03:active, a.roll03:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
  font-weight: bold;
- color : #999999;
+ color : #B0BF86;
  text-decoration : none;
 }
 a.roll03:hover {
@@ -197,4 +289,200 @@ a.txtGroupViolet11Bold:hover{
 	color: #FF0000;
 	font-weight: bold;
 	text-decoration : none;	
+}
+/* Portofolio Data */
+td.portofolio1{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color : #425A3E;
+	font-weight:bold;
+	text-decoration : none;
+	background-color: #C8E6C3;	
+	padding:0px,0px,0px,2px;
+	border-left-width:1px;
+	border-left-color:#FF0000;
+	border-left-style:solid;
+	border-top-width:0px;
+	border-bottom-color:#FF0000;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FF0000;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+}
+td.portofolio11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color : #425A3E;
+	font-weight:normal;
+	text-decoration : none;
+	background-color: #C8E6C3;	
+	padding:0px,0px,0px,2px;
+	border-left-width:1px;
+	border-left-color:#FF0000;
+	border-top-width:0px;
+	border-bottom-color:#FF0000;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FF0000;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+}
+td.portofolioSynthesis{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color : #425A3E;
+	font-weight:normal;
+	text-decoration : none;
+	background-color: #C8E6C3;
+	padding:0px,0px,0px,2px;
+	border-top-style: none; 
+	border-right-style: none; 
+	border-left-style: none; 
+	border-bottom-style: none;
+	padding-left:4px;
+	padding-right:4px;
+}
+td.portofolio2{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color : #425A3E;
+	font-weight:bold;
+	text-decoration : none;
+	background-color:White;	
+	padding:0px,0px,0px,2px;
+	border-left-width:1px;
+	border-left-color:#FF0000;
+	border-left-style:solid;
+	border-top-width:0px;
+	border-bottom-color:#FF0000;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FF0000;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+}
+td.portofolio22{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color : #425A3E;
+	font-weight:normal;
+	text-decoration : none;
+	background-color:White;	
+	padding:0px,0px,0px,2px;
+	border-left-width:1px;
+	border-left-color:#FF0000;
+	border-top-width:0px;
+	border-bottom-color:#FF0000;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FF0000;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+}
+/* Table title */
+td.p2{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #FFFFFF;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #C8E6C3;
+	padding-left:5px;
+	padding-right:5px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+}
+/* Excel data */
+td.excelData{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color : #000000;
+	font-weight:bold;
+	text-decoration : none;
+	background-color: #FFFFFF;	
+	padding-left:4px;
+	
+}
+.txtBoldGrisExcel{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color : #808080;
+	font-weight:bold;
+}
+/* Styles used to display tree levels in Excel export */
+tr.BorderLevel{
+	border:solid 1px #808080;
+}
+td.acl1{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	text-decoration : none;
+}
+a.acl1,a.acl1:active,a.acl1:visited{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	text-decoration : none;
+}
+a.acl1:hover{
+	text-decoration :underline;		
+}
+td.acl2{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:normal;
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	text-decoration : none;
+}
+a.acl2,a.acl2:active,a.acl2:visited{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:normal;
+	text-decoration : none;
+}
+a.acl2:hover{
+	text-decoration :underline;	
 }
