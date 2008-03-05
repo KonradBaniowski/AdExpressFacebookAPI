@@ -7,7 +7,7 @@
 
 using System;
 
-namespace TNS.AdExpress.Web.Core.Navigation{
+namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
 	/// Classe utilisée dans l'affichage des textes des modules
 	/// </summary>

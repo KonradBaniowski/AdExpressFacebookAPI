@@ -10,7 +10,7 @@ using System.Collections;
 using TNS.AdExpress.Web.Core.DataAccess.Navigation;
 
 
-namespace TNS.AdExpress.Web.Core.Navigation{
+namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
 	/// Classe statique qui contient les différentes entêtes du site
 	/// Cette classe est chargé au démarrage du portail Web

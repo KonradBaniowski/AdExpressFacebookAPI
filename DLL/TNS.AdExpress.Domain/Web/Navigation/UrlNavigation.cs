@@ -9,7 +9,7 @@
 using System;
 using TNS.AdExpress.Web.Core.Sessions;
 
-namespace TNS.AdExpress.Web.Core.Navigation{
+namespace TNS.AdExpress.Domain.Web.Navigation {
 
 
 	///<summary>

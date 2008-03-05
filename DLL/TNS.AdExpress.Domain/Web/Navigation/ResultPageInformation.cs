@@ -9,7 +9,7 @@
 using System;
 using System.Collections;
 
-namespace TNS.AdExpress.Web.Core.Navigation{
+namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
 	/// Classe contenant divers information sur une page de resultat comme son url ou son code de traduction
 	/// </summary>

@@ -3,7 +3,7 @@ using System.Collections;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Web.Core.DataAccess.Navigation;
 
-namespace TNS.AdExpress.Web.Core.Navigation{
+namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
 	/// Classe utilisée pour connaître les données relatives à un module où un groupe de module
 	/// Hérite de ModuleHeadingDataAccess 

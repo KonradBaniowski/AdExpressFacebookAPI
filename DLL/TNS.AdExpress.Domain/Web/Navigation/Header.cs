@@ -8,7 +8,7 @@
 using System;
 using System.Collections;
 
-namespace TNS.AdExpress.Web.Core.Navigation{
+namespace TNS.AdExpress.Domain.Web.Navigation{
 	/// <summary>
 	/// Informations nécessaires au bon fonctionnement de l'entête.
 	/// </summary>

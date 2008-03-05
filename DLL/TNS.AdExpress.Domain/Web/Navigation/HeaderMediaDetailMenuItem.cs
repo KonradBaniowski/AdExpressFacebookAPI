@@ -6,7 +6,7 @@
 
 using System;
 
-namespace TNS.AdExpress.Web.Core.Navigation{
+namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
 	/// Information spécifiques à un menu d'une entête d'un détail média
 	/// </summary>

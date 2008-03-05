@@ -10,7 +10,7 @@
 using System;
 using System.Collections;
 
-namespace TNS.AdExpress.Web.Core.Navigation{
+namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
 	/// Description résumée de SelectionPageInformation.
 	/// </summary>
