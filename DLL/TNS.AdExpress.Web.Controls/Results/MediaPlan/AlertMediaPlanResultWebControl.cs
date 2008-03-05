@@ -13,7 +13,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using AjaxPro;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;

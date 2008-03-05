@@ -14,7 +14,7 @@ using System.Collections;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using TNS.FrameWork.Date;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Selections;
 using TNS.AdExpress.Web.DataAccess.Selections.Products;

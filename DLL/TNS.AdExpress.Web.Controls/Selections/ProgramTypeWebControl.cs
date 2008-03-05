@@ -14,8 +14,9 @@ using TNS.AdExpress.Web.DataAccess.Selections.Programs;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.DataAccess;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
+using TNS.AdExpress.Domain.Level;
 
 
 namespace TNS.AdExpress.Web.Controls.Selections

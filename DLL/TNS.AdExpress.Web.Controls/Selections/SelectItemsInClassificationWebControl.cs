@@ -21,7 +21,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using ClassificationDA = TNS.AdExpress.Classification.DataAccess;
 using ClassificationTable = TNS.AdExpress.Constantes.Classification.DB.Table;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Controls.Results;
 using TNS.AdExpress.Web.Controls.Buttons;
@@ -33,7 +33,7 @@ using TNS.FrameWork.Exceptions;
 using TNS.Classification;
 using TNS.Classification.Universe;
 using TNS.Classification.WebControls;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using CoreSelection=TNS.AdExpress.Web.Core.Selection;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using Oracle.DataAccess.Client;
@@ -977,7 +977,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="siteLanguage">site language</param>
 		/// <returns>translate word</returns>
 		protected override string GetWebWord(int code, int siteLanguage) {
-			return TNS.AdExpress.Web.Core.Translation.GestionWeb.GetWebWord(code, siteLanguage);
+			return GestionWeb.GetWebWord(code, siteLanguage);
 		}
 		#endregion
 

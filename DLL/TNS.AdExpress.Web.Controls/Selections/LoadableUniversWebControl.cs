@@ -11,9 +11,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 using System.ComponentModel;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Selection;
 using CoreSelection = TNS.AdExpress.Web.Core.Selection;
 using TNS.Classification.WebControls;
@@ -180,7 +180,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		List<int> tempBranchIds = null;
 		List<UniverseLevel> tempLevels = null;
 
-		Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+		Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			if(selectionPage){
 				foreach(SelectionPageInformation currentPage in currentModuleDescription.SelectionsPages){
 					if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath)) {

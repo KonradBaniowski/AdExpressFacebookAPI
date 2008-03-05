@@ -14,7 +14,7 @@ using TNS.FrameWork.Net.Rss;
 using TNS.FrameWork.Net.Rss.Channel;
 using TNS.FrameWork.Net.Rss.Collections;
 using TNS.FrameWork.Net.Rss.Item;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>

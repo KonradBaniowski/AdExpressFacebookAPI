@@ -14,7 +14,7 @@ using DBCst = TNS.AdExpress.Constantes.DB;
 using FwkSelectionCst=TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Web.Controls.Exceptions;
 using Oracle.DataAccess.Client;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 

@@ -16,7 +16,7 @@ using TNS.AdExpress.Web.Controls.Exceptions;
 using TNS.AdExpress.Web.DataAccess.Selections.Medias;
 using TNS.AdExpress.Web.Core.Sessions;
 using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using DBConstantesClassification=TNS.AdExpress.Constantes.Classification.DB;
 using VhCstes=TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
 using TableName=TNS.AdExpress.Constantes.Classification.DB.Table.name;

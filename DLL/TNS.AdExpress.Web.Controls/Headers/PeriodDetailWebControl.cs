@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using WebFct = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 
 namespace TNS.AdExpress.Web.Controls.Headers

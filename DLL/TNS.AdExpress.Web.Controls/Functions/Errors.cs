@@ -7,7 +7,7 @@ using System;
 
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.Exceptions;

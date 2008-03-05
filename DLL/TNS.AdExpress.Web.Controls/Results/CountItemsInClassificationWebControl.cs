@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using ClassificationDA=TNS.AdExpress.Classification.DataAccess;
 using ClassificationTable=TNS.AdExpress.Constantes.Classification.DB.Table;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using AjaxPro;
 

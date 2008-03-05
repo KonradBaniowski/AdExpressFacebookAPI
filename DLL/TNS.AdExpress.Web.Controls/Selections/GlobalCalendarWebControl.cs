@@ -13,7 +13,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TNS.FrameWork.Date;
 using CustomerWebConstantes = TNS.AdExpress.Constantes.Web.CustomerSessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Web;
 using Obout = OboutInc.SlideMenu;
 

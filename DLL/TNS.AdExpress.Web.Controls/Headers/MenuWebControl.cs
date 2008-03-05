@@ -19,8 +19,8 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Navigation;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Translation;
 using WebCst=TNS.AdExpress.Constantes.Web;
 using WebFunction=TNS.AdExpress.Web.Functions;
 

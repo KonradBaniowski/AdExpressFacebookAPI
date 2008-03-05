@@ -16,10 +16,11 @@ using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Level;
 
 
 namespace TNS.AdExpress.Web.Controls.Headers

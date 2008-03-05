@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 using ProductClassification = TNS.AdExpress.Classification.DataAccess.ProductBranch;
 using TNS.Classification.Universe;

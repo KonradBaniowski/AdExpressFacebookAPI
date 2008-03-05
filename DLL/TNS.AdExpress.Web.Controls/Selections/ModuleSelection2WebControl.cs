@@ -16,8 +16,8 @@ using Oracle.DataAccess.Client;
 using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.FrameWork;
 
 namespace TNS.AdExpress.Web.Controls.Selections {

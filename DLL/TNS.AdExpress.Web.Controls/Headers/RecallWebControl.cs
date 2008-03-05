@@ -9,9 +9,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Collections;
 using System.ComponentModel;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 
 
@@ -106,7 +106,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				string nomInput=Page.Request.Form.GetValues("__EVENTTARGET")[0];
 				if(nomInput==this.ID){
 					string valueInput=Page.Request.Form.GetValues("__EVENTARGUMENT")[0];
-					Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+					Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 					foreach(SelectionPageInformation currentPage in currentModuleDescription.SelectionsPages){
 						if(currentPage.Id==int.Parse(valueInput)){
 							nextUrl=currentPage.Url;
@@ -215,7 +215,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//Exemple, a changer ultérieurement
 			//webSession.CustomerLogin.moduleList();
 			bool premier=true;
-			Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+			Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			foreach(SelectionPageInformation currentPage in currentModuleDescription.SelectionsPages){
 				if(premier){
 					HTMLLinks+="\n<tr><td><table cellspacing=5 cellpadding=0 bgcolor=#FFFFFF width=\"100%\">";

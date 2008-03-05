@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
 using WebFunctions=TNS.AdExpress.Web.Functions;

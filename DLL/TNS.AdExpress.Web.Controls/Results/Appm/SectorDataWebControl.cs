@@ -20,7 +20,7 @@ using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
 using TNS.AdExpress.Constantes.Customer;
 using APPMUIs = TNS.AdExpress.Web.UI.Results.APPM;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using Oracle.DataAccess.Client;
 
 namespace TNS.AdExpress.Web.Controls.Results.Appm

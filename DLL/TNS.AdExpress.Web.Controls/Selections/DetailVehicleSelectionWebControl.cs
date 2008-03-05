@@ -16,7 +16,7 @@ using System.Data;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Controls.Exceptions;
 using TNS.AdExpress.Web.DataAccess.Selections.Medias;
 using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;

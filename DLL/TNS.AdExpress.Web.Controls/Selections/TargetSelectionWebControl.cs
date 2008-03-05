@@ -16,7 +16,7 @@ using FwkSelectionCst=TNS.AdExpress.Constantes.FrameWork.Selection;
 using FwkResultsCst=TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Controls.Exceptions;
 using Oracle.DataAccess.Client;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;

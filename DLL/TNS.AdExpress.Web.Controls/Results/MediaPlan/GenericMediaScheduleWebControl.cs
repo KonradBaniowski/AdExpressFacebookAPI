@@ -16,7 +16,7 @@ using System.ComponentModel;
 
 using AjaxPro;
 using TNS.AdExpress.Web.Controls.Headers;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Common.Results;

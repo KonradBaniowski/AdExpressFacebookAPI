@@ -17,7 +17,7 @@ using System.Windows.Forms;
 using TNS.AdExpress.Web.DataAccess.Selections;
 using TNS.AdExpress.Web.DataAccess.Selections.Products;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using WebConstantes=TNS.AdExpress.Constantes.Web;

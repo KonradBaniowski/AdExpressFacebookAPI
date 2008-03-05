@@ -12,11 +12,12 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using TNS.AdExpress.Web.DataAccess.Selections.Programs;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.DataAccess;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Domain.Level;
 
 
 namespace TNS.AdExpress.Web.Controls.Selections {

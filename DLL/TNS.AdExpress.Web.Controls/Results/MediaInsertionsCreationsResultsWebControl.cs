@@ -18,7 +18,7 @@ using System.Collections.Specialized;
 
 using WebBusinessFacade=TNS.AdExpress.Web.BusinessFacade;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using CstClassification = TNS.AdExpress.Constantes.Classification;

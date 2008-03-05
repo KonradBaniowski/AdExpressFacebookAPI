@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Rules.Results.APPM;
 using TNS.AdExpress.Constantes.Customer; 
 using WebConstantes = TNS.AdExpress.Constantes.Web;

@@ -14,9 +14,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.Controls.Headers{

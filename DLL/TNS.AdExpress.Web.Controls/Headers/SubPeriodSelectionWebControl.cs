@@ -7,7 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Functions;
 

@@ -16,7 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TNS.AdExpress.Web.DataAccess.Selections.Products;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 

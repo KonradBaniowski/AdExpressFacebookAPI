@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 using AjaxPro;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Common.Results;

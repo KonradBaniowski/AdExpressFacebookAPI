@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.ComponentModel;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpress.Web.Controls.Results{

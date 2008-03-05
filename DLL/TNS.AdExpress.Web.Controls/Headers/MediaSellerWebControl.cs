@@ -11,9 +11,9 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Drawing;
 using System.Collections;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Controls.Results;
 
 using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;

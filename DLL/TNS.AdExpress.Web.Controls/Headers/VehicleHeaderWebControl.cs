@@ -14,8 +14,8 @@ using System.ComponentModel;
 using TNS.AdExpress.Web.Core.Sessions;
 using System.Collections;
 using System.Collections.Specialized;
-using TNS.AdExpress.Web.Core.Navigation;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
@@ -84,7 +84,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			string languageString,idSessionString,idsString,zoomDateString,paramString,idVehicleString; 
 			bool firstParameter;
 
-			HeaderMediaDetailMenuItem currentHeaderMenuItem=null;
+			WebHeaderMediaDetailMenuItem currentHeaderMenuItem=null;
 			output.Write("\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" bgcolor=\"#DED8E5\">");		
 			output.Write("\n<tr>");
 
@@ -98,7 +98,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					paramString="";
 					idVehicleString="-1";
 					firstParameter=true;
-					currentHeaderMenuItem = (HeaderMediaDetailMenuItem)myEnumerator.Value;
+					currentHeaderMenuItem = (WebHeaderMediaDetailMenuItem)myEnumerator.Value;
 					//Options dans l url suivant le menuItem
 					//Differenciation et inactivation du menu actif si nécessaire
 					if(ActiveMenu==int.Parse(currentHeaderMenuItem.IdVehicle)){
@@ -212,7 +212,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				currentHeaderMenuItem = null;
 				IDictionaryEnumerator myEnumerator2 = Headers.GetEnumerator();
 				while(myEnumerator2.MoveNext()){
-					currentHeaderMenuItem = (HeaderMediaDetailMenuItem)myEnumerator2.Value;
+					currentHeaderMenuItem = (WebHeaderMediaDetailMenuItem)myEnumerator2.Value;
 					if(ActiveMenu==int.Parse(currentHeaderMenuItem.IdVehicle)){
 						bgcolor="#FFFFFF";
 					}

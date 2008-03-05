@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 
 using RulesResults=TNS.AdExpress.Web.Rules.Results;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;

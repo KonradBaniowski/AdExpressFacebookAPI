@@ -18,7 +18,7 @@ using TNS.AdExpress.Constantes.Customer;
 
 using TNS.FrameWork.DB.Common;
 using Dundas.Charting.WebControl;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 namespace TNS.AdExpress.Web.Controls.Results.Appm
 {

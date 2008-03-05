@@ -8,7 +8,7 @@
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using System.ComponentModel;
 
 

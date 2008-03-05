@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Classification.DB;
 
 

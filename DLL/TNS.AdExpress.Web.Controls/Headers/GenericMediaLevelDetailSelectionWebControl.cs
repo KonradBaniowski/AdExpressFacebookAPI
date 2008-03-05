@@ -17,12 +17,13 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.DataAccess.Session;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
