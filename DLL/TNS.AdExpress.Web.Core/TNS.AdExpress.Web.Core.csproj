@@ -135,9 +135,7 @@
     </Compile>
     <Compile Include="CustomerPeriod.cs" />
     <Compile Include="DataAccess\ClassificationList\SearchLevelDataAccess.cs" />
-    <Compile Include="DataAccess\WebLanguagesDataAccess.cs" />
-    <Compile Include="DataAccess\WebParamtersDataAccess.cs" />
-    <Compile Include="DataAccess\WebThemesDataAccess.cs" />
+    <Compile Include="DataAccess\Session\GenericDetailLevelDataAccess.cs" />
     <Compile Include="Exceptions\WebThemesDataAccessException.cs" />
     <Compile Include="Exceptions\WebLanguagesDataAccessException.cs" />
     <Compile Include="Exceptions\SearchLevelDataAccessException.cs" />
@@ -179,12 +177,6 @@
     <Compile Include="DataAccess\CssStylesListDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\DetailLevelItemsInformationDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\DetailLevelsInformationDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataAccess\GenericClassificationSearchDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -197,35 +189,11 @@
     <Compile Include="DataAccess\InsertionDetailInformationDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\Navigation\HeaderDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\Navigation\ModuleCategoryListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\Navigation\ModulesListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataAccess\PortofolioDetailMediaColumnsInformationDataAccess.cs" />
-    <Compile Include="DataAccess\Session\GenericDetailLevelDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataAccess\Session\TrackingDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\Translation\WordListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataAccess\WebRightDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DetailLevelItemInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DetailLevelItemsInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DetailLevelsInformation.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\ActiveMediaListDataAccessException.cs" />
@@ -250,22 +218,10 @@
     <Compile Include="Exceptions\GenericDetailLevelDataAccessExeption.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exceptions\GenericDetailLevelException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\HeaderException.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Exceptions\MediaException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\MediaListException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\ModuleCategoryListDataAccessException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\ModuleException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\MySessionDataAccessException.cs">
@@ -278,9 +234,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\TrackingDataAccessExeption.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\TranslationException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\UnitException.cs">
@@ -298,9 +251,6 @@
     <Compile Include="Exceptions\WebSessionException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exceptions\WordListDBException.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GenericColumnItemInformation.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -311,51 +261,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="InsertionDetailInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\Header.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\HeaderMediaDetailMenuItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\HeaderMenuItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\HeaderRules.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\Module.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\ModuleCategory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\ModuleGroup.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\ModuleItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\ModulesList.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\OptionalPageInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\PageInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\ResultPageInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\SelectionPageInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\SubSelectionPageInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Navigation\UrlNavigation.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PortofolioDetailMediaColumnsInformation.cs" />
@@ -399,9 +304,6 @@
     <Compile Include="Sessions\GenericColumns.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Sessions\GenericDetailLevel.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Sessions\GenericDetailLevelSaved.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -421,18 +323,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Result\SponsorshipShowLinkRules.cs" />
-    <Compile Include="Translation\GestionWeb.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Translation\WordList.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebApplicationParameters.cs" />
-    <Compile Include="WebLanguage.cs" />
     <Compile Include="WebRight.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WebTheme.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TNS.AdExpress.Classification\TNS.AdExpress.Classification.csproj">
@@ -453,6 +346,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Result\AdExpressCells.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataAccess\Navigation\" />
+    <Folder Include="Navigation\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

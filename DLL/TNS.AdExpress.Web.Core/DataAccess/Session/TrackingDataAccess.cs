@@ -11,7 +11,7 @@ using DBActivation=TNS.AdExpress.Constantes.DB.ActivationValues;
 using TNS.FrameWork.DB.Common;
 using TrackingConstantes=TNS.AdExpress.Constantes.Tracking;
 using WebExceptions=TNS.AdExpress.Web.Core.Exceptions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.Core.DataAccess.Session{

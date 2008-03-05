@@ -29,12 +29,14 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.FrameWork.DB.Common;
 using DATracking = TNS.AdExpress.Web.Core.DataAccess.Session.TrackingDataAccess;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using CoreConstantes = TNS.AdExpress.Constantes.Web.Core;
 using TNS.FrameWork.WebResultUI;
 using TNS.Isis.Right.Common;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Web.Core.Sessions {

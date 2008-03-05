@@ -49,7 +49,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
 
             }
             catch (System.Exception e) {
-                throw (new ModuleException(" Erreur : " + e.Message));
+                throw (new System.Exception(" Erreur : " + e.Message));
             }
 
         }

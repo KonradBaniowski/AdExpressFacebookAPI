@@ -7,6 +7,7 @@
 using System;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Core.Result{
 	/// <summary>
@@ -67,13 +68,13 @@ namespace TNS.AdExpress.Web.Core.Result{
 		public override string GetLink(){
 			if(_level>0){
 				DetailLevelItemInformation.Levels detailLevelItemInformation=_webSession.GenericProductDetailLevel.GetDetailLevelItemInformation(_level);
-				if(detailLevelItemInformation==TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser||
-					detailLevelItemInformation==TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.product||
-					detailLevelItemInformation==TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.brand||
-					detailLevelItemInformation==TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.holdingCompany||
-					detailLevelItemInformation==TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.sector||
-					detailLevelItemInformation==TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.subSector||
-					detailLevelItemInformation==TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.group){
+				if(detailLevelItemInformation==DetailLevelItemInformation.Levels.advertiser||
+					detailLevelItemInformation==DetailLevelItemInformation.Levels.product||
+					detailLevelItemInformation==DetailLevelItemInformation.Levels.brand||
+					detailLevelItemInformation==DetailLevelItemInformation.Levels.holdingCompany||
+					detailLevelItemInformation==DetailLevelItemInformation.Levels.sector||
+					detailLevelItemInformation==DetailLevelItemInformation.Levels.subSector||
+					detailLevelItemInformation==DetailLevelItemInformation.Levels.group){
 					
 					return(_link.Replace("{0}",_webSession.IdSession).Replace("{1}",_classificationId.ToString()).Replace("{2}",_level.ToString()));
 				}

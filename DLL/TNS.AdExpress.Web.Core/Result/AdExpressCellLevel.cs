@@ -10,6 +10,7 @@ using CstDB = TNS.AdExpress.Constantes.Customer.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Core.Result{
 	/// <summary>

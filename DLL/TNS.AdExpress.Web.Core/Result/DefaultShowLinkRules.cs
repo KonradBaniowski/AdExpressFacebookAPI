@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Core.Result {
     /// <summary>
@@ -66,8 +67,8 @@ namespace TNS.AdExpress.Web.Core.Result {
         public virtual bool ShowLink() {
             if(_cellLevel.Level > 0) {
                 switch(_genericDetailLevel.GetDetailLevelItemInformation(_cellLevel.Level)) {
-                    case TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.product:
-                    case TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser:
+                    case DetailLevelItemInformation.Levels.product:
+                    case DetailLevelItemInformation.Levels.advertiser:
                         return true;
                     default: return false;
                 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Core.Result {
     /// <summary>

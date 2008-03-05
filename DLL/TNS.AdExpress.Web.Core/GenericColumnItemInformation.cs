@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using CoreExceptions=TNS.AdExpress.Web.Core.Exceptions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Exceptions;
 
 namespace TNS.AdExpress.Web.Core
 {
@@ -355,8 +356,8 @@ namespace TNS.AdExpress.Web.Core
 			if(dataBaseTableName!=null && dataBaseTableName.Length>0)_dataBaseTableName=dataBaseTableName;
 			if(dataBaseTableNamePrefix!=null && dataBaseTableNamePrefix.Length>0)_dataBaseTableNamePrefix=dataBaseTableNamePrefix;
             if (cellType != null && cellType.Length > 0) _cellType = cellType;
-			if(_convertNullDbId && dataBaseAliasIdField==null)throw(new CoreExceptions.GenericDetailLevelException("Id alias have to be defined if convertNullDbId is true"));
-			if(_convertNullDbField && dataBaseAliasField==null)throw(new CoreExceptions.GenericDetailLevelException("Field alias have to be defined if convertNullDbId is true"));
+			if(_convertNullDbId && dataBaseAliasIdField==null)throw(new GenericDetailLevelException("Id alias have to be defined if convertNullDbId is true"));
+			if(_convertNullDbField && dataBaseAliasField==null)throw(new GenericDetailLevelException("Field alias have to be defined if convertNullDbId is true"));
 		}
 
 		/// <summary>

@@ -9,12 +9,12 @@ using System.Data;
 using System.Xml;
 using System.Collections;
 using System.IO;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes;
 using TNS.AdExpress.Web.Core.Exceptions;
-using TNS.AdExpress.Web.Core.Navigation;
 using TNS.AdExpress.Web.Core;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Core.DataAccess{
 
@@ -139,7 +139,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
 				}
 		
 			catch(System.Exception e){
-				throw(new ModuleException(" Erreur : "+e.Message)); 
+				throw(new System.Exception(" Erreur : "+e.Message)); 
 			}		
 			
 		}

@@ -9,6 +9,7 @@ using System.Data;
 using System.Collections;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebExceptions=TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Core.DataAccess{
 	/// <summary>

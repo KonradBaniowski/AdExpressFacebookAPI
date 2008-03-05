@@ -13,6 +13,7 @@ using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBActivation=TNS.AdExpress.Constantes.DB.ActivationValues;
 using WebExceptions=TNS.AdExpress.Web.Core.Exceptions;
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Core.DataAccess.Session{
 

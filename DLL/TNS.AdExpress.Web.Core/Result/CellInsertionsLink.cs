@@ -8,6 +8,7 @@ using System;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Core.Result{
 

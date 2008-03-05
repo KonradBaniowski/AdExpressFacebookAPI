@@ -8,7 +8,7 @@
 using System;
 using System.Collections;
 using System.Data;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using WebExceptions=TNS.AdExpress.Web.Core.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.DB;

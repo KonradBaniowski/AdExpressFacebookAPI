@@ -8,7 +8,7 @@ using System;
 using System.Collections;
 using System.Data;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.DB;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 

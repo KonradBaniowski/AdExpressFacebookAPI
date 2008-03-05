@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Core.Sessions{
 	/// <summary>
