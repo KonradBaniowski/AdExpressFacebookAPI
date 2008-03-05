@@ -739,7 +739,7 @@
 					<td>
 						<table cellSpacing="0" cellPadding="0" border="0">
 							<tr>
-								<td align="center" width="40"><IMG src="/Images/Common/button/loupe_up.gif"></td>
+								<td align="center" width="40"><asp:Image ID="Image158" runat="server" SkinID="selected" /></td>
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="text15Adexpresstext" runat="server" Code="1012"></cc1:adexpresstext></td>
 							</tr>
 						</table>
@@ -753,7 +753,7 @@
 					<td>
 						<table cellSpacing="0" cellPadding="0" border="0">
 							<tr>
-								<td align="center" width="40"><IMG src="/Images/Common/button/universe_up.gif"></td>
+								<td align="center" width="40"><asp:Image ID="Image159" runat="server" SkinID="product" /></td>
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="text16Adexpresstext" runat="server" Code="1013"></cc1:adexpresstext></td>
 							</tr>
 						</table>
@@ -767,7 +767,7 @@
 					<td>
 						<table cellSpacing="0" cellPadding="0" border="0">
 							<tr>
-								<td align="center" width="40"><IMG src="/Images/Common/button/media_up.gif"></td>
+								<td align="center" width="40"><asp:Image ID="Image161" runat="server" SkinID="media" /></td>
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="text17Adexpresstext" runat="server" Code="1014"></cc1:adexpresstext></td>
 							</tr>
 						</table>
@@ -781,7 +781,7 @@
 					<td>
 						<table cellSpacing="0" cellPadding="0" border="0">
 							<tr>
-								<td align="center" width="40"><IMG src="/Images/Common/button/calendar_up.gif"></td>
+								<td align="center" width="40"><asp:Image ID="Image162" runat="server" SkinID="calendar" /></td>
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="text18Adexpresstext" runat="server" Code="1015"></cc1:adexpresstext></td>
 							</tr>
 						</table>
@@ -795,7 +795,7 @@
 					<td>
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td width="40" align="center"><IMG src="/Images/Common/button/result_up.gif"></td>
+								<td width="40" align="center"><asp:Image ID="Image163" runat="server" SkinID="result" /></td>
 								<td class="txtViolet11">
 									<cc1:AdExpressText language="33" id="text19Adexpresstext" runat="server" Code="1016"></cc1:AdExpressText>
 								</td>
@@ -811,7 +811,7 @@
 					<td>
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td width="40" align="center"><IMG src="/Images/Common/button/universe_up.gif"></td>
+								<td width="40" align="center"><asp:Image ID="Image160" runat="server" SkinID="product" /></td>
 								<td class="txtViolet11">
 									<cc1:AdExpressText language="33" id="Adexpresstext40" runat="server" Code="1344"></cc1:AdExpressText>
 								</td>
