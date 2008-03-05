@@ -1,3 +1,4 @@
+
 #region Informations
 // Auteur: G. Ragneau
 // Date de Création:
@@ -12,7 +13,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation{
 	/// <summary>
 	/// Informations nécessaires au bon fonctionnement de l'entête.
 	/// </summary>
-	public class Header{
+	public class WebHeader{
 
 		#region Variables
 		/// <summary>
@@ -44,7 +45,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation{
 		/// <param name="imgUrl">Url de l'image sous jacente des menus</param>
 		/// <param name="flashUrl">Url du fichier animation flash en haut de l'entête</param>
 		/// <param name="missingFlashUrl">Lien à utiliser quand le client ne dispose pas de flash</param>
-		public Header(string imgUrl, string flashUrl, string missingFlashUrl){
+		public WebHeader(string imgUrl, string flashUrl, string missingFlashUrl){
 			_imgUrl=imgUrl;
 			_missingFlashUrl = missingFlashUrl;
 			_flashUrl = flashUrl;

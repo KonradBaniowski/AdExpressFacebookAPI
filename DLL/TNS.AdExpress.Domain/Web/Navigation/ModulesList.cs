@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
-using TNS.AdExpress.Web.Core.Exceptions;
-using TNS.AdExpress.Web.Core.DataAccess.Navigation;
+using TNS.AdExpress.Domain.XmlLoader;
+using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Exceptions;
+
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -41,6 +44,8 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			_htModuleGroup=new Hashtable();
 			_htModule=new Hashtable();
 			_htModuleCategory=new Hashtable();
+            ModulesListXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CONFIGURATION_FILENAME),_htModuleGroup,_htModule);
+            ModuleCategoryListXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME),_htModuleCategory);
 		}
 		#endregion
 
@@ -51,9 +56,8 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		///  <param name="pathXMLFile">chemin du fichier xml</param>
 		///  <param name="pathXMLModuleCategoryFile">Chemin du fichier xml de la configuration des catégories</param>
 		///  <url>element://model:project::TNS.AdExpress.Web.Core/design:view:::f0mlmfqhp2ke24l_v</url>
-		public static void Init(string pathXMLFile, string pathXMLModuleCategoryFile){
-			ModulesListDataAccess.Load(pathXMLFile,_htModuleGroup,_htModule);
-			ModuleCategoryListDataAccess.Load(pathXMLModuleCategoryFile,_htModuleCategory);
+		public static void Init(){
+			
 		}
 		#endregion
 

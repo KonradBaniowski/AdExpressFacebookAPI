@@ -11,7 +11,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
 	/// Information spécifiques à un menu d'une entête homepage ou générique
 	/// </summary>
-	public class HeaderMenuItem{
+	public class WebHeaderMenuItem{
 
 		#region Variables
 		/// <summary>
@@ -50,7 +50,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// <param name="giveSession">Indique si l'identifiant de la session doit être indiquée dans l'url</param>
 		/// <param name="target">Indique la fenêtre cible du lien courant</param>
         /// <param name="displayInPopUp">Indique si on veut afficher la page demandé dans une pop up</param>
-        public HeaderMenuItem(Int64 idMenu, string targetUrl, bool giveLanguage, bool giveSession, string target, bool displayInPopUp) {
+        public WebHeaderMenuItem(Int64 idMenu, string targetUrl, bool giveLanguage, bool giveSession, string target, bool displayInPopUp) {
 			_targetUrl = targetUrl;
 			_idMenu = idMenu;
 			_giveLanguage=giveLanguage;

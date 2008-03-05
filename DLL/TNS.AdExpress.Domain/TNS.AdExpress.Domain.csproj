@@ -35,6 +35,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.dll</HintPath>
+    </Reference>
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.dll</HintPath>
@@ -51,11 +55,58 @@
     <Compile Include="Exceptions\DefaultConnectionException.cs" />
     <Compile Include="DataBaseDescription\Schema.cs" />
     <Compile Include="DataBaseDescription\Tables.cs" />
+    <Compile Include="Exceptions\DetailLevelItemsInformationXLException.cs" />
+    <Compile Include="Exceptions\DetailLevelsInformationXLException.cs" />
+    <Compile Include="Exceptions\GenericDetailLevelException.cs" />
+    <Compile Include="Exceptions\HeaderException.cs" />
+    <Compile Include="Exceptions\ModuleCategoryListXLException.cs" />
+    <Compile Include="Exceptions\ModuleException.cs" />
+    <Compile Include="Exceptions\TranslationException.cs" />
+    <Compile Include="Exceptions\WebLanguagesXLException.cs" />
+    <Compile Include="Exceptions\WebThemesXLException.cs" />
+    <Compile Include="Levels\DetailLevelItemInformation.cs" />
+    <Compile Include="Levels\DetailLevelItemsInformation.cs" />
+    <Compile Include="Levels\DetailLevelsInformation.cs" />
+    <Compile Include="Levels\GenericDetailLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Right.cs" />
+    <Compile Include="Translation\GestionWeb.cs" />
+    <Compile Include="Translation\WordList.cs" />
+    <Compile Include="Web\Navigation\WebHeader.cs" />
+    <Compile Include="Web\Navigation\WebHeaderMediaDetailMenuItem.cs" />
+    <Compile Include="Web\Navigation\WebHeaderMenuItem.cs" />
+    <Compile Include="Web\Navigation\WebHeaders.cs" />
+    <Compile Include="Web\Navigation\Module.cs" />
+    <Compile Include="Web\Navigation\ModuleCategory.cs" />
+    <Compile Include="Web\Navigation\ModuleGroup.cs" />
+    <Compile Include="Web\Navigation\ModuleItem.cs" />
+    <Compile Include="Web\Navigation\ModulesList.cs" />
+    <Compile Include="Web\Navigation\OptionalPageInformation.cs" />
+    <Compile Include="Web\Navigation\PageInformation.cs" />
+    <Compile Include="Web\Navigation\ResultPageInformation.cs" />
+    <Compile Include="Web\Navigation\SelectionPageInformation.cs" />
+    <Compile Include="Web\Navigation\SubSelectionPageInformation.cs" />
+    <Compile Include="Web\WebApplicationParameters.cs" />
+    <Compile Include="Web\WebLanguage.cs" />
+    <Compile Include="Web\WebTheme.cs" />
     <Compile Include="XmlLoader\DataBaseDescriptionXL.cs" />
+    <Compile Include="XmlLoader\DetailLevelItemsInformationXL.cs" />
+    <Compile Include="XmlLoader\DetailLevelsInformationXL.cs" />
+    <Compile Include="XmlLoader\HeaderXL.cs" />
+    <Compile Include="XmlLoader\ModuleCategoryListXL.cs" />
+    <Compile Include="XmlLoader\ModulesListXL.cs" />
+    <Compile Include="XmlLoader\WebLanguagesXL.cs" />
+    <Compile Include="XmlLoader\WebParamtersXL.cs" />
+    <Compile Include="XmlLoader\WebThemesXL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataBaseDescription\DataBaseConfiguration.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -10,7 +10,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
 	/// Information spécifiques à un menu d'une entête d'un détail média
 	/// </summary>
-	public class HeaderMediaDetailMenuItem : HeaderMenuItem{
+	public class WebHeaderMediaDetailMenuItem : WebHeaderMenuItem{
 
 		#region Variables
 		/// <summary>
@@ -79,7 +79,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// <param name="zoomDate">période étudiée en zoom</param>
 		/// <param name="idVehicle">Identifiant du média</param>
 		/// <param name="param"> Nombre générée à partir de la date</param>
-		public HeaderMediaDetailMenuItem(Int64 idMenu, string targetUrl,bool giveLanguage,bool giveSession,string target,string ids,string zoomDate,string param,string idVehicle):base(idMenu,targetUrl,giveLanguage,giveSession,target,false){
+		public WebHeaderMediaDetailMenuItem(Int64 idMenu, string targetUrl,bool giveLanguage,bool giveSession,string target,string ids,string zoomDate,string param,string idVehicle):base(idMenu,targetUrl,giveLanguage,giveSession,target,false){
 			_ids = ids;
 			_zoomDate = zoomDate;
 			_param = param;

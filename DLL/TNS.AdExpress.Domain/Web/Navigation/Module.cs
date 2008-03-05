@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections;
+using TNS.AdExpress.Domain.Exceptions;
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -242,7 +243,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 				return(null);
 			}
 			catch(System.Exception err){
-				throw(new TNS.AdExpress.Web.Core.Exceptions.ModuleException("Impossible d'obtenir les informations correspondant au résultat "+currentTab,err));
+				throw(new ModuleException("Impossible d'obtenir les informations correspondant au résultat "+currentTab,err));
 			}
 		}
 
@@ -265,7 +266,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 				return(-1);
 			}
 			catch(System.Exception err){
-				throw(new TNS.AdExpress.Web.Core.Exceptions.ModuleException("Impossible d'obtenir le resultId de "+currentTab,err));
+				throw(new ModuleException("Impossible d'obtenir le resultId de "+currentTab,err));
 			}
 			
 		}
@@ -307,7 +308,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		///</remarks>
 		///<param name="url">Url de la page</param>
 		///<param name="currentTab">id le page de résultat sélectionnée par le client</param>
-		public TNS.AdExpress.Web.Core.Navigation.PageInformation GetPageInformation( string url, Int64 currentTab ){
+		public PageInformation GetPageInformation( string url, Int64 currentTab ){
 			try{
 				foreach(PageInformation currentPage in _selectionsPages){
 					if(currentPage.Url==url)return(currentPage); 
@@ -329,7 +330,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 				return(null);
 			}
 			catch(System.Exception err){
-				throw(new TNS.AdExpress.Web.Core.Exceptions.ModuleException("Impossible d'obtenir les inforamtions de la page "+url+","+currentTab.ToString(),err));
+				throw(new ModuleException("Impossible d'obtenir les inforamtions de la page "+url+","+currentTab.ToString(),err));
 			}
 		
 		} 
