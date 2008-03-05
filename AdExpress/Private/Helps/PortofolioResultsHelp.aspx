@@ -668,7 +668,7 @@
 					<td>
 						<table cellSpacing="0" cellPadding="0" border="0">
 							<tr>
-								<td align="center" width="40"><IMG src="/Images/Common/button/print_up.gif"></td>
+								<td align="center" width="40"><asp:Image ID="Image164" runat="server" SkinID="print" /></td>
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="text4AdExpressText" runat="server" Code="1662"></cc1:adexpresstext></td>
 							</tr>
 						</table>
@@ -683,7 +683,7 @@
 					<td>
 						<table cellSpacing="0" cellPadding="0" border="0">
 							<tr>
-								<td align="center" width="40"><IMG src="/Images/Common/button/excel_up.gif"></td>
+								<td align="center" width="40"><asp:Image ID="Image165" runat="server" SkinID="excel" /></td>
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext38" runat="server" Code="1663"></cc1:adexpresstext></td>
 							</tr>
 						</table>
@@ -698,7 +698,7 @@
 					<td>
 						<table cellSpacing="0" cellPadding="0" border="0">
 							<tr>
-								<td align="center" width="40"><IMG src="/Images/Common/button/excel_export_up.gif"></td>
+								<td align="center" width="40"><asp:Image ID="Image166" runat="server" SkinID="excelExport" /></td>
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext39" runat="server" Code="2027"></cc1:adexpresstext></td>
 							</tr>
 						</table>
@@ -713,7 +713,7 @@
 					<td>
 						<table cellSpacing="0" cellPadding="0" border="0">
 							<tr>
-								<td align="center" width="40"><IMG src="/Images/Common/detailSpot_up.gif"></td>
+								<td align="center" width="40"><asp:Image ID="Image167" runat="server" SkinID="detailSpot" /></td>
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext41" runat="server" Code="2028"></cc1:adexpresstext></td>
 							</tr>
 						</table>

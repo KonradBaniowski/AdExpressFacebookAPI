@@ -30,12 +30,15 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Menu/calendarMenuIcon.gif" SkinID="calendar" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/resultMenuIcon.gif" SkinID="result" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/excelMenuIcon.gif" SkinID="excel" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/excelExportMenuIcon.gif" SkinID="excelExport" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/printMenuIcon.gif" SkinID="print" />
 
 <%-- Boutons --%>
 <asp:image runat="server" ImageUrl="Images/Culture/Button/valider_up.gif" SkinID="valider" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/save_up.gif" SkinID="save" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/bt_delete_up.gif" SkinID="delete" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/ok_up.gif" SkinID="ok" />
+<asp:image runat="server" ImageUrl="Images/Common/detailSpot_up.gif" SkinID="detailSpot" />
 
 <%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrButtons" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
