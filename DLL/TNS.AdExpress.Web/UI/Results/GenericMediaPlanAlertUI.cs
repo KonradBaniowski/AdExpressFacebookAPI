@@ -2169,11 +2169,11 @@ namespace TNS.AdExpress.Web.UI.Results{
 
             if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || webSession.CurrentModule == WebConstantes.Module.Name.ALERTE_PLAN_MEDIA)
             {
-				t.Append(ExcelFunction.GetLogo());
+                t.Append(ExcelFunction.GetLogo(webSession));
                 t.Append(ExcelFunction.GetExcelHeader(webSession, false, periodBeginning, periodEnd));
             }
             else {
-				t.Append(ExcelFunction.GetLogo());
+                t.Append(ExcelFunction.GetLogo(webSession));
                 t.Append(ExcelFunction.GetExcelHeaderForMediaPlanPopUp(webSession, false, periodBeginning, periodEnd));
             }
             #endregion
@@ -2724,7 +2724,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
             #region Rappel des paramètres
             // Paramètres du tableau
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
             t.Append(ExcelFunction.GetExcelHeader(webSession, true, periodBeginning, periodEnd));
             
             #endregion

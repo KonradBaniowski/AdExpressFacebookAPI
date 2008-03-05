@@ -1032,7 +1032,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region Rappel de sélection
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
 			if(webSession.CurrentModule==WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || webSession.CurrentModule==WebConstantes.Module.Name.ALERTE_PLAN_MEDIA){
 				t.Append(ExcelFunction.GetExcelHeader(webSession,true,true));
 			}
@@ -1230,7 +1230,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			string totalUnit="";
 			#endregion
 
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
 			t.Append(ExcelFunction.GetExcelHeader(webSession,true,true));
 
 			t.Append("<table border=0 cellpadding=0 cellspacing=0>\r\n\t<tr>");

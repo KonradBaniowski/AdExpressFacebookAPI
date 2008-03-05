@@ -402,7 +402,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			else if(webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.SEASONALITY){
 								temp=GestionWeb.GetWebWord(1139,webSession.SiteLanguage);
 			}
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
 			t.Append(ExcelFunction.GetExcelHeader(webSession,false,true,false,temp));
 
 			#endregion

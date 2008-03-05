@@ -163,7 +163,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			#endregion
 			#region Rappel des paramètres
 			// Paramètres du tableau
-			t.Append(ExcelFunction.GetAppmLogo());
+            t.Append(ExcelFunction.GetAppmLogo(webSession));
 			t.Append(ExcelFunction.GetExcelHeader(webSession, GestionWeb.GetWebWord(1666, webSession.SiteLanguage)));
 			#endregion
 

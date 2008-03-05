@@ -844,7 +844,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
 
 			#region Rappel des paramètres
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
 			t.Append(ExcelFunction.GetExcelHeader(webSession,false,true,false,GestionWeb.GetWebWord(1254,webSession.SiteLanguage)));
 			
 

@@ -89,7 +89,7 @@ namespace TNS.AdExpress.Web.UI.Results {
 						break;
 
 				}
-				t.Append(ExcelFunction.GetLogo());
+                t.Append(ExcelFunction.GetLogo(webSession));
 				t.Append(ExcelFunction.GetExcelHeader(webSession,true,true,false,true,module));		//TODO : Adapter pour univers generique		
 				t.Append(GetHtmlSource(webSession,true));
 				t.Append(ExcelFunction.GetFooter(webSession));					
@@ -169,7 +169,7 @@ namespace TNS.AdExpress.Web.UI.Results {
 						break;
 
 				}
-				html.Append(ExcelFunction.GetLogo());
+                html.Append(ExcelFunction.GetLogo(webSession));
 				html.Append(ExcelFunction.GetExcelHeader(webSession,true,true,false,true,module)); //TODO : Adapter pour univers generique		
 
 				try{

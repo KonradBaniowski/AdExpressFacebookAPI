@@ -164,7 +164,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 				#endregion
 			
 				if (excel){
-					html.Insert(0, ExcelFct.GetAppmLogo() + ExcelFct.GetExcelHeader(webSession, false, false,false,false,true,GestionWeb.GetWebWord(1727,webSession.SiteLanguage)));
+                    html.Insert(0, ExcelFct.GetAppmLogo(webSession) + ExcelFct.GetExcelHeader(webSession, false, false, false, false, true, GestionWeb.GetWebWord(1727, webSession.SiteLanguage)));
 					html.Append(ExcelFct.GetFooter(webSession));
 				}
 			}
@@ -187,7 +187,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			#region variables
 			System.Text.StringBuilder t = new System.Text.StringBuilder(20000);
 			#endregion
-			t.Append(ExcelFct.GetAppmLogo());
+            t.Append(ExcelFct.GetAppmLogo(webSession));
 			t.Append(GetHtml(dataSource, webSession, dateBegin, dateEnd, idBaseTarget,idMedia,idWave,true));
 			t.Append(ExcelFct.GetFooter(webSession));
 			return Convertion.ToHtmlString(t.ToString());

@@ -924,7 +924,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			StringBuilder HtmlTxt = new StringBuilder(1000);
 
 			#region Paramètres du tableau
-			HtmlTxt.Append(ExcelFunction.GetLogo());
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
 			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUp(webSession,false,periodBeginning,periodEnd, idElement, level));
 			#endregion
 
@@ -1025,7 +1025,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			const string CLASSE_2="pmmediaxls2";
 
 			#region Paramètres du tableau
-			HtmlTxt.Append(ExcelFunction.GetLogo());
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
 			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUp(webSession,false,periodBeginning,periodEnd, idElement, level));
 			#endregion
 
@@ -1130,7 +1130,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			const string CLASSE_2="pmmediaxls2";
 
 			#region Paramètres du tableau
-			HtmlTxt.Append(ExcelFunction.GetLogo());
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
 			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUp(webSession,false,periodBeginning,periodEnd, idElement, level));
 			#endregion
 
@@ -1232,7 +1232,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			const string CLASSE_2="pmmediaxls2";
 
 			#region Paramètres du tableau
-			HtmlTxt.Append(ExcelFunction.GetLogo());
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
 			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUp(webSession,false,periodBeginning,periodEnd, idElement, level));
 			#endregion
 

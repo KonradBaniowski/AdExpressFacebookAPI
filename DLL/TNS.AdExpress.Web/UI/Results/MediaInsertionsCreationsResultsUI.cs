@@ -2147,7 +2147,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			string classe="";
 
 			#region Paramètres du tableau
-			HtmlTxt.Append(ExcelFunction.GetLogo());
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
 			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
 			#endregion
 
@@ -2369,7 +2369,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			string classe="";
 
 			#region Paramètres du tableau
-			HtmlTxt.Append(ExcelFunction.GetLogo());
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
 			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
 			#endregion	
 			
@@ -2587,7 +2587,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			string classe="";
 			int j=0;
 			#region Paramètres du tableau
-			HtmlTxt.Append(ExcelFunction.GetLogo());
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
 			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
 			#endregion
 
@@ -2809,7 +2809,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			string classe="";
 
 			#region Paramètres du tableau
-			HtmlTxt.Append(ExcelFunction.GetLogo());
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
 			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
 			#endregion
 
@@ -3066,7 +3066,7 @@ namespace TNS.AdExpress.Web.UI.Results{
             #endregion
 
             #region Paramètres du tableau
-			HtmlTxt.Append(ExcelFunction.GetLogo());
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
             HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession, false, periodBeginning, periodEnd, mediaImpactedList, idVehicle));
             #endregion
 

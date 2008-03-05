@@ -179,7 +179,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			if(excel){
 				#region Rappel des paramètres
 				// Paramètres du tableau
-				t.Append(ExcelFunction.GetAppmLogo());
+                t.Append(ExcelFunction.GetAppmLogo(webSession));
 				t.Append(ExcelFunction.GetExcelHeader(webSession,GestionWeb.GetWebWord(1777,webSession.SiteLanguage)));				
 				#endregion
 				t.Append(Convertion.ToHtmlString(APPMUIs.AnalyseFamilyInterestPlanUI.InterestFamilyPlan( webSession, dataSource, idWave,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget,excel)));

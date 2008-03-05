@@ -655,7 +655,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			#region Rappel des paramètres
 			// Paramètres du tableau
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
 			t.Append(ExcelFunction.GetExcelHeader(webSession,GestionWeb.GetWebWord(1500,webSession.SiteLanguage)));
 			
 			#endregion

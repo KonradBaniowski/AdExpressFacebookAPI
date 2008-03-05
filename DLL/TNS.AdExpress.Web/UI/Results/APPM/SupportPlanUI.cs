@@ -150,7 +150,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 				return html.ToString();
 			}
 			else {
-				return ExcelFct.GetAppmLogo()
+                return ExcelFct.GetAppmLogo(webSession)
 					+ Convertion.ToHtmlString(ExcelFct.GetExcelHeader(webSession, false, false, false, false, true, GestionWeb.GetWebWord(1733, webSession.SiteLanguage))
 					+ html.ToString())
 					+ ExcelFct.GetFooter(webSession);

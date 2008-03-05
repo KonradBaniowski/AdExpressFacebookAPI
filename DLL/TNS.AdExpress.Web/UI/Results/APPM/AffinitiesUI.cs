@@ -128,7 +128,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 			#endregion
 
 			string excelTable=Convertion.ToHtmlString(APPMUIs.AffinitiesUI.GetHTML(webSession,dataSource,dateBegin,dateEnd,baseTarget,idWave,excel));
-			return ExcelFunction.GetAppmLogo() + parameters + excelTable + Convertion.ToHtmlString(ExcelFunction.GetFooter(webSession));
+            return ExcelFunction.GetAppmLogo(webSession) + parameters + excelTable + Convertion.ToHtmlString(ExcelFunction.GetFooter(webSession));
 		}
 		#endregion
 	}

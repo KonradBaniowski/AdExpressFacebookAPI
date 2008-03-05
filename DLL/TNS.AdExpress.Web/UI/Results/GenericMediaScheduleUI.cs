@@ -417,7 +417,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                 t.Append(ExcelFunction.GetExcelHeaderForCreativeMediaPlan(webSession));
             }
             else {
-                t.Append(ExcelFunction.GetLogo());
+                t.Append(ExcelFunction.GetLogo(webSession));
                 if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) {
                     t.Append(ExcelFunction.GetExcelHeader(webSession, true, false, zoom, periodDisplayLevel));
                 }

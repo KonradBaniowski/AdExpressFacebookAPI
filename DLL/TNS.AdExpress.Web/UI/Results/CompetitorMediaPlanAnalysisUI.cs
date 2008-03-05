@@ -392,7 +392,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			//fin MAJ
 
 			System.Text.StringBuilder t=new System.Text.StringBuilder(10000);
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
 			t.Append(ExcelFunction.GetExcelHeader(webSession,true,true));
 
 			t.Append("<table border=0 cellpadding=0 cellspacing=0>\r\n\t<tr>");
