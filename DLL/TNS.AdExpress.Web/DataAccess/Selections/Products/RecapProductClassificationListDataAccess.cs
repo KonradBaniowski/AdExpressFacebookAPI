@@ -15,7 +15,7 @@ using TablesDBConstantes=TNS.AdExpress.Constantes.DB.Tables;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Products{

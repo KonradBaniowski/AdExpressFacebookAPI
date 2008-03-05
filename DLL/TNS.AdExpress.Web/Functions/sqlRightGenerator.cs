@@ -25,7 +25,7 @@ using TNS.AdExpress.Web.Core.Navigation;
 using TNS.AdExpress.Web.Core.Translation;
 using TNS.FrameWork.DB.Common;
 using FWKConstantes = TNS.AdExpress.Constantes.FrameWork;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.Functions {

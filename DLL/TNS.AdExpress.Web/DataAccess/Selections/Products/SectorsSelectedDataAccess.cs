@@ -19,7 +19,7 @@ using DBClassificationCst = TNS.AdExpress.Constantes.Classification.DB;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.DB.Common;
 using TNS.Classification.Universe;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Products{

@@ -20,9 +20,7 @@ using TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork.DB.Common;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.DataBaseDescription;
-using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Results

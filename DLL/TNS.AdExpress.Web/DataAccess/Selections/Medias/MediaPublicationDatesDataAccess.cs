@@ -20,7 +20,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.Core.Navigation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Medias

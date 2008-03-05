@@ -26,7 +26,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.DB.Common;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 #endregion
 

@@ -29,7 +29,7 @@ using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Web.DataAccess{

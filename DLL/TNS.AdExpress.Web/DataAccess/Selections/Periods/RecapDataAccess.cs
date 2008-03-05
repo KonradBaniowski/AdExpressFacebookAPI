@@ -11,7 +11,7 @@ using Oracle.DataAccess.Client;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using WebException=TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{

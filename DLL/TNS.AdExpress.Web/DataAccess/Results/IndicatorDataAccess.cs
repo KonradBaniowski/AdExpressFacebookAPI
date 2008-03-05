@@ -24,7 +24,7 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using DateFunctions = TNS.FrameWork.Date;
 using FrameWorkConstantes= TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 #endregion
 
