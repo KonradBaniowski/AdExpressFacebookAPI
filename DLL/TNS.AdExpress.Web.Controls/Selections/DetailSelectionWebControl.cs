@@ -19,9 +19,9 @@ using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using AdExClassification = TNS.AdExpress.Classification.DataAccess;
 using ClassificationCst=TNS.AdExpress.Constantes.Classification;
 using ResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert;
@@ -40,7 +40,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
 	/// Composant pour la construction du code html pour le rappel de sélection
 	/// </summary>
-	[DefaultProperty("Text"), 
+	[DefaultProperty("Text"),  
 		ToolboxData("<{0}:DetailSelectionWebControl runat=server></{0}:DetailSelectionWebControl>")]
 	public class DetailSelectionWebControl : System.Web.UI.WebControls.WebControl{
 
