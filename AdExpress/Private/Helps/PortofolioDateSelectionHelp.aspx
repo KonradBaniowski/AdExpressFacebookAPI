@@ -56,7 +56,7 @@
 					<td colSpan="2"><asp:Image ID="Image6" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/calendarDatePortfolio.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/calendarDatePortfolio.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image7" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -72,7 +72,7 @@
 					<td colSpan="2"><asp:Image ID="Image9" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/calendarDay.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/calendarDay.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image10" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -81,7 +81,7 @@
 					<td width="10"><asp:Image ID="Image11" runat="server" SkinID="pixel" width="10" /></td>
 					<td class="txtViolet11">
 						<cc1:adexpresstext language="33" id="text2AdExpressText" runat="server" Code="997"></cc1:adexpresstext>
-						&nbsp;<IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Button/valider_up.gif">&nbsp;
+						&nbsp;<IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/valider_up.gif">&nbsp;
 						<cc1:adexpresstext language="33" id="text3AdExpressText" runat="server" Code="1023"></cc1:adexpresstext></td>
 				</tr>
 				<tr>
@@ -124,7 +124,7 @@
 					<td width="10"><asp:Image ID="Image18" runat="server" SkinID="pixel" width="10" /></td>
 					<td class="txtViolet11">
 						<cc1:adexpresstext language="33" id="text9AdExpressText" runat="server" Code="997"></cc1:adexpresstext>
-						&nbsp;<img src="/App_Themes/<%=_themeName%>/Images/Culture/Button/valider_up.gif" >&nbsp;
+						&nbsp;<img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/valider_up.gif" >&nbsp;
 						<cc1:adexpresstext language="33" id="text8AdExpressText" runat="server" Code="1029"></cc1:adexpresstext>
 					</td>
 				</tr>
@@ -234,7 +234,7 @@
 					<td colSpan="2"><asp:Image ID="Image26" runat="server" SkinID="pixel" height="10" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="right" class="whiteBackGround" colSpan="2"><A onmouseover="bouton.src='/App_Themes/<%=_themeName%>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%=_themeName%>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%=_themeName%>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
+					<td align="right" class="whiteBackGround" colSpan="2"><A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
 				</tr>
 			</table>
 		</form>

@@ -47,7 +47,7 @@
 					<td colSpan="2"><asp:Image ID="Image4" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portfolioResultOption.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portfolioResultOption.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image5" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -69,7 +69,7 @@
 					<td colSpan="2"><asp:Image ID="Image9" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portSynthesePubTVRadio.gif" >&nbsp;<IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portSynthesePubPress.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portSynthesePubTVRadio.gif" >&nbsp;<IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portSynthesePubPress.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image10" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -84,7 +84,7 @@
 					<td colSpan="2"><asp:Image ID="Image12" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portSynthesePubChemindeFer.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portSynthesePubChemindeFer.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image13" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -107,7 +107,7 @@
 					<td colSpan="2"><asp:Image ID="Image17" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/annDynGadLink.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/annDynGadLink.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image18" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -129,7 +129,7 @@
 					<td colSpan="2"><asp:Image ID="Image21" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portDetailColonne.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portDetailColonne.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image22" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -144,7 +144,7 @@
 					<td colSpan="2"><asp:Image ID="Image24" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portDetailInsertionOption.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portDetailInsertionOption.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image28" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -166,7 +166,7 @@
 					<td colSpan="2"><asp:Image ID="Image32" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portNouveautesOption.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portNouveautesOption.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image33" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -181,7 +181,7 @@
 					<td colSpan="2"><asp:Image ID="Image35" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portNouveautesTableauPress.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portNouveautesTableauPress.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image36" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -196,7 +196,7 @@
 					<td colSpan="2"><asp:Image ID="Image38" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portNouveautesTableauTVRadio.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portNouveautesTableauTVRadio.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image39" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -226,7 +226,7 @@
 					<td colSpan="2"><asp:Image ID="Image45" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portDetailSupportTableauTVRadio.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portDetailSupportTableauTVRadio.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image46" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -241,7 +241,7 @@
 					<td colSpan="2"><asp:Image ID="Image48" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portDetailSupportTableauTVRadio2.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portDetailSupportTableauTVRadio2.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image49" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -256,7 +256,7 @@
 					<td colSpan="2"><asp:Image ID="Image50" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portDetailSupportTableauPress.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portDetailSupportTableauPress.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image51" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -279,7 +279,6 @@
 				<tr>
 					<td width="10"><asp:Image ID="Image106" runat="server" SkinID="pixel" width="10" /></td>
 					<td class="txtViolet11">
-					
 					    <table cellSpacing="0" cellPadding="0" border="0">
 							<tr>
 								<td align="center" width="40"><asp:Image ID="Image150" runat="server" SkinID="excel" /></td>
@@ -322,7 +321,7 @@
 					<td colSpan="2"><asp:Image ID="Image58" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Common/Help/portStructurePresentation.gif"></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/Help/portStructurePresentation.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image59" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -351,9 +350,9 @@
 					<td colSpan="2"><asp:Image ID="Image62" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/unite2.gif" ><br>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/unite2.gif" ><br>
 					<br>
-					<IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/annDynPDM.gif" >
+					<IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/annDynPDM.gif" >
 					</td>
 				</tr>
 				<tr>
@@ -369,7 +368,7 @@
 					<td colSpan="2"><asp:Image ID="Image64" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/annDynGadLink.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/annDynGadLink.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image65" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -387,7 +386,7 @@
 					<td colSpan="2"><asp:Image ID="Image67" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/portDetailInsertionOption.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portDetailInsertionOption.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image68" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -409,7 +408,7 @@
 					<td colSpan="2"><asp:Image ID="Image69" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/nbPage.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/nbPage.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image83" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -424,7 +423,7 @@
 					<td colSpan="2"><asp:Image ID="Image70" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/repeatOption.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/repeatOption.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image84" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -461,7 +460,7 @@
 					<td colSpan="2"><asp:Image ID="Image71" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/detailSelectionDiv.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/detailSelectionDiv.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image87" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -499,7 +498,7 @@
 					<td colSpan="2"><asp:Image ID="Image73" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/personalizedLevels.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/personalizedLevels.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image90" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -517,7 +516,7 @@
 					<td colSpan="2"><asp:Image ID="Image74" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/levels3.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/levels3.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image91" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -535,7 +534,7 @@
 					<td colSpan="2"><asp:Image ID="Image75" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/personalizedLevelsChoice.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/personalizedLevelsChoice.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image92" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -563,9 +562,9 @@
 				<tr>
 					<td width="10"><asp:Image ID="Image125" runat="server" SkinID="pixel" width="10" /></td>
 					<td class="txtViolet11">
-						<IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/annDynSelectProductKO.gif" >&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext31" runat="server" Code="1461"></cc1:adexpresstext><br>
+						<IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/annDynSelectProductKO.gif" >&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext31" runat="server" Code="1461"></cc1:adexpresstext><br>
 						<br>
-						<IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/annDynSelectProductOK.gif" >&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext32" runat="server" Code="1462"></cc1:adexpresstext>
+						<IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/annDynSelectProductOK.gif" >&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext32" runat="server" Code="1462"></cc1:adexpresstext>
 					</td>
 				</tr>
 				<tr>
@@ -623,7 +622,7 @@
 					<td colSpan="2"><asp:Image ID="Image79" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="center" colSpan="2"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveResult.gif" ></td>
+					<td align="center" colSpan="2"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/PopUpSaveResult.gif" ></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image80" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -635,7 +634,7 @@
 				</tr>
 				<!-- Exemple Image -->
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveResultNewName.gif">&nbsp;&nbsp;<IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveResultFolderSelection.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/PopUpSaveResultNewName.gif">&nbsp;&nbsp;<IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/PopUpSaveResultFolderSelection.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image95" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -647,7 +646,7 @@
 				</tr>
 				<!-- Exemple Image -->
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveUniverseSaveAs.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/PopUpSaveUniverseSaveAs.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image96" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -830,7 +829,7 @@
 					<td colSpan="2"><asp:Image ID="Image26" runat="server" SkinID="pixel" height="10" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="right" class="whiteBackGround" colSpan="2"><A onmouseover="bouton.src='/App_Themes/<%=_themeName%>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%=_themeName%>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%=_themeName%>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
+					<td align="right" class="whiteBackGround" colSpan="2"><A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
 				</tr>
 			</table>
 		</form>

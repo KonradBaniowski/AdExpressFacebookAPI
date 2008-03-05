@@ -60,7 +60,7 @@
 					<td colSpan="2"><asp:Image ID="Image4" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/annComptitorSelection.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/annComptitorSelection.gif"></td>
 				</tr>
 				<!-- bouton suivant-->
 				<tr>
@@ -82,11 +82,29 @@
 				</tr>
 				<tr>
 					<td width="10"><asp:Image ID="Image31" runat="server" SkinID="pixel" width="10" /></td>
-					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text4AdExpressText" runat="server" Code="999"></cc1:adexpresstext></td>
+					<td class="txtViolet11">
+					    <table cellSpacing="0" cellPadding="0" border="0">
+							<tr>
+								<td align="center" width="40"><asp:Image ID="Image150" runat="server" SkinID="initialize" /></td>
+								<td class="txtViolet11"><cc1:adexpresstext language="33" id="text4AdExpressText" runat="server" Code="2456"></cc1:adexpresstext></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colSpan="2"><asp:Image ID="Image59" runat="server" SkinID="pixel" height="5" width="100%" /></td>
 				</tr>
 				<tr>
 					<td width="10"><asp:Image ID="Image32" runat="server" SkinID="pixel" width="10" /></td>
-					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text40AdExpressText" runat="server" Code="1073"></cc1:adexpresstext></td>
+					<td class="txtViolet11">
+					
+					    <table cellSpacing="0" cellPadding="0" border="0">
+							<tr>
+								<td align="center" width="40"><asp:Image ID="Image58" runat="server" SkinID="initialize_all" /></td>
+								<td class="txtViolet11"><cc1:adexpresstext language="33" id="text40AdExpressText" runat="server" Code="2457"></cc1:adexpresstext></td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image50" runat="server" SkinID="pixel" height="10" width="100%" /></td>
@@ -107,7 +125,7 @@
 					<td colSpan="2"><asp:Image ID="Image7" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/annSelection.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/annSelection.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image8" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -121,7 +139,7 @@
 					<td colSpan="2"><asp:Image ID="Image9" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/annProSelection.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/annProSelection.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image10" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -135,7 +153,7 @@
 					<td colSpan="2"><asp:Image ID="Image11" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/proSelection.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/proSelection.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image12" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -157,7 +175,7 @@
 					<td colSpan="2"><asp:Image ID="Image13" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveUniverse.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/PopUpSaveUniverse.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image14" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -169,7 +187,7 @@
 				</tr>
 				<!-- Exemple Image -->
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveUniverseNewName.gif">&nbsp;&nbsp;<IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveUniverseFolderSelection.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/PopUpSaveUniverseNewName.gif">&nbsp;&nbsp;<IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/PopUpSaveUniverseFolderSelection.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image15" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -181,7 +199,7 @@
 				</tr>
 				<!-- Exemple Image -->
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveUniverseSaveAs.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/PopUpSaveUniverseSaveAs.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image16" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -212,7 +230,7 @@
 					<td colSpan="2"><asp:Image ID="Image19" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/universeSelection.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/universeSelection.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image20" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -327,7 +345,7 @@
 					<td colSpan="2"><asp:Image ID="Image26" runat="server" SkinID="pixel" height="10" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="right" class="whiteBackGround" colSpan="2"><A onmouseover="bouton.src='/App_Themes/<%=_themeName%>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%=_themeName%>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%=_themeName%>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
+					<td align="right" class="whiteBackGround" colSpan="2"><A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
 				</tr>
 			</table>
 		</form>

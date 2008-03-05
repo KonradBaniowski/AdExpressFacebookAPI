@@ -17,13 +17,6 @@ namespace AdExpress.Private.Helps{
 	/// Page d'aide de PortofolioResultsHelp.aspx
 	/// </summary>
 	public partial class PortofolioResultsHelp : WebPage{
-		
-		#region Variables
-        /// <summary>
-        /// Theme name
-        /// </summary>
-        public string _themeName = string.Empty;
-		#endregion
 
 		#region Variables MMI
 		/// <summary>
@@ -190,7 +183,6 @@ namespace AdExpress.Private.Helps{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Aguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-            _themeName = WebApplicationParameters.Themes[_siteLanguage].Name;
 			
 			#region Textes et langage du site
 			//Modification de la langue pour les Textes AdExpress
