@@ -23,6 +23,7 @@ using ProductList=TNS.AdExpress.Web.DataAccess.Selections.Products.ProductListDa
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>

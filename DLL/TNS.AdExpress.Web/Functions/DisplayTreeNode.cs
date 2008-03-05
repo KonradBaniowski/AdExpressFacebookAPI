@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Functions{
 	/// <summary>

@@ -9,6 +9,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Constantes.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Web.Controls.Headers {
 
@@ -139,7 +140,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output) {
-			Hashtable headers = HeaderRules.Headers;
+            Dictionary<string,WebHeader> headers = WebHeaders.HeadersList;
 
 			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\" width=\"100%\">");
 			output.Write("\n<tr>");
@@ -194,12 +195,12 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			string look = "";
 			string languageString, idSessionString;
 			bool firstParameter;
-			HeaderMenuItem currentHeaderMenuItem = null;
-			for (i = 0; i < ((Header)headers[pageType.ToString()]).MenuItems.Count; i++) {
+			WebHeaderMenuItem currentHeaderMenuItem = null;
+			for (i = 0; i < headers[pageType.ToString()].MenuItems.Count; i++) {
 				languageString = "";
 				idSessionString = "";
 				firstParameter = true;
-				currentHeaderMenuItem = ((HeaderMenuItem)((Header)headers[pageType.ToString()]).MenuItems[i]);
+				currentHeaderMenuItem = (WebHeaderMenuItem)headers[pageType.ToString()].MenuItems[i];
 				//Options dans l url suivant le menuItem
 				//Differenciation et inactivation du menu actif si nécessaire
 				if (activeMenu == currentHeaderMenuItem.IdMenu) {
@@ -239,14 +240,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
 					#endregion
 
-					href = ((HeaderMenuItem)((Header)headers[pageType.ToString()]).MenuItems[i]).TargetUrl + languageString + idSessionString;
+					href = ((WebHeaderMenuItem)headers[pageType.ToString()].MenuItems[i]).TargetUrl + languageString + idSessionString;
 					if (currentHeaderMenuItem.Target.Length > 0) 
                         href += "\" target=\"" + currentHeaderMenuItem.Target + "\"";
 				}
                 if(currentHeaderMenuItem.DisplayInPopUp)
-                    menus += "\n<A class=\"" + look + "\" href=\"javascript:popupOpenBis('" + href + "','975','600','yes');\">" + GestionWeb.GetWebWord((int)((HeaderMenuItem)((Header)headers[pageType.ToString()]).MenuItems[i]).IdMenu, language) + "</A> |";
+                    menus += "\n<A class=\"" + look + "\" href=\"javascript:popupOpenBis('" + href + "','975','600','yes');\">" + GestionWeb.GetWebWord((int)((WebHeaderMenuItem)headers[pageType.ToString()].MenuItems[i]).IdMenu, language) + "</A> |";
                 else
-                 menus += "\n<A class=\"" + look + "\" href=\"" + href + "\">" + GestionWeb.GetWebWord((int)((HeaderMenuItem)((Header)headers[pageType.ToString()]).MenuItems[i]).IdMenu, language) + "</A> |";
+                 menus += "\n<A class=\"" + look + "\" href=\"" + href + "\">" + GestionWeb.GetWebWord((int)((WebHeaderMenuItem)headers[pageType.ToString()].MenuItems[i]).IdMenu, language) + "</A> |";
 			}
 			menus = menus.Substring(0, menus.Length - 2);
 			output.Write("{0}\n</p>", menus);

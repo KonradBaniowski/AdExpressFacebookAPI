@@ -21,6 +21,7 @@ using Oracle.DataAccess.Client;
 
 using AjaxPro;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Results{
 	/// <summary>

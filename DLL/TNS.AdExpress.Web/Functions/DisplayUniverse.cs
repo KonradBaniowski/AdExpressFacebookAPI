@@ -10,10 +10,11 @@ using System.Text;
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using Oracle.DataAccess.Client;
 using AdExClassification = TNS.AdExpress.Classification.DataAccess;
 using TNS.FrameWork;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Functions {
 	/// <summary>

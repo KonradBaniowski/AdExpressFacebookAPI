@@ -33,6 +33,7 @@ using TNS.FrameWork.Date;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Web;
 
 #endregion
 

@@ -44,6 +44,7 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
 using ProductClassification = TNS.AdExpress.Classification.DataAccess.ProductBranch;
+using TNS.AdExpress.Domain.Web;
 
 #endregion
 

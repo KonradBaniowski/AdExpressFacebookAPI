@@ -23,7 +23,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebExeptions=TNS.AdExpress.Web.Exceptions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
-using WebNavigation=TNS.AdExpress.Web.Core.Navigation;
+using WebNavigation=TNS.AdExpress.Domain.Web.Navigation;
 using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.DB.Common;
 
