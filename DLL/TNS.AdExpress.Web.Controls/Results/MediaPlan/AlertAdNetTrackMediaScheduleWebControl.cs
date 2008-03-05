@@ -375,7 +375,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 				
 					try{
 //						_customerWebSession.CurrentModule = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
-						output.WriteLine(ExcelFunction.GetLogo());
+                        output.WriteLine(ExcelFunction.GetLogo(_customerWebSession));
                         output.WriteLine(ExcelFunction.GetExcelHeaderForAdnettrackMediaPlanPopUp(_customerWebSession, false, period.Begin.ToString("yyyyMMdd"), period.End.ToString("yyyyMMdd")));
 						output.WriteLine(GetExcel(_customerWebSession, period));
 						output.WriteLine(ExcelFunction.GetFooter(_customerWebSession));

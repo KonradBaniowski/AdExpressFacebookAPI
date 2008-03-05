@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Translation;
 using Oracle.DataAccess.Client;
 using AdExClassification = TNS.AdExpress.Classification.DataAccess;
@@ -111,17 +112,18 @@ namespace TNS.AdExpress.Web.Functions {
 		/// Give the Css name accoribng to level
 		/// </summary>
 		/// <param name="level">Niveau de l'arbre</param>
+        /// <param name="cssNameStyle">Css name style</param>
 		/// <returns>Nom du style CSS</returns>
-		private static string GetLevelCss(int level) {
+        private static string GetLevelCss(int level, string cssNameStyle) {
 			switch (level) {
 				case 1:
-					return ("Level1");
+                    return ("Level" + cssNameStyle + "1");
 				case 2:
-					return ("Level2");
+                    return ("Level" + cssNameStyle + "2");
 				case 3:
-					return ("Level3");
+                    return ("Level" + cssNameStyle + "3");
 				default:
-					return ("Level1");
+                    return ("Level" + cssNameStyle + "1");
 			}
 		}
 
@@ -145,7 +147,8 @@ namespace TNS.AdExpress.Web.Functions {
 			ArrayList itemIdList = null;
 			bool lineClosed = false;
 			int colSpan = 0;
-			string img = "<img src=/Images/Common/checkbox.GIF>";
+            string themeName = WebApplicationParameters.Themes[language].Name;
+            string img = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>";
 			TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess universeItems = null;
 			int code = 0;
 			StringBuilder html = new StringBuilder();
@@ -176,7 +179,7 @@ namespace TNS.AdExpress.Web.Functions {
 								if (itemIdList != null && itemIdList.Count > 0) {
 									//Level label
 									level = 1;
-									html.Append("<tr style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \"><td colspan=" + baseColSpan + " class=" + GetLevelCss(level) + " >" + GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language) + " </td></tr>");
+                                    html.Append("<tr class=\"violetBorder\"><td colspan=" + baseColSpan + " class=" + GetLevelCss(level,"") + " >" + GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language) + " </td></tr>");
 
 									//Show items of the current level
 									level = 2;
@@ -188,18 +191,18 @@ namespace TNS.AdExpress.Web.Functions {
 										
 										//Current item label
 										lineClosed = false;
-										html.Append("<td class=" + GetLevelCss(level) + " colspan=" + colSpan + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</td>");
+										html.Append("<td class=" + GetLevelCss(level,"") + " colspan=" + colSpan + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</td>");
 										if (k > 0 && ((k+1) % (baseColSpan-1)) == 0) {
 											lineClosed = true;
-											html.Append("<td class=" + GetLevelCss(level) + " style=\"border-right:solid 1px " + BORDER_COLOR + ";width=10px;\">&nbsp;</td></tr>");//Items are showed on three columns
+                                            html.Append("<td class=" + GetLevelCss(level, "RightBorder") + ">&nbsp;</td></tr>");//Items are showed on three columns
 										}
 										colSpan = 0;
 									}
 									if (!lineClosed) {
-										html.Append("<td class=" + GetLevelCss(level) + " style=\"border-right:solid 1px " + BORDER_COLOR + ";width=10px;\">&nbsp;</td></tr>");									
+                                        html.Append("<td class=" + GetLevelCss(level, "RightBorder") + ">&nbsp;</td></tr>");									
 									}
 									// Bordure en bas et bordure à droite
-									html.Append("<tr><td colspan=" + baseColSpan + " class=" + GetLevelCss(level) + " style=\"border-bottom:solid 1px " + BORDER_COLOR + ";border-right:solid 1px " + BORDER_COLOR + ";height:5px;font-size:5px;\">&nbsp;</td></tr>");
+									html.Append("<tr><td colspan=" + baseColSpan + " class=" + GetLevelCss(level,"RightBottomBorder") + " >&nbsp;</td></tr>");
 									html.Append("</tr>");
 								}
 
@@ -346,8 +349,8 @@ namespace TNS.AdExpress.Web.Functions {
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
 							//Level label
-							if (displayBorder) html.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
-							else html.Append("<table style=\"border-bottom :#644883 1px solid;  border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0  width=" + witdhTable + ">");
+                            if (displayBorder) html.Append("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
+                            else html.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0  width=" + witdhTable + ">");
 							html.Append("<tr class=\"txtViolet11Bold\" ><td colspan=" + baseColSpan + "  >&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language)) + " </td></tr>");
 							html.Append("</table>");
 							displayBorder = false;
@@ -359,7 +362,7 @@ namespace TNS.AdExpress.Web.Functions {
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
-									html.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=" + witdhTable + ">");
+                                    html.Append("<table class=\violetBorderWithoutTop paleVioletBackGround\" width=" + witdhTable + ">");
 
 									for (int k = 0; k < itemIdList.Count; k++) {
 
@@ -383,7 +386,7 @@ namespace TNS.AdExpress.Web.Functions {
 											//Pagination
 											if (paginate && nbLineByPage > 0 && currentLine > 0 && (currentLine % nbLineByPage) == 0 && k<itemIdList.Count-1) {
 												html.Append("</table>");
-												html.Append("<table style=\"border-bottom :#644883 0px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=" + witdhTable + ">");
+                                                html.Append("<table class=\"violetRightLeftBorder paleVioletBackGround\" width=" + witdhTable + ">");
 												currentLine = 0;
 											}
 											

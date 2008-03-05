@@ -376,11 +376,12 @@ namespace TNS.AdExpress.Web.UI{
 		/// Genere le logo TNS pour les export excel
 		/// </summary>
 		/// <returns></returns>
-		public static string GetLogo() {
+        public static string GetLogo(WebSession webSession) {
 			StringBuilder t = new System.Text.StringBuilder();
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 			#region Logo TNS
 			t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
-			t.Append("<tr><td><img src=\"" + WebConstantes.Images.LOGO_TNS + "\"></td></tr>");
+            t.Append("<tr><td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_TNS + "\"></td></tr>");
 			t.Append(GetBlankLine());
 			t.Append("</table><br>");
 			#endregion
@@ -392,13 +393,14 @@ namespace TNS.AdExpress.Web.UI{
 		/// Genere le logo TNS pour les export excel
 		/// </summary>
 		/// <returns></returns>
-		public static string GetAppmLogo() {
+        public static string GetAppmLogo(WebSession webSession) {
 			StringBuilder t = new System.Text.StringBuilder();
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 			#region Logo TNS
 			t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
-			t.Append("<tr><td><img src=\"" + WebConstantes.Images.LOGO_TNS + "\"></td>");
+            t.Append("<tr><td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_TNS + "\"></td>");
 			t.Append("<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>");
-			t.Append("<td><img src=\"" + WebConstantes.Images.LOGO_APPM + "\"></td></tr>");
+            t.Append("<td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_APPM + "\"></td></tr>");
 			t.Append ("<tr><td colspan=8>&nbsp;</td></tr>");
 			t.Append("</table><br>");
 			#endregion
@@ -456,7 +458,7 @@ namespace TNS.AdExpress.Web.UI{
 			try{
 
 				#region Début du tableau
-				t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
+                t.Append("<table class=\"BorderLevel\" cellpadding=0 cellspacing=0>");
 				t.Append("<tr><td class=\"excelDataItalic\">"+GestionWeb.GetWebWord(512,webSession.SiteLanguage)+"</td></tr>");
 				#endregion
 
@@ -780,7 +782,7 @@ namespace TNS.AdExpress.Web.UI{
 			if (webSession.isMediaSelected()){
 				html.Append(GetBlankLine());
 				html.Append("<tr><td class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(190,webSession.SiteLanguage)+" :</font></td></tr>");
-				html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversMedia));
+				html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversMedia, webSession.SiteLanguage));
 			}
 			return(html.ToString());
 		}
@@ -830,7 +832,7 @@ namespace TNS.AdExpress.Web.UI{
 						//t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>");
 						//t.Append("<TR><TD colspan=4 class=\"txtViolet11Bold\" bgColor=\"#ffffff\" >" + webSession.PrincipalProductUniverses[k].Label + " </TD></TR>");
 						productSelection += "<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
-						productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold\" bgColor=\"#ffffff\" >" + webSession.PrincipalProductUniverses[k].Label + " </TD></TR>";
+                        productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.PrincipalProductUniverses[k].Label + " </TD></TR>";
 						adExpressUniverse = webSession.PrincipalProductUniverses[k];
 						//t.Append(TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));
 						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
@@ -903,7 +905,7 @@ namespace TNS.AdExpress.Web.UI{
 						//adExpressUniverse = webSession.SecondaryProductUniverses[k];
 						//t.Append(TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));
 						productSelection += "<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
-						productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold\" bgColor=\"#ffffff\" >" + webSession.SecondaryProductUniverses[k].Label + " </TD></TR>";
+                        productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.SecondaryProductUniverses[k].Label + " </TD></TR>";
 						adExpressUniverse = webSession.SecondaryProductUniverses[k];
 						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
 					}
@@ -919,7 +921,7 @@ namespace TNS.AdExpress.Web.UI{
 			if (webSession.isReferenceMediaSelected()) {
 				t.Append(GetBlankLine());
 				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(971, webSession.SiteLanguage) + " :</font></TD></TR>");
-				t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ReferenceUniversMedia));
+				t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ReferenceUniversMedia, webSession.SiteLanguage));
 			}
 			#endregion
 
@@ -1040,7 +1042,7 @@ namespace TNS.AdExpress.Web.UI{
 				t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1087,webSession.SiteLanguage) +"</font></td></tr>");
 				while((TreeNode)webSession.CompetitorUniversMedia[idMedia]!=null){
 					TreeNode tree=(TreeNode)webSession.CompetitorUniversMedia[idMedia];				
-					t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(((TreeNode)webSession.CompetitorUniversMedia[idMedia])));
+					t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(((TreeNode)webSession.CompetitorUniversMedia[idMedia]),webSession.SiteLanguage));
 					t.Append(GetBlankLine());
 					idMedia++;
 				}
@@ -1132,7 +1134,7 @@ namespace TNS.AdExpress.Web.UI{
 					if(((LevelInformation)webSession.SelectionUniversAEPMTarget.LastNode.Tag).Text.Length>0){
 						html.Append("<tr height=\"20\"><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1763,webSession.SiteLanguage)+"</font></td></tr>");
 						// Affichage du TreeNode
-						html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversAEPMTarget));
+						html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversAEPMTarget,webSession.SiteLanguage));
 					}
 				}
 			}
@@ -1591,7 +1593,7 @@ namespace TNS.AdExpress.Web.UI{
 			}
 			t.Append(GetBlankLine());
 			t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(webTexId,webSession.SiteLanguage)+"</font></TD></TR>");
-			t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ProductDetailLevel.ListElement));
+			t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ProductDetailLevel.ListElement,webSession.SiteLanguage));
 
 			return(t.ToString());
 		}

@@ -27,7 +27,68 @@ namespace TNS.AdExpress.Web.UI.Results{
 	/// </summary>
 	public class PortofolioChartUI:Chart{
 		
-		/// <summary>
+        #region Variables
+        /// <summary>
+        /// Pie colors list
+        /// </summary>
+        private string _pieColors = string.Empty;
+        /// <summary>
+        /// Pie line color
+        /// </summary>
+        private string _pieLineColor = string.Empty;
+        /// <summary>
+        /// Default border line color
+        /// </summary>
+        private string _defaultBorderLineColor = string.Empty;
+        /// <summary>
+        /// Chart border line color
+        /// </summary>
+        private string _chartBorderLineColor = string.Empty;
+        /// <summary>
+        /// Title color
+        /// </summary>
+        private string _titleColor = string.Empty;
+        #endregion
+
+        #region Accessors
+        /// <summary>
+        /// Get or Set Pie colors list
+        /// </summary>
+        public string PieColors {
+            get { return _pieColors; }
+            set { _pieColors = value; }
+        }
+        /// <summary>
+        /// Get or Set Pie line color
+        /// </summary>
+        public string PieLineColor {
+            get { return _pieLineColor; }
+            set { _pieLineColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Default border line color
+        /// </summary>
+        public string DefaultBorderLineColor {
+            get { return _defaultBorderLineColor; }
+            set { _defaultBorderLineColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Chart border line color
+        /// </summary>
+        public string ChartBorderLineColor {
+            get { return _chartBorderLineColor; }
+            set { _chartBorderLineColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Title color
+        /// </summary>
+        public string TitleColor {
+            get { return _titleColor; }
+            set { _titleColor = value; }
+        }
+        #endregion
+
+        /// <summary>
 		/// Graphiques Structure de alerte d'un portefeuille
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
@@ -56,33 +117,39 @@ namespace TNS.AdExpress.Web.UI.Results{
 			string[]  xSpotValues = null;
 			double[]  yDurationValues = null;
 			string[]  xDurationValues = null;
-
 			#endregion
 
-			#region Constantes
-			//couleurs des tranches du graphique
-			Color[] pieColors={
-				Color.FromArgb(100,72,131),
-				Color.FromArgb(177,163,193),
-				Color.FromArgb(208,200,218),
-				Color.FromArgb(225,224,218),
-				Color.FromArgb(255,215,215),
-				Color.FromArgb(255,240,240),
-				Color.FromArgb(202,255,202),
-				Color.FromArgb(255,5,182),
-				Color.FromArgb(157,152,133),
-				Color.FromArgb(241,241,241),
-				Color.FromArgb(77,150,75),
-				Color.FromArgb(0,0,0)
-			};
+            #region couleurs des tranches du graphique
+            string[] pieColorsList = _pieColors.Split(',');
+            Color[] pieColors = new Color[12];
+            int indexPieColors = 0;
+            ColorConverter ColorConverter = new ColorConverter();
+            
+            foreach (string pieColorsString in pieColorsList) {
+                pieColors.SetValue((Color)ColorConverter.ConvertFrom(pieColorsString), indexPieColors++);
+            }
 
-			
+            //Color[] pieColors={
+            //    Color.FromArgb(100,72,131),
+            //    Color.FromArgb(177,163,193),
+            //    Color.FromArgb(208,200,218),
+            //    Color.FromArgb(225,224,218),
+            //    Color.FromArgb(255,215,215),
+            //    Color.FromArgb(255,240,240),
+            //    Color.FromArgb(202,255,202),
+            //    Color.FromArgb(255,5,182),
+            //    Color.FromArgb(157,152,133),
+            //    Color.FromArgb(241,241,241),
+            //    Color.FromArgb(77,150,75),
+            //    Color.FromArgb(0,0,0)
+            //};
 			#endregion
 
 			#region Paramétrage des dates
 			int dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
 			int dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 			#endregion	
+
 
 			//id Média
 			string idVehicle=webSession.GetSelection(webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
@@ -131,7 +198,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 							this.ChartAreas.Add(chartAreaFormat);
 							//Charger les séries de valeurs pour format
-							serieFormat=SetSeriesForPress(dtFormat,chartAreaFormat,serieFormat,xFormatValues,yFormatValues,pieColors,GestionWeb.GetWebWord(1420,webSession.SiteLanguage),typeFlash);												
+							serieFormat=SetSeriesForPress(dtFormat,chartAreaFormat,serieFormat,xFormatValues,yFormatValues,pieColors,GestionWeb.GetWebWord(1420,webSession.SiteLanguage),typeFlash,_pieLineColor);												
 						}
 							//Conteneur graphique pour couleur
 						ChartArea chartAreaColor=null;
@@ -151,7 +218,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							}					
 							this.ChartAreas.Add(chartAreaColor);
 							//Charger les séries de valeurs pour couleur
-							serieColor=SetSeriesForPress(dtColor,chartAreaColor,serieColor,xColorValues,yColorValues,pieColors,GestionWeb.GetWebWord(1438,webSession.SiteLanguage),typeFlash);																					
+							serieColor=SetSeriesForPress(dtColor,chartAreaColor,serieColor,xColorValues,yColorValues,pieColors,GestionWeb.GetWebWord(1438,webSession.SiteLanguage),typeFlash,_pieLineColor);																					
 						}
 							//Conteneur graphique pour emplacements
 						ChartArea chartAreaLocation=null;
@@ -171,7 +238,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							}							
 							this.ChartAreas.Add(chartAreaLocation);
 							//Charger les séries de valeurs pour emplacements
-							serieLocation=SetSeriesForPress(dtLocation,chartAreaLocation,serieLocation,xLocationValues,yLocationValues,pieColors,GestionWeb.GetWebWord(1439,webSession.SiteLanguage),typeFlash);						
+							serieLocation=SetSeriesForPress(dtLocation,chartAreaLocation,serieLocation,xLocationValues,yLocationValues,pieColors,GestionWeb.GetWebWord(1439,webSession.SiteLanguage),typeFlash,_pieLineColor);						
 							
 						}
 
@@ -188,10 +255,10 @@ namespace TNS.AdExpress.Web.UI.Results{
 								chartAreaInsert.Position.Height = 22;							
 								this.ChartAreas.Add(chartAreaInsert);
 								//Charger les séries de valeurs pour encarts
-								serieInsert=SetSeriesForPress(dtInsert,chartAreaInsert,serieInsert,xInsertValues,yInsertValues,pieColors,GestionWeb.GetWebWord(1440,webSession.SiteLanguage),typeFlash);																																
+								serieInsert=SetSeriesForPress(dtInsert,chartAreaInsert,serieInsert,xInsertValues,yInsertValues,pieColors,GestionWeb.GetWebWord(1440,webSession.SiteLanguage),typeFlash,_pieLineColor);																																
 						}	
 							//initialisation du control
-							InitializeComponentForPress(chartAreaFormat,chartAreaColor,chartAreaLocation,chartAreaInsert,typeFlash,webSession);
+							InitializeComponentForPress(chartAreaFormat,chartAreaColor,chartAreaLocation,chartAreaInsert,typeFlash,webSession,_defaultBorderLineColor,_chartBorderLineColor,_titleColor);
 								
 							//ajout des séries de valeurs
 						if(dtFormat!=null && dtFormat.Rows.Count>0)
@@ -234,15 +301,15 @@ namespace TNS.AdExpress.Web.UI.Results{
 								
 								
 								//Charger les séries de valeurs pour euros 
-								serieEuros=SetSeries(tab,chartAreaEuros,serieEuros,xEurosValues,yEurosValues,pieColors,GestionWeb.GetWebWord(1423,webSession.SiteLanguage),typeFlash);							
+								serieEuros=SetSeries(tab,chartAreaEuros,serieEuros,xEurosValues,yEurosValues,pieColors,GestionWeb.GetWebWord(1423,webSession.SiteLanguage),typeFlash,_pieLineColor);							
 								
 								//Charger les séries de valeurs pour spot
-								serieSpot=SetSeries(tab,chartAreaSpot,serieSpot,xSpotValues,ySpotValues,pieColors,GestionWeb.GetWebWord(869,webSession.SiteLanguage),typeFlash);							
+								serieSpot=SetSeries(tab,chartAreaSpot,serieSpot,xSpotValues,ySpotValues,pieColors,GestionWeb.GetWebWord(869,webSession.SiteLanguage),typeFlash,_pieLineColor);							
 								
 								//Charger les séries de valeurs pour durée
-								serieDuration=SetSeries(tab,chartAreaDuration,serieDuration,xDurationValues,yDurationValues,pieColors,GestionWeb.GetWebWord(280,webSession.SiteLanguage),typeFlash);															
+								serieDuration=SetSeries(tab,chartAreaDuration,serieDuration,xDurationValues,yDurationValues,pieColors,GestionWeb.GetWebWord(280,webSession.SiteLanguage),typeFlash,_pieLineColor);															
 								//initialisation du control
-								InitializeComponent(chartAreaEuros,chartAreaSpot,chartAreaDuration,typeFlash,webSession);
+								InitializeComponent(chartAreaEuros,chartAreaSpot,chartAreaDuration,typeFlash,webSession,_defaultBorderLineColor,_chartBorderLineColor,_titleColor);
 								
 								//ajout des séries de valeurs
 								this.Series.Add(serieEuros);
@@ -282,16 +349,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 								this.ChartAreas.Add(chartAreaDuration);
 																
 								//Charger les séries de valeurs pour euros 
-								serieEuros=SetSeries(tab,chartAreaEuros,serieEuros,xEurosValues,yEurosValues,pieColors,GestionWeb.GetWebWord(1423,webSession.SiteLanguage),typeFlash);							
+								serieEuros=SetSeries(tab,chartAreaEuros,serieEuros,xEurosValues,yEurosValues,pieColors,GestionWeb.GetWebWord(1423,webSession.SiteLanguage),typeFlash,_pieLineColor);							
 								
 								//Charger les séries de valeurs pour spot
-								serieSpot=SetSeries(tab,chartAreaSpot,serieSpot,xSpotValues,ySpotValues,pieColors,GestionWeb.GetWebWord(869,webSession.SiteLanguage),typeFlash);							
+								serieSpot=SetSeries(tab,chartAreaSpot,serieSpot,xSpotValues,ySpotValues,pieColors,GestionWeb.GetWebWord(869,webSession.SiteLanguage),typeFlash,_pieLineColor);							
 								
 								//Charger les séries de valeurs pour durée
-								serieDuration=SetSeries(tab,chartAreaDuration,serieDuration,xDurationValues,yDurationValues,pieColors,GestionWeb.GetWebWord(280,webSession.SiteLanguage),typeFlash);							
+								serieDuration=SetSeries(tab,chartAreaDuration,serieDuration,xDurationValues,yDurationValues,pieColors,GestionWeb.GetWebWord(280,webSession.SiteLanguage),typeFlash,_pieLineColor);							
 
 								//initialisation du control
-								InitializeComponent(chartAreaEuros,chartAreaSpot,chartAreaDuration,typeFlash,webSession);
+								InitializeComponent(chartAreaEuros,chartAreaSpot,chartAreaDuration,typeFlash,webSession,_defaultBorderLineColor,_chartBorderLineColor,_titleColor);
 								
 								//ajout des séries de valeurs
 								this.Series.Add(serieEuros);
@@ -413,8 +480,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 		/// <param name="pieColors">couleurs du graphique</param>
 		/// <param name="typeFlash">sortie flash</param>
 		/// <param name="chartAreaName">nom du conteneur de l'image</param>
+        /// <param name="pieLineColor">Pie line color</param>
 		/// <returns>séries de valeurs</returns>
-		private static  Dundas.Charting.WebControl.Series SetSeries(object[,] tab ,ChartArea chartArea,Dundas.Charting.WebControl.Series series,string[] xValues,double[] yValues,Color[] pieColors,string chartAreaName,bool typeFlash){
+		private static  Dundas.Charting.WebControl.Series SetSeries(object[,] tab ,ChartArea chartArea,Dundas.Charting.WebControl.Series series,string[] xValues,double[] yValues,Color[] pieColors,string chartAreaName,bool typeFlash, string pieLineColor){
 			#region  Création graphique
 			if(xValues!=null && yValues!=null){
 								
@@ -444,8 +512,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 				#region Légende
 				series["LabelStyle"]="Outside";
 				series.LegendToolTip = "#PERCENT";
-				series.ToolTip = "#PERCENT : #VALX ";				
-				series["PieLineColor"]="Black";
+				series.ToolTip = "#PERCENT : #VALX ";
+                //series["PieLineColor"]="Black";
+                series["PieLineColor"] = pieLineColor;
 				#endregion				
 				series.Label="#PERCENT : #VALX";
 				series["3DLabelLineSize"]="30";
@@ -470,8 +539,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 		/// <param name="pieColors">couleurs du graphique</param>
 		/// <param name="typeFlash">sortie flash</param>
 		/// <param name="chartAreaName">Nom du conteneur de l'image</param>
+        /// <param name="pieLineColor">Pie line color</param>
 		/// <returns>séries de valeurs</returns>
-		private static  Dundas.Charting.WebControl.Series SetSeriesForPress(DataTable dt ,ChartArea chartArea,Dundas.Charting.WebControl.Series series,string[] xValues,double[] yValues,Color[] pieColors,string chartAreaName,bool typeFlash){
+		private static  Dundas.Charting.WebControl.Series SetSeriesForPress(DataTable dt ,ChartArea chartArea,Dundas.Charting.WebControl.Series series,string[] xValues,double[] yValues,Color[] pieColors,string chartAreaName,bool typeFlash, string pieLineColor){
 			#region  Création graphique
 			if(xValues!=null && yValues!=null){
 								
@@ -501,7 +571,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 				series["LabelStyle"]="Outside";
 				series.LegendToolTip = "#PERCENT";
 				series.ToolTip = "#PERCENT : #VALX";
-				series["PieLineColor"]="Black";
+                //series["PieLineColor"] = "Black";
+                series["PieLineColor"] = pieLineColor;
 				//series.LabelFormat=
 				#endregion			
 
@@ -524,8 +595,12 @@ namespace TNS.AdExpress.Web.UI.Results{
 		/// <param name="chartAreaDuration">conteneur de l'image répartition durée</param>
 		/// <param name="typeFlash">sortie flash</param>
 		/// <param name="webSession">Session client</param>
-		private void InitializeComponent(ChartArea chartAreaEuros, ChartArea chartAreaSpot, ChartArea chartAreaDuration, bool typeFlash, WebSession webSession) {
-			#region Animation Flash
+        /// <param name="defaultBorderLineColor">Default chart border color</param>
+        /// <param name="borderLineColor">Chart border color</param>
+        /// <param name="title">Title color</param>
+        private void InitializeComponent(ChartArea chartAreaEuros, ChartArea chartAreaSpot, ChartArea chartAreaDuration, bool typeFlash, WebSession webSession, string defaultBorderLineColor, string borderLineColor, string titleColor) {
+			
+            #region Animation Flash
 			//Animation flash
 			if(typeFlash){
 				this.ImageType=ChartImageType.Flash;
@@ -543,13 +618,19 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}
 			#endregion
 
-			#region Chart
-			this.Width=new Unit("700px");
+            #region Color Converter
+            ColorConverter ColorConverter = new ColorConverter();
+            #endregion
+
+            #region Chart
+            this.Width=new Unit("700px");
 			this.Height=new Unit("800px");
 			this.BackGradientType = GradientType.TopBottom;
-			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
+            //this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
+            this.BorderLineColor = (Color)ColorConverter.ConvertFrom(defaultBorderLineColor);											
 			this.BorderStyle=ChartDashStyle.Solid;
-			this.BorderLineColor=Color.FromArgb(99,73,132);
+            //this.BorderLineColor=Color.FromArgb(99,73,132);
+            this.BorderLineColor = (Color)ColorConverter.ConvertFrom(borderLineColor);											
 			this.BorderLineWidth=2;
 			this.Legend.Enabled=false;
 			#endregion	
@@ -562,7 +643,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			this.Titles[0].Position.X = 50;
 			this.Titles[0].Position.Y = (typeFlash) ? 2 : 7;
 			this.Titles[0].Font=new Font("Arial", (float)13);
-			this.Titles[0].Color=Color.FromArgb(100,72,131);
+            //this.Titles[0].Color=Color.FromArgb(100,72,131);
+            this.Titles[0].Color = (Color)ColorConverter.ConvertFrom(titleColor);
 			this.Titles[0].DockToChartArea=chartAreaEuros.Name;
 			if (!typeFlash) {
 				chartAreaEuros.Position.X = 22;
@@ -577,7 +659,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			this.Titles[1].Position.X = 50;
 			this.Titles[1].Position.Y = (typeFlash) ? 34 : 38;
 			this.Titles[1].Font=new Font("Arial", (float)13);
-			this.Titles[1].Color=Color.FromArgb(100,72,131);
+            //this.Titles[1].Color=Color.FromArgb(100,72,131);
+            this.Titles[1].Color = (Color)ColorConverter.ConvertFrom(titleColor);
 			this.Titles[1].DockToChartArea=chartAreaSpot.Name;
 			if (!typeFlash) {
 				chartAreaSpot.Position.X = 22;
@@ -592,7 +675,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			this.Titles[2].Position.X = 50;
 			this.Titles[2].Position.Y = 66;
 			this.Titles[2].Font=new Font("Arial", (float)13);
-			this.Titles[2].Color=Color.FromArgb(100,72,131);
+            //this.Titles[2].Color=Color.FromArgb(100,72,131);
+            this.Titles[2].Color = (Color)ColorConverter.ConvertFrom(titleColor);
 			this.Titles[2].DockToChartArea=chartAreaDuration.Name;
 			if (!typeFlash) {
 				chartAreaDuration.Position.X = 22;
@@ -621,8 +705,12 @@ namespace TNS.AdExpress.Web.UI.Results{
 		/// <param name="chartAreaInsert">conteneur de l'image répartition encart</param>
 		/// <param name="typeFlash"></param>
 		/// <param name="webSession">Session client</param>
-		private void InitializeComponentForPress(ChartArea chartAreaFormat, ChartArea chartAreaColor, ChartArea chartAreaLocation, ChartArea chartAreaInsert, bool typeFlash, WebSession webSession) {			
-			#region Animation Flash
+        /// <param name="defaultBorderLineColor">Default chart border color</param>
+        /// <param name="borderLineColor">Chart border color</param>
+        /// <param name="titleColor">Title color</param>
+        private void InitializeComponentForPress(ChartArea chartAreaFormat, ChartArea chartAreaColor, ChartArea chartAreaLocation, ChartArea chartAreaInsert, bool typeFlash, WebSession webSession, string defaultBorderLineColor, string borderLineColor, string titleColor) {			
+			
+            #region Animation Flash
 			//Animation flash
 			if(typeFlash){
 				this.ImageType=ChartImageType.Flash;
@@ -640,6 +728,10 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}
 			#endregion
 
+            #region Color Converter
+            ColorConverter ColorConverter = new ColorConverter();
+            #endregion
+
 			#region Chart
 			if(chartAreaInsert!=null){
 				this.Width=new Unit("800px");
@@ -649,9 +741,11 @@ namespace TNS.AdExpress.Web.UI.Results{
 				this.Height=new Unit("900px");
 			}
 			this.BackGradientType = GradientType.TopBottom;
-			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
+            //this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
+            this.BorderLineColor = (Color)ColorConverter.ConvertFrom(defaultBorderLineColor);
 			this.BorderStyle=ChartDashStyle.Solid;
-			this.BorderLineColor=Color.FromArgb(99,73,132);
+            //this.BorderLineColor=Color.FromArgb(99,73,132);
+            this.BorderLineColor = (Color)ColorConverter.ConvertFrom(borderLineColor);
 			this.BorderLineWidth=2;
 			this.Legend.Enabled=false;			
 			#endregion	
@@ -672,7 +766,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 				}
 				
 				this.Titles[0].Font=new Font("Arial", (float)13);
-				this.Titles[0].Color=Color.FromArgb(100,72,131);
+                //this.Titles[0].Color=Color.FromArgb(100,72,131);
+                this.Titles[0].Color = (Color)ColorConverter.ConvertFrom(titleColor);
 				this.Titles[0].DockToChartArea=chartAreaFormat.Name;
 			}
 			//titre couleur
@@ -690,7 +785,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 				}
 				
 				this.Titles[1].Font=new Font("Arial", (float)13);
-				this.Titles[1].Color=Color.FromArgb(100,72,131);
+                //this.Titles[1].Color=Color.FromArgb(100,72,131);
+                this.Titles[1].Color = (Color)ColorConverter.ConvertFrom(titleColor);
 				this.Titles[1].DockToChartArea=chartAreaColor.Name;
 			}
 			//titre emplacements
@@ -707,7 +803,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 					this.Titles[2].Position.Y = (typeFlash) ? 68 : 73;
 				}
 				this.Titles[2].Font=new Font("Arial", (float)13);
-				this.Titles[2].Color=Color.FromArgb(100,72,131);
+                //this.Titles[2].Color=Color.FromArgb(100,72,131);
+                this.Titles[2].Color = (Color)ColorConverter.ConvertFrom(titleColor);
 				this.Titles[2].DockToChartArea=chartAreaLocation.Name;
 			}
 			//titre encarts
@@ -721,7 +818,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 				
 
 				this.Titles[3].Font=new Font("Arial", (float)13);
-				this.Titles[3].Color=Color.FromArgb(100,72,131);
+                //this.Titles[3].Color=Color.FromArgb(100,72,131);
+                this.Titles[3].Color = (Color)ColorConverter.ConvertFrom(titleColor);
 				this.Titles[3].DockToChartArea=chartAreaInsert.Name;
 			}
 			if (!typeFlash) {

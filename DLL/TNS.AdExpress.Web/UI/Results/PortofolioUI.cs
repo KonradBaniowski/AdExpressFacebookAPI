@@ -19,6 +19,7 @@ using System.Data;
 using System.Collections;
 using System.Text;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.UI.Selections.Periods;
@@ -242,10 +243,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			#region HTML
 			t.Append("<table  border=0 cellpadding=0 cellspacing=0 width=600 >");			
-			
 
 			//Titre du support
-            t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" class=\"portofolioSynthesisBorder\">" + support + "</td></tr>");	
+            t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"portofolioSynthesisBorderHeader\" align=\"center\">" + support + "</td></tr>");	
 			// Date de début et fin de vague pour affichage
 			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.outdoor)
 			{
@@ -483,9 +483,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 						int compteur=0;
 						string endBalise="";
 						string day="";
-						t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 bgcolor=#E9E6EF bordercolor=#644883>");
+						t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 class=\"paleVioletBackGroundV2 violetBorder\">");
 						//Chemin de fer
-						t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc11Bold\" bgcolor=#644883 align=\"center\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;font-size: 12px\">"+GestionWeb.GetWebWord(1397,webSession.SiteLanguage)+"</td></tr>");
+                        t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, webSession.SiteLanguage) + "</td></tr>");
 						for(int i=0;i<dtVisuel.Rows.Count;i++) {
 							//date_media_num
 
@@ -512,9 +512,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 								endBalise="</td></tr>";
 
 							}
-							t.Append("<td><table  border=0 cellpadding=0 cellspacing=0 width=100% >");
-							t.Append("<tr><td class=\""+portofolioValue2+"\" align=center style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">"+day+"</td><tr>");
-							t.Append("<tr><td align=\"center\" class=\""+portofolioValue2+"\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">");
+                            t.Append("<td class=\"portofolioSynthesisBorder\"><table  border=0 cellpadding=0 cellspacing=0 width=100% >");
+                            t.Append("<tr><td class=\"portofolioSynthesis\" align=center >" + day + "</td><tr>");
+                            t.Append("<tr><td align=\"center\" class=\"portofolioSynthesis\" >");
                             if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
                             {	
                                 t.Append("<a href=\"javascript:portofolioCreation('" + webSession.IdSession + "','" + idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "','" + support + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
@@ -527,12 +527,12 @@ namespace TNS.AdExpress.Web.UI.Results{
 							t.Append("</td></tr>");
 							if(htValue.Count>0){
                                 if (htValue.ContainsKey(dtVisuel.Rows[i]["date_cover_num"])) {
-                                    t.Append("<tr><td class=\"" + portofolioValue2 + "\" align=\"center\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + " : " + ((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[1] + "</td><tr>");
-                                    t.Append("<tr><td class=\"" + portofolioValue2 + "\" align=\"center\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">" + GestionWeb.GetWebWord(1399, webSession.SiteLanguage) + " :" + int.Parse(((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[0]).ToString("### ### ### ###") + "</td><tr>");
+                                    t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + " : " + ((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[1] + "</td><tr>");
+                                    t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1399, webSession.SiteLanguage) + " :" + int.Parse(((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[0]).ToString("### ### ### ###") + "</td><tr>");
                                 }
                                 else {
-                                    t.Append("<tr><td class=\"" + portofolioValue2 + "\" align=\"center\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + " : 0</td><tr>");
-                                    t.Append("<tr><td class=\"" + portofolioValue2 + "\" align=\"center\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">" + GestionWeb.GetWebWord(1399, webSession.SiteLanguage) + " : 0</td><tr>");
+                                    t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + " : 0</td><tr>");
+                                    t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1399, webSession.SiteLanguage) + " : 0</td><tr>");
 
                                 }
 							}
@@ -1432,11 +1432,11 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}
 
 			//Ensemble du spot à spot sur la période intérrogée						
-			GetAllPeriodInsertions(t,GestionWeb.GetWebWord(1837,webSession.SiteLanguage),webSession.IdSession,idMedia.ToString());			
+			GetAllPeriodInsertions(t,GestionWeb.GetWebWord(1837,webSession.SiteLanguage),webSession,idMedia.ToString());
 
-			t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 bgcolor=#E9E6EF bordercolor=#644883>");
+            t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 class=\"paleVioletBackGroundV2 violetBorder\">");
 			//Chemin de fer
-			t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc11Bold\" bgcolor=#644883 align=\"center\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;font-size: 12px\">"+support+"</td></tr>");
+            t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\" >" + support + "</td></tr>");
 			for(int i=0;i<dtVisuel.Rows.Count;i++) {
 				//date_media_num
 
@@ -1464,9 +1464,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 					endBalise="</td></tr>";
 
 				}
-				t.Append("<td><table  border=0 cellpadding=0 cellspacing=0 width=100% >");
-				t.Append("<tr><td class=\""+portofolioValue2+"\" align=center style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">"+day+"</td><tr>");
-				t.Append("<tr><td align=\"center\" class=\""+portofolioValue2+"\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">");
+                t.Append("<td class=\"portofolioSynthesisBorder\"><table  border=0 cellpadding=0 cellspacing=0 width=100% >");
+                t.Append("<tr><td class=\"portofolioSynthesis\" align=center>" + day + "</td><tr>");
+                t.Append("<tr><td align=\"center\" class=\"portofolioSynthesis\">");
 				//if(int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString())>=10){	
 					//t.Append("<a href=\"/Private/Results/PortofolioCreationMediaPopUp.aspx?idSession="+webSession.IdSession+"&idMedia="+idMedia+"&date="+dtVisuel.Rows[i]["date_media_num"].ToString()+"\">");
 					t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','"+dtVisuel.Rows[i]["date_media_num"].ToString()+"','');\" >");
@@ -1478,12 +1478,12 @@ namespace TNS.AdExpress.Web.UI.Results{
 				t.Append("</td></tr>");
 				if(htValue.Count>0){
                     if (htValue.ContainsKey(dtVisuel.Rows[i]["date_cover_num"])) {
-                        t.Append("<tr><td class=\"" + portofolioValue2 + "\" align=\"center\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + " : " + ((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[1] + "</td><tr>");
-                        t.Append("<tr><td class=\"" + portofolioValue2 + "\" align=\"center\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">" + GestionWeb.GetWebWord(1399, webSession.SiteLanguage) + " :" + int.Parse(((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[0]).ToString("### ### ### ###") + "</td><tr>");
+                        t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + " : " + ((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[1] + "</td><tr>");
+                        t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1399, webSession.SiteLanguage) + " :" + int.Parse(((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[0]).ToString("### ### ### ###") + "</td><tr>");
                     }
                     else {
-                        t.Append("<tr><td class=\"" + portofolioValue2 + "\" align=\"center\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + " : 0</td><tr>");
-                        t.Append("<tr><td class=\"" + portofolioValue2 + "\" align=\"center\" style=\"BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none\">" + GestionWeb.GetWebWord(1399, webSession.SiteLanguage) + " : 0</td><tr>");
+                        t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + " : 0</td><tr>");
+                        t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1399, webSession.SiteLanguage) + " : 0</td><tr>");
                     }
 				}
 				t.Append("</table></td>");
@@ -1518,7 +1518,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			string classStyleValue="acl2";
 			bool color=true;
 			bool isTvNatThematiques=false;
-			string style ="style=\"cursor : hand\"";
+            //string style ="style=\"cursor : hand\"";
+            string style = "cursorHand";
 
 			StringBuilder t=new StringBuilder(20000);
 			string nbrInsertion="";
@@ -1551,7 +1552,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			if(isTvNatThematiques)style="";
 			if(!excel && !isTvNatThematiques){				
 				//Ensemble du spot à spot sur la période intérrogée
-				GetAllPeriodInsertions(t,GestionWeb.GetWebWord(1836,webSession.SiteLanguage),webSession.IdSession,idMedia.ToString());
+				GetAllPeriodInsertions(t,GestionWeb.GetWebWord(1836,webSession.SiteLanguage),webSession,idMedia.ToString());
 			}
 			
 	
@@ -1559,32 +1560,31 @@ namespace TNS.AdExpress.Web.UI.Results{
 			
 			#region Première ligne
 			t.Append("\r\n\t<tr height=\"20px\" >");
-			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid\" colspan=2>&nbsp;</td>");
+            t.Append("<td class=\"p2 violetBorderTop\" colspan=2>&nbsp;</td>");
 			// Lundi
-			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid; \">"+GestionWeb.GetWebWord(654,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(654, webSession.SiteLanguage) + "</td>");
 			// Mardi
-			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  \">"+GestionWeb.GetWebWord(655,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(655, webSession.SiteLanguage) + "</td>");
 			// Mercredi
-			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  \">"+GestionWeb.GetWebWord(656,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(656, webSession.SiteLanguage) + "</td>");
 			// Jeudi
-			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid; \">"+GestionWeb.GetWebWord(657,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(657, webSession.SiteLanguage) + "</td>");
 			// Vendredi
-			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  \">"+GestionWeb.GetWebWord(658,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(658, webSession.SiteLanguage) + "</td>");
 			// Samedi
-			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  \">"+GestionWeb.GetWebWord(659,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(659, webSession.SiteLanguage) + "</td>");
 			// Dimanche
-			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  \">"+GestionWeb.GetWebWord(660,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(660, webSession.SiteLanguage) + "</td>");
 			t.Append("</tr>");
 			#endregion
 
 			for(int i=0;i<tab.GetLength(0) && int.Parse(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN].ToString())>=0;i++){
 			
 				if(color) {
-					t.Append("<tr  onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#D0C8DA';\" bgcolor=#D0C8DA>");
+                    t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV2';\" class=\"violetBackGroundV2\">");
 				}
 				else{
-					
-					t.Append("<tr  onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#E1E0DA';\" bgcolor=#E1E0DA>");
+                    t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='greyBackGround';\" class=\"greyBackGround\">");
 				}
 				// code écran
 				t.Append("<td class=\"p2\" rowspan=2 align=\"left\" nowrap>"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"</td>");
@@ -1600,7 +1600,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Monday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 					
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+int.Parse(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_VALUE].ToString()).ToString("### ### ###")+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_VALUE].ToString(),WebConstantes.CustomerSessions.Unit.euro,false)+"</td>");
+					t.Append("<td class=\""+classStyleValue + (style.Length>0 ? " " + style + "" : "" ) + "\" align=\"right\" nowrap title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_VALUE].ToString(),WebConstantes.CustomerSessions.Unit.euro,false)+"</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1613,7 +1613,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Tuesday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 					
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+int.Parse(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_VALUE].ToString()).ToString("### ### ###")+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_VALUE].ToString(),WebConstantes.CustomerSessions.Unit.euro,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_VALUE].ToString(), WebConstantes.CustomerSessions.Unit.euro, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1625,7 +1625,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(!excel && !isTvNatThematiques)
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Wednesday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+int.Parse(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_VALUE].ToString()).ToString("### ### ###")+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_VALUE].ToString(),WebConstantes.CustomerSessions.Unit.euro,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_VALUE].ToString(), WebConstantes.CustomerSessions.Unit.euro, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1636,7 +1636,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(!excel && !isTvNatThematiques)
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Thursday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+int.Parse(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_VALUE].ToString()).ToString("### ### ###")+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_VALUE].ToString(),WebConstantes.CustomerSessions.Unit.euro,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_VALUE].ToString(), WebConstantes.CustomerSessions.Unit.euro, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1648,7 +1648,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Friday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 					
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+int.Parse(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_VALUE].ToString()).ToString("### ### ###")+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_VALUE].ToString(),WebConstantes.CustomerSessions.Unit.euro,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_VALUE].ToString(), WebConstantes.CustomerSessions.Unit.euro, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1659,7 +1659,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(!excel && !isTvNatThematiques)
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Saturday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+int.Parse(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_VALUE].ToString()).ToString("### ### ###")+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_VALUE].ToString(),WebConstantes.CustomerSessions.Unit.euro,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_VALUE].ToString(), WebConstantes.CustomerSessions.Unit.euro, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1670,7 +1670,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(!excel && !isTvNatThematiques)
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Sunday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+int.Parse(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_VALUE].ToString()).ToString("### ### ###")+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_VALUE].ToString(),WebConstantes.CustomerSessions.Unit.euro,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_VALUE].ToString(), WebConstantes.CustomerSessions.Unit.euro, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1680,12 +1680,12 @@ namespace TNS.AdExpress.Web.UI.Results{
 				t.Append("</tr>");
 
 				if(color){
-					t.Append("<tr  onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#D0C8DA';\" bgcolor=#D0C8DA>");
+                    t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV2';\" class=\"violetBackGroundV2\">");
 					t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+GestionWeb.GetWebWord(939,webSession.SiteLanguage)+"</td>");
 					color=!color;
 				}
 				else{
-					t.Append("<tr  onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#E1E0DA';\" bgcolor=#E1E0DA>");
+                    t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='greyBackGround';\" class=\"greyBackGround\">");
 					t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+GestionWeb.GetWebWord(939,webSession.SiteLanguage)+"</td>");
 					color=!color;
 				}
@@ -1700,7 +1700,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Monday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 					
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_INSERTION]+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_INSERTION].ToString(),WebConstantes.CustomerSessions.Unit.spot,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_INSERTION].ToString(), WebConstantes.CustomerSessions.Unit.spot, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1712,7 +1712,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Tuesday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_INSERTION]+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_INSERTION].ToString(),WebConstantes.CustomerSessions.Unit.spot,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_INSERTION].ToString(), WebConstantes.CustomerSessions.Unit.spot, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1723,7 +1723,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(!excel && !isTvNatThematiques)
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Wednesday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_INSERTION]+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_INSERTION].ToString(),WebConstantes.CustomerSessions.Unit.spot,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_INSERTION].ToString(), WebConstantes.CustomerSessions.Unit.spot, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1734,7 +1734,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(!excel && !isTvNatThematiques)
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Thursday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_INSERTION]+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_INSERTION].ToString(),WebConstantes.CustomerSessions.Unit.spot,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_INSERTION].ToString(), WebConstantes.CustomerSessions.Unit.spot, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1745,7 +1745,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(!excel && !isTvNatThematiques)
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Friday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_INSERTION]+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_INSERTION].ToString(),WebConstantes.CustomerSessions.Unit.spot,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_INSERTION].ToString(), WebConstantes.CustomerSessions.Unit.spot, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1756,7 +1756,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(!excel && !isTvNatThematiques)
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Saturday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_INSERTION]+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_INSERTION].ToString(),WebConstantes.CustomerSessions.Unit.spot,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_INSERTION].ToString(), WebConstantes.CustomerSessions.Unit.spot, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -1767,7 +1767,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(!excel && !isTvNatThematiques)
 						t.Append("<a href=\"javascript:portofolioDetailMedia('"+webSession.IdSession+"','"+idMedia+"','Sunday','"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN]+"');\" >");
 //					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap style=\"cursor : hand\" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_INSERTION]+"</td>");
-					t.Append("<td class=\""+classStyleValue+"\" align=\"right\" nowrap "+style+" title=\""+GestionWeb.GetWebWord(1429,webSession.SiteLanguage)+"\">"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_INSERTION].ToString(),WebConstantes.CustomerSessions.Unit.spot,false)+"</td>");
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, webSession.SiteLanguage) + "\">" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_INSERTION].ToString(), WebConstantes.CustomerSessions.Unit.spot, false) + "</td>");
 					if(!excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -2935,13 +2935,14 @@ namespace TNS.AdExpress.Web.UI.Results{
 		/// </summary>
 		/// <param name="t">Constructeur du lien</param>
 		/// <param name="linkText">texte du lien</param>
-		/// <param name="idSession">session client</param>
+        /// <param name="webSession">session client</param>
 		/// <param name="idMedia">identifiant support</param>
-		private static void GetAllPeriodInsertions(StringBuilder t,string linkText,string idSession,string idMedia){
-			t.Append("<table border=0 cellpadding=0 cellspacing=0 >");	
-			t.Append("<TR height=10><TD ><a class=\"roll03\" href=\"javascript:portofolioDetailMedia('"+idSession+"','"+idMedia+"','','');\" ");
-			t.Append(" onmouseover=\"detailSpotButton.src='/Images/Common/detailSpot_down.gif';\" onmouseout=\"detailSpotButton.src='/Images/Common/detailSpot_up.gif';\" ");
-			t.Append("><IMG NAME=\"detailSpotButton\" src=\"/Images/Common/detailSpot_up.gif\" BORDER=0 align=absmiddle alt=\""+linkText+"\">");
+        private static void GetAllPeriodInsertions(StringBuilder t, string linkText, WebSession webSession, string idMedia) {
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+			t.Append("<table border=0 cellpadding=0 cellspacing=0 >");
+            t.Append("<TR height=10><TD ><a class=\"roll03\" href=\"javascript:portofolioDetailMedia('" + webSession.IdSession + "','" + idMedia + "','','');\" ");
+            t.Append(" onmouseover=\"detailSpotButton.src='/App_Themes/"+themeName+"/Images/Common/detailSpot_down.gif';\" onmouseout=\"detailSpotButton.src='/App_Themes/"+themeName+"/Images/Common/detailSpot_up.gif';\" ");
+            t.Append("><IMG NAME=\"detailSpotButton\" src=\"/App_Themes/" + themeName + "/Images/Common/detailSpot_up.gif\" BORDER=0 align=absmiddle alt=\"" + linkText + "\">");
 			t.Append("&nbsp;"+linkText);
 			t.Append("</a></TD></TR>");
 			t.Append("</table>");
@@ -2960,22 +2961,22 @@ namespace TNS.AdExpress.Web.UI.Results{
 			
 			StringBuilder t=new StringBuilder(5000);
 			string P2="p2";
-			string bgcolor="#ffffff";
+            string backGround = "whiteBackGround";
 
-			t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 >");					
+            t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 >");					
 			
 			#region libellés colonnes
 			// Première ligne
 			t.Append("\r\n\t<tr height=\"20px\" >");
 			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.radio)
-				t.Append("<td class=\""+P2+"\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1299,webSession.SiteLanguage)+"</td>");
+				t.Append("<td class=\""+P2+" whiteBackGround\" nowrap>"+GestionWeb.GetWebWord(1299,webSession.SiteLanguage)+"</td>");
 			else if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.tv
 				|| (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.others
 				)
-				t.Append("<td class=\""+P2+"\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1451,webSession.SiteLanguage)+"</td>");
-			t.Append("<td class=\""+P2+"\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1423,webSession.SiteLanguage)+"</td>");
-			t.Append("<td class=\""+P2+"\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(869,webSession.SiteLanguage)+"</td>");
-			t.Append("<td class=\""+P2+"\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1435,webSession.SiteLanguage)+"</td>");						
+				t.Append("<td class=\""+P2+" whiteBackGround\" nowrap>"+GestionWeb.GetWebWord(1451,webSession.SiteLanguage)+"</td>");
+			t.Append("<td class=\""+P2+" whiteBackGround\" nowrap>"+GestionWeb.GetWebWord(1423,webSession.SiteLanguage)+"</td>");
+			t.Append("<td class=\""+P2+" whiteBackGround\" nowrap>"+GestionWeb.GetWebWord(869,webSession.SiteLanguage)+"</td>");
+			t.Append("<td class=\""+P2+" whiteBackGround\" nowrap>"+GestionWeb.GetWebWord(1435,webSession.SiteLanguage)+"</td>");						
 			t.Append("</tr>");	
 			#endregion	
 
@@ -2985,7 +2986,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				if(tab[i,PortofolioStructure.MEDIA_HOURS_COLUMN_INDEX]!=null && tab[i,PortofolioStructure.EUROS_COLUMN_INDEX]!=null && 
 					tab[i,PortofolioStructure.EUROS_COLUMN_INDEX]!=null && tab[i,PortofolioStructure.SPOT_COLUMN_INDEX]!=null &&
 					tab[i,PortofolioStructure.DURATION_COLUMN_INDEX]!=null ){
-					t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='"+bgcolor+"';\"  bgcolor="+bgcolor+" height=\"20px\" >");
+                    t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='" + backGround + "';\"  class=\"" + backGround + "\" height=\"20px\" >");
 					
 					//tranche horaire										
 					t.Append("\r\n\t<td align=\"left\" class=\""+classCss+"\" nowrap>"+tab[i,PortofolioStructure.MEDIA_HOURS_COLUMN_INDEX].ToString()+"</td>");
@@ -3006,7 +3007,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("</tr>");
 				}
 				classCss="acl2";
-				bgcolor="#B1A3C1";
+                backGround = "violetBackGroundV3";
 			}
 			t.Append("</table>");
 
@@ -3028,7 +3029,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			StringBuilder t=new StringBuilder(8000);			
 			//string P2="p2";	
 
-			t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 >");	
+            t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 >");	
 			
 			#region libellés colonnes
 			// Première ligne
@@ -3085,13 +3086,13 @@ namespace TNS.AdExpress.Web.UI.Results{
 					throw new Exceptions.PortofolioUIException("GetVentilationLines(WebSession webSession,DataTable dt,int labelcode,string classCss,PortofolioStructure.Ventilation ventilation)-->Le type de ventilation ne peut pas être déterminé.");
 			}
 			//libellé
-			t.Append("\r\n\t<tr  onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#B1A3C1';\"  bgcolor=#B1A3C1 height=\"20px\" >");												
-			t.Append("\r\n\t<td align=\"left\" class=\"p2\" bgcolor=#ffffff nowrap><b>"+GestionWeb.GetWebWord(labelcode,webSession.SiteLanguage)+"</b></td>"); 
+            t.Append("\r\n\t<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\"  class=\"violetBackGroundV3\" height=\"20px\" >");
+            t.Append("\r\n\t<td align=\"left\" class=\"p2\" class=\"whiteBackGround\" nowrap><b>" + GestionWeb.GetWebWord(labelcode, webSession.SiteLanguage) + "</b></td>"); 
 			t.Append("\r\n\t<td  class=\"p2\"  nowrap>"+GestionWeb.GetWebWord(1398,webSession.SiteLanguage)+"</td>");
 			t.Append("</tr>");
 			//Nombre d'insertions
 			foreach(DataRow dr in dt.Rows){
-				t.Append("\r\n\t<tr  onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#B1A3C1';\"  bgcolor=#B1A3C1 height=\"20px\" >");								
+                t.Append("\r\n\t<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\"  class=\"violetBackGroundV3\" height=\"20px\" >");								
 				if(dr[ventilationType]!=null )
 					t.Append("\r\n\t<td align=\"left\" class=\""+classCss+"\" nowrap>&nbsp;&nbsp;&nbsp;"+dr[ventilationType].ToString()+"</td>");
 				else t.Append("\r\n\t<td class=\""+classCss+"\" nowrap>&nbsp;</td>");
@@ -3147,7 +3148,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			#region Rappel des paramètres
 			// Paramètres du tableau
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
 			t.Append(ExcelFunction.GetExcelHeader(webSession,GestionWeb.GetWebWord(1410,webSession.SiteLanguage)));
 
 			#endregion			
@@ -3183,7 +3184,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			#region Rappel des paramètres
 			// Paramètres du tableau
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
 			if(webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.NOVELTY)
 			{
 				t.Append(ExcelFunction.GetExcelHeader(webSession,GestionWeb.GetWebWord(1310,webSession.SiteLanguage)));
@@ -3327,7 +3328,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			StringBuilder t=new StringBuilder(5000);
 
 			// Paramètres du tableau
-			t.Append(ExcelFunction.GetLogo());
+            t.Append(ExcelFunction.GetLogo(webSession));
 			t.Append(ExcelFunction.GetExcelHeader(webSession,GestionWeb.GetWebWord(1379,webSession.SiteLanguage)));
 
 			#endregion

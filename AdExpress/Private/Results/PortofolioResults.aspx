@@ -103,7 +103,7 @@
 					<td style="HEIGHT: 9px"><cc2:initializeproductwebcontrol id="InitializeProductWebControl" runat="server" InitializeProduct="True" AutoPostBackOption="False"></cc2:initializeproductwebcontrol></td>
 				</tr>
 				<tr vAlign="top" class="whiteBackGround">
-					<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" ImageUrl="/Images/Common/Button/ok_up.gif" RollOverImageUrl="/Images/Common/Button/ok_down.gif"></cc1:imagebuttonrolloverwebcontrol></td>
+					<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
 				</tr>
 				<!-- Info bt droit -->
 				<tr>
@@ -165,10 +165,7 @@
 										<!-- Resultat -->
 										<%=result%>
 										<DCWC:PORTOFOLIOCHARTUI id="portofolioChart" runat="server"></DCWC:PORTOFOLIOCHARTUI><cc5:resultwebcontrol id="_resultWebControl" runat="server" JavascriptFilePath="/scripts/WebResult.js"
-											CssDetailSelectionBordelLevel="dsBorderLevel" CssDetailSelectionL1="dsLv1" CssDetailSelectionL2="dsLv2" CssDetailSelectionL3="dsLv3" CssDetailSelectionTitle="dsTitle" CssDetailSelectionTitleData="dsTitleData"
-											CssDetailSelectionTitleGlobal="dsTitleGlobal" CssLHeader="h2" BackgroudColorL1="#B1A3C1" CssL1="lv1" HighlightBackgroundColorL1="#FFFFFF" HighlightBackgroundColorL3="#FFFFFF" BackgroudColorL2="#D0C8DA"
-											CssL2="lv2" CssL3="lv3" HighlightBackgroundColorL2="#FFFFFF" BackgroudColorL3="#E1E0DA" AllowPaging="True" ImgBtnCroiOverPath="/Images/Common/fl_tri_croi3_in.gif" ImgBtnCroiPath="/Images/Common/fl_tri_croi3.gif"
-											ImgBtnDeCroiOverPath="/Images/Common/fl_tri_decroi3_in.gif" ImgBtnDeCroiPath="/Images/Common/fl_tri_decroi3.gif" CssLTotal="lv0"></cc5:resultwebcontrol></td>
+											AllowPaging="True" SkinID="portofolioResultTable"></cc5:resultwebcontrol></td>
 								</tr>
 								<tr>
 									<td class="whiteBackGround" height="5"></td>

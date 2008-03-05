@@ -58,6 +58,8 @@ namespace AdExpress.Private.Results.Excel{
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
 
+                Response.ContentType = "application/vnd.ms-excel";
+
 				#region Resultat
 				switch(_webSession.CurrentTab) {
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:

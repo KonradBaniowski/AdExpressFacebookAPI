@@ -307,7 +307,7 @@ namespace AdExpress.Private.Selection{
 				#endregion
 				
 				// logo
-				logo = TNS.AdExpress.Web.UI.ExcelWebPage.GetLogo();
+                logo = TNS.AdExpress.Web.UI.ExcelWebPage.GetLogo(_webSession);
 
 				// Intitulé de l'étude
 				typeEtude=Convertion.ToHtmlString(GestionWeb.GetWebWord(842,_webSession.SiteLanguage));

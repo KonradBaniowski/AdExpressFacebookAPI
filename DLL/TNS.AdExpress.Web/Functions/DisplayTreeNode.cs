@@ -11,6 +11,7 @@ using System.Collections;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Translation;
 
@@ -73,13 +74,14 @@ namespace TNS.AdExpress.Web.Functions{
 		/// Affichage d'un arbre pour l'export Excel
 		/// </summary>
 		/// <param name="root">Arbre</param>
+        /// <param name="siteLanguage">Site language</param>
 		/// <returns>Code HTML</returns>
-		public static string ToExcel(TreeNode root){
+		public static string ToExcel(TreeNode root, int siteLanguage){
 			int maxLevel=0;
 			GetNbLevels(root,1,ref maxLevel);
 			StringBuilder html = new StringBuilder();
 			int nbTD=1;
-			TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(root,ref html,0,maxLevel-1,ref nbTD);
+			TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(root,ref html,0,maxLevel-1,ref nbTD, siteLanguage);
 			return(html.ToString());
 		}
 
@@ -100,17 +102,18 @@ namespace TNS.AdExpress.Web.Functions{
 		/// Donne le nom du style CSS selon le niveau de l'arbre
 		/// </summary>
 		/// <param name="level">Niveau de l'arbre</param>
+        /// <param name="cssNameStyle">Css name style</param>
 		/// <returns>Nom du style CSS</returns>
-		private static string GetLevelCss(int level){
+		private static string GetLevelCss(int level,string cssNameStyle){
 			switch(level){
 				case 1:
-					return("Level1");
+                    return ("Level" + cssNameStyle + "1");
 				case 2:
-					return("Level2");
+                    return ("Level" + cssNameStyle + "2");
 				case 3:
-					return("Level3");
+                    return ("Level" + cssNameStyle + "3");
 				default:
-					return("Level1");
+                    return ("Level" + cssNameStyle + "1");
 			}
 		}
 
@@ -122,6 +125,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="level">Niveau de l'arbre</param>
 		/// <param name="maxLevel">Nombre maximum de niveaud e l'arbre</param>
 		/// <param name="nbTD">Nombre de cellule TD</param>
+        /// <param name="siteLanguage">Site langauge</param>
 		/// <returns>True si le nombre maximum de TD a été atteint, sinon false</returns>
 		/// <remarks>
 		/// - Actuellement, la méthode gère 3 niveaux d'affichage mais elle est générique.
@@ -129,7 +133,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// dans la méthode ci-après et ajouter les niveaux dans la méthode GetLevelCss(int level)
 		/// - Affichage sur 3 colonnes dans le dernier niveau
 		/// </remarks>
-		private static bool ToExcel(TreeNode root, ref StringBuilder html, int level, int maxLevel, ref int nbTD){
+		private static bool ToExcel(TreeNode root, ref StringBuilder html, int level, int maxLevel, ref int nbTD, int siteLanguage){
 
 			#region Constantes
 			const string BORDER_COLOR="#808080";
@@ -137,23 +141,25 @@ namespace TNS.AdExpress.Web.Functions{
 
 			#region Variables
 			string img="";
+            string themeName = WebApplicationParameters.Themes[siteLanguage].Name;
 			#endregion
 
 			#region Checkbox
 			// Non cocher
-			if(!root.Checked) img="<img src=/Images/Common/checkbox_not_checked.GIF>";
+			if(!root.Checked) img="<img src=/App_Themes/"+themeName+"/Images/Common/checkbox_not_checked.GIF>";
 			// Cocher
-			else if(root.Checked) img="<img src=/Images/Common/checkbox.GIF>";
+            //else if(root.Checked) img="<img src=/Images/Common/checkbox.GIF>";
+            else if (root.Checked) img = "<img src=/App_Themes/"+themeName+"/Images/Common/checkbox.GIF>";
 			#endregion
 
 			// Si on est dans le dernier niveau de l'arbre
 			if(level==maxLevel){ 
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
-				html.Append("<td class="+GetLevelCss(level)+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;"+((LevelInformation)root.Tag).Text+"</td>");	
+				html.Append("<td class="+GetLevelCss(level,"")+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;"+((LevelInformation)root.Tag).Text+"</td>");	
 			}
 			else{
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
-				if(level!=0)html.Append("<tr class=\"BorderLevel\"><td colspan=4 class="+GetLevelCss(level)+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;"+((LevelInformation)root.Tag).Text+"</td></tr>");
+				if(level!=0)html.Append("<tr class=\"BorderLevel\"><td colspan=4 class="+GetLevelCss(level,"")+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;"+((LevelInformation)root.Tag).Text+"</td></tr>");
 				// On prépare l'affichage du dernier niveau de l'arbre (nouvelle ligne) si on affiche le père d'une feuille
 				if(level==maxLevel-1 && root.Nodes.Count>0)
 					html.Append("<tr>");
@@ -161,7 +167,7 @@ namespace TNS.AdExpress.Web.Functions{
 			// Boucle sur chaque noeud de l'arbre
 			foreach(TreeNode currentNode in root.Nodes){
 				// Si le niveau inférieur indique qu'il faut changer de ligne et que la demande n'a pas été faite par le dernier fils
-				if(ToExcel(currentNode,ref html,level+1,maxLevel,ref nbTD) && currentNode!=root.LastNode){
+				if(ToExcel(currentNode,ref html,level+1,maxLevel,ref nbTD,siteLanguage) && currentNode!=root.LastNode){
 					html.Append("</tr><tr>");
 				}
 			}
@@ -169,12 +175,12 @@ namespace TNS.AdExpress.Web.Functions{
 			if(level==maxLevel-1 && root.Nodes.Count>0){
 				if(nbTD!=1){
 					// On ajoute des cellules vides (td avec colspan)pour avoir le bon nombre de cellules (TD)
-					html.Append("<td class="+GetLevelCss(level+1)+" colspan="+(((int)(4-nbTD)).ToString())+">&nbsp;</td>");
+					html.Append("<td class="+GetLevelCss(level+1,"")+" colspan="+(((int)(4-nbTD)).ToString())+">&nbsp;</td>");
 					// Bordure de droite
-					html.Append("<td class="+GetLevelCss(level+1)+" style=\"border-right:solid 1px "+BORDER_COLOR+";width=10px;\">&nbsp;</td></tr>");
+                    html.Append("<td class=\"" + GetLevelCss(level + 1, "RightBorder") + "\">&nbsp;</td></tr>");
 				}
 				// Bordure en bas et bordure à droite
-				html.Append("<tr><td colspan=4 class="+GetLevelCss(level+1)+" style=\"border-bottom:solid 1px "+BORDER_COLOR+";border-right:solid 1px "+BORDER_COLOR+";height:5px;font-size:5px;\">&nbsp;</td></tr>");
+                html.Append("<tr><td colspan=4 class=\"" + GetLevelCss(level + 1, "RightBottomBorder") + "\" >&nbsp;</td></tr>");
 				nbTD=1;
 			}
 			// Si on est dans le dernier niveau de l'arbre
@@ -184,7 +190,7 @@ namespace TNS.AdExpress.Web.Functions{
 				// On prépare le changement de ligne commander au niveau supperieur par le return true
 				if(nbTD==3){
 					nbTD=1;
-					html.Append("<td class="+GetLevelCss(level)+" style=\"border-right:solid 1px "+BORDER_COLOR+";width=10px;\">&nbsp;</td></tr>");
+                    html.Append("<td class=\"" + GetLevelCss(level, "RightBorder") + "\" >&nbsp;</td></tr>");
 					return(true);
 				}
 				nbTD++;

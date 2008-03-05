@@ -18,6 +18,7 @@ using System.Text;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Translation;
@@ -89,11 +90,34 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Style pour le niveau 3
 		/// </summary>
 		private string _cssLevel3 = String.Empty;
+        /// <summary>
+        /// Right border css for level 1
+        /// </summary>
+        private string _cssRightBorderLevel1 = String.Empty;
+        /// <summary>
+        /// Right border css for level 2
+        /// </summary>
+        private string _cssRightBorderLevel2 = String.Empty;
+        /// <summary>
+        /// Right border css for level 3
+        /// </summary>
+        private string _cssRightBorderLevel3 = String.Empty;
+        /// <summary>
+        /// Right Bottom border css for level 1
+        /// </summary>
+        private string _cssRightBottomBorderLevel1 = String.Empty;
+        /// <summary>
+        /// Right Bottom border css for level 2
+        /// </summary>
+        private string _cssRightBottomBorderLevel2 = String.Empty;
+        /// <summary>
+        /// Right Bottom border css for level 3
+        /// </summary>
+        private string _cssRightBottomBorderLevel3 = String.Empty;
 		/// <summary>
 		/// Style pour la bordure d'un niveau
 		/// </summary>
 		private string _cssBorderLevel = String.Empty;
-		
 		/// <summary>
 		/// Style vérifié du titre global du tableau > GetCssTitleGlobalHTML()
 		/// </summary>
@@ -118,6 +142,30 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Style vérifié pour le niveau 3 > GetCssLevel3HTML()
 		/// </summary>
 		private string cssLevel3="";
+        /// <summary>
+        /// Style verified for level 1 > GetCssRightBorderLevel1HTML()
+        /// </summary>
+        private string cssRightBorderLevel1 = "";
+        /// <summary>
+        /// Style verified for level 2 > GetCssRightBorderLevel2HTML()
+        /// </summary>
+        private string cssRightBorderLevel2 = "";
+        /// <summary>
+        /// Style verified for level 3 > GetCssRightBorderLevel3HTML()
+        /// </summary>
+        private string cssRightBorderLevel3 = "";
+        /// <summary>
+        /// Style verified for level 1 > GetCssRightBottomBorderLevel1HTML()
+        /// </summary>
+        private string cssRightBottomBorderLevel1 = "";
+        /// <summary>
+        /// Style verified for level 2 > GetCssRightBottomBorderLevel2HTML()
+        /// </summary>
+        private string cssRightBottomBorderLevel2 = "";
+        /// <summary>
+        /// Style verified for level 3 > GetCssRightBottomBorderLevel3HTML()
+        /// </summary>
+        private string cssRightBottomBorderLevel3 = "";
 		/// <summary>
 		/// Style vérifié pour la bordure d'un niveau > GetCssBorderLevelHTML()
 		/// </summary>
@@ -183,6 +231,66 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				cssLevel3=GetCssLevel3HTML();
 			}
 		}
+        /// <summary>
+        /// Style for level 1
+        /// </summary>
+        public string CssRightBorderLevel1 {
+            get { return _cssRightBorderLevel1; }
+            set {
+                _cssRightBorderLevel1 = value;
+                cssRightBorderLevel1 = GetCssRightBorderLevel1HTML();
+            }
+        }
+        /// <summary>
+        /// Style for level 2
+        /// </summary>
+        public string CssRightBorderLevel2 {
+            get { return _cssRightBorderLevel2; }
+            set {
+                _cssRightBorderLevel2 = value;
+                cssRightBorderLevel2 = GetCssRightBorderLevel2HTML();
+            }
+        }
+        /// <summary>
+        /// Style for level 3
+        /// </summary>
+        public string CssRightBorderLevel3 {
+            get { return _cssRightBorderLevel3; }
+            set {
+                _cssRightBorderLevel3 = value;
+                cssRightBorderLevel3 = GetCssRightBorderLevel3HTML();
+            }
+        }
+        /// <summary>
+        /// Style for level 1
+        /// </summary>
+        public string CssRightBottomBorderLevel1 {
+            get { return _cssRightBottomBorderLevel1; }
+            set {
+                _cssRightBottomBorderLevel1 = value;
+                cssRightBottomBorderLevel1 = GetCssRightBorderLevel1HTML();
+            }
+        }
+        /// <summary>
+        /// Style for level 2
+        /// </summary>
+        public string CssRightBottomBorderLevel2 {
+            get { return _cssRightBottomBorderLevel2; }
+            set {
+                _cssRightBottomBorderLevel2 = value;
+                cssRightBottomBorderLevel2 = GetCssRightBorderLevel2HTML();
+            }
+        }
+        /// <summary>
+        /// Style for level 3
+        /// </summary>
+        public string CssRightBottomBorderLevel3 {
+            get { return _cssRightBottomBorderLevel3; }
+            set {
+                _cssRightBottomBorderLevel3 = value;
+                cssRightBottomBorderLevel3 = GetCssRightBorderLevel3HTML();
+            }
+        }
 		/// <summary>
 		/// Style du titre global du tableau
 		/// </summary>
@@ -303,6 +411,54 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			if(_cssLevel3 != null && _cssLevel3.Length > 0)return ("class=\""+_cssLevel3+"\"");
 			return("");
 		}
+        /// <summary>
+        /// Vérification du style
+        /// </summary>
+        /// <returns>HTML</returns>
+        private string GetCssRightBorderLevel1HTML() {
+            if (_cssRightBorderLevel1 != null && _cssRightBorderLevel1.Length > 0) return ("class=\"" + _cssRightBorderLevel1 + "\"");
+            return ("");
+        }
+        /// <summary>
+        /// Vérification du style
+        /// </summary>
+        /// <returns>HTML</returns>
+        private string GetCssRightBorderLevel2HTML() {
+            if (_cssRightBorderLevel2 != null && _cssRightBorderLevel2.Length > 0) return ("class=\"" + _cssRightBorderLevel2 + "\"");
+            return ("");
+        }
+        /// <summary>
+        /// Vérification du style
+        /// </summary>
+        /// <returns>HTML</returns>
+        private string GetCssRightBorderLevel3HTML() {
+            if (_cssRightBorderLevel3 != null && _cssRightBorderLevel3.Length > 0) return ("class=\"" + _cssRightBorderLevel3 + "\"");
+            return ("");
+        }
+        /// <summary>
+        /// Vérification du style
+        /// </summary>
+        /// <returns>HTML</returns>
+        private string GetCssRightBottomBorderLevel1HTML() {
+            if (_cssRightBottomBorderLevel1 != null && _cssRightBottomBorderLevel1.Length > 0) return ("class=\"" + _cssRightBottomBorderLevel1 + "\"");
+            return ("");
+        }
+        /// <summary>
+        /// Vérification du style
+        /// </summary>
+        /// <returns>HTML</returns>
+        private string GetCssRightBottomBorderLevel2HTML() {
+            if (_cssRightBottomBorderLevel2 != null && _cssRightBottomBorderLevel2.Length > 0) return ("class=\"" + _cssRightBottomBorderLevel2 + "\"");
+            return ("");
+        }
+        /// <summary>
+        /// Vérification du style
+        /// </summary>
+        /// <returns>HTML</returns>
+        private string GetCssRightBottomBorderLevel3HTML() {
+            if (_cssRightBottomBorderLevel3 != null && _cssRightBottomBorderLevel3.Length > 0) return ("class=\"" + _cssRightBottomBorderLevel3 + "\"");
+            return ("");
+        }
 		/// <summary>
 		/// Vérification du style
 		/// </summary>
@@ -328,7 +484,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			try{
 
 				#region Début du tableau
-				t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0 width=100% >");
+                t.Append("<table class=\"greyBorder\" cellpadding=0 cellspacing=0 width=100% >");
 				switch(OutputType){
 					case RenderType.excel:
 					case RenderType.rawExcel:
@@ -779,7 +935,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					if(webSession.PrincipalProductUniverses.ContainsKey(k)){
 						t.Append(GetBlankLine());
 						t.Append("<TR><TD colspan=4 " + cssTitleData + " ><font " + cssTitle + ">" + GestionWeb.GetWebWord(1759, webSession.SiteLanguage) + " :</font></TD></TR>");
-						t.Append("<TR><TD colspan=4 class=\"txtViolet11Bold\" bgColor=\"#ffffff\" ><font>" + webSession.PrincipalProductUniverses[k].Label + " </font></TD></TR>");
+                        t.Append("<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" ><font>" + webSession.PrincipalProductUniverses[k].Label + " </font></TD></TR>");
 						adExpressUniverse = webSession.PrincipalProductUniverses[k];
 						t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));
 					}
@@ -1313,6 +1469,42 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			}
 		}
 
+        /// <summary>
+        /// Donne le nom du style CSS selon le niveau de l'arbre
+        /// </summary>
+        /// <param name="level">Niveau de l'arbre</param>
+        /// <returns>Nom du style CSS</returns>
+        private string GetRightBorderLevelCss(int level) {
+            switch (level) {
+                case 1:
+                    return (cssRightBorderLevel1);
+                case 2:
+                    return (cssRightBorderLevel2);
+                case 3:
+                    return (cssRightBorderLevel3);
+                default:
+                    return (cssRightBorderLevel1);
+            }
+        }
+
+        /// <summary>
+        /// Donne le nom du style CSS selon le niveau de l'arbre
+        /// </summary>
+        /// <param name="level">Niveau de l'arbre</param>
+        /// <returns>Nom du style CSS</returns>
+        private string GetRightBottomBorderLevelCss(int level) {
+            switch (level) {
+                case 1:
+                    return (cssRightBottomBorderLevel1);
+                case 2:
+                    return (cssRightBottomBorderLevel2);
+                case 3:
+                    return (cssRightBottomBorderLevel3);
+                default:
+                    return (cssRightBottomBorderLevel1);
+            }
+        }
+
 		/// <summary>
 		/// Affichage d'un arbre pour l'export Excel
 		/// </summary>
@@ -1330,29 +1522,32 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// </remarks>
         private bool ToExcel(System.Windows.Forms.TreeNode root, ref StringBuilder html, int level, int maxLevel, ref int nbTD)
         {
+            #region Variables
+            string img = "";
+            string rightBorder = string.Empty;
+            string rightBottomBorder = string.Empty;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+            #endregion
 
 			#region Border Color
-			string borderColor = String.Empty;
 			switch(OutputType){
 				case RenderType.html:
-					borderColor="#B1A3C1";
+                    rightBorder = "violetRightBorder";
+                    rightBottomBorder = "violetRightBottomBorder";
 					break;
 				case RenderType.excel:
 				case RenderType.rawExcel:
-					borderColor="#808080";
+                    rightBorder = "greyRightBorder";
+                    rightBottomBorder = "greyRightBottomBorder";
 					break;
 			}
 			#endregion
 
-			#region Variables
-			string img="";
-			#endregion
-
 			#region Checkbox
 			// Non cocher
-			if(!root.Checked) img="<img src=/Images/Common/checkbox_not_checked.GIF>";
+			if(!root.Checked) img="<img src=/App_Themes/"+themeName+"/Images/Common/checkbox_not_checked.GIF>";
 				// Cocher
-			else if(root.Checked) img="<img src=/Images/Common/checkbox.GIF>";
+			else if(root.Checked) img="<img src=/App_Themes/"+themeName+"/Images/Common/checkbox.GIF>";
 			#endregion
 
 			// Si on est dans le dernier niveau de l'arbre
@@ -1380,10 +1575,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					// On ajoute des cellules vides (td avec colspan)pour avoir le bon nombre de cellules (TD)
 					html.Append("<td "+GetLevelCss(level+1)+" colspan="+(((int)(4-nbTD)).ToString())+">&nbsp;</td>");
 					// Bordure de droite
-					html.Append("<td "+GetLevelCss(level+1)+" style=\"border-right:solid 1px "+borderColor+";width=10px;\">&nbsp;</td></tr>");
+					html.Append("<td "+GetRightBorderLevelCss(level+1)+" >&nbsp;</td></tr>");
 				}
 				// Bordure en bas et bordure à droite
-				html.Append("<tr><td colspan=4 "+GetLevelCss(level+1)+" style=\"border-bottom:solid 1px "+borderColor+";border-right:solid 1px "+borderColor+";height:5px;font-size:5px;\">&nbsp;</td></tr>");
+				html.Append("<tr><td colspan=4 "+GetRightBottomBorderLevelCss(level+1)+">&nbsp;</td></tr>");
 				nbTD=1;
 			}
 			// Si on est dans le dernier niveau de l'arbre
@@ -1393,7 +1588,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				// On prépare le changement de ligne commander au niveau supperieur par le return true
 				if(nbTD==3){
 					nbTD=1;
-					html.Append("<td "+GetLevelCss(level)+" style=\"border-right:solid 1px "+borderColor+";width=10px;\">&nbsp;</td></tr>");
+					html.Append("<td "+GetRightBorderLevelCss(level)+">&nbsp;</td></tr>");
 					return(true);
 				}
 				nbTD++;
@@ -1490,28 +1685,32 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <returns>Html render to show universe selection</returns>
 		private  string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, OracleConnection connection, AccessType accessType) {
 
+            #region Variables
+            int level = 1;
+            ArrayList itemIdList = null;
+            bool lineClosed = false;
+            int colSpan = 0;
+            string rightBorder = string.Empty;
+            string rightBottomBorder = string.Empty;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+            string img = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>";
+            TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess universeItems = null;
+            int code = 0;
+            StringBuilder html = new StringBuilder();
+            #endregion
+
 			#region Border Color
-			string borderColor = String.Empty;
 			switch (OutputType) {
 				case RenderType.html:
-					borderColor = "#B1A3C1";
+                    rightBorder = "violetRightBorder";
+                    rightBottomBorder = "violetRightBottomBorder";
 					break;
 				case RenderType.excel:
 				case RenderType.rawExcel:
-					borderColor = "#808080";
+                    rightBorder = "greyRightBorder";
+                    rightBottomBorder = "greyRightBottomBorder";
 					break;
 			}
-			#endregion
-
-			#region Variables
-			int level = 1;
-			ArrayList itemIdList = null;
-			bool lineClosed = false;
-			int colSpan = 0;
-			string img = "<img src=/Images/Common/checkbox.GIF>";
-			TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess universeItems = null;
-			int code = 0;
-			StringBuilder html = new StringBuilder();
 			#endregion
 
 			if (accessType == AccessType.includes) code = 2281;
@@ -1555,17 +1754,17 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 										html.Append("<td  " + GetLevelCss(level) + " colspan=" + colSpan + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</td>");
 										if (k > 0 && ((k + 1) % (baseColSpan - 1)) == 0) {
 											lineClosed = true;
-											html.Append("<td  " + GetLevelCss(level) + " style=\"border-right:solid 1px " + borderColor + ";width=10px;\">&nbsp;</td></tr>");//Items are showed on three columns
+											html.Append("<td  " + GetLevelCss(level) + " class=\""+rightBorder+"\">&nbsp;</td></tr>");//Items are showed on three columns
 										}
 										colSpan = 0;
 									}
 									if (!lineClosed) {
-										html.Append("<td  " + GetLevelCss(level) + " style=\"border-right:solid 1px " + borderColor + ";width=10px;\">&nbsp;</td></tr>");
+										html.Append("<td  " + GetLevelCss(level) + " class=\""+rightBorder+"\">&nbsp;</td></tr>");
 									}
 								}
 
 								// Bordure en bas et bordure à droite
-								html.Append("<tr><td colspan=" + baseColSpan + "  " + GetLevelCss(level) + "  style=\"border-bottom:solid 1px " + borderColor + ";border-right:solid 1px " + borderColor + ";height:5px;font-size:5px;\">&nbsp;</td></tr>");
+								html.Append("<tr><td colspan=" + baseColSpan + "  " + GetLevelCss(level) + " class=\""+rightBottomBorder+"\">&nbsp;</td></tr>");
 							}
 							html.Append("</tr>");
 						}

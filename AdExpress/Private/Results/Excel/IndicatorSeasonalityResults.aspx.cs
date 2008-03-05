@@ -76,7 +76,7 @@ namespace AdExpress.Private.Results.Excel{
 						break;
 					case 	
 					TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.NOVELTY:
-						result = ExcelFunction.GetLogo();
+                        result = ExcelFunction.GetLogo(_webSession);
 						result += ExcelFunction.GetExcelHeader(_webSession, false, true, false, GestionWeb.GetWebWord(1310, _webSession.SiteLanguage));
 						result += TNS.AdExpress.Web.UI.Results.IndicatorNoveltyUI.GetIndicatorNoveltyExcelUI(this,IndicatorNoveltyRules.GetFormattedTable(_webSession,TNS.AdExpress.Constantes.FrameWork.Results.Novelty.ElementType.product),_webSession,TNS.AdExpress.Constantes.FrameWork.Results.Novelty.ElementType.product);
 						result += "<br>"+TNS.AdExpress.Web.UI.Results.IndicatorNoveltyUI.GetIndicatorNoveltyExcelUI(this,IndicatorNoveltyRules.GetFormattedTable(_webSession,TNS.AdExpress.Constantes.FrameWork.Results.Novelty.ElementType.advertiser),_webSession,TNS.AdExpress.Constantes.FrameWork.Results.Novelty.ElementType.advertiser);
