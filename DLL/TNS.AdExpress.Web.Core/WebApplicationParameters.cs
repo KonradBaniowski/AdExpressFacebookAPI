@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core.DataAccess;
 using TNS.FrameWork.DB.Common;
 
