@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Exceptions;
 using TNS.AdExpress.Web.Core;

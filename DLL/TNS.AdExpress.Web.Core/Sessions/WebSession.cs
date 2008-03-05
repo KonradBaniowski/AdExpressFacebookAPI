@@ -34,7 +34,7 @@ using CoreConstantes = TNS.AdExpress.Constantes.Web.Core;
 using TNS.FrameWork.WebResultUI;
 using TNS.Isis.Right.Common;
 using TNS.AdExpress.Classification;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 
 namespace TNS.AdExpress.Web.Core.Sessions {
