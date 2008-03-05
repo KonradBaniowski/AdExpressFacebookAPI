@@ -35,6 +35,9 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 
 <%-- Boutons --%>
 <asp:image runat="server" ImageUrl="Images/Culture/Button/valider_up.gif" SkinID="valider" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/suivant_up.gif" SkinID="suivant" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/enregistrer_univers_up.gif" SkinID="enregistrer" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/charger_up.gif" SkinID="charger" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/save_up.gif" SkinID="save" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/bt_delete_up.gif" SkinID="delete" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/ok_up.gif" SkinID="ok" />

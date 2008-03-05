@@ -8,18 +8,20 @@ using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using TNS.AdExpress.Web.UI;
+using TNS.AdExpress.Web.Core;
 
 namespace AdExpress.Private.Helps{
 	/// <summary>
 	/// Page d'aide de AEPMTargetSelectionHelp.aspx
 	/// </summary>
-	public partial class AEPMTargetSelectionHelp : System.Web.UI.Page{
+	public partial class AEPMTargetSelectionHelp : WebPage{
 
 		#region Variables
-		/// <summary>
-		/// Langue du site
-		/// </summary>
-		public int _siteLanguage=33;
+        /// <summary>
+        /// Theme name
+        /// </summary>
+        public string _themeName = string.Empty;
 		#endregion
 
 		#region Variables MMI
@@ -70,12 +72,11 @@ namespace AdExpress.Private.Helps{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Aguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
+            _themeName = WebApplicationParameters.Themes[_siteLanguage].Name;
 			
 			#region Textes et langage du site
-			if(Page.Request.QueryString.Get("siteLanguage")!=null)
-				_siteLanguage=int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_siteLanguage);
+			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
 			#endregion
 
 		}

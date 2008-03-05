@@ -68,7 +68,7 @@
 				</tr>
 				<tr>
 					<td width="10"><asp:Image ID="Image29" runat="server" SkinID="pixel" width="10" /></td>
-					<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext1" runat="server" Code="997"></cc1:adexpresstext>&nbsp;<IMG src="/Images/<%=_siteLanguage%>/button/suivant_up.gif" >
+					<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext1" runat="server" Code="997"></cc1:adexpresstext>&nbsp;<asp:Image ID="Image56" runat="server" SkinID="suivant" />
 						<cc1:adexpresstext language="33" id="Adexpresstext2" runat="server" Code="1071"></cc1:adexpresstext></td>
 				</tr>
 				<!-- bouton valider-->
@@ -77,7 +77,7 @@
 				</tr>
 				<tr>
 					<td width="10"><asp:Image ID="Image30" runat="server" SkinID="pixel" width="10" /></td>
-					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text2AdExpressText" runat="server" Code="997"></cc1:adexpresstext>&nbsp;<IMG src="/Images/<%=_siteLanguage%>/button/valider_up.gif" >
+					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text2AdExpressText" runat="server" Code="997"></cc1:adexpresstext>&nbsp;<asp:Image ID="Image153" runat="server" SkinID="valider" />
 						<cc1:adexpresstext language="33" id="text3AdExpressText" runat="server" Code="998"></cc1:adexpresstext></td>
 				</tr>
 				<tr>
@@ -149,7 +149,7 @@
 				<!-- Enregistrer l'univers -->
 				<tr>
 					<td width="10"><asp:Image ID="Image38" runat="server" SkinID="pixel" width="10" /></td>
-					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text10Adexpresstext" runat="server" Code="1005"></cc1:adexpresstext>&nbsp;<IMG src="/Images/<%=_siteLanguage%>/button/enregistrer_univers_up.gif" >&nbsp;
+					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text10Adexpresstext" runat="server" Code="1005"></cc1:adexpresstext>&nbsp;<asp:Image ID="Image57" runat="server" SkinID="enregistrer" />&nbsp;
 						<cc1:adexpresstext language="33" id="text11Adexpresstext" runat="server" Code="2447"></cc1:adexpresstext></td>
 				</tr>
 				<!-- Exemple Image -->
@@ -169,7 +169,7 @@
 				</tr>
 				<!-- Exemple Image -->
 				<tr>
-					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveUniverseNewName.gif">&nbsp;&nbsp;<IMG src="/Images/<%=_siteLanguage%>/Help/PopUpSaveUniverseFolderSelection.gif"></td>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveUniverseNewName.gif">&nbsp;&nbsp;<IMG src="/App_Themes/<%=_themeName%>/Images/Culture/Help/PopUpSaveUniverseFolderSelection.gif"></td>
 				</tr>
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image15" runat="server" SkinID="pixel" height="15" width="100%" /></td>
@@ -204,7 +204,7 @@
 				</tr>
 				<tr>
 					<td width="10"><asp:Image ID="Image42" runat="server" SkinID="pixel" width="10" /></td>
-					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text12Adexpresstext" runat="server" Code="1008"></cc1:adexpresstext>&nbsp;<IMG src="/Images/<%=_siteLanguage%>/button/charger_up.gif" >&nbsp;
+					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text12Adexpresstext" runat="server" Code="1008"></cc1:adexpresstext>&nbsp;<asp:Image ID="Image152" runat="server" SkinID="charger" />&nbsp;
 						<cc1:adexpresstext language="33" id="text13Adexpresstext" runat="server" Code="1009"></cc1:adexpresstext></td>
 				</tr>
 				<!-- Exemple Image -->
