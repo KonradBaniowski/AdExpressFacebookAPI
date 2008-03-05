@@ -110,34 +110,21 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataAccess\Customer\RightDataAccess.cs" />
-    <Compile Include="DataBaseDescription\DefaultConnection.cs" />
-    <Compile Include="DataBaseDescription\DataBase.cs" />
-    <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="Exceptions\AdExpressCustomerDBException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\AdExpressCustomerException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exceptions\DefaultConnectionException.cs" />
-    <Compile Include="Exceptions\InvalidXmlValueException.cs" />
     <Compile Include="Exceptions\OracleDataSourceException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\SqlGeneratorSystemException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exceptions\XmlEmptyValueException.cs" />
-    <Compile Include="Exceptions\XmlNullValueException.cs" />
-    <Compile Include="Exceptions\XmlReaderDataSourceException.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Rules\Customer\Right.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataBaseDescription\Schema.cs" />
-    <Compile Include="DataBaseDescription\Tables.cs" />
-    <Compile Include="XmlLoader\DataBaseDescriptionXL.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
@@ -153,7 +140,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataBaseDescription\DataBaseConfiguration.cd" />
+    <Folder Include="XmlLoader\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
