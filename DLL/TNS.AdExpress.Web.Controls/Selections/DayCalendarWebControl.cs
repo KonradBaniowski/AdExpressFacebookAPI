@@ -13,6 +13,7 @@ using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core;
 using TNS.FrameWork.Date;
 using CustomerWebConstantes=TNS.AdExpress.Constantes.Web.CustomerSessions;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
