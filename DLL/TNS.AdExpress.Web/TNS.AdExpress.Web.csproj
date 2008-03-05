@@ -1257,10 +1257,6 @@
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.ADEXPRESS\TNS.AdExpress.csproj">
-      <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
-      <Name>TNS.AdExpress</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

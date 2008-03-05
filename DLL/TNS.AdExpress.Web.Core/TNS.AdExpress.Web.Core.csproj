@@ -447,10 +447,6 @@
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
       <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.ADEXPRESS\TNS.AdExpress.csproj">
-      <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
-      <Name>TNS.AdExpress</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
