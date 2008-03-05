@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Controls.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
@@ -22,6 +22,7 @@ using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 using ProductList=TNS.AdExpress.Web.DataAccess.Selections.Products.ProductListDataAccess;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
