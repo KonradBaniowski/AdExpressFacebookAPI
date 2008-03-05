@@ -10,7 +10,7 @@ using System;
 using System.Data;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Web.Core.DataAccess.Translation;
-using TNS.AdExpress.DataBaseDescription;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 
 namespace TNS.AdExpress.Web.Core.Translation{
