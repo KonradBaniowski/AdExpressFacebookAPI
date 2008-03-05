@@ -9,9 +9,9 @@ using System.Collections.Generic;
 
 using System.Windows.Forms;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Navigation;
 using TNS.AdExpress.Web.Controls.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
