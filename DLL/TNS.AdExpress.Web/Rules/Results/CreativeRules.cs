@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using DBClassifCst = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.Common.Results.Creatives;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.FrameWork.WebResultUI.TableControl;

@@ -25,7 +25,7 @@ using Oracle.DataAccess.Client;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;
 using TNS.AdExpress.Web.DataAccess.MyAdExpress;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
@@ -34,6 +34,7 @@ using WebRules=TNS.AdExpress.Web.Rules;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Level;
 
 
 namespace AdExpress.Private.MyAdExpress{

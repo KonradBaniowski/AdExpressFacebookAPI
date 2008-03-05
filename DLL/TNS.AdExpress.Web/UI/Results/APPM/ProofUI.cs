@@ -14,7 +14,7 @@ using System.IO;
 using System.Web.UI;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.Customer;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using RulesFct = TNS.AdExpress.Web.Rules.Results;

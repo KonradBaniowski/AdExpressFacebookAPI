@@ -21,10 +21,11 @@ using DBClassifCst = TNS.AdExpress.Constantes.Classification.DB;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Exceptions;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.DataAccess.Results {
 

@@ -11,9 +11,9 @@ using System.Web.UI.HtmlControls;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Rules.Customer;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 
@@ -115,7 +115,7 @@ namespace AdExpress.Private.Universe{
 			_siteLanguage=_webSession.SiteLanguage;
 			
 			//Connaitre la page annonceur (annonceur, concurentiel)
-			Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(_webSession.CurrentModule);
+			Module currentModuleDescription=ModulesList.GetModule(_webSession.CurrentModule);
 			if(branchType==TNS.AdExpress.Constantes.Classification.Branch.type.advertiser
 				|| branchType==TNS.AdExpress.Constantes.Classification.Branch.type.brand){
 				url=((ResultPageInformation) currentModuleDescription.SelectionsPages[0]).Url;

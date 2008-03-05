@@ -22,7 +22,7 @@ using System.Web.UI.HtmlControls;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using TradCst = TNS.AdExpress.Constantes.DB.Language;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 
 namespace AdExpress.Private.Informations{

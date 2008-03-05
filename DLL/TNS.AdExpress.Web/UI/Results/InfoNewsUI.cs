@@ -11,7 +11,7 @@ using System.Collections;
 
 using TNS.AdExpress.Web.DataAccess.MyAdExpress;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using AdExpressWebRules=TNS.AdExpress.Web.Rules;

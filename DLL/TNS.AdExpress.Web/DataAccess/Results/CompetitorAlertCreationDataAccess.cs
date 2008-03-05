@@ -26,7 +26,7 @@ using DBConstantes=TNS.AdExpress.Constantes.DB;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using ResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -68,7 +68,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			bool premier = true;
 			string listMediaAccess="";
 			int positionUnivers=1;
-            Module currentModuleDescription = Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 
 			#region Sélection de Médias
 			while(webSession.CompetitorUniversMedia[positionUnivers]!=null){

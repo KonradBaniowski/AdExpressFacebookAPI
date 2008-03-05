@@ -10,7 +10,7 @@
 using System;
 using System.Text;
 using System.Web.UI;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.UI.Global.Loading{
 	/// <summary>

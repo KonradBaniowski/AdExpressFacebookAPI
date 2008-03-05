@@ -27,7 +27,7 @@ using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using ConstantesCustomer=TNS.AdExpress.Constantes.Customer;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using  ConstantesFrameWork=TNS.AdExpress.Constantes.FrameWork;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{

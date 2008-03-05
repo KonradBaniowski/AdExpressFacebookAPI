@@ -11,13 +11,13 @@ using System;
 using System.Web.UI;
 using System.Windows.Forms;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebText = TNS.AdExpress.Web.Functions.Text;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using ResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using CustomerConstantes=TNS.AdExpress.Constantes.Customer;
 using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
@@ -94,7 +94,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#region Type de module		
 			// Type de module pour savoir si l'on affiche les créations
 			try{
-				Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+				Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 				if(currentModuleDescription.ModuleType==TNS.AdExpress.Constantes.Web.Module.Type.alert){
 					displayCreation=true;
 					displayCreation=DisplayCreationBoolean(webSession,-1);

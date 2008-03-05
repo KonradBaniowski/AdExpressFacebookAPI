@@ -19,7 +19,7 @@ using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.Rules.Results;

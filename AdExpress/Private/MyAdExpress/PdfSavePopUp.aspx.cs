@@ -17,12 +17,13 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Constantes.Web;
 
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Level;
 
 namespace AdExpress.Private.MyAdExpress
 {

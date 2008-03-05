@@ -13,7 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using Dundas.Charting.WebControl;
 using TNS.AdExpress.Web.Core.Sessions;
 using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork;

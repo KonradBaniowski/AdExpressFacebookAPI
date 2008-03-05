@@ -10,7 +10,7 @@
 using System;
 using System.Text;
 using TNS.AdExpress.Web.UI;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 
 namespace TNS.AdExpress.Web.Functions{

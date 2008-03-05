@@ -18,7 +18,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.UI.Results;
 using TNS.AdExpress.Web.Rules.Results;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using BusinessFacadeResults=TNS.AdExpress.Web.BusinessFacade.Results;

@@ -13,7 +13,7 @@ using System.Web;
 using System.Web.UI;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork;
 using TNS.FrameWork.Date;
 
@@ -27,6 +27,7 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;
 using DBConstantesClassification=TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -148,7 +149,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
             #region Module
             Int64 moduleId;
-            WebConstantes.Module.Type moduleType=(TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
+            WebConstantes.Module.Type moduleType=(ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
             if(moduleType==WebConstantes.Module.Type.alert|| zoomDate.Length>0) moduleId=WebConstantes.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE;
             else moduleId=WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE;
             #endregion
@@ -546,7 +547,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
             #region Module
             Int64 moduleId;
-            WebConstantes.Module.Type moduleType=(TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
+            WebConstantes.Module.Type moduleType=(ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
             if(moduleType==WebConstantes.Module.Type.alert) moduleId=WebConstantes.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE;
             else moduleId=WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE;
             #endregion

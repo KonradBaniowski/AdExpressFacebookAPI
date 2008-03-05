@@ -12,7 +12,7 @@ using System.Collections;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
@@ -24,6 +24,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork.Date;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Common.Results;
+using TNS.AdExpress.Domain.Level;
 
 
 namespace TNS.AdExpress.Web.UI.Results.APPM

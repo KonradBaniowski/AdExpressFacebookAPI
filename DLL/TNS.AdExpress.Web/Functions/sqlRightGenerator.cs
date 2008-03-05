@@ -21,12 +21,13 @@ using ClassificationConstantes = TNS.AdExpress.Constantes.Classification;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebExceptions = TNS.AdExpress.Web.Exceptions;
-using TNS.AdExpress.Web.Core.Navigation;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.DB.Common;
 using FWKConstantes = TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Functions {
 	/// <summary>
@@ -1634,7 +1635,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
 		internal static string GetUnitFieldName(WebSession webSession) {
-			WebConstantes.Module.Type moduleType = (TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
+			WebConstantes.Module.Type moduleType = (ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
 			switch (moduleType) {
 				case WebConstantes.Module.Type.tvSponsorship:
 				case WebConstantes.Module.Type.alert:
@@ -1756,7 +1757,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
 		internal static string GetDateFieldName(WebSession webSession) {
-			WebConstantes.Module.Type moduleType = (TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
+			WebConstantes.Module.Type moduleType = (ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
 			switch (moduleType) {
 				case WebConstantes.Module.Type.tvSponsorship:
 				case WebConstantes.Module.Type.alert:
@@ -3248,7 +3249,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <returns>Jointures</returns>
 		internal static string getJointForInsertDetail(WebSession webSession, string dataTablePrefixe) {
 
-			Module currentModuleDescription = TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 			switch (webSession.Insert) {
 				case WebConstantes.CustomerSessions.Insert.total:
 					return "";
@@ -3287,7 +3288,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <returns>Jointures</returns>
 		internal static string getJointForInsertDetail(WebSession webSession, string dataTablePrefixe, DBConstantes.TableType.Type type) {
 
-			Module currentModuleDescription = TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 			switch (webSession.Insert) {
 				case WebConstantes.CustomerSessions.Insert.total:
 					return "";

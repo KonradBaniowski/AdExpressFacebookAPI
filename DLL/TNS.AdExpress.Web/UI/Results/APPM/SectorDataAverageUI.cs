@@ -9,7 +9,7 @@ using System.Text;
 using System.Collections;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;

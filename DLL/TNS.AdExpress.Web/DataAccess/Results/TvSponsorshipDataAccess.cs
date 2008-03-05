@@ -23,6 +23,7 @@ using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Level;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results
@@ -94,7 +95,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 				// Obtient les jointures pour la nomenclature
 				mediaJoinCondition = GetSqlJoins(webSession);
 
-				if(webSession.GenericMediaDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser)){
+				if(webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)){
 					try{
 						dataTableNameForGad=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GAD+" "+DBConstantes.Tables.GAD_PREFIXE;
 						dataFieldsForGad=", "+WebFunctions.SQLGenerator.GetFieldsAddressForGad();
@@ -405,7 +406,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 //			if(webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS ){	
 				detailLevelFieldName = webSession.GenericMediaDetailLevel.GetSqlFields();
 				if(webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media
-					&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(Core.DetailLevelItemInformation.Levels.media)){
+					&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.media)){
 					if(detailLevelFieldName.Length>0)detailLevelFieldName += ",";
 					detailLevelFieldName += DbTables.DATA_SPONSORSHIP_PREFIXE+".id_media,"+DbTables.MEDIA_PREFIXE+".media";
 
@@ -449,7 +450,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 				orderFieldName=webSession.GenericMediaDetailLevel.GetSqlOrderFields();
 				if(orderFieldName.Length>0){
 					if(webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media
-						&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(Core.DetailLevelItemInformation.Levels.media)){
+						&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.media)){
 						if(orderFieldName.Length>0)orderFieldName += ",";
 						orderFieldName += DbTables.MEDIA_PREFIXE+".media,"+DbTables.DATA_SPONSORSHIP_PREFIXE+".id_media";
 					}
@@ -495,7 +496,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 				groupByFieldName = webSession.GenericMediaDetailLevel.GetSqlGroupByFields();
 				if(groupByFieldName.Length>0){
 					if(webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media
-						&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(Core.DetailLevelItemInformation.Levels.media)){
+						&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.media)){
 						if(groupByFieldName.Length>0)groupByFieldName += ",";
 						groupByFieldName += DbTables.DATA_SPONSORSHIP_PREFIXE+".id_media,"+DbTables.MEDIA_PREFIXE+".media";
 					}
@@ -542,7 +543,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 				mediaJoinCondition=webSession.GenericMediaDetailLevel.GetSqlJoins(webSession.SiteLanguage,DbTables.DATA_SPONSORSHIP_PREFIXE);
 				if(mediaJoinCondition.Length>0){
 					if(webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media
-						&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(Core.DetailLevelItemInformation.Levels.media)){
+						&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.media)){
 						mediaJoinCondition += " and "+ DbTables.MEDIA_PREFIXE+".id_media="+DbTables.DATA_SPONSORSHIP_PREFIXE+".id_media";
 						mediaJoinCondition += " and "+ DbTables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage;
 						mediaJoinCondition += " and "+ DbTables.MEDIA_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
@@ -571,7 +572,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 //			if(webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS ){
 				detailLevelTableName=webSession.GenericMediaDetailLevel.GetSqlTables(DBConstantes.Schema.ADEXPRESS_SCHEMA);
 				if(webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media
-					&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(Core.DetailLevelItemInformation.Levels.media)){
+					&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.media)){
 					if(detailLevelTableName.Length>0)detailLevelTableName += ",";
 					detailLevelTableName += DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DbTables.MEDIA+" "+DbTables.MEDIA_PREFIXE;
 

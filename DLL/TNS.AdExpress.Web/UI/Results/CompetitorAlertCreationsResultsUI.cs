@@ -14,7 +14,7 @@ using System.Data;
 using System.Collections;
 using System.Web.UI;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;

@@ -12,7 +12,7 @@ using TNS.FrameWork.DB.Common;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebDataAccess=TNS.AdExpress.Web.DataAccess;
 using APPMConstantes=TNS.AdExpress.Constantes.FrameWork.Results.APPM;
 using TNS.FrameWork.WebResultUI;

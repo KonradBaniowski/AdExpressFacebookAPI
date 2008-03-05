@@ -28,7 +28,7 @@ using Oracle.DataAccess.Client;
 
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.UI.Results;
 using TNS.AdExpress.Web.Rules.Results;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
@@ -36,9 +36,10 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using DataAccessFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.AdExpress.Web.Controls.Headers;
-using CommonGlobal=TNS.AdExpress.Web.Core.Navigation;
+using CommonGlobal=TNS.AdExpress.Domain.Web.Navigation;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using ConstantesWeb=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace AdExpress.Private.Results{
 	/// <summary>
@@ -434,14 +435,14 @@ namespace AdExpress.Private.Results{
 		/// <param name="zoomDate">date étudiée</param>
 		/// <param name="param">paramètre de cache</param>
 		private void SetVehicleTabOptions(WebSession webSession, VehicleHeaderWebControl vehicleHeaderWebControl,ArrayList vehicleArr,string idVehicleFromTab,string ids,string zoomDate,string param){
-			TNS.AdExpress.Web.Core.Navigation.HeaderMediaDetailMenuItem headerMediaDetailMenuItem =null;
+			WebHeaderMediaDetailMenuItem headerMediaDetailMenuItem =null;
 			ListDictionary ht =null;
 			if(vehicleArr!=null && vehicleArr.Count>1){
 				ht = new ListDictionary();
 				vehicleHeaderWebControl.CustomerWebSession = webSession;
 				for(int i=0;i<vehicleArr.Count;i++){
 					if(vehicleArr[i]!=null && vehicleArr[i].ToString().Length>0 && GetVehicleWebWord((DBClassificationConstantes.Vehicles.names)int.Parse(vehicleArr[i].ToString()))>0){
-						headerMediaDetailMenuItem = new TNS.AdExpress.Web.Core.Navigation.HeaderMediaDetailMenuItem(GetVehicleWebWord((DBClassificationConstantes.Vehicles.names)int.Parse(vehicleArr[i].ToString())),"/Private/Results/MediaInsertionsCreationsResults.aspx",true,true,"",ids,zoomDate,param,vehicleArr[i].ToString());
+						headerMediaDetailMenuItem = new WebHeaderMediaDetailMenuItem(GetVehicleWebWord((DBClassificationConstantes.Vehicles.names)int.Parse(vehicleArr[i].ToString())),"/Private/Results/MediaInsertionsCreationsResults.aspx",true,true,"",ids,zoomDate,param,vehicleArr[i].ToString());
 						ht.Add(vehicleArr[i].ToString(),headerMediaDetailMenuItem);						
 						if(vehicleArr[i].ToString().Equals(idVehicleFromTab) && vehicleHeaderWebControl!=null)vehicleHeaderWebControl.ActiveMenu = int.Parse(idVehicleFromTab);
 					}

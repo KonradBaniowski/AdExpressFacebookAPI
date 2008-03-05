@@ -13,7 +13,7 @@ using System.Text;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.Date;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Exceptions;
 
 using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;

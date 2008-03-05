@@ -11,7 +11,7 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
 using AccessCst = TNS.AdExpress.Constantes.Customer.Right.type;
 using TNS.FrameWork.Exceptions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Exceptions;
@@ -117,7 +117,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 
 			if (idVehicle !=null && (DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)) != DBClassificationConstantes.Vehicles.names.internet) {
 				#region Récupération des noms de tables et de champs suivant le média(vehcile)
-				Core.Navigation.Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
+				TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 				string tablePrefixe = DbTables.WEB_PLAN_PREFIXE;
 				tableName = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)), currentModuleDescription.ModuleType);
 
@@ -238,7 +238,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 			#endregion
 			
 			#region Récupération des noms de tables et de champs suivant le média(vehcile)
-			Core.Navigation.Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
+			TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			tablePrefixe = DbTables.DATA_PRESS_APPM_PREFIXE;
 			tableName=" "+DBTableFieldsName.Schema.APPM_SCHEMA+"."+DbTables.DATA_PRESS_APPM;		
 				

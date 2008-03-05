@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using SQLFunctions=TNS.AdExpress.Web.DataAccess;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;

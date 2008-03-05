@@ -29,6 +29,8 @@ using TNS.FrameWork.Date;
 using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Web.Core.Result;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Rules.Results
 {
@@ -158,9 +160,9 @@ namespace TNS.AdExpress.Web.Rules.Results
 			Headers headers=new Headers();
 			// Ajout de la colonne des libellés des Autres dimensions
 			if(webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES )
-				headers.Root.Add(new Header(true,Core.Translation.GestionWeb.GetWebWord(1164,webSession.SiteLanguage),FrameWorkResultConstantes.TvSponsorship.LEVEL_HEADER_ID));
+				headers.Root.Add(new Header(true,GestionWeb.GetWebWord(1164,webSession.SiteLanguage),FrameWorkResultConstantes.TvSponsorship.LEVEL_HEADER_ID));
 			else if	(webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS )
-				headers.Root.Add(new Header(true,Core.Translation.GestionWeb.GetWebWord(804,webSession.SiteLanguage),FrameWorkResultConstantes.TvSponsorship.LEVEL_HEADER_ID));
+				headers.Root.Add(new Header(true,GestionWeb.GetWebWord(804,webSession.SiteLanguage),FrameWorkResultConstantes.TvSponsorship.LEVEL_HEADER_ID));
 			long startDataColIndex=1;
 			long startDataColIndexInit=1;
 
@@ -169,22 +171,22 @@ namespace TNS.AdExpress.Web.Rules.Results
 			//A vérifier Création où version
             if (webSession.CustomerLogin.FlagsList[DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG] != null &&
                 (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES &&
-                (webSession.GenericMediaDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser) ||
-                webSession.GenericMediaDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.product)) ||
+                (webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
+                webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)) ||
                 webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                 ) {
-                headers.Root.Add(new HeaderCreative(false, Core.Translation.GestionWeb.GetWebWord(1994, webSession.SiteLanguage), FrameWorkResultConstantes.TvSponsorship.CREATIVE_HEADER_ID));
+                headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(1994, webSession.SiteLanguage), FrameWorkResultConstantes.TvSponsorship.CREATIVE_HEADER_ID));
                 showCreative = true;
                 startDataColIndex++;
                 startDataColIndexInit++;
             }
             bool showInsertions = false;
             if((webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES &&
-                (webSession.GenericMediaDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser) ||
-                webSession.GenericMediaDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.product))) ||
+                (webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
+                webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product))) ||
                 webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES
                 ){
-                headers.Root.Add(new HeaderInsertions(false, Core.Translation.GestionWeb.GetWebWord(2245, webSession.SiteLanguage), FrameWorkResultConstantes.TvSponsorship.INSERTIONS_HEADER_ID));
+                headers.Root.Add(new HeaderInsertions(false, GestionWeb.GetWebWord(2245, webSession.SiteLanguage), FrameWorkResultConstantes.TvSponsorship.INSERTIONS_HEADER_ID));
                 startDataColIndex++;
                 startDataColIndexInit++;
                 showInsertions = true;
@@ -195,7 +197,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units ){
 				startDataColIndexInit++;
 				showTotal=true;
-				headers.Root.Add(new Header(true,Core.Translation.GestionWeb.GetWebWord(805,webSession.SiteLanguage),FrameWorkResultConstantes.TvSponsorship.TOTAL_HEADER_ID));
+				headers.Root.Add(new Header(true,GestionWeb.GetWebWord(805,webSession.SiteLanguage),FrameWorkResultConstantes.TvSponsorship.TOTAL_HEADER_ID));
 			}
 		
 			// Chargement des libellés de colonnes
@@ -232,14 +234,14 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 			#region Total
 
-			Core.Sessions.GenericDetailLevel genericDetailLevel = webSession.GenericMediaDetailLevel;
+			TNS.AdExpress.Domain.Level.GenericDetailLevel genericDetailLevel = webSession.GenericMediaDetailLevel;
 			
 			long nbColInTabData=tabData.GetLength(1);
 			startDataColIndex++;
 			startDataColIndexInit++;
 			currentLineInTabResult = resultTable.AddNewLine(TNS.FrameWork.WebResultUI.LineType.total);
 			//Libellé du total
-			resultTable[currentLineInTabResult,levelLabelColIndex]=new CellLevel(-1,Core.Translation.GestionWeb.GetWebWord(805,webSession.SiteLanguage),0,currentLineInTabResult);
+			resultTable[currentLineInTabResult,levelLabelColIndex]=new CellLevel(-1,GestionWeb.GetWebWord(805,webSession.SiteLanguage),0,currentLineInTabResult);
 			CellLevel currentCellLevel0=(CellLevel)resultTable[currentLineInTabResult,levelLabelColIndex];
 			if(showCreative)resultTable[currentLineInTabResult,creativeColIndex]= new CellSponsorshipCreativesLink(currentCellLevel0,webSession,genericDetailLevel);
             if (showInsertions) resultTable[currentLineInTabResult, insertionsColIndex] = new CellSponsorshipInsertionsLink(currentCellLevel0, webSession, genericDetailLevel);
@@ -360,7 +362,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 					oldIdL2 = oldIdL3 = oldIdL4 = -1;
 
 					#region GAD
-					if(webSession.GenericMediaDetailLevel.DetailLevelItemLevelIndex(Core.DetailLevelItemInformation.Levels.advertiser)==1){
+					if(webSession.GenericMediaDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser)==1){
 						if(tabData[currentLine,FrameWorkResultConstantes.TvSponsorship.ADDRESS_COLUMN_INDEX]!=null){
 							((CellLevel)resultTable[currentLineInTabResult,levelLabelColIndex]).AddressId=Int64.Parse(tabData[currentLine,FrameWorkResultConstantes.TvSponsorship.ADDRESS_COLUMN_INDEX].ToString());
 						}
@@ -426,7 +428,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 					oldIdL3 = oldIdL4 = -1;
 
 					#region GAD
-					if(webSession.GenericMediaDetailLevel.DetailLevelItemLevelIndex(Core.DetailLevelItemInformation.Levels.advertiser)==2){
+					if(webSession.GenericMediaDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser)==2){
 						if(tabData[currentLine,FrameWorkResultConstantes.TvSponsorship.ADDRESS_COLUMN_INDEX]!=null){
 							((CellLevel)resultTable[currentLineInTabResult,levelLabelColIndex]).AddressId=Int64.Parse(tabData[currentLine,FrameWorkResultConstantes.TvSponsorship.ADDRESS_COLUMN_INDEX].ToString());
 						}
@@ -490,7 +492,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 					oldIdL4 = -1;
 
 					#region GAD
-					if(webSession.GenericMediaDetailLevel.DetailLevelItemLevelIndex(Core.DetailLevelItemInformation.Levels.advertiser)==3){
+					if(webSession.GenericMediaDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser)==3){
 						if(tabData[currentLine,FrameWorkResultConstantes.TvSponsorship.ADDRESS_COLUMN_INDEX]!=null){
 							((CellLevel)resultTable[currentLineInTabResult,levelLabelColIndex]).AddressId=Int64.Parse(tabData[currentLine,FrameWorkResultConstantes.TvSponsorship.ADDRESS_COLUMN_INDEX].ToString());
 						}
@@ -555,7 +557,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 					oldIdL4 = -1;
 
 					#region GAD
-					if(webSession.GenericMediaDetailLevel.DetailLevelItemLevelIndex(Core.DetailLevelItemInformation.Levels.advertiser)==4){
+					if(webSession.GenericMediaDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser)==4){
 						if(tabData[currentLine,FrameWorkResultConstantes.TvSponsorship.ADDRESS_COLUMN_INDEX]!=null){
 							((CellLevel)resultTable[currentLineInTabResult,levelLabelColIndex]).AddressId=Int64.Parse(tabData[currentLine,FrameWorkResultConstantes.TvSponsorship.ADDRESS_COLUMN_INDEX].ToString());
 						}
@@ -904,7 +906,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 						tabResult[currentLine,k]=(double) 0.0;
 					}
 						
-					if(webSession.GenericMediaDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser)){
+					if(webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)){
 						try{
 							if(currentRow["id_address"]!=null)tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.ADDRESS_COLUMN_INDEX]=Int64.Parse(currentRow["id_address"].ToString());
 						}catch(Exception){
@@ -1011,7 +1013,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media :
 				
 					//Libellés supports 
-					headerGroupTmp=new HeaderGroup(Core.Translation.GestionWeb.GetWebWord(804,webSession.SiteLanguage),true,FrameWorkResultConstantes.TvSponsorship.START_ID_GROUP+m);//TODO vérifier index de départ															
+					headerGroupTmp=new HeaderGroup(GestionWeb.GetWebWord(804,webSession.SiteLanguage),true,FrameWorkResultConstantes.TvSponsorship.START_ID_GROUP+m);//TODO vérifier index de départ															
 
 					if(dimensionListForLabelSearch!=null && dimensionListForLabelSearch.Length>0){
 						dimendionIdList=dimensionListForLabelSearch.Split(',');
@@ -1026,7 +1028,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Period :
 					//Libellés périodes
-					headerGroupTmp=new HeaderGroup(Core.Translation.GestionWeb.GetWebWord(1755,webSession.SiteLanguage),true,FrameWorkResultConstantes.TvSponsorship.START_ID_GROUP+m);//TODO vérifier index de départ
+					headerGroupTmp=new HeaderGroup(GestionWeb.GetWebWord(1755,webSession.SiteLanguage),true,FrameWorkResultConstantes.TvSponsorship.START_ID_GROUP+m);//TODO vérifier index de départ
 
 					if(dimensionListForLabelSearch!=null && dimensionListForLabelSearch.Length>0){
 						dimendionIdList=dimensionListForLabelSearch.Split(',');
@@ -1067,7 +1069,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units :
 					//Libellés unités
-					headerGroupTmp=new HeaderGroup(Core.Translation.GestionWeb.GetWebWord(2061,webSession.SiteLanguage),true,FrameWorkResultConstantes.TvSponsorship.START_ID_GROUP+m);//TODO vérifier index de départ
+					headerGroupTmp=new HeaderGroup(GestionWeb.GetWebWord(2061,webSession.SiteLanguage),true,FrameWorkResultConstantes.TvSponsorship.START_ID_GROUP+m);//TODO vérifier index de départ
 					
 					if(dimensionListForLabelSearch!=null && dimensionListForLabelSearch.Length>0){
 						dimendionIdList=dimensionListForLabelSearch.Split(',');
@@ -1079,16 +1081,16 @@ namespace TNS.AdExpress.Web.Rules.Results
 							
 							switch(unit){
 								case Constantes.Web.CustomerSessions.Unit.euro :
-									unitLabel  = Core.Translation.GestionWeb.GetWebWord(1423,webSession.SiteLanguage);
+									unitLabel  = GestionWeb.GetWebWord(1423,webSession.SiteLanguage);
 									break;
 								case Constantes.Web.CustomerSessions.Unit.kEuro :
-									unitLabel  = Core.Translation.GestionWeb.GetWebWord(1789,webSession.SiteLanguage);
+									unitLabel  = GestionWeb.GetWebWord(1789,webSession.SiteLanguage);
 									break;
 								case Constantes.Web.CustomerSessions.Unit.duration :
-									unitLabel  = Core.Translation.GestionWeb.GetWebWord(1933,webSession.SiteLanguage);
+									unitLabel  = GestionWeb.GetWebWord(1933,webSession.SiteLanguage);
 									break;
 								case Constantes.Web.CustomerSessions.Unit.spot :
-									unitLabel  = Core.Translation.GestionWeb.GetWebWord(939,webSession.SiteLanguage);
+									unitLabel  = GestionWeb.GetWebWord(939,webSession.SiteLanguage);
 									break;
 							}
 

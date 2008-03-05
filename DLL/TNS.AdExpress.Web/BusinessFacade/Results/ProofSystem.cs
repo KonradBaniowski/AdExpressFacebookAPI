@@ -7,7 +7,7 @@
 using System;
 using System.Web.UI;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebRules=TNS.AdExpress.Web.Rules;
 using WebUI=TNS.AdExpress.Web.UI;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;

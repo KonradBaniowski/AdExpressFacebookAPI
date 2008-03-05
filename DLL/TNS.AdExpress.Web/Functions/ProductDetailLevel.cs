@@ -8,7 +8,7 @@
 
 using System;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using ResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert;

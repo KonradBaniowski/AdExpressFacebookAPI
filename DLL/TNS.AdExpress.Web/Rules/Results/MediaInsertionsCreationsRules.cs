@@ -28,7 +28,9 @@ using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Level;
 
 
 namespace TNS.AdExpress.Web.Rules.Results{
@@ -987,7 +989,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			string[] idSelectedVehicle = null;
 			if(vehicleAccessList.Length>0)idSelectedVehicle = vehicleAccessList.Split(',');
 			string tableName="";
-			Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+			Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			
 
 			#endregion

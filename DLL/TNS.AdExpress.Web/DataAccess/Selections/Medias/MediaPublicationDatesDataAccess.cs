@@ -18,10 +18,11 @@ using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 {

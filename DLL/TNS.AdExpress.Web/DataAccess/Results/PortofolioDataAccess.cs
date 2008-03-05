@@ -30,6 +30,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Level;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -860,7 +861,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					dataJointForInsert=WebFunctions.SQLGenerator.getJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
 				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				
-				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser)){
+				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)){
 					try{
 						dataTableNameForGad=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GAD+" "+DBConstantes.Tables.GAD_PREFIXE;
 						dataFieldsForGad=", "+WebFunctions.SQLGenerator.GetFieldsAddressForGad();
@@ -869,7 +870,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					catch(WebExceptions.SQLGeneratorException){;}
 				}
 				//Agence_media
-				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.groupMediaAgency)||webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.agency)){
+				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency)||webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency)){
 					mediaAgencyTable=DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+",";
 					mediaAgencyJoins="And "+DATA_TABLE_PREFIXE+".id_product="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_product ";
 					mediaAgencyJoins+="And "+DATA_TABLE_PREFIXE+".id_vehicle="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_vehicle ";
@@ -1509,7 +1510,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					dataJointForInsert=WebFunctions.SQLGenerator.getJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
 				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				
-				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser)){
+				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)){
 					try{
 						dataTableNameForGad=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GAD+" "+DBConstantes.Tables.GAD_PREFIXE;
 						dataFieldsForGad=", "+WebFunctions.SQLGenerator.GetFieldsAddressForGad();
@@ -1518,7 +1519,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					catch(WebExceptions.SQLGeneratorException){;}
 				}
 				//Agence_media
-				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.groupMediaAgency)||webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.agency)){
+				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency)||webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency)){
 					mediaAgencyTable=DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+",";
 					mediaAgencyJoins="And "+DATA_TABLE_PREFIXE+".id_product="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_product ";
 					mediaAgencyJoins+="And "+DATA_TABLE_PREFIXE+".id_vehicle="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_vehicle ";

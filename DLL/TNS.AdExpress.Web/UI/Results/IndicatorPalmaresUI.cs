@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 using System.Collections;
 using System.Windows.Forms;
 
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.DataAccess.Results;

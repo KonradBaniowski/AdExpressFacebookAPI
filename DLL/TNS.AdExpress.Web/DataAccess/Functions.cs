@@ -31,6 +31,7 @@ using TNS.AdExpress.Classification;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.DataAccess{
 	/// <summary>

@@ -24,10 +24,10 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.UI.Selections.Periods;
 using TNS.AdExpress.Web.DataAccess.Selections.Periods;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using CustomerConstantes=TNS.AdExpress.Constantes.Customer;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using WebFunctions=TNS.AdExpress.Web.Functions;
@@ -609,7 +609,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#region Type de module
 			// Type de module pour savoir si l'on affiche les créations
 			try{
-				Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);				
+				Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);				
 			}
 			catch(System.Exception err){
 				throw(new WebExceptions.PortofolioUIException("Impossible de déterminer le type de module pour savoir s'il ont doit montrer les créations",err));

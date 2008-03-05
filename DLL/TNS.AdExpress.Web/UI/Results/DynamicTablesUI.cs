@@ -15,7 +15,7 @@ using System.Text;
 
 using System.Windows.Forms;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Rules.Results;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using TblFormatCst = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;

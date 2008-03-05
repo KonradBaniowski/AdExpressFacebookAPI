@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
@@ -22,6 +22,7 @@ using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.DataAccess.Results
 {

@@ -12,7 +12,7 @@ using TNS.AdExpress.Constantes.FrameWork.Results;
 using ConstantePeriod=TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
@@ -25,6 +25,7 @@ using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Functions;
 using TNS.FrameWork;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.UI.Results {
     /// <summary>
@@ -1152,7 +1153,7 @@ namespace TNS.AdExpress.Web.UI.Results {
 
             #region Module
             Int64 moduleId;
-            //WebConstantes.Module.Type moduleType=(TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
+            //WebConstantes.Module.Type moduleType=(ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
             moduleId=WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
             #endregion
 

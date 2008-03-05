@@ -21,7 +21,7 @@ using System.Web.UI.HtmlControls;
 using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.UI.Results;
 
 using WebFunctions = TNS.AdExpress.Web.Functions;

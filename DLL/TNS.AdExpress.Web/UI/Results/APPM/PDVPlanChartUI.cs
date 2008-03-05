@@ -10,7 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text;
 using System.Collections;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;

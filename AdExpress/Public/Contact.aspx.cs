@@ -10,7 +10,7 @@ using System.Web.UI;
 //using System.Web.UI.HtmlControls;
 
 using TNSMail=TNS.FrameWork.Net.Mail;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstTrad = TNS.AdExpress.Constantes.DB.Language;
 using WebFunctions=TNS.AdExpress.Web.Functions;

@@ -14,8 +14,8 @@ using WebRules=TNS.AdExpress.Web.Rules;
 using WebUI=TNS.AdExpress.Web.UI;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using  TNS.AdExpress.Web.UI.Results;
-using TNS.AdExpress.Web.Core.Translation;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 using TNS.FrameWork.WebResultUI;
 
@@ -41,7 +41,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 			#region Module sélectionné
 			Module currentModuleDescription;
 			try{
-				currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+				currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			}
 			catch(System.Exception err){
 				throw(new WebExceptions.PortofolioSystemException("Impossible d'obtenir le module sélectionné",err));
@@ -110,7 +110,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 			#region Module sélectionné
 			Module currentModuleDescription;
 			try{
-				currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+				currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			}
 			catch(System.Exception err){
 				throw(new WebExceptions.PortofolioSystemException("Impossible d'obtenir le module sélectionné",err));
@@ -195,7 +195,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 			#region Module sélectionné
 			Module currentModuleDescription;
 			try{
-				currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+				currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			}
 			catch(System.Exception err){
 				throw(new WebExceptions.PortofolioSystemException("Impossible d'obtenir le module sélectionné",err));

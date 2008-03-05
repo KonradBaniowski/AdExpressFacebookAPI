@@ -28,6 +28,7 @@ using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{

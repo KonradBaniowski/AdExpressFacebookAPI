@@ -24,7 +24,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 
 namespace TNS.AdExpress.Web.Rules.Results

@@ -10,7 +10,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
 using TNS.AdExpress.Web.Controls.Headers;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 namespace AdExpress {
     /// <summary>

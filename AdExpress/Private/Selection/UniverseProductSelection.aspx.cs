@@ -13,7 +13,7 @@ using System.Web.UI.HtmlControls;
 using TNS.Classification;
 using TNS.Classification.WebControls;
 using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using FrameWorkSelection=TNS.AdExpress.Constantes.FrameWork.Selection;

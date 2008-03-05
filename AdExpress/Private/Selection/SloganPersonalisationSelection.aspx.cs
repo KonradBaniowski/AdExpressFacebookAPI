@@ -20,8 +20,8 @@ using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions = TNS.AdExpress.Web.Functions;

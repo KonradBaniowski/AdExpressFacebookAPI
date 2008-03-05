@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Web;
 
 using System.Web.SessionState;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.ClassificationList;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Web;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
@@ -20,6 +20,8 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 
 using TNS.Classification;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Level;
 
 namespace AdExpress {
 	/// <summary>
@@ -49,7 +51,8 @@ namespace AdExpress {
                 Int64 dd=WebApplicationParameters.DefaultLanguage;
                 IDataSource tt= WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.session);
 				// Initialisation des listes de texte
-				GestionWeb.Init();
+				//GestionWeb.Init();
+                TNS.AdExpress.AdExpressWordListLoader.LoadLists();
 				// Initialisation des descriptions des éléments de niveaux de détail
                 DetailLevelItemsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.GENERIC_DETAIL_LEVEL_ITEMS_CONFIGURATION_FILENAME)); 
 				// Initialisation des descriptions des niveaux de détail
@@ -65,11 +68,12 @@ namespace AdExpress {
 				// Chargement des niveaux de détail AdNetTrack
                 AdNetTrackDetailLevelsDescription.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.ADNETTRACK_DETAIL_LEVEL_CONFIGURATION_FILENAME));
 				// Chargement des noms de modules et des catégories de modules
-                ModulesList.Init(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CONFIGURATION_FILENAME,WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME);
+                //ModulesList.Init(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CONFIGURATION_FILENAME,WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME);
 //				TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel t=(TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel) ModulesList.GetModule(198).DefaultMediaDetailLevels[1]; 
 //				string g=t.GetLabel(33);
 				// Chargement des noms d'entetes
-                HeaderRules.Init(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.HEADER_CONFIGURATION_FILENAME);
+                //Headers.
+                //.Init(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.HEADER_CONFIGURATION_FILENAME);
 				// Initialisation du cache des login
 				//Logins.init();
 				// Chargement de la configuration du serveur

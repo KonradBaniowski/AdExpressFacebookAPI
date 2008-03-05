@@ -21,6 +21,7 @@ using TNS.AdExpress.Web.Exceptions;
 
 using TNS.FrameWork.Date;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.Rules.Results
 {
@@ -91,25 +92,25 @@ namespace TNS.AdExpress.Web.Rules.Results
 					headers.Root.Add(new Header(false,string.Empty,FIRST_COL_INDEX));
 				
 					//Colonne produit
-					headers.Root.Add(new Header(false, WebCore.Translation.GestionWeb.GetWebWord(1164,webSession.SiteLanguage), PRODUCT_COL_INDEX));
+					headers.Root.Add(new Header(false, GestionWeb.GetWebWord(1164,webSession.SiteLanguage), PRODUCT_COL_INDEX));
 		
 					//Colonne justificative
-					headers.Root.Add(new HeaderCreative(false, WebCore.Translation.GestionWeb.GetWebWord(1731,webSession.SiteLanguage), PROOF_COL_INDEX));
+					headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(1731,webSession.SiteLanguage), PROOF_COL_INDEX));
 								
 					//Colonne euro
-					headers.Root.Add(new Header(false, WebCore.Translation.GestionWeb.GetWebWord(1423,webSession.SiteLanguage), EUROS_COL_INDEX));
+					headers.Root.Add(new Header(false, GestionWeb.GetWebWord(1423,webSession.SiteLanguage), EUROS_COL_INDEX));
 								
 					//Colonne Pages
-					headers.Root.Add(new Header(false, WebCore.Translation.GestionWeb.GetWebWord(943,webSession.SiteLanguage), PAGE_COL_INDEX));
+					headers.Root.Add(new Header(false, GestionWeb.GetWebWord(943,webSession.SiteLanguage), PAGE_COL_INDEX));
 				
 					//Colonne Insertion
-					headers.Root.Add(new Header(false, WebCore.Translation.GestionWeb.GetWebWord(940,webSession.SiteLanguage), INSERTION_COL_INDEX));
+					headers.Root.Add(new Header(false,GestionWeb.GetWebWord(940,webSession.SiteLanguage), INSERTION_COL_INDEX));
 
 					//Colonne format
-					headers.Root.Add(new Header(false, WebCore.Translation.GestionWeb.GetWebWord(1420,webSession.SiteLanguage), FORMAT_COL_INDEX));
+					headers.Root.Add(new Header(false,GestionWeb.GetWebWord(1420,webSession.SiteLanguage), FORMAT_COL_INDEX));
 
 					//Colonne Emplacement
-					headers.Root.Add(new Header(false, WebCore.Translation.GestionWeb.GetWebWord(1732,webSession.SiteLanguage), LOCATION_COL_INDEX));
+					headers.Root.Add(new Header(false, GestionWeb.GetWebWord(1732,webSession.SiteLanguage), LOCATION_COL_INDEX));
 
 				
 				
@@ -122,7 +123,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 					tab.AddNewLine(LineType.total);
 					//Première colonne
-					tab[iCurLine, FIRST_COL_INDEX] = new AdExpressCellLevel(0, WebCore.Translation.GestionWeb.GetWebWord(805,webSession.SiteLanguage), 0, iCurLine, webSession);
+					tab[iCurLine, FIRST_COL_INDEX] = new AdExpressCellLevel(0, GestionWeb.GetWebWord(805,webSession.SiteLanguage), 0, iCurLine, webSession);
 					currentCellLevel0 = (CellLevel)tab[iCurLine,FIRST_COL_INDEX];
 					InitProofLine(webSession,tab, iCurLine);
 

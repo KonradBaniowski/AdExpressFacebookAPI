@@ -23,8 +23,8 @@ using Oracle.DataAccess.Client;
 using System.Windows.Forms;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;

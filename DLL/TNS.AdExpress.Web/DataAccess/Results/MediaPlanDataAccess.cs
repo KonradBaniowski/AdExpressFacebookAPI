@@ -23,6 +23,7 @@ using TNS.FrameWork.DB.Common;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using DBTableFieldsName = TNS.AdExpress.Constantes.DB;
 using WebCommon=TNS.AdExpress.Web.Common;
+using TNS.AdExpress.Domain.Web.Navigation;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -441,7 +442,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
 					return(DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+Tables.WEB_PLAN_MEDIA_WEEK);
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
-					TNS.AdExpress.Web.Core.Navigation.Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+					Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 					switch(currentModuleDescription.ModuleType){
 						case WebConstantes.Module.Type.alert:
 						switch((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())){

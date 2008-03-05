@@ -24,6 +24,7 @@ using DBTableFieldsName = TNS.AdExpress.Constantes.DB;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebCommon=TNS.AdExpress.Web.Common;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Web.Navigation;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -67,7 +68,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 //            #region Récupération des noms de tables et de champs suivant le vehicule
 //            try{
 //                //tableName = getTable((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)));
-//                TNS.AdExpress.Web.Core.Navigation.Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+//                Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 //                tableName=WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)),currentModuleDescription.ModuleType);
 //                //unitField = getField(webSession.Unit);
 //                if(DBClassificationConstantes.Vehicles.names.outdoor ==(DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)) 
@@ -323,7 +324,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#region Récupération des noms de tables et de champs suivant le vehicule
 			try {
 				//tableName = getTable((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)));
-				TNS.AdExpress.Web.Core.Navigation.Module currentModuleDescription = TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+				Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 				tableName = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)), currentModuleDescription.ModuleType);
 				//unitField = getField(webSession.Unit);
 				if (DBClassificationConstantes.Vehicles.names.outdoor == (DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle))

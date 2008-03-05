@@ -21,7 +21,7 @@ using Oracle.DataAccess.Client;
 using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Web.Core.Sessions;
 using System.Windows.Forms;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.DataAccess.MyAdExpress;
 

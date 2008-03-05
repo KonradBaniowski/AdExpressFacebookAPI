@@ -18,7 +18,7 @@ using ConstResults=TNS.AdExpress.Constantes.FrameWork.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebFunctions=TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using DateFunctions = TNS.FrameWork.Date;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using WebExceptions = TNS.AdExpress.Web.Exceptions;
@@ -1737,7 +1737,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 								else tab[indexTabRow,ConstResults.MediaStrategy.TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX]= Invest;																					
 								break;
 							default :
-								throw (new WebExceptions.IndicatorMediaStrategyException(TNS.AdExpress.Web.Core.Translation.GestionWeb.GetWebWord(1237,webSession.SiteLanguage)));		
+								throw (new WebExceptions.IndicatorMediaStrategyException(GestionWeb.GetWebWord(1237,webSession.SiteLanguage)));		
 						}													
 					//Remplit les investissement totaux pour l'univers
 					} else if(comparisonCriterion==TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal){
@@ -1755,7 +1755,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 								tab[indexTabRow,ConstResults.MediaStrategy.TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX]= Invest;														
 								break;		
 							default :
-								throw (new WebExceptions.IndicatorMediaStrategyException(TNS.AdExpress.Web.Core.Translation.GestionWeb.GetWebWord(1237,webSession.SiteLanguage)));		
+								throw (new WebExceptions.IndicatorMediaStrategyException(GestionWeb.GetWebWord(1237,webSession.SiteLanguage)));		
 						}
 					}
 				}
@@ -2106,7 +2106,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 						else nbMaxLines=2+nbAdvertiser+ (2+nbAdvertiser +(2+nbAdvertiser)*nbMedia)*nbCategory;
 						break;
 					default :
-						throw (new WebExceptions.IndicatorMediaStrategyException(TNS.AdExpress.Web.Core.Translation.GestionWeb.GetWebWord(1237,webSession.SiteLanguage)));		
+						throw (new WebExceptions.IndicatorMediaStrategyException(GestionWeb.GetWebWord(1237,webSession.SiteLanguage)));		
 				}
 				OldIdVehicle="0";				
 			}			
@@ -2135,7 +2135,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle:
 					return  FrameWorkResultConstantes.MediaStrategy.MediaLevel.vehicleLevel;					
 				default :
-					 throw (new WebExceptions.IndicatorMediaStrategyException(TNS.AdExpress.Web.Core.Translation.GestionWeb.GetWebWord(1237,webSession.SiteLanguage)));		
+					 throw (new WebExceptions.IndicatorMediaStrategyException(GestionWeb.GetWebWord(1237,webSession.SiteLanguage)));		
 			}						
 		}
 		/// <summary>

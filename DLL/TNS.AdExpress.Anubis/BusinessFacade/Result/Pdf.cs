@@ -9,7 +9,7 @@ using System.Drawing;
 
 using TNS.AdExpress.Anubis.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using PDFCreatorPilot2;
 

@@ -16,7 +16,7 @@ using System.Data;
 using TNS.AdExpress.Web.Core.Sessions;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebFunctions=TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using System.Web.UI;
 using System.IO;
 using WebConstantes = TNS.AdExpress.Constantes.Web;

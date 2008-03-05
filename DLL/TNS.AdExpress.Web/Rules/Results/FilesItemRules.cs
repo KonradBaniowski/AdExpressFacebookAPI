@@ -14,7 +14,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using AdExpressWebRules=TNS.AdExpress.Web.Rules;
 using WebExceptions = TNS.AdExpress.Web.Exceptions;
 using WebCommon = TNS.AdExpress.Web.Common;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 
 namespace TNS.AdExpress.Web.Rules.Results {

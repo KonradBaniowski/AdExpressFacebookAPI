@@ -9,7 +9,7 @@ using TNS.AdExpress.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebRules=TNS.AdExpress.Web.Rules;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using FrameWorkConstantes = TNS.AdExpress.Constantes.FrameWork;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;

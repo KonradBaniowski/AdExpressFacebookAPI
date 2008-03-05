@@ -14,7 +14,7 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using SQLFunctions=TNS.AdExpress.Web.DataAccess;
 using WebFnc = TNS.AdExpress.Web.Functions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.WebResultUI;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM{

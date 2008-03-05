@@ -19,12 +19,12 @@ using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.UI.Results;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
@@ -38,6 +38,7 @@ using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using Dundas.Charting.WebControl;
+using TNS.AdExpress.Domain.Level;
 
 #endregion
 

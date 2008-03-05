@@ -18,7 +18,7 @@ using System.Web.UI;
 
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;
@@ -31,6 +31,7 @@ using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;
 using TNS.FrameWork;
 using FrameWorkResults=TNS.AdExpress.Constantes.FrameWork.Results;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
+using TNS.AdExpress.Domain.Level;
 #endregion
 
 namespace TNS.AdExpress.Web.UI.Results{

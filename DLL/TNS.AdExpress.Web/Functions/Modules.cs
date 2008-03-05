@@ -10,7 +10,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using WebModule=TNS.AdExpress.Constantes.Web.Module;
 using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
@@ -18,7 +18,7 @@ using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 
 using DateDll = TNS.FrameWork.Date;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace TNS.AdExpress.Web.Functions
 {
@@ -238,7 +238,7 @@ namespace TNS.AdExpress.Web.Functions
 		/// <param name="webSession"></param>
 		/// <returns></returns>
 		public static bool IsSponsorShipTVModule(WebSession webSession){
-			Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+			Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			if(currentModuleDescription.ModuleType==WebModule.Type.tvSponsorship)
 				return true;
 			return false;

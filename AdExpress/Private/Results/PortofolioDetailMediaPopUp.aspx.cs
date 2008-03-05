@@ -22,6 +22,7 @@ using TNS.AdExpress.Web.Core;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Level;
 
 #endregion
 

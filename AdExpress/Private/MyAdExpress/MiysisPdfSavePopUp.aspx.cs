@@ -14,7 +14,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using WebFunctions=TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
 using System.Text.RegularExpressions;
 

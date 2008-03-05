@@ -4,7 +4,7 @@
 #endregion
 using System;
 using Dundas.Charting.WebControl;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using System.Drawing;
 

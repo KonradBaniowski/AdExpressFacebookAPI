@@ -12,7 +12,7 @@ using System.Collections.Specialized;
 
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using ConstantesFrwkResults=TNS.AdExpress.Constantes.FrameWork.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
@@ -20,8 +20,9 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using ResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert;
 using TNS.FrameWork;
 using ConstantesCustomer=TNS.AdExpress.Constantes.Customer;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Functions{
 	/// <summary>

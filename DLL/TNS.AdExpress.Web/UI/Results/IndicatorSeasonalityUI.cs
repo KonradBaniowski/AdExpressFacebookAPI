@@ -15,7 +15,7 @@ using System.Web.UI;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Exceptions;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;

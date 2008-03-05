@@ -21,7 +21,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using DataAccess=TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 
 namespace AdExpress.Private.Universe{

@@ -10,6 +10,7 @@ using System.Data;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Programs{
 	/// <summary>

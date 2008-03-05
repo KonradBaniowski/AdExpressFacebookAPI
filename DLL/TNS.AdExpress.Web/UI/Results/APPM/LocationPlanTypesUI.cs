@@ -13,7 +13,7 @@ using ResultsAPPM=TNS.AdExpress.Web.Rules.Results.APPM;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using FWkResults=TNS.AdExpress.Constantes.FrameWork.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;

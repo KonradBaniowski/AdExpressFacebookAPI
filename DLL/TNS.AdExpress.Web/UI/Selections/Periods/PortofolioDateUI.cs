@@ -10,9 +10,9 @@ using System.Data;
 using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Selections.Periods;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using CstWeb = TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpress.Web.UI.Selections.Periods{

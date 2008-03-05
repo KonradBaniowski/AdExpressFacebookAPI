@@ -28,6 +28,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.Web;
 using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
+using TNS.AdExpress.Domain.Web.Navigation;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -69,7 +70,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#region Récupération des noms de tables et de champs suivant le vehicule
 			try{
 				//tableName = getTable((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)));
-				TNS.AdExpress.Web.Core.Navigation.Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+				TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 				tableName=WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)),currentModuleDescription.ModuleType);
 				if(DBClassificationConstantes.Vehicles.names.outdoor ==(DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)) 
 					&& webSession.Unit== TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion){
@@ -483,7 +484,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#region Récupération des noms de tables et de champs suivant le vehicule
 			try{
 				//tableName = getTable((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)));
-				TNS.AdExpress.Web.Core.Navigation.Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+				TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 				tableName=WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)),currentModuleDescription.ModuleType);
 				if(DBClassificationConstantes.Vehicles.names.outdoor ==(DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)) 
 					&& webSession.Unit== TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion){

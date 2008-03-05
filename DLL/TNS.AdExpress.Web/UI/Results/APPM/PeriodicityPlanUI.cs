@@ -10,7 +10,7 @@ using System.Text;
 using System.Collections;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Exceptions;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
 using DBConstantes=TNS.AdExpress.Constantes.DB;

@@ -30,13 +30,14 @@ using WebCommon=TNS.AdExpress.Web.Common;
 using WebCore=TNS.AdExpress.Web.Core;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
 using ClassificationDB=TNS.AdExpress.Classification.DataAccess;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using FrameWorkDates=TNS.FrameWork.Date;
 using RulesConstantes=TNS.AdExpress.Web.Rules.Results;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebResultUI=TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Web.Core.Result;
+using TNS.AdExpress.Domain.Level;
 #endregion
 
 namespace TNS.AdExpress.Web.Rules.Results{
@@ -613,12 +614,12 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 			// Ajout de la colonne Produit
 			Headers headers=new Headers();
-			headers.Root.Add(new WebResultUI.Header(WebCore.Translation.GestionWeb.GetWebWord(1164,webSession.SiteLanguage),DynamicResultConstantes.LEVEL_ID));
+			headers.Root.Add(new WebResultUI.Header(GestionWeb.GetWebWord(1164,webSession.SiteLanguage),DynamicResultConstantes.LEVEL_ID));
 
 			#region Fidèle
-			WebResultUI.HeaderGroup fidele=new WebResultUI.HeaderGroup(WebCore.Translation.GestionWeb.GetWebWord(1241,webSession.SiteLanguage),DynamicResultConstantes.LOYAL_HEADER_ID);
-			fidele.Add(new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
-			WebResultUI.Header unitFidele=new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
+			WebResultUI.HeaderGroup fidele=new WebResultUI.HeaderGroup(GestionWeb.GetWebWord(1241,webSession.SiteLanguage),DynamicResultConstantes.LOYAL_HEADER_ID);
+			fidele.Add(new WebResultUI.Header(true,GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
+			WebResultUI.Header unitFidele=new WebResultUI.Header(true,GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
 			unitFidele.Add(new WebResultUI.Header(true,PeriodDateN,DynamicResultConstantes.N_UNIVERSE_POSITION));
 			unitFidele.Add(new WebResultUI.Header(true,PeriodDateN1,DynamicResultConstantes.N1_UNIVERSE_POSITION));
 			fidele.Add(unitFidele);
@@ -626,9 +627,9 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#endregion
 
 			#region Fidèle en baisse
-			WebResultUI.HeaderGroup fideleDecline=new WebResultUI.HeaderGroup(WebCore.Translation.GestionWeb.GetWebWord(1242,webSession.SiteLanguage),DynamicResultConstantes.LOYAL_DECLINE_HEADER_ID);
-			fideleDecline.Add(new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
-			WebResultUI.Header unitFideleDecline=new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
+			WebResultUI.HeaderGroup fideleDecline=new WebResultUI.HeaderGroup(GestionWeb.GetWebWord(1242,webSession.SiteLanguage),DynamicResultConstantes.LOYAL_DECLINE_HEADER_ID);
+			fideleDecline.Add(new WebResultUI.Header(true,GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
+			WebResultUI.Header unitFideleDecline=new WebResultUI.Header(true,GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
 			unitFideleDecline.Add(new WebResultUI.Header(true,PeriodDateN,DynamicResultConstantes.N_UNIVERSE_POSITION));
 			unitFideleDecline.Add(new WebResultUI.Header(true,PeriodDateN1,DynamicResultConstantes.N1_UNIVERSE_POSITION));
 			fideleDecline.Add(unitFideleDecline);
@@ -636,9 +637,9 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#endregion
 
 			#region Fidèle en hausse
-			WebResultUI.HeaderGroup fideleRise=new WebResultUI.HeaderGroup(WebCore.Translation.GestionWeb.GetWebWord(1243,webSession.SiteLanguage),DynamicResultConstantes.LOYAL_RISE_HEADER_ID);
-			fideleRise.Add(new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
-			WebResultUI.Header unitFideleRise=new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
+			WebResultUI.HeaderGroup fideleRise=new WebResultUI.HeaderGroup(GestionWeb.GetWebWord(1243,webSession.SiteLanguage),DynamicResultConstantes.LOYAL_RISE_HEADER_ID);
+			fideleRise.Add(new WebResultUI.Header(true,GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
+			WebResultUI.Header unitFideleRise=new WebResultUI.Header(true,GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
 			unitFideleRise.Add(new WebResultUI.Header(true,PeriodDateN,DynamicResultConstantes.N_UNIVERSE_POSITION));
 			unitFideleRise.Add(new WebResultUI.Header(true,PeriodDateN1,DynamicResultConstantes.N1_UNIVERSE_POSITION));
 			fideleRise.Add(unitFideleRise);
@@ -646,9 +647,9 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#endregion
 
 			#region Gagnés
-			WebResultUI.HeaderGroup won=new WebResultUI.HeaderGroup(WebCore.Translation.GestionWeb.GetWebWord(1244,webSession.SiteLanguage),DynamicResultConstantes.WON_HEADER_ID);
-			won.Add(new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
-			WebResultUI.Header unitWon=new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
+			WebResultUI.HeaderGroup won=new WebResultUI.HeaderGroup(GestionWeb.GetWebWord(1244,webSession.SiteLanguage),DynamicResultConstantes.WON_HEADER_ID);
+			won.Add(new WebResultUI.Header(true,GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
+			WebResultUI.Header unitWon=new WebResultUI.Header(true,GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
 			unitWon.Add(new WebResultUI.Header(true,PeriodDateN,DynamicResultConstantes.N_UNIVERSE_POSITION));
 			unitWon.Add(new WebResultUI.Header(true,PeriodDateN1,DynamicResultConstantes.N1_UNIVERSE_POSITION));
 			won.Add(unitWon);
@@ -656,9 +657,9 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#endregion
 
 			#region Perdus
-			WebResultUI.HeaderGroup lost=new WebResultUI.HeaderGroup(WebCore.Translation.GestionWeb.GetWebWord(1245,webSession.SiteLanguage),DynamicResultConstantes.LOST_HEADER_ID);
-			lost.Add(new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
-			WebResultUI.Header unitLost=new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
+			WebResultUI.HeaderGroup lost=new WebResultUI.HeaderGroup(GestionWeb.GetWebWord(1245,webSession.SiteLanguage),DynamicResultConstantes.LOST_HEADER_ID);
+			lost.Add(new WebResultUI.Header(true,GestionWeb.GetWebWord(1852,webSession.SiteLanguage),DynamicResultConstantes.ITEM_NUMBER_HEADER_ID));
+			WebResultUI.Header unitLost=new WebResultUI.Header(true,GestionWeb.GetWebWord(unitId,webSession.SiteLanguage),DynamicResultConstantes.UNIT_HEADER_ID);
 			unitLost.Add(new WebResultUI.Header(true,PeriodDateN,DynamicResultConstantes.N_UNIVERSE_POSITION));
 			unitLost.Add(new WebResultUI.Header(true,PeriodDateN1,DynamicResultConstantes.N1_UNIVERSE_POSITION));
 			lost.Add(unitLost);
@@ -682,25 +683,25 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#region Initialisation des lignes
 			Int64 levelLabelColIndex=resultTable.GetHeadersIndexInResultTable(DynamicResultConstantes.LEVEL_ID.ToString());
 			advertiserLineIndex=resultTable.AddNewLine(LineType.level1);
-			resultTable[advertiserLineIndex,levelLabelColIndex]=new CellLabel(WebCore.Translation.GestionWeb.GetWebWord(1146,webSession.SiteLanguage));
+			resultTable[advertiserLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1146,webSession.SiteLanguage));
 			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null){
 				brandLineIndex=resultTable.AddNewLine(LineType.level1);
-				resultTable[brandLineIndex,levelLabelColIndex]=new CellLabel(WebCore.Translation.GestionWeb.GetWebWord(1149,webSession.SiteLanguage));
+				resultTable[brandLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1149,webSession.SiteLanguage));
 			}
 			productLineIndex=resultTable.AddNewLine(LineType.level1);
-			resultTable[productLineIndex,levelLabelColIndex]=new CellLabel(WebCore.Translation.GestionWeb.GetWebWord(1164,webSession.SiteLanguage));
+			resultTable[productLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1164,webSession.SiteLanguage));
 			sectorLineIndex=resultTable.AddNewLine(LineType.level1);
-			resultTable[sectorLineIndex,levelLabelColIndex]=new CellLabel(WebCore.Translation.GestionWeb.GetWebWord(1847,webSession.SiteLanguage));
+			resultTable[sectorLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1847,webSession.SiteLanguage));
 			subsectorLineIndex=resultTable.AddNewLine(LineType.level1);
-			resultTable[subsectorLineIndex,levelLabelColIndex]=new CellLabel(WebCore.Translation.GestionWeb.GetWebWord(1848,webSession.SiteLanguage));
+			resultTable[subsectorLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1848,webSession.SiteLanguage));
 			groupLineIndex=resultTable.AddNewLine(LineType.level1);
-			resultTable[groupLineIndex,levelLabelColIndex]=new CellLabel(WebCore.Translation.GestionWeb.GetWebWord(1849,webSession.SiteLanguage));
+			resultTable[groupLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1849,webSession.SiteLanguage));
 			// Groupe d'Agence && Agence
 			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null){
 				agencyGroupLineIndex=resultTable.AddNewLine(LineType.level1);
-				resultTable[agencyGroupLineIndex,levelLabelColIndex]=new CellLabel(WebCore.Translation.GestionWeb.GetWebWord(1850,webSession.SiteLanguage));
+				resultTable[agencyGroupLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1850,webSession.SiteLanguage));
 				agencyLineIndex=resultTable.AddNewLine(LineType.level1);
-				resultTable[agencyLineIndex,levelLabelColIndex]=new CellLabel(WebCore.Translation.GestionWeb.GetWebWord(1851,webSession.SiteLanguage));
+				resultTable[agencyLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1851,webSession.SiteLanguage));
 			}
 			#endregion
 
@@ -1069,7 +1070,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#region Chargement des données à partir de la base	
 			DataSet ds;
             DataSet dsMedia = null;
-			Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+			Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			try{
                 //ds=DynamicDataAccess.GetData(webSession,vehicleName, beginningPeriod, endPeriod,beginningPeriodN1, endPeriodEndN1);
                 ds = DynamicDataAccess.GetGenericData(webSession, vehicleName);
@@ -1210,7 +1211,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			long k;
 			ArrayList l2Indexes=new ArrayList();
 			ArrayList l1Indexes=new ArrayList();
-            WebCore.DetailLevelItemInformation columnDetailLevel = (WebCore.DetailLevelItemInformation)webSession.GenericColumnDetailLevel.Levels[0];
+            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)webSession.GenericColumnDetailLevel.Levels[0];
 			#endregion 
 
 			#region Aucune données
@@ -1226,7 +1227,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 			#region Affiche le Gad ?
 			bool showGad=false;
-			int advertiserColumnIndex=webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser);
+			int advertiserColumnIndex=webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser);
 			if(advertiserColumnIndex>0){
 				showGad=true;
 			}
@@ -1241,19 +1242,19 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
             switch (columnDetailLevel.Id) {
 
-                case WebCore.DetailLevelItemInformation.Levels.media:
+                case DetailLevelItemInformation.Levels.media:
                     mediaLabelList = new ClassificationDB.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
                     break;
-                case WebCore.DetailLevelItemInformation.Levels.category:
+                case DetailLevelItemInformation.Levels.category:
                     categoryLabelList = new ClassificationDB.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
                     break;
-                case WebCore.DetailLevelItemInformation.Levels.mediaSeller:
+                case DetailLevelItemInformation.Levels.mediaSeller:
                     mediaSellerLabelList = new ClassificationDB.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
                     break;
-                case WebCore.DetailLevelItemInformation.Levels.title:
+                case DetailLevelItemInformation.Levels.title:
                     titleLabelList = new ClassificationDB.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
                     break;
-                case WebCore.DetailLevelItemInformation.Levels.interestCenter:
+                case DetailLevelItemInformation.Levels.interestCenter:
                     interestCenterLabelList = new TNS.AdExpress.Classification.DataAccess.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
                     break;
 
@@ -1323,18 +1324,18 @@ namespace TNS.AdExpress.Web.Rules.Results{
             #region Headers
             // Ajout de la colonne Produit
 			Headers headers=new Headers();
-			headers.Root.Add(new WebResultUI.Header(true,WebCore.Translation.GestionWeb.GetWebWord(1164,webSession.SiteLanguage),DynamicResultConstantes.LEVEL_ID));
+			headers.Root.Add(new WebResultUI.Header(true,GestionWeb.GetWebWord(1164,webSession.SiteLanguage),DynamicResultConstantes.LEVEL_ID));
 			// Ajout plan media ?
 			bool showMediaSchedule=false;
-			if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.advertiser)||
-				webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.product)||
-				webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.brand)||
-				webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.holdingCompany)||
-				webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.sector)||
-				webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.subSector)||
-				webSession.GenericProductDetailLevel.ContainDetailLevelItem(TNS.AdExpress.Web.Core.DetailLevelItemInformation.Levels.group)
+			if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)||
+				webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)||
+				webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.brand)||
+				webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.holdingCompany)||
+				webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.sector)||
+				webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subSector)||
+				webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.group)
 				){
-				headers.Root.Add(new HeaderMediaSchedule(false,WebCore.Translation.GestionWeb.GetWebWord(150,webSession.SiteLanguage),DynamicResultConstantes.MEDIA_SCHEDULE_ID));
+				headers.Root.Add(new HeaderMediaSchedule(false,GestionWeb.GetWebWord(150,webSession.SiteLanguage),DynamicResultConstantes.MEDIA_SCHEDULE_ID));
 				showMediaSchedule=true;
 			}
 
@@ -1345,26 +1346,26 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#region Ajout Année N
 			WebResultUI.HeaderGroup yearN=new WebResultUI.HeaderGroup(PeriodDateN,true,FrameWorkResultConstantes.DynamicAnalysis.N_UNIVERSE_POSITION);
 			// Ajout sous total
-			if(addSubTotal)yearN.AddSubTotal(true,WebCore.Translation.GestionWeb.GetWebWord(1102,webSession.SiteLanguage),FrameWorkResultConstantes.DynamicAnalysis.SUBTOTAL_ID);
+			if(addSubTotal)yearN.AddSubTotal(true,GestionWeb.GetWebWord(1102,webSession.SiteLanguage),FrameWorkResultConstantes.DynamicAnalysis.SUBTOTAL_ID);
 			// Media
             foreach (WebCommon.Results.SelectionSubGroup subGroup in subGroupMediaTotalIndex) {
                 if (subGroup != null) {
                     if (subGroup.ParentId == FrameWorkResultConstantes.DynamicAnalysis.N_UNIVERSE_POSITION)
                         switch (columnDetailLevel.Id) {
 
-                            case WebCore.DetailLevelItemInformation.Levels.media:
+                            case DetailLevelItemInformation.Levels.media:
                                 yearN.Add(new WebResultUI.Header(true, mediaLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.category:
+                            case DetailLevelItemInformation.Levels.category:
                                 yearN.Add(new WebResultUI.Header(true, categoryLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.mediaSeller:
+                            case DetailLevelItemInformation.Levels.mediaSeller:
                                 yearN.Add(new WebResultUI.Header(true, mediaSellerLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.title:
+                            case DetailLevelItemInformation.Levels.title:
                                 yearN.Add(new WebResultUI.Header(true, titleLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.interestCenter:
+                            case DetailLevelItemInformation.Levels.interestCenter:
                                 yearN.Add(new WebResultUI.Header(true, interestCenterLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
 
@@ -1377,26 +1378,26 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#region  Ajout Année N-1
 			WebResultUI.HeaderGroup yearN1=new WebResultUI.HeaderGroup(PeriodDateN1,true,FrameWorkResultConstantes.DynamicAnalysis.N1_UNIVERSE_POSITION);
 			// Ajout sous total
-			if(addSubTotal)yearN1.AddSubTotal(true,WebCore.Translation.GestionWeb.GetWebWord(1102,webSession.SiteLanguage),FrameWorkResultConstantes.DynamicAnalysis.SUBTOTAL_ID);
+			if(addSubTotal)yearN1.AddSubTotal(true,GestionWeb.GetWebWord(1102,webSession.SiteLanguage),FrameWorkResultConstantes.DynamicAnalysis.SUBTOTAL_ID);
 			// Media
             foreach (WebCommon.Results.SelectionSubGroup subGroup in subGroupMediaTotalIndex) {
                 if (subGroup != null) {
                     if (subGroup.ParentId == FrameWorkResultConstantes.DynamicAnalysis.N_UNIVERSE_POSITION)
                         switch (columnDetailLevel.Id) {
 
-                            case WebCore.DetailLevelItemInformation.Levels.media:
+                            case DetailLevelItemInformation.Levels.media:
                                 yearN1.Add(new WebResultUI.Header(true, mediaLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.category:
+                            case DetailLevelItemInformation.Levels.category:
                                 yearN1.Add(new WebResultUI.Header(true, categoryLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.mediaSeller:
+                            case DetailLevelItemInformation.Levels.mediaSeller:
                                 yearN1.Add(new WebResultUI.Header(true, mediaSellerLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.title:
+                            case DetailLevelItemInformation.Levels.title:
                                 yearN1.Add(new WebResultUI.Header(true, titleLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.interestCenter:
+                            case DetailLevelItemInformation.Levels.interestCenter:
                                 yearN1.Add(new WebResultUI.Header(true, interestCenterLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
 
@@ -1407,28 +1408,28 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#endregion
 
 			#region  Ajout Année Evol
-			WebResultUI.HeaderGroup evol=new WebResultUI.HeaderGroup(WebCore.Translation.GestionWeb.GetWebWord(1212,webSession.SiteLanguage),true,FrameWorkResultConstantes.DynamicAnalysis.EVOL_UNIVERSE_POSITION);
+			WebResultUI.HeaderGroup evol=new WebResultUI.HeaderGroup(GestionWeb.GetWebWord(1212,webSession.SiteLanguage),true,FrameWorkResultConstantes.DynamicAnalysis.EVOL_UNIVERSE_POSITION);
 			// Ajout sous total
-			if(addSubTotal)evol.AddSubTotal(true,WebCore.Translation.GestionWeb.GetWebWord(1102,webSession.SiteLanguage),FrameWorkResultConstantes.DynamicAnalysis.SUBTOTAL_ID);
+			if(addSubTotal)evol.AddSubTotal(true,GestionWeb.GetWebWord(1102,webSession.SiteLanguage),FrameWorkResultConstantes.DynamicAnalysis.SUBTOTAL_ID);
 			// Media
             foreach (WebCommon.Results.SelectionSubGroup subGroup in subGroupMediaTotalIndex) {
                 if (subGroup != null) {
                     if (subGroup.ParentId == FrameWorkResultConstantes.DynamicAnalysis.N_UNIVERSE_POSITION)
                         switch (columnDetailLevel.Id) {
 
-                            case WebCore.DetailLevelItemInformation.Levels.media:
+                            case DetailLevelItemInformation.Levels.media:
                                 evol.Add(new WebResultUI.Header(true, mediaLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.category:
+                            case DetailLevelItemInformation.Levels.category:
                                 evol.Add(new WebResultUI.Header(true, categoryLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.mediaSeller:
+                            case DetailLevelItemInformation.Levels.mediaSeller:
                                 evol.Add(new WebResultUI.Header(true, mediaSellerLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.title:
+                            case DetailLevelItemInformation.Levels.title:
                                 evol.Add(new WebResultUI.Header(true, titleLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
-                            case WebCore.DetailLevelItemInformation.Levels.interestCenter:
+                            case DetailLevelItemInformation.Levels.interestCenter:
                                 evol.Add(new WebResultUI.Header(true, interestCenterLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                 break;
 
@@ -1475,7 +1476,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#region Ligne du Total
 			currentLineInTabResult= resultTable.AddNewLine(TNS.FrameWork.WebResultUI.LineType.total);
 			//Libellé du total
-			resultTable[currentLineInTabResult,levelLabelColIndex]=new CellLevel(-1,WebCore.Translation.GestionWeb.GetWebWord(805,webSession.SiteLanguage),0,currentLineInTabResult);
+			resultTable[currentLineInTabResult,levelLabelColIndex]=new CellLevel(-1,GestionWeb.GetWebWord(805,webSession.SiteLanguage),0,currentLineInTabResult);
 			CellLevel currentCellLevel0=(CellLevel)resultTable[currentLineInTabResult,levelLabelColIndex];
 			if(showMediaSchedule)resultTable[currentLineInTabResult,mediaScheduleColIndex]= new CellMediaScheduleLink(currentCellLevel0,webSession);
 			// Unité
@@ -1552,7 +1553,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					oldIdL2=oldIdL3=-1;
 
 					#region GAD
-					if(showGad && webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(WebCore.DetailLevelItemInformation.Levels.advertiser)==1){
+					if(showGad && webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser)==1){
 						if(tabData[FrameWorkResultConstantes.DynamicAnalysis.ADDRESS_COLUMN_INDEX,currentLine]!=null){
 							((CellLevel)resultTable[currentLineInTabResult,levelLabelColIndex]).AddressId=(Int64)tabData[FrameWorkResultConstantes.DynamicAnalysis.ADDRESS_COLUMN_INDEX,currentLine];
 						}
@@ -1599,7 +1600,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					oldIdL3=-1;
 
 					#region GAD
-					if(showGad && webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(WebCore.DetailLevelItemInformation.Levels.advertiser)==2){
+					if(showGad && webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser)==2){
 						if(tabData[FrameWorkResultConstantes.DynamicAnalysis.ADDRESS_COLUMN_INDEX,currentLine]!=null){
 							((CellLevel)resultTable[currentLineInTabResult,levelLabelColIndex]).AddressId=(Int64)tabData[FrameWorkResultConstantes.DynamicAnalysis.ADDRESS_COLUMN_INDEX,currentLine];
 						}
@@ -1644,7 +1645,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					currentL3Index=currentLineInTabResult;
 
 					#region GAD
-					if(showGad && webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(WebCore.DetailLevelItemInformation.Levels.advertiser)==3){
+					if(showGad && webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser)==3){
 						if(tabData[FrameWorkResultConstantes.DynamicAnalysis.ADDRESS_COLUMN_INDEX,currentLine]!=null){
 							((CellLevel)resultTable[currentLineInTabResult,levelLabelColIndex]).AddressId=(Int64)tabData[FrameWorkResultConstantes.DynamicAnalysis.ADDRESS_COLUMN_INDEX,currentLine];
 						}
@@ -1748,7 +1749,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			// Ecriture des sous totaux
 			for(k=1;k<nbUnivers;k++){
 				if(groupMediaTotalIndex[k].Count>1)
-					tabResult[groupMediaTotalIndex[k].IndexInResultTable,FrameWorkResultConstantes.DynamicAnalysis.MEDIA_LINE_LABEL_INDEX]=WebCore.Translation.GestionWeb.GetWebWord(1102,webSession.SiteLanguage);
+					tabResult[groupMediaTotalIndex[k].IndexInResultTable,FrameWorkResultConstantes.DynamicAnalysis.MEDIA_LINE_LABEL_INDEX]=GestionWeb.GetWebWord(1102,webSession.SiteLanguage);
 			}
 
 			#endregion
@@ -1764,7 +1765,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 			#region Ligne du Total
 			tabResult[FrameWorkResultConstantes.DynamicAnalysis.IDL1_INDEX,FrameWorkResultConstantes.DynamicAnalysis.TOTAL_LINE_INDEX]=FrameWorkResultConstantes.DynamicAnalysis.TOTAL_IDENTIFICATION;
-			tabResult[FrameWorkResultConstantes.DynamicAnalysis.LABELL1_INDEX,FrameWorkResultConstantes.DynamicAnalysis.TOTAL_LINE_INDEX]=WebCore.Translation.GestionWeb.GetWebWord(805,webSession.SiteLanguage);
+			tabResult[FrameWorkResultConstantes.DynamicAnalysis.LABELL1_INDEX,FrameWorkResultConstantes.DynamicAnalysis.TOTAL_LINE_INDEX]=GestionWeb.GetWebWord(805,webSession.SiteLanguage);
 			// Initialisation de la ligne
 			for(k=FrameWorkResultConstantes.DynamicAnalysis.FIRST_MEDIA_INDEX;k<nbCol;k++){
 				tabResult[k,FrameWorkResultConstantes.DynamicAnalysis.TOTAL_LINE_INDEX]=(double) 0.0;

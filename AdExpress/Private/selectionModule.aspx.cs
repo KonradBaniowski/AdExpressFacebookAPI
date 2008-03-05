@@ -20,10 +20,12 @@ using System.Windows.Forms;
 using DBConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Level;
 
 
 namespace AdExpress{
@@ -85,7 +87,7 @@ namespace AdExpress{
 							_webSession.CurrentTab = 0;
 					}
 
-					_webSession.ModuleTraductionCode  = (int)TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModuleWebTxt(tmp);
+					_webSession.ModuleTraductionCode  = (int)ModulesList.GetModuleWebTxt(tmp);
 				
 					#region Initialisation des données
 					_webSession.ReachedModule  = false;
@@ -255,7 +257,7 @@ namespace AdExpress{
                     catch (System.Exception) { }
 
 					_webSession.Save();
-					Response.Redirect(TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModuleNextUrl(tmp)+"?idSession="+_webSession.IdSession);
+					Response.Redirect(ModulesList.GetModuleNextUrl(tmp)+"?idSession="+_webSession.IdSession);
 				}
 				else{
 					//test page résultat plan média

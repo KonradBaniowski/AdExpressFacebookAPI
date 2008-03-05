@@ -13,7 +13,7 @@ using System.Text;
 using System.Windows.Forms;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.Functions{
 	/// <summary>

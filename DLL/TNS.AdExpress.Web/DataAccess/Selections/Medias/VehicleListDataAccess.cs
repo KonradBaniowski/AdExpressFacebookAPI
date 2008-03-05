@@ -19,6 +19,7 @@ using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 	/// <summary>

@@ -13,7 +13,7 @@ using System.Drawing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.Customer;

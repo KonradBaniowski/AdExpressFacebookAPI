@@ -22,9 +22,9 @@ using System.Web.UI.HtmlControls;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Rules.Customer;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
@@ -179,7 +179,7 @@ namespace AdExpress.Private.Universe{
 				
 					string idSelectedUniverse = Request.Form.GetValues("universeDropDownList")[0];
 					string idSelectedDirectory = Request.Form.GetValues("directoryDropDownList")[0];
-					Module currentModuleDescription = TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(_webSession.CurrentModule);
+					Module currentModuleDescription = ModulesList.GetModule(_webSession.CurrentModule);
 
 					//Identification de la branche de l'univers					
 					TNS.AdExpress.Constantes.Classification.Branch.type branchType =  GetBrancheType(stringBranch);

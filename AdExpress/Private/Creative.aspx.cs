@@ -25,13 +25,14 @@ using TNS.AdExpress.Web.UI;
 using ProductClassification=TNS.AdExpress.Classification.DataAccess.ProductBranch;
 using MediaClassification=TNS.AdExpress.Classification.DataAccess.MediaBranch;
 using AdExpressException=TNS.AdExpress.Exceptions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.Exceptions;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Level;
 
 namespace AdExpress.Private{
 	/// <summary>

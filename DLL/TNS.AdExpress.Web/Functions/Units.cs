@@ -10,7 +10,7 @@ using System.Collections;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DateFrameWork=TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork;
 
 namespace TNS.AdExpress.Web.Functions{

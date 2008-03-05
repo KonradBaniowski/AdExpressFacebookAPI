@@ -13,7 +13,7 @@ using System;
 using System.Web.UI;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork;
 using TNS.FrameWork.Date;
 using WebConstantes = TNS.AdExpress.Constantes.Web;

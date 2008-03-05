@@ -26,9 +26,10 @@ using TNS.AdExpress.Anubis.BusinessFacade;
 using TNS.FrameWork.Net.Mail;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Level;
 
 
 namespace TNS.AdExpress.Anubis.BusinessFacade.Core{
@@ -212,7 +213,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Core{
 			// Initialisation des descriptions des niveaux de détail
             DetailLevelsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_DETAIL_LEVEL_CONFIGURATION_FILENAME)); 				
 			// Chargement des noms de modules
-            ModulesList.Init(AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CONFIGURATION_FILENAME,AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME);
+            //ModulesList.Init(AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CONFIGURATION_FILENAME,AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME);
             //Charge les niveaux d'univers
             UniverseLevels.getInstance(new TNS.FrameWork.DB.Common.XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory +@"Configuration\"+ TNS.AdExpress.Constantes.Web.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
 

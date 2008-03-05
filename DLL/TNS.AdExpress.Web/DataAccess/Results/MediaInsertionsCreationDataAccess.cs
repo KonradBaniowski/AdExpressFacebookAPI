@@ -34,7 +34,9 @@ using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using ConstantesCustomer=TNS.AdExpress.Constantes.Customer;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using  ConstantesFrameWork=TNS.AdExpress.Constantes.FrameWork;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web.Navigation;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -1590,7 +1592,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		private static void GetSqlTables(DBClassificationConstantes.Vehicles.names idVehicle, WebSession webSession, StringBuilder sql, ArrayList detailLevelList) {
 			
 			string tableName = "";
-			Module currentModuleDescription = Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 			if (WebFunctions.Modules.IsSponsorShipTVModule(webSession))
 				tableName = DBConstantes.Tables.DATA_SPONSORSHIP;
 			else tableName = SQLGenerator.getVehicleTableNameForDetailResult(idVehicle, currentModuleDescription.ModuleType);
@@ -1617,7 +1619,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
         private static string GetTables(DBClassificationConstantes.Vehicles.names idVehicle, ListDictionary mediaList, WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails preformatedMediaDetail, WebSession webSession){
 			string sql="";
 			string tableName="";
-			Module currentModuleDescription=TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+			Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			tableName = SQLGenerator.getVehicleTableNameForDetailResult(idVehicle,currentModuleDescription.ModuleType);
 			
 			

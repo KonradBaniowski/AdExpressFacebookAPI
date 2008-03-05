@@ -18,7 +18,7 @@ using TNS.AdExpress.Web.Exceptions;
 using ClassificationCst=TNS.AdExpress.Constantes.Classification;
 using CstResults=TNS.AdExpress.Constantes.FrameWork.Results;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 using WebModule=TNS.AdExpress.Constantes.Web.Module;
 using TNS.FrameWork.WebResultUI;

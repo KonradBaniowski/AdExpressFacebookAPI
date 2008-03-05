@@ -8,7 +8,7 @@ using System.Text;
 using System.Collections;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using APPMUIs = TNS.AdExpress.Web.UI.Results.APPM;

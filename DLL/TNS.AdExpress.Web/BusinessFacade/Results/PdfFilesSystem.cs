@@ -13,7 +13,7 @@ using WebCommon = TNS.AdExpress.Web.Common;
 using WebUI = TNS.AdExpress.Web.UI.Results;
 using WebExceptions = TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.BusinessFacade.Results{
 	/// <summary>

@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using System.Data;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Selection;
 using ConstantesDB = TNS.AdExpress.Constantes.DB;
@@ -23,6 +23,7 @@ using ConstantesWeb = TNS.AdExpress.Constantes.Web;
 using ConstanteCustomerRight = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Level;
 
 
 namespace TNS.AdExpress.Web.DataAccess.Results

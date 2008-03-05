@@ -25,6 +25,7 @@ using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Anubis.DataAccess.Result{

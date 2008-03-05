@@ -11,7 +11,7 @@ using System.Collections;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.Date;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using DataAccessResults=TNS.AdExpress.Web.DataAccess.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;

@@ -21,7 +21,7 @@ using ConstResults=TNS.AdExpress.Constantes.FrameWork.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebFunctions=TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using DateFunctions = TNS.FrameWork.Date;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Web.Exceptions;

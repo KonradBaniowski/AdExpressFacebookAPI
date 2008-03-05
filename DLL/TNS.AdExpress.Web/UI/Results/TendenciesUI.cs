@@ -9,7 +9,7 @@
 using System;
 using System.Data;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebConstantes=TNS.AdExpress.Constantes.Web;

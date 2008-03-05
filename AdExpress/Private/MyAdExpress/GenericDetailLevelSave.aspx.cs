@@ -16,12 +16,13 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.DataAccess.Session;
+using TNS.AdExpress.Domain.Level;
 
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>

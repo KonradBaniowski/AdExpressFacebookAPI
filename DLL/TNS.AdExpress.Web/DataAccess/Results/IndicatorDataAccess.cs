@@ -13,7 +13,7 @@ using System.Data;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Exceptions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
@@ -26,6 +26,7 @@ using FrameWorkConstantes= TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 

@@ -22,7 +22,7 @@ using TNS.AdExpress.Web.Rules.Results;
 using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.UI.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
@@ -31,11 +31,12 @@ using DataAccessFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 using System.Windows.Forms;
 using TNS.AdExpress.Web.Exceptions;
 using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using WebControls=TNS.AdExpress.Web.Controls;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Domain.Level;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -192,7 +193,7 @@ namespace AdExpress.Private.Results{
             {
                 #region Résultat
                 // Gestion PostBack
-                Module currentModuleDescription = TNS.AdExpress.Web.Core.Navigation.ModulesList.GetModule(_webSession.CurrentModule);
+                Module currentModuleDescription = ModulesList.GetModule(_webSession.CurrentModule);
 
                 MenuWebControl2.ForbidHelpPages = true;
 

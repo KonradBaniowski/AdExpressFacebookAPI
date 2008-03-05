@@ -9,7 +9,7 @@ using System.Data;
 using TNS.AdExpress.Web.DataAccess.Results.APPM;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Exceptions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 

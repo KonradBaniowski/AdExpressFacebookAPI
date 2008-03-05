@@ -21,7 +21,7 @@ using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using DataAccessFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 using FrameWorkConstantes= TNS.AdExpress.Constantes.FrameWork.Results;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 
 using Dundas.Charting.WebControl;

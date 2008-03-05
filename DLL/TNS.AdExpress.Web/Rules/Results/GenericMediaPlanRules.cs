@@ -42,7 +42,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
         {
 
             DataSet ds = null;
-            TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel detailLevel;
+            TNS.AdExpress.Domain.Level.GenericDetailLevel detailLevel;
 
             #region Data
             if (vehicleId == (Int64)DBClassificationConstantes.Vehicles.names.adnettrack)
@@ -778,7 +778,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
             MediaSchedulePeriod period = new MediaSchedulePeriod(beginUserDate, endUserDate, CustomerSessions.Period.DisplayLevel.dayly);
 
 			DataSet ds=null;
-			TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel detailLevel=null;
+            TNS.AdExpress.Domain.Level.GenericDetailLevel detailLevel=null;
 			WebConstantes.CustomerSessions.Period.DisplayLevel oldDisplayPeriod=webSession.DetailPeriod;
 
 			#region Création du DataSet de résultats
@@ -1588,10 +1588,10 @@ namespace TNS.AdExpress.Web.Rules.Results{
         }
         #endregion
 
-        private static Int64 GetLevelId(WebSession webSession, DataRow dr,int level,TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel detailLevel){
+        private static Int64 GetLevelId(WebSession webSession, DataRow dr,int level,TNS.AdExpress.Domain.Level.GenericDetailLevel detailLevel){
 			return(Int64.Parse(dr[detailLevel.GetColumnNameLevelId(level)].ToString()));
 		}
-		private static string GetLevelLabel(WebSession webSession, DataRow dr,int level,TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel detailLevel){
+        private static string GetLevelLabel(WebSession webSession,DataRow dr,int level,TNS.AdExpress.Domain.Level.GenericDetailLevel detailLevel) {
 			return(dr[detailLevel.GetColumnNameLevelLabel(level)].ToString());
 		}
 	}

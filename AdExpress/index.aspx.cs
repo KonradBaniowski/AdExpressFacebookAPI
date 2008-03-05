@@ -13,7 +13,7 @@ using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using Oracle.DataAccess.Client;
 using TNS.FrameWork.DB.Common;

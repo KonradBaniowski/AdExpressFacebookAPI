@@ -15,7 +15,7 @@ using System.Text;
 
 using TNS.AdExpress.Web.Common.Results.Creatives.Comparers;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.WebResultUI.TableControl;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;

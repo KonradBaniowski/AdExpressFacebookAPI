@@ -11,7 +11,7 @@ using System.Text;
 using DBClassificationCst = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using SSDataAccess= TNS.AdExpress.Web.DataAccess.Selections.Products;
 

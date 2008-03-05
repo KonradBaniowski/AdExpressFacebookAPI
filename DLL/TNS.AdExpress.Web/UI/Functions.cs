@@ -11,7 +11,7 @@ using System;
 
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Exceptions;
 

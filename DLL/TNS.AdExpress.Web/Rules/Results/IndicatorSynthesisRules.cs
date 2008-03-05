@@ -9,7 +9,7 @@ using System.Data;
 
 using TNS.AdExpress.Web;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using FrameWorkConstantes = TNS.AdExpress.Constantes.FrameWork;
 using WebFunctions=TNS.AdExpress.Web.Functions;
