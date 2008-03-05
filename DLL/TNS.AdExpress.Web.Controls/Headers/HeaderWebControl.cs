@@ -5,8 +5,8 @@ using System.ComponentModel;
 
 using System.Collections;
 
-using TNS.AdExpress.Web.Core.Translation;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Constantes.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 
