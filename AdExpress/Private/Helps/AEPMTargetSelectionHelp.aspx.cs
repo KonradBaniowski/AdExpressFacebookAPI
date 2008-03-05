@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.UI;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.Helps{
 	/// <summary>
