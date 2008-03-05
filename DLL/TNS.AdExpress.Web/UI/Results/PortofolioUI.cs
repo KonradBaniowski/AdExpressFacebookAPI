@@ -43,6 +43,7 @@ using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using ResultCstComp=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert;
 using TNS.FrameWork;
 using WebDataAccess=TNS.AdExpress.Web.DataAccess;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace TNS.AdExpress.Web.UI.Results{
