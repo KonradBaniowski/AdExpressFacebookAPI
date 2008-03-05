@@ -17,6 +17,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Medias;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 using TNS.Classification;
 
@@ -46,7 +47,7 @@ namespace AdExpress {
 			try{
                 //Langues 
                 Int64 dd=WebApplicationParameters.DefaultLanguage;
-                IDataSource tt= WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.DataBaseDescription.DefaultConnectionIds.session);
+                IDataSource tt= WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.session);
 				// Initialisation des listes de texte
 				GestionWeb.Init();
 				// Initialisation des descriptions des éléments de niveaux de détail
