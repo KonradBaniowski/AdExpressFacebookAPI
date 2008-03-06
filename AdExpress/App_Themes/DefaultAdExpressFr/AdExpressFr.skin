@@ -19,6 +19,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/logo_cote_droit.gif" SkinID="logo_cote_droit" />
 <asp:image runat="server" ImageUrl="Images/Common/croix.gif" SkinID="croix" />
 <asp:image runat="server" ImageUrl="Images/Common/logoTNShome.gif" SkinID="logoTNShome" />
+<asp:image runat="server" ImageUrl="Images/Common/detailSpot_up.gif" SkinID="detailSpot" />
+<asp:image runat="server" ImageUrl="Images/Common/picto_plus.gif" SkinID="picto_plus" />
 <asp:image runat="server" ImageUrl="Images/Culture/logo/LogoAdexpress.gif" SkinID="LogoAdexpress" />
 <asp:image runat="server" ImageUrl="Images/Culture/logo/logo.gif" SkinID="logo" />
 <asp:image runat="server" ImageUrl="Images/Common/Result/bt_detail_up.gif" SkinID="bt_detail" />
@@ -52,7 +54,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Button/chart_up.gif" SkinID="chart" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/table_up.gif" SkinID="table" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/result2_up.gif" SkinID="result2" />
-<asp:image runat="server" ImageUrl="Images/Common/detailSpot_up.gif" SkinID="detailSpot" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/mpClose.gif" SkinID="mpClose" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/mpOpen.gif" SkinID="mpOpen" />
 
 
 <%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
@@ -60,6 +63,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrSelections" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrResults" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="webUiResults" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
+
 
 <ctrHeader:HeaderWebControl runat="server" language="33" FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Common/HeaderStrip.swf" MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Common/FlashReplacement/HeaderStrip.gif" />
 <ctrHeader:FlashWebControl runat="server" FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Culture/anime6.swf" MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/HomeAnime.gif"/>
