@@ -8,19 +8,15 @@ using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using TNS.AdExpress.Web.UI;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.Helps{
 	/// <summary>
 	/// Page d'aide de CompetitorAlertResultsHelp.aspx
 	/// </summary>
-	public partial class CompetitorAlertResultsHelp : System.Web.UI.Page{
-		
-		#region Variables
-		/// <summary>
-		/// Langue du site
-		/// </summary>
-		public int _siteLanguage=33;
-		#endregion
+	public partial class CompetitorAlertResultsHelp : WebPage{
 		
 		#region Variables MMI
 		/// <summary>
@@ -108,10 +104,8 @@ namespace AdExpress.Private.Helps{
 		protected void Page_Load(object sender, System.EventArgs e){
 			
 			#region Textes et langage du site
-			if(Page.Request.QueryString.Get("siteLanguage")!=null)
-				_siteLanguage=int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_siteLanguage);
+			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
 			#endregion
 
 		}
@@ -141,5 +135,6 @@ namespace AdExpress.Private.Helps{
 		#endregion
 
 		#endregion
+
 	}
 }
