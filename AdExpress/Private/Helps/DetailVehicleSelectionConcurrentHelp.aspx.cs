@@ -8,19 +8,15 @@ using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using TNS.AdExpress.Web.UI;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.Helps{
 	/// <summary>
 	/// Page d'aide de DetailVehicleSelectionConcurrentHelp.aspx
 	/// </summary>
-	public partial class DetailVehicleSelectionConcurrentHelp : System.Web.UI.Page{
-		
-		#region Variables
-		/// <summary>
-		/// Langue du site
-		/// </summary>
-		public int _siteLanguage=33;
-		#endregion
+	public partial class DetailVehicleSelectionConcurrentHelp : WebPage{
 
 		#region Variables MMI
 		/// <summary>
@@ -118,14 +114,8 @@ namespace AdExpress.Private.Helps{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Aguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			
-			#region Textes et langage du site
-			if(Page.Request.QueryString.Get("siteLanguage")!=null)
-				_siteLanguage=int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_siteLanguage);
-			#endregion
-
+			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
 		}
 		#endregion
 
@@ -154,5 +144,6 @@ namespace AdExpress.Private.Helps{
 		#endregion
 
 		#endregion
+
 	}
 }

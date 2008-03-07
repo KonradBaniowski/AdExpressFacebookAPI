@@ -167,7 +167,7 @@
 				<!-- Enregistrer l'univers -->
 				<tr>
 					<td width="10"><asp:Image ID="Image38" runat="server" SkinID="pixel" width="10" /></td>
-					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text10Adexpresstext" runat="server" Code="1005"></cc1:adexpresstext>&nbsp;<asp:Image ID="Image57" runat="server" SkinID="enregistrer" />&nbsp;
+					<td class="txtViolet11"><cc1:adexpresstext language="33" id="text10Adexpresstext" runat="server" Code="1005"></cc1:adexpresstext>&nbsp;<asp:Image ID="Image57" runat="server" SkinID="enregistrer_univers" />&nbsp;
 						<cc1:adexpresstext language="33" id="text11Adexpresstext" runat="server" Code="2447"></cc1:adexpresstext></td>
 				</tr>
 				<!-- Exemple Image -->
