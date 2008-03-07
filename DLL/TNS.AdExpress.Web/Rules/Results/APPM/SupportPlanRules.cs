@@ -12,7 +12,7 @@ using System.Data;
 using System.Text;
 
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 
@@ -112,7 +112,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 					idOldVeh = int.Parse(row["id_vehicle"].ToString());
 					oldVh = dtResult.NewRow();
 					dtResult.Rows.Add(oldVh);
-					oldVh["rowType"] = Right.type.vehicleAccess.ToString();
+					oldVh["rowType"] = CustomerCst.Right.type.vehicleAccess.ToString();
 					oldVh["label"] = "Total";//row["vehicle"].ToString();
 					oldVh["budget"] = Decimal.Parse(data.Compute("sum(euro)","id_vehicle=" + idOldVeh + " and id_target=" + dtTargets.Rows[0][0].ToString()).ToString());
 					foreach(object obj in targetsCol.Keys){
@@ -138,7 +138,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 					idOldCat = int.Parse(row["id_category"].ToString());
 					oldCt = dtResult.NewRow();
 					dtResult.Rows.Add(oldCt);
-					oldCt["rowType"] = Right.type.categoryAccess.ToString();
+                    oldCt["rowType"] = CustomerCst.Right.type.categoryAccess.ToString();
 					oldCt["label"] = row["category"].ToString();
 					oldCt["budget"] = int.Parse(data.Compute("sum(euro)","id_vehicle=" + idOldVeh + " and id_category=" + idOldCat + " and id_target=" + dtTargets.Rows[0][0].ToString()).ToString());
 					foreach(object obj in targetsCol.Keys){
@@ -167,7 +167,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 					idOldMedia = int.Parse(row["id_media"].ToString());
 					oldMedia = dtResult.NewRow();
 					dtResult.Rows.Add(oldMedia);
-					oldMedia["rowType"] = Right.type.mediaAccess.ToString();
+                    oldMedia["rowType"] = CustomerCst.Right.type.mediaAccess.ToString();
 					oldMedia["idMedia"] = idOldMedia;
 					oldMedia["label"] = row["media"].ToString();
 					oldMedia["budget"] = int.Parse(row["euro"].ToString());

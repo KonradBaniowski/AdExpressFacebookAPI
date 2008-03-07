@@ -13,7 +13,7 @@ using System.Data;
 using System.Text;
 
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 
@@ -77,7 +77,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 						idOldMedia = int.Parse(row["id_media"].ToString());
 						oldMediaRow = nRow = dtResult.NewRow();
 						dtResult.Rows.Add(nRow);
-						nRow["rowType"] = Right.type.mediaAccess.ToString();
+                        nRow["rowType"] = CustomerCst.Right.type.mediaAccess.ToString();
 						nRow["idMedia"] = row["id_media"].ToString();
 						nRow["label"] = row["media"].ToString();
 						nRow["date"] = DBNull.Value;
@@ -95,7 +95,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 						idOldDate = int.Parse(row["date_media_num"].ToString());
 						nRow = dtResult.NewRow();
 						dtResult.Rows.Add(nRow);
-						nRow["rowType"] = Right.type.productAccess.ToString();
+                        nRow["rowType"] = CustomerCst.Right.type.productAccess.ToString();
 						nRow["idMedia"] = row["id_media"].ToString();
 						nRow["label"] = row["product"].ToString();
 						if (row["date_cover_num"].ToString().Length > 0) {

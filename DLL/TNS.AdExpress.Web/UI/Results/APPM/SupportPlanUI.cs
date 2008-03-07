@@ -10,7 +10,7 @@ using System;
 using System.Data;
 using System.Text;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 
@@ -96,9 +96,10 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 			#region table fill
 			string css = "";
 			foreach(DataRow row in dtResult.Rows){
-				if(row[0].ToString()== Right.type.mediaAccess.ToString()){
+                if(row[0].ToString()== CustomerCst.Right.type.mediaAccess.ToString()) {
 					css = md_css;
-				}else if (row[0].ToString()== Right.type.categoryAccess.ToString()){
+                }
+                else if(row[0].ToString()== CustomerCst.Right.type.categoryAccess.ToString()) {
 					css = ct_css;
 				}else{
 					css = vh_css;
