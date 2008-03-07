@@ -18,57 +18,6 @@ namespace AdExpress.Private.Helps{
 	/// </summary>
 	public partial class DashBoardMediaSelectionHelp : WebPage{
 
-		#region Variables MMI
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		#endregion
-
 		#region Evènements
 
 		#region Chargement

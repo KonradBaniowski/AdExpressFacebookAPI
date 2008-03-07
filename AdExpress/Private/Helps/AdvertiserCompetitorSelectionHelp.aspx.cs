@@ -17,100 +17,6 @@ namespace AdExpress.Private.Helps{
 	/// Page d'aide de AdvertiserCompetitorSelectionHelp.aspx
 	/// </summary>
 	public partial class AdvertiserCompetitorSelectionHelp : WebPage{
-		
-		#region Variables MMI
-		/// <summary>
-		/// Titre
-		/// </summary>
-		/// <summary>
-		/// Titre de Paragraphe
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Titre de Paragraphe
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Titre de Paragraphe
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte d'introduction
-		/// </summary>
-		/// <summary>
-		/// Texte d'introduction
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-
-		#endregion
 	
 		#region Evènements
 
@@ -121,12 +27,8 @@ namespace AdExpress.Private.Helps{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Aguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-
-			#region Textes et langage du site
 			//Modification de la langue pour les Textes AdExpress
 			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
-			#endregion
-
 		}
 		#endregion
 

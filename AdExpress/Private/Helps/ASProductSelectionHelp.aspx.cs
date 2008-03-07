@@ -18,73 +18,6 @@ namespace AdExpress.Private.Helps{
 	/// </summary>
 	public partial class ASProductSelectionHelp : WebPage{
 
-		#region Variables MMI
-		/// <summary>
-		/// Texte d'introduction
-		/// </summary>
-		/// <summary>
-		/// Titre de Paragraphe
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText AdExpressText1;
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Titre de Paragraphe
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Texte Explicatif
-		/// </summary>
-		/// <summary>
-		/// Titre de la page
-		/// </summary>
-		#endregion
-
 		#region Evènements
 
 		#region Chargement
@@ -94,12 +27,8 @@ namespace AdExpress.Private.Helps{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Aguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-
-			#region Textes et langage du site
 			//Modification de la langue pour les Textes AdExpress
 			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
-			#endregion
-
 		}
 		#endregion
 
