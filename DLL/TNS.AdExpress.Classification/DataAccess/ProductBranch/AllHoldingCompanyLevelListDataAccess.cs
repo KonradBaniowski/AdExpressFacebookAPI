@@ -5,9 +5,11 @@
 #endregion
 
 using System;
+using System.Data;
 using TNS.AdExpress.Classification.DataAccess;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Classification.Exceptions;
+using TNS.FrameWork.DB.Common;
 
 
 namespace TNS.AdExpress.Classification.DataAccess.ProductBranch{
@@ -22,7 +24,7 @@ namespace TNS.AdExpress.Classification.DataAccess.ProductBranch{
 		/// <summary>
 		/// Connexion à la base de données
 		/// </summary>
-		private OracleConnection connection;
+		private IDataSource source;
 
 		#endregion
 		
@@ -30,9 +32,9 @@ namespace TNS.AdExpress.Classification.DataAccess.ProductBranch{
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		/// <param name="connection">Connexion à la base de données</param>
-		public AllHoldingCompanyLevelListDataAccess(OracleConnection connection){
-			this.connection=connection;
+		/// <param name="source">Connexion à la base de données</param>
+		public AllHoldingCompanyLevelListDataAccess(IDataSource source){
+			this.source=source;
 		}
 		#endregion
 
@@ -43,50 +45,29 @@ namespace TNS.AdExpress.Classification.DataAccess.ProductBranch{
 		public string this [Int64 id]{
 			get{
 				string text;
-				string table=TNS.AdExpress.Constantes.Classification.DB.Table.name.holding_company.ToString();
+                DataSet ds;
+
+                #region Request
+                string table=TNS.AdExpress.Constantes.Classification.DB.Table.name.holding_company.ToString();
 				// Construction de la requête
 				string sql="select id_"+table+", "+table+" from adexpressfr01."+table+" where id_language="+TNS.AdExpress.Constantes.DB.Language.FRENCH+" and activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" and id"+table+"="+id.ToString();
-				// Ouverture de la base de données
-				bool DBToClosed=false;
-				if (connection.State==System.Data.ConnectionState.Closed){
-					DBToClosed=true;
-					try{
-						connection.Open();
-					}
-					catch(System.Exception e){
-						throw(e);
-					}
-				}
-				OracleCommand oracleCommand;
-				OracleDataReader oracleDataReader=null;
-				try{
-					oracleCommand=new OracleCommand(sql,connection);
-					oracleDataReader=oracleCommand.ExecuteReader();
-					if(oracleDataReader.Read()) text=oracleDataReader.GetValue(1).ToString();
-					else throw(new Classification.Exceptions.ClassificationDataDBException("Aucun Libellé ne correspond à l'identifiant "+id));
-				}
-				catch(System.Exception e){
-					try{
-						if(oracleDataReader!=null) oracleDataReader.Close();
-						if (DBToClosed) connection.Close();
-					}
-					catch(System.Exception ex){
-						throw(new ClassificationDataDBException("Impossible de fermer la base de données: "+ex.Message));
-					}
-					throw(new ClassificationDataDBException("Impossible de sélectionner les éléments : "+e.Message));
-				}
-				// Fermeture de la base de données
-				try{
-					oracleDataReader.Close();
-					if (DBToClosed) connection.Close();
-				}
-				catch(System.Exception e){
-					throw(new ClassificationDataDBException("Impossible de fermer la base de données : "+e.Message));
-				}
-				return(text);
+                #endregion
+
+                #region Resquest execution
+                try {
+                    ds=source.Fill(sql);
+                    text=ds.Tables[0].Rows[0][1].ToString();
+                }
+                catch(System.Exception e) {
+                    throw (new ClassificationDataDBException("Impossible de sélectionner les éléments : "+e.Message));
+                }
+                #endregion
+
+                return (text);
 			}
 		}
 		#endregion
 	}
 }
+
 

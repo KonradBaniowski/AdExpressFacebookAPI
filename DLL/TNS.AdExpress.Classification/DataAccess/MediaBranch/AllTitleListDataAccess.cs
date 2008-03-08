@@ -8,6 +8,7 @@ using System;
 using TNS.AdExpress.Classification.DataAccess;
 using Oracle.DataAccess.Client;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
+using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Classification.DataAccess.MediaBranch{
 	/// <summary>
@@ -20,16 +21,16 @@ namespace TNS.AdExpress.Classification.DataAccess.MediaBranch{
 		/// <summary>
 		/// Constructeur de données Française
 		/// </summary>
-		/// <param name="connection">Connexion à la base de données</param>
-		public AllTitleListDataAccess(OracleConnection connection):base(TNS.AdExpress.Constantes.Classification.DB.Table.name.title,DBConstantes.Language.FRENCH,connection){
+		/// <param name="source">Connexion à la base de données</param>
+		public AllTitleListDataAccess(IDataSource source):base(TNS.AdExpress.Constantes.Classification.DB.Table.name.title,DBConstantes.Language.FRENCH,source){
 		}
 
 		/// <summary>
 		/// Constructeur
 		/// </summary>
 		/// <param name="language">Langue des données</param>
-		/// <param name="connection">Connexion à la base de données</param>
-		public AllTitleListDataAccess(int language,OracleConnection connection):base(TNS.AdExpress.Constantes.Classification.DB.Table.name.title,language,connection){
+		/// <param name="source">Connexion à la base de données</param>
+		public AllTitleListDataAccess(int language,IDataSource source):base(TNS.AdExpress.Constantes.Classification.DB.Table.name.title,language,source){
 		}
 		
 		#endregion

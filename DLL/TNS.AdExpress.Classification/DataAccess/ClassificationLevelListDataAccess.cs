@@ -10,6 +10,7 @@ using Oracle.DataAccess.Client;
 using System.Data;
 using TNS.AdExpress.Classification.Exceptions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
+using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Classification.DataAccess{
 	/// <summary>
@@ -42,10 +43,11 @@ namespace TNS.AdExpress.Classification.DataAccess{
 		/// </summary>
 		/// <param name="table">Table servant à la construction de la liste</param>
 		/// <param name="language">Langue des données</param>
-		/// <param name="connection">Connexion à la base de données</param>
-		public ClassificationLevelListDataAccess(TNS.AdExpress.Constantes.Classification.DB.Table.name table,int language,OracleConnection connection){
+		/// <param name="source">Connexion à la base de données</param>
+		public ClassificationLevelListDataAccess(TNS.AdExpress.Constantes.Classification.DB.Table.name table,int language,IDataSource source){
 			this.language=language;
 			this.table=table;
+            DataTable dt;
 			list=new Hashtable();
 
 			#region Création de la requête
@@ -54,67 +56,20 @@ namespace TNS.AdExpress.Classification.DataAccess{
 			sql+=" where id_language="+language+" and activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			sql+=" order by "+table.ToString();
 			#endregion
-				
-			#region Ouverture de la base de données
-			bool DBToClosed=false;
-			if (connection.State==System.Data.ConnectionState.Closed){
-				DBToClosed=true;
-				try{
-					connection.Open();
-				}
-				catch(System.Exception err){
-					throw(new ClassificationDataDBException("Impossible d'ouvrir la base de données",err));
-				}
+
+            #region Request
+            try {
+                dt=source.Fill(sql).Tables[0];
+                dt.TableName=table.ToString();
 			}
-			#endregion
-
-			OracleCommand sqlCommand=null;
-			OracleDataAdapter sqlAdapter=null;
-			DataSet ds=new DataSet();
-			DataTable dt;
-
-			try{
-				sqlCommand=new OracleCommand(sql,connection);
-				sqlAdapter=new OracleDataAdapter(sqlCommand);
-				sqlAdapter.Fill(ds,table.ToString());
-				dt=ds.Tables[table.ToString()];
-				ds.Tables.Clear();
-				ds=null;
-			}
-
-			#region Traitement d'erreur du chargement des données
 			catch(System.Exception ex){
-				try{
-					// Fermeture de la base de données
-					if (sqlAdapter!=null){
-						sqlAdapter.Dispose();
-					}
-					if(sqlCommand!=null) sqlCommand.Dispose();
-					if (DBToClosed) connection.Close();
-				}
-				catch(System.Exception et){
-					throw(new ClassificationDataDBException ("Impossible de fermer la base de données lors d'une erreur d'authentification",et));
-				}
-				throw(new ClassificationDataDBException ("Impossible de charger les éléments de la nomenclature",ex));
+		        throw(new ClassificationDataDBException ("Impossible de charger les éléments de la nomenclature",ex));
 			}
-			#endregion
+            #endregion
 
-			#region Fermeture de la base de données
-			try{
-				// Fermeture de la base de données
-				if (sqlAdapter!=null){
-					sqlAdapter.Dispose();
-				}
-				if(sqlCommand!=null)sqlCommand.Dispose();
-				if (DBToClosed) connection.Close();
-			}
-			catch(System.Exception et){
-				throw(new ClassificationDataDBException ("Impossible de fermer la base de données lors de l'authentification",et));
-			}
-			#endregion
 
-			#region Transformation du DataTable en HashTable
-			try{
+            #region Transformation du DataTable en HashTable
+            try {
 				foreach(DataRow currentRow in dt.Rows){
 					list.Add(currentRow[0],currentRow[1]);
 					idListOrderByClassificationItem.Add(currentRow[0]);
@@ -132,13 +87,14 @@ namespace TNS.AdExpress.Classification.DataAccess{
 		/// Constructeur de la liste de tous les éléments d'un niveau d'une nomenclature
 		/// </summary>
 		/// <param name="table">Table servant à la construction de la liste</param>
-		/// <param name="connection">Connexion à la base de données</param>
+		/// <param name="source">Connexion à la base de données</param>
 		/// <param name="codeslist">Liste des codes</param>
 		/// <param name="language">langue du site</param>
-		public ClassificationLevelListDataAccess(TNS.AdExpress.Constantes.Classification.DB.Table.name table,string codeslist,int language,OracleConnection connection){
+        public ClassificationLevelListDataAccess(TNS.AdExpress.Constantes.Classification.DB.Table.name table,string codeslist,int language,IDataSource source) {
 			this.language=language;
 			this.table=table;
 			list=new Hashtable();
+            DataTable dt;
 
 			#region Création de la requête
 			string sql="select id_"+table.ToString()+", "+table.ToString();
@@ -147,64 +103,16 @@ namespace TNS.AdExpress.Classification.DataAccess{
 			sql+=" and id_"+table.ToString()+" in("+codeslist+")";
 			sql+=" order by "+table.ToString();
 			#endregion
-			
-			#region Ouverture de la base de données
-			bool DBToClosed=false;
-			if (connection.State==System.Data.ConnectionState.Closed){
-				DBToClosed=true;
-				try{
-					connection.Open();
-				}
-				catch(System.Exception e){
-					throw(new ClassificationDataDBException("Impossible d'ouvrir la base de données",e));
-				}
-			}
-			#endregion
 
-			OracleCommand sqlCommand=null;
-			OracleDataAdapter sqlAdapter=null;
-			DataSet ds=new DataSet();
-			DataTable dt;
-
-			try{
-				sqlCommand=new OracleCommand(sql,connection);
-				sqlAdapter=new OracleDataAdapter(sqlCommand);
-				sqlAdapter.Fill(ds,table.ToString());
-				dt=ds.Tables[table.ToString()];
-				ds.Tables.Clear();
-				ds=null;
-			}
-
-			#region Traitement d'erreur du chargement des données
-			catch(System.Exception ex){
-				try{
-					// Fermeture de la base de données
-					if (sqlAdapter!=null){
-						sqlAdapter.Dispose();
-					}
-					if(sqlCommand!=null) sqlCommand.Dispose();
-					if (DBToClosed) connection.Close();
-				}
-				catch(System.Exception et){
-					throw(new ClassificationDataDBException ("Impossible de fermer la base de données lors d'une erreur d'authentification",et));
-				}
-				throw(new ClassificationDataDBException ("Impossible de charger les éléments de la nomenclature",ex));
-			}
-			#endregion
-
-			#region Fermeture de la base de données
-			try{
-				// Fermeture de la base de données
-				if (sqlAdapter!=null){
-					sqlAdapter.Dispose();
-				}
-				if(sqlCommand!=null)sqlCommand.Dispose();
-				if (DBToClosed) connection.Close();
-			}
-			catch(System.Exception et){
-				throw(new ClassificationDataDBException ("Impossible de fermer la base de données lors de l'authentification",et));
-			}
-			#endregion
+            #region Request
+            try {
+                dt=source.Fill(sql).Tables[0];
+                dt.TableName=table.ToString();
+            }
+            catch(System.Exception ex) {
+                throw (new ClassificationDataDBException("Impossible de charger les éléments de la nomenclature",ex));
+            }
+            #endregion
 
 			#region Transformation du DataTable en HashTable
 			try{
@@ -224,12 +132,13 @@ namespace TNS.AdExpress.Classification.DataAccess{
 		/// Constructeur de la liste de tous les éléments d'un niveau d'une nomenclature
 		/// </summary>
 		/// <param name="table">Table servant à la construction de la liste</param>
-		/// <param name="connection">Connexion à la base de données</param>
+		/// <param name="source">Connexion à la base de données</param>
 		/// <param name="codeslist">Liste des codes</param>
 		/// <param name="language">langue du site</param>
-		public ClassificationLevelListDataAccess(string table, string codeslist, int language, OracleConnection connection) {
+		public ClassificationLevelListDataAccess(string table, string codeslist, int language, IDataSource source) {
 			this.language = language;
 			list = new Hashtable();
+            DataTable dt;
 
 			#region Création de la requête
 			string sql = "select id_" + table + ", " + table;
@@ -239,63 +148,15 @@ namespace TNS.AdExpress.Classification.DataAccess{
 			sql += " order by " + table;
 			#endregion
 
-			#region Ouverture de la base de données
-			bool DBToClosed = false;
-			if (connection.State == System.Data.ConnectionState.Closed) {
-				DBToClosed = true;
-				try {
-					connection.Open();
-				}
-				catch (System.Exception e) {
-					throw (new ClassificationDataDBException("Impossible d'ouvrir la base de données", e));
-				}
-			}
-			#endregion
-
-			OracleCommand sqlCommand = null;
-			OracleDataAdapter sqlAdapter = null;
-			DataSet ds = new DataSet();
-			DataTable dt;
-
-			try {
-				sqlCommand = new OracleCommand(sql, connection);
-				sqlAdapter = new OracleDataAdapter(sqlCommand);
-				sqlAdapter.Fill(ds, table.ToString());
-				dt = ds.Tables[table];
-				ds.Tables.Clear();
-				ds = null;
-			}
-
-			#region Traitement d'erreur du chargement des données
-			catch (System.Exception ex) {
-				try {
-					// Fermeture de la base de données
-					if (sqlAdapter != null) {
-						sqlAdapter.Dispose();
-					}
-					if (sqlCommand != null) sqlCommand.Dispose();
-					if (DBToClosed) connection.Close();
-				}
-				catch (System.Exception et) {
-					throw (new ClassificationDataDBException("Impossible de fermer la base de données lors d'une erreur d'authentification", et));
-				}
-				throw (new ClassificationDataDBException("Impossible de charger les éléments de la nomenclature", ex));
-			}
-			#endregion
-
-			#region Fermeture de la base de données
-			try {
-				// Fermeture de la base de données
-				if (sqlAdapter != null) {
-					sqlAdapter.Dispose();
-				}
-				if (sqlCommand != null) sqlCommand.Dispose();
-				if (DBToClosed) connection.Close();
-			}
-			catch (System.Exception et) {
-				throw (new ClassificationDataDBException("Impossible de fermer la base de données lors de l'authentification", et));
-			}
-			#endregion
+            #region Request
+            try {
+                dt=source.Fill(sql).Tables[0];
+                dt.TableName=table.ToString();
+            }
+            catch(System.Exception ex) {
+                throw (new ClassificationDataDBException("Impossible de charger les éléments de la nomenclature",ex));
+            }
+            #endregion
 
 			#region Transformation du DataTable en HashTable
 			try {
@@ -314,13 +175,14 @@ namespace TNS.AdExpress.Classification.DataAccess{
 		/// Constructeur de la liste de tous les éléments d'un niveau d'une nomenclature
 		/// </summary>
 		/// <param name="table">Table servant à la construction de la liste</param>
-		/// <param name="connection">Connexion à la base de données</param>
+		/// <param name="source">Connexion à la base de données</param>
 		/// <param name="codeslist">Liste des codes</param>
 		/// <param name="language">langue du site</param>
 		/// <param name="dbSchema">Scema base de données</param>
-		public ClassificationLevelListDataAccess(string table, string codeslist, int language, OracleConnection connection,string dbSchema) {
+		public ClassificationLevelListDataAccess(string table, string codeslist, int language,IDataSource source,string dbSchema) {
 			this.language = language;
-			list = new Hashtable();
+            DataTable dt;
+            list = new Hashtable();
 
 			#region Création de la requête
 			string sql = "select id_" + table + ", " + table;
@@ -330,63 +192,15 @@ namespace TNS.AdExpress.Classification.DataAccess{
 			sql += " order by " + table;
 			#endregion
 
-			#region Ouverture de la base de données
-			bool DBToClosed = false;
-			if (connection.State == System.Data.ConnectionState.Closed) {
-				DBToClosed = true;
-				try {
-					connection.Open();
-				}
-				catch (System.Exception e) {
-					throw (new ClassificationDataDBException("Impossible d'ouvrir la base de données", e));
-				}
-			}
-			#endregion
-
-			OracleCommand sqlCommand = null;
-			OracleDataAdapter sqlAdapter = null;
-			DataSet ds = new DataSet();
-			DataTable dt;
-
-			try {
-				sqlCommand = new OracleCommand(sql, connection);
-				sqlAdapter = new OracleDataAdapter(sqlCommand);
-				sqlAdapter.Fill(ds, table.ToString());
-				dt = ds.Tables[table];
-				ds.Tables.Clear();
-				ds = null;
-			}
-
-			#region Traitement d'erreur du chargement des données
-			catch (System.Exception ex) {
-				try {
-					// Fermeture de la base de données
-					if (sqlAdapter != null) {
-						sqlAdapter.Dispose();
-					}
-					if (sqlCommand != null) sqlCommand.Dispose();
-					if (DBToClosed) connection.Close();
-				}
-				catch (System.Exception et) {
-					throw (new ClassificationDataDBException("Impossible de fermer la base de données lors d'une erreur d'authentification", et));
-				}
-				throw (new ClassificationDataDBException("Impossible de charger les éléments de la nomenclature", ex));
-			}
-			#endregion
-
-			#region Fermeture de la base de données
-			try {
-				// Fermeture de la base de données
-				if (sqlAdapter != null) {
-					sqlAdapter.Dispose();
-				}
-				if (sqlCommand != null) sqlCommand.Dispose();
-				if (DBToClosed) connection.Close();
-			}
-			catch (System.Exception et) {
-				throw (new ClassificationDataDBException("Impossible de fermer la base de données lors de l'authentification", et));
-			}
-			#endregion
+            #region Request
+            try {
+                dt=source.Fill(sql).Tables[0];
+                dt.TableName=table.ToString();
+            }
+            catch(System.Exception ex) {
+                throw (new ClassificationDataDBException("Impossible de charger les éléments de la nomenclature",ex));
+            }
+            #endregion
 
 			#region Transformation du DataTable en HashTable
 			try {
