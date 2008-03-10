@@ -16,7 +16,7 @@ namespace TNS.AdExpress.BusinessFacade{
 	/// Description résumée de SqlGenerator.
 	/// </summary>
 	public class SqlGeneratorSystem{
-
+        /*
 		#region Droits
 
 		#region Supports
@@ -260,6 +260,6 @@ namespace TNS.AdExpress.BusinessFacade{
 		#endregion
 
 		#endregion
-
+        */
 	}
 }
