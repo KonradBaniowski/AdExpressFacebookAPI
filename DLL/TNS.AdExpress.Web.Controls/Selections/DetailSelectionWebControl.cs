@@ -269,7 +269,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             get { return _cssRightBottomBorderLevel1; }
             set {
                 _cssRightBottomBorderLevel1 = value;
-                cssRightBottomBorderLevel1 = GetCssRightBorderLevel1HTML();
+                cssRightBottomBorderLevel1 = GetCssRightBottomBorderLevel1HTML();
             }
         }
         /// <summary>
@@ -279,7 +279,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             get { return _cssRightBottomBorderLevel2; }
             set {
                 _cssRightBottomBorderLevel2 = value;
-                cssRightBottomBorderLevel2 = GetCssRightBorderLevel2HTML();
+                cssRightBottomBorderLevel2 = GetCssRightBottomBorderLevel2HTML();
             }
         }
         /// <summary>
@@ -289,7 +289,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             get { return _cssRightBottomBorderLevel3; }
             set {
                 _cssRightBottomBorderLevel3 = value;
-                cssRightBottomBorderLevel3 = GetCssRightBorderLevel3HTML();
+                cssRightBottomBorderLevel3 = GetCssRightBottomBorderLevel3HTML();
             }
         }
 		/// <summary>
@@ -613,14 +613,15 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		public string GetLogo(WebSession webSession) {
 			
 			StringBuilder t = new System.Text.StringBuilder();
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
 			t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
-			t.Append("<tr><td><img src=\"" + WebConstantes.Images.LOGO_TNS + "\"></td>");
+            t.Append("<tr><td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_TNS + "\"></td>");
 			switch (webSession.CurrentModule) {
 				case WebConstantes.Module.Name.DONNEES_DE_CADRAGE:
 				case WebConstantes.Module.Name.BILAN_CAMPAGNE:								
 					t.Append("<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>");
-					t.Append("<td><img src=\"" + WebConstantes.Images.LOGO_APPM + "\"></td></tr>");
+					t.Append("<td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_APPM + "\"></td></tr>");
 					t.Append("<tr><td colspan=8>&nbsp;</td></tr>");
 					break;
 				default: 
@@ -1755,17 +1756,17 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 										html.Append("<td  " + GetLevelCss(level) + " colspan=" + colSpan + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</td>");
 										if (k > 0 && ((k + 1) % (baseColSpan - 1)) == 0) {
 											lineClosed = true;
-											html.Append("<td  " + GetLevelCss(level) + " class=\""+rightBorder+"\">&nbsp;</td></tr>");//Items are showed on three columns
+											html.Append("<td  " + GetRightBorderLevelCss(level) + ">&nbsp;</td></tr>");//Items are showed on three columns
 										}
 										colSpan = 0;
 									}
 									if (!lineClosed) {
-										html.Append("<td  " + GetLevelCss(level) + " class=\""+rightBorder+"\">&nbsp;</td></tr>");
+										html.Append("<td  " + GetRightBorderLevelCss(level) + ">&nbsp;</td></tr>");
 									}
 								}
 
 								// Bordure en bas et bordure à droite
-								html.Append("<tr><td colspan=" + baseColSpan + "  " + GetLevelCss(level) + " class=\""+rightBottomBorder+"\">&nbsp;</td></tr>");
+								html.Append("<tr><td colspan=" + baseColSpan + "  " + GetRightBottomBorderLevelCss(level) + ">&nbsp;</td></tr>");
 							}
 							html.Append("</tr>");
 						}
