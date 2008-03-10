@@ -88,7 +88,90 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			get{return _cssDetailSelectionL3;}
 			set{_cssDetailSelectionL3 = value;	}
 		}
-
+        /// <summary>
+        /// Right border css class for level 1  
+        /// </summary>
+        protected string _cssDetailSelectionRightBorderL1 = "";
+        /// <summary>
+        /// Get or set Right border css class for level 1  
+        /// </summary>
+        [Bindable(true),
+        Category("Detail Selection"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBorderL1 {
+            get { return _cssDetailSelectionRightBorderL1; }
+            set { _cssDetailSelectionRightBorderL1 = value; }
+        }
+        /// <summary>
+        /// Right border css class for level 2
+        /// </summary>
+        protected string _cssDetailSelectionRightBorderL2 = "";
+        /// <summary>
+        /// Get or set Right border css class for level 2
+        /// </summary>
+        [Bindable(true),
+        Category("Detail Selection"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBorderL2 {
+            get { return _cssDetailSelectionRightBorderL2; }
+            set { _cssDetailSelectionRightBorderL2 = value; }
+        }
+        /// <summary>
+        /// Right border css class for level 3
+        /// </summary>
+        protected string _cssDetailSelectionRightBorderL3 = "";
+        /// <summary>
+        /// Get or set Right border css class for level 3
+        /// </summary>
+        [Bindable(true),
+        Category("Detail Selection"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBorderL3 {
+            get { return _cssDetailSelectionRightBorderL3; }
+            set { _cssDetailSelectionRightBorderL3 = value; }
+        }
+        /// <summary>
+        /// Right Bottom border css class for level 1  
+        /// </summary>
+        protected string _cssDetailSelectionRightBottomBorderL1 = "";
+        /// <summary>
+        /// Get or set Right Bottom border css class for level 1  
+        /// </summary>
+        [Bindable(true),
+        Category("Detail Selection"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBottomBorderL1 {
+            get { return _cssDetailSelectionRightBottomBorderL1; }
+            set { _cssDetailSelectionRightBottomBorderL1 = value; }
+        }
+        /// <summary>
+        /// Right Bottom border css class for level 2
+        /// </summary>
+        protected string _cssDetailSelectionRightBottomBorderL2 = "";
+        /// <summary>
+        /// Get or set Right Bottom border css class for level 2
+        /// </summary>
+        [Bindable(true),
+        Category("Detail Selection"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBottomBorderL2 {
+            get { return _cssDetailSelectionRightBottomBorderL2; }
+            set { _cssDetailSelectionRightBottomBorderL2 = value; }
+        }
+        /// <summary>
+        /// Right Bottom border css class for level 3
+        /// </summary>
+        protected string _cssDetailSelectionRightBottomBorderL3 = "";
+        /// <summary>
+        /// Get or set Right Bottom border css class for level 3
+        /// </summary>
+        [Bindable(true),
+        Category("Detail Selection"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBottomBorderL3 {
+            get { return _cssDetailSelectionRightBottomBorderL3; }
+            set { _cssDetailSelectionRightBottomBorderL3 = value; }
+        }
 		/// <summary>
 		/// Classe CSS du titre global du tableau
 		/// </summary>
@@ -413,6 +496,12 @@ namespace TNS.AdExpress.Web.Controls.Results{
             js.Append("\r\n\t obj.CssDetailSelectionL1 = '" + CssDetailSelectionL1 + "';");
             js.Append("\r\n\t obj.CssDetailSelectionL2 = '" + CssDetailSelectionL2 + "';");
             js.Append("\r\n\t obj.CssDetailSelectionL3 = '" + CssDetailSelectionL3 + "';");
+            js.Append("\r\n\t obj.CssDetailSelectionRightBorderL1 = '" + CssDetailSelectionRightBorderL1 + "';");
+            js.Append("\r\n\t obj.CssDetailSelectionRightBorderL2 = '" + CssDetailSelectionRightBorderL2 + "';");
+            js.Append("\r\n\t obj.CssDetailSelectionRightBorderL3 = '" + CssDetailSelectionRightBorderL3 + "';");
+            js.Append("\r\n\t obj.CssDetailSelectionRightBottomBorderL1 = '" + CssDetailSelectionRightBottomBorderL1 + "';");
+            js.Append("\r\n\t obj.CssDetailSelectionRightBottomBorderL2 = '" + CssDetailSelectionRightBottomBorderL2 + "';");
+            js.Append("\r\n\t obj.CssDetailSelectionRightBottomBorderL3 = '" + CssDetailSelectionRightBottomBorderL3 + "';");
             js.Append("\r\n\t obj.CssDetailSelectionTitleGlobal = '" + CssDetailSelectionTitleGlobal + "';");
             js.Append("\r\n\t obj.CssDetailSelectionTitle = '" + CssDetailSelectionTitle + "';");
             js.Append("\r\n\t obj.CssDetailSelectionTitleData = '" + CssDetailSelectionTitleData + "';");
@@ -1279,6 +1368,30 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					_cssDetailSelectionL3 = o["CssDetailSelectionL3"].Value; 
 					_cssDetailSelectionL3 = _cssDetailSelectionL3.Replace("\"","");
 				}
+                if (o.Contains("CssDetailSelectionRightBorderL1")) {
+                    _cssDetailSelectionRightBorderL1 = o["CssDetailSelectionRightBorderL1"].Value;
+                    _cssDetailSelectionRightBorderL1 = _cssDetailSelectionRightBorderL1.Replace("\"", "");
+                }
+                if (o.Contains("CssDetailSelectionRightBorderL2")) {
+                    _cssDetailSelectionRightBorderL2 = o["CssDetailSelectionRightBorderL2"].Value;
+                    _cssDetailSelectionRightBorderL2 = _cssDetailSelectionRightBorderL2.Replace("\"", "");
+                }
+                if (o.Contains("CssDetailSelectionRightBorderL3")) {
+                    _cssDetailSelectionRightBorderL3 = o["CssDetailSelectionRightBorderL3"].Value;
+                    _cssDetailSelectionRightBorderL3 = _cssDetailSelectionRightBorderL3.Replace("\"", "");
+                }
+                if (o.Contains("CssDetailSelectionRightBottomBorderL1")) {
+                    _cssDetailSelectionRightBottomBorderL1 = o["CssDetailSelectionRightBottomBorderL1"].Value;
+                    _cssDetailSelectionRightBottomBorderL1 = _cssDetailSelectionRightBottomBorderL1.Replace("\"", "");
+                }
+                if (o.Contains("CssDetailSelectionRightBottomBorderL2")) {
+                    _cssDetailSelectionRightBottomBorderL2 = o["CssDetailSelectionRightBottomBorderL2"].Value;
+                    _cssDetailSelectionRightBottomBorderL2 = _cssDetailSelectionRightBottomBorderL2.Replace("\"", "");
+                }
+                if (o.Contains("CssDetailSelectionRightBottomBorderL3")) {
+                    _cssDetailSelectionRightBottomBorderL3 = o["CssDetailSelectionRightBottomBorderL3"].Value;
+                    _cssDetailSelectionRightBottomBorderL3 = _cssDetailSelectionRightBottomBorderL3.Replace("\"", "");
+                }
 				if(o.Contains("CssDetailSelectionTitleGlobal")){
 					_cssDetailSelectionTitleGlobal = o["CssDetailSelectionTitleGlobal"].Value; 
 					_cssDetailSelectionTitleGlobal = _cssDetailSelectionTitleGlobal.Replace("\"","");
@@ -1564,6 +1677,12 @@ namespace TNS.AdExpress.Web.Controls.Results{
                 detailSelectionWebControl.CssLevel1 = CssDetailSelectionL1;
                 detailSelectionWebControl.CssLevel2 = CssDetailSelectionL2;
                 detailSelectionWebControl.CssLevel3 = CssDetailSelectionL3;
+                detailSelectionWebControl.CssRightBorderLevel1 = CssDetailSelectionRightBorderL1;
+                detailSelectionWebControl.CssRightBorderLevel2 = CssDetailSelectionRightBorderL2;
+                detailSelectionWebControl.CssRightBorderLevel3 = CssDetailSelectionRightBorderL3;
+                detailSelectionWebControl.CssRightBottomBorderLevel1 = CssDetailSelectionRightBottomBorderL1;
+                detailSelectionWebControl.CssRightBottomBorderLevel2 = CssDetailSelectionRightBottomBorderL2;
+                detailSelectionWebControl.CssRightBottomBorderLevel3 = CssDetailSelectionRightBottomBorderL3;
                 detailSelectionWebControl.CssTitleGlobal = CssDetailSelectionTitleGlobal;
                 detailSelectionWebControl.CssTitle = CssDetailSelectionTitle;
                 detailSelectionWebControl.CssTitleData = CssDetailSelectionTitleData;
@@ -1617,6 +1736,12 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     detailSelectionWebControl.CssLevel1 = CssDetailSelectionL1;
                     detailSelectionWebControl.CssLevel2 = CssDetailSelectionL2;
                     detailSelectionWebControl.CssLevel3 = CssDetailSelectionL3;
+                    detailSelectionWebControl.CssRightBorderLevel1 = CssDetailSelectionRightBorderL1;
+                    detailSelectionWebControl.CssRightBorderLevel2 = CssDetailSelectionRightBorderL2;
+                    detailSelectionWebControl.CssRightBorderLevel3 = CssDetailSelectionRightBorderL3;
+                    detailSelectionWebControl.CssRightBottomBorderLevel1 = CssDetailSelectionRightBottomBorderL1;
+                    detailSelectionWebControl.CssRightBottomBorderLevel2 = CssDetailSelectionRightBottomBorderL2;
+                    detailSelectionWebControl.CssRightBottomBorderLevel3 = CssDetailSelectionRightBottomBorderL3;
                     detailSelectionWebControl.CssTitleGlobal = CssDetailSelectionTitleGlobal;
                     detailSelectionWebControl.CssTitle = CssDetailSelectionTitle;
                     detailSelectionWebControl.CssTitleData = CssDetailSelectionTitleData;
