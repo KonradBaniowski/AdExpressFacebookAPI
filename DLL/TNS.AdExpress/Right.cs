@@ -137,7 +137,7 @@ namespace TNS.AdExpress {
             get {
                 try {
                   
-                    if(_rights[typeRight]==null||!_rights.ContainsKey(typeRight)|| _rights.Keys.Count==0) return ("");
+                    if(!_rights.ContainsKey(typeRight)||_rights[typeRight]==null) return ("");
                     string list="";
                     foreach(string currentItem in _rights[typeRight]) {
                         list+=currentItem+",";
@@ -678,7 +678,7 @@ namespace TNS.AdExpress {
         /// <returns>Flag name</returns>
         public string GetFlag(Int64 flagId) {
             try {
-                if(_flagsRights==null||_flagsRights.Keys.Count==0) SetFlagsRights();
+                if(_flagsRights==null) SetFlagsRights();
                 if(_flagsRights.ContainsKey(flagId)) return (_flagsRights[flagId]);
                 return (null);
             }
