@@ -63,6 +63,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Button/mpOpen.gif" SkinID="mpOpen" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/delete_up.gif" SkinID="deleteLevels" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/restore_up.gif" SkinID="restoreLevels" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/bt_arrow_down.gif" SkinID="bt_arrow_down" />
 
 
 <%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
