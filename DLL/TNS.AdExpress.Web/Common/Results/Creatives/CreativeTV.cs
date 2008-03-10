@@ -115,13 +115,13 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         /// <param name="output">Output</param>
         public override void Render(System.Text.StringBuilder output) {
 
-            output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\"  bgcolor=\"#B1A3C1\">");
+            output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\" class=\"violetBackGroundV3\">");
 
             output.AppendFormat("<tr><td class=\"creativeVisualCell\">");
             if ((_session.CustomerLogin.GetFlag(DBCst.Flags.ID_TV_CREATION_ACCESS_FLAG) != null && _vehicle == DBClassifCst.Vehicles.names.tv)
                 || (_session.CustomerLogin.GetFlag(DBCst.Flags.ID_OTHERS_CREATION_ACCESS_FLAG) != null && _vehicle == DBClassifCst.Vehicles.names.others)
                 ) {
-                output.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><img border=\"0\" src=\"/Images/Common/videoFile.gif\"></a>", this._path, this._session.IdSession, (int)_vehicle);
+                output.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\" class=\"videoFileBackGround\"></a>", this._path, this._session.IdSession, (int)_vehicle);
             }
             else {
                 output.AppendFormat("<p class=\"txtViolet12Bold\" valign=\"top\" width=\"240\">{0}</p>", GestionWeb.GetWebWord(2250, _session.SiteLanguage));

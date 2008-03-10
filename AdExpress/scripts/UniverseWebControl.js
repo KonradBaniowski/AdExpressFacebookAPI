@@ -104,8 +104,8 @@ function ob_t2_Custom_Add(parentId, currentLevelId,treeviewId,oSelect,hiddenFiel
 	var hiddenFieldIElement = document.getElementById(hiddenFieldId);
 	var childId;
 	var tempSelectedIds='';
-	var  bt_delete_Image= new Image();	
-	bt_delete_Image.src = '/Images/Common/button/bt_delete_item.gif';
+	//var  bt_delete_Image= new Image();	
+	//bt_delete_Image.src = '/Images/Common/button/bt_delete_item.gif';
 	
 	if (!pNode) 
 	{	   
@@ -207,7 +207,7 @@ function ob_t2_Custom_Add(parentId, currentLevelId,treeviewId,oSelect,hiddenFiel
          	
         sInnerHtml = '<table cellspacing="0" class="ob_t2g"><tr><td class="ob_t6"><img ' + ((subTreeURL != null) ? 'src="' + ob_style + '/plusik_l.gif" onclick="ob_t21(this, \'' + subTreeURL + '\')"' : 'src="' + ob_style + '/hr_l.gif"') + '></td>';
         sInnerHtml += '<td class="ob_t4"' + (ob_t2_showicons == false ? ' style="display:none;"' : '') + '>' + (ob_t2_showicons == true ? '<div class="ob_d4">' : '') + ((image != null && typeof(ob_icons) != 'undefined' && ob_t2_showicons == true) ? '<img src="' + ob_icons + '/' + image + '">' : '') + (ob_t2_showicons == true ? '</div>' : '') + '</td>';
-        sInnerHtml += '<td id=' + childId + ' onclick="ob_t22(this, event)" class="ob_t2">' + textOrHTML + '</td><td nowrap>&nbsp;<a href=# onclick="removeItem(\''+hiddenFieldId+'\', \''+oSelect.options[i].value+'\');ob_t2_Remove(\''+childId+'\');"><img src=\"'+bt_delete_Image.src+'\" border=0></a></td></tr></table>';	///Images/Common/button/bt_delete_item.gif
+        sInnerHtml += '<td id=' + childId + ' onclick="ob_t22(this, event)" class="ob_t2">' + textOrHTML + '</td><td nowrap>&nbsp;<a href=# onclick="removeItem(\''+hiddenFieldId+'\', \''+oSelect.options[i].value+'\');ob_t2_Remove(\''+childId+'\');"><img src="'+ob_style+'/bt_delete_item.gif" border=0></a></td></tr></table>';	///Images/Common/button/bt_delete_item.gif
     	     	
         div.innerHTML = sInnerHtml;
         node = div.firstChild.firstChild.firstChild.firstChild.nextSibling.nextSibling;

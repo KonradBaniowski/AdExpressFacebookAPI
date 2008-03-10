@@ -43,8 +43,19 @@ namespace AdExpress.Private.Results.RawExcel{
 		}
 		#endregion
 
-		#region DeterminePostBackMode
-		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
+        #region Chargement de la page
+		/// <summary>
+		/// Chargement de la page
+		/// </summary>
+		/// <param name="sender">page</param>
+		/// <param name="e">arguments</param>
+        protected void Page_Load(object sender, System.EventArgs e) {
+            Response.ContentType = "application/vnd.ms-excel";
+        }
+        #endregion
+
+        #region DeterminePostBackMode
+        protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			_resultWebControl.CustomerWebSession = _webSession;
 			return base.DeterminePostBackMode ();
 		}

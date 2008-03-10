@@ -224,7 +224,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 AjaxScripts(output);
             }
 
-            output.WriteLine("<table align=\"center\" bgcolor=\"#FFFFFF\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
+            output.WriteLine("<table align=\"center\" class=\"whiteBackGround\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
 
             //header
             if (Vehicles.Count > 0) {
@@ -560,7 +560,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 js.Append("\r\n\t if( pageCount_" + this.ID + " <= nbIndexPage )  ");
                 js.Append("\r\n\t  nbIndexPage = pageCount_" + this.ID + " - 1; ");
 
-                js.Append("\r\n\t\t htmlNavigationBar += ' <font color=\"#FF0099\">'+currentPageIndex_" + this.ID + "+'</font> ';");
+                js.Append("\r\n\t\t htmlNavigationBar += ' <font class=\"pinkTextColor\">'+currentPageIndex_" + this.ID + "+'</font> ';");
                 js.Append("\r\n\t\t leftPageIndex = rightPageIndex = currentPageIndex_" + this.ID + ";");
                 js.Append("\r\n\t\t while(nbIndexPage>0 && pageCount_" + this.ID + ">1){ ");
                     js.Append("\r\n\t\t\t if( currentPageIndex_" + this.ID + "!=1 && leftPageIndex>1) {");

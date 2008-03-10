@@ -106,7 +106,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         /// <param name="output">Output</param>
         public override void Render(System.Text.StringBuilder output) {
 
-            output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\"  bgcolor=\"#B1A3C1\">");
+            output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\"  class=\"violetBackGroundV3\">");
 
             output.AppendFormat("<tr><td class=\"creativeVisualCellLeft\">");
             if (_session.CustomerLogin.GetFlag(DBCst.Flags.ID_PRESS_CREATION_ACCESS_FLAG) != null) {

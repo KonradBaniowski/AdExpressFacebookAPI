@@ -103,11 +103,11 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         /// <param name="output">Output</param>
         public override void Render(System.Text.StringBuilder output) {
 
-            output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\"  bgcolor=\"#B1A3C1\">");
+            output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\" class=\"violetBackGroundV3\">");
 
             output.AppendFormat("<tr><td class=\"creativeVisualCell\">");
             if (_session.CustomerLogin.GetFlag(DBCst.Flags.ID_RADIO_CREATION_ACCESS_FLAG) != null) {
-                output.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\"><img border=\"0\" src=\"/Images/Common/audioFile.gif\"></a>", this._path, this._id, this._session.IdSession, (int)DBClassifCst.Vehicles.names.radio);
+                output.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\" class=\"audioFileBackGround\"></a>", this._path, this._id, this._session.IdSession, (int)DBClassifCst.Vehicles.names.radio);
             }
             else {
                 output.AppendFormat("<p class=\"txtViolet12Bold\" valign=\"top\" width=\"240\">{0}</p>", GestionWeb.GetWebWord(2250, _session.SiteLanguage));

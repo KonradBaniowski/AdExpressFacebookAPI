@@ -194,21 +194,21 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 					idParent=(Int64)currentRow[0];
 					textParent=currentRow[1].ToString();
 					//Premier
-					if(idParent!=idParentOld && start!=0){					
+					if(idParent!=idParentOld && start!=0){
+
+                        t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=" + _width + ">");
 					
-						t.Append("<table style=\"border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; border-bottom :#644883 1px solid; \" class=\"txtViolet11Bold\" cellpadding=0 cellspacing=0   width="+_width+">");
-					
-						t.Append("<tr onClick=\"showHideContent"+valueTable+"('"+idParent+"');\" style=\"cursor : hand\">");
-						t.Append("<td align=\"left\" height=\"10\" width=\"100%\" valign=\"middle\">");					
+						t.Append("<tr onClick=\"showHideContent"+valueTable+"('"+idParent+"');\" class=\"cursorHand\">");
+						t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");					
 						t.Append("<label ID=\""+currentRow[0]+valueTable+"\">&nbsp;");
 						t.Append(""+textParent+"");
 						t.Append("</label>");
 						t.Append("</td>");
-						t.Append("<td  ><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");	
+                        t.Append("<td class=\"arrowBackGround\"></td>");	
 						t.Append("</tr>");
 						t.Append("</table>");
 						t.Append("<div id=\""+idParent+"Content"+valueTable+"\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
-						t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width="+_width+">");
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
 					//	t.Append("<tr><td>");
 					//	t.Append("<label style=\"cursor : hand\" onclick=\"allSelection2('"+idParent+textParent+"')\" ID=\""+currentRow[0]+"\">");
 					//	t.Append("</td></tr>");			
@@ -223,18 +223,18 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 					else if (idParent!=idParentOld){				
 						t.Append("</table>");
 						t.Append("</div>");
-						t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+_width+">");
-						t.Append("<tr onClick=\"showHideContent"+valueTable+"('"+idParent+"');\" style=\"cursor : hand\">");
-						t.Append("<td align=\"left\" height=\"10\" width=\"100%\" valign=\"middle\">");					
+                        t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + _width + ">");
+						t.Append("<tr onClick=\"showHideContent"+valueTable+"('"+idParent+"');\" class=\"cursorHand\">");
+						t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");					
 						t.Append("<label ID=\""+currentRow[0]+valueTable+"\">&nbsp;");
 						t.Append(""+textParent+"");
 						t.Append("</label>");
 						t.Append("</td>");
-						t.Append("<td ><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
+                        t.Append("<td class=\"arrowBackGround\"></td>");		
 						t.Append("</tr>");
 						t.Append("</table>");
 						t.Append("<div id=\""+idParent+"Content"+valueTable+"\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
-						t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width="+_width+">");
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
 					//	t.Append("<tr><td>");
 					//	t.Append("<label style=\"cursor : hand\" onclick=\"allSelection2('"+idParent+textParent+"')\" ID=\""+currentRow[0]+"\">");
 					//	t.Append("</td></tr>");	
@@ -312,19 +312,19 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 					//Premier
 					if (idParent != idParentOld && start != 0) {
 
-						t.Append("<table style=\"border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; border-bottom :#644883 1px solid; \" class=\"txtViolet11Bold\" cellpadding=0 cellspacing=0   width=" + _width + ">");
+                        t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=" + _width + ">");
 
-						t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" style=\"cursor : hand\">");
-						t.Append("<td align=\"left\" height=\"10\" width=\"100%\" valign=\"middle\">");
+                        t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" class=\"cursorHand\">");
+						t.Append("<td align=\"left\" height=\"10\"  valign=\"middle\">");
 						t.Append("<label ID=\"" + currentRow[0] + valueTable + "\">&nbsp;");
 						t.Append("" + textParent + "");
 						t.Append("</label>");
 						t.Append("</td>");
-						t.Append("<td  ><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");
+                        t.Append("<td class=\"arrowBackGround\"></td>");
 						t.Append("</tr>");
 						t.Append("</table>");
 						t.Append("<div id=\"" + idParent + "Content" + valueTable + "\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
-						t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=" + _width + ">");						
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");						
 
 						idParentOld = idParent;
 						textParentOld = textParent;
@@ -335,18 +335,18 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 					else if (idParent != idParentOld) {
 						t.Append("</table>");
 						t.Append("</div>");
-						t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + _width + ">");
-						t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" style=\"cursor : hand\">");
-						t.Append("<td align=\"left\" height=\"10\" width=\"100%\" valign=\"middle\">");
+                        t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + _width + ">");
+                        t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" class=\"cursorHand\">");
+						t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
 						t.Append("<label ID=\"" + currentRow[0] + valueTable + "\">&nbsp;");
 						t.Append("" + textParent + "");
 						t.Append("</label>");
 						t.Append("</td>");
-						t.Append("<td ><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");
+                        t.Append("<td class=\"arrowBackGround\"></td>");
 						t.Append("</tr>");
 						t.Append("</table>");
 						t.Append("<div id=\"" + idParent + "Content" + valueTable + "\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
-						t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=" + _width + ">");						
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");						
 
 
 						idParentOld = idParent;

@@ -18,6 +18,7 @@ using TNS.AdExpress.Web.Core.Selection;
 using CoreSelection = TNS.AdExpress.Web.Core.Selection;
 using TNS.Classification.WebControls;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
  
@@ -127,9 +128,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// </summary>
 		/// <param name="e">Arguments</param>
 		protected override void OnPreRender(EventArgs e) {
+
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+
 			buttonRollOver=new TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl();
-			buttonRollOver.ImageUrl="/Images/"+webSession.SiteLanguage+"/button/charger_up.gif";
-			buttonRollOver.RollOverImageUrl="/Images/"+webSession.SiteLanguage+"/button/charger_down.gif";
+            buttonRollOver.ImageUrl = "/App_Themes/"+themeName+"/Images/Culture/button/charger_up.gif";
+			buttonRollOver.RollOverImageUrl="/App_Themes/"+themeName+"/Images/Culture/button/charger_down.gif";
 			buttonRollOver.ID="loadImageButtonRollOverWebControl";
 		
 		
@@ -179,6 +183,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		CoreSelection.ILevelsRules levelsRules = null;
 		List<int> tempBranchIds = null;
 		List<UniverseLevel> tempLevels = null;
+        string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
 		Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			if(selectionPage){
@@ -224,21 +229,21 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			
 
 
-		output.Write("<table style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid\" cellSpacing=\"0\" cellPadding=\"0\" width=\"200\" border=\"0\">");
-		output.Write("<tr style=\"CURSOR: hand\" onclick=\"showHideContent6('listAdvertiser');\">");
+		output.Write("<table class=\"violetBorder\" cellSpacing=\"0\" cellPadding=\"0\" width=\"200\" border=\"0\">");
+        output.Write("<tr class=\"cursorHand\" onclick=\"showHideContent6('listAdvertiser');\">");
 		output.Write("<td class=\"txtViolet11Bold\" >&nbsp;"+GestionWeb.GetWebWord(893,webSession.SiteLanguage)+"&nbsp;</td>");
-		output.Write("<td align=\"right\"><IMG  src=\"/Images/Common/button/bt_arrow_down.gif\" align=\"absMiddle\">");
+		output.Write("<td align=\"right\" class=\"arrowBackGround\">");
 		output.Write("</td>");
 		output.Write("</tr>");
 		output.Write("</table>");
 
 
 
-		output.Write("<div id=\"listAdvertiserContent6\" style=\"BORDER-RIGHT: #644883 1px solid; DISPLAY: none; BORDER-LEFT: #644883 1px solid; WIDTH: 620px; BORDER-BOTTOM: #644883 1px solid\">");
-		output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" align=\"center\" bgColor=\"#ffffff\" border=\"0\">");
+        output.Write("<div id=\"listAdvertiserContent6\" class=\"violetBorderWithoutTop\" style=\"DISPLAY: none; WIDTH: 620px;\">");
+        output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" align=\"center\" class=\"whiteBackGround\" border=\"0\">");
 		output.Write("<tr>");
 		output.Write("<td width=\"199\"><IMG height=\"1\" src=\"/images/Common/pixel.gif\"></td>");
-		output.Write("<td style=\"BORDER-TOP: #644883 1px solid\" width=\"421\"><IMG height=\"1\" src=\"/images/Common/pixel.gif\"></td>");
+        output.Write("<td class=\"violetBorderTop\" width=\"421\"><IMG height=\"1\" src=\"/images/Common/pixel.gif\"></td>");
 		output.Write("</tr>");
 		output.Write("<tr>");
 		output.Write("<td class=\"txtGris11Bold\" style=\"PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 2px; PADDING-TOP: 0px\" colSpan=\"2\">&nbsp;</td>");
@@ -266,8 +271,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		output.Write("</td>");
 		output.Write("</tr>");
 		output.Write("<tr>");
-		
-		if(existUnivers)output.Write("<td style=\"PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 5px; PADDING-TOP: 2px; TEXT-ALIGN: right\" colSpan=\"2\"><a id=\"loadImageButtonRollOverWebControl\" onmouseover=\"rolloverServerControl_display('loadImageButtonRollOverWebControl_img',loadImageButtonRollOverWebControl_img_over);\" onmouseout=\"rolloverServerControl_display('loadImageButtonRollOverWebControl_img',loadImageButtonRollOverWebControl_img_out);\" href=\"javascript:__doPostBack('loadImageButtonRollOverWebControl','')\"><img name=\"loadImageButtonRollOverWebControl_img\" src=\"/Images/"+webSession.SiteLanguage+"/button/charger_up.gif\" border=\"0\" /></a>");
+
+        if (existUnivers) output.Write("<td style=\"PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 5px; PADDING-TOP: 2px; TEXT-ALIGN: right\" colSpan=\"2\"><a id=\"loadImageButtonRollOverWebControl\" onmouseover=\"rolloverServerControl_display('loadImageButtonRollOverWebControl_img',loadImageButtonRollOverWebControl_img_over);\" onmouseout=\"rolloverServerControl_display('loadImageButtonRollOverWebControl_img',loadImageButtonRollOverWebControl_img_out);\" href=\"javascript:__doPostBack('loadImageButtonRollOverWebControl','')\"><img name=\"loadImageButtonRollOverWebControl_img\" src=\"/App_Themes/" + themeName + "/Images/Culture/button/charger_up.gif\" border=\"0\" /></a>");
 			
 		//	<cc2:imagebuttonrolloverwebcontrol id=\"loadImageButtonRollOverWebControl\" runat=\"server\"></cc2:imagebuttonrolloverwebcontrol>
 		output.Write("</td>");
