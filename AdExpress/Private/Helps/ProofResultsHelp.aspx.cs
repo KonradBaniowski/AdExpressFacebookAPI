@@ -11,18 +11,13 @@ using System.Web.UI.HtmlControls;
 using System.ComponentModel;
 using System.Drawing;
 using System.Web.SessionState;
+using TNS.AdExpress.Web.UI;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
-public partial class Private_Helps_ProofResultsHelp : System.Web.UI.Page
-{
+public partial class Private_Helps_ProofResultsHelp : WebPage{
 
-    #region Variables
-    /// <summary>
-    /// Langue du site
-    /// </summary>
-    public int _siteLanguage = 33;
-    #endregion
-
-    #region EvÃ¨nements
+    #region Evènements
 
     #region Chargement
     /// <summary>
@@ -30,16 +25,9 @@ public partial class Private_Helps_ProofResultsHelp : System.Web.UI.Page
     /// </summary>
     /// <param name="sender">Objet qui lance l'Ã©vÃ¨nement</param>
     /// <param name="e">Aguments</param>
-    protected void Page_Load(object sender, System.EventArgs e)
-    {
-
-        #region Textes et langage du site
-        if (Page.Request.QueryString.Get("siteLanguage") != null)
-            _siteLanguage = int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
+    protected void Page_Load(object sender, System.EventArgs e){
         //Modification de la langue pour les Textes AdExpress
-        TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls, _siteLanguage);
-        #endregion
-
+        TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls, _siteLanguage);
     }
     #endregion
 
