@@ -16,10 +16,7 @@
 	</HEAD>
 	<body>
 		<form id="Form1" method="post" runat="server">
-			<cc1:ResultWebControl id="_resultWebControl" runat="server" CssLTotal="exlv0" CssL3="exlv3" CssL2="exlv2"
-				CssL1="exlv1" CssLHeader="exh2" OutputType="excel" CssDetailSelectionL1="dsLv1Excel" CssDetailSelectionL2="dsLv2Excel"
-				CssDetailSelectionL3="dsLv3Excel" CssDetailSelectionTitle="dsTitle" CssDetailSelectionTitleData="dsTitleData"
-				CssDetailSelectionTitleGlobal="dsTitleGlobal" CssDetailSelectionBordelLevel="dsBorderLevel"></cc1:ResultWebControl>
+			<cc1:ResultWebControl id="_resultWebControl" runat="server" OutputType="excel" SkinID="portofolioExcelResultTable"></cc1:ResultWebControl>
 			<%=result%>
 		</form>
 	</body>
