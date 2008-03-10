@@ -67,8 +67,8 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 			sessionId = _webSession.IdSession;
 
 			#region Boutons  Images
-			validateButton.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
-			validateButton.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
+			//validateButton.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
+			//validateButton.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
 			//saveUniverseImageButtonRollOverWebControl.ImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_up.gif";
 			//saveUniverseImageButtonRollOverWebControl.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_down.gif";
 			#endregion

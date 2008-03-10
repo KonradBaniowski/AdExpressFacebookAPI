@@ -66,6 +66,8 @@ namespace AdExpress.Private.Results.Excel{
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try{
 
+                Response.ContentType = "application/vnd.ms-excel";
+
 				#region Resultat
 				string[] ids=null;			
 				try{
