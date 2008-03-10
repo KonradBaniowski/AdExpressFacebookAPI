@@ -301,7 +301,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 						//Brand Label
 						//Rights verification for Brand
-						if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
+						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 							synthesisData.Add("brand", synthesisTable.Rows[0]["brand"]);
 
 						//Advertiser Label
@@ -602,7 +602,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 							//Brand Label
 							//Rights verification for Brand
-							if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
+							if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 								synthesisData[k].Add("brand", synthesisTableTmp.Rows[0]["brand"]);
 
 							//Advertiser Label

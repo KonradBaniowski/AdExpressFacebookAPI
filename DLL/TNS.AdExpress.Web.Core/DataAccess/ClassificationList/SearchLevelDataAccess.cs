@@ -213,161 +213,161 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 			string sql = "";
 			bool premier = true;
 			// Sector (Famille)
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.sectorAccess).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess].Length > 0) {
 				if (beginByAnd) sql += " and";
-				sql += " ((" + sectorPrefixe + ".id_sector in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.sectorAccess) + ") ";
+				sql += " ((" + sectorPrefixe + ".id_sector in (" + webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess] + ") ";
 				premier = false;
 			}
 			// SubSector (Classe)
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.subSectorAccess).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess].Length > 0) {
 				if (!premier) sql += " or";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " ((";
 				}
-				sql += " " + subsectorPrefixe + ".id_subsector in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.subSectorAccess) + ") ";
+				sql += " " + subsectorPrefixe + ".id_subsector in (" + webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess] + ") ";
 				premier = false;
 			}
 			// Group (Groupe)
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.groupAccess).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.groupAccess].Length > 0) {
 				if (!premier) sql += " or";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " ((";
 				}
-				sql += " " + groupPrefixe + ".id_group_ in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.groupAccess) + ") ";
+				sql += " " + groupPrefixe + ".id_group_ in (" + webSession.CustomerLogin[CustomerRightConstante.type.groupAccess] + ") ";
 				premier = false;
 			}
 			// Segment (Variété)
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.segmentAccess).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess].Length > 0) {
 				if (!premier) sql += " or";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " ((";
 				}
-				sql += " " + segmentPrefixe + ".id_segment in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.segmentAccess) + ") ";
+				sql += " " + segmentPrefixe + ".id_segment in (" + webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess] + ") ";
 				premier = false;
 			}
 			// Holding Company 
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.holdingCompanyAccess).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.holdingCompanyAccess].Length > 0) {
 				if (!premier) sql += " or";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " ((";
 				}
-				sql += " " + holdingCompanyPrefixe + ".id_holding_company in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.holdingCompanyAccess) + ") ";
+				sql += " " + holdingCompanyPrefixe + ".id_holding_company in (" + webSession.CustomerLogin[CustomerRightConstante.type.holdingCompanyAccess] + ") ";
 				premier = false;
 			}
 			// Advertiser
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.advertiserAccess).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess].Length > 0) {
 				if (!premier) sql += " or";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " ((";
 				}
-				sql += " " + advertiserPrefixe + ".id_advertiser in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.advertiserAccess) + ") ";
+				sql += " " + advertiserPrefixe + ".id_advertiser in (" + webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess] + ") ";
 				premier = false;
 			}
 			// Brand
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.brandAccess).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.brandAccess].Length > 0) {
 				if (!premier) sql += " or";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " ((";
 				}
-				sql += " " + brandPrefixe + ".id_brand in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.brandAccess) + ") ";
+				sql += " " + brandPrefixe + ".id_brand in (" + webSession.CustomerLogin[CustomerRightConstante.type.brandAccess] + ") ";
 				premier = false;
 			}
 			// Product
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.productAccess).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.productAccess].Length > 0) {
 				if (!premier) sql += " or";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " ((";
 				}
-				sql += " " + productPrefixe + ".id_product in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.productAccess) + ") ";
+				sql += " " + productPrefixe + ".id_product in (" + webSession.CustomerLogin[CustomerRightConstante.type.productAccess] + ") ";
 				premier = false;
 			}
 			if (!premier) sql += " )";
 			// Droits en exclusion
 			// Sector (Famille)
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.sectorException).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorException].Length > 0) {
 				if (!premier) sql += " and";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + sectorPrefixe + ".id_sector not in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.sectorException) + ") ";
+				sql += " " + sectorPrefixe + ".id_sector not in (" + webSession.CustomerLogin[CustomerRightConstante.type.sectorException] + ") ";
 				premier = false;
 			}
 			// SubSector (Classe)
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.subSectorException).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorException].Length > 0) {
 				if (!premier) sql += " and";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + subsectorPrefixe + ".id_subsector not in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.subSectorException) + ") ";
+				sql += " " + subsectorPrefixe + ".id_subsector not in (" + webSession.CustomerLogin[CustomerRightConstante.type.subSectorException] + ") ";
 				premier = false;
 			}
 			// Group (Groupe)
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.groupException).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.groupException].Length > 0) {
 				if (!premier) sql += " and";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + groupPrefixe + ".id_group_  not in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.groupException) + ") ";
+				sql += " " + groupPrefixe + ".id_group_  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.groupException] + ") ";
 				premier = false;
 			}
 			// Segment (Variété)
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.segmentException).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.segmentException].Length > 0) {
 				if (!premier) sql += " and";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + segmentPrefixe + ".id_segment  not in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.segmentException) + ") ";
+				sql += " " + segmentPrefixe + ".id_segment  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.segmentException] + ") ";
 				premier = false;
 			}
 			// Holding Company
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.holdingCompanyException).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.holdingCompanyException].Length > 0) {
 				if (!premier) sql += " and";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + holdingCompanyPrefixe + ".id_holding_company  not in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.holdingCompanyException) + ") ";
+				sql += " " + holdingCompanyPrefixe + ".id_holding_company  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.holdingCompanyException] + ") ";
 				premier = false;
 			}
 			// Advertiser
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.advertiserException).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserException].Length > 0) {
 				if (!premier) sql += " and";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + advertiserPrefixe + ".id_advertiser  not in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.advertiserException) + ") ";
+				sql += " " + advertiserPrefixe + ".id_advertiser  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.advertiserException] + ") ";
 				premier = false;
 			}
 			// Brand
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.brandException).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.brandException].Length > 0) {
 				if (!premier) sql += " and";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + brandPrefixe + ".id_brand  not in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.brandException) + ") ";
+				sql += " " + brandPrefixe + ".id_brand  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.brandException] + ") ";
 				premier = false;
 			}
 			// Product
-			if (webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.productException).Length > 0) {
+			if (webSession.CustomerLogin[CustomerRightConstante.type.productException].Length > 0) {
 				if (!premier) sql += " and";
 				else {
 					if (beginByAnd) sql += " and";
 					sql += " (";
 				}
-				sql += " " + productPrefixe + ".id_product  not in (" + webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.productException) + ") ";
+				sql += " " + productPrefixe + ".id_product  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.productException] + ") ";
 				premier = false;
 			}
 			if (!premier) sql += " )";

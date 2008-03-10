@@ -20,7 +20,6 @@ using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.DataAccess.Selections.Products;
@@ -201,13 +200,13 @@ namespace AdExpress.Private.Selection{
 
 				#region Rights for brand and holding company
 				//For controlling access to brands and holding company according to the right flags 
-				if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]==null)
+				if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)==null)
 				{
 					RadiobuttonBrand.Enabled=false;
 					AdexpressBrandText.Enabled=false;					
 					cssBrand="txtGris11";
 				}
-				if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY]==null)
+				if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)==null)
 				{
 					radioButtonHoldingCompany.Enabled=false;
 					AdExpressHolding.Enabled=false;
@@ -710,7 +709,7 @@ namespace AdExpress.Private.Selection{
 											int numberCompetitorAdvertiser=_webSession.CompetitorUniversAdvertiser.Count+1;
 											_webSession.CompetitorUniversAdvertiser.Add(numberCompetitorAdvertiser,new TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser(idUnivers.Text,(System.Windows.Forms.TreeNode)_webSession.SelectionUniversAdvertiser.Clone()));
 											_webSession.Save();		
-											DBFunctions.closeDataBase(_webSession);
+											_webSession.Source.Close();
 											Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession+"");
 											//Response.Redirect("VehicleSelection.aspx?idSession="+_webSession.IdSession+"");
 										}
@@ -724,7 +723,7 @@ namespace AdExpress.Private.Selection{
 										}
 										else 
 										{
-											DBFunctions.closeDataBase(_webSession);
+											_webSession.Source.Close();
 											Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession+"");
 										}
 									}
@@ -983,9 +982,9 @@ namespace AdExpress.Private.Selection{
 		protected void initializeImageButtonRollOverWebControl1_Click(object sender, System.EventArgs e) {
 			
 			#region Activation des boutons
-			if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
+			if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 				RadiobuttonBrand.Enabled=true;
-			if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY]!=null)
+			if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)!=null)
 				radioButtonHoldingCompany.Enabled=true;
 			
 			//radioButtonHoldingCompany.Enabled=true;
@@ -1027,9 +1026,9 @@ namespace AdExpress.Private.Selection{
 							_webSession.Save();
 
 							#region Activation des boutons
-							if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
+							if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 								RadiobuttonBrand.Enabled=true;
-							if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY]!=null)
+							if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)!=null)
 								radioButtonHoldingCompany.Enabled=true;
 			
 							//radioButtonHoldingCompany.Enabled=true;
@@ -1090,11 +1089,11 @@ namespace AdExpress.Private.Selection{
 			try{
 				#region Activation des boutons
 				//holding company rights
-				if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY]!=null)								
+				if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)!=null)								
 					radioButtonHoldingCompany.Enabled=true;
 				radiobuttonAdvertiser.Enabled=true;
 				//Brand rights
-				if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)						
+				if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)						
 					RadiobuttonBrand.Enabled=true;
 				radiobuttonProduct.Enabled=true;
 				#endregion

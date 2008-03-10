@@ -187,7 +187,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			try{
 				#region Obtention du résultat 
 				if(webSession!=null)
-					_dataSource=new OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+					_dataSource=webSession.Source;
 				
 				html.Append(WebSystem.Results.SectorDataSystem.GetHtml(webSession));
 				#endregion

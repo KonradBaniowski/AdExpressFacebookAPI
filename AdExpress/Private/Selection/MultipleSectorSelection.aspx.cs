@@ -327,7 +327,7 @@ namespace AdExpress.Private.Selection{
 			if (_webSession.PrincipalProductUniverses.Count > 0) {
 				//redirection
 				_webSession.Save();
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				//Redirection Page suivante
 				if (_nextUrl.Length > 0) { // if(sender!=null && _nextUrl.Length>0)					
 					Response.Redirect(this._nextUrl + "?idSession=" + _webSession.IdSession);

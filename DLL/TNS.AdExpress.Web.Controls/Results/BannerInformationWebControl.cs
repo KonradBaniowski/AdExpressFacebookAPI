@@ -265,7 +265,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				displayBannerWebControl.ActiveLink = true;
 				displayBannerWebControl.LanguageId = _customerWebSession.SiteLanguage;
 				// The customer have the right to save the banner
-				if (_customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DOWNLOAD_ACCESS_FLAG] != null) {
+				if (_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DOWNLOAD_ACCESS_FLAG) != null) {
 					displayBannerWebControl.CanSave = true;
 				}
 				switch (_formatId) {
@@ -307,7 +307,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				output.Write("<td width=\"150\" nowrap><strong>" + GestionWeb.GetWebWord(857, _customerWebSession.SiteLanguage) + "&nbsp;:</strong></td>");
 				output.Write("<td nowrap>" + _advertiserLabel + "</td>");
 				output.Write("</tr>");
-				if (_customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG] != null) {
+				if (_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG) != null) {
 					output.Write("<tr nowrap>");
 					output.Write("<td width=\"150\" nowrap><strong>" + GestionWeb.GetWebWord(2154, _customerWebSession.SiteLanguage) + "&nbsp;:</strong></td>");
 					output.Write("<td nowrap>" + _productLabel + "</td>");
@@ -317,7 +317,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				output.Write("<td width=\"150\" nowrap><strong>" + GestionWeb.GetWebWord(2155, _customerWebSession.SiteLanguage) + "&nbsp;:</strong></td>");
 				output.Write("<td nowrap>" + _format + "</td>");
 				output.Write("</tr>");
-				if (_customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG] != null) {
+				if (_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG) != null) {
 					output.Write("<tr nowrap>");
 					output.Write("<td width=\"150\" nowrap><strong>" + GestionWeb.GetWebWord(2156, _customerWebSession.SiteLanguage) + "&nbsp;:</strong></td>");
 					output.Write("<td nowrap><a href=\"" + MEDIA_SCHEDULE_PATH + "?idSession=" + _customerWebSession.IdSession + "&idLevel=" + ConstFrameWorkResults.AdNetTrackMediaSchedule.Type.advertiser.GetHashCode() + "&id=" + _advertiserId + "&zoomDate=" + _zoomDate + "&urlParameters=" + _urlParameters + "\" class=\"" + _cssLink + "\">" + GestionWeb.GetWebWord(857, _customerWebSession.SiteLanguage) + "</a> | <a href=\"" + MEDIA_SCHEDULE_PATH + "?idSession=" + _customerWebSession.IdSession + "&idLevel=" + ConstFrameWorkResults.AdNetTrackMediaSchedule.Type.product.GetHashCode() + "&id=" + _productId + "&zoomDate=" + _zoomDate + "&urlParameters=" + _urlParameters + "\" class=\"" + _cssLink + "\">" + GestionWeb.GetWebWord(858, _customerWebSession.SiteLanguage) + "</a> | <a href=\"" + MEDIA_SCHEDULE_PATH + "?idSession=" + _customerWebSession.IdSession + "&idLevel=" + ConstFrameWorkResults.AdNetTrackMediaSchedule.Type.visual.GetHashCode() + "&id=" + _hashcode + "&zoomDate=" + _zoomDate + "&urlParameters=" + _urlParameters + "\" class=\"" + _cssLink + "\">" + GestionWeb.GetWebWord(1909, _customerWebSession.SiteLanguage) + "</a></td>");

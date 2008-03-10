@@ -665,7 +665,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			dropDownList.CssClass=_cssListBox;
 			dropDownList.Items.Add(new ListItem("-------","-1"));
 			
-			if(((_customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]!=null)&&(_idVehicleFromTab==(Int64)DBClassificationConstantes.Vehicles.names.outdoor))||(_idVehicleFromTab!=(Int64)DBClassificationConstantes.Vehicles.names.outdoor)){
+			if(((_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)!=null)&&(_idVehicleFromTab==(Int64)DBClassificationConstantes.Vehicles.names.outdoor))||(_idVehicleFromTab!=(Int64)DBClassificationConstantes.Vehicles.names.outdoor)){
 				
 				foreach(DetailLevelItemInformation currentDetailLevelItem in _allowedDetailItemList){
 					if(CanAddDetailLevelItem(currentDetailLevelItem)){
@@ -716,7 +716,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				case DetailLevelItemInformation.Levels.mediaSeller:
 					return(!_customerWebSession.isCompetitorAdvertiserSelected());
 				case DetailLevelItemInformation.Levels.brand:
-					return((CheckProductDetailLevelAccess()) && (_customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null));
+					return((CheckProductDetailLevelAccess()) && (_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null));
 				case DetailLevelItemInformation.Levels.product:
 				case DetailLevelItemInformation.Levels.advertiser:
 					return(CheckProductDetailLevelAccess());
@@ -729,7 +729,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					return(CheckProductDetailLevelAccess());
 				case DetailLevelItemInformation.Levels.groupMediaAgency:
 				case DetailLevelItemInformation.Levels.agency:
-					return((CheckProductDetailLevelAccess()) && (_customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null));
+					return((CheckProductDetailLevelAccess()) && (_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null));
 				default:
 					return(true);
 			}
@@ -810,7 +810,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// </summary>
 		/// <returns>True si oui false sinon</returns>
 		private bool CheckProductDetailLevelAccess(){
-			if(_customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG]!=null)return(true);
+			if(_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG)!=null)return(true);
 			return(false);
 		}
 		

@@ -26,7 +26,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.Web;
 using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 {
@@ -246,7 +246,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 
 			#region Construction de la requête
 			//additional target
-			Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+            Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmTargetAccess));									
 			string sql="";
 			// Sélection 
 			sql+="select distinct "+tablePrefixe+".id_advertiser,advertiser,"+tablePrefixe+".id_product,product,"+tablePrefixe+".id_vehicle, vehicle, nvl("+tablePrefixe+".id_slogan,0) as id_slogan";			

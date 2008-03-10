@@ -271,7 +271,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Vrai si le client à accès aux accroches</returns>
 		public static bool HasSloganRight(WebSession webSession){
-			if(webSession!=null && webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG]!=null 
+			if(webSession!=null && webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null 
 //				&&
 //				// Sélection par produit ou marque
 //				(webSession.GetSelection(webSession.SelectionUniversAdvertiser,ConstantesCustomer.Right.type.productAccess).Length>0 ||
@@ -299,8 +299,8 @@ namespace TNS.AdExpress.Web.Functions{
 		public static void GetGenericLevelDetail(WebSession webSession, ref bool displayGenericlevelDetailLabel,System.Web.UI.WebControls.Label genericlevelDetailLabel,bool excel){
 			ArrayList detailSelections = null;
 
-			webSession.CustomerLogin.ModuleList();
-			Module currentModule = (Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule];
+			//webSession.CustomerLogin.ModuleList();
+			Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 			try{
 				detailSelections = ((ResultPageInformation) currentModule.GetResultPageInformation((int)webSession.CurrentTab)).DetailSelectionItemsType;
 			}
@@ -339,8 +339,8 @@ namespace TNS.AdExpress.Web.Functions{
         public static void GetGenericLevelDetailColumn(WebSession webSession, ref bool displayGenericlevelDetailColumnLabel, System.Web.UI.WebControls.Label genericlevelDetailColumnLabel, bool excel) {
             ArrayList detailSelections = null;
 
-            webSession.CustomerLogin.ModuleList();
-            Module currentModule = (Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule];
+            //webSession.CustomerLogin.ModuleList();
+            Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
             try {
                 detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)webSession.CurrentTab)).DetailSelectionItemsType;
             }

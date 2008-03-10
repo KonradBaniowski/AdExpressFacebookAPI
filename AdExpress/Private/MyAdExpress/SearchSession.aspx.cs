@@ -220,7 +220,7 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <param name="e"></param>
 		protected void personalizeImagebuttonrolloverwebcontrol_Click(object sender, System.EventArgs e) {
 			try{
-				DBFunctions.closeDataBase(_webSession);
+                _webSession.Source.Close();
 				Response.Redirect("/Private/MyAdexpress/PersonnalizeSession.aspx?idSession="+_webSession.IdSession+"");
 			}
 			catch(System.Exception exc){
@@ -239,7 +239,7 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <param name="e"></param>
 		protected void universOpenImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			try{
-				DBFunctions.closeDataBase(_webSession);
+                _webSession.Source.Close();
 				Response.Redirect("/Private/Universe/PersonnalizeUniverse.aspx?idSession="+_webSession.IdSession+"");
 			}
 			catch(System.Exception exc){
@@ -258,7 +258,7 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <param name="e"></param>
 		protected void pdfOpenImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			try{
-				DBFunctions.closeDataBase(_webSession);
+                _webSession.Source.Close();
 				Response.Redirect("/Private/MyAdexpress/PdfFiles.aspx?idSession="+_webSession.IdSession+"");
 			}
 			catch(System.Exception exc){
@@ -337,7 +337,7 @@ namespace AdExpress.Private.MyAdExpress{
 				bool validModule=false;
 				bool notValidPeriod = false;
                 TNS.FrameWork.DB.Common.IDataSource source = new TNS.FrameWork.DB.Common.OracleDataSource("User Id=" + _webSession.CustomerLogin.Login + "; Password=" + _webSession.CustomerLogin.PassWord + " " + TNS.AdExpress.Constantes.DB.Connection.RIGHT_CONNECTION_STRING);
-				TNS.AdExpress.Web.Core.WebRight right=new TNS.AdExpress.Web.Core.WebRight(_webSession.CustomerLogin.Login,_webSession.CustomerLogin.PassWord,source);
+				TNS.AdExpress.Right right=new TNS.AdExpress.Right(_webSession.CustomerLogin.Login,_webSession.CustomerLogin.PassWord);
 				string PeriodBeginningDate="";
 				string PeriodEndDate="";
 				string invalidPeriodMessage="";
@@ -360,7 +360,7 @@ namespace AdExpress.Private.MyAdExpress{
 
 					webSessionSave=(WebSession)MySessionDataAccess.GetResultMySession(idMySession.ToString(),_webSession);
 
-					DataTable dtModulesList= right.ModuleList();
+					DataTable dtModulesList= right.GetCustomerModuleListHierarchy();
 
 					#region Vérification des droits sur les modules
 					foreach(DataRow currentRow in dtModulesList.Rows){
@@ -371,9 +371,9 @@ namespace AdExpress.Private.MyAdExpress{
 					#endregion
 
 					#region Vérification des flags produit pour le niveau de détail produit					
-					if((!_webSession.CustomerLogin.FlagsList.ContainsKey(TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)&&(webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("holdingcompany")>=0))||
-						(!_webSession.CustomerLogin.FlagsList.ContainsKey(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)&&(webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("brand")>=0))
-						|| (!_webSession.CustomerLogin.FlagsList.ContainsKey(TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)&&(webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency")>=0))
+					if((_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)==null&&(webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("holdingcompany")>=0))||
+						(_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)==null&&(webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("brand")>=0))
+						|| (_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)==null&&(webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency")>=0))
 						){
 						_webSession.PreformatedProductDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;
 					}
@@ -385,7 +385,7 @@ namespace AdExpress.Private.MyAdExpress{
 					#endregion
 
 					#region Vérification des flags produit pour le niveau de détail support
-					if((!_webSession.CustomerLogin.FlagsList.ContainsKey(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)&&(webSessionSave.PreformatedMediaDetail.ToString().ToLower().IndexOf("slogan")>=0))
+					if((_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)==null&&(webSessionSave.PreformatedMediaDetail.ToString().ToLower().IndexOf("slogan")>=0))
 						){
 						_webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
 					}
@@ -816,7 +816,7 @@ namespace AdExpress.Private.MyAdExpress{
 					
 					//Année agence média
 					_webSession.MediaAgencyFileYear=webSessionSave.MediaAgencyFileYear;					
-					if(_webSession.CustomerLogin.FlagsList.ContainsKey(TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency")>=0)
+					if(_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency")>=0)
 						&& !WebFunctions.CheckedText.IsStringEmpty(_webSession.MediaAgencyFileYear)
 						&& _webSession.PeriodBeginningDate.Length>0
 						){
@@ -894,7 +894,7 @@ namespace AdExpress.Private.MyAdExpress{
 					else if (validModule){
 						_webSession.Save();
 						if (_webSession.LastReachedResultUrl.Length!=0){
-							DBFunctions.closeDataBase(_webSession);
+							//_webSession.Source.Close();
 							Response.Redirect(_webSession.LastReachedResultUrl+"?idSession="+_webSession.IdSession);
 						}
 						else{

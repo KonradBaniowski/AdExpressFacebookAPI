@@ -367,7 +367,7 @@ namespace AdExpress.Private.Selection {
                     _webSession.Save();
                     //Redirection Page suivante
                     if (eventButton == constEvent.eventSelection.VALID_EVENT) {
-                        DBFunctions.closeDataBase(_webSession);
+                        _webSession.Source.Close();
                         Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + "");
                     }
 

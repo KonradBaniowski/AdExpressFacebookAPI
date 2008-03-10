@@ -7,7 +7,7 @@ using System.Web.SessionState;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.ClassificationList;
 using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpress.Rules.Customer;
+//using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Web;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNSMail=TNS.FrameWork.Net.Mail;

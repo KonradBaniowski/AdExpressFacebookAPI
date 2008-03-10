@@ -267,7 +267,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		protected override void OnInit(EventArgs e) {
 			base.OnInit (e);
 			try{
-				_module=(Module)_webSession.CustomerLogin.HtModulesList[_webSession.CurrentModule];
+				_module=_webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
 				if(this.Page.IsPostBack){
 					string nomInput=Page.Request.Form.GetValues("__EVENTTARGET")[0];
 					if(nomInput==this.ID){
@@ -356,7 +356,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		private string GetMenuCreation(){
 
 			//Module loading
-			_module=(Module)_webSession.CustomerLogin.HtModulesList[_webSession.CurrentModule];
+			_module=_webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
 
 			//Get current page
 			PageInformation pInfo = _module.GetPageInformation(this.Page.Request.Url.AbsolutePath, _webSession.CurrentTab);

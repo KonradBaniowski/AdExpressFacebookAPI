@@ -59,7 +59,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 		internal static Int64 Save(WebSession webSession,TNS.AdExpress.Anubis.Constantes.Result.type resultType,string fileName){
 
 			Int64 idStaticNavSession=-1;
-			OracleConnection connection = webSession.CustomerLogin.Connection;
+			OracleConnection connection =(OracleConnection) webSession.CustomerLogin.Source.GetSource();
 
 			#region Ouverture de la base de données
 			bool DBToClosed=false;
@@ -159,7 +159,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 		internal static Int64 Save(ProofDetail proofDetail,TNS.AdExpress.Anubis.Constantes.Result.type resultType,string fileName){
 
 			Int64 idStaticNavSession=-1;
-			OracleConnection connection = proofDetail.CustomerWebSession.CustomerLogin.Connection;
+			OracleConnection connection = (OracleConnection)proofDetail.CustomerWebSession.CustomerLogin.Source.GetSource();
 
 			#region Ouverture de la base de données
 			bool DBToClosed=false;

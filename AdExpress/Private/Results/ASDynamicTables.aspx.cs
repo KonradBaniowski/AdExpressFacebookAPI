@@ -121,7 +121,7 @@ namespace AdExpress{
 				#region Url Suivante
 //				_nextUrl=this.recallWebControl.NextUrl;
 				if(_nextUrl.Length!=0){
-					DBFunctions.closeDataBase(_webSession);
+					_webSession.Source.Close();
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 				}			
 				#endregion

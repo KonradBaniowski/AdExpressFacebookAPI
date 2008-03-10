@@ -14,7 +14,7 @@ using System.Text;
 using System.IO;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 
 using TNS.FrameWork.DB.Common;
 using Dundas.Charting.WebControl;
@@ -90,9 +90,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			_customerWebSession=webSession;
 
 			if(_customerWebSession!=null){
-				_idBaseTarget=	_idBaseTarget = Int64.Parse(_customerWebSession.GetSelection(_customerWebSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
-				_idAdditionalTarget = Int64.Parse(_customerWebSession.GetSelection(_customerWebSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));
-				_idWave=Int64.Parse(_customerWebSession.GetSelection(webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+				_idBaseTarget=	_idBaseTarget = Int64.Parse(_customerWebSession.GetSelection(_customerWebSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmBaseTargetAccess));
+                _idAdditionalTarget = Int64.Parse(_customerWebSession.GetSelection(_customerWebSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmTargetAccess));
+                _idWave=Int64.Parse(_customerWebSession.GetSelection(webSession.SelectionUniversAEPMWave,CustomerCst.Right.type.aepmWaveAccess));									
 				_dateBegin = int.Parse(_customerWebSession.PeriodBeginningDate);
 				_dateEnd = int.Parse(_customerWebSession.PeriodEndDate);
 				_imageType = appmImageType;

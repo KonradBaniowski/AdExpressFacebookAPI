@@ -136,7 +136,7 @@ namespace AdExpress.Private.Results
 					
 			}
 			catch(System.Exception){
-				//DBFunctions.closeDataBase(_webSession);
+				//_webSession.Source.Close();
 				Response.Redirect("/Public/Message.aspx?msgTxt="+GestionWeb.GetWebWord(891, CstDB.Language.ENGLISH)+"&title="+GestionWeb.GetWebWord(887, CstDB.Language.ENGLISH));
 			}
 			#endregion
@@ -161,7 +161,7 @@ namespace AdExpress.Private.Results
 				}
 			}
 			catch(System.Exception){
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect("/Public/Message.aspx?msgTxt="+GestionWeb.GetWebWord(880, _webSession.SiteLanguage)+"&title="+GestionWeb.GetWebWord(887, _webSession.SiteLanguage));
 			}
 
@@ -272,7 +272,7 @@ namespace AdExpress.Private.Results
 					}
 					break;
 				default:
-					DBFunctions.closeDataBase(_webSession);
+					_webSession.Source.Close();
 					Response.Redirect("/Public/Message.aspx?msgTxt="+GestionWeb.GetWebWord(890, _webSession.SiteLanguage)+"&title="+GestionWeb.GetWebWord(887, _webSession.SiteLanguage));
 					break;
 			}

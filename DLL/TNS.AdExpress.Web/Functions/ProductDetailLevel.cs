@@ -156,7 +156,7 @@ namespace TNS.AdExpress.Web.Functions{
 		public static bool CanCustomizeUniverseSlogan(WebSession webSession) {
 			#region Ancienne version
 			//if (
-			//    webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG]!=null 
+			//    webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG]!=null 
 			//    &&
 			//    // Sélection par produit ou marque ou annonceur
 			//    (
@@ -177,7 +177,7 @@ namespace TNS.AdExpress.Web.Functions{
 
 
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count>0 && 
-				webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG] != null &&
+				webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG) != null &&
 				// Sélection par produit ou marque ou annonceur						
 				(webSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
 				webSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||

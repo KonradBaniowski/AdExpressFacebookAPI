@@ -35,7 +35,7 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using WebCommon=TNS.AdExpress.Web.Common;
 using WebCore=TNS.AdExpress.Web.Core;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
-using ClassificationDB=TNS.AdExpress.Classification.DataAccess;
+using ClassificationDB=TNS.AdExpress.DataAccess.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Translation;
 using WebResultUI=TNS.FrameWork.WebResultUI;
@@ -340,8 +340,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 			#region Création des headers
 			nbLine=5;
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)nbLine++;
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null)nbLine+=2;
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)nbLine++;
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)nbLine+=2;
 
 			// Ajout de la colonne Produit
 			Headers headers=new Headers();
@@ -388,7 +388,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			Int64 levelLabelColIndex=resultTable.GetHeadersIndexInResultTable(ComptitorResultConstantes.LEVEL_HEADER_ID.ToString());
 			advertiserLineIndex=resultTable.AddNewLine(LineType.level1);
 			resultTable[advertiserLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1146,webSession.SiteLanguage));
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null){
 				brandLineIndex=resultTable.AddNewLine(LineType.level1);
 				resultTable[brandLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1149,webSession.SiteLanguage));
 			}
@@ -401,7 +401,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			groupLineIndex=resultTable.AddNewLine(LineType.level1);
 			resultTable[groupLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1849,webSession.SiteLanguage));
 			// Groupe d'Agence && Agence
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null){
 				agencyGroupLineIndex=resultTable.AddNewLine(LineType.level1);
 				resultTable[agencyGroupLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1850,webSession.SiteLanguage));
 				agencyLineIndex=resultTable.AddNewLine(LineType.level1);
@@ -479,7 +479,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 							GetProductActivity(resultTable,dt,advertiserLineIndex,expression,sort,referenceUniversMedia,competitorUniversMedia);
 							advertisers.Add(currentRow["id_advertiser"].ToString());
 						}
-						if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null){
+						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null){
 							//Activité publicitaire marques
 							if(currentRow["id_brand"]!=null && currentRow["id_brand"]!=System.DBNull.Value && !brands.Contains(currentRow["id_brand"].ToString())){					
 								expression="id_brand="+currentRow["id_brand"].ToString(); 							
@@ -515,7 +515,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 						}
 				
 			
-						if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null){
+						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null){
 							//activité publicitaire Groupes d'agences
 							if(currentRow["ID_GROUP_ADVERTISING_AGENCY"]!=null && currentRow["ID_GROUP_ADVERTISING_AGENCY"]!=System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString())){					
 								expression="ID_GROUP_ADVERTISING_AGENCY="+currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString(); 					
@@ -709,7 +709,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
             // Ajout Création ?
 			bool showCreative=false;
             //A vérifier Création où version
-			if(  webSession.CustomerLogin.FlagsList[DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG]!=null &&
+			if(  webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)!=null &&
 				(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)||
 				webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product))){
 				headers.Root.Add(new HeaderCreative(false,GestionWeb.GetWebWord(1994,webSession.SiteLanguage),ComptitorResultConstantes.CREATIVE_HEADER_ID));
@@ -763,19 +763,19 @@ namespace TNS.AdExpress.Web.Rules.Results{
             switch (columnDetailLevel.Id) {
 
                 case DetailLevelItemInformation.Levels.media:
-                    mediaLabelList = new ClassificationDB.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    mediaLabelList = new ClassificationDB.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.Source);
                     break;
                 case DetailLevelItemInformation.Levels.category:
-                    categoryLabelList = new ClassificationDB.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    categoryLabelList = new ClassificationDB.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.Source);
                     break;
                 case DetailLevelItemInformation.Levels.mediaSeller:
-                    mediaSellerLabelList = new ClassificationDB.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    mediaSellerLabelList = new ClassificationDB.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.Source);
                     break;
                 case DetailLevelItemInformation.Levels.title:
-                    titleLabelList = new ClassificationDB.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    titleLabelList = new ClassificationDB.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.Source);
                     break;
                 case DetailLevelItemInformation.Levels.interestCenter:
-                    interestCenterLabelList = new TNS.AdExpress.Classification.DataAccess.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    interestCenterLabelList = new ClassificationDB.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch,webSession.SiteLanguage,webSession.Source);
                     break;
 
             }

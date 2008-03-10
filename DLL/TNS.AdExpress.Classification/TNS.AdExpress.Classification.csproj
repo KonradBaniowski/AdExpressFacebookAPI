@@ -112,96 +112,15 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\ClassificationLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataAccess\Functions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\AllCategoryListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\AllInterestCenterListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\AllMediaListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\AllMediaSellerListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\AllTitleListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\AllVehicleListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\PartialCategoryListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\PartialInterestCenterListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\PartialMediaListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\PartialMediaSellerListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\PartialTitleListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\MediaBranch\PartialVehicleListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\AllAdvertiserLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\AllGroupLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\AllHoldingCompanyLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\AllSectorLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\AllSegmentLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\AllSubSectorLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\PartialAdvertiserLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\PartialBrandLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\PartialGroupLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\PartialHoldingCompanyLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\PartialProductLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\PartialSectorLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\PartialSegmentLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\ProductBranch\PartialSubSectorLevelListDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\ClassificationDataDBException.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

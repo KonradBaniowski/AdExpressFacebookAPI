@@ -177,8 +177,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				#endregion
 
 				//Récupération de la liste des média autorisés pour l'utilisateur courant
-				if(webSession.CustomerLogin.getListIdVehicle().Length>0){				
-					vhlist=webSession.CustomerLogin.getListIdVehicle();
+				if(webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap].Length>0){
+                    vhlist=webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap];
 					VehicleIdsArr = vhlist.Split(',');
 					for(int v=0;v<VehicleIdsArr.Length;v++){
 						if(v>0)vhSeparator="-";

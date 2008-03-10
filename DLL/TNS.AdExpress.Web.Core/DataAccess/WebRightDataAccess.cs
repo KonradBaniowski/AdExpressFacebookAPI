@@ -14,7 +14,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 using WebExceptions=TNS.AdExpress.Web.Core.Exceptions;
-
+/*
 namespace TNS.AdExpress.Web.Core.DataAccess{
 	///<summary>
 	/// Class used to manage custormer web rights
@@ -128,3 +128,4 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
 
 	}
 }
+*/

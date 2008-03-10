@@ -49,6 +49,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         public string Sql {
             get{return(" "+_label+".");}
         }
+        /// <summary>
+        /// Get Schema label
+        /// </summary>
+        /// <remarks>
+        /// <example> adexpr03</example>
+        public string Label {
+            get { return (_label); }
+        }
         #endregion
 
     }

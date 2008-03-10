@@ -44,13 +44,13 @@ namespace TNS.AdExpress.Web.DataAccess{
 		/// Ferme et dispose la connexion à la base de données
 		/// </summary>
 		/// <param name="webSession"></param>
-		public static void closeDataBase(WebSession webSession){
-			if(webSession.CustomerLogin.Connection!=null){
-				if(webSession.CustomerLogin.Connection.State==System.Data.ConnectionState.Open)webSession.CustomerLogin.Connection.Close();
-				webSession.CustomerLogin.Connection.Dispose();
-				webSession.CustomerLogin.Connection=null;
-			}
-		}
+        //public static void closeDataBase(WebSession webSession){
+        //    if(webSession.CustomerLogin.Connection!=null){
+        //        if(webSession.CustomerLogin.Connection.State==System.Data.ConnectionState.Open)webSession.CustomerLogin.Connection.Close();
+        //        webSession.CustomerLogin.Connection.Dispose();
+        //        webSession.CustomerLogin.Connection=null;
+        //    }
+        //}
 		#endregion
 
 		#region Vérification de la dernière date disponible pour un media dans la base de données des recap

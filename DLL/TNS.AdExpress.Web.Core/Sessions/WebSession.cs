@@ -116,7 +116,8 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		///  <directed>True</directed>
 		///  <supplierCardinality>1</supplierCardinality>
-		protected TNS.AdExpress.Web.Core.WebRight customerLogin = null;
+		//protected TNS.AdExpress.Web.Core.WebRight customerLogin = null;
+        protected TNS.AdExpress.Right customerLogin = null;
 
 		/// <summary>
 		/// Login company
@@ -584,7 +585,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// Constructeur de la classe session
 		/// </summary>
 		/// <param name="login">Ensemble des droit du client connecté</param>
-		public WebSession(TNS.AdExpress.Web.Core.WebRight login) {
+        public WebSession(TNS.AdExpress.Right login) {
 
 			try {
 				this.customerLogin = login;
@@ -606,8 +607,9 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		public IDataSource Source {
 			get {
-				if (_source == null)
-					_source = new OracleDataSource(CustomerLogin.OracleConnectionString);
+                if(_source == null)
+                    //_source = new OracleDataSource(CustomerLogin.OracleConnectionString);
+                    _source=customerLogin.Source;
 				return (_source);
 			}
 			set {
@@ -893,7 +895,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// <summary>
 		/// Get Droits client
 		/// </summary>
-		public TNS.AdExpress.Web.Core.WebRight CustomerLogin {
+		public TNS.AdExpress.Right CustomerLogin {
 			get { return customerLogin; }
 			set {
 				customerLogin = value;
@@ -2246,7 +2248,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </exception>
 		public void Save() {
 
-			customerLogin.HtModulesList.Clear();
+			customerLogin.ClearModulesList();
 
 			#region On force la mise à jour des données des objets dans la HashTable
 
@@ -2897,10 +2899,9 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		public void OnUseGad() {
 			try {
-				customerLogin.ModuleList();
-				Module moduleSelected = (Module)customerLogin.HtModulesList[currentModule];
+				Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-				customerLogin.HtModulesList.Clear();
+				//customerLogin.HtModulesList.Clear();
 				DATracking.UseGad(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
@@ -2913,10 +2914,9 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		private void OnSetMediaAgencyInGenericDetailLevel(GenericDetailLevel currentDetailLevel) {
 			if (currentDetailLevel.ContainLevelToTrack(DetailLevelItemInformation.Levels.groupMediaAgency) || currentDetailLevel.ContainLevelToTrack(DetailLevelItemInformation.Levels.agency)) {
 				try {
-					customerLogin.ModuleList();
-					Module moduleSelected = (Module)customerLogin.HtModulesList[currentModule];
+                    Module moduleSelected = customerLogin.GetModule(currentModule);
 					Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-					customerLogin.HtModulesList.Clear();
+					//customerLogin.HtModulesList.Clear();
 					DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 				}
 				catch (System.Exception) { }
@@ -2934,10 +2934,10 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				case TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.group_agencyAgencyAdvertiser:
 				case TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.group_agencyAgencyProduct:
 					try {
-						customerLogin.ModuleList();
-						Module moduleSelected = (Module)customerLogin.HtModulesList[currentModule];
+						//customerLogin.ModuleList();
+                        Module moduleSelected = customerLogin.GetModule(currentModule);
 						Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-						customerLogin.HtModulesList.Clear();
+						//customerLogin.HtModulesList.Clear();
 						DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 					}
 					catch (System.Exception) { }
@@ -2973,10 +2973,10 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		public void OnSetResult() {
 			try {
-				customerLogin.ModuleList();
-				Module moduleSelected = (Module)customerLogin.HtModulesList[currentModule];
+				//customerLogin.ModuleList();
+                Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-				customerLogin.HtModulesList.Clear();
+				//customerLogin.HtModulesList.Clear();
 				DATracking.SetResult(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
@@ -2988,10 +2988,10 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		public void OnUseFileExport() {
 			try {
-				customerLogin.ModuleList();
-				Module moduleSelected = (Module)customerLogin.HtModulesList[currentModule];
+				//customerLogin.ModuleList();
+                Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-				customerLogin.HtModulesList.Clear();
+				//customerLogin.HtModulesList.Clear();
 				DATracking.UseFileExport(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
@@ -3002,10 +3002,10 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		public void OnUseMyAdExpressSave() {
 			try {
-				customerLogin.ModuleList();
-				Module moduleSelected = (Module)customerLogin.HtModulesList[currentModule];
+				//customerLogin.ModuleList();
+                Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-				customerLogin.HtModulesList.Clear();
+				//customerLogin.HtModulesList.Clear();
 				DATracking.UseMyAdExpressSave(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }

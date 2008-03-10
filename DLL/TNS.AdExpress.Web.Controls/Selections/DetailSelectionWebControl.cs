@@ -16,13 +16,13 @@ using System.Data;
 
 using System.Text;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+//using Oracle.DataAccess.Client;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
-using AdExClassification = TNS.AdExpress.Classification.DataAccess;
+using AdExClassification=TNS.AdExpress.DataAccess.Classification;
 using ClassificationCst=TNS.AdExpress.Constantes.Classification;
 using ResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
@@ -494,8 +494,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				}
 				#endregion
 
-				_webSession.CustomerLogin.ModuleList();
-				Module currentModule = (Module)_webSession.CustomerLogin.HtModulesList[_webSession.CurrentModule];
+				//_webSession.CustomerLogin.ModuleList();
+				Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
 				try{
 					detailSelections=((ResultPageInformation) currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
 				}
@@ -595,7 +595,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				t.Append("</table><br>");
 
 				// On libère htmodule pour pouvoir le sauvegarder dans les tendances
-				_webSession.CustomerLogin.HtModulesList.Clear();
+				//_webSession.CustomerLogin.HtModulesList.Clear();
 				
 				return Convertion.ToHtmlString(t.ToString());
 			}
@@ -921,25 +921,25 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				t.Append(GetBlankLine()); 
 				t.Append("<TR><TD colspan=4 " + cssTitleData + " ><font " + cssTitle + ">" + GestionWeb.GetWebWord(1759, webSession.SiteLanguage) + " :</font></TD></TR>");
 				adExpressUniverse = webSession.PrincipalProductUniverses[0];
-				if (webSession.CustomerLogin.Connection == null) {
-					TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-					webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-				}
-				t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));//TNS.AdExpress.Web.Functions.DisplayUniverse
+                //if (webSession.CustomerLogin.Connection == null) {
+                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
+                //}
+				t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source));//TNS.AdExpress.Web.Functions.DisplayUniverse
 			}
 			else if (webSession.PrincipalProductUniverses.Count > 1) {
 				
-				if (webSession.CustomerLogin.Connection == null) {
-					TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-					webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-				}
+                //if (webSession.CustomerLogin.Connection == null) {
+                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
+                //}
 				for (int k = 0; k < webSession.PrincipalProductUniverses.Count; k++) {
 					if(webSession.PrincipalProductUniverses.ContainsKey(k)){
 						t.Append(GetBlankLine());
 						t.Append("<TR><TD colspan=4 " + cssTitleData + " ><font " + cssTitle + ">" + GestionWeb.GetWebWord(1759, webSession.SiteLanguage) + " :</font></TD></TR>");
                         t.Append("<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" ><font>" + webSession.PrincipalProductUniverses[k].Label + " </font></TD></TR>");
 						adExpressUniverse = webSession.PrincipalProductUniverses[k];
-						t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));
+						t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source));
 					}
 				}
 			}
@@ -1656,7 +1656,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="language">language</param>
 		/// <param name="connection">DB connection</param>
 		/// <returns>Html render to show universe selection</returns>
-		private string ToExcel(AdExpressUniverse adExpressUniverse, int language, OracleConnection connection) {
+		private string ToExcel(AdExpressUniverse adExpressUniverse, int language, TNS.FrameWork.DB.Common.IDataSource source) {
 		
 			#region Variables
 			StringBuilder html = new StringBuilder();
@@ -1666,11 +1666,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 			//Groups of items excludes
 			groups = adExpressUniverse.GetExludes();
-			html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language, connection, AccessType.excludes));
+            html.Append(GetUniverseGroupForExcel(groups,baseColSpan,language,source,AccessType.excludes));
 
 			//Groups of items includes
 			groups = adExpressUniverse.GetIncludes();
-			html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language, connection, AccessType.includes));
+            html.Append(GetUniverseGroupForExcel(groups,baseColSpan,language,source,AccessType.includes));
 
 
 			return html.ToString();
@@ -1685,7 +1685,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="connection">DB connection</param>
 		/// <param name="accessType">items access type</param>
 		/// <returns>Html render to show universe selection</returns>
-		private  string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, OracleConnection connection, AccessType accessType) {
+		private  string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, TNS.FrameWork.DB.Common.IDataSource source, AccessType accessType) {
 
             #region Variables
             int level = 1;
@@ -1696,7 +1696,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             string rightBottomBorder = string.Empty;
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
             string img = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>";
-            TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess universeItems = null;
+            TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
             int code = 0;
             StringBuilder html = new StringBuilder();
             #endregion
@@ -1742,7 +1742,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 							//Show items of the current level
 							level = 2;
 							html.Append("<tr>");
-							universeItems = new TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, connection);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),language,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {

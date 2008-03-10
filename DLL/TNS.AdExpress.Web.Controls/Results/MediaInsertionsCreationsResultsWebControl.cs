@@ -751,7 +751,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 				}
 			}
 
-			if( _customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG]!=null){
+			if( _customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)!=null){
 				
 				mediaImpactedList = WebFunctions.MediaDetailLevel.GetImpactedMedia(_customerWebSession,long.Parse(ids[0]),long.Parse(ids[1]),long.Parse(ids[2]),long.Parse(ids[3]));	
 				ds = MediaCreationDataAccess.GetAdNetTrackData(_customerWebSession,mediaImpactedList,dateBegin,dateEnd,long.Parse(_idVehicle));

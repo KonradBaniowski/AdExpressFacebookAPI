@@ -529,8 +529,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			#region Affichage des résultats
 			for(int i=0;i<tab.GetLength(0);i++){
-				if(i!=ResultConstantes.BRANDS_LINE_INDEX && i!=ResultConstantes.AGENCY_LINE_INDEX && i!=ResultConstantes.AGENCIES_GROUPS_LINE_INDEX ||(i==ResultConstantes.BRANDS_LINE_INDEX && webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
-					|| ((i==ResultConstantes.AGENCY_LINE_INDEX || i==ResultConstantes.AGENCIES_GROUPS_LINE_INDEX) && webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null)
+				if(i!=ResultConstantes.BRANDS_LINE_INDEX && i!=ResultConstantes.AGENCY_LINE_INDEX && i!=ResultConstantes.AGENCIES_GROUPS_LINE_INDEX ||(i==ResultConstantes.BRANDS_LINE_INDEX && webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+					|| ((i==ResultConstantes.AGENCY_LINE_INDEX || i==ResultConstantes.AGENCIES_GROUPS_LINE_INDEX) && webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
 					){
 					t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#B1A3C1';\"  bgcolor=#B1A3C1 height=\"20px\" >");
 

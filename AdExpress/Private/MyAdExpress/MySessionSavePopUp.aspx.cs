@@ -18,7 +18,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Text.RegularExpressions;
 using Oracle.DataAccess.Client;
-using TNS.AdExpress.Rules.Customer;
+//using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Web.Core.Sessions;
 using System.Windows.Forms;
 using TNS.AdExpress.Domain.Translation;

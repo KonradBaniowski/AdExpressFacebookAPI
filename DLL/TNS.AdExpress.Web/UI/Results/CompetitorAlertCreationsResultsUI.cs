@@ -624,13 +624,13 @@ namespace TNS.AdExpress.Web.UI.Results{
             string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
 
-			// Pas de données à afficher
+			// Pas de données à afficher 
 			if (data == null || data[0, 0] == null) {
 				return HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage, 177)).ToString();
 			}
 
 			//Pas de droit d'accès aux insertions de la Publicité extérieure
-			if (webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG] == null) {
+			if (webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null) {
 				return HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage, 1882)).ToString();
 			}
 
@@ -1251,7 +1251,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region Pas de donnée à afficher
-			if (data == null || data[0, 0] == null || webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG] == null) {
+			if (data == null || data[0, 0] == null || webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null) {
 				 HtmlTxt.Append(GetUIEmptyExcel(webSession.SiteLanguage, 10)).ToString();
 				HtmlTxt.Append(ExcelFunction.GetFooter(webSession));
 				return HtmlTxt.ToString();

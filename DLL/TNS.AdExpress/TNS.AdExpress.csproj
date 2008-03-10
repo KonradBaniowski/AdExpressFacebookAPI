@@ -123,6 +123,7 @@
     <Compile Include="Exceptions\SqlGeneratorSystemException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Right.cs" />
     <Compile Include="Rules\Customer\Right.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1180,7 +1180,7 @@ namespace TNS.AdExpress.Web.UI.Results {
             //Version
             bool showVersions=false;
             if (!isExport && !isCreative) {
-                if (webSession.CustomerLogin.FlagsList[Flags.ID_SLOGAN_ACCESS_FLAG] != null) {
+                if (webSession.CustomerLogin.GetFlag(Flags.ID_SLOGAN_ACCESS_FLAG) != null) {
                     showVersions = true;
                     t.Append("\r\n\t\t<td rowspan=\"3\" class=\"pt\">" + GestionWeb.GetWebWord(1994, webSession.SiteLanguage) + "</td>");
                 }

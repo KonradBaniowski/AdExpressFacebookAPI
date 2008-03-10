@@ -692,10 +692,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 							System.Windows.Forms.TreeNode tmp;
 //							if (isDetailElement(customerWebSession.CurrentUniversMedia)) {
 								// Ouverture de la base de données
-								#region Connexion à la base de données
-								if (customerWebSession.CustomerLogin.Connection==null)
-									customerWebSession.CustomerLogin.Connection=new OracleConnection(customerWebSession.CustomerLogin.OracleConnectionString);
-								#endregion								
+                                //#region Connexion à la base de données
+                                //if (customerWebSession.CustomerLogin.Connection==null)
+                                //    customerWebSession.CustomerLogin.Connection=new OracleConnection(customerWebSession.CustomerLogin.OracleConnectionString);
+                                //#endregion								
 
 								dsInterestCenterList=VehicleListDataAccess.InterestCenterList(customerWebSession,listInterestCenter);
 								if(dsInterestCenterList != null && dsInterestCenterList.Tables[0].Rows.Count==1) {

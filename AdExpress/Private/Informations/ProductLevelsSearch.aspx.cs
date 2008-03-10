@@ -16,7 +16,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
-using Classification=TNS.AdExpress.Classification.DataAccess;
+using Classification=TNS.AdExpress.DataAccess.Classification;
 using ClassificationTable=TNS.AdExpress.Constantes.Classification.DB.Table;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 

@@ -14,7 +14,6 @@ using Oracle.DataAccess.Client;
 using System.Text;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Rules.Customer;
 using DBCst=TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Exceptions;

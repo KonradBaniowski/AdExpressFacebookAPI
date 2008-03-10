@@ -22,8 +22,8 @@ using AdExpressWebRules=TNS.AdExpress.Web.Rules;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.UI;
-using ProductClassification=TNS.AdExpress.Classification.DataAccess.ProductBranch;
-using MediaClassification=TNS.AdExpress.Classification.DataAccess.MediaBranch;
+using ProductClassification=TNS.AdExpress.DataAccess.Classification.ProductBranch;
+using MediaClassification=TNS.AdExpress.DataAccess.Classification.MediaBranch;
 using AdExpressException=TNS.AdExpress.Exceptions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.DB.Common;
@@ -33,6 +33,7 @@ using TNS.AdExpress.Classification;
 
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress;
 
 namespace AdExpress.Private{
 	/// <summary>
@@ -104,12 +105,14 @@ namespace AdExpress.Private{
 				//WebSession webSession=null;
 				//Creer l'objet Right
                 TNS.FrameWork.DB.Common.IDataSource source = new TNS.FrameWork.DB.Common.OracleDataSource("User Id=" + LOGIN + "; Password=" + PASSWORD + " " + TNS.AdExpress.Constantes.DB.Connection.RIGHT_CONNECTION_STRING);
-				TNS.AdExpress.Web.Core.WebRight loginRight=new TNS.AdExpress.Web.Core.WebRight(LOGIN,PASSWORD,source);
+				Right loginRight=new Right(LOGIN,PASSWORD);
 				//Vérifier le droit d'accès au site
-				if (loginRight.CanAccessToAdExpress(source)){
+				if (loginRight.CanAccessToAdExpress()){
 					// Regarde à partir de quel tables charger les droits clients
 					// (template ou droits propres au login)
-					loginRight.htRightUserBD();				
+                    loginRight.SetModuleRights();
+                    loginRight.SetFlagsRights();
+                    loginRight.SetRights();			
 					if(true){
 						//Creer une session
 						if(webSession==null) webSession = new WebSession(loginRight);
@@ -122,7 +125,7 @@ namespace AdExpress.Private{
                         #region Media
                         try {
                             webSession.CurrentUniversMedia = new System.Windows.Forms.TreeNode("media");
-                            MediaClassification.PartialVehicleListDataAccess vehicleLabels = new MediaClassification.PartialVehicleListDataAccess(vehicleListIdString, _siteLanguage, loginRight.Connection);
+                            MediaClassification.PartialVehicleListDataAccess vehicleLabels = new MediaClassification.PartialVehicleListDataAccess(vehicleListIdString, _siteLanguage, loginRight.Source);
                             foreach (string currentVehicleId in vehicleListId) {
                                 id = Int64.Parse(currentVehicleId);
                                 tmpNode = new System.Windows.Forms.TreeNode(vehicleLabels[id]);

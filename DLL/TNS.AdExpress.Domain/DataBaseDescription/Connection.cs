@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.DB.Constantes;
+using TNS.AdExpress.Domain.Exceptions;
 
 namespace TNS.AdExpress.Domain.DataBaseDescription {
 
@@ -101,6 +102,25 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
             set { _maxPoolSize=value; }
         }
 
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Get IDataSource
+        /// </summary>
+        public IDataSource GetDataSource(string login,string password) {
+            try {
+                SourceFactory sourceFactory=new SourceFactory(_type,login,password,_dataSource);
+                sourceFactory.ConnectionTimeOut=_connectionTimeOut;
+                sourceFactory.DecrPoolSize=_decrPoolSize;
+                sourceFactory.MaxPoolSize=_maxPoolSize;
+                sourceFactory.Pooling=_pooling;
+                return (sourceFactory.GetIDataSource());
+            }
+            catch(System.Exception err) {
+                throw (new DefaultConnectionException("Impossible to retreive default connection",err));
+            }
+        }
         #endregion
     }
 }

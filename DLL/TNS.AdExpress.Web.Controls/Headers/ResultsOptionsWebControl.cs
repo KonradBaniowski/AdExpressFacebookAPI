@@ -894,8 +894,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				resultsPages.ID = "_resultsPages";
 				resultsPages.CssClass =  cssClass;
 				resultsPages.AutoPostBack = autoPostBackOption;
-				customerWebSession.CustomerLogin.ModuleList();
-				ArrayList resultPages=((Module)customerWebSession.CustomerLogin.HtModulesList[customerWebSession.CurrentModule]).GetResultPageInformationsList();
+				//customerWebSession.CustomerLogin.ModuleList();
+				ArrayList resultPages=((Module)customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule)).GetResultPageInformationsList();
 				foreach(ResultPageInformation current in resultPages){					
 					if(!CanShowResult(customerWebSession,current))continue;
 
@@ -982,7 +982,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                     
 					#region Accroches
 					// Gestion des droits sur les accroches
-					if(customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG]!=null &&
+					if(customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null &&
 						(_forceMediaDetailForSlogan ||
 						// Sélection par produit ou marque
 						(customerWebSession.GetSelection(customerWebSession.SelectionUniversAdvertiser,TNS.AdExpress.Constantes.Customer.Right.type.productAccess).Length>0 ||
@@ -1062,7 +1062,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1110, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.group.GetHashCode().ToString()));
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1144, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupSegment.GetHashCode().ToString()));
 				//Rights verification for Brand
-				if(customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
+				if(customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 				{
 					productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1111, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupBrand.GetHashCode().ToString()));
 				}
@@ -1071,17 +1071,17 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				//modifications for segmentAdvertiser,segmentProduct,SegmentBrand(3 new items added in the dropdownlist)
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1577, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString()));
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1578, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString()));
-				if(customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
+				if(customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 				{
 					productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1579, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentBrand.GetHashCode().ToString()));
 				}
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1146, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.advertiser.GetHashCode().ToString()));
-				if(customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
+				if(customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 				{
 					productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1147, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserBrand.GetHashCode().ToString()));
 				}
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1148, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserProduct.GetHashCode().ToString()));
-				if(customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
+				if(customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 				{
 					productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1149, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.brand.GetHashCode().ToString()));
 				}

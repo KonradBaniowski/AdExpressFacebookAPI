@@ -226,12 +226,12 @@ namespace AdExpress.Private.Results{
 					_webSession.Save();
 				}
 				catch(System.Exception exc2){
-					DataAccessFunctions.closeDataBase(_webSession);
+                    _webSession.Source.Close();
 					Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(959, _webSession.SiteLanguage)+"\n\n"+exc2.Message));
 				}
 			}
 			catch(System.Exception){
-				DataAccessFunctions.closeDataBase(_webSession);
+                _webSession.Source.Close();
 				Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(958, _webSession.SiteLanguage)));
 			}
 			#endregion

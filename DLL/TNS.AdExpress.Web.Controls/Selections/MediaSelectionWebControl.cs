@@ -604,9 +604,9 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		/// <param name="vhSeparator">separateur</param>
 		private void getListIdVehicle(ref string vhlist, ref string  VehicleIds,string vhSeparator){
 			//Récupération de la liste des média autorisés pour l'utilisateur courant
-			if(webSession.CustomerLogin.getListIdVehicle().Length>0){				
+			if(webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap].Length>0){				
 				int c=0;
-				string[] VehicleIdsArr = webSession.CustomerLogin.getListIdVehicle().Split(',');
+				string[] VehicleIdsArr = webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap].Split(',');
 				for(int v=0;v<VehicleIdsArr.Length;v++){
 					if(v>0)vhSeparator="-";
 					VehicleIds+=vhSeparator+"vh_"+VehicleIdsArr[v].ToString();

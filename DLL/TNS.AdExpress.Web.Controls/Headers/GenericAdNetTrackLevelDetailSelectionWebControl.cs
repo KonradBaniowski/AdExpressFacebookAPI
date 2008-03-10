@@ -300,7 +300,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					if(// Droit sur les niveaux de détail produit
 						CheckProductDetailLevelAccess() &&
 						// Droit des Marques
-						_customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null
+						_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null
 						)return(true);
 					return(false);
 					#endregion
@@ -310,7 +310,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					if(// Droit sur les niveaux de détail produit
 						CheckProductDetailLevelAccess() &&
 						// Droit sur les groupe de société
-						_customerWebSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG]!=null
+						_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG)!=null
 						)return(true);
 					return(false);
 					#endregion

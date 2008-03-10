@@ -10,7 +10,6 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -285,7 +284,7 @@ namespace AdExpress.Private.Universe{
 
 		#region Annuler
 		protected void cancelImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
-			DBFunctions.closeDataBase(_webSession);
+			_webSession.Source.Close();
 			Response.Write("<script language=javascript>");
 			Response.Write("	window.close();");
 			Response.Write("</script>");

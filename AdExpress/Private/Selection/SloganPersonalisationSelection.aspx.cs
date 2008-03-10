@@ -241,7 +241,7 @@ namespace AdExpress.Private.Selection{
 			if(sloganList!=null){
 				_webSession.IdSlogans=sloganList;
 				_webSession.Save();
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 
 				Response.Redirect(this._nextUrl + "?idSession=" + _webSession.IdSession + ((WithZoomDate(_zoom,0,_nextUrl)) ? "&zoomDate=" + _zoom : ""));
 			}

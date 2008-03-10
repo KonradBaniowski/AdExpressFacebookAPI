@@ -339,8 +339,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire</param>
 		protected override void Render(HtmlTextWriter output){
-			customerWebSession.CustomerLogin.ModuleList();
-			Module currentModule=(Module)customerWebSession.CustomerLogin.HtModulesList[customerWebSession.CurrentModule];
+			//customerWebSession.CustomerLogin.ModuleList();
+			Module currentModule=customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule);
 			ResultPageInformation currentPageResult=null;
 			try{
 				currentPageResult=(ResultPageInformation) currentModule.GetResultPageInformation(Convert.ToInt32(customerWebSession.CurrentTab));

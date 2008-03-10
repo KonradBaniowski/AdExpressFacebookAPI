@@ -135,7 +135,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					//Récupération des données pour identifiant média (vehicle) issu de la sélection de l'onglet correspondant.
 					if(idVehicle!=null && idVehicle.Length>0 && long.Parse(idVehicle.ToString())>-1){
 						//Pas de droit publicité extérieure
-						if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
+						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null 
 							&& (CstClassification.DB.Vehicles.names)int.Parse(idVehicle.ToString())==CstClassification.DB.Vehicles.names.outdoor ){
 							ds = null;
 						}
@@ -153,7 +153,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				else{
 					//Récupération des données
 						//Pas de droit publicité extérieure
-						if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
+						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null 
 							&& (CstClassification.DB.Vehicles.names)int.Parse(idMediaLevel1.ToString())==CstClassification.DB.Vehicles.names.outdoor ){
 							ds = null;
 						}
@@ -666,7 +666,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			object[,] tab =null;
 			bool first = true;	
 
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null){
 				return tab;
 			}
 			int i = -1;
@@ -1008,7 +1008,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				//Cas  média demandé (vehicle) 					
 				if( mediaImpactedList["id_vehicle"]!=null && long.Parse(mediaImpactedList["id_vehicle"].ToString())>-1
 					//&&
-					//!(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
+					//!(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
 					//&& (CstClassification.DB.Vehicles.names)int.Parse(mediaImpactedList["id_vehicle"].ToString())== CstClassification.DB.Vehicles.names.outdoor 
 					//)						
 					){
@@ -1027,7 +1027,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					if(ds!=null && ds.Tables[0]!=null && ds.Tables[0].Rows.Count>0){
 						foreach(DataRow dr in ds.Tables[0].Rows){
 							
-							//if( !(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
+							//if( !(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
 							//    && (CstClassification.DB.Vehicles.names)int.Parse(dr["id_vehicle"].ToString())==CstClassification.DB.Vehicles.names.outdoor )
 							//    ){
 								if(dr["id_vehicle"] != null && dr["id_vehicle"].ToString().Length>0 && int.Parse(dr["id_vehicle"].ToString()) == CstClassification.DB.Vehicles.names.internet.GetHashCode()){
@@ -1046,7 +1046,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					ds = MediaCreationDataAccess.GetIdsVehicle(webSession,-1,long.Parse(mediaImpactedList["id_media"].ToString()));
 					if(ds!=null && ds.Tables[0]!=null && ds.Tables[0].Rows.Count>0){
 						foreach(DataRow dr in ds.Tables[0].Rows){
-							//if( !(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
+							//if( !(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
 							//    && (CstClassification.DB.Vehicles.names)int.Parse(dr["id_vehicle"].ToString())==CstClassification.DB.Vehicles.names.outdoor )
 							//    ){
 								if(dr["id_vehicle"] != null && dr["id_vehicle"].ToString().Length>0 && int.Parse(dr["id_vehicle"].ToString()) == CstClassification.DB.Vehicles.names.internet.GetHashCode()){
@@ -1066,7 +1066,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 						ds = MediaCreationDataAccess.GetIdsVehicle(webSession,long.Parse(mediaImpactedList["id_slogan"].ToString()));
 						if(ds!=null && ds.Tables[0]!=null && ds.Tables[0].Rows.Count>0 ){
 							DataRow dr = ds.Tables[0].Rows[0];
-							//if( !(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
+							//if( !(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
 							//    && (CstClassification.DB.Vehicles.names)int.Parse(dr["id_vehicle"].ToString())==CstClassification.DB.Vehicles.names.outdoor )
 							//    ){
 								if(dr["id_vehicle"] != null && dr["id_vehicle"].ToString().Length>0 && int.Parse(dr["id_vehicle"].ToString()) == CstClassification.DB.Vehicles.names.internet.GetHashCode()){
@@ -1092,7 +1092,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 							if(tableName.Length>0) {								
 								ds = MediaCreationDataAccess.GetIdsVehicle(webSession,0,tableName,dateBegin,dateEnd,idSelectedVehicle[i].ToString());
 								if(ds!=null && ds.Tables[0]!=null && ds.Tables[0].Rows.Count>0 && (Int64.Parse(ds.Tables[0].Rows[0][0].ToString())>0)){																	
-									//if( !(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
+									//if( !(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
 									//    && (CstClassification.DB.Vehicles.names)int.Parse(idSelectedVehicle[i].ToString())==CstClassification.DB.Vehicles.names.outdoor )
 									//    ){
 										 vehicleList.Add(idSelectedVehicle[i].ToString());
@@ -1120,7 +1120,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 						if(tableName.Length>0) {							 
 							ds = MediaCreationDataAccess.GetIdsVehicle(webSession,mediaImpactedList,tableName,dateBegin,dateEnd,idSelectedVehicle[i].ToString());
 							if(ds!=null && ds.Tables[0]!=null && ds.Tables[0].Rows.Count>0 && Int64.Parse(ds.Tables[0].Rows[0][0].ToString())>0){								
-								//if( !(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
+								//if( !(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null 
 								//    && (CstClassification.DB.Vehicles.names)int.Parse(idSelectedVehicle[i].ToString())==CstClassification.DB.Vehicles.names.outdoor )
 								//    ){
 									 vehicleList.Add(idSelectedVehicle[i].ToString());
@@ -1212,7 +1212,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
             {
                 vehicleArr = MediaInsertionsCreationsRules.GetIdsVehicle(webSession, mediaImpactedList, dateBegin.ToString(), dateEnd.ToString());
 
-                if (vehicleArr != null && vehicleArr.Count > 0 && webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG] == null
+                if (vehicleArr != null && vehicleArr.Count > 0 && webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null
                     && vehicleArr.Contains((DBClassificationConstantes.Vehicles.names.outdoor.GetHashCode()).ToString()))
                 {
                     vehicleArr.Remove((DBClassificationConstantes.Vehicles.names.outdoor.GetHashCode()).ToString());

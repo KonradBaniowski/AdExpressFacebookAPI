@@ -1,5 +1,5 @@
 using System;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 
 namespace TNS.AdExpress.Web.Core.Sessions{
 	/// <summary>
@@ -13,7 +13,7 @@ namespace TNS.AdExpress.Web.Core.Sessions{
 		/// <summary>
 		/// Type de Node : niveau et accès (en accès ou en exception)
 		/// </summary>
-		protected Right.type type;
+        protected CustomerCst.Right.type type;
 		
 		/// <summary>
 		/// Identifiant de l'élément. Le libellé de l'élément est contenu dans le champ Text du treenode
@@ -33,7 +33,7 @@ namespace TNS.AdExpress.Web.Core.Sessions{
 		/// <param name="type">Type de Node : niveau et accès (en accès ou en exception)</param>
 		/// <param name="id">Identifiant de l'élément.</param>
 		/// <param name="text">Label de l'élément</param>
-		public LevelInformation(Right.type type, Int64 id, string text){
+        public LevelInformation(CustomerCst.Right.type type,Int64 id,string text) {
 			this.type = type;
 			this.id = id;
 			this.text = text;
@@ -44,7 +44,7 @@ namespace TNS.AdExpress.Web.Core.Sessions{
 		/// <summary>
 		/// Get type
 		/// </summary>
-		public Right.type Type{
+        public CustomerCst.Right.type Type {
 			get{
 				return this.type;
 			}

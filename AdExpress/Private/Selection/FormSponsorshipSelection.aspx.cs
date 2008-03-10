@@ -17,7 +17,6 @@ using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.DataAccess.Selections.Products;
@@ -434,7 +433,7 @@ namespace AdExpress.Private.Selection
 				_webSession.Save(); 
 
 				if(AdvertiserSelectionWebControl1.NbElement==1) {
-					DBFunctions.closeDataBase(_webSession);
+					_webSession.Source.Close();
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession+"");
 				}
 				else if (AdvertiserSelectionWebControl1.NbElement==2) {
@@ -471,7 +470,7 @@ namespace AdExpress.Private.Selection
 				_webSession.Save();
 
 				if(AdvertiserSelectionWebControl1.NbElement==1) {
-					DBFunctions.closeDataBase(_webSession);
+					_webSession.Source.Close();
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession+"");
 				}
 				else if (AdvertiserSelectionWebControl1.NbElement==2) {
@@ -510,7 +509,7 @@ namespace AdExpress.Private.Selection
 				_webSession.Save();
 
 				if(AdvertiserSelectionWebControl1.NbElement==1) {
-					DBFunctions.closeDataBase(_webSession);
+					_webSession.Source.Close();
 					_nextUrl = this._currentModule.GetSubSectionURL(PROGRAM_TYPE_ID,Page.Request.Url.AbsolutePath,false); 
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession+"");
 				}

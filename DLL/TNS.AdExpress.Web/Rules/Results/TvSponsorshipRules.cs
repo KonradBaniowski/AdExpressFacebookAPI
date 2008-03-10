@@ -21,7 +21,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using CustomerConstantes=TNS.AdExpress.Constantes.Customer;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
-using ClassificationDB=TNS.AdExpress.Classification.DataAccess;
+using ClassificationDB=TNS.AdExpress.DataAccess.Classification;
 
 using TNS.FrameWork;
 using TNS.FrameWork.WebResultUI;
@@ -169,7 +169,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			// Ajout Création 
 			bool showCreative=false;
 			//A vérifier Création où version
-            if (webSession.CustomerLogin.FlagsList[DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG] != null &&
+            if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) != null &&
                 (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES &&
                 (webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)) ||
@@ -1017,7 +1017,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 					if(dimensionListForLabelSearch!=null && dimensionListForLabelSearch.Length>0){
 						dimendionIdList=dimensionListForLabelSearch.Split(',');
-						ClassificationDB.MediaBranch.PartialMediaListDataAccess mediaLabelList = new ClassificationDB.MediaBranch.PartialMediaListDataAccess(dimensionListForLabelSearch,webSession.SiteLanguage,webSession.CustomerLogin.Connection);
+						ClassificationDB.MediaBranch.PartialMediaListDataAccess mediaLabelList = new ClassificationDB.MediaBranch.PartialMediaListDataAccess(dimensionListForLabelSearch,webSession.SiteLanguage,webSession.Source);
 						
 						foreach(string currentMedia in dimendionIdList) {							
 							headerGroupTmp.Add(new Header(true,mediaLabelList[Int64.Parse(currentMedia)],Int64.Parse(currentMedia)));							

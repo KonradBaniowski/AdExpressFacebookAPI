@@ -10,7 +10,7 @@ using TNS.FrameWork.DB.Common;
 
 
 
-
+/*
 namespace TNS.AdExpress.DataAccess.Customer{
 	/// <summary>
 	/// Classe qui vérifie dans la base de données si les droits clients sont valides
@@ -1802,3 +1802,4 @@ namespace TNS.AdExpress.DataAccess.Customer{
 
 	}
 }
+*/

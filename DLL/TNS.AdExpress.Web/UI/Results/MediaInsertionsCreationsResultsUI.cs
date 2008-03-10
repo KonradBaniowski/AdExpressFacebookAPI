@@ -1231,7 +1231,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			//Pas de droit publicité extérieure
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null){
 				HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;BORDER:SOLID 5px #ffffff;\"");
 				HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"0\" align=\"left\" border=\"0\">");
 				HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage,1882));
@@ -1851,7 +1851,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			////Pas de droit résultat au détail insertion
 			if ( idVehicle !=null && idVehicle.Length>0 
 				&& (CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == CstClassification.DB.Vehicles.names.outdoor 
-				&& webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG] == null				
+				&& webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null				
 				) {
 				return "<TABLE width=\"500\" bgColor=\"#ffffff\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;BORDER:SOLID 5px #ffffff;\""
 					+ "cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">"
@@ -2075,7 +2075,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			if (tab==null || tab[0,0]==null){
 
 				//Pas de droit publicité extérieure
-				if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null
+				if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null
 					&& (CstClassification.DB.Vehicles.names)int.Parse(idVehicle)==CstClassification.DB.Vehicles.names.outdoor 
 					){
 					return "<TABLE width=\"500\" bgColor=\"#ffffff\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;BORDER:SOLID 5px #ffffff;\""
@@ -2792,7 +2792,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			StringBuilder HtmlTxt = new StringBuilder(1000);
 
 			//Pas de droit publicité extérieure
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG]==null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null){
 				HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;BORDER:SOLID 5px #ffffff;\"");
 				HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">");
 				HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage,1882));

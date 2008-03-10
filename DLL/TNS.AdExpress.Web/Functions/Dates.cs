@@ -353,7 +353,7 @@ namespace TNS.AdExpress.Web.Functions{
 		public static string CheckPeriodValidity( WebSession webSession, string EndPeriod){
 												
 			//traitement de la notion de fréquence
-			Int64 frequency = webSession.CustomerLogin.getIdFrequency(webSession.CurrentModule);
+			Int64 frequency = webSession.CustomerLogin.GetIdFrequency(webSession.CurrentModule);
 			switch (frequency){
 				case FrequencyCst.ANNUAL:
 					//si l'année d'etude n'est pas chargée dans son intégralité (année d'étude = année courante

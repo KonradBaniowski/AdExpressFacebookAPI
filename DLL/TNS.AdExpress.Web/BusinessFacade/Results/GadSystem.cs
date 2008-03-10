@@ -91,7 +91,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 					_phone				= myRow["telephone"].ToString();
 					_fax				= myRow["fax"].ToString();
 					_email				= myRow["email"].ToString();
-					if (webSession.CustomerLogin.FlagsList.ContainsKey((long)DBCst.Flag.id.gad.GetHashCode())){
+					if (webSession.CustomerLogin.GetFlag((long)DBCst.Flag.id.gad.GetHashCode()).Length>0){
 						_docMarketingId		= myRow["id_gad"].ToString();
 						_docMarketingKey	= myRow["docKey"].ToString();
 					}

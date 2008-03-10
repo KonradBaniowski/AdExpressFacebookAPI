@@ -78,11 +78,12 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n</TR>");
 
 			//Exemple, a changer ultérieurement
-			webSession.CustomerLogin.ModuleList();
-			foreach(Int64 current in ((Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule]).Bridges){
-				if (webSession.CustomerLogin.HtModulesList.ContainsKey(current)){ 
+			//webSession.CustomerLogin.ModuleList();
+            Module currentModule=webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+            foreach(Int64 current in currentModule.Bridges) {
+				if (webSession.CustomerLogin.GetModule(current)!=null){ 
 					output.Write("\n<tr>");
-					output.Write("\n<td><A class=\"roll03\" href=\"" +((ResultPageInformation)((Module)webSession.CustomerLogin.HtModulesList[current]).GetResultPageInformation(0)).Url + "?idSession=" + webSession.IdSession + "\">&gt; "+GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(current),webSession.SiteLanguage)+"</td>");
+					output.Write("\n<td><A class=\"roll03\" href=\"" +((ResultPageInformation)(webSession.CustomerLogin.GetModule(current)).GetResultPageInformation(0)).Url + "?idSession=" + webSession.IdSession + "\">&gt; "+GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(current),webSession.SiteLanguage)+"</td>");
 					output.Write("\n</td>");
 					output.Write("\n</tr>");
 				}

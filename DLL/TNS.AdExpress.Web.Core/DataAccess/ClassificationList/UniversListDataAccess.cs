@@ -110,10 +110,10 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 			if(branch.Length>0){
 				sql+=" and se.id_type_universe_client in ("+branch+")";
 			}
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]==null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)==null){
 				sql+=" and se.ID_UNIVERSE_CLIENT_DESCRIPTION not in("+webConstantes.LoadableUnivers.BRAND_PRODUCT+")";
 			}
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY]==null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)==null){
 				sql+=" and se.ID_UNIVERSE_CLIENT_DESCRIPTION not in("+webConstantes.LoadableUnivers.HOLDING_ADVERTISER+")";
 			}	
 			sql+=" order by dir.GROUP_UNIVERSE_CLIENT, se.UNIVERSE_CLIENT ";

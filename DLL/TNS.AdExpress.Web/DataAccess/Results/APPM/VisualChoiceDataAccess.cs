@@ -8,7 +8,6 @@ using System;
 using TNS.AdExpress.Web.Core.Sessions;
 using Oracle.DataAccess.Client;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Rules.Customer;
 using System.Collections;
 using System.Data;
 using System.Text;

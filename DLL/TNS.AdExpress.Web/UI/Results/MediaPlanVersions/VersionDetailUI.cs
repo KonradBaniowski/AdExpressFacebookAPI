@@ -274,7 +274,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			//To check if the user has a right to view the media agency or not
 			//mediaAgencyAccess flag is used in the rest of the classes which indicates whethere the user has access 
 			//to media agency or not
-			if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null)
+			if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
 				mediaAgencyAccess=true;
 
 			#endregion
@@ -309,7 +309,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 				//Nom du Produit
 				output.Append("<tr valign=\"top\"><td nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1418,_webSession.SiteLanguage)) + "</td><td nowrap> : &nbsp;&nbsp;&nbsp;"+ Convertion.ToHtmlString(this._exportAPPMVersion.Product) + "</td></tr>");
 				//Nom de la marque
-				if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null) {
+				if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null) {
 					output.Append("<tr valign=\"top\"><td nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(2001,_webSession.SiteLanguage)) + "</td><td nowrap> : &nbsp;&nbsp;&nbsp;"+ Convertion.ToHtmlString(this._exportAPPMVersion.Brand) + "</td></tr>");
 				}
 				//Nom de l'announceur

@@ -247,14 +247,9 @@ namespace AdExpress.Private.Selection{
 		/// </summary>
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
-		protected void Page_UnLoad(object sender, System.EventArgs e){		
+		protected void Page_UnLoad(object sender, System.EventArgs e){
 
-			#region Libération des connections BD
-			if(_webSession.CustomerLogin.Connection!=null){
-				if(_webSession.CustomerLogin.Connection.State==System.Data.ConnectionState.Open)_webSession.CustomerLogin.Connection.Close();
-				_webSession.CustomerLogin.Connection.Dispose();
-			}
-			#endregion
+            _webSession.Source.Close();
 		}
 		#endregion
 		
@@ -359,7 +354,7 @@ namespace AdExpress.Private.Selection{
 					_webSession.Save();
 					#endregion
 	
-					DBFunctions.closeDataBase(_webSession);
+					_webSession.Source.Close();
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession+"");
 				
 				}else{

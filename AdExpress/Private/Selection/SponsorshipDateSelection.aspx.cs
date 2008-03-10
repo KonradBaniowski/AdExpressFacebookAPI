@@ -237,7 +237,7 @@ namespace AdExpress.Private.Selection
 		protected void validateButton1_Click(object sender, System.EventArgs e) {
 			try{
 				calendarValidation();
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
 			catch(System.Exception ex){
@@ -311,7 +311,7 @@ namespace AdExpress.Private.Selection
 						throw(new AdExpressException.SponsorshipDateSelectionException(GestionWeb.GetWebWord(885,_webSession.SiteLanguage)));
 				}
 				_webSession.Save();
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
 			catch(System.Exception ex){

@@ -16,7 +16,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Translation;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using Dundas.Charting.WebControl;
 using APPMUIs = TNS.AdExpress.Web.UI.Results.APPM;
 using WebFunctions=TNS.AdExpress.Web.Functions;
@@ -117,13 +117,13 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 
 				#region targets
 				//base target
-				Int64 idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+                Int64 idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmBaseTargetAccess));
 				//additional target
-				Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+                Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmTargetAccess));									
 				#endregion
 
 				#region Wave
-				Int64 idWave=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+                Int64 idWave=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave,CustomerCst.Right.type.aepmWaveAccess));									
 				#endregion
 
 				#region Données

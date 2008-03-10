@@ -193,10 +193,7 @@ namespace AdExpress.Private.Selection {
         /// <param name="sender">Objet qui lance l'évènement</param>
         /// <param name="e">Argument</param>
         protected void Page_UnLoad(object sender, System.EventArgs e) {
-            if (_webSession.CustomerLogin.Connection != null) {
-                if (_webSession.CustomerLogin.Connection.State == System.Data.ConnectionState.Open) _webSession.CustomerLogin.Connection.Close();
-                _webSession.CustomerLogin.Connection.Dispose();
-            }
+            _webSession.Source.Close();
             _webSession.Save();
         }
         #endregion
@@ -229,7 +226,7 @@ namespace AdExpress.Private.Selection {
         protected void validateButton1_Click(object sender, System.EventArgs e) {
             try {
                 calendarValidation();
-                DBFunctions.closeDataBase(_webSession);
+                _webSession.Source.Close();
                 Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
             }
             catch (System.Exception ex) {
@@ -433,7 +430,7 @@ namespace AdExpress.Private.Selection {
                         _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
                 }
 
-                DBFunctions.closeDataBase(_webSession);
+                _webSession.Source.Close();
                 Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
             }
             catch (AdExpressException.AnalyseDateSelectionException ex) {

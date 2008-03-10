@@ -75,29 +75,29 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 			bool beginByAnd=true;
 			// le bloc doit il commencer par AND
 			// Vehicle
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.vehicleAccess).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length>0) {
 				if(beginByAnd) sql.Append(" and");
-				sql.Append(" (("+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.vehicleAccess)+") ");
+				sql.Append(" (("+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess]+") ");
 				premier=false;
 			}
 			// Category
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryAccess).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess].Length>0) {
 				if(!premier) sql.Append(" or");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append("((");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryAccess)+") ");
+				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess]+") ");
 				premier=false;
 			}
 			// Media
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.mediaAccess).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess].Length>0) {
 				if(!premier) sql.Append(" or");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" ((");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.mediaAccess)+") ");
+				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess]+") ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -105,34 +105,34 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 			// Droits en exclusion
 			
 			// Vehicle
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.vehicleException).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleException].Length>0) {
 				if(!premier) sql.Append(" and");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
 				sql.Append(" ");
-				sql.Append(DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle not in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.vehicleException)+") ");
+				sql.Append(DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle not in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleException]+") ");
 				premier=false;
 			}
 			// Category
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryException).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.categoryException].Length>0) {
 				if(!premier) sql.Append(" and");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category not in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryException)+") ");
+				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category not in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryException]+") ");
 				premier=false;
 			}
 			// Media
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.mediaException).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.mediaException].Length>0) {
 				if(!premier) sql.Append(" and");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media not in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.mediaException)+") ");
+				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media not in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaException]+") ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
@@ -217,69 +217,69 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 			bool beginByAnd=true;
 			// le bloc doit il commencer par AND
 			// Vehicle
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.vehicleAccess).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length>0) {
 				if(beginByAnd) sql.Append(" and");
-				sql.Append(" (("+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.vehicleAccess)+") ");
+				sql.Append(" (("+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess]+") ");
 				premier=false;
 			}
 			// Category
-			//			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryAccess).Length>0)
+			//			if(webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess).Length>0)
 			//			{
 			//				if(beginByAnd) sql.Append(" and");
-			//				sql.Append(" (("+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryAccess)+") ");
+			//				sql.Append(" (("+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess)+") ");
 			//				premier=false;
 			//			}
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryAccess).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess].Length>0) {
 				if(!premier) sql.Append(" or");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append("((");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryAccess)+") ");
+				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess]+") ");
 				premier=false;
 			}
 			// Media
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.mediaAccess).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess].Length>0) {
 				if(!premier) sql.Append(" or");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" ((");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.mediaAccess)+") ");
+				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess]+") ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");
 
 			// Droits en exclusion
 			//vehicle
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.vehicleException).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleException].Length>0) {
 				if(!premier) sql.Append(" and");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
 				sql.Append(" ");
-				sql.Append(DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle not in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.vehicleException)+") ");
+				sql.Append(DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle not in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleException]+") ");
 				premier=false;
 			}
 			// Category
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryException).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.categoryException].Length>0) {
 				if(!premier) sql.Append(" and");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category not in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.categoryException)+") ");
+				sql.Append(" "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category not in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryException]+") ");
 				premier=false;
 			}
 			// Media
-			if(webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.mediaException).Length>0) {
+			if(webSession.CustomerLogin[CustomerRightConstante.type.mediaException].Length>0) {
 				if(!premier) sql.Append(" and");
 				else {
 					if(beginByAnd) sql.Append(" and");
 					sql.Append(" (");
 				}
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media not in ("+webSession.CustomerLogin.rightElementString(CustomerRightConstante.type.mediaException)+") ");
+				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media not in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaException]+") ");
 				premier=false;
 			}
 			if(!premier) sql.Append(" )");

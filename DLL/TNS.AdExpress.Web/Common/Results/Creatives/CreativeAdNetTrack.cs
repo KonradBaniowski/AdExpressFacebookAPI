@@ -363,7 +363,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
                 output.AppendFormat("\n</td></tr>");
                 output.AppendFormat("\n<tr><td align=\"center\">");
 
-                if (_session.CustomerLogin.FlagsList[DBCst.Flags.ID_DOWNLOAD_ACCESS_FLAG] != null) {
+                if (_session.CustomerLogin.GetFlag(DBCst.Flags.ID_DOWNLOAD_ACCESS_FLAG) != null) {
                     output.AppendFormat("\n<a href={0} class=\"roll06\" title=\"{1}\">{2}</a>",
                         pathFile,
                         GestionWeb.GetWebWord(SAVE_LINK_LABEL_HELP_ID, _session .SiteLanguage),
@@ -407,7 +407,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td class=\"tdsepar\">:</td><td>{1}</td></tr>"
                 , GestionWeb.GetWebWord(1110, _session.SiteLanguage)
                 , this._group);
-            if (_session.CustomerLogin.FlagsList[DBCst.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG] != null) {
+            if (_session.CustomerLogin.GetFlag(DBCst.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG) != null) {
                 output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td class=\"tdsepar\">:</td><td>{1}</td></tr>"
                     , GestionWeb.GetWebWord(2154, _session.SiteLanguage)
                     , _product);
@@ -427,7 +427,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
                 format);
 
             //Liens plans médias
-            if (_session.CustomerLogin.FlagsList[DBCst.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG] != null) {
+            if (_session.CustomerLogin.GetFlag(DBCst.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG) != null) {
                 output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td class=\"tdsepar\">:</td>",
                     GestionWeb.GetWebWord(2156, _session.SiteLanguage));
 

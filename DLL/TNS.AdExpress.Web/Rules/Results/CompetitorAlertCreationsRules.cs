@@ -314,7 +314,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			object[,] tab = null;
 			bool first = true;
 
-			if (webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG] == null) {
+			if (webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null) {
 				return tab;
 			}
 			int i = -1;

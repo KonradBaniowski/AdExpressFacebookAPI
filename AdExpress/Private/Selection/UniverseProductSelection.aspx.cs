@@ -199,7 +199,7 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 					 universeDictionary.Add(universeDictionary.Count, universe);
 					 _webSession.PrincipalProductUniverses = universeDictionary;
 					 _webSession.Save();
-					 DBFunctions.closeDataBase(_webSession);
+					 _webSession.Source.Close();
 					 Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + "");
 				 }
 				 else {
@@ -258,7 +258,7 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 				universeDictionary.Add(universeDictionary.Count, universe);
 				_webSession.PrincipalProductUniverses = universeDictionary;
 				_webSession.Save();
-				DBFunctions.closeDataBase(_webSession);				
+				_webSession.Source.Close();				
 				//saveScript = WebFunctions.Script.SaveUniverseOpen(_webSession.IdSession, branchType, idUniverseClientDescription);
 				//Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"saveUnivers","<script language=\"JavaScript\" type=\"text/JavaScript\"> window.open('/Private/Universe/UniverseSavePopUp.aspx?idSession="+_webSession.IdSession+"', '', \"toolbar=0, directories=0, status=0, menubar=0, width=450, height=300, scrollbars=1, location=0, resizable=1\");</script>");
 				saveScript = "window.showModalDialog('/Private/Universe/RegisterUniverse.aspx?idSession=" + _webSession.IdSession + "&brancheType=" + branchType

@@ -11,7 +11,6 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -249,12 +248,12 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 						if (UniversListDataAccess.UpdateUniverse(Int64.Parse(idSelectedUniverse), _webSession, idUniverseClientDescription, branchType.GetHashCode(), universes)) {
 
 							// Validation : confirmation d'enregistrement de la requête
-							DBFunctions.closeDataBase(_webSession);
+							_webSession.Source.Close();
 							Response.Write(WebFunctions.Script.AlertWithWindowClose(GestionWeb.GetWebWord(921, _webSession.SiteLanguage)));
 						}
 						else {
 							// Erreur : Echec de l'enregistrement de la requête	
-							DBFunctions.closeDataBase(_webSession);
+							_webSession.Source.Close();
 							Response.Write(WebFunctions.Script.AlertWithWindowClose(GestionWeb.GetWebWord(922, _webSession.SiteLanguage)));
 						}
 					}
@@ -266,29 +265,29 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 
 							if (idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, universes, branchType, idUniverseClientDescription, _webSession)) {
 								// Validation : confirmation d'enregistrement de l'univers
-								DBFunctions.closeDataBase(_webSession);
+								_webSession.Source.Close();
 								Response.Write(WebFunctions.Script.AlertWithWindowClose(GestionWeb.GetWebWord(921, _webSession.SiteLanguage)));
 							}
 							else {
 								// Erreur : Echec de l'enregistrement de l'univers
-								DBFunctions.closeDataBase(_webSession);
+								_webSession.Source.Close();
 								Response.Write(WebFunctions.Script.AlertWithWindowClose(GestionWeb.GetWebWord(922, _webSession.SiteLanguage)));
 							}
 						}
 						else {
 							// Erreur : univers déjà existant
-							DBFunctions.closeDataBase(_webSession);
+							_webSession.Source.Close();
 							Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(923, _webSession.SiteLanguage)));
 						}
 					}
 					else if (universeName.Length == 0) {
 						// Erreur : Le champs est vide
-						DBFunctions.closeDataBase(_webSession);
+						_webSession.Source.Close();
 						Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(837, _webSession.SiteLanguage)));
 					}
 					else {
 						// Erreur : suppérieur à 50 caractères
-						DBFunctions.closeDataBase(_webSession);
+						_webSession.Source.Close();
 						Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(823, _webSession.SiteLanguage)));
 					}
 				

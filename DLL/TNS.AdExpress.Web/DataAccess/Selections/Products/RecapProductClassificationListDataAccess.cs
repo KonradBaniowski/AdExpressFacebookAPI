@@ -10,7 +10,6 @@ using System.Collections;
 using System.Data;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Rules.Customer;
 using TablesDBConstantes=TNS.AdExpress.Constantes.DB.Tables;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Exceptions;

@@ -110,7 +110,7 @@ namespace AdExpress.Private.Results.ValueExcel{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		private void Page_UnLoad(object sender, System.EventArgs e){
-			DBFunctions.closeDataBase(_webSession);
+            _webSession.Source.Close();
 		}
 		#endregion
 		

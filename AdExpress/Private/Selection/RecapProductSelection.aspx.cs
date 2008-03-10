@@ -395,7 +395,7 @@ namespace AdExpress.Private.Selection{
 				if (errorMessage == null) {
 					_webSession.Save();
 					if (_nextUrl.Length > 0) { 
-						DBFunctions.closeDataBase(_webSession);
+						_webSession.Source.Close();
 						HttpContext.Current.Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
 					}
 				}

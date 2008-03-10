@@ -21,9 +21,11 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.DataAccess.Classification;
 
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.DataAccess.Classification.ProductBranch;
 
 namespace AdExpress.Private.MyAdExpress
 {
@@ -363,42 +365,42 @@ namespace AdExpress.Private.MyAdExpress
             switch ((DetailLevelItemInformation.Levels)_webSession.GenericProductDetailLevel.GetDetailLevelItemInformation(level))
             {
                 case DetailLevelItemInformation.Levels.sector:
-                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess, id, (new TNS.AdExpress.Classification.DataAccess.ProductBranch.PartialSectorLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, (OracleConnection)_webSession.Source.GetSource()))[id].ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess, id, (new PartialSectorLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, _webSession.Source))[id].ToString());
                     tree.Checked = true;
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.sector, tree);
                     break;
                 case DetailLevelItemInformation.Levels.subSector:
-                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess, id, (new TNS.AdExpress.Classification.DataAccess.ProductBranch.PartialSubSectorLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, (OracleConnection)_webSession.Source.GetSource()))[id].ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess, id, (new PartialSubSectorLevelListDataAccess(id.ToString(), _webSession.SiteLanguage,_webSession.Source))[id].ToString());
                     tree.Checked = true;
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.subsector, tree);
                     break;
                 case DetailLevelItemInformation.Levels.group:
-                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess, id, (new TNS.AdExpress.Classification.DataAccess.ProductBranch.PartialGroupLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, (OracleConnection)_webSession.Source.GetSource()))[id].ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess, id, (new PartialGroupLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, _webSession.Source))[id].ToString());
                     tree.Checked = true;
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.group, tree);
                     break;
                 case DetailLevelItemInformation.Levels.segment:
-                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess, id, (new TNS.AdExpress.Classification.DataAccess.ProductBranch.PartialSegmentLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, (OracleConnection)_webSession.Source.GetSource()))[id].ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess, id, (new PartialSegmentLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, _webSession.Source))[id].ToString());
                     tree.Checked = true;
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.segment, tree);
                     break;
                 case DetailLevelItemInformation.Levels.product:
-                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.productAccess, id, (new TNS.AdExpress.Classification.DataAccess.ProductBranch.PartialProductLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, (OracleConnection)_webSession.Source.GetSource()))[id].ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.productAccess, id, (new PartialProductLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, _webSession.Source))[id].ToString());
                     tree.Checked = true;
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.product, tree);
                     break;
                 case DetailLevelItemInformation.Levels.advertiser:
-                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess, id, (new TNS.AdExpress.Classification.DataAccess.ProductBranch.PartialAdvertiserLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, (OracleConnection)_webSession.Source.GetSource()))[id].ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess, id, (new PartialAdvertiserLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, _webSession.Source))[id].ToString());
                     tree.Checked = true;
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.advertiser, tree);
                     break;
                 case DetailLevelItemInformation.Levels.brand:
-                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.brandAccess, id, (new TNS.AdExpress.Classification.DataAccess.ProductBranch.PartialBrandLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, (OracleConnection)_webSession.Source.GetSource()))[id].ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.brandAccess, id, (new PartialBrandLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, _webSession.Source))[id].ToString());
                     tree.Checked = true;
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.brand, tree);
                     break;
                 case DetailLevelItemInformation.Levels.holdingCompany:
-                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess, id, (new TNS.AdExpress.Classification.DataAccess.ProductBranch.PartialHoldingCompanyLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, (OracleConnection)_webSession.Source.GetSource()))[id].ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess, id, (new PartialHoldingCompanyLevelListDataAccess(id.ToString(), _webSession.SiteLanguage, _webSession.Source))[id].ToString());
                     tree.Checked = true;
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.holding_company, tree);
                     break;

@@ -176,7 +176,7 @@ namespace AdExpress.Private.Results
                 //				_nextUrl=this.recallWebControl.NextUrl;
                 if (_nextUrl.Length != 0)
                 {
-                    DBFunctions.closeDataBase(_webSession);
+                    _webSession.Source.Close();
 					Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + ((withZoomDateEventArguments && _zoom != null && _zoom.Length > 0) ? "&zoomDate=" + _zoom + "&detailPeriod=" + _savePeriod.GetHashCode() : ""));
                 }
 

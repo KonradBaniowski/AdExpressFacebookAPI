@@ -1,9 +1,10 @@
 using System;
 using TNS.AdExpress.Web.Core.Sessions;
 using Oracle.DataAccess.Client;
-using TNS.AdExpress.Rules.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using System.Collections;
 using System.Data;
+using TNS.AdExpress;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 	/// <summary>
@@ -35,8 +36,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 		public AdvertiserListDataAccess(TNS.AdExpress.Web.Core.Sessions.WebSession webSession, string newText,bool radioButtonHoldingCompany,
 			bool radiobuttonAdvertiser,bool radiobuttonProduct,bool radiobuttonAll,string listHoldingCompany,string listAdvertiser,
 			string listProduct) {
-			
-			Right right=webSession.CustomerLogin;
+
+            Right right=webSession.CustomerLogin;
 			string sql="";				
 					
 			#region requête
@@ -90,120 +91,120 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 					
 			#region Droits clients
 			//Droits clients partie produit
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length==0
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length==0) {
+			if(right[CustomerCst.Right.type.sectorAccess].Length==0
+				&& right[CustomerCst.Right.type.subSectorAccess].Length==0 
+				&& right[CustomerCst.Right.type.groupAccess].Length==0 
+				&& right[CustomerCst.Right.type.segmentAccess].Length==0) {
 				sql+=" ";	 
 			}
 
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException).Length>0
+			else if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
+				|| right[CustomerCst.Right.type.sectorException].Length>0 
+				|| right[CustomerCst.Right.type.subSectorException].Length>0
+				|| right[CustomerCst.Right.type.groupException].Length>0 
+				|| right[CustomerCst.Right.type.segmentException].Length>0
 				) {
 				sql+=" and ( ";}
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
+			if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
 				){
 				sql+="( ";}
 					
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0)sql+="  sc.id_sector in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess)+")";
+			if(right[CustomerCst.Right.type.sectorAccess].Length>0)sql+="  sc.id_sector in ("+right[CustomerCst.Right.type.sectorAccess]+")";
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 && right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0)
-				sql+=" or sc.id_subsector in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess)+")";
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 )
-				sql+=" sc.id_subsector in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess)+")";
+			if(right[CustomerCst.Right.type.subSectorAccess].Length>0 && right[CustomerCst.Right.type.sectorAccess].Length>0)
+				sql+=" or sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+			else if(right[CustomerCst.Right.type.subSectorAccess].Length>0 )
+				sql+=" sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 && (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 || right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0))
-				sql+=" or gr.id_group_ in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess)+")";
-			else if (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0)
-				sql+="  gr.id_group_ in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess)+")";
+			if(right[CustomerCst.Right.type.groupAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0))
+				sql+=" or gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+			else if (right[CustomerCst.Right.type.groupAccess].Length>0)
+				sql+="  gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
 
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0 && (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 || right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 || right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 ))
-				sql+=" or sg.id_segment in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess)+")";
-			else if (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0)
-				sql+="  sg.id_segment in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess)+")";
+			if(right[CustomerCst.Right.type.segmentAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0 || right[CustomerCst.Right.type.groupAccess].Length>0 ))
+				sql+=" or sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+			else if (right[CustomerCst.Right.type.segmentAccess].Length>0)
+				sql+="  sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
 
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
+			if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
 				){
 				sql+=" ) ";}
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException).Length>0)sql+=" and sc.id_sector not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException).Length>0)sql+=" and sc.id_subsector not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException).Length>0)sql+=" and gr.id_group_ not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException).Length>0)sql+=" and sg.id_segment not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException)+")";
+			if(right[CustomerCst.Right.type.sectorException].Length>0)sql+=" and sc.id_sector not in ("+right[CustomerCst.Right.type.sectorException]+")";
+			if(right[CustomerCst.Right.type.subSectorException].Length>0)sql+=" and sc.id_subsector not in ("+right[CustomerCst.Right.type.subSectorException]+")";
+			if(right[CustomerCst.Right.type.groupException].Length>0)sql+=" and gr.id_group_ not in ("+right[CustomerCst.Right.type.groupException]+")";
+			if(right[CustomerCst.Right.type.segmentException].Length>0)sql+=" and sg.id_segment not in ("+right[CustomerCst.Right.type.segmentException]+")";
 					
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length==0
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length==0) {
+			if(right[CustomerCst.Right.type.sectorAccess].Length==0
+				&& right[CustomerCst.Right.type.subSectorAccess].Length==0 
+				&& right[CustomerCst.Right.type.groupAccess].Length==0 
+				&& right[CustomerCst.Right.type.segmentAccess].Length==0) {
 				sql+=" ";	 
 			}
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException).Length>0
+			else if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
+				|| right[CustomerCst.Right.type.sectorException].Length>0 
+				|| right[CustomerCst.Right.type.subSectorException].Length>0
+				|| right[CustomerCst.Right.type.groupException].Length>0 
+				|| right[CustomerCst.Right.type.segmentException].Length>0
 				) {
 				sql+=" ) ";}
 
 						
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length==00) {
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length==0 
+				&& right[CustomerCst.Right.type.advertiserAccess].Length==0) {
 				sql+=" ";
 			}
 				//Droits clients partie advertiser
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException).Length>0) {
+			else if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
+				|| right[CustomerCst.Right.type.advertiserAccess].Length>0
+				|| right[CustomerCst.Right.type.holdingCompanyException].Length>0
+				|| right[CustomerCst.Right.type.advertiserException].Length>0) {
 				sql+=" and ( ";}
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
+				|| right[CustomerCst.Right.type.advertiserAccess ].Length>0
 				){
 				sql+="( ";}
 
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0)
-				sql+="  hc.id_holding_company in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess)+")";
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0)
+				sql+="  hc.id_holding_company in ("+right[CustomerCst.Right.type.holdingCompanyAccess]+")";
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess).Length>0 && right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0)
-				sql+=" or ad.id_advertiser in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess)+")";
-			else if (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess).Length>0)
-				sql+=" ad.id_advertiser in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
+			if(right[CustomerCst.Right.type.advertiserAccess].Length>0 && right[CustomerCst.Right.type.holdingCompanyAccess].Length>0)
+				sql+=" or ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess]+")";
+			else if (right[CustomerCst.Right.type.advertiserAccess].Length>0)
+				sql+=" ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess]+")";
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
+				|| right[CustomerCst.Right.type.advertiserAccess].Length>0
 				){
 				sql+=" ) ";}
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException).Length>0)sql+=" and hc.id_holding_company not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException).Length>0)sql+=" and ad.id_advertiser not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException)+")";
+			if(right[CustomerCst.Right.type.holdingCompanyException].Length>0)sql+=" and hc.id_holding_company not in ("+right[CustomerCst.Right.type.holdingCompanyException]+")";
+			if(right[CustomerCst.Right.type.advertiserException].Length>0)sql+=" and ad.id_advertiser not in ("+right[CustomerCst.Right.type.advertiserException]+")";
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length==0) {
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length==0 
+				&& right[CustomerCst.Right.type.advertiserAccess].Length==0) {
 				sql+=" ";
 			}
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException).Length>0) {
+			else if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
+				|| right[CustomerCst.Right.type.advertiserAccess].Length>0
+				|| right[CustomerCst.Right.type.holdingCompanyException].Length>0
+				|| right[CustomerCst.Right.type.advertiserException].Length>0) {
 				sql+=" ) ";}
 			#endregion
 
@@ -380,120 +381,120 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 					
 			#region Droits clients
 			//Droits clients partie produit
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length==0
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length==0) {
+			if(right[CustomerCst.Right.type.sectorAccess].Length==0
+				&& right[CustomerCst.Right.type.subSectorAccess].Length==0 
+				&& right[CustomerCst.Right.type.groupAccess].Length==0 
+				&& right[CustomerCst.Right.type.segmentAccess].Length==0) {
 				sql+=" ";	 
 			}
 
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException).Length>0
+			else if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
+				|| right[CustomerCst.Right.type.sectorException].Length>0 
+				|| right[CustomerCst.Right.type.subSectorException].Length>0
+				|| right[CustomerCst.Right.type.groupException].Length>0 
+				|| right[CustomerCst.Right.type.segmentException].Length>0
 				) {
 				sql+=" and ( ";}
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
+			if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+    			|| right[CustomerCst.Right.type.segmentAccess].Length>0
 				){
 				sql+="( ";}
 					
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0)sql+="  sc.id_sector in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess)+")";
+			if(right[CustomerCst.Right.type.sectorAccess].Length>0)sql+="  sc.id_sector in ("+right[CustomerCst.Right.type.sectorAccess]+")";
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 && right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0)
-				sql+=" or sc.id_subsector in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess)+")";
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 )
-				sql+=" sc.id_subsector in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess)+")";
+			if(right[CustomerCst.Right.type.subSectorAccess].Length>0 && right[CustomerCst.Right.type.sectorAccess].Length>0)
+				sql+=" or sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+			else if(right[CustomerCst.Right.type.subSectorAccess].Length>0 )
+				sql+=" sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 && (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 || right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0))
-				sql+=" or gr.id_group_ in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess)+")";
-			else if (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0)
-				sql+="  gr.id_group_ in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess)+")";
+			if(right[CustomerCst.Right.type.groupAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0))
+				sql+=" or gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+			else if (right[CustomerCst.Right.type.groupAccess].Length>0)
+				sql+="  gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
 
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0 && (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 || right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 || right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 ))
-				sql+=" or sg.id_segment in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess)+")";
-			else if (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0)
-				sql+="  sg.id_segment in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess)+")";
+			if(right[CustomerCst.Right.type.segmentAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0 || right[CustomerCst.Right.type.groupAccess].Length>0 ))
+				sql+=" or sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+			else if (right[CustomerCst.Right.type.segmentAccess].Length>0)
+				sql+="  sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
 
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
+			if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
 				){
 				sql+=" ) ";}
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException).Length>0)sql+=" and sc.id_sector not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException).Length>0)sql+=" and sc.id_subsector not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException).Length>0)sql+=" and gr.id_group_ not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException).Length>0)sql+=" and sg.id_segment not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException)+")";
+			if(right[CustomerCst.Right.type.sectorException].Length>0)sql+=" and sc.id_sector not in ("+right[CustomerCst.Right.type.sectorException]+")";
+			if(right[CustomerCst.Right.type.subSectorException].Length>0)sql+=" and sc.id_subsector not in ("+right[CustomerCst.Right.type.subSectorException]+")";
+			if(right[CustomerCst.Right.type.groupException].Length>0)sql+=" and gr.id_group_ not in ("+right[CustomerCst.Right.type.groupException]+")";
+			if(right[CustomerCst.Right.type.segmentException].Length>0)sql+=" and sg.id_segment not in ("+right[CustomerCst.Right.type.segmentException]+")";
 					
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length==0
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length==0) {
+			if(right[CustomerCst.Right.type.sectorAccess].Length==0
+				&& right[CustomerCst.Right.type.subSectorAccess].Length==0 
+				&& right[CustomerCst.Right.type.groupAccess].Length==0 
+				&& right[CustomerCst.Right.type.segmentAccess].Length==0) {
 				sql+=" ";	 
 			}
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException).Length>0
+			else if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
+				|| right[CustomerCst.Right.type.sectorException].Length>0 
+				|| right[CustomerCst.Right.type.subSectorException].Length>0
+				|| right[CustomerCst.Right.type.groupException].Length>0 
+				|| right[CustomerCst.Right.type.segmentException].Length>0
 				) {
 				sql+=" ) ";}
 
 						
-			//			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length==0 
-			//				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length==0) {
+			//			if(right[CustomerCst.Right.type.holdingCompanyAccess).Length==0 
+			//				&& right[CustomerCst.Right.type.advertiserAccess ).Length==0) {
 			//				sql+=" ";
 			//			}
 			//				//Droits clients partie advertiser
-			//			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-			//				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
-			//				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException).Length>0
-			//				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException).Length>0) {
+			//			else if(right[CustomerCst.Right.type.holdingCompanyAccess).Length>0 
+			//				|| right[CustomerCst.Right.type.advertiserAccess ).Length>0
+			//				|| right[CustomerCst.Right.type.holdingCompanyException).Length>0
+			//				|| right[CustomerCst.Right.type.advertiserException).Length>0) {
 			//				sql+=" and ( ";}
 			//					
-			//			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-			//				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
+			//			if(right[CustomerCst.Right.type.holdingCompanyAccess).Length>0 
+			//				|| right[CustomerCst.Right.type.advertiserAccess ).Length>0
 			//				){
 			//				sql+="( ";}
 			//
 			//					
-			//			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0)
-			//				sql+="  hc.id_holding_company in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess)+")";
+			//			if(right[CustomerCst.Right.type.holdingCompanyAccess).Length>0)
+			//				sql+="  hc.id_holding_company in ("+right[CustomerCst.Right.type.holdingCompanyAccess)+")";
 			//
-			//			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess).Length>0 && right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0)
-			//				sql+=" or ad.id_advertiser in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess)+")";
-			//			else if (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess).Length>0)
-			//				sql+=" ad.id_advertiser in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess)+")";
-			//			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-			//				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
+			//			if(right[CustomerCst.Right.type.advertiserAccess).Length>0 && right[CustomerCst.Right.type.holdingCompanyAccess).Length>0)
+			//				sql+=" or ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess)+")";
+			//			else if (right[CustomerCst.Right.type.advertiserAccess).Length>0)
+			//				sql+=" ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess)+")";
+			//			if(right[CustomerCst.Right.type.holdingCompanyAccess).Length>0 
+			//				|| right[CustomerCst.Right.type.advertiserAccess ).Length>0
 			//				){
 			//				sql+=" ) ";}
-			//			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException).Length>0)sql+=" and hc.id_holding_company not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException)+")";
-			//			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException).Length>0)sql+=" and ad.id_advertiser not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException)+")";
+			//			if(right[CustomerCst.Right.type.holdingCompanyException).Length>0)sql+=" and hc.id_holding_company not in ("+right[CustomerCst.Right.type.holdingCompanyException)+")";
+			//			if(right[CustomerCst.Right.type.advertiserException).Length>0)sql+=" and ad.id_advertiser not in ("+right[CustomerCst.Right.type.advertiserException)+")";
 			//					
-			//			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length==0 
-			//				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length==0) {
+			//			if(right[CustomerCst.Right.type.holdingCompanyAccess).Length==0 
+			//				&& right[CustomerCst.Right.type.advertiserAccess ).Length==0) {
 			//				sql+=" ";
 			//			}
-			//			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-			//				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
-			//				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException).Length>0
-			//				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException).Length>0) {
+			//			else if(right[CustomerCst.Right.type.holdingCompanyAccess).Length>0 
+			//				|| right[CustomerCst.Right.type.advertiserAccess ).Length>0
+			//				|| right[CustomerCst.Right.type.holdingCompanyException).Length>0
+			//				|| right[CustomerCst.Right.type.advertiserException).Length>0) {
 			//				sql+=" ) ";}
 			#endregion
 
@@ -652,131 +653,131 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 					
 			#region Droits clients
 			//Droits clients partie produit
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length==0
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length==0) 
+			if(right[CustomerCst.Right.type.sectorAccess].Length==0
+				&& right[CustomerCst.Right.type.subSectorAccess].Length==0 
+				&& right[CustomerCst.Right.type.groupAccess].Length==0 
+				&& right[CustomerCst.Right.type.segmentAccess].Length==0) 
 			{
 				sql+=" ";	 
 			}
 
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException).Length>0
+            else if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
+				|| right[CustomerCst.Right.type.sectorException].Length>0 
+				|| right[CustomerCst.Right.type.subSectorException].Length>0
+				|| right[CustomerCst.Right.type.groupException].Length>0 
+				|| right[CustomerCst.Right.type.segmentException].Length>0
 				) 
 			{
 				sql+=" and ( ";}
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
+                if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
 				)
 			{
 				sql+="( ";}
-					
-					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0)sql+="  sc.id_sector in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess)+")";
-					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 && right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0)
-				sql+=" or sc.id_subsector in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess)+")";
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 )
-				sql+=" sc.id_subsector in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess)+")";
-
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 && (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 || right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0))
-				sql+=" or gr.id_group_ in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess)+")";
-			else if (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0)
-				sql+="  gr.id_group_ in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess)+")";
-
-					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0 && (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 || right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 || right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 ))
-				sql+=" or sg.id_segment in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess)+")";
-			else if (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0)
-				sql+="  sg.id_segment in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess)+")";
 
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
+                if(right[CustomerCst.Right.type.sectorAccess].Length>0) sql+="  sc.id_sector in ("+right[CustomerCst.Right.type.sectorAccess]+")";
+
+                if(right[CustomerCst.Right.type.subSectorAccess].Length>0 && right[CustomerCst.Right.type.sectorAccess].Length>0)
+                    sql+=" or sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+                else if(right[CustomerCst.Right.type.subSectorAccess].Length>0)
+                    sql+=" sc.id_subsector in ("+right[CustomerCst.Right.type.subSectorAccess]+")";
+
+			if(right[CustomerCst.Right.type.groupAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0))
+				sql+=" or gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+			else if (right[CustomerCst.Right.type.groupAccess].Length>0)
+                sql+="  gr.id_group_ in ("+right[CustomerCst.Right.type.groupAccess]+")";
+
+
+            if(right[CustomerCst.Right.type.segmentAccess].Length>0 && (right[CustomerCst.Right.type.subSectorAccess].Length>0 || right[CustomerCst.Right.type.sectorAccess].Length>0 || right[CustomerCst.Right.type.groupAccess].Length>0))
+                sql+=" or sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+            else if(right[CustomerCst.Right.type.segmentAccess].Length>0)
+                sql+="  sg.id_segment in ("+right[CustomerCst.Right.type.segmentAccess]+")";
+
+
+			if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
 				)
 			{
 				sql+=" ) ";}
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException).Length>0)sql+=" and sc.id_sector not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException).Length>0)sql+=" and sc.id_subsector not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException).Length>0)sql+=" and gr.id_group_ not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException).Length>0)sql+=" and sg.id_segment not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException)+")";
+			if(right[CustomerCst.Right.type.sectorException].Length>0)sql+=" and sc.id_sector not in ("+right[CustomerCst.Right.type.sectorException]+")";
+			if(right[CustomerCst.Right.type.subSectorException].Length>0)sql+=" and sc.id_subsector not in ("+right[CustomerCst.Right.type.subSectorException]+")";
+			if(right[CustomerCst.Right.type.groupException].Length>0)sql+=" and gr.id_group_ not in ("+right[CustomerCst.Right.type.groupException]+")";
+			if(right[CustomerCst.Right.type.segmentException].Length>0)sql+=" and sg.id_segment not in ("+right[CustomerCst.Right.type.segmentException]+")";
 					
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length==0
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length==0) 
+			if(right[CustomerCst.Right.type.sectorAccess].Length==0
+				&& right[CustomerCst.Right.type.subSectorAccess].Length==0 
+				&& right[CustomerCst.Right.type.groupAccess].Length==0 
+				&& right[CustomerCst.Right.type.segmentAccess].Length==0) 
 			{
 				sql+=" ";	 
 			}
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.sectorException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.subSectorException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.groupException).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.segmentException).Length>0
+			else if(right[CustomerCst.Right.type.sectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.subSectorAccess].Length>0 
+				|| right[CustomerCst.Right.type.groupAccess].Length>0 
+				|| right[CustomerCst.Right.type.segmentAccess].Length>0
+				|| right[CustomerCst.Right.type.sectorException].Length>0 
+				|| right[CustomerCst.Right.type.subSectorException].Length>0
+				|| right[CustomerCst.Right.type.groupException].Length>0 
+				|| right[CustomerCst.Right.type.segmentException].Length>0
 				) 
 			{
 				sql+=" ) ";}
 
 						
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length==00) 
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length==0 
+				&& right[CustomerCst.Right.type.advertiserAccess].Length==00) 
 			{
 				sql+=" ";
 			}
 				//Droits clients partie advertiser
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException).Length>0) 
+			else if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
+				|| right[CustomerCst.Right.type.advertiserAccess].Length>0
+				|| right[CustomerCst.Right.type.holdingCompanyException].Length>0
+				|| right[CustomerCst.Right.type.advertiserException].Length>0) 
 			{
 				sql+=" and ( ";}
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
+				|| right[CustomerCst.Right.type.advertiserAccess].Length>0
 				)
 			{
 				sql+="( ";}
 
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0)
-				sql+="  hc.id_holding_company in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess)+")";
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0)
+				sql+="  hc.id_holding_company in ("+right[CustomerCst.Right.type.holdingCompanyAccess]+")";
 
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess).Length>0 && right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0)
-				sql+=" or ad.id_advertiser in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess)+")";
-			else if (right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess).Length>0)
-				sql+=" ad.id_advertiser in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
+			if(right[CustomerCst.Right.type.advertiserAccess].Length>0 && right[CustomerCst.Right.type.holdingCompanyAccess].Length>0)
+				sql+=" or ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess]+")";
+			else if (right[CustomerCst.Right.type.advertiserAccess].Length>0)
+				sql+=" ad.id_advertiser in ("+right[CustomerCst.Right.type.advertiserAccess]+")";
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
+				|| right[CustomerCst.Right.type.advertiserAccess].Length>0
 				)
 			{
 				sql+=" ) ";}
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException).Length>0)sql+=" and hc.id_holding_company not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException)+")";
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException).Length>0)sql+=" and ad.id_advertiser not in ("+right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException)+")";
+			if(right[CustomerCst.Right.type.holdingCompanyException].Length>0)sql+=" and hc.id_holding_company not in ("+right[CustomerCst.Right.type.holdingCompanyException]+")";
+			if(right[CustomerCst.Right.type.advertiserException].Length>0)sql+=" and ad.id_advertiser not in ("+right[CustomerCst.Right.type.advertiserException]+")";
 					
-			if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length==0 
-				&& right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length==0) 
+			if(right[CustomerCst.Right.type.holdingCompanyAccess].Length==0 
+				&& right[CustomerCst.Right.type.advertiserAccess].Length==0) 
 			{
 				sql+=" ";
 			}
-			else if(right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess).Length>0 
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException).Length>0
-				|| right.rightElementString(TNS.AdExpress.Constantes.Customer.Right.type.advertiserException).Length>0) 
+			else if(right[CustomerCst.Right.type.holdingCompanyAccess].Length>0 
+				|| right[CustomerCst.Right.type.advertiserAccess].Length>0
+				|| right[CustomerCst.Right.type.holdingCompanyException].Length>0
+				|| right[CustomerCst.Right.type.advertiserException].Length>0) 
 			{
 				sql+=" ) ";}
 			#endregion		

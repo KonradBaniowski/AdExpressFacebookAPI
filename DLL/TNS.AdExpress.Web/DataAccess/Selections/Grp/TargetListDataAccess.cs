@@ -32,7 +32,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Grp
 		/// <param name="idWave">identifiant(s) de(s) vague(s)</param>
 		/// <param name="connectionString">Chaîne de connexion</param>
 		/// <returns>liste des cibles AEPM</returns>
-		public static DataSet GetAEPMTargetListDataAccess(string idWave,string connectionString){
+		public static DataSet GetAEPMTargetListDataAccess(string idWave,IDataSource source){
 			string sql="";
 
 			sql= " select "+DBCst.Tables.TARGET_PREFIXE+".id_target,"+DBCst.Tables.TARGET_PREFIXE+".target";
@@ -41,7 +41,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Grp
 			if(WebFunctions.CheckedText.IsStringEmpty(idWave))
 				sql+="  and "+DBCst.Tables.TARGET_PREFIXE+".id_wave in ("+idWave+")";
 			sql+=" order by "+DBCst.Tables.TARGET_PREFIXE+".target asc";
-			return WebDataAccess.Functions.ExecuteQuery(sql,connectionString);
+			return source.Fill(sql);
 		}
 
 		/// <summary>
@@ -51,7 +51,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Grp
 		/// <param name="targets">Libellés cibles (séparés par une virgule)</param>
 		/// <param name="connectionString">Chaîne de connection</param>
 		/// <returns>Libellé des cibles AEPM</returns>
-		public static DataSet GetAEPMTargetListDataAccess(string idWave,string targets,string connectionString){
+		public static DataSet GetAEPMTargetListDataAccess(string idWave,string targets,IDataSource source){
 
 			string sql="";
 
@@ -65,7 +65,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Grp
 			sql+=" order by "+DBCst.Tables.TARGET_PREFIXE+".target asc";
 
 			try{
-				return WebDataAccess.Functions.ExecuteQuery(sql,connectionString);
+				return (source.Fill(sql));
 			}
 			catch(System.Exception e){
 				throw(e);

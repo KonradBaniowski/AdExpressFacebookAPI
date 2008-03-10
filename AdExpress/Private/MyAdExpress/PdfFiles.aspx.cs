@@ -217,7 +217,8 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <param name="e">Arguments</param>
 		protected void ImageButtonRollOverWebControl1_Click(object sender, System.EventArgs e) {
 			try{
-				DBFunctions.closeDataBase(_webSession);
+				//_webSession.Source.Close();
+                _webSession.Source.Close();
 				Response.Redirect("/Private/MyAdexpress/SearchSession.aspx?idSession="+_webSession.IdSession+"");
 			}
 			catch(System.Exception exc){
@@ -236,7 +237,7 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <param name="e"></param>
 		protected void personalizeImagebuttonrolloverwebcontrol_Click(object sender, System.EventArgs e) {
 			try{
-				DBFunctions.closeDataBase(_webSession);
+                _webSession.Source.Close();
 				Response.Redirect("/Private/MyAdexpress/PersonnalizeSession.aspx?idSession="+_webSession.IdSession+"");
 			}
 			catch(System.Exception exc){
@@ -255,7 +256,7 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <param name="e"></param>
 		protected void universOpenImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			try{
-				DBFunctions.closeDataBase(_webSession);
+                _webSession.Source.Close();
 				Response.Redirect("/Private/Universe/PersonnalizeUniverse.aspx?idSession="+_webSession.IdSession+"");
 			}
 			catch(System.Exception exc){

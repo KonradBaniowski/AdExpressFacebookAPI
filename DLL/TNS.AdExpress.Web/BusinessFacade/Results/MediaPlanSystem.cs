@@ -18,7 +18,7 @@ using ModuleName=TNS.AdExpress.Constantes.Web.Module.Name;
 using TNS.AdExpress.Web.Exceptions;
 using WebFnc = TNS.AdExpress.Web.Functions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 
 namespace TNS.AdExpress.Web.BusinessFacade.Results
 {
@@ -49,9 +49,9 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results
 				switch(webSession.CurrentModule){
 					case ModuleName.BILAN_CAMPAGNE :
 						//base target
-						idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+                        idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmBaseTargetAccess));
 						//additional target
-						idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+                        idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmTargetAccess));									
 						try{
                             if (!page.ClientScript.IsClientScriptBlockRegistered("PopUpInsertion")){
                                 page.ClientScript.RegisterClientScriptBlock(page.GetType(), "PopUpInsertion", WebFnc.Script.PopUpInsertion(false));
@@ -97,9 +97,9 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results
 				switch(webSession.CurrentModule){
 					case ModuleName.BILAN_CAMPAGNE :
 						//base target
-						idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+                        idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmBaseTargetAccess));
 						//additional target
-						idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+                        idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmTargetAccess));									
 						try{
                             if (!page.ClientScript.IsClientScriptBlockRegistered("PopUpInsertion")){
                                 page.ClientScript.RegisterClientScriptBlock(page.GetType(), "PopUpInsertion", WebFnc.Script.PopUpInsertion(false));

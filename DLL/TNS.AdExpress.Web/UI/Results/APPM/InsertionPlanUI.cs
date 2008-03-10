@@ -11,7 +11,7 @@ using System.Data;
 using System.Text;
 
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 
@@ -119,7 +119,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 				#region table fill
 				string css = "";
 				foreach(DataRow row in dtResult.Rows){
-					if(row[0].ToString()== Right.type.mediaAccess.ToString()){
+                    if(row[0].ToString()== CustomerCst.Right.type.mediaAccess.ToString()) {
 						css = md_css;
 					}
 					else{
@@ -131,7 +131,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					
 					if(!excel){
 						//Lien vers la PopUp Justificatif
-						if(row[0].ToString()== Right.type.mediaAccess.ToString()){
+                        if(row[0].ToString()== CustomerCst.Right.type.mediaAccess.ToString()) {
 							html.Append("<td></td>");
 						}
 						else{						

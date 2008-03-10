@@ -12,7 +12,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using WebExceptions=TNS.AdExpress.Web.Core.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.DB;
-
+/*
 namespace TNS.AdExpress.Web.Core{
 
 
@@ -141,3 +141,4 @@ namespace TNS.AdExpress.Web.Core{
 
     }
 }
+*/

@@ -25,12 +25,35 @@
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
     <table enumId="1" description="List detail table" schemaEnumId="5" label="list_detail" prefix="lstd"/>
     <table enumId="2" description="tracking table" schemaEnumId="5" label="tracking" prefix="tr"/>
-    <table enumId="3" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
-    <table enumId="4" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
-    <table enumId="5" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
-    <table enumId="6" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
-    <table enumId="7" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
-    <table enumId="8" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
-    <table enumId="9" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
+
+    <table enumId="12" description="Right: Template" schemaEnumId="2" label="template" prefix="t"/>
+    <table enumId="13" description="Right: Template assignment" schemaEnumId="2" label="template_assignment" prefix="ta"/>
+    <table enumId="14" description="Right: Media type" schemaEnumId="2" label="type_media" prefix="tm"/>
+    <table enumId="15" description="Right: Product type" schemaEnumId="2" label="type_product" prefix="tp"/>
+
+    <table enumId="24" description="Right: Media order template" schemaEnumId="2" label="order_template_media" prefix="otm"/>
+    <table enumId="25" description="Right: Product order template" schemaEnumId="2" label="order_template_product" prefix="otp"/>
+    
+    <table enumId="91" description="Right: Login" schemaEnumId="2" label="login" prefix="lo"/>
+    
+    <table enumId="97" description="Right: Module" schemaEnumId="2" label="module" prefix="m"/>
+    <table enumId="98" description="Right: Module group" schemaEnumId="2" label="module_group" prefix="mg"/>
+
+    <table enumId="122" description="Recap: category" schemaEnumId="4" label="category" prefix="recap_c"/>
+
+    <table enumId="125" description="Recap: media" schemaEnumId="4" label="media" prefix="recap_m"/>
+    
+    <table enumId="130" description="Recap: vehicle" schemaEnumId="4" label="vehicle" prefix="recap_v"/>
+    <table enumId="131" description="Right: Module Assignment" schemaEnumId="2" label="module_assignment" prefix="ma"/>
+    <table enumId="132" description="Right: Right Assignment" schemaEnumId="2" label="right_assignment" prefix="ra"/>
+    <table enumId="133" description="Right: My Login view" schemaEnumId="2" label="my_login" prefix="mylo"/>
+    <table enumId="134" description="Right: Product Order" schemaEnumId="2" label="order_client_product" prefix="ocp"/>
+    <table enumId="135" description="Right: Media Order" schemaEnumId="2" label="order_client_media" prefix="ocm"/>
+    <table enumId="136" description="Right: Module frequency types" schemaEnumId="2" label="frequency" prefix="mfq"/>
+    <table enumId="137" description="Right: Module category" schemaEnumId="2" label="module_category" prefix="mc"/>
+    <table enumId="138" description="Right: Flag" schemaEnumId="2" label="flag" prefix="fg"/>
+    <table enumId="139" description="Right: Project flag assignment" schemaEnumId="2" label="flag_project_assignment" prefix="fgpa"/>
+    <!--<table enumId="6" description="List table" schemaEnumId="5" label="list" prefix="lst"/>-->
   </tables>
 </database>
+

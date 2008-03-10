@@ -625,7 +625,7 @@ namespace AdExpress.Private.Selection{
 					//)
 					//oConnection = new Oracle.DataAccess.Client.OracleConnection(DBCst.Connection.RECAP_CONNECTION_STRING);
 					//else
-						oConnection = _webSession.CustomerLogin.Connection;
+						//oConnection = _webSession.CustomerLogin.Connection;
 
 					System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
 					string nameProduct = "";
@@ -682,7 +682,7 @@ namespace AdExpress.Private.Selection{
 								//Render universe html code
 								t.Append("<TR height=\"20\">");
 								t.Append("<TD>&nbsp;</TD>");
-								t.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.SiteLanguage, oConnection) + "</TD>");								
+								t.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.SiteLanguage, _webSession.Source) + "</TD>");								
 								t.Append("</TR>");
 								t.Append("<TR height=\"5\">");
 								t.Append("<TD></TD>");
@@ -696,7 +696,7 @@ namespace AdExpress.Private.Selection{
 						}
 						else {
 							if (_webSession.PrincipalProductUniverses.ContainsKey(k)) {
-								productText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.SiteLanguage, oConnection);
+								productText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.SiteLanguage, _webSession.Source);
 							}
 						}						
 					}
@@ -712,7 +712,7 @@ namespace AdExpress.Private.Selection{
 					//)
 					//    oConnection = new Oracle.DataAccess.Client.OracleConnection(DBCst.Connection.RECAP_CONNECTION_STRING);
 					//else 
-					oConnection = _webSession.CustomerLogin.Connection;
+					//oConnection = _webSession.CustomerLogin.Connection;
 
 					if (WebFunctions.Modules.IsDashBoardModule(_webSession)) {
 						displayProduct = true;
@@ -749,7 +749,7 @@ namespace AdExpress.Private.Selection{
 
 						if(_webSession.SecondaryProductUniverses.ContainsKey(0)){
 							//Liste des annonceurs de référence personnalisés
-							referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[0], _webSession.SiteLanguage, oConnection);
+							referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[0], _webSession.SiteLanguage, _webSession.Source);
 							referenceProductAdExpressText.Code = 1195;
 							displayReferenceAdvertiser = true;
 						}
@@ -757,7 +757,7 @@ namespace AdExpress.Private.Selection{
 							//Liste des annonceurs de référence personnalisés
 							 advertiserAdexpresstext.Code = 1196;
 							 displayAdvertiser = true;
-							 advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[1], _webSession.SiteLanguage, oConnection);
+                             advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[1],_webSession.SiteLanguage,_webSession.Source);
 						}
 
 					}
@@ -775,14 +775,14 @@ namespace AdExpress.Private.Selection{
 										advertiserAdexpresstext.Code = 2301;
 										displayAdvertiser = true;
 									}
-									advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k], _webSession.SiteLanguage, oConnection);
+                                    advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.SiteLanguage,_webSession.Source);
 								}
 								else {
 									if (WebFunctions.Modules.IsDashBoardModule(_webSession)) {
-										productText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k], _webSession.SiteLanguage, oConnection);
+                                        productText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.SiteLanguage,_webSession.Source);
 									}
 									else {
-										referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k], _webSession.SiteLanguage, oConnection);										
+                                        referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.SiteLanguage,_webSession.Source);										
 									}
 								}
 							}
@@ -979,8 +979,8 @@ namespace AdExpress.Private.Selection{
 		private void GetGenericLevelDetail(WebSession webSession){
 			ArrayList detailSelections = null;
 
-			_webSession.CustomerLogin.ModuleList();
-			Module currentModule = (Module)_webSession.CustomerLogin.HtModulesList[_webSession.CurrentModule];
+			//_webSession.CustomerLogin.ModuleList();
+			Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
 			try{
 				detailSelections=((ResultPageInformation) currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
 			}

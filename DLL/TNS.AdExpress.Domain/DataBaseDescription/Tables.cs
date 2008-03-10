@@ -28,9 +28,13 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         private string _prefix;
         /// <summary>
+        /// Schema Id
+        /// </summary>
+        private SchemaIds _schemaId;
+        /// <summary>
         /// Schema
         /// </summary>
-        private Schema _schema;
+        private Schema _schema=null;
         #endregion
 
         #region Constructor
@@ -52,6 +56,16 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         #endregion
 
         #region Accessors
+
+        /// <summary>
+        /// Get SQL code
+        /// prefix
+        /// </summary>
+        /// <example> wp</example>
+        public string Prefix {
+            get { return (_prefix); }
+        }
+
         /// <summary>
         /// Get SQL code
         /// Schema.Table prefix

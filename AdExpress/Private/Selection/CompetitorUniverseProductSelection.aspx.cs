@@ -334,7 +334,7 @@ public partial class Private_Selection_CompetitorUniverseProductSelection : TNS.
 						if ((MustSelectIncludeItems() && nGroups != null && nGroups.Count > 0) || !MustSelectIncludeItems()) {
 							_webSession.PrincipalProductUniverses.Add(_webSession.PrincipalProductUniverses.Count, universe);
 							_webSession.Save();
-							DBFunctions.closeDataBase(_webSession);
+							_webSession.Source.Close();
 							//Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + "");
 							if (WebConstantes.Module.Name.BILAN_CAMPAGNE == _webSession.CurrentModule) {
 								idUnivers.Text = "" + GestionWeb.GetWebWord(1678, _webSession.SiteLanguage);
@@ -430,7 +430,7 @@ public partial class Private_Selection_CompetitorUniverseProductSelection : TNS.
 						if ((MustSelectIncludeItems() && nGroups != null && nGroups.Count > 0) || !MustSelectIncludeItems()) {
 							_webSession.PrincipalProductUniverses.Add(_webSession.PrincipalProductUniverses.Count, universe);
 							_webSession.Save();
-							DBFunctions.closeDataBase(_webSession);
+							_webSession.Source.Close();
 							Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + "");
 						}
 						else {

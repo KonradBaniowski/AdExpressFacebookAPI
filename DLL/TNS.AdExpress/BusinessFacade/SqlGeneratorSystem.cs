@@ -6,7 +6,6 @@
 #endregion
 
 using System;
-using TNS.AdExpress.Rules.Customer;
 using AdexpressExceptions = TNS.AdExpress.Exceptions;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
@@ -29,67 +28,67 @@ namespace TNS.AdExpress.BusinessFacade{
 		/// <param name="tablePrefixe">Préfixe de la table qui contient les données</param>
 		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
 		/// <returns>Code SQL généré</returns>
-		public static string GetMediaRight(Right customerLogin,string tablePrefixe,bool beginByAnd){
+		public static string GetMediaRight(TNS.AdExpress.Right customerLogin,string tablePrefixe,bool beginByAnd){
 			string sql="";
 			bool premier=true;
 			// le bloc doit il commencer par AND
 			// Vehicle
-			if(customerLogin.rightElementString(CustomerRightConstante.type.vehicleAccess).Length>0){
+			if(customerLogin[CustomerRightConstante.type.vehicleAccess].Length>0){
 				if(beginByAnd) sql+=" and";
-				sql+=" (("+tablePrefixe+".id_vehicle in ("+customerLogin.rightElementString(CustomerRightConstante.type.vehicleAccess)+") ";
+				sql+=" (("+tablePrefixe+".id_vehicle in ("+customerLogin[CustomerRightConstante.type.vehicleAccess]+") ";
 				premier=false;
 			}
 			// Category
-			if(customerLogin.rightElementString(CustomerRightConstante.type.categoryAccess).Length>0){
+			if(customerLogin[CustomerRightConstante.type.categoryAccess].Length>0){
 				if(!premier) sql+=" or";
 				else {
 					if(beginByAnd) sql+=" and";
 					sql+=" ((";
 				}
-				sql+=" "+tablePrefixe+".id_category in ("+customerLogin.rightElementString(CustomerRightConstante.type.categoryAccess)+") ";
+				sql+=" "+tablePrefixe+".id_category in ("+customerLogin[CustomerRightConstante.type.categoryAccess]+") ";
 				premier=false;
 			}
 			// Media
-			if(customerLogin.rightElementString(CustomerRightConstante.type.mediaAccess).Length>0){
+			if(customerLogin[CustomerRightConstante.type.mediaAccess].Length>0){
 				if(!premier) sql+=" or";
 				else{
 					if(beginByAnd) sql+=" and";
 					sql+=" ((";
 				}
-				sql+=" "+tablePrefixe+".id_media in ("+customerLogin.rightElementString(CustomerRightConstante.type.mediaAccess)+") ";
+				sql+=" "+tablePrefixe+".id_media in ("+customerLogin[CustomerRightConstante.type.mediaAccess]+") ";
 				premier=false;
 			}
 			if(!premier) sql+=" )";
 
 			// Droits en exclusion
 			// Vehicle
-			if(customerLogin.rightElementString(CustomerRightConstante.type.vehicleException).Length>0){
+			if(customerLogin[CustomerRightConstante.type.vehicleException].Length>0){
 				if(!premier) sql+=" and";
 				else{
 					if(beginByAnd) sql+=" and";
 					sql+=" (";
 				}
-				sql+=" "+tablePrefixe+".id_vehicle not in ("+customerLogin.rightElementString(CustomerRightConstante.type.vehicleException)+") ";
+				sql+=" "+tablePrefixe+".id_vehicle not in ("+customerLogin[CustomerRightConstante.type.vehicleException]+") ";
 				premier=false;
 			}
 			// Category
-			if(customerLogin.rightElementString(CustomerRightConstante.type.categoryException).Length>0){
+			if(customerLogin[CustomerRightConstante.type.categoryException].Length>0){
 				if(!premier) sql+=" and";
 				else{
 					if(beginByAnd) sql+=" and";
 					sql+=" (";
 				}
-				sql+=" "+tablePrefixe+".id_category not in ("+customerLogin.rightElementString(CustomerRightConstante.type.categoryException)+") ";
+				sql+=" "+tablePrefixe+".id_category not in ("+customerLogin[CustomerRightConstante.type.categoryException]+") ";
 				premier=false;
 			}
 			// Media
-			if(customerLogin.rightElementString(CustomerRightConstante.type.mediaException).Length>0){
+			if(customerLogin[CustomerRightConstante.type.mediaException].Length>0){
 				if(!premier) sql+=" and";
 				else{
 					if(beginByAnd) sql+=" and";
 					sql+=" (";
 				}
-				sql+=" "+tablePrefixe+".id_media not in ("+customerLogin.rightElementString(CustomerRightConstante.type.mediaException)+") ";
+				sql+=" "+tablePrefixe+".id_media not in ("+customerLogin[CustomerRightConstante.type.mediaException]+") ";
 				premier=false;
 			}
 			if(!premier) sql+=" )";
@@ -108,7 +107,7 @@ namespace TNS.AdExpress.BusinessFacade{
 		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
 		/// <param name="customerLogin">Droit client</param>
 		/// <returns>Code SQL généré</returns>
-		public static string GetProductRight(Right customerLogin,string tablePrefixe,bool beginByAnd){
+		public static string GetProductRight(TNS.AdExpress.Right customerLogin,string tablePrefixe,bool beginByAnd){
 			return(GetProductRight(customerLogin,tablePrefixe,tablePrefixe,tablePrefixe,tablePrefixe,beginByAnd));
 		}
 
@@ -126,7 +125,7 @@ namespace TNS.AdExpress.BusinessFacade{
 		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
 		/// <param name="customerLogin">Droit client</param>
 		/// <returns>Code SQL généré</returns>
-		public static string GetProductRight(Right customerLogin,bool beginByAnd){
+        public static string GetProductRight(TNS.AdExpress.Right customerLogin,bool beginByAnd) {
 			return(GetProductRight(customerLogin,DBConstantes.Tables.SECTOR_PREFIXE,DBConstantes.Tables.SUBSECTOR_PREFIXE,DBConstantes.Tables.GROUP_PREFIXE,DBConstantes.Tables.SEGMENT_PREFIXE,beginByAnd));
 		}
 		
@@ -141,85 +140,85 @@ namespace TNS.AdExpress.BusinessFacade{
 		/// <param name="customerLogin">Droit client</param>
 		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
 		/// <returns>Code SQL généré</returns>
-		public static string GetProductRight(Right customerLogin,string sectorPrefixe,string subsectorPrefixe,string groupPrefixe,string segmentPrefixe,bool beginByAnd){
+		public static string GetProductRight(TNS.AdExpress.Right customerLogin,string sectorPrefixe,string subsectorPrefixe,string groupPrefixe,string segmentPrefixe,bool beginByAnd){
 			string sql="";
 			bool premier=true;
 			// Sector (Famille)
-			if(customerLogin.rightElementString(CustomerRightConstante.type.sectorAccess).Length>0){
+			if(customerLogin[CustomerRightConstante.type.sectorAccess].Length>0){
 				if(beginByAnd) sql+=" and";
-				sql+=" (("+sectorPrefixe+".id_sector in ("+customerLogin.rightElementString(CustomerRightConstante.type.sectorAccess)+") ";
+				sql+=" (("+sectorPrefixe+".id_sector in ("+customerLogin[CustomerRightConstante.type.sectorAccess]+") ";
 				premier=false;
 			}
 			// SubSector (Classe)
-			if(customerLogin.rightElementString(CustomerRightConstante.type.subSectorAccess).Length>0){
+			if(customerLogin[CustomerRightConstante.type.subSectorAccess].Length>0){
 				if(!premier) sql+=" or";
 				else {
 					if(beginByAnd) sql+=" and";
 					sql+=" ((";
 				}
-				sql+=" "+subsectorPrefixe+".id_subsector in ("+customerLogin.rightElementString(CustomerRightConstante.type.subSectorAccess)+") ";
+				sql+=" "+subsectorPrefixe+".id_subsector in ("+customerLogin[CustomerRightConstante.type.subSectorAccess]+") ";
 				premier=false;
 			}
 			// Group (Groupe)
-			if(customerLogin.rightElementString(CustomerRightConstante.type.groupAccess).Length>0){
+			if(customerLogin[CustomerRightConstante.type.groupAccess].Length>0){
 				if(!premier) sql+=" or";
 				else {
 					if(beginByAnd) sql+=" and";
 					sql+=" ((";
 				}
-				sql+=" "+groupPrefixe+".id_group_ in ("+customerLogin.rightElementString(CustomerRightConstante.type.groupAccess)+") ";
+				sql+=" "+groupPrefixe+".id_group_ in ("+customerLogin[CustomerRightConstante.type.groupAccess]+") ";
 				premier=false;
 			}
 			// Segment (Variété)
-			if(customerLogin.rightElementString(CustomerRightConstante.type.segmentAccess).Length>0){
+			if(customerLogin[CustomerRightConstante.type.segmentAccess].Length>0){
 				if(!premier) sql+=" or";
 				else {
 					if(beginByAnd) sql+=" and";
 					sql+=" ((";
 				}
-				sql+=" "+segmentPrefixe+".id_segment in ("+customerLogin.rightElementString(CustomerRightConstante.type.segmentAccess)+") ";
+				sql+=" "+segmentPrefixe+".id_segment in ("+customerLogin[CustomerRightConstante.type.segmentAccess]+") ";
 				premier=false;
 			}
 			if(!premier) sql+=" )";
 			// Droits en exclusion
 			// Sector (Famille)
-			if(customerLogin.rightElementString(CustomerRightConstante.type.sectorException).Length>0){
+			if(customerLogin[CustomerRightConstante.type.sectorException].Length>0){
 				if(!premier) sql+=" and";
 				else{
 					if(beginByAnd) sql+=" and";
 					sql+=" (";
 				}
-				sql+=" "+sectorPrefixe+".id_sector not in ("+customerLogin.rightElementString(CustomerRightConstante.type.sectorException)+") ";
+				sql+=" "+sectorPrefixe+".id_sector not in ("+customerLogin[CustomerRightConstante.type.sectorException]+") ";
 				premier=false;
 			}
 			// SubSector (Classe)
-			if(customerLogin.rightElementString(CustomerRightConstante.type.subSectorException).Length>0){
+			if(customerLogin[CustomerRightConstante.type.subSectorException].Length>0){
 				if(!premier) sql+=" and";
 				else {
 					if(beginByAnd) sql+=" and";
 					sql+=" (";
 				}
-				sql+=" "+subsectorPrefixe+".id_subsector not in ("+customerLogin.rightElementString(CustomerRightConstante.type.subSectorException)+") ";
+				sql+=" "+subsectorPrefixe+".id_subsector not in ("+customerLogin[CustomerRightConstante.type.subSectorException]+") ";
 				premier=false;
 			}
 			// Group (Groupe)
-			if(customerLogin.rightElementString(CustomerRightConstante.type.groupException).Length>0){
+			if(customerLogin[CustomerRightConstante.type.groupException].Length>0){
 				if(!premier) sql+=" and";
 				else{
 					if(beginByAnd) sql+=" and";
 					sql+=" (";
 				}
-				sql+=" "+groupPrefixe+".id_group_  not in ("+customerLogin.rightElementString(CustomerRightConstante.type.groupException)+") ";
+				sql+=" "+groupPrefixe+".id_group_  not in ("+customerLogin[CustomerRightConstante.type.groupException]+") ";
 				premier=false;
 			}
 			// Segment (Variété)
-			if(customerLogin.rightElementString(CustomerRightConstante.type.segmentException).Length>0){
+			if(customerLogin[CustomerRightConstante.type.segmentException].Length>0){
 				if(!premier) sql+=" and";
 				else {
 					if(beginByAnd) sql+=" and";
 					sql+=" (";
 				}
-				sql+=" "+segmentPrefixe+".id_segment  not in ("+customerLogin.rightElementString(CustomerRightConstante.type.segmentException)+") ";
+				sql+=" "+segmentPrefixe+".id_segment  not in ("+customerLogin[CustomerRightConstante.type.segmentException]+") ";
 				premier=false;
 			}
 			if(!premier) sql+=" )";

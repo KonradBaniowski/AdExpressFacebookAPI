@@ -53,8 +53,8 @@ namespace TNS.AdExpress.Web.Core.Selection {
 			switch(_dimension){
 				case TNS.Classification.Universe.Dimension.product:
 					for(int i=0; i<_universeLevels.Count; i++){
-						if ((_universeLevels[i].ID == TNS.Classification.Universe.TNSClassificationLevels.BRAND && _webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE] == null)//Pas de droit pour les Marques
-							|| (_universeLevels[i].ID == TNS.Classification.Universe.TNSClassificationLevels.HOLDING_COMPANY && _webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY] == null)//Pas de droit pour les groupes de sociétés
+						if ((_universeLevels[i].ID == TNS.Classification.Universe.TNSClassificationLevels.BRAND && _webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) == null)//Pas de droit pour les Marques
+							|| (_universeLevels[i].ID == TNS.Classification.Universe.TNSClassificationLevels.HOLDING_COMPANY && _webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY) == null)//Pas de droit pour les groupes de sociétés
 							) continue;
 						tempList.Add(_universeLevels[i]);
 					}
@@ -75,7 +75,7 @@ namespace TNS.AdExpress.Web.Core.Selection {
 			switch (_dimension) {
 				case TNS.Classification.Universe.Dimension.product:
 					for (int i = 0; i < _branchesIds.Count; i++) {
-						if (_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE] == null &&
+						if (_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) == null &&
 							(UniverseBranches.Get(_branchesIds[i]) != null && UniverseBranches.Get(_branchesIds[i]).Contains(TNS.Classification.Universe.TNSClassificationLevels.BRAND) && UniverseBranches.Get(_branchesIds[i]).Levels.Count <= 2)
 							)//Pas de droit pour les Marques
 							 continue;

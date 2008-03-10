@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using ClassificationDA=TNS.AdExpress.Classification.DataAccess;
+using ClassificationDA=TNS.AdExpress.DataAccess.Classification;
 using ClassificationTable=TNS.AdExpress.Constantes.Classification.DB.Table;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;

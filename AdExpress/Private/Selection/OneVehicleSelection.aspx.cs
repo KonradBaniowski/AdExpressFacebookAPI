@@ -183,7 +183,7 @@ namespace AdExpress.Private.Selection{
 					if(currentItem.Selected)vehiclesSelection+=currentItem.Value+",";
 				}
 				if(vehiclesSelection.Length<1){
-					//DBFunctions.closeDataBase(_webSession);
+					//_webSession.Source.Close();
 					Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052,_webSession.SiteLanguage)));
 				}
 				else{
@@ -220,7 +220,7 @@ namespace AdExpress.Private.Selection{
 					_webSession.Save();
 					//Redirection vers la page suivante
 					if(_nextUrl.Length>0){
-						DBFunctions.closeDataBase(_webSession);
+						_webSession.Source.Close();
 						HttpContext.Current.Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 					}
 				}

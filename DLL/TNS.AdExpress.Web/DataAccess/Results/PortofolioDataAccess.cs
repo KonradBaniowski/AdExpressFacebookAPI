@@ -346,8 +346,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			}
 
 			#region Execution de la requête
-            			
-			OracleConnection connection=new OracleConnection(webSession.CustomerLogin.OracleConnectionString);
+
+            OracleConnection connection=(OracleConnection)webSession.Source.GetSource();
 			OracleCommand sqlCommand=null;
 
 			OracleDataAdapter sqlAdapter=null;
@@ -495,8 +495,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			}
 
 			#region Execution de la requête
-	
-			OracleConnection connection=new OracleConnection(webSession.CustomerLogin.OracleConnectionString);
+
+            OracleConnection connection=(OracleConnection)webSession.Source.GetSource();
 			OracleCommand sqlCommand=null;
 
 			OracleDataAdapter sqlAdapter=null;

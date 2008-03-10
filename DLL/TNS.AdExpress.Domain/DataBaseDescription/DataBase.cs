@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.XmlLoader;
 
 namespace TNS.AdExpress.Domain.DataBaseDescription {
@@ -615,6 +616,42 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Vehicle in Product class analysis
         /// </summary>
         recapVehicle=130,
+        /// <summary>
+        /// Module assignment
+        /// </summary>
+        rightModuleAssignment=131,
+        /// <summary>
+        /// Right assignment
+        /// </summary>
+        rightAssignment=132,
+        /// <summary>
+        /// My login
+        /// </summary>
+        rightMyLogin=133,
+        /// <summary>
+        /// Product customer rights
+        /// </summary>
+        rightProductOrder=134,
+        /// <summary>
+        /// Media customer rights
+        /// </summary>
+        rightMediaOrder=135,
+        /// <summary>
+        /// Module right frequency
+        /// </summary>
+        rightFrequency=136,
+        /// <summary>
+        /// Module Category
+        /// </summary>
+        rightModuleCategory=137,
+        /// <summary>
+        /// Flags 
+        /// </summary>
+        rightFlag=138,
+        /// <summary>
+        /// Flags assignment
+        /// </summary>
+        rightProjectFlagAssignment=139
     } 
     #endregion
 
@@ -653,6 +690,8 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         public DataBase(IDataSource source) {
             _customerConnections=DataBaseDescriptionXL.LoadCustomerConnections(source);
             _defaultConnections=DataBaseDescriptionXL.LoadDefaultConnections(source);
+            _schemas=DataBaseDescriptionXL.LoadSchemas(source);
+            _tables=DataBaseDescriptionXL.LoadTables(source,_schemas);
             
 
         }
@@ -672,16 +711,76 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         }
 
         /// <summary>
+        /// Get schema label
+        /// </summary>
+        /// <param name="schema">Schema Id</param>
+        /// <returns>schema label</returns>
+        public Schema GetSchema(SchemaIds schemaId) {
+            try {
+                return (_schemas[schemaId]);
+            }
+            catch(System.Exception err) {
+                throw (new DataBaseException("Impossible to retreive schema label"));
+            }
+        }
+
+        /// <summary>
         /// Get customer database connection
         /// </summary>
         /// <param name="login">Customer login</param>
         /// <param name="password">Customer password</param>
         /// <param name="customerConnectionId">Connection Id</param>
-        /// <returns></returns>
+        /// <returns>Data Source</returns>
         public IDataSource GetCustomerConnection(string login,string password,CustomerConnectionIds customerConnectionId) {
             if(login==null ||login.Length==0) throw (new ArgumentException("Invalid login parameter"));
             if(password==null ||password.Length==0) throw (new ArgumentException("Invalid password parameter"));
-            throw new System.NotImplementedException();
+            return(_customerConnections[customerConnectionId].GetDataSource(login,password));
+        }
+
+        /// <summary>
+        /// Get customer database connection
+        /// </summary>
+        /// <param name="login">Customer login</param>
+        /// <param name="password">Customer password</param>
+        /// <param name="customerConnectionId">Connection Id</param>
+        /// <returns>Data Source</returns>
+        public IDataSource GetAdExpr03CustomerConnection(string login,string password) {
+            return (GetCustomerConnection(login,password,CustomerConnectionIds.adexpr03));
+        }
+
+        /// <summary>
+        /// Get table label with schema label and prefix
+        /// Schema.Table prefix
+        /// </summary>
+        /// <remarks>
+        /// A space is put before the string
+        /// </remarks>
+        /// <example> adexpr03.data_press_4M wp</example>
+        /// <param name="tableId">Table Id</param>
+        /// <returns>SQL Table code</returns>
+        public string GetSqlTableLabelWithPrefix(TableIds tableId) {
+            try {
+                return (_tables[tableId].SqlWithPrefix);
+            }
+            catch(System.Exception err) {
+                throw (new DataBaseException("Impossible to retreive sql table code"));
+            }
+        }
+
+        /// <summary>
+        /// Get table object
+        /// </summary>
+        /// <param name="tableId">Table Id</param>
+        /// <returns>Table Object</returns>
+        public Table GetTable(TableIds tableId) {
+            try {
+                Table table=_tables[tableId];
+                if(table==null) throw (new DataBaseException("Table Object is null"));
+                return (table);
+            }
+            catch(System.Exception err) {
+                throw (new DataBaseException("Impossible to retreive table object",err));
+            }
         }
         #endregion
     }

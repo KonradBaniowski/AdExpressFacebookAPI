@@ -124,8 +124,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				}
 				if(WebFunctions.CheckedText.IsStringEmpty(waveAccessList)){	
 					if(IsThisTargetBase)
-					ds=TargetListDataAccess.GetAEPMTargetListDataAccess(waveAccessList,FwkResultsCst.APPM.BaseTarget,webSession.CustomerLogin.OracleConnectionString);	
-					else ds=TargetListDataAccess.GetAEPMTargetListDataAccess(waveAccessList,webSession.CustomerLogin.OracleConnectionString);	
+					ds=TargetListDataAccess.GetAEPMTargetListDataAccess(waveAccessList,FwkResultsCst.APPM.BaseTarget,webSession.Source);	
+					else ds=TargetListDataAccess.GetAEPMTargetListDataAccess(waveAccessList,webSession.Source);	
 				}
 				if(ds==null || ds.Equals(System.DBNull.Value) || ds.Tables[0]==null || ds.Tables[0].Rows.Count==0)
 					noneWave=true;

@@ -102,7 +102,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					
 			#endregion
 
-			webSession.CustomerLogin.HtModulesList.Clear();
+			webSession.CustomerLogin.ClearModulesList();
 			webSession.Save();
 		}
 		#endregion
@@ -162,7 +162,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// </summary>
 		/// <returns></returns>
 		public bool DisplayListMediaAgency(){
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null){
 				return true;
 			}
 			else return false;

@@ -39,11 +39,11 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using ResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert;
 using TNS.AdExpress.Domain.Web.Navigation;
-using AdExClassification = TNS.AdExpress.Classification.DataAccess;
+using AdExClassification = TNS.AdExpress.DataAccess.Classification;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
-using ProductClassification = TNS.AdExpress.Classification.DataAccess.ProductBranch;
+using ProductClassification=TNS.AdExpress.DataAccess.Classification.ProductBranch;
 using TNS.AdExpress.Domain.Web;
 
 #endregion
@@ -207,8 +207,7 @@ namespace TNS.AdExpress.Web.UI{
 
 				// Supports pour Portefeuille d'un support
 				if(webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE||webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE){					
-					OracleConnection connection=new OracleConnection(webSession.CustomerLogin.OracleConnectionString);
-					TNS.AdExpress.Classification.DataAccess.MediaBranch.PartialMediaListDataAccess supportSelected=new TNS.AdExpress.Classification.DataAccess.MediaBranch.PartialMediaListDataAccess((((LevelInformation)webSession.ReferenceUniversMedia.FirstNode.Tag).ID).ToString(),webSession.SiteLanguage,connection);
+                    TNS.AdExpress.DataAccess.Classification.MediaBranch.PartialMediaListDataAccess supportSelected=new TNS.AdExpress.DataAccess.Classification.MediaBranch.PartialMediaListDataAccess((((LevelInformation)webSession.ReferenceUniversMedia.FirstNode.Tag).ID).ToString(),webSession.SiteLanguage,webSession.Source);
 					string support=supportSelected[((LevelInformation)webSession.ReferenceUniversMedia.FirstNode.Tag).ID];
 					t.Append("<tr>");
 					t.Append("<td class=\"excelData\">"+GestionWeb.GetWebWord(18,webSession.SiteLanguage)+" : "+ support+"</td>");
@@ -463,8 +462,8 @@ namespace TNS.AdExpress.Web.UI{
 				t.Append("<tr><td class=\"excelDataItalic\">"+GestionWeb.GetWebWord(512,webSession.SiteLanguage)+"</td></tr>");
 				#endregion
 
-				webSession.CustomerLogin.ModuleList();
-				Module currentModule = (Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule];
+				//webSession.CustomerLogin.ModuleList();
+				Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 				try{
 					detailSelections=((ResultPageInformation) currentModule.GetResultPageInformation((int)webSession.CurrentTab)).DetailSelectionItemsType;
 				}
@@ -547,7 +546,7 @@ namespace TNS.AdExpress.Web.UI{
 				t.Append("</table><br>");
 
 				// On libère htmodule pour pouvoir le sauvegarder dans les tendances
-				webSession.CustomerLogin.HtModulesList.Clear();
+				//webSession.CustomerLogin.HtModulesList.Clear();
 				
 				return Convertion.ToHtmlString(t.ToString());
 			}
@@ -809,18 +808,18 @@ namespace TNS.AdExpress.Web.UI{
 				//t.Append("<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>");
 				productSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
 				adExpressUniverse = webSession.PrincipalProductUniverses[0];
-				if (webSession.CustomerLogin.Connection == null) {
-					TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-					webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-				}
+                //if (webSession.CustomerLogin.Connection == null) {
+                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
+                //}
 				//t.Append(TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));//TNS.AdExpress.Web.Functions.DisplayUniverse
-				productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+				productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source);
 			}
 			else if (webSession.PrincipalProductUniverses.Count > 1) {				
-				if (webSession.CustomerLogin.Connection == null) {
-					TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-					webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-				}
+                //if (webSession.CustomerLogin.Connection == null) {
+                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
+                //}
 				for (int k = 0; k < webSession.PrincipalProductUniverses.Count; k++) {
 					if (webSession.PrincipalProductUniverses.ContainsKey(k)) {
 						t.Append(GetBlankLine());
@@ -836,7 +835,7 @@ namespace TNS.AdExpress.Web.UI{
                         productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.PrincipalProductUniverses[k].Label + " </TD></TR>";
 						adExpressUniverse = webSession.PrincipalProductUniverses[k];
 						//t.Append(TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));
-						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source);
 					}
 				}
 			}
@@ -872,18 +871,18 @@ namespace TNS.AdExpress.Web.UI{
 					productSelection += GetBlankLine();
 				}
 				productSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";				
-				if (webSession.CustomerLogin.Connection == null) {
-					TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-					webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-				}
+                //if (webSession.CustomerLogin.Connection == null) {
+                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
+                //}
 				//t.Append(TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));
-				productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+				productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source);
 			}
 			else if (webSession.SecondaryProductUniverses.Count > 1) {
-				if (webSession.CustomerLogin.Connection == null) {
-					TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-					webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-				}
+                //if (webSession.CustomerLogin.Connection == null) {
+                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
+                //}
 				for (int k = 0; k < webSession.SecondaryProductUniverses.Count; k++) {
 					if (webSession.SecondaryProductUniverses.ContainsKey(k)) {
 						t.Append(GetBlankLine());
@@ -908,7 +907,7 @@ namespace TNS.AdExpress.Web.UI{
 						productSelection += "<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
                         productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.SecondaryProductUniverses[k].Label + " </TD></TR>";
 						adExpressUniverse = webSession.SecondaryProductUniverses[k];
-						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source);
 					}
 				}
 			}
@@ -1326,11 +1325,11 @@ namespace TNS.AdExpress.Web.UI{
 				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(webTexId,webSession.SiteLanguage)+" : </font></TD></TR>");
 				// Récupération du libellé
 				if(elementIsAdvertiser){ // Annonceur sélectionné
-					AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess elementName = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(idElement.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+					AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess elementName = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(idElement.ToString(),webSession.SiteLanguage,webSession.Source);
 					t.Append("<TR><TD colspan=4 class=\"excelData\" >"+ elementName[idElement].ToString() +"</TD></TR>");
 				}
 				else{ // Produit sélectionné
-					AdExClassification.ProductBranch.PartialProductLevelListDataAccess elementName = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(idElement.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                    AdExClassification.ProductBranch.PartialProductLevelListDataAccess elementName = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(idElement.ToString(),webSession.SiteLanguage,webSession.Source);
 					t.Append("<TR><TD colspan=4 class=\"excelData\" >"+ elementName[idElement].ToString() +"</TD></TR>");
 				}
 			}
@@ -1364,50 +1363,50 @@ namespace TNS.AdExpress.Web.UI{
 					//Obtient le libellé du média sélectionné
 					switch(mediaSelectLabel){
 						case DBCst.Fields.ID_VEHICLE :
-							elementName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1292,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case DBCst.Fields.ID_CATEGORY :
-							elementName = new AdExClassification.MediaBranch.PartialCategoryListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.MediaBranch.PartialCategoryListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1382,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case DBCst.Fields.ID_INTEREST_CENTER :
-							elementName = new AdExClassification.MediaBranch.PartialInterestCenterListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.MediaBranch.PartialInterestCenterListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1411,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case DBCst.Fields.ID_MEDIA_SELLER :
-							elementName = new AdExClassification.MediaBranch.PartialMediaSellerListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.MediaBranch.PartialMediaSellerListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1383,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case DBCst.Fields.ID_MEDIA :
-							elementName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(971,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case  DBCst.Fields.ID_SLOGAN :
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1888,webSession.SiteLanguage) +" : </font> "+ mediaSelectId.ToString() +"</TD></TR>");
 							break;
 						case  DBCst.Fields.ID_ADVERTISER :
-							elementName = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(857,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case  DBCst.Fields.ID_BRAND :
-							elementName = new AdExClassification.ProductBranch.PartialBrandLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.ProductBranch.PartialBrandLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1889,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case  DBCst.Fields.ID_PRODUCT :
-							elementName = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(858,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case  DBCst.Fields.ID_SECTOR :
-							elementName = new AdExClassification.ProductBranch.PartialSectorLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.ProductBranch.PartialSectorLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1103,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case  DBCst.Fields.ID_SUBSECTOR :
-							elementName = new AdExClassification.ProductBranch.PartialSubSectorLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.ProductBranch.PartialSubSectorLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1931,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 						case  DBCst.Fields.ID_GROUP_ :
-							elementName = new AdExClassification.ProductBranch.PartialGroupLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+                            elementName = new AdExClassification.ProductBranch.PartialGroupLevelListDataAccess(mediaSelectId.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1110,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
 					}
@@ -1464,8 +1463,8 @@ namespace TNS.AdExpress.Web.UI{
 		public static string GetExcelHeaderForMediaPlanPopUp(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd){
 			StringBuilder t=new StringBuilder(2000);
 			try{
-				webSession.CustomerLogin.ModuleList();
-				Module currentModule = (Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule];
+				//webSession.CustomerLogin.ModuleList();
+				Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
 				#region Début du tableau
 				t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
@@ -1510,8 +1509,8 @@ namespace TNS.AdExpress.Web.UI{
         public static string GetExcelHeaderForMediaPlanPopUp(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd, string zoomDate, int periodDisplayLevel) {
             StringBuilder t = new StringBuilder(2000);
             try {
-                webSession.CustomerLogin.ModuleList();
-                Module currentModule = (Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule];
+                //webSession.CustomerLogin.ModuleList();
+                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
                 #region Début du tableau
                 t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
@@ -1612,8 +1611,8 @@ namespace TNS.AdExpress.Web.UI{
 		public static string GetExcelHeaderForAdnettrackMediaPlanPopUp(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd){
 			StringBuilder t=new StringBuilder(2000);
 			try{
-				webSession.CustomerLogin.ModuleList();
-				Module currentModule = (Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule];
+				//webSession.CustomerLogin.ModuleList();
+                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
 				#region Début du tableau
 				t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
@@ -1636,11 +1635,11 @@ namespace TNS.AdExpress.Web.UI{
 				if(webSession.AdNetTrackSelection.Id.ToString().Length>0){
 					switch(webSession.AdNetTrackSelection.SelectionType){
 						case AdNetTrackMediaSchedule.Type.advertiser:
-							AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess advertiser = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(webSession.AdNetTrackSelection.Id.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+							AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess advertiser = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(webSession.AdNetTrackSelection.Id.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(857,webSession.SiteLanguage)+" :</font> "+ advertiser[webSession.AdNetTrackSelection.Id].ToString() +"</TD></TR>");
 							break;
 						case AdNetTrackMediaSchedule.Type.product:
-							AdExClassification.ProductBranch.PartialProductLevelListDataAccess product = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(webSession.AdNetTrackSelection.Id.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+							AdExClassification.ProductBranch.PartialProductLevelListDataAccess product = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(webSession.AdNetTrackSelection.Id.ToString(),webSession.SiteLanguage,webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(858,webSession.SiteLanguage)+" :</font> "+ product[webSession.AdNetTrackSelection.Id].ToString() +"</TD></TR>");
 							break;
 						case AdNetTrackMediaSchedule.Type.visual:
@@ -1683,8 +1682,8 @@ namespace TNS.AdExpress.Web.UI{
 		public static string GetExcelHeaderForCreationsPopUp(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd, Int64 idElement,int level){
 			StringBuilder t=new StringBuilder(2000);
 			try{
-				webSession.CustomerLogin.ModuleList();
-				Module currentModule = (Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule];
+				//webSession.CustomerLogin.ModuleList();
+                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
 				#region Début du tableau
                 t.Append("<table class=\"BorderLevel\" cellpadding=0 cellspacing=0>");
@@ -1729,8 +1728,8 @@ namespace TNS.AdExpress.Web.UI{
 
 			StringBuilder t=new StringBuilder(2000);
 			try{
-				webSession.CustomerLogin.ModuleList();
-				Module currentModule = (Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule];
+				//webSession.CustomerLogin.ModuleList();
+                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
 				#region Début du tableau
 				t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
@@ -1742,7 +1741,7 @@ namespace TNS.AdExpress.Web.UI{
 				// Période
 				t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));			
 				// Media
-				AdExClassification.MediaBranch.PartialVehicleListDataAccess vehicleName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(idVehicle.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+				AdExClassification.MediaBranch.PartialVehicleListDataAccess vehicleName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(idVehicle.ToString(),webSession.SiteLanguage,webSession.Source);
 				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(190,webSession.SiteLanguage) +" : </font> "+ vehicleName[idVehicle].ToString() +"</TD></TR>");
 				// Elément du niveau sélectionné (L1 ou L2 ou L3 ou L4) depuis le picto creation du PM
 				if(mediaImpactedList!=null)
@@ -1791,8 +1790,8 @@ namespace TNS.AdExpress.Web.UI{
 		public static string GetExcelHeaderForCreationsPopUpFromPortofolio(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd, int idVehicle, int idMedia, bool allPeriod, string nameDay, string codeEcran){
 			StringBuilder t=new StringBuilder(2000);
 			try{
-				webSession.CustomerLogin.ModuleList();
-				Module currentModule = (Module)webSession.CustomerLogin.HtModulesList[webSession.CurrentModule];
+				//webSession.CustomerLogin.ModuleList();
+                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
 				#region Début du tableau
 				t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
@@ -1825,10 +1824,10 @@ namespace TNS.AdExpress.Web.UI{
 					}
 				}			
 				// Media
-				AdExClassification.MediaBranch.PartialVehicleListDataAccess vehicleName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(idVehicle.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+				AdExClassification.MediaBranch.PartialVehicleListDataAccess vehicleName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(idVehicle.ToString(),webSession.SiteLanguage,webSession.Source);
 				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(190,webSession.SiteLanguage) +" : </font> "+ vehicleName[idVehicle].ToString() +"</TD></TR>");
 				// Support
-				AdExClassification.MediaBranch.PartialMediaListDataAccess mediaName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(idMedia.ToString(),webSession.SiteLanguage,(OracleConnection)webSession.Source.GetSource());
+				AdExClassification.MediaBranch.PartialMediaListDataAccess mediaName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(idMedia.ToString(),webSession.SiteLanguage,webSession.Source);
 				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(971,webSession.SiteLanguage) +" : </font> "+ mediaName[idMedia].ToString() +"</TD></TR>");
 
 				t.Append(GetBlankLine());
@@ -1944,7 +1943,7 @@ namespace TNS.AdExpress.Web.UI{
                     for (int i = 0; i < groups.Count; i++) {
                         productLevelIdsList = groups[0].GetAsString(TNSClassificationLevels.PRODUCT);
                         levelIdsList = groups[0].Get(TNSClassificationLevels.PRODUCT);
-                        productLabels = new ProductClassification.PartialProductLevelListDataAccess(productLevelIdsList, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                        productLabels = new ProductClassification.PartialProductLevelListDataAccess(productLevelIdsList, webSession.SiteLanguage, webSession.CustomerLogin.Source);
                         foreach (long id in levelIdsList) {
                             t.Append(productLabels[id] + "&nbsp;&nbsp;<br>");
                         }

@@ -1920,7 +1920,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			// Annonceur
 			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1146,webSession.SiteLanguage)+"</td>");
 			// Agence média
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null && table.Columns.Contains("advertising_agency"))
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency"))
 			{
 //				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+"</td>");
 				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+((mediaAgencyYear.Length>0)?" ("+mediaAgencyYear+")":"")+"</td>");
@@ -2008,7 +2008,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						// Annonceur 
 						t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertiser"]+"</td>");
 						// Agence Média
-						if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null && table.Columns.Contains("advertising_agency"))
+						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency"))
 						{
 							t.Append("<td class=\""+classStyleValue+"\" align=\"left\"	>"+row["advertising_agency"]+"</td>");
 						}
@@ -2129,7 +2129,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			// Annonceur
 			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1146,webSession.SiteLanguage)+"</td>");
 			// Agence média
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null)
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
 			{
 				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+((mediaAgencyYear.Length>0)?" ("+mediaAgencyYear+")":"")+"</td>");
 			}
@@ -2199,7 +2199,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					// Annonceur
 					t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertiser"]+"</td>");
 					// Agence Média
-					if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null && table.Columns.Contains("advertising_agency"))
+					if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency"))
 					{
 						t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertising_agency"]+"</td>");
 					}
@@ -2323,7 +2323,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			// Annonceur
 			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1146,webSession.SiteLanguage)+"</td>");
 			// Agence média
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null && table.Columns.Contains("advertising_agency"))
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency"))
 			{
 //				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+"</td>");
 				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+((mediaAgencyYear.Length>0)?" ("+mediaAgencyYear+")":"")+"</td>");
@@ -2389,7 +2389,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					// Annonceur
 					t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertiser"]+"</td>");
 					// Agence Média
-					if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null && table.Columns.Contains("advertising_agency")) {
+					if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency")) {
 						t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertising_agency"]+"</td>");
 					}
 					//Plan media du produit

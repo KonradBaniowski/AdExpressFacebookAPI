@@ -234,10 +234,7 @@ namespace AdExpress.Private.Selection{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Argument</param>
 		protected void Page_UnLoad(object sender, System.EventArgs e) {
-			if(_webSession.CustomerLogin.Connection!=null){
-				if(_webSession.CustomerLogin.Connection.State==System.Data.ConnectionState.Open)_webSession.CustomerLogin.Connection.Close();
-				_webSession.CustomerLogin.Connection.Dispose();
-			}
+            _webSession.Source.Close();
 			_webSession.Save();
 		}
 		#endregion
@@ -279,7 +276,7 @@ namespace AdExpress.Private.Selection{
 				if(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess).Length==0)
 					throw(new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(1765,_webSession.SiteLanguage)));
 				_webSession.Save();
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
 			catch(System.Exception ex){
@@ -332,7 +329,7 @@ namespace AdExpress.Private.Selection{
 			if(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess).Length==0)
 				throw(new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(1765,_webSession.SiteLanguage)));
 				_webSession.Save();
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
 			catch(AdExpressException.AnalyseDateSelectionException ex){

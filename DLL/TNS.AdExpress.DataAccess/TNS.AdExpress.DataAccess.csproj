@@ -49,8 +49,38 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classification\ClassificationLevelListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\AllCategoryListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\AllInterestCenterListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\AllMediaListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\AllMediaSellerListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\AllTitleListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\AllVehicleListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\PartialCategoryListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\PartialInterestCenterListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\PartialMediaListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\PartialMediaSellerListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\PartialTitleListDataAccess.cs" />
+    <Compile Include="Classification\MediaBranch\PartialVehicleListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\AllAdvertiserLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\AllGroupLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\AllHoldingCompanyLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\AllSectorLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\AllSegmentLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\AllSubSectorLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\PartialAdvertiserLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\PartialBrandLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\PartialGroupLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\PartialHoldingCompanyLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\PartialProductLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\PartialSectorLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\PartialSegmentLevelListDataAccess.cs" />
+    <Compile Include="Classification\ProductBranch\PartialSubSectorLevelListDataAccess.cs" />
+    <Compile Include="Exceptions\ClassificationDALException.cs" />
+    <Compile Include="Exceptions\RightDALException.cs" />
     <Compile Include="Exceptions\WordListDALException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RightDAL.cs" />
     <Compile Include="Source\MySqlDataSource.cs" />
     <Compile Include="Translation\WordListDAL.cs" />
   </ItemGroup>
@@ -58,6 +88,10 @@
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

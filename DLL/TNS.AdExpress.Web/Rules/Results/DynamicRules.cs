@@ -29,7 +29,7 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using WebCommon=TNS.AdExpress.Web.Common;
 using WebCore=TNS.AdExpress.Web.Core;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
-using ClassificationDB=TNS.AdExpress.Classification.DataAccess;
+using ClassificationDB=TNS.AdExpress.DataAccess.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using FrameWorkDates=TNS.FrameWork.Date;
 using RulesConstantes=TNS.AdExpress.Web.Rules.Results;
@@ -609,8 +609,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				
 			#region Création des headers
 			nbLine=5;
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)nbLine++;
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null)nbLine+=2;
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)nbLine++;
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)nbLine+=2;
 
 			// Ajout de la colonne Produit
 			Headers headers=new Headers();
@@ -684,7 +684,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			Int64 levelLabelColIndex=resultTable.GetHeadersIndexInResultTable(DynamicResultConstantes.LEVEL_ID.ToString());
 			advertiserLineIndex=resultTable.AddNewLine(LineType.level1);
 			resultTable[advertiserLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1146,webSession.SiteLanguage));
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null){
 				brandLineIndex=resultTable.AddNewLine(LineType.level1);
 				resultTable[brandLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1149,webSession.SiteLanguage));
 			}
@@ -697,7 +697,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			groupLineIndex=resultTable.AddNewLine(LineType.level1);
 			resultTable[groupLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1849,webSession.SiteLanguage));
 			// Groupe d'Agence && Agence
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null){
+			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null){
 				agencyGroupLineIndex=resultTable.AddNewLine(LineType.level1);
 				resultTable[agencyGroupLineIndex,levelLabelColIndex]=new CellLabel(GestionWeb.GetWebWord(1850,webSession.SiteLanguage));
 				agencyLineIndex=resultTable.AddNewLine(LineType.level1);
@@ -753,7 +753,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 						advertisers.Add(currentRow["id_advertiser"].ToString());
 					}
 
-					if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null){//droits marques
+					if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null){//droits marques
 						//Activité publicitaire marques
 						if(currentRow["id_brand"]!=null && currentRow["id_brand"]!=System.DBNull.Value && !brands.Contains(currentRow["id_brand"].ToString())){
                             filterN = "id_brand=" + currentRow["id_brand"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
@@ -793,7 +793,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 						groups.Add(currentRow["id_group_"].ToString());
 					}
 					
-					if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null){//droits agences média					
+					if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null){//droits agences média					
 						//activité publicitaire Groupes d'agences
 						if(currentRow["ID_GROUP_ADVERTISING_AGENCY"]!=null && currentRow["ID_GROUP_ADVERTISING_AGENCY"]!=System.DBNull.Value &&  !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString())){
                             filterN = "ID_GROUP_ADVERTISING_AGENCY=" + currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
@@ -1243,19 +1243,19 @@ namespace TNS.AdExpress.Web.Rules.Results{
             switch (columnDetailLevel.Id) {
 
                 case DetailLevelItemInformation.Levels.media:
-                    mediaLabelList = new ClassificationDB.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    mediaLabelList = new ClassificationDB.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.Source);
                     break;
                 case DetailLevelItemInformation.Levels.category:
-                    categoryLabelList = new ClassificationDB.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    categoryLabelList = new ClassificationDB.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch,webSession.SiteLanguage,webSession.Source);
                     break;
                 case DetailLevelItemInformation.Levels.mediaSeller:
-                    mediaSellerLabelList = new ClassificationDB.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    mediaSellerLabelList = new ClassificationDB.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch,webSession.SiteLanguage,webSession.Source);
                     break;
                 case DetailLevelItemInformation.Levels.title:
-                    titleLabelList = new ClassificationDB.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    titleLabelList = new ClassificationDB.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch,webSession.SiteLanguage,webSession.Source);
                     break;
                 case DetailLevelItemInformation.Levels.interestCenter:
-                    interestCenterLabelList = new TNS.AdExpress.Classification.DataAccess.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch, webSession.SiteLanguage, webSession.CustomerLogin.Connection);
+                    interestCenterLabelList = new ClassificationDB.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch,webSession.SiteLanguage,webSession.Source);
                     break;
 
             }
@@ -1738,7 +1738,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			
 			#region Libellé des colonnes
 			// Chargement des libellés de colonnes
-			ClassificationDB.MediaBranch.PartialMediaListDataAccess mediaLabelList=new ClassificationDB.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch,webSession.SiteLanguage,webSession.CustomerLogin.Connection);
+			ClassificationDB.MediaBranch.PartialMediaListDataAccess mediaLabelList=new ClassificationDB.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch,webSession.SiteLanguage,webSession.Source);
 			// Ecriture des médias en colonnes
 			mediaList=mediaListForLabelSearch.Split(',');
 			foreach(string currentMedia in mediaList){

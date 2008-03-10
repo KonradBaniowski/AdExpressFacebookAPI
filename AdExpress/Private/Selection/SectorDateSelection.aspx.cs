@@ -247,7 +247,7 @@ namespace AdExpress.Private.Selection{
 				if(isComparativeStudy(selectedComparativeStudy))_webSession.ComparativeStudy=true;
 				else _webSession.ComparativeStudy=false;
 				_webSession.Save();
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
 			catch(NoDataException) {
@@ -386,7 +386,7 @@ namespace AdExpress.Private.Selection{
 					default :
 						throw(new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885,_webSession.SiteLanguage)));
 				}
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
 			catch(NoDataException) {

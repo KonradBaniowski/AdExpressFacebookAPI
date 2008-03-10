@@ -159,7 +159,7 @@ namespace AdExpress.Private.Results{
 
 				#region Url Suivante
 				if(_nextUrl.Length!=0){
-					DBFunctions.closeDataBase(_webSession);
+					_webSession.Source.Close();
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 				}
 				#endregion
@@ -296,7 +296,7 @@ namespace AdExpress.Private.Results{
 							//unité en euro pour cette planche
 							_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
 						}
-						_webSession.CustomerLogin.HtModulesList.Clear();
+						_webSession.CustomerLogin.ClearModulesList();
 						_webSession.Save();
 				
 						_genericMediaLevelDetailSelectionWebControl.Visible=false;

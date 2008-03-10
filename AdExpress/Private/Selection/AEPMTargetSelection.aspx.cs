@@ -58,13 +58,6 @@ namespace AdExpress.Private.Selection{
 		/// Constructeur
 		/// </summary>
 		public AEPMTargetSelection():base(){
-
-			#region Ouverture la base de données
-			// Ouverture de la base de données
-			if(_webSession.CustomerLogin.Connection!=null){
-				if(_webSession.CustomerLogin.Connection.State==System.Data.ConnectionState.Closed) _webSession.CustomerLogin.Connection.Open();
-			}
-			#endregion
 		
 		}
 		#endregion
@@ -187,7 +180,7 @@ namespace AdExpress.Private.Selection{
 					if(currentItem.Selected)targetSelection+=currentItem.Value+",";
 				}
 				if(targetSelection.Length<1){
-					//DBFunctions.closeDataBase(_webSession);
+					//_webSession.Source.Close();
 					Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1788,_webSession.SiteLanguage)));
 				}
 				else{
@@ -218,7 +211,7 @@ namespace AdExpress.Private.Selection{
 					_webSession.Save();
 					//Redirection vers la page suivante
 					if(_nextUrl.Length>0){
-						DBFunctions.closeDataBase(_webSession);
+						_webSession.Source.Close();
 						Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 					}
 				}

@@ -4,7 +4,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 using TNS.FrameWork.DB.Common;
 
-
+/*
 namespace TNS.AdExpress.Rules.Customer {
 	/// <summary>
 	/// Classe qui sauvegarde les droits des clients dans une hashtables
@@ -551,16 +551,16 @@ namespace TNS.AdExpress.Rules.Customer {
 			}
 		}
 
-/*		/// <summary>
-		/// Récupère le tableau avec les champs suivants
-		/// 1ère colonne : idGroupModule 2ème colonne : groupModule
-		/// 3ème colonne : idModule 4ème colonne : module
-		/// </summary>
-		/// <returns>dtModule</returns>
-		public DataTable moduleList(){
-		return moduleListDB(); 
-		}
-*/		
+//		/// <summary>
+//		/// Récupère le tableau avec les champs suivants
+//		/// 1ère colonne : idGroupModule 2ème colonne : groupModule
+//		/// 3ème colonne : idModule 4ème colonne : module
+//		/// </summary>
+//		/// <returns>dtModule</returns>
+//		public DataTable moduleList(){
+//		return moduleListDB(); 
+//		}
+		
 		/// <summary>
 		/// Remplit les droits d'un utilisateur dans htRight
 		/// </summary>
@@ -591,3 +591,4 @@ namespace TNS.AdExpress.Rules.Customer {
 		#endregion
 	}
 }
+*/

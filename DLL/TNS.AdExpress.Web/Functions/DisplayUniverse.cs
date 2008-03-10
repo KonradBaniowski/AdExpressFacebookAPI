@@ -12,9 +12,10 @@ using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Translation;
 using Oracle.DataAccess.Client;
-using AdExClassification = TNS.AdExpress.Classification.DataAccess;
+using AdExClassification=TNS.AdExpress.DataAccess.Classification;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Web;
+using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Web.Functions {
 	/// <summary>
@@ -27,9 +28,9 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </summary>
 		/// <param name="adExpressUniverse">adExpress Universe</param>
 		/// <param name="language">language</param>
-		/// <param name="connection">DB connection</param>
+		/// <param name="source">Data Source</param>
 		/// <returns>Html render to show universe selection</returns>
-		public static string ToExcel(AdExpressUniverse adExpressUniverse, int language,OracleConnection connection) {
+		public static string ToExcel(AdExpressUniverse adExpressUniverse, int language,IDataSource source) {
 			
 
 			#region Variables
@@ -41,11 +42,11 @@ namespace TNS.AdExpress.Web.Functions {
 			if (adExpressUniverse != null && adExpressUniverse.Count() > 0) {
 				//Groups of items excludes
 				groups = adExpressUniverse.GetExludes();
-				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language, connection, AccessType.excludes));
+				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language, source, AccessType.excludes));
 
 				//Groups of items includes
 				groups = adExpressUniverse.GetIncludes();
-				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language, connection, AccessType.includes));
+				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language, source, AccessType.includes));
 
 			}
 			return html.ToString();
@@ -56,28 +57,13 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </summary>
 		/// <param name="adExpressUniverse">adExpress Universe</param>
 		/// <param name="language">language</param>
-		/// <param name="connection">DB connection</param>
+		/// <param name="source">Data Source</param>
 		/// <returns>Html render to show universe selection</returns>
-		public static string ToHtml(AdExpressUniverse adExpressUniverse, int language, OracleConnection connection, int witdhTable) {			
+		public static string ToHtml(AdExpressUniverse adExpressUniverse, int language, IDataSource source, int witdhTable) {			
 				
 			int currentLine = 0;
 
-			#region Ancienne version
-			//if (adExpressUniverse != null && adExpressUniverse.Count() > 0) {
-			//    html.Append("<table style=\" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
-			//    //Groups of items excludes
-			//    groups = adExpressUniverse.GetExludes();
-			//    html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, connection, AccessType.excludes, witdhTable));
-
-			//    //Groups of items includes
-			//    groups = adExpressUniverse.GetIncludes();
-			//    html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, connection, AccessType.includes, witdhTable));
-
-			//    html.Append("</table>");
-			//}
-			#endregion
-
-			return ToHtml(adExpressUniverse, language, connection, witdhTable, false, -1, ref currentLine);  
+			return ToHtml(adExpressUniverse, language, source, witdhTable, false, -1, ref currentLine);  
 		}
 
 		/// <summary>
@@ -85,9 +71,9 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </summary>
 		/// <param name="adExpressUniverse">adExpress Universe</param>
 		/// <param name="language">language</param>
-		/// <param name="connection">DB connection</param>
+		/// <param name="source">Data Source</param>
 		/// <returns>Html render to show universe selection</returns>
-		public static string ToHtml(AdExpressUniverse adExpressUniverse, int language, OracleConnection connection, int witdhTable,bool paginate,int nbLineByPage,ref int currentLine) {
+		public static string ToHtml(AdExpressUniverse adExpressUniverse, int language, IDataSource source, int witdhTable,bool paginate,int nbLineByPage,ref int currentLine) {
 			StringBuilder html = new StringBuilder();
 			List<NomenclatureElementsGroup> groups = null;
 			int baseColSpan = 3;
@@ -96,11 +82,11 @@ namespace TNS.AdExpress.Web.Functions {
 				html.Append("<table style=\" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
 				//Groups of items excludes
 				groups = adExpressUniverse.GetExludes();
-				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, connection, AccessType.excludes, witdhTable,paginate,nbLineByPage ,ref currentLine ));
+				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, source, AccessType.excludes, witdhTable,paginate,nbLineByPage ,ref currentLine ));
 
 				//Groups of items includes
 				groups = adExpressUniverse.GetIncludes();
-				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, connection, AccessType.includes, witdhTable, paginate, nbLineByPage, ref currentLine));
+				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, source, AccessType.includes, witdhTable, paginate, nbLineByPage, ref currentLine));
 
 				html.Append("</table>");
 			}
@@ -134,10 +120,10 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="groups">universe groups</param>
 		/// <param name="baseColSpan">base column span</param>
 		/// <param name="language">language</param>
-		/// <param name="connection">DB connection</param>
+		/// <param name="source">Data Source</param>
 		/// <param name="accessType">items access type</param>
 		/// <returns>Html render to show universe selection</returns>
-		private static string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, OracleConnection connection, AccessType accessType) {
+		private static string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, IDataSource source, AccessType accessType) {
 			
 			#region Constantes
 			const string BORDER_COLOR = "#808080";
@@ -150,7 +136,7 @@ namespace TNS.AdExpress.Web.Functions {
 			int colSpan = 0;
             string themeName = WebApplicationParameters.Themes[language].Name;
             string img = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>";
-			TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess universeItems = null;
+            TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
 			int code = 0;
 			StringBuilder html = new StringBuilder();
 			#endregion
@@ -172,9 +158,9 @@ namespace TNS.AdExpress.Web.Functions {
 					if (levelIdsList != null) {
 						
 						for(int j = 0; j<levelIdsList.Count; j++){
-							
-							
-							universeItems = new TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, connection);
+
+
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),language,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
@@ -224,10 +210,10 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="groups">universe groups</param>
 		/// <param name="baseColSpan">base column span</param>
 		/// <param name="language">language</param>
-		/// <param name="connection">DB connection</param>
+		/// <param name="source">Data Source</param>
 		/// <param name="accessType">items access type</param>
 		/// <returns>Html render to show universe selection</returns>
-		private static string GetUniverseGroupForHtml(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, OracleConnection connection, AccessType accessType, int witdhTable, bool paginate, int nbLineByPage, ref int currentLine) {
+		private static string GetUniverseGroupForHtml(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, IDataSource source, AccessType accessType, int witdhTable, bool paginate, int nbLineByPage, ref int currentLine) {
 
 			
 			#region Variables
@@ -236,7 +222,7 @@ namespace TNS.AdExpress.Web.Functions {
 			string checkBox = "";
 			string buttonAutomaticChecked = "checked";
 			string disabled = "disabled";
-			TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess universeItems = null;
+            TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
 			int code = 0;
 			StringBuilder html = new StringBuilder();
 			int colonne = 0;
@@ -359,7 +345,7 @@ namespace TNS.AdExpress.Web.Functions {
 
 							//Show items of the current level							
 							colonne = 0;
-							universeItems = new TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, connection);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),language,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {

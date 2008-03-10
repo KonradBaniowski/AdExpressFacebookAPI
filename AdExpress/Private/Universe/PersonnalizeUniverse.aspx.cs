@@ -390,7 +390,7 @@ namespace AdExpress.Private.Universe{
 		/// <param name="e">Arguments</param>
 		protected void openImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			try{
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect("/Private/MyAdexpress/SearchSession.aspx?idSession="+_webSession.IdSession+"");
 			}
 			catch(System.Exception exc){
@@ -409,7 +409,7 @@ namespace AdExpress.Private.Universe{
 		/// <param name="e">Arguments</param>
 		protected void personalizeImagebuttonrolloverwebcontrol_Click(object sender, System.EventArgs e) {
 			try{
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect("/Private/MyAdexpress/PersonnalizeSession.aspx?idSession="+_webSession.IdSession+"");
 			}
 			catch(System.Exception exc){
@@ -428,7 +428,7 @@ namespace AdExpress.Private.Universe{
 		/// <param name="e"></param>
 		protected void pdfOpenImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			try{
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect("/Private/MyAdexpress/PdfFiles.aspx?idSession="+_webSession.IdSession+"");
 			}
 			catch(System.Exception exc){

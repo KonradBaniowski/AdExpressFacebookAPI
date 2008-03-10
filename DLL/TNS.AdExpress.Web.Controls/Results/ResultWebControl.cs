@@ -1838,10 +1838,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// <returns>tableau de résultats</returns>
 		protected virtual ResultTable GetResultTable(WebSession customerWebSession){
 			
-			if(customerWebSession.CustomerLogin.Connection==null){
-                TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(customerWebSession.CustomerLogin.OracleConnectionString));
-				customerWebSession.CustomerLogin.Connection=(OracleConnection)dataSource.GetSource();
-			}
+            //if(customerWebSession.CustomerLogin.Connection==null){
+            //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(customerWebSession.CustomerLogin.OracleConnectionString));
+            //    customerWebSession.CustomerLogin.Connection=(OracleConnection)dataSource.GetSource();
+            //}
 
 			switch(customerWebSession.CurrentModule){
 				case WebConstantes.Module.Name.ANALYSE_POTENTIELS:

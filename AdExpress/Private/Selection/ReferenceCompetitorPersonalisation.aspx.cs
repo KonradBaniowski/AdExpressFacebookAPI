@@ -270,7 +270,7 @@ namespace AdExpress.Private.Selection{
 					}
 					//redirection
 					_webSession.Save();
-					DBFunctions.closeDataBase(_webSession);
+					_webSession.Source.Close();
 					Response.Redirect(this._nextUrl+"?idSession="+_webSession.IdSession);
 				}
 				else{

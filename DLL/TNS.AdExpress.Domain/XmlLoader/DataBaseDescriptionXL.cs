@@ -31,6 +31,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
         /// <param name="source">source</param>
         /// <returns>Customer connections list</returns>
         public static Dictionary<CustomerConnectionIds,CustomerConnection> LoadCustomerConnections(IDataSource source) {
+
             #region Variables
             Dictionary<CustomerConnectionIds,CustomerConnection> list=new Dictionary<CustomerConnectionIds,CustomerConnection>();
             XmlTextReader reader=null;
@@ -153,6 +154,124 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     defaultConnection.Pooling=bool.Parse(reader.GetAttribute("pooling"));
                                 list.Add(defaultConnectionId,defaultConnection);
 
+                                break;
+                        }
+                    }
+                }
+            }
+            #region Error Management
+            catch(System.Exception err) {
+
+                #region Close the file
+                if(source.GetSource()!=null) source.Close();
+                #endregion
+
+                throw (new Exception(" Error : ",err));
+            }
+            #endregion
+
+            source.Close();
+            return (list);
+        }
+        #endregion
+
+        #region Load schemas
+        /// <summary>
+        /// Load schemas
+        /// </summary>
+        /// <example>
+        /// <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr"/>
+        /// </example>
+        /// <param name="source">source</param>
+        /// <returns>Schema list</returns>
+        public static Dictionary<SchemaIds,Schema> LoadSchemas(IDataSource source) {
+
+            #region Variables
+            Dictionary<SchemaIds,Schema> list=new Dictionary<SchemaIds,Schema>();
+            XmlTextReader reader=null;
+
+            Schema schema=null;
+            SchemaIds schemaId;
+            string label="";
+
+            #endregion
+
+            try {
+                source.Open();
+                reader=(XmlTextReader)source.GetSource();
+                while(reader.Read()) {
+                    if(reader.NodeType==XmlNodeType.Element) {
+
+                        switch(reader.LocalName) {
+                            case "schema":
+                                schema=null;
+                                if(reader.GetAttribute("enumId")==null || reader.GetAttribute("enumId").Length==0) throw (new InvalidXmlValueException("Invalid enumId (schema id) parameter"));
+                                schemaId=(SchemaIds)int.Parse(reader.GetAttribute("enumId"));
+                                if(reader.GetAttribute("label")==null || reader.GetAttribute("label").Length==0) throw (new InvalidXmlValueException("Invalid Schema label parameter"));
+                                label=reader.GetAttribute("label");
+                                list.Add(schemaId,new Schema(schemaId,label));
+                                break;
+                        }
+                    }
+                }
+            }
+            #region Error Management
+            catch(System.Exception err) {
+
+                #region Close the file
+                if(source.GetSource()!=null) source.Close();
+                #endregion
+
+                throw (new Exception(" Error : ",err));
+            }
+            #endregion
+
+            source.Close();
+            return (list);
+        }
+        #endregion
+
+        #region Load Tables
+        /// <summary>
+        /// Load tables
+        /// </summary>
+        /// <example>
+        /// <table enumId="91" description="Right: Login" schemaEnumId="2" label="login" prefix="lo"/>
+        /// </example>
+        /// <param name="source">source</param>
+        /// <returns>Tables list</returns>
+        public static Dictionary<TableIds,Table> LoadTables(IDataSource source,Dictionary<SchemaIds,Schema> schemas) {
+
+            #region Variables
+            Dictionary<TableIds,Table> list=new Dictionary<TableIds,Table>();
+            XmlTextReader reader=null;
+
+            Table table=null;
+            TableIds tableId;
+            SchemaIds schemaId;
+            string label="";
+            string prefix="";
+
+            #endregion
+
+            try {
+                source.Open();
+                reader=(XmlTextReader)source.GetSource();
+                while(reader.Read()) {
+                    if(reader.NodeType==XmlNodeType.Element) {
+
+                        switch(reader.LocalName) {
+                            case "table":
+                                table=null;
+                                if(reader.GetAttribute("enumId")==null || reader.GetAttribute("enumId").Length==0) throw (new InvalidXmlValueException("Invalid enumId (table id) parameter"));
+                                tableId=(TableIds)int.Parse(reader.GetAttribute("enumId"));
+                                if(reader.GetAttribute("schemaEnumId")==null || reader.GetAttribute("schemaEnumId").Length==0) throw (new InvalidXmlValueException("Invalid schemaEnumId (schema id) parameter"));
+                                schemaId=(SchemaIds)int.Parse(reader.GetAttribute("schemaEnumId"));
+                                if(reader.GetAttribute("label")==null || reader.GetAttribute("label").Length==0) throw (new InvalidXmlValueException("Invalid table label parameter"));
+                                label=reader.GetAttribute("label");
+                                if(reader.GetAttribute("prefix")==null || reader.GetAttribute("prefix").Length==0) throw (new InvalidXmlValueException("Invalid table prefix parameter"));
+                                prefix=reader.GetAttribute("prefix");
+                                list.Add(tableId,new Table(tableId,label,prefix,schemas[schemaId]));
                                 break;
                         }
                     }

@@ -4,7 +4,7 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Data;
 using Oracle.DataAccess.Client;
-using TNS.AdExpress.Rules.Customer;
+using TNS.AdExpress;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
@@ -90,7 +90,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				HTML+="	</tr>";
 
 				// Parcours de la table des droits sur les modules
-				foreach(DataRow currentRow in webSession.CustomerLogin.ModuleList().Rows){
+                DataTable dt=webSession.CustomerLogin.GetCustomerModuleListHierarchy();
+				foreach(DataRow currentRow in dt.Rows){
 					idGroupModule=(Int64)currentRow["idGroupModule"];
 
 					if(idGroupModuleOld!=idGroupModule){

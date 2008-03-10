@@ -1262,8 +1262,7 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// <summary>
 		/// Liste des identifiants des modules
 		/// </summary>
-		public class Name
-		{
+		public class Name{
 			/// <summary>
 			/// identifiant alerte plan media
 			/// </summary>

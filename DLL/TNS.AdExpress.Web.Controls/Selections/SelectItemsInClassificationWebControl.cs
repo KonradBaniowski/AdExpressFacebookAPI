@@ -19,7 +19,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using ClassificationDA = TNS.AdExpress.Classification.DataAccess;
+using ClassificationDA=TNS.AdExpress.DataAccess.Classification;
 using ClassificationTable = TNS.AdExpress.Constantes.Classification.DB.Table;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -164,7 +164,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="e">Arguments</param>
 		protected override void OnInit(EventArgs e) {
 			//Init allowed branch and levels loading
-			LoadBranchAndLevelsForCurrentPage( (Module)_webSession.CustomerLogin.HtModulesList[_webSession.CurrentModule]);
+			LoadBranchAndLevelsForCurrentPage(_webSession.CustomerLogin.GetModule(_webSession.CurrentModule));
 		}
 		#endregion
 
@@ -260,14 +260,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="language">language</param>
 		/// <param name="connection">connection</param>
 		/// <returns>Html code of universe selected</returns>
-		public string ShowUniverse(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, int language, OracleConnection connection) {
+		public string ShowUniverse(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, int language, TNS.FrameWork.DB.Common.IDataSource source) {
 
 			DataSet ds = null;
 			int treeViewId = 0;
 			string nodeCurrentText = "", childNodeCss = "";
 			UniverseAccessType accessType;
 			List<NomenclatureElementsGroup> groups = null;
-			TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess universeItems = null;
+            TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
 			string childId = "";
 			StringBuilder html = new StringBuilder();
 			int code = 0, headerCode = 0;
@@ -307,7 +307,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
-							universeItems = new TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, connection);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),language,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
@@ -377,7 +377,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
-							universeItems = new TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, connection);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),language,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {

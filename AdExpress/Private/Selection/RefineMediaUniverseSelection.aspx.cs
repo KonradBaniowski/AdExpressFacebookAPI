@@ -498,7 +498,7 @@ namespace AdExpress.Private.Selection
 					int numberCompetitorMedia=_webSession.CompetitorUniversMedia.Count+1;
 					_webSession.CompetitorUniversMedia.Add(numberCompetitorMedia,(System.Windows.Forms.TreeNode)_webSession.CurrentUniversMedia.Clone());
 					_webSession.Save();
-					DBFunctions.closeDataBase(_webSession);
+					_webSession.Source.Close();
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession+"");
 				
 				}else if (AdvertiserSelectionWebControl1.NbElement==constEvent.error.CHECKBOX_NULL) {

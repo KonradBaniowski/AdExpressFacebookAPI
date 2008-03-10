@@ -1,0 +1,740 @@
+using System;
+using System.Data;
+using System.Collections.Generic;
+using System.Text;
+using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.DataAccess.Exceptions;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using DbCst=TNS.AdExpress.Constantes.DB;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
+
+namespace TNS.AdExpress.DataAccess {
+    /// <summary>
+    /// Right Data access class
+    /// </summary>
+    public class RightDAL {
+
+
+        #region AdExpress Customer Access
+
+        /// <summary>
+        /// Vérifie l'existence du projet adExpress 
+        /// avec au moins un module.
+        /// Si true assigne idLogin
+        /// </summary>
+        /// <param name="source">Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns>True if the customer can access to AdExpress Web site</returns>
+        public static bool CanAccessToAdExpressDB(IDataSource source,Int64 loginId) {
+            bool moduleExist=false;
+
+            #region Tables initilization
+            Table loginTable,rightAssignmentTable,moduleAssignmentTable;
+            try {
+                loginTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+                rightAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAssignment);
+                moduleAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleAssignment);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Imossible to get table names",err));
+            } 
+            #endregion
+
+            #region Request
+            string sql="select  distinct "+moduleAssignmentTable.Prefix+".id_module";
+            sql+=" from "+loginTable.SqlWithPrefix+", "+rightAssignmentTable.SqlWithPrefix+", "+moduleAssignmentTable.SqlWithPrefix+" ";
+            sql+=" where "+loginTable.Prefix+".id_login="+rightAssignmentTable.Prefix+".id_login";
+            sql+=" and "+loginTable.Prefix+".id_login="+moduleAssignmentTable.Prefix+".id_login";
+            sql+=" and "+loginTable.Prefix+".id_login="+loginId+"";
+            sql+=" and "+rightAssignmentTable.Prefix+".id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+"";
+            sql+=" and "+loginTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
+            sql+=" and "+rightAssignmentTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
+            sql+=" and "+loginTable.Prefix+".date_expired>=sysdate";
+            sql+=" and "+moduleAssignmentTable.Prefix+".date_beginning_module<=sysdate";
+            sql+=" and "+moduleAssignmentTable.Prefix+".date_end_module>=sysdate";
+            sql+=" and "+moduleAssignmentTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
+            #endregion
+
+            #region Execute request
+            try {
+                DataSet ds=source.Fill(sql);
+                if(ds.Tables[0].Rows.Count>0) moduleExist=true;
+                else moduleExist=false;
+            }
+            catch(System.Exception) {
+                moduleExist=false;
+            }
+            #endregion
+
+            return (moduleExist);
+        }
+
+        /// <summary>
+        /// Check login password
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="login">Login</param>
+        /// <param name="password">Password</param>
+        /// <returns>Login Id (-1 if the login is not valid)</returns>
+        public static Int64 GetLoginId(IDataSource source,string login, string password) {
+            Int64 loginId=-1;
+
+            #region Tables initilization
+            Table myloginTable;
+            try {
+                myloginTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightMyLogin);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names",err));
+            } 
+            #endregion
+
+            #region Construction de la requête
+            string sql=" select "+myloginTable.Prefix+".id_login";
+            sql+=" from "+myloginTable.SqlWithPrefix+" ";
+            sql+=" where login=upper('"+login+"')";
+            sql+=" and password=upper('"+password+"')";
+            sql+=" and date_expired>=sysdate";
+            sql+=" and activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
+            #endregion
+
+            #region Execution de la requête
+            try {
+                DataSet ds=source.Fill(sql);
+                foreach(DataRow currentRow in ds.Tables[0].Rows) {
+                    loginId=Int64.Parse(currentRow[0].ToString());
+                }
+            }
+            catch(System.Exception) {
+                return (loginId);
+            }
+            #endregion
+
+            return (loginId);
+
+        }
+        #endregion
+
+        #region Right last modification date
+        /// <summary>
+        /// Get Last modification date
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <returns>Last modification date</returns>
+        public static DateTime LastModificationDate(IDataSource source,Int64 loginId) {
+            DateTime lastModificationDate;
+
+            #region Tables initilization
+            Table rightAssignmentTable;
+            try {
+                rightAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAssignment);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names",err));
+            } 
+            #endregion
+
+            #region Request
+            string	sql=" select date_modification_right";
+			sql+=" from "+rightAssignmentTable.SqlWithPrefix+" ";
+            sql+=" where id_login="+loginId+"";
+			sql+=" and id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+"";
+            #endregion
+
+            #region Execute request
+            try {
+                lastModificationDate=(DateTime)source.Fill(sql).Tables[0].Rows[0][0];
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Imossible to get last modification date",err));
+            } 
+            #endregion
+
+            return (lastModificationDate);
+        }
+        #endregion
+
+        #region Check if some tempates exist
+        /// <summary>
+        /// Check if some product tempates exist
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns>True if some templates exist</returns>
+        public static bool IsProductTemplateExist(IDataSource source,Int64 loginId) {
+            bool isTemplateExist=false;
+            int nbreTemplate=0;
+
+            #region Tables initilization
+            Table templateAssignmentTable,productOrderTemplateTable;
+            try {
+                templateAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightTemplateAssignment);
+                productOrderTemplateTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightProductOrderTemplate);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names",err));
+            } 
+            #endregion
+
+            #region request
+            string sql=" select "+templateAssignmentTable.Prefix+".id_template ";
+            sql+=" from "+templateAssignmentTable.SqlWithPrefix+",";
+            sql+=" "+productOrderTemplateTable.SqlWithPrefix+" ";
+            sql+=" where id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+"  ";
+            sql+=" and id_login="+loginId+" ";
+            sql+=" and "+templateAssignmentTable.Prefix+".activation <"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+productOrderTemplateTable.Prefix+".activation <"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+templateAssignmentTable.Prefix+".id_template="+productOrderTemplateTable.Prefix+".id_template ";
+            #endregion
+
+            #region Execute request
+            try {
+                DataSet ds=source.Fill(sql);
+                if(ds!=null && ds.Tables!=null && ds.Tables.Count>0 && ds.Tables[0]!=null && ds.Tables[0].Rows!=null &&ds.Tables[0].Rows.Count>0) {
+                    nbreTemplate=Convert.ToInt32(ds.Tables[0].Rows[0][0].ToString());
+                }
+
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive the number of product templates",err));
+            }
+            
+            #endregion
+
+            if(nbreTemplate>0)isTemplateExist=true;
+            return isTemplateExist;
+        }
+
+        /// <summary>
+        /// Check if some media tempates exist
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns>True if some templates exist</returns>
+        public static bool IsMediaTemplateExist(IDataSource source,Int64 loginId) {
+            bool isTemplateExist=false;
+            int nbreTemplate=0;
+
+            #region Tables initilization
+            Table templateAssignmentTable,mediaOrderTemplateTable;
+            try {
+                templateAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightTemplateAssignment);
+                mediaOrderTemplateTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightMediaOrderTemplate);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names",err));
+            } 
+            #endregion
+
+            #region Request
+            string sql=" select "+templateAssignmentTable.Prefix+".id_template ";
+            sql+=" from "+templateAssignmentTable.SqlWithPrefix+",";
+            sql+=" "+mediaOrderTemplateTable.SqlWithPrefix+" ";
+            sql+=" where id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+"  ";
+            sql+=" and id_login="+loginId+" ";
+            sql+=" and "+templateAssignmentTable.Prefix+".activation <"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+mediaOrderTemplateTable.Prefix+".activation <"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+templateAssignmentTable.Prefix+".id_template="+mediaOrderTemplateTable.Prefix+".id_template ";
+            #endregion
+
+            #region Execute request
+            try {
+                DataSet ds=source.Fill(sql);
+                if(ds!=null && ds.Tables!=null && ds.Tables.Count>0 && ds.Tables[0]!=null && ds.Tables[0].Rows!=null &&ds.Tables[0].Rows.Count>0) {
+                    nbreTemplate=Convert.ToInt32(ds.Tables[0].Rows[0][0].ToString());
+                }
+
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive the number of product templates",err));
+            }
+            #endregion
+
+            if(nbreTemplate>0) isTemplateExist=true;
+            return isTemplateExist;
+
+        }
+        #endregion
+
+        #region Get Rights
+
+        #region Customer Rights
+        /// <summary>
+        /// Get product rights
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns>SQL code</returns>
+        public static DataSet GetProductRights(IDataSource source,Int64 loginId) {
+
+            #region Tables initilization
+            Table orderClientProductTable,typeProductTable;
+            Schema mau;
+            try {
+                orderClientProductTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightProductOrder);
+                typeProductTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightProductType);
+                mau=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mau01);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label",err));
+            } 
+            #endregion
+
+            #region Request
+            string sql="select "+mau.Label+".listnum_to_char(list_product)list,exception,"+typeProductTable.Prefix+".id_type_product";
+            sql+=" from "+orderClientProductTable.SqlWithPrefix+","+typeProductTable.SqlWithPrefix+" ";
+            sql+=" where "+orderClientProductTable.Prefix+".id_type_product="+typeProductTable.Prefix+".id_type_product";
+            sql+=" and id_login="+loginId+"";
+            sql+=" and id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+"";
+            sql+=" and "+orderClientProductTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
+            sql+=" and "+typeProductTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
+            #endregion
+
+            #region Execute request
+            try {
+                return(source.Fill(sql));
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive rights",err));
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// Get media rights
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns>SQL code</returns>
+        public static DataSet GetMediaRights(IDataSource source,Int64 loginId) {
+
+            #region Tables initilization
+            Table orderClientMediaTable,typeMediaTable;
+            Schema mau;
+            try {
+                orderClientMediaTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightMediaOrder);
+                typeMediaTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightMediaType);
+                mau=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mau01);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label",err));
+            } 
+            #endregion
+
+            #region Request
+            string sql="select "+mau.Label+".listnum_to_char(list_media)list,exception,"+typeMediaTable.Prefix+".id_type_media";
+            sql+=" from "+orderClientMediaTable.SqlWithPrefix+", "+typeMediaTable.SqlWithPrefix+"";
+            sql+=" where "+orderClientMediaTable.Prefix+".id_type_media="+typeMediaTable.Prefix+".id_type_media";
+            sql+=" and id_login="+loginId+"";
+            sql+=" and id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+"";
+            sql+=" and "+orderClientMediaTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
+            sql+=" and "+typeMediaTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
+            #endregion
+
+            #region Execute request
+            try {
+                return (source.Fill(sql));
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive rights",err));
+            }
+            #endregion
+        }
+        #endregion
+
+        #region Template
+
+        /// <summary>
+        /// Get product template
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns>template</returns>
+        public static DataSet GetProductTemplate(IDataSource source,Int64 loginId) {
+
+            #region Tables initilization
+            Table orderTemplateProductTable,typeProductTable,templateTable,templateAssignmentTable;
+            Schema mau;
+            try {
+                orderTemplateProductTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightProductOrderTemplate);
+                typeProductTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightProductType);
+                templateTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightTemplate);
+                templateAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightTemplateAssignment);
+                mau=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mau01);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label",err));
+            } 
+            #endregion
+
+            #region Request
+            string sql="select "+mau.Label+".listnum_to_char(list_product)list,exception,"+typeProductTable.Prefix+".id_type_product";
+            sql+=" from "+orderTemplateProductTable.SqlWithPrefix+","+typeProductTable.SqlWithPrefix+","+templateTable.SqlWithPrefix+",";
+            sql+=" "+templateAssignmentTable.SqlWithPrefix+" ";
+            sql+=" where "+orderTemplateProductTable.Prefix+".id_type_product="+typeProductTable.Prefix+".id_type_product";
+            sql+=" and "+orderTemplateProductTable.Prefix+".id_template="+templateTable.Prefix+".id_template";
+            sql+=" and "+templateTable.Prefix+".id_template="+templateAssignmentTable.Prefix+".id_template ";
+            sql+=" and id_login="+loginId+" ";
+            sql+= "and "+templateAssignmentTable.Prefix+".id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+" ";
+            sql+=" and "+orderTemplateProductTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+typeProductTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+templateTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+templateAssignmentTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            #endregion
+
+            #region Execute request
+            try {
+                return (source.Fill(sql));
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive rights",err));
+            }
+            #endregion
+
+        }
+
+        /// <summary>
+        /// Get media template
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns>template</returns>
+        public static DataSet GetMediaTemplate(IDataSource source,Int64 loginId) {
+
+            #region Tables initilization
+            Table orderTemplateMediaTable,typeMediaTable,templateTable,templateAssignmentTable;
+            Schema mau;
+            try {
+                orderTemplateMediaTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightMediaOrderTemplate);
+                typeMediaTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightMediaType);
+                templateTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightTemplate);
+                templateAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightTemplateAssignment);
+                mau=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mau01);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label",err));
+            } 
+            #endregion
+
+            #region Request
+            string sql="select "+mau.Label+".listnum_to_char(list_media)list,exception,"+typeMediaTable.Prefix+".id_type_media";
+            sql+=" from "+orderTemplateMediaTable.SqlWithPrefix+","+typeMediaTable.SqlWithPrefix+","+templateTable.SqlWithPrefix+",";
+            sql+=" "+templateAssignmentTable.SqlWithPrefix+"";
+            sql+=" where "+orderTemplateMediaTable.Prefix+".id_type_media="+typeMediaTable.Prefix+".id_type_media";
+            sql+=" and "+orderTemplateMediaTable.Prefix+".id_template="+templateTable.Prefix+".id_template";
+            sql+=" and "+templateTable.Prefix+".id_template="+templateAssignmentTable.Prefix+".id_template ";
+            sql+=" and id_login="+loginId+" ";
+            sql+= "and "+templateAssignmentTable.Prefix+".id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+" ";
+            sql+=" and "+orderTemplateMediaTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+typeMediaTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+templateTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            sql+=" and "+templateAssignmentTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+            
+            #endregion
+
+            #region Execute request
+            try {
+                return (source.Fill(sql));
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive rights",err));
+            }
+            #endregion
+
+        }
+        #endregion
+
+        #region Product class analysis
+        /// <summary>
+        /// Get Product class analysis right
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <param name="rights">Customer Rights</param>
+        /// <returns>template</returns>
+        public static DataSet GetProductClassAnalysisRights(IDataSource source,Dictionary<CustomerCst.Right.type,string[]> rights) {
+
+            #region Tables initilization
+            Table vehicleTable,categoryTable,mediaTable;
+            try {
+                vehicleTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapVehicle);
+                categoryTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCategory);
+                mediaTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMedia);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label",err));
+            }
+            #endregion
+
+            #region Request
+            StringBuilder sql=new StringBuilder(2000);
+            bool premier=true;
+            //Requête SQL
+            sql.Append("Select distinct "+vehicleTable.Prefix+".id_vehicle ");
+            sql.Append(" from "+vehicleTable.SqlWithPrefix+","+categoryTable.SqlWithPrefix+","+mediaTable.SqlWithPrefix+" ");
+            sql.Append(" where");
+            // Langue
+            sql.Append(" "+vehicleTable.Prefix+".id_language="+WebApplicationParameters.DefaultLanguage.ToString());
+            sql.Append(" and "+categoryTable.Prefix+".id_language="+WebApplicationParameters.DefaultLanguage.ToString());
+            sql.Append(" and "+mediaTable.Prefix+".id_language="+WebApplicationParameters.DefaultLanguage.ToString());
+            // Activation
+            sql.Append(" and "+vehicleTable.Prefix+".activation<"+DbCst.ActivationValues.UNACTIVATED);
+            sql.Append(" and "+categoryTable.Prefix+".activation<"+DbCst.ActivationValues.UNACTIVATED);
+            sql.Append(" and "+mediaTable.Prefix+".activation<"+DbCst.ActivationValues.UNACTIVATED);
+
+            // Jointure
+            sql.Append(" and "+vehicleTable.Prefix+".id_vehicle="+categoryTable.Prefix+".id_vehicle");
+            sql.Append(" and "+categoryTable.Prefix+".id_category="+mediaTable.Prefix+".id_category");
+
+
+            // Ordre
+
+            premier=true;
+            bool beginByAnd=true;
+            // le bloc doit il commencer par AND
+            // Vehicle
+            if(rights.ContainsKey(CustomerCst.Right.type.vehicleAccess) && rights[CustomerCst.Right.type.vehicleAccess].Length>0) {
+                if(beginByAnd) sql.Append(" and");
+                sql.Append(" (("+vehicleTable.Prefix+".id_vehicle in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.vehicleAccess])+") ");
+                premier=false;
+            }
+            // Category
+            if(rights.ContainsKey(CustomerCst.Right.type.categoryAccess) && rights[CustomerCst.Right.type.categoryAccess].Length>0) {
+                if(!premier) sql.Append(" or");
+                else {
+                    if(beginByAnd) sql.Append(" and");
+                    sql.Append(" ((");
+                }
+                sql.Append(" "+categoryTable.Prefix+".id_category in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.categoryAccess])+") ");
+                premier=false;
+            }
+            // Media
+            if(rights.ContainsKey(CustomerCst.Right.type.mediaAccess) && rights[CustomerCst.Right.type.mediaAccess].Length>0) {
+                if(!premier) sql.Append(" or");
+                else {
+                    if(beginByAnd) sql.Append(" and");
+                    sql.Append(" ((");
+                }
+                sql.Append(" "+mediaTable.Prefix+".id_media in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.mediaAccess])+") ");
+                premier=false;
+            }
+            if(!premier) sql.Append(" )");
+
+            // Droits en exclusion
+            // Vehicle
+            if(rights.ContainsKey(CustomerCst.Right.type.vehicleException) && rights[CustomerCst.Right.type.vehicleException].Length>0) {
+                if(!premier) sql.Append(" and");
+                else {
+                    if(beginByAnd) sql.Append(" and");
+                    sql.Append(" (");
+                }
+                sql.Append(" "+vehicleTable.Prefix+".id_vehicle not in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.vehicleException])+") ");
+                premier=false;
+            }
+            // Category
+            if(rights.ContainsKey(CustomerCst.Right.type.categoryException) && rights[CustomerCst.Right.type.categoryException].Length>0) {
+                if(!premier) sql.Append(" and");
+                else {
+                    if(beginByAnd) sql.Append(" and");
+                    sql.Append(" (");
+                }
+                sql.Append(" "+categoryTable.Prefix+".id_category not in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.categoryException])+") ");
+                premier=false;
+            }
+            // Media
+            if(rights.ContainsKey(CustomerCst.Right.type.mediaException) && rights[CustomerCst.Right.type.mediaException].Length>0) {
+                if(!premier) sql.Append(" and");
+                else {
+                    if(beginByAnd) sql.Append(" and");
+                    sql.Append(" (");
+                }
+                sql.Append(" "+mediaTable.Prefix+".id_media not in ("+ConvertIdTableToString(rights[CustomerCst.Right.type.mediaException])+") ");
+                premier=false;
+            }
+            if(!premier) sql.Append(" )");
+
+            #endregion
+
+            #region Execute request
+            try {
+                return (source.Fill(sql.ToString()));
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive rights",err));
+            }
+            #endregion
+        }
+
+        #endregion
+
+        #region Module Frequency
+        /// <summary>
+        /// Get Module frequencies
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns></returns>
+        public static DataSet GetModuleFrequencies(IDataSource source,Int64 loginId) {
+
+            #region Tables initilization
+            Table moduleAssignmentTable,frequencyTable;
+            try {
+                moduleAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleAssignment);
+                frequencyTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightFrequency);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label",err));
+            }
+            #endregion
+
+            #region Request
+            StringBuilder sql=new StringBuilder(1000);
+            sql.Append(" select id_module, "+frequencyTable.Prefix+".id_frequency");
+            sql.Append(" from  "+frequencyTable.SqlWithPrefix+","+frequencyTable.SqlWithPrefix+" ");
+            sql.Append(" where ma.id_login="+loginId+" ");
+            sql.Append(" and "+moduleAssignmentTable.Prefix+".ID_FREQUENCY="+moduleAssignmentTable.Prefix+".ID_FREQUENCY ");
+            sql.Append(" and "+moduleAssignmentTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
+            sql.Append(" and "+frequencyTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
+            #endregion
+
+            #region Execute request
+            try {
+                return (source.Fill(sql.ToString()));
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive module frequencies",err));
+            }
+            #endregion
+        }
+        #endregion
+
+        #region Right Cohesion
+
+        #region Media Right cohesion
+        #endregion
+
+        #region Product Right cohesion
+        #endregion
+
+        #endregion
+
+       #region Modules
+        /// <summary>
+        /// Get Customer Modules rights
+        /// </summary>
+        /// <param name="source">Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns>Accessible modules</returns>
+        public static DataSet GetModulesRights(IDataSource source,Int64 loginId) {
+           
+            #region Tables initilization
+            Table moduleAssignmentTable,moduleTable,moduleGroupTable,moduleCategoryTable;
+            try {
+                moduleAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleAssignment);
+                moduleTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModule);
+                moduleGroupTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleGroup);
+                moduleCategoryTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleCategory); ;
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label",err));
+            }
+            #endregion
+
+            #region request
+            StringBuilder sql=new StringBuilder(1000);
+            sql.Append(" select "+moduleTable.Prefix+".id_module_group,"+moduleTable.Prefix+".id_module,"+moduleCategoryTable.Prefix+".id_module_category ");
+            sql.Append(" from "+moduleAssignmentTable.SqlWithPrefix+","+moduleTable.SqlWithPrefix+","+moduleGroupTable.SqlWithPrefix+","+moduleCategoryTable.SqlWithPrefix+" ");
+            sql.Append(" where "+moduleAssignmentTable.Prefix+".id_module="+moduleTable.Prefix+".id_module ");
+            sql.Append(" and "+moduleAssignmentTable.Prefix+".id_module not in("+TNS.AdExpress.Constantes.Web.Module.NOT_USED_ID_LIST+") ");
+            sql.Append(" and "+moduleTable.Prefix+".id_module_group="+moduleGroupTable.Prefix+".id_module_group ");
+            sql.Append(" and "+moduleTable.Prefix+".id_module_category = "+moduleCategoryTable.Prefix+".id_module_category(+) ");
+            sql.Append(" and "+moduleAssignmentTable.Prefix+".id_login="+loginId+" ");
+            sql.Append(" and "+moduleGroupTable.Prefix+".id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+" ");
+            sql.Append(" and "+moduleAssignmentTable.Prefix+".date_beginning_module<=sysdate ");
+            sql.Append(" and "+moduleAssignmentTable.Prefix+".date_end_module>=sysdate ");
+            sql.Append(" and "+moduleAssignmentTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
+            sql.Append(" and "+moduleTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
+            sql.Append(" and "+moduleGroupTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
+            sql.Append(" order by "+moduleGroupTable.Prefix+".module_group, "+moduleCategoryTable.Prefix+".module_category, "+moduleTable.Prefix+".module");
+            #endregion
+
+            #region Execute request
+            try {
+                return (source.Fill(sql.ToString()));
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive module rights",err));
+            }
+            #endregion
+
+        }
+        #endregion
+
+        #region Flags
+        /// <summary>
+        /// Get Customer Flags rights
+        /// </summary>
+        /// <param name="source">Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns>Accessible flags</returns>
+        public static DataSet GetFlagsRights(IDataSource source,Int64 loginId) {
+
+            #region Tables initilization
+            Table flagTable,projectFlagAssignmentTable;
+            try {
+                flagTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightFlag);
+                projectFlagAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightProjectFlagAssignment);
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label",err));
+            }
+            #endregion
+
+            #region request
+            StringBuilder sql=new StringBuilder(1000);
+            sql.Append("select "+flagTable.Prefix+".id_flag, flag ");
+            sql.Append(" from "+projectFlagAssignmentTable.SqlWithPrefix+",");
+            sql.Append(" "+flagTable.SqlWithPrefix+" ");
+            sql.Append(" where "+projectFlagAssignmentTable.Prefix+".id_project="+TNS.AdExpress.Constantes.Project.ADEXPRESS_ID+" ");
+            sql.Append(" and "+projectFlagAssignmentTable.Prefix+".id_login="+loginId+" ");
+            sql.Append(" and "+projectFlagAssignmentTable.Prefix+".ID_FLAG="+flagTable.Prefix+".ID_FLAG ");
+            sql.Append(" and "+projectFlagAssignmentTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
+            sql.Append(" and "+flagTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
+            #endregion
+
+            #region Execute request
+            try {
+                return (source.Fill(sql.ToString()));
+            }
+            catch(System.Exception err) {
+                throw (new RightDALException("Impossible to retreive flags rights",err));
+            }
+            #endregion
+
+        }
+        #endregion
+
+        #endregion
+
+        #region Private Medthods
+        /// <summary>
+        /// Convert string table to string
+        /// </summary>
+        /// <remarks>id,id,id</remarks>
+        /// <param name="tab"></param>
+        /// <returns>string</returns>
+        private static string ConvertIdTableToString(string[] tab) {
+            string list="";
+            foreach(string id in tab) {
+                list+=id+",";
+            }
+            if(list.Length>0) list=list.Substring(0,list.Length-1);
+            return (list);
+        }
+        #endregion
+
+
+    }
+        
+}

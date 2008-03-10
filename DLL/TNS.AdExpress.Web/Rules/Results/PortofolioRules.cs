@@ -31,7 +31,7 @@ using WebCommon=TNS.AdExpress.Web.Common;
 using WebCore=TNS.AdExpress.Web.Core;
 using WebDataAccess = TNS.AdExpress.Web.DataAccess;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
-using ClassificationDB=TNS.AdExpress.Classification.DataAccess;
+using ClassificationDB=TNS.AdExpress.DataAccess.Classification;
 using TNS.AdExpress.Domain.Translation;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Domain.Translation;
@@ -160,7 +160,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 						break;
 					}
 				}
-                if(creatives>0 && webSession.CustomerLogin.FlagsList[TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG]!=null) {
+                if(creatives>0 && webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null) {
                     headers.Root.Add(new HeaderCreative(false,GestionWeb.GetWebWord(CREATIVES_COL,webSession.SiteLanguage),CREATIVES_COL));
                 }
                 else creatives=0;
@@ -779,7 +779,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
                 bool showCreative = webSession.CustomerLogin.ShowCreatives(vehicle);
                 // Affichage Agences Medias
                 bool showMediaAgency = false;
-                if (webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY] != null && dt.Columns.Contains("advertising_agency")) {
+                if (webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) != null && dt.Columns.Contains("advertising_agency")) {
                     showMediaAgency = true;
                 }
                 //Affichage date Diffusion

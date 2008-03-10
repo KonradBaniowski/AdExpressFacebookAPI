@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
-using ProductClassification = TNS.AdExpress.Classification.DataAccess.ProductBranch;
+using ProductClassification=TNS.AdExpress.DataAccess.Classification.ProductBranch;
 using TNS.Classification.Universe;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
@@ -98,7 +98,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 for (int i = 0; i < groups.Count; i++) {
                     productLevelIdsList = groups[0].GetAsString(TNSClassificationLevels.PRODUCT);
                     levelIdsList = groups[0].Get(TNSClassificationLevels.PRODUCT);
-                    productLabels = new ProductClassification.PartialProductLevelListDataAccess(productLevelIdsList, _webSession.SiteLanguage, _webSession.CustomerLogin.Connection);
+                    productLabels = new ProductClassification.PartialProductLevelListDataAccess(productLevelIdsList, _webSession.SiteLanguage, _webSession.Source);
                     foreach (long id in levelIdsList) {
                         output.Write(productLabels[id] + "&nbsp;&nbsp;<br>");	
                     }

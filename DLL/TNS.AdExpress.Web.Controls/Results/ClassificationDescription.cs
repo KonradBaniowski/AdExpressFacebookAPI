@@ -7,7 +7,7 @@
 
 using System;
 using TNS.FrameWork.DB.Common;
-using Classification=TNS.AdExpress.Classification.DataAccess;
+using Classification=TNS.AdExpress.DataAccess.Classification;
 using ClassificationTable=TNS.AdExpress.Constantes.Classification.DB.Table;
 
 namespace TNS.AdExpress.Web.Controls.Results{

@@ -16,7 +16,7 @@ using Oracle.DataAccess.Client;
 using TNS.AdExpress.Constantes.DB;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Exceptions;
@@ -561,7 +561,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#endregion
 
 			//additional target
-			Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));
+            Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmTargetAccess));
 
 			query = "SELECT id_slogan as id, visual as visual,date_media_num as dateParution,date_cover_num as datenum, id_media as idmedia"
 				+ " FROM ("

@@ -24,7 +24,7 @@ using TNS.AdExpress.Web.Exceptions;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
 using WeBCst = TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Constantes.Customer;
+using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
@@ -303,20 +303,20 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
 			#region targets
 			//base target
-			Int64 idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+            Int64 idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmBaseTargetAccess));
 			//additional target
-			Int64 idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+            Int64 idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmTargetAccess));									
 			#endregion
 
 			#region Wave
-			Int64 idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+            Int64 idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,CustomerCst.Right.type.aepmWaveAccess));									
 			#endregion
 
 			#region Media Agency rights
 			//To check if the user has a right to view the media agency or not
 			//mediaAgencyAccess flag is used in the rest of the classes which indicates whethere the user has access 
 			//to media agency or not
-			if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null)
+			if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
 				mediaAgencyAccess=true;
 
 			#endregion
@@ -396,7 +396,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								//Nom de l'announceur
 								item.Advertiser = hTable["advertiser"].ToString();
 								//Marque
-								if(_webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE]!=null)
+								if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 									item.Brand = hTable["brand"].ToString();
 								if(mediaAgencyAccess && hTable["agency"].ToString().Length>0) {
 									//Nom de l'agence Media

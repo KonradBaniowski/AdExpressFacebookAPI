@@ -162,13 +162,13 @@ namespace TNS.AdExpress.Web.UI{
 			#region Connexion à la base de données
 			try{
 				//Pour reste APPM
-				_dataSource=new OracleDataSource(new OracleConnection(_webSession.CustomerLogin.OracleConnectionString));
+                OracleConnection connection=(OracleConnection)_webSession.Source.GetSource();
 			}
 			catch(System.Exception err){
 				this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this.Page,new WebExeptions.WebPageException("Le DataSource ne peut être créer",err),_webSession));
 			}
 			//Ancienne connexion client
-			_webSession.CustomerLogin.Connection=(OracleConnection)_dataSource.GetSource();
+			//_webSession.CustomerLogin.Connection=(OracleConnection)_dataSource.GetSource();
 			#endregion
 		}
 		#endregion
@@ -182,18 +182,19 @@ namespace TNS.AdExpress.Web.UI{
 		/// <param name="e">Arguments</param>
 		private void WebPage_Unload(object sender, EventArgs e) {
 			try{
+                //TODO
 				// Ancienne utilisation de la connexion client
-				if(_webSession!=null && _webSession.CustomerLogin.Connection!=null){
-					if(_webSession.CustomerLogin.Connection.State==System.Data.ConnectionState.Open)_webSession.CustomerLogin.Connection.Close();
-					_webSession.CustomerLogin.Connection.Dispose();
+                //if(_webSession!=null && _webSession.CustomerLogin.Connection!=null){
+                //    if(_webSession.CustomerLogin.Connection.State==System.Data.ConnectionState.Open)_webSession.CustomerLogin.Connection.Close();
+                //    _webSession.CustomerLogin.Connection.Dispose();
 				
-					//IdataSource
-					if((OracleConnection)_webSession.Source.GetSource()!=null){
-						if(((OracleConnection)_webSession.Source.GetSource()).State==System.Data.ConnectionState.Open)_webSession.Source.Close();
-						((OracleConnection)_webSession.Source.GetSource()).Dispose();
+                //    //IdataSource
+                //    if((OracleConnection)_webSession.Source.GetSource()!=null){
+                //        if(((OracleConnection)_webSession.Source.GetSource()).State==System.Data.ConnectionState.Open)_webSession.Source.Close();
+                //        ((OracleConnection)_webSession.Source.GetSource()).Dispose();
 					
-					}
-				}
+                //    }
+                //}
 			}
 			catch(System.Exception err){
 				this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this.Page,new WebExeptions.WebPageException("Impossible de décharger la page: "+err.Message+"  "+err.StackTrace),_webSession));

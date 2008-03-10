@@ -314,7 +314,7 @@ namespace AdExpress.Private.Selection {
 			try{
 				calendarValidation();
 				_webSession.Save();
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
 			catch(System.Exception ex){
@@ -391,7 +391,7 @@ namespace AdExpress.Private.Selection {
 						throw(new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885,_webSession.SiteLanguage)));
 				}
 				_webSession.Save();
-				DBFunctions.closeDataBase(_webSession);
+				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
 			catch(System.Exception ex){ 
@@ -410,7 +410,7 @@ namespace AdExpress.Private.Selection {
 			_webSession.PeriodBeginningDate=date;
 			_webSession.PeriodEndDate=date;
 			_webSession.Save();
-			DBFunctions.closeDataBase(_webSession);
+			_webSession.Source.Close();
 			Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);		
 		}
 		#endregion

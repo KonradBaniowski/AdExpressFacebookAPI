@@ -49,9 +49,10 @@ namespace AdExpress.Private.Results.Excel
 			try{
 				#region Connexion à la base de données
 				// Ouverture de la base de données
-				if(_webSession.CustomerLogin.Connection!=null){
-					if(_webSession.CustomerLogin.Connection.State==System.Data.ConnectionState.Closed) _webSession.CustomerLogin.Connection.Open();
-				}
+                //if(_webSession.CustomerLogin.Connection!=null){
+                //    if(_webSession.CustomerLogin.Connection.State==System.Data.ConnectionState.Closed) _webSession.CustomerLogin.Connection.Open();
+                //}
+                _webSession.Source.Open();
 				#endregion						
 
 				#region chargement de l'univers						
