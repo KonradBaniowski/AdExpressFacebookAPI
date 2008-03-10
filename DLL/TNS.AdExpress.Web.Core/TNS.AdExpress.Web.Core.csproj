@@ -347,9 +347,6 @@
   <ItemGroup>
     <None Include="Result\AdExpressCells.cd" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Navigation\" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
