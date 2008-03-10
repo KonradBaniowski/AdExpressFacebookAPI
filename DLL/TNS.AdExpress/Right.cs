@@ -137,7 +137,7 @@ namespace TNS.AdExpress {
             get {
                 try {
                   
-                    if(_rights[typeRight]==null||_rights.Keys.Count==0) return ("");
+                    if(_rights[typeRight]==null||!_rights.ContainsKey(typeRight)|| _rights.Keys.Count==0) return ("");
                     string list="";
                     foreach(string currentItem in _rights[typeRight]) {
                         list+=currentItem+",";
