@@ -26,7 +26,7 @@ namespace AdExpress.Private.Results.Excel{
 	/// Export Excel pour les popup de la planche détail support
 	/// dans le module portefeuille
 	/// </summary>
-	public partial class PortofolioDetailMediaPopUp : System.Web.UI.Page{
+    public partial class PortofolioDetailMediaPopUp : TNS.AdExpress.Web.UI.PrivateWebPage {
 
 		#region Variables
 		/// <summary>
@@ -76,11 +76,13 @@ namespace AdExpress.Private.Results.Excel{
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 
+            Response.ContentType = "application/vnd.ms-excel";
+
 			#region Textes et langage du site
 			//Langue du site
 			_siteLanguage=_webSession.SiteLanguage;
 			#endregion
-			
+
             //DataSet dsTable=null;
 
 //			DataSet dsTable=TNS.AdExpress.Web.DataAccess.Results.PortofolioDataAccess.GetDetailMedia(_webSession,((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID,((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID,_webSession.PeriodBeginningDate,_webSession.PeriodEndDate,_codeEcran);
