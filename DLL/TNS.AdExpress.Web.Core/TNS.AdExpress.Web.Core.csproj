@@ -193,9 +193,6 @@
     <Compile Include="DataAccess\Session\TrackingDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\WebRightDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Exceptions\ActiveMediaListDataAccessException.cs" />
     <Compile Include="Exceptions\AdNetTrackDetailLevelsDescriptionDataAccessException.cs">
       <SubType>Code</SubType>
@@ -323,9 +320,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Result\SponsorshipShowLinkRules.cs" />
-    <Compile Include="WebRight.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TNS.ADEXPRESS.CONSTANTES\TNS.AdExpress.Constantes.csproj">
