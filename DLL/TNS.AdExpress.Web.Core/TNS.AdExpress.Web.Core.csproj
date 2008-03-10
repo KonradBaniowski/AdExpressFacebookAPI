@@ -352,7 +352,6 @@
     <None Include="Result\AdExpressCells.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataAccess\Navigation\" />
     <Folder Include="Navigation\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

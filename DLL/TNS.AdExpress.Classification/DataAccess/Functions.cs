@@ -16,7 +16,7 @@ namespace TNS.AdExpress.Classification{
 	/// Fonctions traitant des données des nomenclatures
 	/// </summary>
 	public class Functions{
-
+        /*
 		#region Recherche d'élements dans les nomenclatures support et produit
 
 		/// <summary>
@@ -541,5 +541,6 @@ namespace TNS.AdExpress.Classification{
 			}
 		}
 		#endregion
+        */
 	}
 }
