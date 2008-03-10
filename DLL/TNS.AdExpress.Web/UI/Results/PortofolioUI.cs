@@ -3088,7 +3088,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}
 			//libellé
             t.Append("\r\n\t<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\"  class=\"violetBackGroundV3\" height=\"20px\" >");
-            t.Append("\r\n\t<td align=\"left\" class=\"p2\" class=\"whiteBackGround\" nowrap><b>" + GestionWeb.GetWebWord(labelcode, webSession.SiteLanguage) + "</b></td>"); 
+            t.Append("\r\n\t<td align=\"left\" class=\"p2\" nowrap><b>" + GestionWeb.GetWebWord(labelcode, webSession.SiteLanguage) + "</b></td>"); 
 			t.Append("\r\n\t<td  class=\"p2\"  nowrap>"+GestionWeb.GetWebWord(1398,webSession.SiteLanguage)+"</td>");
 			t.Append("</tr>");
 			//Nombre d'insertions
