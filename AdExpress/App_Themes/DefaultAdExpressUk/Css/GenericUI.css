@@ -186,7 +186,7 @@ td.exlv1 {
 	font-size: 11px;
 	color : #000000;
 	font-weight:bold;
-	background-color:#969696;	
+	background-color:#99CC00;	
 	height:20px;	
 	white-space:nowrap;
 	text-decoration : none;
@@ -226,7 +226,7 @@ td.exlv2 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
-	background-color:#9999FF;	
+	background-color:#CCFFCC;	
 	height:20px;	
 	white-space:nowrap;
 	text-decoration : none;
@@ -283,7 +283,7 @@ td.exlv3{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;	
-	background-color:#CCCCFF;
+	background-color:#339966;
 	height:20px;	
 	white-space:nowrap;
 	text-decoration : none;
@@ -463,7 +463,7 @@ tr.exlv2{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
-	background-color:#D0C8DA;
+	background-color:#CCFFCC;
 	text-align : right;	
 	height:20px;	
 	white-space:nowrap;
@@ -502,7 +502,7 @@ tr.exlv3{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;	
-	background-color:#E1E0DA;
+	background-color:#339966;
 	text-align : right;	
 	height:20px;	
 	white-space:nowrap;
@@ -659,6 +659,74 @@ td.dsTitleData{
 	text-decoration : none;
 	background-color:#E1E0DA;
 }
+.dsRightBorderLv1{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:bold;
+	height:20px;
+	white-space:nowrap;
+	text-decoration : none;
+	background-color:#A5CC8F;
+	border-right:solid 1px #FF0000; 
+	width:10px;
+}
+.dsRightBorderLv2{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	height:20px;
+	white-space:nowrap;
+	text-decoration : none;
+	background-color:#DCE6C3;
+	border-right:solid 1px #FF0000; 
+	width:10px;
+}
+.dsRightBorderLv3{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	height:20px;	
+	white-space:nowrap;
+	text-decoration : none;
+	background-color:#E1E0DA;
+	border-right:solid 1px #FF0000; 
+	width:10px;
+}
+.dsRightBottomBorderLv1{
+	font-family: Arial, Helvetica, sans-serif;
+	color : #000000;
+	font-weight:bold;
+	white-space:nowrap;
+	text-decoration : none;
+	background-color:#A5CC8F;
+	border-bottom:solid 1px #000000;
+	border-right:solid 1px #000000;
+	height:5px;
+	font-size:5px;
+}
+.dsRightBottomBorderLv2{
+	font-family: Arial, Helvetica, sans-serif;
+	color : #000000;
+	white-space:nowrap;
+	text-decoration : none;
+	background-color:#DCE6C3;
+	border-bottom:solid 1px #000000;
+	border-right:solid 1px #000000;
+	height:5px;
+	font-size:5px;
+}
+.dsRightBottomBorderLv3{
+	font-family: Arial, Helvetica, sans-serif;
+	color : #000000;
+	white-space:nowrap;
+	text-decoration : none;
+	background-color:#E1E0DA;
+	border-bottom:solid 1px #000000;
+	border-right:solid 1px #000000;
+	height:5px;
+	font-size:5px;
+}
 .dsLv1Excel{
 	background-color:#808080;
 	font-family: Arial, Helvetica, sans-serif;
@@ -679,14 +747,71 @@ td.dsTitleData{
 	font-size: 11px;
 	color : #000000;
 	font-weight: bold;
-} 
+}
+.dsRightBorderLv1Excel{
+	background-color:#808080;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	border-right:solid 1px #808080; 
+	width:10px;
+}
+.dsRightBorderLv2Excel{
+	background-color:#FF99CC;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	border-right:solid 1px #808080; 
+	width:10px;
+}
+.dsRightBorderLv3Excel{
+	background-color:#FFFFFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	border-right:solid 1px #808080; 
+	width:10px;
+}
+.dsRightBottomBorderLv1Excel{
+	background-color:#808080;
+	font-family: Arial, Helvetica, sans-serif;
+	color : #000000;
+	font-weight: bold;
+	border-bottom:solid 1px #808080;
+	border-right:solid 1px #808080;
+	height:5px;
+	font-size:5px;
+}
+.dsRightBottomBorderLv2Excel{
+	background-color:#FF99CC;
+	font-family: Arial, Helvetica, sans-serif;
+	color : #000000;
+	font-weight: bold;
+	border-bottom:solid 1px #808080;
+	border-right:solid 1px #808080;
+	height:5px;
+	font-size:5px;
+}
+.dsRightBottomBorderLv3Excel{
+	background-color:#FFFFFF;
+	font-family: Arial, Helvetica, sans-serif;
+	color : #000000;
+	font-weight: bold;
+	border-bottom:solid 1px #808080;
+	border-right:solid 1px #808080;
+	height:5px;
+	font-size:5px;
+}   
 tr.title td{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color : #FFFFFF;
 	font-weight: bold;
 	text-decoration : none;
-	background-color: #644883;
+	background-color: #800000;
 	padding-left:5px;
 	padding-right:5px;
 	height:30px;
@@ -702,7 +827,7 @@ tr.title{
 	color : #FFFFFF;
 	font-weight: bold;
 	text-decoration : none;
-	background-color: #644883;
+	background-color: #800000;
 	padding-left:5px;
 	padding-right:5px;
 	height:30px;

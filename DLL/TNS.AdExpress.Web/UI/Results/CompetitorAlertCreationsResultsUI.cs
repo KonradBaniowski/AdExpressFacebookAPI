@@ -26,6 +26,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebExceptions = TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace TNS.AdExpress.Web.UI.Results{
@@ -109,8 +110,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 		private static string GetUIPress(object[,] data, WebSession webSession, Page page, string idVehicle) {
 
 			StringBuilder HtmlTxt = new StringBuilder(70000);
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
-			HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\" ");
+            HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" ");
 			HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"3\" align=\"center\" border=\"0\">");
 
 			#region Pas de données
@@ -150,9 +152,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 				HtmlTxt.Append("<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
 				HtmlTxt.Append("<td>");
 				HtmlTxt.Append("<!-- fleche -->");
-				HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
+                HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/"+themeName+"/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
 				HtmlTxt.Append("<!-- message -->");
-				HtmlTxt.Append("<TD  vAlign=\"top\" width=\"100%\" class=\"popuptitle1\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
+                HtmlTxt.Append("<TD  vAlign=\"top\" width=\"100%\" class=\"popuptitle1 creationpopUpBackGround\">");
 				HtmlTxt.Append(currentCategory);
 				HtmlTxt.Append("</TD>");
 				HtmlTxt.Append("</td>");
@@ -194,7 +196,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							//page différente de la précédente
 							oldPage = data[i,CstWeb.PressInsertionsColumnIndex.MEDIA_PAGING_INDEX].ToString();
 							HtmlTxt.Append("<tr class=\"popupinsertionligne\">");
-							HtmlTxt.Append("<td "+((!first)?"style=\"BORDER-TOP: #9966cc 1px solid;\"":"") +" class=\"txtViolet11Bold\">Page "+ oldPage + "</td>");
+                            HtmlTxt.Append("<td class=\"txtViolet11Bold" + ((!first) ? " creationVioletTopBorder" : "") + "\">Page " + oldPage + "</td>");
 							HtmlTxt.Append("</tr>");
 							first = false;
 						}
@@ -273,12 +275,13 @@ namespace TNS.AdExpress.Web.UI.Results{
 		private static string GetUIRadio(object[,] data, WebSession webSession, Page page, string idVehicle){
 			
 			StringBuilder HtmlTxt = new StringBuilder(70000);
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
 			const string CLASSE_1="p6";
 			const string CLASSE_2="p7";
 
 			#region Début du tableau
-			HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\" ");
+            HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" ");
 			HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">");
 			#endregion
 
@@ -313,8 +316,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 				#region Infos Catégorie
 				HtmlTxt.Append("<TR><td>&nbsp;</td></tr>");
 				HtmlTxt.Append("<tr><td colSpan=\"13\"><table width=\"100%\" cellSpacing=\"0\" cellPadding=\"0\"><tr>");
-				HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
-				HtmlTxt.Append("<TD class=\"insertionCategory\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
+                HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/" + themeName + "/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
+                HtmlTxt.Append("<TD class=\"insertionCategory creationpopUpBackGround\">");
 				HtmlTxt.Append(currentCategory);
 				HtmlTxt.Append("</TD></tr>");
 				HtmlTxt.Append("</table></td></TR>");							
@@ -379,8 +382,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 							&& webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG) != null) {
 
 							if (data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX] != null && data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString().CompareTo("0") != 0)
-								HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap><a href=\"javascript:openDownload('" + data[i, CstWeb.RadioInsertionsColumnIndex.FILE_INDEX].ToString() + "," + data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/Images/Common/Picto_Radio.gif\"></a></td>");
-							else HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap><a href=\"javascript:openDownload('" + data[i, CstWeb.RadioInsertionsColumnIndex.FILE_INDEX].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/Images/Common/Picto_Radio.gif\"></a></td>");
+                                HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap><a href=\"javascript:openDownload('" + data[i, CstWeb.RadioInsertionsColumnIndex.FILE_INDEX].ToString() + "," + data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_Radio.gif\"></a></td>");
+                            else HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap><a href=\"javascript:openDownload('" + data[i, CstWeb.RadioInsertionsColumnIndex.FILE_INDEX].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_Radio.gif\"></a></td>");
 						}
 						else {
 							HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap></td>");
@@ -441,12 +444,13 @@ namespace TNS.AdExpress.Web.UI.Results{
 		private static string GetUITV(object[,] data, WebSession webSession, Page page, string idVehicle){
 
 			StringBuilder HtmlTxt = new StringBuilder(70000);
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
 			const string CLASSE_1="p6";
 			const string CLASSE_2="p7";
 
 			#region Début du tableau (lien excel, support et dates)
-			HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\"");
+            HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\"");
 			HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">");
 			#endregion
 
@@ -483,8 +487,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 				#region Infos Catégorie
 				HtmlTxt.Append("<TR><td>&nbsp;</td></tr>");
 				HtmlTxt.Append("<tr><td colSpan=\"11\"><table width=\"100%\" cellSpacing=\"0\" cellPadding=\"0\"><tr>");
-				HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
-				HtmlTxt.Append("<TD class=\"insertionCategory\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
+                HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/" + themeName + "/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
+                HtmlTxt.Append("<TD class=\"insertionCategory creationpopUpBackGround\">");
 				HtmlTxt.Append(currentCategory);
 				HtmlTxt.Append("</TD></tr>");
 				HtmlTxt.Append("</table></td></TR>");							
@@ -547,7 +551,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						if(data[i,CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString().CompareTo("")!=0
 							&& webSession.CustomerLogin.ShowCreatives((CstClassification.DB.Vehicles.names)int.Parse(idVehicle))
 							){
-							HtmlTxt.Append("<tr><td class=\""+classe+"\" nowrap><a href=\"javascript:openDownload('"+data[i,CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString()+"','"+webSession.IdSession+"','"+idVehicle+"');\"><img border=\"0\" src=\"/Images/Common/Picto_pellicule.gif\"></a></td>");
+							HtmlTxt.Append("<tr><td class=\""+classe+"\" nowrap><a href=\"javascript:openDownload('"+data[i,CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString()+"','"+webSession.IdSession+"','"+idVehicle+"');\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_pellicule.gif\"></a></td>");
 						}
 						else{
 							HtmlTxt.Append("<tr><td class=\""+classe+"\" nowrap></td>");
@@ -617,6 +621,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			const string CLASSE_1 = "p6";
 			const string CLASSE_2 = "p7";
 			int i = 0;
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+
 
 			// Pas de données à afficher
 			if (data == null || data[0, 0] == null) {
@@ -637,7 +643,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#region Détail insertion outdoor sans gestion des colonnes génériques
 
 			#region Début du tableau
-			HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\"");
+            HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\"");
 			HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"3\" align=\"left\" border=\"0\">");
 			#endregion
 
@@ -665,9 +671,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 				HtmlTxt.Append("<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
 				HtmlTxt.Append("<td>");
 				HtmlTxt.Append("<!-- fleche -->");
-				HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
+                HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/" + themeName + "/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
 				HtmlTxt.Append("<!-- message -->");
-				HtmlTxt.Append("<TD  vAlign=\"top\" width=\"100%\" class=\"popuptitle1\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
+                HtmlTxt.Append("<TD  vAlign=\"top\" width=\"100%\" class=\"popuptitle1 creationpopUpBackGround\">");
 				HtmlTxt.Append(currentCategory);
 				HtmlTxt.Append("</TD>");
 				HtmlTxt.Append("</td>");
@@ -705,7 +711,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							HtmlTxt.Append("</TR>");
 						}
 						HtmlTxt.Append("<tr width=\"100%\" class=\"popupinsertionligne\">");
-						HtmlTxt.Append("<td width=\"100%\" " + ((!first) ? "style=\"BORDER-TOP: #9966cc 1px solid;\"" : "") + " class=\"txtViolet11Bold\">&nbsp;</td>");
+                        HtmlTxt.Append("<td width=\"100%\" class=\"txtViolet11Bold" + ((!first) ? " creationVioletTopBorder" : "") + "\" >&nbsp;</td>");
 						HtmlTxt.Append("</tr>");
 
 						HtmlTxt.Append("<tr class=\"popupinsertionligne\"><td width=\"100%\"><TABLE cellSpacing=\"0\" border=\"0\"><tr>");
@@ -929,7 +935,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region Début du tableau
-			HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\" cellPadding=\"0\" align=\"center\" border=\"0\">");
+            HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
 			#endregion
 
 			#region Pas de données à afficher
@@ -1030,7 +1036,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region Début du tableau
-			HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\" cellPadding=\"0\" align=\"center\" border=\"0\">");
+            HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
 
 //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(845,webSession.SiteLanguage) + " " + data[0,CstWeb.RadioInsertionsColumnIndex.VEHICLE_INDEX].ToString()+"</td></tr>"); 
 //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
@@ -1135,7 +1141,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region Début du tableau
-			HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\" cellPadding=\"0\" align=\"center\" border=\"0\">");
+            HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
 
 //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(845,webSession.SiteLanguage) + " " + data[0,CstWeb.TVInsertionsColumnIndex.VEHICLE_INDEX].ToString()+"</td></tr>"); 
 //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
@@ -1237,7 +1243,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region Début du tableau
-			HtmlTxt.Append("<TABLE width=\"500\" bgColor=\"#ffffff\" cellPadding=\"0\" align=\"center\" border=\"0\">");
+            HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
 
 //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(845,webSession.SiteLanguage) + " " + data[0,CstWeb.OutDoorInsertionsColumnIndex.VEHICLE_INDEX].ToString()+"</td></tr>"); 
 //			HtmlTxt.Append("<tr><TD class=\"p2\">"+GestionWeb.GetWebWord(844,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + Dates.dateToString(Dates.getPeriodBeginningDate(periodBeginning, webSession.PeriodType),webSession.SiteLanguage)
