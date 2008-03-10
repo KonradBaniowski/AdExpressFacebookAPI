@@ -110,7 +110,6 @@
     <Compile Include="BusinessFacade\SqlGeneratorSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\Customer\RightDataAccess.cs" />
     <Compile Include="Exceptions\AdExpressCustomerDBException.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -150,6 +149,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataAccess\Customer\" />
     <Folder Include="XmlLoader\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
