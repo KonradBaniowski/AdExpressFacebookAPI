@@ -112,9 +112,6 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BusinessFacade\SqlGeneratorSystem.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Exceptions\AdExpressCustomerDBException.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -122,9 +119,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\OracleDataSourceException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\SqlGeneratorSystemException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Right.cs" />
@@ -147,7 +141,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataAccess\Customer\" />
     <Folder Include="XmlLoader\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
