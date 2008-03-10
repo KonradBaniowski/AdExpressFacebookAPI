@@ -179,6 +179,12 @@ namespace TNS.AdExpress.Web.Controls.Results {
                     zoomDetailSelectionWebControl.CssLevel1 = CssDetailSelectionL1;
                     zoomDetailSelectionWebControl.CssLevel2 = CssDetailSelectionL2;
                     zoomDetailSelectionWebControl.CssLevel3 = CssDetailSelectionL3;
+                    zoomDetailSelectionWebControl.CssRightBorderLevel1 = CssDetailSelectionRightBorderL1;
+                    zoomDetailSelectionWebControl.CssRightBorderLevel2 = CssDetailSelectionRightBorderL2;
+                    zoomDetailSelectionWebControl.CssRightBorderLevel3 = CssDetailSelectionRightBorderL3;
+                    zoomDetailSelectionWebControl.CssRightBottomBorderLevel1 = CssDetailSelectionRightBottomBorderL1;
+                    zoomDetailSelectionWebControl.CssRightBottomBorderLevel2 = CssDetailSelectionRightBottomBorderL2;
+                    zoomDetailSelectionWebControl.CssRightBottomBorderLevel3 = CssDetailSelectionRightBottomBorderL3;
                     zoomDetailSelectionWebControl.CssTitleGlobal = CssDetailSelectionTitleGlobal;
                     zoomDetailSelectionWebControl.CssTitle = CssDetailSelectionTitle;
                     zoomDetailSelectionWebControl.CssTitleData = CssDetailSelectionTitleData;
@@ -287,6 +293,12 @@ namespace TNS.AdExpress.Web.Controls.Results {
                 zoomDetailSelectionWebControl.CssLevel1 = CssDetailSelectionL1;
                 zoomDetailSelectionWebControl.CssLevel2 = CssDetailSelectionL2;
                 zoomDetailSelectionWebControl.CssLevel3 = CssDetailSelectionL3;
+                zoomDetailSelectionWebControl.CssRightBorderLevel1 = CssDetailSelectionRightBorderL1;
+                zoomDetailSelectionWebControl.CssRightBorderLevel2 = CssDetailSelectionRightBorderL2;
+                zoomDetailSelectionWebControl.CssRightBorderLevel3 = CssDetailSelectionRightBorderL3;
+                zoomDetailSelectionWebControl.CssRightBottomBorderLevel1 = CssDetailSelectionRightBottomBorderL1;
+                zoomDetailSelectionWebControl.CssRightBottomBorderLevel2 = CssDetailSelectionRightBottomBorderL2;
+                zoomDetailSelectionWebControl.CssRightBottomBorderLevel3 = CssDetailSelectionRightBottomBorderL3;
                 zoomDetailSelectionWebControl.CssTitleGlobal = CssDetailSelectionTitleGlobal;
                 zoomDetailSelectionWebControl.CssTitle = CssDetailSelectionTitle;
                 zoomDetailSelectionWebControl.CssTitleData = CssDetailSelectionTitleData;
