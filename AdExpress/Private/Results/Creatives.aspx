@@ -8,11 +8,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title>AdExpress</title>
-    <link href="/Css/AdExpress.css" type="text/css" rel="stylesheet"/>
-    <link href="/Css/GenericUI.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="/scripts/dom-drag.js"></script>
 </head>
-<body background="../../Images/Common/backgroundPopUp.gif">
+<body class="popUpBackGround">
     <form id="form1" runat="server">
     <div>
         <cc1:CreativesWebControl ID="CreativesWebControl1" runat="server" />

@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<title>AdExpress</title>
 		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
 		<meta name="CODE_LANGUAGE" Content="C#">
@@ -16,11 +16,10 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
-	<body bgcolor="#ffffff" style="BACKGROUND-ATTACHMENT: fixed; BACKGROUND-IMAGE: url(/Images/Common/dark_back.bmp); BACKGROUND-REPEAT: repeat-x"
-		bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0">
+	<body class="darkBackGround" bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0">
 		<form id="Form1" method="post" runat="server">
 			<cc1:MenuWebControl id="MenuWebControl2" runat="server"></cc1:MenuWebControl>
-			<table border="0" width="100%" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+			<table border="0" width="100%" align="center" cellpadding="0" cellspacing="0" class="whiteBackGround">
 				<tr>
 					<td>
 						<cc1:InformationWebControl id="InformationWebControl1" runat="server" InLeftMenu="False"></cc1:InformationWebControl>
@@ -32,7 +31,7 @@
 				<tr>
 					<td>
 					    <!--<%=result%>-->
-					    <cc3:PortofolioDetailMediaResultWebControl id="PortofolioDetailMediaResultWebControl1" runat="server" BackgroudColorL1="#D0C8DA" CssL1="lv2" CssLHeader="h2" HighlightBackgroundColorL1="#FFFFFF" ImgBtnCroiOverPath="/Images/Common/fl_tri_croi3_in.gif" ImgBtnCroiPath="/Images/Common/fl_tri_croi3.gif" ImgBtnDeCroiOverPath="/Images/Common/fl_tri_decroi3_in.gif" ImgBtnDeCroiPath="/Images/Common/fl_tri_decroi3.gif" JavascriptFilePath="/scripts/WebResult.js" AjaxProTimeOut="120" AllowPaging="True" IdTitleText="0" CssDetailSelectionBordelLevel="dsBorderLevel" CssDetailSelectionL1="dsLv1" CssDetailSelectionL2="dsLv2" CssDetailSelectionL3="dsLv3" CssDetailSelectionTitle="dsTitle" CssDetailSelectionTitleData="dsTitleData"></cc3:PortofolioDetailMediaResultWebControl> 
+					    <cc3:PortofolioDetailMediaResultWebControl id="PortofolioDetailMediaResultWebControl1" runat="server" JavascriptFilePath="/scripts/WebResult.js" AjaxProTimeOut="120" AllowPaging="True" IdTitleText="0" SkinID="PortofolioPopUpResult"></cc3:PortofolioDetailMediaResultWebControl> 
 					</td>
 				</tr>
 			</table>

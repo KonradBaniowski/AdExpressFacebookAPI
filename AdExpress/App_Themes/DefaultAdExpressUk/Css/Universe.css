@@ -3,16 +3,16 @@ table.treeIncludeFrameCss{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;	    
 	font-weight: bold;
-	border:solid 1px #644883;
+	border:solid 1px #6B8199;
 	height:250px;
 	padding:0px 0px 0px 0px;	   	    
 }
 tr.treeIncludeFrameHeaderCss{
-	background-color:#644883;
+	background-color:#6B8199;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;	    
 	font-weight: bold;
-	border:solid 1px #644883;
+	border:solid 1px #6B8199;
 	color:#FFFFFF;
 	height:10%;
 	padding:0px 0px 0px 0px;	   	    
@@ -24,16 +24,16 @@ table.treeExcludeFrameCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;	    
     font-weight: bold;
-    border:solid 1px #DC121B;
+    border:solid 1px #7DB3A2;
 	height:250px;
     padding:0px 0px 0px 0px;	   	    
 }
 tr.treeExcludeFrameHeaderCss{
-    background-color:#DC121B;
+    background-color:#7DB3A2;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;	    
     font-weight: bold;
-    border:solid 1px #DC121B;
+    border:solid 1px #7DB3A2;
     color:#FFFFFF;
     height:10%;
     padding:0px 0px 0px 0px;	   	    
@@ -44,47 +44,47 @@ tr.treeExcludeFrameBodyCss{
 .txtParentNodeChildExcludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #DC121B;
+    color: #7DB3A2;
     font-weight: bold;
 }
 .txtParentNodeChildIncludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #644883;
+    color: #6B8199;
     font-weight: bold;
 }
 td.txtChildNodeExcludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #DC121B;
+    color: #7DB3A2;
     font-weight: normal;
      text-transform : capitalize;
 }
 td.txtChildNodeIncludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #644883;
+    color: #6B8199;
     font-weight: normal;
     text-transform : capitalize;
 }
 tr.txtChildNodeExcludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #DC121B;
+    color: #7DB3A2;
     font-weight: normal;
     text-transform : capitalize;
 }
 tr.txtChildNodeIncludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #644883;
+    color: #6B8199;
     font-weight: normal;
     text-transform : capitalize;
 }
 div.txtChildNodeExcludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #DC121B;
+    color: #7DB3A2;
     font-weight: normal;
     text-transform : capitalize;	    
     width:150px;
@@ -92,19 +92,19 @@ div.txtChildNodeExcludeCss{
 div.txtChildNodeIncludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #644883;
+    color: #6B8199;
     font-weight: normal;
     text-transform : capitalize;	
     width:150px;     
 }
 /*Fin Styles Arbre de niveaux des univers*/
 .listBoxCss{
-    background-color:#644883;
+    background-color:#6B8199;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #ffffff;
     font-weight: bold;
-    border:solid 1px #644883;	   
+    border:solid 1px #6B8199;	   
     padding:0px;
     border-spacing:0px;
     border-collapse:collapse;
@@ -113,26 +113,26 @@ div.txtChildNodeIncludeCss{
 select.customSelectCss{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-    color: #644883;
+    color: #6B8199;
     font-weight: normal;
     text-transform : capitalize;
 }
 .optionItemDefault{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 9px;
-    color: #644883;
+    color: #6B8199;
     font-weight: normal;
     text-transform : capitalize;	
 }
 .optionItemHierarchy{
-    color: #644883;
-    background-color:#E0D7EC;
+    color: #6B8199;
+    background-color:#C3E6DB;
     text-transform : capitalize;
 }
 tr.labelNbelements{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color : #999999;
+	color : #425A3E;
 	font-weight: bold;
 	text-decoration : none;
 	background-color: #FFFFFF;
@@ -140,19 +140,19 @@ tr.labelNbelements{
 	border-spacing:0px;
 	text-align:center;
 	height:25px;
-	border: 0px #644883;
+	border: 0px #6B8199;
 }
 a.trashNodeCss,a.trashNodeCss:active, a.trashNodeCss:visited,a.trashNodeCss:hover,a.trashNodeCss:Link{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #999999;
+	color: #425A3E;
 	font-weight: normal;
 	text-decoration:none;
 }
 /*Autres*/	
 tr.listBoxHeaderCss{
 	height:10%;
-    text-align:left;
+    text-align:left; 
 }
 tr.listBoxBodyCss{
 	height:90%;
@@ -160,21 +160,21 @@ tr.listBoxBodyCss{
     text-align:center;
 }
 .levelInRed{
-	color: #644883;
+	color: #6B8199;
 	background-color:#FFD7D7;
 }
 .levelInLightRed{
-	color: #644883;
+	color: #6B8199;
 	background-color:#FFEAEA;
 }
 .levelInLightLightRed{
-	color: #644883;
+	color: #6B8199;
 	background-color:#FFF0F0;
 }
 .SearchRulesTextCss{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 9px;
-	color: #644883;
+	color: #6B8199;
 	font-weight: normal;
 	width :480px;
 }

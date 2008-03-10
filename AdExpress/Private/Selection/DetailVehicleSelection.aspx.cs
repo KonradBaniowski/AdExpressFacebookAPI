@@ -278,15 +278,15 @@ namespace AdExpress.Private.Selection{
 				#endregion
 
 				#region Boutons RollOver
-				validImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";		
+				//validImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";		
 			
-				nextImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/suivant_up.gif";
-				nextImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/suivant_down.gif";			
-				saveImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_up.gif";
-				saveImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_down.gif";
-				loadImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/charger_up.gif";
-				loadImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/charger_down.gif";
+				//nextImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/suivant_up.gif";
+				//nextImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/suivant_down.gif";			
+				//saveImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_up.gif";
+				//saveImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_down.gif";
+				//loadImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/charger_up.gif";
+				//loadImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/charger_down.gif";
 				
 				#region Boutons parrainage				
 				programTypeImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_up.gif";
