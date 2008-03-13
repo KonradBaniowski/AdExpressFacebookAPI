@@ -3,18 +3,14 @@
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<title>AdExpress</title>
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<LINK href="/Css/AdExpress.css" type="text/css" rel="stylesheet">
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT">
-
 		<meta http-equiv="expires" content="0">
-
 		<meta http-equiv="pragma" content="no-cache">
-
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
 	<body bottomMargin="0" leftMargin="0" topMargin="0">
@@ -25,39 +21,39 @@
 					<TD vAlign="top">
 						<TABLE id="Table3" cellSpacing="0" cellPadding="0" border="0">
 							<TR>
-								<TD><IMG height="100" src="/Images/Common/logo_cote_gauche.gif" width="10"></TD>
+								<TD><asp:Image ID="Image153" runat="server" SkinID="logo_cote_gauche" height="100" width="10" /></TD>
 							</TR>
 							<TR>
-								<TD bgColor="#ffffff"><IMG height="1" src="/Images/Common/pixel.gif" width="1"></TD>
+								<TD class="whiteBackGround"><asp:Image ID="Image1" runat="server" SkinID="pixel" height="1" width="1" /></TD>
 							</TR>
 						</TABLE>
 					</TD>
 					<!-- menu -->
-					<TD vAlign="top" align="center" background="/Images/Common/dupli_fond.gif">
+					<TD vAlign="top" align="center" class="imageBackGround">
 						<TABLE id="Table6" cellSpacing="0" cellPadding="0" width="10" border="0">
-							<TR vAlign="top" bgColor="#ffffff">
+							<TR vAlign="top" class="whiteBackGround">
 								<!-- Logo -->
-								<TD><IMG height=90 src="/Images/<%=_siteLanguage%>/logo/logo.gif" width=185 ></TD>
+								<TD><asp:Image ID="Image8" runat="server" SkinID="logo" height="90" width="185" /></TD>
 							</TR>
 							<TR>
-								<TD><IMG height="5" src="/Images/Common/plus_sous_logo.gif" width="185"></TD>
+								<TD><asp:Image ID="Image9" runat="server" SkinID="plus_sous_logo" height="5" width="185" /></TD>
 							</TR>
 							<TR>
-								<TD><IMG height="10" src="images/pixel.gif" width="1"></TD>
+								<TD><asp:Image ID="Image2" runat="server" SkinID="pixel" height="10" width="1" /></TD>
 							</TR>
 							<TR>
-								<TD bgColor="#ffffff"><IMG height="5" src="images/pixel.gif" width="1"></TD>
+								<TD class="whiteBackGround"><asp:Image ID="Image3" runat="server" SkinID="pixel" height="5" width="1" /></TD>
 							</TR>
 							<!-- titre et descriptif-->
 							<TR>
-								<TD bgColor="#ffffff">
+								<TD class="whiteBackGround">
 									<TABLE id="Table4" cellSpacing="0" cellPadding="0" border="0">
 										<TR>
-											<TD><IMG height="2" src="/Images/Common/pixel.gif" width="5"></TD>
+											<TD><asp:Image ID="Image4" runat="server" SkinID="pixel" height="2" width="5" /></TD>
 										</TR>
 										<TR>
-											<TD bgColor="#ffffff"><A onmouseover="bouton.src='/Images/<%=_siteLanguage%>/button/back_down.gif';" onmouseout="bouton.src = '/Images/<%=_siteLanguage%>/button/back_up.gif';" href="javascript:history.go(-<%=backPageNb%>)" ><IMG src="/Images/<%=_siteLanguage%>/button/back_up.gif" border=0 name=bouton >
-												</A>
+											<TD class="whiteBackGround">
+											<A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/back_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/back_up.gif';" href="javascript:history.back(-<%=backPageNb%>);" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/back_up.gif" border=0 name=bouton></A>
 											</TD>
 										</TR>
 									</TABLE>
@@ -69,17 +65,17 @@
 					<TD vAlign="top">
 						<TABLE id="Table5" cellSpacing="0" cellPadding="0" border="0">
 							<TR>
-								<TD><IMG id="imageDrt" height="100" src="/Images/Common/logo_cote_droit.gif" width="5"></TD>
+								<TD><asp:Image ID="Image5" runat="server" SkinID="logo_cote_droit" height="100" width="5" /></TD>
 							</TR>
 							<TR>
-								<TD bgColor="#ffffff"><IMG height="1" src="/Images/Common/pixel.gif" width="1"></TD>
+								<TD class="whiteBackGround"><asp:Image ID="Image6" runat="server" SkinID="pixel" height="1" width="1" /></TD>
 							</TR>
 						</TABLE>
 					</TD>
-					<TD bgColor="#644883"><IMG height="1" src="/Images/Common/pixel.gif" width="1">
+					<TD bgColor="#644883"><asp:Image ID="Image7" runat="server" SkinID="pixel" height="1" width="1" />
 					</TD>
-					<TD width="10" background="/Images/Common/dupli_fond.gif">&nbsp;</TD>
-					<TD width="10" bgColor="#ffffff">&nbsp;</TD>
+					<TD width="10" class="imageBackGround">&nbsp;</TD>
+					<TD width="10" class="whiteBackGround">&nbsp;</TD>
 					<!-- droite-->
 					<TD vAlign="top">
 						<TABLE id="Table10" cellSpacing="0" cellPadding="0" border="0">
@@ -94,8 +90,8 @@
 													<PARAM NAME="_cx" VALUE="19394">
 													<PARAM NAME="_cy" VALUE="820">
 													<PARAM NAME="FlashVars" VALUE="">
-													<PARAM NAME="Movie" VALUE="/Flash/Common/bandeau_violet.swf">
-													<PARAM NAME="Src" VALUE="/Flash/Common/bandeau_violet.swf">
+													<PARAM NAME="Movie" VALUE="/App_Themes/<%= this.Theme %>/Flash/Common/HeaderStrip.swf">
+													<PARAM NAME="Src" VALUE="/App_Themes/<%= this.Theme %>/Flash/Common/HeaderStrip.swf">
 													<PARAM NAME="WMode" VALUE="Window">
 													<PARAM NAME="Play" VALUE="-1">
 													<PARAM NAME="Loop" VALUE="-1">
@@ -111,7 +107,7 @@
 													<PARAM NAME="SWRemote" VALUE="">
 													<PARAM NAME="MovieData" VALUE="">
 													<PARAM NAME="SeamlessTabbing" VALUE="1">
-													<embed src="/Flash/Common/bandeau_violet.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer"
+													<embed src="/App_Themes/<%= this.Theme %>/Flash/Common/HeaderStrip.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer"
 														type="application/x-shockwave-flash" width="733" height="31"> </embed>
 												</OBJECT>
 											</TD>
@@ -122,12 +118,12 @@
 							</TR>
 							<TR>
 								<!-- ligne du haut a droite -->
-								<TD background="/Images/Common/dupli_3bis.gif">
+								<TD class="imageBackGround3bis">
 									<TABLE id="Table2" cellSpacing="0" cellPadding="0" width="100%" border="0">
 										<TR>
-											<TD vAlign="top" align="left"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
-											<TD><IMG height="17" src="/Images/Common/pixel.gif" width="1"></TD>
-											<TD vAlign="top" align="right"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
+											<TD vAlign="top" align="left"><asp:Image ID="Image10" runat="server" SkinID="croix" height="5" width="5" /></TD>
+											<TD><asp:Image ID="Image12" runat="server" SkinID="pixel" height="17" width="1" /></TD>
+											<TD vAlign="top" align="right"><asp:Image ID="Image11" runat="server" SkinID="croix" height="5" width="5" /></TD>
 										</TR>
 									</TABLE>
 								</TD>
@@ -135,19 +131,18 @@
 							<!-- Centre -->
 							<TR>
 								<TD id="sertARien">
-									<TABLE id="data" style="BACKGROUND-IMAGE: url(/Images/Common/dark_back.bmp); BACKGROUND-REPEAT: repeat-x"
-										height="600" cellPadding="0" width="100%" align="center" border="0">
+									<TABLE id="data" class="darkBackGround" height="600" cellPadding="0" width="100%" align="center" border="0">
 										<TR>
 											<TD vAlign="top" align="center">
 												<TABLE id="Table11" cellSpacing="0" cellPadding="0" width="410" border="0" height="200">
 													<TR>
 														<!-- fleche -->
-														<TD style="WIDTH: 15px" vAlign="top" rowSpan="2"><IMG id="f1" height="14" src="/Images/Common/fleche_1.gif" border="0"></TD>
+														<TD style="WIDTH: 15px" vAlign="top" rowSpan="2"><asp:Image ID="Image13" runat="server" SkinID="fleche_1" height="14" /></TD>
 														<!-- message -->
-														<TD vAlign="top" width="410" bgColor="#ffffff">
+														<TD vAlign="top" width="410" class="whiteBackGround">
 															<TABLE id="tableDetails" cellSpacing="5" border="0">
 																<TR>
-																	<TD vAlign="top" noWrap width="100"><IMG src="/Images/Common/bande.gif" width="400">
+																	<TD vAlign="top" noWrap width="100"><asp:Image ID="Image14" runat="server" SkinID="bande" width="400" />
 																	</TD>
 																</TR>
 																<tr>
@@ -168,12 +163,12 @@
 				<!-- ligne du bas a droite -->
 				<TR height="5">
 					<TD></TD>
-					<TD valign="top" background="/Images/Common/dupli_fond.gif">
+					<TD valign="top" class="imageBackGround">
 						<TABLE id="Table7" cellSpacing="0" cellPadding="0" width="100%" border="0">
 							<TR>
-								<TD vAlign="top"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
+								<TD vAlign="top"><asp:Image ID="Image15" runat="server" SkinID="croix" height="5" width="5" /></TD>
 								<TD></TD>
-								<TD vAlign="top" align="right"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
+								<TD vAlign="top" align="right"><asp:Image ID="Image16" runat="server" SkinID="croix" height="5" width="5" /></TD>
 							</TR>
 						</TABLE>
 					</TD>
@@ -184,9 +179,9 @@
 					<TD id="dellCel" valign="top">
 						<TABLE id="Table8" cellSpacing="0" cellPadding="0" width="100%" border="0">
 							<TR>
-								<TD vAlign="top"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
+								<TD vAlign="top"><asp:Image ID="Image17" runat="server" SkinID="croix" height="5" width="5" /></TD>
 								<TD></TD>
-								<TD vAlign="top" align="right"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
+								<TD vAlign="top" align="right"><asp:Image ID="Image18" runat="server" SkinID="croix" height="5" width="5" /></TD>
 							</TR>
 						</TABLE>
 					</TD>

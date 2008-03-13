@@ -11,10 +11,11 @@ using System.Web.UI.HtmlControls;
 
 using TNS.AdExpress.Web.Controls.Headers;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Web.UI;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
-
-namespace AdExpress
-{
+namespace AdExpress{
 	/// <summary>
 	/// Page pour afficher des messages (d'erreur ou non).
 	/// On peut preciser plusieurs parametres dans l uirl
@@ -25,7 +26,7 @@ namespace AdExpress
 	/// et qu'un message spécifique est demandé sous forme de code, un titre par defaut aest applique.
 	/// Si le message est un txt et que le titre n est pas precise, il ny en a pas
 	/// </summary>
-	public partial class Message : System.Web.UI.Page{
+	public partial class Message : WebPage{
 		
 		#region Variables
 		///// <summary>
@@ -40,10 +41,6 @@ namespace AdExpress
 		/// Nombre de page de retour en arrière
 		/// </summary>
 		public int backPageNb = 2;
-		/// <summary>
-		/// Langue du site
-		/// </summary>
-		public int _siteLanguage;
 		/// <summary>
 		/// Titre de la page
 		/// </summary>
@@ -83,17 +80,20 @@ namespace AdExpress
 		/// <param name="sender">Objet source</param>
 		/// <param name="e">Arguments</param>
 		private void Page_Load(object sender, System.EventArgs e) {
-			 _siteLanguage=int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
-			
-			if(Page.Request.QueryString.Get("back")!=null) backPageNb = int.Parse(Page.Request.QueryString.Get("back").ToString());
+			if(Page.Request.QueryString.Get("back")!=null) 
+                backPageNb = int.Parse(Page.Request.QueryString.Get("back").ToString());
 
-			if(Page.Request.QueryString.Get("msgTxt")!=null) msg.Text = Page.Request.QueryString.Get("msgTxt").ToString();
+			if(Page.Request.QueryString.Get("msgTxt")!=null) 
+                msg.Text = Page.Request.QueryString.Get("msgTxt").ToString();
 			else{
-				if (Page.Request.QueryString.Get("msgCode")!=null) msg.Text = getText(int.Parse(Page.Request.QueryString.Get("msgCode").ToString()));
-				else msg.Text = getText(0);
+				if (Page.Request.QueryString.Get("msgCode")!=null) 
+                    msg.Text = getText(int.Parse(Page.Request.QueryString.Get("msgCode").ToString()));
+				else 
+                    msg.Text = getText(0);
 			}
 			
-			if(Page.Request.QueryString.Get("title")!=null) title = Page.Request.QueryString.Get("title").ToString();
+			if(Page.Request.QueryString.Get("title")!=null) 
+                title = Page.Request.QueryString.Get("title").ToString();
 		}
 		#endregion
 
@@ -126,5 +126,6 @@ namespace AdExpress
 			}
 		}
 		#endregion
+
 	}
 }

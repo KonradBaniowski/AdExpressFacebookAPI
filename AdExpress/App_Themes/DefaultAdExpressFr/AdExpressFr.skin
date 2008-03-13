@@ -21,6 +21,9 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/logoTNShome.gif" SkinID="logoTNShome" />
 <asp:image runat="server" ImageUrl="Images/Common/detailSpot_up.gif" SkinID="detailSpot" />
 <asp:image runat="server" ImageUrl="Images/Common/picto_plus.gif" SkinID="picto_plus" />
+<asp:image runat="server" ImageUrl="Images/Common/fleche_1.gif" SkinID="fleche_1" />
+<asp:image runat="server" ImageUrl="Images/Common/bande.gif" SkinID="bande" />
+<asp:image runat="server" ImageUrl="Images/Common/bande300.gif" SkinID="bande300" />
 <asp:image runat="server" ImageUrl="Images/Culture/logo/LogoAdexpress.gif" SkinID="LogoAdexpress" />
 <asp:image runat="server" ImageUrl="Images/Culture/logo/logo.gif" SkinID="logo" />
 <asp:image runat="server" ImageUrl="Images/Common/Result/bt_detail_up.gif" SkinID="bt_detail" />
@@ -43,6 +46,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Menu/targetMenuIcon.gif" SkinID="target" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/sponsorshipMenuIcon.gif" SkinID="sponsorship" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/programMenuIcon.gif" SkinID="program" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/helpMenuIcon.gif" SkinID="help" />
 
 <%-- Boutons --%>
 <asp:image runat="server" ImageUrl="Images/Culture/Button/valider_up.gif" SkinID="valider" />

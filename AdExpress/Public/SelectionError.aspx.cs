@@ -11,12 +11,15 @@ using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.Controls.Headers;
 using TNS.AdExpress.Domain.Translation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Web.UI;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Public{
 	/// <summary>
 	/// Description résumée de SelectionError.
 	/// </summary>
-	public partial class SelectionError : System.Web.UI.Page{
+	public partial class SelectionError : WebPage{
 
 		#region Variables
 		/// <summary>
@@ -68,7 +71,7 @@ namespace AdExpress.Public{
 		/// <param name="e">Arguments</param>
 		private void Page_Load(object sender, System.EventArgs e){
 			idSession=HttpContext.Current.Request.QueryString.Get("idSession");
-			_siteLanguage=int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
+            _siteLanguage = int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
 			WebConstantes.ErrorManager.selectedUnivers error=(WebConstantes.ErrorManager.selectedUnivers) int.Parse(Page.Request.QueryString.Get("error").ToString());
 			
 			if(WebConstantes.ErrorManager.formatFile.excel.ToString()==Page.Request.QueryString.Get("format").ToString()){
