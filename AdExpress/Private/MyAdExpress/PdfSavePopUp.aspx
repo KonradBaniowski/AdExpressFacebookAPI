@@ -3,7 +3,7 @@
 <%@ Page language="c#" Inherits="AdExpress.Private.MyAdExpress.PdfSavePopUp" CodeFile="PdfSavePopUp.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<title>AdExpress</title>
 		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
 		<meta name="CODE_LANGUAGE" Content="C#">
@@ -11,14 +11,13 @@
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<LINK href="/Css/AdExpress.css" type="text/css" rel="stylesheet">
 	</HEAD>
-	<body background="/images/Common/dupli_fond.gif">
+	<body class="imageBackGround">
 		<form id="Form2" method="post" runat="server">
 			<table id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
 				<tr bgColor="#644883" height="14">
-					<td style="WIDTH: 14px; HEIGHT: 13px"><IMG src="/Images/Common/fleche_1.gif"></td>
-					<td class="txtBlanc11Bold" style="WIDTH: 100%; HEIGHT: 13px" background="/Images/Common/bandeau_titre.gif">&nbsp;
+					<td style="WIDTH: 14px; HEIGHT: 13px"><asp:Image ID="Image153" runat="server" SkinID="fleche_1" /></td>
+					<td class="txtBlanc11Bold bandeauTitreBackGround" style="WIDTH: 100%; HEIGHT: 13px">&nbsp;
 						<cc1:adexpresstext language="33" id="saveTitle" runat="server" Code="1747"></cc1:adexpresstext></td>
 				</tr>
 				<tr>
@@ -42,8 +41,8 @@
 								<td colSpan="2">&nbsp;</td>
 							</tr>
 							<tr>
-								<td align="right" colSpan="2"><cc2:imagebuttonrolloverwebcontrol id="validateRollOverWebControl" runat="server" onclick="validateRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;
-									<cc2:imagebuttonrolloverwebcontrol id="closeRollOverWebControl" runat="server" onclick="closeRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;
+								<td align="right" colSpan="2"><cc2:imagebuttonrolloverwebcontrol id="validateRollOverWebControl" runat="server" onclick="validateRollOverWebControl_Click" SkinID="validateButton"></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;
+									<cc2:imagebuttonrolloverwebcontrol id="closeRollOverWebControl" runat="server" onclick="closeRollOverWebControl_Click" SkinID="fermerButton"></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;
 								</td>
 							</tr>
 						</table>

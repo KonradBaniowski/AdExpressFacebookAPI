@@ -23,7 +23,6 @@ using TNS.AdExpress.Domain.Translation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 
-
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Gestion de Mon AdExpress.
@@ -32,106 +31,16 @@ namespace AdExpress.Private.MyAdExpress{
 		
 		#region MMI
 		/// <summary>
-		/// Mon AdExpress
-		/// </summary>
-		/// <summary>
-		/// Commentaire sur Mon Adexpress
-		/// </summary>
-		/// <summary>
-		/// Mes Univers
-		/// </summary>
-		/// <summary>
-		/// Bouton ouvrir pdf
-		/// </summary>
-		/// <summary>
 		/// Commentaire Mes pdf
 		/// </summary>
 		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText Adexpresstext8;
-		/// <summary>
-		/// En-tête
-		/// </summary>
-		/// <summary>
-		/// Tire: création d'un répertoire
-		/// </summary>
-		/// <summary>
-		/// Nommer votre nouveau répertoire
-		/// </summary>
-		/// <summary>
-		/// Bouton retour Menu principal de Mon AdExpress
-		/// </summary>
-		/// <summary>
-		/// Bouton création d'un répertoire
-		/// </summary>
-		/// <summary>
-		/// Création d'un répertoire
-		/// </summary>
-		/// <summary>
-		/// Titre : Supprimer un répertoire
-		/// </summary>
-		/// <summary>
-		/// Sélectionner le répertoire à supprimer
-		/// </summary>
-		/// <summary>
-		/// Titre : Renommer un répertoire
-		/// </summary>
-		/// <summary>
-		/// Sélectionner un répertoire
-		/// </summary>
-		/// <summary>
-		/// Renommer le répertoire sélectionné
-		/// </summary>
-		/// <summary>
-		/// Déplacer le résultat
-		/// </summary>
-		/// <summary>
-		/// Bouton supprimer
-		/// </summary>
-		/// <summary>
-		/// Bouton renommer
-		/// </summary>
-		/// <summary>
-		/// Sélectionner le résultat à déplacer
-		/// </summary>
-		/// <summary>
-		/// Déplacer le résultat
-		/// </summary>
-		/// <summary>
-		/// Bouton déplacer
-		/// </summary>
-		/// <summary>
-		/// Bouton ouvrir univers
-		/// </summary>
-		/// <summary>
-		/// Liste des répertoires
-		/// </summary>
-		/// <summary>
-		/// Liste des repertoires dans renommer
-		/// </summary>
-		/// <summary>
-		/// Renommer le répertoire
-		/// </summary>
-		/// <summary>
-		/// déplacer le répertoire
-		/// </summary>
-		/// <summary>
-		/// Commentaire Mes Univers
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
 		#endregion
 
-		#region Variables		
+		#region Variables
 		/// <summary>
 		/// Liste des répertoires
 		/// </summary>
 		protected string listRepertories;
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
 		/// <summary>
 		/// Javascript pour l'affichage des TreeNodes
 		/// </summary>
@@ -159,15 +68,14 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <param name="sender">Objet source</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){			
-			
 			try{
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_webSession.SiteLanguage);
 
 				//Liste des répertoires dans déplacer un univers
 				TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI myAdexpress=new TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI(_webSession,TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession,500);
 				listRepertories= myAdexpress.GetSelectionTableHtmlUI(4,"");
-				script=myAdexpress.Script;
+				//script=myAdexpress.Script;
 
 				// Liste des univers dans renommer un univers
 				listSesssionsToRename = myAdexpress.GetSelectionTableHtmlUI(5, "");
@@ -183,33 +91,10 @@ namespace AdExpress.Private.MyAdExpress{
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("ShowHideContent1")) {
 					Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ShowHideContent1", TNS.AdExpress.Web.Functions.Script.ShowHideContent1(1));
 				}
-				#endregion
 
-				#region Rollover des boutons
-				ImageButtonRollOverWebControl1.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_up.gif";
-				ImageButtonRollOverWebControl1.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_down.gif";
-			
-				createRepertoryImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";	
-				createRepertoryImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";	
-
-				deleteImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
-				deleteImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
-
-				renameImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
-				renameImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
-	
-				moveImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
-				moveImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
-
-				universOpenImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_up.gif";
-				universOpenImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_down.gif";
-				
-				pdfOpenImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_up.gif";
-				pdfOpenImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_down.gif";
-
-				renameSessionsImagebutton.ImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/valider_up.gif";
-				renameSessionsImagebutton.RollOverImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/valider_down.gif";
-			
+                if(!Page.ClientScript.IsClientScriptBlockRegistered("script")) {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "script", myAdexpress.Script);
+                }
 				#endregion
 			
 				#region Chargement de la liste des répertoires
@@ -657,5 +542,6 @@ namespace AdExpress.Private.MyAdExpress{
 
 		}
 		#endregion
+
 	}
 }

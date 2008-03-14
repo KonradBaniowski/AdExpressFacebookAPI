@@ -19,41 +19,12 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Constantes.Web;
 
-namespace AdExpress.Private.MyAdExpress
-{
+namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Description résumée de APPMExcelSavePopUp.
 	/// </summary>
-	public partial class APPMExcelSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage
-	{
-		#region Varaibles MMI
-		/// <summary>
-		/// Libellé du nom de fichier
-		/// </summary>
-		/// <summary>
-		/// Libellé du mail
-		/// </summary>
-		/// <summary>
-		/// Nom du fichier
-		/// </summary>
-		/// <summary>
-		/// Mail
-		/// </summary>
-		/// <summary>
-		/// Bouton valider
-		/// </summary>
-		/// <summary>
-		/// Titre de la sauvegarde
-		/// </summary>
-		/// <summary>
-		/// Bouton fermer
-		/// </summary>
-		/// <summary>
-		/// Case à cocher mémoriser adresse email 
-		/// </summary>
-
-		#endregion
-
+	public partial class APPMExcelSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
+		
 		#region Constructeur
 		/// <summary>
 		/// Constructeur : chargement de la session
@@ -74,14 +45,6 @@ namespace AdExpress.Private.MyAdExpress
 
 			#region Textes et Langage du site
 			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
-			#endregion
-
-			#region Rollover des boutons
-			validateRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-			validateRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
-
-			closeRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/fermer_up.gif";
-			closeRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/fermer_down.gif";
 			#endregion
 
 			#region Gestion des cookies
@@ -105,7 +68,6 @@ namespace AdExpress.Private.MyAdExpress
 
 			#endregion
 
-		
 		}
 		#endregion
 
@@ -116,8 +78,6 @@ namespace AdExpress.Private.MyAdExpress
 		/// <param name="e">Arguments</param>
 		protected void closeRollOverWebControl_Click(object sender, System.EventArgs e) {
             this.ClientScript.RegisterClientScriptBlock(this.GetType(), "closeScript", WebFunctions.Script.CloseScript());
-			
-		
 		}
 
 		/// <summary>
@@ -192,5 +152,6 @@ namespace AdExpress.Private.MyAdExpress
            
 		}
 		#endregion
+
 	}
 }

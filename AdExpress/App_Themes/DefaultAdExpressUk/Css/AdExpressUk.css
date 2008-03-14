@@ -5,6 +5,12 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_fond3.gif);
 .imageBackGround3bis{
 background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_3bis.gif);
 }
+.bandeauTitreBackGround{
+background:url(/App_Themes/DefaultAdExpressFr/Images/Common/bandeau_titre.gif);
+}
+.blockdupliBackGround{
+background:url(/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif);
+}
 .arrowBackGround{
 background:url(/App_Themes/DefaultAdExpressUk/images/Common/button/bt_arrow_down.gif);
 background-repeat:no-repeat;

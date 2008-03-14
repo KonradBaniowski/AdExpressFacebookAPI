@@ -22,6 +22,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/detailSpot_up.gif" SkinID="detailSpot" />
 <asp:image runat="server" ImageUrl="Images/Common/picto_plus.gif" SkinID="picto_plus" />
 <asp:image runat="server" ImageUrl="Images/Common/fleche_1.gif" SkinID="fleche_1" />
+<asp:image runat="server" ImageUrl="Images/Common/block_fleche.gif" SkinID="block_fleche" />
 <asp:image runat="server" ImageUrl="Images/Common/bande.gif" SkinID="bande" />
 <asp:image runat="server" ImageUrl="Images/Common/bande300.gif" SkinID="bande300" />
 <asp:image runat="server" ImageUrl="Images/Culture/logo/LogoAdexpress.gif" SkinID="LogoAdexpress" />
@@ -57,6 +58,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Culture/Button/fermer_up.gif" SkinID="close" />
 <asp:image runat="server" ImageUrl="Images/Culture/Button/ouvrir_up.gif" SkinID="ouvrir" />
 <asp:image runat="server" ImageUrl="Images/Culture/Button/bt_fiche_up.gif" SkinID="fiche" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/personnaliser_gris.gif" SkinID="personnaliser" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/save_up.gif" SkinID="save" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/bt_delete_up.gif" SkinID="delete" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/ok_up.gif" SkinID="ok" />
@@ -87,6 +89,11 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/valider_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/valider_down.gif" SkinID="validateButton" />
 <ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/Button/ok_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/Button/ok_down.gif" SkinID="okButton"/>
 <ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_down.gif" SkinID="initializeButton" />
+
+<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/ouvrir_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/ouvrir_down.gif" SkinID="ouvrirButton" />
+<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/fermer_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/fermer_down.gif" SkinID="fermerButton" />
+<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/personnaliser_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/personnaliser_down.gif" SkinID="personnaliserButton" />
+
 <ctrHeader:actualitieswebcontrol runat="server" ImageUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/AdExpressVisu.gif" TitleCss="actualities" RssTitleCss="txtViolet11Bold" RssDescriptionCss="txtViolet11" ImageRssUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/iconRss.gif" />
 <ctrSelections:moduleselection2webcontrol runat="server" ModuleGroupWithBackgroundCss="moduleGroupWithBackgroung" ModuleSubGroupCss="moduleSubGroup" ModuleGroupInformationCss="moduleGroupInformation" ModuleGroupCss="moduleGroup" ModuleCss="Tips1" ImageModuleUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/arrowModule.gif" 
 DescriptionImageList="198:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMedia.png,199:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMediaConcurrentiel.png,277:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Concurrentiels.png,280:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Potentiel.png,

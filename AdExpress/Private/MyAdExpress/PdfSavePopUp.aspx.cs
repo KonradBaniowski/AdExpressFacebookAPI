@@ -135,14 +135,6 @@ namespace AdExpress.Private.MyAdExpress
                 zoomDate = Page.Request.QueryString.Get("zoomDate");
                 #endregion
 
-                #region Rollover des boutons
-                validateRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
-
-				closeRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/fermer_up.gif";
-				closeRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/fermer_down.gif";
-				#endregion
-
 				#region Gestion des cookies
 
 				#region Cookies enregistrement des préférences
@@ -191,9 +183,6 @@ namespace AdExpress.Private.MyAdExpress
 		protected void validateRollOverWebControl_Click(object sender, System.EventArgs e) {
 			string fileName=tbxFileName.Text;
 			string mail=tbxMail.Text;
-
-
-
             try
             {
 				if(fileName==null || mail==null || fileName.Length==0 || mail.Length==0) {
