@@ -15,7 +15,7 @@
 	<body class="imageBackGround">
 		<form id="Form2" method="post" runat="server">
 			<table id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
-				<tr bgColor="#644883" height="14">
+				<tr class="violetBackGround" height="14">
 					<td style="WIDTH: 14px; HEIGHT: 13px"><asp:Image ID="Image153" runat="server" SkinID="fleche_1" /></td>
 					<td class="txtBlanc11Bold bandeauTitreBackGround" style="WIDTH: 100%; HEIGHT: 13px">&nbsp;
 						<cc1:adexpresstext language="33" id="saveTitle" runat="server" Code="1747"></cc1:adexpresstext></td>

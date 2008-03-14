@@ -31,30 +31,6 @@ namespace AdExpress.Private.MyAdExpress{
 	/// </summary>
 	public partial class MySessionSavePopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
 
-		#region MMI
-		/// <summary>
-		/// Liste des directory
-		/// </summary>
-		/// <summary>
-		/// Nom de la session
-		/// </summary>
-		/// <summary>
-		/// Bouton OK
-		/// </summary>
-		/// <summary>
-		/// Sélectionner un répertoire
-		/// </summary>
-		/// <summary>
-		/// Enregistrer votre résultat
-		/// </summary>
-		/// <summary>
-		/// Titre : Enregistrer votre résultat
-		/// </summary>
-		/// <summary>
-		/// Bouton Annuler
-		/// </summary>
-		#endregion
-
 		#region Constructeur
 		/// <summary>
 		/// Constructeur 
@@ -70,18 +46,11 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <param name="sender">Objet source</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){						
-		
 			try{
 
 				#region Langue du site
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
-				#endregion
-			
-				#region RollOver 
-				// RollOver
-				cancelImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/annuler_up.gif";
-				cancelImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/annuler_down.gif";
+				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_webSession.SiteLanguage);
 				#endregion
 
 				#region Liste des répertoires
@@ -301,7 +270,7 @@ namespace AdExpress.Private.MyAdExpress{
 		}
 		#endregion
 
-		#region Javascript		
+		#region Javascript
 		/// <summary>
 		/// Génére les javascripts utilisés pour la sauvegarde de résultat
 		/// </summary>
