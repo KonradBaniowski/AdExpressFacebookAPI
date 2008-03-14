@@ -129,59 +129,52 @@ namespace AdExpress.Private.MyAdExpress{
 		/// </summary>
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
-		protected void Page_Load(object sender, System.EventArgs e){
-		
-			try{
-	
-				#region Textes et Langage du site
-				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
-			
-				HeaderWebControl1.ActiveMenu = CstWeb.MenuTraductions.MY_ADEXPRESS;
-				#endregion
+        protected void Page_Load(object sender, System.EventArgs e) {
 
-				#region Rollover des boutons
-				ImageButtonRollOverWebControl1.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_up.gif";
-				ImageButtonRollOverWebControl1.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_down.gif";
+            try {
 
-				personalizeImagebuttonrolloverwebcontrol.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_up.gif";
-				personalizeImagebuttonrolloverwebcontrol.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_down.gif";
+                #region Textes et Langage du site
+                //Modification de la langue pour les Textes AdExpress
+                TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls, _webSession.SiteLanguage);
 
-				universOpenImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_up.gif";
-				universOpenImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_down.gif";
-				#endregion
+                HeaderWebControl1.ActiveMenu = CstWeb.MenuTraductions.MY_ADEXPRESS;
+                #endregion
 
-				#region Résultat
-				TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI myAdexpress=new TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI(_webSession,TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession,500);
-				result = TNS.AdExpress.Web.BusinessFacade.Results.PdfFilesSystem.GetHtml(this.Page,_webSession,this._dataSource);
-				#endregion
+                #region Résultat
+                TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI myAdexpress = new TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI(_webSession, TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession, 500);
+                result = TNS.AdExpress.Web.BusinessFacade.Results.PdfFilesSystem.GetHtml(this.Page, _webSession, this._dataSource);
+                #endregion
 
-				//Charge le script
-				script=myAdexpress.Script;
-			
-				// Gestion lorsqu'il n'y a pas de répertoire
-							if(result.Length==0){
-								AdExpressText6.Code=833;
-							}	
-			
-				#region Script
-				// popup
-				if (!Page.ClientScript.IsClientScriptBlockRegistered("myAdExpress")) {
-					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"myAdExpress",TNS.AdExpress.Web.Functions.Script.MyAdExpress(idSession,_webSession));
-				}
-				// Champ hidden 
-				if (!Page.ClientScript.IsClientScriptBlockRegistered("insertHidden")) {
-					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"insertHidden",TNS.AdExpress.Web.Functions.Script.InsertHidden());
-				}
-			}
-				#endregion
+                //Charge le script
+                //script=myAdexpress.Script;
 
-			catch(System.Exception exc){
-				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
-					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
-				}
-			}
-		}
+                // Gestion lorsqu'il n'y a pas de répertoire
+                if(result.Length == 0) {
+                    AdExpressText6.Code = 833;
+                }
+
+                #region Script
+                // script
+                if(!Page.ClientScript.IsClientScriptBlockRegistered("script")) {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "script", myAdexpress.Script);
+                }
+                // popup
+                if(!Page.ClientScript.IsClientScriptBlockRegistered("myAdExpress")) {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "myAdExpress", TNS.AdExpress.Web.Functions.Script.MyAdExpress(idSession, _webSession));
+                }
+                // Champ hidden 
+                if(!Page.ClientScript.IsClientScriptBlockRegistered("insertHidden")) {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "insertHidden", TNS.AdExpress.Web.Functions.Script.InsertHidden());
+                }
+                #endregion
+
+            }
+            catch(System.Exception exc) {
+                if(exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
 		#endregion
 
 		#region Code généré par le Concepteur Web Form

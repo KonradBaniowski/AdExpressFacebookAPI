@@ -112,7 +112,7 @@
 									<td class="whiteBackGround" height="5"></td>
 								</tr>
 								<tr>
-									<td class="txtGris11Bold" class="whiteBackGround"><cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="827"></cc1:adexpresstext></td>
+									<td class="txtGris11Bold whiteBackGround"><cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="827"></cc1:adexpresstext></td>
 								</tr>
 								<tr>
 									<td height="5"></td>
