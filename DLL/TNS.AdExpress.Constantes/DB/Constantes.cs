@@ -423,25 +423,23 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Table Agrégée des données du plan média par mois
 		/// </summary>
-        //public const string WEB_PLAN_MEDIA_MONTH="web_plan_media_month";
-		public const string WEB_PLAN_MEDIA_MONTH="web_plan_media_kiosque_month";
+        public const string WEB_PLAN_MEDIA_MONTH="web_plan_media_month";
 		/// <summary>
 		/// Table Agrégée des données du plan média par semaine
 		/// </summary>
-        public const string WEB_PLAN_MEDIA_WEEK = "web_plan_media_kiosque_week";
-        //public const string WEB_PLAN_MEDIA_WEEK = "web_plan_media_week";
+        public const string WEB_PLAN_MEDIA_WEEK = "web_plan_media_week";
 		/// <summary>
 		/// Table Agrégée des données du plan média APPM par mois
 		/// </summary>
-		public const string WEB_PLAN_APPM_MONTH="web_plan_appm_kiosque_month";
+		public const string WEB_PLAN_APPM_MONTH="web_plan_appm_month";
 		/// <summary>
 		/// Table Agrégée des données du plan média APPM par semaine
 		/// </summary>
-		public const string WEB_PLAN_APPM_WEEK="web_plan_appm_kiosque_week";
+		public const string WEB_PLAN_APPM_WEEK="web_plan_appm_week";
 		/// <summary>
 		/// Table des données désagrégées de presse inter
 		/// </summary>
-        public const string DATA_PRESS_INTER = "data_press_kiosque";
+        public const string DATA_PRESS_INTER = "data_press";
         //public const string DATA_PRESS_INTER = "data_press";
 		/// <summary>
 		/// Préfixe des tables de presse inter
@@ -450,7 +448,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Table des données désagrégées de presse
 		/// </summary>
-        public const string DATA_PRESS = "data_press_kiosque";
+        public const string DATA_PRESS = "data_press";
         //public const string DATA_PRESS = "data_press";
 		/// <summary>
 		/// Préfixe des tables de presse
@@ -459,7 +457,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Table des données désagrégé
 		/// </summary>
-		public const string DATA_PRESS_APPM ="data_press_kiosque_appm";		
+		public const string DATA_PRESS_APPM ="data_press_appm";		
 		/// <summary>
 		/// Préfixe des tables de presse
 		/// </summary>
@@ -504,12 +502,12 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Table des données désagrégées de presse inter pour 4 mois
 		/// </summary>
-        public const string ALERT_DATA_PRESS_INTER = "data_press_kiosque_4M";
+        public const string ALERT_DATA_PRESS_INTER = "data_press_4M";
         //public const string ALERT_DATA_PRESS_INTER = "data_press_4M";
 		/// <summary>
 		/// Table des données désagrégées de presse pour 4 mois
 		/// </summary>
-        public const string ALERT_DATA_PRESS = "data_press_kiosque_4M";
+        public const string ALERT_DATA_PRESS = "data_press_4M";
         //public const string ALERT_DATA_PRESS = "data_press_4M";
 		/// <summary>
 		/// Table des données désagrégées d'adnettrack pour 4 mois
@@ -603,7 +601,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Table liant data_press a location
 		/// </summary>
-		public const string DATA_LOCATION = "data_location_kiosque";
+		public const string DATA_LOCATION = "data_location";
 		/// <summary>
 		/// Table liant data_press a location
 		/// </summary>
@@ -651,7 +649,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Table alarm_media
 		/// </summary>
-		public const string ALARM_MEDIA = "alarm_media_kiosque";
+		public const string ALARM_MEDIA = "alarm_media";
 		/// <summary>
 		/// Table alarm_media
 		/// </summary>
@@ -659,7 +657,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Table application_media
 		/// </summary>
-		public const string APPLICATION_MEDIA="application_media_kiosque";
+		public const string APPLICATION_MEDIA="application_media";
 		/// <summary>
 		/// Prefixe Table application_media
 		/// </summary>

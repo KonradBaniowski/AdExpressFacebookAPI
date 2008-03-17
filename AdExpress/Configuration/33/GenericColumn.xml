@@ -34,7 +34,7 @@
 						<dbJoinConstraint id="3" name="validation donnée" dbField="activation" dbTablePrefixe="dl" dbRelatedField="50" sqlOperation="leftOuterJoin"/>											
 					</dbJoinConstraints>
 					<dbTableConstraints>
-						<dbTableConstraint id="1" name="Publicité presse" dbTable="data_location_kiosque" dbTablePrefixe="dl" dbSchema="adexpr03"/>
+						<dbTableConstraint id="1" name="Publicité presse" dbTable="data_location" dbTablePrefixe="dl" dbSchema="adexpr03"/>
 					</dbTableConstraints>					
 				</dbConstraints>										
 			</constraints>
@@ -76,7 +76,7 @@
 						<dbJoinConstraint id="4" name="validité du champ" dbField="activation"  dbTablePrefixe="appliMd" dbRelatedField="50"  sqlOperation="leftOuterJoin"/>
 					</dbJoinConstraints>
 					<dbTableConstraints>
-						<dbTableConstraint  id="1" name="Application media" dbTable="application_media_kiosque" dbTablePrefixe="appliMd" dbSchema="adexpr03"/>
+						<dbTableConstraint  id="1" name="Application media" dbTable="application_media" dbTablePrefixe="appliMd" dbSchema="adexpr03"/>
 					</dbTableConstraints>
 				</dbConstraints>														
 			</constraints>
