@@ -304,6 +304,7 @@ namespace AdExpress.Private.Results
                 MenuWebControl2.ForbidSave = true;
                 PeriodDetailWebControl1.Visible = false;
                 SubPeriodSelectionWebControl1.Visible = true;
+                SubPeriodSelectionWebControl1.AllPeriodAllowed = false;
                 _savePeriod = _webSession.DetailPeriod;
                 _webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
                 GenericMediaScheduleWebControl1.ZoomDate = _zoom;

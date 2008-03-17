@@ -197,6 +197,7 @@ namespace AdExpress.Private.Results
                 }
                 OptionLayerWebControl1.DisplayPeriodDetailOption = false;
                 SubPeriodSelectionWebControl1.Visible = true;
+                SubPeriodSelectionWebControl1.AllPeriodAllowed = false;
                 _savePeriod = _webSession.DetailPeriod;
                 _webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
                 GenericMediaScheduleWebControl1.ZoomDate = _zoom;
