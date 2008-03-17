@@ -106,9 +106,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DbTables.DATA_PRESS_PREFIXE,true));
 			#endregion
 
-			#region Sélection			
-//			sql.Append(" and (("+DbTables.WEB_PLAN_PREFIXE+".id_vehicle = "+idVehicle+")) ");
-			#endregion
+            #region Sélection
+            sql.Append(" and (( " + DbTables.DATA_PRESS_PREFIXE + ".id_vehicle = " + DBClassificationConstantes.Vehicles.names.press.GetHashCode() + ")) ");
+            #endregion
 
 			#endregion
 
