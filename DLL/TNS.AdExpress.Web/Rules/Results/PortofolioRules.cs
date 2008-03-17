@@ -708,6 +708,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
             bool allPeriod = false;
             string mediaAgencyYear = "";
             Int64 idMedia = ((LevelInformation)webSession.ReferenceUniversMedia.FirstNode.Tag).ID;
+            bool isDigitalTV = DataAccess.Results.PortofolioDetailMediaDataAccess.IsMediaBelongToCategory(webSession, idMedia, TNS.AdExpress.Constantes.DB.Category.ID_DIGITAL_TV, webSession.SiteLanguage);
             #endregion
 
             #region Niveau de détail produit (Generic)
@@ -815,6 +816,10 @@ namespace TNS.AdExpress.Web.Rules.Results{
                             case GenericColumnItemInformation.Columns.dateDiffusion:
                             case GenericColumnItemInformation.Columns.dateParution:
                                 if (showDate)
+                                    headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, webSession.SiteLanguage), Column.WebTextId));
+                                break;
+                            case GenericColumnItemInformation.Columns.topDiffusion:
+                                if (!isDigitalTV)
                                     headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, webSession.SiteLanguage), Column.WebTextId));
                                 break;
                             default:
@@ -928,10 +933,13 @@ namespace TNS.AdExpress.Web.Rules.Results{
                                         break;
                                     case GenericColumnItemInformation.Columns.topDiffusion:
                                     case GenericColumnItemInformation.Columns.idTopDiffusion:
-                                        if (row[Column.DataBaseField].ToString().Length > 0)
-                                            tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
-                                        else
-                                            tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(0);
+                                        if (!isDigitalTV)
+                                        {
+                                            if (row[Column.DataBaseField].ToString().Length > 0)
+                                                tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
+                                            else
+                                                tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(0);
+                                        }
                                         break;
                                     default:
                                         if (Column.Visible) {

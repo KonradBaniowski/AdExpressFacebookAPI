@@ -590,11 +590,12 @@ color:#FF05B6;
 	width: 250px;
 	height:13px;
 	position:static;
-	/*position:relative;*/
-	/*position:absolute;*/
+	/*position:static;*/
 	/*display:block;*/
-	/*top:0;*/
-	/*left:0;*/
+	/*position:absolute;*/
+	position:relative;
+	top:0;
+	left:0;
 	overflow: hidden;
 }
 .scroll_content_css

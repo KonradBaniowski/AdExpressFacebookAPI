@@ -90,6 +90,23 @@ namespace TNS.AdExpress.Web.Controls.Headers
             }
         }
         /// <summary>
+        /// Specify if "All periods" optrion is allowed
+        /// </summary>
+        protected bool _isAllPeriodAllowed = true;
+        /// <summary>
+        /// Get / Set "All periods" optrion is allowed
+        /// </summary>
+        public bool AllPeriodAllowed
+        {
+            get
+            {
+                return _isAllPeriodAllowed;
+            }
+            set
+            {
+                _isAllPeriodAllowed = value;
+            }
+        }        /// <summary>
         /// Zomm on this specific date
         /// </summary>
         protected string _zoom = string.Empty;
@@ -178,7 +195,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
             string realPeriodBegin = _webSession.PeriodBeginningDate;
             string realPeriodEnd = _webSession.PeriodEndDate;
 
-            realPeriodBegin = Dates.getPeriodBeginningDate(realPeriodBegin, _webSession.PeriodType).ToString("yyyyMMdd");
+            DateTime begin = Dates.getPeriodBeginningDate(realPeriodBegin, _webSession.PeriodType);
+            DateTime today = DateTime.Now.Date;
+            if (begin < today.AddDays(1 - today.Day).AddMonths(-3))
+            {
+                _isAllPeriodAllowed = false;
+            }
+
+            realPeriodBegin = begin.ToString("yyyyMMdd");
             realPeriodEnd = Dates.getPeriodEndDate(realPeriodEnd, _webSession.PeriodType).ToString("yyyyMMdd");
 
             if (periodDisplay == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
@@ -195,16 +219,16 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 periodBegin = realPeriodBegin.Substring(0, 6);
                 periodEnd = realPeriodEnd.Substring(0, 6);
             }
-            _zoom = (_zoom.Length > 0) ? _zoom : periodBegin;
+            //_zoom = (_zoom.Length > 0) ? _zoom : periodBegin;
 
             //if ((_zoom != periodBegin || _zoom != periodEnd) && _isZoomEnabled)
             #region Period
-            if (_zoom.Length > 0 && _isZoomEnabled && (_zoom != periodBegin || _zoom != periodEnd))
+            if ((_zoom.Length > 0 || _isAllPeriodAllowed) && _isZoomEnabled && (_zoom != periodBegin || _zoom != periodEnd))
             {
 
                 #region Data
                 string currentPeriod = periodBegin;
-                periodIndex = 0;
+                periodIndex = -1;
                 i = -1;
                 sb.Append("<script language=javascript>");
                 sb.AppendFormat("\r\nvar tab_zooms_{0} = new Array();", this.ID);
@@ -237,6 +261,39 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 AppendPeriod(periodType, currentPeriod, i, sb, tmpSb, ref periodIndex, realPeriodBegin, realPeriodEnd, ref labBegin, ref labEnd);
                 //fin dernière période
 
+                if (_isAllPeriodAllowed)
+                {
+                    //All periods
+                    sb.AppendFormat("\r\ntab_zooms_{0}[{1}] = '';", this.ID, i + 1);
+                    sb.AppendFormat("\r\ntab_periodLabel_{0}[{1}] = '{2} {3} {4} {5}';"
+                        , this.ID
+                        , i + 1
+                        , GestionWeb.GetWebWord(896, _webSession.SiteLanguage)
+                        , Dates.dateToString(Dates.getPeriodBeginningDate(realPeriodBegin, _webSession.PeriodType), _webSession.SiteLanguage)
+                        , GestionWeb.GetWebWord(897, _webSession.SiteLanguage)
+                        , Dates.dateToString(Dates.getPeriodEndDate(realPeriodEnd, _webSession.PeriodType), _webSession.SiteLanguage)
+                    );
+                    sb.AppendFormat("\r\ntab_periodImage_{0}[{1}] = '/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
+                    sb.AppendFormat("\r\ntab_periodImage_selected_{0}[{1}] = '/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
+                    sb.AppendFormat("\r\ntab_periodImage_over_{0}[{1}] = '/Images/Common/button/bt_calendar_down.gif';", this.ID, i + 1);
+                }
+                if (periodIndex < 0)
+                {
+                    if (_isAllPeriodAllowed)
+                    {
+                        periodIndex = i + 1;
+                        labBegin = Dates.dateToString(Dates.getPeriodBeginningDate(realPeriodBegin, _webSession.PeriodType), _webSession.SiteLanguage);
+                        labEnd = Dates.dateToString(Dates.getPeriodEndDate(realPeriodEnd, _webSession.PeriodType), _webSession.SiteLanguage);
+
+                    }
+                    else
+                    {
+                        periodIndex = 0;
+                        labBegin = Dates.dateToString(Dates.Max(Dates.getZoomBeginningDate(periodBegin, periodType), Dates.getPeriodBeginningDate(realPeriodBegin, WebCst.CustomerSessions.Period.Type.dateToDate)), _webSession.SiteLanguage);
+                        labEnd = Dates.dateToString(Dates.Max(Dates.getZoomEndDate(periodBegin, periodType), Dates.getPeriodEndDate(realPeriodEnd, WebCst.CustomerSessions.Period.Type.dateToDate)), _webSession.SiteLanguage);
+                    }
+                }
+                //End all periods
 
                 //periode courante
                 sb.AppendFormat("\r\nvar current_period_{0} = {1};", this.ID, periodIndex);
@@ -290,6 +347,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 sb.Append("\r\n\t}");
                 sb.Append("\r\n}");
 
+                sb.AppendFormat("\r\nfunction PeriodSelectAll_{0}()", this.ID);
+                sb.Append("{");
+                sb.AppendFormat("\r\n\tif (current_period_{0} >= 0) ", this.ID);
+                sb.Append("{");
+                sb.AppendFormat("\r\n\t\tdocument.getElementById('img_{0}_'+current_period_{0}).src = tab_periodImage_{0}[current_period_{0}];"
+                    , this.ID);
+                sb.AppendFormat("\r\n\t\tcurrent_period_{0} = {1}; ", this.ID, i + 1);
+                sb.AppendFormat("\r\n\t\t{0} = tab_zooms_{1}[{2}];", this._periodContainerName, this.ID, i + 1);
+                sb.AppendFormat("\r\n\t\t{0}();", this._javascriptRefresh);
+                sb.Append("\r\n\t}");
+                sb.Append("\r\n}");
+
                 sb.Append("\r\n</script>");
                 #endregion
 
@@ -330,7 +399,16 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     }
 
                     //Period list design
-                    sb.AppendFormat("\r\n<td valign=\"top\">&nbsp;&nbsp;&nbsp;</td><td width=\"100%\" valign=\"top\"><div width=\"{4}\" id=\"scrollcontentContainer_{2}\" class=\"{1}\"><div id=\"scrollcontent_{2}\" class=\"{3}\">{0}</div></div>",
+                    if (_isAllPeriodAllowed)
+                    {
+                        sb.Append("\r\n<td valign=\"top\">&nbsp;&nbsp;&nbsp;</td>");
+                        sb.AppendFormat("<td valign=\"top\"><img id=\"img_{0}_{1}\" src=\"/Images/Common/button/bt_calendar_up.gif\" onMouseOver=\"javascript:PeriodMouseOver_{0}({1});\" onMouseOut=\"javascript:PeriodMouseOut_{0}({1});\"  onclick=\"javascript:PeriodSelectAll_{0}();\"/></td>"
+                            , this.ID
+                            , i + 1
+                            );
+                        //onMouseOver=\"this.src='/Images/Common/button/bt_calendar_down.gif';\" onMouseOut=\"this.src='/Images/Common/button/bt_calendar_up.gif';\" onclick=\"javascript:PeriodSelectAll_{0}();\"/>");
+                    }
+                    sb.AppendFormat("<td valign=\"top\">&nbsp;&nbsp;&nbsp;</td></td><td width=\"100%\" valign=\"top\"><div width=\"{4}\" id=\"scrollcontentContainer_{2}\" class=\"{1}\"><div id=\"scrollcontent_{2}\" class=\"{3}\">{0}</div></div>",
                         tmpSb.ToString(),
                         SCROLL_CONTENT_CONTAINER_CSS,
                         this.ID,
@@ -342,6 +420,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
                     sb.AppendFormat("<tr id=\"{0}_bottomLine\" height=\"2\"><td colspan=\"4\"></td></tr>", this.ID);
 
+                    #region Scrolling scripts
                     sb.Append("\r\n<script language=\"javascript\">");
                     sb.AppendFormat("\r\n\tvar theScrollTrack_{0} = document.getElementById(\"scrollTrack_{0}\");", this.ID);
                     sb.AppendFormat("\r\n\tvar theScrollContainer_{0} = document.getElementById(\"scrollContainer_{0}\");", this.ID);
@@ -440,6 +519,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     sb.AppendFormat("\r\n\tInit_{0}();", this.ID);
                     sb.AppendFormat("\r\n\tInitScrollBar_{0}();", this.ID);
                     sb.Append("\r\n</script>");
+                    #endregion
 
                 }
 

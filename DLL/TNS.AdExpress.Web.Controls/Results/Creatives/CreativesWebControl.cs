@@ -30,6 +30,7 @@ using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.Common.Results.Creatives;
 using FrmFct = TNS.FrameWork.WebResultUI.Functions;
 using TNS.FrameWork.WebResultUI.TableControl;
+using TNS.FrameWork.Date;
 
 namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
@@ -141,11 +142,26 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// <summary>
         /// Get / Set current zoomdate
         /// </summary>
-        public string ZoomDate {
-            get {
+        public string ZoomDate
+        {
+            get
+            {
                 return _zoom;
             }
-            set {
+            set
+            {
+                if ((value == null || value.Length <= 0) && _webSession != null)
+                {
+                    if (_webSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
+                    {
+                        AtomicPeriodWeek tmp = new AtomicPeriodWeek(new DateTime(int.Parse(_webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_webSession.PeriodBeginningDate.Substring(4, 2)), int.Parse(_webSession.PeriodBeginningDate.Substring(6, 2))));
+                        value = string.Format("{0}{1}", tmp.FirstDay.AddDays(3).Year, tmp.Week.ToString("0#"));
+                    }
+                    else
+                    {
+                        value = _webSession.PeriodBeginningDate.Substring(0, 6);
+                    }
+                }
                 _zoom = value;
                 this._header.ZoomDate = _zoom;
             }

@@ -1048,7 +1048,12 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			
 			#region Droits médias spécifique au media
 			sql+=WebFunctions.SQLGenerator.getAccessVehicleList(webSession,DBConstantes.Tables.VEHICLE_PREFIXE,true);
-
+            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+                || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
+                && webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null)
+            {
+                sql += " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category not in (68) ";
+            }
 			#endregion
 
 

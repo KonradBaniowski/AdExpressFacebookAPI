@@ -1992,7 +1992,7 @@ namespace TNS.AdExpress.Constantes.Web{
         /// <summary>
         /// Répertoire contenant les visuels du Marketing Direct
         /// </summary>
-        public const string LOCAL_PATH_MD_IMAGE = @"\\hera\AdexDatas\MarketingDirect\";
+        public const string LOCAL_PATH_MD_IMAGE = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\MarketingDirect\";
         /// <summary>
         /// Répertoire contenant les logos de la publicité extérieur
         /// </summary>

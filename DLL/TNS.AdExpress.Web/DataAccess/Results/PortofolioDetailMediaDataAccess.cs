@@ -410,6 +410,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 sql.Append(product);
                 sql.Append(productsRights);
                 sql.Append(mediaRights);
+
+                //Droit detail spot à spot TNT
+                if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
+                    && webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG) == null)
+                    sql.Append(" and " + DATA_TABLE_PREFIXE + ".id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
+
                 #endregion
 
                 // Order by
@@ -797,6 +803,46 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 				default : return "advertiser";
 			}
 		}
+
+        /// <summary>
+        /// Determine if a media belongs to a categroy
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsMediaBelongToCategory(WebSession webSession, long idMedia, long idCategory, int siteLanguage)
+        {
+            StringBuilder sql = new StringBuilder(1000);
+            DataTable dt = null;
+
+            sql.Append(" select  " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media," + DBConstantes.Tables.MEDIA_PREFIXE + ".media," + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category ");
+            sql.Append(" from  " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".CATEGORY  " + DBConstantes.Tables.CATEGORY_PREFIXE + "," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".MEDIA " + DBConstantes.Tables.MEDIA_PREFIXE);
+            sql.Append(" " + "," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".BASIC_MEDIA " + DBConstantes.Tables.BASIC_MEDIA_PREFIXE + " ");
+            sql.Append(" where ");
+            sql.Append(" " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_basic_media =" + DBConstantes.Tables.BASIC_MEDIA_PREFIXE + ".id_basic_media ");
+            sql.Append(" and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category=" + DBConstantes.Tables.BASIC_MEDIA_PREFIXE + ".id_category ");
+            sql.Append(" and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category=" + idCategory);
+            sql.Append(" and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_language=" + siteLanguage);
+            sql.Append(" and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ");
+            sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + siteLanguage);
+            sql.Append(" and " + DBConstantes.Tables.BASIC_MEDIA_PREFIXE + ".id_language=" + siteLanguage);
+            sql.Append(" and " + DBConstantes.Tables.BASIC_MEDIA_PREFIXE + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ");
+            sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media = " + idMedia);
+            sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ");
+            sql.Append("  order by media ");
+
+            #region Execution de la requête
+            try
+            {
+                dt = webSession.Source.Fill(sql.ToString()).Tables[0];
+
+                if (dt != null && !dt.Equals(System.DBNull.Value) && dt.Rows.Count > 0) return true;
+                else return false;
+            }
+            catch (System.Exception err)
+            {
+                throw (new WebExceptions.PortofolioDataAccessException("Impossible de déterminer si le média appartient à la categorie: ", err));
+            }
+            #endregion
+        }
 		#endregion
 	}
 }

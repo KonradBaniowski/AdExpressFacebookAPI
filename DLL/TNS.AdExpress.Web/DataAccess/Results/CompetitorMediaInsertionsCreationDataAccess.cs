@@ -187,6 +187,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
                     #region Droits
                     sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession, "wp", true));
+
+                    //Droit detail spot à spot TNT
+                    if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
+                        && webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG) == null)
+                        sql.Append(" and wp.id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
+
                     #endregion
 
                     #region Sélection
@@ -338,8 +344,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", "+prefix+"expenditure_euro"
 						+", "+prefix+"id_commercial_break"
 						+", category"
-						+", vehicle";
-				case DBClassificationConstantes.Vehicles.names.outdoor:
+						+", vehicle"
+                        +", " + prefix + "id_category";
+                case DBClassificationConstantes.Vehicles.names.outdoor:
 					return "media"
 						+", "+prefix+"date_media_num"						
 						+", advertiser"

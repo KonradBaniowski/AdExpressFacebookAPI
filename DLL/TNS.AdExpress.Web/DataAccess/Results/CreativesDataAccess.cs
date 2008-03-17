@@ -531,23 +531,29 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             #region Approche Media
 
             #region Sélection de Médias
+            string listMediaAccess = string.Empty;
+            if (moduleId == WebCst.Module.Name.ALERTE_PORTEFEUILLE ||
+                moduleId == WebCst.Module.Name.ANALYSE_PORTEFEUILLE)
+            {
+                listMediaAccess += session.GetSelection((TreeNode)session.ReferenceUniversMedia, CustCst.Right.type.mediaAccess) + ",";
+            }
             if (moduleId == WebCst.Module.Name.ALERTE_CONCURENTIELLE ||
-                moduleId == WebCst.Module.Name.ALERTE_PORTEFEUILLE ||
                 moduleId == WebCst.Module.Name.ALERTE_POTENTIELS ||
                 moduleId == WebCst.Module.Name.ANALYSE_CONCURENTIELLE ||
-                moduleId == WebCst.Module.Name.ANALYSE_PORTEFEUILLE ||
                 moduleId == WebCst.Module.Name.ANALYSE_POTENTIELS)
             {
-                string listMediaAccess = string.Empty;
                 int positionUnivers = 1;
-                while (session.CompetitorUniversMedia[positionUnivers] != null) {
+                while (session.CompetitorUniversMedia[positionUnivers] != null)
+                {
                     listMediaAccess += session.GetSelection((TreeNode)session.CompetitorUniversMedia[positionUnivers], CustCst.Right.type.mediaAccess) + ",";
                     positionUnivers++;
                 }
-                if (listMediaAccess.Length > 0) {
-                    sql.AppendFormat(" and ((wp.id_media in ({0}))) ", listMediaAccess.Substring(0, listMediaAccess.Length - 1));
-                }
 
+
+            }
+            if (listMediaAccess.Length > 0)
+            {
+                sql.AppendFormat(" and ((wp.id_media in ({0}))) ", listMediaAccess.Substring(0, listMediaAccess.Length - 1));
             }
             #endregion
 
@@ -635,6 +641,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 }
                 sql.Append(GetFiltersClause(session, detailLevels, filters, vehicle));
                 sql.AppendFormat(CheckZeroVersion(detailLevels, (DBClassifCst.Vehicles.names) vehicle, filters));
+            }
+            if (session.SloganIdZoom > -1)
+            {
+                sql.AppendFormat(" and wp.id_slogan={0}", session.SloganIdZoom);
             }
             #endregion
 

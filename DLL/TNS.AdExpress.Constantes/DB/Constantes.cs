@@ -1317,6 +1317,10 @@ namespace TNS.AdExpress.Constantes.DB{
         /// la valeur de la gatégorie publicité non adressée dans la base de données
         /// </summary>
         public const string PUBLICITE_NON_ADRESSEE = "69";
+        /// <summary>
+        /// ID category corresponding to digital TV
+        /// </summary>
+        public const Int64 ID_DIGITAL_TV = 78;
         #endregion
 
     }
@@ -1594,7 +1598,11 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Identifiant du flag Accès au Parrainage TV
 		/// </summary>
 		public const Int64 ID_SPONSORSHIP_TV_ACCESS_FLAG = 261;
-	}
+        /// <summary>
+        /// Right Flag  of digital tv spot's details
+        /// </summary>
+        public const Int64 ID_DETAIL_DIGITAL_TV_ACCESS_FLAG = 266;
+    }
 	#endregion
 
 	#region Classe pour les tendances

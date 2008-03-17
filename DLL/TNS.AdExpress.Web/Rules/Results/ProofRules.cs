@@ -320,7 +320,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 						#endregion
 
 						#region Récupération du nombre de pages du media
-						nbMediaPage = DataAccess.Results.ProofDataAccess.GetDataPages(webSession, idMedia, currentRow["date_cover_num"].ToString());
+                        nbMediaPage = DataAccess.Results.ProofDataAccess.GetDataPages(webSession, idMedia, currentRow["date_media_num"].ToString());
 						dr["number_page_media"]	= decimal.Parse(nbMediaPage.ToString());
 						#endregion
 

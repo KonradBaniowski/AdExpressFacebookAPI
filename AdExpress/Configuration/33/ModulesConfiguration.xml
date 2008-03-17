@@ -442,7 +442,7 @@
               <detailSelection id="10" name="Inset selected"/>
             </detailSelections>
           </page>
-          <page id="2" resultid="10" name="Nouveautés" traductioncode="1377" url="/Private/Results/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+          <!--<page id="2" resultid="10" name="Nouveautés" traductioncode="1377" url="/Private/Results/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -452,7 +452,7 @@
               <detailSelection id="6" name="Product Selected"/>
               <detailSelection id="11" name="New in Media"/>
             </detailSelections>
-          </page>
+          </page>-->
           <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" />
             <detailSelections>
               <detailSelection id="1" name="Module name"/>

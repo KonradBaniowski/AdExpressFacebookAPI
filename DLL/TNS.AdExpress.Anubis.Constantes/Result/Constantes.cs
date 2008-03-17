@@ -27,55 +27,55 @@ namespace TNS.AdExpress.Anubis.Constantes{
 			/// <summary>
 			/// Type APPM
 			/// </summary>
-			appm=101,
+			appm=1,
 			/// <summary>
 			/// Type Bastet
 			/// </summary>
-			bastet=102,
+			bastet=2,
 			/// <summary>
 			/// Type alerte Geb (alerte portefeuille)
 			/// </summary>
-			gebAlert=103,
+			gebAlert=3,
 			/// <summary>
 			/// Type détail insertion APPM
 			/// </summary>
-			appmInsertionDetail=104,
+			appmInsertionDetail=4,
 			/// <summary>
 			/// Type APPM excel (plug-in Satet)
 			/// </summary>
-			appmExcel=105, 
+			appmExcel=5, 
 			/// <summary>
 			/// Type Indicateurs PDF (plug-in Hotep)
 			/// </summary>
-			hotep=106,
+			hotep=6,
 			/// <summary>
 			/// Type Alerte Plan Média PDF (plug-in Miysis)
 			/// </summary>
-			miysis=107,
+			miysis=7,
 			/// <summary>
 			/// Type APPM Plan Media PDF (plug-in Mnevis)
 			/// </summary>
-			mnevis=108,
+			mnevis=8,
 			/// <summary>
 			/// Type Justificatifs Presse PDF (plug-in Shou)
 			/// </summary>
-			shou = 109,
+			shou = 9,
 			/// <summary>
 			/// Type Données de Cadrage Excel (Plug-in Amset)
 			/// </summary>
-			amset=110,
+			amset= 10,
 			/// <summary>
 			/// Type Données de Cadrage PDF (Plug-in Aton)
 			/// </summary>
-			aton=111,
+			aton= 11,
 			/// <summary>
 			/// Type Indicateurs Press (Hermes)
 			/// </summary>
-			hermesPress=112,
+			hermesPress= 12,
 			/// <summary>
 			/// Type Indicateurs Radio TV (Hermes)
 			/// </summary>
-			hermesRadioTV=113
+			hermesRadioTV= 13
 		}
 
 		/// <summary>

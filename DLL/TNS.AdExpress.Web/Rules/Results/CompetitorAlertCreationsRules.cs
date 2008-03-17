@@ -182,16 +182,22 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				//    int.Parse(currentRow["top_diffusion"].ToString().Substring(System.Math.Max(currentRow["top_diffusion"].ToString().Length-2,0),System.Math.Min(currentRow["top_diffusion"].ToString().Length,2))))
 				//    ).ToString();
 				#endregion
-				TimeSpan tSpan = (new TimeSpan(
-					currentRow["top_diffusion"].ToString().Length >= 5 ? int.Parse(currentRow["top_diffusion"].ToString().Substring(0, currentRow["top_diffusion"].ToString().Length - 4)) : 0,
-					currentRow["top_diffusion"].ToString().Length >= 3 ? int.Parse(currentRow["top_diffusion"].ToString().Substring(System.Math.Max(currentRow["top_diffusion"].ToString().Length - 4, 0), System.Math.Min(currentRow["top_diffusion"].ToString().Length - 2, 2))) : 0,
-					int.Parse(currentRow["top_diffusion"].ToString().Substring(System.Math.Max(currentRow["top_diffusion"].ToString().Length - 2, 0), System.Math.Min(currentRow["top_diffusion"].ToString().Length, 2))))
-					);
-				tab[i, CstWeb.TVInsertionsColumnIndex.TOP_DIFFUSION_INDEX] = ((tSpan.Hours.ToString().Length > 1) ? tSpan.Hours.ToString() : "0" + tSpan.Hours.ToString())
-				+ ":" + ((tSpan.Minutes.ToString().Length > 1) ? tSpan.Minutes.ToString() : "0" + tSpan.Minutes.ToString())
-				+ ":" + ((tSpan.Seconds.ToString().Length > 1) ? tSpan.Seconds.ToString() : "0" + tSpan.Seconds.ToString());
-			
-				tab[i,CstWeb.TVInsertionsColumnIndex.ID_COMMERCIAL_BREAK_INDEX]=currentRow["id_commercial_break"].ToString();
+                if (Int64.Parse(currentRow["id_category"].ToString()) == TNS.AdExpress.Constantes.DB.Category.ID_DIGITAL_TV)
+                {
+                    tab[i, CstWeb.TVInsertionsColumnIndex.TOP_DIFFUSION_INDEX] = "";//Masquer top diffusion pour la TNT
+                }
+                else
+                {
+                    TimeSpan tSpan = (new TimeSpan(
+                        currentRow["top_diffusion"].ToString().Length >= 5 ? int.Parse(currentRow["top_diffusion"].ToString().Substring(0, currentRow["top_diffusion"].ToString().Length - 4)) : 0,
+                        currentRow["top_diffusion"].ToString().Length >= 3 ? int.Parse(currentRow["top_diffusion"].ToString().Substring(System.Math.Max(currentRow["top_diffusion"].ToString().Length - 4, 0), System.Math.Min(currentRow["top_diffusion"].ToString().Length - 2, 2))) : 0,
+                        int.Parse(currentRow["top_diffusion"].ToString().Substring(System.Math.Max(currentRow["top_diffusion"].ToString().Length - 2, 0), System.Math.Min(currentRow["top_diffusion"].ToString().Length, 2))))
+                        );
+                    tab[i, CstWeb.TVInsertionsColumnIndex.TOP_DIFFUSION_INDEX] = ((tSpan.Hours.ToString().Length > 1) ? tSpan.Hours.ToString() : "0" + tSpan.Hours.ToString())
+                    + ":" + ((tSpan.Minutes.ToString().Length > 1) ? tSpan.Minutes.ToString() : "0" + tSpan.Minutes.ToString())
+                    + ":" + ((tSpan.Seconds.ToString().Length > 1) ? tSpan.Seconds.ToString() : "0" + tSpan.Seconds.ToString());
+                }
+                tab[i, CstWeb.TVInsertionsColumnIndex.ID_COMMERCIAL_BREAK_INDEX] = currentRow["id_commercial_break"].ToString();
 				tab[i,CstWeb.TVInsertionsColumnIndex.DURATION_INDEX]=currentRow["duration"].ToString();
 				tab[i,CstWeb.TVInsertionsColumnIndex.RANK_INDEX]=currentRow["id_rank"].ToString();
 				tab[i,CstWeb.TVInsertionsColumnIndex.BREAK_DURATION_INDEX]=currentRow["duration_commercial_break"].ToString();

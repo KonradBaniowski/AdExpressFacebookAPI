@@ -342,7 +342,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             #endregion
 
             #region Sélection
-            if (periodDisplay != ConstantesPeriod.DisplayLevel.dayly)
+            if (periodDisplay != ConstantesPeriod.DisplayLevel.dayly && (ConstantesDBClassif.Vehicles.names)vehicleId != ConstantesDBClassif.Vehicles.names.adnettrack)
             {
                 list = session.GetSelection(session.SelectionUniversMedia, ConstanteCustomerRight.type.vehicleAccess);
                 if (list.Length > 0) sql += " and ((" + ConstantesDB.Tables.WEB_PLAN_PREFIXE + ".id_vehicle in (" + list + "))) ";

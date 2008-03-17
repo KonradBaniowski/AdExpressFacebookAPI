@@ -71,12 +71,21 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
             Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 
 			#region Sélection de Médias
-			while(webSession.CompetitorUniversMedia[positionUnivers]!=null){
-				listMediaAccess+=webSession.GetSelection((TreeNode) webSession.CompetitorUniversMedia[positionUnivers],CustomerRightConstante.type.mediaAccess)+",";
-				positionUnivers++;
-			}
-			if(listMediaAccess.Length>0)listMediaAccess= listMediaAccess.Substring(0,listMediaAccess.Length-1);
-			
+            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE ||
+                webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE)
+            {
+                listMediaAccess += webSession.GetSelection((TreeNode)webSession.ReferenceUniversMedia, CustomerRightConstante.type.mediaAccess) + ",";
+            }
+            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE)
+            {
+                while (webSession.CompetitorUniversMedia[positionUnivers] != null)
+                {
+                    listMediaAccess += webSession.GetSelection((TreeNode)webSession.CompetitorUniversMedia[positionUnivers], CustomerRightConstante.type.mediaAccess) + ",";
+                    positionUnivers++;
+                }
+            }
+            if (listMediaAccess.Length > 0) listMediaAccess = listMediaAccess.Substring(0, listMediaAccess.Length - 1);
+
 			#endregion
 
 			try{
@@ -210,12 +219,23 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#region Droits
 			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession,"wp",true));
+
+            
+            //Droit detail spot à spot TNT
+            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
+                && webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG) == null)
+                sql.Append(" and wp.id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
+
 			#endregion
 
 			#region Sélection
 			list=webSession.GetSelection(webSession.SelectionUniversMedia,CustomerRightConstante.type.vehicleAccess);
-			
-				sql.Append(" and ((wp.id_category<>35)) ");
+            if (webSession.SloganIdZoom > -1)
+            {
+                sql.AppendFormat(" and wp.id_slogan={0}", webSession.SloganIdZoom);
+            }
+
+			sql.Append(" and ((wp.id_category<>35)) ");
 			if(listMediaAccess.Length>0){
 				sql.Append(" and ((wp.id_media in ("+listMediaAccess+"))) ");
 			}
@@ -531,7 +551,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", wp.expenditure_euro"
 						+", wp.id_commercial_break"
 						+", category"
-						+", vehicle";
+						+", vehicle"
+                        +", wp.id_category";
 				case DBClassificationConstantes.Vehicles.names.outdoor :
 					return  "media"
 						+", wp.date_media_num"											

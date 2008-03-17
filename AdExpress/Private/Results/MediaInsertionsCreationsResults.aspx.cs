@@ -277,20 +277,21 @@ namespace AdExpress.Private.Results{
                 else
                 {
                     zoomDate = Page.Request.QueryString.Get("zoomDate");
-                }
-                if (zoomDate.Length <= 0)
-                {
-                    DateTime begin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
-                    if (_webSession.DetailPeriod == ConstantesWeb.CustomerSessions.Period.DisplayLevel.weekly)
+                    if (zoomDate != null && zoomDate.Length <= 0)
                     {
-                        AtomicPeriodWeek week = new AtomicPeriodWeek(begin);
-                        zoomDate = string.Format("{0}{1}", week.Year, week.Week.ToString("0#"));
-                    }
-                    else
-                    {
-                        zoomDate = begin.ToString("yyyyMM");
+                        DateTime begin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+                        if (_webSession.DetailPeriod == ConstantesWeb.CustomerSessions.Period.DisplayLevel.weekly)
+                        {
+                            AtomicPeriodWeek week = new AtomicPeriodWeek(begin);
+                            zoomDate = string.Format("{0}{1}", week.Year, week.Week.ToString("0#"));
+                        }
+                        else
+                        {
+                            zoomDate = begin.ToString("yyyyMM");
+                        }
                     }
                 }
+
 
                 periodNavigation.Value = zoomDate;
 

@@ -199,7 +199,6 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                     end = WebFunctions.Dates.Min(end,
                         WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
-                    webSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
                     period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
 
                 }
@@ -211,12 +210,13 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                     {
                         webSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
                     }
-                    period = new MediaSchedulePeriod(begin, end, webSession.DetailPeriod);
+                    period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
 
                 }
                 #endregion
 
                 #region Data
+                webSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
                 tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, (Int64) DBClassificationConstantes.Vehicles.names.adnettrack);
                 #endregion
 
@@ -348,7 +348,6 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 end = WebFunctions.Dates.Min(end,
                     WebFunctions.Dates.getPeriodEndDate(_customerWebSession.PeriodEndDate, _customerWebSession.PeriodType));
 
-                _customerWebSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
                 period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
 
             }
@@ -371,8 +370,13 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					output.WriteLine(GetHTML(_customerWebSession));						
 					break;				
 				case RenderType.excel:	
-					Int64 module = _customerWebSession.CurrentModule;							
-				
+					Int64 module = _customerWebSession.CurrentModule;
+                    if (_zoomDate != null && _zoomDate != string.Empty)
+                    {
+                        _customerWebSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
+
+                    }
+
 					try{
 //						_customerWebSession.CurrentModule = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
                         output.WriteLine(ExcelFunction.GetLogo(_customerWebSession));

@@ -35,6 +35,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 
 namespace AdExpress.Private.MyAdExpress{
@@ -352,6 +353,8 @@ namespace AdExpress.Private.MyAdExpress{
                 CstWeb.globalCalendar.comparativePeriodType comparativePeriodType;
                 CstWeb.globalCalendar.periodDisponibilityType periodDisponibilityType;
                 bool verifCustomerPeriod = false;
+                bool validResultPage = true;
+
 			
 				foreach (string currentKey in Request.Form.AllKeys){
 					tabParent=currentKey.Split('_');
@@ -371,6 +374,12 @@ namespace AdExpress.Private.MyAdExpress{
 						if((Int64)currentRow["idModule"]==webSessionSave.CurrentModule) {
 							validModule=true; 
 						}
+                        //Verifie droit accès resultat courant
+                        Module module = right.GetModule(webSessionSave.CurrentModule);
+                        if (module != null)
+                        {
+                            validResultPage = (module.GetResultPageInformation(Convert.ToInt32(webSessionSave.CurrentTab)) != null);
+                        }   
 					}
 					#endregion
 
@@ -896,18 +905,30 @@ namespace AdExpress.Private.MyAdExpress{
 						Response.Write("</script>");
 					}
 					else if (validModule){
-						_webSession.Save();
-						if (_webSession.LastReachedResultUrl.Length!=0){
-							//_webSession.Source.Close();
-							Response.Redirect(_webSession.LastReachedResultUrl+"?idSession="+_webSession.IdSession);
-						}
-						else{
-				
-							//Erreur : Impossible de charger la session
-							Response.Write("<script language=javascript>");
-							Response.Write("	alert(\""+GestionWeb.GetWebWord(851,_webSession.SiteLanguage)+"\");");					
-							Response.Write("</script>");
-						}
+                        if (validResultPage)
+                        {
+                            _webSession.Save();
+                            if (_webSession.LastReachedResultUrl.Length != 0)
+                            {
+                                //_webSession.Source.Close();
+                                Response.Redirect(_webSession.LastReachedResultUrl + "?idSession=" + _webSession.IdSession);
+                            }
+                            else
+                            {
+
+                                //Erreur : Impossible de charger la session
+                                Response.Write("<script language=javascript>");
+                                Response.Write("	alert(\"" + GestionWeb.GetWebWord(851, _webSession.SiteLanguage) + "\");");
+                                Response.Write("</script>");
+                            }
+                        }
+                        else
+                        {
+                            //Erreur : Cette session n'est plus dispo
+                            Response.Write("<script language=javascript>");
+                            Response.Write("	alert(\"" + GestionWeb.GetWebWord(2455, _webSession.SiteLanguage) + "\");");
+                            Response.Write("</script>");
+                        }
 					}
 					else{
 						// Erreur : Droits insuffisants

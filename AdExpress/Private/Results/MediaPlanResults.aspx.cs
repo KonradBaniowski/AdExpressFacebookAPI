@@ -315,13 +315,19 @@ namespace AdExpress.Private.Results
                 #region SetZoom
                 StringBuilder js = new StringBuilder();
                 js.Append("\r\nfunction SetZoom(){");
-                js.AppendFormat("\r\n\t{0}();", GenericMediaScheduleWebControl1.RefreshDataMethod);
-                js.AppendFormat("\r\n\tvar date = document.getElementById(\"zoomParam\").value;");
-                js.AppendFormat("\r\n\texportMenu.items.printMenuItem.actionOnClick = exportMenu.items.printMenuItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
-                js.AppendFormat("\r\n\texportMenu.items.excelUnitItem.actionOnClick = exportMenu.items.excelUnitItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
-                js.AppendFormat("\r\n\texportMenu.items.pdfExportResultItem.actionOnClick = exportMenu.items.pdfExportResultItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
-                js.AppendFormat("\r\n\tmenu.items.selectedItem.actionOnClick = menu.items.selectedItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
-				js.AppendFormat("\r\n\tdocument.getElementById(\"zoomParam\").value = {0};", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\tif ({0} == '')", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.Append("\r\n\t{");
+                js.AppendFormat("\r\n\t\tdocument.location='/Private/Results/MediaPlanResults.aspx?idSession={0}'", _webSession.IdSession);
+                js.Append("\r\n\t}");
+                js.Append("\r\n\telse {");
+                js.AppendFormat("\r\n\t\tvar date = document.getElementById(\"zoomParam\").value;");
+                js.AppendFormat("\r\n\t\t{0}();", GenericMediaScheduleWebControl1.RefreshDataMethod);
+                js.AppendFormat("\r\n\t\texportMenu.items.printMenuItem.actionOnClick = exportMenu.items.printMenuItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\t\texportMenu.items.excelUnitItem.actionOnClick = exportMenu.items.excelUnitItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\t\texportMenu.items.pdfExportResultItem.actionOnClick = exportMenu.items.pdfExportResultItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\t\tmenu.items.selectedItem.actionOnClick = menu.items.selectedItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.AppendFormat("\r\n\t\tdocument.getElementById(\"zoomParam\").value = {0};", SubPeriodSelectionWebControl1.PeriodContainerName);
+                js.Append("\r\n\t}");
                 js.Append("\r\n}");
                 SetZoom = js.ToString();
                 #endregion

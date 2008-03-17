@@ -430,22 +430,22 @@ namespace TNS.AdExpress.Web.Controls.Results
 			js.Append("\r\n\nfunction SetInsertionsParameters(obj){");
 			js.Append("\r\n\t obj.IdVehicle = '"+_idVehicle+"';");
 			js.Append("\r\n\t obj.Ids = '"+_ids+"';");
-            if (_zoomDate.Length < 1)
-            {
-                DateTime begin;
-                begin = WebFunctions.Dates.getPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
+            //if (_zoomDate.Length < 1)
+            //{
+            //    DateTime begin;
+            //    begin = WebFunctions.Dates.getPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
 
-                switch (_customerWebSession.DetailPeriod)
-                {
-                    case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
-                        _zoomDate = begin.ToString("YYYYMM");
-                        break;
-                    case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-                        AtomicPeriodWeek tmp = new AtomicPeriodWeek(begin);
-                        _zoomDate = string.Format("{0}{1}", tmp.Year, tmp.Week.ToString("0#"));
-                        break;
-                }
-            }
+            //    switch (_customerWebSession.DetailPeriod)
+            //    {
+            //        case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
+            //            _zoomDate = begin.ToString("YYYYMM");
+            //            break;
+            //        case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
+            //            AtomicPeriodWeek tmp = new AtomicPeriodWeek(begin);
+            //            _zoomDate = string.Format("{0}{1}", tmp.Year, tmp.Week.ToString("0#"));
+            //            break;
+            //    }
+            //}
 			js.Append("\r\n\t obj.ZoomDate = '"+_zoomDate+"';");
 			js.Append("\r\n }");
 			#endregion
