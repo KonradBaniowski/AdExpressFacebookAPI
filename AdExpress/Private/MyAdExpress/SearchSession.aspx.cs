@@ -158,7 +158,7 @@ namespace AdExpress.Private.MyAdExpress{
 				idSession=_webSession.IdSession;
 
 				//Charge le script
-				script=myAdexpress.Script;
+				//script=myAdexpress.Script;
 			
 				// Gestion lorsqu'il n'y a pas de répertoire
 				if(listRepertories.Length==0){
@@ -169,6 +169,10 @@ namespace AdExpress.Private.MyAdExpress{
 				}	
 			
 				#region Script
+                // Script
+                if (!Page.ClientScript.IsClientScriptBlockRegistered("script")) {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "script", myAdexpress.Script);
+                }
 				// popup
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("myAdExpress")) {
 					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"myAdExpress",TNS.AdExpress.Web.Functions.Script.MyAdExpress(idSession,_webSession));
