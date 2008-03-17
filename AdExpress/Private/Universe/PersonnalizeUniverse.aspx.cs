@@ -243,37 +243,37 @@ namespace AdExpress.Private.Universe{
 				#endregion
 
 				#region Rollover des boutons
-				personalizeImagebuttonrolloverwebcontrol.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_up.gif";
-				personalizeImagebuttonrolloverwebcontrol.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_down.gif";
+				//personalizeImagebuttonrolloverwebcontrol.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_up.gif";
+				//personalizeImagebuttonrolloverwebcontrol.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_down.gif";
 
-				openImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_up.gif";
-				openImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_down.gif";
+				//openImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_up.gif";
+				//openImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_down.gif";
 
-				createRepertoryImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";	
-				createRepertoryImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
+				//createRepertoryImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";	
+				//createRepertoryImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
 
-				deleteImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
-				deleteImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
+				//deleteImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
+				//deleteImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
 				deleteImageButtonRollOverWebControl.Attributes.Add("onclick", "javascript: return confirm('Etes vous sûr de vouloir supprimer ce groupe d\\'univers ?');");
 
-				renameImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
-				renameImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
+				//renameImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
+				//renameImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
 	
-				renameUniverseImagebutton.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
-				renameUniverseImagebutton.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
+				//renameUniverseImagebutton.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
+				//renameUniverseImagebutton.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
 			
-				moveImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
-				moveImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
+				//moveImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_up.gif";
+				//moveImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/valider_down.gif";
 			
-				deleteUniversImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/supprimer_up.gif";
-				deleteUniversImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/supprimer_down.gif";
+				//deleteUniversImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/supprimer_up.gif";
+				//deleteUniversImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/supprimer_down.gif";
 				deleteUniversImageButtonRollOverWebControl.Attributes.Add("onclick", "javascript: return confirm('Etes vous sûr de vouloir supprimer cet univers ?');");
 			
-				DetailUniversbuttonrolloverwebcontrol.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/detail_up.gif";
-				DetailUniversbuttonrolloverwebcontrol.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/detail_down.gif";
+				//DetailUniversbuttonrolloverwebcontrol.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/detail_up.gif";
+				//DetailUniversbuttonrolloverwebcontrol.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/detail_down.gif";
 				
-				pdfOpenImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_up.gif";
-				pdfOpenImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_down.gif";
+				//pdfOpenImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_up.gif";
+				//pdfOpenImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_down.gif";
 				#endregion
 
 				#region Chargement de la liste des répertoires

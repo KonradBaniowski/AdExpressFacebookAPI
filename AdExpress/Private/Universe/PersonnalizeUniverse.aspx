@@ -12,9 +12,6 @@
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<LINK href="/Css/AdExpress.css" type="text/css" rel="stylesheet">
-		<style type="text/css">BODY { BACKGROUND-IMAGE: none; MARGIN: 0px; BACKGROUND-COLOR: #ffffff }
-		</style>
 		<script language="JavaScript" type="text/JavaScript">
 		<!--
 			function MM_preloadImages() { //v3.0
@@ -65,169 +62,168 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
-	<body onload="MM_preloadImages('images/valider_down.gif')">
+	<body onload="MM_preloadImages('images/valider_down.gif')" class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
 			<table height="600" cellSpacing="0" cellPadding="0" border="0">
-				
 					<tr>
 						<!-- marge de gauche-->
 						<td vAlign="top">
 							<table cellSpacing="0" cellPadding="0" border="0">
 								<tr>
-									<td><IMG height="100" src="/images/Common/logo_cote_gauche.gif" width="10"></td>
+									<td><asp:Image ID="Image153" runat="server" SkinID="logo_cote_gauche" height="100" width="10" /></td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+									<td class="whiteBackGround"><asp:Image ID="Image1" runat="server" SkinID="pixel" height="1" width="1" /></td>
 								</tr>
 							</table>
 						</td>
 						<!-- menu -->
-						<td vAlign="top" background="/images/Common/dupli_fond.gif">
+						<td vAlign="top" class="imageBackGround">
 							<table id="tableMenu" cellSpacing="0" cellPadding="0" width="10" border="0">
-								<tr vAlign="top" bgColor="#ffffff">
+								<tr vAlign="top" class="whiteBackGround">
 									<!-- Logo -->
-									<td><IMG height=90 src="/images/<%=_siteLanguage%>/logo/logo.gif" width=185 ></td>
+									<td><asp:Image ID="Image50" runat="server" SkinID="logo" height="90" width="185" /></td>
 								</tr>
 								<tr>
-									<td><IMG height="5" src="/images/Common/plus_sous_logo.gif" width="185"></td>
+									<td><asp:Image ID="Image49" runat="server" SkinID="plus_sous_logo" height="5" width="185" /></td>
 								</tr>
 								<tr>
-									<td style="HEIGHT: 10px"><IMG height="10" src="/images/Common/pixel.gif" width="1"></td>
+									<td style="HEIGHT: 10px"><asp:Image ID="Image28" runat="server" SkinID="pixel" height="10" width="1" /></td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff"><IMG height="5" src="/images/Common/pixel.gif" width="1"></td>
+									<td class="whiteBackGround"><asp:Image ID="Image29" runat="server" SkinID="pixel" height="5" width="1" /></td>
 								</tr>
 								<!--Mon Adexpress-->
 								<tr>
-									<td bgColor="#ffffff">
+									<td class="whiteBackGround">
 										<table cellSpacing="0" cellPadding="0" border="0">
-											<tr bgColor="#644883">
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="159"></td>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+											<tr class="violetBackGround">
+												<td><asp:Image ID="Image2" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td><asp:Image ID="Image3" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td><asp:Image ID="Image30" runat="server" SkinID="pixel" height="1" width="159" /></td>
+												<td><asp:Image ID="Image4" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td vAlign="top"><IMG height="12" src="/images/Common/block_fleche.gif" width="12"></td>
-												<td background="/images/Common/block_dupli.gif"><IMG height="1" src="/images/Common/pixel.gif" width="13"></td>
+												<td vAlign="top"><asp:Image ID="Image46" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
+												<td class="blockdupliBackGround"><asp:Image ID="Image31" runat="server" SkinID="pixel" height="1" width="13" /></td>
 												<td class="txtNoir11Bold">
 													<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="Adexpresstext3" runat="server" Code="829"></cc1:adexpresstext></p>
 												</td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+												<td class="violetBackGround"><asp:Image ID="Image5" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+												<td><asp:Image ID="Image6" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image7" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image8" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image9" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 										</table>
 								<tr>
-									<td bgColor="#ffffff" height="5"></td>
+									<td class="whiteBackGround" height="5"></td>
 								</tr>
 								<tr>
-									<td class="txtGris11Bold" bgColor="#ffffff"><cc1:adexpresstext language="33" id="Adexpresstext4" runat="server" Code="827"></cc1:adexpresstext></td>
+									<td class="txtGris11Bold whiteBackGround"><cc1:adexpresstext language="33" id="Adexpresstext4" runat="server" Code="827"></cc1:adexpresstext></td>
 								</tr>
 								<tr>
 									<td height="5"></td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff" height="18" style="HEIGHT: 18px"><cc3:imagebuttonrolloverwebcontrol id="openImageButtonRollOverWebControl" runat="server" onclick="openImageButtonRollOverWebControl_Click"></cc3:imagebuttonrolloverwebcontrol></td>
+									<td class="whiteBackGround" height="18" style="HEIGHT: 18px"><cc3:imagebuttonrolloverwebcontrol id="openImageButtonRollOverWebControl" runat="server" onclick="openImageButtonRollOverWebControl_Click" SkinID="ouvrirButton"></cc3:imagebuttonrolloverwebcontrol></td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff" height="5"></td>
+									<td class="whiteBackGround" height="5"></td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff" height="5"><cc3:imagebuttonrolloverwebcontrol id="personalizeImagebuttonrolloverwebcontrol" runat="server" onclick="personalizeImagebuttonrolloverwebcontrol_Click"></cc3:imagebuttonrolloverwebcontrol></td>
+									<td class="whiteBackGround" height="5"><cc3:imagebuttonrolloverwebcontrol id="personalizeImagebuttonrolloverwebcontrol" runat="server" onclick="personalizeImagebuttonrolloverwebcontrol_Click" SkinID="personnaliserButton"></cc3:imagebuttonrolloverwebcontrol></td>
 								</tr>
 								<tr>
 									<td height="10"></td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff"><IMG height="5" src="/images/Common/pixel.gif" width="1"></td>
+									<td class="whiteBackGround"><asp:Image ID="Image32" runat="server" SkinID="pixel" height="5" width="1" /></td>
 								</tr>
 								<!--Mes univers-->
 								<tr>
-									<td bgColor="#ffffff">
+									<td class="whiteBackGround">
 										<table cellSpacing="0" cellPadding="0" border="0">
-											<tr bgColor="#644883">
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="159"></td>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+											<tr class="violetBackGround">
+												<td><asp:Image ID="Image10" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td><asp:Image ID="Image11" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td><asp:Image ID="Image33" runat="server" SkinID="pixel" height="1" width="159" /></td>
+												<td><asp:Image ID="Image12" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td vAlign="top"><IMG height="12" src="/images/Common/block_fleche.gif" width="12"></td>
-												<td background="/images/Common/block_dupli.gif"><IMG height="1" src="/images/Common/pixel.gif" width="13"></td>
+												<td vAlign="top"><asp:Image ID="Image47" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
+												<td class="blockdupliBackGround"><asp:Image ID="Image34" runat="server" SkinID="pixel" height="1" width="13" /></td>
 												<td class="txtNoir11Bold">
 													<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="AdExpressText1" runat="server" Code="875"></cc1:adexpresstext></p>
 												</td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+												<td class="violetBackGround"><asp:Image ID="Image13" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+												<td><asp:Image ID="Image14" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image15" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image16" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image17" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 										</table>
 								<tr>
-									<td bgColor="#ffffff" height="5"></td>
+									<td class="whiteBackGround" height="5"></td>
 								</tr>
 								<tr>
-									<td class="txtGris11Bold" bgColor="#ffffff"><cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="903"></cc1:adexpresstext></td>
+									<td class="txtGris11Bold whiteBackGround"><cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="903"></cc1:adexpresstext></td>
 								</tr>
 								<tr>
 									<td height="5"></td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff" height="5"><IMG src="/Images/<%=_siteLanguage%>/button/personnaliser_gris.gif" ></td>
+									<td class="whiteBackGround" height="5"><asp:Image ID="Image59" runat="server" SkinID="personnaliser" /></td>
 								</tr>
 								<tr>
 									<td height="10"></td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff"><IMG height="5" src="/images/Common/pixel.gif" width="1"></td>
+									<td class="whiteBackGround"><asp:Image ID="Image35" runat="server" SkinID="pixel" height="5" width="1" /></td>
 								</tr>
 								<!--Mes PDF-->
 								<tr>
-									<td bgColor="#ffffff">
+									<td class="whiteBackGround">
 										<table cellSpacing="0" cellPadding="0" border="0">
-											<tr bgColor="#644883">
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="159"></td>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+											<tr class="violetBackGround">
+												<td><asp:Image ID="Image18" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td><asp:Image ID="Image19" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td><asp:Image ID="Image36" runat="server" SkinID="pixel" height="1" width="159" /></td>
+												<td><asp:Image ID="Image20" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td vAlign="top"><IMG height="12" src="/images/Common/block_fleche.gif" width="12"></td>
-												<td background="/images/Common/block_dupli.gif"><IMG height="1" src="/images/Common/pixel.gif" width="13"></td>
+												<td vAlign="top"><asp:Image ID="Image48" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
+												<td class="blockdupliBackGround"><asp:Image ID="Image37" runat="server" SkinID="pixel" height="1" width="13" /></td>
 												<td class="txtNoir11Bold">
 													<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px">
 														<cc1:adexpresstext language="33" id="Adexpresstext22" runat="server" Code="1778"></cc1:adexpresstext></p>
 												</td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+												<td class="violetBackGround"><asp:Image ID="Image21" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-												<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+												<td><asp:Image ID="Image22" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image23" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image24" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image25" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 										</table>
 									</td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff" height="5"></td>
+									<td class="whiteBackGround" height="5"></td>
 								</tr>
 								<tr>
-									<td class="txtGris11Bold" bgColor="#ffffff"><cc1:adexpresstext language="33" id="Adexpresstext23" runat="server" Code="1753"></cc1:adexpresstext></td>
+									<td class="txtGris11Bold whiteBackGround"><cc1:adexpresstext language="33" id="Adexpresstext23" runat="server" Code="1753"></cc1:adexpresstext></td>
 								</tr>
 								<tr>
 									<td height="5"></td>
 								</tr>
 								<tr>
-									<td class="txtGris10" bgColor="#ffffff" height="5"><cc3:imagebuttonrolloverwebcontrol id="pdfOpenImageButtonRollOverWebControl" runat="server" onclick="pdfOpenImageButtonRollOverWebControl_Click"></cc3:imagebuttonrolloverwebcontrol></td>
+									<td class="txtGris10 whiteBackGround" height="5"><cc3:imagebuttonrolloverwebcontrol id="pdfOpenImageButtonRollOverWebControl" runat="server" onclick="pdfOpenImageButtonRollOverWebControl_Click" SkinID="ouvrirButton"></cc3:imagebuttonrolloverwebcontrol></td>
 								</tr>
 								<!-- test!!!!--></table>
 							<!--TEST : acces à la page de resultat Plan Media -->
@@ -236,18 +232,18 @@
 						<td vAlign="top">
 							<table id="Table5" cellSpacing="0" cellPadding="0" border="0">
 								<tr>
-									<td><IMG height="100" src="/images/Common/logo_cote_droit.gif" width="5"></td>
+									<td><asp:Image ID="Image51" runat="server" SkinID="logo_cote_droit" height="100" width="5" /></td>
 								</tr>
 								<tr>
-									<td bgColor="#ffffff"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
+									<td class="whiteBackGround"><asp:Image ID="Image26" runat="server" SkinID="pixel" height="1" width="1" /></td>
 								</tr>
 							</table>
 						</td>
-						<td bgColor="#644883"><IMG height="1" src="/images/Common/pixel.gif" width="1"></td>
-						<td width="10" background="/images/Common/dupli_fond.gif">&nbsp;</td>
-						<td width="10" bgColor="#ffffff">&nbsp;</td>
+						<td class="violetBackGround"><asp:Image ID="Image27" runat="server" SkinID="pixel" height="1" width="1" /></td>
+						<td width="10" class="imageBackGround">&nbsp;</td>
+						<td width="10" class="whiteBackGround">&nbsp;</td>
 						<!-- droite-->
-						<td vAlign="top" background="/images/Common/dupli_fond.gif">
+						<td vAlign="top" class="imageBackGround">
 							<table cellSpacing="0" cellPadding="0" border="0">
 								<tr>
 									<!-- Menu du haut-->
@@ -258,9 +254,9 @@
 									<td>
 										<table id="Table2" cellSpacing="0" cellPadding="0" width="100%" border="0">
 											<tr>
-												<td vAlign="top" align="left"><IMG height="5" src="/images/Common/croix.gif" width="5"></td>
-												<td><IMG height="17" src="/images/Common/pixel.gif" width="1"></td>
-												<td vAlign="top" align="right"><IMG height="5" src="/images/Common/croix.gif" width="5"></td>
+												<td vAlign="top" align="left"><asp:Image ID="Image44" runat="server" SkinID="croix" height="5" width="5" /></td>
+												<td><asp:Image ID="Image38" runat="server" SkinID="pixel" height="17" width="1" /></td>
+												<td vAlign="top" align="right"><asp:Image ID="Image45" runat="server" SkinID="croix" height="5" width="5" /></td>
 											</tr>
 										</table>
 									</td>
@@ -271,114 +267,114 @@
 										<TABLE id="Table1" cellSpacing="0" cellPadding="0" width="727" border="0">
 											<TBODY>
 												<tr>
-													<td class="txtGris11Bold" bgColor="#ffffff" colSpan="3"><cc1:adexpresstext language="33" id="mainDescAdexpresstext" runat="server" Code="905"></cc1:adexpresstext></td>
+													<td class="txtGris11Bold whiteBackGround" colSpan="3"><cc1:adexpresstext language="33" id="mainDescAdexpresstext" runat="server" Code="905"></cc1:adexpresstext></td>
 												</tr>
 												<tr>
-													<td colSpan="3"><IMG height="10" src="/images/Common/pixel.gif"></td>
+													<td colSpan="3"><asp:Image ID="Image39" runat="server" SkinID="pixel" height="10" /></td>
 												</tr>
 												<!--Créer un Groupe d'univers-->
-												<TR bgColor="#644883" height="14">
-													<td colSpan="1"><IMG src="/Images/Common/fleche_1.gif"></td>
-													<TD class="txtBlanc11Bold" background="/Images/Common/bandeau_titre.gif" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText5" runat="server" Code="912"></cc1:adexpresstext>
+												<TR class="violetBackGround" height="14">
+													<td colSpan="1"><asp:Image ID="Image52" runat="server" SkinID="fleche_1" /></td>
+													<TD class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText5" runat="server" Code="912"></cc1:adexpresstext>
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<td></td>
-													<TD class="txtViolet11" bgColor="#ffffff">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText6" runat="server" Code="913"></cc1:adexpresstext></TD>
-													<TD bgColor="#ffffff"><asp:textbox id="createRepertoryTextBox" runat="server" Width="300px" CssClass="txtViolet11"></asp:textbox></TD>
+													<TD class="txtViolet11 whiteBackGround">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText6" runat="server" Code="913"></cc1:adexpresstext></TD>
+													<TD class="whiteBackGround"><asp:textbox id="createRepertoryTextBox" runat="server" Width="300px" CssClass="txtViolet11"></asp:textbox></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="10"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="10"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
 													<TD></TD>
-													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="createRepertoryImageButtonRollOverWebControl" runat="server" onclick="createRepertoryImageButtonRollOverWebControl_Click"></cc3:imagebuttonrolloverwebcontrol></TD>
+													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="createRepertoryImageButtonRollOverWebControl" runat="server" onclick="createRepertoryImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc3:imagebuttonrolloverwebcontrol></TD>
 												</TR>
 												<!--Supprimer un Groupe d'univers-->
-												<TR bgColor="#644883" height="14">
-													<td colSpan="1"><IMG src="/Images/Common/fleche_1.gif"></td>
-													<TD class="txtBlanc11Bold" background="/Images/Common/bandeau_titre.gif" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText7" runat="server" Code="914"></cc1:adexpresstext>
+												<TR class="violetBackGround" height="14">
+													<td colSpan="1"><asp:Image ID="Image53" runat="server" SkinID="fleche_1" /></td>
+													<TD class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText7" runat="server" Code="914"></cc1:adexpresstext>
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD style="HEIGHT: 17px"></TD>
-													<TD class="txtViolet11" style="HEIGHT: 17px" bgColor="#ffffff">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText8" runat="server" Code="915"></cc1:adexpresstext></TD>
-													<TD style="HEIGHT: 17px" bgColor="#ffffff"><asp:dropdownlist id="directoryDropDownList" runat="server" Width="300px" CssClass="txtViolet11"></asp:dropdownlist></TD>
+													<TD class="txtViolet11 whiteBackGround" style="HEIGHT: 17px">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText8" runat="server" Code="915"></cc1:adexpresstext></TD>
+													<TD style="HEIGHT: 17px" class="whiteBackGround"><asp:dropdownlist id="directoryDropDownList" runat="server" Width="300px" CssClass="txtViolet11"></asp:dropdownlist></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="10"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="10"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
 													<TD></TD>
-													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="deleteImageButtonRollOverWebControl" runat="server" onclick="deleteImageButtonRollOverWebControl_Click"></cc3:imagebuttonrolloverwebcontrol></TD>
+													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="deleteImageButtonRollOverWebControl" runat="server" onclick="deleteImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc3:imagebuttonrolloverwebcontrol></TD>
 												</TR>
 												<!--Renommer un Groupe d'univers-->
-												<TR bgColor="#644883" height="14">
-													<td colSpan="1"><IMG src="/Images/Common/fleche_1.gif"></td>
-													<TD class="txtBlanc11Bold" background="/Images/Common/bandeau_titre.gif" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText9" runat="server" Code="916"></cc1:adexpresstext>
+												<TR class="violetBackGround" height="14">
+													<td colSpan="1"><asp:Image ID="Image54" runat="server" SkinID="fleche_1" /></td>
+													<TD class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText9" runat="server" Code="916"></cc1:adexpresstext>
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD style="HEIGHT: 15px"></TD>
-													<TD class="txtViolet11" style="HEIGHT: 15px" bgColor="#ffffff">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText10" runat="server" Code="917"></cc1:adexpresstext></TD>
-													<TD style="HEIGHT: 15px" bgColor="#ffffff"><asp:dropdownlist id="renameDirectoryDropDownList" runat="server" Width="300px" CssClass="txtViolet11"></asp:dropdownlist></TD>
+													<TD class="txtViolet11 whiteBackGround" style="HEIGHT: 15px" >&nbsp;<cc1:adexpresstext language="33" id="AdExpressText10" runat="server" Code="917"></cc1:adexpresstext></TD>
+													<TD style="HEIGHT: 15px" class="whiteBackGround"><asp:dropdownlist id="renameDirectoryDropDownList" runat="server" Width="300px" CssClass="txtViolet11"></asp:dropdownlist></TD>
 												</TR>
 												<TR>
 													<TD style="HEIGHT: 5px"></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5" style="HEIGHT: 5px"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5" style="HEIGHT: 5px"></TD>
 												</TR>
 												<TR>
 													<TD style="HEIGHT: 22px"></TD>
-													<TD class="txtViolet11" bgColor="#ffffff" style="HEIGHT: 22px">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText11" runat="server" Code="918"></cc1:adexpresstext></TD>
-													<TD bgColor="#ffffff" style="HEIGHT: 22px"><asp:textbox id="renameDirectoryTextBox" runat="server" Width="300px" CssClass="txtViolet11"></asp:textbox></TD>
+													<TD class="txtViolet11 whiteBackGround" style="HEIGHT: 22px">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText11" runat="server" Code="918"></cc1:adexpresstext></TD>
+													<TD class="whiteBackGround" style="HEIGHT: 22px"><asp:textbox id="renameDirectoryTextBox" runat="server" Width="300px" CssClass="txtViolet11"></asp:textbox></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="10"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="10"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
 													<TD></TD>
-													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="renameImageButtonRollOverWebControl" runat="server" onclick="renameImageButtonRollOverWebControl_Click"></cc3:imagebuttonrolloverwebcontrol></TD>
+													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="renameImageButtonRollOverWebControl" runat="server" onclick="renameImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc3:imagebuttonrolloverwebcontrol></TD>
 												</TR>
 												<!--Début Renommer un univers -->
-												<TR bgColor="#644883" height="14">
-													<td colSpan="1"><IMG src="/Images/Common/fleche_1.gif"></td>
-													<TD class="txtBlanc11Bold" background="/Images/Common/bandeau_titre.gif" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext19" runat="server" Code="1096"></cc1:adexpresstext>
+												<TR class="violetBackGround" height="14">
+													<td colSpan="1"><asp:Image ID="Image55" runat="server" SkinID="fleche_1" /></td>
+													<TD class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext19" runat="server" Code="1096"></cc1:adexpresstext>
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD class="txtViolet11" bgColor="#ffffff" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext20" runat="server" Code="1097"></cc1:adexpresstext></TD>
+													<TD class="txtViolet11 whiteBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext20" runat="server" Code="1097"></cc1:adexpresstext></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD class="txtViolet11" bgColor="#ffffff"></TD>
-													<TD bgColor="#ffffff">
+													<TD class="txtViolet11 whiteBackGround"></TD>
+													<TD class="whiteBackGround">
 														<!--Liste des groupes d'univers-->
 														<%=listUniversToRename%>
 														<input id="idMySession7" type="hidden" name="nameMySession">
@@ -386,48 +382,48 @@
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD style="HEIGHT: 13px"></TD>
-													<TD class="txtViolet11" style="HEIGHT: 13px" bgColor="#ffffff">
+													<TD class="txtViolet11 whiteBackGround" style="HEIGHT: 13px">
 														&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext21" runat="server" Code="1100"></cc1:adexpresstext></TD>
-													<TD style="HEIGHT: 13px" bgColor="#ffffff">
+													<TD style="HEIGHT: 13px" class="whiteBackGround">
 														<asp:TextBox id="renameUniverseTextBox" runat="server" Width="296px"></asp:TextBox></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="10">
+													<TD class="whiteBackGround" colSpan="2" height="10">
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
 													<TD></TD>
-													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="renameUniverseImagebutton" runat="server" onclick="renameUniverseImagebutton_Click"></cc3:imagebuttonrolloverwebcontrol></TD>
+													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="renameUniverseImagebutton" runat="server" onclick="renameUniverseImagebutton_Click" SkinID="validateButton"></cc3:imagebuttonrolloverwebcontrol></TD>
 												</TR>
 												<!--Fin Renommer un univers -->
 												<!--Déplacer un univers-->
-												<TR bgColor="#644883" height="14">
-													<td colSpan="1"><IMG src="/Images/Common/fleche_1.gif"></td>
-													<TD class="txtBlanc11Bold" background="/Images/Common/bandeau_titre.gif" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText12" runat="server" Code="883"></cc1:adexpresstext>
+												<TR class="violetBackGround" height="14">
+													<td colSpan="1"><asp:Image ID="Image56" runat="server" SkinID="fleche_1" /></td>
+													<TD class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText12" runat="server" Code="883"></cc1:adexpresstext>
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD class="txtViolet11" bgColor="#ffffff" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText13" runat="server" Code="881"></cc1:adexpresstext></TD>
+													<TD class="txtViolet11 whiteBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText13" runat="server" Code="881"></cc1:adexpresstext></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD class="txtViolet11" bgColor="#ffffff"></TD>
-													<TD bgColor="#ffffff">
+													<TD class="txtViolet11 whiteBackGround"></TD>
+													<TD class="whiteBackGround">
 														<!--Liste des groupes d'univers-->
 														<%=listRepertories%>
 														<input id="idMySession4" type="hidden" name="nameMySession">
@@ -435,48 +431,48 @@
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD style="HEIGHT: 13px"></TD>
-													<TD class="txtViolet11" style="HEIGHT: 13px" bgColor="#ffffff">
+													<TD class="txtViolet11 whiteBackGround" style="HEIGHT: 13px">
 														&nbsp;<cc1:adexpresstext language="33" id="AdExpressText14" runat="server" Code="882"></cc1:adexpresstext></TD>
-													<TD style="HEIGHT: 13px" bgColor="#ffffff"><asp:dropdownlist id="moveDirectoryDropDownList" runat="server" Width="300px" CssClass="txtViolet11"></asp:dropdownlist></TD>
+													<TD style="HEIGHT: 13px" class="whiteBackGround"><asp:dropdownlist id="moveDirectoryDropDownList" runat="server" Width="300px" CssClass="txtViolet11"></asp:dropdownlist></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="10">
+													<TD class="whiteBackGround" colSpan="2" height="10">
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
 													<TD></TD>
-													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="moveImageButtonRollOverWebControl" runat="server" onclick="moveImageButtonRollOverWebControl_Click"></cc3:imagebuttonrolloverwebcontrol></TD>
+													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="moveImageButtonRollOverWebControl" runat="server" onclick="moveImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc3:imagebuttonrolloverwebcontrol></TD>
 												</TR>
 												<!-- Supprimer un univers-->
-												<TR bgColor="#644883" height="14">
-													<td colSpan="1"><IMG src="/Images/Common/fleche_1.gif"></td>
-													<TD class="txtBlanc11Bold" background="/Images/Common/bandeau_titre.gif" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext15" runat="server" Code="932"></cc1:adexpresstext>
+												<TR class="violetBackGround" height="14">
+													<td colSpan="1"><asp:Image ID="Image57" runat="server" SkinID="fleche_1" /></td>
+													<TD class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext15" runat="server" Code="932"></cc1:adexpresstext>
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD class="txtViolet11" bgColor="#ffffff" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext16" runat="server" Code="936"></cc1:adexpresstext>&nbsp;
+													<TD class="txtViolet11 whiteBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext16" runat="server" Code="936"></cc1:adexpresstext>&nbsp;
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="10">
+													<TD class="whiteBackGround" colSpan="2" height="10">
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD class="txtViolet11" bgColor="#ffffff"></TD>
-													<TD bgColor="#ffffff">
+													<TD class="txtViolet11 whiteBackGround"></TD>
+													<TD class="whiteBackGround">
 														<!--Liste des répertoires-->
 														<%=listUniversToDelete%>
 														<input id="idMySession6" type="hidden" name="nameMySession">
@@ -484,39 +480,39 @@
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="10"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="10"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
 													<TD></TD>
-													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="deleteUniversImageButtonRollOverWebControl" runat="server" onclick="deleteUniversImageButtonRollOverWebControl_Click"></cc3:imagebuttonrolloverwebcontrol></TD>
+													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="deleteUniversImageButtonRollOverWebControl" runat="server" onclick="deleteUniversImageButtonRollOverWebControl_Click" SkinID="supprimerButton"></cc3:imagebuttonrolloverwebcontrol></TD>
 												</TR>
 												<!--Détail d'un Univers -->
-												<TR bgColor="#644883" height="14">
-													<td colSpan="1"><IMG src="/Images/Common/fleche_1.gif"></td>
-													<TD class="txtBlanc11Bold" background="/Images/Common/bandeau_titre.gif" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext17" runat="server" Code="960"></cc1:adexpresstext>
+												<TR class="violetBackGround" height="14">
+													<td colSpan="1"><asp:Image ID="Image58" runat="server" SkinID="fleche_1" /></td>
+													<TD class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext17" runat="server" Code="960"></cc1:adexpresstext>
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD class="txtViolet11" bgColor="#ffffff" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext18" runat="server" Code="961"></cc1:adexpresstext></TD>
+													<TD class="txtViolet11 whiteBackGround" colSpan="2">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext18" runat="server" Code="961"></cc1:adexpresstext></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD class="txtViolet11" bgColor="#ffffff"></TD>
-													<TD bgColor="#ffffff">
+													<TD class="txtViolet11 whiteBackGround"></TD>
+													<TD class="whiteBackGround">
 														<!--Liste des groupes d'univers-->
 														<%=listDetailGroupUnivers%>
 														<input id="idMySession5" type="hidden" name="nameMySession">
@@ -524,17 +520,17 @@
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="5"></TD>
+													<TD class="whiteBackGround" colSpan="2" height="5"></TD>
 												</TR>
 												<TR>
 													<TD></TD>
-													<TD bgColor="#ffffff" colSpan="2" height="10">
+													<TD class="whiteBackGround" colSpan="2" height="10">
 													</TD>
 												</TR>
 												<TR>
 													<TD></TD>
 													<TD></TD>
-													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="DetailUniversbuttonrolloverwebcontrol" runat="server" onclick="DetailUniversbuttonrolloverwebcontrol_Click"></cc3:imagebuttonrolloverwebcontrol>
+													<TD vAlign="top" height="40"><cc3:imagebuttonrolloverwebcontrol id="DetailUniversbuttonrolloverwebcontrol" runat="server" onclick="DetailUniversbuttonrolloverwebcontrol_Click" SkinID="detailButton"></cc3:imagebuttonrolloverwebcontrol>
 													</TD>
 												</TR>
 											</TBODY>
@@ -549,25 +545,25 @@
 					<!-- ligne du bas a droite -->
 					<TR height="5">
 						<TD></TD>
-						<TD vAlign="top" background="/Images/Common/dupli_fond.gif">
+						<TD vAlign="top" class="imageBackGround">
 							<TABLE id="Table7" cellSpacing="0" cellPadding="0" width="100%" border="0">
 								<TR>
-									<TD vAlign="top"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
+									<TD vAlign="top"><asp:Image ID="Image40" runat="server" SkinID="croix" height="5" width="5" /></TD>
 									<TD></TD>
-									<TD vAlign="top" align="right"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
+									<TD vAlign="top" align="right"><asp:Image ID="Image41" runat="server" SkinID="croix" height="5" width="5" /></TD>
 								</TR>
 							</TABLE>
 						</TD>
 						<TD></TD>
-						<TD bgColor="#644883"></TD>
-						<TD background="/Images/Common/dupli_fond.gif"></TD>
+						<TD class="violetBackGround"></TD>
+						<TD class="imageBackGround"></TD>
 						<TD></TD>
-						<TD id="dellCel" vAlign="top" background="/Images/Common/dupli_fond.gif">
+						<TD id="dellCel" vAlign="top" class="imageBackGround">
 							<TABLE id="Table8" cellSpacing="0" cellPadding="0" width="100%" border="0">
 								<TR>
-									<TD vAlign="top"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
+									<TD vAlign="top"><asp:Image ID="Image42" runat="server" SkinID="croix" height="5" width="5" /></TD>
 									<TD></TD>
-									<TD vAlign="top" align="right"><IMG height="5" src="/Images/Common/croix.gif" width="5"></TD>
+									<TD vAlign="top" align="right"><asp:Image ID="Image43" runat="server" SkinID="croix" height="5" width="5" /></TD>
 								</TR>
 							</TABLE>
 						</TD>
@@ -576,6 +572,5 @@
 			</table>
 			&nbsp;
 		</form>
-		<!--</TR></TBODY></TABLE>--><!--2005MI-->
 	</body>
 </HTML>
