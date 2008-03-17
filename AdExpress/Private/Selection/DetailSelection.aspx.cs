@@ -307,22 +307,29 @@ namespace AdExpress.Private.Selection{
                 if (_zoomDate == null) _zoomDate = "";
 
 				// Rollover
-				closeImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_up.gif";
-				closeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_down.gif";
+				//closeImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_up.gif";
+				//closeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_down.gif";
 
 				// Chargement du javascript des System.Windows.Forms.TreeNode
-				script= TNS.AdExpress.Web.Functions.DisplayTreeNode.AddScript();
+				//script= TNS.AdExpress.Web.Functions.DisplayTreeNode.AddScript();
 
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_webSession.SiteLanguage);
 				
 				MenuWebControl2.ForcePrint = "/Private/Selection/DetailSelectionExcel.aspx?idSession="
 					+ this._webSession.IdSession + ((_zoomDate.Length > 0)?"&zoomDate="+_zoomDate:"");
 				MenuWebControl2.ForcePrintTraductionCode = 791;
-				
 
-				#region Affichage des paramètres sélectionnés
-				// Module
+                #region Script
+                // script
+                if(!Page.ClientScript.IsClientScriptBlockRegistered("script")) {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "script", TNS.AdExpress.Web.Functions.DisplayTreeNode.AddScript());
+                }
+                #endregion
+
+
+                #region Affichage des paramètres sélectionnés
+                // Module
 				moduleLabel.Text=GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_webSession.CurrentModule),_webSession.SiteLanguage);
 
 				// Unité
@@ -939,18 +946,18 @@ namespace AdExpress.Private.Selection{
 		}
 		#endregion
 
-		#region Bouton Fermer
-		/// <summary>
-		/// Gestion du bouton fermer
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		protected void closeImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
-			Response.Write("<script language=javascript>");
-			Response.Write("	window.close();");
-			Response.Write("</script>");
-		}
-		#endregion
+        //#region Bouton Fermer
+        ///// <summary>
+        ///// Gestion du bouton fermer
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //protected void closeImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
+        //    Response.Write("<script language=javascript>");
+        //    Response.Write("	window.close();");
+        //    Response.Write("</script>");
+        //}
+        //#endregion
 
 		#region Méthodes internes
 		/// <summary>
