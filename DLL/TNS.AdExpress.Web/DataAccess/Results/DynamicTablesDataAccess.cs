@@ -691,9 +691,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				first = false;
 				sql.Append(" and ( " + DBCst.Tables.RECAP_PREFIXE + ".id_vehicle in (" + list + ")");
 			}
-			else{
-				sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(webSession,WebCst.AdExpressUniverse.RECAP_MEDIA_LIST_ID,DBCst.Tables.RECAP_PREFIXE,true));
-			}
+			sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(webSession,WebCst.AdExpressUniverse.RECAP_MEDIA_LIST_ID,DBCst.Tables.RECAP_PREFIXE,true));
 			// Vérifie s'il à toujours les droits pour accéder aux données de ce Vehicle
 			if(list.IndexOf(DBClassificationCst.Vehicles.names.plurimedia.GetHashCode().ToString())<0){
 				sql.Append(WebFunctions.SQLGenerator.getAccessVehicleList(webSession,DBCst.Tables.RECAP_PREFIXE,true));	
