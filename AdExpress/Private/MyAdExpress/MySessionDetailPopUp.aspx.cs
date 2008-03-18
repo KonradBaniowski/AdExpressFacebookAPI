@@ -28,7 +28,6 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.UI;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 
-
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
 	/// Détail d'une Session
@@ -81,7 +80,7 @@ namespace AdExpress.Private.MyAdExpress{
 
 		#endregion
 		
-		#region Variables	
+		#region Variables
 		/// <summary>
 		/// _webSession sauvegardée dans mon AdExpress
 		/// </summary>
@@ -151,12 +150,6 @@ namespace AdExpress.Private.MyAdExpress{
 		/// </summary>
 		public bool displayReferenceDetailMedia=false;
 		/// <summary>
-		/// texte
-		/// </summary>
-		/// <summary>
-		/// Agence
-		/// </summary>
-		/// <summary>
 		/// Affiche le code pour les éléments contenue dans reference media
 		/// </summary>
 		public string referenceMediaDetailText;
@@ -195,7 +188,7 @@ namespace AdExpress.Private.MyAdExpress{
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try{
 
-				#region Variables 
+				#region Variables
 				Int64 idMySession;			
 				string periodText;
 				int idAdvertiser=1;
@@ -220,8 +213,8 @@ namespace AdExpress.Private.MyAdExpress{
 				#endregion
 
 				//Rollover
-				closeImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_up.gif";
-				closeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_down.gif";
+				//closeImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_up.gif";
+				//closeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_down.gif";
 
 				// Affichage du module
 				moduleLabel.Text=GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSessionSave.CurrentModule),_webSession.SiteLanguage);
@@ -555,7 +548,9 @@ namespace AdExpress.Private.MyAdExpress{
 				#endregion
 
 				int i=2;
+
 				#region Ancienne version
+
 				#region Produits
 				// Produit
 				//if (webSessionSave.isSelectionProductSelected()){
@@ -671,8 +666,10 @@ namespace AdExpress.Private.MyAdExpress{
 				//}
 
 				#endregion
+
 				#endregion			
-				//Univers produit principal sélectionné
+				
+                //Univers produit principal sélectionné
 				string nameProduct = "";
 				System.Text.StringBuilder t = null;
 				if (webSessionSave.PrincipalProductUniverses != null && webSessionSave.PrincipalProductUniverses.Count > 0) {
@@ -716,7 +713,7 @@ namespace AdExpress.Private.MyAdExpress{
 								}
 
 								t.Append("<TR><TD></TD>");
-								t.Append("<TD class=\"txtViolet11Bold\" bgColor=\"#ffffff\">&nbsp;");
+                                t.Append("<TD class=\"txtViolet11Bold whiteBackGround\">&nbsp;");
 								t.Append("<label>" + nameProduct + "</label></TD>");
 								t.Append("</TR>");
 
@@ -724,7 +721,7 @@ namespace AdExpress.Private.MyAdExpress{
 								if (webSessionSave.PrincipalProductUniverses[k].Label != null && webSessionSave.PrincipalProductUniverses[k].Label.Length > 0) {
 									t.Append("<TR>");
 									t.Append("<TD></TD>");
-									t.Append("<TD class=\"txtViolet11Bold\" bgColor=\"#ffffff\">&nbsp;");
+                                    t.Append("<TD class=\"txtViolet11Bold whiteBackGround\">&nbsp;");
 									t.Append("<Label>" + webSessionSave.PrincipalProductUniverses[k].Label + "</Label>");
 									t.Append("</TD></TR>");
 								}
@@ -732,11 +729,11 @@ namespace AdExpress.Private.MyAdExpress{
 								//Render universe html code
 								t.Append("<TR height=\"20\">");
 								t.Append("<TD>&nbsp;</TD>");
-								t.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.SiteLanguage, _webSession.Source) + "</TD>");
+                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.SiteLanguage, _webSession.Source) + "</TD>");
 								t.Append("</TR>");
 								t.Append("<TR height=\"5\">");
 								t.Append("<TD></TD>");
-								t.Append("<TD bgColor=\"#ffffff\"></TD>");
+                                t.Append("<TD class=\"whiteBackGround\"></TD>");
 								t.Append("</TR>");
 								t.Append("<TR height=\"7\">");
 								t.Append("<TD colSpan=\"2\"></TD>");
@@ -822,7 +819,7 @@ namespace AdExpress.Private.MyAdExpress{
 										if (webSessionSave.SecondaryProductUniverses[k].Label != null && webSessionSave.SecondaryProductUniverses[k].Label.Length > 0) {
 											referenceAdvertiserText += "<TR>";
 											referenceAdvertiserText += "<TD></TD>";
-											referenceAdvertiserText += "<TD class=\"txtViolet11Bold\" bgColor=\"#ffffff\">&nbsp;";
+                                            referenceAdvertiserText += "<TD class=\"txtViolet11Bold whiteBackGround\">&nbsp;";
 											referenceAdvertiserText += "<Label>" + webSessionSave.SecondaryProductUniverses[k].Label + "</Label>";
 											referenceAdvertiserText += "</TD></TR>";
 										}
@@ -842,7 +839,7 @@ namespace AdExpress.Private.MyAdExpress{
 					System.Text.StringBuilder mediaSB=new System.Text.StringBuilder(1000);
 				
 					mediaSB.Append("<TR><TD></TD>");
-					mediaSB.Append("<TD class=\"txtViolet11Bold\" bgColor=\"#ffffff\">&nbsp;");
+                    mediaSB.Append("<TD class=\"txtViolet11Bold whiteBackGround\">&nbsp;");
 					mediaSB.Append("<label>"+GestionWeb.GetWebWord(1087,_webSession.SiteLanguage)+"</label></TD>");
 					mediaSB.Append("</TR>");
 
@@ -851,11 +848,11 @@ namespace AdExpress.Private.MyAdExpress{
 						System.Windows.Forms.TreeNode tree=(System.Windows.Forms.TreeNode)webSessionSave.CompetitorUniversMedia[idMedia];				
 						mediaSB.Append("<TR height=\"20\">");
 						mediaSB.Append("<TD>&nbsp;</TD>");
-						mediaSB.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">"+TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.CompetitorUniversMedia[idMedia],false,true,true,600,true,false,_webSession.SiteLanguage,2,i,true)+"</TD>");
+                        mediaSB.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.CompetitorUniversMedia[idMedia], false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
 						mediaSB.Append("</TR>");
 						mediaSB.Append("<TR height=\"5\">");
 						mediaSB.Append("<TD></TD>");
-						mediaSB.Append("<TD bgColor=\"#ffffff\"></TD>");
+                        mediaSB.Append("<TD class=\"whiteBackGround\"></TD>");
 						mediaSB.Append("</TR>");
 						mediaSB.Append("<TR height=\"7\">");
 						mediaSB.Append("<TD colSpan=\"2\"></TD>");
@@ -878,18 +875,18 @@ namespace AdExpress.Private.MyAdExpress{
 					System.Text.StringBuilder detailMedia=new System.Text.StringBuilder(1000);
 				
 					detailMedia.Append("<TR><TD></TD>");
-					detailMedia.Append("<TD class=\"txtViolet11Bold\" bgColor=\"#ffffff\">&nbsp;");
+                    detailMedia.Append("<TD class=\"txtViolet11Bold whiteBackGround\" >&nbsp;");
 					detailMedia.Append("<label>"+GestionWeb.GetWebWord(1194,_webSession.SiteLanguage)+"</label></TD>");
 					detailMedia.Append("</TR>");				
 					
 									
 					detailMedia.Append("<TR height=\"20\">");
 					detailMedia.Append("<TD>&nbsp;</TD>");
-					detailMedia.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">"+TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.SelectionUniversMedia.FirstNode,false,true,true,600,true,false,_webSession.SiteLanguage,2,i,true)+"</TD>");
+                    detailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.SelectionUniversMedia.FirstNode, false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
 					detailMedia.Append("</TR>");
 					detailMedia.Append("<TR height=\"5\">");
 					detailMedia.Append("<TD></TD>");
-					detailMedia.Append("<TD bgColor=\"#ffffff\"></TD>");
+                    detailMedia.Append("<TD class=\"whiteBackGround\"></TD>");
 					detailMedia.Append("</TR>");
 					detailMedia.Append("<TR height=\"7\">");
 					detailMedia.Append("<TD colSpan=\"2\"></TD>");
@@ -910,16 +907,16 @@ namespace AdExpress.Private.MyAdExpress{
 					System.Text.StringBuilder referenceDetailMedia=new System.Text.StringBuilder(1000);
 				
 					referenceDetailMedia.Append("<TR><TD></TD>");
-					referenceDetailMedia.Append("<TD class=\"txtViolet11Bold\" bgColor=\"#ffffff\">&nbsp;");
+                    referenceDetailMedia.Append("<TD class=\"txtViolet11Bold whiteBackGround\" >&nbsp;");
 					referenceDetailMedia.Append("<label>"+GestionWeb.GetWebWord(1194,_webSession.SiteLanguage)+"</label></TD>");
 					referenceDetailMedia.Append("</TR>");									
 					referenceDetailMedia.Append("<TR height=\"20\">");
 					referenceDetailMedia.Append("<TD>&nbsp;</TD>");
-					referenceDetailMedia.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">"+TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.ReferenceUniversMedia,false,true,true,600,true,false,_webSession.SiteLanguage,2,i,true)+"</TD>");
+                    referenceDetailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.ReferenceUniversMedia, false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
 					referenceDetailMedia.Append("</TR>");
 					referenceDetailMedia.Append("<TR height=\"5\">");
 					referenceDetailMedia.Append("<TD></TD>");
-					referenceDetailMedia.Append("<TD bgColor=\"#ffffff\"></TD>");
+                    referenceDetailMedia.Append("<TD class=\"whiteBackGround\"></TD>");
 					referenceDetailMedia.Append("</TR>");
 					referenceDetailMedia.Append("<TR height=\"7\">");
 					referenceDetailMedia.Append("<TD colSpan=\"2\"></TD>");
@@ -1246,7 +1243,7 @@ namespace AdExpress.Private.MyAdExpress{
 			System.Text.StringBuilder t = new System.Text.StringBuilder();
 
 			t.Append("<TR><TD></TD>");
-			t.Append("<TD class=\"txtViolet11Bold\" bgColor=\"#ffffff\">&nbsp;");
+            t.Append("<TD class=\"txtViolet11Bold whiteBackGround\" >&nbsp;");
 			t.Append("<label>" + nameProduct + "</label></TD>");
 			t.Append("</TR>");
 
@@ -1254,7 +1251,7 @@ namespace AdExpress.Private.MyAdExpress{
 			if (webSessionSave.SecondaryProductUniverses[k].Label != null && webSessionSave.SecondaryProductUniverses[k].Label.Length > 0) {
 				t.Append("<TR>");
 				t.Append("<TD></TD>");
-				t.Append("<TD class=\"txtViolet11Bold\" bgColor=\"#ffffff\">&nbsp;");
+                t.Append("<TD class=\"txtViolet11Bold whiteBackGround\" >&nbsp;");
 				t.Append("<Label>" + webSessionSave.SecondaryProductUniverses[k].Label + "</Label>");
 				t.Append("</TD></TR>");
 			}
@@ -1262,11 +1259,11 @@ namespace AdExpress.Private.MyAdExpress{
 			//Render universe html code
 			t.Append("<TR height=\"20\">");
 			t.Append("<TD>&nbsp;</TD>");
-            t.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k],webSession.SiteLanguage,webSession.Source) + "</TD>");
+            t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k], webSession.SiteLanguage, webSession.Source) + "</TD>");
 			t.Append("</TR>");
 			t.Append("<TR height=\"5\">");
 			t.Append("<TD></TD>");
-			t.Append("<TD bgColor=\"#ffffff\"></TD>");
+            t.Append("<TD class=\"whiteBackGround\"></TD>");
 			t.Append("</TR>");
 			t.Append("<TR height=\"7\">");
 			t.Append("<TD colSpan=\"2\"></TD>");
