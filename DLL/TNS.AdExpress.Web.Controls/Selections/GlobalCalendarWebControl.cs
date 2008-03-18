@@ -156,6 +156,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// Informe le client que la période en grisée correspond à une période qui ne contient pas des données chargées
         /// </summary>
         protected string _periodRestrictedLabel = "";
+        /// <summary>
+        /// Css file path
+        /// </summary>
+        protected string _cssPath = "";
+        /// <summary>
+        /// Calendar theme name
+        /// </summary>
+        protected string _themeName = "";
         #endregion
 
         #region Accesseurs
@@ -235,6 +243,20 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             get { return _firstDayNotEnable; }
             set { _firstDayNotEnable = value; }
         }
+        /// <summary>
+        /// Set / Get Css file path
+        /// </summary>
+        public string CssPath {
+            get { return _cssPath; }
+            set { _cssPath = value; }
+        }
+        /// <summary>
+        /// Set / Get Calendar theme name
+        /// </summary>
+        public string ThemeName {
+            get { return _themeName; }
+            set { _themeName = value; }
+        }
         #endregion
 
         #region Constructeur
@@ -258,6 +280,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             StringBuilder js = new StringBuilder();
 
             js.Append("\r\n<script language=javascript>\r\n");
+
+            #region Css links
+            js.Append(CssLinks());
+            #endregion
 
             #region Initialisation
             js.Append(Initialisation());
@@ -375,6 +401,29 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
         #region Functions
 
+        #region Css links
+        /// <summary>
+        /// Css links
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string CssLinks() { 
+            StringBuilder js = new StringBuilder();
+            
+            js.Append("\r\n\t var GECKO=(navigator.product==(\"Gecko\"));");
+			
+			js.Append("\r\n\t if(GECKO){");
+            js.Append("\r\n\t\t document.write('<link href=\"/Css/" + _themeName + "/CalendarGecko.css\" rel=\"stylesheet\" type=\"text/css\">');");
+			js.Append("\r\n}\r\n");
+
+			js.Append("\r\n\t else{");
+            js.Append("\r\n\t\t document.write('<link href=\"/Css/" + _themeName + "/Calendar.css\" rel=\"stylesheet\" type=\"text/css\">');");
+			js.Append("\r\n\t }");
+            js.Append("\n\n");
+
+            return (js.ToString());
+        }
+        #endregion
+
         #region Initialisation
         /// <summary>
         /// Initialisation
@@ -390,77 +439,77 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.AppendFormat("\r\n\t var dayImageList_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=31;i++){");
             js.AppendFormat("\r\n\t dayImageList_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t dayImageList_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/' + i + 's.gif';", this.ID);
+            js.AppendFormat("\r\n\t dayImageList_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/' + i + 's.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var dayImageListI_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=31;i++){");
             js.AppendFormat("\r\n\t dayImageListI_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t dayImageListI_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/' + i + '.gif';", this.ID);
+            js.AppendFormat("\r\n\t dayImageListI_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/' + i + '.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var dayImageListNC_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=31;i++){");
             js.AppendFormat("\r\n\t dayImageListNC_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t dayImageListNC_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/' + i + 'NC.gif';", this.ID);
+            js.AppendFormat("\r\n\t dayImageListNC_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/' + i + 'NC.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var monthImageList_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=12;i++){");
             js.AppendFormat("\r\n\t monthImageList_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t monthImageList_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/Month_' + i + 's.gif';", this.ID);
+            js.AppendFormat("\r\n\t monthImageList_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Month_' + i + 's.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var monthImageListI_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=12;i++){");
             js.AppendFormat("\r\n\t monthImageListI_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t monthImageListI_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/Month_' + i + '.gif';", this.ID);
+            js.AppendFormat("\r\n\t monthImageListI_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Month_' + i + '.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var monthImageListNC_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=12;i++){");
             js.AppendFormat("\r\n\t monthImageListNC_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t monthImageListNC_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/Month_' + i + 'NC.gif';", this.ID);
+            js.AppendFormat("\r\n\t monthImageListNC_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Month_' + i + 'NC.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var trimesterImageList_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=4;i++){");
             js.AppendFormat("\r\n\t trimesterImageList_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t trimesterImageList_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/Trim_' + i + 's.gif';", this.ID);
+            js.AppendFormat("\r\n\t trimesterImageList_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_' + i + 's.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var trimesterImageListI_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=4;i++){");
             js.AppendFormat("\r\n\t trimesterImageListI_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t trimesterImageListI_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/Trim_' + i + '.gif';", this.ID);
+            js.AppendFormat("\r\n\t trimesterImageListI_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_' + i + '.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var trimesterImageListNC_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=4;i++){");
             js.AppendFormat("\r\n\t trimesterImageListNC_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t trimesterImageListNC_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/Trim_' + i + 'NC.gif';", this.ID);
+            js.AppendFormat("\r\n\t trimesterImageListNC_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_' + i + 'NC.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var semesterImageList_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=2;i++){");
             js.AppendFormat("\r\n\t semesterImageList_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t semesterImageList_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/Sem_' + i + 's.gif';", this.ID);
+            js.AppendFormat("\r\n\t semesterImageList_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Sem_' + i + 's.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var semesterImageListI_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=2;i++){");
             js.AppendFormat("\r\n\t semesterImageListI_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t semesterImageListI_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/Sem_' + i + '.gif';", this.ID);
+            js.AppendFormat("\r\n\t semesterImageListI_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Sem_' + i + '.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var semesterImageListNC_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=2;i++){");
             js.AppendFormat("\r\n\t semesterImageListNC_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t semesterImageListNC_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/Sem_' + i + 'NC.gif';", this.ID);
+            js.AppendFormat("\r\n\t semesterImageListNC_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Sem_' + i + 'NC.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var yearImageList_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=" + _startYear + ";i<=" + _stopYear + ";i++){");
             js.AppendFormat("\r\n\t yearImageList_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t yearImageList_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/' + i + 's.gif';", this.ID);
+            js.AppendFormat("\r\n\t yearImageList_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/' + i + 's.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var yearImageListI_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=" + _startYear + ";i<=" + _stopYear + ";i++){");
             js.AppendFormat("\r\n\t yearImageListI_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t yearImageListI_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/' + i + '.gif';", this.ID);
+            js.AppendFormat("\r\n\t yearImageListI_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/' + i + '.gif';", this.ID);
             js.Append("\r\n\t }");
             js.AppendFormat("\r\n\t var yearImageListNC_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=" + _startYear + ";i<=" + _stopYear + ";i++){");
             js.AppendFormat("\r\n\t yearImageListNC_{0}[i] = new Image();", this.ID);
-            js.AppendFormat("\r\n\t yearImageListNC_{0}[i].src = '/Images/" + _language.ToString() + "/GlobalCalendar/' + i + 'NC.gif';", this.ID);
+            js.AppendFormat("\r\n\t yearImageListNC_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/' + i + 'NC.gif';", this.ID);
             js.Append("\r\n\t }");
 
             return (js.ToString());
@@ -544,7 +593,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.AppendFormat("\r\n\t var oLabel_{0} = document.getElementById('Label1');", this.ID);
 
             js.AppendFormat("\r\n\n\t if(selectedPeriodType_{0}.length!='' && periodType!=selectedPeriodType_{0})", this.ID);
-            js.Append("\r\n\t\t alert('Les dates sélectionnées ne sont pas du même type');");
+            js.Append("\r\n\t\t alert('" + GestionWeb.GetWebWord(1854, _language) + "');");
             js.Append("\r\n\t else{");
 
             js.Append("\r\n\n\t\t if(dateBegin_" + this.ID + ".length==0){");
@@ -597,7 +646,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.AppendFormat("\r\n\t\t\t\t\t dateEnd_{0} = dateEndPrec_{0};", this.ID);
             js.AppendFormat("\r\n\t\t\t\t\t yearCur_{0} = yearPrec_{0};", this.ID);
             js.AppendFormat("\r\n\t\t\t\t\t longDateEndCur_{0} = longDateEndPrec_{0};", this.ID);
-            js.Append("\r\n\t\t\t\t\t alert('La date de début doit être inférieure à la date de fin');");
+            js.Append("\r\n\t\t\t\t\t alert('" + GestionWeb.GetWebWord(46, _language) + "');");
             js.Append("\r\n\t\t\t\t }");
             js.Append("\r\n\t\t\t }");
             js.Append("\r\n\t\t }");
@@ -668,7 +717,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.AppendFormat("\r\n\t\t\t __doPostBack('" + this.ID + "',''+selectedDateType_{0}+','+selectedYear_{0}+strStart+','+yearCur_{0}+strEnd+'');", this.ID);
             js.Append("\r\n\t\t\t break;");
             js.Append("\r\n\t\t default:");
-            js.Append("\r\n\t\t\t alert('Veuillez sélectionner une période');");
+            js.Append("\r\n\t\t\t alert('" + GestionWeb.GetWebWord(885, _language) + "');");
             js.Append("\r\n\t\t\t break;");
             js.Append("\r\n\t }");
             js.Append("\r\n\t }");
@@ -1760,6 +1809,15 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         protected override void OnLoad(EventArgs e) {
 
             base.OnLoad(e);
+            // Ouverture/fermeture des fenêtres pères
+            if (!Page.ClientScript.IsClientScriptBlockRegistered("Old")) {
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Old", "<script language=\"JavaScript\">var ancien='Parent_" + _selectedYear.ToString() + "Content'; var ouvert=true;</script>");
+            }
+            // Ouverture/fermeture des fenêtres pères
+            if (!Page.ClientScript.IsClientScriptBlockRegistered("ShowHideCalendar")) {
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ShowHideCalendar", TNS.AdExpress.Web.Functions.Script.ShowHideCalendar());
+            }
+
 
             if (Page.IsPostBack) {
                 string valueInput = Page.Request.Form.GetValues("__EVENTARGUMENT")[0];
@@ -1850,12 +1908,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// <param name="e"></param>
         protected override void OnPreRender(EventArgs e) {
 
-            osm = new OboutInc.SlideMenu.SlideMenu();
+            /*osm = new OboutInc.SlideMenu.SlideMenu();
             osm.ID = "GlobalCalendar";
             osm.Height = -1;
             osm.MinimumChildrenHeight = 180;
             base.Width = 800;
-            osm.CSSPath = "CSS/Calendar.css";
+            osm.CSSPath = _cssPath;
             osm.CSSMenu = "SMMenu";
             osm.CSSParent = "SMParent";
             osm.CSSParentOver = "SMParentOver";
@@ -1866,7 +1924,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             osm.Speed = 100;
 
             for (int yearIndex = _startYear; yearIndex <= _stopYear; yearIndex++) {
-                osm.AddParent("Parent_" + yearIndex.ToString(), "<table border=0 cellspacing=0 cellpadding=0 width=\"100%\"><tr><td style=\"font-size-adjust: 0.58;font-family: Arial;font:bold 12px arial;color: #644882;\">" + yearIndex.ToString() + "</td><td><IMG height=\"15\" align=\"right\" src=\"/Images/" + _language.ToString() + "/GlobalCalendar/bt_arrow_down.gif\" width=\"15\"></td></tr></table>");
+                osm.AddParent("Parent_" + yearIndex.ToString(), "<table border=0 cellspacing=0 cellpadding=0 width=\"100%\"><tr><td class=\"SMTitle\">" + yearIndex.ToString() + "</td><td class=\"arrowBackGround\"></td></tr></table>");
                 if(IsRestricted)
                     osm.AddChild(yearIndex.ToString(), GetRestrictedYearHTML(yearIndex));
                 else
@@ -1876,7 +1934,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             //Ouverture de l'année par défaut
             SetSelectedId();
 
-            this.Controls.Add(osm);
+            this.Controls.Add(osm);*/
 
         }
         #endregion
@@ -1888,6 +1946,27 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// <param name="output">output</param>
         protected override void Render(HtmlTextWriter output) {
             base.Render(output);
+            string display = "none";
+            StringBuilder html = new StringBuilder(10000);
+            html.Append("<table width=\"800\" cellspacing=0 cellpadding=0 class=\"SMMenu\">");
+            html.Append("<tr>");
+            html.Append("<td>");
+            for (int yearIndex = _startYear; yearIndex <= _stopYear; yearIndex++) {
+                if (yearIndex == _selectedYear) display = "";
+                else if (display.Length == 0) display = "none";
+                html.Append("<table class=\"SMParent\" border=0 cellspacing=0 cellpadding=0 width=\"100%\" style=\"cursor:pointer;\"><tr onClick=\"javascript:ShowHideCalendar('Parent_" + yearIndex.ToString() + "');\"><td style=\"font-size-adjust: 0.58;font-family: Arial;font:bold 12px arial;color: #644882;\">" + yearIndex.ToString() + "</td><td><IMG height=\"15\" align=\"right\" src=\"/Images/" + _language.ToString() + "/GlobalCalendar/bt_arrow_down.gif\" width=\"15\"></td></tr></table>");
+                html.Append("<div style=\"padding:0;margin:0; display =" + display + "; \" id=\"Parent_" + yearIndex.ToString() + "Content\">");
+                if (IsRestricted)
+                    html.Append(GetRestrictedYearHTML(yearIndex));
+                else
+                    html.Append(GetYearHTML(yearIndex));
+                html.Append("</div>");
+            }
+            html.Append("");
+            html.Append("</td>");
+            html.Append("</tr>");
+            html.Append("</table>");
+            output.Write(html.ToString());
             output.Write(GetCalendarBottomHtml());
             ImagesLoadScript(output);
             CalendarScript(output);
@@ -1924,8 +2003,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             }
             htmlBuilder.Append("\r\n\t<tr>");
             htmlBuilder.Append("\r\n\t\t<td style=\"height: 16px\">");
-            htmlBuilder.Append("\r\n\t\t\t<label id=\"Label1\" style=\"display:block;float:left;color:#644883;background-color:#E8E4ED;border-color:#A794BE;border-width:1px;border-style:Solid;height:16px;width:260px;vertical-align:top; font-family: Arial, Helvetica, sans-serif;font-size: 11px;font-weight: bold; white-space:nowrap;\"></label><label style=\"display:block;float:left;\">&nbsp;&nbsp;&nbsp;</label>");
-            htmlBuilder.Append("\r\n\t\t\t<img id=\"ok\" src=\"/Images/Common/button/initialize_up.gif\" onmouseover=\"ok.src='/Images/Common/button/initialize_down.gif';\" onmouseout=\"ok.src='/Images/Common/button/initialize_up.gif';\" onclick=\"InitAll();\" style=\"cursor:pointer;display:block;float:left;\"/>");
+            htmlBuilder.Append("\r\n\t\t\t<label id=\"Label1\" class=\"SMLabel\"></label><label style=\"display:block;float:left;\">&nbsp;&nbsp;&nbsp;</label>");
+            htmlBuilder.Append("\r\n\t\t\t<img id=\"ok\" src=\"/App_Themes/" + _themeName + "/Images/Common/button/initialize_up.gif\" onmouseover=\"ok.src='/App_Themes/" + _themeName + "/Images/Common/button/initialize_down.gif';\" onmouseout=\"ok.src='/App_Themes/" + _themeName + "/Images/Common/button/initialize_up.gif';\" onclick=\"InitAll();\" style=\"cursor:pointer;display:block;float:left;\"/>");
             htmlBuilder.Append("\r\n\t\t</td>");
             htmlBuilder.Append("\r\n\t</tr>");
             htmlBuilder.Append("\r\n\t<tr>");
@@ -1936,13 +2015,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             htmlBuilder.Append("\r\n\t</table>");
             htmlBuilder.Append("\r\n\t<table id=\"Table11\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
             htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t<td valign=\"top\" background=\"/Images/Common/dupli_fond.gif\" height=\"25\">");
+            htmlBuilder.Append("\r\n\t<td valign=\"top\" class=\"imageBackGround\" height=\"25\">");
             htmlBuilder.Append("\r\n\t<table id=\"Table12\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
             htmlBuilder.Append("\r\n\t<tr>");
             htmlBuilder.Append("\r\n\t</tr>");
             htmlBuilder.Append("\r\n\t<tr>");
             htmlBuilder.Append("\r\n\t<td width=\"135\"></td>");
-            htmlBuilder.Append("\r\n\t<td><img id=\"valider\" src=\"/Images/" + _language + "/button/valider_up.gif\" onmouseover=\"valider.src='/Images/" + _language + "/button/valider_down.gif';\" onmouseout=\"valider.src='/Images/" + _language + "/button/valider_up.gif';\" onclick=\"PostBack('" + this.ID + "');\" style=\"cursor:pointer\"/></td>");
+            htmlBuilder.Append("\r\n\t<td><img id=\"valider\" src=\"/App_Themes/" + _themeName + "/Images/Culture/button/valider_up.gif\" onmouseover=\"valider.src='/App_Themes/" + _themeName + "/Images/Culture/button/valider_down.gif';\" onmouseout=\"valider.src='/App_Themes/" + _themeName + "/Images/Culture/button/valider_up.gif';\" onclick=\"PostBack('" + this.ID + "');\" style=\"cursor:pointer\"/></td>");
             htmlBuilder.Append("\r\n\t</tr>");
             htmlBuilder.Append("\r\n\t</table>");
             htmlBuilder.Append("\r\n\t</td>");
@@ -1964,19 +2043,19 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
             string currentYearMonth;
             StringBuilder htmlBuilder = new StringBuilder(1000);
-            htmlBuilder.Append("\r\n<table border=0 cellspacing=0 cellpadding=0 width=\"100%\">");
+            htmlBuilder.Append("\r\n<table class=\"SMChild\" border=0 cellspacing=0 cellpadding=0 width=\"100%\">");
             htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t\t<td colspan=12 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + year + "'," + year + ",'Year','year_" + year + "','" + year + "')\"><img id=\"year_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/" + year.ToString() + ".gif\"></a></td>");
+            htmlBuilder.Append("\r\n\t\t<td colspan=12 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + year + "'," + year + ",'Year','year_" + year + "','" + year + "')\"><img id=\"year_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/" + year.ToString() + ".gif\"></a></td>");
             htmlBuilder.Append("\r\n\t</tr>");
 
             #region Semestre 1
             htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t\t<td class=\"SMSemestre\" colspan=6 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('1'," + year + ",'Semester','semester_1_" + year + "','1')\"><img id=\"semester_1_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Sem_1.gif\"></a></td>");
+            htmlBuilder.Append("\r\n\t\t<td class=\"SMSemestre\" colspan=6 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('1'," + year + ",'Semester','semester_1_" + year + "','1')\"><img id=\"semester_1_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Sem_1.gif\"></a></td>");
             htmlBuilder.Append("\r\n\t</tr>");
 
             htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t\t<td class=\"SMTrimestreL\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('1'," + year + ",'Trimester','trimester_1_" + year + "','1')\"><img id=\"trimester_1_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Trim_1.gif\"></a></td>");
-            htmlBuilder.Append("\r\n\t\t<td class=\"SMTrimestreR\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('2'," + year + ",'Trimester','trimester_2_" + year + "','2')\"><img id=\"trimester_2_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Trim_2.gif\"></a></td>");
+            htmlBuilder.Append("\r\n\t\t<td class=\"SMTrimestreL\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('1'," + year + ",'Trimester','trimester_1_" + year + "','1')\"><img id=\"trimester_1_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_1.gif\"></a></td>");
+            htmlBuilder.Append("\r\n\t\t<td class=\"SMTrimestreR\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('2'," + year + ",'Trimester','trimester_2_" + year + "','2')\"><img id=\"trimester_2_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_2.gif\"></a></td>");
             htmlBuilder.Append("\r\n\t</tr>");
 
             htmlBuilder.Append("\r\n\t<tr>");
@@ -1987,7 +2066,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 htmlBuilder.Append("\r\n\t<td " + (month == 3 ? "class=\"SMMonth\"" : "") + ((month != 3) ? "class=\"SMTdPadding\"" : "") + ">");
                 htmlBuilder.Append("\r\n\t\t<table border=0 cellspacing=0 cellpadding=0 style=\"padding-top:4px;\">");
                 htmlBuilder.Append("\r\n\t\t\t<tr>");
-                htmlBuilder.Append("\r\n\t\t\t\t<td align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + month + "'," + year + ",'Month','month_" + currentYearMonth + "','" + month + "')\"><img id=\"month_" + currentYearMonth + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Month_" + month + ".gif\"></a></td>");
+                htmlBuilder.Append("\r\n\t\t\t\t<td align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + month + "'," + year + ",'Month','month_" + currentYearMonth + "','" + month + "')\"><img id=\"month_" + currentYearMonth + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Month_" + month + ".gif\"></a></td>");
                 htmlBuilder.Append("\r\n\t\t\t</tr>");
                 htmlBuilder.Append("\r\n\t\t\t<tr>");
                 htmlBuilder.Append("\r\n\t\t\t\t<td colspan=12 align=\"center\">");
@@ -2003,11 +2082,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
             #region Semestre 2
             htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t\t<td class=\"SMSemestre\" colspan=6 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('2'," + year + ",'Semester','semester_2_" + year + "','2')\"><img id=\"semester_2_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Sem_2.gif\"></a></td>");
+            htmlBuilder.Append("\r\n\t\t<td class=\"SMSemestre\" colspan=6 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('2'," + year + ",'Semester','semester_2_" + year + "','2')\"><img id=\"semester_2_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Sem_2.gif\"></a></td>");
             htmlBuilder.Append("\r\n\t</tr>");
             htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t\t<td class=\"SMTrimestreL\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('3'," + year + ",'Trimester','trimester_3_" + year + "','3')\"><img id=\"trimester_3_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Trim_3.gif\"></a></td>");
-            htmlBuilder.Append("\r\n\t\t<td class=\"SMTrimestreR\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('4'," + year + ",'Trimester','trimester_4_" + year + "','4')\"><img id=\"trimester_4_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Trim_4.gif\"></a></td>");
+            htmlBuilder.Append("\r\n\t\t<td class=\"SMTrimestreL\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('3'," + year + ",'Trimester','trimester_3_" + year + "','3')\"><img id=\"trimester_3_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_3.gif\"></a></td>");
+            htmlBuilder.Append("\r\n\t\t<td class=\"SMTrimestreR\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('4'," + year + ",'Trimester','trimester_4_" + year + "','4')\"><img id=\"trimester_4_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_4.gif\"></a></td>");
             htmlBuilder.Append("\r\n\t</tr>");
             htmlBuilder.Append("\r\n\t<tr>");
 
@@ -2018,7 +2097,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 htmlBuilder.Append("\r\n\t<td " + (month == 9 ? "class=\"SMMonth\"" : "") + ((month != 9) ? "class=\"SMTdPadding\"" : "") + ">");
                 htmlBuilder.Append("\r\n\t\t<table border=0 cellspacing=0 cellpadding=0 style=\"padding-top:4px;\">");
                 htmlBuilder.Append("\r\n\t\t\t<tr>");
-                htmlBuilder.Append("\r\n\t\t\t\t<td align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + month + "'," + year + ",'Month','month_" + currentYearMonth + "','" + month + "')\"><img id=\"month_" + currentYearMonth + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Month_" + month + ".gif\"></a></td>");
+                htmlBuilder.Append("\r\n\t\t\t\t<td align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + month + "'," + year + ",'Month','month_" + currentYearMonth + "','" + month + "')\"><img id=\"month_" + currentYearMonth + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Month_" + month + ".gif\"></a></td>");
                 htmlBuilder.Append("\r\n\t\t\t</tr>");
                 htmlBuilder.Append("\r\n\t\t\t<tr>");
                 htmlBuilder.Append("\r\n\t\t\t\t<td colspan=12 align=\"center\">");
@@ -2071,7 +2150,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 htmlMonthBuilder.Append("\r\n\t<td " + (month == 3 ? "class=\"SMMonth\"" : "") + ((month != 3) ? "class=\"SMTdPadding\"" : "") + ">");
                 htmlMonthBuilder.Append("\r\n\t\t<table border=0 cellspacing=0 cellpadding=0 style=\"padding-top:4px;\">");
                 htmlMonthBuilder.Append("\r\n\t\t\t<tr>");
-                htmlMonthBuilder.Append("\r\n\t\t\t\t<td align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + month + "'," + year + ",'Month','month_" + currentYearMonth + "','" + month + "')\"><img id=\"month_" + currentYearMonth + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Month_" + month + (isMonthLinkEnable ? "" : "NC") + ".gif\"></a></td>");
+                htmlMonthBuilder.Append("\r\n\t\t\t\t<td align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + month + "'," + year + ",'Month','month_" + currentYearMonth + "','" + month + "')\"><img id=\"month_" + currentYearMonth + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Month_" + month + (isMonthLinkEnable ? "" : "NC") + ".gif\"></a></td>");
                 htmlMonthBuilder.Append("\r\n\t\t\t</tr>");
                 htmlMonthBuilder.Append("\r\n\t\t\t<tr>");
                 htmlMonthBuilder.Append("\r\n\t\t\t\t<td colspan=12 align=\"center\">");
@@ -2101,12 +2180,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             htmlMonthBuilder.Append("\r\n\t</tr>");
 
             htmlSemesterBuilder.Append("\r\n\t<tr>");
-            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMSemestre\" colspan=6 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('1'," + year + ",'Semester','semester_1_" + year + "','1')\"><img id=\"semester_1_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Sem_1" + (isSemester1LinkEnable ? "" : "NC") + ".gif\"></a></td>");
+            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMSemestre\" colspan=6 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('1'," + year + ",'Semester','semester_1_" + year + "','1')\"><img id=\"semester_1_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Sem_1" + (isSemester1LinkEnable ? "" : "NC") + ".gif\"></a></td>");
             htmlSemesterBuilder.Append("\r\n\t</tr>");
 
             htmlSemesterBuilder.Append("\r\n\t<tr>");
-            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMTrimestreL\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('1'," + year + ",'Trimester','trimester_1_" + year + "','1')\"><img id=\"trimester_1_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Trim_1" + (isTrimester1LinkEnable ? "" : "NC") + ".gif\"></a></td>");
-            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMTrimestreR\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('2'," + year + ",'Trimester','trimester_2_" + year + "','2')\"><img id=\"trimester_2_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Trim_2" + (isTrimester2LinkEnable ? "" : "NC") + ".gif\"></a></td>");
+            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMTrimestreL\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('1'," + year + ",'Trimester','trimester_1_" + year + "','1')\"><img id=\"trimester_1_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_1" + (isTrimester1LinkEnable ? "" : "NC") + ".gif\"></a></td>");
+            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMTrimestreR\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('2'," + year + ",'Trimester','trimester_2_" + year + "','2')\"><img id=\"trimester_2_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_2" + (isTrimester2LinkEnable ? "" : "NC") + ".gif\"></a></td>");
             htmlSemesterBuilder.Append("\r\n\t</tr>");
 
             htmlSemesterBuilder.Append(htmlMonthBuilder.ToString());
@@ -2131,7 +2210,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 htmlMonthBuilder.Append("\r\n\t<td " + (month == 9 ? "class=\"SMMonth\"" : "") + ((month != 9) ? "class=\"SMTdPadding\"" : "") + ">");
                 htmlMonthBuilder.Append("\r\n\t\t<table border=0 cellspacing=0 cellpadding=0 style=\"padding-top:4px;\">");
                 htmlMonthBuilder.Append("\r\n\t\t\t<tr>");
-                htmlMonthBuilder.Append("\r\n\t\t\t\t<td align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + month + "'," + year + ",'Month','month_" + currentYearMonth + "','" + month + "')\"><img id=\"month_" + currentYearMonth + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Month_" + month + (isMonthLinkEnable ? "" : "NC") + ".gif\"></a></td>");
+                htmlMonthBuilder.Append("\r\n\t\t\t\t<td align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + month + "'," + year + ",'Month','month_" + currentYearMonth + "','" + month + "')\"><img id=\"month_" + currentYearMonth + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Month_" + month + (isMonthLinkEnable ? "" : "NC") + ".gif\"></a></td>");
                 htmlMonthBuilder.Append("\r\n\t\t\t</tr>");
                 htmlMonthBuilder.Append("\r\n\t\t\t<tr>");
                 htmlMonthBuilder.Append("\r\n\t\t\t\t<td colspan=12 align=\"center\">");
@@ -2161,20 +2240,20 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             htmlMonthBuilder.Append("\r\n\t</tr>");
 
             htmlSemesterBuilder.Append("\r\n\t<tr>");
-            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMSemestre\" colspan=6 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('2'," + year + ",'Semester','semester_2_" + year + "','2')\"><img id=\"semester_2_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Sem_2" + (isSemester2LinkEnable ? "" : "NC") + ".gif\"></a></td>");
+            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMSemestre\" colspan=6 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('2'," + year + ",'Semester','semester_2_" + year + "','2')\"><img id=\"semester_2_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Sem_2" + (isSemester2LinkEnable ? "" : "NC") + ".gif\"></a></td>");
             htmlSemesterBuilder.Append("\r\n\t</tr>");
 
             htmlSemesterBuilder.Append("\r\n\t<tr>");
-            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMTrimestreL\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('3'," + year + ",'Trimester','trimester_3_" + year + "','3')\"><img id=\"trimester_3_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Trim_3" + (isTrimester1LinkEnable ? "" : "NC") + ".gif\"></a></td>");
-            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMTrimestreR\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('4'," + year + ",'Trimester','trimester_4_" + year + "','4')\"><img id=\"trimester_4_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/Trim_4" + (isTrimester2LinkEnable ? "" : "NC") + ".gif\"></a></td>");
+            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMTrimestreL\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('3'," + year + ",'Trimester','trimester_3_" + year + "','3')\"><img id=\"trimester_3_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_3" + (isTrimester1LinkEnable ? "" : "NC") + ".gif\"></a></td>");
+            htmlSemesterBuilder.Append("\r\n\t\t<td class=\"SMTrimestreR\" colspan=3 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('4'," + year + ",'Trimester','trimester_4_" + year + "','4')\"><img id=\"trimester_4_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Trim_4" + (isTrimester2LinkEnable ? "" : "NC") + ".gif\"></a></td>");
             htmlSemesterBuilder.Append("\r\n\t</tr>");
 
             htmlSemesterBuilder.Append(htmlMonthBuilder.ToString());
             #endregion
 
-            htmlBuilder.Append("\r\n<table border=0 cellspacing=0 cellpadding=0 width=\"100%\">");
+            htmlBuilder.Append("\r\n<table class=\"SMChild\" border=0 cellspacing=0 cellpadding=0 width=\"100%\">");
             htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t\t<td colspan=12 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + year + "'," + year + ",'Year','year_" + year + "','" + year + "')\"><img id=\"year_" + year + "\" border=0 src=\"/Images/" + _language.ToString() + "/GlobalCalendar/" + year.ToString() + ((isSemester1LinkEnable && isSemester2LinkEnable) ? "" : "NC") + ".gif\"></a></td>");
+            htmlBuilder.Append("\r\n\t\t<td colspan=12 align=\"center\"><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + year + "'," + year + ",'Year','year_" + year + "','" + year + "')\"><img id=\"year_" + year + "\" border=0 src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/" + year.ToString() + ((isSemester1LinkEnable && isSemester2LinkEnable) ? "" : "NC") + ".gif\"></a></td>");
             htmlBuilder.Append("\r\n\t</tr>");
 
             htmlBuilder.Append(htmlSemesterBuilder.ToString());
@@ -2197,16 +2276,16 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             DayCalendar dayCalendar = new DayCalendar(yearMonth);
             StringBuilder htmlBuilder = new StringBuilder(6500);
 
-            htmlBuilder.Append("\r\n\t\t\t\t<table cellspacing=1 cellpadding=0 border=0 bgcolor=#FFFFFF>");
+            htmlBuilder.Append("\r\n\t\t\t\t<table cellspacing=1 cellpadding=0 border=0 class=\"whiteBackGround\">");
             // Noms des colonnes
             htmlBuilder.Append("\r\n\t\t\t\t\t<tr>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_1.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_2.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_3.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_4.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_5.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_6.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_7.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_1.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_2.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_3.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_4.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_5.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_6.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_7.gif\" border=0></td>");
             htmlBuilder.Append("\r\n\t\t\t\t\t</tr>");
 
             for (int i = 0; i < dayCalendar.DaysTable.GetLength(0); i++) {
@@ -2216,10 +2295,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 for (int j = 0; j < dayCalendar.DaysTable.GetLength(1); j++) {
 
                     if (dayCalendar.DaysTable[i, j] != 0) {
-                        htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/Images/" + _language.ToString() + "/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + ".gif\"></a></td>");
+                        htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + ".gif\"></a></td>");
                     }
                     else
-                        htmlBuilder.Append("\r\n\t\t\t\t\t\t<td bgcolor=\"#A794BE\"><img width=\"17\" height=\"13\" src=\"/Images/" + _language.ToString() + "/GlobalCalendar/pixel.gif\"></td>");
+                        htmlBuilder.Append("\r\n\t\t\t\t\t\t<td class=\"violetBackGroundV4\"><img width=\"17\" height=\"13\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/pixel.gif\"></td>");
                 }
                 htmlBuilder.Append("\r\n\t\t\t\t\t</tr>");
             }
@@ -2242,16 +2321,16 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             DayCalendar dayCalendar = new DayCalendar(yearMonth);
             StringBuilder htmlBuilder = new StringBuilder(6500);
 
-            htmlBuilder.Append("\r\n\t\t\t\t<table cellspacing=1 cellpadding=0 border=0 bgcolor=#FFFFFF>");
+            htmlBuilder.Append("\r\n\t\t\t\t<table cellspacing=1 cellpadding=0 border=0 class=\"whiteBackGround\">");
             // Noms des colonnes
             htmlBuilder.Append("\r\n\t\t\t\t\t<tr>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_1.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_2.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_3.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_4.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_5.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_6.gif\" border=0></td>");
-            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/Images/" + Language.ToString() + "/GlobalCalendar/Day_7.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_1.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_2.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_3.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_4.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_5.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_6.gif\" border=0></td>");
+            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_7.gif\" border=0></td>");
             htmlBuilder.Append("\r\n\t\t\t\t\t</tr>");
 
             for (int i = 0; i < dayCalendar.DaysTable.GetLength(0); i++) {
@@ -2262,14 +2341,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
                     if (dayCalendar.DaysTable[i, j] != 0) {
                         if (IsDayLinkEnabled(yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00")))
-                            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/Images/" + _language.ToString() + "/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + ".gif\"></a></td>");
+                            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + ".gif\"></a></td>");
                         else {
-                            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/Images/" + _language.ToString() + "/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + "NC.gif\"></a></td>");
+                            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + "NC.gif\"></a></td>");
                             isMonthLinkEnable = false;
                         }
                     }
                     else
-                        htmlBuilder.Append("\r\n\t\t\t\t\t\t<td bgcolor=\"#A794BE\"><img width=\"17\" height=\"13\" src=\"/Images/" + _language.ToString() + "/GlobalCalendar/pixel.gif\"></td>");
+                        htmlBuilder.Append("\r\n\t\t\t\t\t\t<td class=\"violetBackGroundV4\"><img width=\"17\" height=\"13\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/pixel.gif\"></td>");
                 }
                 htmlBuilder.Append("\r\n\t\t\t\t\t</tr>");
             }
@@ -2304,7 +2383,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// <summary>
         /// Renvoie le premier mois du trimestre
         /// </summary>
-        /// <param name="yearMonth">Trimestre et année</param>
+        /// <param name="yearTrimester">Trimestre et année</param>
         private string GetFirstMonthOfTrimester(string yearTrimester) {
 
             int trimester;
@@ -2329,7 +2408,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// <summary>
         /// Renvoie le dernier mois du trimestre
         /// </summary>
-        /// <param name="yearMonth">Trimestre et année</param>
+        /// <param name="yearTrimester">Trimestre et année</param>
         private string GetLastMonthOfTrimester(string yearTrimester) {
 
             int trimester;
@@ -2354,7 +2433,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// <summary>
         /// Renvoie le premier trimestre du semestre
         /// </summary>
-        /// <param name="yearMonth">semestre et année</param>
+        /// <param name="yearSemester">semestre et année</param>
         private string GetFirstTrimesterOfSemester(string yearSemester) {
 
             int semester;
@@ -2375,7 +2454,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// <summary>
         /// Renvoie le dernier trimestre du semestre
         /// </summary>
-        /// <param name="yearMonth">semestre et année</param>
+        /// <param name="yearSemester">semestre et année</param>
         private string GetLastTrimesterOfSemester(string yearSemester) {
 
             int semester;

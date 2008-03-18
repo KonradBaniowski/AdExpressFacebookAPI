@@ -591,9 +591,9 @@ namespace TNS.AdExpress.DataAccess {
             #region Request
             StringBuilder sql=new StringBuilder(1000);
             sql.Append(" select id_module, "+frequencyTable.Prefix+".id_frequency");
-            sql.Append(" from  "+frequencyTable.SqlWithPrefix+","+frequencyTable.SqlWithPrefix+" ");
+            sql.Append(" from  " + frequencyTable.SqlWithPrefix + "," + moduleAssignmentTable.SqlWithPrefix + " ");
             sql.Append(" where ma.id_login="+loginId+" ");
-            sql.Append(" and "+moduleAssignmentTable.Prefix+".ID_FREQUENCY="+moduleAssignmentTable.Prefix+".ID_FREQUENCY ");
+            sql.Append(" and " + frequencyTable.Prefix + ".ID_FREQUENCY=" + moduleAssignmentTable.Prefix + ".ID_FREQUENCY ");
             sql.Append(" and "+moduleAssignmentTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
             sql.Append(" and "+frequencyTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
             #endregion

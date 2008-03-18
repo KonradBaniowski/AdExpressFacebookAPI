@@ -179,7 +179,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				#endregion
 
 				#region Debut Tableau global 
-				t.Append("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td bgColor=\"#ffffff\"><table  vAlign=\"top\">");		
+                t.Append("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td class=\"whiteBackGround\"><table  vAlign=\"top\">");		
 				t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 				insertIndex = t.Length;
 				t.Append("')\" class=\"roll04\" >"+GestionWeb.GetWebWord(1084,webSession.SiteLanguage)+"</a>");
@@ -225,14 +225,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					if (idSector!= idSectorOld)
 					{
 						//bordure du haut de tableau
-						if (idSectorOld == -1)t.Append("<table style=\"border-top :#644883 1px solid; border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('sc_"+idSector+"');\" style=\"cursor : hand\">");
-						else t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('sc_"+idSector+"');\" style=\"cursor : hand\">");
+						if (idSectorOld == -1)t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('sc_"+idSector+"');\" class=\"cursorHand\">");
+                        else t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('sc_" + idSector + "');\" class=\"cursorHand\">");
 						idSectorOld=idSector;
 						startSector=0;
 						t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">&nbsp;&nbsp;&nbsp;"+currentRow["sector"].ToString());
 						t.Append("</td>");
-						t.Append("<td align=\"right\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
-						t.Append("</tr><tr><td colspan=\"2\"><div style=\"MARGIN-LEFT: 0px; background-color:#B1A3C1;display ='none';\" id=\"sc_"+idSector+"\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+                        t.Append("<td align=\"right\" class=\"arrowBackGround\"></td>");		
+						t.Append("</tr><tr><td colspan=\"2\"><div class=\"violetBackGroundV3\" style=\"MARGIN-LEFT: 0px; display ='none';\" id=\"sc_"+idSector+"\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 						//lien tous selectionner
 						t.Append("<tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('sc_"+idSector+"')\" title=\""+GestionWeb.GetWebWord(1082,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(1082,webSession.SiteLanguage)+"</a></td></tr>");
 						SectorIds+="sc_"+idSector+",";
@@ -243,14 +243,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					if (idSubSector!= idSubSectorOld)
 					{
 						//bordure du haut de tableau#
-						if (startSubSector == -1)t.Append("<tr><td ><table style=\"background-color:#B1A3C1; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('sb_"+idSubSector+"');\" style=\"cursor : hand\">");
-						else t.Append("<tr><td ><table style=\"background-color:#B1A3C1; border-top :#644883 1px solid;\" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('sb_"+idSubSector+"');\" style=\"cursor : hand\">");
+						if (startSubSector == -1)t.Append("<tr><td ><table class=\"violetBackGroundV3 txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('sb_"+idSubSector+"');\" class=\"cursorHand\">");
+                        else t.Append("<tr><td ><table class=\"RecapProductSelectionVioletTopBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('sb_" + idSubSector + "');\" class=\"cursorHand\">");
 						idSubSectorOld=idSubSector;
 						startSubSector=0;
 						t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">");
 						t.Append("&nbsp;&nbsp;"+currentRow["SubSector"].ToString()+"</td>");
-						t.Append("<td align=\"right\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");
-						t.Append("</tr><tr><td colspan=\"2\"><DIV style=\"background-color:#D0C8DA; MARGIN-LEFT: 5px\" id=\"sb_"+idSubSector+"\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+                        t.Append("<td align=\"right\" class=\"arrowBackGround\"></td>");
+                        t.Append("</tr><tr><td colspan=\"2\"><DIV class=\"violetBackGroundV2\" style=\"MARGIN-LEFT: 5px\" id=\"sb_" + idSubSector + "\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 						//lien tous selectionner
 						t.Append("<tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('sb_"+idSubSector+"')\" title=\""+GestionWeb.GetWebWord(1083,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(1083,webSession.SiteLanguage)+"</a></td></tr>");
 					}
@@ -261,7 +261,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					{
 						numColumn = 0;
 						//bordure du haut de tableau#
-						t.Append("<tr><td ><table style=\"background-color:#D0C8DA; border-top :#ffffff 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"643\"><tr width=100%>");
+                        t.Append("<tr><td ><table class=\"RecapProductSelectionWhiteTopBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"643\"><tr width=100%>");
 						idGroupOld=idGroup;
 						startGroup=0;
 						t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
@@ -293,8 +293,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						#endregion
 
 						t.Append(" onclick=\"javascript:GroupIntegration('gp_"+idGroup+"')\" type=\"checkbox\" "+checkBox+"   value=\"gp_"+idGroup+"\">"+currentRow["Group_"].ToString()+"</td>");
-						t.Append("<td align=\"right\" width=100% onClick=\"javascript : DivDisplayer('gp_"+idGroup+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");
-						t.Append("</tr><tr><td colspan=\"2\"><DIV style=\"MARGIN-LEFT: 0px\" id=\"gp_"+idGroup+"\"><table cellpadding=0 cellspacing=0 border=\"0\" bgColor=\"#E1E0DA\" width=\"100%\"><tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('gp_"+idGroup+"')\" class=\"roll04\"  >"+GestionWeb.GetWebWord(1067,webSession.SiteLanguage)+"</a></td></tr>");
+						t.Append("<td align=\"right\" width=100% onClick=\"javascript : DivDisplayer('gp_"+idGroup+"');\" class=\"cursorHand arrowBackGround\"></td>");
+						t.Append("</tr><tr><td colspan=\"2\"><DIV style=\"MARGIN-LEFT: 0px\" id=\"gp_"+idGroup+"\"><table cellpadding=0 cellspacing=0 border=\"0\" class=\"greyBackGround\" width=\"100%\"><tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('gp_"+idGroup+"')\" class=\"roll04\"  >"+GestionWeb.GetWebWord(1067,webSession.SiteLanguage)+"</a></td></tr>");
 						i++;
 					}
 					#endregion
@@ -366,7 +366,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			}
 			else
 			{
-				t.Append("<tr><td bgcolor=\"#ffffff\" class=\"txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                t.Append("<tr><td class=\"whiteBackGround\" class=\"txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 				t.Append(" "+GestionWeb.GetWebWord(1081,webSession.SiteLanguage)+"</p> ");
 				t.Append(" </td> ");
 				t.Append(" </tr> ");

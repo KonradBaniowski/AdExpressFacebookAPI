@@ -332,6 +332,37 @@ namespace TNS.AdExpress.Web.Functions{
 		#endregion
 
 		#region ShowHideContent
+        /// <summary>
+        /// Javascript permettant d'ouvrir/Fermer des blocs div.
+        /// </summary>
+        /// <remarks>
+        /// Le script est à enregistrer sous le nom ShowHideContent
+        /// </remarks>
+        /// <returns>Code JavaScript</returns>
+        public static string ShowHideCalendar() {
+            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+            t.Append(" <script language=\"JavaScript\">");
+            t.Append(" function ShowHideCalendar(id)");
+            t.Append(" { ");
+            t.Append(" var oContent = document.all.item(id+\"Content\"); ");
+            t.Append(" if (ancien!=null){ ");
+            t.Append("	if (id+\"Content\"==ancien && ouvert==true){");
+            t.Append(" var oAncien=document.all.item(ancien); ");
+            t.Append(" oAncien.style.display=\"none\"; ");
+            t.Append(" ouvert=false; ");
+            t.Append(" return; ");
+            t.Append(" } ");
+            t.Append(" var oAncien=document.all.item(ancien); ");
+            t.Append(" oAncien.style.display=\"none\"; ");
+            t.Append(" } ");
+            t.Append(" ancien=id+\"Content\"; ");
+            t.Append(" oContent.style.display = \"\"; ");
+            t.Append(" ouvert=true; ");
+            t.Append(" } ");
+            t.Append("</script>");
+            return (t.ToString());
+        }
+
 		/// <summary>
 		/// Javascript permettant d'ouvrir/Fermer des blocs div.
 		/// </summary>

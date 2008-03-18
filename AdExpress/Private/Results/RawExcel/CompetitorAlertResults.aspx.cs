@@ -55,10 +55,14 @@ namespace AdExpress.Private.Results.RawExcel{
 		#region Chargement de la page
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
+
+                Response.ContentType = "application/vnd.ms-excel";
+
 				#region Calcul du résultat
 				// On charge les données
 				//result=WebBF.Results.CompetitorSystem.GetRawExcel(this.Page,_webSession);
 				#endregion
+
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){

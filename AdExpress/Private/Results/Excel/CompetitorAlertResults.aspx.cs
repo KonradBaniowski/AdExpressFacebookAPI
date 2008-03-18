@@ -67,6 +67,8 @@ namespace AdExpress.Private.Results.Excel{
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
 
+                Response.ContentType = "application/vnd.ms-excel";
+
 				#region Calcul du résultat
 				// On charge les données
 				//result=WebBF.Results.CompetitorSystem.GetExcel(this.Page,_webSession);

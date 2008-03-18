@@ -144,10 +144,10 @@ namespace AdExpress.Private.Selection{
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 				recapProductSelectionWebControl.WebSession=_webSession;						
-				saveUniversButton.ImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_up.gif";
-				saveUniversButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_down.gif";
-				validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";	
+				//saveUniversButton.ImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_up.gif";
+				//saveUniversButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_down.gif";
+				//validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";	
 				#endregion							
 
 				#region Script

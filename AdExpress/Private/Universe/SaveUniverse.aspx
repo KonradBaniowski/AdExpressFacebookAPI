@@ -27,8 +27,8 @@
 		<form id="Form1" method="post" runat="server">
 			<TABLE id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
 				<TR class="violetBackGround" height="14">
-					<TD width="14"><IMG src="/Images/Common/fleche_1.gif"></TD>
-					<TD class="txtBlanc11Bold" background="/Images/Common/bandeau_titre.gif">&nbsp;
+					<TD width="14"><asp:Image runat="server" SkinID="fleche_1" /></TD>
+					<TD class="txtBlanc11Bold bandeauTitreBackGround">&nbsp;
 						<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="769"></cc2:adexpresstext></TD>
 				</TR>
 				<TR>
