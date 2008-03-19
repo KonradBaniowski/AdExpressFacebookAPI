@@ -6,10 +6,13 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_fond3.gif);
 background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_3bis.gif);
 }
 .bandeauTitreBackGround{
-background:url(/App_Themes/DefaultAdExpressFr/Images/Common/bandeau_titre.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/bandeau_titre.gif);
 }
 .blockdupliBackGround{
-background:url(/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/block_dupli.gif);
+}
+.popupBackGround{
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/backgroundPopUp.gif);
 }
 .arrowBackGround{
 background:url(/App_Themes/DefaultAdExpressUk/images/Common/button/bt_arrow_down.gif);

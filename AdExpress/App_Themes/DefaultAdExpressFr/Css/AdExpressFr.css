@@ -11,6 +11,9 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/bandeau_titre.gif);
 .blockdupliBackGround{
 background:url(/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif);
 }
+.popupBackGround{
+background:url(/App_Themes/DefaultAdExpressFr/Images/Common/backgroundPopUp.gif);
+}
 .arrowBackGround{
 background-image:url(/App_Themes/DefaultAdExpressFr/images/Common/button/bt_arrow_down.gif);
 background-repeat:no-repeat;
