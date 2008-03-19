@@ -83,37 +83,449 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrSelections" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrResults" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="webUiResults" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
+<%@ Register TagPrefix="ctrCreatives" Namespace="TNS.AdExpress.Web.Controls.Results.Creatives" Assembly="TNS.AdExpress.Web.Controls" %>
 
 
-<ctrHeader:HeaderWebControl runat="server" language="33" FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Common/HeaderStrip.swf" MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Common/FlashReplacement/HeaderStrip.gif" />
-<ctrHeader:FlashWebControl runat="server" FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Culture/anime6.swf" MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/HomeAnime.gif"/>
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/valider_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/valider_down.gif" SkinID="validateButton" />
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/Button/ok_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/Button/ok_down.gif" SkinID="okButton"/>
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_down.gif" SkinID="initializeButton" />
+<%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
+<ctrHeader:HeaderWebControl  
+                            runat="server" 
+                            language="33" 
+                            FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Common/HeaderStrip.swf" 
+                            MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Common/FlashReplacement/HeaderStrip.gif" 
+/>
 
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/ouvrir_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/ouvrir_down.gif" SkinID="ouvrirButton" />
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/fermer_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/fermer_down.gif" SkinID="fermerButton" />
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/personnaliser_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/personnaliser_down.gif" SkinID="personnaliserButton" />
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/annuler_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/annuler_down.gif" SkinID="annulerButton" />
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/resultat_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/resultat_down.gif" SkinID="resultatButton" />
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/supprimer_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/supprimer_down.gif" SkinID="supprimerButton" />
-<ctrButtons:imagebuttonrolloverwebcontrol runat="server" ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/detail_up.gif" RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/detail_down.gif" SkinID="detailButton" />
+<%-- Flash web control : used to show a flash animation --%>
+<ctrHeader:FlashWebControl  
+                           runat="server" 
+                           FlashUrl="/App_Themes/DefaultAdExpressFr/Flash/Culture/anime6.swf" 
+                           MissingFlashUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/HomeAnime.gif"
+/>
 
-<ctrHeader:actualitieswebcontrol runat="server" ImageUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/AdExpressVisu.gif" TitleCss="actualities" RssTitleCss="txtViolet11Bold" RssDescriptionCss="txtViolet11" ImageRssUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/iconRss.gif" />
-<ctrSelections:moduleselection2webcontrol runat="server" ModuleGroupWithBackgroundCss="moduleGroupWithBackgroung" ModuleSubGroupCss="moduleSubGroup" ModuleGroupInformationCss="moduleGroupInformation" ModuleGroupCss="moduleGroup" ModuleCss="Tips1" ImageModuleUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/arrowModule.gif" 
-DescriptionImageList="198:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMedia.png,199:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMediaConcurrentiel.png,277:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Concurrentiels.png,280:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Potentiel.png,
+<%-- A list of ImageButtonRollOver web control used in the site--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/valider_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/valider_down.gif" 
+                           SkinID="validateButton" 
+/>
+
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/Button/ok_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/Button/ok_down.gif" 
+                           SkinID="okButton"
+/>
+
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_down.gif" 
+                           SkinID="initializeButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol   
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_all_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_all_down.gif" 
+                           SkinID="initializeAllButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/suivant_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/suivant_down.gif" 
+                           SkinID="nextButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/enregistrer_univers_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/enregistrer_univers_down.gif" 
+                           SkinID="saveButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol   
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/charger_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/charger_down.gif" 
+                           SkinID="loadButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/ouvrir_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/ouvrir_down.gif" 
+                           SkinID="ouvrirButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/fermer_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/fermer_down.gif" 
+                           SkinID="fermerButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/personnaliser_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/personnaliser_down.gif" 
+                           SkinID="personnaliserButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/annuler_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/annuler_down.gif" 
+                           SkinID="annulerButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/resultat_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/resultat_down.gif" 
+                           SkinID="resultatButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/supprimer_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/supprimer_down.gif" 
+                           SkinID="supprimerButton" 
+/>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/detail_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/detail_down.gif" 
+                           SkinID="detailButton" 
+/>
+
+
+
+<%-- Actualities web control : used to show the actualities in the selection module page --%>
+<ctrHeader:actualitieswebcontrol  
+                           runat="server" 
+                           ImageUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/AdExpressVisu.gif" 
+                           TitleCss="actualities" 
+                           RssTitleCss="txtViolet11Bold" 
+                           RssDescriptionCss="txtViolet11" 
+                           ImageRssUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/iconRss.gif" 
+/>
+
+<%-- Module selection web control : used to show adexpress modules--%>
+<ctrSelections:moduleselection2webcontrol  
+                           runat="server" 
+                           ModuleGroupWithBackgroundCss="moduleGroupWithBackgroung" 
+                           ModuleSubGroupCss="moduleSubGroup" 
+                           ModuleGroupInformationCss="moduleGroupInformation" 
+                           ModuleGroupCss="moduleGroup" 
+                           ModuleCss="Tips1" 
+                           ImageModuleUrlPath="/App_Themes/DefaultAdExpressFr/Images/Common/arrowModule.gif" 
+                           DescriptionImageList="198:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMedia.png,199:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMediaConcurrentiel.png,277:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Concurrentiels.png,280:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Potentiel.png,
 282:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Portefeuille.png,196:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMedia.png,184:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/PlanMediaConcurrentiel.png,278:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Concurrentiels.png,197:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Dynamique.png,
 281:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Potentiel.png,1950:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Justificatifs.png,283:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Portefeuille.png,194:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauDynamique.png,195:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Indicateurs.png,
 450:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Tendances.png,475:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,601:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,602:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,1036:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,
-546:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Programmes.png"/>
-<ctrHeader:ModuleTitleWebControl runat="server" BlockFlechePath="/App_Themes/DefaultAdExpressFr/Images/Common/block_fleche.gif" BlockDupliPath="/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif" TitleUppercaseCss="titleUppercase" />
-<ctrHeader:mediasellerwebcontrol runat="server" BlockFlechePath="/App_Themes/DefaultAdExpressFr/Images/Common/block_fleche.gif" BlockDupliPath="/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif" TitleUppercaseCss="titleUppercase" CommonCssClass="txtNoir11Bold" />
-<ctrHeader:InformationWebControl runat="server" FlashPath="/App_Themes/DefaultAdExpressFr/Flash/Culture/infoOptions.swf" FlashReplacementPath="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/infoOptions.gif" FlashOneLinePath="/App_Themes/DefaultAdExpressFr/Flash/Culture/infoOptionsOneLine.swf" FlashOneLineReplacementPath="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/infoOptionsOneLine.gif" />
-<ctrSelections:OneVehicleSelectionWebControl runat="server" CssClass="txtViolet11Bold" />
-<ctrSelections:daycalendarwebcontrol runat="server" TableBorderColor="#9D9885" TableColor="#FFFFFF" FontColor="#644883" TableColorSelectedDate="#644883" FontColorSelectedDate="#FFFFFF" />
-<ctrSelections:datelistwebcontrol runat="server" CssClass="txtNoir11" />
-<ctrResults:resultwebcontrol runat="server" CssDetailSelectionBordelLevel="dsBorderLevel" CssDetailSelectionL1="dsLv1" CssDetailSelectionL2="dsLv2" CssDetailSelectionL3="dsLv3" CssDetailSelectionTitle="dsTitle" CssDetailSelectionTitleData="dsTitleData"
- CssDetailSelectionTitleGlobal="dsTitleGlobal" CssLHeader="h2" BackgroudColorL1="#B1A3C1" CssL1="lv1" HighlightBackgroundColorL1="#FFFFFF" HighlightBackgroundColorL3="#FFFFFF" BackgroudColorL2="#D0C8DA" CssL2="lv2" CssL3="lv3" HighlightBackgroundColorL2="#FFFFFF" 
- BackgroudColorL3="#E1E0DA" ImgBtnCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3_in.gif" ImgBtnCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3.gif" ImgBtnDeCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3_in.gif" ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3.gif" CssLTotal="lv0" SkinID="portofolioResultTable" />
- <webUiResults:PortofolioChartUI runat="server" PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" PieLineColor="Black" DefaultBorderLineColor="#C0C0C0" ChartBorderLineColor="#634984" TitleColor="#644883"  />
- 
+546:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Programmes.png"
+/>
+<%-- Module title web control : used to show module title --%>
+<ctrHeader:ModuleTitleWebControl  
+                           runat="server" 
+                           BlockFlechePath="/App_Themes/DefaultAdExpressFr/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif" 
+                           TitleUppercaseCss="titleUppercase" 
+/>
+
+<ctrHeader:ModuleBridgeWebControl  
+                           runat="server" 
+                           BlockFlechePath="/App_Themes/DefaultAdExpressFr/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif" 
+                           TitleUppercaseCss="titleUppercase" 
+/>
+
+<ctrHeader:mediasellerwebcontrol  
+                           runat="server" 
+                           BlockFlechePath="/App_Themes/DefaultAdExpressFr/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif" 
+                           TitleUppercaseCss="titleUppercase" 
+                           CommonCssClass="txtNoir11Bold" 
+/>
+
+<ctrHeader:InformationWebControl  
+                           runat="server" 
+                           FlashPath="/App_Themes/DefaultAdExpressFr/Flash/Culture/infoOptions.swf" 
+                           FlashReplacementPath="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/infoOptions.gif" 
+                           FlashOneLinePath="/App_Themes/DefaultAdExpressFr/Flash/Culture/infoOptionsOneLine.swf" 
+                           FlashOneLineReplacementPath="/App_Themes/DefaultAdExpressFr/Images/Culture/FlashReplacement/infoOptionsOneLine.gif" 
+/>
+
+<ctrSelections:OneVehicleSelectionWebControl  
+                           runat="server" 
+                           CssClass="txtViolet11Bold" 
+/>
+
+<ctrSelections:daycalendarwebcontrol  
+                           runat="server" 
+                           TableBorderColor="#9D9885" 
+                           TableColor="#FFFFFF" 
+                           FontColor="#644883" 
+                           TableColorSelectedDate="#644883" 
+                           FontColorSelectedDate="#FFFFFF" 
+/>
+
+<ctrSelections:monthcalendarwebcontrol  
+                           runat="server"
+                           TableBorderColor = "#9D9885"
+                           TableColor = "#FFFFFF"
+                           TableColorSelectedDate = "#644883"
+                           TitleBackgroundColor = "#644883"
+                           FontColor = "#644883"
+                           FontColorSelectedDate = "#FFFFFF"
+                           TableColorNoDate = "#9378B3"
+                           TdBgcolor = "#FFFFFF"
+/>
+
+<ctrSelections:datelistwebcontrol  
+                           runat="server" 
+                           CssClass="txtNoir11" 
+/>
+
+<ctrResults:Resultwebcontrol  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           CssLHeader="h2" 
+                           BackgroudColorL1="#B1A3C1" 
+                           BackgroudColorL2="#D0C8DA" 
+                           BackgroudColorL3="#E1E0DA" 
+                           CssL1="lv1" 
+                           CssL2="lv2" 
+                           CssL3="lv3" 
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           HighlightBackgroundColorL2="#FFFFFF" 
+                           HighlightBackgroundColorL3="#FFFFFF" 
+                           ImgBtnCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3.gif" 
+                           CssLTotal="lv0" 
+                           SkinID="portofolioResultTable" 
+/>
+
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssLTotal="exlv0" 
+                           CssL3="exlv3" 
+                           CssL2="exlv2"
+                           CssL1="exlv1" 
+                           CssLHeader="exh2" 
+                           CssDetailSelectionL1="dsLv1Excel" 
+                           CssDetailSelectionL2="dsLv2Excel" 
+                           CssDetailSelectionL3="dsLv3Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="portofolioExcelResultTable"  
+/>
+
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel" 
+				           CssDetailSelectionL3="dsLv3Excel"
+				           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData" 
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal"
+				           SkinID="portofolioRawExcelResultTable"  
+/>
+
+<webUiResults:PortofolioChartUI  
+                           runat="server" 
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 
+                           PieLineColor="Black" 
+                           DefaultBorderLineColor="#C0C0C0" 
+                           ChartBorderLineColor="#634984" 
+                           TitleColor="#644883"  
+/>
+
+<webUiResults:INDICATORCHARTUI  
+                           runat="server"
+                           ChartAreasBackColor="#DECFE7"
+                           ChartBorderLineColor="#634984"
+                           SeriesColor="#9479B5"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#644883"
+/>
+
+<ctrHeader:resultsoptionswebcontrol  
+                           runat="server" 
+                           CommonCssClass="txtNoir11Bold" 
+                           OutCssClass="ddlOut" 
+                           OverCssClass="ddlOver" 
+/>
+
+<ctrHeader:resultsoptionswebcontrol 
+                           runat="server" 
+                           CommonCssClass="txtNoir11Bold" 
+                           OutCssClass="ddlOut" 
+                           OverCssClass="ddlOver" 
+                           BorderColor="#644883"
+                           SkinID="resultsOptionsASDynamicTables"
+/>
+
+<ctrResults:PortofolioDetailMediaResultWebControl 
+                           runat="server" 
+                           BackgroudColorL1="#D0C8DA" 
+                           CssL1="lv2" 
+                           CssLHeader="h2" 
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           ImgBtnCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3.gif" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           SkinID="PortofolioPopUpResult" 
+/>
+
+<ctrResults:PortofolioDetailMediaResultWebControl  
+                           runat="server" 
+                           CssL1="exlv3" 
+                           CssL2="exlv2"
+                           CssLHeader="exh2" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1Excel" 
+                           CssDetailSelectionL2="dsLv2Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData" 
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           SkinID="PortofolioPopUpExcelResult"
+/>
+
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssLTotal="exlv0" 
+                           CssL3="exlv3" 
+                           CssL2="exlv2"
+				           CssL1="exlv1" 
+				           CssLHeader="exh2" 
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel"
+				           CssDetailSelectionL3="dsLv3Excel"
+				           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"   
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="PresentAbsentExcelResult" 
+/>
+
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel" 
+				           CssDetailSelectionL3="dsLv3Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel" 
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData" 
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal"
+				           SkinID="PresentAbsentRawExcelResult"  
+/>
+
+<ctrCreatives:CreativesWebControl  
+                           runat="server" 
+                           FooterImage="/App_Themes/DefaultAdExpressFr/Images/Common/Result/footer.gif"
+                           HeaderImage="/App_Themes/DefaultAdExpressFr/Images/Common/Result/header.gif"
+                           LoadingImage="/App_Themes/DefaultAdExpressFr/Images/Common/waitAjax.gif"
+                           ButtonFirstDown="/App_Themes/DefaultAdExpressFr/Images/Common/Result/bt_first_down.gif"
+                           ButtonFirstUp="/App_Themes/DefaultAdExpressFr/Images/Common/Result/bt_first_up.gif"
+                           ButtonLastDown="/App_Themes/DefaultAdExpressFr/Images/Common/Result/bt_last_down.gif"
+                           ButtonLastUp="/App_Themes/DefaultAdExpressFr/Images/Common/Result/bt_last_up.gif"
+                           ButtonNextDown="/App_Themes/DefaultAdExpressFr/Images/Common/Result/bt_next_down.gif"
+                           ButtonNextUp="/App_Themes/DefaultAdExpressFr/Images/Common/Result/bt_next_up.gif"
+                           ButtonPreviousDown="/App_Themes/DefaultAdExpressFr/Images/Common/Result/bt_previous_down.gif"
+                           ButtonPreviousUp="/App_Themes/DefaultAdExpressFr/Images/Common/Result/bt_previous_up.gif"
+/>
+
+<ctrSelections:SelectItemsInClassificationWebControl  
+                           runat="server" 
+                           ChildNodeExcludeCss="txtChildNodeExcludeCss" 
+                           ChildNodeIncludeCss="txtChildNodeIncludeCss" 
+                           CustomSelectCss="customSelectCss" 
+                           LabelNbCurrentElementCss="labelNbelements" 
+                           ListBoxBodyCss="listBoxBodyCss" 
+                           ListBoxCss="listBoxCss" 
+                           ListBoxHeaderCss="listBoxHeaderCss" 
+                           ParentNodeChildExcludeCss="txtParentNodeChildExcludeCss" 
+                           ParentNodeChildIncludeCss="txtParentNodeChildIncludeCss" 
+                           SelectOptionItemDefaultCss="optionItemDefault" 
+                           SelectOptionItemHierarchyCss="optionItemHierarchy" 
+                           TrashNodeCss="trashNodeCss"
+                           TreeExcludeFrameBodyCss="treeExcludeFrameBodyCss" 
+                           TreeExcludeFrameCss="treeExcludeFrameCss" 
+                           TreeExcludeFrameHeaderCss="treeExcludeFrameHeaderCss" 
+                           TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" 
+                           TreeIncludeFrameCss="treeIncludeFrameCss" 
+                           TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" 
+                           TreeViewIcons="/App_Themes/DefaultAdExpressFr/Styles/TreeView/Icons" 
+                           TreeViewScripts="/App_Themes/DefaultAdExpressFr/Styles/TreeView/Scripts" 
+                           TreeViewStyles="/App_Themes/DefaultAdExpressFr/Styles/TreeView/Css" 
+                           ExcludeImage="/App_Themes/DefaultAdExpressFr/Images/Common/exclude_item.gif"
+                           IncludeImage="/App_Themes/DefaultAdExpressFr/Images/Common/include_item.gif"
+                           Intersectionimage="/App_Themes/DefaultAdExpressFr/Images/Common/intersection.gif"
+                           TrashImage="/App_Themes/DefaultAdExpressFr/Images/Common/button/bt_delete_up.GIF"
+/>
+
+<ctrSelections:GlobalCalendarWebControl  
+                           runat="server"
+                           CssPath="Css/DefaultAdExpressFr/Calendar.css"
+                           ThemeName="DefaultAdExpressFr"
+/>
+
+<ctrHeader:InitializeProductWebControl  
+                           runat="server"
+                           CssClass="txtNoir11Bold" 
+/>

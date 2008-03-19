@@ -10,7 +10,7 @@
 .SMParent {
     /*background-color: #d3e3ff;*/
     background-color: #FFFFFF;/*#EAD9FF*/
-    width: 782px;
+    width: 790px;
     border-bottom:1px solid #644882;
     font:bold 12px arial;
     color: #644882;/*#555555;*/
@@ -21,7 +21,7 @@
 .SMParentOver {
 	/*background-color: #f6fff3; */
 	background-color: #FFFFFF; 
-	width: 782px;
+	width: 790px;
 	border-bottom:1px solid #644882;
     font:bold 12px arial;
     color: #644882; /*#555555;*/
@@ -33,7 +33,7 @@
 .SMParentSelected {
 	/*background-color: #d3e3ff;*/
 	background-color: #FFFFFF;/*#f5ecff*/
-	width: 782px;
+	width: 790px;
 	border-bottom:1px solid #644882;
     font:bold 12px arial;
     color: #644882; /*#334477;*/
