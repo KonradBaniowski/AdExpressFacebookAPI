@@ -9,7 +9,6 @@
 		<meta content="C#" name="CODE_LANGUAGE"/>
 		<meta content="JavaScript" name="vs_defaultClientScript"/>
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
-		<LINK href="/Css/AdExpress.css" type="text/css" rel="stylesheet"/>
 		<base target="_self"/>
 		<script language="javascript">
 		function cancel(){
