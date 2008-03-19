@@ -185,6 +185,12 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
 	color: #644883;
 	font-weight: bold;
 }
+.txtViolet12{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #644883;
+	font-weight: normal;
+}
 .txtViolet11{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;

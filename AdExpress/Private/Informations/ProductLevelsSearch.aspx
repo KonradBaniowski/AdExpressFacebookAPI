@@ -3,17 +3,12 @@
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<title>AdExpress</title>
 		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<LINK href="/Css/AdExpress.css" type="text/css" rel="stylesheet">
-		<style type="text/css">BODY {
-	BACKGROUND-IMAGE: none; MARGIN: 0px; BACKGROUND-COLOR: #ffffff
-}
-		</style>
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT">
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="pragma" content="no-cache">
@@ -29,12 +24,11 @@
 			document.onkeydown =bloqueTouche; 
 		</script>
 	</HEAD>
-	<body style="BACKGROUND-ATTACHMENT: fixed; BACKGROUND-IMAGE: url(/Images/Common/dupli_fond.gif)"
-		bgColor="#ffffff">
+	<body class="imageBackGround whiteBackGround" style="MARGIN: 0px;">
 		<form id="Form1" method="post" runat="server">
 			<table height="269" cellSpacing="0" cellPadding="0" width="400" border="0">
 				<tr>
-					<td vAlign="top"><IMG src="/Images/<%=_siteLanguage%>/Others/helpBanner.jpg" ></td>
+					<td vAlign="top"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Others/helpBanner.jpg" ></td>
 					<td>
 						<table height="269" cellSpacing="0" cellPadding="0" width="400" border="0">
 							<tr vAlign="top">
@@ -48,7 +42,7 @@
 									</cc2:countitemsinclassificationwebcontrol></td>
 							</tr>
 							<tr vAlign="bottom">
-								<td align="right" width="400"><A onmouseover="bouton.src='/Images/<%=_siteLanguage%>/button/fermer_down.gif';" onmouseout="bouton.src = '/Images/<%=_siteLanguage%>/button/fermer_up.gif';" href="javascript:window.close();" ><IMG src="/Images/<%=_siteLanguage%>/button/fermer_up.gif" border=0 name=bouton ></A>
+								<td align="right" width="400"><A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton ></A>
 								</td>
 							</tr>
 						</table>
