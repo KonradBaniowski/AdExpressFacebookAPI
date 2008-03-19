@@ -58,9 +58,9 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 
 			#region Buttons and Langage parameters
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls, _webSession.SiteLanguage);
-			okButton.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
-			okButton.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
+			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls, _webSession.SiteLanguage);
+			//okButton.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
+			//okButton.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
 			#endregion
 
 			#region Creating universe available group
