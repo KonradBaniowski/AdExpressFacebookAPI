@@ -52,7 +52,7 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
-	<body onload="MM_preloadImages('images/valider_down.gif')" class="bodyStyle">
+	<body class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
 			<table height="600" cellSpacing="0" cellPadding="0" border="0">
 					<tr>
