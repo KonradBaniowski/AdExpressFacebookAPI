@@ -93,11 +93,11 @@ namespace AdExpress.Private.Universe{
 				#region Langage
 				//Modification de la langue pour les Textes AdExpress
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
-				okButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				okButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//okButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//okButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 				#endregion
 
-				#region Création de la liste des groupes d'univers disponibles								
+				#region Création de la liste des groupes d'univers disponibles
 				
 				//Liste des groupes d'univers
 				DataSet ds = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetGroupUniverses(_webSession);

@@ -78,9 +78,9 @@
 				<TR height="20">
 					<TD></TD>
 					<TD vAlign="top" align="right">
-						<cc1:ImageButtonRollOverWebControl id="okButton" runat="server" onclick="okButton_Click"></cc1:ImageButtonRollOverWebControl>&nbsp
-						<a href="#" onclick="javascript:cancel();" onmouseover="bouton.src='/Images/<%=_siteLanguage%>/button/annuler_down.gif';" onmouseout="bouton.src = '/Images/<%=_siteLanguage%>/button/annuler_up.gif';">
-							<img src="/Images/<%=_siteLanguage%>/button/annuler_up.gif" border=0 name=bouton></a></TD>
+						<cc1:ImageButtonRollOverWebControl id="okButton" runat="server" onclick="okButton_Click" SkinID="validateButton"></cc1:ImageButtonRollOverWebControl>&nbsp
+						<A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_down.gif';" href="javascript:cancel();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif" border=0 name=bouton></A>
+					</TD>
 				</TR>
 			</TABLE>
 		</form>
