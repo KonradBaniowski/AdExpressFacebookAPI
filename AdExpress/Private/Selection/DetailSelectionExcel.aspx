@@ -3,9 +3,8 @@
 <%@ Page language="c#" Inherits="AdExpress.Private.Selection.DetailSelectionExcel" CodeFile="DetailSelectionExcel.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<title>AdExpress</title>
-		<%Response.ContentType = "application/vnd.ms-excel";%>
 		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">

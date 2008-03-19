@@ -298,6 +298,7 @@ namespace AdExpress.Private.Selection{
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
+                Response.ContentType = "application/vnd.ms-excel";
 			
 				#region Variables
 				//string periodText;
