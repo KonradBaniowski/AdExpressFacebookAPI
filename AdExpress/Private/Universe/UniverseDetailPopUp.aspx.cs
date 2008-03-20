@@ -26,7 +26,6 @@ namespace AdExpress.Private.Universe{
 	/// </summary>
 	public partial class UniverseDetailPopUp : TNS.AdExpress.Web.UI.PrivateWebPage{
 	
-	
 		#region Variables MMI
 		/// <summary>
 		/// Bouton Fermer
@@ -64,7 +63,6 @@ namespace AdExpress.Private.Universe{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			
 			try{
 				// identifiant Univers
 				Int64 idUniverse;
@@ -163,8 +161,8 @@ namespace AdExpress.Private.Universe{
 				advertiserText=TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(treeNodeUniverse,false,true,true,600,true,false,_webSession.SiteLanguage,2,1,true);
 
 				//Bouton Fermer
-				closeImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_up.gif";
-				closeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_down.gif";
+				//closeImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_up.gif";
+				//closeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_down.gif";
 			
 				//Script pour l'ouverture/fermeture du tableau
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent")) {
@@ -229,5 +227,6 @@ namespace AdExpress.Private.Universe{
 			Response.Write("</script>");
 		}
 		#endregion
+
 	}
 }
