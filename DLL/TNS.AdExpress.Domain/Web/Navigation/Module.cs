@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using TNS.AdExpress.Domain.Exceptions;
+using TNS.AdExpress.Domain.Layers;
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -16,6 +17,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 	public class Module:ModuleItem{
 		
 		#region Variable
+        /// <summary>
+        /// Country rules Layer
+        /// </summary>
+        protected RulesLayer _rulesLayer;
+        /// <summary>
+        /// Country data access Layer
+        /// </summary>
+        protected DataAccessLayer _dataAccessLayer;
 		/// <summary>
 		/// URL de la prochaine page
 		/// </summary>
@@ -118,6 +127,20 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		#endregion
 
 		#region Accesseurs
+        /// <summary>
+        /// Get/Set Rules Layer
+        /// </summary>
+        public RulesLayer CountryRulesLayer {
+            get { return _rulesLayer; }
+            set { _rulesLayer=value; }
+        }
+        /// <summary>
+        /// Get/Set Rules Layer
+        /// </summary>
+        public DataAccessLayer CountryDataAccessLayer {
+            get { return _dataAccessLayer; }
+            set { _dataAccessLayer=value; }
+        }
 		/// <summary>
 		/// Obtient l'URL de la prochaine page
 		/// </summary>
