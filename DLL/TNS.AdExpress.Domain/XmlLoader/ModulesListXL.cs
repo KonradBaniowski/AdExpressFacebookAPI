@@ -16,6 +16,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Exceptions;
+using TNS.AdExpress.Domain.Layers;
 
 
 namespace TNS.AdExpress.Domain.XmlLoader{
@@ -197,6 +198,18 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 									currentSelectionPage.AllowedBranchesIds.Add(int.Parse(Reader.GetAttribute("id")));
 								}
 								break;
+                            case "RulesLayer":
+                                if(Reader.GetAttribute("name")!=null&&Reader.GetAttribute("assemblyName")!=null&&Reader.GetAttribute("class")!=null&&
+                                    Reader.GetAttribute("name").Length>0&&Reader.GetAttribute("assemblyName").Length>0&&Reader.GetAttribute("class").Length>0) {
+                                   ((Module)HtModule[module]).CountryRulesLayer=new RulesLayer(Reader.GetAttribute("name"),Reader.GetAttribute("assemblyName"),Reader.GetAttribute("class"));
+                                }
+                                break;
+                            case "DataAccessLayers":
+                                if(Reader.GetAttribute("name")!=null&&Reader.GetAttribute("assemblyName")!=null&&Reader.GetAttribute("class")!=null&&
+                                    Reader.GetAttribute("name").Length>0&&Reader.GetAttribute("assemblyName").Length>0&&Reader.GetAttribute("class").Length>0) {
+                                    ((Module)HtModule[module]).CountryDataAccessLayer=new DataAccessLayer(Reader.GetAttribute("name"),Reader.GetAttribute("assemblyName"),Reader.GetAttribute("class"));
+                                }
+                                break;
 						}					
 					}				
 				}		

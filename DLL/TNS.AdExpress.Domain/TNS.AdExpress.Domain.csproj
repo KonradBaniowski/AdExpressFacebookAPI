@@ -66,6 +66,9 @@
     <Compile Include="Exceptions\TranslationException.cs" />
     <Compile Include="Exceptions\WebLanguagesXLException.cs" />
     <Compile Include="Exceptions\WebThemesXLException.cs" />
+    <Compile Include="Layers\DataAccessLayer.cs" />
+    <Compile Include="Layers\LayerBase.cs" />
+    <Compile Include="Layers\RulesLayer.cs" />
     <Compile Include="Levels\DetailLevelItemInformation.cs" />
     <Compile Include="Levels\DetailLevelItemsInformation.cs" />
     <Compile Include="Levels\DetailLevelsInformation.cs" />
