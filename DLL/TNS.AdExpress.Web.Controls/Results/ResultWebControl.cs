@@ -23,6 +23,10 @@ using AjaxPro;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 
+using Portofolio=TNS.AdExpressI.Portofolio;
+using Domain=TNS.AdExpress.Domain.Web.Navigation;
+using System.Reflection;
+
 namespace TNS.AdExpress.Web.Controls.Results{
 	/// <summary>
 	/// Description résumée de ResultWebControl.
@@ -1842,7 +1846,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
             //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(customerWebSession.CustomerLogin.OracleConnectionString));
             //    customerWebSession.CustomerLogin.Connection=(OracleConnection)dataSource.GetSource();
             //}
-
+            Domain.Web.Navigation.Module module=customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule);
 			switch(customerWebSession.CurrentModule){
 				case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
 				case WebConstantes.Module.Name.ALERTE_POTENTIELS:
@@ -1857,6 +1861,12 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					return WebBusinessFacade.Results.SponsorshipSystem.GetResultTable(customerWebSession);
 				case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE :
 				case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE :
+                    if(module.CountryRulesLayer==null)throw(new NullReferenceException("Rules layer is null for the portofolio result"));
+                    object[] parameters=new object[1];                     
+                    parameters[0]=customerWebSession;
+                    Portofolio.IResults result=(Portofolio.IResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class,false,BindingFlags.CreateInstance|BindingFlags.Instance|BindingFlags.Public,null,parameters,null,null,null);
+                    //Portofolio.IResults result=(Portofolio.IResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class);
+                    result.GetResultTable();
 					return WebBusinessFacade.Results.PortofolioSystem.GetResultTable(customerWebSession); 
 				case WebConstantes.Module.Name.DONNEES_DE_CADRAGE :
 					return WebBusinessFacade.Results.SectorDataSystem.GetHtml(customerWebSession);
