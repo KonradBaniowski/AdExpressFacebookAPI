@@ -71,7 +71,6 @@ namespace AdExpress.Private.Results{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-		
 			try{
 	
 				#region Textes et Langage du site
@@ -83,8 +82,9 @@ namespace AdExpress.Private.Results{
 				#endregion
 
 				#region Résultat
-				result = TNS.AdExpress.Web.BusinessFacade.Results.InfoNewsSystem.GetHtml(this.Page,_webSession);
+				result = TNS.AdExpress.Web.BusinessFacade.Results.InfoNewsSystem.GetHtml(this.Page, _webSession);
 				#endregion
+
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -129,5 +129,6 @@ namespace AdExpress.Private.Results{
             this.Unload += new System.EventHandler(this.Page_UnLoad);
 		}
 		#endregion
+
 	}
 }

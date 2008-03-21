@@ -22,14 +22,14 @@ namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
 	/// Classe utilisé pour l'affichage des plaquettes info/news
 	/// </summary>
-	public class InfoNewsUI{
+	public class InfoNewsUI:WebPage{
 
 		#region Méthodes pour la sortie HTML
 		/// <summary>
 		/// Fonction pour la construction du code html pour l'affichage des plaquettes infos/news
 		/// </summary>
 		/// <returns>Source html du résultat</returns>
-		public static string GetHtml(Page page, ArrayList list){
+        public static string GetHtml(Page page, ArrayList list) {
 
 			#region Variables
 			System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
@@ -48,31 +48,31 @@ namespace TNS.AdExpress.Web.UI.Results{
 			if (list!=null && list.Count>0){
 				foreach (WebCommon.Results.InfoNewsItem currentName in list){
 					if (start==1){
-						t.Append("\n<table bgColor=\"#ffffff\" style=\"border-top :#644883 1px solid;  border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">");
+                        t.Append("\n<table class=\"violetBorder txtViolet11Bold whiteBackGround\" cellpadding=0 cellspacing=0 width=\"650\">");
 						t.Append("\n<tr onClick=\"javascript : showHideContent('"+currentName.Name+"');\" style=\"cursor : hand\">");
 						t.Append("\n<td>&nbsp;"+ currentName.Name + "</td>");
-						t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/Images/Common/button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
+                        t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + page.Theme + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
 						t.Append("\n</tr></table>");
 						start=0;
 					}
 					else if (start==0){
-						t.Append("\n<table bgColor=\"#ffffff\" style=\"border-top :#644883 0px solid;  border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">");
+                        t.Append("\n<table class=\"violetBorderWithoutTop txtViolet11Bold whiteBackGround\"  cellpadding=0 cellspacing=0 width=\"650\">");
 						t.Append("\n<tr onClick=\"javascript : showHideContent('"+currentName.Name+"');\" style=\"cursor : hand\">");
 						t.Append("\n<td>&nbsp;"+ currentName.Name + "</td>");
-						t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/Images/Common/button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
+                        t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + page.Theme + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
 						t.Append("\n</tr></table>");
 					}
 
-					t.Append("<div id=\""+currentName.Name+"Content\" style=\"MARGIN-LEFT: 0px; BORDER-TOP: #ffffff 0px solid; BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none;\" >");
-					t.Append("\n<table id=\""+currentName.Name+"\" style=\"border-top :#644883 0px solid; border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet10\" bgcolor=#DED8E5 width=\"650\">");
+					t.Append("<div id=\""+currentName.Name+"Content\" style=\"MARGIN-LEFT: 0px; DISPLAY: none;\" >");
+                    t.Append("\n<table id=\"" + currentName.Name + "\" class=\"violetBorderWithoutTop txtViolet10 paleVioletBackGround\" width=\"650\">");
 					compteur=0;
 					for(int i=0; i<currentName.List.GetLength(1) && currentName.List[0,i]!=null; i++){
 						if(compteur==0){
-							t.Append("\n<tr><td width=50%><a href=\""+ currentName.List[1,i].ToString() +"\" target=\"_blank\"><img src=\"/Images/Common/logoPDF.gif\" border=\"0\" alt=\""+ currentName.List[0,i].ToString() +"\"></a>&nbsp;<a href=\""+ currentName.List[1,i].ToString() +"\" class=\"roll02\" target=\"_blank\">"+ currentName.List[0,i].ToString() +"</a></td>");
+                            t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + page.Theme + "/Images/Common/logoPDF.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
 							compteur=1;
 						}
 						else{
-							t.Append("\n<td width=50%><a href=\""+ currentName.List[1,i].ToString() +"\" target=\"_blank\"><img src=\"/Images/Common/logoPDF.gif\" border=0 alt=\""+ currentName.List[0,i].ToString() +"\"></a>&nbsp;<a href=\""+ currentName.List[1,i].ToString() +"\" class=\"roll02\" target=\"_blank\">"+ currentName.List[0,i].ToString() +"</a></td></tr>");
+                            t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + page.Theme + "/Images/Common/logoPDF.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
 							compteur=0;
 						}
 					}

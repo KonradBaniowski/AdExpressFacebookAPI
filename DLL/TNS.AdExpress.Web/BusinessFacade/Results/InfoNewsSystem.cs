@@ -67,7 +67,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 		/// <param name="page">Page en cours</param>
 		/// <param name="webSession">Session</param>
 		/// <returns>Code HTML du tableau déroulant d'Infos/News</returns>
-		public static string GetHtml(Page page, WebSession webSession){
+        public static string GetHtml(Page page, WebSession webSession) {
 			ArrayList list=new ArrayList();
 
 			#region Construction de la liste
@@ -96,7 +96,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 			}
 			#endregion
 
-			return (WebUI.InfoNewsUI.GetHtml(page,list));
+            return (WebUI.InfoNewsUI.GetHtml(page, list));
 		}
 		#endregion
 		
