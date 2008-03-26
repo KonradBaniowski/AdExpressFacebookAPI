@@ -17,6 +17,7 @@ using TNS.AdExpress.Web.DataAccess.Selections.Slogans;
 using TNS.AdExpress.Web.Core.Sessions;
 using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using DBConstantesClassification=TNS.AdExpress.Constantes.Classification.DB;
 using VhCstes=TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
 using TableName=TNS.AdExpress.Constantes.Classification.DB.Table.name;
@@ -254,7 +255,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			//			int insertIndex = 0;
 			//			string productList="";
 		
-			string[] fileList = null;			
+			string[] fileList = null;
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
 			#region Construction du code HTML
 			if(WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession) && dsSloganList != null && dsSloganList.Tables[0].Rows.Count>0 && hasSlogans) {
@@ -292,7 +294,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				#endregion
 
 				#region Debut Tableau global 
-				output.Write("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td bgColor=\"#ffffff\"><table  vAlign=\"top\">");		
+                output.Write("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td class=\"whiteBackGround\"><table  vAlign=\"top\">");		
 				//				output.Write("<a href=\"javascript: ExpandColapseAllDivs('");
 				output.Write("<a href=\"javascript: SelectAllChilds('selectAllSlogans");
 				//				insertIndex = t.Length;
@@ -351,14 +353,14 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 						#region Nouvel annonceur
 						if (idAdvertiser!= idAdvertiserOld) {
 							//bordure du haut de tableau
-							if (idAdvertiserOld == -1)output.Write("<table style=\"border-top :#644883 1px solid; border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_"+idAdvertiser+"');\" style=\"cursor : hand\">");
-							else output.Write("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_"+idAdvertiser+"');\" style=\"cursor : hand\">");
+							if (idAdvertiserOld == -1)output.Write("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_"+idAdvertiser+"');\" style=\"cursor : pointer\">");
+                            else output.Write("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_" + idAdvertiser + "');\" style=\"cursor : pointer\">");
 							idAdvertiserOld=idAdvertiser;
 							startAdvertiser=0;
 							output.Write("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">&nbsp;&nbsp;&nbsp;"+currentRow["advertiser"].ToString());
 							output.Write("</td>");
-							output.Write("<td align=\"right\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
-							output.Write("</tr><tr><td colspan=\"2\"><div style=\"MARGIN-LEFT: 0px; background-color:#B1A3C1;display ='none';\" id=\"ad_"+idAdvertiser+"\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+                            output.Write("<td align=\"right\" class=\"arrowBackGround\"></td>");
+                            output.Write("</tr><tr><td colspan=\"2\"><div style=\"MARGIN-LEFT: 0px; display ='none';\" class=\"violetBackGroundV3\" id=\"ad_" + idAdvertiser + "\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 							//lien tous selectionner
 							output.Write("<tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('ad_"+idAdvertiser+"')\" title=\""+GestionWeb.GetWebWord(817,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(817,webSession.SiteLanguage)+"</a></td></tr>");
 							advertiserIds+="ad_"+idAdvertiser+",";
@@ -372,14 +374,14 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 							){
 							//						if (idProduct!= idProductOld) {
 							//bordure du haut de tableau
-							if (startProduct == -1)output.Write("<tr><td ><table style=\"background-color:#B1A3C1; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad"+idAdvertiser+"pr_"+idProduct+"');\" style=\"cursor : hand\">");
-							else output.Write("<tr><td ><table style=\"background-color:#B1A3C1; border-top :#644883 1px solid;\" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad"+idAdvertiser+"pr_"+idProduct+"');\" style=\"cursor : hand\">");
+							if (startProduct == -1)output.Write("<tr><td ><table class=\"violetBackGroundV3 txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad"+idAdvertiser+"pr_"+idProduct+"');\" style=\"cursor : pointer\">");
+                            else output.Write("<tr><td ><table class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad" + idAdvertiser + "pr_" + idProduct + "');\" style=\"cursor : pointer\">");
 							idProductOld=idProduct;
 							startProduct=0;
 							output.Write("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">");
 							output.Write("&nbsp;&nbsp;"+currentRow["product"].ToString()+"</td>");
-							output.Write("<td align=\"right\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");
-							output.Write("</tr><tr><td colspan=\"2\"><DIV style=\"background-color:#D0C8DA; MARGIN-LEFT: 5px\" id=\"ad"+idAdvertiser+"pr_"+idProduct+"\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+                            output.Write("<td align=\"right\" class=\"arrowBackGround\"></td>");
+                            output.Write("</tr><tr><td colspan=\"2\"><DIV style=\"MARGIN-LEFT: 5px\" class=\"mediumPurple1\" id=\"ad" + idAdvertiser + "pr_" + idProduct + "\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 							//lien tous selectionner
 							output.Write("<tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('ad"+idAdvertiser+"pr_"+idProduct+"')\" title=\""+GestionWeb.GetWebWord(944,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(944,webSession.SiteLanguage)+"</a></td></tr>");
 											
@@ -393,14 +395,14 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 							//						if (idVehicle!= idVehicleOld) {
 							numColumn = 0;
 							//bordure du haut de tableau#
-							output.Write("<tr><td ><table style=\"background-color:#D0C8DA; border-top :#ffffff 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"643\"><tr width=100%>");
+                            output.Write("<tr><td ><table class=\"mediumPurple1 whiteTopBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"643\"><tr width=100%>");
 							idVehicleOld=idVehicle;
 							startVehicle=0;
 							output.Write("<td align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
 							output.Write("&nbsp;");			
 							output.Write(currentRow["vehicle"].ToString()+"</td>");
-							output.Write("<td align=\"right\" width=100% onClick=\"javascript : DivDisplayer('ad"+idAdvertiser+"pr"+idProduct+"vh_"+idVehicle+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");
-							output.Write("</tr><tr><td colspan=\"2\"><DIV style=\"MARGIN-LEFT: 0px\" id=\"ad"+idAdvertiser+"pr"+idProduct+"vh_"+idVehicle+"\"><table cellpadding=0 cellspacing=0 border=\"0\" bgColor=\"#E1E0DA\" width=\"100%\"><tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('ad"+idAdvertiser+"pr"+idProduct+"vh_"+idVehicle+"')\" class=\"roll04\"  >"+GestionWeb.GetWebWord(1932,webSession.SiteLanguage)+"</a></td></tr>");						
+							output.Write("<td align=\"right\" width=100% onClick=\"javascript : DivDisplayer('ad"+idAdvertiser+"pr"+idProduct+"vh_"+idVehicle+"');\" style=\"cursor : pointer\" class=\"arrowBackGround\"></td>");
+							output.Write("</tr><tr><td colspan=\"2\"><DIV style=\"MARGIN-LEFT: 0px\" id=\"ad"+idAdvertiser+"pr"+idProduct+"vh_"+idVehicle+"\"><table cellpadding=0 cellspacing=0 border=\"0\" class=\"greyBackGround\" width=\"100%\"><tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('ad"+idAdvertiser+"pr"+idProduct+"vh_"+idVehicle+"')\" class=\"roll04\"  >"+GestionWeb.GetWebWord(1932,webSession.SiteLanguage)+"</a></td></tr>");						
 							isNewVehicle=true;
 						}
 						#endregion
@@ -454,20 +456,18 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 											break;
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio :
 											if(currentRow["sloganFile"]!=null && currentRow["sloganFile"].ToString().CompareTo("")!=0)
-											vignettes = "<a href=\"javascript:openDownload('" + currentRow["sloganFile"].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/Images/Common/Picto_Radio.gif\"></a>";
+											vignettes = "<a href=\"javascript:openDownload('" + currentRow["sloganFile"].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/"+themeName+"/Images/Common/Picto_Radio.gif\"></a>";
 											break;
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv :
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others :
 											if (currentRow["sloganFile"] != null && currentRow["sloganFile"].ToString().CompareTo("") != 0)
-											vignettes = "<a href=\"javascript:openDownload('" + currentRow["sloganFile"].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/Images/Common/Picto_pellicule.gif\"></a>";
+											vignettes = "<a href=\"javascript:openDownload('" + currentRow["sloganFile"].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/"+themeName+"/Images/Common/Picto_pellicule.gif\"></a>";
 											break;
 
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing :
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
 
-											
-
-											#region Construction de la liste des images du marketing direct ou de la publicité extérieure
+                                            #region Construction de la liste des images du marketing direct ou de la publicité extérieure
 											fileList = currentRow["sloganFile"].ToString().Split(',');
 											string idAssociatedFile = currentRow["sloganFile"].ToString();
 
@@ -506,7 +506,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 											}
 											else vignettes = GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "<br>";
 											#endregion
-											break;
+											
+                                            break;
 									}
 
 								}
@@ -592,7 +593,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				#endregion
 			}
 			else {
-				output.Write("<tr><td bgcolor=\"#ffffff\" class=\"txtGris11Bold\"><div align=\"center\" class=\"txtGris11Bold\">"+GestionWeb.GetWebWord(177,webSession.SiteLanguage)
+                output.Write("<tr><td class=\"whiteBackGround txtGris11Bold\"><div align=\"center\" class=\"txtGris11Bold\">" + GestionWeb.GetWebWord(177, webSession.SiteLanguage)
 					+"</div><br> </td>  </tr>");
 			}
 			#endregion

@@ -125,10 +125,6 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <returns>Html render to show universe selection</returns>
 		private static string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, IDataSource source, AccessType accessType) {
 			
-			#region Constantes
-			const string BORDER_COLOR = "#808080";
-			#endregion
-
 			#region Variables
 			int level = 1;
 			ArrayList itemIdList = null;

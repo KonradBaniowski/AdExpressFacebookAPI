@@ -13,6 +13,7 @@ using System.Text;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Common.Results;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions {
 
@@ -68,13 +69,14 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions {
 		///  <since>jeudi 13 juillet 2006</since>
 		protected override void RenderImage(StringBuilder output) {
 			string[] pathes = this._version.Path.Split(',');
-			output.Append("<tr ><td align=\"left\" bgcolor=\"#E0D7EC\" >");
+            string themeName = WebApplicationParameters.Themes[this._webSession.SiteLanguage].Name;
+            output.Append("<tr ><td align=\"left\" class=\"sloganVioletBackGround\" >");
 			output.Append("<table align=\"left\" border=0 cellpadding=0  cellspacing=0><tr >");
-			foreach(string path in pathes){				
-				output.Append("<td bgcolor=\"#E0D7EC\" >");
+			foreach(string path in pathes){
+                output.Append("<td class=\"sloganVioletBackGround\" >");
 				output.Append("<a href=\"javascript:openPressCreation('" + this._version.Path.Replace("/imagette", "") + "');\">");
 				output.Append("<img border=0 "
-					+ ((path.Length>0)?" width=\"70px\" height=\"90px\" src=\"" + path + "\"" :"src=\"images/common/detailSpot_down.gif\"")
+					+ ((path.Length>0)?" width=\"70px\" height=\"90px\" src=\"" + path + "\"" :"src=\"/App_Themes/"+themeName+"/images/common/detailSpot_down.gif\"")
 					+ ">");
 				output.Append("</a>");
 				output.Append("</td>");	

@@ -1202,11 +1202,12 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <summary>
 		/// Javascript permettant d'ouvrir/Fermer un div 
 		/// </summary>
+        /// <param name="themeName">Theme name</param>
 		/// <remarks>
 		/// Le script est à enregistrer sous le nom DivDisplayer
 		/// </remarks>
 		/// <returns>Code JavaScript</returns>
-		public static string DivDisplayerOption(string siteLanguage){
+		public static string DivDisplayerOption(string themeName){
 			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
 			t.Append(" <script language=\"JavaScript\">");	
 			t.Append(" function DivDisplayerOption(id)");
@@ -1215,12 +1216,12 @@ namespace TNS.AdExpress.Web.Functions{
 			t.Append("if (oContent.style.display =='') {"); 
 			t.Append("oContent.style.display = 'none'; ");
 
-			t.Append("document.getElementById('ImgOpenOption').src = \"/Images/"+siteLanguage+"/Others/OpenOptions.gif\"; ");
+			t.Append("document.getElementById('ImgOpenOption').src = \"/App_Themes/"+themeName+"/Images/Culture/Others/OpenOptions.gif\"; ");
 
 			t.Append("}"); 
 			t.Append("else { ");
 			t.Append("oContent.style.display=''; ");
-			t.Append("document.getElementById('ImgOpenOption').src = \"/Images/"+siteLanguage+"/Others/CloseOptions.gif\"; ");
+            t.Append("document.getElementById('ImgOpenOption').src = \"/App_Themes/"+themeName+"/Images/Culture/Others/CloseOptions.gif\"; ");
 			t.Append(" } ");
 			t.Append(" } ");
 			t.Append("</script>");

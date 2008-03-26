@@ -58,12 +58,12 @@ namespace TNS.AdExpress.Web.UI.Results
 			if(tab!=null){
 
 				#region Affichage du tableau de résultats
-				t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 align=center>");
+                t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 align=center>");
 					
 				#region En-tête du tableau
 				t.Append("\r\n\t<tr height=\"20px\">");
 				//Libellé période N
-				t.Append("<td  bgcolor=#ffffff nowrap  valign=\"middle\">&nbsp;</td>");
+                t.Append("<td  class=\"whiteBackGround\" nowrap  valign=\"middle\">&nbsp;</td>");
 				t.Append("<td class=\""+P2+"\"  nowrap >"+tab[0,FrameWorkConstantes.Results.SynthesisRecap.TOTAL_N_COLUMN_INDEX].ToString()+"</td>");				
 				if(webSession.ComparativeStudy){
 					//Libellé période N-1
@@ -78,8 +78,8 @@ namespace TNS.AdExpress.Web.UI.Results
 
 				#region Lignes du tableau
 				for(int i=1;i<tab.GetLength(0);i++){
-					
-					t.Append("\r\n\t<tr align=\"right\"  bgcolor=#B1A3C1 height=\"20px\" >");
+
+                    t.Append("\r\n\t<tr align=\"right\"  class=\"violetBackGroundV3\" height=\"20px\" >");
 
 					for(int j=0;j<tab.GetLength(1);j++){							
 						unit ="";
@@ -92,8 +92,8 @@ namespace TNS.AdExpress.Web.UI.Results
 							(j>FrameWorkConstantes.Results.SynthesisRecap.TOTAL_N_COLUMN_INDEX && webSession.ComparativeStudy)){ //Affiche données année N ou N-1 avec étude comparartive
 							//Nombre de produits ou d'annonceurs actifs						
 							if(IsNumberValue(i,j)){
-								if(tab[i,j]!=null)t.Append("\r\n\t<td bgcolor=#D0C8DA class=\""+L2+"\" nowrap>"+double.Parse(tab[i,j].ToString()).ToString("### ### ##0")+"</td>");											 
-								else t.Append("\r\n\t\t<td align=\"left\" bgcolor=#D0C8DA class=\""+L2+"\" nowrap>&nbsp;</td>");
+								if(tab[i,j]!=null)t.Append("\r\n\t<td class=\""+ (excel ? "" : "violetBackGroundV2 ")+""+L2+"\" nowrap>"+double.Parse(tab[i,j].ToString()).ToString("### ### ##0")+"</td>");
+                                else t.Append("\r\n\t\t<td align=\"left\" class=\""+ (excel ? "" : "violetBackGroundV2 ")+"" + L2 + "\" nowrap>&nbsp;</td>");
 							}else{
 								//Valeur Keuro ou PDV ou Evolution
 								percentage = IsPercentageValue(i,j);
@@ -126,8 +126,8 @@ namespace TNS.AdExpress.Web.UI.Results
 								}else if(IsUnitValue(i,j) && tab[i,j]!=null){
 									unit = WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,j].ToString(),WebConstantes.CustomerSessions.Unit.kEuro,percentage);						
 								}
-								if(unit.Trim().Length==0)unit="";							
-								t.Append("\r\n\t<td bgcolor=#D0C8DA class=\""+L2+"\" nowrap>"+unit+"</td>");
+								if(unit.Trim().Length==0)unit="";
+                                t.Append("\r\n\t<td class=\""+ (excel ? "" : "violetBackGroundV2 ")+"" + L2 + "\" nowrap>" + unit + "</td>");
 								unit="";	
 							}
 						}
@@ -250,8 +250,8 @@ namespace TNS.AdExpress.Web.UI.Results
 		private static string AddSeparator(bool excel,bool comparativeStudy){
 			string separator="";
 			string colspan="3";
-			if(comparativeStudy)colspan="5"; 
-			if(!excel)separator="<tr><td bgcolor=\"#ffffff\" style=\"HEIGHT: 5px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\" colspan="+colspan+"></td></tr>";	
+			if(comparativeStudy)colspan="5";
+            if (!excel) separator = "<tr><td class=\"whiteBackGround whiteBottomBorder\" style=\"HEIGHT: 5px; BORDER-TOP: white 0px solid;\" colspan=" + colspan + "></td></tr>";	
 			//if(!excel)separator="<tr><td bgcolor=\"#ffffff\" style=\"BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\" colspan="+colspan+"><img width=3px></td></tr>";	// bgcolor=\"#644883\"	
 			return separator;
 		}

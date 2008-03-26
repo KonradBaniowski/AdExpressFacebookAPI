@@ -196,8 +196,8 @@ namespace AdExpress.Private.Results
                 InformationWebControl1.Language = _webSession.SiteLanguage;
                 //				ExportWebControl1.CustomerWebSession=_webSession;
                 //Bouton valider dans la sous sélection
-                okImageButton.ImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/valider_up.gif";
-                okImageButton.RollOverImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/valider_down.gif";
+                //okImageButton.ImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/valider_up.gif";
+                //okImageButton.RollOverImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/valider_down.gif";
                 #endregion
 
                 #region Period Detail
@@ -213,7 +213,7 @@ namespace AdExpress.Private.Results
                 }
                 else
                 {
-                    zoomButton = string.Format("<tr bgcolor=\"#ffffff\" ><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/MediaPlanResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td bgColor=\"#ffffff\" height=\"5\"></td></tr>",
+                    zoomButton = string.Format("<tr class=\"whiteBackGround\" ><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/"+this.Theme+"/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/"+this.Theme+"/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/MediaPlanResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td class=\"whiteBackGround\" height=\"5\"></td></tr>",
                         _webSession.IdSession,
                         _webSession.SiteLanguage,
                         GestionWeb.GetWebWord(2309, _webSession.SiteLanguage));
@@ -315,6 +315,7 @@ namespace AdExpress.Private.Results
 
                 #region SetZoom
                 StringBuilder js = new StringBuilder();
+                js.Append("\r\n<script type=\"text/javascript\">");
                 js.Append("\r\nfunction SetZoom(){");
                 js.AppendFormat("\r\n\tif ({0} == '')", SubPeriodSelectionWebControl1.PeriodContainerName);
                 js.Append("\r\n\t{");
@@ -330,8 +331,14 @@ namespace AdExpress.Private.Results
                 js.AppendFormat("\r\n\t\tdocument.getElementById(\"zoomParam\").value = {0};", SubPeriodSelectionWebControl1.PeriodContainerName);
                 js.Append("\r\n\t}");
                 js.Append("\r\n}");
+                js.Append("\r\n</script>");
                 SetZoom = js.ToString();
                 #endregion
+
+                #region script
+                if (!this.ClientScript.IsClientScriptBlockRegistered("SetZoom")) this.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetZoom", SetZoom);
+                #endregion
+
             }
             else
             {

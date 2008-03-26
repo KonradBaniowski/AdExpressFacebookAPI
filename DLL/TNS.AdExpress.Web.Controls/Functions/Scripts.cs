@@ -101,9 +101,10 @@ namespace TNS.AdExpress.Web.Controls.Functions
 		#region Fonction Page de résultats
 		/// <summary>
 		/// Script fontcion d'affichage d'une page de résultats 
-		/// </summary>		
+		/// </summary>
+        /// <param name="themeName">Theme name</param>
 		/// <returns>Javascript Code</returns>
-		public static string GetResultPage(){
+		public static string GetResultPage(string themeName){
 			StringBuilder js = new StringBuilder(1000);
 			js.Append("\r\n\nfunction GetResultPage(obj){");			
 			
@@ -114,13 +115,13 @@ namespace TNS.AdExpress.Web.Controls.Functions
 		
 			js.Append("\r\n\t htmlNavigationBarUp=GetNavigationBar('isUp'); ");
 			
-			js.Append("\r\n\t\t sb.append('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/Images/Common/Result/header.gif\">');");				
+			js.Append("\r\n\t\t sb.append('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/"+themeName+"/Images/Common/Result/header.gif\">');");				
 			js.Append("\r\n\t\t sb.append(htmlNavigationBarUp);");	
-			js.Append("\r\n\t\t sb.append('</td></tr>');");	
-			
+			js.Append("\r\n\t\t sb.append('</td></tr>');");
 
-			js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" style=\"padding:10px;border-left-color:#644883; border-left-width:1px; border-left-style:solid;border-right-color:#644883; border-right-width:1px; border-right-style:solid;\">');");	
-			js.Append("\r\n\t\t sb.append('<table width=\"100%\" bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0>');");	
+
+            js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" style=\"padding:10px;\" class=\"MSVioletRightLeftBorder\">');");
+            js.Append("\r\n\t\t sb.append('<table width=\"100%\" class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0>');");	
 			js.Append("\r\n\t if(withHeader) ");
 			js.Append("\r\n\t\t sb.append( tab[0]);");	
 			js.Append("\r\n\t if(currentPageIndex==1) ");
@@ -141,7 +142,7 @@ namespace TNS.AdExpress.Web.Controls.Functions
 			js.Append("\r\n\t\t sb.append('</table></td></tr>');");
 											
 			js.Append("\r\n\t htmlNavigationBarDown=GetNavigationBar('isDown'); ");
-			js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/Images/Common/Result/footer.gif\">');");	
+			js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/"+themeName+"/Images/Common/Result/footer.gif\">');");	
 			js.Append("\r\n\t\t sb.append(htmlNavigationBarDown);");
 			js.Append("\r\n\t\t sb.append('</td></tr></table>');");
 			js.Append("\r\n\t obj.innerHTML=sb.toString();");	
@@ -156,14 +157,15 @@ namespace TNS.AdExpress.Web.Controls.Functions
 		/// <summary>
 		/// Script fonction de pagination 
 		/// </summary>		
+        /// <param name="themeName">Theme name</param>
 		/// <returns>Javascript Code</returns>
-		public static string Paginate(){
+		public static string Paginate(string themeName){
 			StringBuilder js = new StringBuilder(1000);
 			js.Append("\r\n\nfunction paginate(pageIndex){");
 			js.Append("\r\n\t currentPageIndex = pageIndex;");
 
 			//page de résultat
-			js.Append("\r\n\t oN.innerHTML='<img src=\"/Images/Common/waitAjax.gif\">';");
+			js.Append("\r\n\t oN.innerHTML='<img src=\"/App_Themes/"+themeName+"/Images/Common/waitAjax.gif\">';");
 			js.Append("\r\n\t setTimeout(\"GetResultPage(oN)\",0);");
 						
 			js.Append("\r\n}");
@@ -178,8 +180,9 @@ namespace TNS.AdExpress.Web.Controls.Functions
 		/// <param name="webControlID">Id du contrôle web appelant</param>
 		/// <param name="webSession">Session du client</param>	
 		/// <param name="withSelectionCallBack">Indique s'il faut afficher le bouton de rappel de sélection</param>
+        /// <param name="themeName">Theme name</param>
 		/// <returns>Javascript Code</returns>
-		public static string GetNavigationBar(string webControlID,WebSession webSession,bool withSelectionCallBack){
+		public static string GetNavigationBar(string webControlID,WebSession webSession, bool withSelectionCallBack, string themeName){
 			StringBuilder js = new StringBuilder(2000);
 			js.Append("\r\n\nfunction GetNavigationBar(up){");
 			js.Append("\r\n\t var htmlNavigationBar = ''; ");
@@ -190,8 +193,8 @@ namespace TNS.AdExpress.Web.Controls.Functions
 			
 			js.Append("\r\n\t if( pageCount > 0 ) { ");
 			
-			js.Append("\r\n\t\t if( pageCount > 1 ) { ");								
-			js.Append("\r\n\t\t htmlNavigationBar += ' <font color=\"#FF0099\">'+currentPageIndex+'</font> ';");
+			js.Append("\r\n\t\t if( pageCount > 1 ) { ");
+            js.Append("\r\n\t\t htmlNavigationBar += ' <font class=\"pinkTextColor\">'+currentPageIndex+'</font> ';");
 			js.Append("\r\n\t\t leftPageIndex = rightPageIndex = currentPageIndex;");
 			js.Append("\r\n\t\t while(nbIndexPage>0 && pageCount>1){ ");
 			js.Append("\r\n\t\t\t if( currentPageIndex!=1 && leftPageIndex>1) {");
@@ -214,10 +217,10 @@ namespace TNS.AdExpress.Web.Controls.Functions
 			js.Append("\r\n\t\t\t\t  pres = pres +' onmouseover=\"'+up+'_previous_img.src=" + webControlID + "_img_previous_in.src;\"';");
 			js.Append("\r\n\t\t\t\t  pres = pres +' onmouseout=\"'+up+'_previous_img.src=" + webControlID + "_img_previous_out.src;\"' ;");
 			js.Append("\r\n\t\t\t\t  pres = pres +' href=\"javascript:paginate('+tempIndex+');\" ';");
-			js.Append("\r\n\t\t\t\t  pres = pres +'><IMG border=0 alt=\"\" name=\"'+up+'_previous_img\" src=\"/Images/Common/Result/bt_previous_up.gif\"></a>';");
+			js.Append("\r\n\t\t\t\t  pres = pres +'><IMG border=0 alt=\"\" name=\"'+up+'_previous_img\" src=\"/App_Themes/"+themeName+"/Images/Common/Result/bt_previous_up.gif\"></a>';");
 			js.Append("\r\n\t\t\t  }");
 			js.Append("\r\n\t\t\t  else {");
-			js.Append("\r\n\t\t\t\t  pres = pres +'<IMG border=0 alt=\"\" name=\"'+up+'_previous_img\" src=\"/Images/Common/Result/bt_previous_up.gif\">';");
+			js.Append("\r\n\t\t\t\t  pres = pres +'<IMG border=0 alt=\"\" name=\"'+up+'_previous_img\" src=\"/App_Themes/"+themeName+"/Images/Common/Result/bt_previous_up.gif\">';");
 			js.Append("\r\n\t\t\t  }");
 			js.Append("\r\n\t\t\t  htmlNavigationBar=pres+htmlNavigationBar;");
 
@@ -229,10 +232,10 @@ namespace TNS.AdExpress.Web.Controls.Functions
 			js.Append("\r\n\t\t\t  firstpage = firstpage +' onmouseover=\"'+up+'_first_img.src=" + webControlID + "_img_first_in.src;\"';");
 			js.Append("\r\n\t\t\t  firstpage = firstpage +' onmouseout=\"'+up+'_first_img.src=" + webControlID + "_img_first_out.src;\"' ;");
 			js.Append("\r\n\t\t\t  firstpage = firstpage +' href=\"javascript:paginate('+tempIndex+');\" ';");
-			js.Append("\r\n\t\t\t  firstpage = firstpage +'><IMG border=0 alt=\"\" name=\"'+up+'_first_img\" src=\"/Images/Common/Result/bt_first_up.gif\"></a>';");
+			js.Append("\r\n\t\t\t  firstpage = firstpage +'><IMG border=0 alt=\"\" name=\"'+up+'_first_img\" src=\"/App_Themes/"+themeName+"/Images/Common/Result/bt_first_up.gif\"></a>';");
 			js.Append("\r\n\t\t\t  }");
 			js.Append("\r\n\t\t\t  else {");
-			js.Append("\r\n\t\t\t  firstpage = firstpage +'<IMG border=0 alt=\"\" name=\"'+up+'_first_img\" src=\"/Images/Common/Result/bt_first_up.gif\">';");
+			js.Append("\r\n\t\t\t  firstpage = firstpage +'<IMG border=0 alt=\"\" name=\"'+up+'_first_img\" src=\"/App_Themes/"+themeName+"/Images/Common/Result/bt_first_up.gif\">';");
 			js.Append("\r\n\t\t\t  }");
 			js.Append("\r\n\t\t\t  htmlNavigationBar= '&nbsp;&nbsp;'+firstpage+htmlNavigationBar;");
 
@@ -243,10 +246,10 @@ namespace TNS.AdExpress.Web.Controls.Functions
 			js.Append("\r\n\t\t\t\t  htmlNavigationBar = htmlNavigationBar +' onmouseover=\"'+up+'_next_img.src=" + webControlID + "_img_next_in.src;\"';");
 			js.Append("\r\n\t\t\t\t  htmlNavigationBar = htmlNavigationBar +' onmouseout=\"'+up+'_next_img.src=" + webControlID + "_img_next_out.src;\"' ;");
 			js.Append("\r\n\t\t\t\t  htmlNavigationBar = htmlNavigationBar +' href=\"javascript:paginate('+tempIndex+');\" ';");
-			js.Append("\r\n\t\t\t\t  htmlNavigationBar = htmlNavigationBar +'><IMG border=0 alt=\"\" name=\"'+up+'_next_img\" src=\"/Images/Common/Result/bt_next_up.gif\"></a>';");
+			js.Append("\r\n\t\t\t\t  htmlNavigationBar = htmlNavigationBar +'><IMG border=0 alt=\"\" name=\"'+up+'_next_img\" src=\"/App_Themes/"+themeName+"/Images/Common/Result/bt_next_up.gif\"></a>';");
 			js.Append("\r\n\t\t\t  }");
 			js.Append("\r\n\t\t\t  else {");
-			js.Append("\r\n\t\t\t\t  htmlNavigationBar = htmlNavigationBar +'<IMG border=0 alt=\"\" name=\"'+up+'_next_img\" src=\"/Images/Common/Result/bt_next_up.gif\">';");
+			js.Append("\r\n\t\t\t\t  htmlNavigationBar = htmlNavigationBar +'<IMG border=0 alt=\"\" name=\"'+up+'_next_img\" src=\"/App_Themes/"+themeName+"/Images/Common/Result/bt_next_up.gif\">';");
 			js.Append("\r\n\t\t\t  }");
 
 			//Dernière Page 			
@@ -257,10 +260,10 @@ namespace TNS.AdExpress.Web.Controls.Functions
 			js.Append("\r\n\t\t\t\t  lastpage = lastpage +' onmouseover=\"'+up+'_last_img.src=" + webControlID + "_img_last_in.src;\"';");
 			js.Append("\r\n\t\t\t\t  lastpage = lastpage +' onmouseout=\"'+up+'_last_img.src=" + webControlID + "_img_last_out.src;\"' ;");
 			js.Append("\r\n\t\t\t\t  lastpage = lastpage +' href=\"javascript:paginate('+tempIndex+');\" ';");
-			js.Append("\r\n\t\t\t\t  lastpage = lastpage +'><IMG border=0 alt=\"\" name=\"'+up+'_last_img\" src=\"/Images/Common/Result/bt_last_up.gif\"></a>';");
+			js.Append("\r\n\t\t\t\t  lastpage = lastpage +'><IMG border=0 alt=\"\" name=\"'+up+'_last_img\" src=\"/App_Themes/"+themeName+"/Images/Common/Result/bt_last_up.gif\"></a>';");
 			js.Append("\r\n\t\t\t  }");
 			js.Append("\r\n\t\t\t  else {");
-			js.Append("\r\n\t\t\t\t  lastpage = lastpage +'<IMG border=0 alt=\"\" name=\"'+up+'_last_img\" src=\"/Images/Common/Result/bt_last_up.gif\">';");
+			js.Append("\r\n\t\t\t\t  lastpage = lastpage +'<IMG border=0 alt=\"\" name=\"'+up+'_last_img\" src=\"/App_Themes/"+themeName+"/Images/Common/Result/bt_last_up.gif\">';");
 			js.Append("\r\n\t\t\t  }");
 			js.Append("\r\n\t\t\t  htmlNavigationBar=htmlNavigationBar+lastpage;");
 			js.Append("\r\n\t\t } ");		
@@ -274,7 +277,7 @@ namespace TNS.AdExpress.Web.Controls.Functions
 			js.Append("\r\n\t\t htmlNavigationBar=PageSizeOptions(pageSizeOptionsList,htmlNavigationBar,up); }");
 					
 			//Appel calque rappel sélection (Rappel de sélection : 1989)
-			if(withSelectionCallBack)js.Append("\r\n htmlNavigationBar ='&nbsp;<a href=\"javascript:afficher(divName);\"     onmouseover=\"'+up+'_detail_img.src=" + webControlID + "_img_detail_in.src;\" onmouseout=\"'+up+'_detail_img.src=" + webControlID + "_img_detail_out.src;\"     ><img src=\"/Images/Common/Result/bt_detail_up.gif\" border=0 title=\""+GestionWeb.GetWebWord(1989,webSession.SiteLanguage)+"\" align=\"absmiddle\" name=\"'+up+'_detail_img\"></a>&nbsp;'+htmlNavigationBar;");
+			if(withSelectionCallBack)js.Append("\r\n htmlNavigationBar ='&nbsp;<a href=\"javascript:afficher(divName);\"     onmouseover=\"'+up+'_detail_img.src=" + webControlID + "_img_detail_in.src;\" onmouseout=\"'+up+'_detail_img.src=" + webControlID + "_img_detail_out.src;\"     ><img src=\"/App_Themes/"+themeName+"/Images/Common/Result/bt_detail_up.gif\" border=0 title=\""+GestionWeb.GetWebWord(1989,webSession.SiteLanguage)+"\" align=\"absmiddle\" name=\"'+up+'_detail_img\"></a>&nbsp;'+htmlNavigationBar;");
 			js.Append("\r\n\t return(htmlNavigationBar); ");
 			js.Append("\r\n }");
 			return js.ToString();
@@ -287,8 +290,9 @@ namespace TNS.AdExpress.Web.Controls.Functions
 		/// </summary>	
 		/// <param name="cookieID">Id cookie</param>
 		/// <param name="webSession">Session du client</param>	
+        /// <param name="themeName">Theme name</param>
 		/// <returns>Javascript Code</returns>
-		public static string PageSizeOptions(string cookieID,WebSession webSession){
+		public static string PageSizeOptions(string cookieID,WebSession webSession, string themeName){
 		//Fonction options nombre de lignes par page
 		StringBuilder js = new StringBuilder(2000);
 		js.Append("\r\n\n function PageSizeOptions(pagesizeList,htmlNavigationBar,up){");			
@@ -327,7 +331,7 @@ namespace TNS.AdExpress.Web.Controls.Functions
 		js.Append("\r\n\t }");
 			
 		//page de résultat	
-		js.Append("\r\n\t oN.innerHTML='<img src=\"/Images/Common/waitAjax.gif\">';");
+		js.Append("\r\n\t oN.innerHTML='<img src=\"/App_Themes/"+themeName+"/Images/Common/waitAjax.gif\">';");
 		js.Append("\r\n\t setTimeout(\"GetResultPage(oN)\",0);");
 		js.Append("\r\n }");
 			return js.ToString();
@@ -340,8 +344,9 @@ namespace TNS.AdExpress.Web.Controls.Functions
 		/// </summary>	
 		/// <param name="cookieID">Id cookie</param>
 		/// <param name="webSession">Session du client</param>	
+        /// <param name="themeName">Theme name</param>
 		/// <returns>Javascript Code</returns>
-		public static string HeaderParentOption(string cookieID,WebSession webSession){
+		public static string HeaderParentOption(string cookieID,WebSession webSession, string themeName){
 			
 		StringBuilder js = new StringBuilder(2000);
 		js.Append("\r\n\n function HeaderParentOption(htmlNavigationBar,up){");
@@ -368,7 +373,7 @@ namespace TNS.AdExpress.Web.Controls.Functions
 
 		//page de résultat
 
-		js.Append("\r\n\t oN.innerHTML='<img src=\"/Images/Common/waitAjax.gif\">';");
+		js.Append("\r\n\t oN.innerHTML='<img src=\"/App_Themes/"+themeName+"/Images/Common/waitAjax.gif\">';");
 		js.Append("\r\n\t setTimeout(\"GetResultPage(oN)\",0);");
 		js.Append("\r\n }");
 			return js.ToString();

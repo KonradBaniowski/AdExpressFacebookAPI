@@ -50,6 +50,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
         private const string COMPONENT_BACK_GROUND = "violetBackGroundV2";
         private const int TRACK_WIDTH = 50;
         private const int TRACK_HEIGHT = 5;
+        private const string WHITE_BACK_GROUND = "whiteBackGround";
         #endregion
 
         #region Properties
@@ -273,9 +274,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         , GestionWeb.GetWebWord(897, _webSession.SiteLanguage)
                         , Dates.dateToString(Dates.getPeriodEndDate(realPeriodEnd, _webSession.PeriodType), _webSession.SiteLanguage)
                     );
-                    sb.AppendFormat("\r\ntab_periodImage_{0}[{1}] = '/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
-                    sb.AppendFormat("\r\ntab_periodImage_selected_{0}[{1}] = '/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
-                    sb.AppendFormat("\r\ntab_periodImage_over_{0}[{1}] = '/Images/Common/button/bt_calendar_down.gif';", this.ID, i + 1);
+                    sb.AppendFormat("\r\ntab_periodImage_{0}[{1}] = '/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
+                    sb.AppendFormat("\r\ntab_periodImage_selected_{0}[{1}] = '/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
+                    sb.AppendFormat("\r\ntab_periodImage_over_{0}[{1}] = '/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_down.gif';", this.ID, i + 1);
                 }
                 if (periodIndex < 0)
                 {
@@ -402,7 +403,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     if (_isAllPeriodAllowed)
                     {
                         sb.Append("\r\n<td valign=\"top\">&nbsp;&nbsp;&nbsp;</td>");
-                        sb.AppendFormat("<td valign=\"top\"><img id=\"img_{0}_{1}\" src=\"/Images/Common/button/bt_calendar_up.gif\" onMouseOver=\"javascript:PeriodMouseOver_{0}({1});\" onMouseOut=\"javascript:PeriodMouseOut_{0}({1});\"  onclick=\"javascript:PeriodSelectAll_{0}();\"/></td>"
+                        sb.AppendFormat("<td valign=\"top\"><img id=\"img_{0}_{1}\" src=\"/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_up.gif\" onMouseOver=\"javascript:PeriodMouseOver_{0}({1});\" onMouseOut=\"javascript:PeriodMouseOut_{0}({1});\"  onclick=\"javascript:PeriodSelectAll_{0}();\"/></td>"
                             , this.ID
                             , i + 1
                             );
@@ -528,7 +529,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             }
             else
             {
-                sb.AppendFormat("<table border=0 cellspacing=0 cellpadding=0 bgcolor=\"{0}\" width=\"100%\">", "#FFFFFF");
+                sb.AppendFormat("<table border=0 cellspacing=0 cellpadding=0 class=\"{0}\" width=\"100%\">", WHITE_BACK_GROUND);
 
                 if (_webSession.PeriodType == WebCst.CustomerSessions.Period.Type.dateToDate) {
                     labBegin = Dates.dateToString(Dates.getPeriodBeginningDate(realPeriodBegin, WebCst.CustomerSessions.Period.Type.dateToDate), _webSession.SiteLanguage);

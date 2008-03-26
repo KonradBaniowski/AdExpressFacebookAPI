@@ -199,7 +199,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             #endregion
 
             #region Début du tableau (support et dates)
-            output.Write("<TABLE width=\"100%\" bgColor=\"#ffffff\" style=\"MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px;BORDER:SOLID 5px #ffffff;\"");
+            output.Write("<TABLE width=\"100%\" class=\"whiteBackGround insertionBorder\"");
             output.Write("cellPadding=\"0\" cellSpacing=\"0\" align=\"" + _align + "\" border=\"0\">");
             #endregion
 

@@ -13,6 +13,7 @@ using ConstantePeriod=TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
@@ -1094,7 +1095,11 @@ namespace TNS.AdExpress.Web.UI.Results {
         /// <param name="isCreative">True if result is a creative PM</param>
         /// <returns>Media plan result (html code + versions codes if required)</returns>
         private static MediaPlanResultData GetHtml(object[,] tab,WebSession webSession, MediaSchedulePeriod period, string zoom, StringBuilder header, ref Int64 nbWeek, bool isExport, int idVehicle, bool isCreative) {
-            
+
+            #region Theme Name
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+            #endregion
+
             #region Pas de données à afficher
             MediaPlanResultData mediaPlanResultData=new MediaPlanResultData();
             if(tab.GetLength(0)==0) {
@@ -1104,8 +1109,8 @@ namespace TNS.AdExpress.Web.UI.Results {
                 }
                 else {
                     mediaPlanResultData.HTMLCode = "<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, webSession.SiteLanguage)
-                        + "<br><br><a href=\"javascript:history.back()\" onmouseover=\"bouton.src='/Images/" + webSession.SiteLanguage + "/button/back_down.gif';\" onmouseout=\"bouton.src = '/Images/" + webSession.SiteLanguage + "/button/back_up.gif';\">"
-                        + "<img src=\"/Images/" + webSession.SiteLanguage + "/button/back_up.gif\" border=0 name=bouton></a></div>";
+                        + "<br><br><a href=\"javascript:history.back()\" onmouseover=\"bouton.src='/App_Themes/"+themeName+"/Images/Culture/button/back_down.gif';\" onmouseout=\"bouton.src = '/App_Themes/"+themeName+"/Images/Culture/button/back_up.gif';\">"
+                        + "<img src=\"/App_Themes/"+themeName+"/Images/Culture/button/back_up.gif\" border=0 name=bouton></a></div>";
                     return (mediaPlanResultData);
                 }
             }
@@ -1415,8 +1420,8 @@ namespace TNS.AdExpress.Web.UI.Results {
                                         classe = "L1";
                                         if (!isExport && !isCreative && tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] != null)
                                         {
-                                            tmpHtml = "<a href=\"javascript:OpenCreatives('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + ",-1,-1,-1,-1','" + zoom + "','-1','" + moduleId.ToString() + "');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";
-                                            tmpHtml2 = "<a href=\"javascript:OpenInsertions('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + ",-1,-1,-1,-1','" + zoom + "');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";
+                                            tmpHtml = "<a href=\"javascript:OpenCreatives('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + ",-1,-1,-1,-1','" + zoom + "','-1','" + moduleId.ToString() + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a>";
+                                            tmpHtml2 = "<a href=\"javascript:OpenInsertions('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + ",-1,-1,-1,-1','" + zoom + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a>";
                                         }
                                     }
                                     if(tab[i,j].GetType()==typeof(TNS.AdExpress.Constantes.FrameWork.MemoryArrayEnd)) {
@@ -1455,8 +1460,8 @@ namespace TNS.AdExpress.Web.UI.Results {
                                     //vérification que la catégorie n est pas les chaines thematiques
                                     //									if (tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX]!=null)tmpHtml="<a href=\"javascript:openCreation('"+webSession.IdSession+"','"+tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX]+","+tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX]+",-1,-1,-1,1','');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";
                                     if (!isExport && !isCreative && tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] != null) {
-                                        tmpHtml = "<a href=\"javascript:OpenCreatives('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + ",-1,-1,-1','" + zoom + "','-1','" + moduleId.ToString() + "');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";
-                                        tmpHtml2 = "<a href=\"javascript:OpenInsertions('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + ",-1,-1,-1','" + zoom + "');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";
+                                        tmpHtml = "<a href=\"javascript:OpenCreatives('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + ",-1,-1,-1','" + zoom + "','-1','" + moduleId.ToString() + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a>";
+                                        tmpHtml2 = "<a href=\"javascript:OpenInsertions('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + ",-1,-1,-1','" + zoom + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a>";
                                     }
                                     // On traite le cas des pages
                                     totalUnit=WebFunctions.Units.ConvertUnitValueToString(tab[i,FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX].ToString(),webSession.Unit);
@@ -1485,8 +1490,8 @@ namespace TNS.AdExpress.Web.UI.Results {
                                     //vérification que la catégorie n est pas les chaines thematiques
                                     //									if (tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX]!=null)tmpHtml="<a href=\"javascript:openCreation('"+webSession.IdSession+"','"+tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX]+","+tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX]+","+tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX]+",-1,-1,1','');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";
                                     if (!isExport && !isCreative && tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] != null) {
-                                        tmpHtml = "<a href=\"javascript:OpenCreatives('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] + ",-1,-1','" + zoom + "','-1','" + moduleId.ToString() + "');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";
-                                        tmpHtml2 = "<a href=\"javascript:OpenInsertions('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] + ",-1,-1','" + zoom + "');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";
+                                        tmpHtml = "<a href=\"javascript:OpenCreatives('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] + ",-1,-1','" + zoom + "','-1','" + moduleId.ToString() + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a>";
+                                        tmpHtml2 = "<a href=\"javascript:OpenInsertions('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] + ",-1,-1','" + zoom + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a>";
                                     }
                                     // On traite le cas des pages
                                     totalUnit=WebFunctions.Units.ConvertUnitValueToString(tab[i,FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX].ToString(),webSession.Unit);
@@ -1513,7 +1518,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                                 totalUnit=WebFunctions.Units.ConvertUnitValueToString(tab[i,FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX].ToString(),webSession.Unit);
                                 //On verifie si la chaine IdMedia est affectée. Elle ne l'est pas dans le cas d'un support appartenant a la caté"gorie "chaîne thématique"
                                 if(tab[i,FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX]!=null)
-                                    t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"L4{0}\">&nbsp;&nbsp;&nbsp;" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L4_COLUMN_INDEX] + "</td><td class=\"L4nb\">" + totalUnit + "</td><td class=\"L4nb\">" + ((double)tab[i, FrameWorkResultConstantes.DetailledMediaPlan.PDM_COLUMN_INDEX]).ToString("0.00") + "</td>" + ((!isExport && !isCreative) ? ((showVersions) ? "<td align=\"center\" class=\"L4\"><a href=\"javascript:OpenCreatives('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L4_ID_COLUMN_INDEX] + ",-1','" + zoom + "','-1','" + moduleId.ToString() + "');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a></td>" : "") + "<td align=\"center\" class=\"L4\"><a href=\"javascript:OpenInsertions('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L4_ID_COLUMN_INDEX] + ",-1','" + zoom + "');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a></td>" : string.Empty), (isExport) ? "export" : string.Empty);
+                                    t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"L4{0}\">&nbsp;&nbsp;&nbsp;" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L4_COLUMN_INDEX] + "</td><td class=\"L4nb\">" + totalUnit + "</td><td class=\"L4nb\">" + ((double)tab[i, FrameWorkResultConstantes.DetailledMediaPlan.PDM_COLUMN_INDEX]).ToString("0.00") + "</td>" + ((!isExport && !isCreative) ? ((showVersions) ? "<td align=\"center\" class=\"L4\"><a href=\"javascript:OpenCreatives('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L4_ID_COLUMN_INDEX] + ",-1','" + zoom + "','-1','" + moduleId.ToString() + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a></td>" : "") + "<td align=\"center\" class=\"L4\"><a href=\"javascript:OpenInsertions('" + webSession.IdSession + "','" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] + "," + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L4_ID_COLUMN_INDEX] + ",-1','" + zoom + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a></td>" : string.Empty), (isExport) ? "export" : string.Empty);
                                 else
                                     t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"L4{0}\">&nbsp;&nbsp;&nbsp;" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L4_COLUMN_INDEX] + "</td><td class=\"L4nb\">" + totalUnit + "</td><td class=\"L4nb\">" + ((double)tab[i, FrameWorkResultConstantes.DetailledMediaPlan.PDM_COLUMN_INDEX]).ToString("0.00") + "</td>" + ((!isExport && !isCreative) ? ((showVersions) ? "<td align=\"center\" class=\"L4\"></td>" : "") + "<td align=\"center\" class=\"L4\"></td>" : string.Empty), (isExport) ? "export" : string.Empty);
                                 //MAJ GR : totaux par années si nécessaire

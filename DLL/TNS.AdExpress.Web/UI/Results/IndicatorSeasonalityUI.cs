@@ -203,7 +203,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			t.Append("<td  nowrap  class=\"p2\">"+GestionWeb.GetWebWord(1153,webSession.SiteLanguage)+"</td>");
 			//Colonne separation 
 			if(!excel){
-				t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 			}
 			//Colonnes 1er annonceurs (optionnels)		
 			t.Append("<td  nowrap  class=\"p2\" colspan=2>"+GestionWeb.GetWebWord(1154,webSession.SiteLanguage)+"</td>");				
@@ -211,7 +211,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			t.Append("<td  nowrap  class=\"p2\">"+GestionWeb.GetWebWord(437,webSession.SiteLanguage)+"</td>");
 			//Colonne separation 
 			if(!excel){
-				t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 			}
 			//Colonnes 1er références (optionnels)		
 			t.Append("<td  nowrap  class=\"p2\" colspan=2>"+GestionWeb.GetWebWord(1155,webSession.SiteLanguage)+"</td>");				
@@ -231,20 +231,20 @@ namespace TNS.AdExpress.Web.UI.Results{
 					else t.Append("<td nowrap  class=\"pmtotal\" >"+GestionWeb.GetWebWord(1189,webSession.SiteLanguage)+"</td>");			
 					if (tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX]!=null)
 //						t.Append("<td nowrap  bgcolor=#B1A3C1 class=\"pmtotalnb\" >"+String.Format("{0:### ### ### ### ##0.## }",Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX].ToString())/(Decimal)1000)+"</td>");
-						t.Append("<td nowrap  bgcolor=#B1A3C1 class=\"pmtotalnb\" >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX].ToString(),webSession.Unit,false)+"</td>");
-					else t.Append("<td nowrap bgcolor=#B1A3C1 class=\"pmtotalnb\" >-</td>");
+                        t.Append("<td nowrap  class=\""+ (excel ? "" : "violetBackGroundV3 ") +"pmtotalnb\" >" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tabTotal[TOTAL_SECTOR_LINE_INDEX, ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX].ToString(), webSession.Unit, false) + "</td>");
+                    else t.Append("<td nowrap class=\""+ (excel ? "" : "violetBackGroundV3 ") +"pmtotalnb\" >-</td>");
 					if(webSession.ComparativeStudy){
 						if (tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.EVOLUTION_COLUMN_INDEX]!=null){
 							if(Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.EVOLUTION_COLUMN_INDEX].ToString())>(Decimal)0.0)image="/I/g.gif";
 							else if (Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.EVOLUTION_COLUMN_INDEX].ToString())<(Decimal)0.0)image="/I/r.gif";
 							else if (Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.EVOLUTION_COLUMN_INDEX].ToString())==(Decimal)0.0)image="/I/o.gif";							
 							if(!excel){
-								t.Append("<td  nowrap  bgcolor=#B1A3C1 class=\"pmtotalnb\">"+Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.EVOLUTION_COLUMN_INDEX].ToString()).ToString("### ### ### ### ##0.##")+"% &nbsp;<img src="+image+"></td>");
+                                t.Append("<td  nowrap  class=\""+ (excel ? "" : "violetBackGroundV3 ") +"pmtotalnb\">" + Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX, ConstResults.Seasonality.EVOLUTION_COLUMN_INDEX].ToString()).ToString("### ### ### ### ##0.##") + "% &nbsp;<img src=" + image + "></td>");
 							}else{
-								t.Append("<td  nowrap  bgcolor=#B1A3C1 class=\"pmtotalnb\">"+Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.EVOLUTION_COLUMN_INDEX].ToString()).ToString("### ### ### ### ##0.##")+"%</td>");
+                                t.Append("<td  nowrap  class=\""+ (excel ? "" : "violetBackGroundV3 ") +"pmtotalnb\">" + Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX, ConstResults.Seasonality.EVOLUTION_COLUMN_INDEX].ToString()).ToString("### ### ### ### ##0.##") + "%</td>");
 							}
 						}
-						else t.Append("<td  nowrap bgcolor=#B1A3C1  class=\"pmtotalnb\">-</td>");
+                        else t.Append("<td  nowrap class=\""+ (excel ? "" : "violetBackGroundV3 ") +"pmtotalnb\">-</td>");
 					}
 					if(tabTotal[TOTAL_SECTOR_LINE_INDEX, ConstResults.Seasonality.REFERENCE_COLUMN_INDEX]!=null)
 						t.Append("<td  nowrap class=\"pmtotalnb\">"+Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX, ConstResults.Seasonality.REFERENCE_COLUMN_INDEX].ToString()).ToString("### ### ### ### ##0.##")+"</td>");
@@ -255,7 +255,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					else t.Append("<td  nowrap class=\"pmtotalnb\" >-</td>");
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");		
+                        t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");		
 					}
 					//Colonnes 1er annonceur (optionnels)
 					if(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.FIRST_ADVERTISER_COLUMN_INDEX]!=null && (Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX].ToString())/(Decimal)1000)>(Decimal)0.0)
@@ -270,7 +270,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					else t.Append("<td class=\"pmtotalnb\" >-</td>");
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");		
+                        t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");		
 					}
 					//Colonnes 1ere référence (optionnels)		
 					if(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.FIRST_PRODUCT_COLUMN_INDEX]!=null && (Decimal.Parse(tabTotal[TOTAL_SECTOR_LINE_INDEX,ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX].ToString())/(Decimal)1000)>(Decimal)0.0)
@@ -300,20 +300,20 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("<td nowrap  class=\"pmtotal\" >"+GestionWeb.GetWebWord(1190,webSession.SiteLanguage)+"</td>");					
 						if (foundRows!=null && foundRows.Length>0 && foundRows[0]!=null && foundRows[0]["TOTAL_N"]!=null )
 //							t.Append("<td nowrap  bgcolor=#B1A3C1 class=\"pmtotalnb\" >"+String.Format("{0:### ### ### ### ##0.## }",Decimal.Parse(foundRows[0]["TOTAL_N"].ToString())/(Decimal)1000)+"</td>");
-							t.Append("<td nowrap  bgcolor=#B1A3C1 class=\"pmtotalnb\" >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(foundRows[0]["TOTAL_N"].ToString(),webSession.Unit,false)+"</td>");
-						else t.Append("<td nowrap bgcolor=#B1A3C1 class=\"pmtotalnb\" >-</td>");
+                            t.Append("<td nowrap  class=\""+ (excel ? "" : "violetBackGroundV3 ") +"pmtotalnb\" >" + WebFunctions.Units.ConvertUnitValueAndPdmToString(foundRows[0]["TOTAL_N"].ToString(), webSession.Unit, false) + "</td>");
+                        else t.Append("<td nowrap class=\"" + (excel ? "" : "violetBackGroundV3 ") + "pmtotalnb\" >-</td>");
 						if(webSession.ComparativeStudy){
 							if (foundRows!=null && foundRows.Length>0 && foundRows[0]!=null && foundRows[0]["EVOL"]!=null){
 								if(Decimal.Parse(foundRows[0]["EVOL"].ToString())>(Decimal)0.0)image="/I/g.gif";
 								else if (Decimal.Parse(foundRows[0]["EVOL"].ToString())<(Decimal)0.0)image="/I/r.gif";
 								else if (Decimal.Parse(foundRows[0]["EVOL"].ToString())==(Decimal)0.0)image="/I/o.gif";								
 								if(!excel){
-									t.Append("<td  nowrap  bgcolor=#B1A3C1 class=\"pmtotalnb\">"+Decimal.Parse(foundRows[0]["EVOL"].ToString()).ToString("### ### ### ### ##0.##")+"% &nbsp;<img src="+image+"></td>");
+                                    t.Append("<td  nowrap  class=\""+ (excel ? "" : "violetBackGroundV3 ") +"pmtotalnb\">" + Decimal.Parse(foundRows[0]["EVOL"].ToString()).ToString("### ### ### ### ##0.##") + "% &nbsp;<img src=" + image + "></td>");
 								}else{
-									t.Append("<td  nowrap  bgcolor=#B1A3C1 class=\"pmtotalnb\">"+Decimal.Parse(foundRows[0]["EVOL"].ToString()).ToString("### ### ### ### ##0.##")+"%</td>");
+                                    t.Append("<td  nowrap  class=\""+ (excel ? "" : "violetBackGroundV3 ") +"pmtotalnb\">" + Decimal.Parse(foundRows[0]["EVOL"].ToString()).ToString("### ### ### ### ##0.##") + "%</td>");
 								}
 							}
-							else t.Append("<td  nowrap bgcolor=#B1A3C1  class=\"pmtotalnb\">-</td>");
+                            else t.Append("<td  nowrap class=\"" + (excel ? "" : "violetBackGroundV3 ") + "pmtotalnb\">-</td>");
 						}
 						if(foundRows!=null && foundRows.Length>0 && foundRows[0]!=null && foundRows[0]["NBREF"]!=null)
 							t.Append("<td  nowrap class=\"pmtotalnb\">"+Decimal.Parse(foundRows[0]["NBREF"].ToString()).ToString("### ### ### ### ##0.##")+"</td>");
@@ -324,7 +324,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						else t.Append("<td  nowrap class=\"pmtotalnb\" >-</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 						}
 						//Colonnes 1er annonceur (optionnels)
 						if(foundRows!=null && foundRows.Length>0 && foundRows[0]!=null && foundRows[0]["ADVERTISER"]!=null)t.Append("<td nowrap class=\"pmtotal\" >"+foundRows[0]["ADVERTISER"].ToString()+"</td>");				
@@ -337,7 +337,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						else t.Append("<td class=\"pmtotalnb\" >-</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 						}
 						//Colonnes 1ere référence (optionnels)		
 						if(foundRows!=null && foundRows.Length>0 && foundRows[0]!=null && foundRows[0]["PRODUCT"]!=null)t.Append("<td nowrap class=\"pmtotal\" >"+foundRows[0]["PRODUCT"].ToString()+"</td>");				
@@ -385,7 +385,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 						}
 						//Colonnes 1er annonceur (optionnels)		
 						if(tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX,ConstResults.Seasonality.FIRST_ADVERTISER_COLUMN_INDEX]!=null && tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX,ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX]!=null && (Decimal.Parse(tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX,ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX].ToString())/(Decimal)1000)>(Decimal)0.0)
@@ -400,7 +400,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						else t.Append("<td nowrap  class=\"pmtotalnb\">-</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 						}
 						//Colonnes 1ere référence (optionnels)		
 						if(tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX,ConstResults.Seasonality.FIRST_PRODUCT_COLUMN_INDEX]!=null && tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX,ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX]!=null && (Decimal.Parse(tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX,ConstResults.Seasonality.INVESTMENT_COLUMN_INDEX].ToString())/(Decimal)1000)>(Decimal)0.0)
@@ -473,21 +473,21 @@ namespace TNS.AdExpress.Web.UI.Results{
 						else t.Append("<td nowrap  class="+adclasse+">-</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 						}
 						#region éléments non personnalisés
 						//Colonnes 1er annonceur (optionnels)		
-						t.Append("<td bgcolor=\"#FFFFFF\" nowrap  class="+adclasse+">-</td>");				
-						t.Append("<td bgcolor=\"#FFFFFF\"  nowrap  class="+adclasse+">-</td>");				
-						t.Append("<td bgcolor=\"#FFFFFF\"  nowrap  class="+adclasse+">-</td>");
+                        t.Append("<td nowrap  class=\"whiteBackGround " + adclasse + "\">-</td>");
+                        t.Append("<td nowrap  class=\"whiteBackGround " + adclasse + "\">-</td>");
+                        t.Append("<td nowrap  class=\"whiteBackGround " + adclasse + "\">-</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 						}
 						//Colonnes 1ere référence (optionnels)		
-						t.Append("<td  bgcolor=\"#FFFFFF\" nowrap  class="+adclasse+">-</td>");				
-						t.Append("<td  bgcolor=\"#FFFFFF\" nowrap  class="+adclasse+">-</td>");				
-						t.Append("<td  bgcolor=\"#FFFFFF\"  nowrap   class="+adclasse+">-</td>");
+                        t.Append("<td  nowrap  class=\"whiteBackGround " + adclasse + "\">-</td>");
+                        t.Append("<td  nowrap  class=\"whiteBackGround " + adclasse + "\">-</td>");
+                        t.Append("<td  nowrap   class=\"whiteBackGround " + adclasse + "\">-</td>");
 						#endregion
 						t.Append("</tr>");
 						color++;				

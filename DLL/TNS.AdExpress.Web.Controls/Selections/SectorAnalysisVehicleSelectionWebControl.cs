@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Data;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Controls.Exceptions;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.DataAccess.Selections.Medias;
 using TNS.AdExpress.Web.Core.Sessions;
 using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
@@ -145,6 +146,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		protected override void Render(HtmlTextWriter output)
 		{
 			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 			
 			if(_reload){
 				if( webSession != null) {
@@ -189,7 +191,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				else  throw (new WebControlInitializationException("Impossible d'initialiser le composant, aucun média n'est accessible."));				
 
 				//Tableau global 
-				t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td bgColor=\"#ffffff\">\n");	
+                t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td class=\"whiteBackGround\">\n");	
 				t.Append("<a href=\"javascript: ExpandColapseAllDivs('"+vhlist+"')\" ");
 				//insertIndex = t.Length;
 				t.Append("\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+GestionWeb.GetWebWord(1117,webSession.SiteLanguage)+"</a>");	
@@ -197,8 +199,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				#region  PluriMedia
 				//bordure du haut de tableau
 				t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_"+VhCstes.plurimedia.GetHashCode().ToString()+"\" >");
-				if (idVehicleOld == -1)t.Append("\n<table bgColor=\"#ffffff\" style=\"border-top :#644883 1px solid;  border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
-				else t.Append("\n<table bgColor=\"#ffffff\" style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");							
+				if (idVehicleOld == -1)t.Append("\n<table class=\"whiteBackGround violetBorderWithoutBottom txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
+                else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");							
 				t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" width=100%>");
 				t.Append("\n<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$"+i+"\" name=\"SectorAnalysisVehicleSelectionWebControl1_"+i+"\" onClick=\"CheckAllChilds('vh_50','"+VehicleIds+"','vh_50')\" value=\"vh_50\">"+GestionWeb.GetWebWord(210,webSession.SiteLanguage)+"");							
 				t.Append("\n</td>\n</tr>");		
@@ -240,8 +242,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						{							
 							//bordure du haut de tableau						
 							t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_"+idVehicle+"\" >");
-							if (idVehicleOld == -1)t.Append("\n<table bgColor=\"#ffffff\" style=\"border-top :#644883 1px solid; border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
-							else t.Append("\n<table bgColor=\"#ffffff\" style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+							if (idVehicleOld == -1)t.Append("\n<table class=\"whiteBackGround violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+                            else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
 
 								//Curseur sur toute la ligne
 								if(OpenVehicleDiv((Int64)idVehicle))t.Append("\n<tr  style=\"cursor : hand\">");
@@ -257,13 +259,13 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							//fin libellé média (nouvelle version)							
 							if(OpenVehicleDiv((Int64)idVehicle)){
 								t.Append("<td width=100% align=\"left\" onClick=\"javascript : DivDisplayer('"+idVehicle+"');\" >"+currentRow["vehicle"].ToString()+"");
-								t.Append("</td><td align=\"right\" onClick=\"javascript : DivDisplayer('"+idVehicle+"');\">");
-								t.Append("<IMG src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\">");
+                                t.Append("</td><td align=\"right\" onClick=\"javascript : DivDisplayer('" + idVehicle + "');\">");
+								t.Append("<IMG src=\"/App_Themes/"+themeName+"/images/Common/button/bt_arrow_down.gif\" width=\"15\">");
 							}else t.Append("<td width=100% align=\"left\" >"+currentRow["vehicle"].ToString()+"");														
 							t.Append("</td></tr>");							
 							t.Append("<tr><td colspan=\"3\" >");
-							t.Append("<Div  style=\"display ='none'\" id=\""+idVehicle+"\">");							
-							t.Append("<TABLE bgcolor=\"#B1A3C1\" cellpadding=0 cellspacing=0 width=100% style=\"border-top :#644883 1px solid; border-bottom :#644883 0px solid; border-left :#644883 0px solid; \" class=\"txtViolet11Bold\">");
+							t.Append("<Div  style=\"display ='none'\" id=\""+idVehicle+"\">");
+                            t.Append("<TABLE cellpadding=0 cellspacing=0 width=100% class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\">");
 							if(OpenVehicleDiv((Int64)idVehicle)){	
 							t.Append("<tr><td class=\"roll04\"><a href=\"javascript: SelectExclusiveAllChilds('vh_"+idVehicle+"','"+VehicleIds+"','vh_"+idVehicle+"','vh_','ct_')\" title=\""+GestionWeb.GetWebWord(1151,webSession.SiteLanguage)+"\" class=\"roll04\">&nbsp;&nbsp;"+GestionWeb.GetWebWord(1151,webSession.SiteLanguage)+"</td></tr>");
 								t.Append("<TR><TD>");	
@@ -276,11 +278,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						if (idCategory!=idCategoryOld && showMediaBranchItem(TableName.category,(Int64)idVehicle))
 						{	
 							numColumn=0;															
-							if(startCategory== -1)t.Append("<tr><td ><div style=\"MARGIN-LEFT: 5px; width=100%; background-color:#B1A3C1;\"  id=\"ct_"+idCategory+"\"><table style=\"background-color:#B1A3C1; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
-							else t.Append("<tr><td><div style=\"MARGIN-LEFT: 5px; width=100%; background-color:#B1A3C1;\"  id=\"ct_"+idCategory+"\"><table style=\"background-color:#B1A3C1; border-top :#644883 1px solid;\" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+							if(startCategory== -1)t.Append("<tr><td ><div style=\"MARGIN-LEFT: 5px; width=100%;\" class=\"violetBackGroundV3\"  id=\"ct_"+idCategory+"\"><table class=\"violetBackGroundV3 txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+							else t.Append("<tr><td><div style=\"MARGIN-LEFT: 5px; width=100%;\" class=\"violetBackGroundV3\"  id=\"ct_"+idCategory+"\"><table class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 
 							//Curseur sur toute la ligne
-							if(showMediaBranchItem(TableName.media,(Int64)idVehicle)) t.Append("\n<tr  style=\"cursor : hand\">");
+							if(showMediaBranchItem(TableName.media,(Int64)idVehicle)) t.Append("\n<tr  style=\"cursor : pointer\">");
 							else t.Append("\n<tr>");
 
 							idCategoryOld=idCategory;
@@ -295,14 +297,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							if(showMediaBranchItem(TableName.media,(Int64)idVehicle)){
 								t.Append(">&nbsp;"+currentRow["category"].ToString()+"</td>");
 								t.Append("<td valign=\"baseline\"  onClick=\"javascript : DivDisplayer('"+idCategory+"');\"   ");
-								t.Append(">&nbsp;<IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\" align=\"right\"></td>");
+								t.Append(">&nbsp;<IMG height=\"15\" src=\"/App_Themes/"+themeName+"/images/Common/button/bt_arrow_down.gif\" width=\"15\" align=\"right\"></td>");
 							}
 							else t.Append(" width=\"15\" colspan=\"2\" >&nbsp;"+currentRow["category"].ToString()+"</td>");
 
 							t.Append("</tr><tr><td colspan=\"3\"><DIV id=\""+idCategory+"\" ><table cellpadding=0 cellspacing=0 border=\"0\" width=100%>");							
 							if(showMediaBranchItem(TableName.media,(Int64)idVehicle))
 							{
-								t.Append("<table cellpadding=0 cellspacing=0 border=\"0\" width=100% style=\"background-color:#D0C8DA; border-top :#ffffff 1px solid; \"  class=\"txtViolet10\">");	
+                                t.Append("<table cellpadding=0 cellspacing=0 border=\"0\" width=100% class=\"mediumPurple1 whiteTopBorder txtViolet10\">");	
 								t.Append("<tr><td colspan=\"3\" class=\"roll04\" ><a href=\"javascript: SelectExclusiveAllChilds('ct_"+idCategory+"','"+VehicleIds+"','vh_"+idVehicle+"','vh_','ct_')\" title=\""+GestionWeb.GetWebWord(1066,webSession.SiteLanguage)+"\" class=\"roll04\">&nbsp;"+GestionWeb.GetWebWord(1066,webSession.SiteLanguage)+"</a></td></tr>");
 							}
 							i++;

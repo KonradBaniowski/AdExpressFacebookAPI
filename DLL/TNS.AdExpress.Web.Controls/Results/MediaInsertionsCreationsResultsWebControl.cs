@@ -99,7 +99,10 @@ namespace TNS.AdExpress.Web.Controls.Results
 		/// Indique s'il faut afficher le bouton de rappel de sélection
 		/// </summary>
 		protected bool _withSelectionCallBack = false;
-
+        /// <summary>
+        /// Theme name
+        /// </summary>
+        protected string _themeName = string.Empty;
 		#endregion
 	
 		#region Propriétés
@@ -237,7 +240,17 @@ namespace TNS.AdExpress.Web.Controls.Results
 		}
 		#endregion
 
-		/// <summary>
+        #region Theme
+        /// <summary>
+        /// Get or Set theme name
+        /// </summary>
+        public string ThemeName {
+            get { return _themeName; }
+            set { _themeName = value; }
+        }
+        #endregion
+
+        /// <summary>
 		/// La liste des paramètres postès^par le navigateur
 		/// </summary>
 		[Bindable(false)]
@@ -330,13 +343,13 @@ namespace TNS.AdExpress.Web.Controls.Results
 			
 			js.Append("\r\n\t\t var sb = new StringBuilder();");							
 			js.Append("\r\n\t if(res!=null && res.value != null){ ");
-			js.Append("\r\n\t\t sb.append('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/Images/Common/Result/header.gif\">');");				
+			js.Append("\r\n\t\t sb.append('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/"+_themeName+"/Images/Common/Result/header.gif\">');");				
 			js.Append("\r\n\t\t sb.append(GetNavigationBar('isUp'));");	
 			js.Append("\r\n\t\t sb.append('</td></tr>');");
-			js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" style=\"padding:10px;border-left-color:#644883; border-left-width:1px; border-left-style:solid;border-right-color:#644883; border-right-width:1px; border-right-style:solid;\">');");			
+            js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" style=\"padding:10px;\" class=\"MSVioletRightLeftBorder\">');");			
 			js.Append("\r\n\t\t sb.append(res.value);");
 			js.Append("\r\n\t\t sb.append('</td></tr>');");		
-			js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/Images/Common/Result/footer.gif\">');");	
+			js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/"+_themeName+"/Images/Common/Result/footer.gif\">');");	
 			js.Append("\r\n\t\t sb.append(GetNavigationBar('isDown'));");
 			js.Append("\r\n\t\t sb.append('</td></tr></table>');");
 			js.Append("\r\n\t oN.innerHTML = sb.toString();");	
@@ -408,19 +421,19 @@ namespace TNS.AdExpress.Web.Controls.Results
 			js.Append("\r\naddEvent(window, \"load\", get_"+this.ID+");");
 
 			//Fonction Page de résultat
-			js.Append(ControlsFunctions.Scripts.GetResultPage());
+			js.Append(ControlsFunctions.Scripts.GetResultPage(_themeName));
 		
 			// Fonction pagination		
-			js.Append(ControlsFunctions.Scripts.Paginate());					
+			js.Append(ControlsFunctions.Scripts.Paginate(_themeName));					
 
 			// Fonction Barre de navigation
-			js.Append(ControlsFunctions.Scripts.GetNavigationBar(this.ID,_customerWebSession,_withSelectionCallBack));
+			js.Append(ControlsFunctions.Scripts.GetNavigationBar(this.ID,_customerWebSession,_withSelectionCallBack,_themeName));
 
 			//Fonction options nombre de lignes par page
-			js.Append(ControlsFunctions.Scripts.PageSizeOptions(WebConstantes.Cookies.CurrentMediaInsertionsPageSize,_customerWebSession));
+			js.Append(ControlsFunctions.Scripts.PageSizeOptions(WebConstantes.Cookies.CurrentMediaInsertionsPageSize,_customerWebSession,_themeName));
 						
 			//Fonction Option ajout en-tête parent
-			js.Append(ControlsFunctions.Scripts.HeaderParentOption(WebConstantes.Cookies.IsShowMediaInsertionsParenHeader,_customerWebSession));			
+			js.Append(ControlsFunctions.Scripts.HeaderParentOption(WebConstantes.Cookies.IsShowMediaInsertionsParenHeader,_customerWebSession,_themeName));			
 
 			//Fonction ajout de(s) ligne(s) parent
 			js.Append(ControlsFunctions.Scripts.GetParentLines());
@@ -813,7 +826,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 		/// <returns></returns>
 		protected string GetLoadingHTML(){
 		
-			return("<div align=\"center\" id=\"res_"+this.ID+"\"><img src=\"/Images/Common/waitAjax.gif\"></div>");
+			return("<div align=\"center\" id=\"res_"+this.ID+"\"><img src=\"/App_Themes/"+_themeName+"/Images/Common/waitAjax.gif\"></div>");
 			
 		}
 
@@ -825,7 +838,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 		/// </summary>
 		/// <returns></returns>
 		protected string GetWindowExpandMenuHTML(){
-			return("<div class=Window align=\"center\" id=\"windowExpandMenu_"+this.ID+"\" style=\"display:none; POSITION: absolute; width: 200px;\"><img src=\"/Images/Common/waitAjax.gif\"></div>");
+			return("<div class=Window align=\"center\" id=\"windowExpandMenu_"+this.ID+"\" style=\"display:none; POSITION: absolute; width: 200px;\"><img src=\"/App_Themes/"+_themeName+"/Images/Common/waitAjax.gif\"></div>");
 		}
 		#endregion
 

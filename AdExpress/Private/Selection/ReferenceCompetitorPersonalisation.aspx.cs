@@ -114,8 +114,8 @@ namespace AdExpress.Private.Selection{
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);							
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;		
-				validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/suivant_up.gif";
-				validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/suivant_down.gif";
+				validateButton.ImageUrl="/App_Themes/"+this.Theme+"/Images/Culture/button/suivant_up.gif";
+				validateButton.RollOverImageUrl="/App_Themes/"+this.Theme+"/Images/Culture/button/suivant_down.gif";
 				validateButton.ToolTip=GestionWeb.GetWebWord(1098,_webSession.SiteLanguage);
 				recapAdvertiserSelectionWebControl.Title = GestionWeb.GetWebWord(1122,_webSession.SiteLanguage);
 				#endregion
@@ -331,14 +331,14 @@ namespace AdExpress.Private.Selection{
 			//Changer le bouton next en valider
 			validateButton.CommandName="validate";
 			validateButton.ToolTip=GestionWeb.GetWebWord(1099,_webSession.SiteLanguage);
-			validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-			validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+			validateButton.ImageUrl="/App_Themes/"+this.Theme+"/Images/Culture/button/valider_up.gif";
+			validateButton.RollOverImageUrl="/App_Themes/"+this.Theme+"/Images/Culture/button/valider_down.gif";
 			//Description de l apage
 			ModuleTitleWebControl1.CodeDescription=1094;
 			recapAdvertiserSelectionWebControl.Title = GestionWeb.GetWebWord(1123,_webSession.SiteLanguage);
 			//Bouton precedent
-			previousButton="<a href=\"#\" onclick=\"javascript:history.back();\" onmouseover=\"bouton.src='/Images/"+_webSession.SiteLanguage+"/button/back_down.gif';\" onmouseout=\"bouton.src = '/Images/"+_webSession.SiteLanguage+"/button/back_up.gif';\">";
-			previousButton+="<img src=\"/Images/"+_webSession.SiteLanguage+"/button/back_up.gif\" border=0 name=bouton></a>&nbsp;";
+			previousButton="<a href=\"#\" onclick=\"javascript:history.back();\" onmouseover=\"bouton.src='/App_Themes/"+this.Theme+"/Images/Culture/button/back_down.gif';\" onmouseout=\"bouton.src = '/App_Themes/"+this.Theme+"/Images/Culture/button/back_up.gif';\">";
+			previousButton+="<img src=\"/App_Themes/"+this.Theme+"/Images/Culture/button/back_up.gif\" border=0 name=bouton></a>&nbsp;";
 			MenuWebControl2.ForbidRecall = false;
 		}
 		#endregion

@@ -73,7 +73,9 @@ namespace AdExpress.Private.Results.RawExcel{
 		/// <param name="sender">page</param>
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			try{	
+			try{
+
+                Response.ContentType = "application/vnd.ms-excel";
 
 				#region Textes et langage du site
 				//Modification de la langue pour les Textes AdExpress

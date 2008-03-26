@@ -1955,7 +1955,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 if (yearIndex == _selectedYear) display = "";
                 else if (display.Length == 0) display = "none";
                 html.Append("<table class=\"SMParent\" border=0 cellspacing=0 cellpadding=0 width=\"100%\" style=\"cursor:pointer;\"><tr onClick=\"javascript:ShowHideCalendar('Parent_" + yearIndex.ToString() + "');\"><td style=\"font-size-adjust: 0.58;font-family: Arial;font:bold 12px arial;color: #644882;\">" + yearIndex.ToString() + "</td><td><IMG height=\"15\" align=\"right\" src=\"/Images/" + _language.ToString() + "/GlobalCalendar/bt_arrow_down.gif\" width=\"15\"></td></tr></table>");
-                html.Append("<div style=\"padding:0;margin:0; display =" + display + "; \" id=\"Parent_" + yearIndex.ToString() + "Content\">");
+                html.Append("<div style=\"padding:0;margin:0; display :" + display + "; \" id=\"Parent_" + yearIndex.ToString() + "Content\">");
                 if (IsRestricted)
                     html.Append(GetRestrictedYearHTML(yearIndex));
                 else

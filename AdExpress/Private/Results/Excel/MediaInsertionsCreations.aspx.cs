@@ -69,6 +69,9 @@ namespace AdExpress.Private.Results.Excel{
 				string idVehicleFromTab="-1";
 
 				try{
+
+                    Response.ContentType = "application/vnd.ms-excel";
+
 					//Récupération du media et du vehicule
 					ids = Page.Request.QueryString.Get("ids").Split(',');
 					idVehicleFromTab =Page.Request.QueryString.Get("idVehicleFromTab");

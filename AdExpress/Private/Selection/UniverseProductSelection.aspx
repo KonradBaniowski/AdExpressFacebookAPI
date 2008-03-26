@@ -65,7 +65,7 @@
 								<td><asp:Image runat="server" height="100" width="10" SkinID="logo_cote_gauche" /></td>
 							</tr>
 							<tr>
-								<td bgColor="#ffffff"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
+								<td class="whiteBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
 							</tr>
 						</table>
 					</td>
@@ -166,8 +166,8 @@
 									<table cellspacing="0" cellpadding="0" border="0">
 										<tr>
 											<td align="right" width="649">&nbsp;
-												<A style="cursor:hand;" onmouseover="bouton.src='/Images/<%=_siteLanguage%>/button/enregistrer_univers_down.gif';" onmouseout="bouton.src = '/Images/<%=_siteLanguage%>/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" >
-													<img src="/Images/<%=_siteLanguage%>/button/enregistrer_univers_up.gif" border="0" name="bouton"></A>&nbsp;
+												<A style="cursor:pointer;" onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" >
+													<img src="/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif" border="0" name="bouton"></A>&nbsp;
 												&nbsp;<cc2:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc2:imagebuttonrolloverwebcontrol></td>
 											<td width="1%"></td>
 										</tr>

@@ -142,7 +142,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			t.Append("</td>-->");
 			//Colonne separation 
 			if(!excel){
-				t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 			}
 			//Colonne libéllé média
 			t.Append("<td  nowrap  class=\"p2\" >"+GestionWeb.GetWebWord(1246,webSession.SiteLanguage)+"&nbsp;"+PeriodEndDate.Year+"</td>");				
@@ -153,7 +153,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			if(webSession.ComparativeStudy)t.Append("<td  nowrap  class=\"p2\" >"+GestionWeb.GetWebWord(1168,webSession.SiteLanguage)+"&nbsp;"+PeriodEndDate.Year+"/"+(PeriodEndDate.Year-1)+"</td>");				
 			//Colonne separation 
 			if(!excel){
-				t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 			}
 			//Colonne libéllé 1er annonceur
 			t.Append("<td  nowrap  class=\"p2\" >"+GestionWeb.GetWebWord(1154,webSession.SiteLanguage)+"</td>");				
@@ -161,7 +161,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			t.Append("<td  nowrap  class=\"p2\" >"+GestionWeb.GetWebWord(1246,webSession.SiteLanguage)+"&nbsp;"+PeriodEndDate.Year+"</td>");				
 			//Colonne separation 
 			if(!excel){
-				t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 			}
 			//colonne libéllé 1ere référence
 			t.Append("<td  nowrap  class=\"p2\" >"+GestionWeb.GetWebWord(1155,webSession.SiteLanguage)+"</td>");				
@@ -198,7 +198,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("</td>");
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 					}
 					t.Append("<td class=\""+classCss+"\"  align=right nowrap>");
 					if(tab[i,ConstResults.MediaStrategy.TOTAL_MARKET_INVEST_COLUMN_INDEX]!=null)
@@ -227,7 +227,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					}
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 					}
 					t.Append("<td class=\""+classCss+"\"  nowrap>");
 					if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_ADVERT_COLUMN_INDEX]!=null)
@@ -242,7 +242,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("</td>");
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 					}
 					t.Append("<td class=\""+classCss+"\" nowrap>");
 					if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_REF_COLUMN_INDEX]!=null)
@@ -273,7 +273,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("</td>");
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 					}
 							
 					t.Append("<td class=\""+classCss+"\" align=right nowrap>");
@@ -303,7 +303,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					}
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 					}
 					t.Append("<td class=\""+classCss+"\" nowrap>");
 					if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_ADVERT_COLUMN_INDEX]!=null)
@@ -318,7 +318,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("</td>");
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 					}
 					t.Append("<td class=\""+classCss+"\" nowrap>");
 					if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_REF_COLUMN_INDEX]!=null)
@@ -348,7 +348,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("</td>");
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 					}
 					t.Append("<td class=\""+classCss+"\" align=right nowrap>");
 					if(tab[i,ConstResults.MediaStrategy.TOTAL_UNIV_INVEST_COLUMN_INDEX]!=null)
@@ -377,7 +377,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					}
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 					}
 					t.Append("<td class=\""+classCss+"\" nowrap>");
 					if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_ADVERT_COLUMN_INDEX]!=null)
@@ -392,7 +392,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("</td>");
 					//Colonne separation 
 					if(!excel){
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 					}
 					t.Append("<td class=\""+classCss+"\" nowrap>");
 					if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_REF_COLUMN_INDEX]!=null)
@@ -437,7 +437,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 							classCss=L2nb;
 						}
 						
@@ -467,7 +467,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						}
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 							classCss=L2;
 						}
 						
@@ -485,7 +485,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 							classCss=L2;
 						}
 						
@@ -514,7 +514,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 							classCss=L2nb;
 						}
 						
@@ -542,7 +542,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						}
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 							classCss=L2;
 						}						
 						t.Append("<td class=\""+classCss+"\" nowrap>");
@@ -559,7 +559,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 							classCss=L2;
 						}						
 						t.Append("<td class=\""+classCss+"\" nowrap>");
@@ -600,7 +600,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 						}
 						t.Append("<td class=\""+classCss+"\" align=right nowrap>");
 						if(tab[i,ConstResults.MediaStrategy.TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX]!=null)
@@ -629,7 +629,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						}
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 						}
 						t.Append("<td class=\""+classCss+"\" nowrap>");
 						if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_ADVERT_COLUMN_INDEX]!=null)
@@ -644,7 +644,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 						}
 						t.Append("<td class=\""+classCss+"\" nowrap>");
 						if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_REF_COLUMN_INDEX]!=null)
@@ -671,7 +671,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 						}
 						t.Append("<td class=\""+classCss+"\" align=right nowrap>");
 						if(tab[i,ConstResults.MediaStrategy.TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX]!=null)
@@ -697,7 +697,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						}
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 						}
 						t.Append("<td class=\""+classCss+"\" nowrap>");
 						if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_ADVERT_COLUMN_INDEX]!=null)
@@ -712,7 +712,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 						}
 						t.Append("<td class=\""+classCss+"\" nowrap>");
 						if(tab[i,ConstResults.MediaStrategy.LABEL_FIRST_REF_COLUMN_INDEX]!=null)
@@ -769,7 +769,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 						}
 						t.Append("<td class=\""+classCss+"\" nowrap>");
 						if (tab[i,ConstResults.MediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX]!=null)
@@ -798,7 +798,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						}
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 						}
 						t.Append("<td class=\""+classCss+"\" nowrap>");
 						t.Append("&nbsp;");	
@@ -808,7 +808,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("</td>");
 						//Colonne separation 
 						if(!excel){
-							t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
 						}
 						t.Append("<td class=\""+classCss+"\" nowrap>");
 						t.Append("&nbsp;");

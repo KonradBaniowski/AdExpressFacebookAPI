@@ -176,10 +176,10 @@ namespace AdExpress.Private.Selection{
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
-				validateButton1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
-				validateButton2.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton2.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";						
+				//validateButton1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//validateButton2.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton2.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";						
 				// Gestion des Calendrier
 				this.monthCalendarBeginWebControl.Language=_webSession.SiteLanguage;
 				this.monthCalendarEndWebControl.Language=_webSession.SiteLanguage;

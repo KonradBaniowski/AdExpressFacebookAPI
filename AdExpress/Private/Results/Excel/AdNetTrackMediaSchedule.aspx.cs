@@ -62,8 +62,9 @@ namespace AdExpress.Private.Results.Excel
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){		
-			try{		
+			try{
 
+                Response.ContentType = "application/vnd.ms-excel";
 				
 				#region Chargement des paramètres
 				TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type selectionType=(TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type) int.Parse(HttpContext.Current.Request.QueryString.Get("idLevel"));

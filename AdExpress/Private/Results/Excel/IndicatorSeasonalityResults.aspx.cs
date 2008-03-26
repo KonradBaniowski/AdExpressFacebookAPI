@@ -59,7 +59,10 @@ namespace AdExpress.Private.Results.Excel{
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			try{		
+			try{
+
+                Response.ContentType = "application/vnd.ms-excel";
+
 				#region Textes et langage du site
 				//Modification de la langue pour les Textes AdExpress
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);			

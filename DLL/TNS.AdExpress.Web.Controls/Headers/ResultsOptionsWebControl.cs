@@ -823,7 +823,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// <param name="e">arguments</param>
 		private void Custom_PreRender(object sender, System.EventArgs e)
 		{
-			
+
+            string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
 			
 			#region Unité
 			if(unitOption)
@@ -1113,21 +1114,21 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				else{
 					if(customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
 						|| customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES) {
-						tblChoice.Images= "/Images/" + customerWebSession.SiteLanguage + "/Tables/Parrainage_type1.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/Parrainage_type2.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/Parrainage_type3.gif" ;							
+						tblChoice.Images= "/App_Themes/"+themeName+"/Images/Culture/Tables/Parrainage_type1.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/Parrainage_type2.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/Parrainage_type3.gif" ;							
 					}else{
-						tblChoice.Images= "/Images/" + customerWebSession.SiteLanguage + "/Tables/type1.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type2.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type3.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type4.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type10.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type11.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type5.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type6.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type7.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type8.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/type9.gif";
+						tblChoice.Images= "/App_Themes/"+themeName+"/Images/Culture/Tables/type1.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type2.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type3.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type4.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type10.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type11.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type5.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type6.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type7.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type8.gif" +
+							"|/App_Themes/"+themeName+"/Images/Culture/Tables/type9.gif";
 					}
 				}
 				if(customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
@@ -1136,6 +1137,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				else tblChoice.ListIndex = customerWebSession.PreformatedTable.GetHashCode();
 				tblChoice.ImageHeight = this.imageHeight;
 				tblChoice.ImageWidth = this.imageWidth;
+                tblChoice.ImageButtonArrow = "/App_Themes/" + themeName + "/Images/Common/button/bt_arrow_tall_top.gif";
 				tblChoice.ID = "DDL"+this.ID;
 				tblChoice.OutCssClass = this.outCssClass;
 				tblChoice.OverCssClass = this.overCssClass;

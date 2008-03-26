@@ -28,6 +28,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Culture/logo/LogoAdexpress.gif" SkinID="LogoAdexpress" />
 <asp:image runat="server" ImageUrl="Images/Culture/logo/logo.gif" SkinID="logo" />
 <asp:image runat="server" ImageUrl="Images/Common/Result/bt_detail_up.gif" SkinID="bt_detail" />
+<asp:image runat="server" ImageUrl="Images/Common/Logo_Adnettrack.jpg" SkinID="Logo_Adnettrack" />
 
 <%-- Icons du menu contextuel --%>
 <asp:image runat="server" ImageUrl="Images/Common/Menu/selectedMenuIcon.gif" SkinID="selected" />
@@ -84,6 +85,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrResults" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="webUiResults" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
 <%@ Register TagPrefix="ctrCreatives" Namespace="TNS.AdExpress.Web.Controls.Results.Creatives" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrMadiaPlan" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
 
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
@@ -528,4 +530,57 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrHeader:InitializeProductWebControl  
                            runat="server"
                            CssClass="txtNoir11Bold" 
+/>
+
+<ctrHeader:genericmedialeveldetailselectionwebcontrol 
+                           runat="server" 
+                           BackGroundColor="#ffffff"
+                           CssDefaultListLabel="txtGris11Bold"
+                           CssListLabel="txtViolet11Bold"
+                           CssListBox="txtNoir11Bold"
+                           CssCustomSectionTitle="txtViolet11Bold"
+/>
+
+<ctrHeader:genericmedialeveldetailselectionwebcontrol 
+                           runat="server" 
+                           SkinID="genericmedialeveldetailselectionwebcontrol"
+/>
+
+<ctrSelections:vehicleselectionwebcontrol 
+                           runat="server" 
+                           CssClass="txtViolet11Bold"
+/>
+
+<ctrMadiaPlan:genericmediaschedulewebcontrol 
+                           runat="server"
+                           ThemeName = "DefaultAdExpressFr" 
+/>
+
+<ctrHeader:PeriodDetailWebControl 
+                           runat="server"
+                           BackgroundColor="#ffffff"
+                           LabelCssClass="txtGris11Bold"  
+                           ListCssClass="txtNoir11Bold"
+                           SkinID="PeriodDetailWebControl"
+/>
+
+<ctrHeader:genericdetailselectionwebcontrol 
+                           runat="server"
+                           ThemeName = "DefaultAdExpressFr"
+/>
+
+<ctrResults:MediaInsertionsCreationsResultsWebControl 
+                           runat="server"
+                           CssDefaultListLabel="txtGris11Bold"
+                           CssListLabel="txtViolet11Bold"
+                           CssListBox="txtNoir11Bold"
+                           CssCustomSectionTitle="txtViolet11Bold"
+                           ThemeName = "DefaultAdExpressFr"
+/>
+
+<ctrHeader:OptionLayerWebControl 
+                           runat="server" 
+                           CssDefaultListLabel="txtViolet11Bold"
+						   BackGroundColor="#E1E0DA" 
+						   ThemeName = "DefaultAdExpressFr"
 />

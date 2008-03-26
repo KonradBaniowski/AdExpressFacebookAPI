@@ -861,7 +861,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 											dysplayChild=false;
 											newLine = true;
 											scndHeaderHtml.Append("<tr Font-Italic=True class=" + LINE_CSS + " style=\"FONT-WEIGHT: normal\">");
-											scndHeaderHtml.Append("<td bgColor=#FFFFFF><img src=/I/p.gif width=10></td><td align=left nowrap>" + offset + data[i,j].ToString() + "</td>");
+                                            scndHeaderHtml.Append("<td class=\"whiteBackGround\"><img src=/I/p.gif width=10></td><td align=left nowrap>" + offset + data[i, j].ToString() + "</td>");
 											addScndData = true;
 											dataOutput = scndHeaderHtml;
 											j = N_COLUMN-1;
@@ -872,7 +872,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 									{
 										newLine = true;
 										outputHtml.Append("<tr Font-Italic=True class=" + LINE_CSS + " style=\"FONT-WEIGHT: normal\">");
-										outputHtml.Append("<td bgColor=#FFFFFF><img src=/I/p.gif width=10></td><td align=left nowrap>" + offset + data[i,j].ToString() + "</td>");
+                                        outputHtml.Append("<td class=\"whiteBackGround\"><img src=/I/p.gif width=10></td><td align=left nowrap>" + offset + data[i, j].ToString() + "</td>");
 										j = N_COLUMN-1;
 									}
 								}
@@ -903,7 +903,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 										outputHtml.Append(scndHeaderHtml.ToString());///////////////////
 										scndHeaderHtml.Length = 0;////////////
 										outputHtml.Append("<tr class=" + LINE_CSS + " style=\"FONT-WEIGHT: normal\">");
-										outputHtml.Append("<td bgColor=#FFFFFF><img src=/I/p.gif width=10></td><td align=left nowrap>" + offset + offset + data[i,j].ToString() + "</td>");
+                                        outputHtml.Append("<td class=\"whiteBackGround\"><img src=/I/p.gif width=10></td><td align=left nowrap>" + offset + offset + data[i, j].ToString() + "</td>");
 										j = N_COLUMN-1;
 									}
 								}
@@ -929,7 +929,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 										outputHtml.Append(scndHeaderHtml.ToString());///////////////////
 										scndHeaderHtml.Length = 0;/////////////
 										outputHtml.Append("<tr Font-Italic=True class=" + LINE_CSS + " style=\"FONT-WEIGHT: normal\">");
-										outputHtml.Append("<td bgColor=#FFFFFF><img src=/I/p.gif width=10></td><td align=left nowrap>" + offset + offset + offset + data[i,j].ToString() + "</td>");
+                                        outputHtml.Append("<td class=\"whiteBackGround\"><img src=/I/p.gif width=10></td><td align=left nowrap>" + offset + offset + offset + data[i, j].ToString() + "</td>");
 										j = N_COLUMN-1;
 									}
 								}

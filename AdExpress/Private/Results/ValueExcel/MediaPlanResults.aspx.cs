@@ -75,6 +75,8 @@ namespace AdExpress.Private.Results.ValueExcel{
             string zoomDate = string.Empty;
             try
             {
+                Response.ContentType = "application/vnd.ms-excel";
+
                 #region Period Detail
                 zoomDate = Page.Request.QueryString.Get("zoomDate");
 

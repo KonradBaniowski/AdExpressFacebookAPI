@@ -138,10 +138,17 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		protected int language=33;
 		#endregion
 
-		#endregion
+        #region Theme
+        /// <summary>
+        /// Theme name
+        /// </summary>
+        private string _themeName = string.Empty;
+        #endregion
 
-		#region Variables MMI
-		/// <summary>
+        #endregion
+
+        #region Variables MMI
+        /// <summary>
 		/// Choix du niveau de détail L1
 		/// </summary>
 		public DropDownList _l1Detail;
@@ -201,6 +208,41 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			get{return language;}
 			set{language=value;}
 		}
+        /// <summary>
+        /// Get or Set Theme name
+        /// </summary>
+        public string ThemeName {
+            get { return _themeName; }
+            set { _themeName = value; }
+        }
+        /// <summary>
+        /// Get or Set le libellé de la liste des niveaux par défaut
+        /// </summary>
+        public string CssDefaultListLabel {
+            get { return _cssDefaultListLabel; }
+            set { _cssDefaultListLabel = value; }
+        }
+        /// <summary>
+        /// Get or Set libellé des listes personnalisées  
+        /// </summary>
+        public string CssListLabel {
+            get { return _cssListLabel; }
+            set { _cssListLabel = value; }
+        }
+        /// <summary>
+        /// Get or Set les listbox
+        /// </summary>
+        public string CssListBox {
+            get { return _cssListBox; }
+            set { _cssListBox = value; }
+        }
+        /// <summary>
+        /// Get or Set le titre de la section personnalisée
+        /// </summary>
+        public string CssCustomSectionTitle {
+            get { return _cssCustomSectionTitle; }
+            set { _cssCustomSectionTitle = value; }
+        }
 		#endregion
 
 		#region Javascript
@@ -392,8 +434,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				#region bouton OK
 				_buttonOk=new ImageButtonRollOverWebControl();
 				_buttonOk.ID="okImageButton";
-				_buttonOk.ImageUrl="/Images/Common/Button/ok_up.gif";
-				_buttonOk.RollOverImageUrl="/Images/Common/Button/ok_down.gif";
+				_buttonOk.ImageUrl="/App_Themes/"+_themeName+"/Images/Common/Button/ok_up.gif";
+				_buttonOk.RollOverImageUrl="/App_Themes/"+_themeName+"/Images/Common/Button/ok_down.gif";
 				Controls.Add(_buttonOk);
 				#endregion
 
@@ -487,7 +529,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		protected override void Render(HtmlTextWriter output){
 
 			#region Début du tableau (support et dates)
-			output.Write("<TABLE width=\"500\" bgColor=\"#ffffff\" style=\"MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px;BORDER:SOLID 0px #ffffff;\"");
+            output.Write("<TABLE width=\"500\" class=\"whiteBackGround\" style=\"MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px;BORDER:SOLID 0px;\"");
 			output.Write("cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">");
 			#endregion
 
@@ -496,8 +538,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
 				output.Write("<TR>");
 				output.Write("<TD>");
-				output.Write("<table bgcolor=#ffffff style=\"MARGIN-LEFT: 0px; BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid\" cellSpacing=\"0\" cellPadding=\"0\" width=\"990px\" border=\"0\"><tr onclick=\"DivDisplayer('detailledLevelContent');\" style=\"CURSOR: hand\"><td class=\"txtViolet11Bold\">&nbsp;" + GestionWeb.GetWebWord(1896, _customerWebSession.SiteLanguage) + "&nbsp;</td><td align=\"right\"><IMG src=\"/images/Common/button/bt_arrow_down.gif\" align=\"absMiddle\"></td></tr></table>");
-				output.Write("\n<div id=\"detailledLevelContent\" style=\"MARGIN-LEFT: 0px; BORDER-RIGHT: #644883 1px solid;DISPLAY: none; BORDER-LEFT: #644883 1px solid; WIDTH: 986px; BORDER-BOTTOM: #644883 1px solid;background-color:#D0C8DA;padding-left:2px;vertical-align:top;\">");
+                output.Write("<table class=\"whiteBackGround violetBorder\" style=\"MARGIN-LEFT: 0px;\" cellSpacing=\"0\" cellPadding=\"0\" width=\"990px\" border=\"0\"><tr onclick=\"DivDisplayer('detailledLevelContent');\" style=\"CURSOR: pointer\"><td class=\"txtViolet11Bold\">&nbsp;" + GestionWeb.GetWebWord(1896, _customerWebSession.SiteLanguage) + "&nbsp;</td><td align=\"right\" class=\"arrowBackGround\"></td></tr></table>");
+                output.Write("\n<div id=\"detailledLevelContent\" style=\"MARGIN-LEFT: 0px; DISPLAY: none; WIDTH: 986px; padding-left:2px; vertical-align:top;\" class=\"detailledLevelCss\">");
 				output.Write("<table width=\"986px\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"Section\">");
 				output.Write("<tr><td>");
 				output.Write("<TABLE id=\"Table2\" height=\"32\" width=\"986\" border=\"0\">");
@@ -538,14 +580,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				output.Write("</TD>");
 				//output.Write("<td colspan=2 align=\"right\"><a class=\"roll03\" href=\"javascript: initialiser();\"  onmouseover=\"saveButton.src='/Images/Common/button/bt_delete_up.jpg';\" onmouseout=\"saveButton.src ='/Images/Common/button/bt_delete_up.jpg';\"><img name=saveButton1 border=0 src=\"/Images/Common/button/bt_delete_up.jpg\" alt=\"Rétablir les colonnes\"></a></td>");
 				//output.Write("<td colspan=2 ><a class=\"roll03\" href=\"javascript: vider();\"  onmouseover=\"saveButton.src='/Images/Common/button/bt_delete_up.jpg';\" onmouseout=\"saveButton.src ='/Images/Common/button/bt_delete_up.jpg';\"><img name=saveButton2 border=0 src=\"/Images/Common/button/bt_delete_up.jpg\" alt=\"Déplacer vers la corbeille\"></a></td>");
-				output.Write("<TD align=left colSpan=2><A class=roll03 onmouseover=\"saveButton1.src='/Images/Common/button/restore_down.gif';\" onmouseout=\"saveButton1.src ='/Images/Common/button/restore_up.gif';\" href=\"javascript:initialiser();\"><IMG alt=\"Rétablir les colonnes\" src=\"/Images/Common/button/restore_up.gif\" border=0 name=saveButton1></A>&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-				output.Write("<A class=roll03 onmouseover=\"saveButton2.src='/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"><IMG alt=\"Déplacer vers la corbeille\" src=\"/Images/Common/button/delete_up.gif\" border=0 name=saveButton2></A></TD>");
-				output.Write("<TD colSpan=2 align=right><A class=roll03 onmouseover=\"saveButton2.src='/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"></A>&nbsp;</TD>");
+				output.Write("<TD align=left colSpan=2><A class=roll03 onmouseover=\"saveButton1.src='/App_Themes/"+_themeName+"/Images/Common/button/restore_down.gif';\" onmouseout=\"saveButton1.src ='/App_Themes/"+_themeName+"/Images/Common/button/restore_up.gif';\" href=\"javascript:initialiser();\"><IMG alt=\"Rétablir les colonnes\" src=\"/App_Themes/"+_themeName+"/Images/Common/button/restore_up.gif\" border=0 name=saveButton1></A>&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+				output.Write("<A class=roll03 onmouseover=\"saveButton2.src='/App_Themes/"+_themeName+"/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"><IMG alt=\"Déplacer vers la corbeille\" src=\"/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif\" border=0 name=saveButton2></A></TD>");
+				output.Write("<TD colSpan=2 align=right><A class=roll03 onmouseover=\"saveButton2.src='/App_Themes/"+_themeName+"/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"></A>&nbsp;</TD>");
 				output.Write("</TR>");
 			
 				output.Write("<TR>");
 				output.Write("<TD  valign=top width=\"986\">");
-				output.Write("<TABLE id=\"Section\" cellSpacing=\"2\" cellPadding=\"2\" border=\"0\" style=\"BORDER-RIGHT: dimgray 1px solid; BORDER-TOP: dimgray 1px solid; BORDER-LEFT: dimgray 1px solid; BORDER-BOTTOM: dimgray 1px solid\">");
+                output.Write("<TABLE id=\"Section\" cellSpacing=\"2\" cellPadding=\"2\" border=\"0\" class=\"dimgrayBorder\">");
 				output.Write("<TR>");
 				output.Write("<TD>");
 				output.Write("<TABLE id=\"levelSelection\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
@@ -590,7 +632,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
 				if (Page.IsPostBack){
 					output.Write("<TD valign=top>");
-					output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\" style=\"BACKGROUND: \"#e1e0da\"\">");
+                    output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
 					output.Write("<DIV class=\"title\">Corbeille</DIV>");
 				
 					foreach(GenericColumnItemInformation Column in _columnItemTrashList){
@@ -604,7 +646,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				}
 				else{
 					output.Write("<TD>");
-					output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\" style=\"BACKGROUND: \"#e1e0da\"\">");
+                    output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
 					output.Write("<DIV class=\"title\">" + GestionWeb.GetWebWord(1950, _customerWebSession.SiteLanguage) + "</DIV>");
 					output.Write("</DIV>");
 					output.Write("</TD>");
@@ -631,9 +673,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				_buttonOk.RenderControl(output); 
 				if (_idVehicleFromTab==(Int64)DBClassificationConstantes.Vehicles.names.radio){
 					if (_customerWebSession.SiteLanguage == 33)
-						output.Write("<FONT face=Arial size=1 color=#644883 style=\"LEFT: 781px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
+                        output.Write("<FONT face=Arial size=1 class=\"txtViolet\" style=\"LEFT: 781px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
 					else
-						output.Write("<FONT face=Arial size=1 color=#644883 style=\"LEFT: 758px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
+                        output.Write("<FONT face=Arial size=1 class=\"txtViolet\" style=\"LEFT: 758px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
 				}
 				output.Write("</div></td>");	
 				output.Write("</tr>");

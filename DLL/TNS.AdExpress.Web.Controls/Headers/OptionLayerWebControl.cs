@@ -109,6 +109,10 @@ namespace TNS.AdExpress.Web.Controls.Headers{
         /// Option Detail de la période
         /// </summary>
         PeriodDetailWebControl _periodDetail = null;
+        /// <summary>
+        /// Theme name
+        /// </summary>
+        protected string _themeName = string.Empty;
         #endregion
 
 		#region Constructeur
@@ -229,10 +233,20 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		public WebConstantes.GenericDetailLevel.ComponentProfile GenericDetailLevelComponentProfile{
 			get{return(_componentProfile);}
 			set{_componentProfile=value;}
-		}
+        }
 
-		#region Css
-		/// <summary>
+        #region Theme
+        /// <summary>
+        /// Set or Get theme name
+        /// </summary>
+        public string ThemeName {
+            get { return (_themeName); }
+            set { _themeName = value; }
+        }
+        #endregion
+
+        #region Css
+        /// <summary>
 		/// Obtient ou définit la classe Css pour le libellé de la liste des niveaux par défaut
 		/// </summary>
 		[Bindable(true), 
@@ -328,8 +342,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			// Bouton
 			_imageButtonRollOverWebControl=new TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl();
 			_imageButtonRollOverWebControl.ID = "ImageButtonRollOverWebControl_"+this.ID;
-			_imageButtonRollOverWebControl.ImageUrl = "/Images/Common/Button/ok_up.gif";
-			_imageButtonRollOverWebControl.RollOverImageUrl = "/Images/Common/Button/ok_down.gif";
+			_imageButtonRollOverWebControl.ImageUrl = "/App_Themes/"+_themeName+"/Images/Common/Button/ok_up.gif";
+			_imageButtonRollOverWebControl.RollOverImageUrl = "/App_Themes/"+_themeName+"/Images/Common/Button/ok_down.gif";
 			this.Controls.Add(_imageButtonRollOverWebControl);
 
 			switch((WebConstantes.GenericDetailLevel.ComponentProfile)_componentProfile){
@@ -367,6 +381,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					_genericMediaLevelDetailSelectionWebControl.SaveASPXFilePath = _saveASPXFilePath;
 					_genericMediaLevelDetailSelectionWebControl.Width=this.Width;
 					_genericMediaLevelDetailSelectionWebControl.BackGroundColor = _backgroundColor;
+                    _genericMediaLevelDetailSelectionWebControl.SkinID = "genericmedialeveldetailselectionwebcontrol";
 					this.Controls.Add(_genericMediaLevelDetailSelectionWebControl);
 					break;
 			}
@@ -381,7 +396,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender (e);
 			if(!this.Page.ClientScript.IsClientScriptBlockRegistered("DivDisplayerOption"))
-				this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"DivDisplayerOption",TNS.AdExpress.Web.Functions.Script.DivDisplayerOption(_customerWebSession.SiteLanguage.ToString()));
+				this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"DivDisplayerOption",TNS.AdExpress.Web.Functions.Script.DivDisplayerOption(_themeName));
 		}
 		#endregion
 
@@ -399,8 +414,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("<div id=\"option\" style=\"DISPLAY: none\">");
 			output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" bgColor=\""+_backgroundColor+"\" border=\"0\">");
 			output.Write("<tr>");
-			output.Write("<td width=\"3\" bgColor=\"#644883\" height=\"1\"></td>");
-			output.Write("<td bgColor=\"#644883\" height=\"1\"></td>");
+            output.Write("<td width=\"3\" class=\"violetBackGround\" height=\"1\"></td>");
+            output.Write("<td class=\"violetBackGround\" height=\"1\"></td>");
 			output.Write("</tr>");
 			
 			// Option Détail période
@@ -475,18 +490,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("<td valign=\"top\" height=\"100%\">");
 
 			// Début Onglet
-			output.Write("<table height=\"100%\" cellSpacing=\"0\" cellPadding=\"0\" bgColor=\"#ffffff\" border=\"0\">");
+            output.Write("<table height=\"100%\" cellSpacing=\"0\" cellPadding=\"0\" class=\"whiteBackGround\" border=\"0\">");
 			output.Write("<tr>");
-			output.Write("<td bgColor=\"#644883\" height=\"1\"></td>");
+            output.Write("<td class=\"violetBackGround\" height=\"1\"></td>");
 			output.Write("</tr>");
 			output.Write("<tr>");
-			output.Write("<td onclick=\"javascript:DivDisplayerOption('option');\" style=\"cursor:hand;cursor:pointer;\"><IMG src=\"/Images/"+_customerWebSession.SiteLanguage+"/Others/OpenOptions.gif\" border=\"0\" id=\"ImgOpenOption\"></td>");
+			output.Write("<td onclick=\"javascript:DivDisplayerOption('option');\" style=\"cursor:hand;cursor:pointer;\"><IMG src=\"/App_Themes/"+_themeName+"/Images/Culture/Others/OpenOptions.gif\" border=\"0\" id=\"ImgOpenOption\"></td>");
 			output.Write("</tr>");
 			output.Write("<tr style=\"cursor:hand;cursor:pointer;\">");
-			output.Write("<td onclick=\"javascript:DivDisplayerOption('option');\"><IMG src=\"/Images/"+_customerWebSession.SiteLanguage+"/Others/TextOptions.gif\" border=\"0\"></td>");
+			output.Write("<td onclick=\"javascript:DivDisplayerOption('option');\"><IMG src=\"/App_Themes/"+_themeName+"/Images/Culture/Others/TextOptions.gif\" border=\"0\"></td>");
 			output.Write("</tr>");
 			output.Write("<tr>");
-			output.Write("<td style=\"background-image:url(/Images/"+_customerWebSession.SiteLanguage+"/Others/BackgroundOptions.gif);\" height=\"100%\"></td>");
+			output.Write("<td style=\"background-image:url(/App_Themes/"+_themeName+"/Images/Culture/Others/BackgroundOptions.gif);\" height=\"100%\"></td>");
 			output.Write("</tr>");
 			output.Write("</table>");
 			// Fin Onglet

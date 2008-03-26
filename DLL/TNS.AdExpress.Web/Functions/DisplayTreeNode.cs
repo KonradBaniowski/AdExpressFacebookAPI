@@ -136,10 +136,6 @@ namespace TNS.AdExpress.Web.Functions{
 		/// </remarks>
 		private static bool ToExcel(TreeNode root, ref StringBuilder html, int level, int maxLevel, ref int nbTD, int siteLanguage){
 
-			#region Constantes
-			const string BORDER_COLOR="#808080";
-			#endregion
-
 			#region Variables
 			string img="";
             string themeName = WebApplicationParameters.Themes[siteLanguage].Name;

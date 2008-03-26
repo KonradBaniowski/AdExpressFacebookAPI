@@ -109,7 +109,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			if(tab.GetLongLength(0)==1 || double.Parse(tab[0,FrameWorkConstantes.Results.PalmaresRecap.TOTAL_N].ToString())==0){
 				
 				if( tableType==FrameWorkConstantes.Results.PalmaresRecap.ElementType.advertiser){
-					t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                    t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 					t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
 					t.Append(GestionWeb.GetWebWord(177,webSession.SiteLanguage));
 					t.Append("</td></tr></table>");
@@ -120,8 +120,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			//Traitement lien de tri			
             //if(webSession.Sort==1 && WebFunctions.CheckedText.IsStringEmpty(itemType))itemToSort=itemType;
             //else itemToSort=TNS.AdExpress.Constantes.Web.SortedItems.Euro;
-						
-			t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+
+            t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 		
 			#region 1ere ligne
 			t.Append("\r\n\t<tr height=\"30px\" >");

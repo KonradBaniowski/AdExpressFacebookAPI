@@ -1513,7 +1513,7 @@ namespace TNS.AdExpress.Web.UI{
                 Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
                 #region Début du tableau
-                t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
+                t.Append("<table class=\"greyBorder\" cellpadding=0 cellspacing=0>");
                 t.Append("<tr><td class=\"excelDataItalic\">" + GestionWeb.GetWebWord(512, webSession.SiteLanguage) + "</td></tr>");
                 #endregion
 
@@ -1615,7 +1615,7 @@ namespace TNS.AdExpress.Web.UI{
                 Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
 				#region Début du tableau
-				t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
+                t.Append("<table class=\"greyBorder\" cellpadding=0 cellspacing=0>");
 				t.Append("<tr><td class=\"excelDataItalic\">"+GestionWeb.GetWebWord(512,webSession.SiteLanguage)+"</td></tr>");
 				#endregion
 
@@ -1732,7 +1732,7 @@ namespace TNS.AdExpress.Web.UI{
                 Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
 				#region Début du tableau
-				t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
+                t.Append("<table class=\"greyBorder\" cellpadding=0 cellspacing=0>");
 				t.Append("<tr><td class=\"excelDataItalic\">"+GestionWeb.GetWebWord(512,webSession.SiteLanguage)+"</td></tr>");
 				#endregion
 

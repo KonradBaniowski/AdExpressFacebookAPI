@@ -13,45 +13,37 @@
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="pragma" content="no-cache" />
     <meta name="Cache-control" content="no-cache" />
-    
-    <link href="/Css/AdExpress.css" type="text/css" rel="stylesheet" />
-    <link href="/Css/MediaSchedule.css" type="text/css" rel="stylesheet" />
-    
     <script language="javascript" type="text/javascript" src="/scripts/WebResult.js"></script>
 	<script type="text/javascript" src="/scripts/dom-drag.js"></script>
-	<script type="text/javascript"><%=SetZoom %></script>
-
-    
     <title>AdExpress</title>
     
 </head>
-<body style="margin:0px; background-attachment: fixed; background-image: url(/Images/Common/backgroundPopUp.gif);background-repeat: repeat; background-color: #ffffff">
+<body style="margin:0px; background-attachment: fixed; background-repeat: repeat; " class="popupBackGround whiteBackGround">
 
     <form id="form1" runat="server">
         <div style="text-align:center;margin:0">
             <asp:HiddenField ID="zoomParam" runat="server" EnableViewState="true"/>
 
-            <table height="300" width="100%" style="margin-top: 25px; margin-left: 0px; margin-right: 25px; background-color: #ffffff" cellpadding="0" cellspacing="0" border="0">
+            <table height="300" width="100%" style="margin-top: 25px; margin-left: 0px; margin-right: 25px;" class="whiteBackGround" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                     <td colspan="2">
                         <cc1:informationwebcontrol id="InformationWebControl1" runat="server" inleftmenu="False" />
                     </td>
                 </tr>
                 <tr>
-                    <td bgcolor="#ffffff" height="15"></td>
+                    <td class="whiteBackGround" height="15"></td>
                 </tr>
 			    <%=zoomButton%>
-                <tr bgcolor="#ffffff">
+                <tr class="whiteBackGround">
                     <td height="100%">
-                        <cc1:OptionLayerWebControl id="OptionLayerWebControl1" runat="server" CssDefaultListLabel="txtViolet11Bold"
-							BackGroundColor="#E1E0DA" GenericDetailLevelComponentProfile="media" GenericDetailLevelType="mediaSchedule"
+                        <cc1:OptionLayerWebControl id="OptionLayerWebControl1" runat="server" GenericDetailLevelComponentProfile="media" GenericDetailLevelType="mediaSchedule"
 							Width="200px" DisplayInformationComponent="False" RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx"></cc1:OptionLayerWebControl>
                     </td>
                     <td valign="top">
                         <table>
                             <tr valign="top"><td valign="top"><cc1:SubPeriodSelectionWebControl id="SubPeriodSelectionWebControl1" runat="server" /></td></tr>
                             <tr>
-                                <td bgcolor="#ffffff" height="15">
+                                <td class="whiteBackGround" height="15">
                                 </td>
                             </tr>
                             <tr valign="middle"><td valign="middle"><cc3:GenericMediaScheduleWebControl id="GenericMediaScheduleWebControl1" runat="server" AjaxProTimeOut="240" ShowVersion="True" /></td></tr>

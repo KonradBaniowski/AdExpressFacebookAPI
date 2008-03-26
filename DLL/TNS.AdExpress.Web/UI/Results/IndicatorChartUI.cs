@@ -14,6 +14,7 @@ using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using Dundas.Charting.WebControl;
 using TNS.AdExpress.Web.Core.Sessions;
 using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork;
@@ -35,7 +36,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 		const int MEDIA_STRATEGY_HEIGHT_GRAPHIC=300;
 		#endregion
 
-		#region Variables
+		#region Variables (Old)
 //		/// <summary>
 //		/// Variables Sessions
 //		/// </summary>
@@ -52,11 +53,126 @@ namespace TNS.AdExpress.Web.UI.Results{
 //		/// Type annonceur ou produit
 //		/// </summary>
 //		protected FrameWorkConstantes.Results.PalmaresRecap.ElementType _tableType;
-
 		#endregion
 
-		#region Constructeur
-		/// <summary>
+        #region Variables
+        /// <summary>
+        /// Chart areas back color
+        /// </summary>
+        private string _chartAreasBackColor = string.Empty;
+        /// <summary>
+        /// Border line color
+        /// </summary>
+        private string _chartBorderLineColor = string.Empty;
+        /// <summary>
+        /// Series color
+        /// </summary>
+        private string _seriesColor = string.Empty;
+        /// <summary>
+        /// Competitor serie color
+        /// </summary>
+        private string _competitorSerieColor = string.Empty;
+        /// <summary>
+        /// Reference serie color
+        /// </summary>
+        private string _referenceSerieColor = string.Empty;
+        /// <summary>
+        /// Legend item competitor color
+        /// </summary>
+        private string _legendItemCompetitorColor = string.Empty;
+        /// <summary>
+        /// Legend item reference color
+        /// </summary>
+        private string _legendItemReferenceColor = string.Empty;
+        /// <summary>
+        /// Pie colors list
+        /// </summary>
+        private string _pieColors = string.Empty;
+        /// <summary>
+        /// Pie line color
+        /// </summary>
+        private string _pieLineColor = string.Empty;
+        /// <summary>
+        /// Title color
+        /// </summary>
+        private string _titleColor = string.Empty;
+        #endregion
+
+        #region Accessors
+        /// <summary>
+        /// Get or Set Chart areas back color
+        /// </summary>
+        public string ChartAreasBackColor {
+            get { return _chartAreasBackColor; }
+            set { _chartAreasBackColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Border line color
+        /// </summary>
+        public string ChartBorderLineColor {
+            get { return _chartBorderLineColor; }
+            set { _chartBorderLineColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Series color
+        /// </summary>
+        public string SeriesColor {
+            get { return _seriesColor; }
+            set { _seriesColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Competitor serie color
+        /// </summary>
+        public string CompetitorSerieColor {
+            get { return _competitorSerieColor; }
+            set { _competitorSerieColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Reference serie color
+        /// </summary>
+        public string ReferenceSerieColor {
+            get { return _referenceSerieColor; }
+            set { _referenceSerieColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Legend item competitor color
+        /// </summary>
+        public string LegendItemCompetitorColor {
+            get { return _legendItemCompetitorColor; }
+            set { _legendItemCompetitorColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Legend item reference color
+        /// </summary>
+        public string LegendItemReferenceColor {
+            get { return _legendItemReferenceColor; }
+            set { _legendItemReferenceColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Pie colors list
+        /// </summary>
+        public string PieColors {
+            get { return _pieColors; }
+            set { _pieColors = value; }
+        }
+        /// <summary>
+        /// Get or Set Pie line color
+        /// </summary>
+        public string PieLineColor {
+            get { return _pieLineColor; }
+            set { _pieLineColor = value; }
+        }
+        /// <summary>
+        /// Get or Set Title color
+        /// </summary>
+        public string TitleColor {
+            get { return _titleColor; }
+            set { _titleColor = value; }
+        }
+        #endregion
+
+        #region Constructeur
+        /// <summary>
 		/// Constructeur
 		/// </summary>
 		public IndicatorChartUI():base(){			            
@@ -81,6 +197,10 @@ namespace TNS.AdExpress.Web.UI.Results{
 			// Il y a au moins un élément
 			bool oneProductExist=false;
 			#endregion
+
+            #region Color Converter
+            ColorConverter ColorConverter = new ColorConverter();
+            #endregion
 
 			#region Animation Flash
 			if(flashType){
@@ -114,11 +234,13 @@ namespace TNS.AdExpress.Web.UI.Results{
 			this.Width=new Unit("750px");
 			this.Height=new Unit("750px");
 			this.BackGradientType = GradientType.TopBottom;
-			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
-			this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);
+			//this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
+			//this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);
+            this.ChartAreas[strChartArea].BackColor = (Color)ColorConverter.ConvertFrom(_chartAreasBackColor);
 			this.DataManipulator.Sort(PointsSortOrder.Descending,series);
 			this.BorderStyle=ChartDashStyle.Solid;
-			this.BorderLineColor=Color.FromArgb(99,73,132);
+			//this.BorderLineColor=Color.FromArgb(99,73,132);
+            this.BorderLineColor = (Color)ColorConverter.ConvertFrom(_chartBorderLineColor);
 			this.BorderLineWidth=2;
 			#endregion
 
@@ -142,7 +264,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			series.ShowLabelAsValue=true;
 			series.XValueType=Dundas.Charting.WebControl.ChartValueTypes.String;
 			series.YValueType=Dundas.Charting.WebControl.ChartValueTypes.Double;
-			series.Color= Color.FromArgb(148,121,181);
+			//series.Color= Color.FromArgb(148,121,181);
+            series.Color = (Color)ColorConverter.ConvertFrom(_seriesColor);
 			series.Enabled=true;
 			series.Font=new Font("Arial", (float)10);
 			series.FontAngle=45;
@@ -162,12 +285,14 @@ namespace TNS.AdExpress.Web.UI.Results{
 					series.Points[i-1].ShowInLegend=true;
 					// Coloration des concurrents en rouge
 					if(tab[i,FrameWorkConstantes.Results.PalmaresRecap.COMPETITOR]!=null && (int)tab[i,FrameWorkConstantes.Results.PalmaresRecap.COMPETITOR]==2){
-						series.Points[i-1].Color=Color.FromArgb(255,223,222);
+						//series.Points[i-1].Color=Color.FromArgb(255,223,222);
+                        series.Points[i - 1].Color = (Color)ColorConverter.ConvertFrom(_competitorSerieColor);
 						competitorElement=true;
 					}
 						// Coloration des références en vert
 					else if(tab[i,FrameWorkConstantes.Results.PalmaresRecap.COMPETITOR]!=null && (int)tab[i,FrameWorkConstantes.Results.PalmaresRecap.COMPETITOR]==1){
-						series.Points[i-1].Color=Color.FromArgb(222,255,222);	
+						//series.Points[i-1].Color=Color.FromArgb(222,255,222);
+                        series.Points[i - 1].Color = (Color)ColorConverter.ConvertFrom(_referenceSerieColor);
 						referenceElement=true;
 					}	
 				}
@@ -185,7 +310,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}
 			LegendItem legendItemReference = new LegendItem();			
 			legendItemReference.BorderWidth=0;
-			legendItemReference.Color=Color.FromArgb(222,255,222);
+			//legendItemReference.Color=Color.FromArgb(222,255,222);
+            legendItemReference.Color = (Color)ColorConverter.ConvertFrom(_legendItemReferenceColor);
 			if(referenceElement){
 				if(tableType==FrameWorkConstantes.Results.PalmaresRecap.ElementType.advertiser){
 					legendItemReference.Name=GestionWeb.GetWebWord(1201,webSession.SiteLanguage);
@@ -198,7 +324,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}			
 			LegendItem legendItemCompetitor = new LegendItem();
 			legendItemCompetitor.BorderWidth=0;			
-			legendItemCompetitor.Color=Color.FromArgb(255,223,222);
+			//legendItemCompetitor.Color=Color.FromArgb(255,223,222);
+            legendItemCompetitor.Color = (Color)ColorConverter.ConvertFrom(_legendItemCompetitorColor);
 
 			if(competitorElement){
 				if(tableType==FrameWorkConstantes.Results.PalmaresRecap.ElementType.advertiser){
@@ -277,6 +404,10 @@ namespace TNS.AdExpress.Web.UI.Results{
 			int compteur=0;
 			#endregion
 
+            #region Color Converter
+            ColorConverter ColorConverter = new ColorConverter();
+            #endregion
+
 			#region Animation Flash
 			if(typeFlash){
 				this.ImageType=ChartImageType.Flash;
@@ -303,10 +434,12 @@ namespace TNS.AdExpress.Web.UI.Results{
 			this.Width=new Unit("850px");
 			this.Height=new Unit("500px");
 			this.BackGradientType = GradientType.TopBottom;
-			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
-			this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);			
+			//this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
+			//this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);			
+            this.ChartAreas[strChartArea].BackColor = (Color)ColorConverter.ConvertFrom(_chartAreasBackColor);
 			this.BorderStyle=ChartDashStyle.Solid;
-			this.BorderLineColor=Color.FromArgb(99,73,132);
+			//this.BorderLineColor=Color.FromArgb(99,73,132);
+            this.BorderLineColor = (Color)ColorConverter.ConvertFrom(_chartBorderLineColor);
 			this.BorderLineWidth=2;
 			#endregion
 
@@ -330,7 +463,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			series.ShowLabelAsValue=true;
 			series.XValueType=Dundas.Charting.WebControl.ChartValueTypes.String;
 			series.YValueType=Dundas.Charting.WebControl.ChartValueTypes.Double;
-			series.Color= Color.FromArgb(148,121,181);
+			//series.Color= Color.FromArgb(148,121,181);
+            series.Color = (Color)ColorConverter.ConvertFrom(_seriesColor);
 			series.Enabled=true;
 			series.Font=new Font("Arial", (float)10);
 			series.FontAngle=90;
@@ -348,12 +482,14 @@ namespace TNS.AdExpress.Web.UI.Results{
 					series.Points[compteur].ShowInLegend=true;
 					// Coloration des concurrents en rouge
 					if(tab[i,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]!=null && (int)tab[i,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]==2){
-						series.Points[compteur].Color=Color.FromArgb(255,223,222);
+						//series.Points[compteur].Color=Color.FromArgb(255,223,222);
+                        series.Points[compteur].Color = (Color)ColorConverter.ConvertFrom(_competitorSerieColor);
 						competitorElement=true;
 					}
 						// Coloration des références en vert
 					else if(tab[i,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]!=null && (int)tab[i,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]==1){
-						series.Points[compteur].Color=Color.FromArgb(222,255,222);	
+						//series.Points[compteur].Color=Color.FromArgb(222,255,222);
+                        series.Points[compteur].Color = (Color)ColorConverter.ConvertFrom(_referenceSerieColor);
 						referenceElement=true;
 					}	
 					
@@ -370,12 +506,14 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 					// Coloration des concurrents en rouge
 					if(tab[last,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]!=null && (int)tab[last,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]==2){
-						series.Points[compteur].Color=Color.FromArgb(255,223,222);
+						//series.Points[compteur].Color=Color.FromArgb(255,223,222);
+                        series.Points[compteur].Color = (Color)ColorConverter.ConvertFrom(_competitorSerieColor);
 						competitorElement=true;
 					}
 						// Coloration des références en vert
 					else if(tab[last,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]!=null && (int)tab[last,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]==1){
-						series.Points[compteur].Color=Color.FromArgb(222,255,222);	
+						//series.Points[compteur].Color=Color.FromArgb(222,255,222);
+                        series.Points[compteur].Color = (Color)ColorConverter.ConvertFrom(_referenceSerieColor);
 						referenceElement=true;
 					}
 	
@@ -396,7 +534,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}
 			LegendItem legendItemReference = new LegendItem();			
 			legendItemReference.BorderWidth=0;
-			legendItemReference.Color=Color.FromArgb(222,255,222);
+			//legendItemReference.Color=Color.FromArgb(222,255,222);
+            legendItemReference.Color = (Color)ColorConverter.ConvertFrom(_legendItemReferenceColor);
 			if(referenceElement){
 				if(tableType==FrameWorkConstantes.Results.EvolutionRecap.ElementType.advertiser){
 					legendItemReference.Name=GestionWeb.GetWebWord(1201,webSession.SiteLanguage);
@@ -409,7 +548,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}			
 			LegendItem legendItemCompetitor = new LegendItem();
 			legendItemCompetitor.BorderWidth=0;			
-			legendItemCompetitor.Color=Color.FromArgb(255,223,222);
+			//legendItemCompetitor.Color=Color.FromArgb(255,223,222);
+            legendItemCompetitor.Color = (Color)ColorConverter.ConvertFrom(_legendItemCompetitorColor);
 
 			if(competitorElement){
 				if(tableType==FrameWorkConstantes.Results.EvolutionRecap.ElementType.advertiser){
@@ -502,6 +642,10 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			#endregion
 
+            #region Color Converter
+            ColorConverter ColorConverter = new ColorConverter();
+            #endregion
+
 			#region Animation Flash
 			if(typeFlash){
 				this.ImageType=ChartImageType.Flash;
@@ -574,9 +718,11 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}
 			this.BackGradientType = GradientType.TopBottom;
 			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
-			this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);			
+			//this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);			
+            this.ChartAreas[strChartArea].BackColor = (Color)ColorConverter.ConvertFrom(_chartAreasBackColor);
 			this.BorderStyle=ChartDashStyle.Solid;
-			this.BorderLineColor=Color.FromArgb(99,73,132);
+			//this.BorderLineColor=Color.FromArgb(99,73,132);
+            this.BorderLineColor = (Color)ColorConverter.ConvertFrom(_chartBorderLineColor);
 			this.BorderLineWidth=2;
 			#endregion
 
@@ -713,14 +859,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			LegendItem legendItemReference = new LegendItem();			
 			legendItemReference.BorderWidth=0;
-			legendItemReference.Color=Color.FromArgb(222,255,222);
+			//legendItemReference.Color=Color.FromArgb(222,255,222);
+            legendItemReference.Color = (Color)ColorConverter.ConvertFrom(_legendItemReferenceColor);
 			if(referenceElement){								
 					legendItemReference.Name=GestionWeb.GetWebWord(1203,webSession.SiteLanguage);
 					this.Legends["Default"].CustomItems.Add(legendItemReference);			
 			}			
 			LegendItem legendItemCompetitor = new LegendItem();
 			legendItemCompetitor.BorderWidth=0;			
-			legendItemCompetitor.Color=Color.FromArgb(255,223,222);
+			//legendItemCompetitor.Color=Color.FromArgb(255,223,222);
+            legendItemCompetitor.Color = (Color)ColorConverter.ConvertFrom(_legendItemCompetitorColor);
 
 			if(competitorElement){
 				
@@ -784,20 +932,31 @@ namespace TNS.AdExpress.Web.UI.Results{
 			object [,] tab=TNS.AdExpress.Web.Rules.Results.IndicatorMediaStrategyRules.GetChartFormattedTable(webSession,webSession.ComparaisonCriterion);
 
 			#region Constantes
-			Color[] pieColors={
-					Color.FromArgb(100,72,131),
-					Color.FromArgb(177,163,193),
-					Color.FromArgb(208,200,218),
-					Color.FromArgb(225,224,218),
-					Color.FromArgb(255,215,215),
-					Color.FromArgb(255,240,240),
-					Color.FromArgb(202,255,202)};
+            //Color[] pieColors={
+            //        Color.FromArgb(100,72,131),
+            //        Color.FromArgb(177,163,193),
+            //        Color.FromArgb(208,200,218),
+            //        Color.FromArgb(225,224,218),
+            //        Color.FromArgb(255,215,215),
+            //        Color.FromArgb(255,240,240),
+            //        Color.FromArgb(202,255,202)};
 
 			const int NBRE_MEDIA=5;
 			#endregion
-		
-			#region Variables
-			//ChartArea chartArea=new ChartArea();
+
+            #region couleurs des tranches du graphique
+            string[] pieColorsList = _pieColors.Split(',');
+            Color[] pieColors = new Color[7];
+            int indexPieColors = 0;
+            ColorConverter ColorConverter = new ColorConverter();
+
+            foreach (string pieColorsString in pieColorsList) {
+                pieColors.SetValue((Color)ColorConverter.ConvertFrom(pieColorsString), indexPieColors++);
+            }
+            #endregion
+
+            #region Variables
+            //ChartArea chartArea=new ChartArea();
 			// Il y a au moins un élément
 			//bool oneProductExist=false;
 			#endregion
@@ -839,7 +998,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
 			//	this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);			
 			this.BorderStyle=ChartDashStyle.Solid;
-			this.BorderLineColor=Color.FromArgb(99,73,132);
+			//this.BorderLineColor=Color.FromArgb(99,73,132);
+            this.BorderLineColor = (Color)ColorConverter.ConvertFrom(_chartBorderLineColor);
 			this.BorderLineWidth=2;
 			this.Legend.Enabled=false;
 			
@@ -1384,7 +1544,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 					((Series)listSeriesMedia[(string)listSeriesName[j]])["LabelStyle"]="Outside";
 					((Series)listSeriesMedia[(string)listSeriesName[j]]).LegendToolTip = "#PERCENT";
 					((Series)listSeriesMedia[(string)listSeriesName[j]]).ToolTip = " "+(string)listSeriesName[j]+" \n #VALX : #PERCENT";
-					((Series)listSeriesMedia[(string)listSeriesName[j]])["PieLineColor"]="Black";
+					//((Series)listSeriesMedia[(string)listSeriesName[j]])["PieLineColor"]="Black";
+                    ((Series)listSeriesMedia[(string)listSeriesName[j]])["PieLineColor"] = _pieLineColor;
 					((Series)listSeriesMedia[(string)listSeriesName[j]]).Font= new Font("Arial", (float)7);
 					#endregion
 
@@ -1403,7 +1564,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 					//this.Titles[i].Position.X = (i % 2 == 0) ? 45 : 90;//this.Titles[i].Position.X=45;
 					//this.Titles[i].Position.Y = (i % 2 == 0) ? (3 + (((96 / (float)Math.Ceiling(dec)) * nbLeftElements) + 1)) : (3 + (((96 / (float)Math.Ceiling(dec)) * (nbRigthElements - 1)) + 1));
 					this.Titles[i].Font = (pCount < 15) ? new Font("Arial", (float)12) : new Font("Arial", (float)8); //this.Titles[i].Font=new Font("Arial", (float)13);
-					this.Titles[i].Color=Color.FromArgb(100,72,131);
+					//this.Titles[i].Color=Color.FromArgb(100,72,131);
+                    this.Titles[i].Color = (Color)ColorConverter.ConvertFrom(_titleColor);
 				    this.Titles[i].DockToChartArea=chartArea2.Name;					
 					#endregion
 
@@ -1417,7 +1579,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					#endregion
 
 					if (j == 0 && !typeFlash) {
-						chartArea2.BackImage = "/Images/common/logo_Tns_2.gif";//WebConstantes.Images.LOGO_TNS;
+						chartArea2.BackImage = "/App_Themes/"+WebApplicationParameters.Themes[webSession.SiteLanguage].Name+"/Images/common/logo_Tns_2.gif";//WebConstantes.Images.LOGO_TNS;
 						chartArea2.BackImageAlign = ChartImageAlign.TopLeft;
 						chartArea2.BackImageMode = ChartImageWrapMode.Unscaled;							
 					}

@@ -151,8 +151,15 @@ namespace AdExpress{
 				result = DynamicTablesUI.GetDynamicTableUI(_webSession,false);
 				#endregion
 
-				#region MAJ de la Session
-				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
+                #region Script
+                // Script
+                if (!Page.ClientScript.IsClientScriptBlockRegistered("ImageDropDownListScripts")) {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ImageDropDownListScripts", scripts);
+                }
+                #endregion
+
+                #region MAJ de la Session
+                _webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
 				_webSession.Save();
 				#endregion
 			}

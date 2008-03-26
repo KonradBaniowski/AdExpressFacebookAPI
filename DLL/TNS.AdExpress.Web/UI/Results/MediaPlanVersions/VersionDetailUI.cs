@@ -12,6 +12,7 @@ using System.Text;
 using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.Date;
 using TNS.FrameWork;
@@ -176,20 +177,22 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		public virtual void GetHtml(StringBuilder output)
 		{
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+
 			//Table
-			output.Append("<table align=\"left\"  cellpadding=0 cellspacing=0  border=\"0\" width=100% bgcolor=\"#B1A3C1\">");
+            output.Append("<table align=\"left\"  cellpadding=0 cellspacing=0  border=\"0\" width=100% class=\"violetBackGroundV3\">");
 			
 			//Render Verion visual
-			output.Append("<tr ><td  align=\"left\" bgcolor=\"#E0D7EC\" >");
+            output.Append("<tr ><td  align=\"left\" class=\"sloganVioletBackGround\" >");
 			this.RenderImage(output);
 			output.Append("</td></tr>");
 
 			//Render version nb cell
-			output.Append("<tr align=\"left\"><td bgcolor=\"#E0D7EC\" align=\"left\" nowrap=\"nowrap\" " + //<tr height=100% >
-				((this._version.CssClass.Length>0)?"class=\"" + this._version.CssClass + "\">":"\">"));
+            output.Append("<tr align=\"left\"><td align=\"left\" nowrap=\"nowrap\" " + //<tr height=100% >
+				((this._version.CssClass.Length>0)?"class=\"" + this._version.CssClass + "\">":"class=\"sloganVioletBackGround\">"));
 			if(_webSession.SloganIdZoom<0){
-				output.Append("<a href=\"javascript:get_version('"+this._version.Id+"');\" onmouseover=\"res_"+this._version.Id+".src='/Images/Common/button/result2_down.gif';\" onmouseout=\"res_"+this._version.Id+".src ='/Images/Common/button/result2_up.gif';\">");
-				output.Append("<img name=\"res_" + this._version.Id + "\" border=0  align=\"left\" src=\"/Images/Common/button/result2_up.gif\">");//align=\"absmiddle\"
+				output.Append("<a href=\"javascript:get_version('"+this._version.Id+"');\" onmouseover=\"res_"+this._version.Id+".src='/App_Themes/"+themeName+"/Images/Common/button/result2_down.gif';\" onmouseout=\"res_"+this._version.Id+".src ='/App_Themes/"+themeName+"/Images/Common/button/result2_up.gif';\">");
+				output.Append("<img name=\"res_" + this._version.Id + "\" border=0  align=\"left\" src=\"/App_Themes/"+themeName+"/Images/Common/button/result2_up.gif\">");//align=\"absmiddle\"
 				output.Append("</a>");
 			}
 			output.Append("<div align=\"left\"><font align=\"left\"  size=1>");

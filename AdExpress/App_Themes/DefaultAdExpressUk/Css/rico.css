@@ -256,7 +256,7 @@ td.simpleDroptd {
 	color : #000000;
 	font-weight: bold;
 	text-decoration : none;
-	background-color: #B1A3C1;
+	background-color: #7DB3A2;
 	padding-left:0px;
 	padding-right:0px;
 	border-left-width:0px;
@@ -288,7 +288,7 @@ H2 {
 	FONT-WEIGHT: bold; FONT-SIZE: 13px
 }
 DIV.simpleDropPanel {
-	FONT-SIZE: 11px;BORDER-RIGHT: #5b5b5b 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #5b5b5b 1px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #5b5b5b 1px solid; WIDTH: 200px; PADDING-TOP: 2px; BORDER-BOTTOM: #5b5b5b 1px solid; HEIGHT: 80px
+	FONT-SIZE: 11px;BORDER-RIGHT: #3E5A51 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #3E5A51 1px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #3E5A51 1px solid; WIDTH: 200px; PADDING-TOP: 2px; BORDER-BOTTOM: #3E5A51 1px solid; HEIGHT: 80px
 }
 DIV.simpleColumn {
 	WIDTH: 55px; HEIGHT: 25px

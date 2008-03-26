@@ -208,6 +208,7 @@ namespace AdExpress.Private.Results
 
                 #region SetZoom
                 StringBuilder js = new StringBuilder();
+                js.Append("\r\n<script type=\"text/javascript\">");
                 js.Append("\r\nfunction SetZoom(){");
                 js.AppendFormat("\r\n\tif ({0} == '')", SubPeriodSelectionWebControl1.PeriodContainerName);
                 js.Append("\r\n\t{");
@@ -222,7 +223,13 @@ namespace AdExpress.Private.Results
                 js.AppendFormat("\r\n\t\tdocument.getElementById(\"zoomParam\").value = {0};", SubPeriodSelectionWebControl1.PeriodContainerName);
                 js.Append("\r\n\t}");
                 js.Append("\r\n}");
+                js.Append("\r\n</script>");
                 SetZoom = js.ToString();
+
+                #region script
+                if (!this.ClientScript.IsClientScriptBlockRegistered("SetZoom")) this.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetZoom", SetZoom);
+                #endregion
+
                 #endregion
             }
             else

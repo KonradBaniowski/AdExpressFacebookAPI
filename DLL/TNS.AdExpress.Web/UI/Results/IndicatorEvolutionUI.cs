@@ -92,7 +92,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 
 			if(tab.GetLongLength(0)==0){
-				t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 				t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
 				if( tableType==FrameWorkConstantes.Results.EvolutionRecap.ElementType.advertiser){
 					t.Append(GestionWeb.GetWebWord(177,webSession.SiteLanguage)+PeriodDate);
@@ -102,7 +102,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			}
 
-			t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+            t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 
 			#region 1ere ligne
 			t.Append("\r\n\t<tr height=\"30px\" >");
@@ -178,9 +178,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 				}
 				else {
 					if(i!=10){	
-						t.Append("<td class=\""+noData+"\" style=\"border-right-color:#FFFFFF; border-right-width: 1px; border-right-style:solid\" colspan=4></td>");
+						t.Append("<td class=\""+noData+" whiteRightBorder\" colspan=4></td>");
 					}else{
-						t.Append("<td class=\""+noData+"\" style=\"border-right-color:#FFFFFF; border-right-width: 1px; border-right-style:solid ; border-bottom-color:#FFFFFF; border-bottom-width: 1px; border-bottom-style:solid\" colspan=4></td>");
+						t.Append("<td class=\""+noData+" whiteRightBottomBorder\" colspan=4></td>");
 					}
 				
 				}
@@ -218,9 +218,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 				}
 				else {
 					if(i!=10){	
-						t.Append("<td class=\""+noData+"\" style=\"border-right-color:#FFFFFF; border-right-width: 1px; border-right-style:solid\" colspan=4></td>");
+						t.Append("<td class=\""+noData+" whiteRightBorder\" colspan=4></td>");
 					}else{
-						t.Append("<td class=\""+noData+"\" style=\"border-right-color:#FFFFFF; border-right-width: 1px; border-right-style:solid ; border-bottom-color:#FFFFFF; border-bottom-width: 1px; border-bottom-style:solid\" colspan=4></td>");
+						t.Append("<td class=\""+noData+" whiteRightBottomBorder\" colspan=4></td>");
 					}
 				
 				}
@@ -256,8 +256,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			
 			// Cas année N-2
 			if(DateTime.Now.Year>webSession.DownLoadDate){
-				if(PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-3)) {				
-					t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+				if(PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-3)) {
+                    t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 					t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");				
 					t.Append(GestionWeb.GetWebWord(177,webSession.SiteLanguage));			
 					t.Append("</td></tr></table>");
@@ -265,8 +265,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 				}
 			}
 			else{
-				if(PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-2)) {				
-					t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+				if(PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-2)) {
+                    t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 					t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");				
 					t.Append(GestionWeb.GetWebWord(177,webSession.SiteLanguage));			
 					t.Append("</td></tr></table>");

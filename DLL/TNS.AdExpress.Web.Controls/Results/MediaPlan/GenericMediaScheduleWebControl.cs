@@ -17,6 +17,7 @@ using System.ComponentModel;
 using AjaxPro;
 using TNS.AdExpress.Web.Controls.Headers;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Common.Results;
@@ -63,6 +64,10 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// Method to vcall to refresh data
         /// </summary>
         protected string _refreshDataMethod = "refreshData";
+        /// <summary>
+        /// Theme name
+        /// </summary>
+        protected string _themeName = string.Empty;
 		#endregion
 
 		#region Accesseurs
@@ -165,6 +170,16 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         public string ZoomDateContainer
         {
             get { return "o_genericMediaSchedule.Zoom"; }
+        }
+        #endregion
+
+        #region Theme name
+        /// <summary>
+        /// Set or Get the theme name
+        /// </summary>
+        public string ThemeName {
+            get { return _themeName; }
+            set { _themeName = value; }
         }
         #endregion
 
@@ -314,6 +329,10 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 if (o.Contains("Zoom"))
                 {
                     _zoomDate = o["Zoom"].Value.Replace("\"", "");
+                }
+
+                if (o.Contains("themeName")) {
+                    _themeName = o["themeName"].Value.Replace("\"", "");
                 }
 
                 if (o.Contains("versionKeys"))
@@ -483,6 +502,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             parameters.Add("Zoom", _zoomDate);
             parameters.Add("versionKeys", string.Empty);
             parameters.Add("versionStyle", string.Empty);
+            parameters.Add("themeName", _themeName);
             js.Append(FrmFct.Scripts.GetAjaxParametersScripts("genericMediaSchedule", "o_genericMediaSchedule", parameters));
             js.Append("\r\n</SCRIPT>\r\n");
             this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "AjaxScript4", js.ToString()); 
@@ -600,23 +620,23 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 				
 					#region Construction du tableaux global
                     html.Append("<table width=100% align=\"left\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
-                    html.Append("<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/Images/Common/Result/header.gif\">&nbsp;</td></tr>");
-                    html.Append("<tr><td align=\"center\" style=\"padding:10px;border-left-color:#644883; border-left-width:1px; border-left-style:solid;border-right-color:#644883; border-right-width:1px; border-right-style:solid;\">");
+                    html.Append("<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/"+_themeName+"/Images/Common/Result/header.gif\">&nbsp;</td></tr>");
+                    html.Append("<tr><td align=\"center\" style=\"padding:10px;\" class=\"MSVioletRightLeftBorder\">");
 					html.Append("<table align=\"center\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
 
 					#endregion
 
 					#region Revenir aux versions sans zoom
 					if(webSession.SloganIdZoom>0){
-						html.Append("\r\n\t<tr align=\"left\" bgcolor=\"#B1A3C1\">\r\n\t\t<td>");
+                        html.Append("\r\n\t<tr align=\"left\" class=\"violetBackGroundV3\">\r\n\t\t<td>");
 						//todo txt en BDD
-						html.Append("<a class=\"roll06\" href=\"javascript:get_back();\" onmouseover=\"back_"+this.ID+".src='/Images/Common/button/back_down.gif';\" onmouseout=\"back_"+this.ID+".src='/Images/Common/button/back_up.gif';\"><img align=\"absmiddle\" name=\"back_"+this.ID+"\" border=0 src=\"/Images/Common/button/back_up.gif\">&nbsp;" + GestionWeb.GetWebWord(1978 , webSession.SiteLanguage) + "</a>");
+						html.Append("<a class=\"roll06\" href=\"javascript:get_back();\" onmouseover=\"back_"+this.ID+".src='/App_Themes/"+_themeName+"/Images/Common/button/back_down.gif';\" onmouseout=\"back_"+this.ID+".src='/App_Themes/"+_themeName+"/Images/Common/button/back_up.gif';\"><img align=\"absmiddle\" name=\"back_"+this.ID+"\" border=0 src=\"/App_Themes/"+_themeName+"/Images/Common/button/back_up.gif\">&nbsp;" + GestionWeb.GetWebWord(1978 , webSession.SiteLanguage) + "</a>");
 						html.Append("\r\n\t\t</td>\r\n\t</tr>");
 					}
 					#endregion
 
-					VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(webSession,result.VersionsDetail,period);					
-					html.Append("\r\n\t<tr bgcolor=\"#B1A3C1\">\r\n\t\t<td>");
+					VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(webSession,result.VersionsDetail,period);
+                    html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
 					html.Append(versionsUI.GetHtml());
 					html.Append("\r\n\t\t</td>\r\n\t</tr>");
 					
@@ -628,7 +648,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					html.Append("\r\n\t\t</td>\r\n\t</tr>");
 					html.Append("</table>");
                     html.Append("</td></tr>");
-                    html.Append("<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/Images/Common/Result/footer.gif\">&nbsp;</td></tr>");
+                    html.Append("<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/"+_themeName+"/Images/Common/Result/footer.gif\">&nbsp;</td></tr>");
                     html.Append("</table>");
 
 				}else{
@@ -687,7 +707,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// <returns></returns>
         protected string GetLoadingHTML()
         {
-            return ("<div id=\"res_" + this.ID + "\"><div align=\"center\" width = \"100%\"><img src=\"/Images/Common/waitAjax.gif\"></div></div>");
+            return ("<div id=\"res_" + this.ID + "\"><div align=\"center\" width = \"100%\"><img src=\"/App_Themes/"+_themeName+"/Images/Common/waitAjax.gif\"></div></div>");
         }
 
         /// <summary>

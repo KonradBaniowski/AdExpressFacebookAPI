@@ -23,6 +23,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		private string overCssClass = "";
 		private double imageWidth = 15.0;
 		private double imageHeight = 15.0;
+        /// <summary>
+        /// Arrow button image
+        /// </summary>
+        private string imageButtonArrow = "";
 
 		/// <summary>
 		/// Obtient ou définit la hauteur de l'image
@@ -94,6 +98,14 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			get{return index;}
 			set{index = Math.Min(value, texts.Split('|').Length - 1);}
 		}
+
+        /// <summary>
+        /// Set or Get image button arrow
+        /// </summary>
+        public string ImageButtonArrow {
+            get { return imageButtonArrow; }
+            set { imageButtonArrow = value; }
+        }
 		#endregion
 
 		#region PreRender
@@ -170,7 +182,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				writer.Write("<label id=\"ComBoText_" + this.ID + "></label>");
 				writer.Write("<img class=\"" + OutCssClass + "\" src=\"images/spacer.gif\" width=\"2\" align=\"absmiddle\"></td>)");
 			}
-			writer.WriteLine("\t\t\t\t\t <td height=\""+ (imageHeight+4.0)+"\" valign=\"middle\" ><img class=\"" + OutCssClass + "\" src=\"/Images/Common/button/bt_arrow_tall_top.gif\" border=\"0\"></td>");
+			writer.WriteLine("\t\t\t\t\t <td height=\""+ (imageHeight+4.0)+"\" valign=\"middle\" ><img class=\"" + OutCssClass + "\" src=\""+imageButtonArrow+"\" border=\"0\"></td>");
 			writer.WriteLine("\t\t\t\t </tr>");
 			writer.WriteLine("\t\t\t </table></td>");
 			writer.WriteLine("\t\t\t </tr>");
