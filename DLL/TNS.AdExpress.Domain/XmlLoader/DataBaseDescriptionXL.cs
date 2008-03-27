@@ -292,5 +292,50 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             return (list);
         }
         #endregion
+
+
+        #region Default result table prefix
+        /// <summary>
+        /// Get Default Result Table Prefix
+        /// </summary>
+        /// <param name="source">Data source</param>
+        /// <returns>Default Result Table Prefix</returns>
+        public static string LoadDefaultResultTablePrefix(IDataSource source) {
+             #region Variables
+            string defaultResultTablePrefix="";
+            XmlTextReader reader=null;
+
+            #endregion
+
+            try {
+                source.Open();
+                reader=(XmlTextReader)source.GetSource();
+                while(reader.Read()) {
+                    if(reader.NodeType==XmlNodeType.Element) {
+
+                        switch(reader.LocalName) {
+                            case "tables":
+                                if(reader.GetAttribute("defaultResultTablesPrefix")==null || reader.GetAttribute("defaultResultTablesPrefix").Length==0) throw (new InvalidXmlValueException("Invalid default result tables prefix parameter"));
+                                defaultResultTablePrefix=reader.GetAttribute("defaultResultTablesPrefix");
+                                break;
+                        }
+                    }
+                }
+            }
+            #region Error Management
+            catch(System.Exception err) {
+
+                #region Close the file
+                if(source.GetSource()!=null) source.Close();
+                #endregion
+
+                throw (new Exception(" Error : ",err));
+            }
+            #endregion
+
+            source.Close();
+            return (defaultResultTablePrefix);
+        } 
+        #endregion
     }
 }

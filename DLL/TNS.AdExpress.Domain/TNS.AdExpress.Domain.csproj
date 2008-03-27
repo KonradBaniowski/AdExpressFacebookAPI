@@ -56,7 +56,7 @@
     <Compile Include="Exceptions\DataBaseException.cs" />
     <Compile Include="Exceptions\DefaultConnectionException.cs" />
     <Compile Include="DataBaseDescription\Schema.cs" />
-    <Compile Include="DataBaseDescription\Tables.cs" />
+    <Compile Include="DataBaseDescription\Table.cs" />
     <Compile Include="Exceptions\DetailLevelItemsInformationXLException.cs" />
     <Compile Include="Exceptions\DetailLevelsInformationXLException.cs" />
     <Compile Include="Exceptions\GenericDetailLevelException.cs" />

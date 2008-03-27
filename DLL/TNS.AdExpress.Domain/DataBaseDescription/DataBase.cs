@@ -679,6 +679,10 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Tables List
         /// </summary>
         private Dictionary<TableIds,Table> _tables;
+        /// <summary>
+        /// Default Result Table Prefix
+        /// </summary>
+        private string _defaultResultTablePrefix;
         
         #endregion
 
@@ -692,16 +696,23 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
             _defaultConnections=DataBaseDescriptionXL.LoadDefaultConnections(source);
             _schemas=DataBaseDescriptionXL.LoadSchemas(source);
             _tables=DataBaseDescriptionXL.LoadTables(source,_schemas);
+            _defaultResultTablePrefix=DataBaseDescriptionXL.LoadDefaultResultTablePrefix(source);
             
 
         }
         #endregion
 
         #region Accessors
-
+        /// <summary>
+        /// Get default result table prefix 
+        /// </summary>
+        public string DefaultResultTablePrefix {
+            get { return (_defaultResultTablePrefix); }
+        }
         #endregion
 
         #region Public Methodes
+        
         /// <summary>
         /// Get default database connection
         /// </summary>
