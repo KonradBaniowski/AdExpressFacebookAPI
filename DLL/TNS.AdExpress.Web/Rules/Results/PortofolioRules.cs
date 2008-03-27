@@ -886,25 +886,25 @@ namespace TNS.AdExpress.Web.Rules.Results{
                                                 if (listVisual.Length > 0) {
                                                     listVisual = listVisual.Substring(0, listVisual.Length - 1);
                                                 }
-                                                tab[iCurLine, iCurColumn++] = new CellPressCreativeLink(listVisual);
+                                                tab[iCurLine, iCurColumn++] = new CellPressCreativeLink(listVisual, webSession);
                                                 listVisual = "";
                                             }
                                             else
-                                                tab[iCurLine, iCurColumn++] = new CellPressCreativeLink("");
+                                                tab[iCurLine, iCurColumn++] = new CellPressCreativeLink("", webSession);
                                         }
                                         break;
                                     case GenericColumnItemInformation.Columns.associatedFile://Visuel radio/tv
                                         if (showCreative) {
                                             switch (vehicle) {
                                                 case DBClassificationConstantes.Vehicles.names.radio:
-                                                    tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(), webSession.IdSession);
+                                                    tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(), webSession);
                                                     break;
                                                 case DBClassificationConstantes.Vehicles.names.tv:
                                                 case DBClassificationConstantes.Vehicles.names.others:
                                                     if (row[Column.DataBaseField].ToString().Length > 0)
-                                                        tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(Convert.ToInt64(row[Column.DataBaseField]), webSession.IdSession, vehicle.GetHashCode());
+                                                        tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(Convert.ToInt64(row[Column.DataBaseField]), webSession, vehicle.GetHashCode());
                                                     else
-                                                        tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(-1, webSession.IdSession, vehicle.GetHashCode());
+                                                        tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(-1, webSession, vehicle.GetHashCode());
 
                                                     break;
                                             }

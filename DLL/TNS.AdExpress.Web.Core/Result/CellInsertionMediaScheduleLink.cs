@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Core.Result {
     /// <summary>
@@ -11,10 +12,6 @@ namespace TNS.AdExpress.Web.Core.Result {
     public class CellInsertionMediaScheduleLink:CellAdExpressImageLink {
 
         #region Variables
-        /// <summary>
-        /// Session du client
-        /// </summary>
-        private WebSession _webSession;
         /// <summary>
         /// Identifiant du produit
         /// </summary>
@@ -37,7 +34,7 @@ namespace TNS.AdExpress.Web.Core.Result {
             _webSession=webSession;
             _productId=productId;
             _vehicleId=vehicleId;
-            _imagePath = "/Images/Common/picto_plus.gif";
+            _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[_webSession.SiteLanguage].Name+"/Images/Common/picto_plus.gif";
             _link="javascript:OpenMediaPlanAlert('{0}','{1}','{2}');";
         }
         #endregion

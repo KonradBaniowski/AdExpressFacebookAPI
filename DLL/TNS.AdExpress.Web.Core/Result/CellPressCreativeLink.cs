@@ -10,6 +10,8 @@ using System.Text;
 
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Core.Result {
 
@@ -30,10 +32,12 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <summary>
         /// Constructor
         /// </summary>
-        public CellPressCreativeLink(string creatives) {
-            _imagePath = "/Images/Common/picto_plus.gif";
+        public CellPressCreativeLink(string creatives, WebSession webSession) {
+            if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
             _link = "javascript:openPressCreation('{0}');";
             _creatives = creatives;
+            _webSession = webSession;
+            _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[_webSession.SiteLanguage].Name+"/Images/Common/picto_plus.gif";
         }
         #endregion
 

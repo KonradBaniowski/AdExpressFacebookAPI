@@ -10,6 +10,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork;
 using TNS.FrameWork.WebResultUI;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Core.Result{
 
@@ -28,7 +29,7 @@ namespace TNS.AdExpress.Web.Core.Result{
 		/// <summary>
 		/// Chemin de l'image servant au lien
 		/// </summary>
-		protected string _imagePath="/Images/Common/picto_plus.gif";
+		protected string _imagePath="";
 		/// <summary>
 		/// Adresse d'appelle du justificatif
 		/// </summary>
@@ -86,6 +87,7 @@ namespace TNS.AdExpress.Web.Core.Result{
 			_mediaPaging = mediaPaging;
 			_dateFacial = dateFacial;
 			_dateParution = dateParution;
+            _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[_webSession.SiteLanguage].Name+"/Images/Common/picto_plus.gif";
 		}
 		#endregion
 

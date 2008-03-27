@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Web.Core.Sessions;
 
 namespace TNS.AdExpress.Web.Core.Result {
     /// <summary>
@@ -26,6 +27,11 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// Chemin de l'image servant au lien
         /// </summary>
         protected string _imagePath = null;
+
+        /// <summary>
+        /// Session du client
+        /// </summary>
+        protected WebSession _webSession;
         #endregion
 
         /// <summary>

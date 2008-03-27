@@ -8,6 +8,7 @@ using System;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Core.Result{
 	/// <summary>
@@ -31,7 +32,7 @@ namespace TNS.AdExpress.Web.Core.Result{
 		/// <summary>
 		/// Chemin de l'image servant au lien
 		/// </summary>
-		protected string _imagePath="/Images/Common/picto_plus.gif";
+		protected string _imagePath="";
 		/// <summary>
 		/// Adresse d'appelle du plan media
 		/// </summary>
@@ -51,6 +52,7 @@ namespace TNS.AdExpress.Web.Core.Result{
 			_classificationId=cellLevel.Id;
 			_level=cellLevel.Level;
 			_webSession=webSession;
+            _imagePath = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Images/Common/picto_plus.gif";
 		}
 		#endregion
 

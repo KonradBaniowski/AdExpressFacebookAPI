@@ -10,6 +10,8 @@ using System.Text;
 
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Core.Result {
 
@@ -24,10 +26,6 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// </summary>
         protected Int64 _creative;
         /// <summary>
-        /// Id de la session
-        /// </summary>
-        protected string _sessionId;
-        /// <summary>
         /// Id du vehicle (Tv ou others)
         /// </summary>
         protected int _vehicleId;
@@ -37,12 +35,13 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <summary>
         /// Constructor
         /// </summary>
-        public CellTvCreativeLink(Int64 creative, string sessionId, int vehicleId) {
-            _imagePath = "/Images/Common/Picto_pellicule.gif";
+        public CellTvCreativeLink(Int64 creative, WebSession webSession, int vehicleId) {
+            if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
             _link = "javascript:openDownload('{0}','{1}','{2}');";
             _creative = creative;
-            _sessionId = sessionId;
+            _webSession = webSession;
             _vehicleId = vehicleId;
+            _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[_webSession.SiteLanguage].Name+"/Images/Common/Picto_pellicule.gif";
         }
         #endregion
 
@@ -53,7 +52,7 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <returns>Adresse du lien</returns>
         public override string GetLink() {
             if (_creative != -1)
-                return (string.Format(_link, _creative, _sessionId, _vehicleId));
+                return (string.Format(_link, _creative, _webSession.IdSession, _vehicleId));
             else
                 return "";
         }

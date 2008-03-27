@@ -732,7 +732,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 								foreach (DataRow dr in ds.Tables[0].Rows) {
 									childId = treeViewId + "_" + currentLevel.ID + "_" + dr[0].ToString();
 									nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + dr[1].ToString().ToLower();
-									nodeCurrentText += "</td><td nowrap>&nbsp;<a href=# onclick=\"removeItem('TreeLevelSelectedIds" + treeViewId + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID + "' , '" + dr[0].ToString() + "');ob_t2_Remove('" + childId + "');\" ><img src=\"/Images/Common/button/bt_delete_item.gif\" border=0></a></div>";
+									nodeCurrentText += "</td><td nowrap>&nbsp;<a href=# onclick=\"removeItem('TreeLevelSelectedIds" + treeViewId + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID + "' , '" + dr[0].ToString() + "');ob_t2_Remove('" + childId + "');\" ><img src=\""+_deleteImage+"\" border=0></a></div>";
 									hiddenFieldIds += dr[0].ToString() + ",";
 									oTree.Add("t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID.ToString(), childId, nodeCurrentText, false, null, null);
 								}
@@ -847,7 +847,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 								foreach (DataRow dr in ds.Tables[0].Rows) {
 									childId = treeViewId + "_" + currentLevel.ID + "_" + dr[0].ToString();
 									nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + dr[1].ToString().ToLower();
-									nodeCurrentText += "</td><td nowrap>&nbsp;<a href=# onclick=\"removeItem('TreeLevelSelectedIds" + treeViewId + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID + "' , '" + dr[0].ToString() + "');ob_t2_Remove('" + childId + "');\" ><img src=\"/Images/Common/button/bt_delete_item.gif\" border=0></a></div>";
+									nodeCurrentText += "</td><td nowrap>&nbsp;<a href=# onclick=\"removeItem('TreeLevelSelectedIds" + treeViewId + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID + "' , '" + dr[0].ToString() + "');ob_t2_Remove('" + childId + "');\" ><img src=\""+_deleteImage+"\" border=0></a></div>";
 									hiddenFieldIds += dr[0].ToString() + ",";
 									oTree.Add("t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID.ToString(), childId, nodeCurrentText, false, null, null);
 								}							

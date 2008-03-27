@@ -11,6 +11,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Core.Result {
     /// <summary>
@@ -24,10 +25,6 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// Niveau de détail générique
         /// </summary>
         protected GenericDetailLevel _genericDetailLevel;
-        /// <summary>
-        /// Session du client
-        /// </summary>
-        protected WebSession _webSession;
         /// <summary>
         /// Cellule du niveau qui a été cliqué
         /// </summary>
@@ -60,8 +57,8 @@ namespace TNS.AdExpress.Web.Core.Result {
             if (genericDetailLevel == null) throw (new ArgumentNullException("L'objet genericDetailLevel est null"));
             if(zoomDate!=null) _zoomDate=zoomDate;
             _universId=universId;
-            _imagePath = "/Images/Common/picto_plus.gif";
             _webSession = webSession;
+            _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[_webSession.SiteLanguage].Name+"/Images/Common/picto_plus.gif";
             _genericDetailLevel = genericDetailLevel;
             _cellLevel = cellLevel;
         }
