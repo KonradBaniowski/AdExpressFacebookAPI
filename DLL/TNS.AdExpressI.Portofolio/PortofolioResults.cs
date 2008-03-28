@@ -188,7 +188,7 @@ namespace TNS.AdExpressI.Portofolio {
 
             #region Initialisation du tableau de résultats
             if(_showInsertions)insertions = 1;
-            if(_showCreatives) insertions=1;
+            if(_showCreatives) creatives=1;
             GetPortofolioHeaders(headers,cellFactories,columnsName);
             tab = new ResultTable(iNbLine,headers);
             #endregion
