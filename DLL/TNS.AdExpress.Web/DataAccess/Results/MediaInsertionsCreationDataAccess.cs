@@ -220,7 +220,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 // Niveau de produit
                 sql.Append(SQLGenerator.getLevelProduct(webSession, DbTables.WEB_PLAN_PREFIXE, true));
                 // Produit à exclure en radio
-                sql.Append(SQLGenerator.getAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DbTables.WEB_PLAN_PREFIXE, true, false));
+                sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DbTables.WEB_PLAN_PREFIXE, true, false));
 
                 #region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection)
 
@@ -377,7 +377,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				if(WebFunctions.Modules.IsSponsorShipTVModule(webSession))
 					sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,true));
 				else
-				sql.Append(SQLGenerator.getAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false));
+				sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false));
 
 
 				#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
@@ -600,7 +600,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,true));			
 			else{
 				// Produit à exclure en radio
-				sql.Append(SQLGenerator.getAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false));
+				sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false));
 			}
 
 			#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
@@ -825,7 +825,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,true));
 			else{
 				// Produit à exclure en radio
-				sql.Append(SQLGenerator.getAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false));
+				sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false));
 			}
 
 			#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
@@ -1338,7 +1338,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 			if (WebFunctions.Modules.IsSponsorShipTVModule(webSession))
 				tableName = DBConstantes.Tables.DATA_SPONSORSHIP;
-			else tableName = SQLGenerator.getVehicleTableNameForDetailResult(idVehicle, currentModuleDescription.ModuleType);
+			else tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, currentModuleDescription.ModuleType);
 
 			sql.Append(" from ");
 			sql.Append(" " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + tableName + " " + DbTables.WEB_PLAN_PREFIXE);
@@ -1363,7 +1363,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string sql="";
 			string tableName="";
 			Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
-			tableName = SQLGenerator.getVehicleTableNameForDetailResult(idVehicle,currentModuleDescription.ModuleType);
+			tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle,currentModuleDescription.ModuleType);
 			
 			
 			sql+=DBConstantes.Schema.ADEXPRESS_SCHEMA+".advertiser   "+DbTables.ADVERTISER_PREFIXE;

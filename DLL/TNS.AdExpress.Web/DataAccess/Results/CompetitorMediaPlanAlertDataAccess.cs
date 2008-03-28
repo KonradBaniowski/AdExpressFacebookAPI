@@ -325,7 +325,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			try {
 				//tableName = getTable((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)));
 				Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
-				tableName = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)), currentModuleDescription.ModuleType);
+				tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)), currentModuleDescription.ModuleType);
 				//unitField = getField(webSession.Unit);
 				if (DBClassificationConstantes.Vehicles.names.outdoor == (DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle))
 					&& webSession.Unit == TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion) {
@@ -381,7 +381,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				//Droits en accès
 				sql += SQLGenerator.getAnalyseCustomerProductRight(webSession, "wp", true);
 				// Produit à exclure en radio
-				sql += SQLGenerator.getAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, "wp", true, false);
+				sql += SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, "wp", true, false);
 				#endregion
 
 				#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection)

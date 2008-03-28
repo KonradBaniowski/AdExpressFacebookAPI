@@ -168,7 +168,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 			try {
 
 				Module module = ModulesList.GetModule(session.CurrentModule);
-				dataTable = SQLGenerator.getVehicleTableNameForDetailResult(vehicle, module.ModuleType);
+				dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(vehicle, module.ModuleType);
 				sql.Append("select ");
 				GetFields(sql, vehicle);
 				sql.Append(" from ");
@@ -239,7 +239,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                                 else
                                     first = false;
                                 sql.Append(" select id_vehicle from ");
-                                sql.AppendFormat(" {0}.{1} wp ", DBCst.Schema.ADEXPRESS_SCHEMA, SQLGenerator.getVehicleTableNameForDetailResult((DBClassifCst.Vehicles.names)i, module.ModuleType));
+                                sql.AppendFormat(" {0}.{1} wp ", DBCst.Schema.ADEXPRESS_SCHEMA, SQLGenerator.GetVehicleTableNameForDetailResult((DBClassifCst.Vehicles.names)i, module.ModuleType));
                                 sql.Append(" where ");
                                 GetUniversFilters(sql, session, fromDate, toDate, i, universId, moduleId, filters, module);
                                 sql.AppendFormat(" and rownum < 2 ");
@@ -255,7 +255,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                         else
                             first = false;
                         sql.Append(" select id_vehicle from ");
-                        sql.AppendFormat(" {0}.{1} wp ", DBCst.Schema.ADEXPRESS_SCHEMA, SQLGenerator.getVehicleTableNameForDetailResult((DBClassifCst.Vehicles.names)i, module.ModuleType));
+                        sql.AppendFormat(" {0}.{1} wp ", DBCst.Schema.ADEXPRESS_SCHEMA, SQLGenerator.GetVehicleTableNameForDetailResult((DBClassifCst.Vehicles.names)i, module.ModuleType));
                         sql.Append(" where ");
                         GetUniversFilters(sql, session, fromDate, toDate, i, universId, moduleId, filters, module);
                         sql.AppendFormat(" and rownum < 2 ");
@@ -612,7 +612,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             if (Modules.IsSponsorShipTVModule(session))
                 sql.Append(SQLGenerator.getAdExpressUniverseCondition(WebCst.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID, "wp", "wp", "wp", true));
             else
-                sql.Append(SQLGenerator.getAdExpressProductUniverseCondition(WebCst.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, "wp", true, false));
+                sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(WebCst.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, "wp", true, false));
             sql.Append(" and wp.id_category<>35  ");// Pas d'affichage de TV NAT thématiques
             #endregion
 

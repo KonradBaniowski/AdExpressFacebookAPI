@@ -93,8 +93,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 
 				selectFields=GetFieldsDetailMedia((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()),mediaAgencyYear);
 //				tableName = GetTableData((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
-				tableName = WebFunctions.SQLGenerator.getVehicleTableNameForAlertDetailResult((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForAlertDetailResult((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				product=GetProductData(webSession);
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
@@ -251,9 +251,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			try{
 				selectFields=GetFieldsDetailMediaForTvRadio((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
 //				tableName = GetTableData((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
-				tableName = WebFunctions.SQLGenerator.getVehicleTableNameForAlertDetailResult((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
+				tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForAlertDetailResult((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
 				groupByFields= GetGroupByDetailMediaForTvRadio((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				product=GetProductData(webSession);
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
@@ -357,7 +357,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 
                 //Tables
                 string tableName = "";
-                tableName = SQLGenerator.getVehicleTableNameForAlertDetailResult((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
+                tableName = SQLGenerator.GetVehicleTableNameForAlertDetailResult((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
 
                 sql.Append(" from ");
                 sql.Append(" " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + tableName + " " + DbTables.WEB_PLAN_PREFIXE);
@@ -391,7 +391,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                     sql.Append(" and id_commercial_break=" + code_ecran + "");
                 }
 
-                listProductHap = WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
+                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
                 product = GetProductData(webSession);
                 productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DATA_TABLE_PREFIXE, true);
                 mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DATA_TABLE_PREFIXE, true);

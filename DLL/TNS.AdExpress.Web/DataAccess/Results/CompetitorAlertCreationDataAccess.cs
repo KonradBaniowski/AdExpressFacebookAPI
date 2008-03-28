@@ -90,7 +90,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			try{
 				//tableName = GetTable((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()),webSession.CurrentModule);
-                tableName = SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), currentModuleDescription.ModuleType);
+                tableName = SQLGenerator.GetVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), currentModuleDescription.ModuleType);
 				fields = GetFields((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
 				element=GetIdElement(webSession,idElement,level,idVehicle);
 			}
@@ -199,7 +199,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Droits en accès
 			sql.Append(SQLGenerator.getAnalyseCustomerProductRight(webSession,"wp",true));
 			//produits à exclure dans les alertes et analyse (radio)
-			sql.Append(SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,"wp",true,false));
+			sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,"wp",true,false));
 			#endregion
 
 			// Niveau de media

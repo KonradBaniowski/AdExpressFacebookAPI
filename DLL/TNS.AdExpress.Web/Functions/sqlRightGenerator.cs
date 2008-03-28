@@ -1544,7 +1544,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// Cette méthode ne peut être utilisée que si toute la nomenclature support est contenue
 		/// dans une même table (famille, classe ,group, produit ).
 		/// </remarks>
-		internal static string getAdExpressProductUniverseCondition(int idProductItemsList, string tablePrefixe, bool beginByAnd, bool access) {
+		public static string GetAdExpressProductUniverseCondition(int idProductItemsList, string tablePrefixe, bool beginByAnd, bool access) {
 			try {
 				return (getAdExpressProductUniverseCondition(idProductItemsList, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd, access));
 			}
@@ -1877,7 +1877,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <exception cref="TNS.AdExpress.Web.Exceptions.SQLGeneratorException">Le niveau de détail produit demandé ne gère pas les données du gad</exception>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Nom de la table</returns>
-		internal static string GetTablesForGad(WebSession webSession) {
+        public static string GetTablesForGad(WebSession webSession) {
 			return (DBConstantes.Tables.GAD);
 		}
 
@@ -1885,7 +1885,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// Détermine le champ addresse du gad
 		/// </summary>
 		/// <returns>Champ addresse du gad</returns>
-		internal static string GetFieldsAddressForGad() {
+		public static string GetFieldsAddressForGad() {
 			return (GetFieldsAddressForGad(DBConstantes.Tables.GAD_PREFIXE));
 		}
 
@@ -1894,7 +1894,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </summary>
 		/// <param name="prefixe">Préfixe à utiliser pour la table du GAD</param>
 		/// <returns>Champ addresse du gad</returns>
-		internal static string GetFieldsAddressForGad(string prefixe) {
+        public static string GetFieldsAddressForGad(string prefixe) {
 			return (prefixe.Length > 0) ? prefixe + ".id_address" : " id_address";
 		}
 
@@ -1903,7 +1903,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </summary>
 		/// <param name="prefixeData">Préfixe à utiliser pour la de résultat</param>
 		/// <returns>Jointure</returns>
-		internal static string GetJointForGad(string prefixeData) {
+		public static string GetJointForGad(string prefixeData) {
 			return (GetJointForGad(DBConstantes.Tables.GAD_PREFIXE, prefixeData));
 
 		}
@@ -1914,7 +1914,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="prefixeGAD">Préfixe à utiliser pour la table du GAD</param>
 		/// <param name="prefixeData">Préfixe à utiliser pour la de résultat</param>
 		/// <returns>Jointure</returns>
-		internal static string GetJointForGad(string prefixeGAD, string prefixeData) {
+        public static string GetJointForGad(string prefixeGAD,string prefixeData) {
 			return (" " + prefixeGAD + ".id_advertiser(+)=" + prefixeData + ".id_advertiser ");
 
 		}
@@ -2236,13 +2236,13 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="vehicleName">Vehicle</param>
 		/// <param name="moduleType">Type de module</param>
 		/// <returns>Nom de la table</returns>
-		internal static string getVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, WebConstantes.Module.Type moduleType) {
+		public static string GetVehicleTableSQLForDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, WebConstantes.Module.Type moduleType) {
 			try {
 				switch (moduleType) {
 					case WebConstantes.Module.Type.alert:
-						return (getVehicleTableNameForAlertDetailResult(vehicleName));
+						return (GetVehicleTableNameForAlertDetailResult(vehicleName));
 					case WebConstantes.Module.Type.analysis:
-						return (getVehicleTableNameForZoomDetailResult(vehicleName));
+						return (GetVehicleTableNameForZoomDetailResult(vehicleName));
 					case WebConstantes.Module.Type.tvSponsorship:
 						return (GetVehicleTableNameForSponsorshipResult());
 
@@ -2261,25 +2261,25 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </summary>
 		/// <param name="vehicleName">Vehicle</param>
 		/// <returns>Nom de la table</returns>
-		internal static string getVehicleTableNameForZoomDetailResult(DBClassificationConstantes.Vehicles.names vehicleName) {
+		internal static string GetVehicleTableSQLForZoomDetailResult(DBClassificationConstantes.Vehicles.names vehicleName) {
 			switch (vehicleName) {
 				case DBClassificationConstantes.Vehicles.names.press:
-					return (DBConstantes.Tables.DATA_PRESS);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					return (DBConstantes.Tables.DATA_PRESS_INTER);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.radio:
-					return (DBConstantes.Tables.DATA_RADIO);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
-					return (DBConstantes.Tables.DATA_TV);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.outdoor:
-					return (DBConstantes.Tables.DATA_OUTDOOR);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.adnettrack:
-					return (DBConstantes.Tables.DATA_ADNETTRACK);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.internet:
-					return (DBConstantes.Tables.DATA_INTERNET);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
-					return (DBConstantes.Tables.DATA_MARKETING_DIRECT);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).SqlWithPrefix);
 				default:
 					throw (new WebExceptions.SQLGeneratorException("Impossible de déterminer la table à traiter"));
 			}
@@ -2289,8 +2289,8 @@ namespace TNS.AdExpress.Web.Functions {
 		/// Détermine la table à traiter pour le parrainage TV
 		/// </summary>
 		/// <returns>Nom de la table</returns>
-		internal static string GetVehicleTableNameForSponsorshipResult() {
-			return (DBConstantes.Tables.DATA_SPONSORSHIP);
+		internal static string GetVehicleTableSQLForSponsorshipResult() {
+            return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataSponsorship).SqlWithPrefix);
 		}
 
 
@@ -2299,29 +2299,122 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </summary>
 		/// <param name="vehicleName">Vehicle</param>
 		/// <returns>Nom de la table</returns>
-		internal static string getVehicleTableNameForAlertDetailResult(DBClassificationConstantes.Vehicles.names vehicleName) {
+		internal static string GetVehicleTableSQLForAlertDetailResult(DBClassificationConstantes.Vehicles.names vehicleName) {
 			switch (vehicleName) {
 				case DBClassificationConstantes.Vehicles.names.press:
-					return (DBConstantes.Tables.ALERT_DATA_PRESS);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					return (DBConstantes.Tables.ALERT_DATA_PRESS_INTER);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.radio:
-					return (DBConstantes.Tables.ALERT_DATA_RADIO);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
-					return (DBConstantes.Tables.ALERT_DATA_TV);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.outdoor:
-					return (DBConstantes.Tables.ALERT_DATA_OUTDOOR);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.adnettrack:
-					return (DBConstantes.Tables.ALERT_DATA_ADNETTRACK);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.internet:
-					return (DBConstantes.Tables.ALERT_DATA_INTERNET);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).SqlWithPrefix);
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
-					return (DBConstantes.Tables.ALERT_DATA_MARKETING_DIRECT);
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).SqlWithPrefix);
 				default:
 					throw (new WebExceptions.SQLGeneratorException("Impossible de déterminer la table à traiter"));
 			}
 		}
+
+        /// <summary>
+        /// Détermine la table à traiter pour avoir des données désagrégées en fonction du vehicle
+        /// </summary>
+        /// <param name="vehicleName">Vehicle</param>
+        /// <param name="moduleType">Type de module</param>
+        /// <returns>Nom de la table</returns>
+        internal static string GetVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names vehicleName,WebConstantes.Module.Type moduleType) {
+            try {
+                switch(moduleType) {
+                    case WebConstantes.Module.Type.alert:
+                        return (GetVehicleTableNameForAlertDetailResult(vehicleName));
+                    case WebConstantes.Module.Type.analysis:
+                        return (GetVehicleTableNameForZoomDetailResult(vehicleName));
+                    case WebConstantes.Module.Type.tvSponsorship:
+                        return (GetVehicleTableNameForSponsorshipResult());
+
+                    default:
+                        throw (new WebExceptions.SQLGeneratorException("Impossible de déterminer le type du module"));
+                }
+            }
+            catch(WebExceptions.SQLGeneratorException fe) {
+                throw (fe);
+            }
+        }
+
+
+        /// <summary>
+        /// Détermine la table à traiter pour un Zoom en fonction du vehicle
+        /// </summary>
+        /// <param name="vehicleName">Vehicle</param>
+        /// <returns>Nom de la table</returns>
+        internal static string GetVehicleTableNameForZoomDetailResult(DBClassificationConstantes.Vehicles.names vehicleName) {
+            switch(vehicleName) {
+                case DBClassificationConstantes.Vehicles.names.press:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Label);
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter).Label);
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio).Label);
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).Label);
+                case DBClassificationConstantes.Vehicles.names.outdoor:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).Label);
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).Label);
+                case DBClassificationConstantes.Vehicles.names.internet:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).Label);
+                case DBClassificationConstantes.Vehicles.names.directMarketing:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).Label);
+                default:
+                    throw (new WebExceptions.SQLGeneratorException("Impossible de déterminer la table à traiter"));
+            }
+        }
+
+        /// <summary>
+        /// Détermine la table à traiter pour le parrainage TV
+        /// </summary>
+        /// <returns>Nom de la table</returns>
+        internal static string GetVehicleTableNameForSponsorshipResult() {
+            return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataSponsorship).Label);
+        }
+
+
+        /// <summary>
+        /// Détermine la table à traiter pour une Alerte en fonction du vehicle
+        /// </summary>
+        /// <param name="vehicleName">Vehicle</param>
+        /// <returns>Nom de la table</returns>
+        internal static string GetVehicleTableNameForAlertDetailResult(DBClassificationConstantes.Vehicles.names vehicleName) {
+            switch(vehicleName) {
+                case DBClassificationConstantes.Vehicles.names.press:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).Label);
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).Label);
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).Label);
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).Label);
+                case DBClassificationConstantes.Vehicles.names.outdoor:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).Label);
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).Label);
+                case DBClassificationConstantes.Vehicles.names.internet:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).Label);
+                case DBClassificationConstantes.Vehicles.names.directMarketing:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).Label);
+                default:
+                    throw (new WebExceptions.SQLGeneratorException("Impossible de déterminer la table à traiter"));
+            }
+        }
 		#endregion
 
 		#region Détail Produit
@@ -2952,7 +3045,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <exception cref="WebExceptions.SQLGeneratorException">
 		/// Lancée au cas ou les unités considérées ne sont traitées
 		/// </exception>
-		internal static string getUnitFields(DBClassificationConstantes.Vehicles.names vehicleName, string dataTablePrefixe) {
+		public static string GetUnitFields(DBClassificationConstantes.Vehicles.names vehicleName, string dataTablePrefixe) {
 
 			switch (vehicleName) {
 				case DBClassificationConstantes.Vehicles.names.tv:
@@ -3247,7 +3340,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="webSession">Session du client</param>
 		/// <param name="dataTablePrefixe">Préfixe de la table des données</param>
 		/// <returns>Jointures</returns>
-		internal static string getJointForInsertDetail(WebSession webSession, string dataTablePrefixe) {
+		public static string GetJointForInsertDetail(WebSession webSession, string dataTablePrefixe) {
 
 			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 			switch (webSession.Insert) {

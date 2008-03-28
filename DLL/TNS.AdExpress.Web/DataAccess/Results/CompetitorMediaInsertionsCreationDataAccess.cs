@@ -167,7 +167,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                     //Droits en accès
                     sql.Append(SQLGenerator.getAnalyseCustomerProductRight(webSession, "wp", true));
                     // Produit à exclure en radio
-                    sql.Append(SQLGenerator.getAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, "wp", true, false));
+                    sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, "wp", true, false));
                     // Produit à exclure en radio
                     #endregion
 

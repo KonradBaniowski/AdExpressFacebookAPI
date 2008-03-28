@@ -119,7 +119,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				#region Récupération des noms de tables et de champs suivant le média(vehcile)
 				TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 				string tablePrefixe = DbTables.WEB_PLAN_PREFIXE;
-				tableName = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)), currentModuleDescription.ModuleType);
+				tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)), currentModuleDescription.ModuleType);
 
 				#endregion
 
@@ -175,7 +175,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				//Droits en accès
 				sql += SQLGenerator.getAnalyseCustomerProductRight(webSession, tablePrefixe, true);
 				// Produit à exclure en radio
-				sql += SQLGenerator.getAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, tablePrefixe, true, false);
+				sql += SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, tablePrefixe, true, false);
 				#endregion
 
 				#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection)				
@@ -294,7 +294,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 			//Droits en accès
 			sql+=SQLGenerator.getAnalyseCustomerProductRight(webSession,tablePrefixe,true);
 			// Produit à exclure en radio
-			sql+=SQLGenerator.getAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,tablePrefixe,true,false);
+			sql+=SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,tablePrefixe,true,false);
 			#endregion
 
 			// Gestion des sélections et des droits

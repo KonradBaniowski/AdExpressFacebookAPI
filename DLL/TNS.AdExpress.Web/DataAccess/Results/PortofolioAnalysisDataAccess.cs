@@ -89,10 +89,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				detailProductOrderBy=webSession.GenericProductDetailLevel.GetSqlOrderFields();
 				dateField=DATA_TABLE_PREFIXE+"."+WebFunctions.SQLGenerator.getDateFieldNameForAnalysisResult(webSession.DetailPeriod);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				//option encarts (pour la presse)
 				if(DBClassificationConstantes.Vehicles.names.press==vehicleName || DBClassificationConstantes.Vehicles.names.internationalPress==vehicleName)
-					dataJointForInsert=WebFunctions.SQLGenerator.getJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
+					dataJointForInsert=WebFunctions.SQLGenerator.GetJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
 				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)){
 					try{
 						dataTableNameForGad=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GAD+" "+DBConstantes.Tables.GAD_PREFIXE;
@@ -244,7 +244,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 			string mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
 			//liste des produit hap
-			string listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+			string listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 			string date=WebFunctions.SQLGenerator.getDateFieldNameForAnalysisResult(webSession.DetailPeriod);
 			string period=WebFunctions.SQLGenerator.getMaxDateForPortofolio(webSession.DetailPeriod);
 
@@ -309,7 +309,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				product=TNS.AdExpress.Web.DataAccess.Results.PortofolioDataAccess.GetProductData(webSession);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				date=WebFunctions.SQLGenerator.getDateFieldNameForAnalysisResult(webSession.DetailPeriod);
 			}
 			catch(System.Exception err){
@@ -445,10 +445,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 // Table de données
                 switch (type) {
                     case DBConstantes.TableType.Type.dataVehicle4M:
-                        dataTableName = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult(vehicleName, WebConstantes.Module.Type.alert);
+                        dataTableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleName, WebConstantes.Module.Type.alert);
                         break;
                     case DBConstantes.TableType.Type.dataVehicle:
-                        dataTableName = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult(vehicleName, WebConstantes.Module.Type.analysis);
+                        dataTableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleName, WebConstantes.Module.Type.analysis);
                         break;
                     case DBConstantes.TableType.Type.webPlan:
                         dataTableName = DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
@@ -472,7 +472,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                         break;
                 }
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				//option encarts (pour la presse)
 				if(DBClassificationConstantes.Vehicles.names.press==vehicleName || DBClassificationConstantes.Vehicles.names.internationalPress==vehicleName)
 					dataJointForInsert=WebFunctions.SQLGenerator.getJointForInsertDetail(webSession,DATA_TABLE_PREFIXE,type);
@@ -740,10 +740,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
             // Table de données
             switch (type) {
                 case DBConstantes.TableType.Type.dataVehicle4M:
-                    table = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)idVehicle, WebConstantes.Module.Type.alert);
+                    table = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)idVehicle, WebConstantes.Module.Type.alert);
                     break;
                 case DBConstantes.TableType.Type.dataVehicle:
-                    table = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)idVehicle, WebConstantes.Module.Type.analysis);
+                    table = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)idVehicle, WebConstantes.Module.Type.analysis);
                     break;
                 case DBConstantes.TableType.Type.webPlan:
                     table = DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
@@ -755,7 +755,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
             string productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DATA_TABLE_PREFIXE, true);
             string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DATA_TABLE_PREFIXE, true);
             //liste des produit hap
-            string listProductHap = WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
+            string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
             string date = string.Empty;
             switch (type) {
                 case DBConstantes.TableType.Type.dataVehicle4M:
@@ -924,10 +924,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 // Table de données
                 switch (type) {
                     case DBConstantes.TableType.Type.dataVehicle4M:
-                        tableName = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)idVehicle, WebConstantes.Module.Type.alert);
+                        tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)idVehicle, WebConstantes.Module.Type.alert);
                         break;
                     case DBConstantes.TableType.Type.dataVehicle:
-                        tableName = WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)idVehicle, WebConstantes.Module.Type.analysis);
+                        tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)idVehicle, WebConstantes.Module.Type.analysis);
                         break;
                     case DBConstantes.TableType.Type.webPlan:
                         tableName = DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
@@ -938,7 +938,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DATA_TABLE_PREFIXE, true);
                 product = TNS.AdExpress.Web.DataAccess.Results.PortofolioDataAccess.GetProductData(webSession);
                 mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DATA_TABLE_PREFIXE, true);
-                listProductHap = WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
+                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
                 switch (type) {
                     case DBConstantes.TableType.Type.dataVehicle4M:
                     case DBConstantes.TableType.Type.dataVehicle:

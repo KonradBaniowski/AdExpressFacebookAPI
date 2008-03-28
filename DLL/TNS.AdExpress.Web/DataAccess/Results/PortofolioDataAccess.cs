@@ -118,7 +118,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 			string mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
 			//liste des produit hap
-			string listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+			string listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 
 
 			string sql=select;
@@ -178,7 +178,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 			string mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
 			//liste des produit hap
-			string listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+			string listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 
 
 			string insertionField="insertion";
@@ -339,7 +339,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				product=GetProductData(webSession);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 			}
 			catch(System.Exception err){
 				throw(new WebExceptions.PortofolioDataAccessException ("Impossible de construire la requête pour la Synthèse publicitaire: "+sql,err));
@@ -488,7 +488,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
 				product=GetProductData(webSession);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 			}
 			catch(System.Exception err){
 				throw(new WebExceptions.PortofolioDataAccessException ("Impossible de construire la requête pour la Synthèse publicitaire: "+sql,err));
@@ -610,7 +610,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				product=GetProductData(webSession);
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 			}
 			catch(System.Exception err){
 				throw(new WebExceptions.PortofolioDataAccessException ("Impossible de construire la requête pour la Synthèse publicitaire: "+sql,err));
@@ -763,7 +763,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				product=GetProductData(webSession);
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 			}
 			catch(System.Exception err){
 				throw(new PortofolioDataAccessException("Impossible de construire la requête",err));
@@ -848,18 +848,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#region Construction de la requête
 			try{
-				dataTableName=WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult(vehicleName,moduleType);
+				dataTableName=WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleName,moduleType);
 				detailProductTablesNames=webSession.GenericProductDetailLevel.GetSqlTables(DBConstantes.Schema.ADEXPRESS_SCHEMA);
 				detailProductFields=webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints=webSession.GenericProductDetailLevel.GetSqlJoins(webSession.SiteLanguage,DATA_TABLE_PREFIXE);
-				unitsFields = WebFunctions.SQLGenerator.getUnitFields(vehicleName,DATA_TABLE_PREFIXE);
+				unitsFields = WebFunctions.SQLGenerator.GetUnitFields(vehicleName,DATA_TABLE_PREFIXE);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				detailProductOrderBy=webSession.GenericProductDetailLevel.GetSqlOrderFields();
 				//option encarts (pour la presse)
 				if(DBClassificationConstantes.Vehicles.names.press==vehicleName || DBClassificationConstantes.Vehicles.names.internationalPress==vehicleName)
-					dataJointForInsert=WebFunctions.SQLGenerator.getJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+					dataJointForInsert=WebFunctions.SQLGenerator.GetJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				
 				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)){
 					try{
@@ -1025,10 +1025,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				//Nom de la table
 				switch((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())){
 					case DBClassificationConstantes.Vehicles.names.press:
-						tableName=WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names.press,WebConstantes.Module.Type.analysis);
+						tableName=WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names.press,WebConstantes.Module.Type.analysis);
 						break;
 					case DBClassificationConstantes.Vehicles.names.internationalPress:
-						tableName=WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names.internationalPress,WebConstantes.Module.Type.analysis);
+						tableName=WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names.internationalPress,WebConstantes.Module.Type.analysis);
 						break;
 				}
 				//tableName = getTableData((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));								
@@ -1054,13 +1054,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql+=" "+DATA_TABLE_PREFIXE+".date_media_num>="+dateBegin;
 				sql+=" and "+DATA_TABLE_PREFIXE+".date_media_num<="+dateEnd;
 				//Encarts
-				sql+=WebFunctions.SQLGenerator.getJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
+				sql+=WebFunctions.SQLGenerator.GetJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
 				
 				#region Nomenclature Produit (droits)
 				//Droits en accès
 				sql+=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				//liste des produit hap
-				string listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				string listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				if(WebFunctions.CheckedText.IsStringEmpty(listProductHap.ToString().Trim()))		
 					sql+=listProductHap;
 				//Liste des produits sélectionnés
@@ -1139,7 +1139,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				product=GetProductData(webSession);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 			}
 			catch(System.Exception err){
 				throw(new PortofolioDataAccessException("Impossible de construire la requête",err));
@@ -1301,7 +1301,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				//Droits en accès
 				sql+=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,"wp",true);
 				//liste des produit hap
-				string listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				string listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				if(WebFunctions.CheckedText.IsStringEmpty(listProductHap.ToString().Trim()))		
 				sql+=listProductHap;
 				//Liste des produits sélectionnés
@@ -1409,7 +1409,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				//Droits en accès
 				sql+=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,"wp",true);
 				//liste des produit hap
-				string listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+				string listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				if(WebFunctions.CheckedText.IsStringEmpty(listProductHap.ToString().Trim()))		
 					sql+=listProductHap;
 				//Liste des produits sélectionnés
@@ -1497,7 +1497,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#region Construction de la requête
 			try{
-				dataTableName=WebFunctions.SQLGenerator.getVehicleTableNameForDetailResult(vehicleName,moduleType);
+				dataTableName=WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleName,moduleType);
 				detailProductTablesNames=webSession.GenericProductDetailLevel.GetSqlTables(DBConstantes.Schema.ADEXPRESS_SCHEMA);
 				detailProductFields=webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints=webSession.GenericProductDetailLevel.GetSqlJoins(webSession.SiteLanguage,DATA_TABLE_PREFIXE);
@@ -1507,8 +1507,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				detailProductOrderBy=webSession.GenericProductDetailLevel.GetSqlOrderFields();
 				//option encarts (pour la presse)
 				if(DBClassificationConstantes.Vehicles.names.press==vehicleName || DBClassificationConstantes.Vehicles.names.internationalPress==vehicleName)
-					dataJointForInsert=WebFunctions.SQLGenerator.getJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
-				listProductHap=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
+					dataJointForInsert=WebFunctions.SQLGenerator.GetJointForInsertDetail(webSession,DATA_TABLE_PREFIXE);
+				listProductHap=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DATA_TABLE_PREFIXE,true,false);
 				
 				if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)){
 					try{

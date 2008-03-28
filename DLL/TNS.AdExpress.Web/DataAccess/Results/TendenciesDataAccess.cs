@@ -220,7 +220,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			getOrderByForTendencies=WebFunctions.SQLGenerator.getOrderByForTendencies(vehicleName);
 		//	productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true);
 		//	mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true);
-			listExcludeProduct=WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DBConstantes.Tables.WEB_PLAN_PREFIXE,true,false);
+			listExcludeProduct=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DBConstantes.Tables.WEB_PLAN_PREFIXE,true,false);
 
 			int idMediaListToLoad;
 			switch(vehicleName){

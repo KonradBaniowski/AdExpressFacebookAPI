@@ -580,7 +580,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				+ WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,tablePrefixe,true)
 
 				// Products to exclude
-				+" "+WebFunctions.SQLGenerator.getAdExpressProductUniverseCondition(AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,tablePrefixe,true,false)			
+				+" "+WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,tablePrefixe,true,false)			
 
 				//product selection
                 + "  " + ((webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0) ? webSession.PrincipalProductUniverses[0].GetSqlConditions(tablePrefixe, true) : "")

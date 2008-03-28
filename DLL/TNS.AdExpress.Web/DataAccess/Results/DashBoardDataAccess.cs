@@ -540,7 +540,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			switch(webSession.PreformatedTable){
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :
 					if(IsRepartitionSelected(webSession)){
-						sql+=WebFunctions.SQLGenerator.getUnitFields(vehicleType,DBConstantes.Tables.DASH_BOARD_PREFIXE);
+						sql+=WebFunctions.SQLGenerator.GetUnitFields(vehicleType,DBConstantes.Tables.DASH_BOARD_PREFIXE);
 					}else sql+=WebFunctions.SQLGenerator.getTotalUnitFields(vehicleType,DBConstantes.Tables.DASH_BOARD_PREFIXE);
 					break;
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual :					
@@ -569,7 +569,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay :												
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice :
 					if(IsRepartitionSelected(webSession)){
-						sql+=WebFunctions.SQLGenerator.getUnitFields(vehicleType,DBConstantes.Tables.DASH_BOARD_PREFIXE);
+						sql+=WebFunctions.SQLGenerator.GetUnitFields(vehicleType,DBConstantes.Tables.DASH_BOARD_PREFIXE);
 					}
 					break;																					
 				default :
@@ -747,7 +747,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql += "  " + selectionClause;
 			//Option Encart sélectionné : uniquement pour la presse
 			if(webSession.CurrentModule==WebModule.Name.TABLEAU_DE_BORD_PRESSE)
-				sql+="  "+WebFunctions.SQLGenerator.getJointForInsertDetail(webSession,DBConstantes.Tables.DASH_BOARD_PREFIXE);
+				sql+="  "+WebFunctions.SQLGenerator.GetJointForInsertDetail(webSession,DBConstantes.Tables.DASH_BOARD_PREFIXE);
 			return sql;			
 		}
 

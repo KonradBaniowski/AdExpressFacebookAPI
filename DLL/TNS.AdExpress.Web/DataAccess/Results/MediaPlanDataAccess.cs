@@ -112,7 +112,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Droits en accès
 			sql+=SQLGenerator.getAnalyseCustomerProductRight(webSession,DbTables.WEB_PLAN_PREFIXE,true);
 			// Produit à exclure en radio
-			sql+=SQLGenerator.getAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false);
+			sql+=SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false);
 			#endregion
 
 			#region Nomenclature Produit (Niveau de détail)  
