@@ -13,8 +13,8 @@
     <moduleGroup name="Alertes" type="0" privilegecode="138" traductioncode="2183" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2187">
       <!-- ***************************************** Alerte portefeuille d'un support *****************************************-->
       <module name="Alerte portefeuille d'un support" privilegecode="282" traductioncode="2164" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2193" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
-        <RulesLayers name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Result"/>
-        <RulesLayers name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.Default.DAL.Result"/>
+        <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.PortofolioResults"/>
+        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
             <defaultProductDetailLevel id="11" name="famille" />
