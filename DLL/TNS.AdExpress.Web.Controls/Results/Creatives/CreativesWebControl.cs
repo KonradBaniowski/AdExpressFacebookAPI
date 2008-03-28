@@ -372,7 +372,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     js.AppendFormat("\r\n\t\t sortLabels_{0} = res.value[2];", this.ID);
                     js.AppendFormat("\r\n\t\t if(data_{0}!=null && data_{0}.length > 0)", this.ID);//Total pages
                     js.Append("\r\n\t\t{");
-                        js.AppendFormat("\r\n\t\t\t pageCount_{0} = Math.ceil((data_{0}.length - 1)/pageSize_{0});", this.ID);
+                        js.AppendFormat("\r\n\t\t\t pageCount_{0} = Math.ceil((data_{0}.length)/pageSize_{0});", this.ID);
                     js.Append("\r\n\t\t }");
                     js.AppendFormat("\r\n\t\t\t if ( currentPageIndex_{0} > pageCount_{0}) currentPageIndex_{0} = 1;", this.ID);
 
@@ -450,7 +450,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             js.AppendFormat("\r\n\t rightPageIndex_{0} = 0;", this.ID);
             js.AppendFormat("\r\n\t if (data_{0} != null && data_{0}.length > 0)", this.ID);//Total pages
             js.Append("\r\n\t {");
-            js.AppendFormat("\r\n\t\t pageCount_{0} = Math.ceil((data_{0}.length - 1)/pageSize_{0});", this.ID);
+            js.AppendFormat("\r\n\t\t pageCount_{0} = Math.ceil((data_{0}.length)/pageSize_{0});", this.ID);
             js.Append("\r\n\t }");
 
             //page de résultat	
@@ -599,7 +599,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             //Page suivante
             js.AppendFormat("\r\n\t\t if(pageCount_{0}> 1) ", this.ID);
             js.Append("\r\n\t\t {");
-            js.AppendFormat("\r\n\t\t var nextIndex = currentPageIndex_{0} + 1;", this.ID);
+            js.AppendFormat("\r\n\t\t var nextIndex = parseInt(currentPageIndex_{0}) + 1;", this.ID);
             js.AppendFormat("\r\n\t\t if(currentPageIndex_{0} < pageCount_{0}) ", this.ID);
             js.Append("\r\n\t\t{");
             js.Append("\r\n\t\t\t bar.append('<a');");
