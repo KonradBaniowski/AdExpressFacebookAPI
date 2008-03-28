@@ -1864,9 +1864,9 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     if(module.CountryRulesLayer==null)throw(new NullReferenceException("Rules layer is null for the portofolio result"));
                     object[] parameters=new object[1];                     
                     parameters[0]=customerWebSession;
-                    Portofolio.IResults result=(Portofolio.IResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class,false,BindingFlags.CreateInstance|BindingFlags.Instance|BindingFlags.Public,null,parameters,null,null,null);
+                    Portofolio.IPortofolioResults portofolioResult=(Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class,false,BindingFlags.CreateInstance|BindingFlags.Instance|BindingFlags.Public,null,parameters,null,null,null);
                     //Portofolio.IResults result=(Portofolio.IResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class);
-                    result.GetResultTable();
+                    portofolioResult.GetResultTable();
 					return WebBusinessFacade.Results.PortofolioSystem.GetResultTable(customerWebSession); 
 				case WebConstantes.Module.Name.DONNEES_DE_CADRAGE :
 					return WebBusinessFacade.Results.SectorDataSystem.GetHtml(customerWebSession);
