@@ -351,7 +351,14 @@ namespace TNS.AdExpress.Web.UI.Results{
 					classStyleTitle=InversClassStyleTitle(classStyleTitle);
 					classStyleValue=InversClassStyleValue(classStyleValue);
 					// Ratio
-					t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1387,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+((decimal)(decimal.Parse(WebFunctions.Units.ConvertUnitValueAndPdmToString((string)tabEncart[0],WebConstantes.CustomerSessions.Unit.pages,false))/decimal.Parse(pageNumber)*100)).ToString("0.###")+" %</td></tr>");	
+                    if (pageNumber.Length > 0)
+                    {
+                        t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1387, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + ((decimal)(decimal.Parse(WebFunctions.Units.ConvertUnitValueAndPdmToString((string)tabEncart[0], WebConstantes.CustomerSessions.Unit.pages, false)) / decimal.Parse(pageNumber) * 100)).ToString("0.###") + " %</td></tr>");
+                    }
+                    else
+                    {
+                        t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1387, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+                    }
 				}			
 
 				if(((string)tabEncart[1]).Length>0){
@@ -4045,10 +4052,15 @@ namespace TNS.AdExpress.Web.UI.Results{
 	
 					classStyleTitle=InversClassStyleTitle(classStyleTitle);
 					classStyleValue=InversClassStyleValue(classStyleValue);
-				if(pageNumber.Length>0){
-					// Ratio
-					t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1387,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+((decimal)(decimal.Parse(adNumber)/decimal.Parse(pageNumber)*100)).ToString("0.###")+" %</td></tr>");	
-				}
+                    if (pageNumber.Length > 0 && adNumber.Length > 0)
+                    {
+                        // Ratio
+                        t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1387, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + ((decimal)(decimal.Parse(adNumber) / decimal.Parse(pageNumber) * 100)).ToString("0.###") + " %</td></tr>");
+                    }
+                    else
+                    {
+                        t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1387, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+                    }
 			}
 
 			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.outdoor)
