@@ -242,8 +242,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         output.Write("<div id=\"listAdvertiserContent6\" class=\"violetBorderWithoutTop\" style=\"DISPLAY: none; WIDTH: 620px;\">");
         output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" align=\"center\" class=\"whiteBackGround\" border=\"0\">");
 		output.Write("<tr>");
-		output.Write("<td width=\"199\"><IMG height=\"1\" src=\"/images/Common/pixel.gif\"></td>");
-        output.Write("<td class=\"violetBorderTop\" width=\"421\"><IMG height=\"1\" src=\"/images/Common/pixel.gif\"></td>");
+		output.Write("<td width=\"199\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+        output.Write("<td class=\"violetBorderTop\" width=\"421\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
 		output.Write("</tr>");
 		output.Write("<tr>");
 		output.Write("<td class=\"txtGris11Bold\" style=\"PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 2px; PADDING-TOP: 0px\" colSpan=\"2\">&nbsp;</td>");

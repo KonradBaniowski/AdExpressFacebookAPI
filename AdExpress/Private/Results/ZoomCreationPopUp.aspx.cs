@@ -14,7 +14,7 @@ namespace AdExpress.Private.Results{
 	/// Popup affichant les créations presse en gd format
 	/// La fenêtre prend en argument dans l'url la liste des fichiers dans un variable création
 	/// </summary>
-	public partial class ZoomCreationPopUp : System.Web.UI.Page{
+	public partial class ZoomCreationPopUp : TNS.AdExpress.Web.UI.WebPage{
 		#region Variables
 		/// <summary>
 		/// Code résultat
@@ -29,9 +29,9 @@ namespace AdExpress.Private.Results{
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
 			string[] files=Page.Request.QueryString.Get("creation").Split(',');
-			 
-			
-			result="<TABLE bgColor=\"#ffffff\" cellPadding=\"0\" cellSpacing=\"5\" align=\"center\" valign=\"center\" border=\"0\">";
+
+
+            result = "<TABLE class=\"whiteBackGround\" cellPadding=\"0\" cellSpacing=\"5\" align=\"center\" valign=\"center\" border=\"0\">";
 			int i=0;
 			for(i=0 ; i<files.Length; i++){
 				if((i%2)==0){

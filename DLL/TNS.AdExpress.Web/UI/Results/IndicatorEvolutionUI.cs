@@ -275,7 +275,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}
 			
 			#region Tableau global
-			t.Append("<table>");
+            t.Append("<table class=\"tableFont\">");
 			t.Append("<tr>");
 			t.Append("<td valign=\"top\">");
 			t.Append(advertiserTable);

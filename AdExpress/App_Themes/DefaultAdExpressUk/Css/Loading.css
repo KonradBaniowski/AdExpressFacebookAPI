@@ -1,0 +1,20 @@
+﻿.violetBorderColorLoading{
+	border-color : #FF0000;
+	border-top :#FF0000 2px solid; 
+	border-left :#FF0000 2px solid; 
+	border-right :#FF0000 2px solid; 
+	border-bottom :#FF0000 2px solid;
+}
+.greyBackGroundLoading{
+	background-color : #EEFFEC;
+}
+.violetBorderLoading{
+	border-color : #FF0000;
+	border-top :#FF0000 1px solid; 
+	border-left :#FF0000 1px solid; 
+	border-right :#FF0000 1px solid; 
+	border-bottom :#FF0000 1px solid;
+}
+.txtVioletLoading{
+	color : #7D3200;
+}

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
+using System.Text;
 using System.Drawing;
 using System.Web;
 using System.Web.SessionState;
@@ -19,7 +20,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page des informations du GAD
 	/// </summary>
-	public partial class Gad : System.Web.UI.Page{
+	public partial class Gad : TNS.AdExpress.Web.UI.WebPage{
 
 		#region Variables
 		///<summary>
@@ -147,19 +148,33 @@ namespace AdExpress.Private.Results{
 				faxLabel.Text			= result.Fax;
 				emailLabel.Text			= result.Email;
 				if (result.DocMarketingId.Length > 0){
-					_docMarketingTarget = string.Format("<a href=\"javascript:OpenGad('{0}');\" onMouseOver=\"advertiserFile.src=ficheDown.src\" onMouseOut=\"advertiserFile.src=ficheUp.src\"><img title=\"{1}\" border=0 name=\"advertiserFile\" src=\"/Images/{2}/button/bt_fiche_up.gif\"/></a>", 
+					_docMarketingTarget = string.Format("<a href=\"javascript:OpenGad('{0}');\" onMouseOver=\"advertiserFile.src=ficheDown.src\" onMouseOut=\"advertiserFile.src=ficheUp.src\"><img title=\"{1}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_up.gif\"/></a>", 
 						//lien
 						string.Format(GestionWeb.GetWebWord(2092,_siteLanguage) , result.DocMarketingId, result.DocMarketingKey),
-						GestionWeb.GetWebWord(2098,_siteLanguage),
-						_siteLanguage
+						GestionWeb.GetWebWord(2098,_siteLanguage)
 						);
 					_docMarketingTitle = string.Format(GestionWeb.GetWebWord(2095 ,_siteLanguage), result.Company).Replace("'", "''");
 				}
 				else{
-					_docMarketingTarget = string.Format("<img title=\"{0}\" border=0 name=\"advertiserFile\" src=\"/Images/"+_siteLanguage+"/button/bt_fiche_off.gif\"/>",
+					_docMarketingTarget = string.Format("<img title=\"{0}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_off.gif\"/>",
 						GestionWeb.GetWebWord(2098,_siteLanguage)); 
 				}
-			}
+
+
+                #region Script
+                StringBuilder js = new StringBuilder();
+                js.Append("\r\n<script type=\"text/javascript\">");
+                js.Append("\r\nvar ficheUp = new Image();");
+                js.Append("\r\nvar ficheDown = new Image();");
+                js.Append("\r\nvar ficheUnavailable = new Image();");
+                js.Append("\r\nficheUp.src = \"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_up.gif\";");
+                js.Append("\r\nficheDown.src = \"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_down.gif\";");
+                js.Append("\r\nficheUnavailable.src = \"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_off.gif\";");
+                js.Append("\r\n</script>");
+                if (!this.ClientScript.IsClientScriptBlockRegistered("FicheScript")) this.ClientScript.RegisterClientScriptBlock(this.GetType(), "FicheScript", js.ToString());
+                #endregion
+
+            }
 			catch(System.Exception et){
 				Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(959, _siteLanguage)) + " " + et.Message);
 			}

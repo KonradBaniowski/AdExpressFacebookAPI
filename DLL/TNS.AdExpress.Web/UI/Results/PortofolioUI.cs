@@ -948,22 +948,22 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			DateTime dayDT=new DateTime(int.Parse(date.Substring(0,4)),int.Parse(date.Substring(4,2)),int.Parse(date.ToString().Substring(6,2)));
-			day=PortofolioDateUI.GetDayOfWeek(webSession,dayDT.DayOfWeek.ToString())+" "+dayDT.ToString("dd/MM/yyyy");	
+			day=PortofolioDateUI.GetDayOfWeek(webSession,dayDT.DayOfWeek.ToString())+" "+dayDT.ToString("dd/MM/yyyy");
 
-			t.Append("<table border=1 bordercolor=#644883 cellpadding=0 cellspacing=0 width=100% bgcolor=#E9E6EF ><tr>");
+            t.Append("<table border=1 class=\"violetBorder paleVioletBackGroundV2\" cellpadding=0 cellspacing=0 width=100% ><tr>");
 			t.Append("<td class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-BOTTOM-STYLE: none\">"+day+"</td>");
 			t.Append("<td align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">"+nameMedia+"</td>");
 			t.Append("<td align=right class=\"portofolio1\" style=\"BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">"+GestionWeb.GetWebWord(1385,webSession.SiteLanguage)+" : "+nbrePages+"</td>");
 			t.Append("</tr></table>");
 
-			t.Append("<table border=0 cellpadding=0 cellspacing=0 width=100% bgcolor=#E9E6EF>");
+            t.Append("<table border=0 cellpadding=0 cellspacing=0 width=100% class=\"paleVioletBackGroundV2\">");
 			foreach (string name in files) {
 				
 				endFile=name.Split('\\');
 				// Couverture - Dos
 				if(i==1 || i==files.Length){
 					t.Append("<tr><td colspan=4 align=center>");
-					t.Append("<table border=1 bordercolor=#644883 cellpadding=0 cellspacing=0 width=100%><tr><td align=center>");
+                    t.Append("<table border=1 class=\"violetBorder\" cellpadding=0 cellspacing=0 width=100%><tr><td align=center>");
 					if(i==1) t.Append("<a name=\"C1\"></a><a name=\"C2\"></a>");
 					if(i==files.Length) t.Append("<a name=\"C3\"></a><a name=\"C4\"></a>");
 					t.Append("<a href=\"javascript:portofolioOneCreation('"+idMedia+"','"+parution+"','"+endFile[endFile.Length-1]+"','');\"><img src='"+pathWeb+endFile[endFile.Length-1]+"' border=\"0\"></a>");
@@ -986,7 +986,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("<td align=center style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">");
 					// Tableau niveau 2
 					if(compteur==0 || compteur==2){
-						t.Append("<table border=1 bordercolor=#644883 cellpadding=0 cellspacing=0 width=100%><tr><td style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">");
+                        t.Append("<table border=1 class=\"violetBorder\" cellpadding=0 cellspacing=0 width=100%><tr><td style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">");
 						filesName[0]=endFile[endFile.Length-1];
 						filesName[1]=files[i].Split('\\')[endFile.Length-1];
 					}

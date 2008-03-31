@@ -316,14 +316,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 left_arrow_HTML = "<td align=\"left\"><a href=\"javascript:__doPostBack('" + this.ID + "','" + previousMonth + "')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Arrow_left_up.gif\"></a></td>";
 			}
 			else
-				left_arrow_HTML="<td><img width=\"11px\" src=\"/Images/Common/pixel.gif\"></td>";
+				left_arrow_HTML="<td><img width=\"11px\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>";
 			if(selectedMonth<stopMonth){
 				if(int.Parse(this.selectedMonth.ToString().Substring(4,2))==12)	nextMonth=(int.Parse(this.selectedMonth.ToString().Substring(0,4))+1).ToString()+"01";
 				else nextMonth=(this.selectedMonth+1).ToString();
                 right_arrow_HTML = "<td align=\"right\"><a href=\"javascript:__doPostBack('" + this.ID + "','" + nextMonth + "')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Arrow_right_up.gif\"></a></td>";
 			}
 			else
-				right_arrow_HTML="<td><img width=\"11px\" src=\"/Images/Common/pixel.gif\"></td>";
+				right_arrow_HTML="<td><img width=\"11px\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>";
 
 
 			htmlBuilder.Append("<tr bgcolor="+_tableColor+">");
@@ -359,7 +359,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					if(days[i,j]!=0)
                         htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('" + this.ID + "','" + (this.selectedMonth).ToString() + days[i, j].ToString("00") + "')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/" + days[i, j] + ".gif\"></a></td>");
 					else
-						htmlBuilder.Append("<td bgcolor=\"#9378B3\"><img width=\"27\" height=\"13\" src=\"/Images/Common/pixel.gif\"></td>");
+                        htmlBuilder.Append("<td class=\"violetCalendarBackGround\"><img width=\"27\" height=\"13\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
 				}
 				htmlBuilder.Append("</tr>");
 			}

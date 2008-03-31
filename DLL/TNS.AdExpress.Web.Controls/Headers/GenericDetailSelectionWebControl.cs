@@ -609,7 +609,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					output.Write("\r\n</tr>");
 					// Espace blanc
 					output.Write("\r\n<tr>");
-					output.Write("\r\n<td colspan=2><img src=\"/Images/Common/pixel.gif\" border=\"0\" height=\"5\"></td>");
+                    output.Write("\r\n<td colspan=2><img src=\"/App_Themes/"+_themeName+"/Images/Common/pixel.gif\" border=\"0\" height=\"5\"></td>");
 					output.Write("\r\n</tr>");
 				}
 

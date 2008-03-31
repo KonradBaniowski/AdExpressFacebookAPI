@@ -394,11 +394,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			if(selectedYear>startYear)
 				left_arrow_HTML="<td align=\"left\"><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear-1).ToString()+"')\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Culture/Calendar/Arrow_left_up.gif\"></a></td>";
 			else
-				left_arrow_HTML="<td><img width=\"11px\" src=\"/Images/Common/pixel.gif\"></td>";
+				left_arrow_HTML="<td><img width=\"11px\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\"></td>";
 			if(selectedYear<stopYear)
 				right_arrow_HTML="<td align=\"right\"><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear+1).ToString()+"')\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Culture/Calendar/Arrow_right_up.gif\"></a></td>";
 			else
-				right_arrow_HTML="<td><img width=\"11px\" src=\"/Images/Common/pixel.gif\"></td>";
+				right_arrow_HTML="<td><img width=\"11px\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\"></td>";
 
 			
 

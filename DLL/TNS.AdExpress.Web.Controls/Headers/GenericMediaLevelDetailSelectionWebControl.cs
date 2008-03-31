@@ -674,7 +674,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("</tr>");
 			// Espace blanc
 			output.Write("<tr>");
-			output.Write("<td><img src=\"/Images/Common/pixel.gif\" border=\"0\" height=\"10\"></td>");
+			output.Write("<td><img src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" border=\"0\" height=\"10\"></td>");
 			output.Write("</tr>");
 			// table de personnalisation
 			output.Write("<tr>");
@@ -724,7 +724,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\r\n</tr>");
 				// Espace blanc
 				output.Write("\r\n<tr>");
-				output.Write("\r\n<td colspan=2><img src=\"/Images/Common/pixel.gif\" border=\"0\" height=\"5\"></td>");
+				output.Write("\r\n<td colspan=2><img src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" border=\"0\" height=\"5\"></td>");
 				output.Write("\r\n</tr>");
 			}
 			// Bouton de sauvegarde

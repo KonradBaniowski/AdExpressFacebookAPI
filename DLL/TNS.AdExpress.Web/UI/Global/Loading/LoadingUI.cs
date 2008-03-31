@@ -11,6 +11,7 @@ using System;
 using System.Text;
 using System.Web.UI;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Global.Loading{
 	/// <summary>
@@ -76,12 +77,13 @@ namespace TNS.AdExpress.Web.UI.Global.Loading{
 //			t.Append("\n</script>\n</div>");
 			#endregion
 
+            t.Append("\r\n<LINK href=\"/App_Themes/"+WebApplicationParameters.Themes[language].Name+"/Css/Loading.css\" type=\"text/css\" rel=\"stylesheet\">");
 			t.Append("\r\n<DIV id=waitDiv style=\"LEFT: 40%; VISIBILITY: hidden; POSITION: absolute; TOP: 50%\">");
 			t.Append("\r\n<DIV align=center>");
-			t.Append("\r\n\t<TABLE borderColor=#644883 cellPadding=6 bgColor=#E1E0DA border=2>");
+            t.Append("\r\n\t<TABLE cellPadding=6 class=\"violetBorderColorLoading greyBackGroundLoading\" border=2 >");
 			t.Append("\r\n\t\t<TR>");
-			t.Append("\r\n\t\t\t<TD align=middle><FONT face=\"Arial, Helvetica, sans-serif\" color=#644883 size=3><B>"+GestionWeb.GetWebWord(1911,language)+"</B></FONT> ");
-			t.Append("\r\n\t\t\t<BR><IMG height=20 src=\"/Images/Common/await.gif\" width=200 border=0> ");
+            t.Append("\r\n\t\t\t<TD align=middle class=\"violetBorderLoading\"><FONT face=\"Arial, Helvetica, sans-serif\" class=\"txtVioletLoading\" size=3><B>" + GestionWeb.GetWebWord(1911, language) + "</B></FONT> ");
+			t.Append("\r\n\t\t\t<BR><IMG height=20 src=\"/App_Themes/"+WebApplicationParameters.Themes[language].Name+"/Images/Common/await.gif\" width=200 border=0> ");
 			//t.Append("\r\n\t\t\t<BR><FONT face=\"Verdana, Arial, Helvetica, sans-serif\" color=#000000 size=2>Veuillez Patienter s'il vous plait</FONT>");
 			t.Append("\r\n\t\t\t</TD>");
 			t.Append("\r\n\t\t</TR>");

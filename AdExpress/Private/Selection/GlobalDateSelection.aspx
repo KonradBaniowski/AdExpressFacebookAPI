@@ -15,7 +15,6 @@
 		<meta content="C#" name="CODE_LANGUAGE"/>
 		<meta content="JavaScript" name="vs_defaultClientScript"/>
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
-		<link rel="stylesheet" href="/Css/thickbox.css" type="text/css" media="screen" />
 		<script type="text/javascript" src="/scripts/jquery.js"></script> 
 		<script type="text/javascript" src="/scripts/thickbox.js"></script>
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT"/>
@@ -486,7 +485,7 @@
 		                    <table id="Table16" cellspacing="0" cellpadding="0" border="0" width="100%">
 		                        <tr>
 		                            <td>        
-		                                <img align=right id="selectionTypeButton" src="/Images/<%=_siteLanguage%>/button/valider_up.gif" onmouseover="selectionTypeButton.src='/Images/<%=_siteLanguage%>/button/valider_down.gif';" onmouseout="selectionTypeButton.src='/Images/<%=_siteLanguage%>/button/valider_up.gif';" onclick="__doPostBack(''+buttonName+'',''+buttonNameValue+'');" style="cursor:pointer"/>
+		                                <img align=right id="selectionTypeButton" src="/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_up.gif" onmouseover="selectionTypeButton.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_down.gif';" onmouseout="selectionTypeButton.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_up.gif';" onclick="__doPostBack(''+buttonName+'',''+buttonNameValue+'');" style="cursor:pointer"/>
 		                            </td>
 		                        </tr>    
 		            

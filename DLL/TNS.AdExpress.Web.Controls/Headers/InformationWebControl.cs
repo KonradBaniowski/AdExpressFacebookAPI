@@ -10,6 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
@@ -144,10 +145,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// fond rose
 		/// </remarks>
 		protected override void Render(HtmlTextWriter output){
+
+            string themeName = WebApplicationParameters.Themes[language].Name;
+
 			if(inLeftMenu){
 				// Design du composant dans le menu de gauche
 				output.Write("\n<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" bgcolor=\""+_backgroundColor+"\">");
-				output.Write("\n<tr><td><IMG height=10 src=\"/images/Common/pixel.gif\" width=\"1\"></td></tr>");
+                output.Write("\n<tr><td><IMG height=10 src=\"/App_Themes/"+themeName+"/images/Common/pixel.gif\" width=\"1\"></td></tr>");
 				output.Write("\n<tr><td>");
 
                 output.Write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"pinkBackGround\"><tr><td>");
@@ -173,7 +177,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("</tr></table>");
 
 				output.Write("\n</td></tr>");
-				output.Write("\n<tr><td><IMG height=\"10\" src=\"/images/Common/pixel.gif\" width=\"1\"></td></tr>");
+				output.Write("\n<tr><td><IMG height=\"10\" src=\"/App_Themes/"+themeName+"/images/Common/pixel.gif\" width=\"1\"></td></tr>");
 				output.Write("\n</table>");
 			}
 			else{

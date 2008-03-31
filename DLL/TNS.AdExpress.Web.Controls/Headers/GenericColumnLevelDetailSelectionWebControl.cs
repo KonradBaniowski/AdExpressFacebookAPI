@@ -12,6 +12,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Headers {
     /// <summary>
@@ -254,7 +255,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             output.Write("</tr>");
             // Espace blanc
             output.Write("<tr>");
-            output.Write("<td><img src=\"/Images/Common/pixel.gif\" border=\"0\" height=\"10\"></td>");
+            output.Write("<td><img src=\"/App_Themes/"+WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name+"/Images/Common/pixel.gif\" border=\"0\" height=\"10\"></td>");
             output.Write("</tr>");
             output.Write("\r\n</table>");
         }

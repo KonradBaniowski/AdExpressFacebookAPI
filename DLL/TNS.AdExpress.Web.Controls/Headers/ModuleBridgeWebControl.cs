@@ -13,6 +13,7 @@ using System.ComponentModel;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
@@ -86,6 +87,9 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output){
+
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+
             output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
 			output.Write("\n<tr>");
 			output.Write("\n<td>");
@@ -95,17 +99,17 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
 			output.Write("\n<tr>");
-			output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/Images/Common/pixel.gif\"></td>");
+            output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
             output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"" + blockFlechePath + "\" width=\"12\"></td>");
-            output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"" + blockDupliPath + "\"><IMG height=\"1\" src=\"/Images/Common/pixel.gif\" width=\"13\"></td>");
+            output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"" + blockDupliPath + "\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" width=\"13\"></td>");
             output.Write("\n<td class=\"txtNoir11Bold " + titleUppercaseCss + "\" width=\"100%\">" + GestionWeb.GetWebWord(794, webSession.SiteLanguage) + "</td>");
 			output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/Images/pixel.gif\" width=\"1\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
 			output.Write("\n<td></td>");
-			output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/images/Common/pixel.gif\"></td>");
+			output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/images/Common/pixel.gif\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n</table>");
 			//fin tableau titre

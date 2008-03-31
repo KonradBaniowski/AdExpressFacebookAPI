@@ -6,6 +6,7 @@ using System.ComponentModel;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Headers
 {
@@ -83,6 +84,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		protected override void Render(HtmlTextWriter output) {
             string moduleTitle="Nom du module";
             string description = "Description du module";
+            string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
             if(customerWebSession!=null){
                 moduleTitle=GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(customerWebSession.CurrentModule),customerWebSession.SiteLanguage);
                 description=GestionWeb.GetWebWord(codeDescription, customerWebSession.SiteLanguage);
@@ -97,11 +99,11 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		    output.Write("\n<TD height=\"5\"></TD>");
 		    output.Write("\n</TR>");
 		    output.Write("\n<tr>");
-		    output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/Images/Common/pixel.gif\"></td>");
+		    output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\"></td>");
 		    output.Write("\n</tr>");
 		    output.Write("\n<tr>");
 		    output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\""+blockFlechePath+"\" width=\"12\"></td>");
-		    output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\""+blockDupliPath+"\"><IMG height=\"1\" src=\"/Images/Common/pixel.gif\" width=\"13\"></td>");
+		    output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\""+blockDupliPath+"\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" width=\"13\"></td>");
             output.Write("\n<td class=\"txtNoir11Bold " + titleUppercaseCss + "\" width=\"100%\">"
 			    +moduleTitle
 			    +"</td>");
@@ -109,7 +111,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		    output.Write("\n</tr>");
 		    output.Write("\n<tr>");
 		    output.Write("\n<td></td>");
-		    output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/images/Common/pixel.gif\"></td>");
+		    output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/images/Common/pixel.gif\"></td>");
 		    output.Write("\n</tr>");
 		    output.Write("\n</table>");
 		    //fin tableau titre
