@@ -57,7 +57,7 @@
 							</tr>
 							<tr>
 								<td class="txtNoir11Bold whiteBackGround" width="185" height="9">
-									<p class="paragraphePadding">
+									<p class="paragraphePadding tableFont">
 										<cc1:AdExpressText language="33" id="AdExpressText3" runat="server" Code="821"></cc1:AdExpressText>
 									</p>
 								</td>
