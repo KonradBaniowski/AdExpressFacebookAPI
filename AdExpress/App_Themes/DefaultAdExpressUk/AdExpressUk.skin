@@ -104,6 +104,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- A list of ImageButtonRollOver web control used in the site--%>
+<%-- Validate Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/valider_up.gif" 
@@ -111,6 +112,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="validateButton" 
 />
 
+<%-- Ok Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/Button/ok_up.gif" 
@@ -118,72 +120,95 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="okButton"
 />
 
+<%-- Initialize Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_down.gif" 
                            SkinID="initializeButton" 
 />
+
+<%-- Initialize All Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol    
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_all_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_all_down.gif" 
                            SkinID="initializeAllButton" 
 />
+
+<%-- Next Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/suivant_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/suivant_down.gif" 
                            SkinID="nextButton" 
 />
+
+<%-- Save Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/enregistrer_univers_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/enregistrer_univers_down.gif" 
                            SkinID="saveButton" 
 />
+
+<%-- Load Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol    
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/charger_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/charger_down.gif" 
                            SkinID="loadButton" 
 />
+
+<%-- Open Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/ouvrir_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/ouvrir_down.gif" 
                            SkinID="ouvrirButton" 
 />
+
+<%-- Close Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/fermer_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/fermer_down.gif" 
                            SkinID="fermerButton" 
 />
+
+<%-- Personnaliser Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/personnaliser_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/personnaliser_down.gif" 
                            SkinID="personnaliserButton" 
 />
+
+<%-- Cancel Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/annuler_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/annuler_down.gif" 
                            SkinID="annulerButton" 
 />
+
+<%-- Result Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/resultat_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/resultat_down.gif" 
                            SkinID="resultatButton" 
 />
+
+<%-- Delete Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/supprimer_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/supprimer_down.gif" 
                            SkinID="supprimerButton" 
 />
+
+<%-- Detail Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/detail_up.gif" 
@@ -225,6 +250,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TitleUppercaseCss="titleUppercase" 
 />
 
+<%-- Module bridge web control : used to switch between 2 modules --%>
 <ctrHeader:ModuleBridgeWebControl   
                            runat="server" 
                            BlockFlechePath="/App_Themes/DefaultAdExpressUk/Images/Common/block_fleche.gif" 
@@ -232,6 +258,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TitleUppercaseCss="titleUppercase" 
 />
 
+<%-- Media seller web control : used to show media detail : Media Genre, Title ... --%>
 <ctrHeader:mediasellerwebcontrol   
                            runat="server" 
                            BlockFlechePath="/App_Themes/DefaultAdExpressUk/Images/Common/block_fleche.gif" 
@@ -240,6 +267,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CommonCssClass="txtNoir11Bold" 
 />
 
+<%-- Information web control : used to show information about how to use the web menu --%>
 <ctrHeader:InformationWebControl   
                            runat="server" 
                            FlashPath="/App_Themes/DefaultAdExpressUk/Flash/Culture/infoOptions.swf" 
@@ -248,11 +276,13 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            FlashOneLineReplacementPath="/App_Themes/DefaultAdExpressUk/Images/Culture/FlashReplacement/infoOptionsOneLine.gif" 
 />
 
+<%-- One vehicle selection web control --%>
 <ctrSelections:OneVehicleSelectionWebControl   
                            runat="server" 
                            CssClass="txtViolet11Bold" 
 />
 
+<%-- Day calendar web control : used to show a calendar who allows you to choose between a day, month and year --%>
 <ctrSelections:daycalendarwebcontrol  
                            runat="server" 
                            TableBorderColor="#9D9885" 
@@ -262,6 +292,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            FontColorSelectedDate="#FFFFFF" 
 />
 
+<%-- Month calendar web control : used to show a calendar who allows you to choose between a month and year --%>
 <ctrSelections:monthcalendarwebcontrol   
                            runat="server"
                            TableBorderColor = "#9D9885"
@@ -274,11 +305,13 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TdBgcolor = "#FFFFFF"
 />
 
+<%-- Date list web control : used to build a list of numbers to allow relative dates selection --%>
 <ctrSelections:datelistwebcontrol   
                            runat="server" 
                            CssClass="txtNoir11" 
 />
 
+<%-- Result web control : used to display a generic result table (HTML) (Vehicle portfolio) --%>
 <ctrResults:Resultwebcontrol   
                            runat="server" 
                            CssDetailSelectionBordelLevel="dsBorderLevel" 
@@ -312,6 +345,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="portofolioResultTable" 
 />
 
+<%-- Result web control : used to display a generic result table (Excel) (Vehicle portfolio) --%>
 <ctrResults:ResultWebControl   
                            runat="server" 
                            CssLTotal="exlv0" 
@@ -335,6 +369,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           SkinID="portofolioExcelResultTable"  
 />
 
+<%-- Result web control : used to display a generic result table (Raw Excel) (Vehicle portfolio) --%>
 <ctrResults:ResultWebControl   
                            runat="server" 
                            CssDetailSelectionBordelLevel="dsBorderLevel"
@@ -353,6 +388,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           SkinID="portofolioRawExcelResultTable"  
 />
 
+<%-- Portofolio chart web control : used to show charts for protofolio module --%>
 <webUiResults:PortofolioChartUI   
                            runat="server" 
                            PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 
@@ -362,6 +398,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TitleColor="#644883"  
 />
 
+<%-- Portofolio chart web control : used to show charts for indicators module --%>
 <webUiResults:INDICATORCHARTUI   
                            runat="server"
                            ChartAreasBackColor="#DECFE7"
@@ -376,6 +413,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TitleColor="#644883"
 />
 
+<%-- Result options web control : used to display result options : insertOption, percentage, pdmOption ... --%>
 <ctrHeader:resultsoptionswebcontrol   
                            runat="server" 
                            CommonCssClass="txtNoir11Bold" 
@@ -383,6 +421,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            OverCssClass="ddlOver" 
 />
 
+<%-- Result options web control : used to display result options specific to Dynamic Tables module --%>
 <ctrHeader:resultsoptionswebcontrol  
                            runat="server" 
                            CommonCssClass="txtNoir11Bold" 
@@ -392,6 +431,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="resultsOptionsASDynamicTables"
 />
 
+<%-- Portofolio detail media result : used to display generic result for portofolio media detail (HTML) --%>
 <ctrResults:PortofolioDetailMediaResultWebControl  
                            runat="server" 
                            BackgroudColorL1="#D0C8DA" 
@@ -417,6 +457,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="PortofolioPopUpResult" 
 />
 
+<%-- Portofolio detail media result : used to display generic result for portofolio media detail (Excel) --%>
 <ctrResults:PortofolioDetailMediaResultWebControl   
                            runat="server" 
                            CssL1="exlv3" 
@@ -435,6 +476,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="PortofolioPopUpExcelResult"
 />
 
+<%-- Result web control : used to display a generic result table (Excel) (Present/absent report)--%>
 <ctrResults:ResultWebControl   
                            runat="server" 
                            CssLTotal="exlv0" 
@@ -458,6 +500,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           SkinID="PresentAbsentExcelResult" 
 />
 
+<%-- Result web control : used to display a generic result table (Raw Excel) (Present/absent report)--%>
 <ctrResults:ResultWebControl   
                            runat="server" 
                            CssDetailSelectionBordelLevel="dsBorderLevel"
@@ -476,6 +519,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           SkinID="PresentAbsentRawExcelResult"  
 />
 
+<%-- Creatives web control : to display a set of creations, vehicle by vehicle, depending on a univers of products and media --%>
 <ctrCreatives:CreativesWebControl   
                            runat="server" 
                            FooterImage="/App_Themes/DefaultAdExpressUk/Images/Common/Result/footer.gif"
@@ -491,6 +535,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            ButtonPreviousUp="/App_Themes/DefaultAdExpressUk/Images/Common/Result/bt_previous_up.gif"
 />
 
+<%-- Select items in classification web control : used to select Items in Classification --%>
 <ctrSelections:SelectItemsInClassificationWebControl   
                            runat="server" 
                            ChildNodeExcludeCss="txtChildNodeExcludeCss" 
@@ -518,19 +563,28 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            IncludeImage="/App_Themes/DefaultAdExpressUk/Images/Common/include_item.gif"
                            Intersectionimage="/App_Themes/DefaultAdExpressUk/Images/Common/intersection.gif"
                            TrashImage="/App_Themes/DefaultAdExpressUk/Images/Common/button/bt_delete_up.GIF"
+                           DeleteImage="/App_Themes/DefaultAdExpressUk/Styles/TreeView/Css/bt_delete_item.gif"
+                           LoupeUpImage = "/App_Themes/DefaultAdExpressUk/Images/Common/button/bt_loupe_up.gif"
+                           LoupeDownImage = "/App_Themes/DefaultAdExpressUk/Images/Common/button/bt_loupe_down.gif"
+                           InitializeUpImage = "/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_up.gif"
+                           InitializeDownImage = "/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_down.gif"
+                           WaitLoadingImage = "/App_Themes/DefaultAdExpressUk/Images/Common/waitAjax.gif"
 />
 
+<%-- Global calendar web control : used to display the global calendar --%>
 <ctrSelections:GlobalCalendarWebControl   
                            runat="server"
                            CssPath="Css/DefaultAdExpressUk/Calendar.css"
                            ThemeName="DefaultAdExpressUk"
 />
 
+<%-- Initialize product web control : used to initialize products selection --%>
 <ctrHeader:InitializeProductWebControl   
                            runat="server"
                            CssClass="txtNoir11Bold" 
 />
 
+<%-- Generic media level detail selection web control--%>
 <ctrHeader:genericmedialeveldetailselectionwebcontrol 
                            runat="server" 
                            BackGroundColor="#ffffff"
@@ -540,21 +594,25 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssCustomSectionTitle="txtViolet11Bold"
 />
 
+<%-- Generic media level detail selection web control--%>
 <ctrHeader:genericmedialeveldetailselectionwebcontrol 
                            runat="server" 
                            SkinID="genericmedialeveldetailselectionwebcontrol"
 />
 
+<%-- Vehicle selection web control --%>
 <ctrSelections:vehicleselectionwebcontrol 
                            runat="server" 
                            CssClass="txtViolet11Bold"
 />
 
+<%-- generic media schedule web control : used to display a generic media plan --%>
 <ctrMadiaPlan:genericmediaschedulewebcontrol 
                            runat="server"
                            ThemeName = "DefaultAdExpressUk" 
 />
 
+<%-- Period Detail Selection WebControl : designed for Media Plan Schedules --%>
 <ctrHeader:PeriodDetailWebControl  
                            runat="server"
                            BackgroundColor="#ffffff"
@@ -563,11 +621,13 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="PeriodDetailWebControl"
 />
 
+<%-- Generic detail selection web control : used to display columns detail --%>
 <ctrHeader:genericdetailselectionwebcontrol 
                            runat="server"
                            ThemeName = "DefaultAdExpressUk"
 />
 
+<%-- Media insertions creations result web control --%>
 <ctrResults:MediaInsertionsCreationsResultsWebControl  
                            runat="server"
                            CssDefaultListLabel="txtGris11Bold"
@@ -577,6 +637,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            ThemeName = "DefaultAdExpressUk"
 />
 
+<%-- Option layer web control : used to display generic details selection --%>
 <ctrHeader:OptionLayerWebControl 
                            runat="server" 
                            CssDefaultListLabel="txtViolet11Bold"
