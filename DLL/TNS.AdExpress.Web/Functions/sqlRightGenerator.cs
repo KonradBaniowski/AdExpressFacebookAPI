@@ -1634,55 +1634,59 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </remarks>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
-		public static string GetUnitFieldName(WebSession webSession) {
-			WebConstantes.Module.Type moduleType = (ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
-			switch (moduleType) {
-				case WebConstantes.Module.Type.tvSponsorship:
-				case WebConstantes.Module.Type.alert:
-					switch (webSession.Unit) {
-						case WebConstantes.CustomerSessions.Unit.duration:
-							return (DBConstantes.Fields.DURATION);
-						case WebConstantes.CustomerSessions.Unit.euro:
-						case WebConstantes.CustomerSessions.Unit.kEuro:
-							return (DBConstantes.Fields.EXPENDITURE_EURO);
-						case WebConstantes.CustomerSessions.Unit.insertion:
-						case WebConstantes.CustomerSessions.Unit.spot:
-							return (DBConstantes.Fields.INSERTION);
-						case WebConstantes.CustomerSessions.Unit.mmPerCol:
-							return (DBConstantes.Fields.AREA_MMC);
-						case WebConstantes.CustomerSessions.Unit.pages:
-							return (DBConstantes.Fields.AREA_PAGE);
-						case WebConstantes.CustomerSessions.Unit.numberBoard:
-							return (DBConstantes.Fields.NUMBER_BOARD);
-						case WebConstantes.CustomerSessions.Unit.grp:
-							return (DBConstantes.Fields.GRP);
-						default:
-							throw new WebExceptions.SQLGeneratorException("Unité non gérée (Module Alerte)");
-					}
+        public static string GetUnitFieldName(WebSession webSession)
+        {
+            WebConstantes.Module.Type moduleType = (ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
+            switch (moduleType)
+            {
+                case WebConstantes.Module.Type.tvSponsorship:
+                case WebConstantes.Module.Type.alert:
+                    switch (webSession.Unit)
+                    {
+                        case WebConstantes.CustomerSessions.Unit.duration:
+                            return (DBConstantes.Fields.DURATION);
+                        case WebConstantes.CustomerSessions.Unit.euro:
+                        case WebConstantes.CustomerSessions.Unit.kEuro:
+                            return (DBConstantes.Fields.EXPENDITURE_EURO);
+                        case WebConstantes.CustomerSessions.Unit.insertion:
+                        case WebConstantes.CustomerSessions.Unit.spot:
+                            return (DBConstantes.Fields.INSERTION);
+                        case WebConstantes.CustomerSessions.Unit.mmPerCol:
+                            return (DBConstantes.Fields.AREA_MMC);
+                        case WebConstantes.CustomerSessions.Unit.pages:
+                            return (DBConstantes.Fields.AREA_PAGE);
+                        case WebConstantes.CustomerSessions.Unit.numberBoard:
+                            return (DBConstantes.Fields.NUMBER_BOARD);
+                        case WebConstantes.CustomerSessions.Unit.grp:
+                            return (DBConstantes.Fields.GRP);
+                        default:
+                            throw new WebExceptions.SQLGeneratorException("Unité non gérée (Module Alerte)");
+                    }
 
-				case WebConstantes.Module.Type.analysis:
-					switch (webSession.Unit) {
-						case WebConstantes.CustomerSessions.Unit.euro:
-						case WebConstantes.CustomerSessions.Unit.kEuro:
-							return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-						case WebConstantes.CustomerSessions.Unit.mmPerCol:
-							return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD);
-						case WebConstantes.CustomerSessions.Unit.pages:
-							return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD);
-						case WebConstantes.CustomerSessions.Unit.numberBoard:
-						case WebConstantes.CustomerSessions.Unit.insertion:
-							return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-						case WebConstantes.CustomerSessions.Unit.spot:
-							return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-						case WebConstantes.CustomerSessions.Unit.duration:
-							return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
-						default:
-							throw (new WebExceptions.SQLGeneratorException("Unité non gérée (Module Analyse)"));
-					}
-				default:
-					throw (new WebExceptions.SQLGeneratorException("Le type de module n'est pas géré pour la sélecetion d'unité"));
-			}
-		}
+                case WebConstantes.Module.Type.analysis:
+                    switch (webSession.Unit)
+                    {
+                        case WebConstantes.CustomerSessions.Unit.euro:
+                        case WebConstantes.CustomerSessions.Unit.kEuro:
+                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
+                        case WebConstantes.CustomerSessions.Unit.mmPerCol:
+                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD);
+                        case WebConstantes.CustomerSessions.Unit.pages:
+                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD);
+                        case WebConstantes.CustomerSessions.Unit.numberBoard:
+                        case WebConstantes.CustomerSessions.Unit.insertion:
+                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
+                        case WebConstantes.CustomerSessions.Unit.spot:
+                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
+                        case WebConstantes.CustomerSessions.Unit.duration:
+                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
+                        default:
+                            throw (new WebExceptions.SQLGeneratorException("Unité non gérée (Module Analyse)"));
+                    }
+                default:
+                    throw (new WebExceptions.SQLGeneratorException("Le type de module n'est pas géré pour la sélecetion d'unité"));
+            }
+        }
 		/// <summary>
 		/// Détermine le nom du champ à utiliser pour l'unité
 		/// 
@@ -1694,7 +1698,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="webSession">Session du client</param>
 		/// <param name="type">Type de la table</param>
 		/// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
-		internal static string GetUnitFieldName(WebSession webSession, DBConstantes.TableType.Type type) {
+		public static string GetUnitFieldName(WebSession webSession, DBConstantes.TableType.Type type) {
 			switch (type) {
 				case DBConstantes.TableType.Type.dataVehicle4M:
 				case DBConstantes.TableType.Type.dataVehicle:
