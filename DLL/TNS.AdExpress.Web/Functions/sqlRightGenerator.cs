@@ -1837,6 +1837,8 @@ namespace TNS.AdExpress.Web.Functions {
 					return (DBConstantes.Tables.RECAP_PLURI);
 				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
 					return (DBConstantes.Tables.RECAP_MEDIA_TACTIC);
+				case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
+					return (DBConstantes.Tables.RECAP_MOBILE_TELEPHONY);
 				default:
 					throw (new WebExceptions.SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
 			}
@@ -1865,6 +1867,8 @@ namespace TNS.AdExpress.Web.Functions {
 					return (DBConstantes.Tables.RECAP_PLURI_SEGMENT);
 				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
 					return (DBConstantes.Tables.RECAP_MEDIA_TACTIC_SEGMENT);
+				case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
+					return (DBConstantes.Tables.RECAP_MOBILE_TELEPHONY_SEGMENT);
 				default:
 					throw (new WebExceptions.SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
 			}

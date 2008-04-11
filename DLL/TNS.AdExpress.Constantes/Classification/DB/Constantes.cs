@@ -135,7 +135,11 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 			/// <summary>
 			/// Plurimédia
 			/// </summary>
-			plurimedia=50
+			plurimedia=50,
+			/// <summary>
+			/// Mobile telephony
+			/// </summary>
+			mobileTelephony = 12
 		}
 	}
 	#endregion

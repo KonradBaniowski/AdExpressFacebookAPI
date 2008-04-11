@@ -725,7 +725,15 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Table des données désagrégées de Media Tactique niveau Media/segment
 		/// </summary>
-		public const string RECAP_MEDIA_TACTIC_SEGMENT ="recap_tactic_segment";	   
+		public const string RECAP_MEDIA_TACTIC_SEGMENT ="recap_tactic_segment";
+		/// <summary>
+		/// Table des données désagrégées de téléphonie mobile
+		/// </summary>
+		public const string RECAP_MOBILE_TELEPHONY = "recap_message";
+		/// <summary>
+		/// Table des données désagrégées de téléphonie mobile niveau Media/segment
+		/// </summary>
+		public const string RECAP_MOBILE_TELEPHONY_SEGMENT = "recap_message_segment";	
 		/// <summary>
 		/// Table périodicity
 		/// </summary>

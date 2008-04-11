@@ -127,7 +127,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					{	oldCategory = IdCategory ;
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["category"].ToString(),"ct_"+(Int64)currentRow["id_category"]));
 					}
-					if ( (Int64)VhCstes.cinema != (Int64)currentRow["id_vehicle"] && (Int64)VhCstes.internet != (Int64)currentRow["id_vehicle"] && (Int64)VhCstes.press != (Int64)currentRow["id_vehicle"])
+					//if ( (Int64)VhCstes.cinema != (Int64)currentRow["id_vehicle"] && (Int64)VhCstes.internet != (Int64)currentRow["id_vehicle"] && (Int64)VhCstes.press != (Int64)currentRow["id_vehicle"])
+					if (showMedia((Int64)currentRow["id_vehicle"]))
 					{						
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["media"].ToString(),"md_"+(Int64)currentRow["id_media"]));
 					}					
@@ -220,7 +221,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						//Fermeture Category				
 						if (idCategory!= idCategoryOld && startCategory==0 && idVehicle!=9)
 						{	//Fermeture support
-							if(idVehicle!=7 && idVehicle!=1 && idVehicle!=9)
+							//if(idVehicle!=7 && idVehicle!=1 && idVehicle!=9)
+							if (showMedia(idVehicle))
 							{
 								if (numColumn!=0)t.Append("</tr>");
 							}
@@ -421,6 +423,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				case DBConstantesClassification.Vehicles.names.press:
 				case DBConstantesClassification.Vehicles.names.internationalPress:
 				case DBConstantesClassification.Vehicles.names.cinema:
+				case DBConstantesClassification.Vehicles.names.mobileTelephony:
 					return(false);
 				default:
 					return(true);

@@ -218,7 +218,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					break;
 				case DBClassificationCst.Vehicles.names.mediasTactics:
 					tableName = "recap_tactic";
-					break;							
+					break;
+				case DBClassificationCst.Vehicles.names.mobileTelephony:
+					tableName = DBCst.Tables.RECAP_MOBILE_TELEPHONY;
+					break;			
 				case DBClassificationCst.Vehicles.names.internationalPress:
 //				case DBClassificationCst.Vehicles.names.mediasTactics:
 				case DBClassificationCst.Vehicles.names.others:
