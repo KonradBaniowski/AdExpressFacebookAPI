@@ -651,7 +651,12 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Flags assignment
         /// </summary>
-        rightProjectFlagAssignment=139
+        rightProjectFlagAssignment=139,
+        /// <summary>
+        /// Product Group Advertising Agency
+        /// </summary>
+        productGroupAgency=200
+
     } 
     #endregion
 
