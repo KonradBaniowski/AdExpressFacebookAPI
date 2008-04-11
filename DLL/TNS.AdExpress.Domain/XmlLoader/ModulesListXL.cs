@@ -204,7 +204,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                    ((Module)HtModule[module]).CountryRulesLayer=new RulesLayer(Reader.GetAttribute("name"),Reader.GetAttribute("assemblyName"),Reader.GetAttribute("class"));
                                 }
                                 break;
-                            case "DataAccessLayers":
+                            case "DataAccessLayer":
                                 if(Reader.GetAttribute("name")!=null&&Reader.GetAttribute("assemblyName")!=null&&Reader.GetAttribute("class")!=null&&
                                     Reader.GetAttribute("name").Length>0&&Reader.GetAttribute("assemblyName").Length>0&&Reader.GetAttribute("class").Length>0) {
                                     ((Module)HtModule[module]).CountryDataAccessLayer=new DataAccessLayer(Reader.GetAttribute("name"),Reader.GetAttribute("assemblyName"),Reader.GetAttribute("class"));

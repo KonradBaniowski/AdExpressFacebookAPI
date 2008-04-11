@@ -1634,7 +1634,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </remarks>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
-		internal static string GetUnitFieldName(WebSession webSession) {
+		public static string GetUnitFieldName(WebSession webSession) {
 			WebConstantes.Module.Type moduleType = (ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
 			switch (moduleType) {
 				case WebConstantes.Module.Type.tvSponsorship:
@@ -2240,11 +2240,11 @@ namespace TNS.AdExpress.Web.Functions {
 			try {
 				switch (moduleType) {
 					case WebConstantes.Module.Type.alert:
-						return (GetVehicleTableNameForAlertDetailResult(vehicleName));
+						return (GetVehicleTableSQLForAlertDetailResult(vehicleName));
 					case WebConstantes.Module.Type.analysis:
-						return (GetVehicleTableNameForZoomDetailResult(vehicleName));
+						return (GetVehicleTableSQLForZoomDetailResult(vehicleName));
 					case WebConstantes.Module.Type.tvSponsorship:
-						return (GetVehicleTableNameForSponsorshipResult());
+						return (GetVehicleTableSQLForSponsorshipResult());
 
 					default:
 						throw (new WebExceptions.SQLGeneratorException("Impossible de déterminer le type du module"));

@@ -19,5 +19,10 @@ namespace TNS.AdExpress.Portofolio.DAL {
         /// </summary>
         /// <returns>Data Set</returns>
         DataSet GetMediaPortofolio();
+        /// <summary>
+        /// Get Data for the portofolio calendar
+        /// </summary>
+        /// <returns></returns>
+        DataSet GetDataCalendar();
     }
 }

@@ -14,7 +14,7 @@
     <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
   </defaultConnections>
   <schemas>
-    <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr"/>
+    <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
     <schema enumId="1" description="APPM (Chronopress)" label="appm01"/>
     <schema enumId="2" description="Right" label="mau01"/>
     <schema enumId="3" description="Mou" label="mou01"/>
@@ -33,6 +33,26 @@
 
     <table enumId="24" description="Right: Media order template" schemaEnumId="2" label="order_template_media" prefix="otm"/>
     <table enumId="25" description="Right: Product order template" schemaEnumId="2" label="order_template_product" prefix="otp"/>
+    <table enumId="26" description="Data: Gad" schemaEnumId="0" label="gad" prefix="gd"/>
+    
+    <table enumId="40" description="Data: Press" schemaEnumId="0" label="data_press" prefix="wp"/>
+    <table enumId="41" description="Data: Radio" schemaEnumId="0" label="data_radio" prefix="wp"/>
+    <table enumId="42" description="Data: Tv" schemaEnumId="0" label="data_tv" prefix="wp"/>
+    <table enumId="43" description="Data: Outdoor" schemaEnumId="0" label="data_outdoor" prefix="wp"/>
+    <table enumId="44" description="Data: Internet" schemaEnumId="0" label="data_internet" prefix="wp"/>
+    <table enumId="45" description="Data: AdNetTrack" schemaEnumId="0" label="data_adnettrack" prefix="wp"/>
+    <table enumId="46" description="Data: APPM" schemaEnumId="1" label="data_press_appm" prefix="wp"/>
+    <table enumId="47" description="Data: Sponsorship" schemaEnumId="0" label="data_sponsorship" prefix="wp"/>
+    <table enumId="48" description="Data: VMC" schemaEnumId="0" label="data_marketing_direct" prefix="wp"/>
+    <table enumId="49" description="Data: Press Inter" schemaEnumId="0" label="data_press" prefix="wp"/>
+    <table enumId="50" description="Data: Press 4M" schemaEnumId="0" label="data_press_4M" prefix="wp"/>
+    <table enumId="51" description="Data: Radio 4M" schemaEnumId="0" label="data_radio_4M" prefix="wp"/>
+    <table enumId="52" description="Data: Tv 4M" schemaEnumId="0" label="data_tv_4M" prefix="wp"/>
+    <table enumId="53" description="Data: Outdoor 4M" schemaEnumId="0" label="data_outdoor_4M" prefix="wp"/>
+    <table enumId="54" description="Data: Internet 4M" schemaEnumId="0" label="data_internet_4M" prefix="wp"/>
+    <table enumId="55" description="Data: APPM 4M" schemaEnumId="1" label="data_press_appm_4M" prefix="wp"/>
+    <table enumId="56" description="Data: VMC 4M" schemaEnumId="0" label="data_marketing_direct_4M" prefix="wp"/>
+    <table enumId="57" description="Data: Press Inter 4M" schemaEnumId="0" label="data_press_4M" prefix="wp"/>
     
     <table enumId="91" description="Right: Login" schemaEnumId="2" label="login" prefix="lo"/>
     

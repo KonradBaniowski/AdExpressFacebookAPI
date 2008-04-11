@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.dll</HintPath>
     </Reference>
+    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.Date.dll</HintPath>
+    </Reference>
     <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.17858, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.WebResultUI.dll</HintPath>
