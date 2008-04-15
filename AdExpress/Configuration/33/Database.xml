@@ -31,10 +31,18 @@
     <table enumId="14" description="Right: Media type" schemaEnumId="2" label="type_media" prefix="tm"/>
     <table enumId="15" description="Right: Product type" schemaEnumId="2" label="type_product" prefix="tp"/>
 
+    <table enumId="16" description="Classif: Vehicle" schemaEnumId="0" label="vehicle" prefix="vh"/>
+    <table enumId="17" description="Classif: Category" schemaEnumId="0" label="category" prefix="ct"/>
+    <table enumId="18" description="Classif: Media" schemaEnumId="0" label="media" prefix="md"/>
+    <table enumId="19" description="Classif: Basic Media" schemaEnumId="0" label="basic_media" prefix="bm"/>
+
     <table enumId="24" description="Right: Media order template" schemaEnumId="2" label="order_template_media" prefix="otm"/>
     <table enumId="25" description="Right: Product order template" schemaEnumId="2" label="order_template_product" prefix="otp"/>
     <table enumId="26" description="Data: Gad" schemaEnumId="0" label="gad" prefix="gd"/>
-    
+
+
+    <table enumId="36" description="Data: Month" schemaEnumId="0" label="web_plan_media_month" prefix="wp"/>
+    <table enumId="37" description="Data: Week" schemaEnumId="0" label="web_plan_media_week" prefix="wp"/>
     <table enumId="40" description="Data: Press" schemaEnumId="0" label="data_press" prefix="wp"/>
     <table enumId="41" description="Data: Radio" schemaEnumId="0" label="data_radio" prefix="wp"/>
     <table enumId="42" description="Data: Tv" schemaEnumId="0" label="data_tv" prefix="wp"/>

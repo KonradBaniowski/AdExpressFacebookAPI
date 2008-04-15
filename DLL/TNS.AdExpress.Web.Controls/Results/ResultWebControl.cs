@@ -23,6 +23,7 @@ using AjaxPro;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 
+using PresentAbsent=TNS.AdExpressI.PresentAbsent;
 using Portofolio=TNS.AdExpressI.Portofolio;
 using Domain=TNS.AdExpress.Domain.Web.Navigation;
 using System.Reflection;
@@ -1855,7 +1856,12 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					return WebBusinessFacade.Results.DynamicSystem.GetResultTable(customerWebSession);
 				case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE :
 				case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE :
-					return WebBusinessFacade.Results.CompetitorSystem.GetHtml(customerWebSession);
+                    if(module.CountryRulesLayer==null)throw(new NullReferenceException("Rules layer is null for the present/absent result"));
+                    object[] param=new object[1];                     
+                    param[0]=customerWebSession;
+                    PresentAbsent.IPresentAbsentResult presentAbsentResult = (PresentAbsent.IPresentAbsentResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    return presentAbsentResult.GetResult();
+					//return WebBusinessFacade.Results.CompetitorSystem.GetHtml(customerWebSession);
 				case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS :
 				case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES :
 					return WebBusinessFacade.Results.SponsorshipSystem.GetResultTable(customerWebSession);

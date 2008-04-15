@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TNS.AdExpressI.PresentAbsentReport.Results">
+    <Position X="5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Results.cs</FileName>
+      <HashCode>EAEABAAAAAAAAQAAAACAhAAAAAAAAAEgAEAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TNS.AdExpressI.PresentAbsentReport.IResults">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>IResults.cs</FileName>
+      <HashCode>EAEABAAAAAAAAAAAAACAhAAAAAAAAAEAAEAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>

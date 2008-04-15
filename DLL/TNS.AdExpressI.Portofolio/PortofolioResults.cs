@@ -268,11 +268,11 @@ namespace TNS.AdExpressI.Portofolio {
             DataSet ds  =null;
             DataTable dt =null;
             CellUnitFactory[] cellFactories=null;
-            CellUnitFactory cellFactory;
+            CellUnitFactory cellFactory = null;
             AdExpressCellLevel[] cellLevels;
             LineType[] lineTypes = new LineType[5] { LineType.total,LineType.level1,LineType.level2,LineType.level3,LineType.level4 };
             DBClassificationConstantes.Vehicles.names vehicle;
-            Headers headers;
+            Headers headers = null;
             string periodBeginning;
             string periodEnd;
             int iCurLine=0;
@@ -311,10 +311,27 @@ namespace TNS.AdExpressI.Portofolio {
             iNbLine=GetCalendarSize(dt,parutions);
             #endregion
 
-            #region Headers
-            GetCalendarHeaders(out headers,out cellFactories,parutions);
+
+            /*
+             * 
+             * GR : MIS EN COMMENTAIRE POUR COMPILATION
+             * 
+             *              
+             */
+            //#region Headers
+            //GetCalendarHeaders(out headers,out cellFactories,parutions);
             
-            #endregion
+            //#endregion
+            /*
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * */
             tab = new ResultTable(iNbLine,headers);
 
             #region Traitement du tableau de résultats
@@ -558,52 +575,61 @@ namespace TNS.AdExpressI.Portofolio {
         /// </summary>
         /// <returns></returns>
         protected void GetCalendarHeaders(out Headers headers,ArrayList parutions) {
-            headers = new Headers();
-            headers.Root.Add(new Header(true,GestionWeb.GetWebWord(PROD_COL,_webSession.SiteLanguage),PROD_COL));
-            headers.Root.Add(new HeaderMediaSchedule(false,GestionWeb.GetWebWord(PM_COL,_webSession.SiteLanguage),PM_COL));
-            headers.Root.Add(new Header(true,GestionWeb.GetWebWord(TOTAL_COL,_webSession.SiteLanguage),TOTAL_COL));
-            headers.Root.Add(new Header(true,GestionWeb.GetWebWord(POURCENTAGE_COL,_webSession.SiteLanguage),POURCENTAGE_COL));
 
-            //une colonne par date de parution
-            parutions.Sort();
-            foreach(Int32 parution in parutions) {
-                headers.Root.Add(new Header(true,DateString.YYYYMMDDToDD_MM_YYYY(parution.ToString(),_webSession.SiteLanguage),(long)parution));
-            }
-            if(!webSession.Percentage) {
-                switch(_webSession.Unit) {
-                    case WebCst.CustomerSessions.Unit.duration:
-                        cellFactory = new CellUnitFactory(new CellDuration(0.0));
-                        break;
-                    case WebCst.CustomerSessions.Unit.euro:
-                        cellFactory = new CellUnitFactory(new CellEuro(0.0));
-                        break;
-                    case WebCst.CustomerSessions.Unit.kEuro:
-                        cellFactory = new CellUnitFactory(new CellKEuro(0.0));
-                        break;
-                    case WebCst.CustomerSessions.Unit.insertion:
-                        cellFactory = new CellUnitFactory(new CellInsertion(0.0));
-                        break;
-                    case WebCst.CustomerSessions.Unit.pages:
-                        cellFactory = new CellUnitFactory(new CellPage(0.0));
-                        break;
-                    case WebCst.CustomerSessions.Unit.mmPerCol:
-                        cellFactory = new CellUnitFactory(new CellMMC(0.0));
-                        break;
-                    default:
-                        cellFactory = new CellUnitFactory(new CellNumber(0.0));
-                        break;
-                }
-            }
-            else {
-                cellFactory = new CellUnitFactory(new CellPDM(0.0));
-            }
+            headers = null;
+            /*
+             * 
+             * GR : MIS EN COMMENTAIRE POUR COMPILATION
+             * 
+             *              
+             */
+
+            //headers = new Headers();
+            //headers.Root.Add(new Header(true,GestionWeb.GetWebWord(PROD_COL,_webSession.SiteLanguage),PROD_COL));
+            //headers.Root.Add(new HeaderMediaSchedule(false,GestionWeb.GetWebWord(PM_COL,_webSession.SiteLanguage),PM_COL));
+            //headers.Root.Add(new Header(true,GestionWeb.GetWebWord(TOTAL_COL,_webSession.SiteLanguage),TOTAL_COL));
+            //headers.Root.Add(new Header(true,GestionWeb.GetWebWord(POURCENTAGE_COL,_webSession.SiteLanguage),POURCENTAGE_COL));
+
+            ////une colonne par date de parution
+            //parutions.Sort();
+            //foreach(Int32 parution in parutions) {
+            //    headers.Root.Add(new Header(true,DateString.YYYYMMDDToDD_MM_YYYY(parution.ToString(),_webSession.SiteLanguage),(long)parution));
+            //}
+            //if(!webSession.Percentage) {
+            //    switch(_webSession.Unit) {
+            //        case WebCst.CustomerSessions.Unit.duration:
+            //            cellFactory = new CellUnitFactory(new CellDuration(0.0));
+            //            break;
+            //        case WebCst.CustomerSessions.Unit.euro:
+            //            cellFactory = new CellUnitFactory(new CellEuro(0.0));
+            //            break;
+            //        case WebCst.CustomerSessions.Unit.kEuro:
+            //            cellFactory = new CellUnitFactory(new CellKEuro(0.0));
+            //            break;
+            //        case WebCst.CustomerSessions.Unit.insertion:
+            //            cellFactory = new CellUnitFactory(new CellInsertion(0.0));
+            //            break;
+            //        case WebCst.CustomerSessions.Unit.pages:
+            //            cellFactory = new CellUnitFactory(new CellPage(0.0));
+            //            break;
+            //        case WebCst.CustomerSessions.Unit.mmPerCol:
+            //            cellFactory = new CellUnitFactory(new CellMMC(0.0));
+            //            break;
+            //        default:
+            //            cellFactory = new CellUnitFactory(new CellNumber(0.0));
+            //            break;
+            //    }
+            //}
+            //else {
+            //    cellFactory = new CellUnitFactory(new CellPDM(0.0));
+            //}
         }
         #endregion
 
         #endregion
 
         #region Cell Factory
-        protected CellFac
+        //protected CellFac
         #endregion
         #region Dates
         /// <summary>
