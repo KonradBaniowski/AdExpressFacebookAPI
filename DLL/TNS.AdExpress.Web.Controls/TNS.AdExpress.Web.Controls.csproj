@@ -525,7 +525,7 @@
       <Project>{7E85C26D-A9C8-40CD-B98D-AD04E96D340B}</Project>
       <Name>TNS.AdExpressI.Portofolio</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.PresentAbsentReport\TNS.AdExpressI.PresentAbsent.csproj">
+    <ProjectReference Include="..\TNS.AdExpressI.PresentAbsent\TNS.AdExpressI.PresentAbsent.csproj">
       <Project>{459F24EC-384D-404F-A6D2-F3B76C288A57}</Project>
       <Name>TNS.AdExpressI.PresentAbsent</Name>
     </ProjectReference>

@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\AdExpress\Bin\</OutputPath>
+    <OutputPath>Bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -45,7 +45,7 @@
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.PresentAbsentReport\TNS.AdExpressI.PresentAbsent.csproj">
+    <ProjectReference Include="..\TNS.AdExpressI.PresentAbsent\TNS.AdExpressI.PresentAbsent.csproj">
       <Project>{459F24EC-384D-404F-A6D2-F3B76C288A57}</Project>
       <Name>TNS.AdExpressI.PresentAbsent</Name>
     </ProjectReference>

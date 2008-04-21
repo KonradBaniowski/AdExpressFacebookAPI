@@ -45,7 +45,7 @@
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.DynamicReport.DAL\TNS.AdExpressI.LostWon.DAL.csproj">
+    <ProjectReference Include="..\TNS.AdExpressI.LostWon.DAL\TNS.AdExpressI.LostWon.DAL.csproj">
       <Project>{1A942442-9ACD-4B02-8B2B-D0B85E3554C0}</Project>
       <Name>TNS.AdExpressI.LostWon.DAL</Name>
     </ProjectReference>
