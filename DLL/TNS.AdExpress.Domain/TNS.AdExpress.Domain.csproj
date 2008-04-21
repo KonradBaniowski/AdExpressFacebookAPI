@@ -74,6 +74,10 @@
     <Compile Include="Levels\DetailLevelsInformation.cs" />
     <Compile Include="Levels\GenericDetailLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Results\groupItem.cs" />
+    <Compile Include="Results\GroupItemForTableResult.cs" />
+    <Compile Include="Results\SelectionGroup.cs" />
+    <Compile Include="Results\SelectionSubGroup.cs" />
     <Compile Include="Translation\GestionWeb.cs" />
     <Compile Include="Translation\WordList.cs" />
     <Compile Include="Web\Navigation\WebHeader.cs" />

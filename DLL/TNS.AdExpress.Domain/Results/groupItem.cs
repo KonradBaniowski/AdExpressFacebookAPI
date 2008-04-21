@@ -5,21 +5,24 @@
 //	G. Facon	11/08/2005	Nom des variables
 #endregion
 
-
 using System;
 
-namespace TNS.AdExpressI.PresentAbsent
+namespace TNS.AdExpress.Domain.Results
 {
 	/// <summary>
-	/// Elément d'un groupe de sélection servant dans un tableau de résultat
+	/// Elément d'un groupe de sélection
 	/// </summary>
-	public class GroupItemForTableResult:GroupItem{
+	public class GroupItem{
 
 		#region Variables
 		/// <summary>
-		/// Index dans le tableau de résultat
+		/// Identifiant de l'élément
 		/// </summary>
-		protected int _indexInResultTable;
+		protected Int64 _id;
+		/// <summary>
+		/// Numéro du group auquel il appartient
+		/// </summary>
+		protected int _groupNumber;
 		#endregion
 
 		#region Constructeurs
@@ -28,9 +31,9 @@ namespace TNS.AdExpressI.PresentAbsent
 		/// </summary>
 		/// <param name="id">Identifiant de l'élément</param>
 		/// <param name="groupNumber">Numéro du group auquel il appartient</param>
-		/// <param name="indexInResultTable">Index dans le tableau de résultat</param>
-		public GroupItemForTableResult(Int64 id,int groupNumber,int indexInResultTable):base(id,groupNumber){
-			_indexInResultTable=indexInResultTable;
+		public GroupItem(Int64 id,int groupNumber){
+			_id=id;
+			_groupNumber=groupNumber;
 		}
 		#endregion
 
@@ -38,9 +41,15 @@ namespace TNS.AdExpressI.PresentAbsent
 		/// <summary>
 		/// Obtient l'identifiant de l'élément
 		/// </summary>
-		public int IndexInResultTable{
-			get{return(_indexInResultTable);}
-			set{_indexInResultTable = value;}
+		public Int64 ID{
+			get{return(_id);}
+		}
+		
+		/// <summary>
+		/// Obtient le groupe d'appartenance
+		/// </summary>
+		public int GroupNumber{
+			get{return(_groupNumber);}
 		}
 		#endregion
 	}

@@ -24,6 +24,7 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpressI.PresentAbsent.Exceptions;
@@ -207,15 +208,13 @@ namespace TNS.AdExpressI.PresentAbsent
         #endregion
 
         #region IResults Membres
-
         /// <summary>
         /// Compute result "Summary"
         /// </summary>
         /// <returns>Computed data</returns>
         public ResultTable GetSummary()
         {
-            this._result = CompetitorMarketShare.SYNTHESIS;
-            return GetSynthesisData();
+            return GetResult(CompetitorMarketShare.SYNTHESIS);
         }
 
         /// <summary>
@@ -224,8 +223,7 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <returns>Computed data</returns>
         public ResultTable GetPortefolio()
         {
-            this._result = CompetitorMarketShare.PORTEFEUILLE;
-            return GetData();
+            return GetResult(CompetitorMarketShare.PORTEFEUILLE);
         }
 
         /// <summary>
@@ -234,8 +232,7 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <returns>Computed data</returns>
         public ResultTable GetCommons()
         {
-            this._result = CompetitorMarketShare.COMMON;
-            return GetData();
+            return GetResult(CompetitorMarketShare.COMMON);
         }
 
         /// <summary>
@@ -244,8 +241,7 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <returns>Computed data</returns>
         public ResultTable GetMissings()
         {
-            this._result = CompetitorMarketShare.ABSENT;
-            return GetData();
+            return GetResult(CompetitorMarketShare.ABSENT);
         }
 
         /// <summary>
@@ -254,8 +250,7 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <returns>Computed data</returns>
         public ResultTable GetExclusives()
         {
-            this._result = CompetitorMarketShare.EXCLUSIF;
-            return GetData();
+            return GetResult(CompetitorMarketShare.EXCLUSIF);
         }
 
         /// <summary>
@@ -274,8 +269,7 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <returns>Computed data</returns>
         public ResultTable GetProspects()
         {
-            this._result = CompetitorMarketShare.POTENTIELS;
-            return GetData();
+            return GetResult(CompetitorMarketShare.POTENTIELS);
         }
 
         /// <summary>
@@ -285,8 +279,21 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <returns>Computed data</returns>
         public ResultTable GetResult(int result)
         {
-            this._result = result;
-            return GetData();
+            switch (result)
+            {
+                case CompetitorMarketShare.ABSENT: 
+                case CompetitorMarketShare.COMMON: 
+                case CompetitorMarketShare.EXCLUSIF: 
+                case CompetitorMarketShare.FORCES: 
+                case CompetitorMarketShare.PORTEFEUILLE:
+                case CompetitorMarketShare.POTENTIELS:
+                    this._result = result;
+                    return GetData();
+                case CompetitorMarketShare.SYNTHESIS:
+                    this._result = CompetitorMarketShare.SYNTHESIS;
+                    return GetSynthesisData();
+                default: return null;
+            }            
         }
 
         /// <summary>
@@ -295,19 +302,8 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <returns>Computed data</returns>
         public ResultTable GetResult()
         {
-            switch (_session.CurrentTab)
-            {
-                case CompetitorMarketShare.ABSENT: return GetMissings();
-                case CompetitorMarketShare.COMMON: return GetCommons();
-                case CompetitorMarketShare.EXCLUSIF: return GetExclusives();
-                case CompetitorMarketShare.FORCES: return GetStrengths();
-                case CompetitorMarketShare.PORTEFEUILLE: return GetPortefolio();
-                case CompetitorMarketShare.POTENTIELS: return GetProspects();
-                case CompetitorMarketShare.SYNTHESIS: return GetSummary();
-                default: return null;
-            }            
+            return GetResult((int)_session.CurrentTab);
         }
-
         #endregion
 
         #region Result Computing Methods

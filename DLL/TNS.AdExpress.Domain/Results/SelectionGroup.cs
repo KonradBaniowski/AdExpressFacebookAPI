@@ -7,7 +7,8 @@
 
 using System;
 
-namespace TNS.AdExpressI.PresentAbsent{
+namespace TNS.AdExpress.Domain.Results
+{
 	/// <summary>
 	/// Représente un groupe de sélection d'univers
 	/// </summary>

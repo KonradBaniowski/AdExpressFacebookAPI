@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TNS.AdExpressI.PresentAbsent
+namespace TNS.AdExpress.Domain.Results
 {
     /// <summary>
     /// Représente un sous groupe de sélection d'univers

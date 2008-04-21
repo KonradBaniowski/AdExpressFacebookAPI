@@ -51,13 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\PresentAbsentException.cs" />
-    <Compile Include="groupItem.cs" />
-    <Compile Include="GroupItemForTableResult.cs" />
     <Compile Include="IPresentAbsentResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PresentAbsentResult.cs" />
-    <Compile Include="SelectionGroup.cs" />
-    <Compile Include="SelectionSubGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
