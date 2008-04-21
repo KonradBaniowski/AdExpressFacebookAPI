@@ -95,7 +95,7 @@
       <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
       <Name>TNS.AdExpress.Web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.Portofolio.DataAcess\TNS.AdExpressI.Portofolio.DAL.csproj">
+    <ProjectReference Include="..\TNS.AdExpressI.Portofolio.DAL\TNS.AdExpressI.Portofolio.DAL.csproj">
       <Project>{AFC56975-EB58-416A-84A9-564F2537D4BA}</Project>
       <Name>TNS.AdExpressI.Portofolio.DAL</Name>
     </ProjectReference>
