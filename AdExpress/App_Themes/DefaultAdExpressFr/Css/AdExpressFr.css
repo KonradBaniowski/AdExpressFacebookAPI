@@ -1,6 +1,11 @@
 ﻿/* Back ground style*/
 .imageBackGround{
-background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_fond.gif);
+	background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_fond.gif);
+}
+.gSepBackGround{
+	background:url(/I/gsep.gif);
+	width:5px; 
+	height:100%;
 }
 .checkboxBackGround{
 	background:url(/App_Themes/DefaultAdExpressFr/Images/Common/checkbox.GIF);
@@ -9,23 +14,23 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_fond.gif);
 	background:url(/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif);
 }
 .imageBackGround3bis{
-background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_3bis.gif);
+	background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_3bis.gif);
 }
 .bandeauTitreBackGround{
-background:url(/App_Themes/DefaultAdExpressFr/Images/Common/bandeau_titre.gif);
+	background:url(/App_Themes/DefaultAdExpressFr/Images/Common/bandeau_titre.gif);
 }
 .blockdupliBackGround{
-background:url(/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif);
+	background:url(/App_Themes/DefaultAdExpressFr/Images/Common/block_dupli.gif);
 }
 .popupBackGround{
-background:url(/App_Themes/DefaultAdExpressFr/Images/Common/backgroundPopUp.gif);
+	background:url(/App_Themes/DefaultAdExpressFr/Images/Common/backgroundPopUp.gif);
 }
 .arrowBackGround{
-background-image:url(/App_Themes/DefaultAdExpressFr/images/Common/button/bt_arrow_down.gif);
-background-repeat:no-repeat;
-background-position:right;
-width:15px;
-height:15px;
+	background-image:url(/App_Themes/DefaultAdExpressFr/images/Common/button/bt_arrow_down.gif);
+	background-repeat:no-repeat;
+	background-position:right;
+	width:15px;
+	height:15px;
 }
 .logoCoteDroitBackGround{
 	background:url(/App_Themes/DefaultAdExpressFr/Images/Common/logo_cote_droit.gif);
@@ -51,8 +56,41 @@ height:15px;
 .whiteBackGround{
 	background-color : #FFFFFF;
 }
+.lightPurple{
+	background-color:#DED8E5;
+}
+.mediumPurple{
+background-color:#D6CBDE
+}
 .mediumPurple1{
 	background-color:#D0C8DA;
+}
+.DarkGrey{
+	background-color:#9D9885;
+}
+.DarkGreen{
+	background-color:#AAFFAA;
+}
+.Green{
+	background-color:#CAFFCA;
+}
+.LightGreen{
+	background-color:#E6FFE6;
+}
+.LightLightGreen{
+	background-color:#F2FFF2;
+}
+.DarkRed{
+	background-color:#FF9D9D;
+}
+.Red{
+	background-color:#FFD7D7;
+}
+.LightRed{
+	background-color:#FFEAEA;
+}
+.LightLightRed{
+	background-color:#FFF0F0;
 }
 .violetBackGround{
 	background-color : #644883;
@@ -65,6 +103,9 @@ height:15px;
 }
 .violetBackGroundV4{
 	background-color : #A794BE;
+}
+.violetCalendarBackGround{
+	background-color : #9378B3;
 }
 .sloganVioletBackGround{
 	background-color : #E0D7EC;
@@ -202,6 +243,13 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
 	border-right :#644883 1px solid; 
 	border-bottom :#644883 1px solid;
 }
+.violetBorderColor{
+	border-color : #644883;
+	border-top :#644883 2px solid; 
+	border-left :#644883 2px solid; 
+	border-right :#644883 2px solid; 
+	border-bottom :#644883 2px solid;
+}
 .violetBorderWithoutTop{
 	border-left :#644883 1px solid; 
 	border-right :#644883 1px solid; 
@@ -278,6 +326,15 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
 	margin-left : 0px; 
 	margin-right : 0px;
 	border : solid 5px #ffffff;
+}
+.insertionBorderV2{
+	margin-top : 25px; 
+	margin-left : 25px; 
+	margin-right : 25px;
+	border : SOLID 5px #ffffff;
+}
+.insertionWhiteBorder{
+	border:SOLID 5px #ffffff;
 }
 .creationVioletTopBorder{
 	border-top : #9966cc 1px solid;
@@ -370,6 +427,9 @@ table.creationWhiteBorder{
 	color: #000000;
 	font-weight: normal;
 }
+.txtRed{
+	color:#DC121B;
+}
 .txtBlanc11{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -406,6 +466,9 @@ table.creationWhiteBorder{
 .txtNowrap{
 	white-space:nowrap;
 }
+.tableFont{
+	font-family: Arial, Helvetica, sans-serif;
+}
 .titleUppercase{
 	padding-right: 5px; 
 	padding-left: 5px; 
@@ -421,7 +484,7 @@ table.creationWhiteBorder{
 .paragraphePaddingHeader{
 	padding-left: 10px; 
 	padding-bottom: 40px; 
-	padding-top: 0px
+	padding-top: 2px
 }
 
 /*Commun header (flash, menu)*/
