@@ -51,8 +51,41 @@ height:15px;
 .whiteBackGround{
 	background-color : #FFFFFF;
 }
+.lightPurple{
+	background-color:#DED8E5;
+}
+.mediumPurple{
+background-color:#D6CBDE
+}
 .mediumPurple1{
 	background-color:#C8E6C3;
+}
+.DarkGrey{
+	background-color:#9D9885;
+}
+.DarkGreen{
+	background-color:#AAFFAA;
+}
+.Green{
+	background-color:#CAFFCA;
+}
+.LightGreen{
+	background-color:#E6FFE6;
+}
+.LightLightGreen{
+	background-color:#F2FFF2;
+}
+.DarkRed{
+	background-color:#FF9D9D;
+}
+.Red{
+	background-color:#FFD7D7;
+}
+.LightRed{
+	background-color:#FFEAEA;
+}
+.LightLightRed{
+	background-color:#FFF0F0;
 }
 .violetBackGround{
 	background-color : #FF0000;
@@ -65,6 +98,9 @@ height:15px;
 }
 .violetBackGroundV4{
 	background-color : #C3E6DB;
+}
+.violetCalendarBackGround{
+	background-color : #000000;
 }
 .sloganVioletBackGround{
 	background-color : #C3E6DB;
@@ -194,6 +230,13 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 	border-right :#FF0000 1px solid; 
 	border-bottom :#FF0000 1px solid;
 }
+.violetBorderColor{
+	border-color : #FF0000;
+	border-top :#FF0000 2px solid; 
+	border-left :#FF0000 2px solid; 
+	border-right :#FF0000 2px solid; 
+	border-bottom :#FF0000 2px solid;
+}
 .violetBorderWithoutTop{
 	border-left :#FF0000 1px solid; 
 	border-right :#FF0000 1px solid; 
@@ -260,10 +303,25 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 	border-right: white 1px solid;
 	border-left: white 1px solid;
 }
+.dimgrayBorder{
+	border-right: dimgray 1px solid; 
+	border-top: dimgray 1px solid; 
+	border-left: dimgray 1px solid; 
+	border-bottom: dimgray 1px solid
+}
 .insertionBorder{
 	margin-left : 0px; 
 	margin-right : 0px;
 	border : solid 5px #ffffff;
+}
+.insertionBorderV2{
+	margin-top : 25px; 
+	margin-left : 25px; 
+	margin-right : 25px;
+	border : SOLID 5px #ffffff;
+}
+.insertionWhiteBorder{
+	border:SOLID 5px #ffffff;
 }
 .creationVioletTopBorder{
 	border-top : #8EBF86 1px solid;
@@ -283,10 +341,10 @@ table.creationWhiteBorder{
 	BORDER-BOTTOM: #ff0000 thin solid
 }
 .detailledLevelCss{
-	border-right: #644883 1px solid;
-	border-left: #644883 1px solid;
-	border-bottom: #644883 1px solid;
-	background-color:#D0C8DA;
+	border-right: #3E5A51 1px solid;
+	border-left: #3E5A51 1px solid;
+	border-bottom: #3E5A51 1px solid;
+	background-color:#C3E6DB;
 }
 /* Separator */
 .columnSeparator{
@@ -364,6 +422,9 @@ table.creationWhiteBorder{
 	color: #999FFF;
 	font-weight: normal;
 }
+.txtRed{
+	color:#DC121B;
+}
 .txtBlanc11{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -400,6 +461,9 @@ table.creationWhiteBorder{
 .txtNowrap{
 	white-space:nowrap;
 }
+.tableFont{
+	font-family: Arial, Helvetica, sans-serif;
+}
 .titleUppercase{
 	padding-right: 5px; 
 	padding-left: 5px; 
@@ -415,7 +479,7 @@ table.creationWhiteBorder{
 .paragraphePaddingHeader{
 	padding-left: 10px; 
 	padding-bottom: 40px; 
-	padding-top: 0px
+	padding-top: 2px
 }
 
 /*Commun header (flash, menu)*/
