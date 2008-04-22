@@ -2,6 +2,11 @@
 .imageBackGround{
 background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_fond3.gif);
 }
+.gSepBackGround{
+	background:url(/I/gsep.gif);
+	width:5px; 
+	height:100%;
+}
 .checkboxBackGround{
 	background:url(/App_Themes/DefaultAdExpressUk/Images/Common/checkbox.GIF);
 }
