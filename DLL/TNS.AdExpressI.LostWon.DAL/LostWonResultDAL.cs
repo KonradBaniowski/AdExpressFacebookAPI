@@ -458,6 +458,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
             Schema schAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
+            Table tblWebPlan = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData);
             #endregion
 
             #region Construction de la requête
@@ -473,7 +474,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                         dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.analysis);
                         break;
                     case CstDB.TableType.Type.webPlan:
-                        dataTableName = CstDB.Tables.WEB_PLAN_MEDIA_MONTH;
+                        //dataTableName = string.Format("{0}.{1} {2}", schAdExpr03.Label, CstDB.Tables.WEB_PLAN_MEDIA_MONTH, DATA_TABLE_PREFIXE);
+                        dataTableName = tblWebPlan.SqlWithPrefix;
                         break;
                     default:
                         throw (new DynamicDALException("Unaable to determùine the type of table to use."));
@@ -542,15 +544,12 @@ namespace TNS.AdExpressI.LostWon.DAL
                 , dataFieldsForGad
                 , dateField
                 , unitField);
-            sql.AppendFormat(" from {0} {1}.{2} {3} {4} {5}"
+            sql.AppendFormat(" from {0} {1} {2} {3}"
                 , mediaAgencyTable
-                , schAdExpr03.Label
                 , dataTableName
-                , DATA_TABLE_PREFIXE
                 , productTableName
                 , dataTableNameForGad);
-
-            // Période
+             //Période
             switch (type)
             {
                 case CstDB.TableType.Type.dataVehicle4M:
@@ -576,7 +575,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     }
                     break;
                 case CstDB.TableType.Type.webPlan:
-                    sql.AppendFormat(" where ",GetMonthPeriod(dateField, customerPeriod));
+                    sql.AppendFormat(" where {0}",GetMonthPeriod(dateField, customerPeriod));
                     break;
             }
 
@@ -674,7 +673,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.analysis);
                     break;
                 case CstDB.TableType.Type.webPlan:
-                    dataTableName = tblWepPlan.Label;
+                    dataTableName = tblWepPlan.SqlWithPrefix;
                     break;
                 default:
                     throw (new DynamicDALException("Unable to determine the type of table to use."));
@@ -704,7 +703,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE);
             sql.AppendFormat(",{0} as date_num, sum({1}) as unit", dateField, unitField);
 
-            sql.AppendFormat(" from {0}.{1} {2}", schAdExpr03.Label, dataTableName, DATA_TABLE_PREFIXE);
+            sql.AppendFormat(" from {0}", dataTableName);
             sql.AppendFormat(",{0}.{1} {2}", schAdExpr03.Label, _session.MediaAgencyFileYear, CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE);
 
             // Période
@@ -841,8 +840,8 @@ namespace TNS.AdExpressI.LostWon.DAL
             {
                 sql = string.Format(" ({0} >= {1} and {0} <= {2})"
                     , dateField
-                    , customerPeriod.PeriodMonthBegin[0]
-                    , customerPeriod.PeriodMonthEnd[0]
+                    , customerPeriod.PeriodMonthBegin[0].ToString().Substring(0, 6)
+                    , customerPeriod.PeriodMonthEnd[0].ToString().Substring(0, 6)
                 );
             }
 
@@ -850,8 +849,8 @@ namespace TNS.AdExpressI.LostWon.DAL
             {
                 comparativeSql = string.Format(" ({0} >= {1} and {0} <= {2})"
                     , dateField
-                    , customerPeriod.ComparativePeriodMonthBegin[0]
-                    , customerPeriod.ComparativePeriodMonthEnd[0]
+                    , customerPeriod.ComparativePeriodMonthBegin[0].ToString().Substring(0, 6)
+                    , customerPeriod.ComparativePeriodMonthEnd[0].ToString().Substring(0, 6)
                 );
             }
 

@@ -23,7 +23,8 @@ using AjaxPro;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 
-using PresentAbsent=TNS.AdExpressI.PresentAbsent;
+using LostWon = TNS.AdExpressI.LostWon;
+using PresentAbsent = TNS.AdExpressI.PresentAbsent;
 using Portofolio=TNS.AdExpressI.Portofolio;
 using Domain=TNS.AdExpress.Domain.Web.Navigation;
 using System.Reflection;
@@ -1847,17 +1848,22 @@ namespace TNS.AdExpress.Web.Controls.Results{
             //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(customerWebSession.CustomerLogin.OracleConnectionString));
             //    customerWebSession.CustomerLogin.Connection=(OracleConnection)dataSource.GetSource();
             //}
+            object[] param = null;
             Domain.Web.Navigation.Module module=customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule);
 			switch(customerWebSession.CurrentModule){
 				case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
 				case WebConstantes.Module.Name.ALERTE_POTENTIELS:
 					return WebBusinessFacade.Results.MarketShareSystem.GetResultTable(customerWebSession);
-				case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE :	
-					return WebBusinessFacade.Results.DynamicSystem.GetResultTable(customerWebSession);
-				case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE :
+				case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE :
+                    if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Lost/Won result"));
+                    param = new object[1];
+                    param[0] = customerWebSession;
+                    LostWon.ILostWonResult lostWonResult = (LostWon.ILostWonResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    return lostWonResult.GetResult();
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
 				case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE :
                     if(module.CountryRulesLayer==null)throw(new NullReferenceException("Rules layer is null for the present/absent result"));
-                    object[] param=new object[1];                     
+                    param=new object[1];                     
                     param[0]=customerWebSession;
                     PresentAbsent.IPresentAbsentResult presentAbsentResult = (PresentAbsent.IPresentAbsentResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                     return presentAbsentResult.GetResult();

@@ -13,6 +13,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using System.Windows.Forms;
 
 using TNS.AdExpress;
@@ -23,12 +24,13 @@ using DBClassif = TNS.AdExpress.DataAccess.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web.Navigation;
+using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
 
 using TNS.AdExpressI.LostWon.Exceptions;
+using TNS.AdExpressI.LostWon.DAL;
 using TNS.FrameWork.WebResultUI;
 
 #endregion
@@ -152,7 +154,7 @@ namespace TNS.AdExpressI.LostWon
         /// <summary>
         /// Current Module
         /// </summary>
-        protected Module _module;
+        protected Navigation.Module _module;
         #endregion
 
         #region Accessors
@@ -180,7 +182,7 @@ namespace TNS.AdExpressI.LostWon
         /// <summary>
         /// Get Current Module
         /// </summary>
-        public Module CurrentModule
+        public Navigation.Module CurrentModule
         {
             get { return _module; }
         }
@@ -194,7 +196,7 @@ namespace TNS.AdExpressI.LostWon
         public LostWonResult(WebSession session)
         {
             _session = session;
-            _module = ModulesList.GetModule(session.CurrentModule);
+            _module = Navigation.ModulesList.GetModule(session.CurrentModule);
 
             #region Sélection du vehicle
             string vehicleSelection = session.GetSelection(session.SelectionUniversMedia, CstCustom.Right.type.vehicleAccess);
@@ -344,14 +346,14 @@ namespace TNS.AdExpressI.LostWon
                 case DynamicAnalysis.LOYAL:
                 case DynamicAnalysis.LOYAL_DECLINE:
                 case DynamicAnalysis.LOYAL_RISE:
-                    tabResult = FilterLoyal((this._result != DynamicAnalysis.LOYAL), (this._result != DynamicAnalysis.LOYAL_RISE), tabData, groupMediaTotalIndex, nbLineInNewTable, ref nbLineInTabResult, nbCol);
+                    tabResult = FilterLoyal((this._result != DynamicAnalysis.LOYAL), (this._result == DynamicAnalysis.LOYAL_RISE), tabData, groupMediaTotalIndex, nbLineInNewTable, ref nbLineInTabResult, nbCol);
                     break;
                 default:
                     break;
             }
             #endregion
 
-            return GetResultTable(tabData, nbLineInTabResult, groupMediaTotalIndex, subGroupMediaTotalIndex, mediaIndex, mediaEvolIndex, mediaListForLabelSearch);
+            return GetResultTable(tabResult, nbLineInTabResult, groupMediaTotalIndex, subGroupMediaTotalIndex, mediaIndex, mediaEvolIndex, mediaListForLabelSearch);
 
         }
         #endregion
@@ -417,6 +419,12 @@ namespace TNS.AdExpressI.LostWon
 
             try
             {
+                if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
+                object[] parameters = new object[1];
+                parameters[0] = _session;
+                ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                dt = lostwonDAL.GetSynthesisData();
+
                 //dt = DynamicDataAccess.GetGenericSynthesisData(_session, vehicleName); 
             }
             catch (System.Exception err)
@@ -725,9 +733,16 @@ namespace TNS.AdExpressI.LostWon
             #region Chargement des données à partir de la base
             DataSet ds = null;
             DataSet dsMedia = null;
-            Module currentModuleDescription = ModulesList.GetModule(_session.CurrentModule);
+            Navigation.Module currentModuleDescription = Navigation.ModulesList.GetModule(_session.CurrentModule);
             try
             {
+                if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
+                object[] parameters = new object[1];
+                parameters[0] = _session;
+                ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                ds = lostwonDAL.GetData();
+                dsMedia = lostwonDAL.GetMediaDetails();
+
                 //ds = DynamicDataAccess.GetGenericData(webSession, vehicleName);
                 //dsMedia = DynamicDataAccess.GetMediaColumnDetailLevelList(webSession);
             }
