@@ -8,28 +8,21 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using System.Windows.Forms;
-using Oracle.DataAccess.Client;
-using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Constantes.Customer;
-using TNS.AdExpress.Web.DataAccess.Results;
-using TNS.AdExpress.Web.Rules.Results;
-using TNS.AdExpress.Web.UI.Results;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using ConstantePeriods = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 
+using System.Reflection;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpressI.MediaSchedule;
 
 namespace AdExpress.Private.Results.Excel{
 	/// <summary>
@@ -119,7 +112,24 @@ namespace AdExpress.Private.Results.Excel{
 
                 #region Calcul du résultat
                 // On charge les données
-                result = GenericMediaScheduleUI.GetExcel(GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1), _webSession, period, zoomDate, false,(int)periodDisplayLevel).HTMLCode;
+                //result = GenericMediaScheduleUI.GetExcel(GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1), _webSession, period, zoomDate, false,(int)periodDisplayLevel).HTMLCode;
+                object[] param = null;
+                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
+                if (zoomDate != null && zoomDate.Length > 0)
+                {
+                    param = new object[3];
+                    param[2] = zoomDate;
+                }
+                else
+                {
+                    param = new object[2];
+                }
+                param[0] = _webSession;
+                param[1] = period;
+                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                result = mediaScheduleResult.GetExcelHtml(false).HTMLCode;
+
                 #endregion
 
             }

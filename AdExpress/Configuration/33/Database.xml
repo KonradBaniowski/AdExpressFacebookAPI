@@ -61,6 +61,7 @@
     <table enumId="55" description="Data: APPM 4M" schemaEnumId="1" label="data_press_appm_4M" prefix="wp"/>
     <table enumId="56" description="Data: VMC 4M" schemaEnumId="0" label="data_marketing_direct_4M" prefix="wp"/>
     <table enumId="57" description="Data: Press Inter 4M" schemaEnumId="0" label="data_press_4M" prefix="wp"/>
+    <table enumId="140" description="Data: AdNetTrack 4M" schemaEnumId="0" label="data_adnettrack_4M" prefix="wp"/>
     
     <table enumId="91" description="Right: Login" schemaEnumId="2" label="login" prefix="lo"/>
     

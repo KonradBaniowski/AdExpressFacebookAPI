@@ -521,6 +521,10 @@
       <Project>{EAD29F53-3152-4356-B965-F34299402360}</Project>
       <Name>TNS.AdExpressI.LostWon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
+      <Project>{23E7E071-0FB0-43D4-B19D-B964EC3082F6}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Portofolio.Default\TNS.AdExpressI.Portofolio.Default.csproj">
       <Project>{638BEFDD-6370-4AEA-8943-DD6961FE3FDE}</Project>
       <Name>TNS.AdExpressI.Portofolio.Default</Name>

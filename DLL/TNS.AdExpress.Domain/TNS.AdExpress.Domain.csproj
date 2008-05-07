@@ -74,10 +74,16 @@
     <Compile Include="Levels\DetailLevelsInformation.cs" />
     <Compile Include="Levels\GenericDetailLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Results\groupItem.cs" />
+    <Compile Include="Results\ExportAPPMVersionItem.cs" />
+    <Compile Include="Results\ExportMDVersionItem.cs" />
+    <Compile Include="Results\ExportOutdoorVersionItem.cs" />
+    <Compile Include="Results\ExportVersionItem.cs" />
+    <Compile Include="Results\GroupItem.cs" />
     <Compile Include="Results\GroupItemForTableResult.cs" />
+    <Compile Include="Results\ResultData.cs" />
     <Compile Include="Results\SelectionGroup.cs" />
     <Compile Include="Results\SelectionSubGroup.cs" />
+    <Compile Include="Results\VersionItem.cs" />
     <Compile Include="Translation\GestionWeb.cs" />
     <Compile Include="Translation\WordList.cs" />
     <Compile Include="Web\Navigation\WebHeader.cs" />

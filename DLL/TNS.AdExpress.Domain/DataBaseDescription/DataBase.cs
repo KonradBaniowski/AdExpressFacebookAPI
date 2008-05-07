@@ -653,6 +653,10 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         rightProjectFlagAssignment=139,
         /// <summary>
+        /// AdNretTrack Data on last 4M
+        /// </summary>
+        dataAdNetTrackAlert=140,
+        /// <summary>
         /// Product Group Advertising Agency
         /// </summary>
         productGroupAgency=200

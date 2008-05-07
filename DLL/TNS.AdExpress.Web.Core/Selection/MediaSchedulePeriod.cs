@@ -54,7 +54,8 @@ namespace TNS.AdExpress.Web.Core.Selection
         /// <summary>
         /// SubPeriods granularity
         /// </summary>
-        public CstPeriod.DisplayLevel PeriodDetailLEvel{
+        public CstPeriod.DisplayLevel PeriodDetailLEvel
+        {
             get { return _periodBreakDown; }
         }
         /// <summary>
@@ -62,7 +63,7 @@ namespace TNS.AdExpress.Web.Core.Selection
         /// </summary>
         public List<MediaScheduleSubPeriod> SubPeriods
         {
-            get {return _subPeriods ;}
+            get { return _subPeriods; }
         }
         /// <summary>
         /// Get Period Beginning
@@ -142,13 +143,15 @@ namespace TNS.AdExpress.Web.Core.Selection
             else
             {
                 //Dayly detail 
-                if ( (_periodBreakDown == CstPeriod.DisplayLevel.dayly) 
+                if ((_periodBreakDown == CstPeriod.DisplayLevel.dayly)
                     //uncomplete same month
                     || ((_periodBreakDown == CstPeriod.DisplayLevel.monthly) && (_begin.Year == _end.Year) && (_begin.Month == _end.Month) && ((_begin.Day > 1) || (_end.Day < _begin.AddDays(1 - _begin.Day).AddMonths(1).AddDays(-1).Day)))
                     //uncomplete deux following monthes
                     || ((_periodBreakDown == CstPeriod.DisplayLevel.monthly) && (_begin.AddDays(1 - _begin.Day) == _end.AddDays(1 - _end.Day).AddMonths(-1)) && (_begin.Day > 1) && (_end.Day < _end.AddDays(1 - _end.Day).AddMonths(1).AddDays(-1).Day))
                     //uncomplete same week
-                    || ((_periodBreakDown == CstPeriod.DisplayLevel.weekly) && ((_begin.DayOfWeek != DayOfWeek.Monday) && ((TimeSpan)_end.Subtract(_begin)).TotalDays != 7))
+                    || ((_periodBreakDown == CstPeriod.DisplayLevel.weekly) && ((_begin.DayOfWeek != DayOfWeek.Monday || _end.DayOfWeek != DayOfWeek.Sunday) && GetWeekNumber(_end) - GetWeekNumber(_begin) < 1))
+                    //uncomplete two following weeks
+                    || ((_periodBreakDown == CstPeriod.DisplayLevel.weekly) && ((_begin.DayOfWeek != DayOfWeek.Monday) && (_end.DayOfWeek != DayOfWeek.Sunday) && GetWeekNumber(_end) - GetWeekNumber(_begin) < 2))
                     )
                 {
                     subPeriodAddOn = new MediaScheduleSubPeriod(CstPeriod.PeriodBreakdownType.data);
@@ -168,39 +171,43 @@ namespace TNS.AdExpress.Web.Core.Selection
                         subPeriodMain = new MediaScheduleSubPeriod(CstPeriod.PeriodBreakdownType.month);
                         isMonthBD = true;
                     }
-                    else{
+                    else
+                    {
                         subPeriodMain = new MediaScheduleSubPeriod(CstPeriod.PeriodBreakdownType.week);
                         isMonthBD = false;
                     }
 
                     //Join the day before the first complete month or week
-                    if(isMonthBD && tmpBegin.Day != 1){
-                        tmpBegin = tmpBegin.AddMonths(1).AddDays(-tmpBegin.Day);
+                    if (isMonthBD && tmpBegin.Day != 1)
+                    {
+                        tmpBegin = tmpBegin.AddMonths(1).AddDays(-tmpBegin.AddMonths(1).Day);
                         subPeriodAddOn.AddSubPeriod(_begin, tmpBegin);
                         tmpBegin = tmpBegin.AddDays(1);
                     }
                     else if (!isMonthBD && tmpBegin.DayOfWeek != DayOfWeek.Monday)
                     {
-                        tmpBegin = tmpBegin.AddDays(7 - tmpBegin.DayOfWeek.GetHashCode());
+                        if (tmpBegin.DayOfWeek != DayOfWeek.Sunday)
+                            tmpBegin = tmpBegin.AddDays(7 - tmpBegin.DayOfWeek.GetHashCode());
                         subPeriodAddOn.AddSubPeriod(_begin, tmpBegin);
                         tmpBegin = tmpBegin.AddDays(1);
                     }
 
                     //Join the day after the last complete month or week
                     tmpEnd = _end;
-                    if(isMonthBD && tmpEnd.Day != tmpEnd.AddMonths(1).AddDays(-tmpEnd.Day).Day){
-                        //Get Min between the last data update date and the day after the complete period suite
-                        tmpEnd = Min(
-                            today.AddMonths(-1).AddDays(1-today.Day),
-                            tmpEnd.AddMonths(1).AddDays(1-tmpEnd.Day));
-                        subPeriodAddOn.AddSubPeriod(tmpEnd, _end);
-                        tmpEnd = tmpEnd.AddDays(-1);
-                    }
-                    else if (!isMonthBD && tmpEnd.DayOfWeek != DayOfWeek.Monday)
+                    if (isMonthBD && tmpEnd.Day != tmpEnd.AddMonths(1).AddDays(-tmpEnd.AddMonths(1).Day).Day)
                     {
                         //Get Min between the last data update date and the day after the complete period suite
                         tmpEnd = Min(
-                            today.AddDays(-35).AddDays(1-today.DayOfWeek.GetHashCode()),
+                            today.AddMonths(-1).AddDays(1 - today.Day),
+                            tmpEnd.AddDays(1 - tmpEnd.Day));
+                        subPeriodAddOn.AddSubPeriod(tmpEnd, _end);
+                        tmpEnd = tmpEnd.AddDays(-1);
+                    }
+                    else if (!isMonthBD && tmpEnd.DayOfWeek != DayOfWeek.Sunday)
+                    {
+                        //Get Min between the last data update date and the day after the complete period suite
+                        tmpEnd = Min(
+                            today.AddDays(-35).AddDays(1 - today.DayOfWeek.GetHashCode()),
                             tmpEnd.AddDays(1 - tmpEnd.DayOfWeek.GetHashCode()));
                         subPeriodAddOn.AddSubPeriod(tmpEnd, _end);
                         tmpEnd = tmpEnd.AddDays(-1);
@@ -237,6 +244,20 @@ namespace TNS.AdExpress.Web.Core.Selection
         }
         #endregion
 
+        #region GetWeekNumber
+        /// <summary>
+        /// Get Week Number as YYYYWW
+        /// </summary>
+        /// <param name="date">Day to compute</param>
+        /// <returns>YYYYWW</returns>
+        public static int GetWeekNumber(DateTime date)
+        {
+            AtomicPeriodWeek week = new AtomicPeriodWeek(date);
+            return week.Year * 100 + week.Week;
+        }
+        #endregion
+
+
     }
     #endregion
 
@@ -256,10 +277,6 @@ namespace TNS.AdExpress.Web.Core.Selection
         /// List of items of SubPeriods
         /// </summary>
         private List<PeriodItem> _items = new List<PeriodItem>();
-        /// <summary>
-        /// Calendar user to determine week of years.
-        /// </summary>
-        private static Calendar _calendar = new GregorianCalendar();
         #endregion
 
         #region Accessors
@@ -304,8 +321,7 @@ namespace TNS.AdExpress.Web.Core.Selection
             }
             else if (_type == CstPeriod.PeriodBreakdownType.week)
             {
-                _items.Add(new PeriodItem(begin.Year * 100 + _calendar.GetWeekOfYear(begin, CalendarWeekRule.FirstFourDayWeek,DayOfWeek.Monday)
-                    , end.Year * 100 + _calendar.GetWeekOfYear(end, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday)));
+                _items.Add(new PeriodItem(MediaSchedulePeriod.GetWeekNumber(begin), MediaSchedulePeriod.GetWeekNumber(end)));
             }
             else
             {
@@ -314,6 +330,36 @@ namespace TNS.AdExpress.Web.Core.Selection
         }
         #endregion
 
+        #region Equals
+        /// <summary>
+        /// Checks objects are equivalent
+        /// </summary>
+        /// <param name="obj">Object to test</param>
+        /// <returns>True if objects are similar</returns>
+        public override bool Equals(object obj)
+        {
+            MediaScheduleSubPeriod m = obj as MediaScheduleSubPeriod;
+            if (m == null || this._type != m._type || m._items.Count != this._items.Count)
+                return false;
+            /*
+             * Check contains in both sides as list does not garanty the unicity
+             * 
+             */
+            foreach (PeriodItem p in m._items)
+            {
+                if (!this._items.Contains(p))
+                    return false;
+            }
+
+            foreach (PeriodItem p in this._items)
+            {
+                if (!m._items.Contains(p))
+                    return false;
+            }
+
+            return true;
+        }
+        #endregion
     }
     #endregion
 
@@ -321,7 +367,8 @@ namespace TNS.AdExpress.Web.Core.Selection
     /// <summary>
     /// Period Item is a beginning and a end as YYYYMMDD, YYYYMM, YYYYWW
     /// </summary>
-    public class PeriodItem{
+    public class PeriodItem
+    {
 
         #region Attributes
         /// <summary>
@@ -331,7 +378,7 @@ namespace TNS.AdExpress.Web.Core.Selection
         /// <summary>
         /// Period end
         /// </summary>
-        private int _end; 
+        private int _end;
 
         #endregion
 
@@ -362,6 +409,23 @@ namespace TNS.AdExpress.Web.Core.Selection
         {
             _begin = begin;
             _end = end;
+        }
+        #endregion
+
+        #region Equals
+        /// <summary>
+        /// Check equality
+        /// </summary>
+        /// <param name="obj">object to check</param>
+        /// <returns>True if both are equivalent PeriodItem objects</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is PeriodItem)
+            {
+                PeriodItem p = (PeriodItem)obj;
+                return (p._begin == this._begin && p._end == this._end);
+            }
+            return false;
         }
         #endregion
 

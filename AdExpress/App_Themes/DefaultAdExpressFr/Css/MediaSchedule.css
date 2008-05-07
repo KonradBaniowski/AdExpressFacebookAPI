@@ -690,7 +690,6 @@ td.ppX{
 	border-right-width: 1px; 
 	border-right-style:solid;
 	background-color: #9999FF;
-	width:17px;
 }
 /* Period */
 td.ppiX{
@@ -707,7 +706,6 @@ td.ppiX{
 	border-right-width: 1px; 
 	border-right-style:solid;
 	background-color: #666699;
-	width:17px;
 }
 /* Week end calendar day */
 td.pdwX{
@@ -727,7 +725,6 @@ td.pdwX{
 	border-right-width: 1px; 
 	border-right-style:solid;
 	background-color: #969696;
-	width:17px;
 }
 /* Calendar day */
 td.pdX{
@@ -747,9 +744,49 @@ td.pdX{
 	border-right-width: 1px; 
 	border-right-style:solid;
 	background-color: #C0C0C0;
-	width:17px;
 }
-
+td.p3X
+{
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#B1A3C1;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#B1A3C1;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	background-color: #B1A3C1;
+	color:#B1A3C1;
+}
+/* Eléments de période présent*/
+td.p4X
+{
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#B1A3C1;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#B1A3C1;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	background-color: #644883;
+	/*color:#644883;*/
+	color:#FFFFFF;
+}
+/* Eléments de période étendu*/
+td.p5X
+{
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#B1A3C1;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#B1A3C1;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	background-color: #A27DCB;
+	color:#A27DCB;
+}
 /* Excel level */
 td.L0X{
 	font-family: Arial, Helvetica, sans-serif;

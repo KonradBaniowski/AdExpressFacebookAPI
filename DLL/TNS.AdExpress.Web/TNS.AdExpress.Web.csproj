@@ -202,43 +202,43 @@
     <Compile Include="Common\Results\Creatives\CreativePresse.cs" />
     <Compile Include="Common\Results\Creatives\CreativeComparer.cs" />
     <Compile Include="Common\Results\Creatives\CreativeItem.cs" />
-    <Compile Include="Common\Results\ExportAPPMVersionItem.cs">
+    <Compile Include="Common\Results\_ExportAPPMVersionItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Results\ExportMDVersionItem.cs" />
-    <Compile Include="Common\Results\ExportOutdoorVersionItem.cs" />
-    <Compile Include="Common\Results\ExportVersionItem.cs">
+    <Compile Include="Common\Results\_ExportMDVersionItem.cs" />
+    <Compile Include="Common\Results\_ExportOutdoorVersionItem.cs" />
+    <Compile Include="Common\Results\_ExportVersionItem.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Results\FilesItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Results\GroupItem.cs">
+    <Compile Include="Common\Results\_GroupItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Results\GroupItemWithIndex.cs">
+    <Compile Include="Common\Results\_GroupItemForTableResult.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Results\InfoNewsItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Results\MediaPlanItem.cs">
+    <Compile Include="Common\Results\_MediaPlanItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Results\MediaPlanResultData.cs">
+    <Compile Include="Common\Results\_MediaPlanResultData.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Results\RecursiveHashTable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Results\ResultData.cs">
+    <Compile Include="Common\Results\_ResultData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Results\SelectionGroup.cs">
+    <Compile Include="Common\Results\_SelectionGroup.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Results\SelectionSubGroup.cs" />
-    <Compile Include="Common\Results\VersionItem.cs">
+    <Compile Include="Common\Results\_SelectionSubGroup.cs" />
+    <Compile Include="Common\Results\_VersionItem.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataAccess\Functions.cs">
@@ -1173,7 +1173,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UI\Results\InfoNewsUI.cs">
-      <SubType>Code</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UI\Results\MarketShareUI.cs">
       <SubType>Code</SubType>

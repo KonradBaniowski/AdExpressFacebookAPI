@@ -4,6 +4,7 @@
 // Date de modification:
 //		G Ragneau - 08/08/2006 - Set GetHtml as public so as to access it 
 //		G Ragneau - 08/08/2006 - GetHTML : Force media plan alert module and restaure it after process (<== because of version zoom);
+//		G Ragneau - 05/05/2008 - GetHTML : implement layers
 #endregion
 
 using System;
@@ -13,7 +14,7 @@ using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
-
+using System.Reflection;
 using AjaxPro;
 using TNS.AdExpress.Web.Controls.Headers;
 using TNS.AdExpress.Domain.Translation;
@@ -30,6 +31,8 @@ using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 
+using TNS.AdExpressI.MediaSchedule;
+using TNS.AdExpress.Domain.Web.Navigation;
 namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 	/// <summary>
 	/// Affiche le résultat d'une alerte plan media
@@ -563,11 +566,14 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 
 			StringBuilder html=new StringBuilder(10000);
             StringBuilder periodNavigation = new StringBuilder(10000);
-			MediaPlanResultData result=null;
+            MediaScheduleData result = null;
+			//MediaPlanResultData result=null;
             MediaSchedulePeriod period = null;
-			Int64 module = webSession.CurrentModule;
-            object[,] tab = null;
+			Int64 moduleId = webSession.CurrentModule;
+            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+            //object[,] tab = null;
             ConstantePeriod.DisplayLevel periodDisplay = webSession.DetailPeriod;
+            object[] param = null;
 			try{
 				
 				//webSession.CurrentModule = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
@@ -609,14 +615,27 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 }
                 #endregion
 
-                tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, -1);
-
+                //tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, -1);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
+                if (_zoomDate.Length > 0)
+                {
+                    param = new object[3];
+                    param[2] = _zoomDate;
+                }
+                else
+                {
+                    param = new object[2];
+                }
+                param[0] = _customerWebSession;
+                param[1] = period;
+                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                result = mediaScheduleResult.GetHtml();
                 #region Data
-				if(tab!=null && tab.GetLength(0)>0){
+				if(result!=null && result.HTMLCode.Length>0){
 
-					#region Obtention du résultat du calendrier d'action				
-					result=TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetHtml(tab,webSession, period,_zoomDate);
-					#endregion
+                    //#region Obtention du résultat du calendrier d'action				
+                    //result=TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetHtml(tab,webSession, period,_zoomDate);
+                    //#endregion
 				
 					#region Construction du tableaux global
                     html.Append("<table width=100% align=\"left\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
@@ -635,10 +654,10 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					}
 					#endregion
 
-					VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(webSession,result.VersionsDetail,period);
-                    html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
-					html.Append(versionsUI.GetHtml());
-					html.Append("\r\n\t\t</td>\r\n\t</tr>");
+                    //VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(webSession,result.VersionsDetail,period);
+                    //html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
+                    //html.Append(versionsUI.GetHtml());
+                    //html.Append("\r\n\t\t</td>\r\n\t</tr>");
 					
 					html.Append("\r\n\t<tr height=\"1\">\r\n\t\t<td>");
 					html.Append("\r\n\t\t</td>\r\n\t</tr>");
@@ -695,7 +714,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 				return(OnAjaxMethodError(err,webSession));
 			}
 			finally{
-				webSession.CurrentModule = module;
+				webSession.CurrentModule = moduleId;
                 webSession.DetailPeriod = periodDisplay;
 			}
 			return(html.ToString());

@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C54C2D70-F9CD-4A49-911F-56EE0029A76E}</ProjectGuid>
+    <ProjectGuid>{8368962F-842E-481B-9C86-5E5609ABCCC9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TNS.AdExpressI.LostWon.Default</RootNamespace>
-    <AssemblyName>TNS.AdExpressI.LostWon.Default</AssemblyName>
+    <RootNamespace>TNS.AdExpressI.MediaSchedule.DAL.Default</RootNamespace>
+    <AssemblyName>TNS.AdExpressI.MediaSchedule.DAL.Default</AssemblyName>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -37,21 +37,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LostWonResult.cs" />
+    <Compile Include="MediaScheduleResultDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
-      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
-      <Name>TNS.AdExpress.Domain</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.LostWon\TNS.AdExpressI.LostWon.csproj">
-      <Project>{EAD29F53-3152-4356-B965-F34299402360}</Project>
-      <Name>TNS.AdExpressI.LostWon</Name>
+    <ProjectReference Include="..\TNS.AdExpressI.MediaSchedule.DAL\TNS.AdExpressI.MediaSchedule.DAL.csproj">
+      <Project>{39325692-D25F-400C-8E46-080BCB3B3524}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
