@@ -558,6 +558,7 @@ namespace AdExpress.Private.Results {
 					case ClassificationCst.DB.Vehicles.names.outdoor:
 					case ClassificationCst.DB.Vehicles.names.mediasTactics:
 					case ClassificationCst.DB.Vehicles.names.mobileTelephony:
+					case ClassificationCst.DB.Vehicles.names.emailing:
 						ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
 						break;
 					case ClassificationCst.DB.Vehicles.names.press:

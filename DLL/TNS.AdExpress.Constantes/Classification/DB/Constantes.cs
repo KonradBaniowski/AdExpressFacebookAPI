@@ -139,7 +139,11 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 			/// <summary>
 			/// Mobile telephony
 			/// </summary>
-			mobileTelephony = 12
+			mobileTelephony = 12,
+			/// <summary>
+			/// Emailing
+			/// </summary>
+			emailing = 13
 		}
 	}
 	#endregion

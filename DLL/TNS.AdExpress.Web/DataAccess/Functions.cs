@@ -90,7 +90,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 
 			sql = sql.Remove(sql.Length-1, 1);
 
-			sql += " from " + getVehicleTableName(idVehicle);
+			sql += " from " + WebFunctions.SQLGenerator.getVehicleTableNameForSectorAnalysisResult((ClassificationConstantes.DB.Vehicles.names)idVehicle);
 			#endregion
 
 			#region Exécution de la requete
@@ -144,6 +144,10 @@ namespace TNS.AdExpress.Web.DataAccess{
 					return "recap_pluri";
 				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
 					return "recap_tactic";
+				case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
+					return "recap_message";
+				case ClassificationConstantes.DB.Vehicles.names.emailing:
+					return "recap_emailing";
 				case ClassificationConstantes.DB.Vehicles.names.internationalPress:
 				case ClassificationConstantes.DB.Vehicles.names.others:
 				case ClassificationConstantes.DB.Vehicles.names.adnettrack:

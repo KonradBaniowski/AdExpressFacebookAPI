@@ -1033,6 +1033,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						case ClassificationCst.DB.Vehicles.names.internationalPress:
 						case ClassificationCst.DB.Vehicles.names.internet:
 						case ClassificationCst.DB.Vehicles.names.mobileTelephony:
+						case ClassificationCst.DB.Vehicles.names.emailing:
 							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
 							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
 							break;

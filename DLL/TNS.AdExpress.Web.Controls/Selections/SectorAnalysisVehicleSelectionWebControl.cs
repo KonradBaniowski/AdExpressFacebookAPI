@@ -219,7 +219,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					
 					#region contruction tableau principal
 						//Fermeture Category				
-						if (idCategory!= idCategoryOld && startCategory==0 && idVehicle!=9)
+					if (idCategory != idCategoryOld && startCategory == 0)//&& idVehicle!=9
 						{	//Fermeture support
 							//if(idVehicle!=7 && idVehicle!=1 && idVehicle!=9)
 							if (showMedia(idVehicle))
@@ -248,8 +248,9 @@ namespace TNS.AdExpress.Web.Controls.Selections
                             else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
 
 								//Curseur sur toute la ligne
-								if(OpenVehicleDiv((Int64)idVehicle))t.Append("\n<tr  style=\"cursor : hand\">");
-								else t.Append("\n<tr>");						
+							if (OpenVehicleDiv((Int64)idVehicle))
+									t.Append("\n<tr  style=\"cursor : hand\">");
+							else t.Append("\n<tr>");						
 														
 							idVehicleOld=idVehicle;
 							startVehicle=0;							
@@ -260,13 +261,13 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 							//fin libellé média (nouvelle version)							
 							if(OpenVehicleDiv((Int64)idVehicle)){
-								t.Append("<td width=100% align=\"left\" onClick=\"javascript : DivDisplayer('"+idVehicle+"');\" >"+currentRow["vehicle"].ToString()+"");
-                                t.Append("</td><td align=\"right\" onClick=\"javascript : DivDisplayer('" + idVehicle + "');\">");
+								t.Append("<td width=100% align=\"left\" onClick=\"javascript : DivDisplayer('vhDiv" + idVehicle + "');\" >" + currentRow["vehicle"].ToString() + "");
+								t.Append("</td><td align=\"right\" onClick=\"javascript : DivDisplayer('vhDiv" + idVehicle + "');\">");
 								t.Append("<IMG src=\"/App_Themes/"+themeName+"/images/Common/button/bt_arrow_down.gif\" width=\"15\">");
 							}else t.Append("<td width=100% align=\"left\" >"+currentRow["vehicle"].ToString()+"");														
 							t.Append("</td></tr>");							
 							t.Append("<tr><td colspan=\"3\" >");
-							t.Append("<Div  style=\"display ='none'\" id=\""+idVehicle+"\">");
+							t.Append("<Div  style=\"display ='none'\" id=\"vhDiv" + idVehicle + "\">");
                             t.Append("<TABLE cellpadding=0 cellspacing=0 width=100% class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\">");
 							if(OpenVehicleDiv((Int64)idVehicle)){	
 							t.Append("<tr><td class=\"roll04\"><a href=\"javascript: SelectExclusiveAllChilds('vh_"+idVehicle+"','"+VehicleIds+"','vh_"+idVehicle+"','vh_','ct_')\" title=\""+GestionWeb.GetWebWord(1151,webSession.SiteLanguage)+"\" class=\"roll04\">&nbsp;&nbsp;"+GestionWeb.GetWebWord(1151,webSession.SiteLanguage)+"</td></tr>");
@@ -424,6 +425,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				case DBConstantesClassification.Vehicles.names.internationalPress:
 				case DBConstantesClassification.Vehicles.names.cinema:
 				case DBConstantesClassification.Vehicles.names.mobileTelephony:
+				case DBConstantesClassification.Vehicles.names.emailing:
 					return(false);
 				default:
 					return(true);
