@@ -125,8 +125,8 @@ namespace AdExpress.Private.MyAdExpress
 				if(_webSession.CurrentModule == Module.Name.JUSTIFICATIFS_PRESSE ){
 					_idMedia	= Page.Request.QueryString.Get("idmedia");
 					_idProduct	= Page.Request.QueryString.Get("idproduct");
-					_dateCover = Page.Request.QueryString.Get("dateFacial");
-					_dateParution = Page.Request.QueryString.Get("dateparution");
+					_dateCover = Page.Request.QueryString.Get("dateCover");
+					_dateParution = Page.Request.QueryString.Get("dateKiosque");
 					_pageNumber		= Page.Request.QueryString.Get("page");
 				}
 				#endregion
