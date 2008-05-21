@@ -335,6 +335,21 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			get {return _pageSize;}
 			set {_pageSize = value;}
 		}
+
+		/// <summary>
+		/// Obtient / définit le nombre de lignes) de debut du tableau à repeter comme entete (total,nombre de parution...) 
+		/// </summary>
+		private int _nbTableBeginningLinesToRepeat = 1;
+		/// <summary>
+		///  Obtient / définit la taille (nombre de lignes) d'une page 
+		/// </summary>
+		[Bindable(true),
+		Category("Paging"),
+		DefaultValue(1)]
+		public int NbTableBeginningLinesToRepeat {
+			get { return _nbTableBeginningLinesToRepeat; }
+			set { _nbTableBeginningLinesToRepeat = value; }
+		}
 		#endregion
 
 		#region Ajax
@@ -529,6 +544,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
             js.Append("\r\n\t obj.BackgroudColorL4 = '" + BackgroudColorL4 + "';");
             js.Append("\r\n\t obj.HighlightBackgroundColorL4 = '" + HighlightBackgroundColorL4 + "';");
             js.Append("\r\n\t obj.HtmlCodeL4 = '" + _htmlCodeL4 + "';");
+			js.Append("\r\n\t obj.CssLNbParution = '" + CssLNbParution + "';");
+			js.Append("\r\n\t obj.BackgroudColorLNbParution = '" + BackgroudColorLNbParution + "';");
+			js.Append("\r\n\t obj.HighlightBackgroundColorLNbParution = '" + HighlightBackgroundColorLNbParution + "';");
+			js.Append("\r\n\t obj.HtmlCodeLNbParution = '" + _htmlCodeLNbParution + "';");
             js.Append("\r\n\t obj.CssLTotal = '" + CssLTotal + "';");
             js.Append("\r\n\t obj.ImgBtnCroiOverPath = '" + this.ImgBtnCroiOverPath + "';");
             js.Append("\r\n\t obj.ImgBtnCroiPath = '" + this.ImgBtnCroiPath + "';");
@@ -770,10 +789,14 @@ namespace TNS.AdExpress.Web.Controls.Results{
 
 
             js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" class=\"resultTableBorder\">');");
-            js.Append("\r\n\t\t sb.append('<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0>');");	
-			js.Append("\r\n\t\t sb.append( tab[0]);");	
+            js.Append("\r\n\t\t sb.append('<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0>');");
+			for (int n = 0; n < _nbTableBeginningLinesToRepeat; n++) {
+				//js.Append("\r\n\t\t sb.append( tab[0]);");
+				js.Append("\r\n\t\t sb.append( tab[" + n + "]);");
+			}
 			js.Append("\r\n\t if(currentPageIndex==1) ");
-			js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + 1 ; ");
+			//js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + 1 ; ");
+			js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + " + _nbTableBeginningLinesToRepeat + " ; ");
 			js.Append("\r\n\t else ");
 			js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ); ");
 			
@@ -1477,6 +1500,22 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				if(o.Contains("HtmlCodeL4")){
 					_htmlCodeL4 = o["HtmlCodeL4"].Value; 
 					_htmlCodeL4 = _htmlCodeL4.Replace("\"","");
+				}
+				if (o.Contains("CssLNbParution")) {
+					_cssLNbParution = o["CssLNbParution"].Value;
+					_cssLNbParution = _cssLNbParution.Replace("\"", "");
+				}
+				if (o.Contains("BackgroudColorLNbParution")) {
+					_backgroudColorLNbParution = o["BackgroudColorLNbParution"].Value;
+					_backgroudColorLNbParution = _backgroudColorLNbParution.Replace("\"", "");
+				}
+				if (o.Contains("HighlightBackgroundColorLNbParution")) {
+					_highlightBackgroundColorLNbParution = o["HighlightBackgroundColorLNbParution"].Value;
+					_highlightBackgroundColorLNbParution = _highlightBackgroundColorLNbParution.Replace("\"", "");
+				}
+				if (o.Contains("_htmlCodeLNbParution")) {
+					_htmlCodeLNbParution = o["HtmlCodeLNbParution"].Value;
+					_htmlCodeLNbParution = _htmlCodeLNbParution.Replace("\"", "");
 				}	
 				if(o.Contains("CssLTotal")){
 					_cssLTotal = o["CssLTotal"].Value; 
