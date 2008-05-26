@@ -3,7 +3,7 @@
 <HTML>
 	<HEAD runat="server">
 		<title>AdExpress 3.0</title>
-		<meta http-equiv="Content-Type" content="application/vnd.ms-excel; charset=iso-8859-1, windows-1252"/>
+		<meta http-equiv="Content-Type" content="application/vnd.ms-excel;"/>
 		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
 		<meta content="C#" name="CODE_LANGUAGE"/>
 		<meta content="JavaScript" name="vs_defaultClientScript"/>
@@ -13,7 +13,7 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
 	</HEAD>
-	<body bgcolor="#ffffff" bottomMargin="0" leftMargin="0" topMargin="0" rightMargin="0">
+	<body class="whiteBackGround" bottomMargin="0" leftMargin="0" topMargin="0" rightMargin="0">
 		<form id="Form1" method="post" runat="server">
 			<%=result%>
 		</form>

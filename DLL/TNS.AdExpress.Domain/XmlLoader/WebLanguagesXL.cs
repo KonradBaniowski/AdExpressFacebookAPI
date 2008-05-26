@@ -81,6 +81,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             string localization;
             int classificationLanguageId;
             string charset="";
+            string contentEncoding="";
             #endregion
 
             try {
@@ -90,6 +91,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                         name="";
                         imageSourceText="";
                         charset="";
+                        contentEncoding="";
                         switch(reader.LocalName) {
                             case "language":
                                 if(reader.GetAttribute("id")==null || reader.GetAttribute("id").Length==0) throw (new InvalidXmlValueException("Invalid id parameter"));
@@ -98,12 +100,13 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 localization=reader.GetAttribute("localization");
                                 if(reader.GetAttribute("name")!=null) name=reader.GetAttribute("name");
                                 if(reader.GetAttribute("charset")!=null) charset=reader.GetAttribute("charset");
+                                if (reader.GetAttribute("contentEncoding") != null) contentEncoding = reader.GetAttribute("contentEncoding");
                                 if(reader.GetAttribute("imageSourceText")!=null) imageSourceText=reader.GetAttribute("imageSourceText");
                                 if(reader.GetAttribute("classificationLanguageId")!=null && reader.GetAttribute("classificationLanguageId").Length>0)
                                     classificationLanguageId=int.Parse(reader.GetAttribute("classificationLanguageId"));
                                 else
                                     classificationLanguageId=id;
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset));
+                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding));
                                 break;
                         }
                     }

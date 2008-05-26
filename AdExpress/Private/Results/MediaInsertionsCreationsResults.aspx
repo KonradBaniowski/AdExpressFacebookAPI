@@ -6,7 +6,7 @@
 <HTML>
 	<HEAD runat="server">
 		<title>AdExpress</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<meta http-equiv="Content-Type" content="text/html;"/>
 		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
 		<meta content="C#" name="CODE_LANGUAGE"/>
 		<meta content="JavaScript" name="vs_defaultClientScript"/>

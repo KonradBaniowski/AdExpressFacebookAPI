@@ -54,6 +54,8 @@ namespace TNS.AdExpressI.Portofolio {
         protected const int PAN_COL = 1604;
         protected const int DURATION_COL = 1435;
         protected const int VOLUME = 2216;
+        protected const int TOTAL_COL = 1401;
+        protected const int POURCENTAGE_COL = 1236;
         #endregion
 
         #region Variables
@@ -65,6 +67,10 @@ namespace TNS.AdExpressI.Portofolio {
         /// Vehicle
         /// </summary>
         protected DBClassificationConstantes.Vehicles.names _vehicle;
+        /// <summary>
+        /// Media Id
+        /// </summary>
+        protected Int64 _idMedia;
         /// <summary>
         /// Date begin
         /// </summary>
@@ -99,6 +105,8 @@ namespace TNS.AdExpressI.Portofolio {
             try {
                 // Set Vehicle
                 _vehicle=GetVehicleName();
+                //Set Media Id
+                _idMedia = GetMediaId();
                 // Period
                 _periodBeginning = GetDateBegin();
                 _periodEnd = GetDateEnd();
@@ -144,8 +152,9 @@ namespace TNS.AdExpressI.Portofolio {
                 switch(_webSession.CurrentTab) {
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
                         return GetPortofolioResultTable();
-                    //case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
-                    //    return WebRules.Results.PortofolioRules.GetCalendar(webSession);
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+                    //return WebRules.Results.PortofolioRules.GetCalendar(webSession);
+                        return GetCalendar();
                     default:
                         return null;
                 }
@@ -252,16 +261,8 @@ namespace TNS.AdExpressI.Portofolio {
         /// <summary>
         /// Obtient le tableau contenant l'ensemble des résultats
         /// </summary>
-        /// <param name="webSession">Session du client</param>
         /// <returns>Tableau de résultats</returns>
-        public ResultTable GetCalendar(WebSession webSession) {
-
-            #region Constantes
-            const int PROD_COL = 1164;
-            const int PM_COL = 751;
-            const int TOTAL_COL = 1401;
-            const int POURCENTAGE_COL = 1236;
-            #endregion
+        public ResultTable GetCalendar() {
 
             #region Variables
             ResultTable tab=null;
@@ -271,35 +272,21 @@ namespace TNS.AdExpressI.Portofolio {
             CellUnitFactory cellFactory = null;
             AdExpressCellLevel[] cellLevels;
             LineType[] lineTypes = new LineType[5] { LineType.total,LineType.level1,LineType.level2,LineType.level3,LineType.level4 };
-            DBClassificationConstantes.Vehicles.names vehicle;
             Headers headers = null;
-            string periodBeginning;
-            string periodEnd;
             int iCurLine=0;
             int iNbLine=0;
             int iNbLevels=0;
             ArrayList parutions = new ArrayList();
             #endregion
 
-            #region Formattage des dates
-            //periodBeginning = GetDateBegin(webSession);
-            //periodEnd = GetDateEnd(webSession);
-            #endregion
-
-            #region Sélection du vehicle
-            //string vehicleSelection=webSession.GetSelection(webSession.SelectionUniversMedia,CustomerConstantes.Right.type.vehicleAccess);
-            //DBClassificationConstantes.Vehicles.names vehicleName=(DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
-            //if(vehicleSelection==null || vehicleSelection.IndexOf(",")>0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
-            //vehicle = (DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleSelection);
-            #endregion
-
             #region Chargement des données
             if(_module.CountryDataAccessLayer==null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-            object[] parameters=new object[4];
+            object[] parameters=new object[5];
             parameters[0]=_webSession;
             parameters[1]=_vehicle;
-            parameters[2]=_periodBeginning;
-            parameters[3]=_periodEnd;
+            parameters[2] = _idMedia;
+            parameters[3]=_periodBeginning;
+            parameters[4]=_periodEnd;
             IPortofolioDAL portofolioDAL=(IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+_module.CountryDataAccessLayer.AssemblyName,_module.CountryDataAccessLayer.Class,false,BindingFlags.CreateInstance|BindingFlags.Instance|BindingFlags.Public,null,parameters,null,null,null);
             ds=portofolioDAL.GetDataCalendar();
 
@@ -311,31 +298,16 @@ namespace TNS.AdExpressI.Portofolio {
             iNbLine=GetCalendarSize(dt,parutions);
             #endregion
 
+            #region Headers
+            GetCalendarHeaders(out headers, out cellFactory, parutions);
+            #endregion
 
-            /*
-             * 
-             * GR : MIS EN COMMENTAIRE POUR COMPILATION
-             * 
-             *              
-             */
-            //#region Headers
-            //GetCalendarHeaders(out headers,out cellFactories,parutions);
-            
-            //#endregion
-            /*
-             * 
-             * 
-             * 
-             * 
-             * 
-             * 
-             * 
-             * 
-             * */
+            #region Initialisation du tableau de résultats
             tab = new ResultTable(iNbLine,headers);
+            #endregion
 
             #region Traitement du tableau de résultats
-                int i = 1;
+            int i = 1;
 
                 #region Intialisation des totaux
                 iNbLevels = _webSession.GenericProductDetailLevel.GetNbLevels;
@@ -343,11 +315,11 @@ namespace TNS.AdExpressI.Portofolio {
                 tab.AddNewLine(LineType.total);
                 tab[iCurLine,1] = cellLevels[0] = new AdExpressCellLevel(0,GestionWeb.GetWebWord(805,_webSession.SiteLanguage),0,iCurLine,_webSession);
                 tab[iCurLine,2] = new CellMediaScheduleLink(cellLevels[0],_webSession);
-                if(!webSession.Percentage)tab[iCurLine,3] = cellFactory.Get(0.0);
+                if(!_webSession.Percentage)tab[iCurLine,3] = cellFactory.Get(0.0);
                 else tab[iCurLine,3] = new CellPDM(0.0,null);
                 tab[iCurLine,4] = new CellPercent(0.0,null);
                 for(i = 5;i < 5+parutions.Count;i++) {
-                    if(!webSession.Percentage)tab[iCurLine,i] = cellFactory.Get(0.0);
+                    if(!_webSession.Percentage)tab[iCurLine,i] = cellFactory.Get(0.0);
                     else tab[iCurLine,i] = new CellPDM(0.0,(CellUnit)tab[iCurLine,3]);
                 }
                 #endregion
@@ -372,7 +344,7 @@ namespace TNS.AdExpressI.Portofolio {
                             level = _webSession.GenericProductDetailLevel.GetDetailLevelItemInformation(i);
                             //PM
                             if(level!=DetailLevelItemInformation.Levels.agency && level!=DetailLevelItemInformation.Levels.groupMediaAgency) {
-                                tab[iCurLine,2] = new CellMediaScheduleLink((AdExpressCellLevel)tab[iCurLine,1],webSession);
+                                tab[iCurLine,2] = new CellMediaScheduleLink((AdExpressCellLevel)tab[iCurLine,1],_webSession);
                             }
                             else {
                                 tab[iCurLine,2] = new CellEmpty();
@@ -403,9 +375,6 @@ namespace TNS.AdExpressI.Portofolio {
 
             return tab;
         }
-
-       
-
         #endregion 
 
         #endregion
@@ -421,11 +390,12 @@ namespace TNS.AdExpressI.Portofolio {
             switch(_webSession.CurrentModule) {
                 case WebCst.Module.Name.ALERTE_PORTEFEUILLE:
                     if(_module.CountryDataAccessLayer==null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-                    object[] parameters=new object[4];
+                    object[] parameters=new object[5];
                     parameters[0]=_webSession;
                     parameters[1]=_vehicle;
-                    parameters[2]=_periodBeginning;
-                    parameters[3]=_periodEnd;
+                    parameters[2] = _idMedia;
+                    parameters[3]=_periodBeginning;
+                    parameters[4]=_periodEnd;
                     IPortofolioDAL portofolioDAL=(IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+_module.CountryDataAccessLayer.AssemblyName,_module.CountryDataAccessLayer.Class,false,BindingFlags.CreateInstance|BindingFlags.Instance|BindingFlags.Public,null,parameters,null,null,null);
                     //Portofolio.IResults result=(Portofolio.IResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class);
                     ds=portofolioDAL.GetMediaPortofolio();
@@ -574,55 +544,47 @@ namespace TNS.AdExpressI.Portofolio {
         /// Calendar Headers and Cell factory
         /// </summary>
         /// <returns></returns>
-        protected void GetCalendarHeaders(out Headers headers,ArrayList parutions) {
+        protected void GetCalendarHeaders(out Headers headers, out CellUnitFactory cellFactory, ArrayList parutions) {
 
-            headers = null;
-            /*
-             * 
-             * GR : MIS EN COMMENTAIRE POUR COMPILATION
-             * 
-             *              
-             */
+            headers = new Headers();
+            headers.Root.Add(new Header(true, GestionWeb.GetWebWord(PROD_COL, _webSession.SiteLanguage), PROD_COL));
+            headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(PM_COL, _webSession.SiteLanguage), PM_COL));
+            headers.Root.Add(new Header(true, GestionWeb.GetWebWord(TOTAL_COL, _webSession.SiteLanguage), TOTAL_COL));
+            headers.Root.Add(new Header(true, GestionWeb.GetWebWord(POURCENTAGE_COL, _webSession.SiteLanguage), POURCENTAGE_COL));
 
-            //headers = new Headers();
-            //headers.Root.Add(new Header(true,GestionWeb.GetWebWord(PROD_COL,_webSession.SiteLanguage),PROD_COL));
-            //headers.Root.Add(new HeaderMediaSchedule(false,GestionWeb.GetWebWord(PM_COL,_webSession.SiteLanguage),PM_COL));
-            //headers.Root.Add(new Header(true,GestionWeb.GetWebWord(TOTAL_COL,_webSession.SiteLanguage),TOTAL_COL));
-            //headers.Root.Add(new Header(true,GestionWeb.GetWebWord(POURCENTAGE_COL,_webSession.SiteLanguage),POURCENTAGE_COL));
-
-            ////une colonne par date de parution
-            //parutions.Sort();
-            //foreach(Int32 parution in parutions) {
-            //    headers.Root.Add(new Header(true,DateString.YYYYMMDDToDD_MM_YYYY(parution.ToString(),_webSession.SiteLanguage),(long)parution));
-            //}
-            //if(!webSession.Percentage) {
-            //    switch(_webSession.Unit) {
-            //        case WebCst.CustomerSessions.Unit.duration:
-            //            cellFactory = new CellUnitFactory(new CellDuration(0.0));
-            //            break;
-            //        case WebCst.CustomerSessions.Unit.euro:
-            //            cellFactory = new CellUnitFactory(new CellEuro(0.0));
-            //            break;
-            //        case WebCst.CustomerSessions.Unit.kEuro:
-            //            cellFactory = new CellUnitFactory(new CellKEuro(0.0));
-            //            break;
-            //        case WebCst.CustomerSessions.Unit.insertion:
-            //            cellFactory = new CellUnitFactory(new CellInsertion(0.0));
-            //            break;
-            //        case WebCst.CustomerSessions.Unit.pages:
-            //            cellFactory = new CellUnitFactory(new CellPage(0.0));
-            //            break;
-            //        case WebCst.CustomerSessions.Unit.mmPerCol:
-            //            cellFactory = new CellUnitFactory(new CellMMC(0.0));
-            //            break;
-            //        default:
-            //            cellFactory = new CellUnitFactory(new CellNumber(0.0));
-            //            break;
-            //    }
-            //}
-            //else {
-            //    cellFactory = new CellUnitFactory(new CellPDM(0.0));
-            //}
+            //une colonne par date de parution
+            parutions.Sort();
+            foreach (Int32 parution in parutions) {
+                headers.Root.Add(new Header(true, DateString.YYYYMMDDToDD_MM_YYYY(parution.ToString(), _webSession.SiteLanguage), (long)parution));
+            }
+            if (!_webSession.Percentage) {
+                switch (_webSession.Unit) {
+                    case WebCst.CustomerSessions.Unit.duration:
+                        cellFactory = new CellUnitFactory(new CellDuration(0.0));
+                        break;
+                    case WebCst.CustomerSessions.Unit.euro:
+                        cellFactory = new CellUnitFactory(new CellEuro(0.0));
+                        break;
+                    case WebCst.CustomerSessions.Unit.kEuro:
+                        cellFactory = new CellUnitFactory(new CellKEuro(0.0));
+                        break;
+                    case WebCst.CustomerSessions.Unit.insertion:
+                        cellFactory = new CellUnitFactory(new CellInsertion(0.0));
+                        break;
+                    case WebCst.CustomerSessions.Unit.pages:
+                        cellFactory = new CellUnitFactory(new CellPage(0.0));
+                        break;
+                    case WebCst.CustomerSessions.Unit.mmPerCol:
+                        cellFactory = new CellUnitFactory(new CellMMC(0.0));
+                        break;
+                    default:
+                        cellFactory = new CellUnitFactory(new CellNumber(0.0));
+                        break;
+                }
+            }
+            else {
+                cellFactory = new CellUnitFactory(new CellPDM(0.0));
+            }
         }
         #endregion
 
@@ -631,6 +593,7 @@ namespace TNS.AdExpressI.Portofolio {
         #region Cell Factory
         //protected CellFac
         #endregion
+
         #region Dates
         /// <summary>
         /// Get begin date for the 2 module types
@@ -685,6 +648,21 @@ namespace TNS.AdExpressI.Portofolio {
             }
             catch(System.Exception err) {
                 throw (new PortofolioException("Impossible to retreive vehicle selection"));
+            }
+        }
+        #endregion
+
+        #region Media Selection
+        /// <summary>
+        /// Get Media Id
+        /// </summary>
+        /// <returns>Media Id</returns>
+        protected Int64 GetMediaId() {
+            try {
+                return (((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID);
+            }
+            catch (System.Exception err) {
+                throw (new PortofolioException("Impossible to retrieve media id"));
             }
         }
         #endregion

@@ -78,6 +78,7 @@ namespace AdExpress.Private.Results{
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
 			
 				HeaderWebControl1.ActiveMenu = WebCst.MenuTraductions.NEWS;
+                HeaderWebControl1.Language = _webSession.SiteLanguage;
 				PageTitleWebControl1.Language = _webSession.SiteLanguage;
 				#endregion
 

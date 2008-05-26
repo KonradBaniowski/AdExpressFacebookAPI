@@ -4,10 +4,10 @@
 <HTML>
 	<HEAD runat="server">
 		<title>AdExpress</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-		<meta content="C#" name="CODE_LANGUAGE">
-		<meta content="JavaScript" name="vs_defaultClientScript">
-		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<meta http-equiv="Content-Type" content="text/html;"/>
+		<meta content="C#" name="CODE_LANGUAGE"/>
+		<meta content="JavaScript" name="vs_defaultClientScript"/>
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
 		<script language="JavaScript" type="text/JavaScript">
 		<!--
 			function MM_preloadImages() { //v3.0
@@ -34,10 +34,10 @@
 			}
 			//-->
 		</script>
-		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT">
-		<meta http-equiv="expires" content="0">
-		<meta http-equiv="pragma" content="no-cache">
-		<meta name="Cache-control" content="no-cache">
+		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT"/>
+		<meta http-equiv="expires" content="0"/>
+		<meta http-equiv="pragma" content="no-cache"/>
+		<meta name="Cache-control" content="no-cache"/>
 	</HEAD>
 	<body class="bodyStyle">
 		<form id="Form1" method="post" runat="server">

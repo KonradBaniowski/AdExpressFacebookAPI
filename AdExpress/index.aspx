@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 	<head runat="server">
 		<title>AdExpress</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<meta http-equiv="Content-Type" content="text/html;"/>
 		<meta content="C#" name="CODE_LANGUAGE"/>
 		<meta content="JavaScript" name="vs_defaultClientScript" />
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>

@@ -1917,8 +1917,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     parameters[0]=customerWebSession;
                     Portofolio.IPortofolioResults portofolioResult=(Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class,false,BindingFlags.CreateInstance|BindingFlags.Instance|BindingFlags.Public,null,parameters,null,null,null);
                     //Portofolio.IResults result=(Portofolio.IResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class);
-                    portofolioResult.GetResultTable();
-					return WebBusinessFacade.Results.PortofolioSystem.GetResultTable(customerWebSession); 
+                    return (portofolioResult.GetResultTable());
+					//return WebBusinessFacade.Results.PortofolioSystem.GetResultTable(customerWebSession); 
 				case WebConstantes.Module.Name.DONNEES_DE_CADRAGE :
 					return WebBusinessFacade.Results.SectorDataSystem.GetHtml(customerWebSession);
 				case WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE :

@@ -46,7 +46,12 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         /// <example>France = "iso-8859-1"</example>
         private string _charset="iso-8859-1";
-
+        /// <summary>
+        /// Content Encoding used for aspx page
+        /// By default, the content encoding is set to utf-8
+        /// </summary>
+        /// <example>France = "utf-8"</example>
+        private string _contentEncoding = "utf-8";
         #endregion
 
         #region Constructor
@@ -57,7 +62,8 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="imageSourceText">Language Image</param>
         /// <param name="localization">Localisation text string id</param>
         /// <param name="charset">Charset used for the language</param>
-        public WebLanguage(int id,string imageSourceText,string localization,string charset) {
+        /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
+        public WebLanguage(int id,string imageSourceText,string localization,string charset,string contentEncoding) {
             if(id<0) throw (new ArgumentException("The language Id cannot be inferior to 0"));
             _id=id;
             if(imageSourceText!=null) _imageSourceText=imageSourceText;
@@ -65,6 +71,7 @@ namespace TNS.AdExpress.Domain.Web {
             if(localization.Length==0) throw (new ArgumentException("Invalid localization parameter"));
             _localization=localization;
             if(charset!=null && charset.Length!=0) _charset=charset;
+            if(contentEncoding!=null && contentEncoding.Length!=0) _contentEncoding=contentEncoding;
             _name="Country name is not defined:"+_id.ToString();
             _classificationLanguageId=_id;
 
@@ -78,8 +85,9 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="localization">Localisation text string id</param>
         /// <param name="classificationLanguageId">Classification language Id</param>
         /// <param name="charset">Charset used for the language</param>
-        public WebLanguage(int id,string name,string imageSourceText,string localization,int classificationLanguageId,string charset)
-            : this(id,imageSourceText,localization,charset) {
+        /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
+        public WebLanguage(int id,string name,string imageSourceText,string localization,int classificationLanguageId,string charset,string contentEncoding)
+            : this(id,imageSourceText,localization,charset,contentEncoding) {
             if(name!=null&&name.Length>0) _name=name;
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
             _classificationLanguageId=classificationLanguageId;
@@ -123,6 +131,12 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         public string Charset {
             get { return (_charset); }
+        }
+        /// <summary>
+        /// Get Content Encoding used for the aspx page
+        /// </summary>
+        public string ContentEncoding {
+            get { return (_contentEncoding); }
         }
         #endregion
     }

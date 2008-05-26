@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head runat="server">
 		<title>AdExpress 3.0</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<meta http-equiv="Content-Type" content="text/html;"/>
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
         <script type="text/javascript" src="/scripts/dom-drag.js"></script>
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT"/>

@@ -65,6 +65,7 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 			ModuleTitleWebControl1.CustomerWebSession = _webSession;
 			InformationWebControl1.Language = _webSession.SiteLanguage;
 			sessionId = _webSession.IdSession;
+            HeaderWebControl1.Language = _webSession.SiteLanguage;
 
 			#region Boutons  Images
 			//validateButton.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
