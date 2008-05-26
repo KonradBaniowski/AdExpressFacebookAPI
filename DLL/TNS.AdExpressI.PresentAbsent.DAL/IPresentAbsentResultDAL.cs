@@ -26,6 +26,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
         DataTable GetSynthesisData();
         DataSet GetColumnDetails();
         DataSet GetMediaDetails();
+		DataSet GetNbParutionData();
 
     }
 

@@ -717,6 +717,62 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
         #endregion
 
+		#region GetNbParutionData
+		/// <summary>
+		/// Load Data for Number of parution
+		/// </summary>
+		/// <returns>Number of parution report data</returns>
+		public DataSet GetNbParutionData() {
+
+			#region Constantes
+			string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+			#endregion
+
+			#region Variables
+			StringBuilder sql = new StringBuilder();
+			string dataTableName = "";
+			string dateField = "";
+			string mediaList = "";
+			int positionUnivers = 1;
+			#endregion
+
+			#region Construction de la requête
+			try {
+				CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
+				dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.analysis);
+				dateField = CstDB.Fields.DATE_MEDIA_NUM;
+
+				sql.Append(" select id_media, count(distinct " + dateField + ") as NbParution");
+				sql.Append(" from  " + dataTableName);
+				sql.Append(" where " + dateField + " >= " + customerPeriod.StartDate + " and " + dateField + " <= " + customerPeriod.EndDate);
+
+				#region Sélection de Médias
+				while (_session.CompetitorUniversMedia[positionUnivers] != null) {
+					mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess) + ",";
+					positionUnivers++;
+				}
+				if (mediaList.Length > 0) sql.Append(" and id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")");
+				#endregion
+				sql.Append(" group by id_media");
+			}
+			catch (System.Exception err) {
+				throw (new PresentAbsentDALException("Unable to build request for Number of parutions : " + sql, err));
+			}
+			#endregion
+
+			#region Execution de la requête
+			try {
+				return _session.Source.Fill(sql.ToString());
+			}
+			catch (System.Exception err) {
+				throw (new PresentAbsentDALException("Unable to lad data for present/absent report : " + sql, err));
+			}
+
+			#endregion
+
+		}
+		#endregion
+
         #region Column Management
 
         #region GetMediaDetails

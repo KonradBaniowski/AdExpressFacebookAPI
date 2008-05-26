@@ -251,6 +251,10 @@ namespace AdExpress.Private.Results{
 
 				displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
 
+
+				if (vehicleName == DBClassificationConstantes.Vehicles.names.press || vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress)
+					_resultWebControl.NbTableBeginningLinesToRepeat = 2;
+
 				#region choix du type d'encarts
 						
 				if(DBClassificationConstantes.Vehicles.names.press==vehicleName 

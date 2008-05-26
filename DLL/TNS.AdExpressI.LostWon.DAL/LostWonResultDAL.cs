@@ -413,12 +413,58 @@ namespace TNS.AdExpressI.LostWon.DAL
         }
         #endregion
 
-        #endregion
+		#region GetNbParutionData
+		/// <summary>
+		/// Get Number of parution data
+		/// </summary>
+		/// <returns> Number of parution data</returns>
+		public DataSet GetNbParutionData() {
 
-        #region Internal methods
+			StringBuilder sql = new StringBuilder();
+			CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
 
-        #region Get Request
-        /// <summary>
+
+			#region Construction de la requete
+
+			try {
+
+				sql.Append("  select id_media, count(distinct date_num ) as NbParution, yearParution ");
+				sql.Append("  from ( ");
+
+				//Get sub query for principal period
+				sql.Append( GetNbParutionRequest(customerPeriod.StartDate, customerPeriod.EndDate, 1));
+
+				sql.Append( " union all");
+
+				//Get sub query for compative period
+				sql.Append( GetNbParutionRequest(customerPeriod.ComparativeStartDate, customerPeriod.ComparativeEndDate, 2));
+
+				sql.Append("   )  group by id_media, yearParution ");
+				sql.Append("   order by id_media, yearParution");
+
+			}
+			catch (System.Exception err) {
+				throw (new DynamicDALException("Error while building request for dynamic report " + sql, err));
+			}
+			#endregion
+
+			#region Execution de la requête
+			try {
+				return _session.Source.Fill(sql.ToString());
+			}
+			catch (System.Exception err) {
+				throw (new DynamicDALException("Error while executing request for dynamic report ", err));
+			}
+			#endregion
+		}
+		#endregion
+
+		#endregion
+
+		#region Internal methods
+
+		#region Get Request
+		/// <summary>
         /// Build requets to load data for dynamic report.
         /// </summary>
         /// <param name="type">Type of table to use</param>
@@ -863,8 +909,56 @@ namespace TNS.AdExpressI.LostWon.DAL
         }
         #endregion
 
-        #endregion
+		#region Get Nb Parution Request
+		/// <summary>
+		/// Get Nb parution for period
+		/// </summary>
+		/// <param name="yearParutionIndex">Index of corresponding year (current or comparative)</param>
+		/// <returns>Code sql</returns>
+		protected string GetNbParutionRequest(string startDate,string endDate,int yearParutionIndex) {
 
-    }
+			#region Constantes
+			string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+			#endregion
+
+			#region Variables
+			string dataTableName = "";			
+			string dateField = "";
+			string mediaList = "";
+			StringBuilder sql = new StringBuilder();
+			CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
+			int positionUnivers = 1;
+			#endregion
+			try {
+				dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.analysis);
+				dateField = DATA_TABLE_PREFIXE + "." + CstDB.Fields.DATE_MEDIA_NUM;
+
+				sql.Append(" select " + DATA_TABLE_PREFIXE + ".id_media, date_media_num as date_num, " + yearParutionIndex + " as yearParution");
+				sql.Append(" from  "+dataTableName );
+				sql.Append(" where " + dateField +">=" + startDate + " and " + dateField + " <= " + endDate);
+
+				#region Sélection de Médias
+				while (_session.CompetitorUniversMedia[positionUnivers] != null) {
+					mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
+					positionUnivers++;
+				}
+				if (mediaList.Length > 0)sql.Append(" and id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")");
+				#endregion
+
+				// Group by
+				sql.Append(" group by id_media, "+dateField);
+
+			}
+			catch (Exception e) {
+				throw (new DynamicDALException("Unable to build Number of parution request for lost won : " + e.Message));
+			}
+
+			return sql.ToString();
+		}
+		#endregion
+
+		#endregion
+
+	}
 
 }

@@ -1097,6 +1097,103 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
         }
         #endregion
 
+		#region GetNbParutionData
+		/// <summary>
+		/// Obtient le nombre de parution par média
+		/// </summary>
+		/// <param name="webSession">Session client</param>
+		/// <param name="vehicleName">Nom du media</param>
+		/// <returns>Nombre de parution par média</returns>
+		public static DataSet GetNbParutionData(WebSession webSession, DBClassificationConstantes.Vehicles.names vehicleName) { //, string beginingDate, string endDate, string beginingDateN1, string endDateN1) {
+			string sql = "";
+
+			CustomerPeriod customerPeriod = webSession.CustomerPeriodSelected;
+
+
+			#region Construction de la requete
+
+			try {
+
+				sql += "  select id_media, columnDetailLevel, count(distinct date_num ) as NbParution ";
+				sql += "  from ( ";
+
+				//Get sub query 
+				sql += GetNbParutionRequest(webSession, vehicleName, customerPeriod.StartDate, customerPeriod.EndDate);
+
+				sql += "  )  group by id_media, columnDetailLevel ";
+				sql += "  order by columnDetailLevel, id_media";
+
+			}
+			catch (System.Exception err) {
+				throw (new CompetitorDataAccessException("Impossible de construire la requête pour le nombre de parutions par supports " + sql, err));
+			}
+			#endregion
+
+			#region Execution de la requête
+			try {
+				return webSession.Source.Fill(sql.ToString());
+			}
+			catch (System.Exception err) {
+				throw (new CompetitorDataAccessException("Impossible de charger les données du module présenets absents", err));
+			}
+			#endregion
+		}
+		#endregion
+
+		#region GetNbParutionRequest
+		/// <summary>
+		/// Get sql query of parution number by media
+		/// </summary>
+		/// <param name="webSession">Session client</param>
+		/// <param name="vehicleName">vehicle Name</param>
+		/// <param name="beginingDate">begining Date</param>
+		/// <param name="endDate">end Date</param>
+		/// <returns>sql query</returns>
+		private static string GetNbParutionRequest(WebSession webSession, DBClassificationConstantes.Vehicles.names vehicleName, string beginingDate, string endDate) {
+
+			#region Constantes
+			const string DATA_TABLE_PREFIXE = "wp";
+			#endregion
+
+			#region Variables
+			string sql = "";
+			string orderFieldName = string.Empty;
+			string groupByFieldName = string.Empty;			
+			int positionUnivers = 1;
+			string mediaList = "";
+			
+			#endregion
+
+			#region Construction de la requête
+			try {
+				DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)webSession.GenericColumnDetailLevel.Levels[0];
+
+				sql += " select " + DATA_TABLE_PREFIXE + ".id_media, " + columnDetailLevel.GetSqlFieldIdWithoutTablePrefix() + " as columnDetailLevel, " + DATA_TABLE_PREFIXE + ".date_media_num as date_num";
+				sql += " from  " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".data_press " + DATA_TABLE_PREFIXE;
+				sql += " where " + DATA_TABLE_PREFIXE + ".date_media_num >=" + beginingDate + " and " + DATA_TABLE_PREFIXE + ".date_media_num <=" + endDate;
+
+				#region Sélection de Médias
+				while (webSession.CompetitorUniversMedia[positionUnivers] != null) {
+					mediaList += webSession.GetSelection((TreeNode)webSession.CompetitorUniversMedia[positionUnivers], CustormerConstantes.Right.type.mediaAccess) + ",";
+					positionUnivers++;
+				}
+				if (mediaList.Length > 0) sql += " and " + DATA_TABLE_PREFIXE + ".id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")";
+				#endregion
+
+			
+				// Group by
+				sql += " group by " + DATA_TABLE_PREFIXE + ".id_media," + columnDetailLevel.GetSqlFieldIdWithoutTablePrefix() + ", date_media_num ";
+
+			}
+			catch (System.Exception err) {
+				throw (new DynamicDataAccessException("Impossible de construire la sous requête pour le nombre de parutions par supports " + sql, err));
+			}
+			#endregion
+
+			return sql;
+		}
+		#endregion
+
         #region GetMediaColumnDetailLevelList
         /// <summary>
         /// Charge les données pour recuperer une liste des supports pour le niveau de détail colonne

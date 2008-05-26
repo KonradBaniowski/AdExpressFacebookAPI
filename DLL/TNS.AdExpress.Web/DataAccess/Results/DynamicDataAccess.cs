@@ -923,6 +923,54 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
         }
         #endregion
 
+		#region GetNbParutionData
+		/// <summary>
+		/// Obtient le nombre de parution par média
+		/// </summary>
+		/// <param name="webSession">Session client</param>
+		/// <param name="vehicleName">Nom du media</param>
+		/// <returns>Nombre de parution par média</returns>
+		public static DataSet GetNbParutionData(WebSession webSession, DBClassificationConstantes.Vehicles.names vehicleName) { //, string beginingDate, string endDate, string beginingDateN1, string endDateN1) {
+			string sql = "";
+
+			CustomerPeriod customerPeriod = webSession.CustomerPeriodSelected;
+
+
+			#region Construction de la requete
+
+			try {
+
+				sql += "  select id_media, columnDetailLevel, count(distinct date_num ) as NbParution, yearParution ";
+				sql += "  from ( ";
+
+				//Get sub query for principal period
+				sql += GetNbParutionRequest(webSession, vehicleName, customerPeriod.StartDate, customerPeriod.EndDate, "1");
+
+				sql += " union all";
+
+				//Get sub query for compative period
+				sql += GetNbParutionRequest(webSession, vehicleName, customerPeriod.ComparativeStartDate, customerPeriod.ComparativeEndDate, "2");
+
+				sql += "  )  group by id_media, columnDetailLevel, yearParution ";
+				sql += "  order by columnDetailLevel, yearParution,id_media";
+
+			}
+			catch (System.Exception err) {
+				throw (new DynamicDataAccessException("Impossible de construire la requête pour le nombre de parutions par supports " + sql, err));
+			}
+			#endregion
+
+			#region Execution de la requête
+			try {
+				return webSession.Source.Fill(sql.ToString());
+			}
+			catch (System.Exception err) {
+				throw (new DynamicDataAccessException("Impossible de charger les données de l'analyse dynamique", err));
+			}
+			#endregion
+		}
+		#endregion
+
         #region Méthodes internes
         /// <summary>
         /// Renvoie le code SQL correspondant à la période de l'étude
@@ -987,6 +1035,60 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
             return sql;
         }
+
+		/// <summary>
+		/// Get sql query of parution number by media
+		/// </summary>
+		/// <param name="webSession">Session client</param>
+		/// <param name="vehicleName">vehicle Name</param>
+		/// <param name="beginingDate">begining Date</param>
+		/// <param name="endDate">end Date</param>
+		/// <param name="yearParutionIndex">year Parution Index to identified comparative dates</param>
+		/// <returns>sql query</returns>
+		private static string GetNbParutionRequest(WebSession webSession, DBClassificationConstantes.Vehicles.names vehicleName, string beginingDate, string endDate, string yearParutionIndex) {
+
+			#region Constantes
+			const string DATA_TABLE_PREFIXE = "wp";
+			#endregion
+
+			#region Variables
+			string sql = "";
+			string orderFieldName = string.Empty;
+			string groupByFieldName = string.Empty;
+
+			int positionUnivers = 1;
+			string mediaList = "";
+
+			#endregion
+
+			#region Construction de la requête
+			try {
+				DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)webSession.GenericColumnDetailLevel.Levels[0];
+
+
+				sql += " select " + DATA_TABLE_PREFIXE + ".id_media, " + columnDetailLevel.GetSqlFieldIdWithoutTablePrefix() + " as columnDetailLevel, " + DATA_TABLE_PREFIXE + ".date_media_num as date_num, " + yearParutionIndex + " as yearParution";
+				sql += " from  " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".data_press " + DATA_TABLE_PREFIXE;
+				sql += " where " + DATA_TABLE_PREFIXE + ".date_media_num >=" + beginingDate + " and " + DATA_TABLE_PREFIXE + ".date_media_num <=" + endDate;
+
+				#region Sélection de Médias
+				while (webSession.CompetitorUniversMedia[positionUnivers] != null) {
+					mediaList += webSession.GetSelection((TreeNode)webSession.CompetitorUniversMedia[positionUnivers], CustormerConstantes.Right.type.mediaAccess) + ",";
+					positionUnivers++;
+				}
+				if (mediaList.Length > 0) sql += " and " + DATA_TABLE_PREFIXE + ".id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")";
+				#endregion
+
+				// Group by
+				sql += " group by " + DATA_TABLE_PREFIXE + ".id_media," + columnDetailLevel.GetSqlFieldIdWithoutTablePrefix() + ", date_media_num ";
+
+			}
+			catch (System.Exception err) {
+				throw (new DynamicDataAccessException("Impossible de construire la sous requête pour le nombre de parutions par supports " + sql, err));
+			}
+			#endregion
+
+			return sql;
+		}
         #endregion
 
     }

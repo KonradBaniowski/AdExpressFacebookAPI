@@ -1276,6 +1276,7 @@ namespace TNS.AdExpressI.PresentAbsent
             }
 
             HeaderGroup headerGroupTmp = null;
+			Dictionary<long, string> mediaKeyIndexResultTable = new Dictionary<long, string>();
             for (int m = 1; m < groupMediaTotalIndex.GetLength(0); m++)
             {
                 if (groupMediaTotalIndex[m] != null)
@@ -1295,7 +1296,8 @@ namespace TNS.AdExpressI.PresentAbsent
 
                                     case DetailLevelItemInformation.Levels.media:
                                         headerGroupTmp.Add(new Header(true, mediaLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                        break;
+										mediaKeyIndexResultTable.Add(subGroup.DataBaseId, (START_ID_GROUP + m) + "-" + subGroup.DataBaseId.ToString());
+										break;
                                     case DetailLevelItemInformation.Levels.category:
                                         headerGroupTmp.Add(new Header(true, categoryLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
                                         break;
@@ -1321,7 +1323,14 @@ namespace TNS.AdExpressI.PresentAbsent
             #region Déclaration du tableau de résultat
 
             long nbLine = GetNbLineFromPreformatedTableToResultTable(tabData) + 1;
-            //long nbLine=1;
+			#region Add Line for  Nb parution data
+			Dictionary<string, double> resNbParution = null;
+			if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (CstDBClassif.Vehicles.names.press == vehicle || CstDBClassif.Vehicles.names.internationalPress == vehicle)) {
+				resNbParution = GetNbParutionsByMedia();
+				if (resNbParution != null && resNbParution.Count>0)
+					nbLine = nbLine + 1;
+			}
+			#endregion
             ResultTable resultTable = new ResultTable(nbLine, headers);
             long nbCol = resultTable.ColumnsNumber - 2;
             long totalColIndex = -1;
@@ -1357,8 +1366,35 @@ namespace TNS.AdExpressI.PresentAbsent
             }
             #endregion
 
-            #region Tableau de résultat
-            oldIdL1 = -1;
+			#region Nombre parutions by media
+			if (resNbParution != null && resNbParution.Count > 0) {				
+				currentLineInTabResult = resultTable.AddNewLine(LineType.nbParution);
+				//Libellé du total
+				resultTable[currentLineInTabResult, levelLabelColIndex] = new CellLevel(-1, GestionWeb.GetWebWord(2460, _session.SiteLanguage), 0, currentLineInTabResult);
+				CellLevel currentCellLevelParution = (CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
+				if (showCreative) resultTable[currentLineInTabResult, creativeColIndex] = new CellOneLevelCreativesLink(currentCellLevelParution, _session, _session.GenericProductDetailLevel);
+				if (showInsertions) resultTable[currentLineInTabResult, insertionsColIndex] = new CellOneLevelInsertionsLink(currentCellLevelParution, _session, _session.GenericProductDetailLevel);
+				if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevelParution, _session);
+				if (showTotal && !computePDM) resultTable[currentLineInTabResult, totalColIndex] = cellUnitFactory.Get(0.0);
+				if (showTotal && computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellPDM(0.0, null);
+				for (k = startDataColIndexInit; k <= nbCol; k++) {
+					resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
+				}
+
+				//Insertion du nombre de parution 		
+				foreach (KeyValuePair<string, double> kpv in resNbParution) {
+					if (mediaKeyIndexResultTable.ContainsKey(long.Parse(kpv.Key)) && resultTable.HeadersIndexInResultTable.ContainsKey(mediaKeyIndexResultTable[long.Parse(kpv.Key)])) {
+						TNS.FrameWork.WebResultUI.Header header = (TNS.FrameWork.WebResultUI.Header)resultTable.HeadersIndexInResultTable[mediaKeyIndexResultTable[long.Parse(kpv.Key)]];
+						resultTable[currentLineInTabResult, header.IndexInResultTable] = new CellNumber(resNbParution[kpv.Key]);
+					}
+				}
+				
+
+			}
+			#endregion
+
+			#region Tableau de résultat
+			oldIdL1 = -1;
             oldIdL2 = -1;
             oldIdL3 = -1;
             AdExpressCellLevel currentCellLevel1 = null;
@@ -1660,6 +1696,57 @@ namespace TNS.AdExpressI.PresentAbsent
 
         }
         #endregion
+
+		#region GetNbParutionsByMedia
+		/// <summary>
+		/// Get Number of parution by media
+		/// </summary>
+		/// <param name="webSession"> Client Session</param>
+		/// <returns>Number of parution by media data</returns>
+		protected  Dictionary<string, double> GetNbParutionsByMedia() {
+
+			#region Variables
+			Dictionary<string, double> res = new Dictionary<string, double>();
+			double nbParutionsCounter = 0;
+			Int64 oldColumnDetailLevel = -1;
+			bool start = true;
+			string oldKey = "";
+			#endregion		
+
+			#region Chargement des données à partir de la base
+			DataSet ds;
+			try {
+				if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the present absent result"));
+				object[] parameters = new object[1];
+				parameters[0] = _session;
+				IPresentAbsentResultDAL presentAbsentDAL = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+				ds = presentAbsentDAL.GetNbParutionData();
+				
+			}
+			catch (System.Exception err) {
+				throw (new PresentAbsentException("Impossible de charger les données pour le nombre de parution", err));
+			}
+			DataTable dt = ds.Tables[0];
+			#endregion
+
+			if (dt != null && dt.Rows.Count > 0) {
+				foreach (DataRow dr in dt.Rows) {
+					if (!oldKey.Equals(dr["id_media"].ToString()) && !start) {
+						res.Add(oldKey, nbParutionsCounter);
+						nbParutionsCounter = 0;
+					}
+					nbParutionsCounter += double.Parse(dr["NbParution"].ToString());
+					start = false;
+					oldKey = dr["id_media"].ToString();
+				}
+				res.Add(oldKey, nbParutionsCounter);
+			}
+
+			return res;
+
+		}
+
+		#endregion
 
         #endregion
     }

@@ -14,6 +14,7 @@
 using System;
 using System.Data;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Results;
@@ -1444,11 +1445,18 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 			#endregion
 
+			#region Sélection du vehicle
+			string vehicleSelection = webSession.GetSelection(webSession.SelectionUniversMedia, CustomerConstantes.Right.type.vehicleAccess);
+			DBClassificationConstantes.Vehicles.names vehicleName = (DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
+			if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.DynamicRulesException("La sélection de médias est incorrecte"));
+			#endregion
+
+
 			#region Déclaration du tableau de résultat
 			//long nbCol=(mediaList.Length*3)+1;
 			//if(mediaList.Length>1)nbCol+=3;
 			long nbLine=GetNbLineFromPreformatedTableToResultTable(tabData)+1;//FrameWorkResultConstantes.DynamicAnalysis.FIRST_LINE_RESULT_INDEX;
-			//long nbLine=1;
+			if (DBClassificationConstantes.Vehicles.names.press == vehicleName || DBClassificationConstantes.Vehicles.names.internationalPress == vehicleName) nbLine = nbLine + 1;////Pour ligne nombre de parutions
 			WebResultUI.ResultTable resultTable=new WebResultUI.ResultTable(nbLine,headers);
 			long nbCol=resultTable.ColumnsNumber-2;
 			long NStartColIndex=-1;
@@ -1499,6 +1507,45 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			}			
 			#endregion
 
+			#endregion
+
+			#region Ligne nombre de parutions
+
+		
+			if (DBClassificationConstantes.Vehicles.names.press == vehicleName || DBClassificationConstantes.Vehicles.names.internationalPress == vehicleName) {
+			    //Nombre de parution par média
+			    Dictionary<string, double> nbParutionByMedia = GetNbParutionsByMedia(webSession);
+
+			    currentLineInTabResult = resultTable.AddNewLine(TNS.FrameWork.WebResultUI.LineType.nbParution);
+			    //Libellé du Nombre parutions
+			    resultTable[currentLineInTabResult, levelLabelColIndex] = new CellLevel(-1, GestionWeb.GetWebWord(2460, webSession.SiteLanguage), 0, currentLineInTabResult);
+			    CellLevel currentCellParution = (CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
+			    if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellParution, webSession);
+			    resultTable[currentLineInTabResult, NStartColIndex] = new CellNumber(0.0);
+			    for (k = NStartColIndex + 1; k < N1StartColIndex; k++) {
+			        resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
+			    }
+			    resultTable[currentLineInTabResult, N1StartColIndex] = new CellNumber(0.0);
+			    for (k = N1StartColIndex + 1; k < EvolStartColIndex; k++) {
+			        resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
+			    }
+			    #region Evol Nb parutions
+			    if (mediaList.Length > 1) resultTable[currentLineInTabResult, EvolStartColIndex] = new CellEvol(resultTable[currentLineInTabResult, NStartColIndex], resultTable[currentLineInTabResult, N1StartColIndex]);
+			    foreach (string currentMedia in mediaList) {
+			        resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", FrameWorkResultConstantes.DynamicAnalysis.EVOL_UNIVERSE_POSITION, currentMedia))] = new CellEvol(resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", FrameWorkResultConstantes.DynamicAnalysis.N_UNIVERSE_POSITION, currentMedia))], resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", FrameWorkResultConstantes.DynamicAnalysis.N1_UNIVERSE_POSITION, currentMedia))]);
+			    }
+			    #endregion
+
+			    //Insertion du nombre de parution pour period N et N-1			
+			    if (nbParutionByMedia != null && nbParutionByMedia.Count > 0) {
+			        foreach (KeyValuePair<string, double> kpv in nbParutionByMedia) {
+			            if (resultTable.HeadersIndexInResultTable.ContainsKey(kpv.Key)) {
+			                TNS.FrameWork.WebResultUI.Header header = (TNS.FrameWork.WebResultUI.Header)resultTable.HeadersIndexInResultTable[kpv.Key];
+			                resultTable[currentLineInTabResult, header.IndexInResultTable] = new CellNumber(nbParutionByMedia[kpv.Key]);
+			            }
+			        }
+			    }
+			}
 			#endregion
 
 			#region Tableau de résultat
@@ -2592,6 +2639,55 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#endregion
 
 		}
+		#endregion
+
+		#region GetNbParutionsByMedia
+
+		private static Dictionary<string, double> GetNbParutionsByMedia(WebSession webSession) {
+
+			#region Variables
+			Dictionary<string, double> res = new Dictionary<string, double>();
+			double nbParutionsCounter = 0;
+			Int64 oldColumnDetailLevel = -1;
+			Int64 oldYearParution = -1;
+			bool start = true;
+			string oldKey = "";
+			#endregion
+
+			#region Sélection du vehicle
+			string vehicleSelection = webSession.GetSelection(webSession.SelectionUniversMedia, CustomerConstantes.Right.type.vehicleAccess);
+			DBClassificationConstantes.Vehicles.names vehicleName = (DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
+			if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.DynamicRulesException("La sélection de médias est incorrecte"));
+			#endregion
+
+			#region Chargement des données à partir de la base
+			DataSet ds;
+			try {
+				ds = DynamicDataAccess.GetNbParutionData(webSession, vehicleName);
+			}
+			catch (System.Exception err) {
+				throw (new WebExceptions.DynamicRulesException("Impossible de charger les données pour le nombre de parution", err));
+			}
+			DataTable dt = ds.Tables[0];
+			#endregion
+
+			if (dt != null && dt.Rows.Count > 0) {
+				foreach (DataRow dr in dt.Rows) {
+					if (!oldKey.Equals(dr["yearParution"].ToString() + "-" + dr["columnDetailLevel"].ToString()) && !start) {
+						res.Add(oldKey, nbParutionsCounter);
+						nbParutionsCounter = 0;
+					}
+					nbParutionsCounter += double.Parse(dr["NbParution"].ToString());
+					start = false;
+					oldKey = dr["yearParution"].ToString() + "-" + dr["columnDetailLevel"].ToString();
+				}
+				res.Add(oldKey, nbParutionsCounter);
+			}
+
+			return res;
+
+		}
+
 		#endregion
 
 		#endregion

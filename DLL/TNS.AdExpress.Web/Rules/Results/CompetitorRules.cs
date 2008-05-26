@@ -18,6 +18,8 @@
 using System;
 using System.Data;
 using System.Collections;
+using System.Collections.Generic;
+
 using System.Windows.Forms;
 
 using TNS.AdExpress.Web.Core.Sessions;
@@ -781,6 +783,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
             }
 
 			HeaderGroup headerGroupTmp=null;
+			Dictionary<long, string> mediaKeyIndexResultTable = new Dictionary<long, string>();
 			for(int m=1;m<groupMediaTotalIndex.GetLength(0);m++){
 				if(groupMediaTotalIndex[m]!=null){
 					//Supports de référence ou concurents 1365
@@ -795,18 +798,23 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
                                     case DetailLevelItemInformation.Levels.media:
                                         headerGroupTmp.Add(new WebResultUI.Header(true, mediaLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
+										mediaKeyIndexResultTable.Add(subGroup.DataBaseId, (ComptitorResultConstantes.START_ID_GROUP + m) + "-" + subGroup.DataBaseId.ToString());
                                         break;
                                     case DetailLevelItemInformation.Levels.category:
                                         headerGroupTmp.Add(new WebResultUI.Header(true, categoryLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
+										mediaKeyIndexResultTable.Add(subGroup.DataBaseId, (ComptitorResultConstantes.START_ID_GROUP + m) + "-" + subGroup.DataBaseId.ToString());
                                         break;
                                     case DetailLevelItemInformation.Levels.mediaSeller:
                                         headerGroupTmp.Add(new WebResultUI.Header(true, mediaSellerLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
+										mediaKeyIndexResultTable.Add(subGroup.DataBaseId, (ComptitorResultConstantes.START_ID_GROUP + m) + "-" + subGroup.DataBaseId.ToString());
                                         break;
                                     case DetailLevelItemInformation.Levels.title:
                                         headerGroupTmp.Add(new WebResultUI.Header(true, titleLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
+										mediaKeyIndexResultTable.Add(subGroup.DataBaseId, (ComptitorResultConstantes.START_ID_GROUP + m) + "-" + subGroup.DataBaseId.ToString());
                                         break;
                                     case DetailLevelItemInformation.Levels.interestCenter:
                                         headerGroupTmp.Add(new WebResultUI.Header(true, interestCenterLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
+										mediaKeyIndexResultTable.Add(subGroup.DataBaseId, (ComptitorResultConstantes.START_ID_GROUP + m) + "-" + subGroup.DataBaseId.ToString());
                                         break;
 
                                 }
@@ -821,7 +829,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#region Déclaration du tableau de résultat
 			
 			long nbLine=GetNbLineFromPreformatedTableToResultTable(tabData)+1;//FrameWorkResultConstantes.DynamicAnalysis.FIRST_LINE_RESULT_INDEX;
-			//long nbLine=1;
+			if (DBClassificationConstantes.Vehicles.names.press == vehicle || DBClassificationConstantes.Vehicles.names.internationalPress == vehicle) nbLine = nbLine + 1; //pour ligne nombre de parutions
 			WebResultUI.ResultTable resultTable=new WebResultUI.ResultTable(nbLine,headers);
 			long nbCol=resultTable.ColumnsNumber-2;
 			long totalColIndex=-1;
@@ -855,6 +863,39 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				if(computePDM)resultTable[currentLineInTabResult,k]=new CellPDM(0.0,(CellUnit)resultTable[currentLineInTabResult,totalColIndex]);
 				else resultTable[currentLineInTabResult,k]=cellUnitFactory.Get(0.0);
 			}
+			#endregion
+
+			#region Nombre de parutions par média
+
+			if (DBClassificationConstantes.Vehicles.names.press == vehicle || DBClassificationConstantes.Vehicles.names.internationalPress == vehicle) {
+
+			    //Nombre de parution par média
+			    Dictionary<string, double> nbParutionByMedia = GetNbParutionsByMedia(webSession);
+
+			    currentLineInTabResult = resultTable.AddNewLine(TNS.FrameWork.WebResultUI.LineType.nbParution);
+			    //Libellé du Nombre parutions
+			    resultTable[currentLineInTabResult, levelLabelColIndex] = new CellLevel(-1, GestionWeb.GetWebWord(2460, webSession.SiteLanguage), 0, currentLineInTabResult);
+			    CellLevel currentCellParution = (CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
+			    if (showCreative) resultTable[currentLineInTabResult, creativeColIndex] = new CellOneLevelCreativesLink(currentCellParution, webSession, webSession.GenericProductDetailLevel);
+			    if (showInsertions) resultTable[currentLineInTabResult, insertionsColIndex] = new CellOneLevelInsertionsLink(currentCellParution, webSession, webSession.GenericProductDetailLevel);
+			    if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellParution, webSession);
+			    if (showTotal && !computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellNumber(0.0);
+			    if (showTotal && computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellNumber(0.0);
+			    for (k = startDataColIndexInit; k <= nbCol; k++) {
+			        resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
+			    }
+
+			    //Insertion du nombre de parution 		
+			    if (nbParutionByMedia != null && nbParutionByMedia.Count > 0) {
+			        foreach (KeyValuePair<string, double> kpv in nbParutionByMedia) {
+			            if (mediaKeyIndexResultTable.ContainsKey(long.Parse(kpv.Key)) && resultTable.HeadersIndexInResultTable.ContainsKey(mediaKeyIndexResultTable[long.Parse(kpv.Key)])) {
+			                TNS.FrameWork.WebResultUI.Header header = (TNS.FrameWork.WebResultUI.Header)resultTable.HeadersIndexInResultTable[mediaKeyIndexResultTable[long.Parse(kpv.Key)]];
+			                resultTable[currentLineInTabResult, header.IndexInResultTable] = new CellNumber(nbParutionByMedia[kpv.Key]);
+			            }
+			        }
+			    }
+			}
+
 			#endregion
 
 			#region Tableau de résultat
@@ -1653,6 +1694,58 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			}
 			return(subTotalWithOneMediaIndexes);
 		}
+		#endregion
+
+		#region GetNbParutionsByMedia
+		/// <summary>
+		/// Obtient le nombre de parution par media
+		/// </summary>
+		/// <param name="webSession">Session client</param>
+		/// <returns>Nombre de parution par media</returns>
+		private static Dictionary<string, double> GetNbParutionsByMedia(WebSession webSession) {
+
+			#region Variables
+			Dictionary<string, double> res = new Dictionary<string, double>();
+			double nbParutionsCounter = 0;
+			Int64 oldColumnDetailLevel = -1;
+			bool start = true;
+			string oldKey = "";
+			#endregion
+
+			#region Sélection du vehicle
+			string vehicleSelection = webSession.GetSelection(webSession.SelectionUniversMedia, CustomerConstantes.Right.type.vehicleAccess);
+			DBClassificationConstantes.Vehicles.names vehicleName = (DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
+			if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.DynamicRulesException("La sélection de médias est incorrecte"));
+			#endregion
+
+			#region Chargement des données à partir de la base
+			DataSet ds;
+			try {
+				ds = CompetitorDataAccess.GetNbParutionData(webSession, vehicleName);
+			}
+			catch (System.Exception err) {
+				throw (new WebExceptions.DynamicRulesException("Impossible de charger les données pour le nombre de parution", err));
+			}
+			DataTable dt = ds.Tables[0];
+			#endregion
+
+			if (dt != null && dt.Rows.Count > 0) {
+				foreach (DataRow dr in dt.Rows) {
+					if (!oldKey.Equals(dr["columnDetailLevel"].ToString()) && !start) {
+						res.Add(oldKey, nbParutionsCounter);
+						nbParutionsCounter = 0;
+					}
+					nbParutionsCounter += double.Parse(dr["NbParution"].ToString());
+					start = false;
+					oldKey = dr["columnDetailLevel"].ToString();
+				}
+				res.Add(oldKey, nbParutionsCounter);
+			}
+
+			return res;
+
+		}
+
 		#endregion
 
 		#endregion

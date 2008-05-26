@@ -1332,7 +1332,14 @@ namespace TNS.AdExpressI.LostWon
 
             #region Déclaration du tableau de résultat
             long nbLine = GetNbLineFromPreformatedTableToResultTable(tabData) + 1;
-            //long nbLine=1;
+			#region Add Line for  Nb parution data
+			Dictionary<string, double> resNbParution = null;
+			if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (CstDBClassif.Vehicles.names.press == _vehicle || CstDBClassif.Vehicles.names.internationalPress == _vehicle)) {
+				resNbParution = GetNbParutionsByMedia();
+				if (resNbParution != null && resNbParution.Count > 0)
+					nbLine = nbLine + 1;
+			}
+			#endregion
             ResultTable resultTable = new ResultTable(nbLine, headers);
             long nbCol = resultTable.ColumnsNumber - 2;
             long NStartColIndex = -1;
@@ -1388,8 +1395,40 @@ namespace TNS.AdExpressI.LostWon
 
             #endregion
 
-            #region Tableau de résultat
-            oldIdL1 = -1;
+			#region Nombre parutions by media
+			if (resNbParution != null && resNbParution.Count > 0) {
+				currentLineInTabResult = resultTable.AddNewLine(TNS.FrameWork.WebResultUI.LineType.nbParution);
+				//Libellé du Nombre parutions
+				resultTable[currentLineInTabResult, levelLabelColIndex] = new CellLevel(-1, GestionWeb.GetWebWord(2460, _session.SiteLanguage), 0, currentLineInTabResult);
+				CellLevel currentCellParution = (CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
+				if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellParution, _session);
+				resultTable[currentLineInTabResult, NStartColIndex] = new CellNumber(0.0);
+				for (k = NStartColIndex + 1; k < N1StartColIndex; k++) {
+					resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
+				}
+				resultTable[currentLineInTabResult, N1StartColIndex] = new CellNumber(0.0);
+				for (k = N1StartColIndex + 1; k < EvolStartColIndex; k++) {
+					resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
+				}
+				#region Evol Nb parutions
+				if (mediaList.Length > 1) resultTable[currentLineInTabResult, EvolStartColIndex] = new CellEvol(resultTable[currentLineInTabResult, NStartColIndex], resultTable[currentLineInTabResult, N1StartColIndex]);
+				foreach (Int64 currentMedia in mediaList) {
+					resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}",EVOL_UNIVERSE_POSITION, currentMedia))] = new CellEvol(resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N_UNIVERSE_POSITION, currentMedia))], resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N1_UNIVERSE_POSITION, currentMedia))]);
+				}
+				#endregion
+
+				//Insertion du nombre de parution pour period N et N-1			
+				foreach (KeyValuePair<string, double> kpv in resNbParution) {
+					if (resultTable.HeadersIndexInResultTable.ContainsKey(kpv.Key)) {
+						TNS.FrameWork.WebResultUI.Header header = (TNS.FrameWork.WebResultUI.Header)resultTable.HeadersIndexInResultTable[kpv.Key];
+						resultTable[currentLineInTabResult, header.IndexInResultTable] = new CellNumber(resNbParution[kpv.Key]);
+					}
+				}
+			}
+			#endregion
+
+			#region Tableau de résultat
+			oldIdL1 = -1;
             oldIdL2 = -1;
             oldIdL3 = -1;
             AdExpressCellLevel currentCellLevel1 = null;
@@ -1803,6 +1842,57 @@ namespace TNS.AdExpressI.LostWon
 
         }
         #endregion
+
+		#region GetNbParutionsByMedia
+		/// <summary>
+		/// Get Number of parution by media data
+		/// </summary>
+		/// <returns>Number of parution by media data</returns>
+		protected  Dictionary<string, double> GetNbParutionsByMedia() {
+
+			#region Variables
+			Dictionary<string, double> res = new Dictionary<string, double>();
+			double nbParutionsCounter = 0;			
+			bool start = true;
+			string oldKey = "";
+			DataTable dt = null;
+			#endregion
+			
+
+			#region Chargement des données à partir de la base
+			DataSet ds;
+			try {
+				if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
+				object[] parameters = new object[1];
+				parameters[0] = _session;
+				ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+				ds = lostwonDAL.GetNbParutionData();
+				if (ds != null ) dt = ds.Tables[0];
+			}
+			catch (System.Exception err) {
+				throw (new LostWonException("Unable to load data for synthesis report.", err));
+			}
+			#endregion
+
+
+			if (dt != null && dt.Rows.Count > 0) {
+				foreach (DataRow dr in dt.Rows) {
+					if (!oldKey.Equals(dr["yearParution"].ToString() + "-" + dr["id_media"].ToString()) && !start) {
+						res.Add(oldKey, nbParutionsCounter);
+						nbParutionsCounter = 0;
+					}
+					nbParutionsCounter += double.Parse(dr["NbParution"].ToString());
+					start = false;
+					oldKey = dr["yearParution"].ToString() + "-" + dr["id_media"].ToString();
+				}
+				res.Add(oldKey, nbParutionsCounter);
+			}
+
+			return res;
+
+		}
+
+		#endregion
 
         #endregion
     }

@@ -25,6 +25,7 @@ namespace TNS.AdExpressI.LostWon.DAL
         DataSet GetData();
         DataTable GetSynthesisData();
         DataSet GetMediaDetails();
+		DataSet GetNbParutionData();
 
     }
 
