@@ -235,11 +235,11 @@ namespace AdExpress.Private.Results{
 				_webSession.ReachedModule=true;
 				#endregion	
 
-				#region Sélection du vehicle
-				string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
-				DBClassificationConstantes.Vehicles.names vehicleName = (DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
-				if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
-				#endregion
+                //#region Sélection du vehicle
+                //string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
+                //DBClassificationConstantes.Vehicles.names vehicleName = (DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
+                //if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
+                //#endregion
 
 
 				if (vehicleName == DBClassificationConstantes.Vehicles.names.press || vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress)
