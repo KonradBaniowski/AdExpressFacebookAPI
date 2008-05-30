@@ -5,7 +5,7 @@
 <%@ Page language="c#" Inherits="AdExpress.Private.Selection.APPMDateSelection" CodeFile="APPMDateSelection.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<title>APPMDateSelection</title>
 		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
 		<meta name="CODE_LANGUAGE" Content="C#">
