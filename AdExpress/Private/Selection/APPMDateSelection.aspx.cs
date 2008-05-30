@@ -270,6 +270,7 @@ namespace AdExpress.Private.Selection{
 		/// <param name="e">Argument</param>
 		protected void validateButton1_Click(object sender, System.EventArgs e) {
 			try{
+                this._dataSource = _webSession.Source;
 				calendarValidation();
 				_webSession.SelectionUniversAEPMWave.Nodes.Clear();
 				_webSession.SelectionUniversAEPMWave.Nodes.Add(SelectionsGrp.WavesSystem.GetWaves(_webSession,this._dataSource));
@@ -293,6 +294,7 @@ namespace AdExpress.Private.Selection{
 		/// <param name="e">Argument</param>
 		protected void validateButton2_Click(object sender, System.EventArgs e) {
 			try{
+                this._dataSource = _webSession.Source;
 				DateDll.AtomicPeriodWeek week;
 				switch(selectedIndex){					
 					case 1:
