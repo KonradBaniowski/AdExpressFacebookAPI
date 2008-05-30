@@ -257,10 +257,27 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		public new string Title{
 			get{throw(new NotImplementedException());}
 			set{throw(new NotImplementedException());}
-		}
-		
-		#region Pagination
-		/// <summary>
+        }
+
+        #region Show Container
+        /// <summary>
+        /// Show te container of the table or not
+        /// </summary>
+        protected bool _showContainer = true;
+        /// <summary>
+        /// Show te container
+        /// </summary>
+        [Bindable(true),
+        Category("Show Container"),
+        DefaultValue("true")]
+        public bool ShowContainer {
+            get { return _showContainer; }
+            set { _showContainer = value; }
+        }
+        #endregion
+
+        #region Pagination
+        /// <summary>
 		/// Nombre par defaut de ligne dans une page
 		/// </summary>
 		private int _defaultPageSize = 100;
@@ -677,15 +694,25 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				);
 			js.Append("\r\n\t\t var sb = new StringBuilder();");							
 			js.Append("\r\n\t if(res!=null && res.value != null){ ");
-            js.Append("\r\n\t\t sb.append('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/" + themeName + "/Images/Common/Result/header.gif\">');");				
-			js.Append("\r\n\t\t sb.append(GetNavigationBar('isUp'));");	
-			js.Append("\r\n\t\t sb.append('</td></tr>');");
-            js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" class=\"resultTableBorder\">');");			
+            js.Append("\r\n\t\t sb.append('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">');");
+            if (_showContainer) {
+                js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/" + themeName + "/Images/Common/Result/header.gif\">');");
+                js.Append("\r\n\t\t sb.append(GetNavigationBar('isUp'));");
+                js.Append("\r\n\t\t sb.append('</td></tr>');");
+                js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" class=\"resultTableBorder\">');");
+            }
+            else
+                js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" class=\"resultTableWithoutBorder\">');");		
+            
+
 			js.Append("\r\n\t\t sb.append(res.value);");
 			js.Append("\r\n\t\t sb.append('</td></tr>');");
-            js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/" + themeName + "/Images/Common/Result/footer.gif\">');");	
-			js.Append("\r\n\t\t sb.append(GetNavigationBar('isDown'));");
-			js.Append("\r\n\t\t sb.append('</td></tr></table>');");
+            if (_showContainer) {
+                js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/" + themeName + "/Images/Common/Result/footer.gif\">');");
+                js.Append("\r\n\t\t sb.append(GetNavigationBar('isDown'));");
+                js.Append("\r\n\t\t sb.append('</td></tr>');");
+            }
+            js.Append("\r\n\t\t sb.append('</table>');");
 			js.Append("\r\n\t oN.innerHTML = sb.toString();");	
 			js.Append("\r\n\t } ");			
 			js.Append("\r\n\t else { ");
@@ -783,12 +810,16 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		
 			js.Append("\r\n\t htmlNavigationBarUp=GetNavigationBar('isUp'); ");
 
-            js.Append("\r\n\t\t sb.append('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/" + themeName + "/Images/Common/Result/header.gif\">');");				
-			js.Append("\r\n\t\t sb.append(htmlNavigationBarUp);");	
-			js.Append("\r\n\t\t sb.append('</td></tr>');");
+            js.Append("\r\n\t\t sb.append('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">');");
+            if (_showContainer) {
+                js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/" + themeName + "/Images/Common/Result/header.gif\">');");
+                js.Append("\r\n\t\t sb.append(htmlNavigationBarUp);");
+                js.Append("\r\n\t\t sb.append('</td></tr>');");
+                js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" class=\"resultTableBorder\">');");
+            }
+            else
+                js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" class=\"resultTableWithoutBorder\">');");
 
-
-            js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" class=\"resultTableBorder\">');");
             js.Append("\r\n\t\t sb.append('<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0>');");
 			for (int n = 0; n < _nbTableBeginningLinesToRepeat; n++) {
 				//js.Append("\r\n\t\t sb.append( tab[0]);");
@@ -813,9 +844,12 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			js.Append("\r\n\t\t sb.append('</table></td></tr>');");
 											
 			js.Append("\r\n\t htmlNavigationBarDown=GetNavigationBar('isDown'); ");
-            js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/" + themeName + "/Images/Common/Result/footer.gif\">');");	
-			js.Append("\r\n\t\t sb.append(htmlNavigationBarDown);");
-			js.Append("\r\n\t\t sb.append('</td></tr></table>');");
+            if (_showContainer) {
+                js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/" + themeName + "/Images/Common/Result/footer.gif\">');");
+                js.Append("\r\n\t\t sb.append(htmlNavigationBarDown);");
+                js.Append("\r\n\t\t sb.append('</td></tr>');");
+            }
+            js.Append("\r\n\t\t sb.append('</table>');");
 			js.Append("\r\n\t obj.innerHTML=sb.toString();");	
 			js.Append("\r\n\t\t sb=null;");
 
