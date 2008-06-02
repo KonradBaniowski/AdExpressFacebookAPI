@@ -1146,3 +1146,6 @@ tr.synthesisTitleEx{
 	border-right-width:1px; 
 	border-right-style:solid;
 }
+.resultTableWithoutBorder{
+	padding:10px;
+}

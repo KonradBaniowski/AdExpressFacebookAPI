@@ -648,3 +648,34 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   BackGroundColor="#E1E0DA" 
 						   ThemeName = "DefaultAdExpressFr"
 />
+
+<%-- Result web control : used to display a generic result table (HTML) (portfolio Synthesis) --%>
+<ctrResults:Resultwebcontrol 
+                           runat="server" 
+                           BackgroudColorL1="#D0C8DA" 
+                           BackgroudColorL2="#E9E6EF" 
+                           CssL1="portofolioSynthesisL1" 
+                           CssL2="portofolioSynthesisL2" 
+                           SkinID="portofolioSynthesisResultTable" 
+/>
+
+<%-- Result web control : used to display a generic result table (Excel) (portfolio Synthesis) --%>
+<ctrResults:ResultWebControl 
+                           runat="server" 
+                           CssL2="portofolioSynthesisExcel2"
+                           CssL1="portofolioSynthesisExcel1" 
+                           CssDetailSelectionL1="dsLv1Excel" 
+                           CssDetailSelectionL2="dsLv2Excel" 
+                           CssDetailSelectionL3="dsLv3Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="portofolioExcelSynthesisResultTable"  
+/>
