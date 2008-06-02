@@ -38,6 +38,8 @@ using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpressI.PresentAbsent.DAL;
+using System.Reflection;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -124,7 +126,11 @@ namespace AdExpress.Private.Results{
         /// Onglet précédent
         /// </summary>
         public long previousTab = 0;
-		#endregion
+        /// <summary>
+        /// Vehicle name
+        /// </summary>
+        public DBClassificationConstantes.Vehicles.names _vehicleName;
+        #endregion
 
 		#region Constructeur
 		/// <summary>
@@ -245,20 +251,16 @@ namespace AdExpress.Private.Results{
 
 				#region Sélection du vehicle
 				string vehicleSelection=_webSession.GetSelection(_webSession.SelectionUniversMedia,Right.type.vehicleAccess);
-				DBClassificationConstantes.Vehicles.names vehicleName=(DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
+				DBClassificationConstantes.Vehicles.names _vehicleName=(DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
 				if(vehicleSelection==null || vehicleSelection.IndexOf(",")>0) throw(new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 				#endregion
 
 				displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
 
-
-				if (vehicleName == DBClassificationConstantes.Vehicles.names.press || vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress)
-					_resultWebControl.NbTableBeginningLinesToRepeat = 2;
-
 				#region choix du type d'encarts
 						
-				if(DBClassificationConstantes.Vehicles.names.press==vehicleName 
-					|| DBClassificationConstantes.Vehicles.names.internationalPress==vehicleName){
+				if(DBClassificationConstantes.Vehicles.names.press==_vehicleName 
+					|| DBClassificationConstantes.Vehicles.names.internationalPress==_vehicleName){
 
 					#region Affichage encarts en fonction du module
 					switch(_webSession.CurrentModule){
@@ -379,6 +381,13 @@ namespace AdExpress.Private.Results{
 			base.OnPreRender (e);
 			try{
 
+                if (_vehicleName == DBClassificationConstantes.Vehicles.names.press || _vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress)
+                    _resultWebControl.NbTableBeginningLinesToRepeat = 2;
+                else
+                {
+                    _resultWebControl.NbTableBeginningLinesToRepeat = 1;
+                }
+
 				#region MAJ _webSession
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
 				_webSession.Save();
@@ -410,8 +419,15 @@ namespace AdExpress.Private.Results{
                     positionUnivers++;
                 }
 
+                TNS.AdExpress.Domain.Web.Navigation.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+                object[] param = null;
+                if (module.CountryDataAccessLayer == null) throw (new NullReferenceException("DataAccess layer is null for the present/absent result"));
+                param = new object[1];
+                param[0] = _webSession;
+                IPresentAbsentResultDAL presentAbsentResultDal = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
                 DataSet dsMedia = null;
-                dsMedia = CompetitorDataAccess.GetColumnDetailLevelList(_webSession);
+                dsMedia = presentAbsentResultDal.GetColumnDetails();
                 DataTable dtMedia = dsMedia.Tables[0];
                 if (dtMedia.Rows != null) {
                     if (dtMedia.Rows.Count == 1 && positionUnivers == 2) {
