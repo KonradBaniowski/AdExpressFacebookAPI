@@ -86,6 +86,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="webUiResults" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
 <%@ Register TagPrefix="ctrCreatives" Namespace="TNS.AdExpress.Web.Controls.Results.Creatives" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrMadiaPlan" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrAppm" Namespace="TNS.AdExpress.Web.Controls.Results.Appm" Assembly="TNS.AdExpress.Web.Controls" %>
 
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
@@ -303,6 +304,20 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            FontColorSelectedDate = "#FFFFFF"
                            TableColorNoDate = "#9378B3"
                            TdBgcolor = "#FFFFFF"
+                           SkinID="monthcalendarwebcontrol1"
+/>
+
+<%-- Last month week calendar web control : used to show a calendar who allows you to choose between a month and week --%>
+<ctrSelections:lastmonthweekcalendarwebcontrol  
+                           runat="server"
+                           TableBorderColor = "#9D9885"
+                           TableColor = "#FFFFFF"
+                           TableColorSelectedDate = "#644883"
+                           TitleBackgroundColor = "#644883"
+                           FontColor = "#644883"
+                           FontColorSelectedDate = "#FFFFFF"
+                           TableColorNoDate = "#9378B3"
+                           SkinID="lastmonthweekcalendarwebcontrol1" 
 />
 
 <%-- Date list web control : used to build a list of numbers to allow relative dates selection --%>
@@ -678,4 +693,44 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
 				           CssDetailSelectionBordelLevel="dsBorderLevel"
 				           SkinID="portofolioExcelSynthesisResultTable"  
+/>
+
+<ctrAppm:AppmContainerWebControl
+                           runat="server" 
+                           AnalyseFamilyInterestPlanSkinID="AnalyseFamilyInterestPlanSkinID"
+                           PdvPlanSkinID=""
+                           PeriodicityPlanSkinID=""
+				           SkinID="container"  
+/>
+
+<ctrAppm:AnalyseFamilyInterestPlanAppmChartWebControl
+                           runat="server" 
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#644883"
+                           CamembertTitleTextFontColor=""
+                           CamembertTitleTextFontSize=""
+                           CamembertTitleTextFontFamily=""
+                           
+                           HistogrammeTitleTextFontColor=""
+                           HistogrammeTitleTextFontSize=""
+                           HistogrammeTitleTextFontFamily=""
+                           HistogrammeLegendTextFontColor="#000000"
+                           HistogrammeLegendTextFontSize="8"
+                           HistogrammeLegendTextFontFamily="Arial"
+                           HistogrammeColorFamille1="#9479B5"
+                           HistogrammeColorFamille2="#FFD7D7"
+                           HistogrammeColorFamille3="#FFD7D7"
+                           HistogrammeBackgroundColor="#DECFE7"
+                           HistogrammeOrdonneeTextFontFamily="Arial" 
+                           HistogrammeOrdonneeTextFontSize="8" 
+                           HistogrammeAbscisseTextFontFamily="Arial" 
+                           HistogrammeAbscisseTextFontSize="8" 
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#644883" 
+                           
+                           ControlBorderSize=""
+                           ControlBorderColor=""                
+                           
+				           SkinID="AnalyseFamilyInterestPlanSkinID"  
 />

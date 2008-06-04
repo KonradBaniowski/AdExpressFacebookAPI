@@ -186,6 +186,9 @@ namespace AdExpress.Private.Results{
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
 				_siteLanguage=_webSession.SiteLanguage;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
+                mediaAgencyText.Language = _webSession.SiteLanguage;
+                InformationWebControl1.Language = _webSession.SiteLanguage;
+                HeaderWebControl1.Language = _webSession.SiteLanguage;
 				#endregion
 
 				#region Définition de la page d'aide
@@ -234,7 +237,8 @@ namespace AdExpress.Private.Results{
 				}
 				#endregion	
 				
-				AppmContainerWebControl1.Source = this._dataSource;	
+                //AppmContainerWebControl1.Source = this._dataSource;	
+                AppmContainerWebControl1.Source = _webSession.Source;	
 				
 				#region Niveau de détail media (Generic)
 				if(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlanByVersion ){
