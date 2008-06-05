@@ -35,7 +35,9 @@
     <table enumId="17" description="Classif: Category" schemaEnumId="0" label="category" prefix="ct"/>
     <table enumId="18" description="Classif: Media" schemaEnumId="0" label="media" prefix="md"/>
     <table enumId="19" description="Classif: Basic Media" schemaEnumId="0" label="basic_media" prefix="bm"/>
-
+    
+    <table enumId="22" description="Classif: Interest Center" schemaEnumId="0" label="interest_center" prefix="ic"/>
+    <table enumId="23" description="Classif: Media Seller" schemaEnumId="0" label="media_seller" prefix="ms"/>
     <table enumId="24" description="Right: Media order template" schemaEnumId="2" label="order_template_media" prefix="otm"/>
     <table enumId="25" description="Right: Product order template" schemaEnumId="2" label="order_template_product" prefix="otp"/>
     <table enumId="26" description="Data: Gad" schemaEnumId="0" label="gad" prefix="gd"/>
@@ -62,7 +64,11 @@
     <table enumId="56" description="Data: VMC 4M" schemaEnumId="0" label="data_marketing_direct_4M" prefix="wp"/>
     <table enumId="57" description="Data: Press Inter 4M" schemaEnumId="0" label="data_press_4M" prefix="wp"/>
     <table enumId="140" description="Data: AdNetTrack 4M" schemaEnumId="0" label="data_adnettrack_4M" prefix="wp"/>
-    
+
+    <table enumId="68" description="Classif: Alarm Media" schemaEnumId="0" label="alarm_media" prefix="al"/>
+    <table enumId="69" description="Classif: Application Media" schemaEnumId="0" label="application_media" prefix="am"/>
+
+    <table enumId="86" description="Classif: Periodicity" schemaEnumId="0" label="periodicity" prefix="pe"/>
     <table enumId="91" description="Right: Login" schemaEnumId="2" label="login" prefix="lo"/>
     
     <table enumId="97" description="Right: Module" schemaEnumId="2" label="module" prefix="m"/>
