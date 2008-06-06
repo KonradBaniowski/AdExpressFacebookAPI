@@ -59,6 +59,8 @@ namespace AdExpress.Private.Results.Excel
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
+            _dataSource = _webSession.Source;
+            this.Response.ContentType = "application/vnd.ms-excel";
 			_idVersion = Page.Request.QueryString.Get("idVersion");
 			_firstInsertionDate = Page.Request.QueryString.Get("firstInsertionDate");
 

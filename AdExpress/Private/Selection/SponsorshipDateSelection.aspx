@@ -4,18 +4,13 @@
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Selection.SponsorshipDateSelection" CodeFile="SponsorshipDateSelection.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
-<HTML>
-	<HEAD>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head runat="server">
 		<title>AdExpress</title>
-		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
-		<meta content="C#" name="CODE_LANGUAGE">
-		<meta content="JavaScript" name="vs_defaultClientScript">
-		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<LINK href="/Css/AdExpress.css" type="text/css" rel="stylesheet">
-		<style type="text/css">BODY {
-	BACKGROUND-IMAGE: none; MARGIN: 0px; BACKGROUND-COLOR: #ffffff
-}
-		</style>
+		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
+		<meta content="C#" name="CODE_LANGUAGE"/>
+		<meta content="JavaScript" name="vs_defaultClientScript"/>
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
 		<script language="JavaScript" type="text/JavaScript">
 		
 			function selectedItem(i){
@@ -81,12 +76,12 @@
 
 
 		</script>
-		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT">
-		<meta http-equiv="expires" content="0">
-		<meta http-equiv="pragma" content="no-cache">
-		<meta content="no-cache" name="Cache-control">
-	</HEAD>
-	<body bottomMargin="0" leftMargin="0" topMargin="0" onload="javascript:selectedItem(7);">
+		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT"/>
+		<meta http-equiv="expires" content="0"/>
+		<meta http-equiv="pragma" content="no-cache"/>
+		<meta content="no-cache" name="Cache-control"/>
+	</head>
+	<body bottomMargin="0" leftMargin="0" topMargin="0" onload="javascript:selectedItem(7);" class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
 			<TABLE id="Table1" height="600" cellSpacing="0" cellPadding="0" width="800" border="0">
 				<TR>

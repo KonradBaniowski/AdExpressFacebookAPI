@@ -2,25 +2,25 @@
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
-<HTML>
-	<HEAD runat="server">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head runat="server">
 		<title>AdExpress</title>
-		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
-		<meta content="C#" name="CODE_LANGUAGE">
-		<meta content="JavaScript" name="vs_defaultClientScript">
-		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-	</HEAD>
+		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
+		<meta content="C#" name="CODE_LANGUAGE"/>
+		<meta content="JavaScript" name="vs_defaultClientScript"/>
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
+	</head>
 	<body class="imageBackGround">
 		<form id="Form1" method="post" runat="server">
-			<table id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
-				<tr bgColor="#644883" height="14">
+			<table id="SaveTable" cellspacing="0" cellpadding="0" width="100%" border="0">
+				<tr class="violetBackGround" style="height:14px">
 					<td style="WIDTH: 14px; HEIGHT: 13px"><asp:Image ID="Image153" runat="server" SkinID="fleche_1" /></td>
 					<td class="txtBlanc11Bold bandeauTitreBackGround" style="WIDTH: 100%; HEIGHT: 13px">&nbsp;
 						<cc1:adexpresstext language="33" id="saveTitle" runat="server" Code="1970"></cc1:adexpresstext></td>
 				</tr>
 				<tr>
-					<td colSpan="2">
-						<table id="SaveData" cellSpacing="0" cellPadding="0" width="100%" border="0">
+					<td colspan="2">
+						<table id="SaveData" cellspacing="0" cellpadding="0" width="100%" border="0">
 							<tr height="35">
 								<td class="txtViolet11Bold" width="150"><cc1:adexpresstext language="33" id="FileNameLabel" runat="server" Code="1746"></cc1:adexpresstext></td>
 								<td><asp:textbox id="tbxFileName" runat="server" Width="300px"></asp:textbox></td>
@@ -49,4 +49,4 @@
 			</table>
 		</form>
 	</body>
-</HTML>
+</html>

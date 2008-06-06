@@ -58,7 +58,18 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 		/// Contrôle qui affiche les résultats de l'APPM sous forme de tableau html
 		/// </summary>
 		protected AppmWebControl appmHtmlWebControl = null;
-
+        /// <summary>
+        /// nom du skin id du controle graphique de l'analyse par famille de presse
+        /// </summary>
+        private string _analyseFamilyInterestPlanSkinID = string.Empty;
+        /// <summary>
+        /// nom du skin id du controle graphique des parts de voix
+        /// </summary>
+        private string _pdvPlanSkinID = string.Empty;
+        /// <summary>
+        /// nom du skin id du controle graphique de la periodicité
+        /// </summary>
+        private string _periodicityPlanSkinID = string.Empty;
 		#endregion
 
 		#region Accesseurs
@@ -87,10 +98,32 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			set{_imageType = value;}
 			get{return _imageType;}
 		}
+
+        /// <summary>
+        /// Obtient ou définit le nom du skin id du controle graphique de l'analyse par famille de presse
+        /// </summary>
+        public string AnalyseFamilyInterestPlanSkinID {
+            set { _analyseFamilyInterestPlanSkinID = value; }
+            get { return _analyseFamilyInterestPlanSkinID; }
+        }
+        /// <summary>
+        /// Obtient ou définit le nom du skin id du controle graphique des parts de voix
+        /// </summary>
+        public string PdvPlanSkinID {
+            set { _pdvPlanSkinID = value; }
+            get { return _pdvPlanSkinID; }
+        }
+        /// <summary>
+        /// Obtient ou définit le nom du skin id du controle graphique de la periodicité
+        /// </summary>
+        public string PeriodicityPlanSkinID {
+            set { _periodicityPlanSkinID = value; }
+            get { return _periodicityPlanSkinID; }
+        }
 		#endregion
 		
 		#region Evènements
-	
+
 		#region Initialisation
 		/// <summary>
 		/// Initialisation
@@ -115,21 +148,21 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 				switch(_customerWebSession.CurrentTab){
 
 					case APPM.interestFamily :
-						appmChartWebControl = new AnalyseFamilyInterestPlanAppmChartWebControl(_customerWebSession,_dataSource,this._imageType);
+                        appmChartWebControl = new AnalyseFamilyInterestPlanAppmChartWebControl(_customerWebSession, _dataSource, this._imageType,_analyseFamilyInterestPlanSkinID);
 						break;
 					case APPM.PDVPlan :
-						appmChartWebControl = new PdvPlanAppmChartWebControl(_customerWebSession,_dataSource,this._imageType);
+						appmChartWebControl = new PdvPlanAppmChartWebControl(_customerWebSession,_dataSource,this._imageType,_pdvPlanSkinID);
 						break;
 					case APPM.periodicityPlan:
-						appmChartWebControl = new PeriodicityPlanAppmChartWebControl(_customerWebSession,_dataSource,this._imageType);
+						appmChartWebControl = new PeriodicityPlanAppmChartWebControl(_customerWebSession,_dataSource,this._imageType,_periodicityPlanSkinID);
 						break;
 				}
-				if(appmChartWebControl!=null){
-					appmChartWebControl.SetDesignMode();
-					appmChartWebControl.EnableViewState=false;
-					appmChartWebControl.ID="appmChartWebControl_"+this.ID;																			
-					Controls.Add(appmChartWebControl);
-				}
+                if (appmChartWebControl != null) {
+                    //appmChartWebControl.SetDesignMode();
+                    appmChartWebControl.EnableViewState = false;
+                    appmChartWebControl.ID = "appmChartWebControl_" + this.ID;
+                    Controls.Add(appmChartWebControl);
+                }
 			}
 
 			//Resultats sous forme de Tableaux

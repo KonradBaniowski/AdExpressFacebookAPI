@@ -41,6 +41,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 			StringBuilder html=null;
 			string classCss1="p2";
 			string classCss2="insertionHeader";
+            string classCssImg = "affinitiesBorderImg";
 			#endregion
 
 			#region getting data 
@@ -57,11 +58,11 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					html.Append("\r\n\t<tr height=\"30px\">");
 					html.Append("<td align= \"center\" class=\""+classCss1+"\" nowrap >"+GestionWeb.GetWebWord(1708,webSession.SiteLanguage)+ "</td>");
 					if(!excel)
-						html.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
 					html.Append("<td align= \"center\" class=\""+classCss1+"\" nowrap >"+GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ "</td>");
 					html.Append("<td align= \"center\" class=\""+classCss1+"\" nowrap >"+GestionWeb.GetWebWord(1686,webSession.SiteLanguage)+ "</td>");
 					if(!excel)
-						html.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
 					html.Append("<td align= \"center\" class=\""+classCss1+"\" nowrap >"+GestionWeb.GetWebWord(1685,webSession.SiteLanguage)+ "</td>");
 					html.Append("<td align= \"center\" class=\""+classCss1+"\" nowrap >"+GestionWeb.GetWebWord(1686,webSession.SiteLanguage)+ "</td>");
 					html.Append("</tr>");
@@ -77,12 +78,12 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 						html.Append("\r\n\t<tr height=\"20px\">");
 						html.Append("<td align= \"left\" class=\""+classCss2+"\" nowrap>"+row["target"]+"</td>");
 						if(!excel)
-							html.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
 //						html.Append("<td class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(row["totalGRP"]).ToString("# ### ##0.##")+ "</td>");
 						html.Append("<td class=\""+classCss2+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(row["totalGRP"].ToString(),WebConstantes.CustomerSessions.Unit.grp,false)+ "</td>");
 						html.Append("<td class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(row["GRPAffinities"]).ToString("# ### ##0")+ "</td>");
 						if(!excel)
-							html.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
 						html.Append("<td class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(row["cgrp"]).ToString("# ### ##0")+ "</td>");
 						html.Append("<td class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(row["cgrpAffinities"]).ToString("# ### ##0")+ "</td>");
 						html.Append("</tr>");				

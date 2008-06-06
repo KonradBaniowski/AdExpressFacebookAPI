@@ -17,6 +17,7 @@ using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM{
 	/// <summary>
@@ -80,7 +81,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					t=new StringBuilder(3500);
 					t.Append("<table  border=0 cellpadding=0 cellspacing=0 width=600 >");
 					//titre
-					t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;font-size: 16px\">"+GestionWeb.GetWebWord(1666,webSession.SiteLanguage)+"</td></tr>");	
+					//t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;font-size: 16px\">"+GestionWeb.GetWebWord(1666,webSession.SiteLanguage)+"</td></tr>");
+                    t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"portofolioSynthesisBorderHeader\" align=\"center\">" + GestionWeb.GetWebWord(1666, webSession.SiteLanguage) + "</td></tr>");	
 					if(idProduct!=0){
 						//Nom du Produit
 						t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1418,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["product"]+"</td></tr>");	
@@ -238,25 +240,27 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 
 			try{
 				if(synthesisData!=null&&synthesisData.Count>0){
+                    string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+
 					t=new StringBuilder(3500);
 					t.Append("<table  border=0 cellpadding=0 cellspacing=0 width=600 >");			
 
 					#region TEMP : Info sur le clic droit de la souris
-					if(!excel){
+					if(!excel){file:///C:\Dev\Csharp2\AdExpress International Demo\Trunk\AdExpress\App_Themes\DefaultAdExpressFr\Images\Common\block_fleche.gif
 						t.Append("<tr><td colspan=2>");
-						t.Append("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#DED8E5\">");
+                        t.Append("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"lightPurple\">");
 						t.Append("\n<tr><td>");
 						t.Append("\n<script language=\"javascript\" type=\"text/javascript\">");
 						t.Append("\nif(hasRightFlashVersion==true){");
 						t.Append("\ndocument.writeln('<object id=\"infoOptionFlash\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"400\" height=\"20\" VIEWASTEXT>');");
-						t.Append("\ndocument.writeln('<param name=\"movie\" value=\"/Flash/"+webSession.SiteLanguage+"/infoOptionsOneLine.swf\">');");
+                        t.Append("\ndocument.writeln('<param name=\"movie\" value=\"/App_Themes/" + themeName + "/Flash/Culture/infoOptionsOneLine.swf\">');");
 						t.Append("\ndocument.writeln('<param name=\"quality\" value=\"high\">');");
 						t.Append("\ndocument.writeln('<param name=\"menu\" value=\"false\">');");
 						t.Append("\ndocument.writeln('<param name=\"wmode\" value=\"transparent\">');");
-						t.Append("\ndocument.writeln('<embed src=\"/Flash/"+webSession.SiteLanguage+"/infoOptionsOneLine.swf\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"400\" height=\"20\"></embed>');");
+                        t.Append("\ndocument.writeln('<embed src=\"/App_Themes/" + themeName + "/Flash/Culture/infoOptionsOneLine.swf\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"400\" height=\"20\"></embed>');");
 						t.Append("\ndocument.writeln('</object></td>');");
 						t.Append("\n}\nelse{");
-						t.Append("\ndocument.writeln('<img src=\"/Images/"+webSession.SiteLanguage+"/FlashReplacement/infoOptionsOneLine.gif\"></td>');");
+                        t.Append("\ndocument.writeln('<img src=\"/App_Themes/" + themeName + "/Images/Culture/FlashReplacement/infoOptionsOneLine.gif\"></td>');");
 						t.Append("\n}");
 						t.Append("\n</script>");
 						t.Append("\n</tr>");
@@ -266,7 +270,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					#endregion
 
 					//titre
-					t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;font-size: 16px\">"+GestionWeb.GetWebWord(2003,webSession.SiteLanguage)+"</td></tr>");	
+                    t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" class=\"synthesisUiTitle\">" + GestionWeb.GetWebWord(2003, webSession.SiteLanguage) + "</td></tr>");	
 						
 						//Numéro de version
 						t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(2005,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["version"]+"</td></tr>");	

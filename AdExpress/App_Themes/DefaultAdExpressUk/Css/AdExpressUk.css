@@ -228,6 +228,14 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 	border-right :#644883 1px solid; 
 	border-bottom :#644883 1px solid;
 }
+.BlancBorder{
+	border-color : #FFFFFF;
+}
+.BlancBorderColorWithoutTop{
+	border-bottom: #ffffff 0px solid; 
+	border-left: #ffffff 0px solid; 
+	border-right: #ffffff 0px solid;
+}
 .violetBorder{
 	border-color : #FF0000;
 	border-top :#FF0000 1px solid; 
@@ -368,6 +376,11 @@ table.creationWhiteBorder{
 	cursor : pointer;
 }
 /*Text style*/
+.txtMediumPurple
+{
+	color : #D6CBDE;
+}
+
 .txtViolet{
 	color : #7D3200;
 }
@@ -1674,7 +1687,7 @@ tr.asl5r{
 /*Dynamiques tables*/
 /*Header*/
 tr.astd0{
-	background-color:#644883;
+	background-color:#FF0000;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #FFFFFF;
@@ -1829,7 +1842,7 @@ tr.asl2x{
 }
 /*Hierarchical level line 3*/
 tr.asl3{
-	background-color:#B1A3C1;
+	background-color:#425A3E;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
@@ -2039,7 +2052,7 @@ tr.asl3brx{
 }
 /*Hierarchical level line 4*/
 tr.asl4{
-	background-color:#D0C8DA;
+	background-color:#C8E6C3;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
@@ -2296,4 +2309,24 @@ table.divTable{
 	color: #425A3E;
 	font-weight: bold;
 	border:solid 1px #425A3E;
+}
+
+td.affinitiesBorderImg
+{
+	background-color:#FF0000;
+	border-right-width: 1px; 
+	border-right-color:#FFFFFF;
+	border-right-style:solid;	
+	border-left-width:1px;
+	border-right-color:#FFFFFF;
+	border-right-style:solid;
+}
+
+td.synthesisUiTitle
+{
+	border-right: #644883 1px solid;
+	border-top: #644883 1px solid; 
+	border-left: #644883 1px solid; 
+	border-bottom: #644883 1px solid;
+	font-size: 16px
 }

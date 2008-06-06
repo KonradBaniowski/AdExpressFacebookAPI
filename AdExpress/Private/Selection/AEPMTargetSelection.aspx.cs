@@ -79,8 +79,11 @@ namespace AdExpress.Private.Selection{
 			// Initialisation de la liste des média
 			ModuleTitleWebControl1.CustomerWebSession = _webSession;
 			InformationWebControl1.Language = _webSession.SiteLanguage;
-			validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-			validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+            HeaderWebControl1.Language = _webSession.SiteLanguage;
+            
+
+			//validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+			//validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 			#endregion
 
 			#region Rappel des différentes sélections

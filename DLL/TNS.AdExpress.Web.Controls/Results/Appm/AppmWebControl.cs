@@ -23,6 +23,7 @@ using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using APPMUIs = TNS.AdExpress.Web.UI.Results.APPM;
 using TNS.AdExpress.Domain.Translation;
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Results.Appm{
 	/// <summary>
@@ -210,24 +211,24 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 					#region Wave
                     Int64 idWave=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave,CustomerCst.Right.type.aepmWaveAccess));									
 					#endregion
-
+                    string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 					result =  APPMUIs.MediaPlanUI.GetWithVersionHTML(webSession,_dataSource,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget,false);
 					
 					if(result!=null && result.HTMLCode!=null && result.HTMLCode.Length>0){
 						#region Construction du tableaux global
-						html.Append("<table cellSpacing=\"0\" cellPadding=\"0\" align=\"left\" border=\"0\">");
+						html.Append("<table cellspacing=\"0\" cellpadding=\"0\" align=\"left\" border=\"0\">");
 						#endregion
 
 						#region Revenir aux versions sans zoom
 						if(webSession.SloganIdZoom>0){
-							html.Append("\r\n\t<tr align=\"left\" bgcolor=\"#B1A3C1\">\r\n\t\t<td>");					
-							html.Append("<a class=\"roll06\" href=\"javascript:get_back();\" onmouseover=\"back_"+this.ID+".src='/Images/Common/button/back_down.gif';\" onmouseout=\"back_"+this.ID+".src='/Images/Common/button/back_up.gif';\"><img align=\"absmiddle\" name=\"back_"+this.ID+"\" border=0 src=\"/Images/Common/button/back_up.gif\">&nbsp;" + GestionWeb.GetWebWord(1978 , webSession.SiteLanguage) + "</a>");
+                            html.Append("\r\n\t<tr align=\"left\" class=\"violetBackGroundV3\">\r\n\t\t<td>");
+                            html.Append("<a class=\"roll06\" href=\"javascript:get_back();\" onmouseover=\"back_" + this.ID + ".src='/App_Themes/" + themeName + "/Images/Common/button/back_down.gif';\" onmouseout=\"back_" + this.ID + ".src='/App_Themes/" + themeName + "/Images/Common/button/back_up.gif';\"><img align=\"absmiddle\" name=\"back_" + this.ID + "\" border=0 src=\"/App_Themes/" + themeName + "/Images/Common/button/back_up.gif\">&nbsp;" + GestionWeb.GetWebWord(1978, webSession.SiteLanguage) + "</a>");
 							html.Append("\r\n\t\t</td>\r\n\t</tr>");
 						}
 						#endregion
 
 						VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(webSession,result.VersionsDetail);
-						html.Append("\r\n\t<tr bgcolor=\"#B1A3C1\">\r\n\t\t<td>");
+                        html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
 						html.Append(versionsUI.GetHtml());
 						html.Append("\r\n\t\t</td>\r\n\t</tr>");
 						html.Append("\r\n\t<tr height=\"1\">\r\n\t\t<td>");

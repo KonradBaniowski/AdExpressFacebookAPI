@@ -96,6 +96,7 @@ namespace AdExpress.Private.Selection{
 			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);			
 			ModuleTitleWebControl1.CustomerWebSession = _webSession;
 			InformationWebControl1.Language = _webSession.SiteLanguage;
+            HeaderWebControl1.Language = _webSession.SiteLanguage;
 			//validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
 			//validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";			
 			#endregion

@@ -44,6 +44,7 @@ namespace AdExpress.Private.Results.Excel{
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
+                Response.ContentType = "application/vnd.ms-excel";
 			}	
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){

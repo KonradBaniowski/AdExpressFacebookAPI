@@ -147,11 +147,17 @@ namespace AdExpress.Private.Selection{
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
+                HeaderWebControl1.Language = _webSession.SiteLanguage;
+                title1AdExpTxt.Language = _webSession.SiteLanguage;
+                title2AdExpTxt.Language = _webSession.SiteLanguage;
+                comment2AdExpressText.Language = _webSession.SiteLanguage;
+                monthAdExpressText.Language = _webSession.SiteLanguage;
+                weekAdExpressText.Language = _webSession.SiteLanguage;
 
-				validateButton1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
-				validateButton2.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton2.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//validateButton1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//validateButton2.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton2.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 ////			previousYear = GestionWeb.GetWebWord(787,_webSession.SiteLanguage);
 //				previousMonth = GestionWeb.GetWebWord(788,_webSession.SiteLanguage);
 //				previousWeek = GestionWeb.GetWebWord(789,_webSession.SiteLanguage);

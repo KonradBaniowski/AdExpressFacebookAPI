@@ -74,6 +74,19 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 		/// Obtient ou définit le type de l'image
 		/// </summary>		
 		protected ChartImageType _imageType = ChartImageType.Jpeg;
+
+        /// <summary>
+        /// nom du skin id du controle graphique de l'analyse par famille de presse
+        /// </summary>
+        private string _analyseFamilyInterestPlanSkinID = string.Empty;
+        /// <summary>
+        /// nom du skin id du controle graphique des saisonalité
+        /// </summary>
+        private string _seasonalityPlanSkinID = string.Empty;
+        /// <summary>
+        /// nom du skin id du controle graphique de la periodicité
+        /// </summary>
+        private string _periodicityPlanSkinID = string.Empty;
 		#endregion
 
 		#region Propriétés
@@ -287,6 +300,36 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			get{return _backgroudColorL1;}
 			set{_backgroudColorL1 = value;}
 		}
+
+        /// <summary>
+		/// Couleur de la bordure droite de selection de la ligne
+		/// </summary>
+		protected string _cssDetailSelectionRightBorderL1="";
+		/// <summary>
+		/// Obtient ou définit Couleur de la bordure droite de selection de la ligne
+		/// </summary>
+		[Bindable(true), 
+		Category("Level1"), 
+		DefaultValue("")] 
+		public string CssDetailSelectionRightBorderL1{
+			get{return _backgroudColorL1;}
+			set{_backgroudColorL1 = value;}
+		}
+
+        /// <summary>
+		/// Couleur de la bordure du bas de selection de la ligne
+		/// </summary>
+		protected string _cssDetailSelectionRightBottomBorderL1="";
+		/// <summary>
+		/// Obtient ou définit Couleur de la bordure du bas de selection de la ligne
+		/// </summary>
+		[Bindable(true), 
+		Category("Level1"), 
+		DefaultValue("")] 
+		public string CssDetailSelectionRightBottomBorderL1{
+			get{return _cssDetailSelectionRightBottomBorderL1;}
+			set{_cssDetailSelectionRightBottomBorderL1 = value;}
+		}
 		#endregion
 
 		#region Level 2
@@ -334,6 +377,36 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			get{return _backgroudColorL2;}
 			set{_backgroudColorL2 = value;}
 		}
+
+        /// <summary>
+        /// Couleur de la bordure droite de selection de la ligne
+        /// </summary>
+        protected string _cssDetailSelectionRightBorderL2 = "";
+        /// <summary>
+        /// Obtient ou définit Couleur de la bordure droite de selection de la ligne
+        /// </summary>
+        [Bindable(true),
+        Category("Level2"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBorderL2 {
+            get { return _backgroudColorL2; }
+            set { _backgroudColorL2 = value; }
+        }
+
+        /// <summary>
+        /// Couleur de la bordure du bas de selection de la ligne
+        /// </summary>
+        protected string _cssDetailSelectionRightBottomBorderL2 = "";
+        /// <summary>
+        /// Obtient ou définit Couleur de la bordure du bas de selection de la ligne
+        /// </summary>
+        [Bindable(true),
+        Category("Level2"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBottomBorderL2 {
+            get { return _cssDetailSelectionRightBottomBorderL2; }
+            set { _cssDetailSelectionRightBottomBorderL2 = value; }
+        }
 		#endregion
 
 		#region Level 3
@@ -381,6 +454,36 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			get{return _backgroudColorL3;}
 			set{_backgroudColorL3 = value;}
 		}
+
+        /// <summary>
+        /// Couleur de la bordure droite de selection de la ligne
+        /// </summary>
+        protected string _cssDetailSelectionRightBorderL3 = "";
+        /// <summary>
+        /// Obtient ou définit Couleur de la bordure droite de selection de la ligne
+        /// </summary>
+        [Bindable(true),
+        Category("Level3"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBorderL3 {
+            get { return _backgroudColorL3; }
+            set { _backgroudColorL3 = value; }
+        }
+
+        /// <summary>
+        /// Couleur de la bordure du bas de selection de la ligne
+        /// </summary>
+        protected string _cssDetailSelectionRightBottomBorderL3 = "";
+        /// <summary>
+        /// Obtient ou définit Couleur de la bordure du bas de selection de la ligne
+        /// </summary>
+        [Bindable(true),
+        Category("Level3"),
+        DefaultValue("")]
+        public string CssDetailSelectionRightBottomBorderL3 {
+            get { return _cssDetailSelectionRightBottomBorderL3; }
+            set { _cssDetailSelectionRightBottomBorderL3 = value; }
+        }
 		#endregion
 
 		#region Level Total
@@ -557,6 +660,27 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			set{_imageType = value;}
 			get{return _imageType;}
 		}
+        /// <summary>
+        /// Obtient ou définit le nom du skin id du controle graphique de l'analyse par famille de presse
+        /// </summary>
+        public string AnalyseFamilyInterestPlanSkinID {
+            set { _analyseFamilyInterestPlanSkinID = value; }
+            get { return _analyseFamilyInterestPlanSkinID; }
+        }
+        /// <summary>
+        /// Obtient ou définit le nom du skin id du controle graphique des saisonnalité
+        /// </summary>
+        public string SeasonalityPlanSkinID {
+            set { _seasonalityPlanSkinID = value; }
+            get { return _seasonalityPlanSkinID; }
+        }
+        /// <summary>
+        /// Obtient ou définit le nom du skin id du controle graphique de la periodicité
+        /// </summary>
+        public string PeriodicityPlanSkinID {
+            set { _periodicityPlanSkinID = value; }
+            get { return _periodicityPlanSkinID; }
+        }
 		#endregion
 
 		#region Evènements
@@ -661,17 +785,17 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 					switch(_customerWebSession.CurrentTab){
 
 						case APPM.sectorDataPeriodicity:
-							appmChartWebControl = new PeriodicityPlanAppmChartWebControl(_customerWebSession,_dataSource,this._imageType);
+							appmChartWebControl = new PeriodicityPlanAppmChartWebControl(_customerWebSession,_dataSource,this._imageType,_periodicityPlanSkinID);
 							break;
 						case APPM.sectorDataInterestFamily:
-							appmChartWebControl = new AnalyseFamilyInterestPlanAppmChartWebControl(_customerWebSession,_dataSource,this._imageType);
+							appmChartWebControl = new AnalyseFamilyInterestPlanAppmChartWebControl(_customerWebSession,_dataSource,this._imageType,_analyseFamilyInterestPlanSkinID);
 							break;
 						case APPM.sectorDataSeasonality:
-							appmChartWebControl = new SeasonalityPlanSectorDataChartWebControl(_customerWebSession,_dataSource,this._imageType);
+							appmChartWebControl = new SeasonalityPlanSectorDataChartWebControl(_customerWebSession,_dataSource,this._imageType,_seasonalityPlanSkinID);
 							break;
 					}
 					if(appmChartWebControl!=null){
-						appmChartWebControl.SetDesignMode();
+						//appmChartWebControl.SetDesignMode();
 						appmChartWebControl.EnableViewState=false;
 						appmChartWebControl.ID="appmChartWebControl_"+this.ID;																			
 						Controls.Add(appmChartWebControl);
@@ -723,6 +847,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			resultwebcontrol.CssDetailSelectionBordelLevel=CssDetailSelectionBordelLevel;
 			resultwebcontrol.CssDetailSelectionL1=CssDetailSelectionL1;
 			resultwebcontrol.CssDetailSelectionL2 = CssDetailSelectionL2;
+
+            resultwebcontrol.CssDetailSelectionRightBorderL1 = CssDetailSelectionRightBorderL1;
+            resultwebcontrol.CssDetailSelectionRightBorderL2 = CssDetailSelectionRightBorderL2;
+            resultwebcontrol.CssDetailSelectionRightBottomBorderL1 = CssDetailSelectionRightBottomBorderL1;
+            resultwebcontrol.CssDetailSelectionRightBottomBorderL2 = CssDetailSelectionRightBottomBorderL2;
 			resultwebcontrol.CssDetailSelectionTitle=CssDetailSelectionTitle;
 			resultwebcontrol.CssDetailSelectionTitleData=CssDetailSelectionTitleData;
 			resultwebcontrol.CssDetailSelectionTitleGlobal=CssDetailSelectionTitleGlobal;

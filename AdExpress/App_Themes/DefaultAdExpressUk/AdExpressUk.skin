@@ -86,7 +86,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="webUiResults" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
 <%@ Register TagPrefix="ctrCreatives" Namespace="TNS.AdExpress.Web.Controls.Results.Creatives" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrMadiaPlan" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
-
+<%@ Register TagPrefix="ctrAppm" Namespace="TNS.AdExpress.Web.Controls.Results.Appm" Assembly="TNS.AdExpress.Web.Controls" %>
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
 <ctrHeader:HeaderWebControl   
@@ -303,6 +303,19 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            FontColorSelectedDate = "#FFFFFF"
                            TableColorNoDate = "#9378B3"
                            TdBgcolor = "#FFFFFF"
+/>
+
+<%-- Last month week calendar web control : used to show a calendar who allows you to choose between a month and week --%>
+<ctrSelections:lastmonthweekcalendarwebcontrol  
+                           runat="server"
+                           TableBorderColor = "#000000"
+                           TableColor = "#FFFFFF"
+                           TableColorSelectedDate = "#000000"
+                           TitleBackgroundColor = "#000000"
+                           FontColor = "#CCCCCC"
+                           FontColorSelectedDate = "#FFFFFF"
+                           TableColorNoDate = "#000000"
+                           SkinID="lastmonthweekcalendarwebcontrol1"
 />
 
 <%-- Date list web control : used to build a list of numbers to allow relative dates selection --%>
@@ -647,4 +660,227 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssDefaultListLabel="txtViolet11Bold"
 						   BackGroundColor="#D6F3CE" 
 						   ThemeName = "DefaultAdExpressUk"
+/>
+<%-- Result web control : used to display a generic result table (HTML) (portfolio Synthesis) --%>
+<ctrResults:Resultwebcontrol 
+                           runat="server" 
+                           BackgroudColorL1="#D0C8DA" 
+                           BackgroudColorL2="#E9E6EF" 
+                           CssL1="portofolioSynthesisL1" 
+                           CssL2="portofolioSynthesisL2" 
+                           SkinID="portofolioSynthesisResultTable" 
+/>
+
+<%-- Result web control : used to display a generic result table (Excel) (portfolio Synthesis) --%>
+<ctrResults:ResultWebControl 
+                           runat="server" 
+                           CssL2="portofolioSynthesisExcel2"
+                           CssL1="portofolioSynthesisExcel1" 
+                           CssDetailSelectionL1="dsLv1Excel" 
+                           CssDetailSelectionL2="dsLv2Excel" 
+                           CssDetailSelectionL3="dsLv3Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="portofolioExcelSynthesisResultTable"  
+/>
+
+<ctrAppm:AppmContainerWebControl
+                           runat="server" 
+                           AnalyseFamilyInterestPlanSkinID="AnalyseFamilyInterestPlanSkinID"
+                           PdvPlanSkinID="PdvPlanSkinID"
+                           PeriodicityPlanSkinID="PeriodicityPlanSkinID"
+                           
+				           SkinID="container"  
+/>
+
+<ctrAppm:AnalyseFamilyInterestPlanAppmChartWebControl
+                           runat="server" 
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#644883"
+                           CamembertTitleTextFontColor1="#B1A3C1"
+                           CamembertTitleTextFontSize1="10"
+                           CamembertTitleTextFontFamily1="Times new Roman"
+                           CamembertTitleTextFontColor2="#B1A3C1"
+                           CamembertTitleTextFontSize2="10"
+                           CamembertTitleTextFontFamily2="Times new Roman"
+                           
+                           HistogrammeTitleTextFontColor="#B1A3C1"
+                           HistogrammeTitleTextFontSize="10"
+                           HistogrammeTitleTextFontFamily="Times new Roman"
+                           HistogrammeLegendTextFontColor="#E1E0DA"
+                           HistogrammeLegendTextFontSize="8"
+                           HistogrammeLegendTextFontFamily="Times new Roman"
+                           HistogrammeColorFamille1="#B1A3C1"
+                           HistogrammeColorFamille2="#9D9885"
+                           HistogrammeColorFamille3="#9D9885"
+                           HistogrammeBackgroundColor="#644883"
+                           HistogrammeOrdonneeTextFontFamily="Times new Roman" 
+                           HistogrammeOrdonneeTextFontSize="8" 
+                           HistogrammeAbscisseTextFontFamily="Times new Roman" 
+                           HistogrammeAbscisseTextFontSize="8" 
+                           
+                           TextNoResultFontFamily="Times new Roman"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#B1A3C1" 
+                           
+                           ControlBorderSize="2"
+                           ControlBorderColor="#B1A3C1"                
+                           
+				           SkinID="AnalyseFamilyInterestPlanSkinID"  
+/>
+<ctrAppm:PdvPlanAppmChartWebControl
+                           runat="server"     
+                           
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#644883"
+                           
+                           CamembertEurosFontColor = "#E1E0DA"
+                           CamembertEurosFontSize = "12"
+                           CamembertEurosFontFamily = "Arial"
+                           
+                           CamembertPagesFontColor = "#E1E0DA"
+                           CamembertPagesFontSize = "12"
+                           CamembertPagesFontFamily = "Arial"
+                           
+                           CamembertInsertionsFontColor = "#644883"
+                           CamembertInsertionsFontSize = "12"
+                           CamembertInsertionsFontFamily = "Arial"
+                           
+                           CamembertGRPFontColor = "#E1E0DA"
+                           CamembertGRPFontSize = "12"
+                           CamembertGRPFontFamily = "Arial"
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#E1E0DA"
+                           
+                           ControlBorderSize="2"
+                           ControlBorderColor="#4D964B" 
+                           
+				           SkinID="PdvPlanSkinID"  
+/>
+<ctrAppm:PeriodicityPlanAppmChartWebControl
+                           runat="server"           
+                           
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#644883"
+                           CamembertTitleTextFontColor1="#B1A3C1"
+                           CamembertTitleTextFontSize1="10"
+                           CamembertTitleTextFontFamily1="Times new Roman"
+                           CamembertTitleTextFontColor2="#B1A3C1"
+                           CamembertTitleTextFontSize2="10"
+                           CamembertTitleTextFontFamily2="Times new Roman"
+                           
+                           HistogrammeTitleTextFontColor="#B1A3C1"
+                           HistogrammeTitleTextFontSize="10"
+                           HistogrammeTitleTextFontFamily="Times new Roman"
+                           HistogrammeLegendTextFontColor="#E1E0DA"
+                           HistogrammeLegendTextFontSize="8"
+                           HistogrammeLegendTextFontFamily="Times new Roman"
+                           HistogrammeColorFamille1="#B1A3C1"
+                           HistogrammeColorFamille2="#9D9885"
+                           HistogrammeColorFamille3="#9D9885"
+                           HistogrammeBackgroundColor="#644883"
+                           HistogrammeOrdonneeTextFontFamily="Times new Roman" 
+                           HistogrammeOrdonneeTextFontSize="8" 
+                           HistogrammeAbscisseTextFontFamily="Times new Roman" 
+                           HistogrammeAbscisseTextFontSize="8" 
+                           
+                           TextNoResultFontFamily="Times new Roman"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#B1A3C1" 
+                           
+                           ControlBorderSize="2"
+                           ControlBorderColor="#B1A3C1" 
+                              
+				           SkinID="PeriodicityPlanSkinID"  
+/>
+
+<ctrAppm:SectorDataContainerWebControl
+                           runat="server"           
+                           
+                           CssLHeader="h2" 
+                           CssTitle="title" 
+                           CssL1="synthesisLv1" 
+                           CssL2="synthesisLv2"
+                           CssL3="avgLv0" 
+						   CssDetailSelectionL1="dsLv1" 
+						   CssDetailSelectionL2="dsLv2" 
+						   CssDetailSelectionTitle="dsTitle" 
+						   CssDetailSelectionTitleData="dsTitleData" 
+						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
+						   CssDetailSelectionBordelLevel="dsBorderLevel" 
+						   CssLTotal="lv0" 
+						   CssLAffinities="affinitiesLv1" 
+						   
+						   AnalyseFamilyInterestPlanSkinID="AnalyseFamilyInterestPlanSkinID"
+                           SeasonalityPlanSkinID="SeasonalityPlanSkinID"
+                           PeriodicityPlanSkinID="PeriodicityPlanSkinID"
+  
+				           SkinID="SectorData"  
+/>
+
+<ctrAppm:SectorDataContainerWebControl
+                           runat="server" 
+
+                           CssL1="exlv2" 
+                           CssL2="exlv3" 
+                           CssLHeader="exh2"
+				           CssTitle="synthesisTitleEx" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel" 
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionTitle="dsTitle"
+				           CssDetailSelectionTitleData="dsTitleData" 
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal"  
+				           CssLAffinities="exlv2"
+				           CssLTotal="exlv0" 
+				           CssDetailSelectionL2="dsLv2Excel"
+				           
+				           SkinID="SectorDataExcel"
+/>
+
+
+
+<ctrAppm:SeasonalityPlanSectorDataChartWebControl
+                           runat="server"  
+                           
+                           PieColors="#000000,#4D964B,#F1F1F1,#9D9885,#FF05B6,#CAFFCA,#FFF0F0,#FFD7D7,#E1E0DA,#D0C8DA,#B1A3C1,#644883"
+                           
+                           AbscisseTextFontFamily="Arial" 
+                           Ordonnee1TextFontFamily="Arial" 
+                           Ordonnee2TextFontFamily="Arial"
+                           
+                           HistogrammeTitleTextFontColor="#644883"
+                           HistogrammeTitleTextFontSize="10"
+                           HistogrammeTitleTextFontFamily="Arial"
+                           HistogrammeColorFamille1="#9479B5"
+                           HistogrammeFamille1LegendTextFontSize="8"
+                           HistogrammeFamille1LegendTextFontFamily="Arial"
+                           HistogrammeBackgroundColor="#DECFE7"
+                           HistogrammeOrdonneeTextFontSize="8" 
+                           HistogrammeAbscisseTextFontSize="8"
+                           
+                           GraphTitleTextFontColor="#644883"
+                           GraphTitleTextFontSize="10"
+                           GraphTitleTextFontFamily="Arial"
+                           GraphColorFamille1="#9479B5"
+                           GraphFamille1LegendTextFontSize="8"
+                           GraphFamille1LegendTextFontFamily="Arial"
+                           GraphBackgroundColor="#DECFE7"
+                           GraphOrdonneeTextFontSize="8" 
+                           GraphAbscisseTextFontSize="8"
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#644883" 
+
+                           ControlBorderSize="2"
+                           ControlBorderColor="#634984"
+
+                           SkinID="SeasonalityPlanSkinID"  
 />

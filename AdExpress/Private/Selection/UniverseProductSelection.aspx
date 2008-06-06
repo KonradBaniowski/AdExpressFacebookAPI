@@ -166,9 +166,9 @@
 									<table cellspacing="0" cellpadding="0" border="0">
 										<tr>
 											<td align="right" width="649">&nbsp;
-												<A style="cursor:pointer;" onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" >
-													<img src="/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif" border="0" name="bouton"></A>&nbsp;
-												&nbsp;<cc2:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc2:imagebuttonrolloverwebcontrol></td>
+												<a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" >
+													<asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
+												&nbsp;<cc2:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
 											<td width="1%"></td>
 										</tr>
 									</table>

@@ -58,6 +58,8 @@ namespace AdExpress.Private.Results.Jpeg
 		/// <param name="e">EventArgs</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
+                this._dataSource = _webSession.Source;
+
 					#region Flash d'attente
 					Page.Response.Write(LoadingSystem.GetHtmlDiv(_webSession.SiteLanguage,Page));
 					Page.Response.Flush();

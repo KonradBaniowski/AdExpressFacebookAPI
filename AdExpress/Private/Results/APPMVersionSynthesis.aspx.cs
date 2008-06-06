@@ -70,6 +70,8 @@ namespace AdExpress.Private.Results{
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 
+            _dataSource = _webSession.Source;
+
 			#region Gestion du flash d'attente
 			Page.Response.Write(LoadingSystem.GetHtmlDiv(_webSession.SiteLanguage,Page));
 			Page.Response.Flush();

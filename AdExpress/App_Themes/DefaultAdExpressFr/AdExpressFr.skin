@@ -698,21 +698,26 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrAppm:AppmContainerWebControl
                            runat="server" 
                            AnalyseFamilyInterestPlanSkinID="AnalyseFamilyInterestPlanSkinID"
-                           PdvPlanSkinID=""
-                           PeriodicityPlanSkinID=""
+                           PdvPlanSkinID="PdvPlanSkinID"
+                           PeriodicityPlanSkinID="PeriodicityPlanSkinID"
+                           
 				           SkinID="container"  
 />
 
 <ctrAppm:AnalyseFamilyInterestPlanAppmChartWebControl
                            runat="server" 
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#644883"
-                           CamembertTitleTextFontColor=""
-                           CamembertTitleTextFontSize=""
-                           CamembertTitleTextFontFamily=""
                            
-                           HistogrammeTitleTextFontColor=""
-                           HistogrammeTitleTextFontSize=""
-                           HistogrammeTitleTextFontFamily=""
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#F5ECFF,#395573,#6B8199,#C3D3E6,#EDF6FF,#525A3E,#B0BF86,#DCE6C3,#FAFFEC,#3E5A51,#7DB3A2,#C3E6DB,#ECFFF9,#425A3E,#8EBF86,#C8E6C3,#EEFFEC,#7D3200,#D95700,#E6A173,#FFD9BF,#43415A,#908DBF,#C9C7E6,#EFEEFF,#7D4B00,#B36B00,#FFCC80,#FFE6BF"
+                           CamembertTitleTextFontColor1="#644883"
+                           CamembertTitleTextFontSize1="10"
+                           CamembertTitleTextFontFamily1="Arial"
+                           CamembertTitleTextFontColor2="#644883"
+                           CamembertTitleTextFontSize2="10"
+                           CamembertTitleTextFontFamily2="Arial"
+                           
+                           HistogrammeTitleTextFontColor="#644883"
+                           HistogrammeTitleTextFontSize="10"
+                           HistogrammeTitleTextFontFamily="Arial"
                            HistogrammeLegendTextFontColor="#000000"
                            HistogrammeLegendTextFontSize="8"
                            HistogrammeLegendTextFontFamily="Arial"
@@ -729,8 +734,161 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TextNoResultFontSize="8"
                            TextNoResultFontColor="#644883" 
                            
-                           ControlBorderSize=""
-                           ControlBorderColor=""                
+                           ControlBorderSize="2"
+                           ControlBorderColor="#634984"                
                            
 				           SkinID="AnalyseFamilyInterestPlanSkinID"  
+/>
+<ctrAppm:PdvPlanAppmChartWebControl
+                           runat="server"     
+                           
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#F5ECFF,#395573,#6B8199,#C3D3E6,#EDF6FF,#525A3E,#B0BF86,#DCE6C3,#FAFFEC,#3E5A51,#7DB3A2,#C3E6DB,#ECFFF9,#425A3E,#8EBF86,#C8E6C3,#EEFFEC,#7D3200,#D95700,#E6A173,#FFD9BF,#43415A,#908DBF,#C9C7E6,#EFEEFF,#7D4B00,#B36B00,#FFCC80,#FFE6BF"        
+                           
+                           CamembertEurosFontColor = "#644883"
+                           CamembertEurosFontSize = "12"
+                           CamembertEurosFontFamily = "Arial"
+                           
+                           CamembertPagesFontColor = "#644883"
+                           CamembertPagesFontSize = "12"
+                           CamembertPagesFontFamily = "Arial"
+                           
+                           CamembertInsertionsFontColor = "#644883"
+                           CamembertInsertionsFontSize = "12"
+                           CamembertInsertionsFontFamily = "Arial"
+                           
+                           CamembertGRPFontColor = "#644883"
+                           CamembertGRPFontSize = "12"
+                           CamembertGRPFontFamily = "Arial"
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#644883"
+                           
+                           ControlBorderSize="2"
+                           ControlBorderColor="#634984" 
+                           
+				           SkinID="PdvPlanSkinID"  
+/>
+<ctrAppm:PeriodicityPlanAppmChartWebControl
+                           runat="server"     
+                           
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#F5ECFF,#395573,#6B8199,#C3D3E6,#EDF6FF,#525A3E,#B0BF86,#DCE6C3,#FAFFEC,#3E5A51,#7DB3A2,#C3E6DB,#ECFFF9,#425A3E,#8EBF86,#C8E6C3,#EEFFEC,#7D3200,#D95700,#E6A173,#FFD9BF,#43415A,#908DBF,#C9C7E6,#EFEEFF,#7D4B00,#B36B00,#FFCC80,#FFE6BF"
+                           CamembertTitleTextFontColor1="#644883"
+                           CamembertTitleTextFontSize1="10"
+                           CamembertTitleTextFontFamily1="Arial"
+                           CamembertTitleTextFontColor2="#644883"
+                           CamembertTitleTextFontSize2="10"
+                           CamembertTitleTextFontFamily2="Arial"
+                           
+                           HistogrammeTitleTextFontColor="#644883"
+                           HistogrammeTitleTextFontSize="10"
+                           HistogrammeTitleTextFontFamily="Arial"
+                           HistogrammeLegendTextFontColor="#000000"
+                           HistogrammeLegendTextFontSize="8"
+                           HistogrammeLegendTextFontFamily="Arial"
+                           HistogrammeColorFamille1="#9479B5"
+                           HistogrammeColorFamille2="#FFD7D7"
+                           HistogrammeColorFamille3="#FFD7D7"
+                           HistogrammeBackgroundColor="#DECFE7"
+                           HistogrammeOrdonneeTextFontFamily="Arial" 
+                           HistogrammeOrdonneeTextFontSize="8" 
+                           HistogrammeAbscisseTextFontFamily="Arial" 
+                           HistogrammeAbscisseTextFontSize="8" 
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#644883" 
+                           
+                           ControlBorderSize="2"
+                           ControlBorderColor="#634984"
+                                    
+				           SkinID="PeriodicityPlanSkinID"  
+/>
+
+<ctrAppm:SectorDataContainerWebControl
+                           runat="server"           
+                           
+                           CssLHeader="h2" 
+                           CssTitle="title" 
+                           CssL1="synthesisLv1" 
+                           CssL2="synthesisLv2"
+                           CssL3="avgLv0" 
+						   CssDetailSelectionL1="dsLv1" 
+						   CssDetailSelectionL2="dsLv2" 
+						   CssDetailSelectionRightBorderL1 = "dsRightBorderLv1"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3"
+						   CssDetailSelectionTitle="dsTitle" 
+						   CssDetailSelectionTitleData="dsTitleData" 
+						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
+						   CssDetailSelectionBordelLevel="dsBorderLevel" 
+						   CssLTotal="lv0" 
+						   CssLAffinities="affinitiesLv1" 
+						   
+						   AnalyseFamilyInterestPlanSkinID="AnalyseFamilyInterestPlanSkinID"
+                           SeasonalityPlanSkinID="SeasonalityPlanSkinID"
+                           PeriodicityPlanSkinID="PeriodicityPlanSkinID"
+  
+				           SkinID="SectorData"  
+/>
+
+<ctrAppm:SectorDataContainerWebControl
+                           runat="server" 
+
+                           CssL1="exlv2" 
+                           CssL2="exlv3" 
+                           CssLHeader="exh2"
+				           CssTitle="synthesisTitleEx" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel" 
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionTitle="dsTitle"
+				           CssDetailSelectionTitleData="dsTitleData" 
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal"  
+				           CssLAffinities="exlv2"
+				           CssLTotal="exlv0" 
+				           CssDetailSelectionL2="dsLv2Excel"
+				           
+				           SkinID="SectorDataExcel"
+/>
+
+<ctrAppm:SeasonalityPlanSectorDataChartWebControl
+                           runat="server"  
+                           
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000"
+                           
+                           AbscisseTextFontFamily="Arial" 
+                           Ordonnee1TextFontFamily="Arial" 
+                           Ordonnee2TextFontFamily="Arial"
+                           
+                           HistogrammeTitleTextFontColor="#644883"
+                           HistogrammeTitleTextFontSize="10"
+                           HistogrammeTitleTextFontFamily="Arial"
+                           HistogrammeColorFamille1="#9479B5"
+                           HistogrammeFamille1LegendTextFontSize="8"
+                           HistogrammeFamille1LegendTextFontFamily="Arial"
+                           HistogrammeBackgroundColor="#DECFE7"
+                           HistogrammeOrdonneeTextFontSize="8" 
+                           HistogrammeAbscisseTextFontSize="8"
+                           
+                           GraphTitleTextFontColor="#644883"
+                           GraphTitleTextFontSize="10"
+                           GraphTitleTextFontFamily="Arial"
+                           GraphColorFamille1="#9479B5"
+                           GraphFamille1LegendTextFontSize="8"
+                           GraphFamille1LegendTextFontFamily="Arial"
+                           GraphBackgroundColor="#DECFE7"
+                           GraphOrdonneeTextFontSize="8" 
+                           GraphAbscisseTextFontSize="8"
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#644883" 
+
+                           ControlBorderSize="2"
+                           ControlBorderColor="#634984"
+
+                           SkinID="SeasonalityPlanSkinID"  
 />

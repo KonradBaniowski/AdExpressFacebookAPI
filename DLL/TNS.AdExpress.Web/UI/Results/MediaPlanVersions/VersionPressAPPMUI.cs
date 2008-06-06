@@ -47,16 +47,16 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions {
 		///  <since>jeudi 13 juillet 2006</since>
 		protected override void RenderSynthesis( StringBuilder output ) {
 			//Beginning synthessis link and parution date tables
-			output.Append("<tr height=100%><td bgcolor=\"#B1A3C1\" align=\"left\"   height=100% width=100% "+
-				((this._version.CssClass.Length>0)?"class=\"" + this._version.CssClass + "\">":"\">"));
+            output.Append("<tr height=100%><td align=\"left\"   height=100% width=100% " +
+                ((this._version.CssClass.Length > 0) ? "class=\"violetBackGroundV3 " + this._version.CssClass + "\">" : "\">"));
 			output.Append("<table height=100%  cellpadding=1 cellspacing=1  width=100% >");
 				
 
 			//Render parution date
-			output.Append("<tr width=100% style=\"border-top-color:#E0D7EC;\">");
-			output.Append("<td width=100%  nowrap    bgcolor=\"#E0D7EC\" ><p>"); 
+			output.Append("<tr width=100% style=\"\">");
+            output.Append("<td width=100%  nowrap    class=\"sloganVioletBackGround\" ><p>"); 
 			if(this._version.Parution!=null && this._version.Parution.Length>0){				
-				output.Append("<font size=1>");
+				output.Append("<font size=1 class=\"txtNoir11\">");
 				output.Append("&nbsp;"+DateString.YYYYMMDDToDD_MM_YYYY( this._version.Parution, this._webSession.SiteLanguage));
 				output.Append("</font>");
 			}

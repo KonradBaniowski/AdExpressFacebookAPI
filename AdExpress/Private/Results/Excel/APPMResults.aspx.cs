@@ -46,7 +46,10 @@ namespace AdExpress.Private.Results.Excel
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
+            this._dataSource = _webSession.Source;
 			try{
+                Response.ContentType = "application/vnd.ms-excel";
+
 				#region Connexion à la base de données
 				// Ouverture de la base de données
                 //if(_webSession.CustomerLogin.Connection!=null){

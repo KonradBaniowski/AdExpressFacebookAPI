@@ -53,6 +53,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 				string classCss1="p2";
 				string classCss2="acl1";
 				string classCss3="insertionHeader";
+                string classCssImg = "affinitiesBorderImg";
 				string unitName="";
 				#endregion					
 				
@@ -81,7 +82,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					html.Append("<td  class=\""+classCss1+"\" nowrap colspan=2>"+GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ "&nbsp;&nbsp;&nbsp;(" +periodicityPlanData.Rows[0]["baseTarget"]+ ")</td>");	
 					//Colonne separation 
 					if(!excel)
-						html.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
 					html.Append("<td  class=\""+classCss1+"\" nowrap colspan=2>"+GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ "&nbsp;&nbsp;&nbsp;(" +periodicityPlanData.Rows[0]["additionalTarget"]+") </td>");			
 					html.Append("</tr>");
 					html.Append("\r\n\t<tr height=\"20px\" style=\"DISPLAY:inline\">");
@@ -113,7 +114,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 				html.Append("<td  class=\""+classCss1+"\" nowrap>"+GestionWeb.GetWebWord(264,webSession.SiteLanguage)+ " </td>");
 				if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
 					if(!excel)
-						html.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
 					html.Append("<td  class=\""+classCss1+"\" nowrap>"+GestionWeb.GetWebWord(573,webSession.SiteLanguage)+ "</td>");
 					html.Append("<td  class=\""+classCss1+"\" nowrap>"+GestionWeb.GetWebWord(264,webSession.SiteLanguage)+ " </td>");
 				}
@@ -128,7 +129,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 				html.Append("<td  class=\""+classCss2+"\" nowrap >  "+GestionWeb.GetWebWord(1684,webSession.SiteLanguage)+ " </td>");
 				if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
 					if(!excel)
-						html.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                        html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
 //					html.Append("<td  class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(periodicityPlanData.Rows[0]["totalAdditionalTargetUnit"]).ToString("# ### ##0.##")+" </td>");
 					html.Append("<td  class=\""+classCss2+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalAdditionalTargetUnit"]).ToString(),webSession.Unit,false)+" </td>");
 					html.Append("<td  class=\""+classCss2+"\" nowrap >"+GestionWeb.GetWebWord(1684,webSession.SiteLanguage)+ " </td>");
@@ -138,14 +139,14 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 
 				#region Lignes du tableau
 				for(int i=1; i<periodicityPlanData.Rows.Count-1;i++){
-					html.Append("\r\n\t<tr onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#B1A3C1';\"  bgcolor=#B1A3C1 height=\"20px\">");
+                    html.Append("\r\n\t<tr onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\"  class=\"violetBackGroundV3\" height=\"20px\">");
 					html.Append("<td  class=\""+classCss3+"\" nowrap >"+periodicityPlanData.Rows[i]["periodicity"]+" </td>");
 //					html.Append("<td  class=\""+classCss3+"\" nowrap >"+Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString("# ### ##0.##")+"</td>");
 					html.Append("<td  class=\""+classCss3+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString(),webSession.Unit,false)+"</td>");
 					html.Append("<td  class=\""+classCss3+"\" nowrap >"+periodicityPlanData.Rows[i]["distributionBase"]+"%</td>");
 					if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
 						if(!excel)
-							html.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 1px solid;BORDER-LEFT: white 1px solid\"><img width=1px></td>");
+                            html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
 //						html.Append("<td  class=\""+classCss3+"\" nowrap >"+Convert.ToDouble(periodicityPlanData.Rows[i]["unitSelected"]).ToString("# ### ##0.##")+"</td>");
 						html.Append("<td  class=\""+classCss3+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitSelected"]).ToString(),webSession.Unit,false)+"</td>");
 						html.Append("<td  class=\""+classCss3+"\" nowrap >"+periodicityPlanData.Rows[i]["distributionSelected"]+"% </td>");

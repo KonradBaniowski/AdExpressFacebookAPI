@@ -74,15 +74,17 @@ public partial class Private_Selection_CompetitorUniverseProductSelection : TNS.
 		ModuleTitleWebControl1.CustomerWebSession = _webSession;
 		InformationWebControl1.Language = _webSession.SiteLanguage;
 		sessionId = _webSession.IdSession;
+        HeaderWebControl1.Language = _webSession.SiteLanguage;
+        universAdExpressText.Language = _webSession.SiteLanguage;
 		//Modification de la langue pour les Textes AdExpress
 		TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls, _webSession.SiteLanguage);
 			
 
 		#region  Images buttons 
-		validateButton.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
-		validateButton.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
-		NextImageButtonRollOverWebControl.ImageUrl = "/Images/" + _siteLanguage + "/button/suivant_up.gif";
-		NextImageButtonRollOverWebControl.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/suivant_down.gif";
+		//validateButton.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
+		//validateButton.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
+		//NextImageButtonRollOverWebControl.ImageUrl = "/Images/" + _siteLanguage + "/button/suivant_up.gif";
+		//NextImageButtonRollOverWebControl.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/suivant_down.gif";
 		//saveUniverseImageButtonRollOverWebControl.ImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_up.gif";
 		//saveUniverseImageButtonRollOverWebControl.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_down.gif";
 		

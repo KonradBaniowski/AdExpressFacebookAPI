@@ -119,9 +119,11 @@ namespace AdExpress.Private.Results
 				#endregion
 
 				#region Textes et Langage du site
+                this._dataSource = _webSession.Source;
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
 				_siteLanguage=_webSession.SiteLanguage;
-				InformationWebControl1.Language = _webSession.SiteLanguage;
+                InformationWebControl1.Language = _siteLanguage;
+                HeaderWebControl1.Language = _siteLanguage;
 				#endregion
 
 				SectorDataContainerWebControl1.Source = this._dataSource;	

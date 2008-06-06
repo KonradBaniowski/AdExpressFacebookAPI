@@ -1,21 +1,17 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CompetitorUniverseProductSelection.aspx.cs" Inherits="Private_Selection_CompetitorUniverseProductSelection" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CompetitorUniverseProductSelection.aspx.cs" Inherits="Private_Selection_CompetitorUniverseProductSelection"%>
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head runat="server">
 		<title>AdExpress</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 		<meta content="C#" name="CODE_LANGUAGE"/>
 		<meta content="JavaScript" name="vs_defaultClientScript"/>
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
-		<link href="/Css/AdExpress.css" type="text/css" rel="stylesheet"/>
-		<LINK href="/Css/Universe.css" type="text/css" rel="stylesheet">
-	    <script language="javascript" src="/scripts/UniverseWebcontrol.js"></script>
-		<style type="text/css">BODY { BACKGROUND-IMAGE: none; MARGIN: 0px; BACKGROUND-COLOR: #ffffff }
-		</style>
+	    <script language="javascript" type="text/JavaScript" src="/scripts/UniverseWebcontrol.js"></script>
 		<script language="JavaScript" type="text/JavaScript">
 		
 							
@@ -62,32 +58,32 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta content="no-cache" name="Cache-control"/>
 	</head>
-<body onload="initjsDOMenu();<%=saveScript%>">
+<body onload="initjsDOMenu();<%=saveScript%>" class="bodyStyle">
 		<form id="Form2" action="CompetitorUniverseProductSelection.aspx" method="post" runat="server">
-			<table height="600" cellspacing="0" cellpadding="0" border="0">
+			<table cellspacing="0" cellpadding="0" border="0" style="height:600px;">
 				<tr>	
 					<td valign="top"><!-- marge de gauche-->
 						<table cellspacing="0" cellpadding="0" border="0">
 							<tr>
-								<td><img height="100" src="/images/Common/logo_cote_gauche.gif" width="10"></td>
+								<td><asp:Image runat="server" height="100" SkinID="logo_cote_gauche" width="10" /></td>
 							</tr>
 							<tr>
-								<td bgColor="#ffffff"><img height="1" src="/images/Common/pixel.gif" width="1"></td>
+								<td class="whiteBackGround"><asp:Image runat="server" height="1" SkinID="pixel" width="1" /></td>
 							</tr>
 						</table>
 					</td>
 					<!-- menu -->
-					<td valign="top" background="/images/Common/dupli_fond.gif">
+					<td valign="top" class="imageBackGround">
 						<table cellspacing="0" cellpadding="0" width="10" border="0">
-							<tr valign="top" bgColor="#ffffff">
+							<tr valign="top" class="whiteBackGround">
 								<!-- Logo -->
-								<td><img height="90" src="/images/<%=_siteLanguage%>/logo/logo.gif" width="185" ></td>
+								<td><asp:Image runat="server" height="90" SkinID="logo" width="185" /></td>
 							</tr>
 							<tr>
-								<td><img height="5" src="/images/Common/plus_sous_logo.gif" width="185"></td>
+								<td><asp:Image runat="server" height="5" SkinID="plus_sous_logo" width="185" /></td>
 							</tr>
 							<tr>
-								<td><img height="5" src="/images/Common/pixel.gif" width="1"></td>
+								<td><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
 							</tr>
 							<!-- éléments variables du menus de gauche -->
 							<tr valign="top">
@@ -95,7 +91,7 @@
 							</tr>
 							<!-- Info bt droit -->
 							<tr>
-								<td><img height="5" src="/images/Common/pixel.gif" width="1"></td>
+								<td><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
 							</tr>
 							<tr>
 								<td><cc1:InformationWebControl id="InformationWebControl1" runat="server" InLeftMenu="True"></cc1:InformationWebControl></td>
@@ -106,18 +102,18 @@
 					<td valign="top">
 						<table id="Table5" cellspacing="0" cellpadding="0" border="0">
 							<tr>
-								<td><img height="100" src="/images/Common/logo_cote_droit.gif" width="5"></td>
+								<td><asp:Image runat="server" height="100" SkinID="logo_cote_droit" width="5" /></td>
 							</tr>
 							<tr>
-								<td bgColor="#ffffff"><img height="1" src="/images/Common/pixel.gif" width="1"></td>
+								<td class="whiteBackGround"><asp:Image runat="server" height="1" SkinID="pixel" width="1" /></td>
 							</tr>
 						</table>
 					</td>
-					<td bgColor="#644883"><img height="1" src="/images/Common/pixel.gif" width="1"></td>
-					<td width="10" background="/images/Common/dupli_fond.gif">&nbsp;</td>
-					<td width="10" bgcolor="#ffffff">&nbsp;</td>
+					<td class="violetBackGround"><asp:Image runat="server" height="1" SkinID="pixel" width="1" /></td>
+					<td width="10" class="imageBackGround">&nbsp;</td>
+					<td width="10" class="whiteBackGround">&nbsp;</td>
 					<!-- droite-->
-					<td style="WIDTH: 731px" valign="top" background="/images/Common/dupli_fond.gif">
+					<td style="WIDTH: 731px" valign="top" class="imageBackGround">
 						<table cellspacing="0" cellpadding="0" border="0">
 							<tr>
 								<!-- Menu du haut-->
@@ -125,19 +121,21 @@
 							</tr>
 							<tr>
 								<!-- ligne du haut a droite -->
-								<td id="lineAVIrer" style="WIDTH: 773px" valign="top" background="/Images/Common/dupli_fond.gif"
+								<td id="lineAVIrer" style="WIDTH: 773px" valign="top" class="imageBackGround"
 									height="1%">
 									<table id="Table2" cellspacing="0" cellpadding="0" width="100%" border="0">
-										<TR>
-											<td valign="top" align="left" height="1%"><img height="5" src="/Images/Common/croix.gif" width="5"></td>
-											<td height="1%"><img height="17" src="/Images/Common/pixel.gif" width="1"></td>
-											<td valign="top" align="right" height="1%"><img height="5" src="/Images/Common/croix.gif" width="5"></td>
-										</TR>
+										<tr>
+											<td valign="top" align="left" height="1%"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
+											<td height="1%"><asp:Image runat="server" height="17" SkinID="pixel" width="1" /></td>
+											<td valign="top" align="right" height="1%"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
+										</tr>
 									</table>
 								</td>
+							</tr>
 							<!-- Centre -->
+							
 							<tr>
-								<td style="WIDTH: 773px" bgColor="#ffffff">
+								<td style="WIDTH: 773px" class="whiteBackGround">
 									<table cellspacing="0" cellpadding="0" width="100%" border="0">
 										<tr style="HEIGHT: 5px">
 											<td style="WIDTH: 478px" colspan="5"></td>
@@ -153,7 +151,7 @@
 											<td colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 10px">
-											<td style="WIDTH: 478px" width="478" background="/images/Common/dupli_fond.gif" colspan="6"></td>
+											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
 											<td colspan="6"></td>
@@ -162,16 +160,16 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px" bgColor="#ffffff"><img height="5" src="/Images/Common/pixel.gif" width="1"></td>
+								<td style="WIDTH: 772px" class="whiteBackGround"><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
 							</tr>														
 							<tr>
-								<td   bgColor="#ffffff"><!--<img height="15" src="/Images/Common/pixel.gif" width="1"> -->
+								<td class="whiteBackGround"><!--<img height="15" src="/Images/Common/pixel.gif" width="1"> -->
 									<cc4:SelectItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" ChildNodeExcludeCss="txtChildNodeExcludeCss" ChildNodeIncludeCss="txtChildNodeIncludeCss" CustomSelectCss="customSelectCss" DefaultBranchId="1" LabelNbCurrentElementCss="labelNbelements" ListBoxBodyCss="listBoxBodyCss" ListBoxCss="listBoxCss" ListBoxHeaderCss="listBoxHeaderCss" NbMaxIncludeTree="2" ParentNodeChildExcludeCss="txtParentNodeChildExcludeCss" ParentNodeChildIncludeCss="txtParentNodeChildIncludeCss" SelectOptionItemDefaultCss="optionItemDefault" SelectOptionItemHierarchyCss="optionItemHierarchy" TrashNodeCss="trashNodeCss" TreeExcludeFrameBodyCss="treeExcludeFrameBodyCss" TreeExcludeFrameCss="treeExcludeFrameCss" TreeExcludeFrameHeaderCss="treeExcludeFrameHeaderCss" TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" TreeIncludeFrameCss="treeIncludeFrameCss" TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" TreeViewIcons="/Styles/TreeView/Icons" TreeViewScripts="/Styles/TreeView/Scripts" TreeViewStyles="/Styles/TreeView/Css" DBSchema="adexpr03"></cc4:SelectItemsInClassificationWebControl>
 									</td>
 							</tr>
 							<tr>
 								<td style="WIDTH: 772px">
-									<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+									<table cellspacing="0" cellpadding="0" width="100%" border="0">
 									    <tr>
 											<td class="txtViolet11Bold" align="center"><cc3:adexpresstext language="33" id="universAdExpressText" runat="server" Code="855"></cc3:adexpresstext></td>
 											<td align="left"><asp:textbox id="idUnivers" runat="server"></asp:textbox></td>
@@ -179,10 +177,10 @@
 										<tr>
 										    <td>&nbsp;</td>
 											<td align="right">
-											<A style="cursor:hand;" onmouseover="bouton.src='/Images/<%=_siteLanguage%>/button/enregistrer_univers_down.gif';" onmouseout="bouton.src = '/Images/<%=_siteLanguage%>/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" >
-													<img src="/Images/<%=_siteLanguage%>/button/enregistrer_univers_up.gif" border="0" name="bouton"></A>&nbsp;
-													<cc2:imagebuttonrolloverwebcontrol id="NextImageButtonRollOverWebControl" runat="server" onclick="NextImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;
-												<cc2:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
+                                            <a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" >
+													<asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
+													<cc2:imagebuttonrolloverwebcontrol SkinID="nextButton" id="NextImageButtonRollOverWebControl" runat="server" onclick="NextImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;
+												<cc2:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
 											</td>
 										</tr>
 									</table>
@@ -193,31 +191,31 @@
 						</td>
 					<!--</td>--></tr>
 				<!-- ligne du bas a droite -->
-				<TR height="5">
+				<tr style="height:5px;">
 					<td></td>
-					<td valign="top" background="/Images/Common/dupli_fond.gif">
+					<td valign="top" class="imageBackGround">
 						<table id="Table7" cellspacing="0" cellpadding="0" width="100%" border="0">
-							<TR>
-								<td valign="bottom"><img height="5" src="/Images/Common/croix.gif" width="5">&nbsp;</td>
+							<tr>
+								<td valign="bottom"><asp:Image runat="server" height="5" SkinID="croix" width="5" />&nbsp;</td>
 								<td></td>
-								<td valign="bottom" align="right"><img height="5" src="/Images/Common/croix.gif" width="5"></td>
-							</TR>
+								<td valign="bottom" align="right"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
+							</tr>
 						</table>
 					</td>
 					<td></td>
-					<td bgcolor="#644883"></td>
-					<td background="/Images/Common/dupli_fond.gif"></td>
+					<td class="violetBackGround"></td>
+					<td class="imageBackGround"></td>
 					<td></td>
-					<td id="dellCel" style="WIDTH: 732px" valign="top" background="/Images/Common/dupli_fond.gif">
+					<td id="dellCel" style="WIDTH: 732px" valign="top" class="imageBackGround">
 						<table id="Table8" cellspacing="0" cellpadding="0" width="100%" border="0">
 							<tr>
-								<td valign="bottom"><img height="5" src="/Images/Common/croix.gif" width="5"></td>
+								<td valign="bottom"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
 								<td>&nbsp;</td>
-								<td valign="bottom" align="right"><img height="5" src="/Images/Common/croix.gif" width="5"></td>
-							</TR>
+								<td valign="bottom" align="right"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
+							</tr>
 						</table>
 					</td>
-				</TR>
+				</tr>
 			</table>
 			
 		</form>

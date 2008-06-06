@@ -29,10 +29,319 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 	/// Description résumée de SeasonalityPlanSectorDataChartWebControl.
 	/// </summary>
 	[ToolboxData("<{0}:SeasonalityPlanSectorDataChartWebControl runat=server></{0}:SeasonalityPlanSectorDataChartWebControl>")]
-	public class SeasonalityPlanSectorDataChartWebControl : BaseAppmChartWebControl{
+	public class SeasonalityPlanSectorDataChartWebControl : BaseAppmChartWebControl {
 
-		#region Constantes
-		/// <summary>
+        #region variable
+        /// <summary>
+        /// Valeur hexadecimale des couleurs separé par le caractere ','
+        /// </summary>
+        private string _strPieColors = string.Empty;
+        /// <summary>
+        /// Famille de police du texte des unités en Abscisse
+        /// </summary>
+        private static string _abscisseTextFontFamily = "Arial";
+        /// <summary>
+        /// Famille de police du texte des unités en ordonnee Y
+        /// </summary>
+        private static string _ordonnee1TextFontFamily = "Arial";
+        /// <summary>
+        /// Famille de police du texte des unités en ordonnee Y2
+        /// </summary>
+        private static string _ordonnee2TextFontFamily = "Arial";
+
+        /// <summary>
+        /// Couleur du titre de l'histogramme
+        /// </summary>
+        private static string _histogrammeTitleTextFontColor = "#644883";
+        /// <summary>
+        /// Taille du titre de l'histogramme
+        /// </summary>
+        private static string _histogrammeTitleTextFontSize = "10";
+        /// <summary>
+        /// Famille de police de l'histogramme
+        /// </summary>
+        private static string _histogrammeTitleTextFontFamily = "Arial";
+        /// <summary>
+        /// Couleur de la famille de presse
+        /// </summary>
+        private static string _histogrammeColorFamille1 = "#9479B5";
+        /// <summary>
+        /// Couleur du texte de la legende de la famille de presse
+        /// </summary>
+        private static string _histogrammeFamille1LegendTextFontSize = "8";
+        /// <summary>
+        /// Couleur du texte de la legende de la famille de presse
+        /// </summary>
+        private static string _histogrammeFamille1LegendTextFontFamily = "Arial";
+        /// <summary>
+        /// Couleur de fond de l'histogramme
+        /// </summary>
+        private static string _histogrammeBackgroundColor = "#DECFE7";
+        /// <summary>
+        /// Taille de police du texte des unités en ordonnee sur l'histogramme
+        /// </summary>
+        private static string _histogrammeOrdonneeTextFontSize = "8";
+        /// <summary>
+        /// Taille de police du texte des unités en Abscisse sur l'histogramme
+        /// </summary>
+        private static string _histogrammeAbscisseTextFontSize = "8";
+
+        /// <summary>
+        /// Couleur du titre de le graph
+        /// </summary>
+        private static string _graphTitleTextFontColor = "#644883";
+        /// <summary>
+        /// Taille du titre de le graph
+        /// </summary>
+        private static string _graphTitleTextFontSize = "10";
+        /// <summary>
+        /// Famille de police de le graph
+        /// </summary>
+        private static string _graphTitleTextFontFamily = "Arial";
+        /// <summary>
+        /// Couleur de la famille de presse
+        /// </summary>
+        private static string _graphColorFamille1 = "#9479B5";
+        /// <summary>
+        /// Couleur du texte de la legende de la famille de presse
+        /// </summary>
+        private static string _graphFamille1LegendTextFontSize = "8";
+        /// <summary>
+        /// Couleur du texte de la legende de la famille de presse
+        /// </summary>
+        private static string _graphFamille1LegendTextFontFamily = "Arial";
+        /// <summary>
+        /// Couleur de fond de le graph
+        /// </summary>
+        private static string _graphBackgroundColor = "#DECFE7";
+        /// <summary>
+        /// Taille de police du texte des unités en ordonnee sur le graph
+        /// </summary>
+        private static string _graphOrdonneeTextFontSize = "8";
+        /// <summary>
+        /// Taille de police du texte des unités en Abscisse sur le graph
+        /// </summary>
+        private static string _graphAbscisseTextFontSize = "8";
+
+        /// <summary>
+        /// Famille de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        private string _textNoResultFontFamily = "Arial";
+        /// <summary>
+        /// Taille de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        private string _textNoResultFontSize = "8";
+        /// <summary>
+        /// Couleur de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        private string _textNoResultFontColor = "#644883";
+        /// <summary>
+        /// Taille de la bordure du controle global
+        /// </summary>
+        private static string _controlBorderSize = "2";
+        /// <summary>
+        /// Couleur de la bordure du controle global
+        /// </summary>
+        private static string _controlBorderColor = "#634984";
+        #endregion
+
+        #region Assessor
+        /// <summary>
+        /// Obtient ou definis la Valeur hexadecimale des couleurs separé par le caractere ','
+        /// </summary>
+        public string PieColors {
+            get { return _strPieColors; }
+            set { _strPieColors = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte des unités en abscisse
+        /// </summary>
+        public string AbscisseTextFontFamily {
+            get { return _abscisseTextFontFamily; }
+            set { _abscisseTextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte des unités en ordonnee sur le graph
+        /// </summary>
+        public string Ordonnee1TextFontFamily {
+            get { return _ordonnee1TextFontFamily; }
+            set { _ordonnee1TextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte des unités en ordonnee sur le graph
+        /// </summary>
+        public string Ordonnee2TextFontFamily {
+            get { return _ordonnee2TextFontFamily; }
+            set { _ordonnee2TextFontFamily = value; }
+        }
+
+        /// <summary>
+        /// Obtient ou definis la Couleur du titre de l'histogramme
+        /// </summary>
+        public string HistogrammeTitleTextFontColor {
+            get { return _histogrammeTitleTextFontColor; }
+            set { _histogrammeTitleTextFontColor = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille du titre de l'histogramme
+        /// </summary>
+        public string HistogrammeTitleTextFontSize {
+            get { return _histogrammeTitleTextFontSize; }
+            set { _histogrammeTitleTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police de l'histogramme
+        /// </summary>
+        public string HistogrammeTitleTextFontFamily {
+            get { return _histogrammeTitleTextFontFamily; }
+            set { _histogrammeTitleTextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de la premiere famille de presse
+        /// </summary>
+        public string HistogrammeColorFamille1 {
+            get { return _histogrammeColorFamille1; }
+            set { _histogrammeColorFamille1 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille du texte de la legende de la famille de presse
+        /// </summary>
+        public string HistogrammeFamille1LegendTextFontSize {
+            get { return _histogrammeFamille1LegendTextFontSize; }
+            set { _histogrammeFamille1LegendTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte de la legende de la famille de presse
+        /// </summary>
+        public string HistogrammeFamille1LegendTextFontFamily {
+            get { return _histogrammeFamille1LegendTextFontFamily; }
+            set { _histogrammeFamille1LegendTextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de fond de l'histogramme
+        /// </summary>
+        public string HistogrammeBackgroundColor {
+            get { return _histogrammeBackgroundColor; }
+            set { _histogrammeBackgroundColor = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de police du texte des unités en ordonnee sur l'histogramme
+        /// </summary>
+        public string HistogrammeOrdonneeTextFontSize {
+            get { return _histogrammeOrdonneeTextFontSize; }
+            set { _histogrammeOrdonneeTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de police du texte des unités en abscisse sur l'histogramme
+        /// </summary>
+        public string HistogrammeAbscisseTextFontSize {
+            get { return _histogrammeAbscisseTextFontSize; }
+            set { _histogrammeAbscisseTextFontSize = value; }
+        }
+
+        /// <summary>
+        /// Obtient ou definis la Couleur du titre de le graph
+        /// </summary>
+        public string GraphTitleTextFontColor {
+            get { return _graphTitleTextFontColor; }
+            set { _graphTitleTextFontColor = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille du titre de le graph
+        /// </summary>
+        public string GraphTitleTextFontSize {
+            get { return _graphTitleTextFontSize; }
+            set { _graphTitleTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police de le graph
+        /// </summary>
+        public string GraphTitleTextFontFamily {
+            get { return _graphTitleTextFontFamily; }
+            set { _graphTitleTextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de la premiere famille de presse
+        /// </summary>
+        public string GraphColorFamille1 {
+            get { return _graphColorFamille1; }
+            set { _graphColorFamille1 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille du texte de la legende de la famille de presse
+        /// </summary>
+        public string GraphFamille1LegendTextFontSize {
+            get { return _graphFamille1LegendTextFontSize; }
+            set { _graphFamille1LegendTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte de la legende de la famille de presse
+        /// </summary>
+        public string GraphFamille1LegendTextFontFamily {
+            get { return _graphFamille1LegendTextFontFamily; }
+            set { _graphFamille1LegendTextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de fond de le graph
+        /// </summary>
+        public string GraphBackgroundColor {
+            get { return _graphBackgroundColor; }
+            set { _graphBackgroundColor = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de police du texte des unités en ordonnee sur le graph
+        /// </summary>
+        public string GraphOrdonneeTextFontSize {
+            get { return _graphOrdonneeTextFontSize; }
+            set { _graphOrdonneeTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de police du texte des unités en abscisse sur le graph
+        /// </summary>
+        public string GraphAbscisseTextFontSize {
+            get { return _graphAbscisseTextFontSize; }
+            set { _graphAbscisseTextFontSize = value; }
+        }
+
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        public string TextNoResultFontFamily {
+            get { return _textNoResultFontFamily; }
+            set { _textNoResultFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        public string TextNoResultFontSize {
+            get { return _textNoResultFontSize; }
+            set { _textNoResultFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de police du texte lorsqu'il n'y a aucun resultat 
+        /// </summary>
+        public string TextNoResultFontColor {
+            get { return _textNoResultFontColor; }
+            set { _textNoResultFontColor = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de la bordure du controle global
+        /// </summary>
+        public string ControlBorderSize {
+            get { return _controlBorderSize; }
+            set { _controlBorderSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de la bordure du controle global
+        /// </summary>
+        public string ControlBorderColor {
+            get { return _controlBorderColor; }
+            set { _controlBorderColor = value; }
+        }
+        #endregion
+
+        #region Constantes
+        /// <summary>
 		/// La position de Chart Area (Horizontal)
 		/// </summary>
 		const int CHART_AREA_POSITION_X=1;
@@ -57,10 +366,6 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 		/// </summary>
 		const int SERIES_ANGLE=-90;
 		/// <summary>
-		/// La taille des chiffres
-		/// </summary>
-		const int FONT_SIZE=8;
-		/// <summary>
 		/// La largeur de l'image
 		/// </summary>
 		const int CHART_WIDTH=600;
@@ -83,7 +388,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 		/// <summary>
 		/// La taille des titres
 		/// </summary>
-		const int TITLE_FONT_SIZE=10;
+		//const int TITLE_FONT_SIZE=10;
 		#endregion
 
 		#region Constructeur
@@ -97,6 +402,17 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
             : base(webSession, dataSource, ImageType)
         {
 		}
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="dataSource">Source de données</param>
+        /// <param name="ImageType">Type de l'image (jpg, flash...)</param>
+        /// <param name="skinID">Nom du skin du controle</param>
+        public SeasonalityPlanSectorDataChartWebControl(WebSession webSession, TNS.FrameWork.DB.Common.IDataSource dataSource, ChartImageType ImageType, string skinID)
+            : base(webSession, dataSource, ImageType) {
+            this.SkinID = skinID;
+        }
 		#endregion
 
 		#region Implémentation des méthodes abstraites 
@@ -116,9 +432,22 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 			double rowCount=0, div=8;
 			#endregion
 
-			#region Constantes
-			//couleurs des tranches du graphique
-			Color[] pieColors={
+
+            #region Initialisation des couleurs des graphiques
+            ColorConverter cc = new ColorConverter();
+
+            #region couleurs du graphique
+            //couleurs des tranches du graphique
+            Color[] pieColors = null;
+            if (_strPieColors != null && _strPieColors.Length != 0) {
+                string[] colorTemp = _strPieColors.Split(",".ToCharArray());
+                pieColors = new Color[colorTemp.Length];
+                for (int i = 0; i < colorTemp.Length; i++) {
+                    pieColors[i] = (Color)cc.ConvertFromString(colorTemp[i]);
+                }
+            }
+            else {
+                Color[] colorTemp = {
 								  Color.FromArgb(100,72,131),
 								  Color.FromArgb(177,163,193),
 								  Color.FromArgb(208,200,218),
@@ -132,14 +461,25 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 								  Color.FromArgb(77,150,75),
 								  Color.FromArgb(0,0,0)
 							  };
-			#endregion
+                pieColors = colorTemp;
+            }
+            #endregion
+
+            #region No Result
+            Color textNoResultFontColor = (Color)cc.ConvertFromString(_textNoResultFontColor);
+            #endregion
+
+            #endregion
 
 			try{
+
 				
 				if (this._customerWebSession.DetailPeriod == WebConstantes.CustomerSessions.Period.DisplayLevel.weekly){
 					this.Titles.Add(GestionWeb.GetWebWord(2125,this._customerWebSession.SiteLanguage));
-					this.Titles[0].Font=new Font("Arial", (float)8,System.Drawing.FontStyle.Bold);
-					this.Titles[0].Color=Color.FromArgb(100,72,131);
+					//this.Titles[0].Font=new Font("Arial", (float)8,System.Drawing.FontStyle.Bold);
+					//this.Titles[0].Color=Color.FromArgb(100,72,131);
+                    this.Titles[0].Font = new Font(_textNoResultFontFamily, (float)Convert.ToDouble(_textNoResultFontSize), System.Drawing.FontStyle.Bold);
+                    this.Titles[0].Color=textNoResultFontColor;
 					this.Width=250;
 					this.Height=30;
 				}
@@ -162,9 +502,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 
 						  #region Initialisation font Size
 						  if(seasonalityPlanData.Rows.Count<=16)
-							  fontSize=FONT_SIZE+1;
+							  fontSize=Convert.ToInt32(_histogrammeFamille1LegendTextFontSize)+1;
 						  else
-							  fontSize=FONT_SIZE;
+                              fontSize = Convert.ToInt32(_histogrammeFamille1LegendTextFontSize);
 						  #endregion
 
 						  #region Get Series Data
@@ -270,8 +610,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 					 }
 					 else{
 						  this.Titles.Add(GestionWeb.GetWebWord(2106,this._customerWebSession.SiteLanguage));
-						  this.Titles[0].Font=new Font("Arial", (float)8,System.Drawing.FontStyle.Bold);
-						  this.Titles[0].Color=Color.FromArgb(100,72,131);
+						  //this.Titles[0].Font=new Font("Arial", (float)8,System.Drawing.FontStyle.Bold);
+						  //this.Titles[0].Color=Color.FromArgb(100,72,131);
+                          this.Titles[0].Font = new Font(_textNoResultFontFamily, (float)Convert.ToDouble(_textNoResultFontSize), System.Drawing.FontStyle.Bold);
+                          this.Titles[0].Color = textNoResultFontColor;
 						  this.Width=250;
 						  this.Height=20;
 					 }
@@ -378,6 +720,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 		private static  Dundas.Charting.WebControl.Series SetSeriesSeasonality(DataTable dt ,ChartArea chartArea,Dundas.Charting.WebControl.Series series,string[] xValues,double[] yValues,Color[] barColors,string chartAreaName,string legendText,int fontSize){
 			
 			#region  Création graphique
+            ColorConverter cc = new ColorConverter();
+            Color histogrammeColorFamille1 = (Color)cc.ConvertFromString(_histogrammeColorFamille1);
+
 			if(xValues!=null && yValues!=null){
 								
 				#region Création et définition du graphique
@@ -386,9 +731,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 				series.ShowLabelAsValue=true;
 				series.XValueType=Dundas.Charting.WebControl.ChartValueTypes.String;
 				series.YValueType=Dundas.Charting.WebControl.ChartValueTypes.Double;
-				series.Color= Color.FromArgb(148,121,181);
+				//series.Color= Color.FromArgb(148,121,181);
+                series.Color = histogrammeColorFamille1;
 				series.Enabled=true;
-				series.Font=new Font("Arial", (float)fontSize);
+				//series.Font=new Font("Arial", (float)fontSize);
+                series.Font = new Font(_histogrammeFamille1LegendTextFontFamily, (float)fontSize);
 				series.FontAngle=SERIES_ANGLE;
 				series["LabelStyle"] = "Top";
 																
@@ -421,6 +768,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 		private static  Dundas.Charting.WebControl.Series SetSeriesSeasonalityDistribution(DataTable dt ,ChartArea chartArea,Dundas.Charting.WebControl.Series series,string[] xValues,double[] yValues,Color[] barColors,string chartAreaName,string legendText,int fontSize){
 			
 			#region  Création graphique
+            ColorConverter cc = new ColorConverter();
+            Color graphColorFamille1 = (Color)cc.ConvertFromString(_graphColorFamille1);
+
 			if(xValues!=null && yValues!=null){
 								
 				#region Création et définition du graphique
@@ -429,8 +779,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 				series.ShowLabelAsValue=true;
 				series.XValueType=Dundas.Charting.WebControl.ChartValueTypes.String;
 				series.YValueType=Dundas.Charting.WebControl.ChartValueTypes.Double;
+                series.Color = graphColorFamille1;
 				series.Enabled=true;
-				series.Font=new Font("Arial", (float)fontSize);
+				//series.Font=new Font("Arial", (float)fontSize);
+                series.Font = new Font(_graphFamille1LegendTextFontFamily, (float)fontSize);
 				series["LabelStyle"] = "Right";
 				series.SmartLabels.Enabled = true;
 				series.SmartLabels.CalloutLineStyle = ChartDashStyle.Dot;
@@ -458,7 +810,14 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 		/// <param name="ImageType">sortie flash</param>
 		/// <param name="chart_width">Taille de l'image</param>
 		/// <param name="fontSize">Font size</param>
-		private static void InitializeComponent(BaseAppmChartWebControl sectorDataChart, ChartArea chartAreaUnit, ChartArea chartAreaDistribution,ChartImageType ImageType,int chart_width,int fontSize){					
+		private static void InitializeComponent(BaseAppmChartWebControl sectorDataChart, ChartArea chartAreaUnit, ChartArea chartAreaDistribution,ChartImageType ImageType,int chart_width,int fontSize){
+
+            ColorConverter cc = new ColorConverter();
+            Color controlBorderColor = (Color)cc.ConvertFromString(_controlBorderColor);
+            Color histogrammeBackgroundColor = (Color)cc.ConvertFromString(_histogrammeBackgroundColor);
+            Color graphBackgroundColor = (Color)cc.ConvertFromString(_graphBackgroundColor);
+            Color histogrammeTitleTextFontColor = (Color)cc.ConvertFromString(_histogrammeTitleTextFontColor);
+            Color graphTitleTextFontColor = (Color)cc.ConvertFromString(_graphTitleTextFontColor);
 
 			//Type image
 			sectorDataChart.ImageType=ImageType;
@@ -470,30 +829,33 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 
 			#region Chart
 			sectorDataChart.BackGradientType = GradientType.TopBottom;
-			sectorDataChart.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
-			sectorDataChart.ChartAreas[chartAreaUnit.Name].BackColor=Color.FromArgb(222,207,231);		
-			sectorDataChart.ChartAreas[chartAreaDistribution.Name].BackColor=Color.FromArgb(222,207,231);
+			//sectorDataChart.ChartAreas[chartAreaUnit.Name].BackColor=Color.FromArgb(222,207,231);		
+			//sectorDataChart.ChartAreas[chartAreaDistribution.Name].BackColor=Color.FromArgb(222,207,231);
+            sectorDataChart.ChartAreas[chartAreaUnit.Name].BackColor = histogrammeBackgroundColor;
+            sectorDataChart.ChartAreas[chartAreaDistribution.Name].BackColor=graphBackgroundColor;
 			sectorDataChart.BorderStyle=ChartDashStyle.Solid;
-			sectorDataChart.BorderLineColor=Color.FromArgb(99,73,132);
-			sectorDataChart.BorderLineWidth=2;
+			//sectorDataChart.BorderLineColor=Color.FromArgb(99,73,132);
+			//sectorDataChart.BorderLineWidth=2;
+            sectorDataChart.BorderLineColor = controlBorderColor;
+            sectorDataChart.BorderLineWidth=Convert.ToInt32(_controlBorderSize);
 
 			sectorDataChart.Width=new Unit(""+chart_width+"px");
 			sectorDataChart.Height=new Unit(""+CHART_HEIGHT+"px");
 			sectorDataChart.Legend.Enabled=false;
 
 			#region Axe des X
-			SetAxisX(sectorDataChart,chartAreaUnit.Name,fontSize);
-			SetAxisX(sectorDataChart,chartAreaDistribution.Name,fontSize);
+			SetAxisX(sectorDataChart,chartAreaUnit.Name,Convert.ToInt32(_histogrammeAbscisseTextFontSize));
+            SetAxisX(sectorDataChart, chartAreaDistribution.Name, Convert.ToInt32(_graphAbscisseTextFontSize));
 			#endregion
 
 			#region Axe des Y
-			SetAxisY(sectorDataChart,chartAreaUnit.Name,fontSize);
-			SetAxisY(sectorDataChart,chartAreaDistribution.Name,fontSize);
+            SetAxisY(sectorDataChart, chartAreaUnit.Name, Convert.ToInt32(_histogrammeOrdonneeTextFontSize));
+            SetAxisY(sectorDataChart, chartAreaDistribution.Name, Convert.ToInt32(_graphOrdonneeTextFontSize));
 			#endregion
 
 			#region Axe des Y2
-			SetAxisY2(sectorDataChart,chartAreaUnit.Name,fontSize);
-			SetAxisY2(sectorDataChart,chartAreaDistribution.Name,fontSize);
+            SetAxisY2(sectorDataChart, chartAreaUnit.Name, Convert.ToInt32(_histogrammeOrdonneeTextFontSize));
+            SetAxisY2(sectorDataChart, chartAreaDistribution.Name, Convert.ToInt32(_graphOrdonneeTextFontSize));
 			#endregion
 
 			#endregion	
@@ -504,8 +866,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 			sectorDataChart.Titles[0].DockInsideChartArea=true;
 			sectorDataChart.Titles[0].Position.X=TITLE_POSITION_X;
 			sectorDataChart.Titles[0].Position.Y=UNIT_TITLE_POSITION_Y;
-			sectorDataChart.Titles[0].Font=new Font("Arial", (float)TITLE_FONT_SIZE);
-			sectorDataChart.Titles[0].Color=Color.FromArgb(100,72,131);
+			//sectorDataChart.Titles[0].Font=new Font("Arial", (float)TITLE_FONT_SIZE);
+			//sectorDataChart.Titles[0].Color=Color.FromArgb(100,72,131);
+            sectorDataChart.Titles[0].Font = new Font(_histogrammeTitleTextFontFamily, (float)Convert.ToDouble(_histogrammeTitleTextFontSize));
+            sectorDataChart.Titles[0].Color = histogrammeTitleTextFontColor;
 			sectorDataChart.Titles[0].DockToChartArea=chartAreaUnit.Name;
 
 			sectorDataChart.Titles.Add(chartAreaDistribution.Name);
@@ -513,8 +877,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 			sectorDataChart.Titles[1].Position.Auto = false;
 			sectorDataChart.Titles[1].Position.X = TITLE_POSITION_X;
 			sectorDataChart.Titles[1].Position.Y = DISTRIBUTION_TITLE_POSITION_Y;
-			sectorDataChart.Titles[1].Font=new Font("Arial", (float)TITLE_FONT_SIZE);
-			sectorDataChart.Titles[1].Color=Color.FromArgb(100,72,131);
+			//sectorDataChart.Titles[1].Font=new Font("Arial", (float)TITLE_FONT_SIZE);
+			//sectorDataChart.Titles[1].Color=Color.FromArgb(100,72,131);
+            sectorDataChart.Titles[1].Font = new Font(_graphTitleTextFontFamily, (float)Convert.ToDouble(_graphTitleTextFontSize));
+            sectorDataChart.Titles[1].Color = graphTitleTextFontColor;
 			sectorDataChart.Titles[1].DockToChartArea=chartAreaDistribution.Name;
 			#endregion
 		}
@@ -530,7 +896,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 		private static void SetAxisX(BaseAppmChartWebControl sectorDataChart, string chartAreaName,int fontSize){
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelStyle.Enabled = true;
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelsAutoFit = false;
-			sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelStyle.Font=new Font("Arial", (float)fontSize);
+			//sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelStyle.Font=new Font("Arial", (float)fontSize);
+            sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelStyle.Font = new Font(_abscisseTextFontFamily, (float)fontSize);
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.MajorGrid.LineWidth=0;
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.Interval=1;				
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelStyle.FontAngle = SERIES_ANGLE;
@@ -548,7 +915,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 			sectorDataChart.ChartAreas[chartAreaName].AxisY.Enabled=AxisEnabled.True;
 			sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelStyle.Enabled=true;
 			sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelsAutoFit=false;			
-			sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelStyle.Font=new Font("Arial", (float)fontSize);
+			sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelStyle.Font=new Font(_ordonnee1TextFontFamily, (float)fontSize);
 			sectorDataChart.ChartAreas[chartAreaName].AxisY.TitleFont=new Font("Arial", (float)fontSize);
 			sectorDataChart.ChartAreas[chartAreaName].AxisY.MajorGrid.LineWidth=0;
 		}
@@ -565,7 +932,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 			sectorDataChart.ChartAreas[chartAreaName].AxisY2.Enabled=AxisEnabled.True;
 			sectorDataChart.ChartAreas[chartAreaName].AxisY2.LabelStyle.Enabled=true;
 			sectorDataChart.ChartAreas[chartAreaName].AxisY2.LabelsAutoFit=false;
-			sectorDataChart.ChartAreas[chartAreaName].AxisY2.LabelStyle.Font=new Font("Arial", (float)fontSize);
+			sectorDataChart.ChartAreas[chartAreaName].AxisY2.LabelStyle.Font=new Font(_ordonnee2TextFontFamily, (float)fontSize);
 			sectorDataChart.ChartAreas[chartAreaName].AxisY2.TitleFont=new Font("Arial", (float)fontSize);
 		}
 		#endregion
@@ -578,7 +945,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output)
-		{			
+		{
+            //On cree le design ici pour pouvoir appliquer le skin a ce controle, 
+            //Si le design est appelé avant, les membres du skin ne sont pas appliqué a ce controle
+            SetDesignMode();
 			base.Render(output);
 		}
 		#endregion

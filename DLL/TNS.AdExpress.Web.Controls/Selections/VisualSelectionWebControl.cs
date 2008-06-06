@@ -30,6 +30,7 @@ using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.DataAccess.Selections.Medias;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.DataAccess.Results.APPM;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace TNS.AdExpress.Web.Controls.Selections
@@ -301,13 +302,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		protected override void Render(HtmlTextWriter output) {	
 			string display="none";
 			if(Page.IsPostBack)display="";
-			
-			output.Write("\n<table bgColor=\"#ffffff\" style=\"border-bottom :#644883 1px solid;  border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"100%\">\n");
+            string themeName = WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
+
+            output.Write("\n<table class=\"txtViolet11Bold GenericMediaLevelDetailSelectionHeader\"  cellpadding=0 cellspacing=0 width=\"100%\">\n");
 			output.Write("\n<tr style=\"cursor : hand\">");
 			output.Write("\n<td align=\"left\" onClick=\"javascript : DivDisplayer('md_0');\" >");
 			output.Write("&nbsp;"+GestionWeb.GetWebWord(1782,_customerWebSession.SiteLanguage));
 			output.Write("</td>");
-			output.Write("<td align=\"right\" onClick=\"javascript : DivDisplayer('md_0');\"><IMG src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\">");
+            output.Write("<td align=\"right\" onClick=\"javascript : DivDisplayer('md_0');\"><img src=\"../../App_Themes/" + themeName + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\">");
 			output.Write("\n</td>");
 			output.Write("\n</tr>");
 			
@@ -315,7 +317,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			output.Write("\n<tr>");
 			output.Write("\n<td width=\"100%\" colspan=2 >");
 			output.Write("\n<div  id=\"md_0\" style=\" display : "+display+"; \">");
-			output.Write("\n<Table  bgcolor=#E9E6EF style=\" border-top:#644883 1px solid; border-bottom :#644883 0px solid; border-left :#644883 0px solid; \"  class=\"txtViolet11Bold\" cellpadding=5 cellspacing=0 width=\"100%\">\n");
+            output.Write("\n<Table class=\"txtViolet11Bold paleVioletBackGroundV2 violetBorder\" cellpadding=5 cellspacing=0 width=\"100%\">\n");
 		
 			//option supports
 			if (_mediasOption){

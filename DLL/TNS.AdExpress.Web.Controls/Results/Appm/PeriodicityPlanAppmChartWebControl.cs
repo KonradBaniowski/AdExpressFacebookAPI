@@ -33,6 +33,297 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 		ToolboxData("<{0}:PeriodicityPlanAppmChartWebControl runat=server></{0}:PeriodicityPlanAppmChartWebControl>")]
 	public class PeriodicityPlanAppmChartWebControl : BaseAppmChartWebControl
 	{
+        #region Variables
+        /// <summary>
+        /// Valeur hexadecimale des couleurs des portions de camembert separé par le caractere ','
+        /// </summary>
+        private string _strPieColors = string.Empty;
+        /// <summary>
+        /// Couleur du titre du premier camembert
+        /// </summary>
+        private static string _camembertTitleTextFontColor1 = "#644883";
+        /// <summary>
+        /// Taille du titre du premier camembert
+        /// </summary>
+        private static string _camembertTitleTextFontSize1 = "10";
+        /// <summary>
+        /// Famille de police du titre du premier camembert
+        /// </summary>
+        private static string _camembertTitleTextFontFamily1 = "Arial";
+        /// <summary>
+        /// Couleur du titre du second camembert
+        /// </summary>
+        private static string _camembertTitleTextFontColor2 = "#644883";
+        /// <summary>
+        /// Taille du titre du second camembert
+        /// </summary>
+        private static string _camembertTitleTextFontSize2 = "10";
+        /// <summary>
+        /// Famille de police du titre du second camembert
+        /// </summary>
+        private static string _camembertTitleTextFontFamily2 = "Arial";
+        /// <summary>
+        /// Couleur du titre de l'histogramme
+        /// </summary>
+        private static string _histogrammeTitleTextFontColor = "#644883";
+        /// <summary>
+        /// Taille du titre de l'histogramme
+        /// </summary>
+        private static string _histogrammeTitleTextFontSize = "10";
+        /// <summary>
+        /// Famille de police de l'histogramme
+        /// </summary>
+        private static string _histogrammeTitleTextFontFamily = "Arial";
+        /// <summary>
+        /// Couleur du texte de la legende de l'histogramme
+        /// </summary>
+        private string _histogrammeLegendTextFontColor = "#000000";
+        /// <summary>
+        /// Taille du texte de la legende de l'histogramme
+        /// </summary>
+        private string _histogrammeLegendTextFontSize = "8";
+        /// <summary>
+        /// Famille de police du texte de la legende de l'histogramme
+        /// </summary>
+        private string _histogrammeLegendTextFontFamily = "Arial";
+        /// <summary>
+        /// Couleur de la premiere famille de presse
+        /// </summary>
+        private string _histogrammeColorFamille1 = "#9479B5";
+        /// <summary>
+        /// Couleur de la deuxieme famille de presse
+        /// </summary>
+        private string _histogrammeColorFamille2 = "#FFD7D7";
+        /// <summary>
+        /// Couleur de la troisieme famille de presse
+        /// </summary>
+        private string _histogrammeColorFamille3 = "#FFD7D7";
+        /// <summary>
+        /// Couleur de fond de l'histogramme
+        /// </summary>
+        private static string _histogrammeBackgroundColor = "#DECFE7";
+        /// <summary>
+        /// Famille de police du texte des unités en ordonnee sur l'histogramme
+        /// </summary>
+        private static string _histogrammeOrdonneeTextFontFamily = "Arial";
+        /// <summary>
+        /// Taille de police du texte des unités en ordonnee sur l'histogramme
+        /// </summary>
+        private static string _histogrammeOrdonneeTextFontSize = "8";
+        /// <summary>
+        /// Famille de police du texte des unités en Abscisse sur l'histogramme
+        /// </summary>
+        private static string _histogrammeAbscisseTextFontFamily = "Arial";
+        /// <summary>
+        /// Taille de police du texte des unités en Abscisse sur l'histogramme
+        /// </summary>
+        private static string _histogrammeAbscisseTextFontSize = "8";
+        /// <summary>
+        /// Famille de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        private string _textNoResultFontFamily = "Arial";
+        /// <summary>
+        /// Taille de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        private string _textNoResultFontSize = "8";
+        /// <summary>
+        /// Couleur de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        private string _textNoResultFontColor = "#644883";
+        /// <summary>
+        /// Taille de la bordure du controle global
+        /// </summary>
+        private static string _controlBorderSize = "2";
+        /// <summary>
+        /// Couleur de la bordure du controle global
+        /// </summary>
+        private static string _controlBorderColor = "#634984";
+        #endregion
+
+        #region Assesseur
+        /// <summary>
+        /// Obtient ou definis la Valeur hexadecimale des couleurs des portions de camembert separé par le caractere ','
+        /// </summary>
+        public string PieColors {
+            get { return _strPieColors; }
+            set { _strPieColors = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur du titre du premier camembert
+        /// </summary>
+        public string CamembertTitleTextFontColor1 {
+            get { return _camembertTitleTextFontColor1; }
+            set { _camembertTitleTextFontColor1 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille du titre du premier camembert
+        /// </summary>
+        public string CamembertTitleTextFontSize1 {
+            get { return _camembertTitleTextFontSize1; }
+            set { _camembertTitleTextFontSize1 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du titre du premier camembert
+        /// </summary>
+        public string CamembertTitleTextFontFamily1 {
+            get { return _camembertTitleTextFontFamily1; }
+            set { _camembertTitleTextFontFamily1 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur du titre du second camembert
+        /// </summary>
+        public string CamembertTitleTextFontColor2 {
+            get { return _camembertTitleTextFontColor2; }
+            set { _camembertTitleTextFontColor2 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille du titre du second camembert
+        /// </summary>
+        public string CamembertTitleTextFontSize2 {
+            get { return _camembertTitleTextFontSize2; }
+            set { _camembertTitleTextFontSize2 = value; }
+        }
+        /// <summary>
+        /// Famille de police du titre du second camembert
+        /// </summary>
+        public string CamembertTitleTextFontFamily2 {
+            get { return _camembertTitleTextFontFamily2; }
+            set { _camembertTitleTextFontFamily2 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur du titre de l'histogramme
+        /// </summary>
+        public string HistogrammeTitleTextFontColor {
+            get { return _histogrammeTitleTextFontColor; }
+            set { _histogrammeTitleTextFontColor = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille du titre de l'histogramme
+        /// </summary>
+        public string HistogrammeTitleTextFontSize {
+            get { return _histogrammeTitleTextFontSize; }
+            set { _histogrammeTitleTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police de l'histogramme
+        /// </summary>
+        public string HistogrammeTitleTextFontFamily {
+            get { return _histogrammeTitleTextFontFamily; }
+            set { _histogrammeTitleTextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur du texte de la legende de l'histogramme
+        /// </summary>
+        public string HistogrammeLegendTextFontColor {
+            get { return _histogrammeLegendTextFontColor; }
+            set { _histogrammeLegendTextFontColor = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille du texte de la legende de l'histogramme
+        /// </summary>
+        public string HistogrammeLegendTextFontSize {
+            get { return _histogrammeLegendTextFontSize; }
+            set { _histogrammeLegendTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte de la legende de l'histogramme
+        /// </summary>
+        public string HistogrammeLegendTextFontFamily {
+            get { return _histogrammeLegendTextFontFamily; }
+            set { _histogrammeLegendTextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de la premiere famille de presse
+        /// </summary>
+        public string HistogrammeColorFamille1 {
+            get { return _histogrammeColorFamille1; }
+            set { _histogrammeColorFamille1 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de la deuxieme famille de presse
+        /// </summary>
+        public string HistogrammeColorFamille2 {
+            get { return _histogrammeColorFamille2; }
+            set { _histogrammeColorFamille2 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de la troisieme famille de presse
+        /// </summary>
+        public string HistogrammeColorFamille3 {
+            get { return _histogrammeColorFamille3; }
+            set { _histogrammeColorFamille3 = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de fond de l'histogramme
+        /// </summary>
+        public string HistogrammeBackgroundColor {
+            get { return _histogrammeBackgroundColor; }
+            set { _histogrammeBackgroundColor = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte des unités en ordonnee sur l'histogramme
+        /// </summary>
+        public string HistogrammeOrdonneeTextFontFamily {
+            get { return _histogrammeOrdonneeTextFontFamily; }
+            set { _histogrammeOrdonneeTextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de police du texte des unités en ordonnee sur l'histogramme
+        /// </summary>
+        public string HistogrammeOrdonneeTextFontSize {
+            get { return _histogrammeOrdonneeTextFontSize; }
+            set { _histogrammeOrdonneeTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte des unités en abscisse sur l'histogramme
+        /// </summary>
+        public string HistogrammeAbscisseTextFontFamily {
+            get { return _histogrammeAbscisseTextFontFamily; }
+            set { _histogrammeAbscisseTextFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de police du texte des unités en abscisse sur l'histogramme
+        /// </summary>
+        public string HistogrammeAbscisseTextFontSize {
+            get { return _histogrammeAbscisseTextFontSize; }
+            set { _histogrammeAbscisseTextFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Famille de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        public string TextNoResultFontFamily {
+            get { return _textNoResultFontFamily; }
+            set { _textNoResultFontFamily = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de police du texte lorsqu'il n'y a aucun resultat
+        /// </summary>
+        public string TextNoResultFontSize {
+            get { return _textNoResultFontSize; }
+            set { _textNoResultFontSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de police du texte lorsqu'il n'y a aucun resultat 
+        /// </summary>
+        public string TextNoResultFontColor {
+            get { return _textNoResultFontColor; }
+            set { _textNoResultFontColor = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Taille de la bordure du controle global
+        /// </summary>
+        public string ControlBorderSize {
+            get { return _controlBorderSize; }
+            set { _controlBorderSize = value; }
+        }
+        /// <summary>
+        /// Obtient ou definis la Couleur de la bordure du controle global
+        /// </summary>
+        public string ControlBorderColor {
+            get { return _controlBorderColor; }
+            set { _controlBorderColor = value; }
+        }
+        #endregion
 
 		#region Constructeur
 		/// <summary>
@@ -45,6 +336,17 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
             : base(webSession, dataSource, appmImageType)
         {
 		}
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="dataSource">Source de données</param>
+        /// <param name="appmImageType">Type de l'image Appm (jpg, flash...)</param>
+        /// <param name="skinId">Nom du skin</param>
+        public PeriodicityPlanAppmChartWebControl(WebSession webSession, TNS.FrameWork.DB.Common.IDataSource dataSource, ChartImageType appmImageType, string skinId)
+            : base(webSession, dataSource, appmImageType) {
+            this.SkinID = skinId;
+        }
 		#endregion
 
 		#region Implémentation des méthodes abstraites 
@@ -65,28 +367,38 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			double maxScale=0;
 			#endregion
 
-			#region Constantes
-			//couleurs des tranches du graphique
-			Color[] pieColors={
-								  Color.FromArgb(100,72,131),
-								  Color.FromArgb(177,163,193),
-								  Color.FromArgb(208,200,218),
-								  Color.FromArgb(225,224,218),
-								  Color.FromArgb(255,215,215),
-								  Color.FromArgb(255,240,240),
-								  Color.FromArgb(202,255,202),
-								  Color.FromArgb(255,5,182),
-								  Color.FromArgb(157,152,133),
-								  Color.FromArgb(241,241,241),
-								  Color.FromArgb(77,150,75),
-								  Color.FromArgb(0,0,0)
-							  };
+            #region Initialisation des couleurs des graphiques
+            ColorConverter cc = new ColorConverter();
+            #region No Result
+            Color textNoResultFontColor = (Color)cc.ConvertFromString(_textNoResultFontColor);
+            #endregion
+            //couleurs des tranches du graphique
+            #region Camembert
+            #region Couleur du camembert
+            Color[] pieColors = null;
+            if (_strPieColors != null && _strPieColors.Length != 0) {
+                string[] colorTemp = _strPieColors.Split(",".ToCharArray());
+                pieColors = new Color[colorTemp.Length];
+                for (int i = 0; i < colorTemp.Length; i++) {
+                    pieColors[i] = (Color)cc.ConvertFromString(colorTemp[i]);
+                }
+            }
+            else {
+                pieColors = WebConstantes.UI.UI.newPieColors;
+            }
+            #endregion
 
-			Color[] barColors={ 
-								  Color.FromArgb(255,223,222),
-								   
-			};
-			#endregion
+            #endregion
+
+            #region Histogramme
+            Color histogrammeTitleTextFontColor = (Color)cc.ConvertFromString(_histogrammeTitleTextFontColor);
+            Color histogrammeLegendTextFontColor = (Color)cc.ConvertFromString(_histogrammeLegendTextFontColor);
+            Color histogrammeColorFamille1 = (Color)cc.ConvertFromString(_histogrammeColorFamille1);
+            Color histogrammeColorFamille2 = (Color)cc.ConvertFromString(_histogrammeColorFamille2);
+            Color histogrammeColorFamille3 = (Color)cc.ConvertFromString(_histogrammeColorFamille3);
+            Color histogrammeBackgroundColor = (Color)cc.ConvertFromString(_histogrammeBackgroundColor);
+            #endregion
+            #endregion
 
 			#region Initialisation
 			float areaUnitPositionHeight=0, areaLegendPositionY=0, areaLegendPositionHeight=0, areaUnitadditionalPositionY=0, areaUnitadditionalPositionHeight=0;	
@@ -208,7 +520,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 
 					#endregion
 
-					seriePeriodicity=SetSeriesPeriodicity(periodicityPlanData,chartAreaUnit,seriePeriodicity,xUnitValues,yUnitValues,WebConstantes.UI.UI.newPieColors,chartAreaName);												
+					seriePeriodicity=SetSeriesPeriodicity(periodicityPlanData,chartAreaUnit,seriePeriodicity,xUnitValues,yUnitValues,pieColors,chartAreaName);												
 					#endregion												
  
 					#region legend chart Area
@@ -268,7 +580,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 						chartAreaUnitadditional.Position.Height=areaUnitadditionalPositionHeight;
 						this.ChartAreas.Add(chartAreaUnitadditional);						
 						//Charger les séries de valeurs 
-						seriePeriodicityadditional=SetSeriesPeriodicity(periodicityPlanData,chartAreaUnitadditional,seriePeriodicityadditional,xUnitValues,yUnitValues,WebConstantes.UI.UI.newPieColors,chartAreaAdditionalName);												
+						seriePeriodicityadditional=SetSeriesPeriodicity(periodicityPlanData,chartAreaUnitadditional,seriePeriodicityadditional,xUnitValues,yUnitValues,pieColors,chartAreaAdditionalName);												
 					}
 					#endregion
 					
@@ -313,7 +625,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 						legendItemReference.Name+= " ("+periodicityPlanData.Rows[0]["baseTarget"]+") " ;
 						legendItemReference.Style = LegendImageStyle.Rectangle;
 						legendItemReference.ShadowOffset = 1;
-						legendItemReference.Color =Color.FromArgb(255,215,215);
+						//legendItemReference.Color =Color.FromArgb(255,215,215);
+                        legendItemReference.Color = histogrammeColorFamille3;
 						thirdLegend.CustomItems.Add(legendItemReference);
 
 						LegendItem legendItemReference2 = new LegendItem();
@@ -321,18 +634,21 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 						legendItemReference2.Name+= " ("+periodicityPlanData.Rows[0]["additionalTarget"]+") " ;
 						legendItemReference2.Style = LegendImageStyle.Rectangle;
 						legendItemReference2.ShadowOffset = 1;
-						legendItemReference2.Color = Color.FromArgb(255,215,215);
+						//legendItemReference2.Color = Color.FromArgb(255,215,215);
+                        legendItemReference2.Color = histogrammeColorFamille2;
 						thirdLegend.CustomItems.Add(legendItemReference2);
 						this.Legends.Add(thirdLegend);
 						//serieInterestFamilyCgrpBase.Legend = "Third";
 						thirdLegend.DockToChartArea = chartAreaCgrpLegend.Name;
 						//thirdLegend.DockInsideChartArea = true;	
-						thirdLegend.Font=new Font("Arial", (float)8);
+						//thirdLegend.Font=new Font("Arial", (float)8);
+                        thirdLegend.Font = new Font(_histogrammeLegendTextFontFamily, (float)Convert.ToDouble(_histogrammeLegendTextFontSize));
 						thirdLegend.Enabled =true;
 						thirdLegend.InsideChartArea = "legendCgrpArea";
 						thirdLegend.LegendStyle = LegendStyle.Row;
 						thirdLegend.Docking = LegendDocking.Bottom;
 						thirdLegend.Alignment = StringAlignment.Center;
+                        thirdLegend.FontColor = histogrammeLegendTextFontColor;
 						#endregion
 
 						#region legend4
@@ -343,7 +659,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 						//fourthLegend.DockInsideChartArea = true;	
 						fourthLegend.InsideChartArea = "legendCgrpArea";
 						legendItemReference.BorderWidth=1;
-						legendItemReference.Color = Color.FromArgb(148,121,181);
+						//legendItemReference.Color = Color.FromArgb(148,121,181);
+                        legendItemReference.Color = histogrammeColorFamille1;
 						legendItemReference.Name=GestionWeb.GetWebWord(1685,this._customerWebSession.SiteLanguage);
 						legendItemReference.Name+= " ("+periodicityPlanData.Rows[0]["baseTarget"]+") " ;
 						fourthLegend.Enabled =false;
@@ -374,8 +691,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 						//chartAreaCgrp.Name="chartAreaCgrp";								
 						this.ChartAreas.Add(chartAreaCgrp);
 						//Charger les séries de valeurs 
-						seriePeriodicityCgrpBase=SetSeriesBarPeriodicity(periodicityPlanData,chartAreaCgrp,seriePeriodicityCgrpBase,xUnitValues,yUnitValues,Color.FromArgb(148,121,181),chartAreaCgrpName,maxScale);												
-						seriePeriodicityCgrpSelected=SetSeriesBarPeriodicity(periodicityPlanData,chartAreaCgrp,seriePeriodicityCgrpSelected,xUnitValuesSelected,yUnitValuesSelected, Color.FromArgb(255,215,215),chartAreaCgrpName,maxScale);												
+                        seriePeriodicityCgrpBase = SetSeriesBarPeriodicity(periodicityPlanData, chartAreaCgrp, seriePeriodicityCgrpBase, xUnitValues, yUnitValues, histogrammeColorFamille1, chartAreaCgrpName, maxScale);
+                        seriePeriodicityCgrpSelected = SetSeriesBarPeriodicity(periodicityPlanData, chartAreaCgrp, seriePeriodicityCgrpSelected, xUnitValuesSelected, yUnitValuesSelected, histogrammeColorFamille2, chartAreaCgrpName, maxScale);												
 					
 						#endregion
 
@@ -425,8 +742,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 				}
 				else{
 					this.Titles.Add(GestionWeb.GetWebWord(2106,this._customerWebSession.SiteLanguage));
-					this.Titles[0].Font=new Font("Arial", (float)8,System.Drawing.FontStyle.Bold);
-					this.Titles[0].Color=Color.FromArgb(100,72,131);
+					//this.Titles[0].Font=new Font("Arial", (float)8,System.Drawing.FontStyle.Bold);
+					//this.Titles[0].Color=Color.FromArgb(100,72,131);
+                    this.Titles[0].Font = new Font(_textNoResultFontFamily, (float)Convert.ToDouble(_textNoResultFontSize), System.Drawing.FontStyle.Bold);
+                    this.Titles[0].Color = textNoResultFontColor;
 					this.Width=250;
 					this.Height=25;
 				}
@@ -577,7 +896,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 				
 				#region Définition des couleurs
 				//couleur du graphique
-				for(int k=0;k<dt.Rows.Count && k<11;k++){
+				for(int k=0;k<dt.Rows.Count && k<barColors.Length;k++){
 					series.Points[k].Color=barColors[k];
 				}
 				#endregion
@@ -619,7 +938,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 								
 				#region Création et définition du graphique
 				//Création du graphique							
-				
+                #region Couleur du controle
+                ColorConverter cc = new ColorConverter();
+                Color histogrammeBackgroundColor = (Color)cc.ConvertFromString(_histogrammeBackgroundColor);
+                #endregion
+
 				//Type de graphique
 				series.Type= SeriesChartType.Bar;
 				series.XValueType=ChartValueTypes.String;
@@ -627,15 +950,18 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 				series.Enabled=true;
 																
 				chartArea.Area3DStyle.Enable3D = false;
-				chartArea.BackColor =Color.FromArgb(222,207,231);
+				//chartArea.BackColor =Color.FromArgb(222,207,231);
+                chartArea.BackColor = histogrammeBackgroundColor;
 
 				chartArea.Name=chartAreaName;
 				series.ChartArea=chartArea.Name;
 				chartArea.AxisY.Maximum= maxScale+1000;
 				//chartArea.AxisX.Maximum= dt.Rows.Count+1;
 				series.Points.DataBindXY(xValues,yValues);
-				chartArea.AxisX.LabelStyle.Font = new Font("Arial", 8);
-				chartArea.AxisY.LabelStyle.Font = new Font("Arial", 8);
+				//chartArea.AxisX.LabelStyle.Font = new Font("Arial", 8);
+				//chartArea.AxisY.LabelStyle.Font = new Font("Arial", 8);
+                chartArea.AxisX.LabelStyle.Font = new Font(_histogrammeAbscisseTextFontFamily, (float)Convert.ToDouble(_histogrammeAbscisseTextFontSize));
+                chartArea.AxisY.LabelStyle.Font = new Font(_histogrammeOrdonneeTextFontFamily, (float)Convert.ToDouble(_histogrammeOrdonneeTextFontSize));
 				
 				#region Définition des couleurs
 				//couleur du graphique
@@ -663,7 +989,12 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 		/// <param name="chartAreaUnit">conteneur de l'image répartition unité</param>
 		/// <param name="chartAreaCgrp">conteneur de l'image répartition pour Cgrp</param>
 		/// <param name="appmImageType">sortie flash</param>
-		private static void InitializeComponent(BaseAppmChartWebControl appmChart, ChartArea chartAreaUnit,ChartArea chartAreaCgrp,ChartImageType appmImageType) {					
+		private static void InitializeComponent(BaseAppmChartWebControl appmChart, ChartArea chartAreaUnit,ChartArea chartAreaCgrp,ChartImageType appmImageType) {
+
+            ColorConverter cc = new ColorConverter();
+            Color camembertTitleTextFontColor1 = (Color)cc.ConvertFromString(_camembertTitleTextFontColor1);
+            Color histogrammeTitleTextFontColor = (Color)cc.ConvertFromString(_histogrammeTitleTextFontColor);
+            Color controlBorderColor = (Color)cc.ConvertFromString(_controlBorderColor);
 
 			//Type image
 			appmChart.ImageType=appmImageType;
@@ -682,8 +1013,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			appmChart.BackGradientType = GradientType.TopBottom;
 			appmChart.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
 			appmChart.BorderStyle=ChartDashStyle.Solid;
-			appmChart.BorderLineColor=Color.FromArgb(99,73,132);
-			appmChart.BorderLineWidth=2;
+			//appmChart.BorderLineColor=Color.FromArgb(99,73,132);
+			//appmChart.BorderLineWidth=2;
+            appmChart.BorderLineColor = controlBorderColor;
+            appmChart.BorderLineWidth = Convert.ToInt32(_controlBorderSize);
 			appmChart.Legend.Enabled=true;
 			#endregion	
 
@@ -692,8 +1025,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			//titre unité de base			
 			appmChart.Titles.Add(chartAreaUnit.Name);
 			appmChart.Titles[0].DockInsideChartArea=true;			
-			appmChart.Titles[0].Font=new Font("Arial", (float)10);
-			appmChart.Titles[0].Color=Color.FromArgb(100,72,131);
+			//appmChart.Titles[0].Font=new Font("Arial", (float)10);
+			//appmChart.Titles[0].Color=Color.FromArgb(100,72,131);
+            appmChart.Titles[0].Font = new Font(_camembertTitleTextFontFamily1, (float)Convert.ToDouble(_camembertTitleTextFontSize1));
+            appmChart.Titles[0].Color = camembertTitleTextFontColor1;
 			appmChart.Titles[0].DockToChartArea=chartAreaUnit.Name;	
 			
 			//titre unité pour CGRP
@@ -703,8 +1038,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 				appmChart.Titles[1].Position.Auto = false;
 				appmChart.Titles[1].Position.X = 45;
 				appmChart.Titles[1].Position.Y = 50;
-				appmChart.Titles[1].Font=new Font("Arial", (float)10);
-				appmChart.Titles[1].Color=Color.FromArgb(100,72,131);
+				//appmChart.Titles[1].Font=new Font("Arial", (float)10);
+				//appmChart.Titles[1].Color=Color.FromArgb(100,72,131);
+                appmChart.Titles[1].Font = new Font(_histogrammeTitleTextFontFamily, (float)Convert.ToDouble(_histogrammeTitleTextFontSize));
+                appmChart.Titles[1].Color = histogrammeTitleTextFontColor;
 				appmChart.Titles[1].DockToChartArea=chartAreaCgrp.Name;
 			}
 			#endregion
@@ -718,8 +1055,14 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 		/// <param name="chartAreaUnitadditional">conteneur de l'image répartition pour cible selectionnée</param>
 		/// <param name="chartAreaCgrp">conteneur de l'image répartition pour Cgrp</param>
 		/// <param name="appmImageType">Type sortie de l'image</param>
-		private static void InitializeComponentGrp(BaseAppmChartWebControl appmChart, ChartArea chartAreaUnit,ChartArea chartAreaUnitadditional,ChartArea chartAreaCgrp,ChartImageType appmImageType) {			
-			
+		private static void InitializeComponentGrp(BaseAppmChartWebControl appmChart, ChartArea chartAreaUnit,ChartArea chartAreaUnitadditional,ChartArea chartAreaCgrp,ChartImageType appmImageType) {
+
+            ColorConverter cc = new ColorConverter();
+            Color camembertTitleTextFontColor1 = (Color)cc.ConvertFromString(_camembertTitleTextFontColor1);
+            Color camembertTitleTextFontColor2 = (Color)cc.ConvertFromString(_camembertTitleTextFontColor2);
+            Color histogrammeTitleTextFontColor = (Color)cc.ConvertFromString(_histogrammeTitleTextFontColor);
+            Color controlBorderColor = (Color)cc.ConvertFromString(_controlBorderColor);
+
 			//Type image
 			appmChart.ImageType=appmImageType;
 			if(ChartImageType.Flash==appmImageType){
@@ -746,8 +1089,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			appmChart.BackGradientType = GradientType.TopBottom;
 			appmChart.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
 			appmChart.BorderStyle=ChartDashStyle.Solid;
-			appmChart.BorderLineColor=Color.FromArgb(99,73,132);
-			appmChart.BorderLineWidth=2;
+			//appmChart.BorderLineColor=Color.FromArgb(99,73,132);
+			//appmChart.BorderLineWidth=2;
+            appmChart.BorderLineColor = controlBorderColor;
+            appmChart.BorderLineWidth = Convert.ToInt32(_controlBorderSize);
 			appmChart.Legend.Enabled=true;
 			#endregion	
 
@@ -756,8 +1101,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			//titre unité de base			
 			appmChart.Titles.Add(chartAreaUnit.Name);
 			appmChart.Titles[0].DockInsideChartArea=true;			
-			appmChart.Titles[0].Font=new Font("Arial", (float)10);
-			appmChart.Titles[0].Color=Color.FromArgb(100,72,131);
+			//appmChart.Titles[0].Font=new Font("Arial", (float)10);
+			//appmChart.Titles[0].Color=Color.FromArgb(100,72,131);
+            appmChart.Titles[0].Font = new Font(_camembertTitleTextFontFamily1, (float)Convert.ToDouble(_camembertTitleTextFontSize1));
+            appmChart.Titles[0].Color = camembertTitleTextFontColor1;
 			appmChart.Titles[0].DockToChartArea=chartAreaUnit.Name;	
 		
 			//titre unité pour la cible selectionnée		
@@ -766,8 +1113,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 			appmChart.Titles[1].Position.Auto = false;
 			appmChart.Titles[1].Position.X = 50;
 			appmChart.Titles[1].Position.Y = positionY;
-			appmChart.Titles[1].Font=new Font("Arial", (float)10);
-			appmChart.Titles[1].Color=Color.FromArgb(100,72,131);
+			//appmChart.Titles[1].Font=new Font("Arial", (float)10);
+			//appmChart.Titles[1].Color=Color.FromArgb(100,72,131);
+            appmChart.Titles[1].Font = new Font(_camembertTitleTextFontFamily2, (float)Convert.ToDouble(_camembertTitleTextFontSize2));
+            appmChart.Titles[1].Color = camembertTitleTextFontColor2;
 			appmChart.Titles[1].DockToChartArea=chartAreaUnitadditional.Name;
 
 			//titre unité pour CGRP
@@ -777,8 +1126,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 				appmChart.Titles[2].Position.Auto = false;
 				appmChart.Titles[2].Position.X = 50;
 				appmChart.Titles[2].Position.Y = 67;
-				appmChart.Titles[2].Font=new Font("Arial", (float)10);
-				appmChart.Titles[2].Color=Color.FromArgb(100,72,131);
+				//appmChart.Titles[2].Font=new Font("Arial", (float)10);
+				//appmChart.Titles[2].Color=Color.FromArgb(100,72,131);
+                appmChart.Titles[2].Font = new Font(_histogrammeTitleTextFontFamily, (float)Convert.ToDouble(_histogrammeTitleTextFontSize));
+                appmChart.Titles[2].Color = histogrammeTitleTextFontColor;
 				appmChart.Titles[2].DockToChartArea=chartAreaCgrp.Name;
 			}
 			#endregion
@@ -791,7 +1142,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 		/// Génère ce contrôle dans le paramètre de sortie spécifié.
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
-		protected override void Render(HtmlTextWriter output){			
+		protected override void Render(HtmlTextWriter output){
+            //On cree le design ici pour pouvoir appliquer le skin a ce controle, 
+            //Si le design est appelé avant, les membres du skin ne sont pas appliqué a ce controle
+            SetDesignMode();
 			base.Render(output);
 		}
 		#endregion

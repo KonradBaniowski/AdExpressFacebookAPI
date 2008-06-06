@@ -198,7 +198,8 @@ namespace TNS.AdExpress.Web.Controls{
 		/// </summary>
 		/// <returns></returns>
 		protected string GetLoadingHTML(){
-			return("<div align=\"center\" id=\"res_"+this.ID+"\"><img src=\"/Images/Common/waitAjax.gif\"></div>");
+            string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
+            return ("<div align=\"center\" id=\"res_" + this.ID + "\"><img src=\"/App_Themes/" + themeName + "/Images/Common/waitAjax.gif\"></div>");
 		}
 		
 		/// <summary>
