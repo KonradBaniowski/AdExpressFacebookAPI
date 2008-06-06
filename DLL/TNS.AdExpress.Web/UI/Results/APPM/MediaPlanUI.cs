@@ -605,8 +605,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 						monthColspan=(monthColspan*nbPixelByDay)-boderRightWidth;
 						monthsHtml+="\r\n\t\t<td   width=\""+monthColspan+"px\" class=\"pmb\" align=center  nowrap>"; 
 						if(nbDaysInMonth>4)monthsHtml+=MonthString.Get(int.Parse(oldMonthDate.ToString().Substring(4,2)),webSession.SiteLanguage,3)+" "+oldMonthDate.ToString().Substring(2,2);
-						else 
-							monthsHtml+="<font color=\"#644883\">.</font>";
+						else
+                            monthsHtml += "<font class=\"txtViolet\">.</font>";
 						monthsHtml+="</td>";
 						
 						monthColspan=0;
@@ -623,7 +623,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 						weekColspan=(weekColspan*nbPixelByDay)-boderRightWidth;
 						weeksHtml+="\r\n\t\t<td width=\""+weekColspan+"px\" class=\"pmc\"   align=center nowrap>"; 
 						if(nbDaysInWeek>2)weeksHtml+=oldWeekDate.ToString(); //GestionWeb.GetWebWord(848, webSession.SiteLanguage) +"&nbsp;"+
-						else weeksHtml+="<font color=\"#D0C8DA\">.</font>";
+                        else weeksHtml += "<font class=\"txtMediumPurple\">.</font>";
 						weeksHtml+="</td>";
 						weekColspan=0;
 						nbDaysInWeek=0;
@@ -643,8 +643,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					
 					monthsHtml+=MonthString.Get(int.Parse(oldMonthDate.ToString().Substring(4,2)),webSession.SiteLanguage,3)+" "+oldMonthDate.ToString().Substring(2,2);
 				}
-				else 
-					monthsHtml+="<font color=\"#644883\">.</font>";
+				else
+                    monthsHtml += "<font class=\"txtViolet\">.</font>";
 				monthsHtml+="</td>";
 				monthsHtml+="</tr></table></td>";//On ferme le tableau contenant les cellules affichant les mois
 				monthsHtml+="</tr>";
@@ -652,7 +652,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 				weekColspan=(weekColspan*nbPixelByDay)-boderRightWidth;
 				weeksHtml+="\r\n\t\t<td   class=\"pmc\" width=\""+weekColspan+"px\" align=center nowrap>";// class=\"p7bold\"
 				if(nbDaysInWeek>2)weeksHtml+=oldWeekDate.ToString(); //GestionWeb.GetWebWord(848, webSession.SiteLanguage) +"&nbsp;"+
-				else weeksHtml+="<font color=\"#D0C8DA\">.</font>";
+                else weeksHtml += "<font class=\"txtMediumPurple\">.</font>";
 				weeksHtml+="</td>";	
 				weeksHtml+="</tr></table></td>";//On ferme le tableau contenant les cellules affichant les semaines
 				weeksHtml+="</tr>";
