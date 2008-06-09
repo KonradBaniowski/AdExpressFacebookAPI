@@ -36,5 +36,29 @@ namespace TNS.AdExpressI.Portofolio {
 		/// </summary>
 		/// <returns>Result Table</returns>
         ResultTable GetResultTable();
+        /// <summary>
+        /// Get view of the vehicle (HTML)
+        /// </summary>
+        /// <param name="excel">True for excel result</param>
+        /// <returns>HTML Code</returns>
+        string GetVehicleViewHtml(bool excel);
+        /// <summary>
+        /// Get detail media html
+        /// </summary>
+        /// <param name="excel">True for excel result</param>
+        /// <returns>HTML Code</returns>
+        string GetDetailMediaHtml(bool excel);
+        /// <summary>
+        /// Get detail media for press
+        /// </summary>
+        /// <param name="excel">True for excel result</param>
+        /// <returns>HTML Code</returns>
+        string GetDetailMediaPressHtml(bool excel);
+            /// <summary>
+        /// Get detail media for tv & radio
+        /// </summary>
+        /// <param name="excel">True for excel result</param>
+        /// <returns>HTML Code</returns>
+        string GetDetailMediaTvRadioHtml(bool excel);
     }
 }

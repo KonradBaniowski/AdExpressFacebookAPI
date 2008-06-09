@@ -2341,7 +2341,7 @@ namespace TNS.AdExpress.Web.Functions {
         /// <param name="vehicleName">Vehicle</param>
         /// <param name="moduleType">Type de module</param>
         /// <returns>Nom de la table</returns>
-        internal static string GetVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names vehicleName,WebConstantes.Module.Type moduleType) {
+        public static string GetVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names vehicleName,WebConstantes.Module.Type moduleType) {
             try {
                 switch(moduleType) {
                     case WebConstantes.Module.Type.alert:

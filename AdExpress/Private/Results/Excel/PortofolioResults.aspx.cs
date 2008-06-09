@@ -49,6 +49,25 @@ namespace AdExpress.Private.Results.Excel{
 		}
 		#endregion
 
+        #region On PreInit
+        /// <summary>
+        /// On preinit event
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnPreInit(EventArgs e) {
+            base.OnPreInit(e);
+            switch (_webSession.CurrentTab) {
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+                    _resultWebControl.SkinID = "portofolioExcelSynthesisResultTable";
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                    _resultWebControl.SkinID = "portofolioExcelResultTable";
+                    break;
+            }
+        }
+        #endregion
+
 		#region Chargement de la page
 		/// <summary>
 		/// Chargement de la page
@@ -64,10 +83,10 @@ namespace AdExpress.Private.Results.Excel{
 				switch(_webSession.CurrentTab) {
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
 						_resultWebControl.Visible = true;
 						break;	
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:	
-					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.NOVELTY:
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
 						_resultWebControl.Visible = false;

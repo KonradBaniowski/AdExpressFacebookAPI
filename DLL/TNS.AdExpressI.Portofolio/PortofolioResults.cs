@@ -12,6 +12,7 @@ using System.Text;
 using System.Web.UI;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
+using FrameWorkConstantes = TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;
 using CustomerConstantes=TNS.AdExpress.Constantes.Customer;
@@ -28,6 +29,7 @@ using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Portofolio.DAL;
 using System.Reflection;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpressI.Portofolio {
     /// <summary>
@@ -113,7 +115,7 @@ namespace TNS.AdExpressI.Portofolio {
                 // Module
                 _module=ModulesList.GetModule(webSession.CurrentModule);
                 _showCreatives=ShowCreatives();
-                _showInsertions=ShowCreatives();
+                _showInsertions=ShowInsertions();
             }
             catch(System.Exception err) {
                 throw (new PortofolioException("Impossible to set parameters",err));
@@ -139,6 +141,427 @@ namespace TNS.AdExpressI.Portofolio {
         }
         #endregion
 
+        #region HTML for vehicle view
+        /// <summary>
+        /// Get view of the vehicle (HTML)
+        /// </summary>
+        /// <param name="excel">True for excel result</param>
+        /// <returns>HTML code</returns>
+        public string GetVehicleViewHtml(bool excel) {
+
+            #region Variables
+            StringBuilder t = new StringBuilder(5000);
+            DataSet dsVisuel = null;
+            string pathWeb = "";
+            #endregion
+
+            #region Accès aux tables
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            object[] parameters = new object[5];
+            parameters[0] = _webSession;
+            parameters[1] = _vehicle;
+            parameters[2] = _idMedia;
+            parameters[3] = _periodBeginning;
+            parameters[4] = _periodEnd;
+            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+
+            dsVisuel = portofolioDAL.GetListDate(true);
+            DataTable dtVisuel = dsVisuel.Tables[0];
+            #endregion
+
+            // Vérifie si le client a le droit aux créations
+            if (_webSession.CustomerLogin.ShowCreatives(_vehicle)) {
+                if (!excel) {
+                    if (_vehicle == DBClassificationConstantes.Vehicles.names.press
+                        || _vehicle == DBClassificationConstantes.Vehicles.names.internationalPress) {
+
+                        Hashtable htValue = portofolioDAL.GetInvestmentByMedia();
+
+                        //t.Append("</table>");
+                        int compteur = 0;
+                        string endBalise = "";
+                        string day = "";
+                        t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 align=center class=\"paleVioletBackGroundV2 violetBorder\">");
+                        //Vehicle view
+                        t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, _webSession.SiteLanguage) + "</td></tr>");
+                        for (int i = 0; i < dtVisuel.Rows.Count; i++) {
+                            //date_media_num
+
+                            if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
+                                pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
+                            }
+                            else {
+                                pathWeb = "/Images/" + _webSession.SiteLanguage + "/Others/no_visuel.gif";
+                            }
+                            DateTime dayDT = new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
+                            day = GetDayOfWeek(dayDT.DayOfWeek.ToString()) + " " + dayDT.ToString("dd/MM/yyyy");
+
+                            if (compteur == 0) {
+                                t.Append("<tr>");
+                                compteur = 1;
+                                endBalise = "";
+                            }
+                            else if (compteur == 1) {
+                                compteur = 2;
+                                endBalise = "";
+                            }
+                            else {
+                                compteur = 0;
+                                endBalise = "</td></tr>";
+
+                            }
+                            t.Append("<td class=\"portofolioSynthesisBorder\"><table  border=0 cellpadding=0 cellspacing=0 width=100% >");
+                            t.Append("<tr><td class=\"portofolioSynthesis\" align=center >" + day + "</td><tr>");
+                            t.Append("<tr><td align=\"center\" class=\"portofolioSynthesis\" >");
+                            if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
+                                t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
+                            }
+                            t.Append(" <img alt=\"" + GestionWeb.GetWebWord(1409, _webSession.SiteLanguage) + "\" src='" + pathWeb + "' border=\"0\" width=180 height=220>");
+                            if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
+                                t.Append("</a>");
+                            }
+                            t.Append("</td></tr>");
+                            if (htValue.Count > 0) {
+                                if (htValue.ContainsKey(dtVisuel.Rows[i]["date_cover_num"])) {
+                                    t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1398, _webSession.SiteLanguage) + " : " + ((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[1] + "</td><tr>");
+                                    t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1399, _webSession.SiteLanguage) + " :" + int.Parse(((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[0]).ToString("### ### ### ###") + "</td><tr>");
+                                }
+                                else {
+                                    t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1398, _webSession.SiteLanguage) + " : 0</td><tr>");
+                                    t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1399, _webSession.SiteLanguage) + " : 0</td><tr>");
+
+                                }
+                            }
+                            t.Append("</table></td>");
+                            t.Append(endBalise);
+                        }
+                        if (compteur != 0)
+                            t.Append("</tr>");
+
+                        t.Append("</table>");
+                    }
+                }
+            }
+
+            return t.ToString();
+        }
+        #endregion
+
+        #region HTML detail media
+        /// <summary>
+        /// Get media detail html
+        /// </summary>
+        /// <param name="excel">true for excel result</param>
+        /// <returns>HTML Code</returns>
+        public string GetDetailMediaHtml(bool excel) {
+            switch (_vehicle) {
+                case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    return GetDetailMediaPressHtml(excel);
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    return GetDetailMediaTvRadioHtml(excel);
+                default:
+                    throw new PortofolioException("Vehicle unknown.");
+            }
+        }
+        #endregion
+
+        #region Get Detail Media for Press
+        /// <summary>
+        ///  Get Detail Media for Press
+        /// </summary>
+        /// <param name="excel">True for excel result</param>
+        /// <returns>Code Html</returns>
+        public string GetDetailMediaPressHtml(bool excel) {
+
+            StringBuilder t = new StringBuilder(5000);
+
+            GetAllPeriodInsertions(t, GestionWeb.GetWebWord(1837, _webSession.SiteLanguage));
+            t.Append(GetVehicleViewHtml(excel));
+
+            return t.ToString();
+        }
+
+        #endregion
+
+        #region Get Detail Media for Tv & Radio
+        /// <summary>
+        /// Get Detail Media for Tv & Radio
+        /// </summary>
+        /// <param name="excel">true for excel result</param>
+        /// <returns>HTML Code</returns>
+        public string GetDetailMediaTvRadioHtml(bool excel) {
+
+            string classStyleValue = "acl2";
+            bool color = true;
+            bool isTvNatThematiques = false;
+            string style = "cursorHand";
+
+            StringBuilder t = new StringBuilder(20000);
+            string nbrInsertion = "";
+            switch (_vehicle) {
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    nbrInsertion = GestionWeb.GetWebWord(939, _webSession.SiteLanguage);
+                    break;
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    nbrInsertion = GestionWeb.GetWebWord(939, _webSession.SiteLanguage);
+                    break;
+                default:
+                    break;
+            }
+
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            object[] parameters = new object[5];
+            parameters[0] = _webSession;
+            parameters[1] = _vehicle;
+            parameters[2] = _idMedia;
+            parameters[3] = _periodBeginning;
+            parameters[4] = _periodEnd;
+            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+
+            int[,] tab = GetFormattedTableDetailMedia(portofolioDAL);
+
+            #region aucune données
+            if (tab.GetLength(0) == 0) {
+                return ("<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, _webSession.SiteLanguage)
+                    + "</div>");
+            }
+            #endregion
+
+            //Vérifie si le support appartient à la TV Nat Thématiques
+            isTvNatThematiques = portofolioDAL.IsBelongToTvNatThematiques();
+            if (isTvNatThematiques) style = "";
+            if (!excel && !isTvNatThematiques) {
+                //Ensemble du spot à spot sur la période intérrogée
+                GetAllPeriodInsertions(t, GestionWeb.GetWebWord(1836, _webSession.SiteLanguage));
+            }
+
+
+            t.Append("<table border=0 cellpadding=0 cellspacing=0 >");
+
+            #region Première ligne
+            t.Append("\r\n\t<tr height=\"20px\" >");
+            t.Append("<td class=\"p2 violetBorderTop\" colspan=2>&nbsp;</td>");
+            // Lundi
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(654, _webSession.SiteLanguage) + "</td>");
+            // Mardi
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(655, _webSession.SiteLanguage) + "</td>");
+            // Mercredi
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(656, _webSession.SiteLanguage) + "</td>");
+            // Jeudi
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(657, _webSession.SiteLanguage) + "</td>");
+            // Vendredi
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(658, _webSession.SiteLanguage) + "</td>");
+            // Samedi
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(659, _webSession.SiteLanguage) + "</td>");
+            // Dimanche
+            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(660, _webSession.SiteLanguage) + "</td>");
+            t.Append("</tr>");
+            #endregion
+
+            #region Table
+            for (int i = 0; i < tab.GetLength(0) && int.Parse(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN].ToString()) >= 0; i++) {
+
+                if (color) {
+                    t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV2';\" class=\"violetBackGroundV2\">");
+                }
+                else {
+                    t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='greyBackGround';\" class=\"greyBackGround\">");
+                }
+                // code écran
+                t.Append("<td class=\"p2\" rowspan=2 align=\"left\" nowrap>" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "</td>");
+
+                if (color) {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + GestionWeb.GetWebWord(868, _webSession.SiteLanguage) + "</td>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + GestionWeb.GetWebWord(868, _webSession.SiteLanguage) + "</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Monday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_VALUE].ToString(), WebCst.CustomerSessions.Unit.euro, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Tuesday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_VALUE].ToString(), WebCst.CustomerSessions.Unit.euro, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Wednesday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+                    
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_VALUE].ToString(), WebCst.CustomerSessions.Unit.euro, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Thursday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+                    
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_VALUE].ToString(), WebCst.CustomerSessions.Unit.euro, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Friday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_VALUE].ToString(), WebCst.CustomerSessions.Unit.euro, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Saturday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+                    
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_VALUE].ToString(), WebCst.CustomerSessions.Unit.euro, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Sunday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+                    
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_VALUE].ToString(), WebCst.CustomerSessions.Unit.euro, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                t.Append("</tr>");
+
+                if (color) {
+                    t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV2';\" class=\"violetBackGroundV2\">");
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + GestionWeb.GetWebWord(939, _webSession.SiteLanguage) + "</td>");
+                    color = !color;
+                }
+                else {
+                    t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='greyBackGround';\" class=\"greyBackGround\">");
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + GestionWeb.GetWebWord(939, _webSession.SiteLanguage) + "</td>");
+                    color = !color;
+                }
+
+                // Partie Nombre de spot
+
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Monday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_INSERTION].ToString(), WebCst.CustomerSessions.Unit.spot, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Tuesday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_INSERTION].ToString(), WebCst.CustomerSessions.Unit.spot, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Wednesday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_INSERTION].ToString(), WebCst.CustomerSessions.Unit.spot, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Thursday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_INSERTION].ToString(), WebCst.CustomerSessions.Unit.spot, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Friday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_INSERTION].ToString(), WebCst.CustomerSessions.Unit.spot, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Saturday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_INSERTION].ToString(), WebCst.CustomerSessions.Unit.spot, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                if (tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_INSERTION].ToString() != "0") {
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Sunday','" + tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] + "');\" >");
+
+                    t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + Units.ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_INSERTION].ToString(), WebCst.CustomerSessions.Unit.spot, false) + "</td>");
+                    if (!excel && !isTvNatThematiques)
+                        t.Append("</a>");
+                }
+                else {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                }
+                t.Append("</tr>");
+
+            }
+            #endregion
+
+            t.Append("</table>");
+            return t.ToString();
+
+        }
+        #endregion
+
         #region Result table for: DETAIL PORTOFOLIO, CALENDAR
         /// <summary>
         /// Get ResultTable for some portofolio result
@@ -153,8 +576,9 @@ namespace TNS.AdExpressI.Portofolio {
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
                         return GetPortofolioResultTable();
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
-                    //return WebRules.Results.PortofolioRules.GetCalendar(webSession);
                         return GetCalendar();
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+                        return GetSynthesisResultTable();
                     default:
                         return null;
                 }
@@ -168,6 +592,429 @@ namespace TNS.AdExpressI.Portofolio {
         #endregion
 
         #region Rules
+
+        #region Synthesis
+        /// <summary>
+        /// Get Result Table for portofolio synthesis
+        /// </summary>
+        /// <returns>ResultTable</returns>
+        public ResultTable GetSynthesisResultTable() {
+
+            #region Constantes
+            /// <summary>
+            /// Header column index
+            /// </summary>
+            const int HEADER_COLUMN_INDEX = 0;
+            /// <summary>
+		    /// First column index
+		    /// </summary>
+		    const int FIRST_COLUMN_INDEX = 1;
+		    /// <summary>
+		    /// Second column index
+		    /// </summary>
+		    const int SECOND_COLUMN_INDEX =2;
+            #endregion
+
+            #region Variables
+            string investment = "";
+            string firstDate = "";
+            string lastDate = "";
+            string support = "";
+            string periodicity = "";
+            string category = "";
+            string regie = "";
+            string interestCenter = "";
+            string pageNumber = "";
+            string ojd = "";
+            string nbrSpot = "";
+            string nbrEcran = "";
+            decimal averageDurationEcran = 0;
+            decimal nbrSpotByEcran = 0;
+            string totalDuration = "";
+            string numberBoard = "";
+            ResultTable resultTable = null;
+            LineType lineType = LineType.level1;
+            string typeReseauStr = string.Empty;
+            #endregion
+
+            #region Accès aux tables
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            object[] parameters = new object[5];
+            parameters[0] = _webSession;
+            parameters[1] = _vehicle;
+            parameters[2] = _idMedia;
+            parameters[3] = _periodBeginning;
+            parameters[4] = _periodEnd;
+            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+
+            DataSet dsInvestment = portofolioDAL.GetInvestment();
+            DataTable dtInvestment = dsInvestment.Tables[0];
+
+            DataSet dsInsertionNumber = portofolioDAL.GetInsertionNumber();
+            DataTable dtInsertionNumber = dsInsertionNumber.Tables[0];
+
+            DataSet dsCategory = portofolioDAL.GetCategoryMediaSellerData();
+            DataTable dtCategory = dsCategory.Tables[0];
+
+            DataSet dsPage = portofolioDAL.GetPage();
+            DataTable dtPage = dsPage.Tables[0];
+            
+            DataTable dtTypeSale = null;
+            if (_vehicle == DBClassificationConstantes.Vehicles.names.outdoor) {
+                DataSet dsTypeSale = portofolioDAL.GetTypeSale();
+                dtTypeSale = dsTypeSale.Tables[0];
+            }
+
+            object[] tab = portofolioDAL.NumberProductAdvertiser();
+            object[] tabEncart = null;
+
+            if (_vehicle == DBClassificationConstantes.Vehicles.names.press || _vehicle == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                tabEncart = portofolioDAL.NumberPageEncart();
+            }
+            #endregion
+
+            #region Parcours des tableaux
+            foreach (DataRow row in dtInvestment.Rows) {
+                
+                investment = row["investment"].ToString();
+                firstDate = row["first_date"].ToString();
+                lastDate = row["last_date"].ToString();
+                
+                if (dtInvestment.Columns.Contains("duration")) {
+                    totalDuration = row["duration"].ToString();
+                }
+                if (dtInvestment.Columns.Contains("number_board")) {
+                    numberBoard = row["number_board"].ToString();
+                }
+
+            }
+            //nombre d'insertions
+            if (!dtInsertionNumber.Equals(System.DBNull.Value) && dtInsertionNumber.Rows.Count > 0) {
+                nbrSpot = dtInsertionNumber.Rows[0]["insertion"].ToString();
+            }
+            foreach (DataRow row in dtCategory.Rows) {
+                support = row["support"].ToString();
+                category = row["category"].ToString();
+                regie = row["media_seller"].ToString();
+                interestCenter = row["interest_center"].ToString();
+                if (dtCategory.Columns.Contains("periodicity"))
+                    periodicity = row["periodicity"].ToString();
+                if (dtCategory.Columns.Contains("ojd"))
+                    ojd = row["ojd"].ToString();
+            }
+
+            if (_vehicle== DBClassificationConstantes.Vehicles.names.press
+                || _vehicle == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                foreach (DataRow row in dtPage.Rows) {
+                    pageNumber = row["page"].ToString();
+                }
+            }
+
+            if (_vehicle == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicle == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicle == DBClassificationConstantes.Vehicles.names.others) {
+                DataSet dsEcran = portofolioDAL.GetEcranData();
+                DataTable dtEcran = dsEcran.Tables[0];
+
+                foreach (DataRow row in dtEcran.Rows) {
+                    nbrEcran = row["nbre_ecran"].ToString();
+                    if (row["nbre_ecran"] != System.DBNull.Value) {
+                        averageDurationEcran = decimal.Parse(row["ecran_duration"].ToString()) / decimal.Parse(row["nbre_ecran"].ToString());
+                        nbrSpotByEcran = decimal.Parse(row["nbre_spot"].ToString()) / decimal.Parse(row["nbre_ecran"].ToString());
+                    }
+                }
+            }
+            #endregion
+
+            #region Période
+            DateTime dtFirstDate = DateTime.Today;
+            DateTime dtLastDate = DateTime.Today;
+            if (_vehicle == DBClassificationConstantes.Vehicles.names.outdoor) {
+                if (firstDate.Length > 0) {
+                    dtFirstDate = Convert.ToDateTime(firstDate);
+                    dtFirstDate = dtFirstDate.Date;
+                }
+                if (lastDate.Length > 0) {
+                    dtLastDate = Convert.ToDateTime(lastDate);
+                    dtLastDate = dtLastDate.Date;
+                }
+            }
+            else {
+                if (firstDate.Length > 0) {
+                    dtFirstDate = new DateTime(int.Parse(firstDate.Substring(0, 4)), int.Parse(firstDate.Substring(4, 2)), int.Parse(firstDate.Substring(6, 2)));
+                }
+
+                if (lastDate.Length > 0) {
+                    dtLastDate = new DateTime(int.Parse(lastDate.Substring(0, 4)), int.Parse(lastDate.Substring(4, 2)), int.Parse(lastDate.Substring(6, 2)));
+                }
+            }
+            #endregion
+
+            #region nbLines init
+            long nbLines = 0;
+            long lineIndex = 0;
+            switch (_vehicle) {
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+                    nbLines = 16;
+                    break;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
+                    nbLines = 14;
+                    break;
+                default:
+                    throw (new PortofolioException("Vehicle unknown"));
+            }
+            #endregion
+
+            #region headers
+            Headers headers = new Headers();
+
+            TNS.FrameWork.WebResultUI.Header header = new TNS.FrameWork.WebResultUI.Header(support.ToString(), HEADER_COLUMN_INDEX, "SynthesisH1");
+            header.Add(new TNS.FrameWork.WebResultUI.Header("", FIRST_COLUMN_INDEX, "SynthesisH2"));
+            header.Add(new TNS.FrameWork.WebResultUI.Header("", SECOND_COLUMN_INDEX, "SynthesisH2"));
+            headers.Root.Add(header);
+            resultTable = new ResultTable(nbLines, headers);
+            #endregion
+
+            #region Construction de resultTable
+            // Date de début et fin de vague pour affichage
+            if (_vehicle== DBClassificationConstantes.Vehicles.names.outdoor){
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtFirstDate.Date.ToString("dd/MM/yyyy"));
+
+                ChangeLineType(ref lineType);
+
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1608, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtLastDate.Date.ToString("dd/MM/yyyy"));
+            }
+            // Date de parution ou diffusion
+            else {
+                if (firstDate.Length > 0) {
+                    if (_vehicle == DBClassificationConstantes.Vehicles.names.press
+                        || _vehicle == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                        //Cas Presse : Date de parution 
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage));
+                    }
+                    else {
+                        // Cas TV-Radio : Date de diffusion
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1380, _webSession.SiteLanguage));
+                    }
+                    if (firstDate == lastDate) {
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtFirstDate.Date.ToString("dd/MM/yyyy"));
+                    }
+                    else {
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel("Du " + dtFirstDate.Date.ToString("dd/MM/yyyy") + " au " + dtLastDate.Date.ToString("dd/MM/yyyy"));
+                    }
+                }
+            }
+            
+            ChangeLineType(ref lineType);
+
+            // Périodicité
+            if (dtCategory.Columns.Contains("periodicity")) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1450, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(periodicity);
+                ChangeLineType(ref lineType);
+            }
+            // Categorie
+            lineIndex = resultTable.AddNewLine(lineType);
+            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1416, _webSession.SiteLanguage));
+            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(category);
+            ChangeLineType(ref lineType);
+
+            // Régie
+            lineIndex = resultTable.AddNewLine(lineType);
+            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1417, _webSession.SiteLanguage));
+            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(regie);
+            ChangeLineType(ref lineType);
+
+            // Centre d'intérêt
+            lineIndex = resultTable.AddNewLine(lineType);
+            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1411, _webSession.SiteLanguage));
+            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(interestCenter);
+            ChangeLineType(ref lineType);
+
+            //number board et type de reseau ,cas de l'Affichage
+            if (_vehicle == DBClassificationConstantes.Vehicles.names.outdoor && dtTypeSale.Rows.Count > 0) {
+
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1604, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberBoard));
+                ChangeLineType(ref lineType);
+
+                int count = 0;
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1609, _webSession.SiteLanguage));
+                if (dtTypeSale.Rows.Count == 0) typeReseauStr="&nbsp;";
+                else {
+                    foreach (DataRow row in dtTypeSale.Rows) {
+                        if (count > 0) {
+                            typeReseauStr += "<BR>";
+                        }
+                        typeReseauStr += SQLGenerator.SaleTypeOutdoor(row["type_sale"].ToString(), _webSession.SiteLanguage);
+                        count++;
+                    }
+                }
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(typeReseauStr);
+                ChangeLineType(ref lineType);
+
+            }
+            // Cas de la presse
+            if (_vehicle == DBClassificationConstantes.Vehicles.names.press
+                || _vehicle == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                // Nombre de page
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(pageNumber));
+                ChangeLineType(ref lineType);
+
+                if (((string)tabEncart[0]).Length > 0) {
+                    // Nombre de page pub		
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1386, _webSession.SiteLanguage));
+                    //resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(Units.ConvertUnitValueAndPdmToString((string)tabEncart[0], WebCst.CustomerSessions.Unit.pages, false)));
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(tabEncart[0].ToString()));
+
+                    ChangeLineType(ref lineType);
+
+                    // Ratio
+                    if (pageNumber.Length > 0) {
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage));
+                        //resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPercent(((decimal)(decimal.Parse(Units.ConvertUnitValueAndPdmToString((string)tabEncart[0], WebCst.CustomerSessions.Unit.pages, false)) / decimal.Parse(pageNumber) * 100)).ToString("0.###") + " %");
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(((decimal.Parse(tabEncart[0].ToString()) / decimal.Parse(pageNumber) * 100)/1000).ToString("0.###")+" %");
+                    }
+                    else {
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage));
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel("&nbsp;&nbsp;&nbsp;&nbsp;");
+                    }
+                    ChangeLineType(ref lineType);
+                }
+
+                if (((string)tabEncart[1]).Length > 0) {
+                    // Nombre de page de pub hors encarts
+                    if (((string)tabEncart[1]).Length == 0)
+                        tabEncart[1] = "0";
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1388, _webSession.SiteLanguage));
+                    //resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(Units.ConvertUnitValueAndPdmToString((string)tabEncart[1], WebCst.CustomerSessions.Unit.pages, false)));
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(tabEncart[1].ToString()));
+                    ChangeLineType(ref lineType);
+                }
+                if (((string)tabEncart[2]).Length > 0) {
+                    // Nombre de page de pub encarts
+                    if (((string)tabEncart[2]).Length == 0) {
+                        tabEncart[2] = "0";
+                    }
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1389, _webSession.SiteLanguage));
+                    //resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(Units.ConvertUnitValueAndPdmToString((string)tabEncart[2], WebCst.CustomerSessions.Unit.pages, false)));
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(tabEncart[2].ToString()));
+                    ChangeLineType(ref lineType);
+                }
+            }
+
+            // Cas tv, radio
+            if (_vehicle == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicle == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicle == DBClassificationConstantes.Vehicles.names.others) {
+
+                //Nombre de spot
+                if (nbrSpot.Length == 0) {
+                    nbrSpot = "0";
+                }
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1404, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrSpot));
+                ChangeLineType(ref lineType);
+
+                // Nombre d'ecran
+                if (nbrEcran.Length == 0) {
+                    nbrEcran = "0";
+                }
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1412, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrEcran));
+                ChangeLineType(ref lineType);
+
+                if (totalDuration.Length == 0) {
+                    totalDuration = "0";
+                    //totalDuration = Units.ConvertUnitValueAndPdmToString(totalDuration, WebCst.CustomerSessions.Unit.duration, false);
+                }
+                // total durée
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1413, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(double.Parse(totalDuration));
+                ChangeLineType(ref lineType);
+            }
+
+            // Total investissements
+            if (investment.Length > 0) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage));
+                //resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellEuro(double.Parse(Units.ConvertUnitValueAndPdmToString(investment, WebCst.CustomerSessions.Unit.euro, false)));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellEuro(double.Parse(investment));
+                ChangeLineType(ref lineType);
+            }
+
+            //Nombre de produits
+            lineIndex = resultTable.AddNewLine(lineType);
+            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage));
+            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(tab[0].ToString()));
+            ChangeLineType(ref lineType);
+
+            if (_vehicle != DBClassificationConstantes.Vehicles.names.outdoor) {
+                //Nombre de nouveaux produits dans la pige
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(tab[2].ToString()));
+                ChangeLineType(ref lineType);
+
+                //Nombre de nouveaux produits dans le support
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1395, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(tab[1].ToString()));
+                ChangeLineType(ref lineType);
+            }
+            //Nombre d'annonceurs
+            lineIndex = resultTable.AddNewLine(lineType);
+            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));
+            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(tab[3].ToString()));
+            ChangeLineType(ref lineType);
+
+            // Cas tv, presse
+            if (_vehicle == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicle == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicle == DBClassificationConstantes.Vehicles.names.others) {
+
+                // Durée moyenne d'un écran
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1414, _webSession.SiteLanguage));
+                //resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(double.Parse(Units.ConvertUnitValueAndPdmToString(((long)averageDurationEcran).ToString(), WebCst.CustomerSessions.Unit.duration, false)));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
+                ChangeLineType(ref lineType);
+
+                // Nombre moyen de spots par écran
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1415, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(nbrSpotByEcran.ToString("0.00"));
+
+            }
+            #endregion
+
+            return resultTable;
+
+        }
+        #endregion
 
         #region Détail du portefeuille
         /// <summary>
@@ -376,6 +1223,80 @@ namespace TNS.AdExpressI.Portofolio {
             return tab;
         }
         #endregion 
+
+        #region Détail support
+        /// <summary>
+        /// Créer un tableau avec pour chaque jour de la semaine
+        /// l'investissement du support et le nombre de spot
+        /// </summary>
+        /// <returns>tableau avec pour chaque jour de la semaine
+        /// l'investissement du support et le nombre de spot</returns>
+        public int[,] GetFormattedTableDetailMedia(IPortofolioDAL portofolioDAL) {
+
+            #region Variables
+            int[,] tab = null;
+            DataTable dt = null;
+            DateTime dayDT;
+            int currentLine = -1;
+            int oldEcranCode = -1;
+            int ecranCode;
+            #endregion
+
+            dt = portofolioDAL.GetCommercialBreakForTvRadio().Tables[0];
+
+            #region Initialisation du tableau
+            tab = new int[dt.Rows.Count, FrameWorkResultConstantes.PortofolioDetailMedia.TOTAL_INDEX];
+            #endregion
+
+            #region Parcours du tableau
+            foreach (DataRow row in dt.Rows) {
+                ecranCode = int.Parse(row["code_ecran"].ToString());
+                dayDT = new DateTime(int.Parse(row["date_media_num"].ToString().Substring(0, 4)), int.Parse(row["date_media_num"].ToString().Substring(4, 2)), int.Parse(row["date_media_num"].ToString().Substring(6, 2)));
+                if (ecranCode != oldEcranCode) {
+                    currentLine++;
+                    oldEcranCode = ecranCode;
+                    tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] = int.Parse(row["code_ecran"].ToString());
+                }
+                switch (dayDT.DayOfWeek.ToString()) {
+
+                    case "Monday":
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_VALUE] += int.Parse(row["value"].ToString());
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.MONDAY_INSERTION] += int.Parse(row["insertion"].ToString());
+                        break;
+                    case "Tuesday":
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_VALUE] += int.Parse(row["value"].ToString());
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.TUESDAY_INSERTION] += int.Parse(row["insertion"].ToString());
+                        break;
+                    case "Wednesday":
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_VALUE] += int.Parse(row["value"].ToString());
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.WEDNESDAY_INSERTION] += int.Parse(row["insertion"].ToString());
+                        break;
+                    case "Thursday":
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_VALUE] += int.Parse(row["value"].ToString());
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.THURSDAY_INSERTION] += int.Parse(row["insertion"].ToString());
+                        break;
+                    case "Friday":
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_VALUE] += int.Parse(row["value"].ToString());
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.FRIDAY_INSERTION] += int.Parse(row["insertion"].ToString());
+                        break;
+                    case "Saturday":
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_VALUE] += int.Parse(row["value"].ToString());
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.SATURDAY_INSERTION] += int.Parse(row["insertion"].ToString());
+                        break;
+                    case "Sunday":
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_VALUE] += int.Parse(row["value"].ToString());
+                        tab[currentLine, FrameWorkConstantes.Results.PortofolioDetailMedia.SUNDAY_INSERTION] += int.Parse(row["insertion"].ToString());
+                        break;
+                }
+            }
+            //if condition added to fix the bug in detail support when we select the single date
+            if (currentLine + 1 < dt.Rows.Count)
+                tab[currentLine + 1, FrameWorkConstantes.Results.PortofolioDetailMedia.ECRAN] = FrameWorkConstantes.Results.PortofolioDetailMedia.END_ARRAY;
+            #endregion
+
+            return tab;
+        }
+        #endregion		
 
         #endregion
 
@@ -804,6 +1725,78 @@ namespace TNS.AdExpressI.Portofolio {
                 }
             }
             return (false);
+        }
+        #endregion
+
+        #region Change line type
+        /// <summary>
+        /// Change line type
+        /// </summary>
+        /// <param name="lineType">Line Type</param>
+        /// <returns>Line type</returns>
+        private void ChangeLineType(ref LineType lineType) {
+
+            if (lineType == LineType.level1)
+                lineType = LineType.level2;
+            else 
+                lineType = LineType.level1;
+
+        }
+        #endregion
+
+        #region Get day of week
+        /// <summary>
+        /// Get day of week
+        /// </summary>
+        /// <param name="dayOfWeek">Day Of Week</param>
+        /// <returns>Day Of Week</returns>
+        private string GetDayOfWeek(string dayOfWeek) {
+            string txt = "";
+            switch (dayOfWeek) {
+                case "Monday":
+                    txt = GestionWeb.GetWebWord(654, _webSession.SiteLanguage);
+                    break;
+                case "Tuesday":
+                    txt = GestionWeb.GetWebWord(655, _webSession.SiteLanguage);
+                    break;
+                case "Wednesday":
+                    txt = GestionWeb.GetWebWord(656, _webSession.SiteLanguage);
+                    break;
+                case "Thursday":
+                    txt = GestionWeb.GetWebWord(657, _webSession.SiteLanguage);
+                    break;
+                case "Friday":
+                    txt = GestionWeb.GetWebWord(658, _webSession.SiteLanguage);
+                    break;
+                case "Saturday":
+                    txt = GestionWeb.GetWebWord(659, _webSession.SiteLanguage);
+                    break;
+                case "Sunday":
+                    txt = GestionWeb.GetWebWord(660, _webSession.SiteLanguage);
+                    break;
+            }
+            return txt;
+        }
+        #endregion
+
+        #region Get All Period Insertions
+        /// <summary>
+        /// Affiche le lien vers le détail des insertions sur la période sélectionnée.
+        /// </summary>
+        /// <param name="t">Constructeur du lien</param>
+        /// <param name="linkText">texte du lien</param>
+        /// <param name="webSession">session client</param>
+        /// <param name="idMedia">identifiant support</param>
+        private void GetAllPeriodInsertions(StringBuilder t, string linkText) {
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+            t.Append("<table border=0 cellpadding=0 cellspacing=0 >");
+            t.Append("<TR height=10><TD ><a class=\"roll03\" href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','','');\" ");
+            t.Append(" onmouseover=\"detailSpotButton.src='/App_Themes/" + themeName + "/Images/Common/detailSpot_down.gif';\" onmouseout=\"detailSpotButton.src='/App_Themes/" + themeName + "/Images/Common/detailSpot_up.gif';\" ");
+            t.Append("><IMG NAME=\"detailSpotButton\" src=\"/App_Themes/" + themeName + "/Images/Common/detailSpot_up.gif\" BORDER=0 align=absmiddle alt=\"" + linkText + "\">");
+            t.Append("&nbsp;" + linkText);
+            t.Append("</a></TD></TR>");
+            t.Append("</table>");
+            t.Append("<br><br>");
         }
         #endregion
 

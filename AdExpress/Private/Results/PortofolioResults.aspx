@@ -163,9 +163,8 @@
 								<tr>
 									<td align="center" class="whiteBackGround">
 										<!-- Resultat -->
-										<%=result%>
 										<DCWC:PORTOFOLIOCHARTUI id="portofolioChart" runat="server"></DCWC:PORTOFOLIOCHARTUI><cc5:resultwebcontrol id="_resultWebControl" runat="server" JavascriptFilePath="/scripts/WebResult.js"
-											AllowPaging="True" SkinID="portofolioResultTable"></cc5:resultwebcontrol></td>
+											AllowPaging="True" SkinID="portofolioResultTable"></cc5:resultwebcontrol><%=result%></td>
 								</tr>
 								<tr>
 									<td class="whiteBackGround" height="5"></td>

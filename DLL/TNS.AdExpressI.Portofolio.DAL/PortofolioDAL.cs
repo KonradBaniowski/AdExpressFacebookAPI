@@ -22,6 +22,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Exceptions;
 using CustormerConstantes=TNS.AdExpress.Constantes.Customer;
+using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 
 namespace TNS.AdExpress.Portofolio.DAL {
@@ -323,14 +324,14 @@ namespace TNS.AdExpress.Portofolio.DAL {
                 for (int i = 0; i <= 3; i++) {
                     if ((_vehicleName != DBClassificationConstantes.Vehicles.names.outdoor) || (i != 2 && i != 1)) {
                         if (i <= 2) {
-                            sql = " select count(id_product) as total ";
-                            sql = " from( ";
-                            sql = " select  id_product ";
+                            sql += " select count(id_product) as total ";
+                            sql += " from( ";
+                            sql += " select  id_product ";
                         }
                         else {
-                            sql = " select count(id_advertiser) as total ";
-                            sql = " from( ";
-                            sql = " select  id_advertiser ";
+                            sql += " select count(id_advertiser) as total ";
+                            sql += " from( ";
+                            sql += " select  id_advertiser ";
                         }
                         sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                         sql += " where id_media=" + _idMedia + "";
@@ -375,7 +376,11 @@ namespace TNS.AdExpress.Portofolio.DAL {
                 if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                     foreach (DataRow row in ds.Tables[0].Rows) {
                         tab[index] = row["total"].ToString();
-                        index++;
+                        if (_vehicleName == DBClassificationConstantes.Vehicles.names.outdoor){
+                            index = index + 3;
+                        }
+                        else
+                            index++;
                     }
             }
             catch (System.Exception err) {
@@ -421,7 +426,7 @@ namespace TNS.AdExpress.Portofolio.DAL {
 
                 for (int i = 0; i <= 2; i++) {
 
-                    sql = " select sum(area_page) as page ";
+                    sql += " select sum(area_page) as page ";
                     sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " where ID_MEDIA=" + _idMedia + " ";
                     // hors encart
@@ -1112,6 +1117,186 @@ namespace TNS.AdExpress.Portofolio.DAL {
 
         #endregion
 
+        #region Get dates list
+        /// <summary>
+        /// Get dates list
+        /// </summary>
+        /// <param name="conditionEndDate">Add condition end date</param>
+        /// <returns>DataSet</returns>
+        public DataSet GetListDate(bool conditionEndDate) {
+
+            string tableName = "";
+            try {
+                tableName = GetAlertTable();
+            }
+            catch (System.Exception err) {
+                throw (new PortofolioDALException("Error when getting table name", err));
+            }
+
+            #region Construction de la requête
+            StringBuilder sql = new StringBuilder(500);
+
+            sql.Append("select distinct date_media_num ");
+
+            if (_vehicleName == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                sql.Append(", disponibility_visual ");
+                sql.Append(", number_page_media ");
+                sql.Append(", date_cover_num ");
+            }
+            sql.Append(", media ");
+            sql.Append(" from ");
+            sql.Append(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + "." + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+
+            if (_vehicleName == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).SqlWithPrefix + " ");
+                sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).SqlWithPrefix + " ");
+            }
+            sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).SqlWithPrefix + " ");
+            sql.Append(" where " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media" + " ");
+            sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=" + _idMedia + " ");
+            // Période			
+
+            if (_beginingDate.Length > 0)
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num>=" + _beginingDate);
+            if (_endDate.Length > 0 && conditionEndDate)
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num<=" + _endDate);
+
+            if (_vehicleName == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress) {
+
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix + ".date_debut(+) = " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num ");
+
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix + ".id_project(+) = " + CstProject.ADEXPRESS_ID + " ");
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix + ".id_media(+) = " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media ");
+
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=al.id_media(+)");
+
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num=al.DATE_ALARM(+)");
+
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix + ".id_media(+)=" + _idMedia + " ");
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix + ".ID_LANGUAGE_I(+)=" + _webSession.SiteLanguage + " ");
+                sql.Append(" and  " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix + ".DATE_ALARM(+)>=" + _beginingDate + " ");
+                if (_endDate.Length > 0 && conditionEndDate)
+                    sql.Append(" and  " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix + ".DATE_ALARM(+)<=" + _endDate + " ");
+
+            }
+            // Tri			
+            sql.Append(" order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num desc");
+
+            #endregion
+
+            #region Execution de la requête
+            try {
+                return (_webSession.Source.Fill(sql.ToString()));
+            }
+            catch (System.Exception err) {
+                throw (new PortofolioDALException("Erreur lors de la sélection de la table", err));
+            }
+            #endregion
+
+        }
+        #endregion
+
+        #region Get Commercial Break For Tv & Radio
+        /// <summary>
+        /// Get Commercial Break For Tv & Radio
+        /// </summary>
+        /// <returns>Liste des codes ecrans</returns>
+        public DataSet GetCommercialBreakForTvRadio() {
+
+            #region Varaibles
+            string selectFields = "";
+            string tableName = "";
+            string groupByFields = "";
+            string listProductHap = "";
+            string product = "";
+            string productsRights = "";
+            string mediaRights = "";
+            string sql = "";
+            #endregion
+
+            #region Construction de la requête
+
+            try {
+                selectFields = GetFieldsDetailMediaForTvRadio();
+                tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(_vehicleName,WebConstantes.Module.Type.alert);
+                groupByFields = GetGroupByDetailMediaForTvRadio();
+                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+                product = GetProductData();
+                productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            }
+            catch (System.Exception err) {
+                throw (new PortofolioDALException("Impossible to build the request", err));
+            }
+
+            sql += "select " + selectFields;
+            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + "." + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
+            sql += " where id_media=" + _idMedia + "  ";
+            sql += " and date_media_num>=" + _beginingDate + " ";
+            sql += " and date_media_num<=" + _endDate + " ";
+            sql += " and insertion=1 ";
+            sql += listProductHap;
+            sql += product;
+            sql += productsRights;
+            sql += mediaRights;
+            sql += groupByFields;
+
+
+            #endregion
+
+            #region Execution de la requête
+            try {
+                return _webSession.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception err) {
+                throw (new PortofolioDALException("Impossible de charger des données pour les nouveauté: " + sql, err));
+            }
+            #endregion
+
+        }
+        #endregion
+
+        #region Is Belong To Tv Nat Thematiques
+        /// <summary>
+        /// Is Belong To Tv Nat Thematiques
+        /// </summary>
+        /// <returns>True if belong To Tv Nat Thematiques</returns>
+        public bool IsBelongToTvNatThematiques() {
+
+            StringBuilder t = new StringBuilder(1000);
+            DataTable dt = null;
+
+            t.Append(" select  " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".media," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix + ".id_category ");
+            t.Append(" from  " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).SqlWithPrefix + "," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).SqlWithPrefix);
+            t.Append(" " + "," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).SqlWithPrefix + " ");
+            t.Append(" where ");
+            t.Append(" " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_basic_media =" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix + ".id_basic_media ");
+            t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix + ".id_category=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix + ".id_category ");
+            t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix + ".id_category=35 ");
+            t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix + ".id_language=33 ");
+            t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_language=33 ");
+            t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix + ".id_language=33 ");
+            t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media = " + _idMedia);
+            t.Append("  order by media ");
+
+            #region Execution de la requête
+            try {
+                dt = _webSession.Source.Fill(t.ToString()).Tables[0];
+
+                if (dt != null && !dt.Equals(System.DBNull.Value) && dt.Rows.Count > 0) return true;
+                else return false;
+            }
+            catch (System.Exception err) {
+                throw (new PortofolioDALException("Impossible to know if the media belong to Tv Nat Thematiques : " + t, err));
+            }
+            #endregion
+
+        }
+        #endregion
+
         #endregion
 
         #region Methods
@@ -1137,10 +1322,10 @@ namespace TNS.AdExpress.Portofolio.DAL {
         /// <returns>Sql From clause</returns>
         private string GetTable() {
             string sql = "";
-            sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.media);
-            sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.basicMedia);
-            sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.mediaSeller);
-            sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.category);
+            sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.media) + ", ";
+            sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.basicMedia) + ", ";
+            sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.mediaSeller) + ", ";
+            sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.category) + ", ";
             sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.interestCenter);
 
             switch (_vehicleName) {
@@ -1159,6 +1344,30 @@ namespace TNS.AdExpress.Portofolio.DAL {
                     return sql;
                 default:
                     throw new PortofolioDALException("getTable()-->There is no table for this vehicle.");
+            }
+        }
+        #endregion
+
+        #region Get Alert Table
+        /// <summary>
+        /// Get alert table
+        /// </summary>
+        /// <returns>Alert table name</returns>
+        private string GetAlertTable() {
+            switch (_vehicleName) {
+                case DBClassificationConstantes.Vehicles.names.press:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).Label;
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).Label;
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).Label;
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).Label;
+                case DBClassificationConstantes.Vehicles.names.outdoor:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).Label;
+                default:
+                    throw new PortofolioDALException("GetAlertTable()-->Vehicle unknown.");
             }
         }
         #endregion
@@ -1551,6 +1760,51 @@ namespace TNS.AdExpress.Portofolio.DAL {
                     return " group by location ";
                 default:
                     throw new PortofolioDALException("getPressStructGroupBy(PortofolioStructure.Ventilation ventilation)--> Pas de ventilation (format, couleur) déterminé.");
+            }
+        }
+        #endregion
+
+        #region Get Fields Detail Media For Tv & Radio
+        /// <summary>
+        /// Get Fields Detail Media For Tv & Radio
+        /// </summary>
+        /// <returns>SQL</returns>
+        private string GetFieldsDetailMediaForTvRadio() {
+            string sql = "";
+            switch (_vehicleName) {
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    sql += " sum(insertion) as insertion ";
+                    sql += ",commercial_break as code_ecran";
+                    sql += ",sum(expenditure_euro) value ";
+                    sql += " , date_media_num  ";
+                    return sql;
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    sql += " sum(insertion) as insertion ";
+                    sql += ",id_commercial_break as code_ecran";
+                    sql += ",sum(expenditure_euro) value ";
+                    sql += ",date_media_num  ";
+                    return sql;
+                default:
+                    throw new PortofolioDALException("GetFieldsDetailMediaForTvRadio()-->Vehicle unknown.");
+            }
+        }
+        #endregion
+
+        #region Get Group By Detail Media For Tv & Radio
+        /// <summary>
+        /// Get Group By Detail Media For Tv & Radio
+        /// </summary>
+        /// <returns>SQL</returns>
+        public string GetGroupByDetailMediaForTvRadio() {
+            switch (_vehicleName) {
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    return "group by date_media_num ,commercial_break order by commercial_break";
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    return "group by date_media_num ,id_commercial_break order by id_commercial_break";
+                default:
+                    throw new PortofolioDALException("GetGroupByDetailMediaForTvRadio()-->Vehicle unknown.");
             }
         }
         #endregion

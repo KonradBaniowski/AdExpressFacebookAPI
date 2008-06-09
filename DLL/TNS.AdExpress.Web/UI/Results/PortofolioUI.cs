@@ -243,237 +243,215 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region HTML
-			t.Append("<table  border=0 cellpadding=0 cellspacing=0 width=600 >");			
+            t.Append("<table  border=0 cellpadding=0 cellspacing=0 width=600 >");
 
-			//Titre du support
-            t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"portofolioSynthesisBorderHeader\" align=\"center\">" + support + "</td></tr>");	
-			// Date de début et fin de vague pour affichage
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.outdoor)
-			{
-				t.Append("\r\n\t<tr><td class=\""+portofolioTitle1+"\" width=50%>"+GestionWeb.GetWebWord(1607,webSession.SiteLanguage)+" : "+"</td><td class=\""+portofolioValue1+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+dtFirstDate.Date.ToString("dd/MM/yyyy")+"</td></tr>");	
-				t.Append("\r\n\t<tr><td class=\""+portofolioTitle2+"\" width=50%>"+GestionWeb.GetWebWord(1608,webSession.SiteLanguage)+" : "+"</td><td class=\""+portofolioValue2+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+dtLastDate.Date.ToString("dd/MM/yyyy")+"</td></tr>");	
-		
-			}
-				// Date de parution ou diffusion
-			else
-			{
-				if(firstDate.Length>0)
-				{
-					if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.press
-						|| 	(DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.internationalPress
-						)
-					{
-						//Cas Presse : Date de parution 
-						t.Append("\r\n\t<tr  ><td class=\""+portofolioTitle1+"\" width=50%>"+GestionWeb.GetWebWord(1381,webSession.SiteLanguage)+"</td>");
-					}
-					else
-					{
-						// Cas TV-Radio : Date de diffusion
-						t.Append("\r\n\t<tr ><td class=\""+portofolioTitle1+"\" width=50%>"+GestionWeb.GetWebWord(1380,webSession.SiteLanguage)+"</td>");
-					}
-					if(firstDate==lastDate)
-					{
-						t.Append("<td class=\""+portofolioValue1+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+dtFirstDate.Date.ToString("dd/MM/yyyy")+"</td></tr>");
-					}
-					else
-					{
-						
-						t.Append("<td class=\""+portofolioValue1+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;Du "+dtFirstDate.Date.ToString("dd/MM/yyyy")+" au "+dtLastDate.Date.ToString("dd/MM/yyyy")+"</td></tr>");
-					}
-				}
-			}
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.outdoor)
-			{
-				classStyleTitle=portofolioTitle1;	
-				classStyleValue=portofolioValue1;
-			}
-			else
-			{
-				classStyleTitle=portofolioTitle2;	
-				classStyleValue=portofolioValue2;
-			}
-			// Périodicité
-			if(dtCategory.Columns.Contains("periodicity")){
-				t.Append("<tr><td class=\""+portofolioTitle2+"\" width=50%>"+GestionWeb.GetWebWord(1450,webSession.SiteLanguage)+"</td><td class=\""+portofolioValue2+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+periodicity+"</td></tr>");
-				classStyleTitle=portofolioTitle1;	
-				classStyleValue=portofolioValue1;	
-			}
-			// Categorie
-			t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1416,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+category+"</td></tr>");
-			
-			classStyleTitle=InversClassStyleTitle(classStyleTitle);
-			classStyleValue=InversClassStyleValue(classStyleValue);	
-			// Régie
-			t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1417,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+regie+"</td></tr>");	
+            //Titre du support
+            t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"portofolioSynthesisBorderHeader\" align=\"center\">" + support + "</td></tr>");
+            // Date de début et fin de vague pour affichage
+            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.outdoor) {
+                t.Append("\r\n\t<tr><td class=\"" + portofolioTitle1 + "\" width=50%>" + GestionWeb.GetWebWord(1607, webSession.SiteLanguage) + " : " + "</td><td class=\"" + portofolioValue1 + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + dtFirstDate.Date.ToString("dd/MM/yyyy") + "</td></tr>");
+                t.Append("\r\n\t<tr><td class=\"" + portofolioTitle2 + "\" width=50%>" + GestionWeb.GetWebWord(1608, webSession.SiteLanguage) + " : " + "</td><td class=\"" + portofolioValue2 + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + dtLastDate.Date.ToString("dd/MM/yyyy") + "</td></tr>");
 
-			classStyleTitle=InversClassStyleTitle(classStyleTitle);
-			classStyleValue=InversClassStyleValue(classStyleValue);	
-			
-			// Centre d'intérêt
-			t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1411,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+interestCenter+"</td></tr>");	
+            }
+            // Date de parution ou diffusion
+            else {
+                if (firstDate.Length > 0) {
+                    if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.press
+                        || (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.internationalPress
+                        ) {
+                        //Cas Presse : Date de parution 
+                        t.Append("\r\n\t<tr  ><td class=\"" + portofolioTitle1 + "\" width=50%>" + GestionWeb.GetWebWord(1381, webSession.SiteLanguage) + "</td>");
+                    }
+                    else {
+                        // Cas TV-Radio : Date de diffusion
+                        t.Append("\r\n\t<tr ><td class=\"" + portofolioTitle1 + "\" width=50%>" + GestionWeb.GetWebWord(1380, webSession.SiteLanguage) + "</td>");
+                    }
+                    if (firstDate == lastDate) {
+                        t.Append("<td class=\"" + portofolioValue1 + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + dtFirstDate.Date.ToString("dd/MM/yyyy") + "</td></tr>");
+                    }
+                    else {
 
-			//number board et type de reseau ,cas de l'Affichage
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.outdoor&&dtTypeSale.Rows.Count>0)
-			{
-				t.Append("<tr><td class=\""+portofolioTitle2+"\" width=50%>"+GestionWeb.GetWebWord(1604,webSession.SiteLanguage)+"</td><td class=\""+portofolioValue2+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+numberBoard+"</td></tr>");	
-				int count=0;						
-				t.Append("<tr><td VALIGN=top class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1609,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>");	
-				if(dtTypeSale.Rows.Count==0)t.Append("&nbsp;");
-				else
-				{
-					foreach(DataRow row in dtTypeSale.Rows)
-					{
-						if(count>0)
-						{
-							t.Append("<BR>");
-						}
-						t.Append("&nbsp;&nbsp;&nbsp;&nbsp;"+WebFunctions.SQLGenerator.SaleTypeOutdoor(row["type_sale"].ToString(),webSession.SiteLanguage));						
-						count++;
-					}
-				}
-				t.Append("</td></tr>");
-					
-			}
-			// Cas de la presse
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.press
-				|| 	(DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.internationalPress
-				){
-				classStyleTitle=InversClassStyleTitle(classStyleTitle);
-				classStyleValue=InversClassStyleValue(classStyleValue);	
-				// Nombre de page
-				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1385,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+pageNumber+"</td></tr>");
-				if(((string)tabEncart[0]).Length>0){
-					classStyleTitle=InversClassStyleTitle(classStyleTitle);
-					classStyleValue=InversClassStyleValue(classStyleValue);
-					// Nombre de page pub				
-					t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1386,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+WebFunctions.Units.ConvertUnitValueAndPdmToString((string)tabEncart[0],WebConstantes.CustomerSessions.Unit.pages,false)+"</td></tr>");
+                        t.Append("<td class=\"" + portofolioValue1 + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;Du " + dtFirstDate.Date.ToString("dd/MM/yyyy") + " au " + dtLastDate.Date.ToString("dd/MM/yyyy") + "</td></tr>");
+                    }
+                }
+            }
+            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.outdoor) {
+                classStyleTitle = portofolioTitle1;
+                classStyleValue = portofolioValue1;
+            }
+            else {
+                classStyleTitle = portofolioTitle2;
+                classStyleValue = portofolioValue2;
+            }
+            // Périodicité
+            if (dtCategory.Columns.Contains("periodicity")) {
+                t.Append("<tr><td class=\"" + portofolioTitle2 + "\" width=50%>" + GestionWeb.GetWebWord(1450, webSession.SiteLanguage) + "</td><td class=\"" + portofolioValue2 + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + periodicity + "</td></tr>");
+                classStyleTitle = portofolioTitle1;
+                classStyleValue = portofolioValue1;
+            }
+            // Categorie
+            t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1416, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + category + "</td></tr>");
 
-					classStyleTitle=InversClassStyleTitle(classStyleTitle);
-					classStyleValue=InversClassStyleValue(classStyleValue);
-					// Ratio
-                    if (pageNumber.Length > 0)
-                    {
+            classStyleTitle = InversClassStyleTitle(classStyleTitle);
+            classStyleValue = InversClassStyleValue(classStyleValue);
+            // Régie
+            t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1417, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + regie + "</td></tr>");
+
+            classStyleTitle = InversClassStyleTitle(classStyleTitle);
+            classStyleValue = InversClassStyleValue(classStyleValue);
+
+            // Centre d'intérêt
+            t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1411, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + interestCenter + "</td></tr>");
+
+            //number board et type de reseau ,cas de l'Affichage
+            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.outdoor && dtTypeSale.Rows.Count > 0) {
+                t.Append("<tr><td class=\"" + portofolioTitle2 + "\" width=50%>" + GestionWeb.GetWebWord(1604, webSession.SiteLanguage) + "</td><td class=\"" + portofolioValue2 + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + numberBoard + "</td></tr>");
+                int count = 0;
+                t.Append("<tr><td VALIGN=top class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1609, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>");
+                if (dtTypeSale.Rows.Count == 0) t.Append("&nbsp;");
+                else {
+                    foreach (DataRow row in dtTypeSale.Rows) {
+                        if (count > 0) {
+                            t.Append("<BR>");
+                        }
+                        t.Append("&nbsp;&nbsp;&nbsp;&nbsp;" + WebFunctions.SQLGenerator.SaleTypeOutdoor(row["type_sale"].ToString(), webSession.SiteLanguage));
+                        count++;
+                    }
+                }
+                t.Append("</td></tr>");
+
+            }
+            // Cas de la presse
+            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.press
+                || (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.internationalPress
+                ) {
+                classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                classStyleValue = InversClassStyleValue(classStyleValue);
+                // Nombre de page
+                t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1385, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + pageNumber + "</td></tr>");
+                if (((string)tabEncart[0]).Length > 0) {
+                    classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                    classStyleValue = InversClassStyleValue(classStyleValue);
+                    // Nombre de page pub				
+                    t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1386, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + WebFunctions.Units.ConvertUnitValueAndPdmToString((string)tabEncart[0], WebConstantes.CustomerSessions.Unit.pages, false) + "</td></tr>");
+
+                    classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                    classStyleValue = InversClassStyleValue(classStyleValue);
+                    // Ratio
+                    if (pageNumber.Length > 0) {
                         t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1387, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + ((decimal)(decimal.Parse(WebFunctions.Units.ConvertUnitValueAndPdmToString((string)tabEncart[0], WebConstantes.CustomerSessions.Unit.pages, false)) / decimal.Parse(pageNumber) * 100)).ToString("0.###") + " %</td></tr>");
                     }
-                    else
-                    {
+                    else {
                         t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1387, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
                     }
-				}			
+                }
 
-				if(((string)tabEncart[1]).Length>0){
-					classStyleTitle=InversClassStyleTitle(classStyleTitle);
-					classStyleValue=InversClassStyleValue(classStyleValue);
-					// Nombre de page de pub hors encarts
-					if(((string)tabEncart[1]).Length==0)
-						tabEncart[1]="0";
-					t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1388,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+WebFunctions.Units.ConvertUnitValueAndPdmToString((string)tabEncart[1],WebConstantes.CustomerSessions.Unit.pages,false)+"</td></tr>");	
-				}
-				if(((string)tabEncart[2]).Length>0){
-					classStyleTitle=InversClassStyleTitle(classStyleTitle);
-					classStyleValue=InversClassStyleValue(classStyleValue);
-					// Nombre de page de pub encarts
-					if(((string)tabEncart[2]).Length==0){
-						tabEncart[2]="0";
-					}
-					t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1389,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+WebFunctions.Units.ConvertUnitValueAndPdmToString((string)tabEncart[2],WebConstantes.CustomerSessions.Unit.pages,false)+"</td></tr>");	
-				}				
-			}
+                if (((string)tabEncart[1]).Length > 0) {
+                    classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                    classStyleValue = InversClassStyleValue(classStyleValue);
+                    // Nombre de page de pub hors encarts
+                    if (((string)tabEncart[1]).Length == 0)
+                        tabEncart[1] = "0";
+                    t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1388, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + WebFunctions.Units.ConvertUnitValueAndPdmToString((string)tabEncart[1], WebConstantes.CustomerSessions.Unit.pages, false) + "</td></tr>");
+                }
+                if (((string)tabEncart[2]).Length > 0) {
+                    classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                    classStyleValue = InversClassStyleValue(classStyleValue);
+                    // Nombre de page de pub encarts
+                    if (((string)tabEncart[2]).Length == 0) {
+                        tabEncart[2] = "0";
+                    }
+                    t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1389, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + WebFunctions.Units.ConvertUnitValueAndPdmToString((string)tabEncart[2], WebConstantes.CustomerSessions.Unit.pages, false) + "</td></tr>");
+                }
+            }
 
-			// Cas tv, radio
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.radio
-				|| 	(DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.tv
-				|| 	(DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.others
+            // Cas tv, radio
+            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.radio
+                || (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
+                || (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.others
 
-				)
-			{
-				
-				classStyleTitle=InversClassStyleTitle(classStyleTitle);
-				classStyleValue=InversClassStyleValue(classStyleValue);					
-				//Nombre de spot
-				if(nbrSpot.Length==0)
-				{
-					nbrSpot="0";
-				}
-				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1404,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+nbrSpot+"</td></tr>");
+                ) {
 
-				classStyleTitle=InversClassStyleTitle(classStyleTitle);
-				classStyleValue=InversClassStyleValue(classStyleValue);	
-				// Nombre d'ecran
-				if(nbrEcran.Length==0)
-				{
-					nbrEcran="0";
-				}
-				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1412,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+nbrEcran+"</td></tr>");
+                classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                classStyleValue = InversClassStyleValue(classStyleValue);
+                //Nombre de spot
+                if (nbrSpot.Length == 0) {
+                    nbrSpot = "0";
+                }
+                t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1404, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + nbrSpot + "</td></tr>");
 
-				classStyleTitle=InversClassStyleTitle(classStyleTitle);
-				classStyleValue=InversClassStyleValue(classStyleValue);
+                classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                classStyleValue = InversClassStyleValue(classStyleValue);
+                // Nombre d'ecran
+                if (nbrEcran.Length == 0) {
+                    nbrEcran = "0";
+                }
+                t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1412, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + nbrEcran + "</td></tr>");
 
-				if(totalDuration.Length>0) 
-				{
-					//totalDuration=GetDurationFormatHH_MM_SS(int.Parse(totalDuration));
-					totalDuration=WebFunctions.Units.ConvertUnitValueAndPdmToString(totalDuration,WebConstantes.CustomerSessions.Unit.duration,false);
-				}
-				else
-				{
-					totalDuration="0";
-				}
-				// total durée
-				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1413,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+totalDuration+"</td></tr>");
-			}
+                classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                classStyleValue = InversClassStyleValue(classStyleValue);
 
-			classStyleTitle=InversClassStyleTitle(classStyleTitle);
-			classStyleValue=InversClassStyleValue(classStyleValue);
-			// Total investissements
-			if(investment.Length>0){
-//				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1390,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;"+Int64.Parse(investment).ToString("### ### ###")+"</td></tr>");	
-				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1390,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;"+WebFunctions.Units.ConvertUnitValueAndPdmToString(investment,WebConstantes.CustomerSessions.Unit.euro,false)+"</td></tr>");	
-			}			
+                if (totalDuration.Length > 0) {
+                    //totalDuration=GetDurationFormatHH_MM_SS(int.Parse(totalDuration));
+                    totalDuration = WebFunctions.Units.ConvertUnitValueAndPdmToString(totalDuration, WebConstantes.CustomerSessions.Unit.duration, false);
+                }
+                else {
+                    totalDuration = "0";
+                }
+                // total durée
+                t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1413, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + totalDuration + "</td></tr>");
+            }
 
-			classStyleTitle=InversClassStyleTitle(classStyleTitle);
-			classStyleValue=InversClassStyleValue(classStyleValue);
-			//Nombre de produits
-			t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1393,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+(int)tab[0]+"</td></tr>");
-	
-			classStyleTitle=InversClassStyleTitle(classStyleTitle);
-			classStyleValue=InversClassStyleValue(classStyleValue);
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())!=DBClassificationConstantes.Vehicles.names.outdoor)
-			{
-				//Nombre de nouveaux produits dans la pige
-				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1394,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+(int)tab[2]+"</td></tr>");
-	
-				classStyleTitle=InversClassStyleTitle(classStyleTitle);
-				classStyleValue=InversClassStyleValue(classStyleValue);
-				//Nombre de nouveaux produits dans le support
-				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50% nowrap>"+GestionWeb.GetWebWord(1395,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50% >&nbsp;&nbsp;&nbsp;&nbsp;"+(int)tab[1]+"</td></tr>");
-			}
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())!=DBClassificationConstantes.Vehicles.names.outdoor)
-			{
-				classStyleTitle=InversClassStyleTitle(classStyleTitle);
-				classStyleValue=InversClassStyleValue(classStyleValue);
-			}
-			//Nombre d'annonceurs
-			t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1396,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+(int)tab[3]+"</td></tr>");	
-					
-		
-			// Cas tv, presse
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.radio
-				|| 	(DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.tv
-				|| 	(DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())== DBClassificationConstantes.Vehicles.names.others
-				){
-				
-				classStyleTitle=InversClassStyleTitle(classStyleTitle);
-				classStyleValue=InversClassStyleValue(classStyleValue);	
-				// Durée moyenne d'un écran
-				//t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1414,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+GetDurationFormatHH_MM_SS((int)averageDurationEcran)+"</td></tr>");
-				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1414,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+WebFunctions.Units.ConvertUnitValueAndPdmToString( ((long)averageDurationEcran).ToString() ,WebConstantes.CustomerSessions.Unit.duration,false)+"</td></tr>");
+            classStyleTitle = InversClassStyleTitle(classStyleTitle);
+            classStyleValue = InversClassStyleValue(classStyleValue);
+            // Total investissements
+            if (investment.Length > 0) {
+                //				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1390,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;"+Int64.Parse(investment).ToString("### ### ###")+"</td></tr>");	
+                t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1390, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;" + WebFunctions.Units.ConvertUnitValueAndPdmToString(investment, WebConstantes.CustomerSessions.Unit.euro, false) + "</td></tr>");
+            }
 
-				classStyleTitle=InversClassStyleTitle(classStyleTitle);
-				classStyleValue=InversClassStyleValue(classStyleValue);	
-				// Nombre moyen de spots par écran
-				t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1415,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+nbrSpotByEcran.ToString("0.00")+"</td></tr>");
-				
-			}
+            classStyleTitle = InversClassStyleTitle(classStyleTitle);
+            classStyleValue = InversClassStyleValue(classStyleValue);
+            //Nombre de produits
+            t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1393, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + (int)tab[0] + "</td></tr>");
+
+            classStyleTitle = InversClassStyleTitle(classStyleTitle);
+            classStyleValue = InversClassStyleValue(classStyleValue);
+            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) != DBClassificationConstantes.Vehicles.names.outdoor) {
+                //Nombre de nouveaux produits dans la pige
+                t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1394, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + (int)tab[2] + "</td></tr>");
+
+                classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                classStyleValue = InversClassStyleValue(classStyleValue);
+                //Nombre de nouveaux produits dans le support
+                t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50% nowrap>" + GestionWeb.GetWebWord(1395, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50% >&nbsp;&nbsp;&nbsp;&nbsp;" + (int)tab[1] + "</td></tr>");
+            }
+            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) != DBClassificationConstantes.Vehicles.names.outdoor) {
+                classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                classStyleValue = InversClassStyleValue(classStyleValue);
+            }
+            //Nombre d'annonceurs
+            t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1396, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + (int)tab[3] + "</td></tr>");
+
+
+            // Cas tv, presse
+            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.radio
+                || (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
+                || (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.others
+                ) {
+
+                classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                classStyleValue = InversClassStyleValue(classStyleValue);
+                // Durée moyenne d'un écran
+                //t.Append("<tr><td class=\""+classStyleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1414,webSession.SiteLanguage)+"</td><td class=\""+classStyleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+GetDurationFormatHH_MM_SS((int)averageDurationEcran)+"</td></tr>");
+                t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1414, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + WebFunctions.Units.ConvertUnitValueAndPdmToString(((long)averageDurationEcran).ToString(), WebConstantes.CustomerSessions.Unit.duration, false) + "</td></tr>");
+
+                classStyleTitle = InversClassStyleTitle(classStyleTitle);
+                classStyleValue = InversClassStyleValue(classStyleValue);
+                // Nombre moyen de spots par écran
+                t.Append("<tr><td class=\"" + classStyleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1415, webSession.SiteLanguage) + "</td><td class=\"" + classStyleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + nbrSpotByEcran.ToString("0.00") + "</td></tr>");
+
+            }
 
 
 			#region Chemin de fer
@@ -487,7 +465,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 						Hashtable htValue=PortofolioDataAccess.GetInvestmentByMedia(webSession,idVehicle,idMedia,dateBegin,dateEnd);
 
-						t.Append("</table>");
+                        t.Append("</table>");
 						int compteur=0;
 						string endBalise="";
 						string day="";

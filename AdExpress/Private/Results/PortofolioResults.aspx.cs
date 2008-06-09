@@ -40,6 +40,10 @@ using DBConstantes=TNS.AdExpress.Constantes.DB;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+
+using Portofolio = TNS.AdExpressI.Portofolio;
+using Domain = TNS.AdExpress.Domain.Web.Navigation;
+using System.Reflection;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -132,8 +136,34 @@ namespace AdExpress.Private.Results{
 
 		#region Evènements
 
+        #region On PreInit
+        /// <summary>
+        /// On preinit event
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnPreInit(EventArgs e) {
+            base.OnPreInit(e);
+            Int64 tabSelected;
+            try {
+                tabSelected = Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
+            }
+            catch (System.Exception err) {
+                tabSelected = 0;
+            }
+            switch (tabSelected) {
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+                    _resultWebControl.SkinID = "portofolioSynthesisResultTable";
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                    _resultWebControl.SkinID = "portofolioResultTable";
+                    break;
+            }
+        }
+        #endregion
+
 		#region chargement de la page
-		/// <summary>
+        /// <summary>
 		/// Chargement de la page
 		/// Suivant l'indicateur choisi une méthode contenue dans UI est appelé
 		/// </summary>
@@ -242,6 +272,10 @@ namespace AdExpress.Private.Results{
 						ResultsOptionsWebControl1.InsertOption=false;
 						ResultsOptionsWebControl1.UnitOption=false;	
 						ResultsOptionsWebControl1.Percentage=false;
+                        _resultWebControl.Visible = true;
+                        _resultWebControl.ShowContainer = false;
+                        //_resultWebControl.SkinID = "portofolioSynthesisResultTable"; 
+                        detailProductLevel = true;
 						
 						if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
 							//unité en euro pour cette planche
@@ -409,13 +443,23 @@ namespace AdExpress.Private.Results{
 		/// <param name="e"></param>
 		protected override void OnPreRender(EventArgs e) {
 			try{
-				switch(_webSession.CurrentTab) {
+                Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+                object[] parameters = new object[1];
+                parameters[0] = _webSession;
+                Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+				
+                switch(_webSession.CurrentTab) {
 
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
-						break;	
-					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:	
-					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+						break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+                        result = portofolioResult.GetVehicleViewHtml(false); 
+                        break;
+					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                        result = portofolioResult.GetDetailMediaHtml(false);
+                        break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.NOVELTY:
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
 						result=WebBF.Results.PortofolioSystem.GetAlertHtml(this.Page,_webSession);

@@ -74,20 +74,36 @@ namespace TNS.AdExpress.Portofolio.DAL {
         /// <summary>
         /// Get New Product
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Data Set</returns>
         DataSet GetNewProduct();
         /// <summary>
         /// Get Tv Or Radio Struct Data
         /// </summary>
         /// <param name="HourBegin">Hour Begin</param>
         /// <param name="HourEnd">Hour End</param>
-        /// <returns></returns>
+        /// <returns>Data Set</returns>
         DataSet GetTvOrRadioStructData(int HourBegin, int HourEnd);
         /// <summary>
         /// Get Press Struct Data
         /// </summary>
         /// <param name="ventilation">ventilation</param>
-        /// <returns></returns>
+        /// <returns>Data Set</returns>
         DataSet GetPressStructData(PortofolioStructure.Ventilation ventilation);
+        /// <summary>
+        /// Get dates list
+        /// </summary>
+        /// <param name="conditionEndDate">Add condition end date</param>
+        /// <returns>Data Set</returns>
+        DataSet GetListDate(bool conditionEndDate);
+        /// <summary>
+        /// Get Commercial Break For Tv & Radio
+        /// </summary>
+        /// <returns>Data Set</returns>
+        DataSet GetCommercialBreakForTvRadio();
+        /// <summary>
+        /// Is Belong To Tv Nat Thematiques
+        /// </summary>
+        /// <returns>True if belong To Tv Nat Thematiques</returns>
+        bool IsBelongToTvNatThematiques();
     }
 }
