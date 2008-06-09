@@ -1209,7 +1209,7 @@
     <moduleGroup name="ChronoPresse" type="4" privilegecode="147" traductioncode="2186"  flashUrl="/Flash/common/ChronoPress.swf" missingFlashUrl="/Images/Common/FlashReplacement/ChronoPress.gif" descriptionWebTextId="2190">
       <!-- *****************************************  Bilan Campagne  *****************************************-->
       <module name="Bilan Campagne" privilegecode="546" traductioncode="2181" moduleCategoryId="0" urlNextPage="/Private/Selection/CompetitorUniverseProductSelection.aspx" descriptionWebTextId="2210" descriptionImageName="/Images/Common/Infobulle/Chronopresse.png">
-        <RulesLayer name="APPM Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Appm.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
+        <RulesLayer name="APPM Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Appm.dll" class="TNS.AdExpressI.MediaSchedule.Appm.MediaScheduleResults"/>
         <DataAccessLayer name="APPM Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Appm.MediaScheduleResultDAL"/>
         <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/CompetitorUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserCompetitorSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
          <!--<loadableUnivers>

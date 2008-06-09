@@ -550,6 +550,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openPressCreation")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openPressCreation", WebFunctions.Script.OpenPressCreation());
             if (!this.Page.ClientScript.IsClientScriptBlockRegistered("Popup")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Popup", WebFunctions.Script.Popup());
             if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openDownload")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openDownload", WebFunctions.Script.OpenDownload());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("AppmInsertions")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "AppmInsertions", WebFunctions.Script.PopUpInsertion(false));
 			
 			
 		}
