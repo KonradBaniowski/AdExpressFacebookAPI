@@ -164,7 +164,9 @@ namespace AdExpress.Private.Selection
 				#endregion			
 			
 				#region Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+                for (int i = 0; i < this.Controls.Count; i++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                }
 				#endregion
 						 
 				#region Evènemment
@@ -249,20 +251,20 @@ namespace AdExpress.Private.Selection
 
 				#region Rollover des boutons
 				//Button valider
-				validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 				
 				//Button Ok
-				okButtonRollOverWebControl2.ImageUrl="/Images/Common/button/ok_up.gif";
-				okButtonRollOverWebControl2.RollOverImageUrl="/Images/Common/button/ok_down.gif";			
+				//okButtonRollOverWebControl2.ImageUrl="/Images/Common/button/ok_up.gif";
+				//okButtonRollOverWebControl2.RollOverImageUrl="/Images/Common/button/ok_down.gif";			
 
 				//Button enregistrer
-				saveUniverseImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_up.gif";
-				saveUniverseImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_down.gif";
+				//saveUniverseImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_up.gif";
+				//saveUniverseImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_down.gif";
 
 				//Button forme de parrainage
-				programTypeImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_up.gif";
-				programTypeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_down.gif";			
+				//programTypeImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_up.gif";
+				//programTypeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_down.gif";			
 
 				initializeImageButtonRollOverWebControl1.ToolTip=GestionWeb.GetWebWord(1358,_webSession.SiteLanguage);
 				#endregion

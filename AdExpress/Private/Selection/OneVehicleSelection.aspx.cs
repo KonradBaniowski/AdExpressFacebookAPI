@@ -87,6 +87,7 @@ namespace AdExpress.Private.Selection{
 				#region Textes et langage du site
 				//Modification de la langue pour les Textes AdExpress
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_siteLanguage);
+                HeaderWebControl1.Language = _webSession.SiteLanguage;
 
 				// Initialisation de la liste des média
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;

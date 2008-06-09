@@ -17,7 +17,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Domain.Level;
-
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Selections
 {
@@ -445,26 +445,28 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			//if((eventButton==constEvent.eventSelection.OK_EVENT)||(eventButton==constEvent.eventSelection.INITIALIZE_EVENT)||!(Page.IsPostBack)) {
 			
 				#region Affichage
+
+                string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 		
 				if(dsListProgramType!=null) {
 
 					if(dsListProgramType.Tables[0].Rows.Count>0) {	
-						t.Append("<tr class=\"txtGris11Bold\">");												
-						t.Append("<td bgcolor=#FFFFFF  >");
+						t.Append("<tr class=\"txtGris11Bold\">");
+                        t.Append("<td class=\"whiteBackGround\"  >");
 						t.Append(""+GestionWeb.GetWebWord(812,webSession.SiteLanguage)+"</td></tr>");
 					}
 				}
-				t.Append("<tr height=5px bgcolor=\"#ffffff\"><td></td></tr>");
+                t.Append("<tr height=5px class=\"whiteBackGround\"><td></td></tr>");
 				//t.Append("<tr><td bgcolor=\"#ffffff\"><img src=\"images/pixel.gif\" width=\"1\" height=\"5\"></td></tr>");
-				t.Append("<tr><td bgcolor=\"#ffffff\"><img src=\"images/pixel.gif\" width=\"1\" height=\"20\"></td></tr> ");
+                t.Append("<tr><td class=\"whiteBackGround\"><img src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\" height=\"20\"></td></tr> ");
 
 				textOpenclose = GestionWeb.GetWebWord(2054,webSession.SiteLanguage);
 
 				if(dsListProgramType!=null) {
-					if(dsListProgramType.Tables[0].Rows.Count>0) {	
+					if(dsListProgramType.Tables[0].Rows.Count>0) {
 
-						t.Append("<tr bgcolor=\"#ffffff\"> ");
-						t.Append("<td bgcolor=\"#ffffff\"> ");
+                        t.Append("<tr class=\"whiteBackGround\"> ");
+                        t.Append("<td class=\"whiteBackGround\"> ");
 						t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 						insertIndex = t.Length;
 						t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+textOpenclose+"</a>");	
@@ -478,7 +480,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				int nbLinesTest=0;
 			
 				//Tableau global
-				t.Append("<tr><td bgColor=\"#ffffff\" vAlign=\"top\"><table>");			
+                t.Append("<tr><td class=\"whiteBackGround\" vAlign=\"top\"><table>");			
 				t.Append("<tr><td vAlign=\"top\">");
 
 				Int64 idParentOld=-1;
@@ -536,7 +538,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		
 							t.Append("</table>");
 							t.Append("</div>");
-							t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=100%>");
+                            t.Append("<table class=\"txtViolet11Bold violetBorderWithoutTop\"  cellpadding=0 cellspacing=0 width=100%>");
 							t.Append("<tr>");
 							t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
 							t.Append("<input type=\"checkbox\" "+checkBox+" onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1$"+i+"\">");
@@ -544,11 +546,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							t.Append(""+currentRow[1].ToString()+"");
 							t.Append("</label>");
 							t.Append("</td>");
-							t.Append("<td width=\"100%\" align=right onClick=\"DivDisplayer('"+idParent+"Ct');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
+                            t.Append("<td width=\"100%\" align=right onClick=\"DivDisplayer('" + idParent + "Ct');\" style=\"cursor : hand\"><img height=\"15\" src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
 							t.Append("</tr>");
 							t.Append("</table>");
-							t.Append("<div id=\""+idParent+"Ct\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
-							t.Append("<table id="+idParent+" style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=100%>");
+                            t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: none; WIDTH: 100%\">");
+                            t.Append("<table id=" + idParent + " class=\"violetBorderWithoutTop lightPurple\" width=100%>");
 							t.Append("<tr><td colspan=\"3\"><a href=# style=\"TEXT-DECORATION: none\" class=\"roll04\" onclick=\"allSelection('"+idParent+"',"+i+")\" ID=\""+currentRow[0]+"\">");
 						
 							t.Append(GestionWeb.GetWebWord(2055,webSession.SiteLanguage));
@@ -572,8 +574,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							}
 							t.Append("<table cellpadding=0 cellspacing=0   width=670px>");
 							t.Append("<tr><td></td></tr>");
-							t.Append("</table>");	
-							t.Append("<table style=\"border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; border-bottom :#644883 1px solid; \" class=\"txtViolet11Bold\" cellpadding=0 cellspacing=0   width=100%>");
+							t.Append("</table>");
+                            t.Append("<table class=\"txtViolet11Bold violetBorder\" cellpadding=0 cellspacing=0   width=100%>");
 							t.Append("<tr>");
 							t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
 							t.Append("<input type=\"checkbox\" "+checkBox+" onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1$"+i+"\">");
@@ -581,11 +583,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							t.Append(""+currentRow[1].ToString()+"");
 							t.Append("</label>");
 							t.Append("</td>");
-							t.Append("<td width=\"100%\" align=right onClick=\"DivDisplayer('"+idParent+"Ct');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");	
+                            t.Append("<td width=\"100%\" align=right onClick=\"DivDisplayer('" + idParent + "Ct');\" style=\"cursor : hand\"><img height=\"15\" src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");	
 							t.Append("</tr>");
 							t.Append("</table>");
-							t.Append("<div id=\""+idParent+"Ct\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
-							t.Append("<table id="+idParent+" style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=100%>");
+                            t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" DISPLAY: none; WIDTH: 100%\" >");
+                            t.Append("<table id=" + idParent + " class=\"violetBorderWithoutTop paleVioletBackGround\" width=100%>");
 							t.Append("<tr><td colspan=\"3\"><a href=# class=\"roll04\" style=\"TEXT-DECORATION: none\" onclick=\"allSelection('"+idParent+"',"+i+")\" ID=\""+currentRow[0]+"\">");
 							t.Append(GestionWeb.GetWebWord(2055,webSession.SiteLanguage));
 							t.Append("</a></td></tr>");	
@@ -684,34 +686,34 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				if(programTypeText.Length<2 && eventButton==2) {							
 				//if(programTypeText.Length<2 && eventButton==constEvent.eventSelection.OK_EVENT) {
 					// Saississez 2 caractères au minimum
-					t.Append("<tr><td bgcolor=\"#ffffff\" class=\"txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" "+GestionWeb.GetWebWord(1473,webSession.SiteLanguage)+" "+programTypeText+".</p> ");
 					t.Append(" </td> ");
 					t.Append(" </tr> ");
 				}	
 				else if(!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(programTypeText) && eventButton==2) {
 				//else if(!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(programTypeText) && eventButton==constEvent.eventSelection.OK_EVENT) {
-					t.Append("<tr><td bgcolor=\"#ffffff\" class=\"txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" "+GestionWeb.GetWebWord(820,webSession.SiteLanguage)+" "+programTypeText+".</p> ");
 					t.Append(" </td> ");
 					t.Append(" </tr> ");
 				}	
 				else if(dsListProgramType!=null) {
 					if(dsListProgramType.Tables[0].Rows.Count==0) {
-						t.Append("<tr><td bgcolor=\"#ffffff\" class=\"txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                        t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 						t.Append(" "+GestionWeb.GetWebWord(819,webSession.SiteLanguage)+" "+programTypeText+".</p> ");
 						t.Append(" </td> ");
 						t.Append(" </tr> ");
 					}
 				}
 				else if(ErrorMessage.Length>0) {
-					t.Append("<tr><td bgcolor=\"#ffffff\" class=\"txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(ErrorMessage);
 					t.Append("</td></tr>");
 				}			
 				//Fin du tableau global
-				t.Append("</td></tr></table></td></tr>");				
-				t.Append("<tr><td bgColor=\"#ffffff\"><IMG height=\"20\" src=\"images/pixel.gif\" width=\"1\"></td></tr>");
+				t.Append("</td></tr></table></td></tr>");
+                t.Append("<tr><td class=\"whiteBackGround\"><IMG height=\"20\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td></tr>");
 				t.Append("<tr><td></td></tr>");	
 
 				if (vhList!="") {
@@ -727,14 +729,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			//if(eventButton==constEvent.eventSelection.LOAD_EVENT  || eventButton==7 || eventButton==constEvent.eventSelection.SAVE_EVENT || eventButton==8 || eventButton==9) {
 				if(eventButton==4 || eventButton==3) {
 				//if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT) {
-					t.Append("<tr class=\"txtGris11Bold\">");												
-					t.Append("<td bgcolor=#FFFFFF  >");
+					t.Append("<tr class=\"txtGris11Bold\">");
+                    t.Append("<td class=\"whiteBackGround\"  >");
 					t.Append(""+GestionWeb.GetWebWord(812,webSession.SiteLanguage)+"</td></tr>");
 				}
-				
-				t.Append("<tr height=5px bgcolor=\"#ffffff\"><td></td></tr>");				
-				t.Append("<tr><td bgColor=\"#ffffff\" vAlign=\"top\">");
-				t.Append("<table width=\"100%\" bgcolor=\"#ffffff\">");				
+
+                t.Append("<tr height=5px class=\"whiteBackGround\"><td></td></tr>");
+                t.Append("<tr><td class=\"whiteBackGround\" valign=\"top\">");
+                t.Append("<table width=\"100%\" class=\"whiteBackGround\">");				
 				t.Append("<tr> ");
 				
 				t.Append("</td></tr><tr><td>");	

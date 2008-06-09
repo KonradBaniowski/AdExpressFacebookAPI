@@ -92,7 +92,9 @@ namespace AdExpress.Private.Universe{
 
 				#region Langage
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
+                for (int i = 0; i < this.Controls.Count; i++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                }
 				//okButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
 				//okButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 				#endregion

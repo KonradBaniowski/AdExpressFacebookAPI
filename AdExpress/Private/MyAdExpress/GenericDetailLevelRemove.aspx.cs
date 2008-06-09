@@ -43,7 +43,9 @@ namespace AdExpress.Private.MyAdExpress{
 		protected void Page_Load(object sender, System.EventArgs e){
 			
 			#region Textes et Langage du site
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);			
+            for (int i = 0; i < this.Controls.Count; i++) {
+                TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+            }
 			#endregion
 
 			try{

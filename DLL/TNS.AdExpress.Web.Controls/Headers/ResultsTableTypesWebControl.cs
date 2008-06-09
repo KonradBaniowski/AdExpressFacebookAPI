@@ -13,6 +13,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Controls.Results;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Headers
 {
@@ -147,6 +148,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			get{return index;}
 			set{index = Math.Min(value, texts.Split('|').Length - 1);}
 		}
+
+        /// <summary>
+        /// Images button Arrow
+        /// </summary>
+        [Bindable(true), DefaultValue("")]
+        private string _imageButtonArrow;
+        /// <summary></summary>
+        public string ImageButtonArrow {
+            get { return _imageButtonArrow; }
+            set { _imageButtonArrow = value; }
+        }
+
 		#endregion
 
 		#endregion
@@ -185,12 +198,13 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <param name="e">arguments</param>
 		private void Custom_PreRender(object sender, System.EventArgs e) {
 
-		
+		        string themeName =  WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
+
 				tblChoice = new ImageDropDownListWebControl();
 				tblChoice.BackColor = this.BackColor;
 				tblChoice.BorderColor = this.BorderColor;
 				tblChoice.BorderWidth = new System.Web.UI.WebControls.Unit(this.borderWidth);
-				
+                tblChoice.ImageButtonArrow = this._imageButtonArrow;
 
 				if (this.List!="") tblChoice.List = this.List;
 				else{					
@@ -198,10 +212,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				
 				}
 				if (this.images!="") tblChoice.Images = this.images;
-				else{					
-						tblChoice.Images= "/Images/" + customerWebSession.SiteLanguage + "/Tables/Parrainage_type1.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/Parrainage_type2.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/Parrainage_type3.gif" ;							
+				else{
+                    tblChoice.Images = "/App_Themes/" + themeName + "/Images/Culture/Tables/Parrainage_type1.gif" +
+                            "|/App_Themes/" + themeName + "/Images/Culture/Tables/Parrainage_type2.gif" +
+                            "|/App_Themes/" + themeName + "/Images/Culture/Tables/Parrainage_type3.gif";							
 					
 				}
 				if(customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
@@ -229,7 +243,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output) {
 			//Debut du tableau
-			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" bgcolor=\"#FFFFFF\">");
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
 
 			//format de tableau
 			

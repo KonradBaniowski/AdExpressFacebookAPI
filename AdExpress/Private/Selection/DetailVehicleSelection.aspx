@@ -4,14 +4,13 @@
 <%@ Page language="c#" Inherits="AdExpress.Private.Selection.DetailVehicleSelection" CodeFile="DetailVehicleSelection.aspx.cs" %>
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
-<HTML>
-	<HEAD runat="server">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head runat="server">
 		<title>AdExpress</title>
 		<meta http-equiv="Content-Type" content="text/html;"/>
 		<meta content="C#" name="CODE_LANGUAGE"/>
 		<meta content="JavaScript" name="vs_defaultClientScript"/>
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
-		<link href="/Css/AdExpress.css" type="text/css" rel="stylesheet"/>
 		<script language="JavaScript" type="text/JavaScript">
 		<!--
 			function MM_preloadImages() { //v3.0
@@ -43,14 +42,14 @@
 		<meta http-equiv="expires" content="0"/>
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
-	</HEAD>
+	</head>
 	<body onload="<%=saveScript%>" class="bodyStyle">
 		<form id="Form2" action="AdvertiserSelection.aspx" method="post" runat="server">
-			<table height="600" cellSpacing="0" cellPadding="0" border="0">
+			<table style="height:600px" cellspacing="0" cellpadding="0" border="0">
 				<tr>
 					<!-- marge de gauche-->
-					<td vAlign="top">
-						<table cellSpacing="0" cellPadding="0" border="0">
+					<td valign="top">
+						<table cellspacing="0" cellpadding="0" border="0">
 							<tr>
 								<td><asp:Image runat="server" height="100" width="10" SkinID="logo_cote_gauche" /></td>
 							</tr>
@@ -60,9 +59,9 @@
 						</table>
 					</td>
 					<!-- menu -->
-					<td vAlign="top" class="imageBackGround">
-						<table cellSpacing="0" cellPadding="0" width="10" border="0">
-							<tr vAlign="top" class="whiteBackGround">
+					<td valign="top" class="imageBackGround">
+						<table cellspacing="0" cellpadding="0" width="10" border="0">
+							<tr valign="top" class="whiteBackGround">
 								<!-- Logo -->
 								<td><asp:Image runat="server" height="90" width="185" SkinID="logo" /></td>
 							</tr>
@@ -73,25 +72,25 @@
 								<td><asp:Image runat="server" height="5" width="1" SkinID="pixel" /></td>
 							</tr>
 							<!-- éléments variables du menus de gauche -->
-							<tr vAlign="top">
+							<tr valign="top">
 								<td id="pageTitle"><cc2:moduletitlewebcontrol id="ModuleTitleWebControl2" runat="server" CodeDescription="1456"></cc2:moduletitlewebcontrol></td>
 							</tr>
 							<!-- Navigation Interne -->
-							<TR>
-								<TD><asp:Image runat="server" height="10" width="1" SkinID="pixel" /></TD>
-							</TR>
-							<tr vAlign="top">
+							<tr>
+								<td><asp:Image runat="server" height="10" width="1" SkinID="pixel" /></td>
+							</tr>
+							<tr valign="top">
 								<td id="selectionRegie"><cc2:mediasellerwebcontrol id="MediaSellerWebControl2" runat="server" CodeDescription="1456" MediaDetailOption="True"></cc2:mediasellerwebcontrol></td>
 							</tr>
 							<tr class="whiteBackGround">
 								<td></td>
 							</tr>
-							<TR>
+							<tr>
 								<td style="HEIGHT: 12px" class="whiteBackGround"><cc4:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc4:imagebuttonrolloverwebcontrol></td>
-							</TR>
-							<TR>
-								<TD class="whiteBackGround" height="5"></TD>
-							</TR>
+							</tr>
+							<tr>
+								<td class="whiteBackGround" height="5"></td>
+							</tr>
 							<!-- Info bt droit -->
 							<tr>
 								<td><asp:Image runat="server" height="5" width="1" SkinID="pixel" /></td>
@@ -103,8 +102,8 @@
 						</table>
 					</td>
 					<!-- Séparateur -->
-					<td vAlign="top">
-						<table id="Table5" cellSpacing="0" cellPadding="0" border="0">
+					<td valign="top">
+						<table id="Table5" cellspacing="0" cellpadding="0" border="0">
 							<tr>
 								<td><asp:Image runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>
 							</tr>
@@ -117,36 +116,37 @@
 					<td width="10" class="imageBackGround">&nbsp;</td>
 					<td width="10" class="whiteBackGround">&nbsp;</td>
 					<!-- droite-->
-					<td style="WIDTH: 731px" vAlign="top" class="imageBackGround">
-						<table cellSpacing="0" cellPadding="0" border="0">
+					<td style="WIDTH: 731px" valign="top" class="imageBackGround">
+						<table cellspacing="0" cellpadding="0" border="0">
 							<tr>
 								<!-- Menu du haut-->
 								<td style="WIDTH: 772px"><cc2:headerwebcontrol language="33" id="HeaderWebControl2" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
 							</tr>
 							<tr>
 								<!-- ligne du haut a droite -->
-								<TD id="lineAVIrer" style="WIDTH: 773px" vAlign="top" class="imageBackGround"
+								<td id="lineAVIrer" style="WIDTH: 773px" valign="top" class="imageBackGround"
 									height="1%">
-									<TABLE id="Table2" cellSpacing="0" cellPadding="0" width="100%" border="0">
-										<TR>
-											<TD vAlign="top" align="left" height="1%"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-											<TD height="1%"><asp:Image runat="server" height="17" width="1" SkinID="pixel" /></TD>
-											<TD vAlign="top" align="right" height="1%"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-										</TR>
-									</TABLE>
-								</TD>
+									<table id="Table2" cellspacing="0" cellpadding="0" width="100%" border="0">
+										<tr>
+											<td valign="top" align="left" height="1%"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+											<td height="1%"><asp:Image runat="server" height="17" width="1" SkinID="pixel" /></td>
+											<td valign="top" align="right" height="1%"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
 							<!-- Centre -->
 							<tr>
 								<td style="WIDTH: 773px" class="whiteBackGround">
-									<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+									<table cellspacing="0" cellpadding="0" width="100%" border="0">
 										<tr style="HEIGHT: 5px">
-											<td style="WIDTH: 478px" colSpan="5"></td>
+											<td style="WIDTH: 478px" colspan="5"></td>
 										</tr>
 										<tr>
-											<td colSpan="5">
+											<td colspan="5">
 												<!--Chargement mes univers
 												<table style="BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid"
-													cellSpacing="0" cellPadding="0" width="200" border="0">
+													cellspacing="0" cellpadding="0" width="200" border="0">
 													<tr>
 														<td class="txtViolet11Bold">&nbsp;&nbsp;
 															<cc1:adexpresstext language="33" id="AdExpressText4" runat="server" Code="893"></cc1:adexpresstext></td>
@@ -156,18 +156,18 @@
 													</tr>
 												</table>
 												<div id="listAdvertiserContent6" style="BORDER-RIGHT: #644883 1px solid; DISPLAY: none; BORDER-LEFT: #644883 1px solid; WIDTH: 620px; BORDER-BOTTOM: #644883 1px solid">
-													<table cellSpacing="0" cellPadding="0" width="100%" align="center" bgColor="#ffffff" border="0">
+													<table cellspacing="0" cellpadding="0" width="100%" align="center" bgColor="#ffffff" border="0">
 														<tr>
 															<td width="199"><IMG height="1" src="/images/Common/pixel.gif"></td>
 															<td style="BORDER-TOP: #644883 1px solid" width="421"><IMG height="1" src="/images/Common/pixel.gif"></td>
 														</tr>
 														<tr>
 															<td class="txtGris11Bold" style="PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 2px; PADDING-TOP: 0px"
-																colSpan="2">&nbsp;</td>
+																colspan="2">&nbsp;</td>
 														</tr>
 														<tr>
 															<td style="PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 2px; PADDING-TOP: 0px"
-																colSpan="2">
+																colspan="2">
 																<!--Tableau des univers
 																<%=listUniverses%>
 																<input id="idMySession" type="hidden" name="nameMySession">
@@ -175,30 +175,30 @@
 														</tr>
 														<tr>
 															<td style="PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 5px; PADDING-TOP: 2px; TEXT-ALIGN: right"
-																colSpan="2"><cc4:imagebuttonrolloverwebcontrol id="loadImageButtonRollOverWebControl" runat="server"></cc4:imagebuttonrolloverwebcontrol></td>
+																colspan="2"><cc4:imagebuttonrolloverwebcontrol id="loadImageButtonRollOverWebControl" runat="server"></cc4:imagebuttonrolloverwebcontrol></td>
 														</tr>
 													</table>
 												</div>--><cc3:loadableuniverswebcontrol id="LoadableUniversWebControl1" runat="server"></cc3:loadableuniverswebcontrol></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
-											<td colSpan="6"></td>
+											<td colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 10px">
-											<td style="WIDTH: 478px" width="478" class="imageBackGround" colSpan="6"></td>
+											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
-											<td colSpan="6"></td>
+											<td colspan="6"></td>
 										</tr>
 										<tr>
 										    <td colspan="6">
-										        <table cellSpacing="0" cellPadding="0" width="400px" border="0">
+										        <table cellspacing="0" cellpadding="0" width="400px" border="0">
 										            <tr>
 											            <td class="txtViolet11Bold">&nbsp;&nbsp;
 												            <cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="972"></cc1:adexpresstext>&nbsp;:
 											            </td>
-											            <td vAlign="middle" align="left"><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox>&nbsp;
+											            <td valign="middle" align="left"><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox>&nbsp;
 												            <cc4:imagebuttonrolloverwebcontrol id="OkImageButtonRollOverWebControl" runat="server" SkinID="okButton" onclick="OkImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol></td>
-											            <td vAlign="middle" align="left">
+											            <td valign="middle" align="left">
 											                <cc4:imagebuttonrolloverwebcontrol id="initializeButton" runat="server" SkinID="initializeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeAllButton" runat="server" SkinID="initializeAllButton"></cc4:imagebuttonrolloverwebcontrol></td>
 													    </tr>
 											    </table>
@@ -211,9 +211,9 @@
 								<td style="WIDTH: 772px" class="whiteBackGround"><asp:Image runat="server" height="5" width="1" SkinID="pixel" /></td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px; HEIGHT: 27px">&nbsp;&nbsp; <A id="A1" onmouseover="MM_swapImage('ok','','/images/Common/button/ok_down.gif',1)"
+								<td style="WIDTH: 772px; HEIGHT: 27px">&nbsp;&nbsp; <a id="A1" onmouseover="MM_swapImage('ok','','/images/Common/button/ok_down.gif',1)"
 										onclick="javascript:createLists();" onmouseout="MM_swapImgRestore()" href="javascript:__doPostBack('ok','')" runat="server">
-									</A>
+									</a>
 								</td>
 							</tr>
 							<tr class="whiteBackGround">
@@ -221,7 +221,7 @@
 							</tr>
 							<tr>
 								<td style="WIDTH: 772px">
-									<table cellSpacing="0" cellPadding="0" border="0">
+									<table cellspacing="0" cellpadding="0" border="0">
 										<tr>
 											<td align="right" width="649"><cc4:imagebuttonrolloverwebcontrol id="saveImageButtonRollOverWebControl" runat="server" Visible="False" onclick="saveImageButtonRollOverWebControl_Click" SkinID="saveButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="nextImageButtonRollOverWebControl" runat="server" Visible="False" onclick="nextImageButtonRollOverWebControl_Click" SkinID="nextButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="programTypeImageButtonRollOverWebControl" runat="server" Visible="False" onclick="programTypeImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="formSponsoringshipImageButtonRollOverWebControl" runat="server" Visible="False" onclick="formSponsoringshipImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" runat="server" Visible="False" onclick="validImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;&nbsp;</td>
 											<td width="1%"></td>
@@ -232,36 +232,36 @@
 						</table>
 						<cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl>
 					</td>
-					<!--</TD>--><!--2005MI-->
+					<!--</td>--><!--2005MI-->
 					</tr>
 				<!-- ligne du bas a droite -->
-				<TR height="5">
-					<TD></TD>
-					<TD vAlign="top" class="imageBackGround">
-						<TABLE id="Table7" cellSpacing="0" cellPadding="0" width="100%" border="0">
-							<TR>
-								<TD vAlign="bottom"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-								<TD></TD>
-								<TD vAlign="bottom" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-							</TR>
-						</TABLE>
-					</TD>
-					<TD></TD>
-					<TD class="violetBackGround"></TD>
-					<TD class="imageBackGround"></TD>
-					<TD></TD>
-					<TD id="dellCel" style="WIDTH: 732px" vAlign="top" class="imageBackGround">
-						<TABLE id="Table8" cellSpacing="0" cellPadding="0" width="100%" border="0">
-							<TR>
-								<TD vAlign="bottom"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-								<TD></TD>
-								<TD vAlign="bottom" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-							</TR>
-						</TABLE>
-					</TD>
-				</TR>
+				<tr style="height:5px">
+					<td></td>
+					<td valign="top" class="imageBackGround">
+						<table id="Table7" cellspacing="0" cellpadding="0" width="100%" border="0">
+							<tr>
+								<td valign="bottom"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+								<td></td>
+								<td valign="bottom" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+							</tr>
+						</table>
+					</td>
+					<td></td>
+					<td class="violetBackGround"></td>
+					<td class="imageBackGround"></td>
+					<td></td>
+					<td id="dellCel" style="WIDTH: 732px" valign="top" class="imageBackGround">
+						<table id="Table8" cellspacing="0" cellpadding="0" width="100%" border="0">
+							<tr>
+								<td valign="bottom"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+								<td></td>
+								<td valign="bottom" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
 			</table>
 		</form>
 		<%=divClose%>
 	</body>
-</HTML>
+</html>

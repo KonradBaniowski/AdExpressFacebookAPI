@@ -465,7 +465,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                                 t.Append("<td class=\"arrowBackGround\"></td>");		
 								t.Append("</tr>");
 								t.Append("</table>");
-								t.Append("<div id=\""+idParent+"Ct\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY:");
+                                t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY:");
 								displayIndex=t.Length;
 								t.Append("; WIDTH: 100%\">");
 								t.Append("<table id="+idParent+" class=\"violetBorderWithoutTop paleVioletBackGround\" width=645>");
@@ -492,7 +492,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                                 t.Append("<td class=\"arrowBackGround\"></td>");	
 								t.Append("</tr>");
 								t.Append("</table>");
-								t.Append("<div id=\""+idParent+"Ct\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: ");
+                                t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: ");
 								displayIndex=t.Length;
 								t.Append("; WIDTH: 100%\" >");
                                 t.Append("<table id=" + idParent + " class =\"violetBorderWithoutTop paleVioletBackGround\" width=645>");

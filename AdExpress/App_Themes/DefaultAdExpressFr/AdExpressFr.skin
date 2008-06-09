@@ -29,6 +29,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Culture/logo/logo.gif" SkinID="logo" />
 <asp:image runat="server" ImageUrl="Images/Common/Result/bt_detail_up.gif" SkinID="bt_detail" />
 <asp:image runat="server" ImageUrl="Images/Common/Logo_Adnettrack.jpg" SkinID="Logo_Adnettrack" />
+<asp:image runat="server" ImageUrl="Images/Common/await.gif" SkinID="await" />
 
 <%-- Icons du menu contextuel --%>
 <asp:image runat="server" ImageUrl="Images/Common/Menu/selectedMenuIcon.gif" SkinID="selected" />
@@ -217,6 +218,21 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="detailButton" 
 />
 
+<%-- Form Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/bt_formes_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/bt_formes_down.gif" 
+                           SkinID="formButton" 
+/>
+
+<%-- Emission Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/bt_emissions_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr/Images/Culture/button/bt_emissions_down.gif" 
+                           SkinID="EmissionButton" 
+/>
 
 <%-- Actualities web control : used to show the actualities in the selection module page --%>
 <ctrHeader:actualitieswebcontrol  
@@ -664,6 +680,14 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   ThemeName = "DefaultAdExpressFr"
 />
 
+<%-- Option table types web control : used to display format table details selection --%>
+<ctrHeader:ResultsTableTypesWebControl 
+                           runat="server" 
+                           BorderColor="#644883"
+                           ImageButtonArrow="/App_Themes/DefaultAdExpressFr/Images/Common/Button/bt_arrow_tall_top.gif"
+						   SkinID = "ResultsTableTypesWebControl1"
+/>
+
 <%-- Result web control : used to display a generic result table (HTML) (portfolio Synthesis) --%>
 <ctrResults:Resultwebcontrol 
                            runat="server" 
@@ -844,6 +868,12 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           CssTitle="synthesisTitleEx" 
 				           CssDetailSelectionBordelLevel="dsBorderLevel" 
 				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionRightBorderL1 = "dsRightBorderLv1Excel"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2Excel"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3Excel"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1Excel"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2Excel"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3Excel"
 				           CssDetailSelectionTitle="dsTitle"
 				           CssDetailSelectionTitleData="dsTitleData" 
 				           CssDetailSelectionTitleGlobal="dsTitleGlobal"  
@@ -891,4 +921,72 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            ControlBorderColor="#634984"
 
                            SkinID="SeasonalityPlanSkinID"  
+/>
+
+<ctrResults:ResultWebControl
+                           runat="server"
+                           
+                           CssL1="lv1" 
+                           CssL2="lv2" 
+                           CssL3="lv3" 
+                           CssL4="lv4" 
+                           CssLHeader="h2"
+						   CssLTotal="lv0" 
+						   CssCHeader="h2"
+						   BackgroudColorL1="#B1A3C1"
+						   BackgroudColorL2="#D0C8DA" 
+						   BackgroudColorL3="#E1E0DA"
+						   BackgroudColorL4="#F1F1F1" 
+						   HighlightBackgroundColorL1="#FFFFFF" 
+						   HighlightBackgroundColorL2="#FFFFFF" 
+						   HighlightBackgroundColorL3="#FFFFFF"  
+						   HighlightBackgroundColorL4="#FFFFFF" 
+						   ImgBtnCroiOverPath="/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/Images/Common/fl_tri_decroi3.gif" 
+						   PageSizeOptions="100,200,500,1000" 
+						   AllowPaging="True"
+						   CssDetailSelectionBordelLevel="dsBorderLevel"
+						   CssDetailSelectionL1="dsLv1" 
+						   CssDetailSelectionL2="dsLv2" 
+						   CssDetailSelectionL3="dsLv3" 
+						   CssDetailSelectionRightBorderL1 = "dsRightBorderLv1"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3"
+						   CssDetailSelectionTitle="dsTitle"
+						   CssDetailSelectionTitleData="dsTitleData" 
+						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
+						   
+						   SkinID="resultwebcontrol1" 
+/>
+
+<ctrResults:ResultWebControl
+                           runat="server"
+                           
+                           CssLTotal="exlv0" 
+                           CssL1="exlv1"
+                           CssL2="exlv2"
+                           CssL3="exlv3" 
+                           CssL4="exlv4" 
+				           CssLHeader="exh2" 
+				           OutputType="excel" 
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel"
+				           CssDetailSelectionL3="dsLv3Excel" 
+				           CssDetailSelectionRightBorderL1 = "dsRightBorderLv1Excel"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2Excel"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3Excel"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1Excel"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2Excel"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3Excel"
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           			           
+				           SkinID="resultwebcontrol1Excel" 
 />
