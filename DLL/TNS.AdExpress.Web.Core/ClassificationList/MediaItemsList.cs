@@ -40,8 +40,7 @@ namespace TNS.AdExpress.Web.Core.ClassificationList{
 		/// </summary>
 		/// <param name="idVehicleItemsList">List Id</param>
 		public MediaItemsList(int idVehicleItemsList){
-			// PZL
-            /*
+            
 			TNS.Baal.ExtractList.Liste liste = null;
 
 			switch(idVehicleItemsList){
@@ -141,7 +140,7 @@ namespace TNS.AdExpress.Web.Core.ClassificationList{
 
 				default:
 					throw (new WebException.MediaListException("the methode doesn't contains treatement for the Id: "+idVehicleItemsList));
-			}*/
+			}
 		}
 		#endregion
 
@@ -150,27 +149,21 @@ namespace TNS.AdExpress.Web.Core.ClassificationList{
 		/// Get the list of vehicles
 		/// </summary>
 		public string GetVehicleItemsList{
-            // PZL
-            get{return("");}
-			//get{return(vehicleItemsList);}
+			get{return(vehicleItemsList);}
 		}
 
 		/// <summary>
 		/// Get the list of categories
 		/// </summary>
 		public string GetCategoryItemsList{
-            // PZL
-            get{return("");}
-			//get{return(categoryItemsList);}
+			get{return(categoryItemsList);}
 		}
 
 		/// <summary>
 		/// Get the list of media
 		/// </summary>
 		public string GetMediaItemsList{
-            // PZL
-            get{return("");}
-			//get{return(mediaItemsList);}
+			get{return(mediaItemsList);}
 		}
 		#endregion
 	}
