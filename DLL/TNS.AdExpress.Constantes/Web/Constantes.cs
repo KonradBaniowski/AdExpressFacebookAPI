@@ -1172,7 +1172,7 @@ namespace TNS.AdExpress.Constantes.Web{
         /// <summary>
         /// Lien vers la page de zoom sur une période dans une analyse plan media d'une appm
         /// </summary>
-        public const string APPM_ZOOM_PLAN_MEDIA = "/Private/Results/ZoomMediaPlanAnalysisResults.aspx";
+        public const string APPM_ZOOM_PLAN_MEDIA = "/Private/Results/APPMResults.aspx";
         /// <summary>
 		/// Lien vers la pop-up de zoom sur une période dans une analyse plan media
 		/// </summary>

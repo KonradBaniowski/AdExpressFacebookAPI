@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc6" Namespace="TNS.AdExpress.Web.Controls.Results.Appm" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="cc7" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.APPMResults" CodeFile="APPMResults.aspx.cs" EnableEventValidation="false"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,9 +21,12 @@
 		<meta http-equiv="expires" content="0" />
 		<meta http-equiv="pragma" content="no-cache" />
 		<meta name="Cache-control" content="no-cache" />
+		<script language="javascript" type="text/javascript" src="/scripts/WebResult.js"></script>
+		<script type="text/javascript" src="/scripts/dom-drag.js"></script>
 	</head>
 	<body class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
+		<asp:HiddenField ID="zoomParam" runat="server" EnableViewState="true"/>
 			<table style="height:600px" cellspacing="0" cellpadding="0" width="800" border="0">
 				<!--<TBODY>--><!--2005MI-->
 			    <tr>
@@ -143,13 +147,19 @@
 						                <tr>
 							                <td><asp:Image runat="server" height="10" SkinID="pixel" width="1" /></td>
 						                </tr>
+						                <%=zoomButton%>										
+                                        <tr class="whiteBackGround" >
+                                            <td><cc2:SubPeriodSelectionWebControl id="SubPeriodSelectionWebControl1" runat="server" />
+                                            </td>
+                                        </tr>
 						                <tr>
 							                <td style="HEIGHT: 5px" class="whiteBackGround"></td>
 						                </tr>
 						                <tr>
 							                <td align="center" class="whiteBackGround">
 								                <cc6:AppmContainerWebControl id="AppmContainerWebControl1" runat="server" SkinID="container"></cc6:AppmContainerWebControl>
-							                </td>
+                                                <cc7:GenericMediaScheduleWebControl id="GenericMediaScheduleWebControl1" runat="server" AjaxProTimeOut="240" ShowVersion="False"/>
+                                            </td>
 						                </tr>
 						                <tr>
 							                <td class="whiteBackGround" height="5"></td>

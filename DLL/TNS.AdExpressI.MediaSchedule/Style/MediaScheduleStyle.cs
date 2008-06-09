@@ -58,7 +58,7 @@ namespace TNS.AdExpressI.MediaSchedule.Style
         public MediaScheduleStyle()
         {
             NoDataDiv               = "txtViolet11Bold";
-            VersionCell0            = "pc0;";
+            VersionCell0            = "pc0";
             CellNotPresent          = "p3";
             CellPresent             = "p4";
             CellExtended            = "p5";

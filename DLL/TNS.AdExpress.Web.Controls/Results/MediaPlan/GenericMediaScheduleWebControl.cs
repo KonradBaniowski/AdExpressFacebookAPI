@@ -71,7 +71,11 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         /// Theme name
         /// </summary>
         protected string _themeName = string.Empty;
-		#endregion
+        /// <summary>
+        /// Current Module
+        /// </summary>
+        protected TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+        #endregion
 
 		#region Accesseurs
         
@@ -186,6 +190,16 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         }
         #endregion
 
+        #region Theme name
+        /// <summary>
+        /// Set or Get the current module
+        /// </summary>
+        public TNS.AdExpress.Domain.Web.Navigation.Module Module
+        {
+            get { return _module; }
+            set { _module = value; }
+        }
+        #endregion
         #endregion
 
         #region Builder
@@ -327,6 +341,10 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 if (o.Contains("IdSession"))
                 {
                     this._customerWebSession = (WebSession)WebSession.Load(o["IdSession"].Value.Replace("\"", ""));
+                }
+                if (o.Contains("IdModule"))
+                {
+                    this._module = ModulesList.GetModule(Int64.Parse(o["IdModule"].Value.Replace("\"", "")));
                 }
 
                 if (o.Contains("Zoom"))
@@ -503,6 +521,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("IdSession", this.CustomerWebSession.IdSession);
             parameters.Add("Zoom", _zoomDate);
+            parameters.Add("IdModule", _module.Id);
             parameters.Add("versionKeys", string.Empty);
             parameters.Add("versionStyle", string.Empty);
             parameters.Add("themeName", _themeName);
@@ -570,7 +589,6 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 			//MediaPlanResultData result=null;
             MediaSchedulePeriod period = null;
 			Int64 moduleId = webSession.CurrentModule;
-            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
             //object[,] tab = null;
             ConstantePeriod.DisplayLevel periodDisplay = webSession.DetailPeriod;
             object[] param = null;
@@ -616,7 +634,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 #endregion
 
                 //tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, -1);
-                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
+                if (_module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
                 if (_zoomDate.Length > 0)
                 {
                     param = new object[3];
@@ -628,7 +646,8 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 }
                 param[0] = _customerWebSession;
                 param[1] = period;
-                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                mediaScheduleResult.Module = _module;
                 result = mediaScheduleResult.GetHtml();
                 #region Data
 				if(result!=null && result.HTMLCode.Length>0){

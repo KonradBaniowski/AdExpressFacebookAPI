@@ -123,7 +123,7 @@ namespace TNS.AdExpressI.MediaSchedule
         public string Zoom
         {
             get { return _zoom; }
-            set { value = _zoom; }
+            set { _zoom = value; }
         }
         #endregion
 
@@ -138,7 +138,22 @@ namespace TNS.AdExpressI.MediaSchedule
         public WebSession Session
         {
             get{ return _session;}
-            set{ value = _session;}
+            set { _session = value; }
+        }
+        #endregion
+
+        #region Module
+        /// <summary>
+        /// Current module
+        /// </summary>
+        protected TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(CstWeb.Module.Name.ANALYSE_PLAN_MEDIA);
+        /// <summary>
+        /// User Session
+        /// </summary>
+        public TNS.AdExpress.Domain.Web.Navigation.Module Module
+        {
+            get{ return _module;}
+            set { _module = value; }
         }
         #endregion
 
@@ -153,7 +168,7 @@ namespace TNS.AdExpressI.MediaSchedule
         public MediaSchedulePeriod Period
         {
             get{ return _period;}
-            set{ value = _period;}
+            set { _period = value; }
         }
         #endregion
 
@@ -168,7 +183,37 @@ namespace TNS.AdExpressI.MediaSchedule
         public Int64 VehicleId
         {
             get{ return _vehicleId;}
-            set { value = _vehicleId; }
+            set { _vehicleId = value; }
+        }
+        #endregion
+
+        #region ShowTotal
+        /// <summary>
+        /// Is acces to total?
+        /// </summary>
+        protected bool _allowTotal = true;
+        /// <summary>
+        /// Get / Set autorisation to access to total
+        /// </summary>
+        public bool AllowTotal
+        {
+            get { return _allowTotal; }
+            set { _allowTotal = value; }
+        }
+        #endregion
+
+        #region ShowPDM
+        /// <summary>
+        /// Is acces to PDM values
+        /// </summary>
+        protected bool _allowPdm = true;
+        /// <summary>
+        /// Get / Set autorisation to access PDM values
+        /// </summary>
+        public bool AllowPdm
+        {
+            get { return _allowPdm; }
+            set { _allowPdm = value; }
         }
         #endregion
 
@@ -330,7 +375,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// Get HTML code for the media schedule
         /// </summary>
         /// <returns>HTML Code</returns>
-        public MediaScheduleData GetHtml()
+        public virtual MediaScheduleData GetHtml()
         {
             _isCreativeDivisionMS = false;
             _showValues = false;
@@ -338,6 +383,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
+            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE;
             _style = new DefaultMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -346,7 +392,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// Get HTML code for the media schedule dedicated to Creative Division
         /// </summary>
         /// <returns>HTML Code</returns>
-        public MediaScheduleData GetHtmlCreativeDivision()
+        public virtual MediaScheduleData GetHtmlCreativeDivision()
         {
             _isCreativeDivisionMS = true;
             _showValues = false;
@@ -354,6 +400,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
+            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack);
             _style = new DefaultMediaScheduleStyle();
             throw new Exception("The method or operation is not implemented.");
         }
@@ -362,7 +409,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// Get HTML code for a pdf export of the media schedule
         /// </summary>
         /// <returns>HTML Code</returns>
-        public MediaScheduleData GetPDFHtml()
+        public virtual MediaScheduleData GetPDFHtml()
         {
             _isCreativeDivisionMS = false;
             _showValues = false;
@@ -370,6 +417,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = true;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
+            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack);
             _style = new PDFMediaScheduleStyle();
             throw new Exception("The method or operation is not implemented.");
         }
@@ -379,7 +427,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// </summary>
         /// <param name="withValues">Specify if each values of the calendar must be shown in Media Schedule</param>
         /// <returns>HTML Code</returns>
-        public MediaScheduleData GetExcelHtml(bool withValues)
+        public virtual MediaScheduleData GetExcelHtml(bool withValues)
         {
             _isCreativeDivisionMS = false;
             _showValues = withValues;
@@ -387,6 +435,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
+            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE; 
             _style = new ExcelMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -400,7 +449,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// Compute data from database
         /// </summary>
         /// <returns>Formatted table ready for UI design</returns>
-        protected object[,] ComputeData()
+        protected virtual object[,] ComputeData()
         {
             object[,] oTab = null;
 
@@ -412,22 +461,21 @@ namespace TNS.AdExpressI.MediaSchedule
             //ds = GenericMediaScheduleDataAccess.GetAdNetTrackData(_session, _period);
             //ds = GenericMediaScheduleDataAccess.GetData(_session, _period);
             object[] param = null;
-            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(CstWeb.Module.Name.ANALYSE_PLAN_MEDIA);
-            if (module.CountryDataAccessLayer == null) throw (new NullReferenceException("Data access layer is null for the Media Schedule result"));
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("Data access layer is null for the Media Schedule result"));
             param = new object[2];
             param[0] = _session;
             param[1] = _period;
-            IMediaScheduleResultDAL mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            IMediaScheduleResultDAL mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 
             if (_vehicleId == (Int64)CstDBClassif.Vehicles.names.adnettrack)
             {
                 detailLevel = _session.GenericAdNetTrackDetailLevel;
-                ds = mediaScheduleDAL.GetAdNetTrackData();
+                ds = mediaScheduleDAL.GetMediaScheduleAdNetTrackData();
             }
             else
             {
                 detailLevel = _session.GenericMediaDetailLevel;                
-                ds = mediaScheduleDAL.GetData();
+                ds = mediaScheduleDAL.GetMediaScheduleData();
             }
 
             if (ds == null || ds.Tables.Count == 0 || ds.Tables[0] == null)
@@ -1056,7 +1104,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <param name="level">Requested level</param>
         /// <param name="detailLevel">Levels breakdown</param>
         /// <returns>Level Id</returns>
-        protected Int64 GetLevelId(DataRow dr, int level, GenericDetailLevel detailLevel)
+        protected virtual Int64 GetLevelId(DataRow dr, int level, GenericDetailLevel detailLevel)
         {
             return (Int64.Parse(dr[detailLevel.GetColumnNameLevelId(level)].ToString()));
         }
@@ -1082,7 +1130,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// </summary>
         /// <param name="data">Preformated Data</param>
         /// <returns>HTML code</returns>
-        protected MediaScheduleData ComputeDesign(object[,] data)
+        protected virtual MediaScheduleData ComputeDesign(object[,] data)
         {
             MediaScheduleData oMediaScheduleData = new MediaScheduleData();
             StringBuilder t = new System.Text.StringBuilder(5000);
@@ -1126,6 +1174,7 @@ namespace TNS.AdExpressI.MediaSchedule
             oMediaScheduleData.PeriodNb = (Int64)Math.Round((double)(nbColTab - firstPeriodIndex) / 7);
 
             bool isExport = _isExcelReport || _isPDFReport;
+            int labColSpan = (isExport && !_allowTotal) ? 2 : 1;
             #endregion
 
             #region Rappel de sélection
@@ -1137,14 +1186,22 @@ namespace TNS.AdExpressI.MediaSchedule
                 }
                 else
                 {
-                    t.Append(FctExcel.GetLogo(_session));
-                    if (_session.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)
+                    if (_module.Id != CstWeb.Module.Name.BILAN_CAMPAGNE)
                     {
-                        t.Append(FctExcel.GetExcelHeader(_session, true, false, Zoom, (int)_session.DetailPeriod));
+                        t.Append(FctExcel.GetLogo(_session));
+                        if (_session.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)
+                        {
+                            t.Append(FctExcel.GetExcelHeader(_session, true, false, Zoom, (int)_session.DetailPeriod));
+                        }
+                        else
+                        {
+                            t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
+                        }
                     }
                     else
                     {
-                        t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
+                        t.Append(FctExcel.GetAppmLogo(_session));
+                        t.Append(FctExcel.GetExcelHeader(_session, GestionWeb.GetWebWord(1474,_session.SiteLanguage)));
                     }
                 }
             }
@@ -1161,24 +1218,31 @@ namespace TNS.AdExpressI.MediaSchedule
             }
             t.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0>\r\n\t<tr>");
             // Product Column (Force nowrap in this column)
-            t.AppendFormat("\r\n\t\t<td rowspan=\"{3}\" width=\"250px\" class=\"{0}\">{1}{2}</td>"
+            t.AppendFormat("\r\n\t\t<td colSpan=\"{4}\" rowspan=\"{3}\" width=\"250px\" class=\"{0}\">{1}{2}</td>"
                 , _style.CellTitle
                 , GestionWeb.GetWebWord(804, _session.SiteLanguage)
                 , (!isExport) ? string.Empty : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                , rowSpanNb);
+                , rowSpanNb
+                , labColSpan);
             // Total Column
-            t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
-            int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
-            int nbSpace = (nbtot - 1) / 3;
-            int nbCharTotal = nbtot + nbSpace - 5;
-            if (nbCharTotal < 5) nbCharTotal = 0;
-            for (int h = 0; h < nbCharTotal; h++)
+            if (_allowTotal)
             {
-                t.Append("&nbsp;");
+                t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
+                int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
+                int nbSpace = (nbtot - 1) / 3;
+                int nbCharTotal = nbtot + nbSpace - 5;
+                if (nbCharTotal < 5) nbCharTotal = 0;
+                for (int h = 0; h < nbCharTotal; h++)
+                {
+                    t.Append("&nbsp;");
+                }
+                t.Append("</td>");
             }
-            t.Append("</td>");
             //PDM
-            t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(806, _session.SiteLanguage), rowSpanNb);
+            if (_allowPdm)
+            {
+                t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(806, _session.SiteLanguage), rowSpanNb);
+            }
             //Version
             if (_allowVersion)
             {
@@ -1203,16 +1267,21 @@ namespace TNS.AdExpressI.MediaSchedule
             StringBuilder headers = new StringBuilder();
             string periodClass;
             string link = string.Empty;
-            if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_POTENTIELS 
-                || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
-                || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
-                || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
-                || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE)
+            switch (_session.CurrentModule)
             {
-                link = TNS.AdExpress.Constantes.Web.Links.MEDIA_SCHEDULE_POP_UP;
-            }
-            else{
-                link = TNS.AdExpress.Constantes.Web.Links.ZOOM_PLAN_MEDIA;
+                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_POTENTIELS:
+                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE:
+                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE:
+                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE:
+                case TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE:
+                    link = TNS.AdExpress.Constantes.Web.Links.MEDIA_SCHEDULE_POP_UP;
+                    break;
+                case TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE:
+                    link = TNS.AdExpress.Constantes.Web.Links.APPM_ZOOM_PLAN_MEDIA;
+                    break;
+                default:
+                    link = TNS.AdExpress.Constantes.Web.Links.ZOOM_PLAN_MEDIA;
+                    break;
             }
 
 
@@ -1475,7 +1544,7 @@ namespace TNS.AdExpressI.MediaSchedule
                                         j = int.MaxValue - 2;
                                         break;
                                     }
-                                    AppenLabelTotalPDM(data, t, i, cssClasse, cssClasseNb, j, string.Empty);
+                                    AppenLabelTotalPDM(data, t, i, cssClasse, cssClasseNb, j, string.Empty, labColSpan);
                                     if (_allowVersion)
                                     {
                                         if (i != TOTAL_LINE_INDEX)
@@ -1513,7 +1582,7 @@ namespace TNS.AdExpressI.MediaSchedule
                             case L2_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
-                                    AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, "&nbsp;");
+                                    AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, "&nbsp;", labColSpan);
                                     if (_allowVersion)
                                     {
                                         AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
@@ -1536,7 +1605,7 @@ namespace TNS.AdExpressI.MediaSchedule
                             case L3_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
-                                    AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;");
+                                    AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan);
                                     if (_allowVersion)
                                     {
                                         AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, j);
@@ -1557,19 +1626,19 @@ namespace TNS.AdExpressI.MediaSchedule
 
                             #region Level 4
                             case L4_COLUMN_INDEX:
-                                AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;");
+                                AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan);
                                 if (_allowVersion)
                                 {
-                                    AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, L3_ID_COLUMN_INDEX);
+                                    AppendCreativeLink(data, t, themeName, i, _style.CellLevelL4, j);
                                 }
                                 if (_allowInsertions)
                                 {
-                                    AppendInsertionLink(data, t, themeName, i, _style.CellLevelL3, L3_ID_COLUMN_INDEX);
+                                    AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
                                 }
 
                                 for (int k = 1; k <= nbColYear; k++)
                                 {
-                                    AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + 7 + k);
+                                    AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + 7 + k);
                                 }
                                 j = j + 7 + nbColYear;
                                 break;
@@ -1642,12 +1711,21 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <param name="line">Current line</param>
         /// <param name="cssClasseNb">Line syle</param>
         /// <param name="tmpCol">Year column in data source</param>
-        protected void AppendYearsTotal(object[,] data, StringBuilder t, int line, string cssClasseNb, int tmpCol)
+        protected virtual void AppendYearsTotal(object[,] data, StringBuilder t, int line, string cssClasseNb, int tmpCol)
         {
-            t.AppendFormat("td class=\"{0}\" nowrap>{1}</td>"
-                , cssClasseNb
-                , FctWeb.Units.ConvertUnitValueToString(data[line, tmpCol].ToString(), _session.Unit).Trim()
-                );
+            if (_allowTotal)
+            {
+                string s = FctWeb.Units.ConvertUnitValueToString(data[line, tmpCol].ToString(), _session.Unit).Trim();
+                if (s.Length <= 0)
+                {
+                    s = "&nbsp;";
+                }
+
+                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>"
+                    , cssClasseNb
+                    , s
+                    );
+            }
         }
 
         /// <summary>
@@ -1660,15 +1738,30 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <param name="cssClasseNb">Line syle for numbers</param>
         /// <param name="col">Column to consider</param>
         /// <param name="padding">Stirng to insert before Label</param>
-        protected void AppenLabelTotalPDM(object[,] data, StringBuilder t, int line, string cssClasse, string cssClasseNb, int col, string padding)
+        protected virtual void AppenLabelTotalPDM(object[,] data, StringBuilder t, int line, string cssClasse, string cssClasseNb, int col, string padding, int labColSpan)
         {
-            t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\">{5}{1}</td><td class=\"{2}\">{3}</td><td class=\"{2}\">{4}</td>"
+            t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{6}\">{5}{1}</td>"
                 , cssClasse
                 , data[line, col]
                 , cssClasseNb
                 , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX].ToString(), _session.Unit)
                 , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00")
-                , padding);
+                , padding
+                , labColSpan);
+            if (_allowTotal)
+            {
+
+                t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                    , cssClasseNb
+                    , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX].ToString(), _session.Unit)
+                    , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00"));
+            }
+            if (_allowPdm)
+            {
+                t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                    , cssClasseNb
+                    , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00"));
+            }
         }
 
         /// <summary>
@@ -1680,7 +1773,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <param name="line">Current line</param>
         /// <param name="cssClasse">Line syle</param>
         /// <param name="level">Column index of the current level (except for level 4 which represent by level 3)</param>
-        protected void AppendInsertionLink(object[,] data, StringBuilder t, string themeName, int line, string cssClasse, int level)
+        protected virtual void AppendInsertionLink(object[,] data, StringBuilder t, string themeName, int line, string cssClasse, int level)
         {
             if (data[line, level] != null)
             {
@@ -1707,7 +1800,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <param name="line">Current line</param>
         /// <param name="cssClasse">Line syle</param>
         /// <param name="level">Column index of the current level (except for level 4 which represent by level 3)</param>
-        protected void AppendCreativeLink(object[,] data, StringBuilder t, string themeName, int line, string cssClasse, int level)
+        protected virtual void AppendCreativeLink(object[,] data, StringBuilder t, string themeName, int line, string cssClasse, int level)
         {
             if (data[line, level] != null)
             {
@@ -1732,7 +1825,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <param name="line">Current line</param>
         /// <param name="level">Current level</param>
         /// <returns>Filters as "id1,id2,id3,id4,-1" (idX replace by -1 if required depending on the curretn level)</returns>
-        protected string GetLevelFilter(object[,] data, int line, int level)
+        protected virtual string GetLevelFilter(object[,] data, int line, int level)
         {
             switch (level)
             {
@@ -1755,7 +1848,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// Get column which contains id_slogan, -1 if missing
         /// </summary>
         /// <returns>Index of column if found, -1 either</returns>
-        protected int GetSloganIdIndex()
+        protected virtual int GetSloganIdIndex()
         {
             int rank = _session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan);
             switch (rank)
@@ -1781,26 +1874,29 @@ namespace TNS.AdExpressI.MediaSchedule
         /// Chack that session verifies conditions to allow access to the versions
         /// </summary>
         /// <returns>True if access authorised</returns>
-        protected bool AllowVersions(){
+        protected virtual bool AllowVersions()
+        {
             return (
                 _session.CustomerLogin.GetFlag(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) != null
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
                 && _vehicleId!=CstDBClassif.Vehicles.names.adnettrack.GetHashCode()
+                && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE
                 );
         }
         /// <summary>
         /// Check the session verifies conditions to allow access to the insertions
         /// </summary>
         /// <returns>True if access authorised</returns>
-        protected bool AllowInsertions()
+        protected virtual bool AllowInsertions()
         {
             return 
                 !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
                 && _vehicleId != CstDBClassif.Vehicles.names.adnettrack.GetHashCode()
+                && (_module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE || _session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                 ;
         }
         #endregion

@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections;
+using System.Reflection;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,6 +14,8 @@ using System.ComponentModel;
 using AjaxPro;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Common.Results;
@@ -23,9 +26,7 @@ using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.FrameWork.WebResultUI;
 using ControlsExceptions = TNS.AdExpress.Web.Controls.Exceptions;
 using TNS.FrameWork;
-
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
-
 
 namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 	/// <summary>
@@ -171,8 +172,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
         {
 
             StringBuilder html = new StringBuilder(10000);
-            MediaPlanResultData result = null;
-            Int64 module = webSession.CurrentModule;
+            MediaScheduleData result = null;
+            Int64 moduleId = webSession.CurrentModule;
+            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(moduleId);
             object[,] tab = null;
             MediaSchedulePeriod period;
 
@@ -215,13 +217,29 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 }
                 #endregion
 
-                #region Data
-                webSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
-                tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, (Int64) DBClassificationConstantes.Vehicles.names.adnettrack);
-                #endregion
+                //#region Data
+                //tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, (Int64) DBClassificationConstantes.Vehicles.names.adnettrack);
+                //#endregion
 
                 #region HTML Code
-                result = TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetAdNetTrackHtml(webSession, period, tab, _zoomDate);
+                //result = TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetAdNetTrackHtml(webSession, period, tab, _zoomDate);
+                object[] param = null;
+                webSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
+                if (_zoomDate.Length > 0)
+                {
+                    param = new object[4];
+                    param[3] = _zoomDate;
+                }
+                else
+                {
+                    param = new object[3];
+                }
+                param[0] = _customerWebSession;
+                param[1] = period;
+                param[2] = (Int64)DBClassificationConstantes.Vehicles.names.adnettrack;
+                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                result = mediaScheduleResult.GetHtml();
 
 
                 html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
@@ -241,7 +259,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             }
             finally
             {
-                webSession.CurrentModule = module;
+                webSession.CurrentModule = moduleId;
             }
             return (html.ToString());
         }

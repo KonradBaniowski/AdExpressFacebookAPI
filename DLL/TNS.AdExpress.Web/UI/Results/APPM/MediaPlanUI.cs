@@ -36,465 +36,467 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 	{
 		#region HTML
 
+        //Media Plan
 		#region Media Plan
-		/// <summary>
-		/// This method generates the HTML for the Media Plan.
-		/// </summary>
-		/// <param name="webSession">clients session</param>
-		/// <param name="dataSource">dataSource for creating Datasets </param>
-		/// <param name="dateBegin">Beginning Date</param>
-		/// <param name="dateEnd">Ending Date</param>
-		/// <param name="baseTarget">Base target</param>
-		/// <param name="additionalTarget">supplementary target</param>
-		/// <param name="excel">boolean to indicate whether the HTML generated is for HTML table or Excel </param>
-		/// <returns>HTML string for the synthesis table</returns>
-		public static string GetHTML(WebSession webSession,IDataSource dataSource, int dateBegin,int dateEnd,Int64 baseTarget,Int64 additionalTarget,bool excel)
-		{
-			#region Variables
-			StringBuilder html=null;
-			object[,] tab=null;
-			int FIRST_PERIOD_INDEX=0;
-			int nbColYear=0;
-			int prevYear=0;
-			int nbPeriodInYear=0;
-			string currentCategoryName=string.Empty;
-			string prevYearString=string.Empty;
-			string HTML=string.Empty;
-			string HTML2=string.Empty;
-			string mediaCSS1=string.Empty;
-			string mediaCSS2=string.Empty;
-			string supportCSS=string.Empty;
-			bool premier=true;
-			#endregion
+        ///// <summary>
+        ///// This method generates the HTML for the Media Plan.
+        ///// </summary>
+        ///// <param name="webSession">clients session</param>
+        ///// <param name="dataSource">dataSource for creating Datasets </param>
+        ///// <param name="dateBegin">Beginning Date</param>
+        ///// <param name="dateEnd">Ending Date</param>
+        ///// <param name="baseTarget">Base target</param>
+        ///// <param name="additionalTarget">supplementary target</param>
+        ///// <param name="excel">boolean to indicate whether the HTML generated is for HTML table or Excel </param>
+        ///// <returns>HTML string for the synthesis table</returns>
+        //public static string GetHTML(WebSession webSession,IDataSource dataSource, int dateBegin,int dateEnd,Int64 baseTarget,Int64 additionalTarget,bool excel)
+        //{
+        //    #region Variables
+        //    StringBuilder html=null;
+        //    object[,] tab=null;
+        //    int FIRST_PERIOD_INDEX=0;
+        //    int nbColYear=0;
+        //    int prevYear=0;
+        //    int nbPeriodInYear=0;
+        //    string currentCategoryName=string.Empty;
+        //    string prevYearString=string.Empty;
+        //    string HTML=string.Empty;
+        //    string HTML2=string.Empty;
+        //    string mediaCSS1=string.Empty;
+        //    string mediaCSS2=string.Empty;
+        //    string supportCSS=string.Empty;
+        //    bool premier=true;
+        //    #endregion
 
-			#region Constants
-			const string PLAN_MEDIA_1_CLASSE="p6";
-			const string PLAN_MEDIA_2_CLASSE="p7";	
-			const string PLAN_MEDIA_XLS_1_CLASSE="pmmediaxls1";
-			const string PLAN_MEDIA_XLS_2_CLASSE="pmmediaxls2";
-			#endregion
+        //    #region Constants
+        //    const string PLAN_MEDIA_1_CLASSE="p6";
+        //    const string PLAN_MEDIA_2_CLASSE="p7";	
+        //    const string PLAN_MEDIA_XLS_1_CLASSE="pmmediaxls1";
+        //    const string PLAN_MEDIA_XLS_2_CLASSE="pmmediaxls2";
+        //    #endregion
 
-			#region Styles
-			if(excel){
-				mediaCSS1=PLAN_MEDIA_XLS_1_CLASSE;
-				mediaCSS2=PLAN_MEDIA_XLS_2_CLASSE;
-				supportCSS="p2excel";
-			}
-			else{
-				mediaCSS1=	PLAN_MEDIA_1_CLASSE;
-				mediaCSS2=PLAN_MEDIA_2_CLASSE;
-				supportCSS="p2";
-			}
-			#endregion
+        //    #region Styles
+        //    if(excel){
+        //        mediaCSS1=PLAN_MEDIA_XLS_1_CLASSE;
+        //        mediaCSS2=PLAN_MEDIA_XLS_2_CLASSE;
+        //        supportCSS="p2excel";
+        //    }
+        //    else{
+        //        mediaCSS1=	PLAN_MEDIA_1_CLASSE;
+        //        mediaCSS2=PLAN_MEDIA_2_CLASSE;
+        //        supportCSS="p2";
+        //    }
+        //    #endregion
 
-			#region Get Data
-			try{
-				tab=TNS.AdExpress.Web.Rules.Results.APPM.MediaPlanRules.GetData(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,webSession.DetailPeriod);
-				#endregion
+        //    #region Get Data
+        //    try{
+        //        tab=TNS.AdExpress.Web.Rules.Results.APPM.MediaPlanRules.GetData(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,webSession.DetailPeriod);
+        //        #endregion
 			
-			#region HTML
+        //    #region HTML
 	
-				if(tab!=null) {
-					html=new StringBuilder(1000);
-					int nbColTab=tab.GetLength(1),j,i;
+        //        if(tab!=null) {
+        //            html=new StringBuilder(1000);
+        //            int nbColTab=tab.GetLength(1),j,i;
 
-					#region number of years
-					nbColYear = int.Parse(webSession.PeriodEndDate.Substring(0,4)) - int.Parse(webSession.PeriodBeginningDate.Substring(0,4));
-					if (nbColYear>0) nbColYear++;
-					FIRST_PERIOD_INDEX = FrameWorkResultConstantes.MediaPlanAPPM.FIRST_PEDIOD_INDEX;			
-					#endregion
+        //            #region number of years
+        //            nbColYear = int.Parse(webSession.PeriodEndDate.Substring(0,4)) - int.Parse(webSession.PeriodBeginningDate.Substring(0,4));
+        //            if (nbColYear>0) nbColYear++;
+        //            FIRST_PERIOD_INDEX = FrameWorkResultConstantes.MediaPlanAPPM.FIRST_PEDIOD_INDEX;			
+        //            #endregion
 					
-					#region Colunm labels
-					html.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0 align=left>\r\n\t<tr>");					
-					html.Append("\n\t\t\t\t\t<td class=\""+supportCSS+"\" rowspan=2>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
+        //            #region Colunm labels
+        //            html.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0 align=left>\r\n\t<tr>");					
+        //            html.Append("\n\t\t\t\t\t<td class=\""+supportCSS+"\" rowspan=2>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
 						
-					#region Years and months/weeks
-					prevYear=int.Parse(tab[0,FIRST_PERIOD_INDEX].ToString().Substring(0,4));
-					for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++) {
-						if(prevYear!=int.Parse(tab[0,j].ToString().Substring(0,4))) {
-							if(nbPeriodInYear<3)prevYearString="&nbsp;";
-							else prevYearString=prevYear.ToString();							
-							HTML2+="<td colspan="+nbPeriodInYear+" class=\"pmannee\">"+prevYearString+"</td>";
-							nbPeriodInYear=0;
-							prevYear=int.Parse(tab[0,j].ToString().Substring(0,4));
+        //            #region Years and months/weeks
+        //            prevYear=int.Parse(tab[0,FIRST_PERIOD_INDEX].ToString().Substring(0,4));
+        //            for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++) {
+        //                if(prevYear!=int.Parse(tab[0,j].ToString().Substring(0,4))) {
+        //                    if(nbPeriodInYear<3)prevYearString="&nbsp;";
+        //                    else prevYearString=prevYear.ToString();							
+        //                    HTML2+="<td colspan="+nbPeriodInYear+" class=\"pmannee\">"+prevYearString+"</td>";
+        //                    nbPeriodInYear=0;
+        //                    prevYear=int.Parse(tab[0,j].ToString().Substring(0,4));
 
-						}
-						if(webSession.DetailPeriod==Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly) {
-							if(excel)
-								HTML+="<td class=\"p10\" style=\"width:15pt\">&nbsp;"+TNS.FrameWork.Date.MonthString.Get(int.Parse(tab[0,j].ToString().Substring(4,2)),webSession.SiteLanguage,1)+"&nbsp;</td>";												
-							else
-                                HTML += "<td class=\"p10\" width=\"17px\"><a class=\"p10\" href=\"" + CstWeb.Links.APPM_ZOOM_PLAN_MEDIA + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + TNS.FrameWork.Date.MonthString.Get(int.Parse(tab[0, j].ToString().Substring(4, 2)), webSession.SiteLanguage, 1) + "&nbsp;</td>";												
-						}
-						else {	
-							if(excel)
-								HTML+="<td class=\"p10\" style=\"width:15pt\">&nbsp;"+tab[0,j].ToString().Substring(4,2)+"&nbsp;</td>";
-							else
-                                HTML += "<td class=\"p10\" width=\"17px\"><a class=\"p10\" href=\"" + CstWeb.Links.APPM_ZOOM_PLAN_MEDIA + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + tab[0, j].ToString().Substring(4, 2) + "&nbsp;<a></td>";							
-						}
-						nbPeriodInYear++;
-					}
-					if(nbPeriodInYear<3)prevYearString="&nbsp;";
-					else prevYearString=prevYear.ToString();
+        //                }
+        //                if(webSession.DetailPeriod==Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly) {
+        //                    if(excel)
+        //                        HTML+="<td class=\"p10\" style=\"width:15pt\">&nbsp;"+TNS.FrameWork.Date.MonthString.Get(int.Parse(tab[0,j].ToString().Substring(4,2)),webSession.SiteLanguage,1)+"&nbsp;</td>";												
+        //                    else
+        //                        HTML += "<td class=\"p10\" width=\"17px\"><a class=\"p10\" href=\"" + CstWeb.Links.APPM_ZOOM_PLAN_MEDIA + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + TNS.FrameWork.Date.MonthString.Get(int.Parse(tab[0, j].ToString().Substring(4, 2)), webSession.SiteLanguage, 1) + "&nbsp;</td>";												
+        //                }
+        //                else {	
+        //                    if(excel)
+        //                        HTML+="<td class=\"p10\" style=\"width:15pt\">&nbsp;"+tab[0,j].ToString().Substring(4,2)+"&nbsp;</td>";
+        //                    else
+        //                        HTML += "<td class=\"p10\" width=\"17px\"><a class=\"p10\" href=\"" + CstWeb.Links.APPM_ZOOM_PLAN_MEDIA + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + tab[0, j].ToString().Substring(4, 2) + "&nbsp;<a></td>";							
+        //                }
+        //                nbPeriodInYear++;
+        //            }
+        //            if(nbPeriodInYear<3)prevYearString="&nbsp;";
+        //            else prevYearString=prevYear.ToString();
 
-					HTML2+="<td colspan="+nbPeriodInYear+" class=\"pmannee2\">"+prevYearString+"</td>";
-					html.Append(HTML2+"</tr><tr>");
-					html.Append(HTML+"</tr>");
-					if(!excel)html.Append("\r\n\t<tr></tr>");					
+        //            HTML2+="<td colspan="+nbPeriodInYear+" class=\"pmannee2\">"+prevYearString+"</td>";
+        //            html.Append(HTML2+"</tr><tr>");
+        //            html.Append(HTML+"</tr>");
+        //            if(!excel)html.Append("\r\n\t<tr></tr>");					
 
-					#endregion					
+        //            #endregion					
 					
-					#endregion				
+        //            #endregion				
 
-					#region Traversing the table
-					for(i=1;i<tab.GetLength(0);i++) {
-						for(j=1;j<tab.GetLength(1);j++) {
-							switch(j) {
+        //            #region Traversing the table
+        //            for(i=1;i<tab.GetLength(0);i++) {
+        //                for(j=1;j<tab.GetLength(1);j++) {
+        //                    switch(j) {
 								
-								case FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX:
-									if(tab[i,j]!=null) {
-										if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]!=null && (Int64)tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]==-1)
-											html.Append("\r\n\t<tr >\r\n\t\t<td class=\"pmtotal\" nowrap>&nbsp;"+tab[i,j]+"</td>");
-										else 
-											html.Append("\r\n\t<tr >\r\n\t\t<td class=\"pmcategory\" nowrap>&nbsp;"+tab[i,j]+"</td>");
-										j=j+3;
+        //                        case FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX:
+        //                            if(tab[i,j]!=null) {
+        //                                if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]!=null && (Int64)tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]==-1)
+        //                                    html.Append("\r\n\t<tr >\r\n\t\t<td class=\"pmtotal\" nowrap>&nbsp;"+tab[i,j]+"</td>");
+        //                                else 
+        //                                    html.Append("\r\n\t<tr >\r\n\t\t<td class=\"pmcategory\" nowrap>&nbsp;"+tab[i,j]+"</td>");
+        //                                j=j+3;
 										
-									}
-									break;
+        //                            }
+        //                            break;
 
-								case FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX:
-									if(tab[i,j]!=null) {
-										if(premier) {
-											html.Append("\r\n\t<tr >\r\n\t\t<td class=\""+mediaCSS1+"\" nowrap>&nbsp;&nbsp;"+tab[i,j]+"</td>");
-											premier=false;
-										}
-										else {
-											html.Append("\r\n\t<tr >\r\n\t\t<td class=\""+mediaCSS2+"\" nowrap>&nbsp;&nbsp;"+tab[i,j]+"</td>");										
-											premier=true;
-										}
-										j=j+1;
-									}
+        //                        case FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX:
+        //                            if(tab[i,j]!=null) {
+        //                                if(premier) {
+        //                                    html.Append("\r\n\t<tr >\r\n\t\t<td class=\""+mediaCSS1+"\" nowrap>&nbsp;&nbsp;"+tab[i,j]+"</td>");
+        //                                    premier=false;
+        //                                }
+        //                                else {
+        //                                    html.Append("\r\n\t<tr >\r\n\t\t<td class=\""+mediaCSS2+"\" nowrap>&nbsp;&nbsp;"+tab[i,j]+"</td>");										
+        //                                    premier=true;
+        //                                }
+        //                                j=j+1;
+        //                            }
 									
-									break;
-								case FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX:									
-								case FrameWorkResultConstantes.MediaPlanAPPM.PERIODICITY_COLUMN_INDEX:
-									break;
-								default:
+        //                            break;
+        //                        case FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX:									
+        //                        case FrameWorkResultConstantes.MediaPlanAPPM.PERIODICITY_COLUMN_INDEX:
+        //                            break;
+        //                        default:
 								
-									if(tab[i,j]==null && (tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null )) {
-										html.Append("<td class=\"p3\">&nbsp;</td>");
-										break;
-									}
-									if((tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null) && (tab[i,j].GetType()==typeof(FrameWorkResultConstantes.MediaPlan.graphicItemType))) {
-										switch((FrameWorkResultConstantes.MediaPlan.graphicItemType)tab[i,j]) {
-											case FrameWorkResultConstantes.MediaPlan.graphicItemType.present:
-												html.Append("<td class=\"p4\">&nbsp;</td>");
-												break;
-											case FrameWorkResultConstantes.MediaPlan.graphicItemType.extended:
-												html.Append("<td class=\"p5\">&nbsp;</td>");
-												break;
-											default:
-												html.Append("<td class=\"p3\">&nbsp;</td>");
-												break;
-										}
-									}
-									break;
-							}
+        //                            if(tab[i,j]==null && (tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null )) {
+        //                                html.Append("<td class=\"p3\">&nbsp;</td>");
+        //                                break;
+        //                            }
+        //                            if((tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null) && (tab[i,j].GetType()==typeof(FrameWorkResultConstantes.MediaPlan.graphicItemType))) {
+        //                                switch((FrameWorkResultConstantes.MediaPlan.graphicItemType)tab[i,j]) {
+        //                                    case FrameWorkResultConstantes.MediaPlan.graphicItemType.present:
+        //                                        html.Append("<td class=\"p4\">&nbsp;</td>");
+        //                                        break;
+        //                                    case FrameWorkResultConstantes.MediaPlan.graphicItemType.extended:
+        //                                        html.Append("<td class=\"p5\">&nbsp;</td>");
+        //                                        break;
+        //                                    default:
+        //                                        html.Append("<td class=\"p3\">&nbsp;</td>");
+        //                                        break;
+        //                                }
+        //                            }
+        //                            break;
+        //                    }
 							
-						}
-						if((tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null))
-							html.Append("</tr>");
-					}
-					html.Append("</table>");	
-					#endregion			
+        //                }
+        //                if((tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null))
+        //                    html.Append("</tr>");
+        //            }
+        //            html.Append("</table>");	
+        //            #endregion			
 
 								
-				}
-			}
-			catch(System.Exception e){
-				throw(new WebExceptions.APPMMediaPlanUIExcpetion("Error while constructing the HTML table of Media plan ",e));
-			}
-			#endregion
+        //        }
+        //    }
+        //    catch(System.Exception e){
+        //        throw(new WebExceptions.APPMMediaPlanUIExcpetion("Error while constructing the HTML table of Media plan ",e));
+        //    }
+        //    #endregion
 
-			#region no data
-			if(html==null||html.Length<=0)
-				return("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(177,webSession.SiteLanguage)+"</div>");
+        //    #region no data
+        //    if(html==null||html.Length<=0)
+        //        return("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(177,webSession.SiteLanguage)+"</div>");
 				
-			#endregion
+        //    #endregion
 
-			return html.ToString();
+        //    return html.ToString();
 
-		}
+        //}
 		#endregion
 
+        //Media Plan Zoom
 		#region Media Plan Zoom
 
-		/// <summary>
-		/// This method generates the HTML for the Media Plan by day.
-		/// </summary>
-		/// <param name="webSession">clients session</param>
-		/// <param name="dataSource">dataSource for creating Datasets </param>		
-		/// <param name="baseTarget">Base target</param>
-		/// <param name="additionalTarget">supplementary target</param>
-		/// <param name="excel">boolean to indicate whether the HTML generated is for HTML table or Excel </param>
-		/// <param name="url">link to next page</param>
-		/// <param name="zoomDate">detail date</param>
-		/// <returns>HTML string for the synthesis table</returns>
-		public static string GetZoomHTML(WebSession webSession,IDataSource dataSource, string zoomDate,Int64 baseTarget,Int64 additionalTarget,bool excel,string url) {
+        ///// <summary>
+        ///// This method generates the HTML for the Media Plan by day.
+        ///// </summary>
+        ///// <param name="webSession">clients session</param>
+        ///// <param name="dataSource">dataSource for creating Datasets </param>		
+        ///// <param name="baseTarget">Base target</param>
+        ///// <param name="additionalTarget">supplementary target</param>
+        ///// <param name="excel">boolean to indicate whether the HTML generated is for HTML table or Excel </param>
+        ///// <param name="url">link to next page</param>
+        ///// <param name="zoomDate">detail date</param>
+        ///// <returns>HTML string for the synthesis table</returns>
+        //public static string GetZoomHTML(WebSession webSession,IDataSource dataSource, string zoomDate,Int64 baseTarget,Int64 additionalTarget,bool excel,string url) {
 			
-			#region Variables
-			StringBuilder html=null;
-			object[,] tab=null;
-			int FIRST_PERIOD_INDEX=0;
-			int nbColYear=0;
-			int prevYear=0;
-			int nbPeriodInYear=0;
-			string currentCategoryName=string.Empty;
-			string prevYearString=string.Empty;
-			string HTML=string.Empty;
-			string HTML2=string.Empty;
-			string mediaCSS1=string.Empty;
-			string mediaCSS2=string.Empty;
-			string supportCSS=string.Empty;
-			bool premier=true;
+        //    #region Variables
+        //    StringBuilder html=null;
+        //    object[,] tab=null;
+        //    int FIRST_PERIOD_INDEX=0;
+        //    int nbColYear=0;
+        //    int prevYear=0;
+        //    int nbPeriodInYear=0;
+        //    string currentCategoryName=string.Empty;
+        //    string prevYearString=string.Empty;
+        //    string HTML=string.Empty;
+        //    string HTML2=string.Empty;
+        //    string mediaCSS1=string.Empty;
+        //    string mediaCSS2=string.Empty;
+        //    string supportCSS=string.Empty;
+        //    bool premier=true;
 						
-			//Formatting date to be used in the tabs which use APPM Press table
-			int dateBegin = 0;
-			int dateEnd = 0;
+        //    //Formatting date to be used in the tabs which use APPM Press table
+        //    int dateBegin = 0;
+        //    int dateEnd = 0;
 					
 			
-			#endregion
+        //    #endregion
 
-			#region Constants
-			const string PLAN_MEDIA_1_CLASSE="p6";
-			const string PLAN_MEDIA_2_CLASSE="p7";	
-			const string PLAN_MEDIA_XLS_1_CLASSE="pmmediaxls1";
-			const string PLAN_MEDIA_XLS_2_CLASSE="pmmediaxls2";
-			#endregion
+        //    #region Constants
+        //    const string PLAN_MEDIA_1_CLASSE="p6";
+        //    const string PLAN_MEDIA_2_CLASSE="p7";	
+        //    const string PLAN_MEDIA_XLS_1_CLASSE="pmmediaxls1";
+        //    const string PLAN_MEDIA_XLS_2_CLASSE="pmmediaxls2";
+        //    #endregion
 
-			#region Styles
-			if(excel){
-				mediaCSS1=PLAN_MEDIA_XLS_1_CLASSE;
-				mediaCSS2=PLAN_MEDIA_XLS_2_CLASSE;
-				supportCSS="p2excel";
-			}
-			else{
-				mediaCSS1=	PLAN_MEDIA_1_CLASSE;
-				mediaCSS2=PLAN_MEDIA_2_CLASSE;
-				supportCSS="p2";
-			}
-			#endregion
+        //    #region Styles
+        //    if(excel){
+        //        mediaCSS1=PLAN_MEDIA_XLS_1_CLASSE;
+        //        mediaCSS2=PLAN_MEDIA_XLS_2_CLASSE;
+        //        supportCSS="p2excel";
+        //    }
+        //    else{
+        //        mediaCSS1=	PLAN_MEDIA_1_CLASSE;
+        //        mediaCSS2=PLAN_MEDIA_2_CLASSE;
+        //        supportCSS="p2";
+        //    }
+        //    #endregion
 
 								
-			//Formatting date to be used in the tabs which use APPM Press table
-			dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(zoomDate,webSession.PeriodType).ToString("yyyyMMdd"));
-			dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(zoomDate,webSession.PeriodType).ToString("yyyyMMdd"));
+        //    //Formatting date to be used in the tabs which use APPM Press table
+        //    dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(zoomDate,webSession.PeriodType).ToString("yyyyMMdd"));
+        //    dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(zoomDate,webSession.PeriodType).ToString("yyyyMMdd"));
 	
 
-			#region Get Data
-			try{
-				tab=TNS.AdExpress.Web.Rules.Results.APPM.MediaPlanRules.GetData(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,WebConstantes.CustomerSessions.Period.DisplayLevel.dayly);
-				#endregion
+        //    #region Get Data
+        //    try{
+        //        tab=TNS.AdExpress.Web.Rules.Results.APPM.MediaPlanRules.GetData(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,WebConstantes.CustomerSessions.Period.DisplayLevel.dayly);
+        //        #endregion
 			
-				#region HTML
+        //        #region HTML
 	
-				if(tab!=null) {
-					html=new StringBuilder(1000);
-					int nbColTab=tab.GetLength(1),j,i;
+        //        if(tab!=null) {
+        //            html=new StringBuilder(1000);
+        //            int nbColTab=tab.GetLength(1),j,i;
 
-					#region number of years
-					nbColYear = int.Parse(dateBegin.ToString().Substring(0,4)) - int.Parse(dateEnd.ToString().Substring(0,4));
-					if (nbColYear>0) nbColYear++;
-					FIRST_PERIOD_INDEX = FrameWorkResultConstantes.MediaPlanAPPM.FIRST_PEDIOD_INDEX;			
-					#endregion
+        //            #region number of years
+        //            nbColYear = int.Parse(dateBegin.ToString().Substring(0,4)) - int.Parse(dateEnd.ToString().Substring(0,4));
+        //            if (nbColYear>0) nbColYear++;
+        //            FIRST_PERIOD_INDEX = FrameWorkResultConstantes.MediaPlanAPPM.FIRST_PEDIOD_INDEX;			
+        //            #endregion
 					
-					#region Colunm labels
-					html.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0 align=left>\r\n\t<tr>");					
-					if(!excel){
-						html.Append("\n\t\t\t\t\t<td class=\""+supportCSS+"\" rowspan=4>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
-						html.Append("\n\t\t\t\t\t<td class=\""+supportCSS+"\" rowspan=4>"+GestionWeb.GetWebWord(540,webSession.SiteLanguage)+"</td>");
-					}else{
-						html.Append("\n\t\t\t\t\t<td class=\""+supportCSS+"\" rowspan=3>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
-					}
-					#region Years and days
-					prevYear=int.Parse(tab[0,FIRST_PERIOD_INDEX].ToString().Substring(0,4));
-					for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++) {
+        //            #region Colunm labels
+        //            html.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0 align=left>\r\n\t<tr>");					
+        //            if(!excel){
+        //                html.Append("\n\t\t\t\t\t<td class=\""+supportCSS+"\" rowspan=4>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
+        //                html.Append("\n\t\t\t\t\t<td class=\""+supportCSS+"\" rowspan=4>"+GestionWeb.GetWebWord(540,webSession.SiteLanguage)+"</td>");
+        //            }else{
+        //                html.Append("\n\t\t\t\t\t<td class=\""+supportCSS+"\" rowspan=3>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
+        //            }
+        //            #region Years and days
+        //            prevYear=int.Parse(tab[0,FIRST_PERIOD_INDEX].ToString().Substring(0,4));
+        //            for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++) {
 
-						if(excel)
-							HTML+="<td class=\"p10\" style=\"width:15pt\">&nbsp;"+tab[0,j].ToString().Substring(6,2)+"&nbsp;</td>";
-						else									
-							HTML+="<td class=\"p10\" width=\"17px\">&nbsp;"+tab[0,j].ToString().Substring(6,2)+"&nbsp;</td>";							
+        //                if(excel)
+        //                    HTML+="<td class=\"p10\" style=\"width:15pt\">&nbsp;"+tab[0,j].ToString().Substring(6,2)+"&nbsp;</td>";
+        //                else									
+        //                    HTML+="<td class=\"p10\" width=\"17px\">&nbsp;"+tab[0,j].ToString().Substring(6,2)+"&nbsp;</td>";							
 
-						nbPeriodInYear++;
-					}
-					if(nbPeriodInYear<3)prevYearString="&nbsp;";
-					else prevYearString=prevYear.ToString();
+        //                nbPeriodInYear++;
+        //            }
+        //            if(nbPeriodInYear<3)prevYearString="&nbsp;";
+        //            else prevYearString=prevYear.ToString();
 
-					#region Période précédente
-					if (webSession.PeriodBeginningDate != zoomDate && !excel) {
-						if (webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.weekly){
-							html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneel\"><a href=\""+url+"?idSession="+webSession.IdSession+"&zoomDate="+
-								(new DateTime(int.Parse(zoomDate.Substring(0,4)),int.Parse(zoomDate.Substring(4,2)),1)).AddMonths(-1).ToString("yyyyMM")
-								+"\"><IMG border=0 height=\"12\" src=\"/images/Common/Arrow_left_up.gif\" width=\"11\"></a></td>");
-						}
-						else{
-							html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneel\"><a href=\""+url+"?idSession="+webSession.IdSession+"&zoomDate=");
-							AtomicPeriodWeek tmp = new AtomicPeriodWeek(int.Parse(zoomDate.Substring(0,4)),int.Parse(zoomDate.Substring(4,2)));
-							tmp.SubWeek(1);
-							if(tmp.Week.ToString().Length<2)html.Append(tmp.Year.ToString() +"0"+ tmp.Week.ToString());
-							else html.Append(tmp.Year.ToString() + tmp.Week.ToString());
-							html.Append("\"><IMG border=0 height=\"12\" src=\"/images/Common/Arrow_left_up.gif\" width=\"11\"></a></td>");
-						}
-					}
-					else
-						html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneel\">&nbsp;</td>");
-					#endregion
-					nbPeriodInYear=nbPeriodInYear-2;
-					HTML2+="<td colspan="+nbPeriodInYear+" class=\"pmannee2\">"+WebFunctions.Dates.getPeriodTxt(webSession, zoomDate)+"</td>";				
-					html.Append(HTML2);
-					#region Période suivante
-					if (webSession.PeriodEndDate != zoomDate && !excel){
-						if (webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.weekly){
-							html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneer\"><a href=\""+url+"?idSession="+webSession.IdSession+"&zoomDate="+
-								(new DateTime(int.Parse(zoomDate.Substring(0,4)),int.Parse(zoomDate.Substring(4,2)),1)).AddMonths(1).ToString("yyyyMM")
-								+"\"><IMG border=0 height=\"12\" src=\"/images/Common/Arrow_right_up.gif\" width=\"11\"></a></td>");
-						}
-						else{
-							html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneer\"><a href=\""+url+"?idSession="+webSession.IdSession+"&zoomDate=");
-							AtomicPeriodWeek tmp = new AtomicPeriodWeek(int.Parse(zoomDate.Substring(0,4)),int.Parse(zoomDate.Substring(4,2)));
-							tmp.Increment();
-							if(tmp.Week.ToString().Length<2)html.Append(tmp.Year.ToString() +"0"+ tmp.Week.ToString());
-							else html.Append(tmp.Year.ToString() + tmp.Week.ToString());
-							html.Append("\"><IMG border=0 height=\"12\" src=\"/images/Common/Arrow_right_up.gif\" width=\"11\"></a></td>");
-						}
-					}
-					else
-						html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneer\">&nbsp;</td>");					
-					#endregion
-					html.Append("</tr>");
-					html.Append("<tr>"+HTML+"</tr>");
-					if(!excel)html.Append("\r\n\t<tr></tr>");					
+        //            #region Période précédente
+        //            if (webSession.PeriodBeginningDate != zoomDate && !excel) {
+        //                if (webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.weekly){
+        //                    html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneel\"><a href=\""+url+"?idSession="+webSession.IdSession+"&zoomDate="+
+        //                        (new DateTime(int.Parse(zoomDate.Substring(0,4)),int.Parse(zoomDate.Substring(4,2)),1)).AddMonths(-1).ToString("yyyyMM")
+        //                        +"\"><IMG border=0 height=\"12\" src=\"/images/Common/Arrow_left_up.gif\" width=\"11\"></a></td>");
+        //                }
+        //                else{
+        //                    html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneel\"><a href=\""+url+"?idSession="+webSession.IdSession+"&zoomDate=");
+        //                    AtomicPeriodWeek tmp = new AtomicPeriodWeek(int.Parse(zoomDate.Substring(0,4)),int.Parse(zoomDate.Substring(4,2)));
+        //                    tmp.SubWeek(1);
+        //                    if(tmp.Week.ToString().Length<2)html.Append(tmp.Year.ToString() +"0"+ tmp.Week.ToString());
+        //                    else html.Append(tmp.Year.ToString() + tmp.Week.ToString());
+        //                    html.Append("\"><IMG border=0 height=\"12\" src=\"/images/Common/Arrow_left_up.gif\" width=\"11\"></a></td>");
+        //                }
+        //            }
+        //            else
+        //                html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneel\">&nbsp;</td>");
+        //            #endregion
+        //            nbPeriodInYear=nbPeriodInYear-2;
+        //            HTML2+="<td colspan="+nbPeriodInYear+" class=\"pmannee2\">"+WebFunctions.Dates.getPeriodTxt(webSession, zoomDate)+"</td>";				
+        //            html.Append(HTML2);
+        //            #region Période suivante
+        //            if (webSession.PeriodEndDate != zoomDate && !excel){
+        //                if (webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.weekly){
+        //                    html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneer\"><a href=\""+url+"?idSession="+webSession.IdSession+"&zoomDate="+
+        //                        (new DateTime(int.Parse(zoomDate.Substring(0,4)),int.Parse(zoomDate.Substring(4,2)),1)).AddMonths(1).ToString("yyyyMM")
+        //                        +"\"><IMG border=0 height=\"12\" src=\"/images/Common/Arrow_right_up.gif\" width=\"11\"></a></td>");
+        //                }
+        //                else{
+        //                    html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneer\"><a href=\""+url+"?idSession="+webSession.IdSession+"&zoomDate=");
+        //                    AtomicPeriodWeek tmp = new AtomicPeriodWeek(int.Parse(zoomDate.Substring(0,4)),int.Parse(zoomDate.Substring(4,2)));
+        //                    tmp.Increment();
+        //                    if(tmp.Week.ToString().Length<2)html.Append(tmp.Year.ToString() +"0"+ tmp.Week.ToString());
+        //                    else html.Append(tmp.Year.ToString() + tmp.Week.ToString());
+        //                    html.Append("\"><IMG border=0 height=\"12\" src=\"/images/Common/Arrow_right_up.gif\" width=\"11\"></a></td>");
+        //                }
+        //            }
+        //            else
+        //                html.Append("\r\n\t\t\t\t\t\t<td class=\"pmbtanneer\">&nbsp;</td>");					
+        //            #endregion
+        //            html.Append("</tr>");
+        //            html.Append("<tr>"+HTML+"</tr>");
+        //            if(!excel)html.Append("\r\n\t<tr></tr>");					
 
-					#endregion	
+        //            #endregion	
 								
-					#region Périodes
+        //            #region Périodes
 					
-					string dayClass="";
-					string day;
-					DateTime date = DateTime.Now;
-					html.Append("\r\n\t<tr>");
-					for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++){
+        //            string dayClass="";
+        //            string day;
+        //            DateTime date = DateTime.Now;
+        //            html.Append("\r\n\t<tr>");
+        //            for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++){
 						
-						date = new DateTime(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)),int.Parse(tab[0,j].ToString().Substring(6,2)));
-						day=TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,date.DayOfWeek.ToString()).ToString();
-						if(day.Equals(GestionWeb.GetWebWord(545,webSession.SiteLanguage))
-							|| day.Equals(GestionWeb.GetWebWord(546,webSession.SiteLanguage))
-							){
-							if(!excel)dayClass="p132";
-							else dayClass="p133";
-						}
-						else{
-							if(!excel)dayClass="p131";
-							else dayClass="p132";							
-						}	
-						html.Append("<td class=\""+dayClass+"\">"+TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,date.DayOfWeek.ToString())+"</td>");
-					}
-					html.Append("\r\n\t</tr>");
-					#endregion
+        //                date = new DateTime(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)),int.Parse(tab[0,j].ToString().Substring(6,2)));
+        //                day=TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,date.DayOfWeek.ToString()).ToString();
+        //                if(day.Equals(GestionWeb.GetWebWord(545,webSession.SiteLanguage))
+        //                    || day.Equals(GestionWeb.GetWebWord(546,webSession.SiteLanguage))
+        //                    ){
+        //                    if(!excel)dayClass="p132";
+        //                    else dayClass="p133";
+        //                }
+        //                else{
+        //                    if(!excel)dayClass="p131";
+        //                    else dayClass="p132";							
+        //                }	
+        //                html.Append("<td class=\""+dayClass+"\">"+TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,date.DayOfWeek.ToString())+"</td>");
+        //            }
+        //            html.Append("\r\n\t</tr>");
+        //            #endregion
 
 				
 					
-					#endregion				
+        //            #endregion				
 
-					#region Traversing the table
-					for(i=1;i<tab.GetLength(0);i++) {
-						for(j=1;j<tab.GetLength(1);j++) {
-							switch(j) {
+        //            #region Traversing the table
+        //            for(i=1;i<tab.GetLength(0);i++) {
+        //                for(j=1;j<tab.GetLength(1);j++) {
+        //                    switch(j) {
 								
-								case FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX:
-									if(tab[i,j]!=null) {
-										if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]!=null && (Int64)tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]==-1){
-											html.Append("\r\n\t<tr >\r\n\t\t<td class=\"pmtotal\" nowrap>&nbsp;"+tab[i,j]+"</td>");
-											if(!excel) html.Append("\r\n\t\n\t\t<td class=\"pmtotal\" nowrap>&nbsp;</td>");
-										}
-										else {
-											html.Append("\r\n\t<tr >\r\n\t\t<td class=\"pmcategory\" nowrap>&nbsp;"+tab[i,j]+"</td>");
-											if(!excel) html.Append("\r\n\t\n\t\t<td class=\"pmcategory\" nowrap>&nbsp;</td>");
-										}
-										j=j+3;
+        //                        case FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX:
+        //                            if(tab[i,j]!=null) {
+        //                                if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]!=null && (Int64)tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]==-1){
+        //                                    html.Append("\r\n\t<tr >\r\n\t\t<td class=\"pmtotal\" nowrap>&nbsp;"+tab[i,j]+"</td>");
+        //                                    if(!excel) html.Append("\r\n\t\n\t\t<td class=\"pmtotal\" nowrap>&nbsp;</td>");
+        //                                }
+        //                                else {
+        //                                    html.Append("\r\n\t<tr >\r\n\t\t<td class=\"pmcategory\" nowrap>&nbsp;"+tab[i,j]+"</td>");
+        //                                    if(!excel) html.Append("\r\n\t\n\t\t<td class=\"pmcategory\" nowrap>&nbsp;</td>");
+        //                                }
+        //                                j=j+3;
 										
-									}
-									break;
+        //                            }
+        //                            break;
 
-								case FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX:
-									if(tab[i,j]!=null) {
-										if(premier) {
-											html.Append("\r\n\t<tr >\r\n\t\t<td class=\""+mediaCSS1+"\" nowrap>&nbsp;&nbsp;"+tab[i,j]+"</td>");
-											if(!excel){
-												html.Append("\r\n\t\t<td class=\""+mediaCSS1+"\" align=\"center\" nowrap><a class=\"acl1\" href=\"javascript:PopUpInsertion('"+webSession.IdSession + "','"
-													+ tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX] + "');\"> <img border=0 src=\"/Images/Common/picto_plus.gif\"></a></td>");
-											}
-											premier=false;
-										}
-										else {
-											html.Append("\r\n\t<tr >\r\n\t\t<td class=\""+mediaCSS2+"\" nowrap>&nbsp;&nbsp;"+tab[i,j]+"</td>");										
-											if(!excel){ html.Append("\r\n\t\t<td class=\""+mediaCSS2+"\" align=\"center\" nowrap><a class=\"acl1\" href=\"javascript:PopUpInsertion('"+webSession.IdSession + "','"
-															+ tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX] + "');\"> <img border=0 src=\"/Images/Common/picto_plus.gif\"></a></td>");
-											}
-											premier=true;
-										}
-										j=j+1;
-									}
+        //                        case FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX:
+        //                            if(tab[i,j]!=null) {
+        //                                if(premier) {
+        //                                    html.Append("\r\n\t<tr >\r\n\t\t<td class=\""+mediaCSS1+"\" nowrap>&nbsp;&nbsp;"+tab[i,j]+"</td>");
+        //                                    if(!excel){
+        //                                        html.Append("\r\n\t\t<td class=\""+mediaCSS1+"\" align=\"center\" nowrap><a class=\"acl1\" href=\"javascript:PopUpInsertion('"+webSession.IdSession + "','"
+        //                                            + tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX] + "');\"> <img border=0 src=\"/Images/Common/picto_plus.gif\"></a></td>");
+        //                                    }
+        //                                    premier=false;
+        //                                }
+        //                                else {
+        //                                    html.Append("\r\n\t<tr >\r\n\t\t<td class=\""+mediaCSS2+"\" nowrap>&nbsp;&nbsp;"+tab[i,j]+"</td>");										
+        //                                    if(!excel){ html.Append("\r\n\t\t<td class=\""+mediaCSS2+"\" align=\"center\" nowrap><a class=\"acl1\" href=\"javascript:PopUpInsertion('"+webSession.IdSession + "','"
+        //                                                    + tab[i,FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX] + "');\"> <img border=0 src=\"/Images/Common/picto_plus.gif\"></a></td>");
+        //                                    }
+        //                                    premier=true;
+        //                                }
+        //                                j=j+1;
+        //                            }
 									
-									break;
-								case FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX:									
-								case FrameWorkResultConstantes.MediaPlanAPPM.PERIODICITY_COLUMN_INDEX:
-									break;
-								default:
+        //                            break;
+        //                        case FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX:									
+        //                        case FrameWorkResultConstantes.MediaPlanAPPM.PERIODICITY_COLUMN_INDEX:
+        //                            break;
+        //                        default:
 								
-									if(tab[i,j]==null && (tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null )) {
-										html.Append("<td class=\"p3\">&nbsp;</td>");
-										break;
-									}
-									if((tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null) && (tab[i,j].GetType()==typeof(FrameWorkResultConstantes.MediaPlan.graphicItemType))) {
-										switch((FrameWorkResultConstantes.MediaPlan.graphicItemType)tab[i,j]) {
-											case FrameWorkResultConstantes.MediaPlan.graphicItemType.present:
-												html.Append("<td class=\"p4\">&nbsp;</td>");
-												break;
-											case FrameWorkResultConstantes.MediaPlan.graphicItemType.extended:
-												html.Append("<td class=\"p5\">&nbsp;</td>");
-												break;
-											default:
-												html.Append("<td class=\"p3\">&nbsp;</td>");
-												break;
-										}
-									}
-									break;
-							}
+        //                            if(tab[i,j]==null && (tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null )) {
+        //                                html.Append("<td class=\"p3\">&nbsp;</td>");
+        //                                break;
+        //                            }
+        //                            if((tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null) && (tab[i,j].GetType()==typeof(FrameWorkResultConstantes.MediaPlan.graphicItemType))) {
+        //                                switch((FrameWorkResultConstantes.MediaPlan.graphicItemType)tab[i,j]) {
+        //                                    case FrameWorkResultConstantes.MediaPlan.graphicItemType.present:
+        //                                        html.Append("<td class=\"p4\">&nbsp;</td>");
+        //                                        break;
+        //                                    case FrameWorkResultConstantes.MediaPlan.graphicItemType.extended:
+        //                                        html.Append("<td class=\"p5\">&nbsp;</td>");
+        //                                        break;
+        //                                    default:
+        //                                        html.Append("<td class=\"p3\">&nbsp;</td>");
+        //                                        break;
+        //                                }
+        //                            }
+        //                            break;
+        //                    }
 							
-						}
-						if((tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null))
-							html.Append("</tr>");
-					}
-					html.Append("</table>");	
-					#endregion			
+        //                }
+        //                if((tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null || tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null))
+        //                    html.Append("</tr>");
+        //            }
+        //            html.Append("</table>");	
+        //            #endregion			
 
 								
-				}
-			}
-			catch(System.Exception e){
-				throw(new WebExceptions.APPMMediaPlanUIExcpetion(" Error while constructing the HTML table of Media plan ",e));
-			}
-			#endregion
+        //        }
+        //    }
+        //    catch(System.Exception e){
+        //        throw(new WebExceptions.APPMMediaPlanUIExcpetion(" Error while constructing the HTML table of Media plan ",e));
+        //    }
+        //    #endregion
 
-			#region no data
-			if(html==null||html.Length<=0)
-				return("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(177,webSession.SiteLanguage)+"</div>");
+        //    #region no data
+        //    if(html==null||html.Length<=0)
+        //        return("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(177,webSession.SiteLanguage)+"</div>");
 				
-			#endregion
+        //    #endregion
 
-			return html.ToString();
+        //    return html.ToString();
 
-		}
+        //}
 
 		#endregion
 
@@ -1232,61 +1234,61 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 		#endregion 
 
 		#endregion
-
+        //Excel
 		#region Excel
-		/// <summary>
-		/// This method generates the HTML for the excel of Media Plan.
-		/// </summary>
-		/// <param name="webSession">clients session</param>
-		/// <param name="dataSource">dataSource for creating Datasets </param>
-		/// <param name="dateBegin">Beginning Date</param>
-		/// <param name="dateEnd">Ending Date</param>
-		/// <param name="baseTarget">Base target</param>
-		/// <param name="additionalTarget">supplementary target</param>
-		/// <returns>HTML string for the synthesis table</returns>
-		public static string GetExcel(WebSession webSession,IDataSource dataSource, int dateBegin,int dateEnd,Int64 baseTarget,Int64 additionalTarget)
-		{
-			#region variables
-			System.Text.StringBuilder t = new System.Text.StringBuilder(20000);
-			#endregion
+        ///// <summary>
+        ///// This method generates the HTML for the excel of Media Plan.
+        ///// </summary>
+        ///// <param name="webSession">clients session</param>
+        ///// <param name="dataSource">dataSource for creating Datasets </param>
+        ///// <param name="dateBegin">Beginning Date</param>
+        ///// <param name="dateEnd">Ending Date</param>
+        ///// <param name="baseTarget">Base target</param>
+        ///// <param name="additionalTarget">supplementary target</param>
+        ///// <returns>HTML string for the synthesis table</returns>
+        //public static string GetExcel(WebSession webSession,IDataSource dataSource, int dateBegin,int dateEnd,Int64 baseTarget,Int64 additionalTarget)
+        //{
+        //    #region variables
+        //    System.Text.StringBuilder t = new System.Text.StringBuilder(20000);
+        //    #endregion
 
-			#region Rappel des paramètres
-			// Paramètres du tableau
-            t.Append(ExcelFunction.GetAppmLogo(webSession));
-			t.Append(ExcelFunction.GetExcelHeader(webSession,GestionWeb.GetWebWord(1474,webSession.SiteLanguage)));
-			#endregion
+        //    #region Rappel des paramètres
+        //    // Paramètres du tableau
+        //    t.Append(ExcelFunction.GetAppmLogo(webSession));
+        //    t.Append(ExcelFunction.GetExcelHeader(webSession,GestionWeb.GetWebWord(1474,webSession.SiteLanguage)));
+        //    #endregion
 
-			t.Append(Convertion.ToHtmlString(GetHTML(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,true)));
-			t.Append(ExcelFunction.GetFooter(webSession));
-			return t.ToString();
-		}
-
+        //    t.Append(Convertion.ToHtmlString(GetHTML(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,true)));
+        //    t.Append(ExcelFunction.GetFooter(webSession));
+        //    return t.ToString();
+        //}
+        //Excel zoom
 		#region Excel zoom
-		/// <summary>
-		/// This method generates the HTML for the excel of Media Plan detail by day.
-		/// </summary>
-		/// <param name="webSession">clients session</param>
-		/// <param name="dataSource">dataSource for creating Datasets </param>
-		/// <param name="zoomDate">detail date</param>
-		/// <param name="baseTarget">Base target</param>
-		/// <param name="additionalTarget">supplementary target</param>		
-		/// <param name="url">url</param>
-		/// <returns>HTML string for the synthesis table</returns>
-		public static string GetZoomExcel(WebSession webSession,IDataSource dataSource, string zoomDate,Int64 baseTarget,Int64 additionalTarget,string url) {
-			#region variables
-			System.Text.StringBuilder t = new System.Text.StringBuilder(20000);
-			#endregion
+        ///// <summary>
+        ///// This method generates the HTML for the excel of Media Plan detail by day.
+        ///// </summary>
+        ///// <param name="webSession">clients session</param>
+        ///// <param name="dataSource">dataSource for creating Datasets </param>
+        ///// <param name="zoomDate">detail date</param>
+        ///// <param name="baseTarget">Base target</param>
+        ///// <param name="additionalTarget">supplementary target</param>		
+        ///// <param name="url">url</param>
+        ///// <returns>HTML string for the synthesis table</returns>
+        //public static string GetZoomExcel(WebSession webSession,IDataSource dataSource, string zoomDate,Int64 baseTarget,Int64 additionalTarget,string url) {
+        //    #region variables
+        //    System.Text.StringBuilder t = new System.Text.StringBuilder(20000);
+        //    #endregion
 			
-			#region Rappel des paramètres
-			// Paramètres du tableau
-            t.Append(ExcelFunction.GetAppmLogo(webSession));
-			t.Append(ExcelFunction.GetExcelHeader(webSession, GestionWeb.GetWebWord(1474, webSession.SiteLanguage)));
-			#endregion
+        //    #region Rappel des paramètres
+        //    // Paramètres du tableau
+        //    t.Append(ExcelFunction.GetAppmLogo(webSession));
+        //    t.Append(ExcelFunction.GetExcelHeader(webSession, GestionWeb.GetWebWord(1474, webSession.SiteLanguage)));
+        //    #endregion
 
-			t.Append(Convertion.ToHtmlString(GetZoomHTML(webSession,dataSource,zoomDate,baseTarget,additionalTarget,true,url)));
-			t.Append(ExcelFunction.GetFooter(webSession));
-			return t.ToString();
-		}
+        //    t.Append(Convertion.ToHtmlString(GetZoomHTML(webSession,dataSource,zoomDate,baseTarget,additionalTarget,true,url)));
+        //    t.Append(ExcelFunction.GetFooter(webSession));
+        //    return t.ToString();
+        //}
 		#endregion
 		#endregion
 
@@ -1312,27 +1314,6 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					return(-1);
 			}
 		}
-//
-//		/// <summary>
-//		/// Obtient la première date de parution d'une version dans un support
-//		/// </summary>
-//		/// <param name="tab">Tableau de résultats</param>
-//		/// <param name="periodIndex">Index de la colonne correspondant à la période dans la tableau de résulats</param>
-//		/// <param name="nbColTab">Nombre de colonnes dans la tableau de résultats</param>
-//		/// <param name="currentLineIndex">Ligne courante dans la tableau de résultats</param>
-//		/// <returns> Première date de parution d'une version dans un support</returns>
-//		private static string GetFirstParutionDate(object[,] tab,int periodIndex,int nbColTab,int currentLineIndex){
-//			string firstParutionDate="";
-//			for(int d=periodIndex;d<nbColTab; d++){//Recupère première date de parutionde la version
-//				if(tab[currentLineIndex,d]!=null && tab[currentLineIndex,d].GetType()==typeof(FrameWorkResultConstantes.MediaPlan.graphicItemType) 
-//					&& (FrameWorkResultConstantes.MediaPlan.graphicItemType)tab[currentLineIndex,d]==FrameWorkResultConstantes.MediaPlanAPPM.graphicItemType.present){
-//					firstParutionDate = tab[2,d].ToString();
-//					break;
-//				}
-//			}
-//
-//			return firstParutionDate;
-//		}
 		#endregion
 	}
 }

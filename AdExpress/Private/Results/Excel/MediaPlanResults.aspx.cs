@@ -114,7 +114,10 @@ namespace AdExpress.Private.Results.Excel{
                 // On charge les données
                 //result = GenericMediaScheduleUI.GetExcel(GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1), _webSession, period, zoomDate, false,(int)periodDisplayLevel).HTMLCode;
                 object[] param = null;
-                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
+                if (module.Id != WebConstantes.Module.Name.BILAN_CAMPAGNE){
+                    module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+                }
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
                 if (zoomDate != null && zoomDate.Length > 0)
                 {
@@ -128,6 +131,7 @@ namespace AdExpress.Private.Results.Excel{
                 param[0] = _webSession;
                 param[1] = period;
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                mediaScheduleResult.Module = module;
                 result = mediaScheduleResult.GetExcelHtml(false).HTMLCode;
 
                 #endregion

@@ -142,13 +142,13 @@
     <Compile Include="BusinessFacade\Results\APPMSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BusinessFacade\Results\CompetitorSystem.cs">
+    <Compile Include="BusinessFacade\Results\_CompetitorSystem.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BusinessFacade\Results\DashBoardSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BusinessFacade\Results\DynamicSystem.cs">
+    <Compile Include="BusinessFacade\Results\_DynamicSystem.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BusinessFacade\Results\GadSystem.cs">
@@ -157,7 +157,7 @@
     <Compile Include="BusinessFacade\Results\InfoNewsSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BusinessFacade\Results\MarketShareSystem.cs">
+    <Compile Include="BusinessFacade\Results\_MarketShareSystem.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BusinessFacade\Results\MediaPlanSystem.cs">
@@ -301,7 +301,7 @@
     <Compile Include="DataAccess\Results\CompetitorAlertCreationDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\Results\CompetitorDataAccess.cs">
+    <Compile Include="DataAccess\Results\_CompetitorDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataAccess\Results\CompetitorMediaInsertionsCreationDataAccess.cs">
@@ -317,7 +317,7 @@
     <Compile Include="DataAccess\Results\DashBoardDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\Results\DynamicDataAccess.cs">
+    <Compile Include="DataAccess\Results\_DynamicDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataAccess\Results\DynamicTablesDataAccess.cs">
@@ -975,14 +975,14 @@
     <Compile Include="Rules\Results\CompetitorMediaPlanAnalysisRules.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Rules\Results\CompetitorRules.cs">
+    <Compile Include="Rules\Results\_CompetitorRules.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Rules\Results\CreativeRules.cs" />
     <Compile Include="Rules\Results\DashBoardRules.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Rules\Results\DynamicRules.cs">
+    <Compile Include="Rules\Results\_DynamicRules.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Rules\Results\DynamicTablesRules.cs">
@@ -1015,7 +1015,7 @@
     <Compile Include="Rules\Results\InfoNewsRules.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Rules\Results\MarketShareRules.cs">
+    <Compile Include="Rules\Results\_MarketShareRules.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Rules\Results\MediaInsertionsCreationsRules.cs">
@@ -1129,7 +1129,7 @@
     <Compile Include="UI\Results\CompetitorMediaPlanAnalysisUI.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\Results\CompetitorUI.cs">
+    <Compile Include="UI\Results\_CompetitorUI.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UI\Results\DashBoardUI.cs">
@@ -1138,7 +1138,7 @@
     <Compile Include="UI\Results\DynamicTablesUI.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\Results\DynamicUI.cs">
+    <Compile Include="UI\Results\_DynamicUI.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UI\Results\FilesItemUI.cs">
@@ -1175,7 +1175,7 @@
     <Compile Include="UI\Results\InfoNewsUI.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UI\Results\MarketShareUI.cs">
+    <Compile Include="UI\Results\_MarketShareUI.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UI\Results\MediaInsertionsCreationsResultsUI.cs">

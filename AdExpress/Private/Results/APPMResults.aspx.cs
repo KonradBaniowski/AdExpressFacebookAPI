@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Text;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
@@ -39,7 +40,9 @@ using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using Dundas.Charting.WebControl;
 using TNS.AdExpress.Domain.Level;
-
+using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Web.Functions;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -61,14 +64,6 @@ namespace AdExpress.Private.Results{
 		/// Script de fermeture du flash d'attente
 		/// </summary>
 		public string divClose=LoadingSystem.GetHtmlCloseDiv();	
-//		/// <summary>
-//		/// Commentaire Présentation graphique
-//		/// </summary>
-//		public string chartTitle="";
-//		/// <summary>
-//		/// Commentaire Présentation tableau
-//		/// </summary>
-//		public string tableTitle="";
 		/// <summary>
 		/// Commentaire Agrandissement de l'image
 		/// </summary>
@@ -81,58 +76,33 @@ namespace AdExpress.Private.Results{
 		///  booléen précisant si l'on doit afficher les agences médias
 		/// </summary>
 		public bool displayMediaAgencyList=false;
-//		/// <summary>
-//		///  booléen précisant si l'on doit afficher la selection des graphes
-//		/// </summary>
-//		public bool graphes=false;
-		#endregion
+        /// <summary>
+        /// Code HTML du résultat
+        /// </summary>
+        public string SetZoom = "";
+        /// <summary>
+        /// Code HTML du résultat
+        /// </summary>
+        public string zoomButton = "";
+        /// <summary>
+        /// Analysis Period
+        /// </summary>
+        protected MediaSchedulePeriod _period;
+        /// <summary>
+        /// Zoom Period
+        /// </summary>
+        protected string _zoom;
+        /// <summary>
+        /// Initial Period Detail Saving
+        /// </summary>
+        ConstantesPeriod.DisplayLevel _savePeriod = ConstantesPeriod.DisplayLevel.monthly;
+        #endregion
 		
 		#region variables MMI
-		/// <summary>
-		/// Contrôle Titre du module
-		/// </summary>
-		/// <summary>
-		/// Contrôle Options des résultats
-		/// </summary>
-		/// <summary>
-		/// Bouton de validation
-		/// </summary>
-		/// <summary>
-		/// Texte : agence média
-		/// </summary>
-//		/// <summary>
-//		/// Choix présentation graphique
-//		/// </summary>
-//		protected System.Web.UI.WebControls.RadioButton graphRadioButton;
-//		/// <summary>
-//		/// Choix présentation tableau
-//		/// </summary>
-//		protected System.Web.UI.WebControls.RadioButton tableRadioButton;		
-//		/// <summary>
-//		/// Graphique du APPM
-//		/// </summary>
-//		public TNS.AdExpress.Web.UI.Results.APPM.APPMChartUI APPMChart;
-		/// <summary>
-		/// Contrôle de la barre d'en-tête
-		/// </summary>
 		/// <summary>
 		/// texte
 		/// </summary>
 		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText Adexpresstext2;
-		/// <summary>
-		/// Conteneur des composants destinés à l'APPM.
-		/// </summary>
-		/// <summary>
-		/// Contextual Menu
-		/// </summary>
-		/// <summary>
-		/// Annule sélection produit
-		/// </summary>
-		/// <summary>
-		/// Contrôle du choix de l'année des agences média
-		/// </summary>
-		
-
 		#endregion
 
 		#region Evènements
@@ -147,39 +117,13 @@ namespace AdExpress.Private.Results{
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try {
 
-				#region Gestion du flash d'attente
-				//				if(Page.Request.Form.GetValues("__EVENTTARGET")!=null)
-				//				{
-				//					string nomInput=Page.Request.Form.GetValues("__EVENTTARGET")[0];
-				//					if(nomInput!=recallWebControl.ID)
-				//					{
-				//						Page.Response.Write(LoadingSystem.GetHtmlDiv(_webSession.SiteLanguage,Page));
-				//						Page.Response.Flush();
-				//					}
-				//				}
-				//				else
-				//				{
-				//					Page.Response.Write(LoadingSystem.GetHtmlDiv(_webSession.SiteLanguage,Page));
-				//					Page.Response.Flush();
-				//				}
-				#endregion
+
 
 				#region Url Suivante
-				//				_nextUrl=this.recallWebControl.NextUrl;
 				if(_nextUrl.Length!=0) {
 					_webSession.Source.Close();
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 				}
-				#endregion
-
-				#region Agence média
-				//				if(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.APPM.synthesis)
-				//				{
-				//					displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
-				//					//displayMediaAgencyList=false;
-				//
-				//				}
-			
 				#endregion
 
 				#region Textes et Langage du site
@@ -191,10 +135,6 @@ namespace AdExpress.Private.Results{
                 HeaderWebControl1.Language = _webSession.SiteLanguage;
 				#endregion
 
-				#region Définition de la page d'aide
-				//			    helpWebControl.Url=WebConstantes.Links.HELP_FILE_PATH+"APPMResultsHelp.aspx";
-				#endregion
-
 				#region Planche des graphiques
 
 				if(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.APPM.periodicityPlan 
@@ -202,42 +142,26 @@ namespace AdExpress.Private.Results{
 					||_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.APPM.interestFamily){
 
 					#region Choix affichage graphique ou tableau ( planche Périodicité du plan)
-					//				chartTitle=GestionWeb.GetWebWord(1191,_webSession.SiteLanguage);
 					ResultsOptionsWebControl1.ChartTitle = GestionWeb.GetWebWord(1191,_webSession.SiteLanguage);
-					//				tableTitle=GestionWeb.GetWebWord(1192,_webSession.SiteLanguage);	
 					ResultsOptionsWebControl1.TableTitle = GestionWeb.GetWebWord(1192,_webSession.SiteLanguage);		
-					//				graphRadioButton.Visible=false;
-					//				tableRadioButton.Visible=false;						
 					#endregion	
 
 					if(!IsPostBack){
-						//					graphRadioButton.Checked=_webSession.Graphics;
-						//					tableRadioButton.Checked=!_webSession.Graphics;
 						ResultsOptionsWebControl1.GraphRadioButton.Checked =_webSession.Graphics; 
 						ResultsOptionsWebControl1.TableRadioButton.Checked = !_webSession.Graphics;
 					}else{
-						//					_webSession.Graphics=graphRadioButton.Checked;
 						_webSession.Graphics=ResultsOptionsWebControl1.GraphRadioButton.Checked;
 						_webSession.Save();
 					}
 					if(_webSession.Graphics){
-						//					ExportWebControl1.JpegFormatFromWebPage=true;
-						//					graphRadioButton.Checked=true;
 						ResultsOptionsWebControl1.GraphRadioButton.Checked=true;
 					}else{
-						//					tableRadioButton.Checked=true;
 						ResultsOptionsWebControl1.TableRadioButton.Checked=true;
-						//					ExportWebControl1.JpegFormatFromWebPage=false;
 					}
-					//				if(graphRadioButton.Checked){
-					//				if(ResultsOptionsWebControl1.GraphRadioButton.Checked){
-					//					displayChart=true;
-					//				}
 				
 				}
 				#endregion	
 				
-                //AppmContainerWebControl1.Source = this._dataSource;	
                 AppmContainerWebControl1.Source = _webSession.Source;	
 				
 				#region Niveau de détail media (Generic)
@@ -254,13 +178,24 @@ namespace AdExpress.Private.Results{
 					#endregion
 				}else{
 					_webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
-					
-					// Initialisation à media\catégorie
-					ArrayList levels=new ArrayList();
-					levels.Add(1);
-					levels.Add(2);
-					_webSession.GenericMediaDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-					
+
+                    if (_webSession.CurrentTab != TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlan)
+                    {
+                        // Initialisation à media\catégorie
+                        ArrayList levels = new ArrayList();
+                        levels.Add(1);
+                        levels.Add(2);
+                        _webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                    }
+                    else
+                    {
+                        //MediaCategoriSupport
+                        ArrayList levels = new ArrayList();
+                        levels.Add(2);
+                        levels.Add(3);
+                        _webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+
+                    }
 				}
 				#endregion
 				
@@ -277,15 +212,19 @@ namespace AdExpress.Private.Results{
 				}
 				#endregion
 
-				_webSession.Save();
-			
-				#region MAJ _webSession
-				//in prerender
-				//				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
-				//				_webSession.ReachedModule=true;
-				//				_webSession.Save();
-				#endregion
+                #region Period Detail
+                if (_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlan &&_zoom != null && _zoom != string.Empty)
+                {
+                    zoomButton = string.Format("<tr class=\"whiteBackGround\" ><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/APPMResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td class=\"whiteBackGround\" height=\"5\"></td></tr>",
+                        _webSession.IdSession,
+                        _webSession.SiteLanguage,
+                        GestionWeb.GetWebWord(2309, _webSession.SiteLanguage));
 
+                }
+                #endregion
+
+                _webSession.Save();
+			
 
 			}
 			catch(System.Exception exc) {
@@ -308,11 +247,12 @@ namespace AdExpress.Private.Results{
 
 			
 			try{
-				#region résultat
-				//result=WebBF.Results.APPMSystem.GetHtml(this.Page,this.APPMChart,_webSession,this._dataSource);			
-				#endregion
 				
 				#region MAJ _webSession
+                if (_zoom != null && _zoom != string.Empty)
+                {
+                    _webSession.DetailPeriod = _savePeriod;
+                }
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
 				_webSession.ReachedModule=true;
 				_webSession.Save();
@@ -340,17 +280,86 @@ namespace AdExpress.Private.Results{
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
 			MediaAgencyYearWebControl1.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
+            AppmContainerWebControl1.CustomerWebSession = _webSession;
+            GenericMediaScheduleWebControl1.CustomerWebSession = _webSession;
+            GenericMediaScheduleWebControl1.Module = ModulesList.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
+            SubPeriodSelectionWebControl1.WebSession = _webSession;
+            _zoom = Page.Request.QueryString.Get("zoomDate");
 
-			#region chargement de l'univers
-						
-			//_webSession.CurrentUniversAdvertiser=(System.Windows.Forms.TreeNode)((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)_webSession.CompetitorUniversAdvertiser[1]).TreeCompetitorAdvertiser;			
+            #region Result params
+            if ((Page.Request.Form.GetValues("_resultsPages") == null && _webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlan)
+                || (Page.Request.Form.GetValues("_resultsPages") != null && Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]) == TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlan)
+                )
+            {
+                GenericMediaScheduleWebControl1.Visible = true;
+                AppmContainerWebControl1.Visible = false;
 
-			#endregion
 
-			//Conteneur des composants de l'APPM
-			AppmContainerWebControl1.CustomerWebSession = _webSession;
-			AppmContainerWebControl1.AppmImageType = ChartImageType.Flash;
-			
+
+                #region Period Detail
+                if (_zoom != null && _zoom != string.Empty)
+                {
+                    if (Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0)
+                    {
+                        _zoom = Page.Request.Form.GetValues("zoomParam")[0];
+                    }
+                    MenuWebControl2.UrlPameters = string.Format("zoomDate={0}", _zoom);
+                    MenuWebControl2.ForbidSave = true;
+                    SubPeriodSelectionWebControl1.Visible = true;
+                    SubPeriodSelectionWebControl1.AllPeriodAllowed = false;
+                    _savePeriod = _webSession.DetailPeriod;
+                    _webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
+                    GenericMediaScheduleWebControl1.ZoomDate = _zoom;
+                    SubPeriodSelectionWebControl1.ZoomDate = _zoom;
+                    SubPeriodSelectionWebControl1.JavascriptRefresh = "SetZoom";
+                    SubPeriodSelectionWebControl1.PeriodContainerName = GenericMediaScheduleWebControl1.ZoomDateContainer;
+                    zoomParam.Value = _zoom;
+
+                    #region SetZoom
+                    StringBuilder js = new StringBuilder();
+                    js.Append("\r\n<script type=\"text/javascript\">");
+                    js.Append("\r\nfunction SetZoom(){");
+                    js.AppendFormat("\r\n\tif ({0} == '')", SubPeriodSelectionWebControl1.PeriodContainerName);
+                    js.Append("\r\n\t{");
+                    js.AppendFormat("\r\n\t\tdocument.location='/Private/Results/MediaPlanResults.aspx?idSession={0}'", _webSession.IdSession);
+                    js.Append("\r\n\t}");
+                    js.Append("\r\n\telse {");
+                    js.AppendFormat("\r\n\t\tvar date = document.getElementById(\"zoomParam\").value;");
+                    js.AppendFormat("\r\n\t\t{0}();", GenericMediaScheduleWebControl1.RefreshDataMethod);
+                    js.AppendFormat("\r\n\t\texportMenu.items.printMenuItem.actionOnClick = exportMenu.items.printMenuItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+                    js.AppendFormat("\r\n\t\tmenu.items.selectedItem.actionOnClick = menu.items.selectedItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+                    js.AppendFormat("\r\n\t\tdocument.getElementById(\"zoomParam\").value = {0};", SubPeriodSelectionWebControl1.PeriodContainerName);
+                    js.Append("\r\n\t}");
+                    js.Append("\r\n}");
+                    js.Append("\r\n</script>");
+                    SetZoom = js.ToString();
+                    #endregion
+
+                    #region script
+                    if (!this.ClientScript.IsClientScriptBlockRegistered("SetZoom")) this.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetZoom", SetZoom);
+                    #endregion
+
+                }
+                else
+                {
+                    SubPeriodSelectionWebControl1.Visible = false;
+
+                }
+                #endregion
+
+
+            }
+            else
+            {
+                GenericMediaScheduleWebControl1.Visible = false;
+                SubPeriodSelectionWebControl1.Visible = false;
+                AppmContainerWebControl1.Visible = true;
+                //Conteneur des composants de l'APPM
+                AppmContainerWebControl1.AppmImageType = ChartImageType.Flash;
+            }
+            #endregion
+
+
 			InitializeProductWebControl1.CustomerWebSession	=_webSession;		
 			
 			_webSession.Save();
@@ -373,7 +382,8 @@ namespace AdExpress.Private.Results{
 			//
 			InitializeComponent();
 			AppmOptionsWebControl();
-			base.OnInit(e);
+
+            base.OnInit(e);
 		}
 		
 		/// <summary>
@@ -400,7 +410,6 @@ namespace AdExpress.Private.Results{
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.interestFamily:					
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.periodicityPlan:
 					ResultsOptionsWebControl1.UnitOptionAppm=true;					
-//					graphes=true;
 					ResultsOptionsWebControl1.ResultFormat=true;
 					_webSession.SecondaryProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 					break;
@@ -420,17 +429,11 @@ namespace AdExpress.Private.Results{
 						//unité en euro pour cette planche
 						_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
 						_webSession.Save();
-					}
+				}
 //					graphes=true;
 					_webSession.SecondaryProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 					ResultsOptionsWebControl1.ResultFormat=true;
 					break;				
-//				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.locationPlanType:
-//					ResultsOptionsWebControl1.UnitOptionAppm=true;
-////					graphes=false;
-//					ResultsOptionsWebControl1.ResultFormat=false;
-//					_webSession.Graphics =false;
-//					break;	
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlanByVersion:
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlan:	
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.supportPlan:

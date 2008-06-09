@@ -27,462 +27,466 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 	/// <summary>
 	/// This class formats the data for Media Plan APPM
 	/// </summary>
-	public class MediaPlanRules{
-		/// <summary>
-		/// Formats the date for Media Plan Table 
-		/// </summary>
-		/// <param name="webSession">clients session</param>
-		/// <param name="dataSource">dataSource for creating Datasets </param>
-		/// <param name="dateBegin">Beginning Date</param>
-		/// <param name="dateEnd">Ending Date</param>
-		/// <param name="baseTarget">Base target</param>
-		/// <param name="additionalTarget">supplementary target</param>
-		/// <param name="detailPeriod">period detail : monthly or weekly or daily</param>
-		/// <returns>Formatted table for the PDV Analysis table</returns>		
-		public static object[,] GetData(WebSession webSession,IDataSource dataSource,int dateBegin,int dateEnd,Int64 baseTarget,Int64 additionalTarget,WebConstantes.CustomerSessions.Period.DisplayLevel detailPeriod){
+	public class MediaPlanRules
+    {
+
+        //GetData
+        #region GetData
+//        /// <summary>
+//        /// Formats the date for Media Plan Table 
+//        /// </summary>
+//        /// <param name="webSession">clients session</param>
+//        /// <param name="dataSource">dataSource for creating Datasets </param>
+//        /// <param name="dateBegin">Beginning Date</param>
+//        /// <param name="dateEnd">Ending Date</param>
+//        /// <param name="baseTarget">Base target</param>
+//        /// <param name="additionalTarget">supplementary target</param>
+//        /// <param name="detailPeriod">period detail : monthly or weekly or daily</param>
+//        /// <returns>Formatted table for the PDV Analysis table</returns>		
+//        public static object[,] GetData(WebSession webSession,IDataSource dataSource,int dateBegin,int dateEnd,Int64 baseTarget,Int64 additionalTarget,WebConstantes.CustomerSessions.Period.DisplayLevel detailPeriod){
 			
-			#region Variables
-			object[,] tab=null;
-			DataTable planMediaData=null;
-//			DataTable totalPublications=null;
-//			DataTable mediaTable=null;
-//			DataRow[] singleMediaPublications=null;
-			//Int64 oldIdVehicle=0;
-			Int64 oldIdCategory=0;
-			Int64 oldIdMedia=0;
-//			Int64 currentVehicleIndex=2;
-			Int64 currentCategoryIndex=0;
-			Int64 currentLineIndex=1;			
-//			bool forceEntry=true;
-//			AtomicPeriodWeek weekDate=null;
-			//double budget=0.0;
-//			double grp=0;
-//			double pages=0;
-			int currentDate=0;
-			int oldCurrentDate=0;
-			int oldDate=0;
-//			Int64 i;
-			int numberOflineToAdd=0;
-			int nbCol=0;
-			int nbline=0;					
-			currentDate = 0;
-			oldCurrentDate = 0;
-			int nbItemsToExtend;
-			string idsMedia=string.Empty;
-			int FIRST_PERIOD_INDEX = FrameWorkResultConstantes.MediaPlanAPPM.FIRST_PEDIOD_INDEX;
-			int TOTAL_LINE_INDEX=FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX;
+//            #region Variables
+//            object[,] tab=null;
+//            DataTable planMediaData=null;
+////			DataTable totalPublications=null;
+////			DataTable mediaTable=null;
+////			DataRow[] singleMediaPublications=null;
+//            //Int64 oldIdVehicle=0;
+//            Int64 oldIdCategory=0;
+//            Int64 oldIdMedia=0;
+////			Int64 currentVehicleIndex=2;
+//            Int64 currentCategoryIndex=0;
+//            Int64 currentLineIndex=1;			
+////			bool forceEntry=true;
+////			AtomicPeriodWeek weekDate=null;
+//            //double budget=0.0;
+////			double grp=0;
+////			double pages=0;
+//            int currentDate=0;
+//            int oldCurrentDate=0;
+//            int oldDate=0;
+////			Int64 i;
+//            int numberOflineToAdd=0;
+//            int nbCol=0;
+//            int nbline=0;					
+//            currentDate = 0;
+//            oldCurrentDate = 0;
+//            int nbItemsToExtend;
+//            string idsMedia=string.Empty;
+//            int FIRST_PERIOD_INDEX = FrameWorkResultConstantes.MediaPlanAPPM.FIRST_PEDIOD_INDEX;
+//            int TOTAL_LINE_INDEX=FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX;
 			
 			
-			#endregion
+//            #endregion
 
-			#region test
-//			 detailPeriod=WebConstantes.CustomerSessions.Period.DisplayLevel.dayly;
-			#endregion
+//            #region test
+////			 detailPeriod=WebConstantes.CustomerSessions.Period.DisplayLevel.dayly;
+//            #endregion
 
-			#region Get data
-			//getting the reference univers data
-			planMediaData=DataAccessResults.APPM.MediaPlanDataAccess.Get(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget).Tables[0];				
-			#endregion
+//            #region Get data
+//            //getting the reference univers data
+//            planMediaData=DataAccessResults.APPM.MediaPlanDataAccess.Get(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget).Tables[0];				
+//            #endregion
 
-			#region Getting Media ids and with the help of it getting all the publications of the selected medias
-//			mediaTable=SQLFunctions.Functions.SelectDistinct("medias",planMediaData,"id_media");
-//			foreach(DataRow dr in mediaTable.Rows){
-//				idsMedia+=dr["id_media"].ToString()+",";				
-//			}
-//			totalPublications=TNS.AdExpress.Web.DataAccess.Results.APPM.MediaPlanDataAccess.GetAllPublications(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,idsMedia.Remove(idsMedia.Length-1,1)).Tables[0];
-			#endregion
+//            #region Getting Media ids and with the help of it getting all the publications of the selected medias
+////			mediaTable=SQLFunctions.Functions.SelectDistinct("medias",planMediaData,"id_media");
+////			foreach(DataRow dr in mediaTable.Rows){
+////				idsMedia+=dr["id_media"].ToString()+",";				
+////			}
+////			totalPublications=TNS.AdExpress.Web.DataAccess.Results.APPM.MediaPlanDataAccess.GetAllPublications(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,idsMedia.Remove(idsMedia.Length-1,1)).Tables[0];
+//            #endregion
 
-			try{
-				if(planMediaData!=null && planMediaData.Rows.Count>0){
+//            try{
+//                if(planMediaData!=null && planMediaData.Rows.Count>0){
 
-					#region Counting the number of vehicles and categories
-					//Faire un select sur le dataset pour avoir le nombre de catégories
-					int nbCategory=0;
-					foreach(DataRow currentRow in planMediaData.Rows){
-//						if(oldIdVehicle!=(Int64)currentRow["id_vehicle"]){
-//							nbVehicle++;
-//							oldIdVehicle=(Int64)currentRow["id_vehicle"];
-//						}
-						if(oldIdCategory!=(Int64)currentRow["id_category"]){
-							nbCategory++;
-							oldIdCategory=(Int64)currentRow["id_category"];
-						}
-					}
-					// There is no data
-					//if(nbVehicle==0)return(new object[0,0]);
-					//oldIdVehicle=0;
-					oldIdCategory=0;
-					#endregion
+//                    #region Counting the number of vehicles and categories
+//                    //Faire un select sur le dataset pour avoir le nombre de catégories
+//                    int nbCategory=0;
+//                    foreach(DataRow currentRow in planMediaData.Rows){
+////						if(oldIdVehicle!=(Int64)currentRow["id_vehicle"]){
+////							nbVehicle++;
+////							oldIdVehicle=(Int64)currentRow["id_vehicle"];
+////						}
+//                        if(oldIdCategory!=(Int64)currentRow["id_category"]){
+//                            nbCategory++;
+//                            oldIdCategory=(Int64)currentRow["id_category"];
+//                        }
+//                    }
+//                    // There is no data
+//                    //if(nbVehicle==0)return(new object[0,0]);
+//                    //oldIdVehicle=0;
+//                    oldIdCategory=0;
+//                    #endregion
 					
-					#region Creating the table of month or weeks or days
-					string tmpDate;
-					ArrayList periodItemsList=new ArrayList();
+//                    #region Creating the table of month or weeks or days
+//                    string tmpDate;
+//                    ArrayList periodItemsList=new ArrayList();
 				
-					//Weeks table
-					if(detailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.weekly){
-						AtomicPeriodWeek currentWeek=new AtomicPeriodWeek(int.Parse(webSession.PeriodBeginningDate.Substring(0,4)),int.Parse(webSession.PeriodBeginningDate.Substring(4,2)));
-						AtomicPeriodWeek endWeek=new AtomicPeriodWeek(int.Parse(webSession.PeriodEndDate.Substring(0,4)),int.Parse(webSession.PeriodEndDate.Substring(4,2)));
-						endWeek.Increment();
-						while(!(currentWeek.Week==endWeek.Week && currentWeek.Year==endWeek.Year)){
-							tmpDate=currentWeek.Year.ToString();
-							if(currentWeek.Week.ToString().Length<2)tmpDate+="0"+currentWeek.Week.ToString();
-							else tmpDate+=currentWeek.Week.ToString();
-							periodItemsList.Add(tmpDate);
-							currentWeek.Increment();
-						}
+//                    //Weeks table
+//                    if(detailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.weekly){
+//                        AtomicPeriodWeek currentWeek=new AtomicPeriodWeek(int.Parse(webSession.PeriodBeginningDate.Substring(0,4)),int.Parse(webSession.PeriodBeginningDate.Substring(4,2)));
+//                        AtomicPeriodWeek endWeek=new AtomicPeriodWeek(int.Parse(webSession.PeriodEndDate.Substring(0,4)),int.Parse(webSession.PeriodEndDate.Substring(4,2)));
+//                        endWeek.Increment();
+//                        while(!(currentWeek.Week==endWeek.Week && currentWeek.Year==endWeek.Year)){
+//                            tmpDate=currentWeek.Year.ToString();
+//                            if(currentWeek.Week.ToString().Length<2)tmpDate+="0"+currentWeek.Week.ToString();
+//                            else tmpDate+=currentWeek.Week.ToString();
+//                            periodItemsList.Add(tmpDate);
+//                            currentWeek.Increment();
+//                        }
 
-					}
-					//Month table
-					if(detailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.monthly){
-						DateTime dateCurrent=new DateTime(int.Parse(webSession.PeriodBeginningDate.Substring(0,4)),int.Parse(webSession.PeriodBeginningDate.Substring(4,2)),1);
-						DateTime endDate=new DateTime(int.Parse(webSession.PeriodEndDate.Substring(0,4)),int.Parse(webSession.PeriodEndDate.Substring(4,2)),1);
-						endDate=endDate.AddMonths(1);						
-						while(!(dateCurrent.Month==endDate.Month && dateCurrent.Year==endDate.Year)){
-							tmpDate=dateCurrent.Year.ToString();
-							if(dateCurrent.Month.ToString().Length<2)tmpDate+="0"+dateCurrent.Month.ToString();
-							else tmpDate+=dateCurrent.Month.ToString();
-							periodItemsList.Add(tmpDate);
-							dateCurrent=dateCurrent.AddMonths(1);
-						}
-					}
+//                    }
+//                    //Month table
+//                    if(detailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.monthly){
+//                        DateTime dateCurrent=new DateTime(int.Parse(webSession.PeriodBeginningDate.Substring(0,4)),int.Parse(webSession.PeriodBeginningDate.Substring(4,2)),1);
+//                        DateTime endDate=new DateTime(int.Parse(webSession.PeriodEndDate.Substring(0,4)),int.Parse(webSession.PeriodEndDate.Substring(4,2)),1);
+//                        endDate=endDate.AddMonths(1);						
+//                        while(!(dateCurrent.Month==endDate.Month && dateCurrent.Year==endDate.Year)){
+//                            tmpDate=dateCurrent.Year.ToString();
+//                            if(dateCurrent.Month.ToString().Length<2)tmpDate+="0"+dateCurrent.Month.ToString();
+//                            else tmpDate+=dateCurrent.Month.ToString();
+//                            periodItemsList.Add(tmpDate);
+//                            dateCurrent=dateCurrent.AddMonths(1);
+//                        }
+//                    }
 				
-					//Days table
-					if(detailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.dayly){
-						DateTime currentDateTime =  WebFunctions.Dates.getPeriodBeginningDate(dateBegin.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
-						DateTime endDate = WebFunctions.Dates.getPeriodEndDate(dateEnd.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
-						while(currentDateTime<=endDate){
-							tmpDate=currentDateTime.Year.ToString();
-							if(currentDateTime.Month.ToString().Length<2)tmpDate+="0"+currentDateTime.Month.ToString();
-							else tmpDate+=currentDateTime.Month.ToString();
-							if(currentDateTime.Day.ToString().Length<2)tmpDate+="0"+currentDateTime.Day.ToString();
-							else tmpDate+=currentDateTime.Day.ToString();
-							periodItemsList.Add(tmpDate);
-							currentDateTime = currentDateTime.AddDays(1);
-						}
-					}
+//                    //Days table
+//                    if(detailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.dayly){
+//                        DateTime currentDateTime =  WebFunctions.Dates.getPeriodBeginningDate(dateBegin.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
+//                        DateTime endDate = WebFunctions.Dates.getPeriodEndDate(dateEnd.ToString(),Constantes.Web.CustomerSessions.Period.Type.nLastDays);
+//                        while(currentDateTime<=endDate){
+//                            tmpDate=currentDateTime.Year.ToString();
+//                            if(currentDateTime.Month.ToString().Length<2)tmpDate+="0"+currentDateTime.Month.ToString();
+//                            else tmpDate+=currentDateTime.Month.ToString();
+//                            if(currentDateTime.Day.ToString().Length<2)tmpDate+="0"+currentDateTime.Day.ToString();
+//                            else tmpDate+=currentDateTime.Day.ToString();
+//                            periodItemsList.Add(tmpDate);
+//                            currentDateTime = currentDateTime.AddDays(1);
+//                        }
+//                    }
 					
-					#endregion
+//                    #endregion
 
-					#region Table declarations
-					// Nombre de colonne
-					nbCol=periodItemsList.Count+FrameWorkResultConstantes.MediaPlanAPPM.FIRST_PEDIOD_INDEX;
-					// Nombre de lignes
-					nbline=planMediaData.Rows.Count+2+nbCategory; //Avant +2
-					// Tableau de résultat
-					tab=new object[nbline,nbCol];
-					// Tableau des indexes des categories
-					//Int64[] tabCategoryIndex=new Int64[nbCategory+1];
-					#endregion
+//                    #region Table declarations
+//                    // Nombre de colonne
+//                    nbCol=periodItemsList.Count+FrameWorkResultConstantes.MediaPlanAPPM.FIRST_PEDIOD_INDEX;
+//                    // Nombre de lignes
+//                    nbline=planMediaData.Rows.Count+2+nbCategory; //Avant +2
+//                    // Tableau de résultat
+//                    tab=new object[nbline,nbCol];
+//                    // Tableau des indexes des categories
+//                    //Int64[] tabCategoryIndex=new Int64[nbCategory+1];
+//                    #endregion
 
-					#region Labelling the colunms
-					while(currentDate<periodItemsList.Count){
-						tab[0,FIRST_PERIOD_INDEX+currentDate]=(string)periodItemsList[currentDate];
-						currentDate++;
-					}					
-					#endregion
+//                    #region Labelling the colunms
+//                    while(currentDate<periodItemsList.Count){
+//                        tab[0,FIRST_PERIOD_INDEX+currentDate]=(string)periodItemsList[currentDate];
+//                        currentDate++;
+//                    }					
+//                    #endregion
 
-					#region Initialisation de la ligne totale
-					// On initialise toutes les dates a absent
-					tab[TOTAL_LINE_INDEX,FrameWorkResultConstantes.MediaPlanAPPM.ID_TOTAL_COUMN_INDEX]=(Int64)FrameWorkResultConstantes.MediaPlanAPPM.ID_TOTAL_STRING;
-					tab[TOTAL_LINE_INDEX,FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_COUMN_INDEX]="Total"; // à Modifier dans l'UI pour mettre GestionWeb
-					for(int k=FIRST_PERIOD_INDEX;k<nbCol;k++){
-						tab[TOTAL_LINE_INDEX,k]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
-					}
-					#endregion
+//                    #region Initialisation de la ligne totale
+//                    // On initialise toutes les dates a absent
+//                    tab[TOTAL_LINE_INDEX,FrameWorkResultConstantes.MediaPlanAPPM.ID_TOTAL_COUMN_INDEX]=(Int64)FrameWorkResultConstantes.MediaPlanAPPM.ID_TOTAL_STRING;
+//                    tab[TOTAL_LINE_INDEX,FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_COUMN_INDEX]="Total"; // à Modifier dans l'UI pour mettre GestionWeb
+//                    for(int k=FIRST_PERIOD_INDEX;k<nbCol;k++){
+//                        tab[TOTAL_LINE_INDEX,k]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
+//                    }
+//                    #endregion
 
-					#region Construction of the resultant table
+//                    #region Construction of the resultant table
 		
-					foreach(DataRow currentRow in planMediaData.Rows){
+//                    foreach(DataRow currentRow in planMediaData.Rows){
 
-						#region Nouvelle Category
-						if(oldIdCategory!=(Int64)currentRow["id_category"]){
-							currentLineIndex++;
-							tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]=(Int64)currentRow["id_category"];
-							tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]=currentRow["category"].ToString();
-							//fin MAJ
-							currentCategoryIndex=currentLineIndex;
-							oldIdCategory=(Int64)currentRow["id_category"];
-							numberOflineToAdd++;
-							tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]=null;
-							tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX]=null;
-							// On initialise toutes les dates a absent
-							for(int k=FIRST_PERIOD_INDEX;k<nbCol;k++){
-								tab[currentCategoryIndex,k]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
-							}
-						}
-						#endregion
+//                        #region Nouvelle Category
+//                        if(oldIdCategory!=(Int64)currentRow["id_category"]){
+//                            currentLineIndex++;
+//                            tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.ID_CATEGORY_COUMN_INDEX]=(Int64)currentRow["id_category"];
+//                            tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]=currentRow["category"].ToString();
+//                            //fin MAJ
+//                            currentCategoryIndex=currentLineIndex;
+//                            oldIdCategory=(Int64)currentRow["id_category"];
+//                            numberOflineToAdd++;
+//                            tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]=null;
+//                            tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX]=null;
+//                            // On initialise toutes les dates a absent
+//                            for(int k=FIRST_PERIOD_INDEX;k<nbCol;k++){
+//                                tab[currentCategoryIndex,k]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
+//                            }
+//                        }
+//                        #endregion
 
-						#region Nouveau Media
-						if(oldIdMedia!=(Int64)currentRow["id_media"]){
-							currentLineIndex++;
-							tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX]=(Int64)currentRow["id_media"];
-							tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]=currentRow["media"].ToString();
-							tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.PERIODICITY_COLUMN_INDEX]=(Int64)currentRow["id_periodicity"];									
-							//fin MAJ
-							oldIdMedia=(Int64)currentRow["id_media"];
-							currentDate=0;
-							tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]=null;
-						}
-						else{
-							#region Même mois
-							if(oldDate==GetFormattedDate(currentRow["publication_date"].ToString(),detailPeriod)){
-								currentDate--; //PB si 2 parutions le même mois
-							}
-							#endregion
-						}
-						#endregion
+//                        #region Nouveau Media
+//                        if(oldIdMedia!=(Int64)currentRow["id_media"]){
+//                            currentLineIndex++;
+//                            tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.ID_MEDIA_COLUMN_INDEX]=(Int64)currentRow["id_media"];
+//                            tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]=currentRow["media"].ToString();
+//                            tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.PERIODICITY_COLUMN_INDEX]=(Int64)currentRow["id_periodicity"];									
+//                            //fin MAJ
+//                            oldIdMedia=(Int64)currentRow["id_media"];
+//                            currentDate=0;
+//                            tab[currentLineIndex,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]=null;
+//                        }
+//                        else{
+//                            #region Même mois
+//                            if(oldDate==GetFormattedDate(currentRow["publication_date"].ToString(),detailPeriod)){
+//                                currentDate--; //PB si 2 parutions le même mois
+//                            }
+//                            #endregion
+//                        }
+//                        #endregion
 
-						// On se place sur le bon mois
-						// En même temps on remplit les case vide par absent
-//						if(oldIdMedia==6169){
-//							string tireote="e";
-//						}
-						while(int.Parse(periodItemsList[currentDate].ToString())!=GetFormattedDate(currentRow["publication_date"].ToString(),detailPeriod)){ //(int.Parse(currentRow["publication_date"].ToString().Substring(0,6)))){
-							if(tab[currentLineIndex,FIRST_PERIOD_INDEX+currentDate]==null)
-								tab[currentLineIndex,FIRST_PERIOD_INDEX+currentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
-							currentDate++;
-						}
-						//valeur pour le media
-						tab[currentLineIndex,FIRST_PERIOD_INDEX+currentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
-						//valeur pour la catégorie
-						tab[currentCategoryIndex,FIRST_PERIOD_INDEX+currentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
-						//valeur pour le total
-						tab[TOTAL_LINE_INDEX,FIRST_PERIOD_INDEX+currentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
+//                        // On se place sur le bon mois
+//                        // En même temps on remplit les case vide par absent
+////						if(oldIdMedia==6169){
+////							string tireote="e";
+////						}
+//                        while(int.Parse(periodItemsList[currentDate].ToString())!=GetFormattedDate(currentRow["publication_date"].ToString(),detailPeriod)){ //(int.Parse(currentRow["publication_date"].ToString().Substring(0,6)))){
+//                            if(tab[currentLineIndex,FIRST_PERIOD_INDEX+currentDate]==null)
+//                                tab[currentLineIndex,FIRST_PERIOD_INDEX+currentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
+//                            currentDate++;
+//                        }
+//                        //valeur pour le media
+//                        tab[currentLineIndex,FIRST_PERIOD_INDEX+currentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
+//                        //valeur pour la catégorie
+//                        tab[currentCategoryIndex,FIRST_PERIOD_INDEX+currentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
+//                        //valeur pour le total
+//                        tab[TOTAL_LINE_INDEX,FIRST_PERIOD_INDEX+currentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
 						
 						
-						currentDate++;
-						oldCurrentDate=currentDate;
-						oldDate=GetFormattedDate(currentRow["publication_date"].ToString(),detailPeriod);
-						// On ajoute la périodicité(cas détail par mois)
-						nbItemsToExtend=GetNbItemsToExtend(oldIdMedia,int.Parse(currentRow["publication_date"].ToString()),int.Parse(currentRow["id_periodicity"].ToString()),detailPeriod);
-//						i=0;
-						while(oldCurrentDate<periodItemsList.Count && nbItemsToExtend>0){
-							tab[currentLineIndex,FIRST_PERIOD_INDEX+oldCurrentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-							if((FrameWorkConstantes.Results.MediaPlan.graphicItemType)tab[currentCategoryIndex,FIRST_PERIOD_INDEX+oldCurrentDate]!=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present)
-								tab[currentCategoryIndex,FIRST_PERIOD_INDEX+oldCurrentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-							if((FrameWorkConstantes.Results.MediaPlan.graphicItemType)tab[TOTAL_LINE_INDEX,FIRST_PERIOD_INDEX+oldCurrentDate]!=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present)
-								tab[TOTAL_LINE_INDEX,FIRST_PERIOD_INDEX+oldCurrentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-							nbItemsToExtend--;
-							oldCurrentDate++;
-						}
-						// A mettre dans le changement de media ??????? 
-						while(oldCurrentDate<periodItemsList.Count){
-							tab[currentLineIndex,FIRST_PERIOD_INDEX+oldCurrentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
-							oldCurrentDate++;
-						}
+//                        currentDate++;
+//                        oldCurrentDate=currentDate;
+//                        oldDate=GetFormattedDate(currentRow["publication_date"].ToString(),detailPeriod);
+//                        // On ajoute la périodicité(cas détail par mois)
+//                        nbItemsToExtend=GetNbItemsToExtend(oldIdMedia,int.Parse(currentRow["publication_date"].ToString()),int.Parse(currentRow["id_periodicity"].ToString()),detailPeriod);
+////						i=0;
+//                        while(oldCurrentDate<periodItemsList.Count && nbItemsToExtend>0){
+//                            tab[currentLineIndex,FIRST_PERIOD_INDEX+oldCurrentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+//                            if((FrameWorkConstantes.Results.MediaPlan.graphicItemType)tab[currentCategoryIndex,FIRST_PERIOD_INDEX+oldCurrentDate]!=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present)
+//                                tab[currentCategoryIndex,FIRST_PERIOD_INDEX+oldCurrentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+//                            if((FrameWorkConstantes.Results.MediaPlan.graphicItemType)tab[TOTAL_LINE_INDEX,FIRST_PERIOD_INDEX+oldCurrentDate]!=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present)
+//                                tab[TOTAL_LINE_INDEX,FIRST_PERIOD_INDEX+oldCurrentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+//                            nbItemsToExtend--;
+//                            oldCurrentDate++;
+//                        }
+//                        // A mettre dans le changement de media ??????? 
+//                        while(oldCurrentDate<periodItemsList.Count){
+//                            tab[currentLineIndex,FIRST_PERIOD_INDEX+oldCurrentDate]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
+//                            oldCurrentDate++;
+//                        }
 	
-					}
-					#endregion
+//                    }
+//                    #endregion
 
-					#region Treating the periodicity	
-//					for(i=1;i<nbline;i++)
-//					{
-//						if(tab[i,0]!=null)if(tab[i,0].GetType()==typeof(FrameWorkConstantes.MemoryArrayEnd)) break;
-//						// C'est une ligne Vehicle
-//						if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.VEHICLE_COLUMN_INDEX]!=null)currentVehicleIndex=i;
-//						// C'est une ligne Category
-//						if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null)currentCategoryIndex=i;
-//						// C'est une ligne Media
-//						if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null)
-//						{
-//							for(int j=FIRST_PERIOD_INDEX;j<nbCol;j++)
-//							{
-//								if((bool)tab[i,j]==true)
-//								{
-//									tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
-//									tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
-//									tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
-//									//tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
-//									if(webSession.DetailPeriod==Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly)
-//									{
-//										switch(int.Parse(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.PERIODICITY_COLUMN_INDEX].ToString()))
-//										{
-//												#region Trimestirel
-//											case (int)DBClassificationConstantes.Periodicity.type.trimestriel:
-//												j++;
-//												if(j<nbCol)
-//												{
-//													tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													//if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//												}
-//												j++;
-//												if(j<nbCol)
-//												{
-//													tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													//if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//												}
-//												break;
-//												#endregion
-//
-//												#region Bimestriel
-//											case (int)DBClassificationConstantes.Periodicity.type.bimestriel:
-//												j++;
-//												if(j<nbCol)
-//												{
-//													tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													//if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//												}
-//												break;
-//												#endregion
-//
-//											default:
-//												break;
-//										}
-//									}
-//									else
-//									{
-//										switch(int.Parse(tab[i,FrameWorkConstantes.Results.MediaPlan.PERIODICITY_COLUMN_INDEX].ToString()))
-//										{
-//												#region Mensuel
-//											case (int)DBClassificationConstantes.Periodicity.type.mensuel:
-//												j++;
-//												if(j<nbCol)
-//												{
-//													weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
-//													forceEntry=true;
-//													while((weekDate.FirstDay.Day<weekDate.LastDay.Day && !((int)weekDate.FirstDay.DayOfWeek ==1 && weekDate.FirstDay.Day==1)) || forceEntry)
-//													{
-//														forceEntry=false;
-//														if(j<nbCol)
-//														{
-//															tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//															if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//															if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//															if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//														}
-//														j++;
-//														if(j<nbCol) weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
-//														else break;
-//													}
-//													if(j>FIRST_PERIOD_INDEX)j--;
-//												}
-//												break;
-//												#endregion
-//
-//												#region Bimensuel
-//											case (int)DBClassificationConstantes.Periodicity.type.bimensuel:
-//												j++;
-//												if(j<nbCol)
-//												{
-//													tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//													if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//												}
-//												break;
-//												#endregion
-//
-//												#region trimestriel
-//											case (int)DBClassificationConstantes.Periodicity.type.trimestriel:
-//												j++;
-//												if(j<nbCol)
-//												{
-//													weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
-//													for(int l=0;l<3;l++)
-//													{
-//														forceEntry=true;
-//														while((weekDate.FirstDay.Day<weekDate.LastDay.Day && !((int)weekDate.FirstDay.DayOfWeek ==1 && weekDate.FirstDay.Day==1)) || forceEntry)
-//														{
-//															forceEntry=false;
-//															if(j<nbCol)
-//															{
-//																tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//																if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//																if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//																if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//															}
-//															j++;
-//															if(j<nbCol) weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
-//															else break;
-//														}
-//													}
-//													if(j>FIRST_PERIOD_INDEX)j--;
-//												}
-//												break;
-//												#endregion
-//
-//												#region Bimestriel
-//											case (int)DBClassificationConstantes.Periodicity.type.bimestriel:
-//												j++;
-//												if(j<nbCol)
-//												{
-//													weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
-//													for(int l=0;l<2;l++)
-//													{
-//														forceEntry=true;
-//														while((weekDate.FirstDay.Day<weekDate.LastDay.Day && !((int)weekDate.FirstDay.DayOfWeek ==1 && weekDate.FirstDay.Day==1)) || forceEntry)
-//														{
-//															forceEntry=false;
-//															if(j<nbCol)
-//															{
-//																tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//																if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//																if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//																if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
-//															}
-//															j++;
-//															if(j<nbCol) weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
-//															else break;
-//														}
-//													}
-//													if(j>FIRST_PERIOD_INDEX)j--;
-//												}
-//												break;
-//												#endregion
-//
-//											default:
-//												break;
-//										}
-//									}
-//								}
-//								else
-//								{
-//									tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
-//								}
-//							}
-//						}
-//					}
-					#endregion
-				}
-			}		
-			catch(System.Exception err){
-				throw(new WebExceptions.APPMMediaPlanRulesExcpetion("Error while formatting the data Media Plan in APPM ",err));
-			}
+//                    #region Treating the periodicity	
+////					for(i=1;i<nbline;i++)
+////					{
+////						if(tab[i,0]!=null)if(tab[i,0].GetType()==typeof(FrameWorkConstantes.MemoryArrayEnd)) break;
+////						// C'est une ligne Vehicle
+////						if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.VEHICLE_COLUMN_INDEX]!=null)currentVehicleIndex=i;
+////						// C'est une ligne Category
+////						if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.CATEGORY_COLUMN_INDEX]!=null)currentCategoryIndex=i;
+////						// C'est une ligne Media
+////						if(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.MEDIA_COLUMN_INDEX]!=null)
+////						{
+////							for(int j=FIRST_PERIOD_INDEX;j<nbCol;j++)
+////							{
+////								if((bool)tab[i,j]==true)
+////								{
+////									tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
+////									tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
+////									tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
+////									//tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.present;
+////									if(webSession.DetailPeriod==Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly)
+////									{
+////										switch(int.Parse(tab[i,FrameWorkResultConstantes.MediaPlanAPPM.PERIODICITY_COLUMN_INDEX].ToString()))
+////										{
+////												#region Trimestirel
+////											case (int)DBClassificationConstantes.Periodicity.type.trimestriel:
+////												j++;
+////												if(j<nbCol)
+////												{
+////													tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													//if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////												}
+////												j++;
+////												if(j<nbCol)
+////												{
+////													tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													//if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////												}
+////												break;
+////												#endregion
+////
+////												#region Bimestriel
+////											case (int)DBClassificationConstantes.Periodicity.type.bimestriel:
+////												j++;
+////												if(j<nbCol)
+////												{
+////													tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													//if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////												}
+////												break;
+////												#endregion
+////
+////											default:
+////												break;
+////										}
+////									}
+////									else
+////									{
+////										switch(int.Parse(tab[i,FrameWorkConstantes.Results.MediaPlan.PERIODICITY_COLUMN_INDEX].ToString()))
+////										{
+////												#region Mensuel
+////											case (int)DBClassificationConstantes.Periodicity.type.mensuel:
+////												j++;
+////												if(j<nbCol)
+////												{
+////													weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
+////													forceEntry=true;
+////													while((weekDate.FirstDay.Day<weekDate.LastDay.Day && !((int)weekDate.FirstDay.DayOfWeek ==1 && weekDate.FirstDay.Day==1)) || forceEntry)
+////													{
+////														forceEntry=false;
+////														if(j<nbCol)
+////														{
+////															tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////															if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////															if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////															if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////														}
+////														j++;
+////														if(j<nbCol) weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
+////														else break;
+////													}
+////													if(j>FIRST_PERIOD_INDEX)j--;
+////												}
+////												break;
+////												#endregion
+////
+////												#region Bimensuel
+////											case (int)DBClassificationConstantes.Periodicity.type.bimensuel:
+////												j++;
+////												if(j<nbCol)
+////												{
+////													tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////													if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////												}
+////												break;
+////												#endregion
+////
+////												#region trimestriel
+////											case (int)DBClassificationConstantes.Periodicity.type.trimestriel:
+////												j++;
+////												if(j<nbCol)
+////												{
+////													weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
+////													for(int l=0;l<3;l++)
+////													{
+////														forceEntry=true;
+////														while((weekDate.FirstDay.Day<weekDate.LastDay.Day && !((int)weekDate.FirstDay.DayOfWeek ==1 && weekDate.FirstDay.Day==1)) || forceEntry)
+////														{
+////															forceEntry=false;
+////															if(j<nbCol)
+////															{
+////																tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////																if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////																if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////																if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////															}
+////															j++;
+////															if(j<nbCol) weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
+////															else break;
+////														}
+////													}
+////													if(j>FIRST_PERIOD_INDEX)j--;
+////												}
+////												break;
+////												#endregion
+////
+////												#region Bimestriel
+////											case (int)DBClassificationConstantes.Periodicity.type.bimestriel:
+////												j++;
+////												if(j<nbCol)
+////												{
+////													weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
+////													for(int l=0;l<2;l++)
+////													{
+////														forceEntry=true;
+////														while((weekDate.FirstDay.Day<weekDate.LastDay.Day && !((int)weekDate.FirstDay.DayOfWeek ==1 && weekDate.FirstDay.Day==1)) || forceEntry)
+////														{
+////															forceEntry=false;
+////															if(j<nbCol)
+////															{
+////																tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////																if(tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]==null || tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j].GetType()==typeof(bool))tab[FrameWorkResultConstantes.MediaPlanAPPM.TOTAL_LINE_INDEX,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////																if(tab[currentVehicleIndex,j]==null || tab[currentVehicleIndex,j].GetType()==typeof(bool))tab[currentVehicleIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////																if(tab[currentCategoryIndex,j]==null || tab[currentCategoryIndex,j].GetType()==typeof(bool))tab[currentCategoryIndex,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.extended;
+////															}
+////															j++;
+////															if(j<nbCol) weekDate=new AtomicPeriodWeek(int.Parse(tab[0,j].ToString().Substring(0,4)),int.Parse(tab[0,j].ToString().Substring(4,2)));
+////															else break;
+////														}
+////													}
+////													if(j>FIRST_PERIOD_INDEX)j--;
+////												}
+////												break;
+////												#endregion
+////
+////											default:
+////												break;
+////										}
+////									}
+////								}
+////								else
+////								{
+////									tab[i,j]=FrameWorkConstantes.Results.MediaPlan.graphicItemType.absent;
+////								}
+////							}
+////						}
+////					}
+//                    #endregion
+//                }
+//            }		
+//            catch(System.Exception err){
+//                throw(new WebExceptions.APPMMediaPlanRulesExcpetion("Error while formatting the data Media Plan in APPM ",err));
+//            }
 
-			#region Debug
-			#if(DEBUG)
-			/*
-			int j;
-			string HTML="<html><table><tr>";
-			try{
-				for(i=0;i<nbline;i++){
-					for(j=0;j<nbCol;j++){
-						if(tab[i,j]!=null)HTML+="<td>"+tab[i,j].ToString()+"</td>";
-						else HTML+="<td>&nbsp;</td>";
-					}
-					HTML+="</tr><tr>";
-				}
-			}
-			catch(System.Exception err){
-				string g="3";
-			}
-			HTML+="</tr></table></html>";
-			*/
-			#endif
-			#endregion
+//            #region Debug
+//            #if(DEBUG)
+//            /*
+//            int j;
+//            string HTML="<html><table><tr>";
+//            try{
+//                for(i=0;i<nbline;i++){
+//                    for(j=0;j<nbCol;j++){
+//                        if(tab[i,j]!=null)HTML+="<td>"+tab[i,j].ToString()+"</td>";
+//                        else HTML+="<td>&nbsp;</td>";
+//                    }
+//                    HTML+="</tr><tr>";
+//                }
+//            }
+//            catch(System.Exception err){
+//                string g="3";
+//            }
+//            HTML+="</tr></table></html>";
+//            */
+//            #endif
+//            #endregion
 
-			return (tab);
-		}
-		
-		
-		#region Plan Media with Version
-		/// <summary>
+//            return (tab);
+//        }
+        #endregion
+
+        #region Plan Media with Version
+        /// <summary>
 		/// Formats the date for Media Plan Table 
 		/// </summary>
 		/// <param name="webSession">clients session</param>

@@ -60,7 +60,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results
 						catch(System.Exception){
 							//TODO exception not catched because of the APPM Pdf generation... (page = null)
 						}
-						return ResultsAPPM.MediaPlanUI.GetZoomHTML(webSession,dataSource,zoomDate,idBaseTarget,idAdditionalTarget,false,url);					
+                        return string.Empty;// ResultsAPPM.MediaPlanUI.GetZoomHTML(webSession, dataSource, zoomDate, idBaseTarget, idAdditionalTarget, false, url);					
 						
 					default :
 						return GenericMediaPlanAlertUI.GetMediaPlanAlertWithMediaDetailLevelHtmlUI(page,GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevelForZoom(webSession,zoomDate),webSession,zoomDate,url);
@@ -108,7 +108,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results
 						catch(System.Exception){
 							//TODO exception not catched because of the APPM Pdf generation... (page = null)
 						}
-						return ResultsAPPM.MediaPlanUI.GetZoomExcel(webSession,dataSource,zoomDate,idBaseTarget,idAdditionalTarget,url);					
+                        return string.Empty; // ResultsAPPM.MediaPlanUI.GetZoomExcel(webSession, dataSource, zoomDate, idBaseTarget, idAdditionalTarget, url);					
 						
 					default :
 						return GenericMediaPlanAlertUI.GetMediaPlanAlertWithMediaDetailLevelExcelUI(GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevelForZoom(webSession, zoomDate),webSession,zoomDate,zoomDate,showValue);

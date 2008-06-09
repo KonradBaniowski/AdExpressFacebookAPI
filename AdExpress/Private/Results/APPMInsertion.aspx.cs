@@ -83,7 +83,7 @@ namespace AdExpress.Private.Results{
 				catch(System.Exception){
 					Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(958, _webSession.SiteLanguage)));
 				}
-
+                _dataSource = _webSession.Source;
 				result= APPMSystem.GetInsertionHtml(this.Page,_dataSource, _webSession,Int64.Parse(_idMedia),false);
 				if (result.Length > 0 ){
 					MenuWebControl2.ForcePrint = "/Private/Results/Excel/APPMInsertion.aspx?idSession=" + this._webSession.IdSession + "&idMed=" + _idMedia;

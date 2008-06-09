@@ -111,9 +111,9 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 						}
 						return APPMUIs.PDVPlanUI.GetHTML(webSession,dataSource,int.Parse(webSession.PeriodBeginningDate),int.Parse(webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget);		
 					case APPM.mediaPlanByVersion :
-						return  APPMUIs.MediaPlanUI.GetWithVersionHTML(webSession,dataSource,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget,false).HTMLCode;		
-					case APPM.mediaPlan:
-						return  APPMUIs.MediaPlanUI.GetHTML(webSession,dataSource,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget,false);		
+						return  APPMUIs.MediaPlanUI.GetWithVersionHTML(webSession,dataSource,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget,false).HTMLCode;
+                    //case APPM.mediaPlan:
+                    //    return APPMUIs.MediaPlanUI.GetHTML(webSession, dataSource, dateBegin, dateEnd, idBaseTarget, idAdditionalTarget, false);		
 					default:
 						return APPMUIs.SynthesisUI.GetHTML(webSession,dataSource,int.Parse(webSession.PeriodBeginningDate),int.Parse(webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget);										
 
@@ -261,8 +261,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 						return APPMUIs.AnalyseFamilyInterestPlanUI.GetExcel(webSession,dataSource,idWave,int.Parse(webSession.PeriodBeginningDate),int.Parse(webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget,true);
 					case APPM.mediaPlanByVersion :
 						return APPMUIs.LocationPlanTypesUI.GetExcel(webSession,dataSource,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget);
-					case APPM.mediaPlan:
-						return APPMUIs.MediaPlanUI.GetExcel(webSession,dataSource,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget);
+                    //case APPM.mediaPlan:
+                    //    return APPMUIs.MediaPlanUI.GetExcel(webSession,dataSource,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget);
 					default:
 						return APPMUIs.SynthesisUI.GetExcel(webSession,dataSource,int.Parse(webSession.PeriodBeginningDate),int.Parse(webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget);
 				}

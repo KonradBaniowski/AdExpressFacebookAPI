@@ -106,6 +106,7 @@ namespace AdExpress.Private.Results{
 					//_dateParution = Page.Request.QueryString.Get("dateParution");
 					_dateCover = Page.Request.QueryString.Get("dateParution"); ;
 					_page		= Page.Request.QueryString.Get("page");
+                    _dataSource = _webSession.Source;
 				}
 				catch(System.Exception){
 					Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(958, _webSession.SiteLanguage)));

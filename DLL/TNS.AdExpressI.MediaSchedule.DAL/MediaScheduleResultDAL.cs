@@ -120,23 +120,23 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
 
         #region IMediaScheduleResultDAL Membres
 
-        #region GetData
+        #region GetMediaScheduleData
         /// <summary>
         /// Get Data to build Media Schedule
         /// </summary>
         /// <returns>DataSet containing Data</returns>
-        public DataSet GetData()
+        public virtual DataSet GetMediaScheduleData()
         {
             return GetData(string.Empty, _session.GenericMediaDetailLevel);
         }
         #endregion
 
-        #region GetAdNetTrackData
+        #region GetMediaScheduleAdNetTrackData
         /// <summary>
         /// Get Data for AdNetTrack Media Schedule
         /// </summary>
         /// <returns>Data</returns>
-        public DataSet GetAdNetTrackData()
+        public virtual DataSet GetMediaScheduleAdNetTrackData()
         {
             string additionalConditions = "";
             this._vehicleId = CstDBClassif.Vehicles.names.adnettrack.GetHashCode();
@@ -169,7 +169,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// <param name="additionalWhereClause">Additional conditions if required</param>
         /// <param name="detailLevel">Clasification details</param>
         /// <returns>DataSet containing Data</returns>
-        protected DataSet GetData(string additionalWhereClause, GenericDetailLevel detailLevel)
+        protected virtual DataSet GetData(string additionalWhereClause, GenericDetailLevel detailLevel)
         {
 
             #region Query Building
@@ -261,7 +261,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// <param name="endDate">Period End</param>
         /// <param name="additionalConditions">Addtional conditions such as AdNetTrack Baners...</param>
         /// <returns>Sql query as a string</returns>
-        protected string GetQuery(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, Int64 vehicleId, List<PeriodItem> periodItems, string additionalConditions)
+        protected virtual string GetQuery(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, Int64 vehicleId, List<PeriodItem> periodItems, string additionalConditions)
         {
 
             #region Variables
@@ -450,7 +450,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// <param name="period">Type of period</param>
         /// <param name="vehicleId">Vehicle Id</param>
         /// <returns>Table matching the vehicle and the type of period</returns>
-        protected string GetDataTableName(CstPeriod.PeriodBreakdownType period, Int64 vehicleId)
+        protected virtual string GetDataTableName(CstPeriod.PeriodBreakdownType period, Int64 vehicleId)
         {
             switch (period)
             {
@@ -516,7 +516,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// </summary>
         /// <param name="period">Type of period</param>
         /// <returns>Date Filed Name matchnig the type of period</returns>
-        protected string GetDateFieldName(CstPeriod.PeriodBreakdownType period)
+        protected virtual string GetDateFieldName(CstPeriod.PeriodBreakdownType period)
         {
             switch (period)
             {
@@ -538,7 +538,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// Get unit field to use in query
         /// </summary>
         /// <returns>Unit field name</returns>
-        protected string GetUnitFieldName(CstPeriod.PeriodBreakdownType periodType)
+        protected virtual string GetUnitFieldName(CstPeriod.PeriodBreakdownType periodType)
         {
             switch (periodType)
             {
@@ -609,7 +609,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         ///<param name="vehicleId">Vehicle Id</param>
         /// <param name="displayPeriod">Result display level</param>
         /// <returns>Field matching period type</returns>
-        protected string GetPeriodicity(CstPeriod.PeriodBreakdownType detailPeriod, Int64 vehicleId, CstPeriod.DisplayLevel displayPeriod)
+        protected virtual string GetPeriodicity(CstPeriod.PeriodBreakdownType detailPeriod, Int64 vehicleId, CstPeriod.DisplayLevel displayPeriod)
         {
 
 
@@ -661,7 +661,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// </remarks>
         /// <param name="dataTablePrefixe">data table prefixe</param>
         /// <returns>product selection to add as condition into a sql query</returns>
-        protected string GetProductSelection(string dataTablePrefixe)
+        protected virtual string GetProductSelection(string dataTablePrefixe)
         {
             string sql = "";
             if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)

@@ -32,11 +32,11 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// <summary>
         /// Get data to build a Media Schedule Report
         /// </summary>
-        DataSet GetData();
+        DataSet GetMediaScheduleData();
 
         /// <summary>
         /// Get Data to build an AdNettrack Media Schedule
         /// </summary>
-        DataSet GetAdNetTrackData();
+        DataSet GetMediaScheduleAdNetTrackData();
     }
 }

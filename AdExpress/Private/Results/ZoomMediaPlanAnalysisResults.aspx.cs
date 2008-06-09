@@ -117,6 +117,7 @@ namespace AdExpress.Private.Results{
 
 				#region Résultat
 				try{
+                    this._dataSource = _webSession.Source;
 					if(_webSession.CurrentModule==ModuleName.BILAN_CAMPAGNE){
 						href="/Private/Results/APPMResults.aspx?idSession";	
 						ResultsOptionsWebControl1.UnitOption=false;

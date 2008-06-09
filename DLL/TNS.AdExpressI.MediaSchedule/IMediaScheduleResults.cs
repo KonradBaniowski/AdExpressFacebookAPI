@@ -20,6 +20,19 @@ namespace TNS.AdExpressI.MediaSchedule{
     /// </summary>
     public interface IMediaScheduleResults
     {
+        #region Properties
+        /// <summary>
+        /// Define Current Module
+        /// </summary>
+        TNS.AdExpress.Domain.Web.Navigation.Module Module
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region Methods
         /// <summary>
         /// Get HTML code for the media schedule
 		/// </summary>
@@ -41,5 +54,6 @@ namespace TNS.AdExpressI.MediaSchedule{
         /// <param name="withValues">Specify if each values of the calendar must be shown in Media Schedule</param>
 		/// <returns>HTML Code</returns>
         MediaScheduleData GetExcelHtml(bool withValues);
+        #endregion
     }
 }
