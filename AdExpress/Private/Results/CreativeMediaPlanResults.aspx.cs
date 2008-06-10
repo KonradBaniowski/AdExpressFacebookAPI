@@ -9,6 +9,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
@@ -33,6 +34,8 @@ using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Common.Results;
 using TNS.FrameWork.Exceptions;
+
+using TNS.AdExpressI.MediaSchedule;
 
 namespace AdExpress.Private.Results{
 	/// <summary>
@@ -87,6 +90,7 @@ namespace AdExpress.Private.Results{
 		/// </summary>
 		public CreativeMediaPlanResults():base(){
 			idsession=HttpContext.Current.Request.QueryString.Get("idSession");
+            this._useThemes = false;
 		}
 		#endregion
 
@@ -149,25 +153,46 @@ namespace AdExpress.Private.Results{
 				if(eventButton==9){
                     object[,] tab = null;
                     MediaSchedulePeriod period = null;
-                    MediaPlanResultData resultTmp = null;
+                    //MediaPlanResultData resultTmp = null;
+                    MediaScheduleData resultTmp = null;
+
 
                     period = new MediaSchedulePeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, _webSession.DetailPeriod);
 
-                    tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
+                    //tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
 
-                    if (_webSession.IdSlogans != null && _webSession.IdSlogans.Count > 0 && tab.GetLength(0) == 0) {
+                    //if (_webSession.IdSlogans != null && _webSession.IdSlogans.Count > 0 && tab.GetLength(0) == 0) {
+                    //    _webSession.IdSlogans = new ArrayList();
+                    //    tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
+                    //}
+
+                    //resultTmp = TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetHtml(tab, _webSession, period, true);
+                    TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
+                    if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
+                    object[] param = new object[2];
+                    param[0] = _webSession;
+                    param[1] = period;
+                    IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    resultTmp = mediaScheduleResult.GetHtmlCreativeDivision();
+                    if (resultTmp.HTMLCode.Length <= 0)
+                    {
                         _webSession.IdSlogans = new ArrayList();
-                        tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
+                        resultTmp = mediaScheduleResult.GetHtmlCreativeDivision();
                     }
-
-                    resultTmp = TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetHtml(tab, _webSession, period, true);
 
                     result += "<table align=\"center\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">";
                     result += "\r\n\t<tr height=\"1\">\r\n\t\t<td>";
                     result += "\r\n\t\t</td>\r\n\t</tr>";
                     result += "\r\n\t<tr>\r\n\t\t<td>";
-                    
-                    result += resultTmp.HTMLCode;
+
+                    if (resultTmp.HTMLCode.Length > 0)
+                    {
+                        result += resultTmp.HTMLCode;
+                    }
+                    else
+                    {
+                        result += "<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, _webSession.SiteLanguage) + "</div>";
+                    }
 
                     result += "\r\n\t\t</td>\r\n\t</tr>";
                     result += "</table>";

@@ -54,6 +54,12 @@ namespace TNS.AdExpressI.MediaSchedule{
         /// <param name="withValues">Specify if each values of the calendar must be shown in Media Schedule</param>
 		/// <returns>HTML Code</returns>
         MediaScheduleData GetExcelHtml(bool withValues);
+        /// <summary>
+        /// Get HTML code for an excel export of the media schedule dedicated to creative division
+		/// </summary>
+        /// <param name="withValues">Specify if each values of the calendar must be shown in Media Schedule</param>
+		/// <returns>HTML Code</returns>
+        MediaScheduleData GetExcelHtmlCreativeDivision(bool withValues);
         #endregion
     }
 }

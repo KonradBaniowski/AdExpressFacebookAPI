@@ -3,7 +3,6 @@
 <HTML>
 	<HEAD>
 		<title>AdExpress</title>
-		<%Response.ContentType = "application/vnd.ms-excel";%>
 		<meta http-equiv="Content-Type" content="application/vnd.ms-excel; charset=iso-8859-1, windows-1252">
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">

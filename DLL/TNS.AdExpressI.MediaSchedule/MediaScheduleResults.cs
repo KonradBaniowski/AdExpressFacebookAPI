@@ -402,7 +402,8 @@ namespace TNS.AdExpressI.MediaSchedule
             _allowVersion = AllowVersions();
             _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack);
             _style = new DefaultMediaScheduleStyle();
-            throw new Exception("The method or operation is not implemented.");
+            return ComputeDesign(ComputeData());
+
         }
 
         /// <summary>
@@ -436,6 +437,23 @@ namespace TNS.AdExpressI.MediaSchedule
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
             _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE; 
+            _style = new ExcelMediaScheduleStyle();
+            return ComputeDesign(ComputeData());
+        }
+        /// <summary>
+        /// Get HTML code for an excel export of the media schedule dedicated to creative division
+        /// </summary>
+        /// <param name="withValues">Specify if each values of the calendar must be shown in Media Schedule</param>
+        /// <returns>HTML Code</returns>
+        public virtual MediaScheduleData GetExcelHtmlCreativeDivision(bool withValues)
+        {
+            _isCreativeDivisionMS = true;
+            _showValues = withValues;
+            _isExcelReport = true;
+            _isPDFReport = false;
+            _allowInsertions = AllowInsertions();
+            _allowVersion = AllowVersions();
+            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack);
             _style = new ExcelMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -1142,21 +1160,8 @@ namespace TNS.AdExpressI.MediaSchedule
             #region No data
             if (data.GetLength(0) == 0)
             {
-                if (IsCreativeDivisionMS)
-                {
-                    oMediaScheduleData.HTMLCode = string.Format("<div align=\"center\" class=\"{1}\">{0}</div>", GestionWeb.GetWebWord(177, _session.SiteLanguage), _style.NoDataDiv);
-                    return (oMediaScheduleData);
-                }
-                else
-                {
-                    oMediaScheduleData.HTMLCode = string.Empty;
-                        //string.Format(
-                        //"<div align=\"center\" class=\"{2}\">{0}<br><br><a href=\"javascript:history.back()\" onmouseover=\"bouton.src='/App_Themes/{1}/Images/Culture/button/back_down.gif';\" onmouseout=\"bouton.src = '/App_Themes/{1}/Images/Culture/button/back_up.gif';\"><img src=\"/App_Themes/{1}/Images/Culture/button/back_up.gif\" border=0 name=bouton></a></div>"
-                        //, GestionWeb.GetWebWord(177, _session.SiteLanguage)
-                        //, themeName
-                        //, _style.NoDataDiv);
-                    return (oMediaScheduleData);
-                }
+                oMediaScheduleData.HTMLCode = string.Empty;
+                return (oMediaScheduleData);
             }
             #endregion
 

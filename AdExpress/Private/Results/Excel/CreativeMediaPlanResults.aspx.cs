@@ -9,6 +9,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
@@ -24,6 +25,8 @@ using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.UI.Results;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpressI.MediaSchedule;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace AdExpress.Private.Results.Excel{
 	/// <summary>
@@ -48,6 +51,7 @@ namespace AdExpress.Private.Results.Excel{
 		/// </summary>
 		public CreativeMediaPlanResults():base(){
 			idsession=HttpContext.Current.Request.QueryString.Get("idSession");
+            this._useThemes = false;
 		}
 		#endregion
 
@@ -62,21 +66,37 @@ namespace AdExpress.Private.Results.Excel{
 		protected void Page_Load(object sender, System.EventArgs e){
 			try {
 
+                this.Response.ContentType = "application/vnd.ms-excel";
+
                 #region Calcul du résultat
                 MediaSchedulePeriod period = null;
+                MediaScheduleData resultTmp = null;
                 object[,] tab = null;
 
 
                 period = new MediaSchedulePeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, _webSession.DetailPeriod);
 
-                tab = GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
+                //tab = GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
 
-                if (_webSession.IdSlogans != null && _webSession.IdSlogans.Count > 0 && tab.GetLength(0) == 0) {
+                //if (_webSession.IdSlogans != null && _webSession.IdSlogans.Count > 0 && tab.GetLength(0) == 0) {
+                //    _webSession.IdSlogans = new ArrayList();
+                //    tab = GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
+                //}
+
+                //result = GenericMediaScheduleUI.GetExcel(tab, _webSession, period, "", false, (int)_webSession.DetailPeriod,true).HTMLCode;
+                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
+                object[] param = new object[2];
+                param[0] = _webSession;
+                param[1] = period;
+                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                resultTmp = mediaScheduleResult.GetExcelHtmlCreativeDivision(false);
+                if (resultTmp.HTMLCode.Length <= 0)
+                {
                     _webSession.IdSlogans = new ArrayList();
-                    tab = GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1);
+                    resultTmp = mediaScheduleResult.GetExcelHtmlCreativeDivision(false);
                 }
-
-                result = GenericMediaScheduleUI.GetExcel(tab, _webSession, period, "", false, (int)_webSession.DetailPeriod,true).HTMLCode;
+                result += resultTmp.HTMLCode;
                 #endregion
 
 			}

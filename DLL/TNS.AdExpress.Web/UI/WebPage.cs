@@ -26,6 +26,10 @@ namespace TNS.AdExpress.Web.UI {
         /// Langue du site
         /// </summary>
         public int _siteLanguage=33;
+        /// <summary>
+        /// Specify whereas to use themes or not
+        /// </summary>
+        public bool _useThemes = true;
         #endregion
 
         #region Constructor
@@ -56,7 +60,8 @@ namespace TNS.AdExpress.Web.UI {
         /// <param name="e">Arguments</param>
         protected override void OnPreInit(EventArgs e) {
             // TODO Gestion des exceptions
-            this.Theme = WebApplicationParameters.Themes[_siteLanguage].Name;
+            if (_useThemes)
+                this.Theme = WebApplicationParameters.Themes[_siteLanguage].Name;
             
         }
         #endregion
