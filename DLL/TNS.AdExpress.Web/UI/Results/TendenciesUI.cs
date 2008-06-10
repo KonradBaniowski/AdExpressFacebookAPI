@@ -17,12 +17,18 @@ using TNS.AdExpress.Web.DataAccess.Results;
 using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
 	/// Génère le code HTML pour le module Tendance
 	/// </summary>
 	public class TendenciesUI{
+
+        /// <summary>
+        /// Current session
+        /// </summary>
+        private static WebSession _webSession = null;
 		
 		#region Ancien code HTML
 		/// <summary>
@@ -55,23 +61,23 @@ namespace TNS.AdExpress.Web.UI.Results{
 			t.Append("\r\n\t<tr height=\"30px\" >");
 			t.Append("<td>&nbsp;</td>");
 			//Investissement
-			t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(1206,webSession.SiteLanguage)+"</td>");
+			t.Append("<td class=\""+P2+"\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(1206,webSession.SiteLanguage)+"</td>");
 
 			switch(vehicleName){
 				case DBClassificationConstantes.Vehicles.names.press:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					//Surface
-					t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(943,webSession.SiteLanguage)+"</td>");
+					t.Append("<td class=\""+P2+"\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(943,webSession.SiteLanguage)+"</td>");
 					// Nombre d'insertion
-					t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(1398,webSession.SiteLanguage)+"</td>");
+					t.Append("<td class=\""+P2+"\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(1398,webSession.SiteLanguage)+"</td>");
 					break;
 				case DBClassificationConstantes.Vehicles.names.radio:					
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:	
 					//duree
-					t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(861,webSession.SiteLanguage)+"</td>");
+					t.Append("<td class=\""+P2+"\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(861,webSession.SiteLanguage)+"</td>");
 					// Nombre de spot
-					t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(571,webSession.SiteLanguage)+"</td>");
+					t.Append("<td class=\""+P2+"\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(571,webSession.SiteLanguage)+"</td>");
 					break;
 				default:
 					break;
@@ -85,30 +91,30 @@ namespace TNS.AdExpress.Web.UI.Results{
 				case DBClassificationConstantes.Vehicles.names.press:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					//Titres
-					t.Append("<td class=\""+P2+"\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1504,webSession.SiteLanguage)+"</td>");
+					t.Append("<td class=\""+P2+"\" nowrap>"+GestionWeb.GetWebWord(1504,webSession.SiteLanguage)+"</td>");
 					break;
 				case DBClassificationConstantes.Vehicles.names.radio:					
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:	
 					//Supports
-					t.Append("<td class=\""+P2+"\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
+					t.Append("<td class=\""+P2+"\" nowrap>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
 					break;
 				default:
 					break;
 			}	
 		
 			
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0,4)+"</td>");
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+webSession.PeriodBeginningDate.Substring(0,4)+"</td>");
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1212,webSession.SiteLanguage)+"</td>");
+			t.Append("<td class=\""+P2+"\" align=\"center\" nowrap>"+TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0,4)+"</td>");
+			t.Append("<td class=\""+P2+"\" align=\"center\" nowrap>"+webSession.PeriodBeginningDate.Substring(0,4)+"</td>");
+			t.Append("<td class=\""+P2+"\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1212,webSession.SiteLanguage)+"</td>");
 			
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0,4)+"</td>");
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+webSession.PeriodBeginningDate.Substring(0,4)+"</td>");
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1212,webSession.SiteLanguage)+"</td>");
+			t.Append("<td class=\""+P2+"\" align=\"center\" nowrap>"+TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0,4)+"</td>");
+			t.Append("<td class=\""+P2+"\" align=\"center\" nowrap>"+webSession.PeriodBeginningDate.Substring(0,4)+"</td>");
+			t.Append("<td class=\""+P2+"\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1212,webSession.SiteLanguage)+"</td>");
 			
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0,4)+"</td>");
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+webSession.PeriodBeginningDate.Substring(0,4)+"</td>");
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1212,webSession.SiteLanguage)+"</td>");
+			t.Append("<td class=\""+P2+"\" align=\"center\" nowrap>"+TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0,4)+"</td>");
+			t.Append("<td class=\""+P2+"\" align=\"center\" nowrap>"+webSession.PeriodBeginningDate.Substring(0,4)+"</td>");
+			t.Append("<td class=\""+P2+"\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1212,webSession.SiteLanguage)+"</td>");
 
 			t.Append("</tr>");
 			#endregion
@@ -179,7 +185,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				#region Categorie
 
 				if(tab[i,FrameWorkConstantes.Tendencies.CATEGORY_INDEX]!=null){
-					t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#B1A3C1';\"  bgcolor=#B1A3C1 height=\"20px\" >");
+                    t.Append("\r\n\t<tr align=\"right\" class=\"violetBackGroundV3\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\" height=\"20px\" >");
 					
 					t.Append("<td align=\"left\" class=\""+L1+"\" nowrap>"+tab[i,FrameWorkConstantes.Tendencies.CATEGORY_INDEX]+"</td>");
 			
@@ -240,7 +246,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 				#region Media
 				if(tab[i,FrameWorkConstantes.Tendencies.MEDIA_INDEX]!=null){
-					t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#D0C8DA';\"  bgcolor=#D0C8DA height=\"20px\" >");
+                    t.Append("\r\n\t<tr align=\"right\" class=\"violetBackGroundV2\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV2';\" height=\"20px\" >");
 					
 					t.Append("<td align=\"left\" class=\""+L2+"\" nowrap>&nbsp;&nbsp;&nbsp;"+tab[i,FrameWorkConstantes.Tendencies.MEDIA_INDEX]+"</td>");
 			
@@ -319,6 +325,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 		/// <returns></returns>
 		public static string GetHTMLTendenciesUI(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName,bool excel){
 
+            _webSession = webSession;
+
 			#region Variables
 			System.Text.StringBuilder t = new System.Text.StringBuilder(20000);
 			int idOldCategory=-1;
@@ -345,34 +353,34 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}			
 			#endregion
 
-			t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 >");
+            t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 >");
 			
 			#region Première Ligne
 			//Première ligne
 			t.Append("\r\n\t<tr height=\"30px\" >");
 			t.Append("<td>&nbsp;</td>");
 			//Investissement
-			t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(1206,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(1206, webSession.SiteLanguage) + "</td>");
 
 			switch(vehicleName){
 				case DBClassificationConstantes.Vehicles.names.press:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					//Surface
-					t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(943,webSession.SiteLanguage)+"</td>");
+                    t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(943, webSession.SiteLanguage) + "</td>");
 					// Nombre d'insertion
-					t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(1398,webSession.SiteLanguage)+"</td>");
+                    t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + "</td>");
 					break;
 				case DBClassificationConstantes.Vehicles.names.radio:					
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:	
 					//duree
-					t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(861,webSession.SiteLanguage)+"</td>");
+                    t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(861, webSession.SiteLanguage) + "</td>");
 					// Nombre de spot
-					t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(571,webSession.SiteLanguage)+"</td>");
+                    t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(571, webSession.SiteLanguage) + "</td>");
 					break;
 				case DBClassificationConstantes.Vehicles.names.outdoor:	
 					// Nombre de panneaux
-					t.Append("<td class=\""+P2+"\" colspan=\"3\" bgcolor=#ffffff align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(1604,webSession.SiteLanguage)+"</td>");
+                    t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(1604, webSession.SiteLanguage) + "</td>");
 					break;
 				
 				default:
@@ -387,14 +395,14 @@ namespace TNS.AdExpress.Web.UI.Results{
 				case DBClassificationConstantes.Vehicles.names.press:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					//Titres
-					t.Append("<td class=\""+P2+"\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1504,webSession.SiteLanguage)+"</td>");
+                    t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1504, webSession.SiteLanguage) + "</td>");
 					break;
 				case DBClassificationConstantes.Vehicles.names.radio:					
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:	
 				case DBClassificationConstantes.Vehicles.names.outdoor:	
 					//Supports
-					t.Append("<td class=\""+P2+"\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
+                    t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(804, webSession.SiteLanguage) + "</td>");
 					break;
 				default:
 					break;
@@ -414,39 +422,39 @@ namespace TNS.AdExpress.Web.UI.Results{
 				webSession.PeriodEndDate=weekCurrent.LastDay.ToString("yyyyMMdd");
 				webSession.PeriodBeginningDate=yearCur+"0101";
 				webSession.Save();
-				
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+yearCur+"</td>");
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+yearPrev+"</td>");	
+
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + yearCur + "</td>");
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + yearPrev + "</td>");	
 		
 
 			}
 			else{
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+webSession.PeriodBeginningDate.Substring(0,4)+"</td>");
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0,4)+"</td>");	
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + webSession.PeriodBeginningDate.Substring(0, 4) + "</td>");
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0, 4) + "</td>");	
 			}
 
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1212,webSession.SiteLanguage)+"</td>");			
+            t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1212, webSession.SiteLanguage) + "</td>");			
 
 			if(webSession.PeriodType==WebConstantes.CustomerSessions.Period.Type.cumlDate){
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+yearCur+"</td>");
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+yearPrev+"</td>");	
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + yearCur + "</td>");
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + yearPrev + "</td>");	
 			}
 			else{
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+webSession.PeriodBeginningDate.Substring(0,4)+"</td>");
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0,4)+"</td>");
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + webSession.PeriodBeginningDate.Substring(0, 4) + "</td>");
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0, 4) + "</td>");
 			}
 
-			
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1212,webSession.SiteLanguage)+"</td>");
+
+            t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1212, webSession.SiteLanguage) + "</td>");
 			if(webSession.PeriodType==WebConstantes.CustomerSessions.Period.Type.cumlDate){
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+yearCur+"</td>");
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+yearPrev+"</td>");	
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + yearCur + "</td>");
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + yearPrev + "</td>");	
 			}
 			else{
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+webSession.PeriodBeginningDate.Substring(0,4)+"</td>");
-				t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0,4)+"</td>");
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + webSession.PeriodBeginningDate.Substring(0, 4) + "</td>");
+                t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + TendenciesDataAccess.GetPeriodN1(webSession.PeriodBeginningDate).Substring(0, 4) + "</td>");
 			}
-			t.Append("<td class=\""+P2+"\" align=\"center\" bgcolor=#ffffff nowrap>"+GestionWeb.GetWebWord(1212,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"" + P2 + "\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1212, webSession.SiteLanguage) + "</td>");
 
 			t.Append("</tr>");
 			#endregion
@@ -515,7 +523,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			foreach(DataRow currentRow in dt.Rows){
 				idCategory = int.Parse(currentRow["ID_CATEGORY"].ToString());
 				if (idOldCategory != idCategory){
-					t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#B1A3C1';\"  bgcolor=#B1A3C1 height=\"20px\" >");
+                    t.Append("\r\n\t<tr align=\"right\" class=\"violetBackGroundV3\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\" height=\"20px\" >");
 					t.Append("<td align=\"left\" class=\""+L1+"\" nowrap>"+currentRow["category"]+"</td>");
 					
 					//totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_cur"],WebConstantes.CustomerSessions.Unit.euro,webSession.PDM);
@@ -572,7 +580,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 					idOldCategory = idCategory;
 				}
-				t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#D0C8DA';\"  bgcolor=#D0C8DA height=\"20px\" >");
+                t.Append("\r\n\t<tr align=\"right\" class=\"violetBackGroundV2\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV2';\" height=\"20px\" >");
 				t.Append("<td align=\"left\" class=\""+L2+"\" nowrap>&nbsp;&nbsp;"+currentRow["media"]+"</td>");
 				
 				//totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_cur"],WebConstantes.CustomerSessions.Unit.euro,webSession.PDM);
@@ -675,7 +683,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 		/// <param name="N">Année N</param>
 		/// <returns>image correspondante</returns>
 		/// <param name="excel">True si excel</param>
-		internal static string Evol(object data,object N,bool excel){			
+		internal static string Evol(object data,object N,bool excel){	
+		    string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 			string picture="";
 			if(excel){
 				return "";
@@ -683,21 +692,21 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			if (data==null){
 				if(N==null || decimal.Parse(N.ToString())==0){
-					picture="&nbsp;<img src=/I/r.gif>";;
+                    picture = "&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/r.gif>"; ;
 				}
 				else{
-					picture="&nbsp;<img src=/I/g.gif>";	
+					picture="&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/g.gif>";	
 				}
 
 			}			
 			else if(decimal.Parse(data.ToString())>0){			
-				picture="&nbsp;<img src=/I/g.gif>";			
+				picture="&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/g.gif>";			
 			}
 			else if(decimal.Parse(data.ToString())<0){
-				picture="&nbsp;<img src=/I/r.gif>";
+				picture="&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/r.gif>";
 			}			
 			else{
-				picture="&nbsp;<img src=/I/o.gif>";
+				picture="&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/o.gif>";
 			}
 			return picture;
 		}

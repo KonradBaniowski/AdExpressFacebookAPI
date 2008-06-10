@@ -49,6 +49,7 @@ namespace AdExpress.Private.Results.Excel{
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
+                Response.ContentType = "application/vnd.ms-excel";
 
 				#region Sélection du vehicle
 				string vehicleSelection=_webSession.GetSelection(_webSession.SelectionUniversMedia,Right.type.vehicleAccess);
