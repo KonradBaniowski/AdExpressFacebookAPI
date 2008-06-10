@@ -61,7 +61,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		}
 		#endregion
 
-		#region Constantes
+/*		#region Constantes
 		/// <summary>
 		/// Titre du début de période en français
 		/// </summary>
@@ -100,6 +100,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		private const string TABLE_COLOR_NO_DATE="#9378B3";
 
 		#endregion
+ */
 
 		#region Variables
 		/// <summary>
@@ -160,8 +161,129 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		protected bool _allDatesInRed = false;
 		#endregion
 
-		#region Accesseurs
-		/// <summary>
+        #region Propriété
+        /// <summary>
+        /// Titre du début de période en français
+        /// </summary>
+        private string _titleDateBeginPicture = "Starting_date.gif";
+        /// <summary>
+        /// Obtient et définit le Titre de début de période à afficher
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue("Starting_date.gif")]
+        public string TitleDateBeginPicture {
+            get { return _titleDateBeginPicture; }
+            set {_titleDateBeginPicture = value; }
+        }
+
+        /// <summary>
+        /// Titre de la fin de période
+        /// </summary>
+        private string _titleDateEndPicture = "Ending_date.gif";
+        /// <summary>
+        /// Obtient et définit le Titre de fin de période à afficher
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue("Ending_date.gif")]
+        public string TitleDateEndPicture {
+            get { return _titleDateEndPicture; }
+            set { _titleDateEndPicture = value; }
+        }
+
+        /// <summary>
+        /// Couleur de la bordure
+        /// </summary>
+        private string _tableBorderColor = "#9D9885";
+        /// <summary>
+        /// Obtient et définit la Couleur de la bordure
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue("#9D9885")]
+        public string TableBorderColor {
+            get { return _tableBorderColor; }
+            set { _tableBorderColor = value; }
+        }
+
+        /// <summary>
+        /// Couleur de fond
+        /// </summary>
+        private string _tableColor = "#FFFFFF";
+        /// <summary>
+        /// Obtient et définit la Couleur de fond
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue("#FFFFFF")]
+        public string TableColor {
+            get { return _tableColor; }
+            set { _tableColor = value; }
+        }
+
+        /// <summary>
+        /// Couleur de fond de la date sélectionnée
+        /// </summary>
+        private string _tableColorSelectedDate = "#644883";
+        /// <summary>
+        /// Obtient et définit la Couleur de fond de la date sélectionnée
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue("#644883")]
+        public string TableColorSelectedDate {
+            get { return _tableColorSelectedDate; }
+            set { _tableColorSelectedDate = value; }
+        }
+
+        /// <summary>
+        /// Couleur de fond du titre dans les colonnes
+        /// </summary>
+        private string _titleBackGroundColor = "#644883";
+        /// <summary>
+        /// Obtient et définit la Couleur de fond du titre dans les colonnes
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue("#644883")]
+        public string TitleBackGroundColor {
+            get { return _titleBackGroundColor; }
+            set { _titleBackGroundColor = value; }
+        }
+
+        /// <summary>
+        /// Couleur de la font
+        /// </summary>
+        private string _fontColor = "#644883";
+        /// <summary>
+        /// Obtient et définit la Couleur de la font
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue("#644883")]
+        public string FontColor {
+            get { return _fontColor; }
+            set { _fontColor = value; }
+        }
+
+
+        /// <summary>
+        /// Couleur de la font
+        /// </summary>
+        private string _fontColorSelectedDate = "#FFFFFF";
+        /// <summary>
+        /// Obtient et définit la Couleur de la font
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue("#FFFFFF")]
+        public string FontColorSelectedDate {
+            get { return _fontColorSelectedDate; }
+            set { _fontColorSelectedDate = value; }
+        }
+
+
+        /// <summary>
+        /// Couleur de la font
+        /// </summary>
+        private string _tableColorNoDate = "#9378B3";
+        /// <summary>
+        /// Obtient et définit la Couleur de la font
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue("#9378B3")]
+        public string TableColorNoDate {
+            get { return _tableColorNoDate; }
+            set { _tableColorNoDate = value; }
+        }
+        #endregion
+
+        #region Accesseurs
+        /// <summary>
 		/// Obtient et définit l'année de début
 		/// </summary>
 		public int StartYear{
@@ -363,6 +485,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output){
+            string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[language].Name;
 			StringBuilder htmlBuilder=new StringBuilder(10500);
 			string dateSelectedString="&nbsp;";
 			string colSpan="";
@@ -381,47 +504,46 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			}
 			
 			htmlBuilder.Append("<!--Debut Calendrier--->");
-			htmlBuilder.Append("<table cellspacing=1 cellpadding=0 border=0 bgcolor="+TABLE_BORDER_COLOR+">");
+			htmlBuilder.Append("<table cellspacing=1 cellpadding=0 border=0 bgcolor="+_tableBorderColor+">");
 			string tmpHTML="";
 			string titleImage=this.getTitle();
 			// Titre
 			colSpan = (display==MonthWeekCalendarWebControl.Display.week)?"colspan=5":"";
-			if(titleImage.Length>0){				
-				tmpHTML="<td "+colSpan+"><img src=\"/Images/"+language+"/Calendar/"+titleImage+"\"></td>";
+			if(titleImage.Length>0){
+                tmpHTML = "<td " + colSpan + "><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/" + titleImage + "\"></td>";
 			}
 			else{
 			tmpHTML="<td "+colSpan+">&nbsp;</td>";
 			}
 
 			if(display!=MonthWeekCalendarWebControl.Display.all){
-				htmlBuilder.Append("<tr bgcolor="+TABLE_COLOR+">");
+				htmlBuilder.Append("<tr bgcolor="+_tableColor+">");
 				htmlBuilder.Append(tmpHTML);
 				htmlBuilder.Append("</tr>");
 			}
-
 			// Flèches
 			string left_arrow_HTML;
 			string right_arrow_HTML;
 			if(selectedYear>startYear)
-				left_arrow_HTML="<td align=\"left\"><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear-1).ToString()+"')\"><img border=0 src=\"/Images/"+language+"/Calendar/Arrow_left_up.gif\"></a></td>";
+				left_arrow_HTML="<td align=\"left\"><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear-1).ToString()+"')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Arrow_left_up.gif\"></a></td>";
 			else
-				left_arrow_HTML="<td><img width=\"11px\" src=\"/Images/Common/pixel.gif\"></td>";
+                left_arrow_HTML = "<td><img width=\"11px\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>";
 			if(selectedYear<stopYear)
-				right_arrow_HTML="<td align=\"right\"><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear+1).ToString()+"')\"><img border=0 src=\"/Images/"+language+"/Calendar/Arrow_right_up.gif\"></a></td>";
+				right_arrow_HTML="<td align=\"right\"><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear+1).ToString()+"')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Arrow_right_up.gif\"></a></td>";
 			else
-				right_arrow_HTML="<td><img width=\"11px\" src=\"/Images/Common/pixel.gif\"></td>";
+                right_arrow_HTML = "<td><img width=\"11px\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>";
 
-			htmlBuilder.Append("<tr bgcolor="+TABLE_COLOR+">");
+			htmlBuilder.Append("<tr bgcolor="+_tableColor+">");
 			if(display==MonthWeekCalendarWebControl.Display.all)
 				htmlBuilder.Append(tmpHTML);
 
 			//Sélection des années
 			colSpan = (display!=MonthWeekCalendarWebControl.Display.month)?"colspan=5":"";
 			htmlBuilder.Append("<td "+colSpan+">");
-			htmlBuilder.Append("<table width=\"100%\"cellspacing=0 cellpadding=0 border=0 bgcolor="+TABLE_COLOR+">");
+			htmlBuilder.Append("<table width=\"100%\"cellspacing=0 cellpadding=0 border=0 bgcolor="+_tableColor+">");
 			htmlBuilder.Append("<tr>");
 			htmlBuilder.Append(left_arrow_HTML);
-			htmlBuilder.Append("<td colspan=3 align=\"center\"><font size=1 color="+FONT_COLOR+" face=\"Arial\">"+this.selectedYear.ToString()+"</font></td>");
+			htmlBuilder.Append("<td colspan=3 align=\"center\"><font size=1 color="+_fontColor+" face=\"Arial\">"+this.selectedYear.ToString()+"</font></td>");
 			htmlBuilder.Append(right_arrow_HTML);
 			htmlBuilder.Append("</tr>");
 			htmlBuilder.Append("</table>");
@@ -429,13 +551,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			htmlBuilder.Append("</tr>");
 
 			//Titre des colonnes
-			htmlBuilder.Append("<tr bgcolor=\""+TITLE_BACKGROUND_COLOR+"\" >");
+			htmlBuilder.Append("<tr bgcolor=\""+_titleBackGroundColor+"\" >");
 			
 			if(display==MonthWeekCalendarWebControl.Display.month || display==MonthWeekCalendarWebControl.Display.all)
-			htmlBuilder.Append("<td align=\"center\"><img src=\"/Images/"+Language.ToString()+"/Calendar/monthTitle.gif\" border=0></td>");
+			htmlBuilder.Append("<td align=\"center\"><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/monthTitle.gif\" border=0></td>");
 			
 			if(display==MonthWeekCalendarWebControl.Display.week || display==MonthWeekCalendarWebControl.Display.all)
-			htmlBuilder.Append("<td colspan=5 align=\"center\"><img src=\"/Images/"+Language.ToString()+"/Calendar/weekTitle.gif\" border=0></td>");
+			htmlBuilder.Append("<td colspan=5 align=\"center\"><img src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/weekTitle.gif\" border=0></td>");
 			
 			htmlBuilder.Append("</tr>");
 
@@ -447,50 +569,50 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				htmlBuilder.Append("<tr>");
 				if(display!=MonthWeekCalendarWebControl.Display.week){
 					if( !_blockIncompleteDates && !_incompleteDatesInRed ) 
-						htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/Month_"+(i+1).ToString()+".gif\"></a></td>");
+						htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Month_"+(i+1).ToString()+".gif\"></a></td>");
 					else {
 						if(_incompleteDatesInRed){
 							//option d'affichage des mois incomplets en rouge
 							if(IsMonthLinkEnabled(i+1)) 
-								htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/Month_"+(i+1).ToString()+".gif\"></a></td>");
+								htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Month_"+(i+1).ToString()+".gif\"></a></td>");
 							else 
-								htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/Month_"+(i+1).ToString()+"NC.gif\"></a></td>");
+								htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Month_"+(i+1).ToString()+"NC.gif\"></a></td>");
 						}
 						else{
 							//option d'affichage uniquement des mois complets(données entièrement disponibles)
 							if(IsMonthLinkEnabled(i+1)) 
-								htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/Month_"+(i+1).ToString()+".gif\"></a></td>");
+								htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Month_"+(i+1).ToString()+".gif\"></a></td>");
 							else 
-								htmlBuilder.Append("<td><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/Month_"+(i+1).ToString()+"G.gif\"></td>");
+								htmlBuilder.Append("<td><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Month_"+(i+1).ToString()+"G.gif\"></td>");
 						}
 					}
 				}
-//				else htmlBuilder.Append("<td><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/Month_"+(i+1).ToString()+".gif\"></td>");
+//				else htmlBuilder.Append("<td><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Month_"+(i+1).ToString()+".gif\"></td>");
 				
 				for(j=0;j<weeks.GetLength(0);j++){
 					if(display!=MonthWeekCalendarWebControl.Display.month){
 						if(weeks[j,i]!=0){ //&& display!=MonthWeekCalendarWebControl.Display.month){
 							if(!_blockIncompleteDates && !_incompleteDatesInRed )
-								htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+weeks[j,i].ToString("00")+"00')\"><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/"+weeks[j,i]+".gif\"></a></td>");							
+								htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+weeks[j,i].ToString("00")+"00')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/"+weeks[j,i]+".gif\"></a></td>");							
 							else{
 								if(_incompleteDatesInRed){
 									//option d'affichage des semaines incompletes en rouge
 									if(IsWeekLinkEnabled(int.Parse(weeks[j,i].ToString()),this.selectedYear) ) 
-										htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+weeks[j,i].ToString("00")+"00')\"><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/"+weeks[j,i]+".gif\"></a></td>");
+										htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+weeks[j,i].ToString("00")+"00')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/"+weeks[j,i]+".gif\"></a></td>");
 									else 
-										htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+weeks[j,i].ToString("00")+"00')\"><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/"+weeks[j,i]+"NC.gif\"></a></td>");
+										htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+weeks[j,i].ToString("00")+"00')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/"+weeks[j,i]+"NC.gif\"></a></td>");
 								}
 								else{
 									//option d'affichage uniquement des semaines completes(données entièrement disponibles)
 									if(IsWeekLinkEnabled(int.Parse(weeks[j,i].ToString()),this.selectedYear) ) 
-										htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+weeks[j,i].ToString("00")+"00')\"><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/"+weeks[j,i]+".gif\"></a></td>");
+										htmlBuilder.Append("<td><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+weeks[j,i].ToString("00")+"00')\"><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/"+weeks[j,i]+".gif\"></a></td>");
 									else 
-										htmlBuilder.Append("<td><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/"+weeks[j,i]+"G.gif\"></a></td>");
+										htmlBuilder.Append("<td><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/"+weeks[j,i]+"G.gif\"></a></td>");
 								}
 							}
-						}else htmlBuilder.Append("<td><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/"+weeks[j,i]+".gif\"></td>");
+						}else htmlBuilder.Append("<td><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/"+weeks[j,i]+".gif\"></td>");
 					}
-//					else htmlBuilder.Append("<td><img border=0 src=\"/Images/"+language.ToString()+"/Calendar/"+weeks[j,i]+".gif\"></td>");
+//					else htmlBuilder.Append("<td><img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/"+weeks[j,i]+".gif\"></td>");
 				}
 				htmlBuilder.Append("</tr>");
 			}
@@ -502,7 +624,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				default :
 					colSpan = "";break;
 			}
-			htmlBuilder.Append("<tr><td "+colSpan+"  bgcolor="+TABLE_COLOR_SELECTED_DATE+"><font size=1 color="+FONT_COLOR_SELECTED_DATE+" face=\"Arial\">"+dateSelectedString+"</font></td></tr>");
+			htmlBuilder.Append("<tr><td "+colSpan+"  bgcolor="+_tableColorSelectedDate+"><font size=1 color="+_fontColorSelectedDate+" face=\"Arial\">"+dateSelectedString+"</font></td></tr>");
 			htmlBuilder.Append("</table>");
 			htmlBuilder.Append("<!--Fin Calendrier--->");
 			output.Write(htmlBuilder.ToString());
@@ -519,9 +641,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		private string getTitle(){
 			switch(this.calendarType){
 				case TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Type.dateBegin:
-					return(MonthWeekCalendarWebControl.TITLE_DATE_BEGIN_PICTURE);
+					return(this._titleDateBeginPicture);
 				case TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Type.dateEnd:
-					return(MonthWeekCalendarWebControl.TITLE_DATE_END_PICTURE);
+					return(this._titleDateEndPicture);
 			}
 			return("");
 		}

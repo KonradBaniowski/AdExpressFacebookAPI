@@ -998,3 +998,19 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           			           
 				           SkinID="resultwebcontrol1Excel" 
 />
+
+<%-- Month Week calendar web control : used to show a calendar who allows you to choose between a week, month and year --%>
+<ctrSelections:MonthWeekCalendarWebControl
+                           runat="server"
+                           TitleDateBeginPicture="Starting_date.gif"
+                           TitleDateEndPicture="Ending_date.gif"
+                           TableBorderColor="#9D9885"
+                           TableColor="#FFFFFF"
+                           TableColorSelectedDate="#644883"
+                           TitleBackGroundColor="#644883"
+                           FontColor="#644883"
+                           FontColorSelectedDate="#FFFFFF"
+                           TableColorNoDate="#9378B3"
+                           SkinID="MonthWeekCalendarWebControl1" 
+                           
+/>

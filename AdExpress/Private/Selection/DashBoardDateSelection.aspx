@@ -167,11 +167,11 @@
 																				
 																					<tr>
 																						<td>
-																							<p id="dateBegin" onclick="javascript:selectedItem(6)"><cc3:monthweekcalendarwebcontrol language="33" id="monthWeekCalendarBeginWebControl" runat="server" CalendarType="dateBegin"
+																							<p id="dateBegin" onclick="javascript:selectedItem(6)"><cc3:monthweekcalendarwebcontrol language="33" id="monthWeekCalendarBeginWebControl" runat="server" CalendarType="dateBegin" SkinID="MonthWeekCalendarWebControl1" 
 																									ShowOnlyCompleteDate="True"></cc3:monthweekcalendarwebcontrol></p>
 																						</td>
 																						<td>
-																							<p id="dateEnd" onclick="javascript:selectedItem(7)"><cc3:monthweekcalendarwebcontrol language="33" id="monthWeekCalendarEndWebControl" runat="server" CalendarType="dateEnd"
+																							<p id="dateEnd" onclick="javascript:selectedItem(7)"><cc3:monthweekcalendarwebcontrol language="33" id="monthWeekCalendarEndWebControl" runat="server" CalendarType="dateEnd" SkinID="MonthWeekCalendarWebControl1" 
 																									ShowOnlyCompleteDate="True"></cc3:monthweekcalendarwebcontrol></p>
 																						</td>
 																					</tr>
