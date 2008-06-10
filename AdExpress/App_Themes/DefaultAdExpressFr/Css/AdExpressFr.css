@@ -236,7 +236,6 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
 	border-right :#644883 1px solid; 
 	border-bottom :#644883 1px solid;
 }
-
 .BlancBorder{
 	border-color : #FFFFFF;
 }
@@ -244,6 +243,9 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
 	border-bottom: #ffffff 0px solid; 
 	border-left: #ffffff 0px solid; 
 	border-right: #ffffff 0px solid;
+}
+.BlancTopBorder{
+	border-top : #FFFFFF 1px solid;
 }
 .violetBorder{
 	border-color : #644883;
@@ -271,6 +273,9 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
 }
 .violetBorderTop{
 	border-top :#644883 1px solid; 
+}
+.violetBorderBottom{
+	border-bottom :#644883 1px solid; 
 }
 .violetRightBorder{
 	border-right:solid 1px #B1A3C1; 

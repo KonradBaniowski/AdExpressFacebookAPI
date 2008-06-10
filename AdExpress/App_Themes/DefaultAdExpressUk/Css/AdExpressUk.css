@@ -236,6 +236,9 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 	border-left: #ffffff 0px solid; 
 	border-right: #ffffff 0px solid;
 }
+.BlancTopBorder{
+	border-top : #FFFFFF 1px solid;
+}
 .violetBorder{
 	border-color : #FF0000;
 	border-top :#FF0000 1px solid; 
@@ -280,6 +283,9 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 }
 .violetBorderTop{
 	border-top :#FF0000 1px solid; 
+}
+.violetBorderBottom{
+	border-bottom :#FF0000 1px solid; 
 }
 .RecapProductSelectionWhiteTopBorder{
 	background-color:#8EBF86; 

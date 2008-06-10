@@ -273,9 +273,9 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				#region Affichage des familles 
 				
 				#region Début du tableau global
-				t.Append("<tr vAlign=\"top\"   align=\"center\" bgColor=\"ffffff\"><td><br><div width=\"100%\" vAlign=\"top\" id=\"sectors\">");
-				t.Append("<table width=\"90%\" class=\"divTable\" vAlign=\"top\" cellSpacing=\"0\">");				
-				t.Append("<tr ><td colspan=\"3\" bgColor=\"#ffffff\" style=\"border-bottom :#644883 1px solid;  \" class=\"txtViolet11Bold\">" + title + "</td></tr>");
+                t.Append("<tr vAlign=\"top\"   align=\"center\" class=\"whiteBackGround\"><td><br><div width=\"100%\" vAlign=\"top\" id=\"sectors\">");
+                t.Append("<table width=\"90%\" class=\"violetBorder txtViolet11Bold lightPurple\" vAlign=\"top\" cellSpacing=\"0\">");
+                t.Append("<tr ><td colspan=\"3\" class=\"txtViolet11Bold whiteBackGround violetBorderBottom\">" + title + "</td></tr>");
 				
 				t.Append("<tr><td colspan=\"3\"><a href=\"javascript: SelectAllChilds('sectors')\" title=\""+GestionWeb.GetWebWord(1533,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(1533,webSession.SiteLanguage)+"</a></td></tr>");
 				#endregion
@@ -343,7 +343,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			}											
 			else {
 				#region Pas de familles
-				t.Append("<tr vAlign=\"top\" ><td bgcolor=\"#ffffff\" class=\"txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                t.Append("<tr vAlign=\"top\" ><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 				t.Append(" "+GestionWeb.GetWebWord(1534,webSession.SiteLanguage)+"</p> ");
 				t.Append(" </td> ");
 				t.Append(" </tr> ");

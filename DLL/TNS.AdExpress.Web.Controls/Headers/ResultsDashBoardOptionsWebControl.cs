@@ -31,7 +31,7 @@ using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.DataAccess.Selections.Medias;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
-
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace TNS.AdExpress.Web.Controls.Headers
@@ -521,6 +521,17 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			get{return index;}
 			set{index = Math.Min(value, texts.Split('|').Length - 1);}
 		}
+
+        /// <summary>
+		///noms des images 
+		/// </summary>
+		[Bindable(true),DefaultValue("")]
+        private string _imageButtonArrow = "";
+		/// <summary></summary>
+        public string ImageButtonArrow {
+            get { return _imageButtonArrow; }
+            set { _imageButtonArrow = value; }
+		}
 		#endregion
 
 		/// <summary>
@@ -881,6 +892,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				tblChoice.BackColor = this.BackColor;
 				tblChoice.BorderColor = this.BorderColor;
 				tblChoice.BorderWidth = new System.Web.UI.WebControls.Unit(this.borderWidth);
+                tblChoice.ImageButtonArrow = this._imageButtonArrow;
 				if (this.List!="") tblChoice.List = this.List;
 				else{
 					if (vehicleType!= DBClassificationConstantes.Vehicles.names.press){  
@@ -889,25 +901,26 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				}
 				if (this.images!="") tblChoice.Images = this.images;
 				else{
+                    string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
 					if (vehicleType!= DBClassificationConstantes.Vehicles.names.press){
-						tblChoice.Images= "/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype1.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype2.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype3.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype4.gif" +						
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype5.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype6.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype7.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype8.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype9.gif"+
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype10.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype11.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype12.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype13.gif" ; 
+                        tblChoice.Images = "/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype1.gif" +
+                            "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype2.gif" +
+                            "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype3.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype4.gif" +						
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype5.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype6.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype7.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype8.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype9.gif"+
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype10.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype11.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype12.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype13.gif" ; 
 					}else {
-						tblChoice.Images= "/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype1.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype2.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype3.gif" +
-							"|/Images/" + customerWebSession.SiteLanguage + "/Tables/TBtype13.gif" ; 
+						tblChoice.Images= "/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype1.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype2.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype3.gif" +
+							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype13.gif" ; 
 					}
 				}
 				int numberImagesForPress=4;
@@ -1098,8 +1111,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// Génère ce contrôle dans le paramètre de sortie spécifié.
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
-		protected override void Render(HtmlTextWriter output) {		
-			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" bgcolor=\"#FFFFFF\">");
+		protected override void Render(HtmlTextWriter output) {
+            string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
+
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
 			output.Write("\n<TR>");
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
@@ -1113,17 +1128,17 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				output.Write("\n<TD height=\"5\"></TD>");
 				output.Write("\n</TR>");
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/Images/Common/pixel.gif\"></td>");
+                output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
 				output.Write("\n</tr>");
 				output.Write("\n<tr>");
-				output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/Images/Common/block_fleche.gif\" width=\"12\"></td>");
-				output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"/Images/Common/block_dupli.gif\"><IMG height=\"1\" src=\"/Images/Common/pixel.gif\" width=\"13\"></td>");
+                output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/App_Themes/" + themeName + "/Images/Common/block_fleche.gif\" width=\"12\"></td>");
+                output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"/App_Themes/" + themeName + "/Images/Common/block_dupli.gif\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
 				output.Write("\n<td class=\"txtNoir11Bold\" style=\"PADDING-RIGHT: 5px; PADDING-LEFT: 5px; TEXT-TRANSFORM: uppercase; HEIGHT: 14px\" width=\"100%\">"+GestionWeb.GetWebWord(792,customerWebSession.SiteLanguage)+"</td>");
-				output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/Images/pixel.gif\" width=\"1\"></td>");
+                output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
 				output.Write("\n</tr>");
 				output.Write("\n<tr>");
 				output.Write("\n<td></td>");
-				output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/images/Common/pixel.gif\"></td>");
+                output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
 				output.Write("\n</tr>");
 				output.Write("\n</table>");
 				//fin tableau titre

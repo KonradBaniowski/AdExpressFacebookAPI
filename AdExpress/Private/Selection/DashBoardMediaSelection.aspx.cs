@@ -115,9 +115,10 @@ namespace AdExpress.Private.Selection {
 
                 #region Textes et langage du site
                 //Modification de la langue pour les Textes AdExpress
-                TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls, _webSession.SiteLanguage);
+                for (int i = 0; i < this.Controls.Count; i++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                }
                 ModuleTitleWebControl2.CustomerWebSession = _webSession;
-                InformationWebControl1.Language = _webSession.SiteLanguage;
                 #endregion
 
                 #region Evènements Boutons
@@ -158,11 +159,11 @@ namespace AdExpress.Private.Selection {
                 #endregion
 
                 #region boutons RollOver
-                validImageButtonRollOverWebControl.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
-                validImageButtonRollOverWebControl.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
+                //validImageButtonRollOverWebControl.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
+                //validImageButtonRollOverWebControl.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
 
-                saveImageButtonRollOverWebControl.ImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_up.gif";
-                saveImageButtonRollOverWebControl.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_down.gif";
+                //saveImageButtonRollOverWebControl.ImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_up.gif";
+                //saveImageButtonRollOverWebControl.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_down.gif";
                 #endregion
 
                 #region Script

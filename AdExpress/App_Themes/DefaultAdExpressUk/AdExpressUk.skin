@@ -686,6 +686,14 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   SkinID = "ResultsTableTypesWebControl1"
 />
 
+<ctrHeader:ResultsDashBoardOptionsWebControl
+                           runat="server" 
+                           BorderColor="#644883"
+                           CommonCssClass="txtNoir11Bold" 
+                           ImageButtonArrow="/App_Themes/DefaultAdExpressUk/Images/Common/Button/bt_arrow_tall_top.gif"
+						   SkinID = "ResultsDashBoardOptionsWebControl1"
+/>
+
 <%-- Result web control : used to display a generic result table (HTML) (portfolio Synthesis) --%>
 <ctrResults:Resultwebcontrol 
                            runat="server" 

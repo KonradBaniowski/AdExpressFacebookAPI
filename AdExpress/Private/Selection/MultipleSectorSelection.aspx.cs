@@ -132,23 +132,24 @@ namespace AdExpress.Private.Selection{
 
 				#region Textes et langage du site
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);							
-				ModuleTitleWebControl1.CustomerWebSession = _webSession;
-				InformationWebControl1.Language = _webSession.SiteLanguage;												
+                for (int i = 0; i < this.Controls.Count; i++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                }
+				ModuleTitleWebControl1.CustomerWebSession = _webSession;										
 				#endregion
 
 				#region Rollover des boutons
-				validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 				validateButton.ToolTip=GestionWeb.GetWebWord(1536,_webSession.SiteLanguage);
 
 				//Boutons univers :
-				loadImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/charger_up.gif";
-				loadImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/charger_down.gif";
+				//loadImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/charger_up.gif";
+				//loadImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/charger_down.gif";
 
 				// bouton sauvegarder
-				saveUniverseImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_up.gif";
-				saveUniverseImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_down.gif";
+				//saveUniverseImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_up.gif";
+				//saveUniverseImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_down.gif";
 			
 			
 				#endregion
