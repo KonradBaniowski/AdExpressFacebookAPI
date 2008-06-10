@@ -685,7 +685,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            ImageButtonArrow="/App_Themes/DefaultAdExpressUk/Images/Common/Button/bt_arrow_tall_top.gif"
 						   SkinID = "ResultsTableTypesWebControl1"
 />
-
+<%-- Option Dash Board web control : used to display Dash Board details selection --%>
 <ctrHeader:ResultsDashBoardOptionsWebControl
                            runat="server" 
                            BorderColor="#644883"
@@ -724,7 +724,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           CssDetailSelectionBordelLevel="dsBorderLevel"
 				           SkinID="portofolioExcelSynthesisResultTable"  
 />
-
+<%-- APPM container web control : used to display APPM result --%>
 <ctrAppm:AppmContainerWebControl
                            runat="server" 
                            AnalyseFamilyInterestPlanSkinID="AnalyseFamilyInterestPlanSkinID"
@@ -733,7 +733,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            
 				           SkinID="container"  
 />
-
+<%-- APPM Family interest web control : used to display APPM result in APPM container --%>
 <ctrAppm:AnalyseFamilyInterestPlanAppmChartWebControl
                            runat="server" 
                            PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#644883"
@@ -768,6 +768,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            
 				           SkinID="AnalyseFamilyInterestPlanSkinID"  
 />
+<%-- APPM PDV plan web control : used to display APPM result in APPM container --%>
 <ctrAppm:PdvPlanAppmChartWebControl
                            runat="server"     
                            
@@ -798,6 +799,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            
 				           SkinID="PdvPlanSkinID"  
 />
+<%-- APPM Periodicity plan web control : used to display APPM result in APPM container --%>
 <ctrAppm:PeriodicityPlanAppmChartWebControl
                            runat="server"           
                            
@@ -833,7 +835,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                               
 				           SkinID="PeriodicityPlanSkinID"  
 />
-
+<%-- Sector data container web control : used to display Sector data result --%>
 <ctrAppm:SectorDataContainerWebControl
                            runat="server"           
                            
@@ -863,7 +865,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
   
 				           SkinID="SectorData"  
 />
-
+<%-- Sector data container web control : used to display Sector data result (excel) --%>
 <ctrAppm:SectorDataContainerWebControl
                            runat="server" 
 
@@ -889,9 +891,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           SkinID="SectorDataExcel"
 />
 
-
-
-
+<%-- Seasonality Plan Sector Data chart web control : used to display Seasonality Plan Sector data result --%>
 <ctrAppm:SeasonalityPlanSectorDataChartWebControl
                            runat="server"  
                            
@@ -930,7 +930,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 
                            SkinID="SeasonalityPlanSkinID"  
 />
-
+<%-- Result web control : used to display generic details result --%>
 <ctrResults:ResultWebControl
                            runat="server"
                            
@@ -971,7 +971,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   
 						   SkinID="resultwebcontrol1" 
 />
-
+<%-- Result web control : used to display generic details result --%>
 <ctrResults:ResultWebControl
                            runat="server"
                            

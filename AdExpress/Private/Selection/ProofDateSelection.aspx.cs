@@ -139,13 +139,15 @@ namespace AdExpress.Private.Selection {
 				#endregion															
 
 				#region Textes et langage du site
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
+                for (int i = 0; i < this.Controls.Count; i++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                }
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
-				validateButton1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
-				validateButton2.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton2.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//validateButton1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				//validateButton2.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton2.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 				previousMonth = GestionWeb.GetWebWord(788,_webSession.SiteLanguage);
 				previousWeek = GestionWeb.GetWebWord(789,_webSession.SiteLanguage);
 				previousYear = GestionWeb.GetWebWord(787,_webSession.SiteLanguage);

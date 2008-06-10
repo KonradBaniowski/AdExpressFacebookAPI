@@ -42,6 +42,7 @@ namespace AdExpress.Private.Results.Excel
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Paramètres</param>
 		protected void Page_Load(object sender, System.EventArgs e){
+            Response.ContentType = "application/vnd.ms-excel";
 		}
 		#endregion
 

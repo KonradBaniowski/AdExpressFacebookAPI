@@ -67,7 +67,6 @@ namespace AdExpress.Private.Results
 		#endregion
 
 		#region Evènements
-
 		#region chargement de la page
 		/// <summary>
 		/// Chargement de la page
@@ -99,7 +98,9 @@ namespace AdExpress.Private.Results
 			#endregion
 
 			#region Textes et Langage du site
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);			
+            for (int i = 0; i < this.Controls.Count; i++) {
+                TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+            }
 			Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 			InformationWebControl1.Language = _webSession.SiteLanguage;
 			#endregion
