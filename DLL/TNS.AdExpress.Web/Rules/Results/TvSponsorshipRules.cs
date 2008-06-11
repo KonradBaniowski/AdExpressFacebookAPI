@@ -31,6 +31,7 @@ using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpress.Web.Rules.Results
 {
@@ -685,24 +686,24 @@ namespace TNS.AdExpress.Web.Rules.Results
 			int positionUnivers=1;
 
 			//Keuros		
-			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode()] = new WebCommon.Results.GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode(),positionUnivers,maxIndex);
+			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode()] = new GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode(),positionUnivers,maxIndex);
 			unitsListForLabelSearch=Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode().ToString();
 			maxIndex++;
 			
 
 			//euro			
-			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.euro.GetHashCode()] = new WebCommon.Results.GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.euro.GetHashCode(),positionUnivers,maxIndex);			
+			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.euro.GetHashCode()] = new GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.euro.GetHashCode(),positionUnivers,maxIndex);			
 			unitsListForLabelSearch +=","+ Constantes.Web.CustomerSessions.Unit.euro.GetHashCode().ToString();
 			maxIndex++;
 			
 			
 			//Durée		
-			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.duration.GetHashCode()] = new WebCommon.Results.GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.duration.GetHashCode(),positionUnivers,maxIndex);			
+			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.duration.GetHashCode()] = new GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.duration.GetHashCode(),positionUnivers,maxIndex);			
 			unitsListForLabelSearch +=","+ Constantes.Web.CustomerSessions.Unit.duration.GetHashCode().ToString();
 			maxIndex++;
 			
 			//Spot ( car parrainage Tv )			
-			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.spot.GetHashCode()] = new WebCommon.Results.GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.spot.GetHashCode(),positionUnivers,maxIndex);			
+			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.spot.GetHashCode()] = new GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.spot.GetHashCode(),positionUnivers,maxIndex);			
 			unitsListForLabelSearch +=","+ Constantes.Web.CustomerSessions.Unit.spot.GetHashCode().ToString();
 			maxIndex++;
 
@@ -738,7 +739,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 						if(currentWeek.Week.ToString().Length<2)tmpDate+="0"+currentWeek.Week.ToString();
 						else tmpDate+=currentWeek.Week.ToString();											
 						datesListForLabelSearch += tmpDate+",";
-						periodItemsIndex[Int64.Parse(tmpDate)]=new WebCommon.Results.GroupItemForTableResult(Int64.Parse(tmpDate),positionUnivers,maxIndex);
+						periodItemsIndex[Int64.Parse(tmpDate)]=new GroupItemForTableResult(Int64.Parse(tmpDate),positionUnivers,maxIndex);
 						currentWeek.Increment();												
 						maxIndex++;
 					}	
@@ -754,7 +755,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 						if(dateCurrent.Month.ToString().Length<2)tmpDate+="0"+dateCurrent.Month.ToString();
 						else tmpDate+=dateCurrent.Month.ToString();						
 						datesListForLabelSearch += tmpDate+",";
-							periodItemsIndex[Int64.Parse(tmpDate)]=new WebCommon.Results.GroupItemForTableResult(Int64.Parse(tmpDate),positionUnivers,maxIndex);
+							periodItemsIndex[Int64.Parse(tmpDate)]=new GroupItemForTableResult(Int64.Parse(tmpDate),positionUnivers,maxIndex);
 						dateCurrent=dateCurrent.AddMonths(1);										
 						maxIndex++;
 					}
@@ -765,7 +766,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 					DateTime endDate = DateString.YYYYMMDDToDateTime(endUserDate);
 					while(currentDateTime<=endDate){																		
 						datesListForLabelSearch += DateString.DateTimeToYYYYMMDD(currentDateTime)+",";
-						periodItemsIndex[Int64.Parse(DateString.DateTimeToYYYYMMDD(currentDateTime))]=new WebCommon.Results.GroupItemForTableResult(Int64.Parse(DateString.DateTimeToYYYYMMDD(currentDateTime)),positionUnivers,maxIndex);
+						periodItemsIndex[Int64.Parse(DateString.DateTimeToYYYYMMDD(currentDateTime))]=new GroupItemForTableResult(Int64.Parse(DateString.DateTimeToYYYYMMDD(currentDateTime)),positionUnivers,maxIndex);
 						currentDateTime = currentDateTime.AddDays(1);												
 						maxIndex++;
 					}
@@ -808,7 +809,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 				mediaList=tmp.Split(',');
 				// Indexes des média (support)
 				foreach(string currentMedia in mediaList){						
-					mediaIndex[Int64.Parse(currentMedia)]=new WebCommon.Results.GroupItemForTableResult(Int64.Parse(currentMedia),1,maxIndex);
+					mediaIndex[Int64.Parse(currentMedia)]=new GroupItemForTableResult(Int64.Parse(currentMedia),1,maxIndex);
 					maxIndex++;						
 				}									
 			}
@@ -821,7 +822,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 						
 						foreach(DataRow dr in ds.Tables[0].Rows){		
 							mediaListForLabelSearch+=dr["id_media"].ToString()+",";
-							mediaIndex[Int64.Parse(dr["id_media"].ToString())]=new WebCommon.Results.GroupItemForTableResult(Int64.Parse(dr["id_media"].ToString()),1,maxIndex);
+							mediaIndex[Int64.Parse(dr["id_media"].ToString())]=new GroupItemForTableResult(Int64.Parse(dr["id_media"].ToString()),1,maxIndex);
 							maxIndex++;							
 						}
 						if(mediaListForLabelSearch!=null && mediaListForLabelSearch.Length>0)mediaListForLabelSearch = mediaListForLabelSearch.Substring(0,mediaListForLabelSearch.Length-1);
@@ -951,7 +952,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 					
 					// Ecriture du résultat des dimensions en colonnes
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
-					tabResult[currentLine,((WebCommon.Results.GroupItemForTableResult)dimensionColIndex[Int64.Parse(currentRow["id_media"].ToString())]).IndexInResultTable]=unit;								
+					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Int64.Parse(currentRow["id_media"].ToString())]).IndexInResultTable]=unit;								
 				
 					// Ecriture du résultat du total (somme)
 					tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.TOTAL_COLUMN_INDEX]=(double)tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.TOTAL_COLUMN_INDEX]+unit;
@@ -962,7 +963,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 					// Ecriture du résultat des dimensions en colonnes
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
-					tabResult[currentLine,((WebCommon.Results.GroupItemForTableResult)dimensionColIndex[Int64.Parse(currentRow["date_num"].ToString())]).IndexInResultTable]=unit;								
+					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Int64.Parse(currentRow["date_num"].ToString())]).IndexInResultTable]=unit;								
 				
 					// Ecriture du résultat du total (somme)
 					tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.TOTAL_COLUMN_INDEX]=(double)tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.TOTAL_COLUMN_INDEX]+unit;				
@@ -972,22 +973,22 @@ namespace TNS.AdExpress.Web.Rules.Results
 														
 					// Ecriture du résultat des keuros en colonnes
 					unit=double.Parse(currentRow["euro"].ToString());
-					tabResult[currentLine,((WebCommon.Results.GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode()]).IndexInResultTable]=unit;
+					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode()]).IndexInResultTable]=unit;
 					
 					// Ecriture du résultat des euro en colonnes
 					unit=double.Parse(currentRow["euro"].ToString());
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
-					tabResult[currentLine,((WebCommon.Results.GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.euro.GetHashCode()]).IndexInResultTable]=unit;								
+					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.euro.GetHashCode()]).IndexInResultTable]=unit;								
 					
 					// Ecriture du résultat des durée en colonnes
 					unit=double.Parse(currentRow["duration"].ToString());
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
-					tabResult[currentLine,((WebCommon.Results.GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.duration.GetHashCode()]).IndexInResultTable]=unit;	
+					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.duration.GetHashCode()]).IndexInResultTable]=unit;	
 					
 					// Ecriture du résultat des spots en colonnes
 					unit=double.Parse(currentRow["insertion"].ToString());
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
-					tabResult[currentLine,((WebCommon.Results.GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.spot.GetHashCode()]).IndexInResultTable]=unit;								
+					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.spot.GetHashCode()]).IndexInResultTable]=unit;								
 							
 					break;
 			}

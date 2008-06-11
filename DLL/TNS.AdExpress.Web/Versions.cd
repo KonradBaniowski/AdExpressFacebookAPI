@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TNS.AdExpress.Web.UI.Results.MediaPlanVersions.ExportVersionsVehicleUI">
+    <Position X="11.25" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>UI\Results\MediaPlanVersions\ExportVersionsVehicleUI.cs</FileName>
+      <HashCode>AAAAAIAAQIIIIUAkIQABBJAABQIABAAAAAgCAAAAASE=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionTvUI">
+    <Position X="8.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>UI\Results\MediaPlanVersions\VersionTvUI.cs</FileName>
+      <HashCode>AAAAAAAAQBAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI">
+    <Position X="5.75" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>UI\Results\MediaPlanVersions\VersionDetailUI.cs</FileName>
+      <HashCode>IAIAAQABQBAwIQBAEgABgAAAAAQCKAAAAACAAQUAAEA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_exportAPPMVersion" />
+      <Field Name="_exportMDVersion" />
+      <Field Name="_exportOutdoorVersion" />
+      <Field Name="_exportVersion" />
+      <Field Name="_version" />
+    </ShowAsAssociation>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionPressAPPMUI">
+    <Position X="10" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>UI\Results\MediaPlanVersions\VersionPressAPPMUI.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionPressUI">
+    <Position X="8.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>UI\Results\MediaPlanVersions\VersionPressUI.cs</FileName>
+      <HashCode>AAIAAAAAABAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionRadioUI">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>UI\Results\MediaPlanVersions\VersionRadioUI.cs</FileName>
+      <HashCode>AAAAAAAAQAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsPluriMediaUI">
+    <Position X="14" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>UI\Results\MediaPlanVersions\VersionsPluriMediaUI.cs</FileName>
+      <HashCode>AAAAAAAgQAEAIQAAAAABAAAAAQIAAAAAAAABAAAAAAM=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionsVehicleUI">
+    <Position X="14" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>UI\Results\MediaPlanVersions\VersionsVehicleUI.cs</FileName>
+      <HashCode>AAAAAAAAQIMAIUgAEAABAIAABQIAAAAAAAgAAAAAAAM=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.Common.Results.ExportAPPMVersionItem">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Common\Results\_ExportAPPMVersionItem.cs</FileName>
+      <HashCode>AhAACAQBAADFEiGhAEQMAAAgAIAgIAIwAADmEAIBhAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.Common.Results.ExportVersionItem">
+    <Position X="3.25" Y="7" Width="2" />
+    <TypeIdentifier>
+      <FileName>Common\Results\_ExportVersionItem.cs</FileName>
+      <HashCode>IAIAAAAAAAAEAAAAAAIAACQAAAAAAAAQAAQAAAIAAAE=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.Common.Results.ExportMDVersionItem">
+    <Position X="6" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Common\Results\_ExportMDVersionItem.cs</FileName>
+      <HashCode>IAAFAgAgAIAAAAAAAAAAACAAADgAAAQQACoAAAqAAGc=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.Common.Results.ExportOutdoorVersionItem">
+    <Position X="0.5" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Common\Results\_ExportOutdoorVersionItem.cs</FileName>
+      <HashCode>AAIAAAAEAAAAAAAAAAAAACQAgAAAAAAQAAAAAAIAAAE=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpress.Web.Common.Results.VersionItem">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Common\Results\_VersionItem.cs</FileName>
+      <HashCode>FAACAEAACABCAAIAAABAAAAAIAAiAEABCIgAAAAQCAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+</ClassDiagram>

@@ -1291,6 +1291,7 @@
     <None Include="ModelSupport\TNS\AdExpress\Web\UI\default.txaPackage" />
     <None Include="ModelSupport\TNS\default.txaPackage" />
     <None Include="ModelSupport\TNS\default.txvpck" />
+    <None Include="Versions.cd" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\Univers\" />
