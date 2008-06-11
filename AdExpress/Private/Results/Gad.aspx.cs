@@ -20,7 +20,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page des informations du GAD
 	/// </summary>
-	public partial class Gad : TNS.AdExpress.Web.UI.WebPage{
+    public partial class Gad : TNS.AdExpress.Web.UI.PrivateWebPage {
 
 		#region Variables
 		///<summary>
@@ -148,7 +148,7 @@ namespace AdExpress.Private.Results{
 				faxLabel.Text			= result.Fax;
 				emailLabel.Text			= result.Email;
 				if (result.DocMarketingId.Length > 0){
-					_docMarketingTarget = string.Format("<a href=\"javascript:OpenGad('{0}');\" onMouseOver=\"advertiserFile.src=ficheDown.src\" onMouseOut=\"advertiserFile.src=ficheUp.src\"><img title=\"{1}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_up.gif\"/></a>", 
+					_docMarketingTarget = string.Format("<a href=\"javascript:OpenGad('{0}');\" onMouseOver=\"advertiserFile.src=ficheDown.src\" onMouseOut=\"advertiserFile.src=ficheUp.src\"><img title=\"{1}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/"+this.Theme+"/Images/Culture/Button/bt_fiche_up.gif\"/></a>", 
 						//lien
 						string.Format(GestionWeb.GetWebWord(2092,_siteLanguage) , result.DocMarketingId, result.DocMarketingKey),
 						GestionWeb.GetWebWord(2098,_siteLanguage)
@@ -156,7 +156,7 @@ namespace AdExpress.Private.Results{
 					_docMarketingTitle = string.Format(GestionWeb.GetWebWord(2095 ,_siteLanguage), result.Company).Replace("'", "''");
 				}
 				else{
-					_docMarketingTarget = string.Format("<img title=\"{0}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_off.gif\"/>",
+					_docMarketingTarget = string.Format("<img title=\"{0}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/"+this.Theme+"/Images/Culture/Button/bt_fiche_off.gif\"/>",
 						GestionWeb.GetWebWord(2098,_siteLanguage)); 
 				}
 
