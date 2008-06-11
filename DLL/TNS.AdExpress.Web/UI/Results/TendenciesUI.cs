@@ -692,21 +692,21 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			if (data==null){
 				if(N==null || decimal.Parse(N.ToString())==0){
-                    picture = "&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/r.gif>"; ;
+                    picture = "&nbsp;<img src=/I/r.gif>"; ;
 				}
 				else{
-					picture="&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/g.gif>";	
+					picture="&nbsp;<img src=/I/g.gif>";	
 				}
 
 			}			
 			else if(decimal.Parse(data.ToString())>0){			
-				picture="&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/g.gif>";			
+				picture="&nbsp;<img src=/I/g.gif>";			
 			}
 			else if(decimal.Parse(data.ToString())<0){
-				picture="&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/r.gif>";
+				picture="&nbsp;<img src=/I/r.gif>";
 			}			
 			else{
-				picture="&nbsp;<img src=/App_Themes/" + themeName + "/Images/Common/I/o.gif>";
+				picture="&nbsp;<img src=/I/o.gif>";
 			}
 			return picture;
 		}

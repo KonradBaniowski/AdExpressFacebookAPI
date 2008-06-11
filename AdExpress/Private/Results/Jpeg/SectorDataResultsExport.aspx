@@ -17,7 +17,7 @@
 		bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0">
 		<form id="Form1" method="post" runat="server">
 			<div align="center">
-				<cc2:SectorDataContainerWebControl id="sectorDataContainerWebControl1" runat="server"></cc2:SectorDataContainerWebControl>
+				<cc2:SectorDataContainerWebControl id="sectorDataContainerWebControl1" runat="server" SkinID="SectorData"></cc2:SectorDataContainerWebControl>
 			</div>
 		</form>
 		<%=divClose%>

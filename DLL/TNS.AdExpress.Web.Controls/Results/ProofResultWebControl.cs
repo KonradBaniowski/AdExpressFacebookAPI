@@ -20,6 +20,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Results
 {
@@ -229,7 +230,8 @@ namespace TNS.AdExpress.Web.Controls.Results
 		{
 			
 
-			#region Variables			
+			#region Variables		
+            string themeName = WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
 			int i = 0;
 			#endregion
 			
@@ -246,7 +248,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 					#region Rendu html
 
 					#region Début tableau général
-					output.Write("<TABLE  bgColor=\"#ffffff\" style=\"MARGIN-TOP: 5px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 25px;\"");
+                    output.Write("<TABLE  class=\"whiteBackGround\" style=\"MARGIN-TOP: 5px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 25px;\"");
 					output.Write("cellPadding=\"0\" cellSpacing=\"3\" align=\"center\" border=\"0\" width=\"900\" >");
 					output.Write("<tr align=\"center\"><td>");
 					#endregion
@@ -259,15 +261,15 @@ namespace TNS.AdExpress.Web.Controls.Results
 					output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
 					output.Write("<td>");
 					output.Write("<!-- fleche -->");
-					output.Write("<td style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/Images/Common/fleche_1.gif\" border=\"0\"></td>");
-					output.Write("<td  vAlign=\"top\" width=\"100%\" class=\"popuptitle1\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
+					output.Write("<td style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/"+themeName+"/Images/Common/fleche_1.gif\" border=\"0\"></td>");
+                    output.Write("<td  vAlign=\"top\" width=\"100%\" class=\"popuptitle1\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/App_Themes/" + themeName + "/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
 					output.Write(GestionWeb.GetWebWord(1766, _customerWebSession.SiteLanguage));
 					output.Write("</td>");
 					output.Write("</td>");
 					output.Write("</table>");
 					output.Write("</td>");
 					output.Write("</tr>");
-					output.Write("\n<tr><td colspan=\"3\" bgcolor=\"#FFFFFF\" style=\"HEIGHT: 3px;\" ></td></tr>");
+                    output.Write("\n<tr><td colspan=\"3\" class=\"whiteBackGround\" style=\"HEIGHT: 3px;\" ></td></tr>");
 					output.Write("\n<tr valign=\"top\">");
 					#endregion				
 					
@@ -280,7 +282,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 						_isVisualExist = true;
 					}
 					else{
-						output.Write("<img src=\"/Images/"+_customerWebSession.SiteLanguage+"/Others/no_visuel.gif\">");
+                        output.Write("<img src=\"/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif\">");
 					}
 					output.Write("\n</td></tr>");
 					output.Write("\n</table>");
@@ -311,7 +313,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 						if(row["number_page_media"]!=System.DBNull.Value)output.Write("<br><font class=txtViolet11>"+ row["number_page_media"].ToString() +"&nbsp;"+GestionWeb.GetWebWord(943,_customerWebSession.SiteLanguage)+"</font>");
 					}
 					else{
-						output.Write("\n<td colspan=\"2\" align=\"center\"><img src=\"/Images/"+_customerWebSession.SiteLanguage+"/Others/no_visuel.gif\"><br><font class=\"txtViolet14Bold\">"+ row["Media"] +"</font>");
+                        output.Write("\n<td colspan=\"2\" align=\"center\"><img src=\"/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif\"><br><font class=\"txtViolet14Bold\">" + row["Media"] + "</font>");
                         if (row["datePublication"] != System.DBNull.Value) output.Write("<br><font class=txtViolet11>" + DateString.dateTimeToDD_MM_YYYY((DateTime)row["datePublication"], _customerWebSession.SiteLanguage) + "</font>");
 						if(row["number_page_media"]!=System.DBNull.Value)output.Write("<br><font class=txtViolet11>"+ row["number_page_media"].ToString() +"&nbsp;"+GestionWeb.GetWebWord(943,_customerWebSession.SiteLanguage)+"</font>");
 

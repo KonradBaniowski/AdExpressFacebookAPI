@@ -14,6 +14,7 @@ using TNS.AdExpress.Domain.Translation;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Selections.Periods{
 
@@ -36,6 +37,7 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 		public static string ListMedia(WebSession webSession,Int64 idVehicle,Int64 idMedia,string dateBegin,string dateEnd){
 			
 			#region Variables
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 			int width=545;			
 			string parent="";
 			string oldParent="-1";
@@ -76,10 +78,10 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 					if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode()
 						|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
 						if(dt.Rows[0][1]!= System.DBNull.Value && int.Parse(dt.Rows[0][1].ToString())<10){
-							couverture="onmouseover=\"graph.src = '/Images/"+webSession.SiteLanguage+"/Others/no_visuel.gif';\" onmouseout=\"graph.src = '/Images/Common/vide.gif';\"";
+                            couverture = "onmouseover=\"graph.src = '/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif';\" onmouseout=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/vide.gif';\"";
 						}
 						else{
-							couverture="onmouseover=\"graph.src = '"+pathWeb+"';\" onmouseout=\"graph.src = '/Images/Common/vide.gif';\"";
+                            couverture = "onmouseover=\"graph.src = '" + pathWeb + "';\" onmouseout=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/vide.gif';\"";
 						}
 					}
 				}
@@ -178,10 +180,10 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 							|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
                                 if (dt.Rows[0][1] != System.DBNull.Value && int.Parse(dt.Rows[i][1].ToString()) < 10)
                                 {
-								couverture="onmouseover=\"graph.src = '/Images/"+webSession.SiteLanguage+"/Others/no_visuel.gif';\" onmouseout=\"graph.src = '/Images/Common/vide.gif';\"";
+                                    couverture = "onmouseover=\"graph.src = '/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif';\" onmouseout=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/vide.gif';\"";
 							}
 							else{
-								couverture="onmouseover=\"graph.src = '"+pathWeb+"';\" onmouseout=\"graph.src = '/Images/Common/vide.gif';\"";
+                                couverture = "onmouseover=\"graph.src = '" + pathWeb + "';\" onmouseout=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/vide.gif';\"";
 							}
 						}
 						if(compteur==0){	
@@ -217,7 +219,7 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 					|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
 					t.Append("</td>");
 					t.Append("<td>");
-					t.Append("<img src='/Images/Common/vide.gif' id=\"graph\" width=180 height=220>");
+                    t.Append("<img src='/App_Themes/" + themeName + "/Images/Common/vide.gif' id=\"graph\" width=180 height=220>");
 					t.Append("</td></tr></table>");
 				}
 			}

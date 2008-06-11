@@ -403,7 +403,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 
 			#region no data
 			if(t==null||t.Length<=0)
-				return("<div align=\"center\"><table class=\"txtViolet11Bold\" bgcolor=#ffffff><tr><td>"+GestionWeb.GetWebWord(177,webSession.SiteLanguage)+"</td></tr></table></div>");
+                return ("<div align=\"center\"><table class=\"txtViolet11Bold whiteBackGround\"><tr><td>" + GestionWeb.GetWebWord(177, webSession.SiteLanguage) + "</td></tr></table></div>");
 				
 			#endregion
 

@@ -73,8 +73,8 @@
 				<%if(press){%>
 				<!--Fin Niveaux Produits-->
 				<tr vAlign="top" class="whiteBackGround">
-					<td id="premeriEspece">&nbsp;<A onmouseover="table.src = '/Images/Common/Button/table_down.gif';" onclick="tableRadioButton.checked=true;"
-							onmouseout="table.src = '/Images/Common/Button/table_up.gif';" href="#"></A>
+					<td id="premeriEspece">&nbsp;<A onmouseover="table.src = '/App_Themes/<%=this.Theme%>/Images/Common/Button/table_down.gif';" onclick="tableRadioButton.checked=true;"
+							onmouseout="table.src = '/App_Themes/<%=this.Theme%>/Images/Common/Button/table_up.gif';" href="#"></A>
 					</td>
 				</tr>
 				<%}%>
@@ -82,8 +82,7 @@
 					<td style="HEIGHT: 9px"><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" runat="server" AutoPostBackOption="False" InitializeProduct="True"></cc2:initializeproductwebcontrol></td>
 				</tr>
 				<tr vAlign="top" class="whiteBackGround">
-					<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" RollOverImageUrl="/Images/Common/Button/ok_down.gif"
-							ImageUrl="/Images/Common/Button/ok_up.gif"></cc1:imagebuttonrolloverwebcontrol></td>
+					<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
 				</tr>
 				<!-- Info bt droit -->
 				<tr>

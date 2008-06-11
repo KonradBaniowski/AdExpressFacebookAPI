@@ -223,7 +223,13 @@
 								<td style="WIDTH: 772px">
 									<table cellspacing="0" cellpadding="0" border="0">
 										<tr>
-											<td align="right" width="649"><cc4:imagebuttonrolloverwebcontrol id="saveImageButtonRollOverWebControl" runat="server" Visible="False" onclick="saveImageButtonRollOverWebControl_Click" SkinID="saveButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="nextImageButtonRollOverWebControl" runat="server" Visible="False" onclick="nextImageButtonRollOverWebControl_Click" SkinID="nextButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="programTypeImageButtonRollOverWebControl" runat="server" Visible="False" onclick="programTypeImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="formSponsoringshipImageButtonRollOverWebControl" runat="server" Visible="False" onclick="formSponsoringshipImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" runat="server" Visible="False" onclick="validImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;&nbsp;</td>
+											<td align="right" width="649">
+											    <cc4:imagebuttonrolloverwebcontrol id="saveImageButtonRollOverWebControl" runat="server" Visible="False" onclick="saveImageButtonRollOverWebControl_Click" SkinID="saveButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
+											    <cc4:imagebuttonrolloverwebcontrol id="nextImageButtonRollOverWebControl" runat="server" Visible="False" onclick="nextImageButtonRollOverWebControl_Click" SkinID="nextButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
+											    <cc4:imagebuttonrolloverwebcontrol id="programTypeImageButtonRollOverWebControl" runat="server" Visible="False" onclick="programTypeImageButtonRollOverWebControl_Click" SkinID="EmissionButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
+											    <cc4:imagebuttonrolloverwebcontrol id="formSponsoringshipImageButtonRollOverWebControl" runat="server" Visible="False" onclick="formSponsoringshipImageButtonRollOverWebControl_Click" SkinID="formButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
+											    <cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" runat="server" Visible="False" onclick="validImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;&nbsp;
+											</td>
 											<td width="1%"></td>
 										</tr>
 									</table>

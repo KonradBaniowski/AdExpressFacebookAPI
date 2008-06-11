@@ -91,10 +91,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
 <ctrHeader:HeaderWebControl   
-                            runat="server" 
-                            language="33" 
-                            FlashUrl="/App_Themes/DefaultAdExpressUk/Flash/Common/HeaderStrip.swf" 
-                            MissingFlashUrl="/App_Themes/DefaultAdExpressUk/Images/Common/FlashReplacement/HeaderStrip.gif" 
+                           runat="server" 
+                           language="33" 
+                           FlashUrl="/App_Themes/DefaultAdExpressUk/Flash/Common/HeaderStrip.swf" 
+                           MissingFlashUrl="/App_Themes/DefaultAdExpressUk/Images/Common/FlashReplacement/HeaderStrip.gif" 
 />
 
 <%-- Flash web control : used to show a flash animation --%>
@@ -604,6 +604,27 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            WaitLoadingImage = "/App_Themes/DefaultAdExpressUk/Images/Common/waitAjax.gif"
 />
 
+<%-- Select items in classification web control : used to select Items in Classification specific to details selection--%>
+<ctrSelections:SelectItemsInClassificationWebControl  
+                           runat="server" 
+                           
+                           TreeViewIcons = "/App_Themes/DefaultAdExpressUk/Styles/TreeView/Icons"
+                           TreeViewScripts = "/App_Themes/DefaultAdExpressUk/Styles/TreeView/Scripts"
+                           TreeViewStyles = "/App_Themes/DefaultAdExpressUk/Styles/TreeView/Css"
+                           ChildNodeExcludeCss = "txtChildNodeExcludeCss"
+                           ChildNodeIncludeCss = "txtChildNodeIncludeCss"
+                           ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss"
+                           ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss"
+                           TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss"
+                           TreeExcludeFrameCss = "treeExcludeFrameCss"
+                           TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss"
+                           TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss"
+                           TreeIncludeFrameCss = "treeIncludeFrameCss"
+                           TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss"
+                           
+                           SkinID="detailsselection"
+/>
+
 <%-- Global calendar web control : used to display the global calendar --%>
 <ctrSelections:GlobalCalendarWebControl   
                            runat="server"
@@ -832,7 +853,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            
                            ControlBorderSize="2"
                            ControlBorderColor="#B1A3C1" 
-                              
+                             
 				           SkinID="PeriodicityPlanSkinID"  
 />
 <%-- Sector data container web control : used to display Sector data result --%>
@@ -949,10 +970,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   HighlightBackgroundColorL2="#FFFFFF" 
 						   HighlightBackgroundColorL3="#FFFFFF"  
 						   HighlightBackgroundColorL4="#FFFFFF" 
-						   ImgBtnCroiOverPath="/Images/Common/fl_tri_croi3_in.gif"
-						   ImgBtnCroiPath="/Images/Common/fl_tri_croi3.gif" 
-						   ImgBtnDeCroiOverPath="/Images/Common/fl_tri_decroi3_in.gif"
-						   ImgBtnDeCroiPath="/Images/Common/fl_tri_decroi3.gif" 
+						   ImgBtnCroiOverPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
 						   PageSizeOptions="100,200,500,1000" 
 						   AllowPaging="True"
 						   CssDetailSelectionBordelLevel="dsBorderLevel"

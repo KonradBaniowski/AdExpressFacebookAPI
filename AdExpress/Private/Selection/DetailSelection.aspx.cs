@@ -289,6 +289,7 @@ namespace AdExpress.Private.Selection{
 			try{
 			
 				#region Variables
+                string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 //				string periodText;
 				int i=1;
 				int idMedia=1;
@@ -647,9 +648,9 @@ namespace AdExpress.Private.Selection{
 					}					
 
 					TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
-					selectItemsInClassificationWebControl.TreeViewIcons = "/Styles/TreeView/Icons";
-					selectItemsInClassificationWebControl.TreeViewScripts = "/Styles/TreeView/Scripts";
-					selectItemsInClassificationWebControl.TreeViewStyles = "/Styles/TreeView/Css";
+                    selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + themeName + "/Styles/TreeView/Icons";
+                    selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + themeName + "/Styles/TreeView/Scripts";
+                    selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + themeName + "/Styles/TreeView/Css";
 					selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
 					selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
 					selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
@@ -735,9 +736,9 @@ namespace AdExpress.Private.Selection{
 						}
 					}
 					TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
-					selectItemsInClassificationWebControl.TreeViewIcons = "/Styles/TreeView/Icons";
-					selectItemsInClassificationWebControl.TreeViewScripts = "/Styles/TreeView/Scripts";
-					selectItemsInClassificationWebControl.TreeViewStyles = "/Styles/TreeView/Css";
+                    selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + themeName + "/Styles/TreeView/Icons";
+                    selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + themeName + "/Styles/TreeView/Scripts";
+                    selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + themeName + "/Styles/TreeView/Css";
 					selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
 					selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
 					selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";

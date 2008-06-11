@@ -2420,3 +2420,23 @@ td.synthesisUiTitle
 	font-size: 16px
 }
 
+td.pmcategoryb
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #D0C8DA;
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+}

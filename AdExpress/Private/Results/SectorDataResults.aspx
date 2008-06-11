@@ -79,8 +79,7 @@
 						<td style="HEIGHT: 9px"></td>
 					</tr>
 					<tr valign="top" class="whiteBackGround">
-						<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server"  RollOverImageUrl="/Images/Common/Button/ok_down.gif"
-								ImageUrl="/Images/Common/Button/ok_up.gif"></cc1:imagebuttonrolloverwebcontrol></td>
+						<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"> </cc1:imagebuttonrolloverwebcontrol></td>
 					</tr>
 					<!-- Info bt droit -->
 					<tr>

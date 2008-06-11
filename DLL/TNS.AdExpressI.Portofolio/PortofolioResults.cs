@@ -150,6 +150,7 @@ namespace TNS.AdExpressI.Portofolio {
         public string GetVehicleViewHtml(bool excel) {
 
             #region Variables
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
             StringBuilder t = new StringBuilder(5000);
             DataSet dsVisuel = null;
             string pathWeb = "";
@@ -178,6 +179,7 @@ namespace TNS.AdExpressI.Portofolio {
                         Hashtable htValue = portofolioDAL.GetInvestmentByMedia();
 
                         //t.Append("</table>");
+
                         int compteur = 0;
                         string endBalise = "";
                         string day = "";
@@ -191,7 +193,7 @@ namespace TNS.AdExpressI.Portofolio {
                                 pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
                             }
                             else {
-                                pathWeb = "/Images/" + _webSession.SiteLanguage + "/Others/no_visuel.gif";
+                                pathWeb = "/App_Themes/"+themeName+"/Images/Culture/Others/no_visuel.gif";
                             }
                             DateTime dayDT = new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
                             day = GetDayOfWeek(dayDT.DayOfWeek.ToString()) + " " + dayDT.ToString("dd/MM/yyyy");

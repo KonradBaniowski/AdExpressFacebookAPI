@@ -203,7 +203,9 @@ namespace AdExpress.Private.Results {
 				#endregion
 			
 				#region Textes et Langage du site
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+                for (int i = 0; i < this.Controls.Count; i++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                }
 				//				 chartTitle=GestionWeb.GetWebWord(1191,_webSession.SiteLanguage);	
 				ResultsOptionsWebControl1.ChartTitle=GestionWeb.GetWebWord(1191,_webSession.SiteLanguage);
 				//				tableTitle=GestionWeb.GetWebWord(1192,_webSession.SiteLanguage);

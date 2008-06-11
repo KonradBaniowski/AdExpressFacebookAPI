@@ -387,9 +387,10 @@ namespace AdExpress.Private.Results{
 						break;
 				}	
 						
-						
 				#region Textes et Langage du site
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+                for (int i = 0; i < this.Controls.Count; i++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                }
 				_siteLanguage=_webSession.SiteLanguage;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 				#endregion

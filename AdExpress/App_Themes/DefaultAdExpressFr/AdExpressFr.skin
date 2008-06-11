@@ -605,6 +605,26 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            InitializeDownImage = "/App_Themes/DefaultAdExpressFr/Images/Common/button/initialize_down.gif"
                            WaitLoadingImage = "/App_Themes/DefaultAdExpressFr/Images/Common/waitAjax.gif"
 />
+<%-- Select items in classification web control : used to select Items in Classification specific to details selection--%>
+<ctrSelections:SelectItemsInClassificationWebControl  
+                           runat="server" 
+                           
+                           TreeViewIcons = "/App_Themes/DefaultAdExpressFr/Styles/TreeView/Icons"
+                           TreeViewScripts = "/App_Themes/DefaultAdExpressFr/Styles/TreeView/Scripts"
+                           TreeViewStyles = "/App_Themes/DefaultAdExpressFr/Styles/TreeView/Css"
+                           ChildNodeExcludeCss = "txtChildNodeExcludeCss"
+                           ChildNodeIncludeCss = "txtChildNodeIncludeCss"
+                           ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss"
+                           ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss"
+                           TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss"
+                           TreeExcludeFrameCss = "treeExcludeFrameCss"
+                           TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss"
+                           TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss"
+                           TreeIncludeFrameCss = "treeIncludeFrameCss"
+                           TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss"
+                           
+                           SkinID="detailsselection"
+/>
 
 <%-- Global calendar web control : used to display the global calendar --%>
 <ctrSelections:GlobalCalendarWebControl  
@@ -959,10 +979,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   HighlightBackgroundColorL2="#FFFFFF" 
 						   HighlightBackgroundColorL3="#FFFFFF"  
 						   HighlightBackgroundColorL4="#FFFFFF" 
-						   ImgBtnCroiOverPath="/Images/Common/fl_tri_croi3_in.gif"
-						   ImgBtnCroiPath="/Images/Common/fl_tri_croi3.gif" 
-						   ImgBtnDeCroiOverPath="/Images/Common/fl_tri_decroi3_in.gif"
-						   ImgBtnDeCroiPath="/Images/Common/fl_tri_decroi3.gif" 
+						   ImgBtnCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressFr/Images/Common/fl_tri_decroi3.gif" 
 						   PageSizeOptions="100,200,500,1000" 
 						   AllowPaging="True"
 						   CssDetailSelectionBordelLevel="dsBorderLevel"

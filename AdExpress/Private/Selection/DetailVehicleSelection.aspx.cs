@@ -290,10 +290,10 @@ namespace AdExpress.Private.Selection{
 				//loadImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/charger_down.gif";
 				
 				#region Boutons parrainage				
-				programTypeImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_up.gif";
-				programTypeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_down.gif";	
-				formSponsoringshipImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/bt_formes_up.gif";
-				formSponsoringshipImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/bt_formes_down.gif";			
+				//programTypeImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_up.gif";
+				//programTypeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_down.gif";	
+				//formSponsoringshipImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/bt_formes_up.gif";
+				//formSponsoringshipImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/bt_formes_down.gif";			
 				#endregion
 
 				#region test

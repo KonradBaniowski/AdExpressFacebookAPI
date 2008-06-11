@@ -854,11 +854,11 @@ namespace TNS.AdExpress.Web.UI.Results {
 					if(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX]!=null){
 
 						if (double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString())>0) //hausse
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>" + ( (!Double.IsInfinity(double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()))) ? double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()).ToString("# ### ##0.##")+" %" : "" ) + "<img src=/App_Themes/"+themeName+"/Images/Common/I/g.gif></td>");		
+							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>" + ( (!Double.IsInfinity(double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()))) ? double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()).ToString("# ### ##0.##")+" %" : "" ) + "<img src=/I/g.gif></td>");		
 						else if (double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString())<0) //baisse
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>" + ( (!Double.IsInfinity(double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()))) ? double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()).ToString("# ### ##0.##")+" %" : "" ) + "<img src=/App_Themes/"+themeName+"/Images/Common/I/r.gif></td>");						
+							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>" + ( (!Double.IsInfinity(double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()))) ? double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()).ToString("# ### ##0.##")+" %" : "" ) + "<img src=/I/r.gif></td>");						
 						else if (!Double.IsNaN(double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()))) // 0 exactement
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap> 0 %<img src=/App_Themes/"+themeName+"/Images/Common/I/o.gif></td>");
+							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap> 0 %<img src=/I/o.gif></td>");
 					}else
 						html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");
 				}
@@ -866,11 +866,11 @@ namespace TNS.AdExpress.Web.UI.Results {
 				for(int j=ResultConstantes.TOTAL_COLUMN_INDEX+1;j<tab.GetLength(1);j++){
 					if(tab[i,j]!= null){
 						if (double.Parse(tab[i,j].ToString())>0) //hausse
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>" + ( (!Double.IsInfinity(double.Parse(tab[i,j].ToString()))) ? double.Parse(tab[i,j].ToString()).ToString("# ### ##0.##")+" %" : "" ) + "<img src=/App_Themes/"+themeName+"/Images/Common/I/g.gif></td>");		
+							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>" + ( (!Double.IsInfinity(double.Parse(tab[i,j].ToString()))) ? double.Parse(tab[i,j].ToString()).ToString("# ### ##0.##")+" %" : "" ) + "<img src=/I/g.gif></td>");		
 						else if (double.Parse(tab[i,j].ToString())<0) //baisse
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>" + ( (!Double.IsInfinity(double.Parse(tab[i,j].ToString()))) ? double.Parse(tab[i,j].ToString()).ToString("# ### ##0.##")+" %" : "" ) + "<img src=/App_Themes/"+themeName+"/Images/Common/I/r.gif></td>");						
+							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>" + ( (!Double.IsInfinity(double.Parse(tab[i,j].ToString()))) ? double.Parse(tab[i,j].ToString()).ToString("# ### ##0.##")+" %" : "" ) + "<img src=/I/r.gif></td>");						
 						else if (!Double.IsNaN(double.Parse(tab[i,j].ToString()))) // 0 exactement
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap> 0 %<img src=/App_Themes/"+themeName+"/Images/Common/I/o.gif></td>");
+							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap> 0 %<img src=/I/o.gif></td>");
 					}
 					else
 						html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");
