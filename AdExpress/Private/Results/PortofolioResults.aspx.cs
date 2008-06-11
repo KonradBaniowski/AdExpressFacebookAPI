@@ -207,7 +207,7 @@ namespace AdExpress.Private.Results{
 				#endregion	
 
 				#region Agence média
-				displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
+				//displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
 				#endregion
 
 				// Initialisation de preformatedProductDetail
@@ -429,7 +429,7 @@ namespace AdExpress.Private.Results{
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
 			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession=_webSession;
 			InitializeProductWebControl.CustomerWebSession=_webSession;	
-			MediaAgencyYearWebControl1.WebSession=_webSession;
+			//MediaAgencyYearWebControl1.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 			_resultWebControl.CustomerWebSession = _webSession;
 			return tmp;

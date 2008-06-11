@@ -706,7 +706,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
             Assembly assembly;
             Type type;
             bool allPeriod = false;
-            string mediaAgencyYear = "";
+			//string mediaAgencyYear = "";
             Int64 idMedia = ((LevelInformation)webSession.ReferenceUniversMedia.FirstNode.Tag).ID;
             bool isDigitalTV = DataAccess.Results.PortofolioDetailMediaDataAccess.IsMediaBelongToCategory(webSession, idMedia, TNS.AdExpress.Constantes.DB.Category.ID_DIGITAL_TV, webSession.SiteLanguage);
             #endregion
@@ -737,22 +737,22 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
             #region On récupère la dernière année des agences médias
 
-            DataTable dtAgency = TNS.AdExpress.Web.DataAccess.Results.MediaAgencyDataAccess.GetListYear(webSession).Tables[0];
+			//DataTable dtAgency = TNS.AdExpress.Web.DataAccess.Results.MediaAgencyDataAccess.GetListYear(webSession).Tables[0];
 
-            if (dtAgency != null && dtAgency.Rows.Count > 0) {
-                //On récupère la dernière année des agences médias
-                mediaAgencyYear = dtAgency.Rows[0]["year"].ToString();
-            }
+			//if (dtAgency != null && dtAgency.Rows.Count > 0) {
+			//    //On récupère la dernière année des agences médias
+			//    mediaAgencyYear = dtAgency.Rows[0]["year"].ToString();
+			//}
             #endregion
 
             #region Chargement des données
             try {
                 if (adBreak.Length > 0 || dayOfWeek.Length > 0) {
-                    ds = DataAccess.Results.PortofolioDetailMediaDataAccess.GetGenericDetailMedia(webSession, vehicle.GetHashCode(), idMedia, mediaAgencyYear, webSession.PeriodBeginningDate, webSession.PeriodEndDate, adBreak, allPeriod);
+                    ds = DataAccess.Results.PortofolioDetailMediaDataAccess.GetGenericDetailMedia(webSession, vehicle.GetHashCode(), idMedia,  webSession.PeriodBeginningDate, webSession.PeriodEndDate, adBreak, allPeriod);
                 }
                 else {
                     allPeriod = true;
-                    ds = DataAccess.Results.PortofolioDetailMediaDataAccess.GetGenericDetailMedia(webSession, vehicle.GetHashCode(), idMedia, mediaAgencyYear, webSession.PeriodBeginningDate, webSession.PeriodEndDate, adBreak, allPeriod);
+                    ds = DataAccess.Results.PortofolioDetailMediaDataAccess.GetGenericDetailMedia(webSession, vehicle.GetHashCode(), idMedia, webSession.PeriodBeginningDate, webSession.PeriodEndDate, adBreak, allPeriod);
                 }
                 if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
                     dt = ds.Tables[0];
@@ -808,7 +808,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
                                 break;
                             case GenericColumnItemInformation.Columns.agenceMedia://Agence Media
                                 if (showMediaAgency)
-                                    headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, webSession.SiteLanguage) + " (" + mediaAgencyYear + ")", Column.WebTextId));
+                                    headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, webSession.SiteLanguage), Column.WebTextId));
                                 break;
                             case GenericColumnItemInformation.Columns.planMedia://Plan media
                                 headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(Column.WebTextId, webSession.SiteLanguage), Column.WebTextId));

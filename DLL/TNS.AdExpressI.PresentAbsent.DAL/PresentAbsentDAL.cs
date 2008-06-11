@@ -123,6 +123,9 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             #region Tables
             Table tblWebPlan = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData);
             Schema schAdExpress = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
+
+			Table tblAdvertisingAgengy = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.advertisingAgency);
+			Table tblGroupAdvertisingAgengy = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupAdvertisingAgency);
             #endregion
 
             #region Construction de la requête
@@ -167,18 +170,19 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
                 sql.AppendFormat("  select {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
                 sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
-                sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE);
+				sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
                 sql.AppendFormat(",{0}.id_media, {1} as date_num, sum({2}) as unit", DATA_TABLE_PREFIXE, dateField, unitField);
             }
             else {
                 sql.AppendFormat("  select {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
                 sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
-                sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE);
+				sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
                 sql.AppendFormat(",{0}.id_media, sum({1}) as unit", DATA_TABLE_PREFIXE, unitField);
             }
             //From
             sql.AppendFormat(" from {0}", dataTableName);
-            sql.AppendFormat(",{0}{1} {2}", schAdExpress.Sql, _session.MediaAgencyFileYear, CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE);
+			sql.AppendFormat(",{0}.{1} {2}", schAdExpress.Label, tblAdvertisingAgengy.Label, tblAdvertisingAgengy.Prefix);
+			sql.AppendFormat(",{0}.{1} {2}", schAdExpress.Label, tblGroupAdvertisingAgengy.Label, tblGroupAdvertisingAgengy.Prefix);
             //Where
 
             // Période
@@ -215,10 +219,10 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 sql.AppendFormat(" {0}", dataJointForInsert);
 
             //Jointures groupe agences/agences		
-            sql.AppendFormat(" and {0}.id_product(+)={1}.id_product ", CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE, DATA_TABLE_PREFIXE);
-            sql.AppendFormat(" and {0}.id_language(+)={1} ", CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE, _session.SiteLanguage);
-            // Vehicle
-            sql.AppendFormat(" and {0}.id_vehicle(+)={1} ", CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE, _vehicle.GetHashCode());
+			sql.AppendFormat(" and {0}.ID_ADVERTISING_AGENCY(+)={1}.ID_ADVERTISING_AGENCY ", tblAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
+			sql.AppendFormat(" and {0}.id_language(+)={1}", tblAdvertisingAgengy.Prefix, _session.SiteLanguage);
+			sql.AppendFormat(" and {0}.ID_GROUP_ADVERTISING_AGENCY(+)={1}.ID_GROUP_ADVERTISING_AGENCY ", tblGroupAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
+			sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.SiteLanguage);
 
             #region Sélection de Médias
             while (_session.CompetitorUniversMedia[positionUnivers] != null) {
@@ -295,13 +299,13 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
                 sql.AppendFormat("  group by {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
                 sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
-                sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE);
+				sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
                 sql.AppendFormat(",{0}.id_media, {1} ", DATA_TABLE_PREFIXE, dateField);
             }
             else {
                 sql.AppendFormat("  group by {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
                 sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
-                sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE);
+				sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
                 sql.AppendFormat(",{0}.id_media ", DATA_TABLE_PREFIXE);
             }
             #endregion
@@ -495,13 +499,13 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                     }
                     catch (SQLGeneratorException) { ;}
                 }
-                //Agence_media
-                if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency) || _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency))
-                {
-                    mediaAgencyTable = schAdEx.Label + "." + _session.MediaAgencyFileYear + " " + CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ",";
-                    mediaAgencyJoins = "And " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_product=" + CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_product ";
-                    mediaAgencyJoins += "And " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_vehicle=" + CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_vehicle ";
-                }
+				////Agence_media
+				//if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency) || _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency))
+				//{
+				//    mediaAgencyTable = schAdEx.Label + "." + _session.MediaAgencyFileYear + " " + CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ",";
+				//    mediaAgencyJoins = "And " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_product=" + CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_product ";
+				//    mediaAgencyJoins += "And " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_vehicle=" + CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_vehicle ";
+				//}
             }
             catch (Exception e) {
                 throw (new PresentAbsentDALException("Unable to intialise request parameters :" + e.Message));
@@ -510,7 +514,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             try {
                 if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
                 {
-                    sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2}, {3}, {4} as date_num, sum({5}) as unit"
+                    sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2} {3}, {4} as date_num, sum({5}) as unit"
                         , WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix
                         , columnDetailLevel
                         , productFieldName
@@ -834,7 +838,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             sql.AppendFormat(" from {0} ", tblMedia.SqlWithPrefix);
             if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.category)
             {
-                sql.AppendFormat(", {0}, {1} ", tblBasicMedia.Prefix, tblCategory.Prefix);
+				sql.AppendFormat(", {0}, {1} ", tblBasicMedia.SqlWithPrefix, tblCategory.SqlWithPrefix);
             }
 
             #region Sélection de Médias
@@ -852,8 +856,8 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             {
                 sql.AppendFormat(" and {0}.id_basic_media={1}.id_basic_media and {0}.id_category={2}.id_category and {0}.id_language={3} and {2}.id_language={3}"
                     , tblBasicMedia.Prefix
-                    , tblMedia
-                    , tblCategory
+                    , tblMedia.Prefix
+                    , tblCategory.Prefix
                     , _session.SiteLanguage);
             }
 

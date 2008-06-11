@@ -654,12 +654,12 @@ namespace TNS.AdExpress.Portofolio.DAL {
                     }
                     catch(SQLGeneratorException) { ;}
                 }
-                //Agence_media
-                if(_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency)||_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency)) {
-                    mediaAgencyTable=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql+"."+_webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+",";
-                    mediaAgencyJoins="And "+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix+".id_product="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_product ";
-                    mediaAgencyJoins+="And "+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix+".id_vehicle="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_vehicle ";
-                }
+				////Agence_media
+				//if(_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency)||_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency)) {
+				//    mediaAgencyTable=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql+"."+_webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+",";
+				//    mediaAgencyJoins="And "+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix+".id_product="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_product ";
+				//    mediaAgencyJoins+="And "+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix+".id_vehicle="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_vehicle ";
+				//}
             }
             catch(System.Exception err) {
                 throw (new PortofolioDALException("Impossible d'initialiser les paramètres de la requêtes",err));
@@ -766,12 +766,12 @@ namespace TNS.AdExpress.Portofolio.DAL {
                     }
                     catch(SQLGeneratorException) { ;}
                 }
-                //Agence_media
-                if(_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency)||_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency)) {
-                    mediaAgencyTable=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql+"."+_webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+",";
-                    mediaAgencyJoins="And "+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix+".id_product="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_product ";
-                    mediaAgencyJoins+="And "+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix+".id_vehicle="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_vehicle ";
-                }
+				////Agence_media
+				//if(_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency)||_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency)) {
+				//    mediaAgencyTable=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql+"."+_webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+",";
+				//    mediaAgencyJoins="And "+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix+".id_product="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_product ";
+				//    mediaAgencyJoins+="And "+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix+".id_vehicle="+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_vehicle ";
+				//}
             }
             catch(Exception e) {
                 throw (new PortofolioDALException("Impossible d'initialiser les paramètres de la requêtes"+e.Message));

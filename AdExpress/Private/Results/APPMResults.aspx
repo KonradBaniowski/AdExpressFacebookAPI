@@ -74,18 +74,7 @@
 			                    <tr class="whiteBackGround">
 				                    <td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" runat="server" AutoPostBackOption="False" InitializeSlogans="True"
 						                    InitializeProduct="False"></cc2:initializeproductwebcontrol></td>
-			                    </tr>
-			                    <%if(displayMediaAgencyList){%>
-			                    <tr class="whiteBackGround">
-				                    <td></td>
-			                    </tr>
-			                    <tr class="whiteBackGround">
-				                    <td class="txtGris11Bold"><cc3:adexpresstext language="33" id="mediaAgencyText" runat="server" Code="1580"></cc3:adexpresstext></td>
-			                    </tr>
-			                    <tr>
-				                    <td style="HEIGHT: 7px" class="whiteBackGround"><cc5:mediaagencyyearwebcontrol id="MediaAgencyYearWebControl1" runat="server"></cc5:mediaagencyyearwebcontrol></td>
-			                    </tr>
-			                    <%}%>
+			                    </tr>			                   
 			                    <tr class="whiteBackGround">
 				                    <td style="HEIGHT: 9px"></td>
 			                    </tr>

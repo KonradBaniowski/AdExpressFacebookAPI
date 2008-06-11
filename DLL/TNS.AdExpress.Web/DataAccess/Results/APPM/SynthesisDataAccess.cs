@@ -662,7 +662,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql+=DBSchema.ADEXPRESS_SCHEMA+"."+DBTables.ADVERTISER+" "+DBTables.ADVERTISER_PREFIXE+", ";
 			sql+=DBSchema.ADEXPRESS_SCHEMA+"."+DBTables.PRODUCT+" "+DBTables.PRODUCT_PREFIXE+", ";
 			if(mediaAgencyAccess){
-				sql+=DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+", ";
+				//sql+=DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+", ";
+				sql += DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBTables.ADVERTISING_AGENCY + " " + DBTables.ADVERTISING_AGENCY_PREFIXE + ", ";
+
 			}
 			//sql+=DBSchema.ADEXPRESS_SCHEMA+"."+", ";
 					
@@ -683,7 +685,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
 			sql+=DBSchema.ADEXPRESS_SCHEMA+"."+DBTables.BRAND+" "+DBTables.BRAND_PREFIXE+", ";
 			if(mediaAgencyAccess){
-				sql+=DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+", ";
+				//sql+=DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+", ";
+				sql += DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBTables.ADVERTISING_AGENCY + " " + DBTables.ADVERTISING_AGENCY_PREFIXE + ", ";
+
 			}			
 					
 			return(sql);
@@ -705,9 +709,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql+=" and "+DBTables.ADVERTISER_PREFIXE+".id_advertiser="+DBTables.WEB_PLAN_PREFIXE+".id_advertiser ";
 			sql+=" and "+DBTables.ADVERTISER_PREFIXE+".id_language="+languageId.ToString();
 			if(mediaAgencyAccess){
-				sql+=" and "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_product(+)="+DBTables.WEB_PLAN_PREFIXE+".id_product";
-				sql+=" and "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_language(+)="+DBConstantes.Language.FRENCH;	
-				sql+=" and "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_vehicle(+)="+DBTables.WEB_PLAN_PREFIXE+".id_vehicle ";
+				sql += " and " + DBConstantes.Tables.ADVERTISING_AGENCY_PREFIXE + ".ID_ADVERTISING_AGENCY(+)=" + DBTables.WEB_PLAN_PREFIXE + ".ID_ADVERTISING_AGENCY";
+				sql += " and " + DBConstantes.Tables.ADVERTISING_AGENCY_PREFIXE + ".id_language(+)=" + DBConstantes.Language.FRENCH;
 			}
 			sql+=" and ";
 			return(sql);
@@ -735,9 +738,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 				sql+=" and "+DBTables.BRAND_PREFIXE+".id_language="+languageId.ToString();
 			}
 			if(mediaAgencyAccess){
-				sql+=" and "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_product(+)="+tablePrefixe+".id_product";
-				sql+=" and "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_language(+)="+DBConstantes.Language.FRENCH;	
-				sql+=" and "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+".id_vehicle(+)="+tablePrefixe+".id_vehicle ";
+				sql += " and " + DBConstantes.Tables.ADVERTISING_AGENCY_PREFIXE + ".ID_ADVERTISING_AGENCY(+)=" + tablePrefixe + ".ID_ADVERTISING_AGENCY";
+				sql += " and " + DBConstantes.Tables.ADVERTISING_AGENCY_PREFIXE + ".id_language(+)=" + DBConstantes.Language.FRENCH;
 			}
 			sql+=" and ";
 			return(sql);

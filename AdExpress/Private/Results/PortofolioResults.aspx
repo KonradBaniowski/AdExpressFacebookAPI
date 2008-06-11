@@ -80,21 +80,7 @@
 					<td style="HEIGHT: 9px"><cc2:genericmedialeveldetailselectionwebcontrol id="_genericMediaLevelDetailSelectionWebControl" runat="server" GenericDetailLevelComponentProfile="product"
 							GenericDetailLevelType="dynamicCompetitorPotential" NbDetailLevelItemList="3" Width="200px" SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx"
 							RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx"></cc2:genericmedialeveldetailselectionwebcontrol></td>
-				</tr>
-				<%if(displayMediaAgencyList){%>
-				<tr class="whiteBackGround" height="5">
-					<td></td>
-				</tr>
-				<tr class="whiteBackGround">
-					<td class="txtGris11Bold" style="HEIGHT: 18px"><cc3:adexpresstext language="33" id="mediaAgencyText" runat="server" Code="1580"></cc3:adexpresstext></td>
-				</tr>
-				<tr>
-					<td class="whiteBackGround" height="5"><cc5:mediaagencyyearwebcontrol id="MediaAgencyYearWebControl1" runat="server"></cc5:mediaagencyyearwebcontrol></td>
-				</tr>
-				<tr class="whiteBackGround" height="3">
-					<td></td>
-				</tr>
-				<%}%>
+				</tr>				
 				<tr class="whiteBackGround" height="5">
 					<td></td>
 				</tr>

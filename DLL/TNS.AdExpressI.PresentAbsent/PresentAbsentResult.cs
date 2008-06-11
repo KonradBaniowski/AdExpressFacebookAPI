@@ -842,10 +842,11 @@ namespace TNS.AdExpressI.PresentAbsent
                         {
                             data.SetLineStart(new LineHide(data.GetLineStart(i).LineType), i);
                         }
-                        for (int j = curLevel.Level + 1; j < nbLevelToShow.Length; j++)
-                        {
-                            nbLevelToShow[j] = 0;
-                        }
+						if (!(data[i, 0] is LineStart && ((LineStart)data[i, 0]).LineType == LineType.nbParution)) {
+							for (int j = curLevel.Level + 1; j < nbLevelToShow.Length; j++) {
+								nbLevelToShow[j] = 0;
+							}
+						}
                     }
                 }
             }

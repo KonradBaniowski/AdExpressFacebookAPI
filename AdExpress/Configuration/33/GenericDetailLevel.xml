@@ -15,8 +15,8 @@
 		<level id="12" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc"/>
 		<level id="13" name="Groupe" webTextId="1110" dbId="id_group_" dbLabel="group_" dbTable="group_" dbTablePrefixe="gr"/>
 		<level id="14" name="Variété" webTextId="592" dbId="id_segment" dbLabel="segment" dbTable="segment" dbTablePrefixe="sg"/>
-		<level id="15" name="Groupe d'agence" webTextId="1890" dbId="id_group_advertising_agency" dbLabel="group_advertising_agency" dbTablePrefixe="pga" toTrack="true"/>
-		<level id="16" name="Agence" webTextId="1891" dbId="id_advertising_agency" dbLabel="advertising_agency" dbTablePrefixe="pga" toTrack="true"/>
+    <level id="15" name="Groupe d'agence" webTextId="1890" dbId="id_group_advertising_agency" dbLabel="group_advertising_agency" dbTable="group_advertising_agency" dbTablePrefixe="gadv" toTrack="true"/>
+    <level id="16" name="Agence" webTextId="1891" dbId="id_advertising_agency" dbLabel="advertising_agency" dbTable="advertising_agency" dbTablePrefixe="adva" toTrack="true"/>
 		<level id="17" name="Titre" webTextId="1976" dbId="id_title" dbLabel="title" dbTable="title" dbTablePrefixe="tt"/>
 		<level id="18" name="Date" webTextId="895"  dbId="date_media_num" dbIdAlias="date_num" dbLabel="date_media_num" dbLabelAlias="date_media_num" dbTablePrefixe="wp"/>
 		<level id="19" name="Durée" webTextId="1933"  dbId="duration" dbIdAlias="id_duration" dbLabel="duration" dbLabelAlias="duration"/>

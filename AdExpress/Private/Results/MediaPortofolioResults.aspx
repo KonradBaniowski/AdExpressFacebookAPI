@@ -69,21 +69,7 @@
 							RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" GenericDetailLevelType="dynamicCompetitorPotential"
 							GenericDetailLevelComponentProfile="product" Width="200px" NbDetailLevelItemList="3"></cc2:genericmedialeveldetailselectionwebcontrol></td>
 				</tr>
-				<%}%>
-				<%if(displayMediaAgencyList){%>
-				<tr class="whiteBackGround" height="5">
-					<td></td>
-				</tr>
-				<tr class="whiteBackGround">
-					<td class="txtGris11Bold"><cc3:adexpresstext language="33" id="mediaAgencyText" runat="server" Code="1580"></cc3:adexpresstext></td>
-				</tr>
-				<tr>
-					<td class="whiteBackGround" height="5"><cc5:mediaagencyyearwebcontrol id="MediaAgencyYearWebControl1" runat="server"></cc5:mediaagencyyearwebcontrol></td>
-				</tr>
-				<tr class="whiteBackGround" height="3">
-					<td></td>
-				</tr>
-				<%}%>
+				<%}%>				
 				<%if(press){%>
 				<!--Fin Niveaux Produits-->
 				<tr vAlign="top" class="whiteBackGround">

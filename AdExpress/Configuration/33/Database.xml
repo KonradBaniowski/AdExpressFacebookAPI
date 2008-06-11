@@ -91,7 +91,10 @@
     <table enumId="137" description="Right: Module category" schemaEnumId="2" label="module_category" prefix="mc"/>
     <table enumId="138" description="Right: Flag" schemaEnumId="2" label="flag" prefix="fg"/>
     <table enumId="139" description="Right: Project flag assignment" schemaEnumId="2" label="flag_project_assignment" prefix="fgpa"/>
-    <!--<table enumId="6" description="List table" schemaEnumId="5" label="list" prefix="lst"/>-->
+    
+    <table enumId="201" description="Classif: Advertising agency" schemaEnumId="0" label="advertising_agency" prefix="adva"/>
+    <table enumId="202" description="Classif: Group Advertising agency" schemaEnumId="0" label="group_advertising_agency" prefix="gadv"/>
+
   </tables>
 </database>
 

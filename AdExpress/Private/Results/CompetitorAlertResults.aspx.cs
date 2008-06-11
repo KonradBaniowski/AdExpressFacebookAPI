@@ -255,7 +255,7 @@ namespace AdExpress.Private.Results{
 				if(vehicleSelection==null || vehicleSelection.IndexOf(",")>0) throw(new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 				#endregion
 
-				displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
+				//displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
 
 				#region choix du type d'encarts
 						
@@ -347,7 +347,7 @@ namespace AdExpress.Private.Results{
 			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession=_webSession;
             _genericColumnLevelDetailSelectionWebControl1.CustomerWebSession = _webSession;
 			InitializeProductWebControl1.CustomerWebSession=_webSession;
-			MediaAgencyYearWebControl1.WebSession=_webSession;
+			//MediaAgencyYearWebControl1.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 
 			#region Gestion PDM (on affiche pas PDM si un seul support est selectionné)
@@ -380,8 +380,10 @@ namespace AdExpress.Private.Results{
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender (e);
 			try{
-
-                if (_vehicleName == DBClassificationConstantes.Vehicles.names.press || _vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress)
+				TNS.AdExpress.Domain.Level.DetailLevelItemInformation columnDetailLevel = (TNS.AdExpress.Domain.Level.DetailLevelItemInformation)_webSession.GenericColumnDetailLevel.Levels[0];
+				string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
+				_vehicleName = (DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
+				if ((_vehicleName == DBClassificationConstantes.Vehicles.names.press || _vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress) && columnDetailLevel.Id == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.media)
                     _resultWebControl.NbTableBeginningLinesToRepeat = 2;
                 else
                 {

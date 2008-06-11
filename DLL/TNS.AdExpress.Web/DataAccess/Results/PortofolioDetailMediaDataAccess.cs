@@ -85,8 +85,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 
 			try{
 				DataTable dt=TNS.AdExpress.Web.DataAccess.Results.MediaAgencyDataAccess.GetListYear(webSession).Tables[0];
-				
-				if(dt!=null && dt.Rows.Count>0){
+
+				if (dt != null && dt.Rows.Count > 0) {
 					//On récupère la dernière année des agences médias
 					mediaAgencyYear = dt.Rows[0]["year"].ToString();
 				}
@@ -300,8 +300,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results
         /// <param name="dateBegin">date de début</param>
         /// <param name="dateEnd">date de fin</param>		
         /// <returns>liste des publicités pour un média donné</returns>
-        public static DataSet GetGenericDetailMedia(WebSession webSession, Int64 idVehicle, Int64 idMedia, string mediaAgencyYear, string dateBegin, string dateEnd) {
-            return GetGenericDetailMedia(webSession, idVehicle, idMedia, mediaAgencyYear, dateBegin, dateEnd, "", false);
+		public static DataSet GetGenericDetailMedia(WebSession webSession, Int64 idVehicle, Int64 idMedia, string dateBegin, string dateEnd) {
+		//public static DataSet GetGenericDetailMedia(WebSession webSession, Int64 idVehicle, Int64 idMedia, string mediaAgencyYear, string dateBegin, string dateEnd) {
+            return GetGenericDetailMedia(webSession, idVehicle, idMedia, dateBegin, dateEnd, "", false);
         }
 
         /// <summary>
@@ -315,7 +316,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 		/// <param name="code_ecran">code ecran</param>
 		/// <param name="allPeriod">vrai si le détail des insertions concerne toute la période sélectionnée</param>
 		/// <returns>liste des publicités pour un média donné</returns>
-        public static DataSet GetGenericDetailMedia(WebSession webSession, Int64 idVehicle, Int64 idMedia, string mediaAgencyYear, string dateBegin, string dateEnd, string code_ecran, bool allPeriod) {
+		public static DataSet GetGenericDetailMedia(WebSession webSession, Int64 idVehicle, Int64 idMedia,string dateBegin, string dateEnd, string code_ecran, bool allPeriod) {
+		//public static DataSet GetGenericDetailMedia(WebSession webSession, Int64 idVehicle, Int64 idMedia, string mediaAgencyYear, string dateBegin, string dateEnd, string code_ecran, bool allPeriod) {
 
             #region Constantes
             const string DATA_TABLE_PREFIXE = "wp";
@@ -346,7 +348,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                     sql.Append(" " + sqlFields);
                 }
 
-                if (mediaAgencyYear.Length > 0) sql.Append(" , advertising_agency");
+				if (webSession.GenericInsertionColumns.ContainColumnItem(TNS.AdExpress.Web.Core.GenericColumnItemInformation.Columns.agenceMedia))
+					sql.Append(" , advertising_agency");
 
                 if (idVehicle == DBClassificationConstantes.Vehicles.names.press.GetHashCode() || idVehicle == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode())
                     sql.Append(" , date_cover_num");
@@ -361,8 +364,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 
                 sql.Append(" from ");
                 sql.Append(" " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + tableName + " " + DbTables.WEB_PLAN_PREFIXE);
-                if (mediaAgencyYear.Length > 0)
-                    sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.PRODUCT_GROUP_ADV_AGENCY + mediaAgencyYear + " pgaa ");
+				if (webSession.GenericInsertionColumns.ContainColumnItem(TNS.AdExpress.Web.Core.GenericColumnItemInformation.Columns.agenceMedia))
+					sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ADVERTISING_AGENCY + "  " + DBConstantes.Tables.ADVERTISING_AGENCY_PREFIXE);
                 sqlTables = webSession.GenericInsertionColumns.GetSqlTables(DBConstantes.Schema.ADEXPRESS_SCHEMA, null);
                 if (sqlTables.Length > 0) {
                     sql.Append(" ," + sqlTables);
@@ -397,12 +400,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DATA_TABLE_PREFIXE, true);
                 orderby = GetOrderByDetailMedia((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), allPeriod,true);
 
-                // Agence média
-                if (mediaAgencyYear.Length > 0) {
-                    sql.Append(" and pgaa.id_product(+)=wp.id_product ");
-                    sql.Append(" and pgaa.id_language(+)=" + webSession.SiteLanguage + " ");
-                    sql.Append(" and pgaa.id_vehicle(+)=" + idVehicle + " ");
-                }
+				//// Agence média
+				//if (mediaAgencyYear.Length > 0) {
+				//    sql.Append(" and pgaa.id_product(+)=wp.id_product ");
+				//    sql.Append(" and pgaa.id_language(+)=" + webSession.SiteLanguage + " ");
+				//    sql.Append(" and pgaa.id_vehicle(+)=" + idVehicle + " ");
+				//}
 
                 #region Droits
                 //liste des produit hap

@@ -659,7 +659,16 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Product Group Advertising Agency
         /// </summary>
-        productGroupAgency=200
+        productGroupAgency=200,
+		/// <summary>
+		/// Advertising Agency
+		/// </summary>
+		advertisingAgency=201,
+		/// <summary>
+		/// Group Advertising Agency
+		/// </summary>
+		groupAdvertisingAgency=202
+
     } 
     #endregion
 

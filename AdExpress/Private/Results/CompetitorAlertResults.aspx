@@ -75,20 +75,7 @@
 							GenericDetailLevelComponentProfile="product" RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx"
 							NbDetailLevelItemList="3"></cc2:genericmedialeveldetailselectionwebcontrol></TD>
 				</tr>
-				<%if(displayMediaAgencyList){%>
-				<tr class="whiteBackGround" height="5">
-					<td></td>
-				</tr>
-				<tr class="whiteBackGround">
-					<td class="txtGris11Bold"><cc3:adexpresstext language="33" id="mediaAgencyText" runat="server" Code="1580"></cc3:adexpresstext></td>
-				</tr>
-				<tr>
-					<td style="HEIGHT: 12px" class="whiteBackGround" height="15"><cc5:mediaagencyyearwebcontrol id="MediaAgencyYearWebControl1" runat="server"></cc5:mediaagencyyearwebcontrol></td>
-				</tr>
-				<tr class="whiteBackGround">
-					<td></td>
-				</tr>
-				<%}%>
+				
 				<tr class="whiteBackGround">
 					<td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" runat="server" AutoPostBackOption="False" InitializeProduct="True"></cc2:initializeproductwebcontrol></td>
 				</tr>

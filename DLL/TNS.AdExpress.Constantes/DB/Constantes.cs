@@ -193,7 +193,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// Chaîne de connexion à la base de données pour les textes du site AdExpress
 		/// </summary>
-		public const string CUSTOMER_TNS_NAME="adexpr03.pige";
+		public const string CUSTOMER_TNS_NAME="adexpr03.pige";		
 
 		#endregion
 	}
@@ -1030,6 +1030,23 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Table COUNTRY
 		/// </summary>
 		public const string COUNTRY="country";
+
+		/// <summary>
+		/// Préfixe table ADVERTISING_AGENCY_PREFIXE
+		/// </summary>
+		public const string ADVERTISING_AGENCY_PREFIXE = "adva";
+		/// <summary>
+		/// Table ADVERTISING_AGENCY
+		/// </summary>
+		public const string ADVERTISING_AGENCY = "ADVERTISING_AGENCY";
+		/// <summary>
+		/// Préfixe table GROUP_ADVERTISING_AGENCY_PREFIXE
+		/// </summary>
+		public const string GROUP_ADVERTISING_AGENCY_PREFIXE = "gadv";
+		/// <summary>
+		/// Préfixe table GROUP_ADVERTISING_AGENCY
+		/// </summary>
+		public const string GROUP_ADVERTISING_AGENCY = "GROUP_ADVERTISING_AGENCY";
 		#endregion
 	}
 

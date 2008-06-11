@@ -161,9 +161,9 @@ namespace AdExpress.Private.Results{
 				if(vehicleSelection==null || vehicleSelection.IndexOf(",")>0) throw(new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 				#endregion
 
-				#region Agence média
-				displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
-				#endregion
+				//#region Agence média
+				//displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
+				//#endregion
 
 				#region Option encart
 				ResultsOptionsWebControl1.InsertOption=false;											
@@ -235,7 +235,7 @@ namespace AdExpress.Private.Results{
 			Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;			
 			InitializeProductWebControl1.CustomerWebSession=_webSession;	
-			MediaAgencyYearWebControl1.WebSession=_webSession;
+			//MediaAgencyYearWebControl1.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession = _webSession;
 			_ResultWebControl.CustomerWebSession = _webSession;

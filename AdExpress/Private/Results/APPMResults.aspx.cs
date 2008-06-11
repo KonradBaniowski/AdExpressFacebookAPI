@@ -130,7 +130,7 @@ namespace AdExpress.Private.Results{
 				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
 				_siteLanguage=_webSession.SiteLanguage;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
-                mediaAgencyText.Language = _webSession.SiteLanguage;
+				//mediaAgencyText.Language = _webSession.SiteLanguage;
                 InformationWebControl1.Language = _webSession.SiteLanguage;
                 HeaderWebControl1.Language = _webSession.SiteLanguage;
 				#endregion
@@ -278,7 +278,7 @@ namespace AdExpress.Private.Results{
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();			
 			Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
-			MediaAgencyYearWebControl1.WebSession=_webSession;
+			//MediaAgencyYearWebControl1.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
             AppmContainerWebControl1.CustomerWebSession = _webSession;
             GenericMediaScheduleWebControl1.CustomerWebSession = _webSession;
@@ -414,7 +414,7 @@ namespace AdExpress.Private.Results{
 					_webSession.SecondaryProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 					break;
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.synthesis :
-					displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
+					//displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
 					ResultsOptionsWebControl1.ProductsOption=true;	
 					if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
 						//unité en euro pour cette planche
