@@ -462,7 +462,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                         dateField = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + CstDB.Fields.DATE_MEDIA_NUM;
                         break;
                     case CstDB.TableType.Type.webPlan:
-                        dataTableName = CstDB.Tables.WEB_PLAN_MEDIA_MONTH;
+                        dataTableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix;
                         dateField = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + CstDB.Fields.WEB_PLAN_MEDIA_MONTH_DATE_FIELD;
                         break;
                     default:
@@ -565,8 +565,8 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                         }
                         break;
                     case CstDB.TableType.Type.webPlan:
-                        sql.AppendFormat(" where {0} >= {1}", dateField, customerPeriod.PeriodDayBegin[0].ToString().Substring(0, 6));
-                        sql.AppendFormat(" and {0} <= {1}", dateField, customerPeriod.PeriodDayEnd[0].ToString().Substring(0, 6));
+                        sql.AppendFormat(" where {0} >= {1}", dateField, customerPeriod.PeriodMonthBegin[0].ToString().Substring(0, 6));
+                        sql.AppendFormat(" and {0} <= {1}", dateField, customerPeriod.PeriodMonthEnd[0].ToString().Substring(0, 6));
                         break;
                 }
                 // Jointures Produits
