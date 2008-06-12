@@ -244,6 +244,14 @@ background:url(/App_Themes/DefaultAdExpressFr/Images/Common/dupli_2.gif);
 	border-left: #ffffff 0px solid; 
 	border-right: #ffffff 0px solid;
 }
+
+.BlancNoBorderColor{
+	border-bottom: #ffffff 0px solid; 
+	border-left: #ffffff 0px solid; 
+	border-right: #ffffff 0px solid;
+	border-top: #ffffff 0px solid;
+}
+
 .BlancTopBorder{
 	border-top : #FFFFFF 1px solid;
 }

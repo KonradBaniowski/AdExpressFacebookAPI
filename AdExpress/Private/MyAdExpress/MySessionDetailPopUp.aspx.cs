@@ -209,7 +209,9 @@ namespace AdExpress.Private.MyAdExpress{
 
 				#region Langage
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+                for (int j = 0; j < this.Controls.Count; j++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[j].Controls, _webSession.SiteLanguage);
+                }
 				#endregion
 
 				//Rollover

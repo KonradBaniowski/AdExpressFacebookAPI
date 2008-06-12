@@ -21,10 +21,10 @@ namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
 	/// Classe utilisé pour l'affichage des plaquettes Fichiers resultats
 	/// </summary>
-	public class FilesItemUI{
+	public class FilesItemUI {
 
-		#region Méthodes pour la sortie HTML
-		/// <summary>
+        #region Méthodes pour la sortie HTML
+        /// <summary>
 		/// Fonction pour la construction du code html pour l'affichage des plaquettes Fichiers resultats
 		/// </summary>
 		/// <returns>Source html du résultat</returns>
@@ -32,6 +32,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 			#region Variables
 			System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
+            string themeName = page.Theme;
 			int compteur=0;
 			int start=1;
 			#endregion
@@ -49,34 +50,34 @@ namespace TNS.AdExpress.Web.UI.Results{
 				
 					if (currentName!=null){
 						if (start==1){
-							t.Append("\n<table bgColor=\"#ffffff\" style=\"border-top :#644883 1px solid;  border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">");
+                            t.Append("\n<table class=\"txtViolet11Bold violetBorder whiteBackGround\"  cellpadding=0 cellspacing=0 width=\"650\">");
 							t.Append("\n<tr onClick=\"javascript : showHideContent('"+currentName.Name+"');\" style=\"cursor : hand\">");
 							t.Append("\n<td>&nbsp;"+ currentName.Name + "</td>");
-							t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/Images/Common/button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
+                            t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + themeName + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
 							t.Append("\n</tr></table>");
 							start=0;
 						}
 						else if (start==0){
-							t.Append("\n<table bgColor=\"#ffffff\" style=\"border-top :#644883 0px solid;  border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">");
+                            t.Append("\n<table class=\"txtViolet11Bold violetBorderWithoutTop whiteBackGround\"  cellpadding=0 cellspacing=0 width=\"650\">");
 							t.Append("\n<tr onClick=\"javascript : showHideContent('"+currentName.Name+"');\" style=\"cursor : hand\">");
 							t.Append("\n<td>&nbsp;"+ currentName.Name + "</td>");
-							t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/Images/Common/button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
+                            t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
 							t.Append("\n</tr></table>");
 						}
 
-						t.Append("<div id=\""+currentName.Name+"Content\" style=\"MARGIN-LEFT: 0px; BORDER-TOP: #ffffff 0px solid; BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none;\" >");
-						t.Append("\n<table id=\""+currentName.Name+"\" style=\"border-top :#644883 0px solid; border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet10\" bgcolor=#DED8E5 width=\"650\">");
+                        t.Append("<div id=\"" + currentName.Name + "Content\" style=\"MARGIN-LEFT: 0px; DISPLAY: none;\" class=\"BlancNoBorderColor\" >");
+                        t.Append("\n<table id=\"" + currentName.Name + "\" class=\"txtViolet10 lightPurple violetBorderWithoutTop\" width=\"650\">");
 						compteur=0;
 						for(int i=0; i<currentName.List.GetLength(1) && currentName.List[0,i]!=null; i++){
 							if(compteur==0){ 
 								switch(currentName.Type){
 									
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmInsertionDetail:
-										t.Append("\n<tr><td width=50%><a href=\""+ currentName.List[1,i].ToString() +"\" target=\"_blank\"><img src=\"/Images/Common/LogoText.gif\" border=\"0\" alt=\""+ currentName.List[0,i].ToString() +"\"></a>&nbsp;<a href=\""+ currentName.List[1,i].ToString() +"\" class=\"roll02\" target=\"_blank\">"+ currentName.List[0,i].ToString() +"</a></td>");
+                                        t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/LogoText.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
 										break;
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmExcel:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.amset:
-										t.Append("\n<tr><td width=50%><a href=\""+ currentName.List[1,i].ToString() +"\" target=\"_blank\"><img src=\"/Images/Common/LogoExcel.gif\" border=\"0\" alt=\""+ currentName.List[0,i].ToString() +"\"></a>&nbsp;<a href=\""+ currentName.List[1,i].ToString() +"\" class=\"roll02\" target=\"_blank\">"+ currentName.List[0,i].ToString() +"</a></td>");
+                                        t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/LogoExcel.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
 										break;	
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appm:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.hotep:
@@ -84,7 +85,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 									case TNS.AdExpress.Anubis.Constantes.Result.type.mnevis:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.shou:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.aton:
-										t.Append("\n<tr><td width=50%><a href=\""+ currentName.List[1,i].ToString() +"\" target=\"_blank\"><img src=\"/Images/Common/logoPDF.gif\" border=\"0\" alt=\""+ currentName.List[0,i].ToString() +"\"></a>&nbsp;<a href=\""+ currentName.List[1,i].ToString() +"\" class=\"roll02\" target=\"_blank\">"+ currentName.List[0,i].ToString() +"</a></td>");
+                                        t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/logoPDF.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
 										break;
 								}	
 								compteur=1;
@@ -93,11 +94,11 @@ namespace TNS.AdExpress.Web.UI.Results{
 								switch(currentName.Type){ 
 									
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmInsertionDetail:
-										t.Append("\n<td width=50%><a href=\""+ currentName.List[1,i].ToString() +"\" target=\"_blank\"><img src=\"/Images/Common/LogoText.gif\" border=0 alt=\""+ currentName.List[0,i].ToString() +"\"></a>&nbsp;<a href=\""+ currentName.List[1,i].ToString() +"\" class=\"roll02\" target=\"_blank\">"+ currentName.List[0,i].ToString() +"</a></td></tr>");
+                                        t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/LogoText.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
 										break;
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmExcel:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.amset:
-										t.Append("\n<td width=50%><a href=\""+ currentName.List[1,i].ToString() +"\" target=\"_blank\"><img src=\"/Images/Common/LogoExcel.gif\" border=0 alt=\""+ currentName.List[0,i].ToString() +"\"></a>&nbsp;<a href=\""+ currentName.List[1,i].ToString() +"\" class=\"roll02\" target=\"_blank\">"+ currentName.List[0,i].ToString() +"</a></td></tr>");
+                                        t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/LogoExcel.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
 										break;	
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appm:								
 									case TNS.AdExpress.Anubis.Constantes.Result.type.hotep:
@@ -105,7 +106,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 									case TNS.AdExpress.Anubis.Constantes.Result.type.mnevis:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.shou:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.aton:
-										t.Append("\n<td width=50%><a href=\""+ currentName.List[1,i].ToString() +"\" target=\"_blank\"><img src=\"/Images/Common/logoPDF.gif\" border=0 alt=\""+ currentName.List[0,i].ToString() +"\"></a>&nbsp;<a href=\""+ currentName.List[1,i].ToString() +"\" class=\"roll02\" target=\"_blank\">"+ currentName.List[0,i].ToString() +"</a></td></tr>");
+                                        t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/logoPDF.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
 										break;
 								}
 								compteur=0;
