@@ -282,7 +282,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.Append("\r\n<script language=javascript>\r\n");
 
             #region Css links
-            js.Append(CssLinks());
+            //js.Append(CssLinks());
             #endregion
 
             #region Initialisation
@@ -402,26 +402,26 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         #region Functions
 
         #region Css links
-        /// <summary>
-        /// Css links
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string CssLinks() { 
-            StringBuilder js = new StringBuilder();
+        ///// <summary>
+        ///// Css links
+        ///// </summary>
+        ///// <returns></returns>
+        //protected virtual string CssLinks() { 
+        //    StringBuilder js = new StringBuilder();
             
-            js.Append("\r\n\t var GECKO=(navigator.product==(\"Gecko\"));");
+        //    js.Append("\r\n\t var GECKO=(navigator.product==(\"Gecko\"));");
 			
-			js.Append("\r\n\t if(GECKO){");
-            js.Append("\r\n\t\t document.write('<link href=\"/Css/" + _themeName + "/CalendarGecko.css\" rel=\"stylesheet\" type=\"text/css\">');");
-			js.Append("\r\n}\r\n");
+        //    js.Append("\r\n\t if(GECKO){");
+        //    js.Append("\r\n\t\t document.write('<link href=\"/Css/" + _themeName + "/CalendarGecko.css\" rel=\"stylesheet\" type=\"text/css\">');");
+        //    js.Append("\r\n}\r\n");
 
-			js.Append("\r\n\t else{");
-            js.Append("\r\n\t\t document.write('<link href=\"/Css/" + _themeName + "/Calendar.css\" rel=\"stylesheet\" type=\"text/css\">');");
-			js.Append("\r\n\t }");
-            js.Append("\n\n");
+        //    js.Append("\r\n\t else{");
+        //    js.Append("\r\n\t\t document.write('<link href=\"/Css/" + _themeName + "/Calendar.css\" rel=\"stylesheet\" type=\"text/css\">');");
+        //    js.Append("\r\n\t }");
+        //    js.Append("\n\n");
 
-            return (js.ToString());
-        }
+        //    return (js.ToString());
+        //}
         #endregion
 
         #region Initialisation

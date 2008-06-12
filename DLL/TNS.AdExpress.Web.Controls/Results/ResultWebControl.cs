@@ -1169,13 +1169,13 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			#region Variables globales
 			js.Append("\r\n\t var GECKO=(navigator.product==(\"Gecko\"));");
 			
-			js.Append("\r\n\t if(GECKO){");
-            js.Append("\r\n\t\t document.write('<link href=\"/Css/" + themeName + "/DefaultGecko.css\" rel=\"stylesheet\" type=\"text/css\">');");
-			js.Append("\r\n}\r\n");
+            //js.Append("\r\n\t if(GECKO){");
+            //js.Append("\r\n\t\t document.write('<link href=\"/Css/" + themeName + "/DefaultGecko.css\" rel=\"stylesheet\" type=\"text/css\">');");
+            //js.Append("\r\n}\r\n");
 
-			js.Append("\r\n\t else{");
-            js.Append("\r\n\t\t document.write('<link href=\"/Css/" + themeName + "/Default.css\" rel=\"stylesheet\" type=\"text/css\">');");
-			js.Append("\r\n\t }");
+            //js.Append("\r\n\t else{");
+            //js.Append("\r\n\t\t document.write('<link href=\"/Css/" + themeName + "/Default.css\" rel=\"stylesheet\" type=\"text/css\">');");
+            //js.Append("\r\n\t }");
 
 			js.Append("\r\n var IE=document.all;");
 			js.Append("\r\n var grabX=0,grabY=0;");
