@@ -685,6 +685,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                         productFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
                         if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
                             dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+                        sql = new StringBuilder();
                         sql.AppendFormat(" select id_media, columnDetailLevel, {0}{1}, sum(unit) as unit",
                             productFieldNameWithoutTablePrefix,
                             dataFieldsForGadWithoutTablePrefix);
