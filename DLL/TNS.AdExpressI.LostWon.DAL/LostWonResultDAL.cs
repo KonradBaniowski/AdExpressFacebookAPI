@@ -559,7 +559,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 listExcludeProduct = FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
                 //option encarts (pour la presse)
                 if (CstDBClassif.Vehicles.names.press == _vehicle || CstDBClassif.Vehicles.names.internationalPress == _vehicle)
-                    dataJointForInsert = FctWeb.SQLGenerator.getJointForInsertDetail(_session, DATA_TABLE_PREFIXE, type);
+                    dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, DATA_TABLE_PREFIXE, type);
                 if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
                 {
                     try
@@ -745,7 +745,7 @@ namespace TNS.AdExpressI.LostWon.DAL
 
             //option encarts (pour la presse)
             if (CstDBClassif.Vehicles.names.press == _vehicle || CstDBClassif.Vehicles.names.internationalPress == _vehicle)
-                dataJointForInsert = FctWeb.SQLGenerator.getJointForInsertDetail(_session, DATA_TABLE_PREFIXE, type);
+                dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, DATA_TABLE_PREFIXE, type);
 
             sql.AppendFormat("  select {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
             sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);

@@ -3391,7 +3391,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="dataTablePrefixe">Préfixe de la table des données</param>
 		/// <param name="type">Type de la table</param>
 		/// <returns>Jointures</returns>
-		public static string getJointForInsertDetail(WebSession webSession, string dataTablePrefixe, DBConstantes.TableType.Type type) {
+		public static string GetJointForInsertDetail(WebSession webSession, string dataTablePrefixe, DBConstantes.TableType.Type type) {
 
 			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 			switch (webSession.Insert) {
