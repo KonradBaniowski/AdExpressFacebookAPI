@@ -1376,8 +1376,8 @@ namespace TNS.AdExpressI.PresentAbsent
 				if (showCreative) resultTable[currentLineInTabResult, creativeColIndex] = new CellOneLevelCreativesLink(currentCellLevelParution, _session, _session.GenericProductDetailLevel);
 				if (showInsertions) resultTable[currentLineInTabResult, insertionsColIndex] = new CellOneLevelInsertionsLink(currentCellLevelParution, _session, _session.GenericProductDetailLevel);
 				if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevelParution, _session);
-				if (showTotal && !computePDM) resultTable[currentLineInTabResult, totalColIndex] = cellUnitFactory.Get(0.0);
-				if (showTotal && computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellPDM(0.0, null);
+				if (showTotal && !computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellNumber(0.0);
+				if (showTotal && computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellNumber(0.0);
 				for (k = startDataColIndexInit; k <= nbCol; k++) {
 					resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
 				}
