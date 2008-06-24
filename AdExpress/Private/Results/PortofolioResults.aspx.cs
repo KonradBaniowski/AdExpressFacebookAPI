@@ -148,7 +148,7 @@ namespace AdExpress.Private.Results{
                 tabSelected = Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
             }
             catch (System.Exception err) {
-                tabSelected = 0;
+                tabSelected = _webSession.CurrentTab;
             }
             switch (tabSelected) {
                 case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
