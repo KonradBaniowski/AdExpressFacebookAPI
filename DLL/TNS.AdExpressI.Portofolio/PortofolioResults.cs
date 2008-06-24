@@ -1379,16 +1379,17 @@ namespace TNS.AdExpressI.Portofolio {
             headers = new TNS.FrameWork.WebResultUI.Headers();
             // Product column
             headers.Root.Add(new Header(true,GestionWeb.GetWebWord(PROD_COL,_webSession.SiteLanguage),PROD_COL));
+            // Creatives column     
+            if (_showCreatives) {
+                headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(CREATIVES_COL, _webSession.SiteLanguage), CREATIVES_COL));
+                creatives = 1;
+            }
             // Insertions column
             if(_showInsertions) {
                 headers.Root.Add(new HeaderCreative(false,GestionWeb.GetWebWord(INSERTIONS_LIST_COL,_webSession.SiteLanguage),INSERTIONS_LIST_COL));
                 insertions = 1;
             }
-            // Creatives column     
-            if(_showCreatives) {
-                headers.Root.Add(new HeaderCreative(false,GestionWeb.GetWebWord(CREATIVES_COL,_webSession.SiteLanguage),CREATIVES_COL));
-                creatives=1;
-            }
+            
             // Media schedule column
             headers.Root.Add(new HeaderMediaSchedule(false,GestionWeb.GetWebWord(PM_COL,_webSession.SiteLanguage),PM_COL));
 
