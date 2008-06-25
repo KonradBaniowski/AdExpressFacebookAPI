@@ -1189,6 +1189,9 @@ namespace TNS.AdExpressI.Portofolio {
                         //nouveau niveau i
                         dCurLevel = _webSession.GenericProductDetailLevel.GetIdValue(row,i);
                         if(dCurLevel > 0 && (cellLevels[i]==null || dCurLevel!=cellLevels[i].Id)) {
+                            for (int j = i + 1; j < cellLevels.Length; j++) {
+                                cellLevels[j] = null;
+                            }
                             iCurLine++;
                             tab.AddNewLine(lineTypes[i]);
                             tab[iCurLine,1] = cellLevels[i] = new AdExpressCellLevel(dCurLevel,_webSession.GenericProductDetailLevel.GetLabelValue(row,i),cellLevels[i-1],i,iCurLine,_webSession);
