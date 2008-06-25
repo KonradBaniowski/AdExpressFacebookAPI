@@ -168,22 +168,23 @@ namespace AdExpress.Private.Results
             _saveModule = _webSession.CurrentModule;
             //_webSession.CurrentModule = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
             // On force l'initialisation du composant avec les valeurs du plan media
-            switch (_webSession.CurrentModule)
-            {
-                case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE:
-                case WebConstantes.Module.Name.ALERTE_POTENTIELS:
-                case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
-                    //GenericMediaLevelDetailSelectionWebControl1.ForceModuleId = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
-                    OptionLayerWebControl1.ForceModuleId = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
-                    break;
-                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
-                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                    //GenericMediaLevelDetailSelectionWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
-                    OptionLayerWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
-                    break;
-            }
+            OptionLayerWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
+            //switch (_webSession.CurrentModule)
+            //{
+            //    case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE:
+            //    case WebConstantes.Module.Name.ALERTE_POTENTIELS:
+            //    case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
+            //        //GenericMediaLevelDetailSelectionWebControl1.ForceModuleId = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
+            //        OptionLayerWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
+            //        break;
+            //    case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+            //    case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+            //    case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
+            //    case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+            //        //GenericMediaLevelDetailSelectionWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
+            //        OptionLayerWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
+            //        break;
+            //}
             #endregion
 
             #region Period Init
