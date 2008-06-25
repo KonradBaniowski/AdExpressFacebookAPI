@@ -710,6 +710,8 @@ namespace TNS.AdExpressI.Portofolio {
                 foreach (DataRow row in dtPage.Rows) {
                     pageNumber = row["page"].ToString();
                 }
+                if (pageNumber.Length == 0)
+                    pageNumber = "0";
             }
 
             if (_vehicle == DBClassificationConstantes.Vehicles.names.radio
