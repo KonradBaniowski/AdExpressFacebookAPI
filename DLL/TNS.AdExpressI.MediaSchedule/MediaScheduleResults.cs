@@ -886,7 +886,7 @@ namespace TNS.AdExpressI.MediaSchedule
                         oTab[currentLineIndex, L2_COLUMN_INDEX] = null;
                         oTab[currentLineIndex, L3_COLUMN_INDEX] = null;
                         // Create MediaPlanItem
-                        for (int mpi = FIRST_PERIOD_INDEX; mpi < nbCol; mpi++)
+                        for (int mpi = firstPeriodIndex; mpi < nbCol; mpi++)
                         {
                             oTab[currentLineIndex, mpi] = new MediaPlanItem(-1);
                         }
