@@ -1045,6 +1045,9 @@ namespace TNS.AdExpressI.Portofolio {
 
             // Get Data
             dt=GetDataForResultTable().Tables[0];
+            if (dt == null || dt.Rows.Count == 0) {
+                return null;
+            }
             // Table nb lines
             iNbLine=GetPortofolioSize(dt);
 
@@ -1332,9 +1335,9 @@ namespace TNS.AdExpressI.Portofolio {
                 default:
                     throw (new PortofolioException("Invalid module"));
             }
-            if(ds==null || ds.Tables[0]==null || ds.Tables[0].Rows.Count==0) {
-                throw(new PortofolioException("DataSet for ResultTable is null"));
-            }
+            //if(ds==null || ds.Tables[0]==null || ds.Tables[0].Rows.Count==0) {
+            //    throw(new PortofolioException("DataSet for ResultTable is null"));
+            //}
             return (ds);
         }
         #endregion
