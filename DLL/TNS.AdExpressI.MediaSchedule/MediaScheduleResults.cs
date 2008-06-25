@@ -537,23 +537,6 @@ namespace TNS.AdExpressI.MediaSchedule
             //bool forceL4 = false;
             #endregion
 
-            #region Years totals
-            Dictionary<int, int> years_index = new Dictionary<int, int>();
-            int currentDate = _period.Begin.Year;
-            int oldCurrentDate = _period.End.Year;
-            int firstPeriodIndex = FIRST_PERIOD_INDEX;
-            if (currentDate != oldCurrentDate)
-            {
-                for (int k = currentDate; k <= oldCurrentDate; k++)
-                {
-                    years_index.Add(k, firstPeriodIndex);
-                    firstPeriodIndex++;
-                }
-            }
-            currentDate = 0;
-            oldCurrentDate = 0;
-            #endregion
-
             #region Count nb of elements for each classification level
             int nbLevels = detailLevel.GetNbLevels;
             Int64 oldIdL1 = -1;
@@ -608,11 +591,18 @@ namespace TNS.AdExpressI.MediaSchedule
 
             #region Create periods table
             List<Int64> periodItemsList = new List<Int64>();
+            Dictionary<int, int> years_index = new Dictionary<int, int>();
+            int currentDate = _period.Begin.Year;
+            int oldCurrentDate = _period.End.Year;
+            int firstPeriodIndex = FIRST_PERIOD_INDEX;
+
             switch (_period.PeriodDetailLEvel)
             {
                 case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
                     AtomicPeriodWeek currentWeek = new AtomicPeriodWeek(_period.Begin);
                     AtomicPeriodWeek endWeek = new AtomicPeriodWeek(_period.End);
+                    currentDate = currentWeek.Year;
+                    oldCurrentDate = endWeek.Year;
                     endWeek.Increment();
                     while (!(currentWeek.Week == endWeek.Week && currentWeek.Year == endWeek.Year))
                     {
@@ -642,6 +632,14 @@ namespace TNS.AdExpressI.MediaSchedule
                 default:
                     throw (new MediaScheduleException("Unable to build periods table."));
             }
+            if (currentDate != oldCurrentDate) {
+                for (int k = currentDate; k <= oldCurrentDate; k++) {
+                    years_index.Add(k, firstPeriodIndex);
+                    firstPeriodIndex++;
+                }
+            }
+            currentDate = 0;
+            oldCurrentDate = 0;
             #endregion
 
             #region Indexes tables
@@ -1166,8 +1164,14 @@ namespace TNS.AdExpressI.MediaSchedule
             #endregion
 
             #region Init Variables
-
-            int nbColYear = _period.End.Year - _period.Begin.Year;
+            int yearBegin = _period.Begin.Year;
+            int yearEnd = _period.End.Year;
+            if(_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.weekly)
+            {
+                yearBegin = new AtomicPeriodWeek(_period.Begin).Year;
+                yearEnd = new AtomicPeriodWeek(_period.End).Year;
+            }
+            int nbColYear = yearEnd - yearBegin;
             if (nbColYear > 0) nbColYear++;
             int firstPeriodIndex = FIRST_PERIOD_INDEX + nbColYear;
 
