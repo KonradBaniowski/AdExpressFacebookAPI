@@ -79,13 +79,14 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			string menus="";
 			string href="";
 			string look="";
-			string bgcolor="";
+			string classBgColor="";
 			string image="";
 			string languageString,idSessionString,idsString,zoomDateString,paramString,idVehicleString; 
 			bool firstParameter;
+            string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
 
 			WebHeaderMediaDetailMenuItem currentHeaderMenuItem=null;
-			output.Write("\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" bgcolor=\"#DED8E5\">");		
+            output.Write("\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"lightPurple\">");		
 			output.Write("\n<tr>");
 
 			if(Headers!=null && Headers.Count>0){
@@ -104,13 +105,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					if(ActiveMenu==int.Parse(currentHeaderMenuItem.IdVehicle)){
 						href="#";
 						look="roll03";
-						bgcolor="#FFFFFF";
-						image="/Images/Common/ongletCoinBlanc.gif";
+                        classBgColor = "whiteBackGround";
+                        image = "/App_Themes/"+themeName+"/Images/Common/ongletCoinBlanc.gif";
 					}
 					else{
 						look="roll01";
-						bgcolor="#644883";
-						image="/Images/Common/ongletCoinViolet.gif";
+                        classBgColor = "violetBackGround";
+                        image = "/App_Themes/" + themeName + "/Images/Common/ongletCoinViolet.gif";
 
 						#region Gestion des Paramètres
 
@@ -198,7 +199,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						if(currentHeaderMenuItem.Target.Length>0)href+="\" target=\""+currentHeaderMenuItem.Target+"\"";
 					}
 					//menus += "\n<td rowspan=2 nowrap bgcolor="+bgcolor+" style=\"border-left-width:1px;border-left-color:#FFFFFF;border-left-style:solid;border-top-width:1px;border-top-color:#FFFFFF;border-top-style:solid;\">&nbsp;<A style =\" font-size:13px \"  class=\""+look+"\" href=\""+href+"\">"+GestionWeb.GetWebWord((int)currentHeaderMenuItem.IdMenu, CustomerWebSession.SiteLanguage)+"</A>&nbsp;</td>";
-					menus += "\n<td rowspan=2 nowrap bgcolor="+bgcolor+" >&nbsp;<A style =\" font-size:13px \"  class=\""+look+"\" href=\""+href+"\">"+GestionWeb.GetWebWord((int)currentHeaderMenuItem.IdMenu, CustomerWebSession.SiteLanguage)+"</A>&nbsp;</td>";
+					menus += "\n<td rowspan=2 nowrap class="+classBgColor+" >&nbsp;<A style =\" font-size:13px \"  class=\""+look+"\" href=\""+href+"\">"+GestionWeb.GetWebWord((int)currentHeaderMenuItem.IdMenu, CustomerWebSession.SiteLanguage)+"</A>&nbsp;</td>";
 					menus += "\n<td valign=top width=8px><img src=\""+image+"\" border=0 height=20px></td>";
 				}
 
@@ -214,12 +215,12 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				while(myEnumerator2.MoveNext()){
 					currentHeaderMenuItem = (WebHeaderMediaDetailMenuItem)myEnumerator2.Value;
 					if(ActiveMenu==int.Parse(currentHeaderMenuItem.IdVehicle)){
-						bgcolor="#FFFFFF";
+                        classBgColor = "whiteBackGround";
 					}
 					else{
-						bgcolor="#644883";
+                        classBgColor = "violetBackGround";
 					}
-					output.Write("\n<td bgcolor="+bgcolor+"></td>");
+					output.Write("\n<td class="+classBgColor+"></td>");
 				}
 				//output.Write("\n<td style=\"background-repeat: repeat-y; background-image:url(/Images/Common/pixelBlanc.gif);\"></td>");
 				output.Write("\n<td></td>");

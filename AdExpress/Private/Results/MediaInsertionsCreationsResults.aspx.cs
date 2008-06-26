@@ -217,7 +217,7 @@ namespace AdExpress.Private.Results{
 
 					}
 					else{
-                        result = "<TABLE width=\"500\" bgColor=\"#ffffff\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;BORDER:SOLID 5px #ffffff;\""
+                        result = "<TABLE width=\"500\" class=\"insertionBorderV2 whiteBackGround\""
                             + "cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">"
                             + MediaInsertionsCreationsResultsUI.GetUIEmpty(_webSession.SiteLanguage);
                         MenuWebControl2.Visible = MenuWebControl2.Enabled = false;
