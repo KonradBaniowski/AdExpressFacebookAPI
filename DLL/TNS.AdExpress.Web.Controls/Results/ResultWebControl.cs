@@ -1703,7 +1703,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			html.Append("<TABLE class=\"GrabCaption\" cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 			html.Append("<TR>");
 
-			html.Append("<TD class=\"TopLine\" onmousedown=\"grab(event,'windowExpandMenu_"+webCtrlId+"');\" >&nbsp;"+GestionWeb.GetWebWord(870,_customerWebSession.SiteLanguage)+"</TD>");
+            html.Append("<TD class=\"TopLine WindowPoliceTitle\" onmousedown=\"grab(event,'windowExpandMenu_" + webCtrlId + "');\" >&nbsp;" + GestionWeb.GetWebWord(870, _customerWebSession.SiteLanguage) + "</TD>");
             html.Append("<TD class=\"TopLine cursorHand\" width=\"15\" align=\"center\" onclick=\"javascript:masquer('windowExpandMenu_" + webCtrlId + "');\" ><IMG src=\"/App_Themes/" + themeName + "/Images/Common/Result/bt_close.gif\" border=\"0\"></TD>");
 
 			html.Append("</TR>");

@@ -1181,8 +1181,8 @@ tr.synthesisTitleEx{
 	BACKGROUND-COLOR: #FFFFFF
 }
 
-.Window table {
-	font-family:Arial;
+.WindowPoliceTitle {
+	FONT-FAMILY: Arial, Helvetica, sans-serif;
 }
 
 .Control {

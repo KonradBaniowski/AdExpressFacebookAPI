@@ -1158,6 +1158,10 @@ tr.synthesisTitleEx{
 	BACKGROUND-COLOR: #FFFFFF
 }
 
+.WindowPoliceTitle {
+	FONT-FAMILY: Arial, Helvetica, sans-serif;
+}
+
 .Control {
 	border: 1px solid #644883;
 }
