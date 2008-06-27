@@ -1181,6 +1181,10 @@ tr.synthesisTitleEx{
 	BACKGROUND-COLOR: #FFFFFF
 }
 
+.Window table {
+	font-family:Arial;
+}
+
 .Control {
 	border: 1px solid #644883;
 }
