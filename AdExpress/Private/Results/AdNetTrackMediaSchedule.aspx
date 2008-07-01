@@ -39,7 +39,7 @@
 				<tr>
 					<td colspan="3" valign="top" height="30">
 					<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="30" height="8" VIEWASTEXT>
-						<param name=movie value="/Flash/Common/Arrow_Back.swf">
+						<param name=movie value="/App_Themes/<%= this.Theme %>/Flash/Common/Arrow_Back.swf">
 						<param name=quality value="high">
 						<param name=menu value="false">
 						<embed src="/App_Themes/<%= this.Theme %>/Flash/Common/Arrow_Back.swf" width="30" height="8" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" menu="false"></embed> 
