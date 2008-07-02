@@ -1184,7 +1184,7 @@ color:#395573;
 .scroll_content_container_css{
 	width: 250px;
 	height:13px;
-	position:static;
+	position:relative;
 	overflow: hidden;
 }
 .scroll_content_css{
