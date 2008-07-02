@@ -324,7 +324,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\""+blockFlechePath+"\" width=\"12\"></td>");
 			output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\""+blockDupliPath+"\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" width=\"13\"></td>");
             output.Write("\n<td class=\"txtNoir11Bold " + titleUppercaseCss + "\" width=\"100%\">" + GestionWeb.GetWebWord(1605, customerWebSession.SiteLanguage) + "</td>");
-			output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/Images/pixel.gif\" width=\"1\"></td>");
+            output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
 			output.Write("\n<td></td>");

@@ -107,7 +107,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             output.Write("\n<td class=\"txtNoir11Bold " + titleUppercaseCss + "\" width=\"100%\">"
 			    +moduleTitle
 			    +"</td>");
-		    output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/Images/pixel.gif\" width=\"1\"></td>");
+            output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
 		    output.Write("\n</tr>");
 		    output.Write("\n<tr>");
 		    output.Write("\n<td></td>");

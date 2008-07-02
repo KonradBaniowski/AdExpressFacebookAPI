@@ -141,7 +141,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output) {
             Dictionary<string,WebHeader> headers = WebHeaders.HeadersList;
-
+            string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[language].Name;
 			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\" width=\"100%\">");
 			output.Write("\n<tr>");
 			output.Write("\n<td colspan=\"2\">");
@@ -184,7 +184,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("\n</td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
-            output.Write("\n<td colspan=\"2\" class=\"dupli1BackGround\"><IMG height=\"1\" src=\"/Images/pixel.gif\" width=\"1\"></td>");
+            output.Write("\n<td colspan=\"2\" class=\"dupli1BackGround\"><IMG height=\"1\" src=\"/AppThemes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
 			output.Write("\n</tr>");
             output.Write("\n<tr class=\"txtBlanc11 headerBackGround\">");
 			output.Write("\n<td>");

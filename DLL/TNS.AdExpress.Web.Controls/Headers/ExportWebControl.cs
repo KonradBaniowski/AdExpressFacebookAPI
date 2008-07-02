@@ -397,6 +397,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			
 			string tmp="";
 			string type="2";
+            string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
 			if(zoomDate.Length>0) tmp="&zoomDate="+zoomDate;
 			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" bgcolor=\"#FFFFFF\">");
 			output.Write("\n<tr>");
@@ -407,7 +408,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
 			output.Write("\n<tr>");
-			output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/Images/Common/pixel.gif\"></td>");
+            output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/AppThemes/" + themeName + "/Images/Common/pixel.gif\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
 			output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/Images/Common/block_fleche.gif\" width=\"12\"></td>");
