@@ -408,7 +408,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
 			output.Write("\n<tr>");
-            output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/AppThemes/" + themeName + "/Images/Common/pixel.gif\"></td>");
+            output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
 			output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/Images/Common/block_fleche.gif\" width=\"12\"></td>");

@@ -184,7 +184,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("\n</td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
-            output.Write("\n<td colspan=\"2\" class=\"dupli1BackGround\"><IMG height=\"1\" src=\"/AppThemes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
+            output.Write("\n<td colspan=\"2\" class=\"dupli1BackGround\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
 			output.Write("\n</tr>");
             output.Write("\n<tr class=\"txtBlanc11 headerBackGround\">");
 			output.Write("\n<td>");
