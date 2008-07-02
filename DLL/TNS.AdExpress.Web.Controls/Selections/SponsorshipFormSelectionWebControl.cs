@@ -439,7 +439,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				}			
 				//Fin du tableau global
 				t.Append("</td></tr></table></td></tr>");
-                t.Append("<tr><td class=\"whiteBackGround\"><IMG height=\"20\" src=\"App_Themes/" + themeName + "/Images/pixel.gif\" width=\"1\"></td></tr>");
+                t.Append("<tr><td class=\"whiteBackGround\"><IMG height=\"20\" src=\"App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td></tr>");
 				t.Append("<tr><td></td></tr>");	
 
 				output.Write(t.ToString());		
