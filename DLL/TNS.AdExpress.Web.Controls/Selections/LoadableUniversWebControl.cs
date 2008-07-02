@@ -262,7 +262,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			if(listUniverses.Length==0) {
 				existUnivers=false;
 				listUniverses="<tr><td class=\"txtViolet12Bold\" colspan=3 align=middle>";
-				listUniverses+="&nbsp&nbsp&nbsp"+GestionWeb.GetWebWord(930,webSession.SiteLanguage);
+				listUniverses+="&nbsp;&nbsp;&nbsp;"+GestionWeb.GetWebWord(930,webSession.SiteLanguage);
 				listUniverses+="</td></tr>";
 			}
 

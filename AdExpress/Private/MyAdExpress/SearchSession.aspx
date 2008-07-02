@@ -43,7 +43,7 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta content="no-cache" name="Cache-control">
 	</HEAD>
-	<body onload="MM_preloadImages('images/valider_down.gif')" class="bodyStyle">
+	<body onload="MM_preloadImages('/App_Themes/<%=_theme%>/images/Culture/button/valider_down.gif')" class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
 			<table height="600" cellSpacing="0" cellPadding="0" border="0">
 					<tr>

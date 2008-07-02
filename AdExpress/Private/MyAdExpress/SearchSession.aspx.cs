@@ -95,6 +95,10 @@ namespace AdExpress.Private.MyAdExpress{
 		/// Script
 		/// </summary>
 		protected string script;
+        /// <summary>
+        /// Current Theme Name
+        /// </summary>
+        protected string _theme;
 		/// <summary>
 		/// id Session
 		/// </summary>
@@ -124,9 +128,12 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){		
 			
-			try{		
+			try{
+                _theme = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_webSession.SiteLanguage);
+                for (int i = 0; i < this.Controls.Count; i++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                }
 			
 				HeaderWebControl1.ActiveMenu = CstWeb.MenuTraductions.MY_ADEXPRESS;
 
