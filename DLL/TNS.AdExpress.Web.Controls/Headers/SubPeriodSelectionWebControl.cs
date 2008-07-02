@@ -468,6 +468,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     sb.Append("\r\n\telse");
                     sb.Append("\r\n\t{");
                     //IE
+                    //toto
+                    sb.AppendFormat("\r\n\ttheScrollTrack_{0}.onDragEnd = function(x, y)", this.ID);
+                    sb.Append("\r\n\t{");
+                    sb.AppendFormat("\r\n\tif ( theScrollTrack_{0}.style.left == \"0px\")", this.ID);
+                    sb.Append("\r\n\t{");
+                    sb.AppendFormat("\r\n\ttheScrollContent_{0}.style.left = 0 +\"px\";", this.ID);
+                    sb.Append("\r\n\t}");
+                    sb.Append("\r\n\t}");
+                    //toto
                     sb.AppendFormat("\r\n\tDrag.init(theScrollTrack_{0}, null, 0, theScrollContentContainer_{0}.width-theScrollTrack_{0}.width, 0, 0);", this.ID);
                     sb.AppendFormat("\r\n\ttheScrollTrack_{0}.onDrag = function(x, y)", this.ID);
                     sb.Append("\r\n\t{");
@@ -476,7 +485,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     sb.AppendFormat("\r\n\ttheScrollContent_{0}.style.left = Math.min(0,(x*((theScrollContent_{0}.offsetWidth-theScrollContentContainer_{0}.width)/(theScrollContentContainer_{0}.width-theScrollTrack_{0}.width))) * (-1)) +\"px\";", this.ID);
                     //(-7 * x / Math.abs(x))+
                     sb.Append("\r\n\t}");
-                    sb.AppendFormat("\r\n\tif ( theScrollTrack_{0}.left == 0)", this.ID);
+                    sb.AppendFormat("\r\n\tif ( theScrollTrack_{0}.style.left == \"0px\")", this.ID);
                     sb.Append("\r\n\t{");
                     sb.AppendFormat("\r\n\ttheScrollContent_{0}.style.left = 0 +\"px\";", this.ID);
 
