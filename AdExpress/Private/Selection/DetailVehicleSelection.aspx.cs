@@ -465,12 +465,16 @@ namespace AdExpress.Private.Selection{
 			
 			//On affiche pas l'icone représentant le racourci vers la page de résultats si les dates sélectionnées sont aux formats autres que mensuels
 			//et que le média Internet est sélectionné
+            /*
 			string idVehicleList =  _webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);						
 			if(_webSession.isDatesSelected() && idVehicleList!=null && idVehicleList.Length>0 
 				&& idVehicleList.IndexOf(DBClassificationConstantes.Vehicles.names.internet.GetHashCode().ToString())>=0
 				&& _webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.monthly &&  _webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.yearly){			
 				this.MenuWebControl2.ForbidResultIcon = true;									
 			}
+            */
+            if(!_webSession.isDatesSelected())
+                this.MenuWebControl2.ForbidResultIcon = true;
 
 			AdvertiserSelectionWebControl1.CustomerWebSession=_webSession;
 			return tmp;
