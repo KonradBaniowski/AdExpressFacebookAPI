@@ -274,7 +274,8 @@ namespace AdExpress.Private.MyAdExpress{
 
                     switch (webSessionSave.DetailPeriod) {
                         case CstCustomerSession.Period.DisplayLevel.monthly:
-                            if (webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastYear &&
+                            if (webSessionSave.PeriodType != CstCustomerSession.Period.Type.currentYear &&
+                                webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastYear &&
                                 webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousYear &&
                                 webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastMonth &&
                                 webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousMonth) {
@@ -322,7 +323,8 @@ namespace AdExpress.Private.MyAdExpress{
                         case CstCustomerSession.Period.DisplayLevel.monthly:
                         case CstCustomerSession.Period.DisplayLevel.weekly:
                         case CstCustomerSession.Period.DisplayLevel.dayly:
-                            if (webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastYear &&
+                            if (webSessionSave.PeriodType != CstCustomerSession.Period.Type.currentYear &&
+                                webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastYear &&
                                 webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousYear &&
                                 webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastMonth &&
                                 webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousMonth &&
