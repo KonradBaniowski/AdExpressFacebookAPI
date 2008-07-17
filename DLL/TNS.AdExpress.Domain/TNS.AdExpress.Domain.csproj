@@ -52,6 +52,7 @@
     <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="DataBaseDescription\DataBase.cs" />
     <Compile Include="DataBaseDescription\DefaultConnection.cs" />
+    <Compile Include="Exceptions\DeliveryFrequencyException.cs" />
     <Compile Include="Exceptions\GenericColumnItemsInformationXLException.cs" />
     <Compile Include="Exceptions\GenericColumnsInformationXLException.cs" />
     <Compile Include="Exceptions\RightException.cs" />
