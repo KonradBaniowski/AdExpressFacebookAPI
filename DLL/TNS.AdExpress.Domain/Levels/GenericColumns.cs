@@ -7,12 +7,11 @@
 using System;
 using System.Collections;
 using System.Data;
-using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.DB;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 
-namespace TNS.AdExpress.Web.Core.Sessions
+namespace TNS.AdExpress.Domain.Level
 {
 	/// <summary>
 	/// Description  de colonnes génériques	.

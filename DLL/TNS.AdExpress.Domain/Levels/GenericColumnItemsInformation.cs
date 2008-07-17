@@ -7,9 +7,9 @@
 using System;
 using System.Collections;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.XmlLoader;
 
-namespace TNS.AdExpress.Web.Core
+namespace TNS.AdExpress.Domain.Level
 {
 	/// <summary>
 	/// Description résumée de GenericColumnItemsInformation.
@@ -53,7 +53,7 @@ namespace TNS.AdExpress.Web.Core
 		/// </summary>
 		/// <param name="source">Source de données</param>
 		public static void Init(IDataSource source){
-			_list=DataAccess.GenericColumnItemsInformationDataAccess.Load(source);
+			_list=GenericColumnItemsInformationXL.Load(source);
 		}
 		#endregion
 

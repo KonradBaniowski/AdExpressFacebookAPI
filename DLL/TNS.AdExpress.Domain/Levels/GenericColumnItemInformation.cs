@@ -6,11 +6,10 @@
 
 using System;
 using System.Collections;
-using CoreExceptions=TNS.AdExpress.Web.Core.Exceptions;
-using WebConstantes=TNS.AdExpress.Constantes.Web;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Exceptions;
 
-namespace TNS.AdExpress.Web.Core
+namespace TNS.AdExpress.Domain.Level
 {
 	/// <summary>
 	/// Description résumée de GenericColumn.

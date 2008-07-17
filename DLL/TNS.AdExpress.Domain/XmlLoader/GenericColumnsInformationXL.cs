@@ -8,17 +8,18 @@ using System;
 using System.Collections;
 using System.Xml;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.Core;
-using CoreExceptions=TNS.AdExpress.Web.Core.Exceptions;
-using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Exceptions;
+using ConstantesWeb = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Level;
 
-namespace TNS.AdExpress.Web.Core.DataAccess{
+
+namespace TNS.AdExpress.Domain.XmlLoader{
 
 	///<summary>
 	/// This class is used to load default detail column
 	/// </summary>
 	/// <stereotype>utility</stereotype>
-	public class GenericColumnsInformationDataAccess {		
+	public class GenericColumnsInformationXL {		
 
 		/// <summary>Load default detail columns by media</summary>
 		/// <param name="source">Data Source</param>	
@@ -92,7 +93,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
 			}
 			catch(System.Exception err){
 				source.Close();
-				throw(new CoreExceptions.DetailLevelsInformationDataAccessException("Impossible to load the GenericColumn XML file",err));
+				throw(new Exceptions.GenericColumnsInformationXLException("Impossible to load the GenericColumn XML file",err));
 			}
 		}
 	}

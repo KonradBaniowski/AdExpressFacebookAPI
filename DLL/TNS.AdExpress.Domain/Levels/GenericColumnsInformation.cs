@@ -7,10 +7,9 @@
 using System;
 using System.Collections;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.DataAccess;
+using TNS.AdExpress.Domain.XmlLoader;
 
-namespace TNS.AdExpress.Web.Core{
+namespace TNS.AdExpress.Domain.Level {
 	/// <summary>
 	/// Description résumée de GenericColumnsInformation.
 	/// </summary>
@@ -38,7 +37,7 @@ namespace TNS.AdExpress.Web.Core{
 		#region Méthodes publiques
 		///  <summary>Initialisation de la liste</summary>
 		public static void Init(IDataSource source) {
-			_list=GenericColumnsInformationDataAccess.Load(source);
+			_list=GenericColumnsInformationXL.Load(source);
 		}
 		///  <summary>Obtient la liste des colonnes</summary>
 		///  <param name="idDetailColumn">Identifiant du détail colonne</param>
