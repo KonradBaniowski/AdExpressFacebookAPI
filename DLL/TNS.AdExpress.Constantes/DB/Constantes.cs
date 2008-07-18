@@ -1354,6 +1354,11 @@ namespace TNS.AdExpress.Constantes.DB{
         /// ID category corresponding to digital TV
         /// </summary>
         public const Int64 ID_DIGITAL_TV = 78;
+
+		/// <summary>
+		/// ID category corresponding to thematic TV
+		/// </summary>
+		public const Int64 ID_THEMATIC_TV = 35;
         #endregion
 
     }

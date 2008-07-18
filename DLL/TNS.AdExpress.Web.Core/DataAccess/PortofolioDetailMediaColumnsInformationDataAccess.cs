@@ -10,6 +10,7 @@ using System.Text;
 using System.Xml;
 using System.Collections;
 
+using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.FrameWork.DB.Common;
 

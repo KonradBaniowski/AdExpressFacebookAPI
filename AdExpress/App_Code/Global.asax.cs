@@ -58,9 +58,9 @@ namespace AdExpress {
 				// Initialisation des descriptions des niveaux de détail
                 DetailLevelsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.GENERIC_DETAIL_LEVEL_CONFIGURATION_FILENAME)); 				
 				// Initialisation des descriptions des colonnes génériques 
-                GenericColumnItemsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME)); 
+				TNS.AdExpress.Domain.Level.GenericColumnItemsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME)); 
 				// Initialisation des descriptions des colonnes génériques prédéfinis
-                GenericColumnsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
+				TNS.AdExpress.Domain.Level.GenericColumnsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
 				// Initialisation des descriptions des niveaux de détail pour les insertions
                 InsertionDetailInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MEDIA_PLANS_INSERTION_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
                 //Initialisation des colonnes par defaut pour le détail média du module portefeuille

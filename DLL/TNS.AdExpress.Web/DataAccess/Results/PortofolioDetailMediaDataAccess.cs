@@ -27,6 +27,8 @@ using TNS.AdExpress.Constantes.FrameWork.Results;
 using WebDataAccess = TNS.AdExpress.Web.DataAccess;
 using TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Level;
+
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results
@@ -348,7 +350,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                     sql.Append(" " + sqlFields);
                 }
 
-				if (webSession.GenericInsertionColumns.ContainColumnItem(TNS.AdExpress.Web.Core.GenericColumnItemInformation.Columns.agenceMedia))
+				if (webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.agenceMedia))
 					sql.Append(" , advertising_agency");
 
                 if (idVehicle == DBClassificationConstantes.Vehicles.names.press.GetHashCode() || idVehicle == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode())
@@ -364,7 +366,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 
                 sql.Append(" from ");
                 sql.Append(" " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + tableName + " " + DbTables.WEB_PLAN_PREFIXE);
-				if (webSession.GenericInsertionColumns.ContainColumnItem(TNS.AdExpress.Web.Core.GenericColumnItemInformation.Columns.agenceMedia))
+				if (webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.agenceMedia))
 					sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ADVERTISING_AGENCY + "  " + DBConstantes.Tables.ADVERTISING_AGENCY_PREFIXE);
                 sqlTables = webSession.GenericInsertionColumns.GetSqlTables(DBConstantes.Schema.ADEXPRESS_SCHEMA, null);
                 if (sqlTables.Length > 0) {
@@ -406,6 +408,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 				//    sql.Append(" and pgaa.id_language(+)=" + webSession.SiteLanguage + " ");
 				//    sql.Append(" and pgaa.id_vehicle(+)=" + idVehicle + " ");
 				//}
+				if (webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.agenceMedia)) {
+					sql.Append(" and " + DBConstantes.Tables.ADVERTISING_AGENCY_PREFIXE + ".id_advertising_agency(+)=" + DbTables.WEB_PLAN_PREFIXE + ".id_advertising_agency ");
+					sql.Append(" and " + DBConstantes.Tables.ADVERTISING_AGENCY_PREFIXE + ".id_language(+)=" + webSession.SiteLanguage + " ");
+					sql.Append(" and " + DBConstantes.Tables.ADVERTISING_AGENCY_PREFIXE + ".activation(+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ");
+				}
 
                 #region Droits
                 //liste des produit hap
