@@ -656,6 +656,10 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// AdNretTrack Data on last 4M
         /// </summary>
         dataAdNetTrackAlert=140,
+		/// <summary>
+		/// Data location
+		/// </summary>
+		dataLocation = 141,
         /// <summary>
         /// Product Group Advertising Agency
         /// </summary>

@@ -66,8 +66,10 @@
     <table enumId="55" description="Data: APPM 4M" schemaEnumId="1" label="data_press_appm" prefix="wp"/>
     <table enumId="56" description="Data: VMC 4M" schemaEnumId="0" label="data_marketing_direct_4M" prefix="wp"/>
     <table enumId="57" description="Data: Press Inter 4M" schemaEnumId="0" label="data_press_4M" prefix="wp"/>
-    <table enumId="140" description="Data: AdNetTrack 4M" schemaEnumId="0" label="data_adnettrack_4M" prefix="wp"/>
-
+    <table enumId="58" description="Classif: Color" schemaEnumId="0" label="color" prefix="co"/>
+    <table enumId="59" description="Classif: Format" schemaEnumId="0" label="format" prefix="fo"/>
+    <table enumId="65" description="Classif: Location" schemaEnumId="0" label="location" prefix="lo"/>
+    <table enumId="66" description="Classif: Inset" schemaEnumId="0" label="inset" prefix="srt"/>
     <table enumId="68" description="Classif: Alarm Media" schemaEnumId="0" label="alarm_media" prefix="al"/>
     <table enumId="69" description="Classif: Application Media" schemaEnumId="0" label="application_media" prefix="am"/>
 
@@ -91,7 +93,9 @@
     <table enumId="137" description="Right: Module category" schemaEnumId="2" label="module_category" prefix="mc"/>
     <table enumId="138" description="Right: Flag" schemaEnumId="2" label="flag" prefix="fg"/>
     <table enumId="139" description="Right: Project flag assignment" schemaEnumId="2" label="flag_project_assignment" prefix="fgpa"/>
-    
+    <table enumId="140" description="Data: AdNetTrack 4M" schemaEnumId="0" label="data_adnettrack_4M" prefix="wp"/>
+    <table enumId="141" description="Classif: Data location" schemaEnumId="0" label="data_location" prefix="dl"/>
+
     <table enumId="201" description="Classif: Advertising agency" schemaEnumId="0" label="advertising_agency" prefix="adva"/>
     <table enumId="202" description="Classif: Group Advertising agency" schemaEnumId="0" label="group_advertising_agency" prefix="gadv"/>
 
