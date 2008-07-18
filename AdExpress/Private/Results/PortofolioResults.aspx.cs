@@ -263,7 +263,8 @@ namespace AdExpress.Private.Results{
 				#endregion	
 
 				//Choix de la planche courante
-				portofolioChart.Visible = false;
+				//portofolioChart.Visible = false;
+				portofolioChartWebControl1.Visible = false;
 				_resultWebControl.Visible = false;
 				switch(_webSession.CurrentTab)
 				{					
@@ -355,7 +356,8 @@ namespace AdExpress.Private.Results{
 							_webSession.Save();
 						}
 						if(_webSession.Graphics){
-							portofolioChart.Visible = true;
+							//portofolioChart.Visible = true;
+							portofolioChartWebControl1.Visible = true;
 							ResultsOptionsWebControl1.GraphRadioButton.Checked = true;
 						}else{
 							ResultsOptionsWebControl1.TableRadioButton.Checked = true;
@@ -433,6 +435,10 @@ namespace AdExpress.Private.Results{
 			//MediaAgencyYearWebControl1.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 			_resultWebControl.CustomerWebSession = _webSession;
+
+			portofolioChartWebControl1.CustomerWebSession = _webSession;
+			portofolioChartWebControl1.TypeFlash = true;
+
 			return tmp;
 		}
 		#endregion
@@ -462,8 +468,11 @@ namespace AdExpress.Private.Results{
                         result = portofolioResult.GetDetailMediaHtml(false);
                         break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.NOVELTY:
+						result = WebBF.Results.PortofolioSystem.GetAlertHtml(this.Page, _webSession);
+						break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
-						result=WebBF.Results.PortofolioSystem.GetAlertHtml(this.Page,_webSession);
+						if(!_webSession.Graphics)
+						result = portofolioResult.GetStructureHtml(false);
 						break;
 					default:					
 						break;

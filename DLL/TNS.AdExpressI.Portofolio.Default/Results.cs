@@ -23,6 +23,14 @@ namespace TNS.AdExpressI.Portofolio.Default {
         /// <param name="webSession">Customer Session</param>
         public Results(WebSession webSession):base(webSession){
         }
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="webSession">Customer Session</param>
+		public Results(WebSession webSession, string adBreak, string dayOfWeek)
+			: base(webSession,adBreak,dayOfWeek) {
+		}
         #endregion
 
     }

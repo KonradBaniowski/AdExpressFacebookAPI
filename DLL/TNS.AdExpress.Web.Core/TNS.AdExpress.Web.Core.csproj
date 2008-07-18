@@ -188,12 +188,6 @@
     <Compile Include="DataAccess\GenericClassificationSearchDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\GenericColumnItemsInformationDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\GenericColumnsInformationDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataAccess\InsertionDetailInformationDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -256,15 +250,6 @@
     <Compile Include="Exceptions\WebSessionException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GenericColumnItemInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GenericColumnItemsInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GenericColumnsInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="InsertionDetailInformation.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -304,9 +289,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sessions\CompetitorMedia.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sessions\GenericColumns.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sessions\GenericDetailLevelSaved.cs">

@@ -19,6 +19,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Level;
 
 namespace AdExpress.Private.Results.Excel{
 

@@ -1039,22 +1039,21 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 							switch(webSession.DetailPeriod){
 
-								case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:	
-									week=new AtomicPeriodWeek(int.Parse(currentDate.Substring(0,4)),int.Parse(currentDate.Substring(4,2)));														
-									dateLabel=week.FirstDay.Day.ToString()+"/"+week.FirstDay.Month.ToString()+"/"+week.FirstDay.Year.ToString()+" - "+week.LastDay.Day.ToString()+"/"+week.LastDay.Month.ToString()+"/"+week.LastDay.Year.ToString();
-//									dateLabel = currentDate.Substring(4,2);//TODO vérifier la forme du libellé des semaines sélectionnées
+								case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
+									dateLabel = DateString.dateTimeToDD_MM_YYYY(WebFunctions.Dates.getPeriodBeginningDate(currentDate, webSession.PeriodType), webSession.SiteLanguage)
+									+ "-" + DateString.dateTimeToDD_MM_YYYY(WebFunctions.Dates.getPeriodEndDate(currentDate, webSession.PeriodType), webSession.SiteLanguage);
 									break;
 								case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
 									i++;
-									if(i==1 || i==dimendionIdList.GetLongLength(0)){//Si premier ou dernier mois de l'univers
-										dateLabel =  MonthString.Get(int.Parse(currentDate.Substring(4,2)),webSession.SiteLanguage,3)+" "+currentDate.Substring(0,4);
-										if(webSession.PeriodType ==WebConstantes.CustomerSessions.Period.Type.dateToDate){
-											dateLabel += (i==1)?"<br>"+ DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodBeginningDate,webSession.SiteLanguage) : "<br>"+ DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodEndDate,webSession.SiteLanguage);
-											if(dimendionIdList.GetLongLength(0)==1 && !webSession.PeriodBeginningDate.Equals(webSession.PeriodEndDate))
-												dateLabel = dateLabel +" - "+DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodEndDate,webSession.SiteLanguage);
+									if (i == 1 || i == dimendionIdList.GetLongLength(0)) {//Si premier ou dernier mois de l'univers
+										dateLabel = MonthString.Get(int.Parse(currentDate.Substring(4, 2)), webSession.SiteLanguage, 9) + " " + currentDate.Substring(0, 4);
+										if (webSession.PeriodType == WebConstantes.CustomerSessions.Period.Type.dateToDate) {
+											dateLabel += (i == 1) ? "<br>" + DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodBeginningDate, webSession.SiteLanguage) : "<br>" + DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodEndDate, webSession.SiteLanguage);
+											if (dimendionIdList.GetLongLength(0) == 1 && !webSession.PeriodBeginningDate.Equals(webSession.PeriodEndDate))
+												dateLabel = dateLabel + " - " + DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodEndDate, webSession.SiteLanguage);
 										}
-									}								
-									else dateLabel = MonthString.Get(int.Parse(currentDate.Substring(4,2)),webSession.SiteLanguage,3)+" "+currentDate.Substring(0,4);
+									}
+									else dateLabel = MonthString.Get(int.Parse(currentDate.Substring(4, 2)), webSession.SiteLanguage, 9) + " " + currentDate.Substring(0, 4);
 									break;
 								case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
 									dateLabel = DateString.YYYYMMDDToDD_MM_YYYY(currentDate,webSession.SiteLanguage);//TODO vérifier la forme du libellé date retourné par la fonction DateString.YYYYMMDDToDD_MM_YYYY

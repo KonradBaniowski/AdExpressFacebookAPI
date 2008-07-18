@@ -177,6 +177,7 @@
     <Compile Include="Exceptions\AlertsCreationsResultsWebControlException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\PortofolioChartWebControlException.cs" />
     <Compile Include="Exceptions\DetailVehicleSelectionWebControlException.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -380,6 +381,7 @@
     <Compile Include="Results\MediaPlan\VersionsVehicleWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Results\PortofolioChartWebControl.cs" />
     <Compile Include="Results\PortofolioDetailMediaResultWebControl.cs" />
     <Compile Include="Results\ProofResultWebControl.cs">
       <SubType>Code</SubType>

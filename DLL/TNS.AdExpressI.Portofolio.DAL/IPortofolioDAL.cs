@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 
-namespace TNS.AdExpress.Portofolio.DAL {
+namespace TNS.AdExpressI.Portofolio.DAL {
     /// <summary>
     /// Portofolio Data access Interface
     /// </summary>
@@ -76,13 +76,14 @@ namespace TNS.AdExpress.Portofolio.DAL {
         /// </summary>
         /// <returns>Data Set</returns>
         DataSet GetNewProduct();
-        /// <summary>
-        /// Get Tv Or Radio Struct Data
-        /// </summary>
-        /// <param name="HourBegin">Hour Begin</param>
-        /// <param name="HourEnd">Hour End</param>
-        /// <returns>Data Set</returns>
-        DataSet GetTvOrRadioStructData(int HourBegin, int HourEnd);
+		/// <summary>
+		/// Get structure data 
+		/// </summary>
+		/// <remarks>Used for tv or radio</remarks>
+		/// <param name="HourBegin">Hour Begin</param>
+		/// <param name="HourEnd">Hour End</param>
+		/// <returns>DataSet</returns>
+		DataSet GetStructData(int HourBegin, int HourEnd);
         /// <summary>
         /// Get Press Struct Data
         /// </summary>
@@ -100,10 +101,23 @@ namespace TNS.AdExpress.Portofolio.DAL {
         /// </summary>
         /// <returns>Data Set</returns>
         DataSet GetCommercialBreakForTvRadio();
-        /// <summary>
-        /// Is Belong To Tv Nat Thematiques
-        /// </summary>
-        /// <returns>True if belong To Tv Nat Thematiques</returns>
-        bool IsBelongToTvNatThematiques();
+		///// <summary>
+		///// Is Belong To Tv Nat Thematiques
+		///// </summary>
+		///// <returns>True if belong To Tv Nat Thematiques</returns>
+		//bool IsBelongToTvNatThematiques();
+		/// <summary>
+		/// Checks if media belong t category
+		/// </summary>
+		/// <param name="idMedia">Id media</param>
+		/// <param name="idCategory">Id Category</param>
+		/// <returns></returns>
+		bool IsMediaBelongToCategory(Int64 idMedia, Int64 idCategory);
+		/// <summary>
+		/// GetGeneric detail media
+		/// </summary>
+		/// <returns></returns>
+		DataSet GetGenericDetailMedia();
+        
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
+using System.Reflection;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
@@ -16,6 +17,8 @@ using TNS.FrameWork.DB.Common;
 
 using Oracle.DataAccess.Client;
 
+using Portofolio = TNS.AdExpressI.Portofolio;
+using Domain = TNS.AdExpress.Domain.Web.Navigation;
 using WebRules = TNS.AdExpress.Web.Rules;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using CustomerConstantes = TNS.AdExpress.Constantes.Customer;
@@ -232,15 +235,17 @@ namespace TNS.AdExpress.Web.Controls.Results {
         /// </summary>
         /// <param name="customerWebSession">Session du client</param>
         /// <returns>tableau de résultats</returns>
-        protected override ResultTable GetResultTable(WebSession customerWebSession) {
+        protected override ResultTable GetResultTable(WebSession customerWebSession) {          
 
-            //if (customerWebSession.CustomerLogin.Connection == null) {
-            //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(customerWebSession.CustomerLogin.OracleConnectionString));
-            //    customerWebSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-            //}
-
-            return WebRules.Results.PortofolioRules.GetPortofolioDetailMediaResultTable(customerWebSession, _dayOfWeek, _adBreak);
-
+            //return WebRules.Results.PortofolioRules.GetPortofolioDetailMediaResultTable(customerWebSession, _dayOfWeek, _adBreak);
+			Domain.Web.Navigation.Module module = customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule);
+			if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+			object[] parameters = new object[3];
+			parameters[0] = customerWebSession;
+			parameters[1] = _adBreak;
+			parameters[2] = _dayOfWeek;
+			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+			return (portofolioResult.GetPortofolioDetailMediaResultTable());
         }
         #endregion
 
