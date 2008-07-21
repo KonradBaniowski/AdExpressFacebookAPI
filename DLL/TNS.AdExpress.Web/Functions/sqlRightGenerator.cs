@@ -474,7 +474,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="tablePrefixe">Préfixe de la table contenant toute la nomenclature</param>
 		/// <param name="beginByAnd">La condition doit elle commencer par And</param>
 		/// <returns>Code SQL généré</returns>
-		internal static string getAccessVehicleList(WebSession webSession, string tablePrefixe, bool beginByAnd) {
+		public static string getAccessVehicleList(WebSession webSession, string tablePrefixe, bool beginByAnd) {
 			string sql = "";
 			string idVehicleListString = webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap];
 			if (idVehicleListString.Length > 0) {
@@ -1411,7 +1411,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// Cette méthode ne peut être utilisée que si toute la nomenclature support est contenue
 		/// dans une même table (Média, catégorie, support).
 		/// </remarks>
-		internal static string getAdExpressUniverseCondition(WebSession webSession, int idMediaItemsList, string tablePrefixe, bool beginByAnd) {
+		public static string getAdExpressUniverseCondition(WebSession webSession, int idMediaItemsList, string tablePrefixe, bool beginByAnd) {
 			try {
 				return (getAdExpressUniverseCondition(webSession, idMediaItemsList, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd));
 			}
