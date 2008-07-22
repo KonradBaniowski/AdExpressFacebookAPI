@@ -1898,7 +1898,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </summary>
 		/// <returns>Champ addresse du gad</returns>
 		public static string GetFieldsAddressForGad() {
-			return (GetFieldsAddressForGad(DBConstantes.Tables.GAD_PREFIXE));
+			return (GetFieldsAddressForGad(WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).Prefix));
 		}
 
 		/// <summary>
@@ -1916,7 +1916,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="prefixeData">Préfixe à utiliser pour la de résultat</param>
 		/// <returns>Jointure</returns>
 		public static string GetJointForGad(string prefixeData) {
-			return (GetJointForGad(DBConstantes.Tables.GAD_PREFIXE, prefixeData));
+			return (GetJointForGad(WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).Prefix, prefixeData));
 
 		}
 
@@ -3084,7 +3084,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <exception cref="TNS.AdExpress.Web.Exceptions.MediaPlanAlertDataAccessException">
 		/// Lancée au cas ou les unités considérées ne sont traitées
 		/// </exception>
-		internal static string getTotalUnitFields(DBClassificationConstantes.Vehicles.names vehicleName, string dataTablePrefixe) {
+		public static string getTotalUnitFields(DBClassificationConstantes.Vehicles.names vehicleName, string dataTablePrefixe) {
 
 			switch (vehicleName) {
 				case DBClassificationConstantes.Vehicles.names.tv:
@@ -3105,7 +3105,7 @@ namespace TNS.AdExpress.Web.Functions {
 		///<param name="vehicleName">typde du média</param>
 		///<param name="dataTablePrefixe">préfixe de la table des données</param>
 		/// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
-		internal static string getUnitFieldsNameForMediaDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, string dataTablePrefixe) {
+		public static string getUnitFieldsNameForMediaDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, string dataTablePrefixe) {
 			switch (vehicleName) {
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
@@ -3132,7 +3132,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="type">Type de la table</param>
 		///<param name="dataTablePrefixe">préfixe de la table des données</param>
 		/// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
-		internal static string getUnitFieldsNameForMediaDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type, string dataTablePrefixe) {
+		public static string getUnitFieldsNameForMediaDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type, string dataTablePrefixe) {
 			switch (vehicleName) {
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
@@ -3172,7 +3172,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// </summary>
 		///<param name="vehicleName">typde du média</param>
 		/// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
-		internal static string getUnitFieldsNameForMediaDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, int resultType) {
+		public static string getUnitFieldsNameForMediaDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, int resultType) {
 			switch (vehicleName) {
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
@@ -3213,7 +3213,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="vehicleName">typde du média</param>
 		/// <param name="type">Type de la table</param>
 		/// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
-		internal static string getUnitFieldsNameForAnalysisPortofolio(DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type) {
+		public static string getUnitFieldsNameForAnalysisPortofolio(DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type) {
 			switch (vehicleName) {
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
