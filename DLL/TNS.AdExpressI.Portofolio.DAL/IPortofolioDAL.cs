@@ -21,6 +21,11 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// </summary>
         /// <returns>Data Set</returns>
         DataSet GetMediaPortofolio();
+		/// <summary>
+		/// Get medai detail data
+		/// </summary>
+		/// <returns></returns>
+		DataSet GetGenericData();
         /// <summary>
         /// Get Data for the portofolio calendar
         /// </summary>
@@ -36,6 +41,11 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// </summary>
         /// <returns>Data Set</returns>
         DataSet GetInvestment();
+		/// <summary>
+		/// Get total investment  nb ad,  duration 
+		/// </summary>
+		/// <returns>Data Set</returns>
+		DataSet GetSynthsesisUnitsData();
         /// <summary>
         /// Get insertions number
         /// </summary>
@@ -56,6 +66,11 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// </summary>
         /// <returns>Data Set</returns>
         object[] NumberProductAdvertiser();
+		/// <summary>
+		/// Get number of products, number of products in the pige, number of products in the media and number of advertisers
+		/// </summary>
+		/// <returns>Data table</returns>
+		object[] GetNumberProductAdvertiser();
         /// <summary>
         /// Get Encart 
         /// </summary>
@@ -70,12 +85,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// Get adbreak data
         /// </summary>
         /// <returns>Data Set</returns>
-        DataSet GetEcranData();
-        /// <summary>
-        /// Get New Product
-        /// </summary>
-        /// <returns>Data Set</returns>
-        DataSet GetNewProduct();
+        DataSet GetEcranData();      
 		/// <summary>
 		/// Get structure data 
 		/// </summary>
@@ -100,12 +110,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// Get Commercial Break For Tv & Radio
         /// </summary>
         /// <returns>Data Set</returns>
-        DataSet GetCommercialBreakForTvRadio();
-		///// <summary>
-		///// Is Belong To Tv Nat Thematiques
-		///// </summary>
-		///// <returns>True if belong To Tv Nat Thematiques</returns>
-		//bool IsBelongToTvNatThematiques();
+        DataSet GetCommercialBreakForTvRadio();	
 		/// <summary>
 		/// Checks if media belong t category
 		/// </summary>
