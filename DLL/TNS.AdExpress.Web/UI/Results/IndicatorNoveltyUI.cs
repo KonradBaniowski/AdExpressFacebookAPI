@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using TNS.AdExpress.Web.Exceptions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -103,7 +104,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 			DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
@@ -273,7 +274,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 				//du dernier mois dispo en BDD
 				//traitement de la notion de fréquence
-				string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+				string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 				if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 					throw new NoDataException();
 				DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);

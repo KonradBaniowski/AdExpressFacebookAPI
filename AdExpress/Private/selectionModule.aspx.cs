@@ -26,6 +26,7 @@ using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Web.Core.Utilities;
 
 
 namespace AdExpress{
@@ -361,7 +362,7 @@ namespace AdExpress{
 					//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 					//du dernier mois dispo en BDD
 					//traitement de la notion de fréquence
-					absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+					absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 
 					if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00"))) {
 						throw (new TNS.AdExpress.Web.Exceptions.NoDataException());

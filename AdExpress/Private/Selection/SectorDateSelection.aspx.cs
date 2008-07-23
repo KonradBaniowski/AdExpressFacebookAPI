@@ -21,6 +21,7 @@ using Oracle.DataAccess.Client;
 using System.Globalization;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Constantes.Customer;
 using AdExpressWebControles=TNS.AdExpress.Web.Controls;
 using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
@@ -295,7 +296,7 @@ namespace AdExpress.Private.Selection{
 								_webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
 							}
 							
-							 absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+							 absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 							if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4,2).Equals("00")))
 								throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)));
 
@@ -330,7 +331,7 @@ namespace AdExpress.Private.Selection{
 						//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 						//du dernier mois dispo en BDD
 						//traitement de la notion de fréquence
-						absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+						absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 						if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4,2).Equals("00")) )
 							throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)));
 												
@@ -493,7 +494,7 @@ namespace AdExpress.Private.Selection{
 				//du dernier mois dispo en BDD
 				//traitement de la notion de fréquence	
 				if(int.Parse(monthCalendarEndWebControl.SelectedDate.ToString().Substring(0,4))==DateTime.Now.Year && int.Parse(monthCalendarBeginWebControl.SelectedDate.ToString().Substring(0,4))==DateTime.Now.Year){
-					string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+					string absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 					if (int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate))
 						throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)));
 

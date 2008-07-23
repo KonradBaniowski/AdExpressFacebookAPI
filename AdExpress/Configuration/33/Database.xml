@@ -72,6 +72,22 @@
     <table enumId="66" description="Classif: Inset" schemaEnumId="0" label="inset" prefix="srt"/>
     <table enumId="68" description="Classif: Alarm Media" schemaEnumId="0" label="alarm_media" prefix="al"/>
     <table enumId="69" description="Classif: Application Media" schemaEnumId="0" label="application_media" prefix="am"/>
+    <table enumId="70" description="Recap Data: Pluri" schemaEnumId="4" label="recap_pluri" prefix="rcp"/>
+    <table enumId="71" description="Recap Data: Press" schemaEnumId="4" label="recap_press" prefix="rcp"/>
+    <table enumId="72" description="Recap Data: TV" schemaEnumId="4" label="recap_tv" prefix="rcp"/>
+    <table enumId="73" description="Recap Data: Radio" schemaEnumId="4" label="recap_radio" prefix="rcp"/>
+    <table enumId="74" description="Recap Data: Outdoor" schemaEnumId="4" label="recap_outdoor" prefix="rcp"/>
+    <table enumId="75" description="Recap Data: Internet" schemaEnumId="4" label="recap_internet" prefix="rcp"/>
+    <table enumId="76" description="Recap Data: Cinema" schemaEnumId="4" label="recap_cinema" prefix="rcp"/>
+    <table enumId="77" description="Recap Data: Tactic" schemaEnumId="4" label="recap_tactic" prefix="rcp"/>
+    <table enumId="78" description="Recap Data: Pluri Segment" schemaEnumId="4" label="recap_pluri_segment" prefix="rcp"/>
+    <table enumId="79" description="Recap Data: Press Segment" schemaEnumId="4" label="recap_press_segment" prefix="rcp"/>
+    <table enumId="80" description="Recap Data: TV Segment" schemaEnumId="4" label="recap_tv_segment" prefix="rcp"/>
+    <table enumId="81" description="Recap Data: Radio Segment" schemaEnumId="4" label="recap_radio_segment" prefix="rcp"/>
+    <table enumId="82" description="Recap Data: Outdoor Segment" schemaEnumId="4" label="recap_outdoor_segment" prefix="rcp"/>
+    <table enumId="83" description="Recap Data: Internet Segment" schemaEnumId="4" label="recap_internet_segment" prefix="rcp"/>
+    <table enumId="84" description="Recap Data: Cinema Segment" schemaEnumId="4" label="recap_cinema_segment" prefix="rcp"/>
+    <table enumId="85" description="Recap Data: Tactic Segment" schemaEnumId="4" label="recap_tactic_segment" prefix="rcp"/>
 
     <table enumId="86" description="Classif: Periodicity" schemaEnumId="0" label="periodicity" prefix="pe"/>
     <table enumId="91" description="Right: Login" schemaEnumId="2" label="login" prefix="lo"/>
@@ -79,11 +95,18 @@
     <table enumId="97" description="Right: Module" schemaEnumId="2" label="module" prefix="m"/>
     <table enumId="98" description="Right: Module group" schemaEnumId="2" label="module_group" prefix="mg"/>
 
+    <table enumId="120" description="Recap: advertiser" schemaEnumId="4" label="advertiser" prefix="recap_a"/>
+    <table enumId="121" description="Recap: brand" schemaEnumId="4" label="brand" prefix="recap_b"/>
     <table enumId="122" description="Recap: category" schemaEnumId="4" label="category" prefix="recap_c"/>
-
+    <table enumId="123" description="Recap: group" schemaEnumId="4" label="group_" prefix="recap_g"/>
+    <table enumId="124" description="Recap: holding company" schemaEnumId="4" label="holding_company" prefix="recap_hc"/>
     <table enumId="125" description="Recap: media" schemaEnumId="4" label="media" prefix="recap_m"/>
-    
+    <table enumId="126" description="Recap: product" schemaEnumId="4" label="product" prefix="recap_p"/>
+    <table enumId="127" description="Recap: sector" schemaEnumId="4" label="sector" prefix="recap_s"/>
+    <table enumId="128" description="Recap: segment" schemaEnumId="4" label="segment" prefix="recap_sg"/>
+    <table enumId="129" description="Recap: subsector" schemaEnumId="4" label="subsector" prefix="recap_sb"/>
     <table enumId="130" description="Recap: vehicle" schemaEnumId="4" label="vehicle" prefix="recap_v"/>
+
     <table enumId="131" description="Right: Module Assignment" schemaEnumId="2" label="module_assignment" prefix="ma"/>
     <table enumId="132" description="Right: Right Assignment" schemaEnumId="2" label="right_assignment" prefix="ra"/>
     <table enumId="133" description="Right: My Login view" schemaEnumId="2" label="my_login" prefix="mylo"/>
@@ -95,6 +118,10 @@
     <table enumId="139" description="Right: Project flag assignment" schemaEnumId="2" label="flag_project_assignment" prefix="fgpa"/>
     <table enumId="140" description="Data: AdNetTrack 4M" schemaEnumId="0" label="data_adnettrack_4M" prefix="wp"/>
     <table enumId="141" description="Classif: Data location" schemaEnumId="0" label="data_location" prefix="dl"/>
+    <table enumId="142" description="Recap Data: Emailing" schemaEnumId="4" label="recap_emailing" prefix="rcp"/>
+    <table enumId="143" description="Recap Data: Emailing Segment" schemaEnumId="4" label="recap_emailing_segment" prefix="rcp"/>
+    <table enumId="144" description="Recap Data: Mobile" schemaEnumId="4" label="recap_message" prefix="rcp"/>
+    <table enumId="145" description="Recap Data: Mobile Segment" schemaEnumId="4" label="recap_message_segment" prefix="rcp"/>
 
     <table enumId="201" description="Classif: Advertising agency" schemaEnumId="0" label="advertising_agency" prefix="adva"/>
     <table enumId="202" description="Classif: Group Advertising agency" schemaEnumId="0" label="group_advertising_agency" prefix="gadv"/>

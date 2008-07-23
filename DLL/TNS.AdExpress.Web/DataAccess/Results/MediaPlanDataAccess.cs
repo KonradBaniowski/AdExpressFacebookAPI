@@ -24,6 +24,7 @@ using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using DBTableFieldsName = TNS.AdExpress.Constantes.DB;
 using WebCommon=TNS.AdExpress.Web.Common;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Core.Exceptions;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -383,7 +384,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						case WebConstantes.CustomerSessions.Unit.duration:
 							return(Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
 						default:
-							throw(new WebExceptions.SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
+							throw(new SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
 					}
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
 					switch(webSession.Unit){
@@ -402,10 +403,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						case WebConstantes.CustomerSessions.Unit.duration:
 							return(Fields.DURATION);
 						default:
-							throw(new WebExceptions.SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
+							throw(new SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
 					}
 				default:
-					throw(new WebExceptions.SQLGeneratorException("Le détails Période sélectionné est incorrect pour le choix des unités"));
+					throw(new SQLGeneratorException("Le détails Période sélectionné est incorrect pour le choix des unités"));
 
 			}
 		}
@@ -460,7 +461,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 							case DBClassificationConstantes.Vehicles.names.adnettrack:
 								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_ADNETTRACK;
 							default:
-								throw(new WebExceptions.SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
+								throw(new SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
 						}
 						case WebConstantes.Module.Type.analysis:
 						switch((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())){
@@ -478,13 +479,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 							case DBClassificationConstantes.Vehicles.names.adnettrack:
 								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_ADNETTRACK;
 							default:
-								throw(new WebExceptions.SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
+								throw(new SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
 						}
 						default:
-							throw(new WebExceptions.SQLGeneratorException("Impossible de déterminer le type du module pour déterminer la table à utiliser"));
+							throw(new SQLGeneratorException("Impossible de déterminer le type du module pour déterminer la table à utiliser"));
 					}
 				default:
-					throw(new WebExceptions.SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
+					throw(new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
 			}
 		}
 
@@ -552,7 +553,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.sloganMediaSellerInterestCenterMedia:
 					return(" nvl(id_slogan,0) as id_slogan,nvl(id_slogan,0) as slogan,"+DbTables.MEDIA_SELLER_PREFIXE+".id_media_seller,media_seller,"+DbTables.INTEREST_CENTER_PREFIXE+".id_interest_center, interest_center,"+DbTables.MEDIA_PREFIXE+".id_media, media ");
 				default:
-					throw(new WebExceptions.SQLGeneratorException("Le détail support demandé n'est pas valide"));
+					throw(new SQLGeneratorException("Le détail support demandé n'est pas valide"));
 			}
 		
 		}
@@ -621,7 +622,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.sloganMediaSellerInterestCenterMedia:
 					return(" id_slogan,media_seller,"+DbTables.MEDIA_SELLER_PREFIXE+".id_media_seller,interest_center,"+DbTables.INTEREST_CENTER_PREFIXE+".id_interest_center,media,"+DbTables.MEDIA_PREFIXE+".id_media ");
 				default:
-					throw(new WebExceptions.SQLGeneratorException("Le détail support demandé n'est pas valide"));
+					throw(new SQLGeneratorException("Le détail support demandé n'est pas valide"));
 			}
 		
 		}
@@ -732,7 +733,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 
 
-			if(tmp.Length==0)throw(new WebExceptions.SQLGeneratorException("Le détail support demandé n'est pas valide"));
+			if(tmp.Length==0)throw(new SQLGeneratorException("Le détail support demandé n'est pas valide"));
 			tmp=tmp.Substring(0,tmp.Length-2);
 			return(tmp);
 		}
@@ -854,7 +855,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			}
 
 
-			if(tmp.Length==0)throw(new WebExceptions.SQLGeneratorException("Le détail support demandé n'est pas valide"));
+			if(tmp.Length==0)throw(new SQLGeneratorException("Le détail support demandé n'est pas valide"));
 			if(!beginByAnd)tmp=tmp.Substring(4,tmp.Length-4);
 			return(tmp);
 		}

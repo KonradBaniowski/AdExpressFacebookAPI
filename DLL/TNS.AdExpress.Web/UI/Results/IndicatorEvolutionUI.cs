@@ -19,7 +19,9 @@ using TNS.AdExpress.Web.Exceptions;
 using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
-namespace TNS.AdExpress.Web.UI.Results{
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+namespace TNS.AdExpress.Web.UI.Results
+{
 	/// <summary>
 	/// Génère le code HTML pour l'indicateur Evolution
 	/// </summary>
@@ -73,7 +75,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			//string imageSortAsc="/Images/Common/fl_tri_croi1.gif";
 			//string imageSortDesc="/Images/Common/fl_tri_decroi1.gif";		
 
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();

@@ -661,6 +661,22 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 		/// </summary>
 		dataLocation = 141,
         /// <summary>
+        /// Recap emailing
+        /// </summary>
+        recapEmailing = 142,
+        /// <summary>
+        /// Recap Emailing aggregated bu segment
+        /// </summary>
+        recapEmailingSegment = 143,
+        /// <summary>
+        /// Recap Cell phone
+        /// </summary>
+        recapMobileTel = 144,
+        /// <summary>
+        /// Recap Cell phone aggregated bu segment
+        /// </summary>
+        recapMobileTelSegment = 145,
+        /// <summary>
         /// Product Group Advertising Agency
         /// </summary>
         productGroupAgency=200,

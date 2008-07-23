@@ -25,6 +25,7 @@ using TNS.AdExpress.Domain.Translation;
 using DateFunctions = TNS.FrameWork.Date;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Web.Exceptions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 #endregion
 
 namespace TNS.AdExpress.Web.Rules.Results
@@ -77,7 +78,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 			DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);

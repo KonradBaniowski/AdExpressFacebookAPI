@@ -549,9 +549,6 @@
     <Compile Include="Exceptions\DashBoardUIException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exceptions\DeliveryFrequencyException.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Exceptions\DirectoryDataAccessException.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -699,7 +696,7 @@
     <Compile Include="Exceptions\MyAdExpressDataAccessException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exceptions\NoDataException.cs">
+    <Compile Include="Exceptions\_NoDataException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\PdfFilesSystemException.cs">
@@ -817,9 +814,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\SponsorshipSystemException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\SQLGeneratorException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\SupportPlanDataAccessException.cs">

@@ -25,6 +25,7 @@ using CustormerConstantes=TNS.AdExpress.Constantes.Customer;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Web.Core.Exceptions;
 
 namespace TNS.AdExpressI.Portofolio.DAL {
     /// <summary>

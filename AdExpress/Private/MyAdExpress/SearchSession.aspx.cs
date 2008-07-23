@@ -28,6 +28,7 @@ using TNS.AdExpress.Web.DataAccess.MyAdExpress;
 using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Web.Core.Utilities;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebModule=TNS.AdExpress.Constantes.Web.Module;
 using WebRules=TNS.AdExpress.Web.Rules;
@@ -1280,7 +1281,7 @@ namespace AdExpress.Private.MyAdExpress{
 			}
 			
 			if(periodType == CstCustomerSession.Period.Type.nLastMonth || periodType == CstCustomerSession.Period.Type.currentYear){
-				string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+				string absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 				if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) 	|| (absolutEndPeriod.Substring(4,2).Equals("00"))){
 					notValidPeriod=true;
 					invalidPeriodMessage = GestionWeb.GetWebWord(1787,_webSession.SiteLanguage);

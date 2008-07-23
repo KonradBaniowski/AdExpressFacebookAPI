@@ -28,6 +28,8 @@ using RightCst = TNS.AdExpress.Constantes.Customer.Right;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.Domain.Exceptions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.Rules.Results{
 	/// <summary>
@@ -57,7 +59,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			try{
 				dsData = DynamicTablesDataAccess.GetData(webSession);
 			}
-			catch(NoDataException){ return null;}
+			catch(TNS.AdExpress.Domain.Exceptions.NoDataException){ return null;}
 			catch(DeliveryFrequencyException e2){ throw e2;}
 			catch(System.Exception e3){ throw e3;}
 
@@ -542,7 +544,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			//Mois
 			int RESULT_MONTHS = -10;
 			int RESULT_LAST_MONTHS = -10;
-			string absolutePeriodEnd = Functions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutePeriodEnd = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (extendedDynamicTable) 
 			{
 				RESULT_MONTHS = Math.Max(RESULT_PDV_N_1_INDEX, 
@@ -1281,8 +1283,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			#endregion
 
 			#region Alimentation du tableau en données
-			yearN= TNS.AdExpress.Web.Functions.Dates.getPeriodLabel(webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.currentYear);
-			yearN1=TNS.AdExpress.Web.Functions.Dates.getPeriodLabel(webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.previousYear);
+			yearN= FctUtilities.Dates.getPeriodLabel(webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.currentYear);
+			yearN1=FctUtilities.Dates.getPeriodLabel(webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.previousYear);
 			//	2 l'etude ne porte que sur 1 année
 			//	3 l'etude porte sur 2 année
 			if (!webSession.ComparativeStudy)nbYearData=2;

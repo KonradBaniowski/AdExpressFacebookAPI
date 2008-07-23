@@ -26,6 +26,8 @@ using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.FrameWork;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Exceptions;
+using TNS.AdExpress.Web.Core.Exceptions;
 
 namespace TNS.AdExpress.Web.Functions{
 	/// <summary>
@@ -350,7 +352,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="webSession">Session du client</param>
 		/// <param name="EndPeriod">Période de fin</param>
 		/// <returns>Période de fin</returns>
-		public static string CheckPeriodValidity( WebSession webSession, string EndPeriod){
+		/*public static string CheckPeriodValidity( WebSession webSession, string EndPeriod){
 												
 			//traitement de la notion de fréquence
 			Int64 frequency = webSession.CustomerLogin.GetIdFrequency(webSession.CurrentModule);
@@ -359,7 +361,7 @@ namespace TNS.AdExpress.Web.Functions{
 					//si l'année d'etude n'est pas chargée dans son intégralité (année d'étude = année courante
 					//ou decembre non chargé)
 					if (int.Parse(EndPeriod.Substring(0,4)) >= int.Parse(webSession.LastAvailableRecapMonth.Substring(0,4)))
-						throw new NoDataException();
+						throw new TNS.AdExpress.Domain.Exceptions.NoDataException();
 					break;
 				case FrequencyCst.MONTHLY:
 					return GetAbsoluteEndPeriod(webSession,EndPeriod,1);
@@ -378,7 +380,7 @@ namespace TNS.AdExpress.Web.Functions{
 			}
 
 			return EndPeriod;
-		}
+		}*/
 		#endregion
 
 		#region Affichage de la période
@@ -388,7 +390,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="webSession">Session client</param>
 		/// <param name="period">period</param>
 		/// <returns>Période dans les tableaux dynamiques en fonction de l'année choisie</returns>
-		public static string getPeriodLabel(WebSession webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type period){
+		/*public static string getPeriodLabel(WebSession webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type period){
 			string beginPeriod="";
 			string endPeriod="";
 			string year="";
@@ -397,14 +399,14 @@ namespace TNS.AdExpress.Web.Functions{
 			switch(period){
 				case CstWeb.CustomerSessions.Period.Type.currentYear :
 					beginPeriod=webSession.PeriodBeginningDate;
-					endPeriod=WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+					endPeriod=FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 					
 					break;
 				case CstWeb.CustomerSessions.Period.Type.previousYear :
 					year=(int.Parse(webSession.PeriodBeginningDate.Substring(0,4))-1).ToString();
 					beginPeriod=year+webSession.PeriodBeginningDate.Substring(4);
 					//endPeriod= year+webSession.PeriodEndDate.Substring(4);
-					endPeriod= year+WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate).Substring(4);
+					endPeriod= year+FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate).Substring(4);
                     						
 					break;
 				default :
@@ -412,8 +414,9 @@ namespace TNS.AdExpress.Web.Functions{
 			}
 
 			return Convertion.ToHtmlString(switchPeriod(webSession,beginPeriod,endPeriod));
-		}
+		}*/
 		
+        /*
 		/// <summary>
 		/// Affichage de la période dans les tableaux dynamiques
 		/// </summary>
@@ -444,7 +447,7 @@ namespace TNS.AdExpress.Web.Functions{
 			}
 
 			return periodText;
-		}
+		}*/
 		#endregion
 
 		#region Dates de chargement des données
@@ -473,7 +476,7 @@ namespace TNS.AdExpress.Web.Functions{
 							PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy11");
 						}
 					}else
-					throw new NoDataException(GestionWeb.GetWebWord(1612,webSession.SiteLanguage));
+					throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1612,webSession.SiteLanguage));
 				}else {	
 					if(CstPeriodType.currentYear == periodType){
 						if(IsPeriodActive(currentWeek,week,periodType)){
@@ -484,7 +487,7 @@ namespace TNS.AdExpress.Web.Functions{
 							if( (( currentWeek==1 || currentWeek==2 ) && week.Week<=2 && DateTime.Now.Year==week.FirstDay.Year)
 								|| (DateTime.Now.Month==2 && !IsPeriodActive(currentWeek,week,periodType))							  
 								)
-								throw new NoDataException(GestionWeb.GetWebWord(1612,webSession.SiteLanguage));														
+								throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1612,webSession.SiteLanguage));														
 							else {
 								PeriodBeginningDate = DateTime.Now.ToString("yyyy01");
 								PeriodEndDate = DateTime.Now.AddMonths(-2).ToString("yyyyMM");
@@ -1128,7 +1131,7 @@ namespace TNS.AdExpress.Web.Functions{
         #endregion
 
         #region Méthodes internes
-        /// <summary>
+        /*/// <summary>
 		/// Obtient la fin de la période en fonction de la fréquence de chargement des données
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
@@ -1158,7 +1161,7 @@ namespace TNS.AdExpress.Web.Functions{
 			}
 		
 			return EndPeriod;
-		}
+		}*/
 		#endregion
 
         #region Date de début d'un zoom en fonction d'un type de période

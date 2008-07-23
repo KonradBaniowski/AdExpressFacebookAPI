@@ -22,6 +22,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Constantes.Web;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -88,7 +89,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();

@@ -24,6 +24,7 @@ using ConstanteCustomerRight = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Web.Core.Exceptions;
 
 
 namespace TNS.AdExpress.Web.DataAccess.Results

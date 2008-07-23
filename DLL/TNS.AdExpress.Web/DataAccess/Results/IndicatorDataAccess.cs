@@ -27,6 +27,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 #endregion
 
 
@@ -1231,7 +1232,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 			DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);
@@ -1571,7 +1572,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 				//du dernier mois dispo en BDD
 				//traitement de la notion de fréquence
-				string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+				string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 				if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 					throw new NoDataException();				
 				DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
@@ -1796,7 +1797,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 				//du dernier mois dispo en BDD
 				//traitement de la notion de fréquence
-				string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+				string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 				if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 					throw new NoDataException();
 				
@@ -2125,7 +2126,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 				//du dernier mois dispo en BDD
 				//traitement de la notion de fréquence
-				string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+				string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 				if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 					throw new NoDataException();
 				
@@ -2543,7 +2544,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();				
 			DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
@@ -2836,7 +2837,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();			
 			DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
@@ -2898,7 +2899,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 			
@@ -3009,7 +3010,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 			
@@ -3096,7 +3097,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 			
@@ -3184,7 +3185,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 			
@@ -3235,7 +3236,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 			
@@ -3328,7 +3329,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 

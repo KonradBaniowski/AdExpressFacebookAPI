@@ -29,6 +29,8 @@ using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Exceptions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -87,7 +89,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				AppendActivationLanguageClause(webSession, sql, dataTable);
 				AppendRegroupmentAndOrderClause(webSession, sql);
 			}
-			catch(NoDataException e1) {throw e1;}
+			catch(TNS.AdExpress.Domain.Exceptions.NoDataException e1) {throw e1;}
 			catch(DeliveryFrequencyException e3) {throw e3;}
 			catch(System.Exception e2) {throw e2;}
 			#endregion
@@ -419,9 +421,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
-				throw new NoDataException();
+				throw new TNS.AdExpress.Domain.Exceptions.NoDataException();
 
 			//Liste des mois de la période sélectionnée
 			//Calcul de l'index année dans une table recap (N, N1 ou N2)

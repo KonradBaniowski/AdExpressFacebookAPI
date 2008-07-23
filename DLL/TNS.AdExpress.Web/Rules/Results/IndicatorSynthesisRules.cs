@@ -14,6 +14,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using FrameWorkConstantes = TNS.AdExpress.Constantes.FrameWork;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 namespace TNS.AdExpress.Web.Rules.Results
 {
 	/// <summary>
@@ -56,10 +57,10 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 					#region Libellés du tableau
 					//Libellés tableau			
-					tab[0,FrameWorkConstantes.Results.SynthesisRecap.TOTAL_N_COLUMN_INDEX]=WebFunctions.Dates.getPeriodLabel(webSession,WebConstantes.CustomerSessions.Period.Type.currentYear);
+					tab[0,FrameWorkConstantes.Results.SynthesisRecap.TOTAL_N_COLUMN_INDEX]=FctUtilities.Dates.getPeriodLabel(webSession,WebConstantes.CustomerSessions.Period.Type.currentYear);
 				
 					if(webSession.ComparativeStudy) {
-						tab[0,FrameWorkConstantes.Results.SynthesisRecap.TOTAL_N1_COLUMN_INDEX]=WebFunctions.Dates.getPeriodLabel(webSession,WebConstantes.CustomerSessions.Period.Type.previousYear);									
+						tab[0,FrameWorkConstantes.Results.SynthesisRecap.TOTAL_N1_COLUMN_INDEX]=FctUtilities.Dates.getPeriodLabel(webSession,WebConstantes.CustomerSessions.Period.Type.previousYear);									
 						tab[0,FrameWorkConstantes.Results.SynthesisRecap.EVOLUTION_COLUMN_INDEX]=GestionWeb.GetWebWord(1207,webSession.SiteLanguage);					
 						tab[0,FrameWorkConstantes.Results.SynthesisRecap.ECART_COLUMN_INDEX]=GestionWeb.GetWebWord(1213,webSession.SiteLanguage);
 					}				

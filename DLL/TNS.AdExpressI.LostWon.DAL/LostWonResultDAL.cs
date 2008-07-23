@@ -27,6 +27,7 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Exceptions;
+using TNS.AdExpress.Web.Core.Exceptions;
 #endregion
 
 namespace TNS.AdExpressI.LostWon.DAL

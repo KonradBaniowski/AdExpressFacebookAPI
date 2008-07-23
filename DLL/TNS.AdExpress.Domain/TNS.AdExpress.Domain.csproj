@@ -55,6 +55,7 @@
     <Compile Include="Exceptions\DeliveryFrequencyException.cs" />
     <Compile Include="Exceptions\GenericColumnItemsInformationXLException.cs" />
     <Compile Include="Exceptions\GenericColumnsInformationXLException.cs" />
+    <Compile Include="Exceptions\NoDataException.cs" />
     <Compile Include="Exceptions\RightException.cs" />
     <Compile Include="Exceptions\DataBaseException.cs" />
     <Compile Include="Exceptions\DefaultConnectionException.cs" />

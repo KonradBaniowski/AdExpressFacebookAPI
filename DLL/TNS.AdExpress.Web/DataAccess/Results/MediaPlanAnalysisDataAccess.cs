@@ -25,6 +25,7 @@ using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using WebConbstantes=TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Web.Core.Exceptions;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{

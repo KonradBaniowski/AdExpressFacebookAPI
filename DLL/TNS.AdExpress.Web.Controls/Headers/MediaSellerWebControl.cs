@@ -271,33 +271,37 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// </summary>
 		/// <param name="sender">object qui lance l'évènement</param>
 		/// <param name="e">arguments</param>
-		private void Custom_PreRender(object sender, System.EventArgs e){
+        private void Custom_PreRender(object sender, System.EventArgs e)
+        {
 
-			#region régie ou centred'intêret ou Titre
-			//Option détail Média
-			if(mediaSellerOption){
-				mediaDetail = new RadioButtonList();
-				mediaDetail.Width = new System.Web.UI.WebControls.Unit("100%");
-				mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1384, customerWebSession.SiteLanguage),"MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia.GetHashCode().ToString()));
-				if(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)ClassificationCst.DB.Vehicles.names.internationalPress.GetHashCode())
-				mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2091, customerWebSession.SiteLanguage),"MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia.GetHashCode().ToString()));
-				mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1383, customerWebSession.SiteLanguage),"MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia.GetHashCode().ToString()));
-				mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1976, customerWebSession.SiteLanguage),"MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia.GetHashCode().ToString()));
-				mediaDetail.ID = "mediaDetail_"+this.ID;
-				mediaDetail.AutoPostBack=autoPostBackOption;
-				mediaDetail.CssClass = cssClass;
-				
-				try{
-					mediaDetail.Items.FindByValue("MediaSeller_"+customerWebSession.PreformatedMediaDetail.GetHashCode().ToString()).Selected = true;
-				}
-				catch(System.Exception){
-					mediaDetail.Items[0].Selected=true;
-				}
+            #region régie ou centred'intêret ou Titre
+            //Option détail Média
+            if (mediaSellerOption)
+            {
+                mediaDetail = new RadioButtonList();
+                mediaDetail.Width = new System.Web.UI.WebControls.Unit("100%");
+                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1384, customerWebSession.SiteLanguage), "MediaSeller_" + SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia.GetHashCode().ToString()));
+                if (((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)ClassificationCst.DB.Vehicles.names.internationalPress.GetHashCode())
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2091, customerWebSession.SiteLanguage), "MediaSeller_" + SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia.GetHashCode().ToString()));
+                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1383, customerWebSession.SiteLanguage), "MediaSeller_" + SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia.GetHashCode().ToString()));
+                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1976, customerWebSession.SiteLanguage), "MediaSeller_" + SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia.GetHashCode().ToString()));
+                mediaDetail.ID = "mediaDetail_" + this.ID;
+                mediaDetail.AutoPostBack = autoPostBackOption;
+                mediaDetail.CssClass = cssClass;
 
-				Controls.Add(mediaDetail);
-			}
-			#endregion
-		}
+                try
+                {
+                    mediaDetail.Items.FindByValue("MediaSeller_" + customerWebSession.PreformatedMediaDetail.GetHashCode().ToString()).Selected = true;
+                }
+                catch (System.Exception)
+                {
+                    mediaDetail.Items[0].Selected = true;
+                }
+
+                Controls.Add(mediaDetail);
+            }
+            #endregion
+        }
 		#endregion
 
 		#region Render

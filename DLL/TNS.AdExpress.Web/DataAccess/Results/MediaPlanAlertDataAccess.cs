@@ -29,6 +29,7 @@ using TNS.AdExpress.Constantes.Web;
 using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Core.Exceptions;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{

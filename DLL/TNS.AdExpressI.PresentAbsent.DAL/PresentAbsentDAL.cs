@@ -32,6 +32,7 @@ using CstDB = TNS.AdExpress.Constantes.DB;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using FctWeb = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Web.Core.Exceptions;
 
 #endregion
 

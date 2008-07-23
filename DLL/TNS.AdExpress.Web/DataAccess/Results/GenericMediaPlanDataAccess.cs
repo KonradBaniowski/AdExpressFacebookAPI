@@ -26,6 +26,7 @@ using WebCommon=TNS.AdExpress.Web.Common;
 using TNS.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Core.Exceptions;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -381,7 +382,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                         else
                             return(Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
 					default:
-						throw(new WebExceptions.SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
+						throw(new SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
 				}
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
 				switch(webSession.Unit){
@@ -405,10 +406,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                         else
                             return(Fields.EXPENDITURE_EURO);
 					default:
-						throw(new WebExceptions.SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
+						throw(new SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
 				}
 				default:
-					throw(new WebExceptions.SQLGeneratorException("Le détails Période sélectionné est incorrect pour le choix des unités"));
+					throw(new SQLGeneratorException("Le détails Période sélectionné est incorrect pour le choix des unités"));
 
 			}
 		}
@@ -491,7 +492,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                                     return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_MARKETING_DIRECT;
 								default:
-									throw(new WebExceptions.SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
+									throw(new SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
 							}
 						case WebConstantes.Module.Type.analysis:
 							switch((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())){
@@ -513,13 +514,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                                     return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_MARKETING_DIRECT;
 								default:
-									throw(new WebExceptions.SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
+									throw(new SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
 							}
 						default:
-							throw(new WebExceptions.SQLGeneratorException("Impossible de déterminer le type du module pour déterminer la table à utiliser"));
+							throw(new SQLGeneratorException("Impossible de déterminer le type du module pour déterminer la table à utiliser"));
 					}
 				default:
-					throw(new WebExceptions.SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
+					throw(new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
 			}
 		}
 
@@ -538,7 +539,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
 					return(false);
 				default:
-					throw(new WebExceptions.SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
+					throw(new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
 			}
 		}
 

@@ -32,6 +32,7 @@ using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 
 namespace TNS.AdExpress.Web.UI.Results{
@@ -158,7 +159,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new NoDataException();
 			

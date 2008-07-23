@@ -7,7 +7,7 @@
 using System;
 using TNS.FrameWork.Exceptions;
 
-namespace TNS.AdExpress.Web.Exceptions{
+namespace TNS.AdExpress.Web.Core.Exceptions{
 	/// <summary>
 	/// Exception SQLGenerator
 	/// </summary>

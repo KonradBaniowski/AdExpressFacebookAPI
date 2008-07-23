@@ -24,6 +24,7 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Web.Core.Exceptions;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results
@@ -102,7 +103,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 						dataFieldsForGadWithoutTablePrefix = " , "+WebFunctions.SQLGenerator.GetFieldsAddressForGad("");
 						dataJointForGad=" and "+WebFunctions.SQLGenerator.GetJointForGad(DbTables.DATA_SPONSORSHIP_PREFIXE);
 					}
-					catch(WebExceptions.SQLGeneratorException){;}
+					catch(SQLGeneratorException){;}
 				}
 
 			}

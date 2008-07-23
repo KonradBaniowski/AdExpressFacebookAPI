@@ -29,6 +29,7 @@ using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Web.Core.Exceptions;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -99,7 +100,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						dataFieldsForGad=", "+WebFunctions.SQLGenerator.GetFieldsAddressForGad();
 						dataJointForGad="and "+WebFunctions.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
 					}
-					catch(WebExceptions.SQLGeneratorException){;}
+					catch(SQLGeneratorException){;}
 				}
 				//Agence_media
 				//if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency)||webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency)){
@@ -482,7 +483,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						dataFieldsForGad=", "+WebFunctions.SQLGenerator.GetFieldsAddressForGad();
 						dataJointForGad="and "+WebFunctions.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
 					}
-					catch(WebExceptions.SQLGeneratorException){;}
+					catch(SQLGeneratorException){;}
 				}
 				//Agence_media
 				//if(webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency)||webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency)){

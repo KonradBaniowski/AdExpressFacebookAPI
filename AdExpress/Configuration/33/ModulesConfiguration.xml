@@ -890,7 +890,7 @@
       </module>
       <!--************************************************* Tableaux dynamiques **********************************************************************-->
       <module name="Tableaux dynamiques" privilegecode="194" traductioncode="2174" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapProductSelection.aspx" descriptionWebTextId="2203" descriptionImageName="/Images/Common/Infobulle/TableauDynamique.png">
-        <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
+        <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">

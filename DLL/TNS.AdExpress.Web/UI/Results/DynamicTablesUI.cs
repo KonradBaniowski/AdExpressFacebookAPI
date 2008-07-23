@@ -20,12 +20,14 @@ using TNS.AdExpress.Web.Rules.Results;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using TblFormatCst = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using ClassifCst = TNS.AdExpress.Constantes.Classification;
 using DBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.Domain.Exceptions;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -49,7 +51,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			try{
 				data = DynamicTablesRules.GetDataTable(webSession);
 			}
-			catch(WebExceptions.DeliveryFrequencyException){return UnvalidFrequencyDelivery(webSession);}
+			catch(DeliveryFrequencyException){return UnvalidFrequencyDelivery(webSession);}
 			catch(System.Exception err){
 				throw(new WebExceptions.DynamicTablesUIException("Impossible d'obtenir les données",err));
 			}
@@ -223,7 +225,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				html.Append("<td>" + GestionWeb.GetWebWord(1164, webSession.SiteLanguage) + "</td>");
 			else
 				html.Append("<td>" + GestionWeb.GetWebWord(1357, webSession.SiteLanguage) + "</td>");
-			html.Append("<td>" + TNS.AdExpress.Web.Functions.Dates.getPeriodLabel(webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.currentYear) + "</td>"); 
+            html.Append("<td>" + FctUtilities.Dates.getPeriodLabel(webSession, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.currentYear) + "</td>"); 
 			//PDM
 			if (webSession.PDM && webSession.PreformatedTable==TblFormatCst.PreformatedTables.media_X_Year)
 				html.Append("<td>" + GestionWeb.GetWebWord(806, webSession.SiteLanguage) + GestionWeb.GetWebWord(1187, webSession.SiteLanguage) + webSession.PeriodBeginningDate.Substring(0,4) + "</td>");
@@ -232,7 +234,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				html.Append("<td>" + GestionWeb.GetWebWord(1166, webSession.SiteLanguage) + GestionWeb.GetWebWord(1187, webSession.SiteLanguage) + webSession.PeriodBeginningDate.Substring(0,4) + "</td>");
 			//N-1
 			if (webSession.ComparativeStudy){
-				html.Append("<td>" + TNS.AdExpress.Web.Functions.Dates.getPeriodLabel(webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.previousYear) + "</td>"); 
+				html.Append("<td>" + FctUtilities.Dates.getPeriodLabel(webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.previousYear) + "</td>"); 
 				//PDV N-1
 				if (webSession.PDV && webSession.PreformatedTable==TblFormatCst.PreformatedTables.product_X_Year)
 					html.Append("<td>" + GestionWeb.GetWebWord(1166, webSession.SiteLanguage) + GestionWeb.GetWebWord(1187, webSession.SiteLanguage) + (int.Parse(webSession.PeriodBeginningDate.Substring(0,4))-1) + "</td>");
@@ -409,7 +411,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			//mois de n
 			int MONTH_COLUMN = -1;
 			int LAST_MONTH_COLUMN = -2;
-			string absolutePeriodEnd = WebFunctions.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+			string absolutePeriodEnd = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			if (extendedToMonths)
 			{
 				MONTH_COLUMN = Math.Max(EVOL_COLUMN,
