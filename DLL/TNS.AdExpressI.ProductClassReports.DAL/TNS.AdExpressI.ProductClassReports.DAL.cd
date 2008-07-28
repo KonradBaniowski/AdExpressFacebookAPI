@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TNS.AdExpressI.ProductClassReports.DAL.ProductClassReportDAL">
+    <Position X="1.5" Y="2.5" Width="3.75" />
+    <TypeIdentifier>
+      <FileName>ProductClassReportDAL.cs</FileName>
+      <HashCode>AAAAAAAAEAAAAQAAAAAAAAAAAAAAAAAiAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="TNS.AdExpressI.ProductClassReports.DAL.IProductClassReportsDAL">
+    <Position X="1.5" Y="0.75" Width="3.75" />
+    <TypeIdentifier>
+      <FileName>IProductClassReportsDAL.cs</FileName>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>
