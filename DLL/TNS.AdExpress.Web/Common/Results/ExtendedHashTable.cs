@@ -9,11 +9,11 @@
 using System;
 using System.Collections;
 
-using TNS.AdExpress.Web.Exceptions;
+using TNS.AdExpress.Web.Core.Exceptions;
 
 namespace TNS.AdExpress.Web.Common.Results{
 	/// <summary>
-	/// RecursiveHashTable permet d'imbriquer plusieurs niveaux de HashTable
+    /// ExtendedHashTable permet d'imbriquer plusieurs niveaux de HashTable
 	/// </summary>
 	public class ExtendedHashTable:Hashtable{
 

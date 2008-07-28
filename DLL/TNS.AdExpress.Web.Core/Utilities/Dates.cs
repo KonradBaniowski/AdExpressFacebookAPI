@@ -169,5 +169,54 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 		}
 
         #endregion
+
+        #region Date de début d'une période en fonction d'un type de période
+        /// <summary>
+        /// Extract begin of a period from period and type of period
+        /// </summary>
+        /// <param name="period">Studied period</param>
+        /// <param name="periodType">Type of period</param>
+        /// <returns>Begin of the period</returns>
+        /// <remarks>
+        /// Use class:
+        ///		public TNS.FrameWork.Date.AtomicPeriodWeek
+        /// </remarks>
+        public static DateTime getPeriodBeginningDate(string period, CustomerSessions.Period.Type periodType)
+        {
+            AtomicPeriodWeek tmpWeek;
+            switch (periodType)
+            {
+                case CstPeriod.Type.dateToDateWeek:
+                case CstPeriod.Type.nLastWeek:
+                case CstPeriod.Type.previousWeek:
+                case CstPeriod.Type.LastLoadedWeek:
+                    if (period.Length == 6)
+                    {
+                        tmpWeek = new AtomicPeriodWeek(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)));
+                        return tmpWeek.FirstDay;
+                    }
+                    else
+                    {
+                        return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+                    }
+                case CstPeriod.Type.dateToDateMonth:
+                case CstPeriod.Type.nLastMonth:
+                case CstPeriod.Type.LastLoadedMonth:
+                case CstPeriod.Type.nLastYear:
+                case CstPeriod.Type.previousMonth:
+                case CstPeriod.Type.previousYear:
+                case CstPeriod.Type.nextToLastYear:
+                case CstPeriod.Type.currentYear:
+                    if (period.Length == 6)
+                        return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), 1);
+                    else
+                        return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+                default:
+                case CstPeriod.Type.previousDay:
+                case CstPeriod.Type.nLastDays:
+                    return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+            }
+        }
+        #endregion
     }
 }

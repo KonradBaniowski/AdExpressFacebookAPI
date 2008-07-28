@@ -1,14 +1,16 @@
 #region Informations
-// Auteur: G. RAGNEAU
-// Date de création:
-// Date de modification: 11/08/2005
+/* Auteur: G. RAGNEAU
+ * Date de création:
+ * Date de modification: 11/08/2005
+ *      24/07/2008 - G Ragneau - Moved from TNS.AdExpress.Web
+ * */
 #endregion
 
 using System;
 
-namespace TNS.AdExpress.Web.Exceptions{
+namespace TNS.AdExpress.Web.Core.Exceptions{
 	/// <summary>
-	/// Gestion des exceptions de la hashtable de gestion d'index de tableaux pour la génération des tableaux dynamiques
+	/// Error managment in ExtendedHashtable class
 	/// </summary>
 	public class ExtendedHashTableException:System.ArgumentException{
 		

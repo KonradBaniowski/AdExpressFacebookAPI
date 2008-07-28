@@ -12,22 +12,21 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
-using TNS.AdExpress.Web.Core.Sessions;
+
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Constantes.Customer;
-using TNS.AdExpress.Web.UI.Results;
 using TNS.AdExpress.Domain.Web.Navigation;
 using WebFunction = TNS.AdExpress.Web.Functions.Script;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+
+using TNS.AdExpressI.ProductClassReports;
 #endregion
 
 namespace AdExpress{
@@ -150,8 +149,14 @@ namespace AdExpress{
 				#region Calcul du résultat
 				scripts = WebFunction.ImageDropDownListScripts(ResultsOptionsWebControl1.ShowPictures);
 				scriptBody = "javascript:openMenuTest();";
-				result = DynamicTablesUI.GetDynamicTableUI(_webSession,false);
-				#endregion
+				//result = DynamicTablesUI.GetDynamicTableUI(_webSession,false);
+                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Product Class Analysis"));
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IProductClassReports productClassReport = (IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                result = productClassReport.GetProductClassReport();
+                #endregion
 
                 #region Script
                 // Script

@@ -144,6 +144,7 @@
     <Compile Include="CustomerPeriod.cs" />
     <Compile Include="DataAccess\ClassificationList\SearchLevelDataAccess.cs" />
     <Compile Include="DataAccess\Session\GenericDetailLevelDataAccess.cs" />
+    <Compile Include="Exceptions\ExtendedHashTableException.cs" />
     <Compile Include="Exceptions\SQLGeneratorException.cs" />
     <Compile Include="Exceptions\WebThemesDataAccessException.cs" />
     <Compile Include="Exceptions\WebLanguagesDataAccessException.cs" />
@@ -313,6 +314,7 @@
     <Compile Include="Result\SponsorshipShowLinkRules.cs" />
     <Compile Include="Utilities\CheckedText.cs" />
     <Compile Include="Utilities\Dates.cs" />
+    <Compile Include="Utilities\ExtendedHashTable.cs" />
     <Compile Include="Utilities\SqlGenerator.cs" />
     <Compile Include="Utilities\Units.cs" />
   </ItemGroup>

@@ -28,12 +28,14 @@ using TNS.FrameWork;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Web.Core.Exceptions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.Functions{
 	/// <summary>
 	/// Ensemble de fonctions de traitement de période
 	/// </summary>
-	public class Dates{
+    public class Dates : FctUtilities.Dates
+    {
 
 
 		#region Variables
@@ -255,51 +257,6 @@ namespace TNS.AdExpress.Web.Functions{
 					return date.ToString("MM/dd/yyyy");
 				default:
 					return date.ToString("dd/MM/yyyy");
-			}
-		}
-		#endregion
-
-		#region Date de début d'une période en fonction d'un type de période
-		/// <summary>
-		/// Foction qui extrait à partir d'une période et d'un type de période la date de début de cette période
-		/// </summary>
-		/// <param name="period">Période dont on veut la date de début</param>
-		/// <param name="periodType">Type de période considérée</param>
-		/// <returns>Date de début de period</returns>
-		/// <remarks>
-		/// Utilise la classe:
-		///		public TNS.FrameWork.Date.AtomicPeriodWeek
-		/// </remarks>
-		public static DateTime getPeriodBeginningDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType){
-			AtomicPeriodWeek tmpWeek;
-			switch(periodType){
-				case CstCustomerSession.Period.Type.dateToDateWeek:
-				case CstCustomerSession.Period.Type.nLastWeek:
-				case CstCustomerSession.Period.Type.previousWeek:
-				case CstCustomerSession.Period.Type.LastLoadedWeek:
-                    if (period.Length == 6) {
-                        tmpWeek = new AtomicPeriodWeek(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)));
-                        return tmpWeek.FirstDay;
-                    }
-                    else {
-                        return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
-                    }
-				case CstCustomerSession.Period.Type.dateToDateMonth:
-				case CstCustomerSession.Period.Type.nLastMonth:
-				case CstCustomerSession.Period.Type.LastLoadedMonth:
-				case CstCustomerSession.Period.Type.nLastYear:
-				case CstCustomerSession.Period.Type.previousMonth:
-				case CstCustomerSession.Period.Type.previousYear:
-				case CstCustomerSession.Period.Type.nextToLastYear:
-				case CstCustomerSession.Period.Type.currentYear:
-                    if(period.Length==6)
-					    return new DateTime(int.Parse(period.Substring(0,4)),int.Parse(period.Substring(4,2)), 1);
-                    else
-                        return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
-				default:
-				case CstCustomerSession.Period.Type.previousDay:
-				case CstCustomerSession.Period.Type.nLastDays:
-					return new DateTime(int.Parse(period.Substring(0,4)),int.Parse(period.Substring(4,2)),int.Parse(period.Substring(6,2)));
 			}
 		}
 		#endregion

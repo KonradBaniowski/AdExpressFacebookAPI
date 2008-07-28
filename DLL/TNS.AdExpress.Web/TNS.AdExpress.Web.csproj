@@ -228,7 +228,7 @@
     <Compile Include="Common\Results\_MediaPlanResultData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Results\RecursiveHashTable.cs">
+    <Compile Include="Common\Results\ExtendedHashTable.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Results\_ResultData.cs">
@@ -574,9 +574,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\ExcelWebPageException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\ExtendedHashTableException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\FilesItemDataAccessException.cs">
