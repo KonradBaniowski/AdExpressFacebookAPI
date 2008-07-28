@@ -174,7 +174,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             StringBuilder html = new StringBuilder(10000);
             MediaScheduleData result = null;
             Int64 moduleId = webSession.CurrentModule;
-            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(moduleId);
+            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
             object[,] tab = null;
             MediaSchedulePeriod period;
 
