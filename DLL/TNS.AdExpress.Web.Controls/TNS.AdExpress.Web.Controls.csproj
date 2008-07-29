@@ -383,6 +383,8 @@
     </Compile>
     <Compile Include="Results\PortofolioChartWebControl.cs" />
     <Compile Include="Results\PortofolioDetailMediaResultWebControl.cs" />
+    <Compile Include="Results\ProductClassAnalysis\ProductClassContainerWebControl.cs" />
+    <Compile Include="Results\ProductClassAnalysis\ProductClassTableWebControl.cs" />
     <Compile Include="Results\ProofResultWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

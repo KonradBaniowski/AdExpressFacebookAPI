@@ -213,7 +213,6 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			}
 
 			tabResult=GetTable(tabResult,finalTabResult);
-			
 
 			return tabResult;
 		

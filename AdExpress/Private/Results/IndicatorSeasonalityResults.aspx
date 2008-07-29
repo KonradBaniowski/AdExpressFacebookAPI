@@ -64,9 +64,9 @@
 				<tr class="whiteBackGround" height="5">
 					<td></td>
 				</tr>
-				<%if(palmares){%>
+				<%if(totalChoice){%>
 				<tr class="whiteBackGround">
-					<td><asp:radiobuttonlist id="palmaresRadioButtonList" runat="server"></asp:radiobuttonlist></td>
+					<td><asp:radiobuttonlist id="totalRadioButtonList" runat="server"></asp:radiobuttonlist></td>
 				</tr>
 				<%}%>
 				<%if(bigFormat){%>

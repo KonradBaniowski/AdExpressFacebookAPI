@@ -899,9 +899,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             string sql = "";
             // Category				
-            if (CheckedText.IsStringEmpty(CategoryAccessList))
+            if (CheckedText.IsNotEmpty(CategoryAccessList))
             {
-                if (CheckedText.IsStringEmpty(MediaAccessList))
+                if (CheckedText.IsNotEmpty(MediaAccessList))
                 {
                     if (beginbyand)
                         sql += " and ( ";
@@ -911,12 +911,12 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 sql += "  " + DBConstantes.Tables.RECAP_PREFIXE + indexSubQuery + ".id_category in (" + CategoryAccessList + ") ";
             }
             // Media			
-            if (CheckedText.IsStringEmpty(MediaAccessList))
+            if (CheckedText.IsNotEmpty(MediaAccessList))
             {
-                if (CheckedText.IsStringEmpty(CategoryAccessList)) sql += " or ";
+                if (CheckedText.IsNotEmpty(CategoryAccessList)) sql += " or ";
                 else if (beginbyand) sql += " and  ";
                 sql += "  " + DBConstantes.Tables.RECAP_PREFIXE + indexSubQuery + ".id_media in (" + MediaAccessList + ") ";
-                if (CheckedText.IsStringEmpty(CategoryAccessList)) sql += " ) ";
+                if (CheckedText.IsNotEmpty(CategoryAccessList)) sql += " ) ";
             }
             return sql;
         }
@@ -1162,15 +1162,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
             sql += " select distinct id_sector ";
             sql += " from " + DBConstantes.Schema.RECAP_SCHEMA + "." + recapTableName + " " + DBConstantes.Tables.RECAP_PREFIXE + " ";
-            if (CheckedText.IsStringEmpty(GroupAccessList))
+            if (CheckedText.IsNotEmpty(GroupAccessList))
             {
                 sql += " where id_group_ in (" + GroupAccessList + ") ";
             }
-            if (CheckedText.IsStringEmpty(SegmentAccessList) && CheckedText.IsStringEmpty(GroupAccessList))
+            if (CheckedText.IsNotEmpty(SegmentAccessList) && CheckedText.IsNotEmpty(GroupAccessList))
             {
                 sql += " or id_segment in  (" + SegmentAccessList + ")";
             }
-            else if (CheckedText.IsStringEmpty(SegmentAccessList))
+            else if (CheckedText.IsNotEmpty(SegmentAccessList))
             {
                 sql += " where id_segment in (" + SegmentAccessList + ") ";
             }
@@ -1197,7 +1197,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         sectorList += currentRow["id_sector"].ToString() + ",";
                     }
                 }
-                if (CheckedText.IsStringEmpty(sectorList))
+                if (CheckedText.IsNotEmpty(sectorList))
                 {
                     sectorList = sectorList.ToString().Substring(0, sectorList.Length - 1);
                 }
@@ -1236,7 +1236,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             if (comparisonCriterion == WebConstantes.CustomerSessions.ComparisonCriterion.sectorTotal)
             {
                 totalSector = GetSectorList(recapTableName, GroupAccessList, SegmentAccessList);
-                if (CheckedText.IsStringEmpty(totalSector))
+                if (CheckedText.IsNotEmpty(totalSector))
                 {
                     if (beginByAnd) sql += " and ";
                     sql += "  " + DBConstantes.Tables.RECAP_PREFIXE + indexSubQuery + ".id_sector in (" + totalSector + ") ";
@@ -1251,7 +1251,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 // Sélection en accès
                 premier = true;
                 // group				
-                if (CheckedText.IsStringEmpty(GroupAccessList))
+                if (CheckedText.IsNotEmpty(GroupAccessList))
                 {
                     if (beginByAnd) sql += " and ";
                     //					sql+=" and (("+DBConstantes.Tables.RECAP_PREFIXE+indexSubQuery+".id_group_ in ("+GroupAccessList+") ";
@@ -1260,7 +1260,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     beginByAnd = true;
                 }
                 // Segment				
-                if (CheckedText.IsStringEmpty(SegmentAccessList))
+                if (CheckedText.IsNotEmpty(SegmentAccessList))
                 {
                     if (!premier) sql += " or";
                     else
@@ -1278,7 +1278,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
                 // Sélection en Exception
                 // group				
-                if (CheckedText.IsStringEmpty(GroupExceptionList))
+                if (CheckedText.IsNotEmpty(GroupExceptionList))
                 {
                     if (premier)
                     {
@@ -1296,7 +1296,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     beginByAnd = true;
                 }
                 // segment en Exception				
-                if (CheckedText.IsStringEmpty(SegmentExceptionList))
+                if (CheckedText.IsNotEmpty(SegmentExceptionList))
                 {
                     if (premier)
                     {
@@ -1318,7 +1318,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 #endregion
             }
             //annonceur de références ou concurrents sélectionnés
-            if (RefenceOrCompetitorAdvertiser && CheckedText.IsStringEmpty(AdvertiserAccessList))
+            if (RefenceOrCompetitorAdvertiser && CheckedText.IsNotEmpty(AdvertiserAccessList))
             {
                 if (beginByAnd) sql += " and ";
                 //				sql+=" and "+DBConstantes.Tables.ADVERTISER_PREFIXE+indexSubQuery+".id_advertiser in ("+AdvertiserAccessList+") ";

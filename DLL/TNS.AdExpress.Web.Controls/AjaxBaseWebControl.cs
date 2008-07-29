@@ -82,7 +82,6 @@ namespace TNS.AdExpress.Web.Controls{
 
 			js.Append("\r\nfunction get_"+this.ID+"_callback(res){");
 			js.Append("\r\n\tvar oN=document.getElementById('res_"+this.ID+"');");
-			//js.Append("\r\n\tdocument.write(res.value);");
 			js.Append("\r\n\toN.innerHTML=res.value;");
 			js.Append("\r\n}\r\n");
 			js.Append("\r\naddEvent(window, \"load\", get_"+this.ID+");");
@@ -110,7 +109,6 @@ namespace TNS.AdExpress.Web.Controls{
 //		[AjaxPro.AjaxMethod]
 //		public abstract string GetData(string sessionId,AjaxPro.JavaScriptObject oParams);
 		#endregion
-
 
 		#region Evènements
 
@@ -144,10 +142,6 @@ namespace TNS.AdExpress.Web.Controls{
 			}
 			cwe.SendMail();
 			return GetMessageError(customerSession,1973);
-//			if(customerSession!=null)
-//				return(GestionWeb.GetWebWord(1973,customerSession.SiteLanguage)+"<br>"+GestionWeb.GetWebWord(2099,customerSession.SiteLanguage));
-//			else
-//				return(GestionWeb.GetWebWord(1973,33)+"<br>"+GestionWeb.GetWebWord(2099,customerSession.SiteLanguage));
 		}
 		#endregion
 
@@ -169,10 +163,6 @@ namespace TNS.AdExpress.Web.Controls{
 		/// <param name="e">Arguments</param>
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender (e);
-//			if(!this.Page.ClientScript.IsClientScriptBlockRegistered("AjaxProTimeOutScript"))
-//				this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"AjaxProTimeOutScript",AjaxProTimeOutScript());
-//			if(!this.Page.ClientScript.IsClientScriptBlockRegistered("AjaxProTimeOutScript_"+this.ID))
-//				this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"AjaxProTimeOutScript_"+this.ID,AjaxEventScript());
 		}
 		#endregion
 

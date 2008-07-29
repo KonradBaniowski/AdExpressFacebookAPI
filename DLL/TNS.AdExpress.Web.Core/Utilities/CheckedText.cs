@@ -74,7 +74,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 		/// </summary>
 		/// <param name="InString">Texte Source</param>
 		/// <returns>True si la chaîne est non vide ou non null, false sinon</returns>		
-		public static bool IsStringEmpty(string InString){
+		public static bool IsNotEmpty(string InString){
 			return (InString!=null && !InString.Equals(""));				
 		}
 		/// <summary>
