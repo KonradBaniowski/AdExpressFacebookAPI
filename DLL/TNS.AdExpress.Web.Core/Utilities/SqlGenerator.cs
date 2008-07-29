@@ -1707,7 +1707,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 if (adexpressMediaItemsList.GetCategoryItemsList.Length > 0)
                 {
                     if (WebConstantes.AdExpressUniverse.RECAP_MEDIA_LIST_ID == idMediaItemsList
-                        && webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) != null)
+                        && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
                     {
                         //Rajout de la catégorie parrainage tv pour les recap
                         sql += categoryTablePrefixe + ".id_category in(" + adexpressMediaItemsList.GetCategoryItemsList + ",68) ";
