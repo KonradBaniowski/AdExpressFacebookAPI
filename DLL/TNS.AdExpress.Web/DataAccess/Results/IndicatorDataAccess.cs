@@ -226,7 +226,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						beginbyand=false;
 					}
 					//Droits Parrainage TV
-					if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+					if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 						if (!beginbyand) sql += " and ";
 						sql += "    " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ";
 					}
@@ -518,7 +518,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						beginbyand=false;
 					}
 					//Droits Parrainage TV
-					if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+					if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 						if (!beginbyand) sql += " and ";
 						sql += "    " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ";
 					}
@@ -846,7 +846,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					beginbyand=false;
 				}
 				//Droits Parrainage TV
-				if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+				if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 					if (!beginbyand) sql += " and ";
 					sql += "    " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ";
 				}
@@ -1021,7 +1021,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql+=WebFunctions.SQLGenerator.getAccessVehicleList(webSession,DBConstantes.Tables.RECAP_PREFIXE,true);	
 			}
 			//Droits Parrainage TV
-			if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+			if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 				sql += "   and " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ";
 			}
 
@@ -1136,7 +1136,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql+=WebFunctions.SQLGenerator.getAccessVehicleList(webSession,DBConstantes.Tables.RECAP_PREFIXE,true);	
 			}
 			//Droits Parrainage TV
-			if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+			if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 				sql += "  and  " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ";
 			}
 			sql+=WebFunctions.SQLGenerator.GetRecapMediaSelection(webSession.GetSelection(webSession.CurrentUniversMedia,CustomerRightConstante.type.categoryAccess),webSession.GetSelection(webSession.CurrentUniversMedia,CustomerRightConstante.type.mediaAccess),true);
@@ -1418,7 +1418,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						sql+="  "+WebFunctions.SQLGenerator.getAccessVehicleList(webSession,DBConstantes.Tables.RECAP_PREFIXE,true);	
 					}
 					//Droits Parrainage TV
-					if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+					if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 						if (!beginbyand) sql += " and ";
 						sql += "    " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ";
 					}
@@ -1921,7 +1921,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				}
 
 				//Droits Parrainage TV
-				if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+				if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 				sql += " and   " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ";
 				}
 				#endregion				
@@ -2229,7 +2229,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql+="  "+WebFunctions.SQLGenerator.getAccessVehicleList(webSession,DBConstantes.Tables.RECAP_PREFIXE,true);	
 				}
 				//Droits Parrainage TV
-				if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+				if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 					sql += " and   " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ";
 				}
 				#endregion				
@@ -3472,7 +3472,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			}
 
 			//Droits Parrainage TV
-			if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+			if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 				sql += " and   " + DBConstantes.Tables.RECAP_PREFIXE + indexSubQuery + ".id_category not in (68)  ";
 			}
 			#endregion
