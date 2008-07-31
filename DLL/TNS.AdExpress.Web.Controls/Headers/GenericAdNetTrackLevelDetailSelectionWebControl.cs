@@ -13,6 +13,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -300,7 +301,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					if(// Droit sur les niveaux de détail produit
 						CheckProductDetailLevelAccess() &&
 						// Droit des Marques
-						_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null
+						_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE)
 						)return(true);
 					return(false);
 					#endregion
@@ -310,7 +311,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					if(// Droit sur les niveaux de détail produit
 						CheckProductDetailLevelAccess() &&
 						// Droit sur les groupe de société
-						_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG)!=null
+						_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG)
 						)return(true);
 					return(false);
 					#endregion

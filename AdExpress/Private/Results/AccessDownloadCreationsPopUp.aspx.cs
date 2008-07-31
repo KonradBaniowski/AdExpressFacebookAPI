@@ -84,11 +84,11 @@ namespace AdExpress.Private.Results {
 			//Construction des boutons radio permettant la visualisation ou la sauvegarde d'un création
 			if (!Page.IsPostBack){
 				RadioButtonList1.Items.Clear();
-				if(_webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_CREATION_ACCESS_FLAG)!=null){
+				if(_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_CREATION_ACCESS_FLAG)){
 					//L'utilisateur a accès au créations en lecture
 					RadioButtonList1.Items.Add(GestionWeb.GetWebWord(873,_webSession.SiteLanguage));
 				}
-				if(_webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DOWNLOAD_ACCESS_FLAG)!=null){
+				if(_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DOWNLOAD_ACCESS_FLAG)){
 					//L'utilisateur a accès aux créations en téléchargement
 					RadioButtonList1.Items.Add(GestionWeb.GetWebWord(874,_webSession.SiteLanguage));
 				}

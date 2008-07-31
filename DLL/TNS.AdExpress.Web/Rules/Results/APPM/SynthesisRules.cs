@@ -264,7 +264,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			double pages=0;
 			#endregion			
 
-			if(webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null){//Droits versions
+			if(webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)){//Droits versions
 				try{
 					
 					#region date formatting
@@ -301,7 +301,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 						//Brand Label
 						//Rights verification for Brand
-						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+						if(webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE))
 							synthesisData.Add("brand", synthesisTable.Rows[0]["brand"]);
 
 						//Advertiser Label
@@ -521,7 +521,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			double pages=0;
 			#endregion			
 
-			if(webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null) {
+			if(webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)) {
 				//Droits versions
 				try {
 					
@@ -602,7 +602,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 							//Brand Label
 							//Rights verification for Brand
-							if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+							if(webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE))
 								synthesisData[k].Add("brand", synthesisTableTmp.Rows[0]["brand"]);
 
 							//Advertiser Label

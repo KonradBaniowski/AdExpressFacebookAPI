@@ -82,6 +82,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             int classificationLanguageId;
             string charset="";
             string contentEncoding="";
+			string nlsSort = "";
+			bool isUTF8 = false;
             #endregion
 
             try {
@@ -92,6 +94,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                         imageSourceText="";
                         charset="";
                         contentEncoding="";
+						nlsSort = "";
+						isUTF8 = false;
                         switch(reader.LocalName) {
                             case "language":
                                 if(reader.GetAttribute("id")==null || reader.GetAttribute("id").Length==0) throw (new InvalidXmlValueException("Invalid id parameter"));
@@ -106,7 +110,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     classificationLanguageId=int.Parse(reader.GetAttribute("classificationLanguageId"));
                                 else
                                     classificationLanguageId=id;
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding));
+								if (reader.GetAttribute("nlsSort") != null && reader.GetAttribute("nlsSort").Length > 0)
+									nlsSort = reader.GetAttribute("nlsSort");
+								if (reader.GetAttribute("isUtf8") != null)
+									isUTF8 = bool.Parse(reader.GetAttribute("isUtf8"));								
+                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,nlsSort,isUTF8));
                                 break;
                         }
                     }

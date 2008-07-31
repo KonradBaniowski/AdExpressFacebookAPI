@@ -18,6 +18,7 @@ using TNS.FrameWork;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM{
 	/// <summary>
@@ -53,7 +54,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			//To check if the user has a right to view the media agency or not
 			//mediaAgencyAccess flag is used in the rest of the classes which indicates whethere the user has access 
 			//to media agency or not
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
+			if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY))
 				mediaAgencyAccess=true;
 
 			#endregion
@@ -214,7 +215,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			//To check if the user has a right to view the media agency or not
 			//mediaAgencyAccess flag is used in the rest of the classes which indicates whethere the user has access 
 			//to media agency or not
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
+			if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY))
 				mediaAgencyAccess=true;
 
 			#endregion
@@ -281,7 +282,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 						t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1418,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["product"]+"</td></tr>");	
 						
 						//Nom de la marque
-						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null){
+						if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE)){
 							styleTitle=InvertStyle(styleTitle);
 							styleValue=InvertStyle(styleValue);
 							t.Append("\r\n\t<tr><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(2001,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["brand"]+"</td></tr>");	

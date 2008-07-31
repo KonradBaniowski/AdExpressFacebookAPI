@@ -200,7 +200,7 @@ namespace AdExpress.Private.Results{
 				#endregion
 				
 				#region Option affiner version 
-				if(!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !WebFunctions.MediaDetailLevel.HasSloganRight(_webSession)
+				if (!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)
 					|| _webSession.CurrentTab!=TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlanByVersion){//droits affiner univers Versions				
 					InitializeProductWebControl1.Visible = false;
 					MenuWebControl2.ForbidOptionPages = true;

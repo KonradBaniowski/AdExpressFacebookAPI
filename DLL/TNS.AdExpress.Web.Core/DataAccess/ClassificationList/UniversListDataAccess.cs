@@ -21,6 +21,9 @@ using TNS.AdExpress.Web.Core.Sessions;
 using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
 using webConstantes=TNS.AdExpress.Constantes.Web;
 
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
 namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 	/// <summary>
 	/// Class used for connections with the datebase in management of the universes
@@ -90,42 +93,35 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="branch">Branch used (media, product)</param>
 		/// <param name="ListUniverseClientDescription">ID_UNIVERSE_CLIENT_DESCRIPTION</param>
 		/// <returns>Universes list</returns>
-		public static DataSet GetData(WebSession webSession,string branch, string ListUniverseClientDescription){
+		public static DataSet GetData(WebSession webSession, string branch, string ListUniverseClientDescription) {
 
-			#region Request construction
-			
-			string sql="select distinct dir.ID_GROUP_UNIVERSE_CLIENT, dir.GROUP_UNIVERSE_CLIENT, se.ID_UNIVERSE_CLIENT, se.UNIVERSE_CLIENT ";
-			sql+=" from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.GROUP_UNIVERSE_CLIENT + " dir, "
-				+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.UNIVERSE_CLIENT + " se , "
-				+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.UNIVERSE_CLIENT_DESCRIPTION + " ucd ";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin.ToString();
-			sql+=" and dir.ACTIVATION<"+DBConstantes.ActivationValues.UNACTIVATED ;
-			sql+=" and (se.ACTIVATION<"+DBConstantes.ActivationValues.UNACTIVATED+" or se.ACTIVATION is null) ";
-			sql+=" and dir.ID_GROUP_UNIVERSE_CLIENT=se.ID_GROUP_UNIVERSE_CLIENT(+) ";
-			
-			if(ListUniverseClientDescription.Trim().Length>0){
-				sql+=" and se.ID_UNIVERSE_CLIENT_DESCRIPTION = ucd.ID_UNIVERSE_CLIENT_DESCRIPTION";
-				sql+=" and se.ID_UNIVERSE_CLIENT_DESCRIPTION in ("+ListUniverseClientDescription+") ";
-			}
-			if(branch.Length>0){
-				sql+=" and se.id_type_universe_client in ("+branch+")";
-			}
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)==null){
-				sql+=" and se.ID_UNIVERSE_CLIENT_DESCRIPTION not in("+webConstantes.LoadableUnivers.BRAND_PRODUCT+")";
-			}
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)==null){
-				sql+=" and se.ID_UNIVERSE_CLIENT_DESCRIPTION not in("+webConstantes.LoadableUnivers.HOLDING_ADVERTISER+")";
-			}	
-			sql+=" order by dir.GROUP_UNIVERSE_CLIENT, se.UNIVERSE_CLIENT ";
+			#region Request construction		
 
+			string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".UNIVERSE_CLIENT ";
+			sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).SqlWithPrefix + " , "
+				+ WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).SqlWithPrefix + " , "
+				+ WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClientDescription).SqlWithPrefix;
+			sql += " where " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin.ToString();
+			sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED;
+			sql += " and (" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED + " or " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ACTIVATION is null) ";
+			sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".ID_GROUP_UNIVERSE_CLIENT=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ID_GROUP_UNIVERSE_CLIENT(+) ";
+
+			if (ListUniverseClientDescription.Trim().Length > 0) {
+				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION = " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClientDescription).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION";
+				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION in (" + ListUniverseClientDescription + ") ";
+			}
+			if (branch.Length > 0) {
+				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".id_type_universe_client in (" + branch + ")";
+			}
+			sql += " order by " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".UNIVERSE_CLIENT ";
 			#endregion
 
 			#region Request execution
-			try{
-				return(webSession.Source.Fill(sql));
+			try {
+				return (webSession.Source.Fill(sql));
 			}
-			catch(System.Exception err){
-				throw(new UniversListException ("Impossible to retreive the customer universe whitch are recorded",err));
+			catch (System.Exception err) {
+				throw (new UniversListException("Impossible to retreive the customer universe whitch are recorded", err));
 			}
 			#endregion
 
@@ -152,7 +148,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 				dt.Columns.Add("GROUP_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["GROUP_UNIVERSE_CLIENT"].GetType());
 				dt.Columns.Add("ID_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["ID_UNIVERSE_CLIENT"].GetType());
 				dt.Columns.Add("UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["UNIVERSE_CLIENT"].GetType());
-				
+
 				foreach (DataRow dr in ds.Tables[0].Rows) {
 					universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)GetObjectUniverses(long.Parse(dr["ID_UNIVERSE_CLIENT"].ToString()), webSession);
 					if (universes != null && universes.Count > 0) {

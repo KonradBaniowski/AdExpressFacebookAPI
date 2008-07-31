@@ -16,6 +16,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -925,7 +926,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 									// Droit sur les niveaux de détail produit
 									CheckProductDetailLevelAccess() &&
 									// Droit des Marques
-									_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null && 
+									_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE) && 
 									// Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
 									(_customerWebSession.GetSelection(_customerWebSession.ProductDetailLevel.ListElement,TNS.AdExpress.Constantes.Customer.Right.type.productAccess).Length>0 ||
 									_customerWebSession.GetSelection(_customerWebSession.ProductDetailLevel.ListElement,TNS.AdExpress.Constantes.Customer.Right.type.brandAccess).Length>0 ||
@@ -956,7 +957,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 								if(
 									CheckProductDetailLevelAccess() &&
 									// Droit sur les groupe de société
-									_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG)!=null &&
+									_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG) &&
 									// Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
 									(_customerWebSession.GetSelection(_customerWebSession.ProductDetailLevel.ListElement,TNS.AdExpress.Constantes.Customer.Right.type.productAccess).Length>0 ||
 									_customerWebSession.GetSelection(_customerWebSession.ProductDetailLevel.ListElement,TNS.AdExpress.Constantes.Customer.Right.type.brandAccess).Length>0 ||
@@ -977,7 +978,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 								if(
 									CheckProductDetailLevelAccess() &&
 									// Droit sur les agences media
-									_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null
+									_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY)
 									)return(true);
 								return(false);
 								#endregion
@@ -985,7 +986,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 								#region Version
 							case DetailLevelItemInformation.Levels.slogan:
 								if(
-									currentDetailLevelItem.Id==DetailLevelItemInformation.Levels.slogan &&_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null &&
+									currentDetailLevelItem.Id==DetailLevelItemInformation.Levels.slogan &&_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
 									// Sélection par produit ou marque ou annonceur
 									(
 									_customerWebSession.GetSelection(_customerWebSession.ProductDetailLevel.ListElement,TNS.AdExpress.Constantes.Customer.Right.type.productAccess).Length>0 ||
@@ -1023,21 +1024,21 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 							#region Marques
 								// Droit des Marques
 							case DetailLevelItemInformation.Levels.brand:
-							if(	_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null )return true;
-								return(false);
+							return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE));
+								
 								#endregion
 
 							#region Groupe de société
 							case DetailLevelItemInformation.Levels.holdingCompany:
-								if(_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)!=null)return(true);
-								return(false);
+								return(_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY));
+								
 								#endregion
 
 							#region Agences et groupe d'agence
 							case DetailLevelItemInformation.Levels.groupMediaAgency:
 							case DetailLevelItemInformation.Levels.agency:
-								if(_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)return(true);
-								return(false);
+								return(_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY));
+								
 								#endregion
 
 							default:
@@ -1116,7 +1117,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						if (
 							CheckProductDetailLevelAccess() &&
 							// Droit sur les groupe de société
-							_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) != null && 
+							_customerWebSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) && 
 							// Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
 							(_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
 							_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||
@@ -1166,7 +1167,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						if (
 							CheckProductDetailLevelAccess() &&
 							// Droit sur les groupe de société
-							_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG) != null &&
+							_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG) &&
 							// Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
 							(_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
 							_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||
@@ -1189,7 +1190,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						if(
 							CheckProductDetailLevelAccess() &&
 							// Droit sur les agences media
-							_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null
+							_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY)
 							)return(true);
 						return(false);
 						#endregion
@@ -1219,7 +1220,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						#endregion
 
 						if (
-							currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG) != null &&
+							currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
 							// Sélection par produit ou marque ou annonceur						
 							(_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT,AccessType.includes) ||
 							_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND,AccessType.includes) ||
@@ -1308,7 +1309,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 
 						if (
 							// Droit des Marques
-							_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) != null &&
+							_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE) &&
 							// Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
 							(_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
 							_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||
@@ -1353,7 +1354,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 
 						if (
 							// Droit sur les groupe de société
-							_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY) != null &&
+							_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY) &&
 							// Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
 							(_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
 							_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||
@@ -1403,7 +1404,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						#endregion
 
 						if (
-							currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG) != null &&
+							currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
 							// Sélection par produit ou marque ou annonceur ou Groupe de sociétés
 							(_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||							
 							_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISER, AccessType.includes) ||
@@ -1446,7 +1447,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						#region Marques
 					case DetailLevelItemInformation.Levels.brand:
 						// Droit des Marques
-						if(_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+						if(_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 							return(true);
 						return(false);
 						#endregion
@@ -1454,7 +1455,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						#region Version
 					case DetailLevelItemInformation.Levels.slogan:
 						if(
-							currentDetailLevelItem.Id==DetailLevelItemInformation.Levels.slogan &&_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null 														
+							currentDetailLevelItem.Id==DetailLevelItemInformation.Levels.slogan &&_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)														
 							)
 							return(true);
 						return(false);
@@ -1464,7 +1465,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					case DetailLevelItemInformation.Levels.holdingCompany:
 						if(							
 							// Droit sur les groupe de société
-							_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)!=null 							
+							_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY) 							
 							)return(true);
 						return(false);
 						#endregion												
@@ -1486,21 +1487,9 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// </remarks>
 		/// <returns>True si oui false sinon</returns>
 		protected bool CheckProductDetailLevelAccess(){
-			if(_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG)!=null)return(true);
-			return(false);
+			return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG));
 		}
 		
-//		/// <summary>
-//		/// Vérifie que le niveua de détail version peut être montré
-//		/// </summary>
-//		/// <returns></returns>
-//		private bool CanAddSloganDetailLevelItem(){
-//			string idVehicleList =  _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);						
-//			if(idVehicleList!=null && idVehicleList.Length>0 && idVehicleList.IndexOf(DBClassificationConstantes.Vehicles.names.internet.GetHashCode().ToString())>=0){
-//				return false;
-//			}
-//			return true;
-//		}
 		#endregion
 
 	}

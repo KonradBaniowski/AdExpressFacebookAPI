@@ -70,36 +70,36 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <param name="idAddress">Identifiant de l'adresse</param>
-		public GadSystem(WebSession webSession, string idAddress){
-			if (idAddress!=null && idAddress.Length>0){
-				DataTable result=null;
-				try{
+		public GadSystem(WebSession webSession, string idAddress) {
+			if (idAddress != null && idAddress.Length > 0) {
+				DataTable result = null;
+				try {
 					//charge les données du DataSet dans un DataTable
-					result=AdExpressDataAccess.Results.GadDataAccess.GetData(webSession,idAddress).Tables[0];
+					result = AdExpressDataAccess.Results.GadDataAccess.GetData(webSession, idAddress).Tables[0];
 				}
-				catch(System.Exception err){
-					throw(new WebExceptions.GadSystemException("Impossible de charger les données du GAD à partir de la base de données, erreur sur l'identifiant de l'adresse : "+idAddress,err));
+				catch (System.Exception err) {
+					throw (new WebExceptions.GadSystemException("Impossible de charger les données du GAD à partir de la base de données, erreur sur l'identifiant de l'adresse : " + idAddress, err));
 				}
-			
+
 				//rempli les champs
-				foreach(DataRow myRow in result.Rows){
-					_company			= myRow["company"].ToString();
-					_street				= myRow["street"].ToString();
-					_street2			= myRow["street2"].ToString();
-					_codePostal			= myRow["code_postal"].ToString();
-					_town				= myRow["town"].ToString();
-					_phone				= myRow["telephone"].ToString();
-					_fax				= myRow["fax"].ToString();
-					_email				= myRow["email"].ToString();
-					if (webSession.CustomerLogin.GetFlag((long)DBCst.Flag.id.gad.GetHashCode()).Length>0){
-						_docMarketingId		= myRow["id_gad"].ToString();
-						_docMarketingKey	= myRow["docKey"].ToString();
+				foreach (DataRow myRow in result.Rows) {
+					_company = myRow["company"].ToString();
+					_street = myRow["street"].ToString();
+					_street2 = myRow["street2"].ToString();
+					_codePostal = myRow["code_postal"].ToString();
+					_town = myRow["town"].ToString();
+					_phone = myRow["telephone"].ToString();
+					_fax = myRow["fax"].ToString();
+					_email = myRow["email"].ToString();
+					if (webSession.CustomerLogin.CustormerFlagAccess((long)DBCst.Flag.id.gad.GetHashCode())) {
+						_docMarketingId = myRow["id_gad"].ToString();
+						_docMarketingKey = myRow["docKey"].ToString();
 					}
-				}			
+				}
 			}
-			else{
+			else {
 				//Exception
-				throw(new WebExceptions.GadSystemException("Impossible de charger les données du GAD, erreur sur l'identifiant de l'adresse : "+idAddress));
+				throw (new WebExceptions.GadSystemException("Impossible de charger les données du GAD, erreur sur l'identifiant de l'adresse : " + idAddress));
 			}
 		}
 		#endregion

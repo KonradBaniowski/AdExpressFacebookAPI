@@ -226,7 +226,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_CATEGORY_COUMN_INDEX]=(Int64)currentRow["id_category"];
 					tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_MEDIA_COLUMN_INDEX]=(Int64)currentRow["id_media"];
 					if(oldIdVehicle==(Int64)Branch.type.mediaOutdoor){
-						if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)!=null )
+						if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) )
 							tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_VEHICLE_COLUMN_INDEX]=(Int64)currentRow["id_vehicle"];
 						else 
 							tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_VEHICLE_COLUMN_INDEX]=null;
@@ -263,7 +263,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.PERIODICITY_COLUMN_INDEX]=null;
 
 					tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_VEHICLE_COLUMN_INDEX]=(Int64)currentRow["id_vehicle"];
-					if ((oldIdCategory!=35 && oldIdVehicle!=(Int64)Branch.type.mediaOutdoor) || (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)!=null && oldIdVehicle==(Int64)Branch.type.mediaOutdoor))
+					if ((oldIdCategory!=35 && oldIdVehicle!=(Int64)Branch.type.mediaOutdoor) || (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) && oldIdVehicle==(Int64)Branch.type.mediaOutdoor))
 						tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_CATEGORY_COUMN_INDEX]=(Int64)currentRow["id_category"];
 					else
 						tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_CATEGORY_COUMN_INDEX]=null;
@@ -291,7 +291,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_CATEGORY_COUMN_INDEX]=currentRow["id_category"].ToString();
 
 					//chaine thématique??
-					if ((oldIdCategory!=35 && oldIdVehicle!=(Int64)Branch.type.mediaOutdoor) || (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)!=null && oldIdVehicle==(Int64)Branch.type.mediaOutdoor))
+					if ((oldIdCategory!=35 && oldIdVehicle!=(Int64)Branch.type.mediaOutdoor) || (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) && oldIdVehicle==(Int64)Branch.type.mediaOutdoor))
 						tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_MEDIA_COLUMN_INDEX]=currentRow["id_media"].ToString();
 					else
 						tab[currentLineIndex,FrameWorkConstantes.Results.MediaPlanAlert.ID_MEDIA_COLUMN_INDEX]=null;

@@ -1886,7 +1886,7 @@ namespace TNS.AdExpressI.MediaSchedule
         protected virtual bool AllowVersions()
         {
             return (
-                _session.CustomerLogin.GetFlag(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) != null
+                _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) 
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport

@@ -242,7 +242,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 
                 //Droit detail spot à spot TNT
                 if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
-                    && webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG) == null)
+                    && !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG))
                     sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + ".id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
 
                 #endregion
@@ -258,7 +258,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
                         if (de.Value != null && de.Key != null && long.Parse(de.Value.ToString()) > -1) {
 
-                            if (de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN) && de.Value.ToString().Equals("0") && WebFunctions.MediaDetailLevel.HasSloganRight(webSession))
+							if (de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN) && de.Value.ToString().Equals("0") && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG))
                                 sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + "." + de.Key.ToString() + " is null  "); //accroche ==0
                             else if (de.Key.ToString().Equals(DBConstantes.Fields.ID_VEHICLE) && de.Value.ToString().Equals(DBClassificationConstantes.Vehicles.names.internet.GetHashCode().ToString())
                                 )
@@ -268,7 +268,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                             }
                             else {
                                 if (!de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN)
-                                    || (de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN) && !de.Value.ToString().Equals("0") && WebFunctions.MediaDetailLevel.HasSloganRight(webSession)))
+									|| (de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN) && !de.Value.ToString().Equals("0") && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)))
                                     sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + "." + de.Key.ToString() + "=" + de.Value.ToString() + "  ");
                             }
 
@@ -393,7 +393,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession,DbTables.WEB_PLAN_PREFIXE,true));
 				//Droit detail spot à spot TNT
 				if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
-					&& webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG) == null)
+					&& !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG))
 					sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + ".id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
                 #endregion
 
@@ -407,12 +407,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                         if (de.Value != null && de.Key != null && long.Parse(de.Value.ToString()) > -1)
                         {
 
-                            if (de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN) && de.Value.ToString().Equals("0") && WebFunctions.MediaDetailLevel.HasSloganRight(webSession))
+							if (de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN) && de.Value.ToString().Equals("0") && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG))
                                 sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + "." + de.Key.ToString() + " is null  "); //accroche ==0
                             else
                             {
                                 if (!de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN)
-                                    || (de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN) && !de.Value.ToString().Equals("0") && WebFunctions.MediaDetailLevel.HasSloganRight(webSession)))
+									|| (de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN) && !de.Value.ToString().Equals("0") && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)))
                                     sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + "." + de.Key.ToString() + "=" + de.Value.ToString() + "  ");
                             }
 
@@ -575,7 +575,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql.Append(" and "+DbTables.WEB_PLAN_PREFIXE+".id_vehicle="+idVehicle+"  ");
 
 			#region Sélection média client	
-			if(WebFunctions.MediaDetailLevel.HasSloganRight(webSession)){							
+			if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) {							
 				if(idSlogan==0){
 					sql.Append(" and  "+DbTables.WEB_PLAN_PREFIXE+".id_slogan is null ");
 				
@@ -1314,9 +1314,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <param name="prefixeMediaPlanTable">prefixe table plan média</param>
 		/// <returns>Chaîne contenant les champs</returns>
 		public static string GetMediaFields(WebSession webSession,WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails preformatedMediaDetail,string prefixeMediaPlanTable){
-						
-		
-					if(WebFunctions.MediaDetailLevel.HasSloganRight(webSession))
+
+
+			if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG))
 					return(" vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan");	
 					else return (" vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media,interest_center,media_seller ");	
 		
@@ -1823,7 +1823,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <param name="idVehicle">Identifiant du média</param>
 		private static void AddSloganField(WebSession webSession, StringBuilder sql, DBClassificationConstantes.Vehicles.names idVehicle) {
 			//Ajoute l'identifiant (uniquement pour la radio) de la version qui sera nécessaire pour construire le chemin du fichier audio de la radio
-			if (WebFunctions.MediaDetailLevel.HasSloganRight(webSession) && idVehicle == DBClassificationConstantes.Vehicles.names.radio &&
+			if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) && idVehicle == DBClassificationConstantes.Vehicles.names.radio &&
 				!webSession.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.slogan) && !webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.slogan)
 				) sql.Append(" ," + DbTables.WEB_PLAN_PREFIXE + ".id_slogan ");
 		}

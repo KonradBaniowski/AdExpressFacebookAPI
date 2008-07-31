@@ -23,6 +23,7 @@ using VhCstes=TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
 using TableName=TNS.AdExpress.Constantes.Classification.DB.Table.name;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebConstantes= TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Controls.Buttons;
 
@@ -522,7 +523,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 							sloganDetail+=currentRow["id_slogan"].ToString();
 							if (currentRow["advertDimension"] != null) {
 								if ((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString()) != DBConstantesClassification.Vehicles.names.directMarketing 
-									||((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString()) == DBConstantesClassification.Vehicles.names.directMarketing && webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_POIDS_MARKETING_DIRECT) != null))
+									||((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString()) == DBConstantesClassification.Vehicles.names.directMarketing && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_POIDS_MARKETING_DIRECT)))
 								sloganDetail += " - " + currentRow["advertDimension"].ToString();
 							}
 							sloganDetail+="\n</td></tr>";

@@ -11,6 +11,7 @@ using System.ComponentModel;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 
 namespace TNS.AdExpress.Web.Controls.Results{
@@ -172,7 +173,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1106,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser.ToString()));
 				this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1108,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiserProduct.ToString()));	
 				//Right verification for Brand
-				if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+				if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 				{
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1107,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiserBrand.ToString()));	
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1109,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiserBrandProduct.ToString()));
@@ -181,7 +182,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1112,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupProduct.ToString()));
 				this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1145,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupAdvertiser.ToString()));
 				//Right verification for Brand
-				if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+				if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 				{
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1111,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupBrand.ToString()));
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1113,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupBrandProduct.ToString()));
@@ -190,7 +191,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1577,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.ToString()));
 				this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1578,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentProduct.ToString()));				
 				//Right verification for Brand
-				if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+				if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 				{
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1579,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentBrand.ToString()));
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1603,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentAdvertiserBrand.ToString()));
@@ -198,18 +199,18 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				}
 				this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1602,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentAdvertiserProduct.ToString()));
 								
-				//Rights for Holding company
-				if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)!=null)
+				//Rights for Holding company				
+				if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY))
 				{
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1589,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.holdingCompany.ToString()));
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1590,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.holdingCompanyAdvertiser.ToString()));
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1592,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.holdingCompanyAdvertiserProduct.ToString()));
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1893,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorHoldingCompanyAdvertiser.ToString()));
-					if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+					if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1591,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.holdingCompanyAdvertiserBrand.ToString()));
 				}
 				// Agence Media
-				if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
+				if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY))
 				{
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1115,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.agencyAdvertiser.ToString()));
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1116,webSession.SiteLanguage),WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.agencyProduct.ToString()));

@@ -534,7 +534,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			bool forceL4=false;		
 			#endregion
 			
-			if(webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null){//Droits versions
+			if(webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)){//Droits versions
 				#region Get data
 				//getting the reference univers data
 				planMediaData=DataAccessResults.APPM.MediaPlanDataAccess.GetDataWithVersions(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget).Tables[0];				

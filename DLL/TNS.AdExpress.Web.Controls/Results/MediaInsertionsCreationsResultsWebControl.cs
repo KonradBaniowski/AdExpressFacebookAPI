@@ -22,6 +22,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using CstClassification = TNS.AdExpress.Constantes.Classification;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 using TNS.AdExpress.Web.UI.Results;
 using TNS.AdExpress.Web.DataAccess.Results;
@@ -718,11 +719,11 @@ namespace TNS.AdExpress.Web.Controls.Results
 			int i = 0;
 
             #region Cas du media Internet
-            if ((CstClassification.DB.Vehicles.names)int.Parse(_idVehicle) == CstClassification.DB.Vehicles.names.adnettrack) { 
-                newtab = new object[1]; 
-				newtab[0] =  GetUIEmpty(_customerWebSession.SiteLanguage,2244);
-		    	return newtab;
-            }
+			if ((CstClassification.DB.Vehicles.names)int.Parse(_idVehicle) == CstClassification.DB.Vehicles.names.adnettrack) {
+				newtab = new object[1];
+				newtab[0] = GetUIEmpty(_customerWebSession.SiteLanguage, 2244);
+				return newtab;
+			}
             #endregion
 
             #region Mise en forme des dates et du media
@@ -764,7 +765,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 				}
 			}
 
-			if( _customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)!=null){
+			if (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)) {
 				
 				mediaImpactedList = WebFunctions.MediaDetailLevel.GetImpactedMedia(_customerWebSession,long.Parse(ids[0]),long.Parse(ids[1]),long.Parse(ids[2]),long.Parse(ids[3]));	
 				ds = MediaCreationDataAccess.GetAdNetTrackData(_customerWebSession,mediaImpactedList,dateBegin,dateEnd,long.Parse(_idVehicle));

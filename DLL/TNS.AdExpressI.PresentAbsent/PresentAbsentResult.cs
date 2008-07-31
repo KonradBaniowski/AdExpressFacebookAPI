@@ -548,8 +548,8 @@ namespace TNS.AdExpressI.PresentAbsent
 
             #region Création des headers
             nbLine = 5;
-            if (_session.CustomerLogin.GetFlag((long)CstDB.Flags.ID_MARQUE) != null) nbLine++;
-            if (_session.CustomerLogin.GetFlag((long)CstDB.Flags.ID_MEDIA_AGENCY) != null) nbLine += 2;
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) nbLine++;
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) nbLine += 2;
 
             // Ajout de la colonne Produit
             Headers headers = new Headers();
@@ -596,7 +596,7 @@ namespace TNS.AdExpressI.PresentAbsent
             Int64 levelLabelColIndex = resultTable.GetHeadersIndexInResultTable(LEVEL_HEADER_ID.ToString());
             advertiserLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[advertiserLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1146, _session.SiteLanguage));
-            if (_session.CustomerLogin.GetFlag((long)CstDB.Flags.ID_MARQUE) != null)
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
             {
                 brandLineIndex = resultTable.AddNewLine(LineType.level1);
                 resultTable[brandLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1149, _session.SiteLanguage));
@@ -610,7 +610,7 @@ namespace TNS.AdExpressI.PresentAbsent
             groupLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[groupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1849, _session.SiteLanguage));
             // Groupe d'Agence && Agence
-            if (_session.CustomerLogin.GetFlag((long)CstDB.Flags.ID_MEDIA_AGENCY) != null)
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
             {
                 agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
                 resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
@@ -703,7 +703,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             GetProductActivity(resultTable, dt, advertiserLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia);
                             advertisers.Add(currentRow["id_advertiser"].ToString());
                         }
-                        if (_session.CustomerLogin.GetFlag((long)CstDB.Flags.ID_MARQUE) != null)
+                        if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
                         {
                             //Activité publicitaire marques
                             if (currentRow["id_brand"] != null && currentRow["id_brand"] != System.DBNull.Value && !brands.Contains(currentRow["id_brand"].ToString()))
@@ -745,7 +745,7 @@ namespace TNS.AdExpressI.PresentAbsent
                         }
 
 
-                        if (_session.CustomerLogin.GetFlag((long)CstDB.Flags.ID_MEDIA_AGENCY) != null)
+                        if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
                         {
                             //activité publicitaire Groupes d'agences
                             if (currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))
@@ -1200,7 +1200,7 @@ namespace TNS.AdExpressI.PresentAbsent
             // Ajout Création ?
             bool showCreative = false;
             //A vérifier Création où version
-            if (_session.CustomerLogin.GetFlag(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) != null &&
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) &&
                 (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)))
             {

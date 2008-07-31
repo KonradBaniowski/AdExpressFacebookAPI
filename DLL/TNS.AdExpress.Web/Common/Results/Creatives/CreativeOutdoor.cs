@@ -85,7 +85,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\" class=\"violetBackGroundV3\">");
 
             output.AppendFormat("<tr><td class=\"creativeVisualCellLeft\">");
-            if (_session.CustomerLogin.GetFlag(DBCst.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) != null) {
+            if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)) {
                 //visuels disponible
                 string[] files = this._path.Split(',');
 

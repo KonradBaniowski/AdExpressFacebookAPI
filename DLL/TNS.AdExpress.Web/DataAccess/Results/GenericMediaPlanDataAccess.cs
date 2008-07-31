@@ -377,7 +377,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					case WebConstantes.CustomerSessions.Unit.duration:
 						return(Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
                     case WebConstantes.CustomerSessions.Unit.volume:
-                        if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_VOLUME_MARKETING_DIRECT) != null)
+                        if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_VOLUME_MARKETING_DIRECT))
                             return(Fields.WEB_PLAN_MEDIA_MONTH_VOLUME_FIELD);
                         else
                             return(Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
@@ -401,7 +401,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					case WebConstantes.CustomerSessions.Unit.duration:
 						return(Fields.DURATION);
                     case WebConstantes.CustomerSessions.Unit.volume:
-                        if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_VOLUME_MARKETING_DIRECT) != null)
+                        if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_VOLUME_MARKETING_DIRECT))
                             return(Fields.VOLUME);
                         else
                             return(Fields.EXPENDITURE_EURO);

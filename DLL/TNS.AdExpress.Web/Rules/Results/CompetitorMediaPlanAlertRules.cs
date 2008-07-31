@@ -1137,7 +1137,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					}
 					oldIdVehicle = Int64.Parse(currentRow["id_vehicle"].ToString());
 					for (k = 1; k <= nbAdervertiser.Count; k++) {
-						if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) != null))
+						if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)))
 							tab[currentLineIndex + k + 1, FrameWorkConstantes.Results.CompetitorMediaPlanAlert.ID_VEHICLE_COLUMN_INDEX] = Int64.Parse(currentRow["id_vehicle"].ToString());
 						else
 							tab[currentLineIndex + k + 1, FrameWorkConstantes.Results.CompetitorMediaPlanAlert.ID_VEHICLE_COLUMN_INDEX] = null;
@@ -1165,7 +1165,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					tab[currentLineIndex, FrameWorkConstantes.Results.CompetitorMediaPlanAlert.PERIODICITY_COLUMN_INDEX] = null;
 					tab[currentLineIndex, FrameWorkResultConstantes.CompetitorMediaPlanAlert.ADVERTISER_COLUMN_INDEX] = null;
 
-					if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) != null)) {
+					if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))) {
 						tab[currentLineIndex, FrameWorkConstantes.Results.CompetitorMediaPlanAlert.ID_VEHICLE_COLUMN_INDEX] = Int64.Parse(currentRow["id_vehicle"].ToString());
 						tab[currentLineIndex, FrameWorkConstantes.Results.CompetitorMediaPlanAlert.ID_CATEGORY_COlUMN_INDEX] = Int64.Parse(currentRow["id_category"].ToString());
 						tab[currentLineIndex, FrameWorkConstantes.Results.CompetitorMediaPlanAlert.ID_MEDIA_COLUMN_INDEX] = Int64.Parse(currentRow["id_media"].ToString());
@@ -1223,7 +1223,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					tab[currentLineIndex, FrameWorkResultConstantes.CompetitorMediaPlanAlert.ADVERTISER_COLUMN_INDEX] = null;
 
 
-					if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor && oldIdCategory != 35) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) != null)) {
+					if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor && oldIdCategory != 35) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))) {
 						tab[currentLineIndex, FrameWorkConstantes.Results.CompetitorMediaPlanAlert.ID_VEHICLE_COLUMN_INDEX] = Int64.Parse(currentRow["id_vehicle"].ToString());
 						tab[currentLineIndex, FrameWorkConstantes.Results.CompetitorMediaPlanAlert.ID_CATEGORY_COlUMN_INDEX] = Int64.Parse(currentRow["id_category"].ToString());
 						tab[currentLineIndex, FrameWorkConstantes.Results.CompetitorMediaPlanAlert.ID_MEDIA_COLUMN_INDEX] = Int64.Parse(currentRow["id_media"].ToString());
@@ -1280,7 +1280,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 					tab[currentLineIndex, FrameWorkResultConstantes.CompetitorMediaPlanAlert.ID_CATEGORY_COlUMN_INDEX] = Int64.Parse(currentRow["id_category"].ToString());
 					// Chaine thématique
-					if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor && oldIdCategory != 35) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) != null)) {
+					if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor && oldIdCategory != 35) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))) {
 						tab[currentLineIndex, FrameWorkResultConstantes.CompetitorMediaPlanAlert.ID_MEDIA_COLUMN_INDEX] = Int64.Parse(currentRow["id_media"].ToString());
 					}
 					else {
@@ -1318,7 +1318,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					//fin MAJ
 
 					//changement oldIdMedia->oldIdAdvertiser
-					if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor && oldIdCategory != 35) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) != null)) {
+					if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor && oldIdCategory != 35) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))) {
 						tab[currentLineIndex, FrameWorkResultConstantes.CompetitorMediaPlanAlert.ID_MEDIA_COLUMN_INDEX] = Int64.Parse(currentRow["id_media"].ToString());
 					}
 					else {
@@ -1414,7 +1414,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 				//tab[currentTotalIndex + Int64.Parse(currentRow["grpunivers"].ToString()), FrameWorkResultConstantes.CompetitorMediaPlanAlert.TOTAL_COLUMN_INDEX] = (double)tab[currentTotalIndex + Int64.Parse(currentRow["grpunivers"].ToString()), FrameWorkResultConstantes.CompetitorMediaPlanAlert.TOTAL_COLUMN_INDEX] + unit;
 				#endregion
-				if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor && oldIdCategory != 35) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) != null)) {
+				if ((oldIdVehicle != (Int64)VehicleClassification.DB.Vehicles.names.outdoor && oldIdCategory != 35) || (oldIdVehicle == (Int64)VehicleClassification.DB.Vehicles.names.outdoor && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) )) {
 					tab[currentCategoryIndex + Int64.Parse(currentRow["grpunivers"].ToString()) + 1, FrameWorkResultConstantes.CompetitorMediaPlanAlert.ID_CATEGORY_COlUMN_INDEX] = Int64.Parse(currentRow["id_category"].ToString());
 				}
 				else {

@@ -561,7 +561,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                         case CstWeb.CustomerSessions.Unit.duration:
                             return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
                         case CstWeb.CustomerSessions.Unit.volume:
-                            if (_session.CustomerLogin.GetFlag(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT) != null)
+                            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
                                 return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_VOLUME_FIELD);
                             else
                                 return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
@@ -587,7 +587,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                         case CstWeb.CustomerSessions.Unit.duration:
                             return (CstDB.Fields.DURATION);
                         case CstWeb.CustomerSessions.Unit.volume:
-                            if (_session.CustomerLogin.GetFlag(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT) != null)
+                            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
                                 return (CstDB.Fields.VOLUME);
                             else
                                 return (CstDB.Fields.EXPENDITURE_EURO);

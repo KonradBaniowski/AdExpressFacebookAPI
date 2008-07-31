@@ -262,30 +262,19 @@ namespace TNS.AdExpress.Web.Functions{
 			return tab;
 		}
 
-		/// <summary>
-		/// Vérifie si le client aux accroches en fonction du niveau de détail produit et média.
-		/// </summary>
-		/// <remarks>Les niveaux de détail par accroche sont disponibles uniquement dans 
-		/// un plan media défini par marque ou par produit
-		/// </remarks>
-		/// <param name="webSession">Session du client</param>
-		/// <returns>Vrai si le client à accès aux accroches</returns>
-		public static bool HasSloganRight(WebSession webSession){
-			if(webSession!=null && webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null 
-//				&&
-//				// Sélection par produit ou marque
-//				(webSession.GetSelection(webSession.SelectionUniversAdvertiser,ConstantesCustomer.Right.type.productAccess).Length>0 ||
-//				webSession.GetSelection(webSession.SelectionUniversAdvertiser,ConstantesCustomer.Right.type.brandAccess).Length>0) 
-//				&&
-//				// Pas de famille, classe, groupe, groupe d'annonceur, annonceur
-//				webSession.GetSelection(webSession.SelectionUniversAdvertiser,ConstantesCustomer.Right.type.sectorAccess).Length==0 &&
-//				webSession.GetSelection(webSession.SelectionUniversAdvertiser,ConstantesCustomer.Right.type.subSectorAccess).Length==0 &&
-//				webSession.GetSelection(webSession.SelectionUniversAdvertiser,ConstantesCustomer.Right.type.groupAccess).Length==0 &&
-//				webSession.GetSelection(webSession.SelectionUniversAdvertiser,ConstantesCustomer.Right.type.holdingCompanyAccess).Length==0 &&
-//				webSession.GetSelection(webSession.SelectionUniversAdvertiser,ConstantesCustomer.Right.type.advertiserAccess).Length==0
-				)return true;
-			else return false;
-		}
+		///// <summary>
+		///// Vérifie si le client aux accroches en fonction du niveau de détail produit et média.
+		///// </summary>
+		///// <remarks>Les niveaux de détail par accroche sont disponibles uniquement dans 
+		///// un plan media défini par marque ou par produit
+		///// </remarks>
+		///// <param name="webSession">Session du client</param>
+		///// <returns>Vrai si le client à accès aux accroches</returns>
+		//public static bool HasSloganRight(WebSession webSession){
+		//    if(webSession!=null && webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null 
+		//        )return true;
+		//    else return false;
+		//}
 
 		#region Niveau de détail support générique
 		/// <summary>

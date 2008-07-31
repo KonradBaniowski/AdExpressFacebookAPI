@@ -170,7 +170,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			// Ajout Création 
 			bool showCreative=false;
 			//A vérifier Création où version
-            if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) != null &&
+            if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
                 (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES &&
                 (webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)) ||

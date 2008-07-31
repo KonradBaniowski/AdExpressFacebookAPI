@@ -26,6 +26,7 @@ using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace AdExpress.Private.Selection {
 	/// <summary>
@@ -788,9 +789,9 @@ namespace AdExpress.Private.Selection {
 		protected void initializeImageButtonRollOverWebControl1_Click(object sender, System.EventArgs e) {
 			
 			#region Activation des boutons
-			if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+			if(_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 				RadiobuttonBrand.Enabled=true;
-			if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)!=null)
+			if(_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY))
 				radioButtonHoldingCompany.Enabled=true;
 			
 			//radioButtonHoldingCompany.Enabled=true;

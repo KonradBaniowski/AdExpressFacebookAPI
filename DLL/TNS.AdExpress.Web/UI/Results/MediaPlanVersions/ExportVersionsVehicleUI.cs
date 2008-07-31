@@ -316,7 +316,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			//To check if the user has a right to view the media agency or not
 			//mediaAgencyAccess flag is used in the rest of the classes which indicates whethere the user has access 
 			//to media agency or not
-			if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
+			if(_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY))
 				mediaAgencyAccess=true;
 
 			#endregion
@@ -396,7 +396,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								//Nom de l'announceur
 								item.Advertiser = hTable["advertiser"].ToString();
 								//Marque
-								if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+								if(_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 									item.Brand = hTable["brand"].ToString();
 								if(mediaAgencyAccess && hTable["agency"].ToString().Length>0) {
 									//Nom de l'agence Media

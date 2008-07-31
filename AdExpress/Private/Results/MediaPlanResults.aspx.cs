@@ -30,6 +30,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.FrameWork.Date;
@@ -415,11 +416,9 @@ namespace AdExpress.Private.Results
 		/// Indique si le client peut affiner l'univers de versions
 		/// </summary>		
 		private void SetSloganUniverseOptions() {
-			//			string idVehicleList =  _webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);						
-			if ((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !WebFunctions.MediaDetailLevel.HasSloganRight(_webSession)) //droits affiner univers Versions
+			if ((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) //droits affiner univers Versions
 					||  _webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly
-				) {//|| (idVehicleList!=null && idVehicleList.Length>0 && idVehicleList.IndexOf(DBClassificationConstantes.Vehicles.names.internet.GetHashCode().ToString())>=0)//Interdire  affiner versions pour le média Internet
-
+				) {
 				InitializeProductWebControl1.Visible = false;
 				MenuWebControl2.ForbidOptionPages = true;
 			}

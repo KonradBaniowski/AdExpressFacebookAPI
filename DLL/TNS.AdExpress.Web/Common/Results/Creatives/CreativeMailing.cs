@@ -249,7 +249,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\" class=\"violetBackGroundV3\">");
 
             output.AppendFormat("<tr><td class=\"creativeVisualCellLeft\">");
-            if (_session.CustomerLogin.GetFlag(DBCst.Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG) != null) {
+            if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)) {
                 //visuels disponible
                 string[] files = this._path.Split(',');
 
@@ -299,7 +299,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
                 , GestionWeb.GetWebWord(1712, _session.SiteLanguage)
                 , this._Budget.ToString("### ### ### ### ##0"));
 
-            if (_session.CustomerLogin.GetFlag(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT) != null) {
+            if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT)) {
                 output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3}</td></tr>"
                     , GestionWeb.GetWebWord(1110, _session.SiteLanguage)
                     , this._group
@@ -313,7 +313,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
                     , GestionWeb.GetWebWord(2247, _session.SiteLanguage)
                     , "-");
             }
-            if (_session.CustomerLogin.GetFlag(DBCst.Flags.ID_POIDS_MARKETING_DIRECT) != null) {
+            if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_POIDS_MARKETING_DIRECT)) {
                 output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3} g</td></tr>"
                     , GestionWeb.GetWebWord(858, _session.SiteLanguage)
                     , this._product

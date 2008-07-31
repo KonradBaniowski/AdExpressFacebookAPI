@@ -135,7 +135,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					//Récupération des données pour identifiant média (vehicle) issu de la sélection de l'onglet correspondant.
 					if(idVehicle!=null && idVehicle.Length>0 && long.Parse(idVehicle.ToString())>-1){
 						//Pas de droit publicité extérieure
-						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null 
+						if(!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
 							&& (CstClassification.DB.Vehicles.names)int.Parse(idVehicle.ToString())==CstClassification.DB.Vehicles.names.outdoor ){
 							ds = null;
 						}
@@ -153,7 +153,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				else{
 					//Récupération des données
 						//Pas de droit publicité extérieure
-						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null 
+					if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
 							&& (CstClassification.DB.Vehicles.names)int.Parse(idMediaLevel1.ToString())==CstClassification.DB.Vehicles.names.outdoor ){
 							ds = null;
 						}
@@ -401,7 +401,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					else
 						tab[i,CstWeb.PressInsertionsColumnIndex.LOCATION_INDEX]+="<br> " + current["location"].ToString();
 					first=false;
-					if(WebFunctions.MediaDetailLevel.HasSloganRight(webSession) && ds.Tables[0].Columns.Contains("id_slogan"))
+					if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) && ds.Tables[0].Columns.Contains("id_slogan"))
 						tab[i,CstWeb.PressInsertionsColumnIndex.ID_SLOGAN_INDEX]=current["id_slogan"].ToString();
 				}
 			
@@ -516,7 +516,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 							tab[i,CstWeb.TVInsertionsColumnIndex.INTEREST_CENTER_INDEX]=currentRow["interest_center"].ToString();
 							tab[i,CstWeb.TVInsertionsColumnIndex.MEDIA_SELLER_INDEX]=currentRow["media_seller"].ToString();
 						}
-						if(WebFunctions.MediaDetailLevel.HasSloganRight(webSession) && ds.Tables[0].Columns.Contains("id_slogan"))
+						if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) && ds.Tables[0].Columns.Contains("id_slogan"))
 							tab[i,CstWeb.TVInsertionsColumnIndex.ID_SLOGAN_INDEX]=currentRow["id_slogan"].ToString();
 					}
 					#endregion
@@ -670,9 +670,9 @@ namespace TNS.AdExpress.Web.Rules.Results{
 		private static object[,] GetDataOutDoor(DataSet ds, WebSession webSession,ArrayList fieldsList){
 			
 			object[,] tab =null;
-			bool first = true;	
+			bool first = true;
 
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null){
+			if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) {
 				return tab;
 			}
 			int i = -1;
@@ -799,7 +799,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 						}
 						else
 							tab[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX] = "";
-						if ( ds.Tables[0].Columns.Contains("id_slogan") && currentRow["id_slogan"] != System.DBNull.Value && WebFunctions.MediaDetailLevel.HasSloganRight(webSession) )
+						if (ds.Tables[0].Columns.Contains("id_slogan") && currentRow["id_slogan"] != System.DBNull.Value && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG))
 							tab[i, CstWeb.OutDoorInsertionsColumnIndex.ID_SLOGAN_INDEX] = currentRow["id_slogan"].ToString();
 
 					}
@@ -1218,7 +1218,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
             {
                 vehicleArr = MediaInsertionsCreationsRules.GetIdsVehicle(webSession, mediaImpactedList, dateBegin.ToString(), dateEnd.ToString());
 
-                if (vehicleArr != null && vehicleArr.Count > 0 && webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null
+				if (vehicleArr != null && vehicleArr.Count > 0 && !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
                     && vehicleArr.Contains((DBClassificationConstantes.Vehicles.names.outdoor.GetHashCode()).ToString()))
                 {
                     vehicleArr.Remove((DBClassificationConstantes.Vehicles.names.outdoor.GetHashCode()).ToString());
@@ -1310,7 +1310,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
                     //Accroche
                     case ID_SLOGAN:
                     case SLOGAN:
-                        if (WebFunctions.MediaDetailLevel.HasSloganRight(webSession)) return cellValue.ToString();
+						if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) return cellValue.ToString();
                         else return null;
 
                     default:
@@ -1386,7 +1386,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			}
 
 			//Ajoute l'identifiant (uniquement pour la radio) de la version qui sera nécessaire pour construire le chemin du fichier audio de la radio
-			if (WebFunctions.MediaDetailLevel.HasSloganRight(webSession) && CstClassification.DB.Vehicles.names.radio == idVehicle
+			if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) && CstClassification.DB.Vehicles.names.radio == idVehicle
 				&& fieldsList != null && !fieldsList.Contains(ID_SLOGAN)) 
 				fieldsList.Add(ID_SLOGAN);
 

@@ -162,7 +162,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// </summary>
 		/// <returns></returns>
 		public bool DisplayListMediaAgency(){
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null){
+			if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY)){
 				return true;
 			}
 			else return false;

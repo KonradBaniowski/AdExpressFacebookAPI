@@ -17,6 +17,8 @@ using TNS.FrameWork.Date;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstClassification = TNS.AdExpress.Constantes.Classification;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
+
 namespace TNS.AdExpress.Web.Rules.Results{
 
 	/// <summary>
@@ -320,7 +322,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			object[,] tab = null;
 			bool first = true;
 
-			if (webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null) {
+			if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) {
 				return tab;
 			}
 			int i = -1;

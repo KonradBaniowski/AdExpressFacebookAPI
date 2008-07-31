@@ -379,7 +379,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							classe=CLASSE_2;
 						}
 						if (data[i, CstWeb.RadioInsertionsColumnIndex.FILE_INDEX].ToString().CompareTo("") != 0
-							&& webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG) != null) {
+							&& webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG)) {
 
 							if (data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX] != null && data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString().CompareTo("0") != 0)
                                 HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap><a href=\"javascript:openDownload('" + data[i, CstWeb.RadioInsertionsColumnIndex.FILE_INDEX].ToString() + "," + data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_Radio.gif\"></a></td>");
@@ -630,7 +630,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}
 
 			//Pas de droit d'accès aux insertions de la Publicité extérieure
-			if (webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null) {
+			if (!webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) {
 				return HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage, 1882)).ToString();
 			}
 
@@ -716,7 +716,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 						HtmlTxt.Append("<tr class=\"popupinsertionligne\"><td width=\"100%\"><TABLE cellSpacing=\"0\" border=\"0\"><tr>");
 						if (data[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX] == null || ((string)data[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX]).CompareTo("") == 0
-							|| (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) == null)
+							|| (!webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG))
 							) {
 							//Pas de créations
 							HtmlTxt.Append("<td class=\"txtViolet12Bold\" valign=\"top\">" + GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "</td>");
@@ -1251,7 +1251,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region Pas de donnée à afficher
-			if (data == null || data[0, 0] == null || webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null) {
+			if (data == null || data[0, 0] == null || !webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) {
 				 HtmlTxt.Append(GetUIEmptyExcel(webSession.SiteLanguage, 10)).ToString();
 				HtmlTxt.Append(ExcelFunction.GetFooter(webSession));
 				return HtmlTxt.ToString();

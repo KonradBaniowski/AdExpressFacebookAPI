@@ -277,7 +277,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			//To check if the user has a right to view the media agency or not
 			//mediaAgencyAccess flag is used in the rest of the classes which indicates whethere the user has access 
 			//to media agency or not
-			if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
+			if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
 				mediaAgencyAccess=true;
 
 			#endregion
@@ -312,7 +312,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 				//Nom du Produit
 				output.Append("<tr valign=\"top\"><td nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1418,_webSession.SiteLanguage)) + "</td><td nowrap> : &nbsp;&nbsp;&nbsp;"+ Convertion.ToHtmlString(this._exportAPPMVersion.Product) + "</td></tr>");
 				//Nom de la marque
-				if(_webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null) {
+				if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) {
 					output.Append("<tr valign=\"top\"><td nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(2001,_webSession.SiteLanguage)) + "</td><td nowrap> : &nbsp;&nbsp;&nbsp;"+ Convertion.ToHtmlString(this._exportAPPMVersion.Brand) + "</td></tr>");
 				}
 				//Nom de l'announceur
@@ -524,10 +524,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
                 output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(176, _webSession.SiteLanguage) + "</td><td width=\"550\">: " + Convertion.ToHtmlString(this._exportMDVersion.Advertiser) + "</td></tr>");
                 output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(174, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportMDVersion.Group) + "</td></tr>");
                 output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(468, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportMDVersion.Product) + "</td></tr>");
-                if (_webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_POIDS_MARKETING_DIRECT) != null)
+                if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_POIDS_MARKETING_DIRECT))
                     output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(2220, _webSession.SiteLanguage) + "</td><td>: " + this._exportMDVersion.Weight + "</td></tr>");
                 output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1423, _webSession.SiteLanguage) + "</td><td>: " + this._exportMDVersion.ExpenditureEuro + "</td></tr>");
-                if (_webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT) != null)
+                if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
                     output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(2216, _webSession.SiteLanguage) + "</td><td>: " + Math.Round(this._exportMDVersion.Volume) + "</td></tr>");
 
 

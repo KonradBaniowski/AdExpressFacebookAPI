@@ -211,8 +211,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 									if(data[0,j].ToString().CompareTo("VISUAL")==0){
 																					
 										if (  data[i,j]==null || ((string)data[i, j]).CompareTo("")==0
-											|| ((CstClassification.DB.Vehicles.names) int.Parse(idVehicle)== TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG)== null)
-											|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG) == null)
+											|| ((CstClassification.DB.Vehicles.names) int.Parse(idVehicle)== TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press && !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
+											|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress && !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG))
 											) {//|| data[i,j].ToString().Length==0
 											//Pas de créations
 											tempVisualString="<td class=\"txtViolet12Bold\" valign=\"top\">"+GestionWeb.GetWebWord(843,webSession.SiteLanguage)+"</td>";
@@ -340,8 +340,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 							}
 							HtmlTxt.Append("<tr class=\"popupinsertionligne\"><td ><TABLE cellSpacing=\"0\" border=\"0\"><tr>");
 							if (((string)data[i, CstWeb.PressInsertionsColumnIndex.VISUAL_INDEX]).CompareTo("")==0
-								|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG) == null)
-								|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG) == null)
+								|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press && !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
+								|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress && !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG))
 								){
 								//Pas de créations
 								HtmlTxt.Append("<td class=\"txtViolet12Bold\" valign=\"top\">"+GestionWeb.GetWebWord(843,webSession.SiteLanguage)+"</td>");
@@ -358,7 +358,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(176, webSession.SiteLanguage) + "</td><td width=\"550\">: " + data[i, CstWeb.PressInsertionsColumnIndex.ADVERTISER_INDEX].ToString() + "</td></tr>");
 							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(174, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.PressInsertionsColumnIndex.GROUP_INDEX].ToString() + "</td></tr>");
 							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(468, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.PressInsertionsColumnIndex.PRODUCT_INDEX].ToString() + "</td></tr>");
-							if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
+							if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
 								HtmlTxt.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1881, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.PressInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString() + "</td></tr>");
 							if(!webSession.isCompetitorAdvertiserSelected()){
 								HtmlTxt.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1384, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.PressInsertionsColumnIndex.INTEREST_CENTER_INDEX].ToString() + "</td></tr>");
@@ -589,7 +589,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 									){
 									//Cas gestion fichier spot radio 
 									if(data[0,j].ToString().CompareTo(ASSOCIATED_FILE)==0){
-										if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG) != null && data[i, j] != null && data[i, j].ToString().Length > 0) {
+										if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG) && data[i, j] != null && data[i, j].ToString().Length > 0) {
 											tempAssociatedFile = data[i, j].ToString();
 											if (indexIdSloganCol>-1 && data[i, indexIdSloganCol] != null && data[i, indexIdSloganCol].ToString().CompareTo("0") != 0)
 												tempAssociatedFile = tempAssociatedFile + "," +data[i, indexIdSloganCol].ToString();											
@@ -646,10 +646,11 @@ namespace TNS.AdExpress.Web.UI.Results{
 //					}
 					#endregion
 
-					if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected() ) {
+					if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected()) {
 						// si droit accroche
-						ColSpan="16";								
-					}else if(!Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected() ) 
+						ColSpan="16";
+					}
+					else if (!webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected()) 
 						ColSpan="15";
 					else ColSpan="13";
 
@@ -693,7 +694,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(869,webSession.SiteLanguage)+"</td>");
 							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(857,webSession.SiteLanguage)+"</td>");
 							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(858,webSession.SiteLanguage)+"</td>");
-							if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
+							if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
 								HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1881,webSession.SiteLanguage)+"</td>");
 							if(!webSession.isCompetitorAdvertiserSelected()){
 								HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1384,webSession.SiteLanguage)+"</td>");
@@ -734,7 +735,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 									classe=CLASSE_2;
 								}
 								if(data[i,CstWeb.RadioInsertionsColumnIndex.FILE_INDEX].ToString().CompareTo("")!=0
-									&& webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG)!=null){
+									&& webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG)){
 									tempAssociatedFile = data[i, CstWeb.RadioInsertionsColumnIndex.FILE_INDEX].ToString();
 									if (data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX] != null && data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString().CompareTo("0") != 0)
 										tempAssociatedFile = tempAssociatedFile + "," + data[i, CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString();											
@@ -745,7 +746,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 								}
 								HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.RadioInsertionsColumnIndex.ADVERTISER_INDEX].ToString()+"</td>");
 								HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.RadioInsertionsColumnIndex.PRODUCT_INDEX].ToString()+"</td>");
-								if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected()){
+								if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected()) {
 									if(data[i,CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX]!=null)HtmlTxt.Append("<td class=\""+classe+"\" nowrap align=\"center\">"+data[i,CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString()+"</td>");
 									else HtmlTxt.Append("<td class=\""+classe+"\" nowrap>&nbsp;</td>");
 								}
@@ -988,8 +989,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 									//Cas gestion fichier spot tv 
 									if (data[0, j].ToString().CompareTo("ASSOCIATED_FILE") == 0) {
 										if (data[i, j] != null && data[i, j].ToString().Length > 0
-										&& (((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_TV_CREATION_ACCESS_FLAG) != null)
-										|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_OTHERS_CREATION_ACCESS_FLAG) != null))
+										&& (((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_TV_CREATION_ACCESS_FLAG))
+										|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OTHERS_CREATION_ACCESS_FLAG)))
 										)
 											HtmlTxt.Append("<td class=\"" + classe + "\" nowrap><a href=\"javascript:openDownload('" + data[i, j].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/"+themeName+"/Images/Common/Picto_pellicule.gif\"></a></td>");
 										else
@@ -1021,13 +1022,14 @@ namespace TNS.AdExpress.Web.UI.Results{
 			}else{
 
 				#region Détail spots télévision sans gestion des colonnes génériques
-				
-				
-				if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected() ) {
+
+
+				if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected()) {
 					// si droit accroche
 					ColSpan="16";
-					paramColSpan="14";				
-				}else if(!Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected() ) {
+					paramColSpan="14";
+				}
+				else if (!webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected()) {
 					ColSpan="15";
 					paramColSpan="13";
 				}else{ 
@@ -1093,7 +1095,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(857,webSession.SiteLanguage)+"</td>");
 						HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(858,webSession.SiteLanguage)+"</td>");
 						//Accroche
-						if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected())
+						if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected())
 							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1881,webSession.SiteLanguage)+"</td>");
 						if(!webSession.isCompetitorAdvertiserSelected()){
 							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1384,webSession.SiteLanguage)+"</td>");
@@ -1133,8 +1135,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 								classe=CLASSE_2;
 							}
 							if( data[i,CstWeb.TVInsertionsColumnIndex.FILES_INDEX] != null && data[i,CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString().CompareTo("")!=0
-								&& (((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_TV_CREATION_ACCESS_FLAG) != null)
-								|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_OTHERS_CREATION_ACCESS_FLAG) != null))
+								&& (((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_TV_CREATION_ACCESS_FLAG)) 
+								|| ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others && webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OTHERS_CREATION_ACCESS_FLAG)))
 								){
 								HtmlTxt.Append("<tr><td class=\""+classe+"\" nowrap><a href=\"javascript:openDownload('"+data[i,CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString()+"','"+webSession.IdSession+"','"+idVehicle+"');\"><img border=\"0\" src=\"/App_Themes/"+themeName+"/Images/Common/Picto_pellicule.gif\"></a></td>");
 							}
@@ -1143,7 +1145,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							}
 							HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.TVInsertionsColumnIndex.ADVERTISER_INDEX].ToString()+"</td>");
 							HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.TVInsertionsColumnIndex.PRODUCT_INDEX].ToString()+"</td>");
-							if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected() ){
+							if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected()) {
 								if(data[i,CstWeb.TVInsertionsColumnIndex.ID_SLOGAN_INDEX]!=null)HtmlTxt.Append("<td class=\""+classe+"\" nowrap align=\"center\">"+data[i,CstWeb.TVInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString()+"</td>");
 								else HtmlTxt.Append("<td class=\""+classe+"\" nowrap>&nbsp;</td>");
 							}
@@ -1230,7 +1232,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			//Pas de droit publicité extérieure
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null){
+			if(!webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)){
                 HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround insertionWhiteBorder\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;\"");
 				HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"0\" align=\"left\" border=\"0\">");
 				HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage,1882));
@@ -1361,7 +1363,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 									if (data[0, j] != null && data[0, j].ToString().CompareTo(ASSOCIATED_FILE) == 0) {
 
 										if (data[i, j] == null || data[i, j] == System.DBNull.Value || ((string)data[i, j]).CompareTo("") == 0
-											|| (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) == null)											
+											|| (!webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG))											
 											) {
 											//Pas de créations
 											tempVisualString = "<td class=\"txtViolet12Bold\" valign=\"top\">" + GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "</td>";
@@ -1489,7 +1491,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							
 							HtmlTxt.Append("<tr class=\"popupinsertionligne\"><td ><TABLE cellSpacing=\"0\" border=\"0\"><tr>");
 							if (data[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX]== null || ((string)data[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX]).CompareTo("") == 0
-								|| ( webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) == null)								
+								|| ( !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) )								
 								) {
 								//Pas de créations
 								HtmlTxt.Append("<td class=\"txtViolet12Bold\" valign=\"top\">" + GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "</td>");
@@ -1507,7 +1509,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(176, webSession.SiteLanguage) + "</td><td width=\"550\">: " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.ADVERTISER_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.ADVERTISER_INDEX].ToString() : "") + "</td></tr>");
 							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(174, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.GROUP_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.GROUP_INDEX].ToString() : "") + "</td></tr>");
 							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(468, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.PRODUCT_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.PRODUCT_INDEX].ToString() : "") + "</td></tr>");
-							if (Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
+							if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
 								HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1881, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.ID_SLOGAN_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString() : "") + "</td></tr>");
 							if (!webSession.isCompetitorAdvertiserSelected()) {
 								HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1384, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.INTEREST_CENTER_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.INTEREST_CENTER_INDEX].ToString() : "") + "</td></tr>");
@@ -1667,7 +1669,7 @@ namespace TNS.AdExpress.Web.UI.Results{
                             //HtmlTxt.Append("<td class=\"txtViolet12Bold\" valign=\"top\">" + GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "</td>");
                             HtmlTxt.Append("<td class=\"txtViolet12Bold\" valign=\"top\" width=\"240\">" + GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "</td>");
                         }
-                        else if ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing && webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG) == null)
+                        else if ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing && !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG))
                             HtmlTxt.Append("");
                             //HtmlTxt.Append("<td class=\"txtViolet12Bold\" valign=\"top\">" + GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "</td>");
                         else{
@@ -1683,12 +1685,12 @@ namespace TNS.AdExpress.Web.UI.Results{
                         HtmlTxt.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(176, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.MDVersionsColumnIndex.ADVERTISER_INDEX].ToString() + "</td></tr>");
                         HtmlTxt.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(468, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.MDVersionsColumnIndex.PRODUCT_INDEX].ToString() + "</td></tr>");
                         HtmlTxt.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(174, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.MDVersionsColumnIndex.GROUP_INDEX].ToString() + "</td></tr>");
-                        if (Functions.MediaDetailLevel.HasSloganRight(webSession))// si droit accroche
+						if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG))// si droit accroche
                             HtmlTxt.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(1888, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.MDVersionsColumnIndex.SLOGAN_INDEX].ToString() + "</td></tr>");
-                        if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_POIDS_MARKETING_DIRECT) != null)
+                        if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_POIDS_MARKETING_DIRECT))
                             HtmlTxt.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(2220, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.MDVersionsColumnIndex.WEIGHT_INDEX].ToString() + "</td></tr>");
                         HtmlTxt.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(1935, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, CstWeb.MDVersionsColumnIndex.EXPENDITURE_INDEX].ToString() + "</td></tr>");
-                        if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT) != null)
+                        if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
                             HtmlTxt.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(2216, webSession.SiteLanguage) + "</td><td nowrap>: " + Math.Round(double.Parse(data[i, CstWeb.MDVersionsColumnIndex.VOLUME_INDEX].ToString())) + "</td></tr>");
 
                         //Mail Content
@@ -1849,7 +1851,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			////Pas de droit résultat au détail insertion
 			if ( idVehicle !=null && idVehicle.Length>0 
 				&& (CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == CstClassification.DB.Vehicles.names.outdoor 
-				&& webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) == null				
+				&& !webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) 				
 				) {
                 return "<TABLE width=\"500\" class=\"whiteBackGround insertionBorderV2\""
 					+ "cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">"
@@ -2073,7 +2075,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			if (tab==null || tab[0,0]==null){
 
 				//Pas de droit publicité extérieure
-				if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null
+				if(!webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
 					&& (CstClassification.DB.Vehicles.names)int.Parse(idVehicle)==CstClassification.DB.Vehicles.names.outdoor 
 					){
                     return "<TABLE width=\"500\" class=\"whiteBackGround insertionWhiteBorder\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;\""
@@ -2275,7 +2277,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(176,webSession.SiteLanguage)+"</td>");
 					HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(174,webSession.SiteLanguage) + "</td>");
 					HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(858,webSession.SiteLanguage) + "</td>");
-					if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
+					if(webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
 						HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(1881,webSession.SiteLanguage) + "</td>");
 					if(!webSession.isCompetitorAdvertiserSelected()){
 						HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(1384,webSession.SiteLanguage) + "</td>");
@@ -2313,7 +2315,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i, CstWeb.PressInsertionsColumnIndex.ADVERTISER_INDEX].ToString()+"</td>");
 						HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i, CstWeb.PressInsertionsColumnIndex.GROUP_INDEX].ToString()+"</td>");
 						HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i, CstWeb.PressInsertionsColumnIndex.PRODUCT_INDEX].ToString()+"</td>");
-						if( Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected()){// si droit accroche
+						if( webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected()){// si droit accroche
 							if(data[i,CstWeb.PressInsertionsColumnIndex.ID_SLOGAN_INDEX]!=null)HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i, CstWeb.PressInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString()+"</td>");
 							else HtmlTxt.Append("<td class=\""+classe+"\" nowrap>&nbsp;</td>");
 						}
@@ -2494,7 +2496,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(895,webSession.SiteLanguage)+"</td>");
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(857,webSession.SiteLanguage)+"</td>");
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(858,webSession.SiteLanguage)+"</td>");
-					if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
+					if(webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
 						HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1881,webSession.SiteLanguage)+"</td>");
 					if(!webSession.isCompetitorAdvertiserSelected()){
 						HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1384,webSession.SiteLanguage)+"</td>");
@@ -2533,7 +2535,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.RadioInsertionsColumnIndex.DATE_INDEX].ToString()+"</td>");
 						HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.RadioInsertionsColumnIndex.ADVERTISER_INDEX].ToString()+"</td>");
 						HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.RadioInsertionsColumnIndex.PRODUCT_INDEX].ToString()+"</td>");
-						if( Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected()){// si droit accroche
+						if( webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected()){// si droit accroche
 							if(data[i,CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX]!=null )HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.RadioInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString()+"</td>");
 							else HtmlTxt.Append("<td class=\""+classe+"\" nowrap>&nbsp;</td>");
 						}
@@ -2713,7 +2715,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(895,webSession.SiteLanguage)+"</td>");
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(857,webSession.SiteLanguage)+"</td>");
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(858,webSession.SiteLanguage)+"</td>");
-					if(Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
+					if(webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
 						HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1881,webSession.SiteLanguage)+"</td>");
 					if(!webSession.isCompetitorAdvertiserSelected()){
 						HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1384,webSession.SiteLanguage)+"</td>");
@@ -2750,7 +2752,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.TVInsertionsColumnIndex.DATE_INDEX].ToString()+"</td>");
 						HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.TVInsertionsColumnIndex.ADVERTISER_INDEX].ToString()+"</td>");
 						HtmlTxt.Append("<td class=\""+classe+"\" nowrap>"+data[i,CstWeb.TVInsertionsColumnIndex.PRODUCT_INDEX].ToString()+"</td>");
-						if( Functions.MediaDetailLevel.HasSloganRight(webSession) && !webSession.isCompetitorAdvertiserSelected()){// si droit accroche
+						if( webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected()){// si droit accroche
 							if(data[i,CstWeb.TVInsertionsColumnIndex.ID_SLOGAN_INDEX]!=null )HtmlTxt.Append("<td class=\""+classe+"\" nowrap align=\"center\">"+data[i,CstWeb.TVInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString()+"</td>");
 							else HtmlTxt.Append("<td class=\""+classe+"\" nowrap>&nbsp;</td>");
 						}
@@ -2804,7 +2806,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			StringBuilder HtmlTxt = new StringBuilder(1000);
 
 			//Pas de droit publicité extérieure
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)==null){
+			if(!webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)){
                 HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround insertionWhiteBorder\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;\"");
 				HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">");
 				HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage,1882));
@@ -3103,12 +3105,12 @@ namespace TNS.AdExpress.Web.UI.Results{
             HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(176, webSession.SiteLanguage) + "</td>");
             HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(468, webSession.SiteLanguage) + "</td>");
             HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(174, webSession.SiteLanguage) + "</td>");
-            if (Functions.MediaDetailLevel.HasSloganRight(webSession))// si droit accroche
+            if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG))// si droit accroche
                 HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(1888, webSession.SiteLanguage) + "</td>");
-            if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_POIDS_MARKETING_DIRECT) != null)
+            if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_POIDS_MARKETING_DIRECT))
                 HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(2220, webSession.SiteLanguage) + "</td>");
             HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(1936, webSession.SiteLanguage) + "</td>");
-            if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT) != null)
+            if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
                 HtmlTxt.Append("<td nowrap class=\"p2\">" + GestionWeb.GetWebWord(2216, webSession.SiteLanguage) + "</td>");
 
             if (listMedia.Contains(CstDB.Media.PUBLICITE_NON_ADRESSEE)) {
@@ -3219,15 +3221,15 @@ namespace TNS.AdExpress.Web.UI.Results{
                 HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + data[i, CstWeb.MDVersionsColumnIndex.PRODUCT_INDEX].ToString() + "</td>");
                 HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + data[i, CstWeb.MDVersionsColumnIndex.GROUP_INDEX].ToString() + "</td>");
 
-                if (Functions.MediaDetailLevel.HasSloganRight(webSession)) {// si droit accroche
+                if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)) {// si droit accroche
                     if (data[i, CstWeb.MDVersionsColumnIndex.SLOGAN_INDEX] != null) HtmlTxt.Append("<td class=\"" + classe + "\" align=\"right\" nowrap>" + data[i, CstWeb.MDVersionsColumnIndex.SLOGAN_INDEX].ToString() + "</td>");
                     else HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>&nbsp;</td>");
                 }
                                
-                if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_POIDS_MARKETING_DIRECT) != null)
+                if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_POIDS_MARKETING_DIRECT))
                     HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + data[i, CstWeb.MDVersionsColumnIndex.WEIGHT_INDEX].ToString() + "</td>");
                 HtmlTxt.Append("<td class=\"" + classe + "\"  align=\"center\" nowrap>" + data[i, CstWeb.MDVersionsColumnIndex.EXPENDITURE_INDEX].ToString() + "</td>");
-                if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT) != null)
+                if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
                     HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + Math.Round(double.Parse(data[i, CstWeb.MDVersionsColumnIndex.VOLUME_INDEX].ToString())) + "</td>");
 
                 //Affichage du détail pour chaque média

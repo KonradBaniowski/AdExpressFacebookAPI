@@ -729,7 +729,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						idCreation = Int64.Parse(tab[i,ResultConstantes.IDL1_INDEX].ToString());
 						//Créations
 						if(DBClassificationConstantes.Vehicles.names.outdoor==vehicleName){
-							if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)!=null ){
+							if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)){
 								if(!showCreation &&  WebFunctions.ProductDetailLevel.DisplayCreation(webSession,ResultCstComp.IDL1_INDEX)){creation="<a href=\"javascript:OpenCreationCompetitorAlert('"+webSession.IdSession+"','"+idCreation+","+level+",','');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";}
 								else{creation="";}
 							}else{creation="";}
@@ -766,7 +766,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						idCreation = Int64.Parse(tab[i,ResultConstantes.IDL2_INDEX].ToString());
 						//Créations
 						if(DBClassificationConstantes.Vehicles.names.outdoor==vehicleName){
-							if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)!=null ){
+							if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) ){
 								if(!showCreation &&  WebFunctions.ProductDetailLevel.DisplayCreation(webSession,ResultCstComp.IDL2_INDEX)){creation="<a href=\"javascript:OpenCreationCompetitorAlert('"+webSession.IdSession+"','"+idCreation+","+level+",','');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";}
 								else{creation="";}
 							}else{creation="";}
@@ -804,7 +804,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						levelProd="3";
 						//Créations
 						if(DBClassificationConstantes.Vehicles.names.outdoor==vehicleName){
-							if (webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)!=null ){
+							if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) ){
 								if(!showCreation && WebFunctions.ProductDetailLevel.DisplayCreation(webSession,ResultCstComp.IDL3_INDEX)){creation="<a href=\"javascript:OpenCreationCompetitorAlert('"+webSession.IdSession+"','"+idCreation+","+level+",','');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a>";}
 								else{creation="";}
 							}else{creation="";}
@@ -1905,7 +1905,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			// Annonceur
 			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1146,webSession.SiteLanguage)+"</td>");
 			// Agence média
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency"))
+			if(webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY) && table.Columns.Contains("advertising_agency"))
 			{
 //				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+"</td>");
 				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+((mediaAgencyYear.Length>0)?" ("+mediaAgencyYear+")":"")+"</td>");
@@ -1993,7 +1993,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						// Annonceur 
 						t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertiser"]+"</td>");
 						// Agence Média
-						if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency"))
+						if(webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) && table.Columns.Contains("advertising_agency"))
 						{
 							t.Append("<td class=\""+classStyleValue+"\" align=\"left\"	>"+row["advertising_agency"]+"</td>");
 						}
@@ -2114,7 +2114,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			// Annonceur
 			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1146,webSession.SiteLanguage)+"</td>");
 			// Agence média
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null)
+			if(webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY))
 			{
 				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+((mediaAgencyYear.Length>0)?" ("+mediaAgencyYear+")":"")+"</td>");
 			}
@@ -2162,7 +2162,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("<tr  onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#D0C8DA';\" bgcolor=#D0C8DA>");
 					if(!excel){
 						// Message audio
-						if(webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG)!=null
+						if(webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG)
 							&& row["fileData"].ToString().Length>0
 							){
 							t.Append("<td class=\""+classStyleValue+"\" align=\"center\" nowrap><a href=\"javascript:openDownload('"+row["fileData"]+"','"+webSession.IdSession+"','"+idVehicle+"');\"><img border=0 src=\"/Images/Common/Picto_Radio.gif\"></a></td>");
@@ -2184,7 +2184,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					// Annonceur
 					t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertiser"]+"</td>");
 					// Agence Média
-					if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency"))
+					if(webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) && table.Columns.Contains("advertising_agency"))
 					{
 						t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertising_agency"]+"</td>");
 					}
@@ -2308,7 +2308,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			// Annonceur
 			t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1146,webSession.SiteLanguage)+"</td>");
 			// Agence média
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency"))
+			if(webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) && table.Columns.Contains("advertising_agency"))
 			{
 //				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+"</td>");
 				t.Append("<td class=\"p2\" style=\"BORDER-TOP: #644883 1px solid;  BORDER-BOTTOM: #644883 1px solid\" nowrap>"+GestionWeb.GetWebWord(1448,webSession.SiteLanguage)+((mediaAgencyYear.Length>0)?" ("+mediaAgencyYear+")":"")+"</td>");
@@ -2353,7 +2353,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("<tr  onmouseover=\"this.bgColor='#ffffff';\" onmouseout=\"this.bgColor='#D0C8DA';\" bgcolor=#D0C8DA>");
 					if(!excel){
 						// Message audio
-						if(webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_TV_CREATION_ACCESS_FLAG)!=null
+						if(webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_TV_CREATION_ACCESS_FLAG)
 							&& row["fileData"].ToString().Length>0
 							){
 							t.Append("<td class=\""+classStyleValue+"\" align=\"center\" nowrap><a href=\"javascript:openDownload('"+row["fileData"]+"','"+webSession.IdSession+"','"+idVehicle+"');\"><img border=0 src=\"/Images/Common/Picto_pellicule.gif\"></a></td>");
@@ -2374,7 +2374,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					// Annonceur
 					t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertiser"]+"</td>");
 					// Agence Média
-					if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && table.Columns.Contains("advertising_agency")) {
+					if(webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) && table.Columns.Contains("advertising_agency")) {
 						t.Append("<td class=\""+classStyleValue+"\" align=\"left\" nowrap>"+row["advertising_agency"]+"</td>");
 					}
 					//Plan media du produit
@@ -3999,7 +3999,7 @@ namespace TNS.AdExpress.Web.UI.Results{
             
             // Cas du Marketing Direct
             if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.directMarketing &&
-                webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT) != null) {
+                webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT)) {
                 // Volume
                 classStyleTitle = InversClassStyleTitle(classStyleTitle);
                 classStyleValue = InversClassStyleValue(classStyleValue);

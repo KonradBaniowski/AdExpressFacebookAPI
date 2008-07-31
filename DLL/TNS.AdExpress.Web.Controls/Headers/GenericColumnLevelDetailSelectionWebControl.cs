@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -341,8 +342,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <returns>True si oui false sinon</returns>
         private bool CheckProductDetailLevelAccess() {
-            if (_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG) != null) return (true);
-            return (false);
+            return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG));
+           
         }
         #endregion
 

@@ -15,6 +15,7 @@ using TNS.AdExpress.Web.Controls.Buttons;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -707,7 +708,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			dropDownList.CssClass=_cssListBox;
 			dropDownList.Items.Add(new ListItem("-------","-1"));
 			
-			if(((_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)!=null)&&(_idVehicleFromTab==(Int64)DBClassificationConstantes.Vehicles.names.outdoor))||(_idVehicleFromTab!=(Int64)DBClassificationConstantes.Vehicles.names.outdoor)){
+			if(((_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))&&(_idVehicleFromTab==(Int64)DBClassificationConstantes.Vehicles.names.outdoor))||(_idVehicleFromTab!=(Int64)DBClassificationConstantes.Vehicles.names.outdoor)){
 				
 				foreach(DetailLevelItemInformation currentDetailLevelItem in _allowedDetailItemList){
 					if(CanAddDetailLevelItem(currentDetailLevelItem)){
@@ -753,12 +754,12 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			
 			switch(currentDetailLevel.Id){
 				case DetailLevelItemInformation.Levels.slogan:
-					return(WebFunctions.MediaDetailLevel.HasSloganRight(_customerWebSession));
+					return _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG);
 				case DetailLevelItemInformation.Levels.interestCenter:
 				case DetailLevelItemInformation.Levels.mediaSeller:
 					return(!_customerWebSession.isCompetitorAdvertiserSelected());
 				case DetailLevelItemInformation.Levels.brand:
-					return((CheckProductDetailLevelAccess()) && (_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null));
+					return ((CheckProductDetailLevelAccess()) && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE));
 				case DetailLevelItemInformation.Levels.product:
 				case DetailLevelItemInformation.Levels.advertiser:
 					return(CheckProductDetailLevelAccess());
@@ -771,7 +772,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					return(CheckProductDetailLevelAccess());
 				case DetailLevelItemInformation.Levels.groupMediaAgency:
 				case DetailLevelItemInformation.Levels.agency:
-					return((CheckProductDetailLevelAccess()) && (_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null));
+					return ((CheckProductDetailLevelAccess()) && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY));
 				default:
 					return(true);
 			}
@@ -800,7 +801,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		private bool CanAddColumnItem(GenericColumnItemInformation currentColumn){
 			switch(currentColumn.Id){
 				case GenericColumnItemInformation.Columns.slogan:
-					return(WebFunctions.MediaDetailLevel.HasSloganRight(_customerWebSession));
+					return _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG);
 				case GenericColumnItemInformation.Columns.interestCenter:
 				case GenericColumnItemInformation.Columns.mediaSeller:
 					return(!_customerWebSession.isCompetitorAdvertiserSelected());
@@ -852,8 +853,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// </summary>
 		/// <returns>True si oui false sinon</returns>
 		private bool CheckProductDetailLevelAccess(){
-			if(_customerWebSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG)!=null)return(true);
-			return(false);
+			return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG));
+			
 		}
 		
 		

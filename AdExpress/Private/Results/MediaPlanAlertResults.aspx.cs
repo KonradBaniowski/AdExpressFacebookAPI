@@ -20,6 +20,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace AdExpress.Private.Results{
 	/// <summary>
@@ -199,7 +200,7 @@ namespace AdExpress.Private.Results{
 		/// </summary>		
 		private void SetSloganUniverseOptions(){
 //			string idVehicleList =  _webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);						
-			if( (!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !WebFunctions.MediaDetailLevel.HasSloganRight(_webSession)) //droits affiner univers Versions
+			if ((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) //droits affiner univers Versions
 					){//|| (idVehicleList!=null && idVehicleList.Length>0 && idVehicleList.IndexOf(DBClassificationConstantes.Vehicles.names.internet.GetHashCode().ToString())>=0)//Interdire  affiner versions pour le média Internet
 				
 				InitializeProductWebControl1.Visible = false;

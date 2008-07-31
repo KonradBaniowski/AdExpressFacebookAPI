@@ -644,7 +644,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 		private static string GetFiedls(bool mediaAgencyAccess,WebSession webSession,string tablePrefixe){
 			string fields=string.Empty;
 			fields+=" distinct "+tablePrefixe+".id_product,product,advertiser,";
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+			if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 				fields+="brand,";
 			if(mediaAgencyAccess)
 				fields+="advertising_agency,";
@@ -682,7 +682,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			string sql="";
 			sql+=DBSchema.ADEXPRESS_SCHEMA+"."+DBTables.ADVERTISER+" "+DBTables.ADVERTISER_PREFIXE+", ";
 			sql+=DBSchema.ADEXPRESS_SCHEMA+"."+DBTables.PRODUCT+" "+DBTables.PRODUCT_PREFIXE+", ";
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+			if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 			sql+=DBSchema.ADEXPRESS_SCHEMA+"."+DBTables.BRAND+" "+DBTables.BRAND_PREFIXE+", ";
 			if(mediaAgencyAccess){
 				//sql+=DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+", ";
@@ -733,7 +733,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql+=" and "+DBTables.PRODUCT_PREFIXE+".id_language="+languageId.ToString();
 			sql+=" and "+DBTables.ADVERTISER_PREFIXE+".id_advertiser="+tablePrefixe+".id_advertiser ";
 			sql+=" and "+DBTables.ADVERTISER_PREFIXE+".id_language="+languageId.ToString();
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null){
+			if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE)){
 				sql+=" and "+DBTables.BRAND_PREFIXE+".id_brand="+tablePrefixe+".id_brand ";
 				sql+=" and "+DBTables.BRAND_PREFIXE+".id_language="+languageId.ToString();
 			}
@@ -769,7 +769,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 		private static string GetGroupBy(bool mediaAgencyAccess,WebSession webSession,string tablePrefixe){
 			string groupBy=string.Empty;
 			groupBy+="product,"+tablePrefixe+".id_product,advertiser,";
-			if(webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)!=null)
+			if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 				groupBy+="brand,";
 			if(mediaAgencyAccess)
 				groupBy+="advertising_agency,";

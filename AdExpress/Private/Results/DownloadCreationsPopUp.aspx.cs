@@ -173,7 +173,7 @@ namespace AdExpress.Private.Results{
                 //L'utilisateur a accès au créations en lecture ?
                 _hasCreationReadRights =_webSession.CustomerLogin.ShowCreatives(vehicle);
 					
-				if (_webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_DOWNLOAD_ACCESS_FLAG) != null) {
+				if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DOWNLOAD_ACCESS_FLAG)) {
 					//L'utilisateur a accès aux créations en téléchargement
 					_hasCreationDownloadRights = true;
 				}

@@ -223,7 +223,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
             
             //Droit detail spot à spot TNT
             if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
-                && webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG) == null)
+                && !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG))
                 sql.Append(" and wp.id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
 
 			#endregion

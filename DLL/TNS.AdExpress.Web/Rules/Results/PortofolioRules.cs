@@ -160,7 +160,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 						break;
 					}
 				}
-                if(creatives>0 && webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)!=null) {
+                if(creatives>0 && webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)) {
                     headers.Root.Add(new HeaderCreative(false,GestionWeb.GetWebWord(CREATIVES_COL,webSession.SiteLanguage),CREATIVES_COL));
                 }
                 else creatives=0;
@@ -186,7 +186,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
                         cellFactories[5+creatives+insertions] = new CellUnitFactory(new CellInsertion(0.0));
 						break;
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
-                        if (webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_VOLUME_MARKETING_DIRECT) != null) {
+                        if (webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_VOLUME_MARKETING_DIRECT)) {
                             headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(VOLUME, webSession.SiteLanguage), VOLUME));
                             iNbCol = 4 + creatives+insertions;
                             cellFactories = new CellUnitFactory[iNbCol];
@@ -780,7 +780,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
                 bool showCreative = webSession.CustomerLogin.ShowCreatives(vehicle);
                 // Affichage Agences Medias
                 bool showMediaAgency = false;
-                if (webSession.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) != null && dt.Columns.Contains("advertising_agency")) {
+                if (webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) && dt.Columns.Contains("advertising_agency")) {
                     showMediaAgency = true;
                 }
                 //Affichage date Diffusion

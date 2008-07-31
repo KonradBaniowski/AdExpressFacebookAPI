@@ -19,6 +19,7 @@ using System.Windows.Forms;
 using TNS.AdExpress;
 using CstCustom = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
+using CstDB = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using DBClassif = TNS.AdExpress.DataAccess.Classification;
 using TNS.AdExpress.Domain.Level;
@@ -440,8 +441,8 @@ namespace TNS.AdExpressI.LostWon
 
             #region Création des headers
             nbLine = 5;
-            if (_session.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) != null) nbLine++;
-            if (_session.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) != null) nbLine += 2;
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) nbLine++;
+			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) nbLine += 2;
 
             // Ajout de la colonne Produit
             Headers headers = new Headers();
@@ -515,7 +516,7 @@ namespace TNS.AdExpressI.LostWon
             Int64 levelLabelColIndex = resultTable.GetHeadersIndexInResultTable(LEVEL_ID.ToString());
             advertiserLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[advertiserLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1146, _session.SiteLanguage));
-            if (_session.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) != null)
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
             {
                 brandLineIndex = resultTable.AddNewLine(LineType.level1);
                 resultTable[brandLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1149, _session.SiteLanguage));
@@ -529,7 +530,7 @@ namespace TNS.AdExpressI.LostWon
             groupLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[groupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1849, _session.SiteLanguage));
             // Groupe d'Agence && Agence
-            if (_session.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) != null)
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
             {
                 agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
                 resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
@@ -594,7 +595,7 @@ namespace TNS.AdExpressI.LostWon
                     advertisers.Add(currentRow["id_advertiser"].ToString());
                 }
 
-                if (_session.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) != null)
+                if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
                 {//droits marques
                     //Activité publicitaire marques
                     if (currentRow["id_brand"] != null && currentRow["id_brand"] != System.DBNull.Value && !brands.Contains(currentRow["id_brand"].ToString()))
@@ -640,7 +641,7 @@ namespace TNS.AdExpressI.LostWon
                     groups.Add(currentRow["id_group_"].ToString());
                 }
 
-                if (_session.CustomerLogin.GetFlag((long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY) != null)
+                if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
                 {//droits agences média					
                     //activité publicitaire Groupes d'agences
                     if (currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))

@@ -171,7 +171,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 						}
 
 						//Droits Parrainage TV
-						if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+						if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 							if (beginByAnd) sql.Append(" and ");
 							sql.Append("    " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ");
 						}
@@ -379,7 +379,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 					sql.Append("  "+rightAccessVehicleList);	
 				}
 				//Droits Parrainage TV
-				if (webSession.CustomerLogin.GetFlag(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {
+				if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {
 					if (beginByAnd) sql.Append(" and ");
 					sql.Append("    " + DBConstantes.Tables.RECAP_PREFIXE + ".id_category not in (68)  ");
 				}
