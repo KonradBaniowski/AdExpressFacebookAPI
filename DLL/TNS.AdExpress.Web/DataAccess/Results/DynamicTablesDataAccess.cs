@@ -727,7 +727,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			if (!first)sql.Append(")");
 
 			//Droits Parrainage TV
-			if (webSession.CustomerLogin.GetFlag(DBCst.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG) == null) {			
+			if (!webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG)) {			
 				sql.Append("   and  " + DBCst.Tables.RECAP_PREFIXE + ".id_category not in (68)  ");
 			}
 
