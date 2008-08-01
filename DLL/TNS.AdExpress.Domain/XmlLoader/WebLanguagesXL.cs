@@ -111,10 +111,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 else
                                     classificationLanguageId=id;
 								if (reader.GetAttribute("nlsSort") != null && reader.GetAttribute("nlsSort").Length > 0)
-									nlsSort = reader.GetAttribute("nlsSort");
-								if (reader.GetAttribute("isUtf8") != null)
-									isUTF8 = bool.Parse(reader.GetAttribute("isUtf8"));								
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,nlsSort,isUTF8));
+									nlsSort = reader.GetAttribute("nlsSort");															
+                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,nlsSort));
                                 break;
                         }
                     }
