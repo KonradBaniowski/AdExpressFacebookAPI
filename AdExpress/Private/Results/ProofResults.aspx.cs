@@ -13,6 +13,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using WebFunctions=TNS.AdExpress.Web.Functions;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 using TNS.FrameWork.WebResultUI;
 
@@ -106,7 +107,7 @@ namespace AdExpress.Private.Results
 			#endregion
 
 			#region Option affiner version 
-			if(!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !WebFunctions.MediaDetailLevel.HasSloganRight(_webSession)){//droits affiner univers Versions				
+			if (!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) {//droits affiner univers Versions				
 				InitializeProductWebControl1.Enabled = false;
 				MenuWebControl2.ForbidOptionPages = true;
 				_webSession.IdSlogans = new ArrayList();
