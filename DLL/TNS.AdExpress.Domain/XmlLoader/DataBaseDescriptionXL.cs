@@ -69,9 +69,10 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 if(reader.GetAttribute("maxPoolSize")!=null)
                                     customerConnection.MaxPoolSize=int.Parse(reader.GetAttribute("maxPoolSize"));
                                 if(reader.GetAttribute("pooling")!=null)
-                                    customerConnection.Pooling=bool.Parse(reader.GetAttribute("pooling"));
+                                    customerConnection.Pooling=bool.Parse(reader.GetAttribute("pooling"));								
                                 list.Add(customerConnectionId,customerConnection);
-
+								if (reader.GetAttribute("isUtf8") != null)
+									customerConnection.IsUTF8 = bool.Parse(reader.GetAttribute("isUtf8"));	
                                 break;
                         }
                     }
@@ -152,6 +153,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     defaultConnection.MaxPoolSize=int.Parse(reader.GetAttribute("maxPoolSize"));
                                 if(reader.GetAttribute("pooling")!=null)
                                     defaultConnection.Pooling=bool.Parse(reader.GetAttribute("pooling"));
+								if (reader.GetAttribute("isUtf8") != null)
+									defaultConnection.IsUTF8 = bool.Parse(reader.GetAttribute("isUtf8"));								
                                 list.Add(defaultConnectionId,defaultConnection);
 
                                 break;

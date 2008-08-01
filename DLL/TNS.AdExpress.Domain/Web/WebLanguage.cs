@@ -52,6 +52,11 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         /// <example>France = "utf-8"</example>
         private string _contentEncoding = "utf-8";
+		/// <summary>
+		/// NLS SORT to use any linguistic sort for an ORDER BY clause
+		/// <example> France ="FRENCH"</example>
+		/// </summary>
+		private string _nlsSort="";		
         #endregion
 
         #region Constructor
@@ -86,9 +91,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="classificationLanguageId">Classification language Id</param>
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
-        public WebLanguage(int id,string name,string imageSourceText,string localization,int classificationLanguageId,string charset,string contentEncoding)
+        public WebLanguage(int id,string name,string imageSourceText,string localization,int classificationLanguageId,string charset,string contentEncoding,string nlsSort)
             : this(id,imageSourceText,localization,charset,contentEncoding) {
             if(name!=null&&name.Length>0) _name=name;
+			if (nlsSort != null && nlsSort.Length > 0) _nlsSort = nlsSort;		
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
             _classificationLanguageId=classificationLanguageId;
             
@@ -138,6 +144,12 @@ namespace TNS.AdExpress.Domain.Web {
         public string ContentEncoding {
             get { return (_contentEncoding); }
         }
+		/// <summary>
+		/// Get NLS SORT to use any linguistic sort for an ORDER BY clause
+		/// </summary>
+		public string NlsSort {
+			get { return (_nlsSort); }
+		}		
         #endregion
     }
 }

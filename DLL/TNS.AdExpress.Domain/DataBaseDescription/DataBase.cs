@@ -340,6 +340,9 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Ad press color list
         /// </summary>
         color=58,
+		/// <summary>
+		/// Format
+		/// </summary>
         format=59,
         /// <summary>
         /// Mail format
@@ -369,8 +372,17 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Press Inset
         /// </summary>
         inset=66,
+		/// <summary>
+		/// Insertion
+		/// </summary>
         insertion=67,
+		/// <summary>
+		/// alarm media
+		/// </summary>
         alarmMedia=68,
+		/// <summary>
+		/// Application media
+		/// </summary>
         applicationMedia=69,
         /// <summary>
         /// Product class analysis plurimedia data
@@ -676,6 +688,18 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Recap Cell phone aggregated bu segment
         /// </summary>
         recapMobileTelSegment = 145,
+		/// <summary>
+		/// Universe client 
+		/// </summary>
+		universeClient = 146,
+		/// <summary>
+		/// Universe client description
+		/// </summary>
+		universeClientDescription = 147,
+		/// <summary>
+		/// Group universe client
+		/// </summary>
+		groupUniverseClient = 148,
         /// <summary>
         /// Product Group Advertising Agency
         /// </summary>
@@ -757,7 +781,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         public IDataSource GetDefaultConnection(DefaultConnectionIds defaultConnectionId) {
             return (_defaultConnections[defaultConnectionId].GetDataSource());
         }
-
+		/// <summary>
+		/// Get default database connection
+		/// </summary>
+		/// <param name="defaultConnectionId">Connection Id</param>
+		/// <param name="nlsSort">NLS sort code</param>
+		public IDataSource GetDefaultConnection(DefaultConnectionIds defaultConnectionId, string nlsSort) {
+			return (_defaultConnections[defaultConnectionId].GetDataSource(nlsSort));
+		}
         /// <summary>
         /// Get schema label
         /// </summary>
@@ -784,7 +815,20 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
             if(password==null ||password.Length==0) throw (new ArgumentException("Invalid password parameter"));
             return(_customerConnections[customerConnectionId].GetDataSource(login,password));
         }
-
+		/// <summary>
+		/// Get customer database connection
+		/// </summary>
+		/// <param name="login">Customer login</param>
+		/// <param name="password">Customer password</param>
+		/// <param name="customerConnectionId">Connection Id</param>
+		/// <param name="isUTf8">True if is utf-8 encoding</param>
+		/// <param name="nlsSort">NLS SORT code</param>
+		/// <returns>Data Source</returns>
+		public IDataSource GetCustomerConnection(string login, string password,string nlsSort,CustomerConnectionIds customerConnectionId) {
+			if (login == null || login.Length == 0) throw (new ArgumentException("Invalid login parameter"));
+			if (password == null || password.Length == 0) throw (new ArgumentException("Invalid password parameter"));
+			return (_customerConnections[customerConnectionId].GetDataSource(login, password, nlsSort));
+		}
         /// <summary>
         /// Get customer database connection
         /// </summary>
@@ -794,6 +838,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <returns>Data Source</returns>
         public IDataSource GetAdExpr03CustomerConnection(string login,string password) {
             return (GetCustomerConnection(login,password,CustomerConnectionIds.adexpr03));
+			
         }
 
         /// <summary>

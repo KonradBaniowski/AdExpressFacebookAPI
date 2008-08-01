@@ -47,6 +47,16 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Max pool size
         /// </summary>
         protected int _maxPoolSize=-1;
+		/// <summary>
+		/// NLS SORT to use any linguistic sort for an ORDER BY clause
+		/// <example> France ="FRENCH"</example>
+		/// </summary>
+		protected string _nlsSort = "";
+		/// <summary>
+		/// Is encoding utf-8
+		/// </summary>
+		protected bool _isUTF8 = false;
+
         #endregion
 
         #region Constructor
@@ -101,7 +111,18 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         public int MaxPoolSize {
             set { _maxPoolSize=value; }
         }
-
+		/// <summary>
+		/// Set NLS SORT to use any linguistic sort for an ORDER BY clause
+		/// </summary>
+		public string NlsSort {
+			set { _nlsSort = value; }
+		}
+		/// <summary>
+		/// Is  utf-8 encoding
+		/// </summary>
+		public bool IsUTF8 {
+			set { _isUTF8 = value; }
+		}
         #endregion
 
         #region Public Methods
@@ -114,13 +135,31 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
                 sourceFactory.ConnectionTimeOut=_connectionTimeOut;
                 sourceFactory.DecrPoolSize=_decrPoolSize;
                 sourceFactory.MaxPoolSize=_maxPoolSize;
-                sourceFactory.Pooling=_pooling;
+                sourceFactory.Pooling=_pooling;				
                 return (sourceFactory.GetIDataSource());
             }
             catch(System.Exception err) {
                 throw (new DefaultConnectionException("Impossible to retreive default connection",err));
             }
         }
+		/// <summary>
+		/// Get IDataSource
+		/// </summary>
+		public IDataSource GetDataSource(string login, string password,string nlsSort) {
+			try {
+				SourceFactory sourceFactory = new SourceFactory(_type, login, password, _dataSource);
+				sourceFactory.ConnectionTimeOut = _connectionTimeOut;
+				sourceFactory.DecrPoolSize = _decrPoolSize;
+				sourceFactory.MaxPoolSize = _maxPoolSize;
+				sourceFactory.Pooling = _pooling;
+				sourceFactory.IsUTF8 = _isUTF8;
+				sourceFactory.NlsSort = nlsSort;
+				return (sourceFactory.GetIDataSource());
+			}
+			catch (System.Exception err) {
+				throw (new DefaultConnectionException("Impossible to retreive default connection", err));
+			}
+		}
         #endregion
     }
 }

@@ -67,13 +67,31 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
                 sourceFactory.ConnectionTimeOut=_connectionTimeOut;
                 sourceFactory.DecrPoolSize=_decrPoolSize;
                 sourceFactory.MaxPoolSize=_maxPoolSize;
-                sourceFactory.Pooling=_pooling;
+                sourceFactory.Pooling=_pooling;			
                 return(sourceFactory.GetIDataSource());
             }
             catch(System.Exception err){
                 throw(new DefaultConnectionException("Impossible to retreive default connection",err));
             }
-        } 
+        }
+		/// <summary>
+		/// Get IDataSource
+		/// </summary>
+		public IDataSource GetDataSource(string nlsSort) {
+			try {
+				SourceFactory sourceFactory = new SourceFactory(_type, _login, _password, _dataSource);
+				sourceFactory.ConnectionTimeOut = _connectionTimeOut;
+				sourceFactory.DecrPoolSize = _decrPoolSize;
+				sourceFactory.MaxPoolSize = _maxPoolSize;
+				sourceFactory.Pooling = _pooling;
+				sourceFactory.IsUTF8 = _isUTF8;
+				sourceFactory.NlsSort = nlsSort;
+				return (sourceFactory.GetIDataSource());
+			}
+			catch (System.Exception err) {
+				throw (new DefaultConnectionException("Impossible to retreive default connection", err));
+			}
+		} 
         #endregion
     }
 }

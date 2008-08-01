@@ -124,7 +124,7 @@ namespace TNS.AdExpress.Domain.Web {
         public static DataBase DataBaseDescription{
             get { return _dataBase; }
         }
-
+		
         #endregion
 
     }
