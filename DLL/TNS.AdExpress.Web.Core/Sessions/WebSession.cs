@@ -643,6 +643,18 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				modificationDate = DateTime.Now;
 			}
 		}
+		/// <summary>
+		/// Get data language
+		/// </summary>
+		public int DataLanguage {
+			get {
+				if (WebApplicationParameters.AllowedLanguages.ContainsKey(siteLanguage))
+					return (WebApplicationParameters.AllowedLanguages[siteLanguage].ClassificationLanguageId);
+				else {
+					throw (new NullReferenceException("Data language id is null"));
+				}			
+			}			
+		}
 		#endregion
 
 		#region Dates
