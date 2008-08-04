@@ -46,7 +46,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
 			sql+=" select distinct " + programLevel.GetSqlFields();
  			sql+=" from "+programLevel.GetSqlTables(TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA);
 			sql+=" where 0=0 ";
-			sql+=programLevel.GetSqlJoinsBetweenLevels(webSession.SiteLanguage);
+			sql+=programLevel.GetSqlJoinsBetweenLevels(webSession.DataLanguage);
 
 			if(newText.Length>0){
 				sql+=" and (" + parentLevelItem.DataBaseField + " like upper('%"+newText+"%')";
@@ -110,7 +110,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
 			sql+=" select "+ programLevel.GetSqlFields();
 			sql+=" from "+programLevel.GetSqlTables(TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA);
 			sql+=" where 0=0 ";
-			sql+=programLevel.GetSqlJoinsBetweenLevels(webSession.SiteLanguage);
+			sql+=programLevel.GetSqlJoinsBetweenLevels(webSession.DataLanguage);
 			
 			if(newText.Length>0){
 				sql+=" and ( " + currentLevelItem.DataBaseField+ " like upper('%"+newText+"%')";

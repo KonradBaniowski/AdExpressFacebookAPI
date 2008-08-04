@@ -834,27 +834,27 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             #region nomenclature produit
             if (sql.ToString().IndexOf(_recapGroup.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat(" and {0}.id_language = {1}", _recapGroup.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapGroup.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapGroup.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             if (sql.ToString().IndexOf(_recapSegment.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat(" and {0}.id_language = {1}", _recapSegment.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapSegment.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapSegment.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             if (sql.ToString().IndexOf(_recapBrand.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat(" and {0}.id_language = {1}", _recapBrand.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapBrand.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapBrand.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             if (sql.ToString().IndexOf(_recapProduct.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat(" and {0}.id_language = {1}", _recapProduct.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapProduct.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapProduct.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             if (sql.ToString().IndexOf(_recapAdvertiser.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat(" and {0}.id_language = {1}", _recapAdvertiser.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapAdvertiser.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapAdvertiser.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             #endregion
@@ -862,17 +862,17 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             #region nomenclature media
             if (sql.ToString().IndexOf(_recapVehicle.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat(" and {0}.id_language = {1}", _recapVehicle.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapVehicle.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapVehicle.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             if (sql.ToString().IndexOf(_recapCategory.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat(" and {0}.id_language = {1}", _recapCategory.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapCategory.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapCategory.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             if (sql.ToString().IndexOf(_recapMedia.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat(" and {0}.id_language = {1}", _recapMedia.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapMedia.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapMedia.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             #endregion

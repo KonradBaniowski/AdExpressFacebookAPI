@@ -36,7 +36,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 			//Get all product rights
 			if (productRight != null && productRight.Length > 0) {
 				productRightSql  = " select id_" + table.ToString() +" from ";
-				productRightSql += dBSchema + ".ALL_PRODUCT_" + webSession.SiteLanguage.ToString() + " wp";
+				productRightSql += dBSchema + ".ALL_PRODUCT_" + webSession.DataLanguage.ToString() + " wp";
 				productRightSql += " Where 0=0 " + productRight;
 			}
 
@@ -54,7 +54,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 			wordToSearch = "'" + wordToSearch.Trim() + "%'";
 
 			sql += " where wp." + table.ToString() + " like " + wordToSearch + "";
-			sql += " and wp.id_language=" + webSession.SiteLanguage;
+			sql += " and wp.id_language=" + webSession.DataLanguage;
 			sql += " and wp.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 
 			if (productRightSql != null && productRightSql.Length > 0) {
@@ -88,7 +88,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-			sql += " from " + dBSchema + ".ALL_PRODUCT_" + webSession.SiteLanguage.ToString() + " wp ";
+			sql += " from " + dBSchema + ".ALL_PRODUCT_" + webSession.DataLanguage.ToString() + " wp ";
 			sql += " where wp.id_" + table.ToString() + " in (" + idList + ")";
 			
 			#region Application des droits produits
@@ -124,7 +124,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-			sql += " from " + dBSchema + ".ALL_PRODUCT_" + webSession.SiteLanguage.ToString() + " wp";
+			sql += " from " + dBSchema + ".ALL_PRODUCT_" + webSession.DataLanguage.ToString() + " wp";
 			sql += " where wp.id_" + table.ToString() + " in (" + idList + ")";
 
 			#region Application des droits produits
@@ -162,7 +162,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 			
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-			sql += " from " + dBSchema + ".ALL_PRODUCT_" + webSession.SiteLanguage.ToString() + " wp"; 
+			sql += " from " + dBSchema + ".ALL_PRODUCT_" + webSession.DataLanguage.ToString() + " wp"; 
 			sql += " where wp.id_" + selectedItemTableName + " in ( " + selectedItemIds + " ) ";
 
 			#region Application des droits produits

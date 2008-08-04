@@ -221,9 +221,9 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
             //Jointures groupe agences/agences		
 			sql.AppendFormat(" and {0}.ID_ADVERTISING_AGENCY(+)={1}.ID_ADVERTISING_AGENCY ", tblAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
-			sql.AppendFormat(" and {0}.id_language(+)={1}", tblAdvertisingAgengy.Prefix, _session.SiteLanguage);
+			sql.AppendFormat(" and {0}.id_language(+)={1}", tblAdvertisingAgengy.Prefix, _session.DataLanguage);
 			sql.AppendFormat(" and {0}.ID_GROUP_ADVERTISING_AGENCY(+)={1}.ID_GROUP_ADVERTISING_AGENCY ", tblGroupAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
-			sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.SiteLanguage);
+			sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.DataLanguage);
 
             #region Sélection de Médias
             while (_session.CompetitorUniversMedia[positionUnivers] != null) {
@@ -480,7 +480,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 groupByFieldName = _session.GenericProductDetailLevel.GetSqlGroupByFields();
                 // Obtient les jointures pour la nomenclature
                 //mediaJoinCondition=GetMediaJoinConditions(webSession,DbTables.WEB_PLAN_PREFIXE,false);
-                productJoinCondition = _session.GenericProductDetailLevel.GetSqlJoins(_session.SiteLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                productJoinCondition = _session.GenericProductDetailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 // Unités
                 unitField = FctWeb.SQLGenerator.GetUnitFieldName(_session, type);
                 // Droits produit
@@ -851,7 +851,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             }
 
             sql.AppendFormat(" where id_media in ({0})", mediaList.Substring(0, mediaList.Length - 1));
-            sql.AppendFormat(" and {0}.id_language={1}", tblMedia.Prefix, _session.SiteLanguage);
+            sql.AppendFormat(" and {0}.id_language={1}", tblMedia.Prefix, _session.DataLanguage);
             #endregion
 
             if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.category)
@@ -860,7 +860,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                     , tblBasicMedia.Prefix
                     , tblMedia.Prefix
                     , tblCategory.Prefix
-                    , _session.SiteLanguage);
+                    , _session.DataLanguage);
             }
 
             #endregion

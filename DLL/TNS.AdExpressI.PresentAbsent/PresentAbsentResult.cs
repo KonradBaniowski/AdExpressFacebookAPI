@@ -1259,19 +1259,19 @@ namespace TNS.AdExpressI.PresentAbsent
             {
 
                 case DetailLevelItemInformation.Levels.media:
-                    mediaLabelList = new DALClassif.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    mediaLabelList = new DALClassif.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.category:
-                    categoryLabelList = new DALClassif.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    categoryLabelList = new DALClassif.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.mediaSeller:
-                    mediaSellerLabelList = new DALClassif.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    mediaSellerLabelList = new DALClassif.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.title:
-                    titleLabelList = new DALClassif.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    titleLabelList = new DALClassif.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.interestCenter:
-                    interestCenterLabelList = new DALClassif.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    interestCenterLabelList = new DALClassif.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
 
             }

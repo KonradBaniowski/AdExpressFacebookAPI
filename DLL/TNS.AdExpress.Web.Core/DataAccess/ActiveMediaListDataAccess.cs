@@ -28,7 +28,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
         /// </summary>
         /// <param name="vehicleId">Id du vehicle</param>
         /// <returns></returns>
-        public static DataSet GetActiveMediaData(Int64 vehicleId) {
+        public static DataSet GetActiveMediaData(Int64 vehicleId, int siteLanguage) {
 
             StringBuilder sql = new StringBuilder(500);
 
@@ -37,7 +37,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
             sql.Append("Select distinct m.id_media ");
             sql.Append("from " + GetVehicleTableName(vehicleId) + ", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media m");
             sql.Append(" where m.id_media = " + GetVehiclePrefixe(vehicleId) + ".id_media");
-            sql.Append(" and m.id_language = 33");
+            sql.AppendFormat(" and m.id_language = {0}", siteLanguage);
             sql.Append(" and m.activation <" + DBConstantes.ActivationValues.UNACTIVATED.ToString());
 
             #region Execution de la requête

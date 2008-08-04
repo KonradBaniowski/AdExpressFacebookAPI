@@ -156,8 +156,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			int i = 0;
 			if(noneWave){
 				output.Write("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(1653,webSession.SiteLanguage)
-					+"<br><br><a href=\"javascript:history.back()\" onmouseover=\"bouton.src='/Images/"+webSession.SiteLanguage+"/button/back_down.gif';\" onmouseout=\"bouton.src = '/Images/"+webSession.SiteLanguage+"/button/back_up.gif';\">"
-					+"<img src=\"/Images/"+webSession.SiteLanguage+"/button/back_up.gif\" border=0 name=bouton></a>"
+					+"<br><br><a href=\"javascript:history.back()\" onmouseover=\"bouton.src='/Images/"+webSession.DataLanguage+"/button/back_down.gif';\" onmouseout=\"bouton.src = '/Images/"+webSession.DataLanguage+"/button/back_up.gif';\">"
+					+"<img src=\"/Images/"+webSession.DataLanguage+"/button/back_up.gif\" border=0 name=bouton></a>"
 					+"</div><br>");
 			}else{
 					output.Write("<table cellpadding=\"0\" cellspacing=\"1\" bgColor=\"#644883\" width=\"90%\">");

@@ -204,7 +204,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
                 groupByFieldName = detailLevel.GetSqlGroupByFields();
                 // Get joins for classification
                 mediaJoinCondition = string.Format("{0} and {1}.id_media_secodip = {2}.id_media "
-                    , detailLevel.GetSqlJoins(_session.SiteLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix)
+                    , detailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix)
                     , tblTargetMediaAssignment.Prefix
                     , WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             }

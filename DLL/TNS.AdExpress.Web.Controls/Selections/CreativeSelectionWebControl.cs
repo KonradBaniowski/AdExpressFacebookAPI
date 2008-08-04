@@ -98,7 +98,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 for (int i = 0; i < groups.Count; i++) {
                     productLevelIdsList = groups[0].GetAsString(TNSClassificationLevels.PRODUCT);
                     levelIdsList = groups[0].Get(TNSClassificationLevels.PRODUCT);
-                    productLabels = new ProductClassification.PartialProductLevelListDataAccess(productLevelIdsList, _webSession.SiteLanguage, _webSession.Source);
+                    productLabels = new ProductClassification.PartialProductLevelListDataAccess(productLevelIdsList, _webSession.DataLanguage, _webSession.Source);
                     foreach (long id in levelIdsList) {
                         output.Write(productLabels[id] + "&nbsp;&nbsp;<br>");	
                     }

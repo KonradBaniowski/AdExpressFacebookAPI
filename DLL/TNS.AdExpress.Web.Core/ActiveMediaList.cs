@@ -42,14 +42,14 @@ namespace TNS.AdExpress.Web.Core{
         /// <summary>
         /// Méthode utilisée pour l'initialisation des listes des supports actifs
         /// </summary>
-        public static void Init(){
+        public static void Init(int siteLanguage){
 
             ArrayList activeMediaList=new ArrayList();
             DataSet ds;
 
             foreach (string str in _vehicleList) {
 
-                ds = ActiveMediaListDataAccess.GetActiveMediaData(Int64.Parse(str));
+                ds = ActiveMediaListDataAccess.GetActiveMediaData(Int64.Parse(str), siteLanguage);
 
                 foreach (DataRow row in ds.Tables[0].Rows) { 
                     activeMediaList.Add(row["id_media"]);

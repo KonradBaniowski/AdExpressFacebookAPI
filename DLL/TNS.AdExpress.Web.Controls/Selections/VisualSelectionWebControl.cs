@@ -241,7 +241,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 								
 								}
 								else{									
-									pathCouv="/Images/"+_customerWebSession.SiteLanguage+"/Others/no_visuel.gif";
+									pathCouv="/Images/"+_customerWebSession.DataLanguage+"/Others/no_visuel.gif";
 									visual="<img src='"+pathCouv+"' border=\"0\" width=\"100\" height=\"141\">";
 									visual="<img src='"+pathCouv+"' border=\"0\" width=\"100\" height=\"141\">";
 									rdbItem = new ListItem(dr["visual"].ToString(), "no_visuel.gif-" + dr["id_media"].ToString() + "-" + dr["date_cover_num"].ToString());

@@ -304,7 +304,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                 // Get group by clause
                 groupByFieldName = detailLevel.GetSqlGroupByFields();
                 // Get joins for classification
-                mediaJoinCondition = detailLevel.GetSqlJoins(_session.SiteLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                mediaJoinCondition = detailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             }
             catch (System.Exception err)
             {

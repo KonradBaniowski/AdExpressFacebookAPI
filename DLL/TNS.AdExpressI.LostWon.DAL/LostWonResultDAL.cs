@@ -390,15 +390,15 @@ namespace TNS.AdExpressI.LostWon.DAL
             }
 
             sql.AppendFormat(" where id_media in ({0})", mediaList.Substring(0, mediaList.Length - 1));
-            sql.AppendFormat(" and {0}.id_language = {1}", tblMedia.Prefix, _session.SiteLanguage);
+            sql.AppendFormat(" and {0}.id_language = {1}", tblMedia.Prefix, _session.DataLanguage);
             #endregion
 
             if (isCategoryRequired)
             {
                 sql.AppendFormat(" and {0}.id_basic_media = {1}.id_basic_media", tblBasicMedia.Prefix, tblMedia.Prefix);
                 sql.AppendFormat(" and {0}.id_category = {1}.id_category", tblBasicMedia.Prefix, tblCategory.Prefix);
-                sql.AppendFormat(" and {0}.id_language = {1}", tblBasicMedia.Prefix, _session.SiteLanguage);
-                sql.AppendFormat(" and {0}.id_language = {1}", tblCategory.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", tblBasicMedia.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.id_language = {1}", tblCategory.Prefix, _session.DataLanguage);
             }
             #endregion
 
@@ -538,7 +538,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 // obtient la clause group by
                 groupByFieldName = _session.GenericProductDetailLevel.GetSqlGroupByFields();
                 // Obtient les jointures pour la nomenclature
-                productJoinCondition = _session.GenericProductDetailLevel.GetSqlJoins(_session.SiteLanguage, DATA_TABLE_PREFIXE);
+                productJoinCondition = _session.GenericProductDetailLevel.GetSqlJoins(_session.DataLanguage, DATA_TABLE_PREFIXE);
                 // Unités
                 unitField = FctWeb.SQLGenerator.GetUnitFieldName(_session, type);
                 // Droits produit
@@ -787,9 +787,9 @@ namespace TNS.AdExpressI.LostWon.DAL
 
             //Jointures groupe agences/agences		
 			sql.AppendFormat(" and {0}.ID_ADVERTISING_AGENCY(+)={1}.ID_ADVERTISING_AGENCY ", tblAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
-			sql.AppendFormat(" and {0}.id_language(+)={1}", tblAdvertisingAgengy.Prefix, _session.SiteLanguage);
+			sql.AppendFormat(" and {0}.id_language(+)={1}", tblAdvertisingAgengy.Prefix, _session.DataLanguage);
 			sql.AppendFormat(" and {0}.ID_GROUP_ADVERTISING_AGENCY(+)={1}.ID_GROUP_ADVERTISING_AGENCY ", tblGroupAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
-			sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.SiteLanguage);
+			sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.DataLanguage);
 
             #region Sélection de Médias
             while (_session.CompetitorUniversMedia[positionUnivers] != null) {

@@ -2393,9 +2393,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_title=" + DBConstantes.Tables.TITLE_PREFIXE + ".id_title"
                             + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media"
                             + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_category"
-                            + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.SiteLanguage
-                            + " and " + DBConstantes.Tables.TITLE_PREFIXE + ".id_language=" + webSession.SiteLanguage
-                            + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_language=" + webSession.SiteLanguage
+                            + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.DataLanguage
+                            + " and " + DBConstantes.Tables.TITLE_PREFIXE + ".id_language=" + webSession.DataLanguage
+                            + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_language=" + webSession.DataLanguage
                             + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED
                             + " and " + DBConstantes.Tables.TITLE_PREFIXE + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED
                             + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
@@ -2404,15 +2404,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.tv:
                     return " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media"
                         + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_category"
-                        + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.SiteLanguage
-                        + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_language=" + webSession.SiteLanguage
+                        + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.DataLanguage
+                        + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_language=" + webSession.DataLanguage
                         + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED
                         + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
                 case DBClassificationConstantes.Vehicles.names.others:
                     return " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media"
                         + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_category"
-                        + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.SiteLanguage
-                        + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_language=" + webSession.SiteLanguage
+                        + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.DataLanguage
+                        + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_language=" + webSession.DataLanguage
                         + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED
                         + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED
                         + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category=" + DBClassificationConstantes.panEuro.PAN_EURO_CATEGORY + "";
@@ -2905,135 +2905,135 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sector:
                     // Sector
                     joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_sector=" + dataTablePrefixe + ".id_sector";
-                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorSubsectorGroup:
                     // Sector
                     joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_sector=" + dataTablePrefixe + ".id_sector";
-                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //SubSector
                     joint += " and " + DBConstantes.Tables.SUBSECTOR_PREFIXE + ".id_subsector=" + dataTablePrefixe + ".id_subsector";
-                    joint += " and " + DBConstantes.Tables.SUBSECTOR_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SUBSECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Group_
                     joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_group_=" + dataTablePrefixe + ".id_group_";
-                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorSubsector:
                     // Sector
                     joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_sector=" + dataTablePrefixe + ".id_sector";
-                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //SubSector
                     joint += " and " + DBConstantes.Tables.SUBSECTOR_PREFIXE + ".id_subsector=" + dataTablePrefixe + ".id_subsector";
-                    joint += " and " + DBConstantes.Tables.SUBSECTOR_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SUBSECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorAdvertiserProduct:
                     // Sector
                     joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_sector=" + dataTablePrefixe + ".id_sector";
-                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Annonceur
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Produit
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorAdvertiser:
                     //Sector
                     joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_sector=" + dataTablePrefixe + ".id_sector";
-                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Annonceur
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorProduct:
                     //Sector
                     joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_sector=" + dataTablePrefixe + ".id_sector";
-                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.product:
                     // Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser:
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiserBrand:
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Brand
                     joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_brand=" + dataTablePrefixe + ".id_brand";
-                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiserProduct:
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiserBrandProduct:
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Brand
                     joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_brand=" + dataTablePrefixe + ".id_brand";
-                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.group:
                     //Group_
                     joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_group_=" + dataTablePrefixe + ".id_group_";
-                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupBrand:
                     //Group_
                     joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_group_=" + dataTablePrefixe + ".id_group_";
-                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Brand
                     joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_brand=" + dataTablePrefixe + ".id_brand";
-                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupProduct:
                     //Group_
                     joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_group_=" + dataTablePrefixe + ".id_group_";
-                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupAdvertiser:
                     //Group_
                     joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_group_=" + dataTablePrefixe + ".id_group_";
-                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupBrandProduct:
                     //Group_
                     joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_group_=" + dataTablePrefixe + ".id_group_";
-                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.GROUP_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Brand
                     joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_brand=" + dataTablePrefixe + ".id_brand";
-                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.group_agencyAgency:
                     // Product
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + DBConstantes.Language.FRENCH;
+                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Vehicle
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_vehicle=" + vehicleName.GetHashCode();
                     break;
@@ -3041,41 +3041,41 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.group_agencyAgencyAdvertiser:
                     // Product
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + DBConstantes.Language.FRENCH;
+                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString(); 
                     // Vechicle
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_vehicle=" + vehicleName.GetHashCode();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.group_agencyAgencyProduct:
                     // Product
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + DBConstantes.Language.FRENCH;
+                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Vechicle
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_vehicle=" + vehicleName.GetHashCode();
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
 
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.agencyAdvertiser:
                     // Product
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + DBConstantes.Language.FRENCH;
+                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Vehicle
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_vehicle=" + vehicleName.GetHashCode();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.agencyProduct:
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Product
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + DBConstantes.Language.FRENCH;
+                    joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Vehicle
                     joint += " and " + DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_vehicle=" + vehicleName.GetHashCode();
                     break;
@@ -3084,94 +3084,94 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.holdingCompany:
                     // holdingCompany
                     joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_holding_company=" + dataTablePrefixe + ".id_holding_company";
-                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.holdingCompanyAdvertiser:
                     //holdingCompany
                     joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_holding_company=" + dataTablePrefixe + ".id_holding_company";
-                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.holdingCompanyAdvertiserBrand:
                     //holdingCompany
                     joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_holding_company=" + dataTablePrefixe + ".id_holding_company";
-                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Brand
                     joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_brand=" + dataTablePrefixe + ".id_brand";
-                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.holdingCompanyAdvertiserProduct:
                     //holdingCompany
                     joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_holding_company=" + dataTablePrefixe + ".id_holding_company";
-                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser:
                     //segment
                     joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_segment=" + dataTablePrefixe + ".id_segment";
-                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentBrand:
                     //segment
                     joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_segment=" + dataTablePrefixe + ".id_segment";
-                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Brand
                     joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_brand=" + dataTablePrefixe + ".id_brand";
-                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentProduct:
                     //segment
                     joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_segment=" + dataTablePrefixe + ".id_segment";
-                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentAdvertiserBrand:
                     //segment
                     joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_segment=" + dataTablePrefixe + ".id_segment";
-                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Brand
                     joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_brand=" + dataTablePrefixe + ".id_brand";
-                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.BRAND_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.segmentAdvertiserProduct:
                     //segment
                     joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_segment=" + dataTablePrefixe + ".id_segment";
-                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //Product
                     joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product";
-                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorHoldingCompanyAdvertiser:
                     // Sector
                     joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_sector=" + dataTablePrefixe + ".id_sector";
-                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     //holdingCompany
                     joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_holding_company=" + dataTablePrefixe + ".id_holding_company";
-                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     // Advertiser
                     joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_advertiser=" + dataTablePrefixe + ".id_advertiser";
-                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+                    joint += " and " + DBConstantes.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
                     break;
                 default:
                     throw (new SQLGeneratorException("Impossible d'initialiser les champs produits de la requêtes"));

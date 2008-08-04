@@ -1167,19 +1167,19 @@ namespace TNS.AdExpressI.LostWon
             {
 
                 case DetailLevelItemInformation.Levels.media:
-                    mediaLabelList = new DBClassif.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    mediaLabelList = new DBClassif.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.category:
-                    categoryLabelList = new DBClassif.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    categoryLabelList = new DBClassif.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.mediaSeller:
-                    mediaSellerLabelList = new DBClassif.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    mediaSellerLabelList = new DBClassif.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.title:
-                    titleLabelList = new DBClassif.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    titleLabelList = new DBClassif.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.interestCenter:
-                    interestCenterLabelList = new DBClassif.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch, _session.SiteLanguage, _session.Source);
+                    interestCenterLabelList = new DBClassif.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
                     break;
 
             }
