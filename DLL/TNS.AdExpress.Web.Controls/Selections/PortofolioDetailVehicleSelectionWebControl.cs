@@ -187,7 +187,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					}
 						// Dernier
 					else if(nbColumn==1 ){
-						t.Append("<td class=\"txtRed\" width=215>");								
+                        t.Append("<td class=\"txtViolet10\" width=215>");								
 						//	t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
 						t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+currentRow[3].ToString()+"\" onClick=\"insertValueInHidden('"+currentRow[2]+"','"+currentRow[3]+"');\" value=\""+currentRow[2]+"\" />"+currentRow[3].ToString()+"<br>");
 						t.Append("</td>");								
