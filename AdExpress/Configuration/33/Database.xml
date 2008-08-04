@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <database>
   <customerConnections>
-    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
+    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </customerConnections>
   <defaultConnections>
-    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="mou01_session_1" password="sessionmolle1"     dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
-    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
+    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="mou01_session_1" password="sessionmolle1"     dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
-    <defaultConnection enumId="3" description="APPM (Chronopresse)" dataBaseEnumId="2" login="grp" password="rpgdoom3"          dataSource="PITAFR02.PIGE" connectionTimeOut="120"/>
-    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false"/>
-    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false"/>
-    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
-    <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150"/>
+    <defaultConnection enumId="3" description="APPM (Chronopresse)" dataBaseEnumId="2" login="grp" password="rpgdoom3"          dataSource="PITAFR02.PIGE" connectionTimeOut="120" isUtf8="true"/>
+    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" isUtf8="true"/>
+    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" isUtf8="true"/>
+    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
   <schemas>
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
@@ -122,6 +122,9 @@
     <table enumId="143" description="Recap Data: Emailing Segment" schemaEnumId="4" label="recap_emailing_segment" prefix="rcp"/>
     <table enumId="144" description="Recap Data: Mobile" schemaEnumId="4" label="recap_message" prefix="rcp"/>
     <table enumId="145" description="Recap Data: Mobile Segment" schemaEnumId="4" label="recap_message_segment" prefix="rcp"/>
+    <table enumId="146" description="Universe: Universe client" schemaEnumId="5" label="universe_client" prefix="se"/>
+    <table enumId="147" description="Universe: Universe client description" schemaEnumId="5" label="universe_client_description" prefix="ucd"/>
+    <table enumId="148" description="Universe: Group Universe client" schemaEnumId="5" label="group_universe_client" prefix="dir"/>
 
     <table enumId="201" description="Classif: Advertising agency" schemaEnumId="0" label="advertising_agency" prefix="adva"/>
     <table enumId="202" description="Classif: Group Advertising agency" schemaEnumId="0" label="group_advertising_agency" prefix="gadv"/>
