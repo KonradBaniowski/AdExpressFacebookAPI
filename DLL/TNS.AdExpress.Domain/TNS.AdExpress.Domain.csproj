@@ -70,6 +70,8 @@
     <Compile Include="Exceptions\TranslationException.cs" />
     <Compile Include="Exceptions\WebLanguagesXLException.cs" />
     <Compile Include="Exceptions\WebThemesXLException.cs" />
+    <Compile Include="Flag.cs" />
+    <Compile Include="Flags.cs" />
     <Compile Include="Layers\DataAccessLayer.cs" />
     <Compile Include="Layers\LayerBase.cs" />
     <Compile Include="Layers\RulesLayer.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="XmlLoader\DataBaseDescriptionXL.cs" />
     <Compile Include="XmlLoader\DetailLevelItemsInformationXL.cs" />
     <Compile Include="XmlLoader\DetailLevelsInformationXL.cs" />
+    <Compile Include="XmlLoader\FlagsXL.cs" />
     <Compile Include="XmlLoader\GenericColumnItemsInformationXL.cs" />
     <Compile Include="XmlLoader\GenericColumnsInformationXL.cs" />
     <Compile Include="XmlLoader\HeaderXL.cs" />
