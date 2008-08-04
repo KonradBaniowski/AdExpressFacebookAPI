@@ -140,7 +140,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                         dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.analysis);
                         break;
                     case CstDB.TableType.Type.webPlan:
-                        dataTableName = tblWebPlan.Label;
+                        dataTableName = tblWebPlan.SqlWithPrefix;
                         break;
                     default:
                         throw (new PresentAbsentDALException("Unable to determine type of table to use."));
