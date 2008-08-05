@@ -690,7 +690,7 @@ namespace AdExpress.Private.Selection{
 								//Render universe html code
 								t.Append("<TR height=\"20\">");
 								t.Append("<TD>&nbsp;</TD>");
-                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.SiteLanguage, _webSession.Source) + "</TD>");								
+                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source) + "</TD>");								
 								t.Append("</TR>");
 								t.Append("<TR height=\"5\">");
 								t.Append("<TD></TD>");
@@ -757,7 +757,7 @@ namespace AdExpress.Private.Selection{
 
 						if(_webSession.SecondaryProductUniverses.ContainsKey(0)){
 							//Liste des annonceurs de référence personnalisés
-							referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[0], _webSession.SiteLanguage, _webSession.Source);
+							referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[0], _webSession.DataLanguage, _webSession.Source);
 							referenceProductAdExpressText.Code = 1195;
 							displayReferenceAdvertiser = true;
 						}
@@ -765,7 +765,7 @@ namespace AdExpress.Private.Selection{
 							//Liste des annonceurs de référence personnalisés
 							 advertiserAdexpresstext.Code = 1196;
 							 displayAdvertiser = true;
-                             advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[1],_webSession.SiteLanguage,_webSession.Source);
+                             advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[1],_webSession.DataLanguage,_webSession.Source);
 						}
 
 					}
@@ -783,14 +783,14 @@ namespace AdExpress.Private.Selection{
 										advertiserAdexpresstext.Code = 2301;
 										displayAdvertiser = true;
 									}
-                                    advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.SiteLanguage,_webSession.Source);
+                                    advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);
 								}
 								else {
 									if (WebFunctions.Modules.IsDashBoardModule(_webSession)) {
-                                        productText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.SiteLanguage,_webSession.Source);
+                                        productText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);
 									}
 									else {
-                                        referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.SiteLanguage,_webSession.Source);										
+                                        referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);										
 									}
 								}
 							}

@@ -259,11 +259,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
 			sql.Append(" and "+ DBConstantes.Tables.PERIODICITY_PREFIXE+".id_periodicity="+DBConstantes.Tables.MEDIA_PREFIXE+".id_periodicity" );			
 			//sql.Append(" and "+ DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle="+DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE+".id_vehicle" );				
 			//langues
-			sql.Append(" and "+ DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage );
+			sql.Append(" and "+ DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage );
 			sql.Append(" and "+ DBConstantes.Tables.VEHICLE_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+ DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage );
+			sql.Append(" and "+ DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage );
 			sql.Append(" and "+ DBConstantes.Tables.MEDIA_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+ DBConstantes.Tables.PERIODICITY_PREFIXE+".id_language="+webSession.SiteLanguage );
+			sql.Append(" and "+ DBConstantes.Tables.PERIODICITY_PREFIXE+".id_language="+webSession.DataLanguage );
 			sql.Append(" and "+ DBConstantes.Tables.PERIODICITY_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+ DBConstantes.Tables.WAVE_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+ DBConstantes.Tables.TARGET_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);

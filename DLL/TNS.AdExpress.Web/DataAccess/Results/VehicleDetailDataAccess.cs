@@ -67,7 +67,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <returns>Null</returns>
 		private DataSet GetPressData(Int64 idMedia,int dateBegin,int dateEnd,WebSession webSession){
 			string list="";
-			string idLanguageString=webSession.SiteLanguage.ToString();
+			string idLanguageString=webSession.DataLanguage.ToString();
 			#region Construction de la requête
 			bool premier=true;
 			string sql="select sc.sector,gr.group_,hc.holding_company,ad.advertiser,pr.product,";

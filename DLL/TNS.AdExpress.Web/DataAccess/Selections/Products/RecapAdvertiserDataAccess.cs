@@ -116,11 +116,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			#endregion
 
 			#region langue
-			sql.Append(" and " + DBCst.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage);
-			sql.Append(" and " + DBCst.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage);
-			sql.Append(" and " + DBCst.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.SiteLanguage);
-			sql.Append(" and " + DBCst.Tables.GROUP_PREFIXE + ".id_language=" + webSession.SiteLanguage);
-			sql.Append(" and " + DBCst.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.SiteLanguage);
+			sql.Append(" and " + DBCst.Tables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage);
+			sql.Append(" and " + DBCst.Tables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage);
+			sql.Append(" and " + DBCst.Tables.SEGMENT_PREFIXE + ".id_language=" + webSession.DataLanguage);
+			sql.Append(" and " + DBCst.Tables.GROUP_PREFIXE + ".id_language=" + webSession.DataLanguage);
+			sql.Append(" and " + DBCst.Tables.HOLDING_PREFIXE + ".id_language=" + webSession.DataLanguage);
 			#endregion
 
 			#region Activation

@@ -209,19 +209,32 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				foreach(OptionalPageInformation currentPage in currentModuleDescription.OptionalsPages){
 					if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath)) {
 						listUniverseClientDescription += currentPage.LoadableUniversString;
+						#region Old region
+						////Apply rigth Rules for getting levels and branches
+						//if (currentPage.AllowedLevelsIds != null && currentPage.AllowedLevelsIds.Count > 0) {
+						//    tempLevels = UniverseLevels.GetList(currentPage.AllowedLevelsIds);
+						//    if (tempLevels != null && tempLevels.Count > 0) {
+						//        for (int i = 0; i < tempLevels.Count; i++) {
+						//            _allowedLevelsId.Add(tempLevels[i].ID);
+						//        }
+						//    }
+
+						//}
+						//if (currentPage.AllowedBranchesIds != null && currentPage.AllowedBranchesIds.Count > 0)
+						//    _allowedBranchesIds = currentPage.AllowedBranchesIds;
+						#endregion
 
 						//Apply rigth Rules for getting levels and branches
-						if (currentPage.AllowedLevelsIds != null && currentPage.AllowedLevelsIds.Count > 0) {
-							tempLevels = UniverseLevels.GetList(currentPage.AllowedLevelsIds);
-							if (tempLevels != null && tempLevels.Count > 0) {
-								for (int i = 0; i < tempLevels.Count; i++) {
-									_allowedLevelsId.Add(tempLevels[i].ID);
-								}
+						levelsRules = new CoreSelection.AdExpressLevelsRules(webSession, currentPage.AllowedBranchesIds, UniverseLevels.GetList(currentPage.AllowedLevelsIds), _dimension);
+						tempBranchIds = levelsRules.GetAuthorizedBranches();
+						tempLevels = levelsRules.GetAuthorizedLevels();
+						if (tempBranchIds != null && tempBranchIds.Count > 0)
+							_allowedBranchesIds = tempBranchIds;
+						if (tempLevels != null && tempLevels.Count > 0) {
+							for (int i = 0; i < tempLevels.Count; i++) {
+								_allowedLevelsId.Add(tempLevels[i].ID);
 							}
-
 						}
-						if (currentPage.AllowedBranchesIds != null && currentPage.AllowedBranchesIds.Count > 0)
-							_allowedBranchesIds = currentPage.AllowedBranchesIds;
 					}
 				
 				}

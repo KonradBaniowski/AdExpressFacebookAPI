@@ -69,13 +69,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			//sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".date_parution_num = "+ date);			
 			
 			sql.Append(" and rtrim(ltrim("+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".media_paging)) like '"+ page +"'");
-			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_language_data_i = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBCst.Tables.MEDIA_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBCst.Tables.ADVERTISER_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBCst.Tables.PRODUCT_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBCst.Tables.GROUP_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBCst.Tables.COLOR_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBCst.Tables.FORMAT_PREFIXE +".id_language = "+ webSession.SiteLanguage);
+			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_language_data_i = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBCst.Tables.MEDIA_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBCst.Tables.ADVERTISER_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBCst.Tables.PRODUCT_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBCst.Tables.GROUP_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBCst.Tables.COLOR_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBCst.Tables.FORMAT_PREFIXE +".id_language = "+ webSession.DataLanguage);
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_media = "+ DBCst.Tables.MEDIA_PREFIXE +".id_media ");
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_advertiser = "+ DBCst.Tables.ADVERTISER_PREFIXE +".id_advertiser ");
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_product = "+ DBCst.Tables.PRODUCT_PREFIXE +".id_product ");
@@ -113,7 +113,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			int nbPage=0;
 
 			sql.Append("select id_media, number_page_media  from "+ DBCst.Schema.ADEXPRESS_SCHEMA +"."+ DBCst.Tables.ALARM_MEDIA +" ");
-			sql.Append("where id_media = "+ idMedia +" and id_language_i = "+ webSession.SiteLanguage +" and date_alarm = "+ date +" ");
+			sql.Append("where id_media = "+ idMedia +" and id_language_i = "+ webSession.DataLanguage +" and date_alarm = "+ date +" ");
 
 			try{
 				DataSet ds = dataSource.Fill(sql.ToString());
@@ -140,7 +140,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			StringBuilder sql = new StringBuilder(500);
 
 			sql.Append("select id_inset,inset from "+ DBCst.Schema.ADEXPRESS_SCHEMA +"."+ DBCst.Tables.INSERT +" ");
-			sql.Append("where id_inset = "+ idInset +" and id_language = "+ webSession.SiteLanguage);
+			sql.Append("where id_inset = "+ idInset +" and id_language = "+ webSession.DataLanguage);
 
 			try{
 				DataSet ds = dataSource.Fill(sql.ToString());
@@ -170,8 +170,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql.Append("where "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".id_media = "+ idMedia +" ");
 			sql.Append("and "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".id_advertisement = "+ idAdvertisement +" ");
 			sql.Append("and "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".date_media_num = "+ date +" ");
-			sql.Append("and "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".id_language_data_i = "+ webSession.SiteLanguage +" ");
-			sql.Append("and "+ DBCst.Tables.LOCATION_PREFIXE +".id_language = "+ webSession.SiteLanguage +" ");
+			sql.Append("and "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".id_language_data_i = "+ webSession.DataLanguage +" ");
+			sql.Append("and "+ DBCst.Tables.LOCATION_PREFIXE +".id_language = "+ webSession.DataLanguage +" ");
 			sql.Append("and "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".id_location = "+ DBCst.Tables.LOCATION_PREFIXE +".id_location ");
 
 			try{

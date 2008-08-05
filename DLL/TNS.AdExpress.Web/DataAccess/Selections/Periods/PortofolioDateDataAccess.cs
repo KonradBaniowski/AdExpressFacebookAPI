@@ -82,7 +82,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
                 sql.Append(" and wp.date_media_num=al.DATE_ALARM(+)");
 				
 				sql.Append(" and al.id_media(+)="+idMedia+" ");
-				sql.Append(" and al.ID_LANGUAGE_I(+)="+webSession.SiteLanguage+" ");
+				sql.Append(" and al.ID_LANGUAGE_I(+)="+webSession.DataLanguage+" ");
 				sql.Append(" and  al.DATE_ALARM(+)>="+dateBegin+" ");
 				if(dateEnd.Length>0 && conditionEndDate)
 					sql.Append(" and  al.DATE_ALARM(+)<="+dateEnd+" ");

@@ -1018,7 +1018,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 					if(dimensionListForLabelSearch!=null && dimensionListForLabelSearch.Length>0){
 						dimendionIdList=dimensionListForLabelSearch.Split(',');
-						ClassificationDB.MediaBranch.PartialMediaListDataAccess mediaLabelList = new ClassificationDB.MediaBranch.PartialMediaListDataAccess(dimensionListForLabelSearch,webSession.SiteLanguage,webSession.Source);
+						ClassificationDB.MediaBranch.PartialMediaListDataAccess mediaLabelList = new ClassificationDB.MediaBranch.PartialMediaListDataAccess(dimensionListForLabelSearch,webSession.DataLanguage,webSession.Source);
 						
 						foreach(string currentMedia in dimendionIdList) {							
 							headerGroupTmp.Add(new Header(true,mediaLabelList[Int64.Parse(currentMedia)],Int64.Parse(currentMedia)));							

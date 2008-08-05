@@ -39,7 +39,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products
                 sql += " from " + Schema.APPM_SCHEMA + "." + Tables.DATA_PRESS_APPM + " " + Tables.DATA_PRESS_APPM_PREFIXE;
 				sql += "," + Schema.ADEXPRESS_SCHEMA + ".group_ " + Tables.GROUP_PREFIXE;
 				sql += " where " + Tables.DATA_PRESS_APPM_PREFIXE + ".id_group_=" + Tables.GROUP_PREFIXE + ".id_group_ ";
-				sql += " and " + Tables.GROUP_PREFIXE + ".id_language = " + webSession.SiteLanguage;
+				sql += " and " + Tables.GROUP_PREFIXE + ".id_language = " + webSession.DataLanguage;
 				// Sélection de Produits
 				if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
 					sql += webSession.PrincipalProductUniverses[0].GetSqlConditions(Tables.DATA_PRESS_APPM_PREFIXE, true);

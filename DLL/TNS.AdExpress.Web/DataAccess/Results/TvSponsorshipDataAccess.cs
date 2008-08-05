@@ -298,7 +298,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			sql.Append(" where ");
 			
 			sql.Append("  "+DbTables.MEDIA_PREFIXE+".id_media = "+DbTables.DATA_SPONSORSHIP_PREFIXE+".id_media");
-			sql.Append(" and "+DbTables.MEDIA_PREFIXE+".id_language ="+webSession.SiteLanguage);
+			sql.Append(" and "+DbTables.MEDIA_PREFIXE+".id_language ="+webSession.DataLanguage);
 			sql.Append(" and "+DbTables.MEDIA_PREFIXE+".activation < "+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
 			// Période
@@ -541,22 +541,22 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 		private static string GetSqlJoins(WebSession webSession){
 			string mediaJoinCondition="";
 //			if(webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS ){
-				mediaJoinCondition=webSession.GenericMediaDetailLevel.GetSqlJoins(webSession.SiteLanguage,DbTables.DATA_SPONSORSHIP_PREFIXE);
+				mediaJoinCondition=webSession.GenericMediaDetailLevel.GetSqlJoins(webSession.DataLanguage,DbTables.DATA_SPONSORSHIP_PREFIXE);
 				if(mediaJoinCondition.Length>0){
 					if(webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media
 						&& !webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.media)){
 						mediaJoinCondition += " and "+ DbTables.MEDIA_PREFIXE+".id_media="+DbTables.DATA_SPONSORSHIP_PREFIXE+".id_media";
-						mediaJoinCondition += " and "+ DbTables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage;
+						mediaJoinCondition += " and "+ DbTables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage;
 						mediaJoinCondition += " and "+ DbTables.MEDIA_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
 					}
 				}
 //			}
 //			else{ 		
-//				mediaJoinCondition=webSession.GenericProductDetailLevel.GetSqlJoins(webSession.SiteLanguage,DbTables.DATA_SPONSORSHIP_PREFIXE);
+//				mediaJoinCondition=webSession.GenericProductDetailLevel.GetSqlJoins(webSession.DataLanguage,DbTables.DATA_SPONSORSHIP_PREFIXE);
 //				if(mediaJoinCondition.Length>0){
 //					if(webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media){
 //						mediaJoinCondition += "  and  "+ DbTables.MEDIA_PREFIXE+".id_media = "+DbTables.DATA_SPONSORSHIP_PREFIXE+".id_media";
-//						mediaJoinCondition += "  and  "+ DbTables.MEDIA_PREFIXE+".id_language = "+webSession.SiteLanguage;
+//						mediaJoinCondition += "  and  "+ DbTables.MEDIA_PREFIXE+".id_language = "+webSession.DataLanguage;
 //						mediaJoinCondition += "  and  "+ DbTables.MEDIA_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
 //					}
 //				}

@@ -70,9 +70,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(DBTables.VEHICLE_PREFIXE+".id_vehicle="+DBTables.DATA_PRESS_APPM_PREFIXE+".id_vehicle ");
 			sql.Append(" and "+DBTables.CATEGORY_PREFIXE+".id_category="+DBTables.DATA_PRESS_APPM_PREFIXE+".id_category ");
 			sql.Append(" and "+DBTables.MEDIA_PREFIXE+".id_media="+DBTables.DATA_PRESS_APPM_PREFIXE+".id_media");
-			sql.Append(" and "+DBTables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage);
-			sql.Append(" and "+DBTables.CATEGORY_PREFIXE+".id_language="+webSession.SiteLanguage);
-			sql.Append(" and "+DBTables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage);
+			sql.Append(" and "+DBTables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage);
+			sql.Append(" and "+DBTables.CATEGORY_PREFIXE+".id_language="+webSession.DataLanguage);
+			sql.Append(" and "+DBTables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage);
 			sql.Append(" and "+DBTables.VEHICLE_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+DBTables.CATEGORY_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+DBTables.MEDIA_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);

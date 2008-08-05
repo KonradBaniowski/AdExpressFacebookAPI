@@ -101,8 +101,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql+=" and "+DBConstantes.Hathor.Tables.TENDENCY_MONTH_PREFIXE+".DATE_PERIOD = "+DBConstantes.Hathor.Tables.TOTAL_TENDENCY_MONTH_PREFIXE+".DATE_PERIOD";
 			
 			if(vehicleName==DBClassificationConstantes.Vehicles.names.press || vehicleName==DBClassificationConstantes.Vehicles.names.internationalPress){
-				sql+=" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage;
-				sql+=" and "+DBConstantes.Tables.TITLE_PREFIXE+".id_language="+webSession.SiteLanguage;
+				sql+=" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage;
+				sql+=" and "+DBConstantes.Tables.TITLE_PREFIXE+".id_language="+webSession.DataLanguage;
 				sql+=" and "+DBConstantes.Tables.MEDIA_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
 				sql+=" and "+DBConstantes.Tables.TITLE_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
 				sql+=" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_title="+DBConstantes.Tables.TITLE_PREFIXE+".id_title "; 

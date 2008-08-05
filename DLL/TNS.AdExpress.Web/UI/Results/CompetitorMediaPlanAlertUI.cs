@@ -191,7 +191,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			
 			t.Append("\r\n\t\t<td rowspan=\"3\" class=\"p2\">"+GestionWeb.GetWebWord(806,webSession.SiteLanguage)+"</td>");
             bool showVersions = false;
-            if(webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) != null) {
+            if(webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)) {
                 showVersions = true;
                 t.Append("\r\n\t\t<td rowspan=\"3\" class=\"p2\">" + GestionWeb.GetWebWord(1994, webSession.SiteLanguage) + "</td>");
             }
@@ -589,7 +589,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			t.Append("</td>");
 			t.Append("\r\n\t\t<td rowspan=\"3\" class=\"p2\">"+GestionWeb.GetWebWord(806,webSession.SiteLanguage)+"</td>");
             bool showVersions = false;
-            if(webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) != null) {
+            if(webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)) {
                 showVersions = true;
                 t.Append("\r\n\t\t<td rowspan=\"3\" class=\"p2\">"+GestionWeb.GetWebWord(1994,webSession.SiteLanguage)+"</td>");
             }

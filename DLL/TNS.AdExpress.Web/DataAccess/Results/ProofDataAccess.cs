@@ -178,13 +178,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             sql.Append(" and " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".date_media_num = " + dateParution);			
 			
 			sql.Append(" and rtrim(ltrim("+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".media_paging)) like '"+ page +"'");
-			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_language_data_i = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.MEDIA_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.ADVERTISER_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.PRODUCT_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.GROUP_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.COLOR_PREFIXE +".id_language = "+ webSession.SiteLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.FORMAT_PREFIXE +".id_language = "+ webSession.SiteLanguage);
+			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_language_data_i = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBConstantes.Tables.MEDIA_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBConstantes.Tables.ADVERTISER_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBConstantes.Tables.PRODUCT_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBConstantes.Tables.GROUP_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBConstantes.Tables.COLOR_PREFIXE +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ DBConstantes.Tables.FORMAT_PREFIXE +".id_language = "+ webSession.DataLanguage);
 			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_media = "+ DBConstantes.Tables.MEDIA_PREFIXE +".id_media ");
 			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_advertiser = "+ DBConstantes.Tables.ADVERTISER_PREFIXE +".id_advertiser ");
 			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_product = "+ DBConstantes.Tables.PRODUCT_PREFIXE +".id_product ");
@@ -226,8 +226,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			sql.Append("where "+ DBConstantes.Tables.DATA_LOCATION_PREFIXE +".id_media = "+ idMedia +" ");
 			sql.Append("and "+ DBConstantes.Tables.DATA_LOCATION_PREFIXE +".id_advertisement = "+ idAdvertisement +" ");
 			sql.Append("and "+ DBConstantes.Tables.DATA_LOCATION_PREFIXE +".date_media_num = "+ date +" ");
-			sql.Append("and "+ DBConstantes.Tables.DATA_LOCATION_PREFIXE +".id_language_data_i = "+ webSession.SiteLanguage +" ");
-			sql.Append("and "+ DBConstantes.Tables.LOCATION_PREFIXE +".id_language = "+ webSession.SiteLanguage +" ");
+			sql.Append("and "+ DBConstantes.Tables.DATA_LOCATION_PREFIXE +".id_language_data_i = "+ webSession.DataLanguage +" ");
+			sql.Append("and "+ DBConstantes.Tables.LOCATION_PREFIXE +".id_language = "+ webSession.DataLanguage +" ");
 			sql.Append("and "+ DBConstantes.Tables.DATA_LOCATION_PREFIXE +".id_location = "+ DBConstantes.Tables.LOCATION_PREFIXE +".id_location ");
 
 			try{
@@ -254,7 +254,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			int nbPage=0;
 
 			sql.Append("select id_media, number_page_media  from "+ DBConstantes.Schema.ADEXPRESS_SCHEMA +"."+ DBConstantes.Tables.ALARM_MEDIA +" ");
-			sql.Append("where id_media = "+ idMedia +" and id_language_i = "+ webSession.SiteLanguage +" and date_alarm = "+ date +" ");
+			sql.Append("where id_media = "+ idMedia +" and id_language_i = "+ webSession.DataLanguage +" and date_alarm = "+ date +" ");
 
 			try{
 				DataSet ds = webSession.Source.Fill(sql.ToString());
@@ -312,23 +312,23 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 		private static void GetSqlJoins(StringBuilder sql,WebSession webSession){
 			
 			sql.Append("  " + DBConstantes.Tables.MEDIA_SELLER_PREFIXE + ".id_media_seller = " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".id_media_seller" );
-			sql.Append(" and " + DBConstantes.Tables.MEDIA_SELLER_PREFIXE + ".id_language = " + webSession.SiteLanguage);
+			sql.Append(" and " + DBConstantes.Tables.MEDIA_SELLER_PREFIXE + ".id_language = " + webSession.DataLanguage);
 			sql.Append(" and " + DBConstantes.Tables.MEDIA_SELLER_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 			
 			sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media = " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".id_media" );
-			sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language = " + webSession.SiteLanguage);
+			sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language = " + webSession.DataLanguage);
 			sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 
 			sql.Append(" and " + DBConstantes.Tables.FORMAT_PREFIXE + ".id_format (+)= " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".id_format" );
-			sql.Append(" and " + DBConstantes.Tables.FORMAT_PREFIXE + ".id_language (+)= " + webSession.SiteLanguage);
+			sql.Append(" and " + DBConstantes.Tables.FORMAT_PREFIXE + ".id_language (+)= " + webSession.DataLanguage);
 			sql.Append(" and " + DBConstantes.Tables.FORMAT_PREFIXE + ".activation (+)< " + DBConstantes.ActivationValues.UNACTIVATED);
 		
 			sql.Append(" and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_product = " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".id_product" );
-			sql.Append(" and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language = " + webSession.SiteLanguage);
+			sql.Append(" and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".id_language = " + webSession.DataLanguage);
 			sql.Append(" and " + DBConstantes.Tables.PRODUCT_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 
 			sql.Append(" and " + DBConstantes.Tables.LOCATION_PREFIXE + ".id_location (+)= " + DBConstantes.Tables.DATA_LOCATION_PREFIXE + ".id_location" );
-			sql.Append(" and " + DBConstantes.Tables.LOCATION_PREFIXE + ".id_language (+)= " + webSession.SiteLanguage);
+			sql.Append(" and " + DBConstantes.Tables.LOCATION_PREFIXE + ".id_language (+)= " + webSession.DataLanguage);
 			sql.Append(" and " + DBConstantes.Tables.LOCATION_PREFIXE + ".activation (+)< " + DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBConstantes.Tables.DATA_LOCATION_PREFIXE + ".id_media (+)= " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".id_media ");
 			sql.Append(" and " + DBConstantes.Tables.DATA_LOCATION_PREFIXE + ".id_advertisement (+)= " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".id_advertisement ");

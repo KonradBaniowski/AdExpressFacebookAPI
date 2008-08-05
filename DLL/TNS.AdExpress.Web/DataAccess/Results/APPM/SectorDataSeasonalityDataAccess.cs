@@ -122,11 +122,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 				sql.Append(" and "+ DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".ID_MEDIA_SECODIP="+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_media" );
 				
 				//media
-				sql.Append(" and "+ DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.SiteLanguage );
+				sql.Append(" and "+ DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage );
 				sql.Append(" and "+ DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".activation < "+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 				
 				//target
-				sql.Append(" and "+ DBConstantes.Tables.TARGET_PREFIXE+".id_language="+webSession.SiteLanguage);
+				sql.Append(" and "+ DBConstantes.Tables.TARGET_PREFIXE+".id_language="+webSession.DataLanguage);
 				sql.Append(" and "+ DBConstantes.Tables.TARGET_PREFIXE+ ".activation < " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 				
 				sql.Append(" and "+ dateField+">="+dateBegin.ToString());

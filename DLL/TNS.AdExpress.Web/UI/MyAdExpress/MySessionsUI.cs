@@ -290,6 +290,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 		public string GetSelectionTableHtmlUI(int valueTable, string ListUniverseClientDescription, List<Int64> allowedLevels) {
 			DataSet dsListRepertory = null;
 			DataTable dt = null;
+		
 			if (_request == type.mySession) {
 				dsListRepertory = MySessionsDataAccess.GetData(_webSession);
 				if(dsListRepertory.Tables[0].Rows.Count != 0)dt =dsListRepertory.Tables[0];

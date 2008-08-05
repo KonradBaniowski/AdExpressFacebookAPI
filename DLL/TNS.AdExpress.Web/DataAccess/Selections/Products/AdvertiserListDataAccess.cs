@@ -79,15 +79,15 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			sql+=" and sc.activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
 			sql+=" and gr.activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
 			sql+=" and sg.activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
-			sql+=" and pr.id_language="+webSession.SiteLanguage+"";
+			sql+=" and pr.id_language="+webSession.DataLanguage+"";
 
 
-			sql+=" and hc.id_language="+webSession.SiteLanguage+"";
-			sql+=" and ad.id_language="+webSession.SiteLanguage+"";
-			sql+=" and sc.id_language="+webSession.SiteLanguage+"";
-			sql+=" and gr.id_language="+webSession.SiteLanguage+"";
-			sql+=" and sg.id_language="+webSession.SiteLanguage+"";
-			sql+=" and pr.id_language="+webSession.SiteLanguage+"";
+			sql+=" and hc.id_language="+webSession.DataLanguage+"";
+			sql+=" and ad.id_language="+webSession.DataLanguage+"";
+			sql+=" and sc.id_language="+webSession.DataLanguage+"";
+			sql+=" and gr.id_language="+webSession.DataLanguage+"";
+			sql+=" and sg.id_language="+webSession.DataLanguage+"";
+			sql+=" and pr.id_language="+webSession.DataLanguage+"";
 					
 			#region Droits clients
 			//Droits clients partie produit
@@ -369,15 +369,15 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			sql+=" and sc.activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
 			sql+=" and gr.activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
 			sql+=" and sg.activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
-			sql+=" and pr.id_language="+webSession.SiteLanguage+"";
+			sql+=" and pr.id_language="+webSession.DataLanguage+"";
 
 
-			//	sql+=" and hc.id_language="+webSession.SiteLanguage+"";
-			sql+=" and sec.id_language="+webSession.SiteLanguage+"";
-			sql+=" and sc.id_language="+webSession.SiteLanguage+"";
-			sql+=" and gr.id_language="+webSession.SiteLanguage+"";
-			sql+=" and sg.id_language="+webSession.SiteLanguage+"";
-			sql+=" and pr.id_language="+webSession.SiteLanguage+"";
+			//	sql+=" and hc.id_language="+webSession.DataLanguage+"";
+			sql+=" and sec.id_language="+webSession.DataLanguage+"";
+			sql+=" and sc.id_language="+webSession.DataLanguage+"";
+			sql+=" and gr.id_language="+webSession.DataLanguage+"";
+			sql+=" and sg.id_language="+webSession.DataLanguage+"";
+			sql+=" and pr.id_language="+webSession.DataLanguage+"";
 					
 			#region Droits clients
 			//Droits clients partie produit
@@ -640,16 +640,16 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			sql+=" and sc.activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
 			sql+=" and gr.activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
 			sql+=" and sg.activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
-			sql+=" and pr.id_language="+webSession.SiteLanguage+"";
+			sql+=" and pr.id_language="+webSession.DataLanguage+"";
 
 
-			sql+=" and hc.id_language="+webSession.SiteLanguage+"";
-			sql+=" and ad.id_language="+webSession.SiteLanguage+"";
-			sql+=" and br.id_language="+webSession.SiteLanguage+"";
-			sql+=" and sc.id_language="+webSession.SiteLanguage+"";
-			sql+=" and gr.id_language="+webSession.SiteLanguage+"";
-			sql+=" and sg.id_language="+webSession.SiteLanguage+"";
-			sql+=" and pr.id_language="+webSession.SiteLanguage+"";
+			sql+=" and hc.id_language="+webSession.DataLanguage+"";
+			sql+=" and ad.id_language="+webSession.DataLanguage+"";
+			sql+=" and br.id_language="+webSession.DataLanguage+"";
+			sql+=" and sc.id_language="+webSession.DataLanguage+"";
+			sql+=" and gr.id_language="+webSession.DataLanguage+"";
+			sql+=" and sg.id_language="+webSession.DataLanguage+"";
+			sql+=" and pr.id_language="+webSession.DataLanguage+"";
 					
 			#region Droits clients
 			//Droits clients partie produit

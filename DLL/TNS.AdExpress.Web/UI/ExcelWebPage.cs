@@ -509,23 +509,14 @@ namespace TNS.AdExpress.Web.UI{
 			AdExpressUniverse adExpressUniverse = null;
 			#region selection produit principale
 			if (webSession.PrincipalProductUniverses.Count ==1) {
-				//t.Append(GetBlankLine());
 				productSelection += GetBlankLine();
-				//t.Append("<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>");
 				productSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
 				adExpressUniverse = webSession.PrincipalProductUniverses[0];
-                //if (webSession.CustomerLogin.Connection == null) {
-                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-                //}
-				//t.Append(TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));//TNS.AdExpress.Web.Functions.DisplayUniverse
-				productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source);
+               
+				productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage,webSession.DataLanguage, webSession.Source);
 			}
 			else if (webSession.PrincipalProductUniverses.Count > 1) {				
-                //if (webSession.CustomerLogin.Connection == null) {
-                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-                //}
+               
 				for (int k = 0; k < webSession.PrincipalProductUniverses.Count; k++) {
 					if (webSession.PrincipalProductUniverses.ContainsKey(k)) {
 						t.Append(GetBlankLine());
@@ -535,13 +526,11 @@ namespace TNS.AdExpress.Web.UI{
 						else {
 							universeCodeTitle = 2302;
 						}
-						//t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>");
-						//t.Append("<TR><TD colspan=4 class=\"txtViolet11Bold\" bgColor=\"#ffffff\" >" + webSession.PrincipalProductUniverses[k].Label + " </TD></TR>");
+						
 						productSelection += "<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
                         productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.PrincipalProductUniverses[k].Label + " </TD></TR>";
 						adExpressUniverse = webSession.PrincipalProductUniverses[k];
-						//t.Append(TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));
-						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source);
+						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage,webSession.DataLanguage, webSession.Source);
 					}
 				}
 			}
@@ -563,8 +552,6 @@ namespace TNS.AdExpress.Web.UI{
 				}
 				else adExpressUniverse = webSession.SecondaryProductUniverses[0];
 
-				//t.Append(GetBlankLine());
-				//t.Append("<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>");		
 				
 				if(WebFunctions.Modules.IsDashBoardModule(webSession))				
 					productSelection = GetBlankLine();
@@ -576,19 +563,10 @@ namespace TNS.AdExpress.Web.UI{
 				else {
 					productSelection += GetBlankLine();
 				}
-				productSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";				
-                //if (webSession.CustomerLogin.Connection == null) {
-                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-                //}
-				//t.Append(TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));
-				productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source);
+				productSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+				productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage,webSession.Source);
 			}
-			else if (webSession.SecondaryProductUniverses.Count > 1) {
-                //if (webSession.CustomerLogin.Connection == null) {
-                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-                //}
+			else if (webSession.SecondaryProductUniverses.Count > 1) {               
 				for (int k = 0; k < webSession.SecondaryProductUniverses.Count; k++) {
 					if (webSession.SecondaryProductUniverses.ContainsKey(k)) {
 						t.Append(GetBlankLine());
@@ -605,15 +583,11 @@ namespace TNS.AdExpress.Web.UI{
 							)
 								universeCodeTitle = 1195;
 							else universeCodeTitle = 2302;
-						}
-						//t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>");
-						//t.Append("<TR><TD colspan=4 class=\"txtViolet11Bold\" bgColor=\"#ffffff\" >" + webSession.SecondaryProductUniverses[k].Label + " </TD></TR>");
-						//adExpressUniverse = webSession.SecondaryProductUniverses[k];
-						//t.Append(TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.CustomerLogin.Connection));
+						}						
 						productSelection += "<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
                         productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.SecondaryProductUniverses[k].Label + " </TD></TR>";
 						adExpressUniverse = webSession.SecondaryProductUniverses[k];
-						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source);
+						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage,webSession.DataLanguage, webSession.Source);
 					}
 				}
 			}

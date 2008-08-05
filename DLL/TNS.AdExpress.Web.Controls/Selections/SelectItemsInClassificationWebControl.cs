@@ -257,10 +257,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Show Universe selected
 		/// </summary>
 		/// <param name="adExpressUniverse">adExpress Universe</param>
-		/// <param name="language">language</param>
+		/// <param name="dataLanguage">language</param>
 		/// <param name="connection">connection</param>
 		/// <returns>Html code of universe selected</returns>
-		public string ShowUniverse(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, int language, TNS.FrameWork.DB.Common.IDataSource source) {
+		public string ShowUniverse(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source) {
 
 			DataSet ds = null;
 			int treeViewId = 0;
@@ -307,11 +307,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),language,source);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
-									nodeCurrentText = "<div class=\"" + nodeCss + "\">" + GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language) + "</div>";
+									nodeCurrentText = "<div class=\"" + nodeCss + "\">" + GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, _siteLanguage) + "</div>";
 									oTree.Add("root", "t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + levelIdsList[j].ToString(), nodeCurrentText, false, null, null);
 
 									for (int k = 0; k < itemIdList.Count; k++) {
@@ -377,11 +377,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),language,source);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
-									nodeCurrentText = "<div class=\"" + nodeCss + "\">" + GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language) + "</div>";
+									nodeCurrentText = "<div class=\"" + nodeCss + "\">" + GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, _siteLanguage) + "</div>";
 									oTree.Add("root", "t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + levelIdsList[j].ToString(), nodeCurrentText, false, null, null);
 
 									for (int k = 0; k < itemIdList.Count; k++) {
@@ -469,14 +469,25 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			}else{
 				foreach (OptionalPageInformation currentPage in module.OptionalsPages) {
 					if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath)) {
-						if (currentPage.AllowedLevelsIds != null && currentPage.AllowedLevelsIds.Count > 0)
-							_allowedLevels = UniverseLevels.GetList(currentPage.AllowedLevelsIds);
-						if (currentPage.AllowedBranchesIds != null && currentPage.AllowedBranchesIds.Count > 0)
-							_allowedBranchesIds = currentPage.AllowedBranchesIds;
+						#region Old version
+						//if (currentPage.AllowedLevelsIds != null && currentPage.AllowedLevelsIds.Count > 0)
+						//    _allowedLevels = UniverseLevels.GetList(currentPage.AllowedLevelsIds);
+						//if (currentPage.AllowedBranchesIds != null && currentPage.AllowedBranchesIds.Count > 0)
+						//    _allowedBranchesIds = currentPage.AllowedBranchesIds;
+
+						#endregion
+						//Apply rigth Rules for getting levels and branches
+						levelsRules = new CoreSelection.AdExpressLevelsRules(_webSession, currentPage.AllowedBranchesIds, UniverseLevels.GetList(currentPage.AllowedLevelsIds), _dimension);
+						tempBranchIds = levelsRules.GetAuthorizedBranches();
+						tempLevels = levelsRules.GetAuthorizedLevels();
+						if (tempBranchIds != null && tempBranchIds.Count > 0)
+							_allowedBranchesIds = tempBranchIds;
+						if (tempLevels != null && tempLevels.Count > 0)
+							_allowedLevels = tempLevels;
 					}
 				}
 			}
-		}
+		}		
 		#endregion
 
 		#region Render UniverseLevel TreeView

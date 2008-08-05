@@ -39,7 +39,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Programs {
 			
 			sql+=" where 0=0 ";
 
-			sql+=programLevel.GetSqlJoinsBetweenLevels(webSession.SiteLanguage);
+			sql+=programLevel.GetSqlJoinsBetweenLevels(webSession.DataLanguage);
 
 			sql+=" order by "+programLevel.GetSqlOrderFields();
 

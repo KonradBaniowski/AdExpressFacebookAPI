@@ -115,30 +115,12 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			get { return _typeFlash; }
 			set { _typeFlash = value; }
 		}
-		#endregion
-
-		#region Render
-		/// <summary>
-		/// Overrided to add "param" tags for contextual menu managment
-		/// </summary>
-		/// <param name="writer">Writer</param>
-		protected override void Render(HtmlTextWriter writer) {
-			SetDesignMode();
-
-			HtmlTextWriter txt = new HtmlTextWriter(new StringWriter());
-			base.Render(txt);
-			int i = -1;
-			if ((i = txt.InnerWriter.ToString().IndexOf("<PARAM name=\"movie\"")) > -1) {
-				writer.Write(txt.InnerWriter.ToString().Insert(i, "\r\n<PARAM name=\"wmode\" value=\"transparent\">\r\n<PARAM name=\"menu\" value=\"false\">\r\n"));
-			}
-			else {
-				writer.Write(txt.InnerWriter.ToString());
-			}
-		}
-		#endregion
+		#endregion		
 
 		#region SetDesgin
-
+		/// <summary>
+		/// Design graphic
+		/// </summary>
 		protected void SetDesignMode() {
 			#region variables
 			object[,] tab = null;
@@ -301,8 +283,6 @@ namespace TNS.AdExpress.Web.Controls.Results {
 						if (dtInsert != null && dtInsert.Rows.Count > 0)
 							this.Series.Add(serieInsert);
 
-
-
 						#endregion
 					}
 					break;
@@ -456,6 +436,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				}
 			}
 			
+			
 		}
 		/// <summary>
 		/// Série d'euros
@@ -545,16 +526,14 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				}
 				#endregion
 
-				#region Légende
+				#region Legend
 				series["LabelStyle"] = "Outside";
 				series.LegendToolTip = "#PERCENT";
 				series.ToolTip = "#PERCENT : #VALX ";
-				//series["PieLineColor"]="Black";
 				series["PieLineColor"] = pieLineColor;
 				#endregion
 				series.Label = "#PERCENT : #VALX";
 				series["3DLabelLineSize"] = "30";
-
 
 				#endregion
 
@@ -611,7 +590,6 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				series["PieLineColor"] = pieLineColor;
 				//series.LabelFormat=
 				#endregion
-
 
 				series.Label = "#PERCENT : #VALX";
 
@@ -675,7 +653,6 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			this.Titles[0].Position.X = 50;
 			this.Titles[0].Position.Y = (typeFlash) ? 2 : 7;
 			this.Titles[0].Font = new Font("Arial", (float)13);
-			//this.Titles[0].Color=Color.FromArgb(100,72,131);
 			this.Titles[0].Color = (Color)ColorConverter.ConvertFrom(titleColor);
 			this.Titles[0].DockToChartArea = chartAreaEuros.Name;
 			if (!typeFlash) {
@@ -861,6 +838,43 @@ namespace TNS.AdExpress.Web.Controls.Results {
 
 			#endregion
 
+		}
+		#endregion
+
+		#region Render
+		/// <summary>
+		/// Overrided to add "param" tags for contextual menu managment
+		/// </summary>
+		/// <param name="writer">Writer</param>
+		protected override void Render(HtmlTextWriter writer) {
+			SetDesignMode();
+
+			HtmlTextWriter txt = new HtmlTextWriter(new StringWriter());
+			base.Render(txt);
+			int i = -1;
+			if ((i = txt.InnerWriter.ToString().IndexOf("<PARAM name=\"movie\"")) > -1) {
+				writer.Write(txt.InnerWriter.ToString().Insert(i, "\r\n<PARAM name=\"wmode\" value=\"transparent\">\r\n<PARAM name=\"menu\" value=\"false\">\r\n"));
+			}
+			else {
+				writer.Write(txt.InnerWriter.ToString());
+			}
+		}
+
+		/// <summary>
+		/// Overrided to add "param" tags for contextual menu managment
+		/// </summary>
+		public string GetHtmlRender() {
+			SetDesignMode();
+
+			HtmlTextWriter txt = new HtmlTextWriter(new StringWriter());
+			base.Render(txt);
+			int i = -1;
+			if ((i = txt.InnerWriter.ToString().IndexOf("<PARAM name=\"movie\"")) > -1) {
+				return txt.InnerWriter.ToString().Insert(i, "\r\n<PARAM name=\"wmode\" value=\"transparent\">\r\n<PARAM name=\"menu\" value=\"false\">\r\n");
+			}
+			else {
+				return txt.InnerWriter.ToString();
+			}
 		}
 		#endregion
 	}

@@ -71,9 +71,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql += " where vh.id_vehicle=wp.id_vehicle";
 				sql += " and ct.id_category=wp.id_category";
 				sql += " and md.id_media = wp.id_media ";
-				sql += " and vh.id_language = " + webSession.SiteLanguage.ToString() + " ";
-				sql += " and ct.id_language = " + webSession.SiteLanguage.ToString() + " ";
-				sql += " and md.id_language = " + webSession.SiteLanguage.ToString() + " ";
+				sql += " and vh.id_language = " + webSession.DataLanguage.ToString() + " ";
+				sql += " and ct.id_language = " + webSession.DataLanguage.ToString() + " ";
+				sql += " and md.id_language = " + webSession.DataLanguage.ToString() + " ";
 				// Activation
 				sql += " and vh.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 				sql += " and ct.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;

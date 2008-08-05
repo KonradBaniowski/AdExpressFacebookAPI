@@ -106,7 +106,7 @@ namespace AdExpress {
                 TNS.Classification.Universe.UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
 
 				//Load flag list
-				TNS.AdExpress.Domain.Flags.GetInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
+				TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
 
 			}
 			catch(System.Exception error){

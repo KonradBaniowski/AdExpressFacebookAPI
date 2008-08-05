@@ -31,7 +31,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#region Construction de la requête
 			string sql="select count(distinct wp.id_"+table.ToString()+") as items ";
-			sql+=" from "+TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA+".product_dimension_"+webSession.SiteLanguage.ToString()+" wp";
+			sql+=" from "+TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA+".product_dimension_"+webSession.DataLanguage.ToString()+" wp";
 			sql+=" where wp."+table.ToString()+" like '%"+wordToSearch.ToUpper().Replace("'"," ")+"%'";
 
 			#region Application des droits produits

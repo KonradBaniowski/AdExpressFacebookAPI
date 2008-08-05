@@ -682,24 +682,24 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				bool premier =true;
 			if(!IsRepartitionSelected(webSession)){
 				sql+= "   "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle="+DBConstantes.Tables.DASH_BOARD_PREFIXE+".id_vehicle"
-					+ "   and "+ DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage
+					+ "   and "+ DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage
 					+"  and "+DBConstantes.Tables.VEHICLE_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 				premier=false;
 			}
 			if(!premier)sql+=" and ";
 			if(webSession.PreformatedMediaDetail==CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia){
 				sql+=DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_interest_center="+DBConstantes.Tables.DASH_BOARD_PREFIXE+".id_interest_center  ";						
-				sql+=" and  " +  DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_language="+webSession.SiteLanguage
+				sql+=" and  " +  DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_language="+webSession.DataLanguage
 					+"   and  "+DBConstantes.Tables.DASH_BOARD_PREFIXE+".id_media="+DBConstantes.Tables.MEDIA_PREFIXE+".id_media"
-					+"   and  "+ DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage+"  "
+					+"   and  "+ DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage+"  "
 					+" and "+DBConstantes.Tables.MEDIA_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			}else if(webSession.PreformatedMediaDetail==CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter){
 				sql+=DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_interest_center="+DBConstantes.Tables.DASH_BOARD_PREFIXE+".id_interest_center  "
-					+"   and  " +  DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_language="+webSession.SiteLanguage	
+					+"   and  " +  DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_language="+webSession.DataLanguage	
 					+"  and "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;							
 			}else if(webSession.PreformatedMediaDetail==CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia){						
 				sql+=DBConstantes.Tables.DASH_BOARD_PREFIXE+".id_media="+DBConstantes.Tables.MEDIA_PREFIXE+".id_media"
-					+"   and  "+ DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage+"  "
+					+"   and  "+ DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage+"  "
 					+"  and "+DBConstantes.Tables.MEDIA_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;						
 			}
 			return sql;
@@ -713,7 +713,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		private static string GetSectorJointClause(WebSession webSession){
 
 			return "   "+DBConstantes.Tables.SECTOR_PREFIXE+".id_sector="+DBConstantes.Tables.DASH_BOARD_PREFIXE+".id_sector"
-				+ "   and "+ DBConstantes.Tables.SECTOR_PREFIXE+".id_language="+webSession.SiteLanguage
+				+ "   and "+ DBConstantes.Tables.SECTOR_PREFIXE+".id_language="+webSession.DataLanguage
 				+"  and "+DBConstantes.Tables.SECTOR_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;						
 		}
 		#endregion

@@ -139,23 +139,23 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                     if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.outdoor)
                     {
                         sql.Append(" and ag.id_agglomeration (+)= wp.id_agglomeration ");
-                        sql.Append(" and ag.id_language (+)= " + webSession.SiteLanguage.ToString());
+                        sql.Append(" and ag.id_language (+)= " + webSession.DataLanguage.ToString());
                         sql.Append(" and ag.activation (+)<" + DBConstantes.ActivationValues.UNACTIVATED);
                     }
                     //langages
-                    sql.Append(" and md.id_language=" + webSession.SiteLanguage.ToString());
-                    sql.Append(" and sg.id_language=" + webSession.SiteLanguage.ToString());
-                    sql.Append(" and gp.id_language=" + webSession.SiteLanguage.ToString());
-                    sql.Append(" and ad.id_language=" + webSession.SiteLanguage.ToString());
-                    sql.Append(" and pr.id_language=" + webSession.SiteLanguage.ToString());
-                    sql.Append(" and ct.id_language=" + webSession.SiteLanguage.ToString());
-                    sql.Append(" and ve.id_language=" + webSession.SiteLanguage.ToString());
+                    sql.Append(" and md.id_language=" + webSession.DataLanguage.ToString());
+                    sql.Append(" and sg.id_language=" + webSession.DataLanguage.ToString());
+                    sql.Append(" and gp.id_language=" + webSession.DataLanguage.ToString());
+                    sql.Append(" and ad.id_language=" + webSession.DataLanguage.ToString());
+                    sql.Append(" and pr.id_language=" + webSession.DataLanguage.ToString());
+                    sql.Append(" and ct.id_language=" + webSession.DataLanguage.ToString());
+                    sql.Append(" and ve.id_language=" + webSession.DataLanguage.ToString());
                     // A changer pour inter si le nom de la table est différent
                     if (tableName.CompareTo(DBConstantes.Tables.DATA_PRESS) == 0)
                     {
-                        sql.Append(" and co.id_language (+)=" + webSession.SiteLanguage.ToString());
-                        sql.Append(" and lo.id_language (+)=" + webSession.SiteLanguage.ToString());
-                        sql.Append(" and fo.id_language (+)=" + webSession.SiteLanguage.ToString());
+                        sql.Append(" and co.id_language (+)=" + webSession.DataLanguage.ToString());
+                        sql.Append(" and lo.id_language (+)=" + webSession.DataLanguage.ToString());
+                        sql.Append(" and fo.id_language (+)=" + webSession.DataLanguage.ToString());
                     }
                     // Période
                     sql.Append(" and wp.date_media_num>=" + dateBegin);

@@ -80,16 +80,16 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" and " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".date_media_num" + " between " + dateBegin + " and " + dateEnd);//date_parution_num
 
 			sql.Append(" and " + DBCst.Tables.MEDIA_PREFIXE + ".id_media = " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_media ");
-			sql.Append(" and " + DBCst.Tables.MEDIA_PREFIXE + ".id_language = " + webSession.SiteLanguage);
+			sql.Append(" and " + DBCst.Tables.MEDIA_PREFIXE + ".id_language = " + webSession.DataLanguage);
 			sql.Append(" and " + DBCst.Tables.MEDIA_PREFIXE + ".activation < " + DBCst.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBCst.Tables.PRODUCT_PREFIXE + ".id_product = " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_product ");
-			sql.Append(" and " + DBCst.Tables.PRODUCT_PREFIXE + ".id_language = " + webSession.SiteLanguage);
+			sql.Append(" and " + DBCst.Tables.PRODUCT_PREFIXE + ".id_language = " + webSession.DataLanguage);
 			sql.Append(" and " + DBCst.Tables.PRODUCT_PREFIXE + ".activation < " + DBCst.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBCst.Tables.FORMAT_PREFIXE + ".id_format (+)= " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_format" );
-			sql.Append(" and " + DBCst.Tables.FORMAT_PREFIXE + ".id_language (+)= " + webSession.SiteLanguage);
+			sql.Append(" and " + DBCst.Tables.FORMAT_PREFIXE + ".id_language (+)= " + webSession.DataLanguage);
 			sql.Append(" and " + DBCst.Tables.FORMAT_PREFIXE + ".activation (+)< " + DBCst.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBCst.Tables.LOCATION_PREFIXE + ".id_location (+)= " + DBCst.Tables.DATA_LOCATION_PREFIXE + ".id_location" );
-			sql.Append(" and " + DBCst.Tables.LOCATION_PREFIXE + ".id_language (+)= " + webSession.SiteLanguage);
+			sql.Append(" and " + DBCst.Tables.LOCATION_PREFIXE + ".id_language (+)= " + webSession.DataLanguage);
 			sql.Append(" and " + DBCst.Tables.LOCATION_PREFIXE + ".activation (+)< " + DBCst.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBCst.Tables.DATA_LOCATION_PREFIXE + ".id_media (+)= " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_media ");
 			sql.Append(" and " + DBCst.Tables.DATA_LOCATION_PREFIXE + ".id_advertisement (+)= " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_advertisement ");

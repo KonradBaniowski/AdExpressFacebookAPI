@@ -80,13 +80,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" and " + DBCst.Tables.WEB_PLAN_PREFIXE + "." + Functions.GetDateFieldWebPlanTable(webSession) + " between " + dateBegin.ToString() + " and " + dateEnd.ToString());
 
 			sql.Append(" and " + DBCst.Tables.VEHICLE_PREFIXE + ".id_vehicle = " + DBCst.Tables.WEB_PLAN_PREFIXE + ".id_vehicle ");
-			sql.Append(" and " + DBCst.Tables.VEHICLE_PREFIXE + ".id_language = " + webSession.SiteLanguage);
+			sql.Append(" and " + DBCst.Tables.VEHICLE_PREFIXE + ".id_language = " + webSession.DataLanguage);
 			sql.Append(" and " + DBCst.Tables.VEHICLE_PREFIXE + ".activation < " + DBCst.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBCst.Tables.CATEGORY_PREFIXE + ".id_category = " + DBCst.Tables.WEB_PLAN_PREFIXE + ".id_category ");
-			sql.Append(" and " + DBCst.Tables.CATEGORY_PREFIXE + ".id_language = " + webSession.SiteLanguage);
+			sql.Append(" and " + DBCst.Tables.CATEGORY_PREFIXE + ".id_language = " + webSession.DataLanguage);
 			sql.Append(" and " + DBCst.Tables.CATEGORY_PREFIXE + ".activation < " + DBCst.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBCst.Tables.MEDIA_PREFIXE + ".id_media = " + DBCst.Tables.WEB_PLAN_PREFIXE + ".id_media ");
-			sql.Append(" and " + DBCst.Tables.MEDIA_PREFIXE + ".id_language = " + webSession.SiteLanguage);
+			sql.Append(" and " + DBCst.Tables.MEDIA_PREFIXE + ".id_language = " + webSession.DataLanguage);
 			sql.Append(" and " + DBCst.Tables.MEDIA_PREFIXE + ".activation < " + DBCst.ActivationValues.UNACTIVATED);
 
 			sql.Append(" and " + DBCst.Tables.WAVE_PREFIXE + ".id_wave = " + idWave.ToString());

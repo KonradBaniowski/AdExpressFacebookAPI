@@ -57,10 +57,10 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			sql+=" and "+TablesDBConstantes.SUBSECTOR_PREFIXE+".id_subsector="+TablesDBConstantes.GROUP_PREFIXE+".id_subsector ";
 			sql+=" and "+TablesDBConstantes.GROUP_PREFIXE+".id_group_="+TablesDBConstantes.SEGMENT_PREFIXE+".id_group_ ";			
 			// Langue
-			sql+=" and "+TablesDBConstantes.SECTOR_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();		
-			sql+=" and "+TablesDBConstantes.SUBSECTOR_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();	
-			sql+=" and "+TablesDBConstantes.GROUP_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();	
-			sql+=" and "+TablesDBConstantes.SEGMENT_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();	
+			sql+=" and "+TablesDBConstantes.SECTOR_PREFIXE+".id_language="+webSession.DataLanguage.ToString();		
+			sql+=" and "+TablesDBConstantes.SUBSECTOR_PREFIXE+".id_language="+webSession.DataLanguage.ToString();	
+			sql+=" and "+TablesDBConstantes.GROUP_PREFIXE+".id_language="+webSession.DataLanguage.ToString();	
+			sql+=" and "+TablesDBConstantes.SEGMENT_PREFIXE+".id_language="+webSession.DataLanguage.ToString();	
 			// Activation
 			sql+=" and "+TablesDBConstantes.SECTOR_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			sql+=" and "+TablesDBConstantes.SUBSECTOR_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;						

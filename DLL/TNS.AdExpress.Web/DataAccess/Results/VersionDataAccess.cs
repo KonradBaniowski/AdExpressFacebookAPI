@@ -257,12 +257,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                + " ) Oneligne "
                + " FROM " + dbSchema + "." + dbTbl + " dp4,  " + dbSchema + ".advertiser ad" + ", " + dbSchema + ".product pr" + ", " + dbSchema + ".sector sc"
                + ", " + dbSchema + ".subsector sb" + ", " + dbSchema + ".group_ gr" + ", " + dbSchema + ".segment sg"
-               + " WHERE pr.id_product = dp4.id_product and pr.id_language=33 "
-               + " and ad.id_advertiser = dp4.id_advertiser and ad.id_language=33 "
-               + " and sc.id_sector = dp4.id_sector and sc.id_language=33 "
-               + " and sb.id_subsector = dp4.id_subsector and sb.id_language=33 "
-               + " and gr.id_group_ = dp4.id_group_ and gr.id_language=33 "
-               + " and sg.id_segment = dp4.id_segment and sg.id_language=33 ";
+               + " WHERE pr.id_product = dp4.id_product and pr.id_language="+webSession.DataLanguage
+               + " and ad.id_advertiser = dp4.id_advertiser and ad.id_language="+webSession.DataLanguage
+               + " and sc.id_sector = dp4.id_sector and sc.id_language="+webSession.DataLanguage
+               + " and sb.id_subsector = dp4.id_subsector and sb.id_language="+webSession.DataLanguage
+               + " and gr.id_group_ = dp4.id_group_ and gr.id_language="+webSession.DataLanguage
+               + " and sg.id_segment = dp4.id_segment and sg.id_language="+webSession.DataLanguage;
 
             if (period != null)
                 query += "  and date_media_num>=" + dateBegin + " and  date_media_num<=" + dateEnd + "  ";
@@ -365,12 +365,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                + " ) Oneligne "
                + " FROM " + dbSchema + "." + dbTbl + " dp4, " + dbSchema + ".advertiser ad" + ", " + dbSchema + ".product pr" + ", " + dbSchema + ".sector sc"
                + ", " + dbSchema + ".subsector sb" + ", " + dbSchema + ".group_ gr" + ", " + dbSchema + ".segment sg"
-               + " WHERE pr.id_product = dp4.id_product and pr.id_language=33 "
-               + " and ad.id_advertiser = dp4.id_advertiser and ad.id_language=33 "
-               + " and sc.id_sector = dp4.id_sector and sc.id_language=33 "
-               + " and sb.id_subsector = dp4.id_subsector and sb.id_language=33 "
-               + " and gr.id_group_ = dp4.id_group_ and gr.id_language=33 "
-               + " and sg.id_segment = dp4.id_segment and sg.id_language=33 ";
+               + " WHERE pr.id_product = dp4.id_product and pr.id_language="+webSession.DataLanguage
+               + " and ad.id_advertiser = dp4.id_advertiser and ad.id_language="+webSession.DataLanguage
+               + " and sc.id_sector = dp4.id_sector and sc.id_language="+webSession.DataLanguage
+               + " and sb.id_subsector = dp4.id_subsector and sb.id_language="+webSession.DataLanguage
+               + " and gr.id_group_ = dp4.id_group_ and gr.id_language="+webSession.DataLanguage
+               + " and sg.id_segment = dp4.id_segment and sg.id_language="+webSession.DataLanguage;
 
              if (period != null)
                 query += "  and date_media_num>=" + dateBegin + " and  date_media_num<=" + dateEnd + "  ";

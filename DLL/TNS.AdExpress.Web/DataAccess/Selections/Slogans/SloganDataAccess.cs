@@ -150,17 +150,17 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				// Conditions de jointure
 				sql += " Where " + tablePrefixe + ".id_slogan!=0 ";
 				sql += " and " + DbTables.VEHICLE_PREFIXE + ".id_vehicle=" + tablePrefixe + ".id_vehicle ";
-				sql += " and " + DbTables.VEHICLE_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+				sql += " and " + DbTables.VEHICLE_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
 				sql += " and " + DbTables.VEHICLE_PREFIXE + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 				sql += " and " + DbTables.PRODUCT_PREFIXE + ".id_product=" + tablePrefixe + ".id_product ";
-				sql += " and " + DbTables.PRODUCT_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+				sql += " and " + DbTables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
 				sql += " and " + DbTables.ADVERTISER_PREFIXE + ".id_advertiser=" + tablePrefixe + ".id_advertiser ";
-				sql += " and " + DbTables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString();
+				sql += " and " + DbTables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
 				sql += " and " + DbTables.ADVERTISER_PREFIXE + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 				if ((DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)) == DBClassificationConstantes.Vehicles.names.press
 					|| (DBClassificationConstantes.Vehicles.names)(Int64.Parse(idVehicle)) == DBClassificationConstantes.Vehicles.names.internationalPress) {
 					sql += " and " + DbTables.FORMAT_PREFIXE + ".id_format(+)=" + tablePrefixe + ".id_format ";
-					sql += " and " + DbTables.FORMAT_PREFIXE + ".id_language(+)=" + webSession.SiteLanguage.ToString();
+					sql += " and " + DbTables.FORMAT_PREFIXE + ".id_language(+)=" + webSession.DataLanguage.ToString();
 					sql += " and " + DbTables.FORMAT_PREFIXE + ".activation(+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 				}
 
@@ -270,16 +270,16 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 			// Conditions de jointure
 			sql+=" Where "+DbTables.DATA_PRESS_APPM_PREFIXE+".id_slogan!=0 ";
 			sql+=" and "+DbTables.VEHICLE_PREFIXE+".id_vehicle="+tablePrefixe+".id_vehicle ";
-			sql+=" and "+DbTables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();
+			sql+=" and "+DbTables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage.ToString();
 			sql+=" and "+DbTables.VEHICLE_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			sql+=" and "+DbTables.PRODUCT_PREFIXE+".id_product="+tablePrefixe+".id_product ";
-			sql+=" and "+DbTables.PRODUCT_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();
+			sql+=" and "+DbTables.PRODUCT_PREFIXE+".id_language="+webSession.DataLanguage.ToString();
 			sql+=" and "+DbTables.ADVERTISER_PREFIXE+".id_advertiser="+tablePrefixe+".id_advertiser ";
-			sql+=" and "+DbTables.ADVERTISER_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();			
+			sql+=" and "+DbTables.ADVERTISER_PREFIXE+".id_language="+webSession.DataLanguage.ToString();			
 			sql+=" and "+DbTables.ADVERTISER_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			
 			sql+=" and "+DbTables.FORMAT_PREFIXE+".id_format(+)="+tablePrefixe+".id_format ";
-			sql+=" and "+DbTables.FORMAT_PREFIXE+".id_language(+)="+webSession.SiteLanguage.ToString();
+			sql+=" and "+DbTables.FORMAT_PREFIXE+".id_language(+)="+webSession.DataLanguage.ToString();
 			sql+=" and "+DbTables.FORMAT_PREFIXE+".activation(+)<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			
 			sql+=" and " + DbTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_media_secodip = " + tablePrefixe + ".id_media ";

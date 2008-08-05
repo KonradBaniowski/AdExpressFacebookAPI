@@ -415,17 +415,17 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
             //produit
             sql.Append(" pr.id_product=wp.id_product ");
-            sql.AppendFormat(" and pr.id_language={0}",  session.SiteLanguage);
+			sql.AppendFormat(" and pr.id_language={0}", session.DataLanguage);
             sql.AppendFormat(" and pr.activation < {0}", DBCst.ActivationValues.UNACTIVATED);
 
             // Annonceur
             sql.Append(" and ad.id_advertiser=wp.id_advertiser ");
-            sql.AppendFormat(" and ad.id_language={0}", session.SiteLanguage);
+			sql.AppendFormat(" and ad.id_language={0}", session.DataLanguage);
             sql.AppendFormat(" and ad.activation < {0}", DBCst.ActivationValues.UNACTIVATED);
 
             // Groupe
             sql.Append(" and gp.id_group_ = wp.id_group_ ");
-            sql.AppendFormat(" and gp.id_language = {0}", session.SiteLanguage);
+			sql.AppendFormat(" and gp.id_language = {0}", session.DataLanguage);
             sql.AppendFormat(" and gp.activation < {0}", DBCst.ActivationValues.UNACTIVATED);
 
             //GAD
@@ -434,27 +434,27 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             if (vehicle == DBClassifCst.Vehicles.names.directMarketing) {
                 // Media
                 sql.Append(" and md.id_media = wp.id_media ");
-                sql.AppendFormat(" and md.id_language = {0}", session.SiteLanguage);
+				sql.AppendFormat(" and md.id_language = {0}", session.DataLanguage);
                 sql.AppendFormat(" and md.activation < {0}", DBCst.ActivationValues.UNACTIVATED);
                 //format
                 sql.Append(" and fr.id_format (+)= wp.id_format ");
-                sql.AppendFormat(" and fr.id_language (+)= {0}", session.SiteLanguage);
+				sql.AppendFormat(" and fr.id_language (+)= {0}", session.DataLanguage);
                 //mail_format
                 sql.Append(" and mf.id_mail_format (+)= wp.id_mail_format ");
-                sql.AppendFormat(" and mf.id_language (+)= {0}", session.SiteLanguage);
+				sql.AppendFormat(" and mf.id_language (+)= {0}", session.DataLanguage);
                 //mail_type
                 sql.Append(" and mt.id_mail_type (+)= wp.id_mail_type ");
-                sql.AppendFormat(" and mt.id_language (+)= {0}", session.SiteLanguage);
+				sql.AppendFormat(" and mt.id_language (+)= {0}", session.DataLanguage);
                 //mailing rapidity
                 sql.Append(" and mr.id_mailing_rapidity (+)= wp.id_mailing_rapidity ");
-                sql.AppendFormat(" and mr.id_language (+)= {0}", session.SiteLanguage);
+				sql.AppendFormat(" and mr.id_language (+)= {0}", session.DataLanguage);
                 //mail content
                 sql.Append(" and wp.id_media = dmc.id_media (+) ");
                 sql.Append(" and wp.date_media_num = dmc.date_media_num (+) ");
                 sql.Append(" and wp.id_cobranding_advertiser = dmc.id_cobranding_advertiser (+) ");
                 sql.Append(" and wp.id_data_marketing_direct_panel = dmc.id_data_marketing_direct_panel (+) ");
                 sql.Append(" and mc.id_mail_content (+) = dmc.id_mail_content ");
-                sql.AppendFormat(" and mc.id_language (+)= {0}", session.SiteLanguage);
+				sql.AppendFormat(" and mc.id_language (+)= {0}", session.DataLanguage);
 
             }
         }

@@ -173,11 +173,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			sql.Append("from "+DBClassificationCst.Table.name.sector+" "+ DBCst.Tables.SECTOR_PREFIXE+", "+ DBClassificationCst.Table.name.subsector+" "+ DBCst.Tables.SUBSECTOR_PREFIXE+", "+ DBClassificationCst.Table.name.group_+" "+ DBCst.Tables.GROUP_PREFIXE+", "+ DBClassificationCst.Table.name.segment+" "+ DBCst.Tables.SEGMENT_PREFIXE);
 
 			sql.Append(" where "+DBCst.Tables.SECTOR_PREFIXE+".ID_SECTOR="+DBCst.Tables.SUBSECTOR_PREFIXE+".ID_SECTOR");
-			sql.Append(" and "+DBCst.Tables.SECTOR_PREFIXE+".ID_LANGUAGE= "+webSession.SiteLanguage);
+			sql.Append(" and "+DBCst.Tables.SECTOR_PREFIXE+".ID_LANGUAGE= "+webSession.DataLanguage);
 			sql.Append(" and "+DBCst.Tables.SUBSECTOR_PREFIXE+".ID_SUBSECTOR="+DBCst.Tables.GROUP_PREFIXE+".ID_SUBSECTOR");
-			sql.Append(" and "+DBCst.Tables.GROUP_PREFIXE+".ID_LANGUAGE= "+webSession.SiteLanguage);
+			sql.Append(" and "+DBCst.Tables.GROUP_PREFIXE+".ID_LANGUAGE= "+webSession.DataLanguage);
 			sql.Append(" and "+DBCst.Tables.SEGMENT_PREFIXE+".id_group_="+DBCst.Tables.GROUP_PREFIXE+".id_group_");
-			sql.Append(" and "+DBCst.Tables.SEGMENT_PREFIXE+".ID_LANGUAGE= "+webSession.SiteLanguage);
+			sql.Append(" and "+DBCst.Tables.SEGMENT_PREFIXE+".ID_LANGUAGE= "+webSession.DataLanguage);
 			string htmlTemp="";
 			if(gList.Length>0){
 				sql.Append(" and ("+DBCst.Tables.GROUP_PREFIXE+".ID_GROUP_ "+ " IN(" + gList + ")" );

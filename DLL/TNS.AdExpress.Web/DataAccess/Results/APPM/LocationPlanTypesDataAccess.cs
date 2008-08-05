@@ -129,10 +129,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			return DBCst.Tables.TARGET_PREFIXE + ".id_target = " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_target "
 				+" and " + DBCst.Tables.TARGET_PREFIXE +".activation < "+  DBCst.ActivationValues.UNACTIVATED
 				+" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_media_secodip = " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_media "
-				+" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_language_data_i="+webSession.SiteLanguage
+				+" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_language_data_i="+webSession.DataLanguage
 				+" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE +".activation < "+  DBCst.ActivationValues.UNACTIVATED
 				+" and " + DBCst.Tables.LOCATION_PREFIXE + ".id_location (+)= " + DBCst.Tables.DATA_LOCATION_PREFIXE + ".id_location "
-				+" and " + DBCst.Tables.LOCATION_PREFIXE + ".id_language (+)= " + webSession.SiteLanguage
+				+" and " + DBCst.Tables.LOCATION_PREFIXE + ".id_language (+)= " + webSession.DataLanguage
 				+" and " + DBCst.Tables.LOCATION_PREFIXE +".activation < "+  DBCst.ActivationValues.UNACTIVATED
 				+" and " + DBCst.Tables.DATA_LOCATION_PREFIXE + ".id_media (+)= " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_media "
 				+" and " + DBCst.Tables.DATA_LOCATION_PREFIXE + ".id_advertisement (+)= " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_advertisement "
@@ -151,7 +151,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 		/// <returns>sélections du client</returns>
 		private static string GetCustomerSelection(WebSession webSession,int dateBegin, int dateEnd,Int64 baseTarget,Int64 additionalTarget){
 			return " and " + DBCst.Tables.TARGET_PREFIXE + ".id_target in (" + baseTarget + ","+additionalTarget+")"
-				+" and "+ DBTables.TARGET_PREFIXE+".id_language="+webSession.SiteLanguage.ToString()
+				+" and "+ DBTables.TARGET_PREFIXE+".id_language="+webSession.DataLanguage.ToString()
 				+" and "+DBCst.Tables.DATA_PRESS_APPM_PREFIXE+".date_media_num >= "+dateBegin.ToString()+"  and  "+DBCst.Tables.DATA_PRESS_APPM_PREFIXE+".date_media_num <= "+dateEnd.ToString()
 				+" and "+DBCst.Tables.DATA_PRESS_APPM_PREFIXE+".id_inset is null "
 				//Sélection client

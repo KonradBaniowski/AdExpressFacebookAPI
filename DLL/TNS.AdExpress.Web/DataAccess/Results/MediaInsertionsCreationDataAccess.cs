@@ -355,10 +355,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql.Append(" and "+DbTables.WEB_PLAN_PREFIXE+".id_slogan in ( "+webSession.SloganIdList+" )  ");
 
 				}
-				if(webSession.GenericInsertionColumns.GetSqlJoins(webSession.SiteLanguage,DbTables.WEB_PLAN_PREFIXE,detailLevelList).Length>0)
-				sql.Append("  "+webSession.GenericInsertionColumns.GetSqlJoins(webSession.SiteLanguage,DbTables.WEB_PLAN_PREFIXE,detailLevelList));
+				if(webSession.GenericInsertionColumns.GetSqlJoins(webSession.DataLanguage,DbTables.WEB_PLAN_PREFIXE,detailLevelList).Length>0)
+				sql.Append("  "+webSession.GenericInsertionColumns.GetSqlJoins(webSession.DataLanguage,DbTables.WEB_PLAN_PREFIXE,detailLevelList));
 				if(webSession.DetailLevel!=null)
-					sql.Append("  "+webSession.DetailLevel.GetSqlJoins(webSession.SiteLanguage,DbTables.WEB_PLAN_PREFIXE));							
+					sql.Append("  "+webSession.DetailLevel.GetSqlJoins(webSession.DataLanguage,DbTables.WEB_PLAN_PREFIXE));							
 				sql.Append("  "+webSession.GenericInsertionColumns.GetSqlContraintJoins());
 				
 
@@ -500,11 +500,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql.Append(" Where ");	
 		
 			//Langages
-			sql.Append("  "+DbTables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and  "+DbTables.CATEGORY_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+			sql.Append("  "+DbTables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and  "+DbTables.CATEGORY_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 			if(idMedia>-1){
-				sql.Append(" and "+DbTables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());			
-				sql.Append(" and "+DbTables.BASIC_MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+				sql.Append(" and "+DbTables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());			
+				sql.Append(" and "+DbTables.BASIC_MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 			}
 
 			//Jointures
@@ -1000,8 +1000,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql.Append(","+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DbTables.SLOGAN+" "+DbTables.SLOGAN_PREFIXE);						
 			sql.Append(" Where ");	
 			sql.Append("  "+DbTables.SLOGAN_PREFIXE+".id_slogan= "+idSlogan);
-			sql.Append("  and "+DbTables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append("  and "+DbTables.SLOGAN_PREFIXE+".id_language= "+webSession.SiteLanguage.ToString());
+			sql.Append("  and "+DbTables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append("  and "+DbTables.SLOGAN_PREFIXE+".id_language= "+webSession.DataLanguage.ToString());
 			sql.Append("  and "+DbTables.VEHICLE_PREFIXE+".id_vehicle ="+DbTables.SLOGAN_PREFIXE+".id_vehicle");
 			sql.Append(" and "+DbTables.VEHICLE_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);			
 			sql.Append("  and  "+DbTables.SLOGAN_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);	
@@ -1540,12 +1540,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			if(beginByAnd) sql.Append(" and ");
 			//produit
 			sql.Append(" "+DbTables.PRODUCT_PREFIXE+".id_product="+dataTablePrefixe+".id_product ");
-			sql.Append(" and "+DbTables.PRODUCT_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+			sql.Append(" and "+DbTables.PRODUCT_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 			sql.Append(" and "+DbTables.PRODUCT_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);							
 
 			// Annonceur
 			sql.Append(" and "+DbTables.ADVERTISER_PREFIXE+".id_advertiser="+dataTablePrefixe+".id_advertiser ");
-			sql.Append(" and "+DbTables.ADVERTISER_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+			sql.Append(" and "+DbTables.ADVERTISER_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 			sql.Append(" and "+DbTables.ADVERTISER_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);
 
 			switch(idVehicle){
@@ -1554,7 +1554,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				case DBClassificationConstantes.Vehicles.names.tv:
 					// Groupe
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_group_="+dataTablePrefixe+".id_group_ ");
-					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);
 
 					sql.Append(GetMediaJoinConditions(webSession,dataTablePrefixe,true));
@@ -1563,7 +1563,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql.Append(GetMediaJoinConditions(webSession,dataTablePrefixe,true));
 					// Groupe
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_group_="+dataTablePrefixe+".id_group_ ");
-					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);
 					break;
 				case DBClassificationConstantes.Vehicles.names.press:
@@ -1571,7 +1571,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql.Append(GetMediaJoinConditions(webSession,dataTablePrefixe,true));
 					// Groupe
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_group_="+dataTablePrefixe+".id_group_ ");
-					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);
 
 					sql.Append(" and ("+DbTables.APPLICATION_MEDIA_PREFIXE+".id_media(+) = "+dataTablePrefixe+".id_media ");
@@ -1579,7 +1579,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql.Append(" and "+DbTables.APPLICATION_MEDIA_PREFIXE+".id_project(+) = "+ CstProject.ADEXPRESS_ID +") ");
 			
 					sql.Append(" and "+DbTables.LOCATION_PREFIXE+".id_location (+)="+DbTables.DATA_LOCATION_PREFIXE+".id_location ");
-					sql.Append(" and "+DbTables.LOCATION_PREFIXE+".id_language (+)="+webSession.SiteLanguage.ToString());
+					sql.Append(" and "+DbTables.LOCATION_PREFIXE+".id_language (+)="+webSession.DataLanguage.ToString());
 				
 					sql.Append(" and "+DbTables.DATA_LOCATION_PREFIXE+".id_advertisement (+)="+dataTablePrefixe+".id_advertisement ");
 					sql.Append(" and "+DbTables.DATA_LOCATION_PREFIXE+".id_media (+)="+dataTablePrefixe+".id_media ");
@@ -1587,34 +1587,34 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				
 
 					sql.Append(" and "+DbTables.COLOR_PREFIXE+".id_color (+)="+dataTablePrefixe+".id_color ");
-					sql.Append(" and "+DbTables.COLOR_PREFIXE+".id_language (+)="+webSession.SiteLanguage.ToString());
+					sql.Append(" and "+DbTables.COLOR_PREFIXE+".id_language (+)="+webSession.DataLanguage.ToString());
 			
 					sql.Append(" and "+DbTables.FORMAT_PREFIXE+".id_format (+)="+dataTablePrefixe+".id_format ");
-					sql.Append(" and "+DbTables.FORMAT_PREFIXE+".id_language (+)="+webSession.SiteLanguage.ToString());
+					sql.Append(" and "+DbTables.FORMAT_PREFIXE+".id_language (+)="+webSession.DataLanguage.ToString());
 					break;
 				case DBClassificationConstantes.Vehicles.names.outdoor:
 					sql.Append(GetMediaJoinConditions(webSession,dataTablePrefixe,true));
 					// Groupe
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_group_="+dataTablePrefixe+".id_group_ ");
-					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);
 
 					sql.Append(" and "+DbTables.AGGLOMERATION_PREFIXE+".id_agglomeration (+)="+dataTablePrefixe+".id_agglomeration ");				
-					sql.Append(" and "+DbTables.AGGLOMERATION_PREFIXE+".id_language (+)="+webSession.SiteLanguage.ToString());
+					sql.Append(" and "+DbTables.AGGLOMERATION_PREFIXE+".id_language (+)="+webSession.DataLanguage.ToString());
 					sql.Append(" and "+DbTables.AGGLOMERATION_PREFIXE+".activation (+)< "+ DBConstantes.ActivationValues.UNACTIVATED);
 					break;
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     // Groupe
                     sql.Append(" and " + DbTables.GROUP_PREFIXE + ".id_group_=" + dataTablePrefixe + ".id_group_ ");
-                    sql.Append(" and " + DbTables.GROUP_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString());
+                    sql.Append(" and " + DbTables.GROUP_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString());
                     sql.Append(" and " + DbTables.GROUP_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
                     // category
                     sql.Append(" and " + DbTables.CATEGORY_PREFIXE + ".id_category=" + dataTablePrefixe + ".id_category ");
-                    sql.Append(" and " + DbTables.CATEGORY_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString());
+                    sql.Append(" and " + DbTables.CATEGORY_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString());
                     sql.Append(" and " + DbTables.CATEGORY_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
                     // Media
                     sql.Append(" and " + DbTables.MEDIA_PREFIXE + ".id_media=" + dataTablePrefixe + ".id_media ");
-                    sql.Append(" and " + DbTables.MEDIA_PREFIXE + ".id_language=" + webSession.SiteLanguage.ToString());
+                    sql.Append(" and " + DbTables.MEDIA_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString());
                     sql.Append(" and " + DbTables.MEDIA_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
                     GetMDJoinConditions(webSession, mediaList, sql, idVehicle, dataTablePrefixe, beginByAnd);
                     break;
@@ -1648,22 +1648,22 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                     case DBConstantes.Category.PUBLICITE_NON_ADRESSEE:
                     case DBConstantes.Media.PUBLICITE_NON_ADRESSEE:
                         sql.Append(" and " + DbTables.FORMAT_PREFIXE + ".id_format (+)=" + dataTablePrefixe + ".id_format ");
-                        sql.Append(" and " + DbTables.FORMAT_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                        sql.Append(" and " + DbTables.FORMAT_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                         sql.Append(" and " + DbTables.MAIL_FORMAT_PREFIXE + ".id_mail_format (+)=" + dataTablePrefixe + ".id_mail_format ");
-                        sql.Append(" and " + DbTables.MAIL_FORMAT_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                        sql.Append(" and " + DbTables.MAIL_FORMAT_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                         sql.Append(" and " + DbTables.MAIL_TYPE_PREFIXE + ".id_mail_type (+)=" + dataTablePrefixe + ".id_mail_type ");
-                        sql.Append(" and " + DbTables.MAIL_TYPE_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                        sql.Append(" and " + DbTables.MAIL_TYPE_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                         break;
                     case DBConstantes.Category.COURRIER_ADRESSE:
                     case DBConstantes.Media.COURRIER_ADRESSE_GESTION:
                         sql.Append(" and " + DbTables.MAILING_RAPIDITY_PREFIXE + ".id_mailing_rapidity (+)=" + dataTablePrefixe + ".id_mailing_rapidity ");
-                        sql.Append(" and " + DbTables.MAILING_RAPIDITY_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                        sql.Append(" and " + DbTables.MAILING_RAPIDITY_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                         sql.Append(" and " + dataTablePrefixe + ".id_media =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_media (+) ");
                         sql.Append(" and " + dataTablePrefixe + ".date_media_num =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".date_media_num (+) ");
                         sql.Append(" and " + dataTablePrefixe + ".id_cobranding_advertiser =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_cobranding_advertiser (+) ");
                         sql.Append(" and " + dataTablePrefixe + ".id_data_marketing_direct_panel =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_data_marketing_direct_panel (+) ");
                         sql.Append(" and " + DbTables.MAIL_CONTENT_PREFIXE + ".id_mail_content (+) =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_mail_content ");
-                        sql.Append(" and " + DbTables.MAIL_CONTENT_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                        sql.Append(" and " + DbTables.MAIL_CONTENT_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                         break;
                     case DBConstantes.Media.COURRIER_ADRESSE_PRESSE:
                     case DBConstantes.Media.COURRIER_ADRESSE_GENERAL:
@@ -1672,7 +1672,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                         sql.Append(" and " + dataTablePrefixe + ".id_cobranding_advertiser =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_cobranding_advertiser (+) ");
                         sql.Append(" and " + dataTablePrefixe + ".id_data_marketing_direct_panel =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_data_marketing_direct_panel (+) ");
                         sql.Append(" and " + DbTables.MAIL_CONTENT_PREFIXE + ".id_mail_content (+) =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_mail_content ");
-                        sql.Append(" and " + DbTables.MAIL_CONTENT_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                        sql.Append(" and " + DbTables.MAIL_CONTENT_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                         break;
                     default:
                         throw new Exceptions.MediaCreationDataAccessException("GetMDJoinConditions(WebSession webSession, StringBuilder sql, DBClassificationConstantes.Vehicles.names idVehicle, string dataTablePrefixe, bool beginByAnd) : Le support ou la catégorie ne correspondent pas à un support ou une catégorie du MD.");
@@ -1682,19 +1682,19 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
             else{
 
                 sql.Append(" and " + DbTables.FORMAT_PREFIXE + ".id_format (+)=" + dataTablePrefixe + ".id_format ");
-                sql.Append(" and " + DbTables.FORMAT_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                sql.Append(" and " + DbTables.FORMAT_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                 sql.Append(" and " + DbTables.MAIL_FORMAT_PREFIXE + ".id_mail_format (+)=" + dataTablePrefixe + ".id_mail_format ");
-                sql.Append(" and " + DbTables.MAIL_FORMAT_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                sql.Append(" and " + DbTables.MAIL_FORMAT_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                 sql.Append(" and " + DbTables.MAIL_TYPE_PREFIXE + ".id_mail_type (+)=" + dataTablePrefixe + ".id_mail_type ");
-                sql.Append(" and " + DbTables.MAIL_TYPE_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                sql.Append(" and " + DbTables.MAIL_TYPE_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                 sql.Append(" and " + DbTables.MAILING_RAPIDITY_PREFIXE + ".id_mailing_rapidity (+)=" + dataTablePrefixe + ".id_mailing_rapidity ");
-                sql.Append(" and " + DbTables.MAILING_RAPIDITY_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                sql.Append(" and " + DbTables.MAILING_RAPIDITY_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
                 sql.Append(" and " + dataTablePrefixe + ".id_media =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_media (+) ");
                 sql.Append(" and " + dataTablePrefixe + ".date_media_num =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".date_media_num (+) ");
                 sql.Append(" and " + dataTablePrefixe + ".id_cobranding_advertiser =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_cobranding_advertiser (+) ");
                 sql.Append(" and " + dataTablePrefixe + ".id_data_marketing_direct_panel =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_data_marketing_direct_panel (+) ");
                 sql.Append(" and " + DbTables.MAIL_CONTENT_PREFIXE + ".id_mail_content (+) =" + DbTables.DATA_MAIL_CONTENT_PREFIXE + ".id_mail_content ");
-                sql.Append(" and " + DbTables.MAIL_CONTENT_PREFIXE + ".id_language (+)=" + webSession.SiteLanguage.ToString());
+                sql.Append(" and " + DbTables.MAIL_CONTENT_PREFIXE + ".id_language (+)=" + webSession.DataLanguage.ToString());
             }
 
 
@@ -1712,31 +1712,31 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			//Vehicles			
 			if(beginByAnd)tmp+=" and ";
-			tmp+="  "+DbTables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage;
+			tmp+="  "+DbTables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage;
 			tmp+=" and "+DbTables.VEHICLE_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			tmp+=" and "+DbTables.VEHICLE_PREFIXE+".id_vehicle="+dataTablePrefixe+".id_vehicle ";
 					
 			
 			//Categories
-			tmp+=" and "+DbTables.CATEGORY_PREFIXE+".id_language="+webSession.SiteLanguage;
+			tmp+=" and "+DbTables.CATEGORY_PREFIXE+".id_language="+webSession.DataLanguage;
 			tmp+=" and "+DbTables.CATEGORY_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			tmp+=" and "+DbTables.CATEGORY_PREFIXE+".id_category="+dataTablePrefixe+".id_category ";
 			
 			// Media			
-			tmp+=" and "+DbTables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage;
+			tmp+=" and "+DbTables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage;
 			tmp+=" and "+DbTables.MEDIA_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			tmp+=" and "+DbTables.MEDIA_PREFIXE+".id_media="+dataTablePrefixe+".id_media ";
 				
 			
 			// Interest center
 
-			tmp+=" and "+DbTables.INTEREST_CENTER_PREFIXE+".id_language="+webSession.SiteLanguage;
+			tmp+=" and "+DbTables.INTEREST_CENTER_PREFIXE+".id_language="+webSession.DataLanguage;
 			tmp+=" and "+DbTables.INTEREST_CENTER_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			tmp+=" and "+DbTables.INTEREST_CENTER_PREFIXE+".id_interest_center="+dataTablePrefixe+".id_interest_center ";
 
 
 			// Régie
-			tmp+=" and "+DbTables.MEDIA_SELLER_PREFIXE+".id_language="+webSession.SiteLanguage;
+			tmp+=" and "+DbTables.MEDIA_SELLER_PREFIXE+".id_language="+webSession.DataLanguage;
 			tmp+=" and "+DbTables.MEDIA_SELLER_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			tmp+=" and "+DbTables.MEDIA_SELLER_PREFIXE+".id_media_seller="+dataTablePrefixe+".id_media_seller ";
 

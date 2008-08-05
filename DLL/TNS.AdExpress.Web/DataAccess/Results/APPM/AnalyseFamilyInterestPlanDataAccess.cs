@@ -239,11 +239,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
 			sql.Append(" and "+ DBConstantes.Tables.MEDIA_PREFIXE+".id_media="+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_media" );			
 			sql.Append(" and "+ DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_interest_center="+DBConstantes.Tables.MEDIA_PREFIXE+".id_interest_center" );			
 			//langues & activation
-			sql.Append(" and "+ DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage );
+			sql.Append(" and "+ DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage );
 			sql.Append(" and "+ DBConstantes.Tables.VEHICLE_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+ DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage );
+			sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.DataLanguage);
 			sql.Append(" and "+ DBConstantes.Tables.MEDIA_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+ DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_language="+webSession.SiteLanguage );
+			sql.Append(" and " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE + ".id_language=" + webSession.DataLanguage);
 			sql.Append(" and "+ DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+ DBConstantes.Tables.WAVE_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+ DBConstantes.Tables.TARGET_PREFIXE+".activation < " + DBConstantes.ActivationValues.UNACTIVATED);

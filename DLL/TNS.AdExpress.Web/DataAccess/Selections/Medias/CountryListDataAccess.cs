@@ -45,11 +45,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 			sql.Append(" from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".vehicle "+DBConstantes.Tables.VEHICLE_PREFIXE+","+DBConstantes.Schema.ADEXPRESS_SCHEMA+".country "+DBConstantes.Tables.COUNTRY_PREFIXE+","+DBConstantes.Schema.ADEXPRESS_SCHEMA+".media "+DBConstantes.Tables.MEDIA_PREFIXE+" , "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".category "+DBConstantes.Tables.CATEGORY_PREFIXE+", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".basic_media "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+" ");
 			sql.Append(" where");
 			// Langue
-			sql.Append(" "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.COUNTRY_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+			sql.Append(" "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+DBConstantes.Tables.COUNTRY_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 			// Activation
 			sql.Append(" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+DBConstantes.Tables.COUNTRY_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
@@ -173,11 +173,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 			sql.Append(" where");
 			
 			// Langue
-			sql.Append(" "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.COUNTRY_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_language="+webSession.SiteLanguage.ToString());
+			sql.Append(" "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+DBConstantes.Tables.COUNTRY_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 			// Activation
 			sql.Append(" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+DBConstantes.Tables.COUNTRY_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);

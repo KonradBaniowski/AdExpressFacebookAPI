@@ -131,52 +131,11 @@ namespace AdExpress{
 			string login=loginTextbox.Text;
 			string password=passwordTextbox.Text;
 			//string connectionString="User Id="+login+";Password="+password+Connection.SESSION_CONNECTION_STRING;
-			try{
-                #region Acienne version Creer l'objet Right
-                /*TNS.FrameWork.DB.Common.IDataSource source = new TNS.FrameWork.DB.Common.OracleDataSource("User Id=" + login + "; Password=" + password + " " + TNS.AdExpress.Constantes.DB.Connection.RIGHT_CONNECTION_STRING);
-				TNS.AdExpress.Web.Core.WebRight loginRight=new TNS.AdExpress.Web.Core.WebRight(login,password,source);
-				//Vérifier le droit d'accès au site
-				if (loginRight.CanAccessToAdExpress(source)){
-					// Regarde à partir de quel tables charger les droits clients
-					// (template ou droits propres au login)
-						loginRight.htRightUserBD();				
-					//Vérifier la cohérence des droits
-					//if (loginRight.checkRightCohesion()){
-					if(true){
-						//Creer une session
-						if(_webSession==null) _webSession = new WebSession(loginRight);
-						_webSession.SiteLanguage=this._siteLanguage;
-						// Année courante pour les recaps
-						_webSession.DownLoadDate=TNS.AdExpress.Web.BusinessFacade.Selections.Periods.RecapBusinessFacade.GetLastLoadedYear();
-						// On met à jour IDataSource à partir de la session elle même.
-						_webSession.Source=source;
-						//Sauvegarder la session
-						_webSession.Save();
-						// Tracking (NewConnection)
-						// On obtient l'adresse IP:
-						_webSession.OnNewConnection(this.Request.UserHostAddress);
-						//Se Rediriger vers la page des modules
-// ------------->       Response.Redirect("Private/selectionModule.aspx?idSession="+_webSession.IdSession);
-					}
-//					else{
-//						// Problèmes de droits
-//						Response.Write("<script language=javascript>");
-//						Response.Write("	alert(\""+GestionWeb.GetWebWord(879,this._siteLanguage)+"\");");
-//						Response.Write("</script>");
-//					}
-				}
-				else{
-					// L'accès est impossible
-					Response.Write("<script language=javascript>");
-					Response.Write("	alert(\""+GestionWeb.GetWebWord(880,this._siteLanguage)+"\");");
-					Response.Write("</script>");
-                }*/
-                #endregion
-
+			try{                
                 #region Nouvelle version
                 //Right Object Creation
 
-                TNS.AdExpress.Right newRight=new  TNS.AdExpress.Right(login,password);
+				TNS.AdExpress.Right newRight = new TNS.AdExpress.Right(login, password, _siteLanguage);
                 if(newRight.CanAccessToAdExpress()) {
                     newRight.SetModuleRights();
                     newRight.SetFlagsRights();

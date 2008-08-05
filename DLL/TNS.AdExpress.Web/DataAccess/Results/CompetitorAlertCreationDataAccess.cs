@@ -146,7 +146,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 sql.Append(" and am.date_debut(+) = wp.date_media_num ");
 				sql.Append(" and am.id_project(+) = "+ CstProject.ADEXPRESS_ID +") ");
 				sql.Append(" and lo.id_location (+)=dl.id_location ");
-				sql.Append(" and lo.id_language (+)="+webSession.SiteLanguage.ToString());
+				sql.Append(" and lo.id_language (+)="+webSession.DataLanguage.ToString());
 
 				sql.Append(" and dl.id_media (+)=wp.id_media ");
                 sql.Append(" and dl.date_media_num (+)=wp.date_media_num ");
@@ -157,18 +157,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.outdoor)
 			{
 				sql.Append(" and ag.id_agglomeration (+)= wp.id_agglomeration ");
-				sql.Append(" and ag.id_language (+)= "+webSession.SiteLanguage.ToString());
+				sql.Append(" and ag.id_language (+)= "+webSession.DataLanguage.ToString());
 				sql.Append(" and ag.activation (+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 			}
 			//langages
-			sql.Append(" and md.id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and sg.id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and gp.id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and ad.id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and pr.id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and ct.id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and ve.id_language="+webSession.SiteLanguage.ToString());
-			sql.Append(" and pga.id_language(+)="+webSession.SiteLanguage.ToString());
+			sql.Append(" and md.id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and sg.id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and gp.id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and ad.id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and pr.id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and ct.id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and ve.id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and pga.id_language(+)="+webSession.DataLanguage.ToString());
 			sql.Append("");
 			
 			//activation
@@ -182,9 +182,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			
 			// A changer pour inter si le nom de la table est différent
 			if (tableName.CompareTo(DBConstantes.Tables.DATA_PRESS)==0){
-				sql.Append(" and co.id_language (+)="+webSession.SiteLanguage.ToString());
-				sql.Append(" and lo.id_language (+)="+webSession.SiteLanguage.ToString());
-				sql.Append(" and fo.id_language (+)="+webSession.SiteLanguage.ToString());
+				sql.Append(" and co.id_language (+)="+webSession.DataLanguage.ToString());
+				sql.Append(" and lo.id_language (+)="+webSession.DataLanguage.ToString());
+				sql.Append(" and fo.id_language (+)="+webSession.DataLanguage.ToString());
 			//activation   
 				sql.Append(" and co.activation <"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 				sql.Append(" and fo.activation <"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);

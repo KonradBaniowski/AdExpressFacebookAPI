@@ -80,7 +80,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			#region where
 			sql.Append(" where ");
 			sql.Append(DBTables.PRODUCT_PREFIXE+".id_product="+DBTables.WEB_PLAN_PREFIXE+".id_product ");
-			sql.Append(" and "+DBTables.PRODUCT_PREFIXE+".id_language="+webSession.SiteLanguage);
+			sql.Append(" and "+DBTables.PRODUCT_PREFIXE+".id_language="+webSession.DataLanguage);
 			sql.Append(" and " + DBTables.PRODUCT_PREFIXE+".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_media_secodip="+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_media");
 			sql.Append(" and " + DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
@@ -88,7 +88,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" and " + DBTables.TARGET_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_target in("+baseTarget.ToString()+","+additionalTarget.ToString()+")");			
 			sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
-			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.SiteLanguage);
+			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and "+dateField+" >="+dateBegin);
 			sql.Append(" and "+dateField+" <="+dateEnd);
 			
@@ -186,7 +186,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
 			sql.Append(" and " + DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBTables.TARGET_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.SiteLanguage);
+			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and "+ DBTables.WEB_PLAN_PREFIXE+".id_group_ in ("+idGroup+")");	
 			sql.Append(" and "+dateField+" >="+dateBegin);
 			sql.Append(" and "+dateField+" <="+dateEnd);
@@ -294,7 +294,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
 			sql.Append(" and " + DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBTables.TARGET_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.SiteLanguage);
+			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and "+dateField+" >="+dateBegin);
 			sql.Append(" and "+dateField+" <="+dateEnd);
 
@@ -424,17 +424,17 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 
 			if (webSession.PrincipalProductUniverses.Count > 0 && webSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISER, AccessType.includes)) {
 				joins = DBTables.ADVERTISER_PREFIXE + ".id_advertiser=" + DBTables.WEB_PLAN_PREFIXE + ".id_advertiser ";
-				joins += " and " + DBTables.ADVERTISER_PREFIXE + ".id_language=" + webSession.SiteLanguage;
+				joins += " and " + DBTables.ADVERTISER_PREFIXE + ".id_language=" + webSession.DataLanguage;
 				counter++;
 			}
 			if (webSession.PrincipalProductUniverses.Count > 0 && webSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes)) {
 				joins = DBTables.BRAND_PREFIXE + ".id_brand=" + DBTables.WEB_PLAN_PREFIXE + ".id_brand ";
-				joins += " and " + DBTables.BRAND_PREFIXE + ".id_language=" + webSession.SiteLanguage;
+				joins += " and " + DBTables.BRAND_PREFIXE + ".id_language=" + webSession.DataLanguage;
 				counter++;
 			}
 			if (counter > 1 ||  (webSession.PrincipalProductUniverses.Count > 0 && webSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes))) {
 				joins =DBTables.PRODUCT_PREFIXE+".id_product="+DBTables.WEB_PLAN_PREFIXE+".id_product ";
-				joins+=" and "+DBTables.PRODUCT_PREFIXE+".id_language="+webSession.SiteLanguage;
+				joins+=" and "+DBTables.PRODUCT_PREFIXE+".id_language="+webSession.DataLanguage;
 				
 			}
 			

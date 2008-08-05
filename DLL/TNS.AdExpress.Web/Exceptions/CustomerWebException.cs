@@ -540,7 +540,7 @@ namespace TNS.AdExpress.Web.Exceptions{
 					//Selection produit principale
 					if (webSession.PrincipalProductUniverses.Count == 1) {
 						body += "<u>" + GestionWeb.GetWebWord(1759, webSession.SiteLanguage) + "</u><br>";
-						body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.PrincipalProductUniverses[0], webSession.SiteLanguage,webSession.Source, 600);
+						body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.PrincipalProductUniverses[0], webSession.SiteLanguage, webSession.DataLanguage,webSession.Source, 600);
 					}
 					else if (webSession.PrincipalProductUniverses.Count > 1) {
 						for (int k = 0; k < webSession.PrincipalProductUniverses.Count; k++) {
@@ -553,7 +553,7 @@ namespace TNS.AdExpress.Web.Exceptions{
 								}
 							}
 							body += "<u>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + "</u><br>";
-                            body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.PrincipalProductUniverses[0],webSession.SiteLanguage,webSession.Source,600);
+                            body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.PrincipalProductUniverses[0],webSession.SiteLanguage, webSession.DataLanguage,webSession.Source,600);
 						}
 					}
 				}
@@ -578,7 +578,7 @@ namespace TNS.AdExpress.Web.Exceptions{
 						}
 						else adExpressUniverse = webSession.SecondaryProductUniverses[0];
 						body += "<u>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + "</u><br>";
-						body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(adExpressUniverse, webSession.SiteLanguage,webSession.Source, 600);
+						body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(adExpressUniverse, webSession.SiteLanguage,webSession.DataLanguage,webSession.Source, 600);
 					}
 					else if (webSession.SecondaryProductUniverses.Count > 1) {
 						for (int k = 0; k < webSession.SecondaryProductUniverses.Count; k++) {
@@ -597,7 +597,7 @@ namespace TNS.AdExpress.Web.Exceptions{
 								else universeCodeTitle = 2302;
 							}
 							body += "<u>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + "</u><br>";
-							body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.SecondaryProductUniverses[k], webSession.SiteLanguage, webSession.Source, 600);
+							body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.SecondaryProductUniverses[k], webSession.SiteLanguage,webSession.DataLanguage, webSession.Source, 600);
 						}
 					}
 				}

@@ -30,7 +30,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="language">language</param>
 		/// <param name="source">Data Source</param>
 		/// <returns>Html render to show universe selection</returns>
-		public static string ToExcel(AdExpressUniverse adExpressUniverse, int language,IDataSource source) {
+		public static string ToExcel(AdExpressUniverse adExpressUniverse, int language, int dataLanguage,IDataSource source) {
 			
 
 			#region Variables
@@ -42,11 +42,11 @@ namespace TNS.AdExpress.Web.Functions {
 			if (adExpressUniverse != null && adExpressUniverse.Count() > 0) {
 				//Groups of items excludes
 				groups = adExpressUniverse.GetExludes();
-				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language, source, AccessType.excludes));
+				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language,dataLanguage, source, AccessType.excludes));
 
 				//Groups of items includes
 				groups = adExpressUniverse.GetIncludes();
-				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language, source, AccessType.includes));
+				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language,dataLanguage, source, AccessType.includes));
 
 			}
 			return html.ToString();
@@ -59,11 +59,11 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="language">language</param>
 		/// <param name="source">Data Source</param>
 		/// <returns>Html render to show universe selection</returns>
-		public static string ToHtml(AdExpressUniverse adExpressUniverse, int language, IDataSource source, int witdhTable) {			
+		public static string ToHtml(AdExpressUniverse adExpressUniverse, int language, int dataLanguage, IDataSource source, int witdhTable) {			
 				
 			int currentLine = 0;
 
-			return ToHtml(adExpressUniverse, language, source, witdhTable, false, -1, ref currentLine);  
+			return ToHtml(adExpressUniverse, language,dataLanguage, source, witdhTable, false, -1, ref currentLine);  
 		}
 
 		/// <summary>
@@ -73,7 +73,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="language">language</param>
 		/// <param name="source">Data Source</param>
 		/// <returns>Html render to show universe selection</returns>
-		public static string ToHtml(AdExpressUniverse adExpressUniverse, int language, IDataSource source, int witdhTable,bool paginate,int nbLineByPage,ref int currentLine) {
+		public static string ToHtml(AdExpressUniverse adExpressUniverse, int language, int dataLanguage, IDataSource source, int witdhTable, bool paginate, int nbLineByPage, ref int currentLine) {
 			StringBuilder html = new StringBuilder();
 			List<NomenclatureElementsGroup> groups = null;
 			int baseColSpan = 3;
@@ -82,11 +82,11 @@ namespace TNS.AdExpress.Web.Functions {
 				html.Append("<table style=\" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
 				//Groups of items excludes
 				groups = adExpressUniverse.GetExludes();
-				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, source, AccessType.excludes, witdhTable,paginate,nbLineByPage ,ref currentLine ));
+				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, dataLanguage,source, AccessType.excludes, witdhTable, paginate, nbLineByPage, ref currentLine));
 
 				//Groups of items includes
 				groups = adExpressUniverse.GetIncludes();
-				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, source, AccessType.includes, witdhTable, paginate, nbLineByPage, ref currentLine));
+				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language,dataLanguage, source, AccessType.includes, witdhTable, paginate, nbLineByPage, ref currentLine));
 
 				html.Append("</table>");
 			}
@@ -120,10 +120,11 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="groups">universe groups</param>
 		/// <param name="baseColSpan">base column span</param>
 		/// <param name="language">language</param>
+		/// <param name="dataLanguage">Data language</param>
 		/// <param name="source">Data Source</param>
 		/// <param name="accessType">items access type</param>
 		/// <returns>Html render to show universe selection</returns>
-		private static string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, IDataSource source, AccessType accessType) {
+		private static string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language,int dataLanguage, IDataSource source, AccessType accessType) {
 			
 			#region Variables
 			int level = 1;
@@ -156,7 +157,7 @@ namespace TNS.AdExpress.Web.Functions {
 						for(int j = 0; j<levelIdsList.Count; j++){
 
 
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),language,source);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
@@ -209,7 +210,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="source">Data Source</param>
 		/// <param name="accessType">items access type</param>
 		/// <returns>Html render to show universe selection</returns>
-		private static string GetUniverseGroupForHtml(List<NomenclatureElementsGroup> groups, int baseColSpan, int language, IDataSource source, AccessType accessType, int witdhTable, bool paginate, int nbLineByPage, ref int currentLine) {
+		private static string GetUniverseGroupForHtml(List<NomenclatureElementsGroup> groups, int baseColSpan, int language,int dataLanguage, IDataSource source, AccessType accessType, int witdhTable, bool paginate, int nbLineByPage, ref int currentLine) {
 
 			
 			#region Variables
@@ -223,90 +224,7 @@ namespace TNS.AdExpress.Web.Functions {
 			StringBuilder html = new StringBuilder();
 			int colonne = 0;
 			bool displayBorder = true;
-			#endregion
-
-			#region Ancienne version
-			//if (accessType == AccessType.includes) code = 2281;
-			//else code = 2282;
-
-
-			//if (groups != null && groups.Count > 0) {
-
-			//    for (int i = 0; i < groups.Count; i++) {
-			//        List<long> levelIdsList = groups[i].GetLevelIdsList();
-			//        displayBorder = true;
-
-			//        html.Append(GetBlankLine(baseColSpan));
-			//        if (i > 0 && accessType == AccessType.includes) code = 2368;
-			//        html.Append("<tr class=\"txtViolet11Bold\"><td colspan=" + baseColSpan + "  >" + GestionWeb.GetWebWord(code, language) + "&nbsp; : </td></tr>");
-
-			//        //For each group's level
-			//        if (levelIdsList != null) {
-			//            html.Append("<tr><td>");					
-
-			//            for (int j = 0; j < levelIdsList.Count; j++) {
-
-			//                //Level label
-			//                if(displayBorder)html.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
-			//                else html.Append("<table style=\"border-bottom :#644883 1px solid;  border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0  width=" + witdhTable + ">");
-			//                html.Append("<tr class=\"txtViolet11Bold\" ><td colspan=" + baseColSpan + "  >&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language)) + " </td></tr>");
-			//                html.Append("</table>");
-			//                displayBorder = false;
-
-			//                //Show items of the current level							
-			//                colonne = 0;
-			//                universeItems = new TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, connection);
-			//                if (universeItems != null) {
-			//                    itemIdList = universeItems.IdListOrderByClassificationItem;
-			//                    if (itemIdList != null && itemIdList.Count > 0) {
-			//                        html.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width=" + witdhTable + ">");
-
-			//                        for (int k = 0; k < itemIdList.Count; k++) {
-										
-			//                            //Current item label										
-			//                            checkBox = "<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"AdvertiserSelectionWebControl1_" + k + "\" name=\"AdvertiserSelectionWebControl1$" + k + "\">";
-			//                            if (colonne == 2) {
-
-			//                                html.Append("<td style=\"white-space: nowrap\" class=\"txtViolet10\" width=33%>");
-			//                                html.Append(checkBox + "<label for=\"AdvertiserSelectionWebControl1_" + k + "\">" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</label>");
-			//                                html.Append("</td>");
-			//                                colonne = 1;
-			//                            }
-			//                            else if (colonne == 1) {
-			//                                html.Append("<td style=\"white-space: nowrap\" class=\"txtViolet10\" width=33%>");
-			//                                html.Append(checkBox + "<label for=\"AdvertiserSelectionWebControl1_" + k + "\">" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</label>");
-			//                                html.Append("</td>");
-			//                                html.Append("</tr>");
-			//                                colonne = 0;
-			//                            }
-			//                            else {
-			//                                html.Append("<tr>");
-			//                                html.Append("<td style=\"white-space: nowrap\" class=\"txtViolet10\" width=33%>");
-			//                                html.Append(checkBox + "<label for=\"AdvertiserSelectionWebControl1_" + k + "\">" + universeItems[Int64.Parse(itemIdList[k].ToString())] + "</label>");
-			//                                html.Append("</td>");
-			//                                colonne = 2;
-			//                            }										
-			//                        }
-			//                        if (colonne != 0) {
-			//                            if (colonne == 2) {
-			//                                html.Append("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
-			//                                html.Append("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
-			//                            }
-			//                            else if (colonne == 1) {
-			//                                html.Append("<td class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
-			//                            }
-			//                            html.Append("</tr>");
-			//                        }									
-			//                    }
-			//                    html.Append("</table>");
-			//                }
-							
-			//            }
-			//            html.Append("</td></tr>");
-			//        }
-			//    }
-			//}
-			#endregion
+			#endregion			
 
 			if (accessType == AccessType.includes) code = 2281;
 			else code = 2282;
@@ -341,7 +259,7 @@ namespace TNS.AdExpress.Web.Functions {
 
 							//Show items of the current level							
 							colonne = 0;
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),language,source);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {

@@ -151,7 +151,7 @@ namespace AdExpress.Private.Universe{
 					selectItemsInClassificationWebControl.DBSchema = TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA;
 					for (int k = 0; k < adExpressUniverse.Count; k++) {
 						if (adExpressUniverse.ContainsKey(k)) {
-							advertiserText += selectItemsInClassificationWebControl.ShowUniverse(adExpressUniverse[k], _webSession.SiteLanguage, _webSession.Source);
+							advertiserText += selectItemsInClassificationWebControl.ShowUniverse(adExpressUniverse[k], _webSession.DataLanguage, _webSession.Source);
 						}
 					}
 				}
