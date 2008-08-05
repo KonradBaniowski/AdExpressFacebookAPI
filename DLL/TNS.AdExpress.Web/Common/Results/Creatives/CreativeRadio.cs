@@ -106,7 +106,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\" class=\"violetBackGroundV3\">");
 
             output.AppendFormat("<tr><td class=\"creativeVisualCell\">");
-            if (_session.CustomerLogin.GetFlag(DBCst.Flags.ID_RADIO_CREATION_ACCESS_FLAG) != null) {
+            if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_RADIO_CREATION_ACCESS_FLAG)) {
                 output.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\" class=\"audioFileBackGround\"></a>", this._path, this._id, this._session.IdSession, (int)DBClassifCst.Vehicles.names.radio);
             }
             else {

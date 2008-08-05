@@ -37,7 +37,6 @@ namespace TNS.AdExpress.Domain {
 		/// </summary>
 		public string Description {
 			get { return _description; }
-			set { _description = value; }
 		} 
 		#endregion
 
@@ -50,6 +49,8 @@ namespace TNS.AdExpress.Domain {
 		public Flag(Int64 id, string description) {
 			if (id == null) throw (new ArgumentException("Invalid identifier parameter"));
 			if (description == null || description.Length == 0) throw (new ArgumentException("Invalid description parameter"));
+			_id = id;
+			_description = description;
 		}
 		#endregion
 	}

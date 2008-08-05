@@ -91,6 +91,10 @@ namespace TNS.AdExpress {
         /// Date de modification des droits utilisateur
         /// </summary>
         protected DateTime _lastModificationDate;
+		/// <summary>
+		/// Site language
+		/// </summary>
+		protected int _siteLanguage = 33;
         #endregion
 
         #region Constructor
@@ -112,6 +116,27 @@ namespace TNS.AdExpress {
                 throw (new RightException("Impossible to access to the Database",err));
             }
         }
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="login">Customer Login</param>
+		/// <param name="password">Customer Password</param>
+		/// <param name="sitelanguage">Site language</param>
+		public Right(string login, string password,int sitelanguage) {
+			if (login == null || login.Length == 0) throw (new ArgumentException("Invalid login parameter"));
+			if (password == null || password.Length == 0) throw (new ArgumentException("Invalid password parameter"));
+			_login = login;
+			_password = password;
+			_connectionDate = DateTime.Now;
+			_siteLanguage = sitelanguage;
+			try {
+				_loginId = RightDAL.GetLoginId(Source, _login, _password);
+			}
+			catch (System.Exception err) {
+				throw (new RightException("Impossible to access to the Database", err));
+			}
+		}
         #endregion
 
         #region Accessors
@@ -121,7 +146,11 @@ namespace TNS.AdExpress {
         public IDataSource Source {
             get {
                 if(_source==null){
-                    _source=WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login,_password,CustomerConnectionIds.adexpr03);
+					string nlsSort = "";
+					if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(_siteLanguage.ToString()))) {
+						nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(_siteLanguage.ToString())].NlsSort;
+					}
+					_source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort,CustomerConnectionIds.adexpr03);
                 }
                 return (_source);
             }
@@ -653,55 +682,62 @@ namespace TNS.AdExpress {
 
         #region Flags rights
 
-        /// <summary>
-        /// Set flags rights
-        /// </summary>
-        public void SetFlagsRights() {
-            DataSet ds;
-            try {
-                ds=RightDAL.GetFlagsRights(Source,_loginId);
-                _flagsRights=new Dictionary<Int64,string>();
-                if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
-                    foreach(DataRow row in ds.Tables[0].Rows) {
-                        _flagsRights.Add((Int64)row[0],row[1].ToString());
-                    }
-                }
-            }
-            catch(System.Exception err) {
-                throw (new RightException("Impossible to retreive flags rights"));
-            }
-        }
-        /// <summary>
-        /// Get Flag name
-        /// </summary>
-        /// <param name="flagId">flag Id</param>
-        /// <returns>Flag name</returns>
-        public string GetFlag(Int64 flagId) {
-            try {
-                if(_flagsRights==null) SetFlagsRights();
-                if(_flagsRights.ContainsKey(flagId)) return (_flagsRights[flagId]);
-                return (null);
-            }
-            catch(System.Exception err) {
-                throw (new RightException("Impossible to retreive flags rights"));
-            }
-        }
+		/// <summary>
+		/// Set flags rights
+		/// </summary>
+		public void SetFlagsRights() {			
+			DataSet ds;
+			try {
+				ds = RightDAL.GetFlagsRights(Source, _loginId);
+				_flagsRights = new Dictionary<Int64, string>();
+				if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
+					foreach (DataRow row in ds.Tables[0].Rows) {
+						_flagsRights.Add((Int64)row[0], row[1].ToString());
+					}
+				}
+			}
+			catch (System.Exception err) {
+				throw (new RightException("Impossible to retreive flags rights"));
+			}
+		}
+		///// <summary>
+		///// Get Flag name
+		///// </summary>
+		///// <param name="flagId">flag Id</param>
+		///// <returns>Flag name</returns>
+		//public string GetFlag(Int64 flagId) {
+		//    try {
+		//        if (_flagsRights == null) SetFlagsRights();
+		//        if (_flagsRights.ContainsKey(flagId)) return (_flagsRights[flagId]);
+		//        return (null);
+		//    }
+		//    catch (System.Exception err) {
+		//        throw (new RightException("Impossible to retreive flags rights"));
+		//    }
+		//}
 
-        /// <summary>
-        /// Indicate if the customer have access to a flag
-        /// </summary>
-        /// <param name="flagId">Flag id</param>
-        /// <returns>True if the customer have access to the flag</returns>
-        public bool CustormerFlagAccess(Int64 flagId) {
-            try {
-                if(_flagsRights==null) SetFlagsRights();
-                if(_flagsRights.ContainsKey(flagId)) return (true);
-                return (false);
-            }
-            catch(System.Exception err) {
-                throw (new RightException("Impossible to retreive flags rights"));
-            }
-        }
+		/// <summary>
+		/// Indicate if the customer have access to a flag
+		/// </summary>
+		/// <param name="flagId">Flag id</param>
+		/// <returns>True if the customer have access to the flag</returns>
+		public bool CustormerFlagAccess(Int64 flagId) {
+			try {
+				#region Old version
+				//if (_flagsRights == null) SetFlagsRights();
+				//if (_flagsRights.ContainsKey(flagId)) return (true);
+				//return (false);
+				#endregion
+				
+				if(!Domain.AllowedFlags.ContainFlag(flagId))return true;
+				if (_flagsRights == null) SetFlagsRights();
+				if (_flagsRights.ContainsKey(flagId)) return (true);
+				return (false);
+			}
+			catch (System.Exception err) {
+				throw (new RightException("Impossible to retreive flags rights"));
+			}
+		}
 
         #region Creation flag / vehicle
         /// <summary>
@@ -709,28 +745,36 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <param name="vehicleId">vehicle id</param>
         /// <returns>True, if the customer has access</returns>
-        public bool ShowCreatives(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicleId) {
-            switch(vehicleId) {
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
-                    return (_flagsRights[Flags.ID_PRESS_CREATION_ACCESS_FLAG] != null);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
-                    return (_flagsRights[Flags.ID_RADIO_CREATION_ACCESS_FLAG] != null);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
-                    return (_flagsRights[Flags.ID_TV_CREATION_ACCESS_FLAG] != null);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
-                    return (_flagsRights[Flags.ID_DETAIL_INTERNET_ACCESS_FLAG] != null);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
-                    return (_flagsRights[Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG] != null);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
-                    return (_flagsRights[Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG] != null);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
-                    return (_flagsRights[Flags.ID_OTHERS_CREATION_ACCESS_FLAG] != null);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
-                    return (_flagsRights[Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG] != null);
-                default:
-                    return (false);
-            }
-        }
+        public bool ShowCreatives(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicleId) {			
+			switch (vehicleId) {
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_CREATION_ACCESS_FLAG)) return true;
+					return (_flagsRights.ContainsKey(Flags.ID_PRESS_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_PRESS_CREATION_ACCESS_FLAG] != null);
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_RADIO_CREATION_ACCESS_FLAG)) return true;
+					return (_flagsRights.ContainsKey(Flags.ID_RADIO_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_RADIO_CREATION_ACCESS_FLAG] != null);
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_TV_CREATION_ACCESS_FLAG)) return true;
+					return (_flagsRights.ContainsKey(Flags.ID_TV_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_TV_CREATION_ACCESS_FLAG] != null);
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)) return true;
+					return (_flagsRights.ContainsKey(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG) && _flagsRights[Flags.ID_DETAIL_INTERNET_ACCESS_FLAG] != null);
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)) return true;
+					return (_flagsRights.ContainsKey(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG] != null);
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
+					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)) return true;
+					return (_flagsRights.ContainsKey(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG] != null);
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
+					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OTHERS_CREATION_ACCESS_FLAG)) return true;
+					return (_flagsRights.ContainsKey(Flags.ID_OTHERS_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_OTHERS_CREATION_ACCESS_FLAG] != null);
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG)) return true;
+					return (_flagsRights.ContainsKey(Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG] != null);
+				default:
+					return (false);
+			}
+		}
         #endregion
         #endregion
 

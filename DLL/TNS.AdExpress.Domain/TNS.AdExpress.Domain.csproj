@@ -71,7 +71,7 @@
     <Compile Include="Exceptions\WebLanguagesXLException.cs" />
     <Compile Include="Exceptions\WebThemesXLException.cs" />
     <Compile Include="Flag.cs" />
-    <Compile Include="Flags.cs" />
+    <Compile Include="AllowedFlags.cs" />
     <Compile Include="Layers\DataAccessLayer.cs" />
     <Compile Include="Layers\LayerBase.cs" />
     <Compile Include="Layers\RulesLayer.cs" />

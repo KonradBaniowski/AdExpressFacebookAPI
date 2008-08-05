@@ -20,7 +20,9 @@ using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork.DB.Common;
-
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain.Web;
 namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 	/// <summary>
 	/// Donne la liste des sessions d'un client qui sont enregistrées, elle sont classés par répertoire
@@ -50,7 +52,7 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 			#endregion
 
 			#region Execution de la requête
-			try{
+			try{			
 				return(webSession.Source.Fill(sql));
 			}
 			catch(System.Exception err){
@@ -80,7 +82,7 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 			#endregion
 
 			#region Execution de la requête
-			try{
+			try{								
 				return(webSession.Source.Fill(sql));
 			}
 			catch(System.Exception err){

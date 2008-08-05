@@ -733,7 +733,7 @@ namespace AdExpress.Private.MyAdExpress{
 								//Render universe html code
 								t.Append("<TR height=\"20\">");
 								t.Append("<TD>&nbsp;</TD>");
-                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.SiteLanguage, _webSession.Source) + "</TD>");
+                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source) + "</TD>");
 								t.Append("</TR>");
 								t.Append("<TR height=\"5\">");
 								t.Append("<TD></TD>");
@@ -747,7 +747,7 @@ namespace AdExpress.Private.MyAdExpress{
 						}
 						else {
 							if (webSessionSave.PrincipalProductUniverses.ContainsKey(k)) {
-								productText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.SiteLanguage, _webSession.Source);
+								productText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source);
 							}
 						}
 					}
@@ -792,7 +792,7 @@ namespace AdExpress.Private.MyAdExpress{
 							//Universe Label							
 							referenceAdvertiserDisplay = true;
 							referenceAdvertiserAdexpresstext.Code = 1195;
-                            referenceAdvertiserText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[0],_webSession.SiteLanguage,_webSession.Source);
+                            referenceAdvertiserText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[0],_webSession.DataLanguage,_webSession.Source);
 						}
 
 						//Listes des annonceurs concurrents
@@ -817,7 +817,7 @@ namespace AdExpress.Private.MyAdExpress{
 								}
 								else {
 									if (WebFunctions.Modules.IsDashBoardModule(webSessionSave))
-                                        productText = selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k],_webSession.SiteLanguage,_webSession.Source);
+                                        productText = selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);
 									else {
 										//Universe Label
 										if (webSessionSave.SecondaryProductUniverses[k].Label != null && webSessionSave.SecondaryProductUniverses[k].Label.Length > 0) {
@@ -827,7 +827,7 @@ namespace AdExpress.Private.MyAdExpress{
 											referenceAdvertiserText += "<Label>" + webSessionSave.SecondaryProductUniverses[k].Label + "</Label>";
 											referenceAdvertiserText += "</TD></TR>";
 										}
-                                        referenceAdvertiserText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k],_webSession.SiteLanguage,_webSession.Source);
+                                        referenceAdvertiserText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);
 									}
 								}
 							}
@@ -1263,7 +1263,7 @@ namespace AdExpress.Private.MyAdExpress{
 			//Render universe html code
 			t.Append("<TR height=\"20\">");
 			t.Append("<TD>&nbsp;</TD>");
-            t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k], webSession.SiteLanguage, webSession.Source) + "</TD>");
+            t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k], webSession.DataLanguage, webSession.Source) + "</TD>");
 			t.Append("</TR>");
 			t.Append("<TR height=\"5\">");
 			t.Append("<TD></TD>");

@@ -24,7 +24,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 		public static Dictionary<Int64, Flag> Load(IDataSource source) {
 
 			#region Variables
-			Dictionary<Int64, Flag> list = new Dictionary<Int64, Flag>();
+			Dictionary<Int64, Flag> list = null;
 			XmlTextReader reader = null;
 			string description = "";
 			Int64 id;
@@ -41,6 +41,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								description = reader.GetAttribute("description");
 								if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
 								id = Int64.Parse(reader.GetAttribute("id"));
+								if (list == null)list = new Dictionary<Int64, Flag>();
 								flag = new Flag(id, description);								
 								list.Add(id, flag);
 								break;

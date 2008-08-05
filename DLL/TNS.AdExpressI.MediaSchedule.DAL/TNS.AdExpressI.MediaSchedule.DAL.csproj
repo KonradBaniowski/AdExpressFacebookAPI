@@ -46,7 +46,7 @@
     </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\prog_sources\Versionning\AdExpress PZL\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

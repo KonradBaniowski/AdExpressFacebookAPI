@@ -349,8 +349,8 @@ namespace AdExpress.Private.MyAdExpress{
 				AtomicPeriodWeek tmp;
 				bool validModule=false;
 				bool notValidPeriod = false;
-                TNS.FrameWork.DB.Common.IDataSource source = new TNS.FrameWork.DB.Common.OracleDataSource("User Id=" + _webSession.CustomerLogin.Login + "; Password=" + _webSession.CustomerLogin.PassWord + " " + TNS.AdExpress.Constantes.DB.Connection.RIGHT_CONNECTION_STRING);
-				TNS.AdExpress.Right right=new TNS.AdExpress.Right(_webSession.CustomerLogin.Login,_webSession.CustomerLogin.PassWord);
+				//TNS.FrameWork.DB.Common.IDataSource source = new TNS.FrameWork.DB.Common.InternationalOracleDataSource("User Id=" + _webSession.CustomerLogin.Login + "; Password=" + _webSession.CustomerLogin.PassWord + " " + TNS.AdExpress.Constantes.DB.Connection.RIGHT_CONNECTION_STRING);
+				TNS.AdExpress.Right right=new TNS.AdExpress.Right(_webSession.CustomerLogin.Login,_webSession.CustomerLogin.PassWord,_webSession.SiteLanguage);
 				string PeriodBeginningDate="";
 				string PeriodEndDate="";
 				string invalidPeriodMessage="";
@@ -374,7 +374,7 @@ namespace AdExpress.Private.MyAdExpress{
 				if (idMySession!=0){
 
 					webSessionSave=(WebSession)MySessionDataAccess.GetResultMySession(idMySession.ToString(),_webSession);
-
+				
 					DataTable dtModulesList= right.GetCustomerModuleListHierarchy();
 
 					#region Vérification des droits sur les modules
@@ -392,9 +392,9 @@ namespace AdExpress.Private.MyAdExpress{
 					#endregion
 
 					#region Vérification des flags produit pour le niveau de détail produit					
-					if((_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY)==null&&(webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("holdingcompany")>=0))||
-						(_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)==null&&(webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("brand")>=0))
-						|| (_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)==null&&(webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency")>=0))
+					if((!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("holdingcompany")>=0))||
+						(!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("brand") >= 0))
+						|| (!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency") >= 0))
 						){
 						_webSession.PreformatedProductDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;
 					}
@@ -406,7 +406,7 @@ namespace AdExpress.Private.MyAdExpress{
 					#endregion
 
 					#region Vérification des flags produit pour le niveau de détail support
-					if((_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)==null&&(webSessionSave.PreformatedMediaDetail.ToString().ToLower().IndexOf("slogan")>=0))
+					if((!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) && (webSessionSave.PreformatedMediaDetail.ToString().ToLower().IndexOf("slogan")>=0))
 						){
 						_webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
 					}
@@ -827,19 +827,11 @@ namespace AdExpress.Private.MyAdExpress{
 								invalidPeriodMessage = err.Message;								
 							}
 						}
-					}
-
-					//Conversion en année avant année précédente si nécessaire
-					//if( webSessionSave.CurrentModule!=TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE && webSessionSave.CurrentModule!=TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR ){
-					//    if(_webSession.PeriodBeginningDate.Length>0)
-					//        _webSession.PeriodBeginningDate=WebFunctions.Dates.ConvertToNextToLastYear(_webSession.PeriodBeginningDate);
-					//    if(_webSession.PeriodEndDate.Length>0)
-					//        _webSession.PeriodEndDate=WebFunctions.Dates.ConvertToNextToLastYear(_webSession.PeriodEndDate);
-					//}
+					}					
 					
 					//Année agence média
 					_webSession.MediaAgencyFileYear=webSessionSave.MediaAgencyFileYear;					
-					if(_webSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY)!=null && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency")>=0)
+					if(_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency")>=0)
 						&& !WebFunctions.CheckedText.IsStringEmpty(_webSession.MediaAgencyFileYear)
 						&& _webSession.PeriodBeginningDate.Length>0
 						){
@@ -879,15 +871,7 @@ namespace AdExpress.Private.MyAdExpress{
 					_webSession.TimeInterval = webSessionSave.TimeInterval;
 					_webSession.DetailPeriodBeginningDate =  webSessionSave.DetailPeriodBeginningDate;
 					_webSession.DetailPeriodEndDate =  webSessionSave.DetailPeriodEndDate;
-					
-					//Conversion en année avant année précédente si nécessaire
-					//if( webSessionSave.CurrentModule!=TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule!=TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR ){
-					//    if(_webSession.DetailPeriodBeginningDate.Length>0)
-					//        _webSession.DetailPeriodBeginningDate=WebFunctions.Dates.ConvertToNextToLastYear(_webSession.DetailPeriodBeginningDate);
-					//    if(_webSession.DetailPeriodEndDate.Length>0)
-					//        _webSession.DetailPeriodEndDate=WebFunctions.Dates.ConvertToNextToLastYear(_webSession.DetailPeriodEndDate);
-					//}
-
+				
 					#region Rajouté pour module Bilan de campagne (APPM)
 					_webSession.CurrentUniversAEPMTarget = webSessionSave.CurrentUniversAEPMTarget;
 					_webSession.SelectionUniversAEPMWave = webSessionSave.SelectionUniversAEPMWave;
@@ -964,49 +948,7 @@ namespace AdExpress.Private.MyAdExpress{
 			}
 		}
 
-		#endregion
-		
-		#region Bouton détail
-//		/// <summary>
-//		/// Gestion du bouton détail
-//		/// </summary>
-//		/// <param name="sender"></param>
-//		/// <param name="e"></param>
-//		private void detailImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
-//			
-//			try{
-//				string[] tabParent=null;
-//				Int64 idMySession=0;			
-//		
-//				idSession=_webSession.IdSession;
-//
-//				foreach (string currentKey in Request.Form.AllKeys){
-//					tabParent=currentKey.Split('_');
-//					if(tabParent[0]=="CKB") {
-//						idMySession=Int64.Parse(tabParent[1]);	
-//					}
-//				}
-//				if (idMySession!=0){			
-//
-//					Response.Write("<script language=javascript>");
-//					Response.Write("	window.open('/Private/MyAdExpress/MySessionDetailPopUp.aspx?idMySession="+idMySession+"&idSession="+_webSession.IdSession+"','','width=660,height=700,toolbar=no,scrollbars=yes,resizable=no');");
-//					Response.Write("</script>");
-//								
-//					//Response.Redirect("/Private/MyAdExpress/MySessionDetailPopUp.aspx?idMySession="+idMySession+"&idSession="+_webSession.IdSession+"");
-//				}else{
-//					// Erreur : veuillez sélectionner une requête
-//					Response.Write("<script language=javascript>");
-//					Response.Write("	alert(\""+GestionWeb.GetWebWord(831,_webSession.SiteLanguage)+"\");");					
-//					Response.Write("</script>");
-//				}
-//			}
-//			catch(System.Exception exc){
-//				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
-//					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
-//				}
-//			}
-//		}
-		#endregion
+		#endregion	
 	
 
 		#region Déchargement de la page
