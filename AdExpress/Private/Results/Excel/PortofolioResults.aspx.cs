@@ -18,6 +18,10 @@ using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
+
+using Portofolio = TNS.AdExpressI.Portofolio;
+using Domain = TNS.AdExpress.Domain.Web.Navigation;
+using System.Reflection;
 #endregion
 
 namespace AdExpress.Private.Results.Excel{
@@ -79,6 +83,12 @@ namespace AdExpress.Private.Results.Excel{
 
                 Response.ContentType = "application/vnd.ms-excel";
 
+				Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+				if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+				object[] parameters = new object[1];
+				parameters[0] = _webSession;
+				Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+				
 				#region Resultat
 				switch(_webSession.CurrentTab) {
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
@@ -86,11 +96,15 @@ namespace AdExpress.Private.Results.Excel{
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
 						_resultWebControl.Visible = true;
 						break;	
-					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:	
+					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+						_resultWebControl.Visible = false;
+						result = portofolioResult.GetDetailMediaHtml(true);
+						break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.NOVELTY:
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
 						_resultWebControl.Visible = false;
-						result=TNS.AdExpress.Web.BusinessFacade.Results.PortofolioSystem.GetExcel(Page,_webSession);
+						//result=TNS.AdExpress.Web.BusinessFacade.Results.PortofolioSystem.GetExcel(Page,_webSession);
+						result = portofolioResult.GetStructureHtml(true);
 						break;
 					default:					
 						break;

@@ -36,6 +36,11 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+
+using Portofolio = TNS.AdExpressI.Portofolio;
+using Domain = TNS.AdExpress.Domain.Web.Navigation;
+using System.Reflection;
+
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -117,6 +122,31 @@ namespace AdExpress.Private.Results{
 		#endregion		
 
 		#region Evènements
+		#region On PreInit
+		/// <summary>
+		/// On preinit event
+		/// </summary>
+		/// <param name="e">Arguments</param>
+		protected override void OnPreInit(EventArgs e) {
+			base.OnPreInit(e);
+			Int64 tabSelected;
+			try {
+				tabSelected = Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
+			}
+			catch (System.Exception err) {
+				tabSelected = _webSession.CurrentTab;
+			}
+			switch (tabSelected) {
+				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+					_ResultWebControl.SkinID = "portofolioSynthesisResultTable";
+					break;
+				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+					_ResultWebControl.SkinID = "portofolioResultTable";
+					break;
+			}
+		}
+		#endregion
 
 		#region Chargement de la page
 		/// <summary>
@@ -187,7 +217,7 @@ namespace AdExpress.Private.Results{
 				else ResultsOptionsWebControl1.InsertOption=false;	
 				switch(_webSession.CurrentTab){					
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
-						_ResultWebControl.Visible = false;
+						_ResultWebControl.Visible = true;// false;
 						_genericProductLevel = false;
 						break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
@@ -272,6 +302,12 @@ namespace AdExpress.Private.Results{
 		/// </summary>
 		/// <param name="output">sortie html</param>
 		protected override void Render(HtmlTextWriter output){
+			//Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+			//if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+			//object[] parameters = new object[1];
+			//parameters[0] = _webSession;
+			//Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+				
 			// Calcul du résultat pour portefeuille
 			if (!_ResultWebControl.Visible)
 				result=WebBF.Results.PortofolioSystem.GetHtml(this.Page,_webSession);

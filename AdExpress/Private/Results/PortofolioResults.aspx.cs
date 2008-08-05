@@ -82,6 +82,7 @@ namespace AdExpress.Private.Results{
 		///  bool précisant si l'on doit afficher les agences médias
 		/// </summary>
 		public bool displayMediaAgencyList=true;
+
 		#endregion
 
 		#region variables MMI
@@ -432,12 +433,13 @@ namespace AdExpress.Private.Results{
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
 			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession=_webSession;
 			InitializeProductWebControl.CustomerWebSession=_webSession;	
-			//MediaAgencyYearWebControl1.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 			_resultWebControl.CustomerWebSession = _webSession;
 
 			portofolioChartWebControl1.CustomerWebSession = _webSession;
 			portofolioChartWebControl1.TypeFlash = true;
+
+		 
 
 			return tmp;
 		}
@@ -471,8 +473,13 @@ namespace AdExpress.Private.Results{
 						result = WebBF.Results.PortofolioSystem.GetAlertHtml(this.Page, _webSession);
 						break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
-						if(!_webSession.Graphics)
-						result = portofolioResult.GetStructureHtml(false);
+						if (!_webSession.Graphics)
+							result = portofolioResult.GetStructureHtml(false);
+						else {
+							//portofolioChartWebControl2 = new TNS.AdExpress.Web.Controls.Results.PortofolioChartWebControl();
+							//portofolioChartWebControl2.CustomerWebSession = _webSession;
+							//portofolioChartWebControl2.TypeFlash = true;
+						}
 						break;
 					default:					
 						break;
