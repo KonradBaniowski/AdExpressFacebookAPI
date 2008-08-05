@@ -18,6 +18,7 @@ using TNS.AdExpress.Web.BusinessFacade.Selections.Medias;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Units;
 
 using TNS.Classification;
 using TNS.AdExpress.Domain.Web;
@@ -67,7 +68,13 @@ namespace AdExpress {
                 PortofolioDetailMediaColumnsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION_FILENAME));
 				// Chargement des niveaux de détail AdNetTrack
                 AdNetTrackDetailLevelsDescription.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.ADNETTRACK_DETAIL_LEVEL_CONFIGURATION_FILENAME));
-				// Chargement des noms de modules et des catégories de modules
+				
+                //Units
+                UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
+                
+                
+                
+                // Chargement des noms de modules et des catégories de modules
                 //ModulesList.Init(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CONFIGURATION_FILENAME,WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME);
 //				TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel t=(TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel) ModulesList.GetModule(198).DefaultMediaDetailLevels[1]; 
 //				string g=t.GetLabel(33);

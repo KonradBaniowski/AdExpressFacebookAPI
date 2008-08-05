@@ -85,6 +85,10 @@ namespace TNS.AdExpress.Constantes.Web {
 		/// Flags configuration file
 		/// </summary>
 		public const string FLAGS_CONFIGURATION_FILENAME = @"Flags.xml";
+        /// <summary>
+        /// Units configuration file
+        /// </summary>
+        public const string UNITS_CONFIGURATION_FILENAME = @"Units.xml";
 
     }
 }

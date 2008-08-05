@@ -52,6 +52,7 @@
     <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="DataBaseDescription\DataBase.cs" />
     <Compile Include="DataBaseDescription\DefaultConnection.cs" />
+    <Compile Include="Exceptions\UnitException.cs" />
     <Compile Include="Exceptions\DeliveryFrequencyException.cs" />
     <Compile Include="Exceptions\GenericColumnItemsInformationXLException.cs" />
     <Compile Include="Exceptions\GenericColumnsInformationXLException.cs" />
@@ -96,6 +97,8 @@
     <Compile Include="Results\VersionItem.cs" />
     <Compile Include="Translation\GestionWeb.cs" />
     <Compile Include="Translation\WordList.cs" />
+    <Compile Include="Units\UnitInformation.cs" />
+    <Compile Include="Units\UnitsInformation.cs" />
     <Compile Include="Web\Navigation\WebHeader.cs" />
     <Compile Include="Web\Navigation\WebHeaderMediaDetailMenuItem.cs" />
     <Compile Include="Web\Navigation\WebHeaderMenuItem.cs" />
@@ -122,6 +125,7 @@
     <Compile Include="XmlLoader\HeaderXL.cs" />
     <Compile Include="XmlLoader\ModuleCategoryListXL.cs" />
     <Compile Include="XmlLoader\ModulesListXL.cs" />
+    <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />
     <Compile Include="XmlLoader\WebLanguagesXL.cs" />
     <Compile Include="XmlLoader\WebParamtersXL.cs" />
     <Compile Include="XmlLoader\WebThemesXL.cs" />

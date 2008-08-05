@@ -374,7 +374,10 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// </summary>
 		public enum Unit
 		{
-			
+			/// <summary>
+			/// Used in unit decription
+			/// </summary>
+            none=9999,
 			/// <summary>
 			/// Unité = euros
 			/// </summary>
