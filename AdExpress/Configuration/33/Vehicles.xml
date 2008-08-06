@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<vehicles>
+  <vehicle id="press" databaseId="1" showInsertions="true" showCreations="true">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>insertion</allowedUnit>
+      <allowedUnit>mmPerCol</allowedUnit>
+      <allowedUnit>pages</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>1</allowedMediaLevelItem>    <!-- Media -->
+        <allowedMediaLevelItem>2</allowedMediaLevelItem>    <!-- Categorie -->
+        <allowedMediaLevelItem>3</allowedMediaLevelItem>    <!-- Support -->
+        <allowedMediaLevelItem>4</allowedMediaLevelItem>    <!-- Centre d'interet -->
+        <allowedMediaLevelItem>5</allowedMediaLevelItem>    <!-- Régie -->
+        <allowedMediaLevelItem>17</allowedMediaLevelItem>   <!-- Titre -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents>
+      <MediaSelectionParent>2</MediaSelectionParent>         <!-- Categorie -->
+      <MediaSelectionParent>5</MediaSelectionParent>         <!-- Centre d'interet -->
+      <MediaSelectionParent>4</MediaSelectionParent>         <!-- Régie -->
+      <MediaSelectionParent>17</MediaSelectionParent>        <!-- Titre -->
+    </MediaSelectionParents>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="6"/>
+  </vehicle>
+</vehicles>

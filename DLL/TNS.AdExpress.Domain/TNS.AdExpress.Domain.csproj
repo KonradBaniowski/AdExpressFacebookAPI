@@ -49,6 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classification\VehicleInformation.cs" />
+    <Compile Include="Classification\VehiclesInformation.cs" />
     <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="DataBaseDescription\DataBase.cs" />
     <Compile Include="DataBaseDescription\DefaultConnection.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="XmlLoader\ModuleCategoryListXL.cs" />
     <Compile Include="XmlLoader\ModulesListXL.cs" />
     <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />
+    <Compile Include="XmlLoader\VehiclesInformationXL.cs" />
     <Compile Include="XmlLoader\WebLanguagesXL.cs" />
     <Compile Include="XmlLoader\WebParamtersXL.cs" />
     <Compile Include="XmlLoader\WebThemesXL.cs" />
