@@ -129,7 +129,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			return DBCst.Tables.TARGET_PREFIXE + ".id_target = " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_target "
 				+" and " + DBCst.Tables.TARGET_PREFIXE +".activation < "+  DBCst.ActivationValues.UNACTIVATED
 				+" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_media_secodip = " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_media "
-				+" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_language_data_i="+webSession.DataLanguage
+				//+" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_language_data_i="+webSession.DataLanguage
 				+" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE +".activation < "+  DBCst.ActivationValues.UNACTIVATED
 				+" and " + DBCst.Tables.LOCATION_PREFIXE + ".id_location (+)= " + DBCst.Tables.DATA_LOCATION_PREFIXE + ".id_location "
 				+" and " + DBCst.Tables.LOCATION_PREFIXE + ".id_language (+)= " + webSession.DataLanguage

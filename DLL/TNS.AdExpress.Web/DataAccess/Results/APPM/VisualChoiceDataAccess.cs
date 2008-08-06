@@ -74,7 +74,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			//sql.Append(" and "+ DBCst.Tables.TARGET_PREFIXE+".id_target="+DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target");
 			sql.Append(" and "+ DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target in("+ additionalTarget.ToString()+")");		
 			//sql.Append(" and "+ DBCst.Tables.TARGET_PREFIXE+".id_language="+DBCst.Language.FRENCH);
-			sql.Append(" and "+ DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
+			//sql.Append(" and "+ DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+ ".activation < " + DBCst.ActivationValues.UNACTIVATED);
 			// Sélection de Produits
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
@@ -141,14 +141,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".date_media_num  >="+dateBegin);
 			sql.Append(" and " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".date_media_num <=" + dateEnd);
 			
-			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_language_data_i = "+ webSession.DataLanguage);
+			//sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_language_data_i = "+ webSession.DataLanguage);
 			sql.Append(" and "+ DBCst.Tables.MEDIA_PREFIXE +".id_language = "+ webSession.DataLanguage);			
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_media = "+ DBCst.Tables.MEDIA_PREFIXE +".id_media ");
 
 			sql.Append(" and "+ DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target in("+ additionalTarget.ToString()+")");		
 			//media
 			sql.Append(" and "+DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_media_secodip="+DBCst.Tables.DATA_PRESS_APPM_PREFIXE+".id_media");			
-			sql.Append(" and "+ DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
+			//sql.Append(" and "+ DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and " + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+ ".activation < " + DBCst.ActivationValues.UNACTIVATED);
 			// Sélection de Produits
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)

@@ -88,7 +88,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" and " + DBTables.TARGET_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_target in("+baseTarget.ToString()+","+additionalTarget.ToString()+")");			
 			sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
-			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
+			//sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and "+dateField+" >="+dateBegin);
 			sql.Append(" and "+dateField+" <="+dateEnd);
 			
@@ -186,7 +186,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
 			sql.Append(" and " + DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBTables.TARGET_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
+			//sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and "+ DBTables.WEB_PLAN_PREFIXE+".id_group_ in ("+idGroup+")");	
 			sql.Append(" and "+dateField+" >="+dateBegin);
 			sql.Append(" and "+dateField+" <="+dateEnd);
@@ -294,7 +294,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
 			sql.Append(" and " + DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
 			sql.Append(" and " + DBTables.TARGET_PREFIXE +".activation < "+  DBConstantes.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
+			//sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and "+dateField+" >="+dateBegin);
 			sql.Append(" and "+dateField+" <="+dateEnd);
 

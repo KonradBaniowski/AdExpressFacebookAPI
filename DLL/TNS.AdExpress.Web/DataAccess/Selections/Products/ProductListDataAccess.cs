@@ -79,7 +79,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			//sql.Append(" and "+ DBConstantes.Tables.TARGET_PREFIXE+".id_target="+DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target");
 			sql.Append(" and "+ DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target in("+ idAdditionalTarget.ToString()+")");		
 			//sql.Append(" and "+ DBConstantes.Tables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
-			sql.Append(" and "+ DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
+			//sql.Append(" and "+ DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and " + DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+ ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 			
 			//sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.GetAnalyseCustomerProductSelection(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,DBConstantes.Tables.WEB_PLAN_PREFIXE,DBConstantes.Tables.WEB_PLAN_PREFIXE,true));
