@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Data;
+using System.Globalization;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Results;
 using CstWeb = TNS.AdExpress.Constantes.Web;
@@ -22,6 +23,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 using WebModule=TNS.AdExpress.Constantes.Web.Module;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Web.Rules.Results
@@ -2076,17 +2078,18 @@ namespace TNS.AdExpress.Web.Rules.Results
 			//libellé période N	
 			AtomicPeriodWeek weekBeginningDate;
 			AtomicPeriodWeek weekEndDate;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			switch(webSession.DetailPeriod ){					
 				case CstPeriodDetail.monthly :	
 					if(isPreviousYear)year--;
 					if(IsDetailPeriod(webSession)){
-						tab[row,col]=MonthString.Get(int.Parse(webSession.DetailPeriodBeginningDate.Substring(4,2)),webSession.SiteLanguage,0)+" "+year.ToString();
+						tab[row,col]=MonthString.GetCharacters(int.Parse(webSession.DetailPeriodBeginningDate.Substring(4,2)),cultureInfo,0)+" "+year.ToString();
 					}else{
 						if(webSession.PeriodBeginningDate.Substring(4,2).Equals(webSession.PeriodEndDate.Substring(4,2))){						
-							tab[row,col]=MonthString.Get(int.Parse(webSession.PeriodBeginningDate.Substring(4,2)),webSession.SiteLanguage,0)+" "+year.ToString();						
+							tab[row,col]=MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.Substring(4,2)),cultureInfo,0)+" "+year.ToString();						
 						}else{							
-							tab[row,col]=MonthString.Get(int.Parse(webSession.PeriodBeginningDate.Substring(4,2)),webSession.SiteLanguage,0)+" "+year.ToString()+" - "
-								+MonthString.Get(int.Parse(webSession.PeriodEndDate.Substring(4,2)),webSession.SiteLanguage,0)+" "+year.ToString();													
+							tab[row,col]=MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.Substring(4,2)),cultureInfo,0)+" "+year.ToString()+" - "
+								+MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.Substring(4,2)),cultureInfo,0)+" "+year.ToString();													
 						}
 					}					
 					break;
@@ -2916,7 +2919,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			//DateTime dateEnd;
 			string dateString;
 			int j=0;
-			
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			#endregion
 
 			switch(webSession.PreformatedTable){
@@ -2945,12 +2948,12 @@ namespace TNS.AdExpress.Web.Rules.Results
 						j++;
 						if(!webSession.DetailPeriodBeginningDate.Equals("0") && WebFunctions.CheckedText.IsStringEmpty(webSession.DetailPeriodBeginningDate)){
 							for(int i=int.Parse(webSession.DetailPeriodBeginningDate.Substring(4,2));i<=int.Parse(webSession.DetailPeriodEndDate.Substring(4,2));i++){
-								tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = MonthString.Get(i,webSession.SiteLanguage,0);
+								tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = MonthString.GetCharacters(i,cultureInfo,0);
 								j++;
 							}
 						}else{							
 							for(int i=int.Parse(webSession.PeriodBeginningDate.Substring(4,2));i<=int.Parse(webSession.PeriodEndDate.Substring(4,2));i++){
-								tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = MonthString.Get(i,webSession.SiteLanguage,0);
+								tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = MonthString.GetCharacters(i,cultureInfo,0);
 								j++;
 							}
 						}

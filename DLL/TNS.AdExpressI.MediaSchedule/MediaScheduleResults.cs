@@ -6,6 +6,7 @@ using System.Data;
 using System.Reflection;
 using System.Text;
 using System.Web;
+using System.Globalization;
 
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
@@ -1150,6 +1151,7 @@ namespace TNS.AdExpressI.MediaSchedule
         {
             MediaScheduleData oMediaScheduleData = new MediaScheduleData();
             StringBuilder t = new System.Text.StringBuilder(5000);
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
 
             #region Theme Name
             string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
@@ -1335,13 +1337,13 @@ namespace TNS.AdExpressI.MediaSchedule
                                         , link
                                         , _session.IdSession
                                         , data[0, j]
-                                        , MonthString.Get(int.Parse(data[0, j].ToString().Substring(4, 2)), _session.SiteLanguage, 1));
+                                        , MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1));
                                 }
                                 else
                                 {
                                     periods.AppendFormat("<td class=\"{0}\">&nbsp;{1}&nbsp;</td>"
                                         , periodClass
-                                        , MonthString.Get(int.Parse(data[0, j].ToString().Substring(4, 2)), _session.SiteLanguage, 1));
+                                        , MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1));
                                 }
                                 break;
                             case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:

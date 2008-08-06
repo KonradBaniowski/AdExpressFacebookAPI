@@ -12,6 +12,7 @@ using System;
 using System.Data;
 using System.Collections;
 using System.Windows.Forms;
+using System.Globalization;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.FrameWork.Date;
@@ -26,6 +27,7 @@ using DateFunctions = TNS.FrameWork.Date;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Web.Exceptions;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace TNS.AdExpress.Web.Rules.Results
@@ -72,6 +74,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			string currentMonth="";
 			//double TotalUnivers=(double)0.0;
 			Int64 Total = 0;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			#endregion
 			
 			#region periode etudiée
@@ -139,7 +142,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 //											tab[i,ConstResults.Novelty.LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX]=double.Parse(currentRow[LatestActiveMonthsArr[j].ToString().Trim()].ToString())/(double)1000.0;
 											tab[i,ConstResults.Novelty.LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX]=double.Parse(currentRow[LatestActiveMonthsArr[j].ToString().Trim()].ToString());
 											tab[i,ConstResults.Novelty.LATEST_ACTIVE_MONTH_ID_COLUMN_INDEX]= WebFunctions.Dates.GetDateFromAlias(LatestActiveMonthsArr[j].ToString().Trim()).Month.ToString();
-											tab[i,ConstResults.Novelty.LATEST_ACTIVE_MONTH_LABEL_COLUMN_INDEX]=DateFunctions.MonthString.Get(WebFunctions.Dates.GetDateFromAlias(LatestActiveMonthsArr[j].ToString().Trim()).Month,webSession.SiteLanguage,0)+" "
+											tab[i,ConstResults.Novelty.LATEST_ACTIVE_MONTH_LABEL_COLUMN_INDEX]=DateFunctions.MonthString.GetCharacters(WebFunctions.Dates.GetDateFromAlias(LatestActiveMonthsArr[j].ToString().Trim()).Month,cultureInfo,0)+" "
 											+WebFunctions.Dates.GetDateFromAlias(LatestActiveMonthsArr[j].ToString().Trim()).Year;
 											//Periode d'inactivité
 											try{

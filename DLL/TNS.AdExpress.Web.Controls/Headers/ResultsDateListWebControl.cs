@@ -8,6 +8,7 @@ using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
+using System.Globalization;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
@@ -15,6 +16,7 @@ using TNS.AdExpress.Web.Controls.Exceptions;
 using TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork.Date;
 using WebFunctions=TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Headers
 {
@@ -132,7 +134,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <param name="dt">date</param>
 		/// <param name="NbMonth">Le nombre de mois à retrancher</param>
 		private void FillMonthlyDate(DateTime dt,int NbMonth){
-			string ItemValue=""; 
+			string ItemValue="";
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			if(NbMonth>0){
 				dt=dt.AddMonths(-NbMonth);			
 				this.Items.Add(new ListItem("------------------------------","0"));
@@ -140,13 +143,13 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//mois année N
 			for(int i=dt.Month;i>0;i--){	
 				ItemValue=i.ToString().Length==1?dt.Year.ToString()+"0"+i.ToString():dt.Year.ToString()+i.ToString();
-				this.Items.Add(new ListItem(MonthString.Get(i,webSession.SiteLanguage,0)+" "+dt.Year.ToString(),ItemValue));												
+				this.Items.Add(new ListItem(MonthString.GetCharacters(i,cultureInfo,0)+" "+dt.Year.ToString(),ItemValue));												
 			}
 			//mois année N-1
 			dt = dt.AddYears(-1);
 			for(int j=12;j>0;j--){	
 				ItemValue=j.ToString().Length==1?dt.Year.ToString()+"0"+j.ToString():dt.Year.ToString()+j.ToString();
-				this.Items.Add(new ListItem(MonthString.Get(j,webSession.SiteLanguage,0)+" "+dt.Year.ToString(),ItemValue));												
+				this.Items.Add(new ListItem(MonthString.GetCharacters(j,cultureInfo,0)+" "+dt.Year.ToString(),ItemValue));												
 				if(j==dt.Month)break;//Année coulante : la dernier mois (chiffre) de l'année N-1 correspond au dernier mois de l'année N à afficher	
 			}
 			if(webSession.DetailPeriod==CustomerSessions.Period.DisplayLevel.monthly){

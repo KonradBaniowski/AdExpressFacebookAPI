@@ -16,7 +16,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
-
+using System.Globalization;
 using TNS.AdExpress.Web.Core.Sessions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;
@@ -27,6 +27,7 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.UI;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
@@ -202,6 +203,7 @@ namespace AdExpress.Private.MyAdExpress{
                 CstWeb.globalCalendar.comparativePeriodType comparativePeriodType;
                 CstWeb.globalCalendar.periodDisponibilityType periodDisponibilityType;
                 bool verifCustomerPeriod = false;
+                CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
 				#endregion
 			
 				idMySession = Int64.Parse(Page.Request.QueryString.Get("idMySession"));
@@ -421,16 +423,16 @@ namespace AdExpress.Private.MyAdExpress{
 						string monthBegin;
 						string monthEnd;
 						if(int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(4,2))<10){
-							monthBegin=TNS.FrameWork.Date.MonthString.Get(int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(5,1)),_webSession.SiteLanguage,10);
+							monthBegin=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(5,1)),cultureInfo,10);
 						}
 						else{
-							monthBegin=TNS.FrameWork.Date.MonthString.Get(int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(4,2)),_webSession.SiteLanguage,10);
+							monthBegin=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(4,2)),cultureInfo,10);
 						}
 						if(int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(4,2))<10){
-							monthEnd=TNS.FrameWork.Date.MonthString.Get(int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(5,1)),_webSession.SiteLanguage,10);
+							monthEnd=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(5,1)),cultureInfo,10);
 						}
 						else{
-							monthEnd=TNS.FrameWork.Date.MonthString.Get(int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(4,2)),_webSession.SiteLanguage,10);
+							monthEnd=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(4,2)),cultureInfo,10);
 						}					
 						periodText=GestionWeb.GetWebWord(846,_webSession.SiteLanguage)+" "+monthBegin+" "+GestionWeb.GetWebWord(847,_webSession.SiteLanguage)+" "+monthEnd;
 						infoDateLabel1.Text=periodText;					

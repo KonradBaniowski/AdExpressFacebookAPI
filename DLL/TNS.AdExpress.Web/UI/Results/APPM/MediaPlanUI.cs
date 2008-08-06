@@ -9,6 +9,7 @@ using System;
 using System.Data;
 using System.Text;
 using System.Collections;
+using System.Globalization;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core;
@@ -25,6 +26,7 @@ using TNS.FrameWork.Date;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
 //using TNS.AdExpress.Domain.Results;
 
 
@@ -520,7 +522,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 			int sloganIndex=-1;
 			int colorNumberToUse=0;
 			int colorItemIndex=1;
-			
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			StringBuilder t = new StringBuilder(10000);
 			string presentClass="p4";
 			string extendedClass="p5";
@@ -607,7 +609,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					if(tab[0,h].ToString().Length>0 && !tab[0,h].ToString().Equals(oldMonthDate) && !firstMonth){
 						monthColspan=(monthColspan*nbPixelByDay)-boderRightWidth;
 						monthsHtml+="\r\n\t\t<td   width=\""+monthColspan+"px\" class=\"pmb\" align=center  nowrap>"; 
-						if(nbDaysInMonth>4)monthsHtml+=MonthString.Get(int.Parse(oldMonthDate.ToString().Substring(4,2)),webSession.SiteLanguage,3)+" "+oldMonthDate.ToString().Substring(2,2);
+						if(nbDaysInMonth>4)monthsHtml+=MonthString.GetCharacters(int.Parse(oldMonthDate.ToString().Substring(4,2)),cultureInfo,3)+" "+oldMonthDate.ToString().Substring(2,2);
 						else
                             monthsHtml += "<font class=\"txtViolet\">.</font>";
 						monthsHtml+="</td>";
@@ -644,7 +646,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					monthsHtml+="\r\n\t\t<td align=center  class=\"pmb\" width=\""+monthColspan+"px\"  nowrap>"; //class=\""+supportCSS+"\" 
 				if(nbDaysInMonth>4) {
 					
-					monthsHtml+=MonthString.Get(int.Parse(oldMonthDate.ToString().Substring(4,2)),webSession.SiteLanguage,3)+" "+oldMonthDate.ToString().Substring(2,2);
+					monthsHtml+=MonthString.GetCharacters(int.Parse(oldMonthDate.ToString().Substring(4,2)),cultureInfo,3)+" "+oldMonthDate.ToString().Substring(2,2);
 				}
 				else
                     monthsHtml += "<font class=\"txtViolet\">.</font>";
@@ -862,7 +864,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 			int sloganIndex=-1;
 			int colorNumberToUse=0;
 			int colorItemIndex=1;
-			
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			StringBuilder t = new StringBuilder(10000);
 			string presentClass="p4";
 			string extendedClass="p5";
@@ -956,7 +958,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					{
 						monthColspan=(monthColspan*nbPixelByDay)-boderRightWidth;
 						monthsHtml+="\r\n\t\t<td   width=\""+monthColspan+"px\" class=\"pmb\" align=center  nowrap>"; 
-						if(nbDaysInMonth>4)monthsHtml+=MonthString.Get(int.Parse(oldMonthDate.ToString().Substring(4,2)),webSession.SiteLanguage,3)+" "+oldMonthDate.ToString().Substring(2,2);
+						if(nbDaysInMonth>4)monthsHtml+=MonthString.GetCharacters(int.Parse(oldMonthDate.ToString().Substring(4,2)),cultureInfo,3)+" "+oldMonthDate.ToString().Substring(2,2);
 						else 
 							monthsHtml+="<font color=\"#644883\">.</font>";
 						monthsHtml+="</td>";
@@ -995,7 +997,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 				if(nbDaysInMonth>4) 
 				{
 					
-					monthsHtml+=MonthString.Get(int.Parse(oldMonthDate.ToString().Substring(4,2)),webSession.SiteLanguage,3)+" "+oldMonthDate.ToString().Substring(2,2);
+					monthsHtml+=MonthString.GetCharacters(int.Parse(oldMonthDate.ToString().Substring(4,2)),cultureInfo,3)+" "+oldMonthDate.ToString().Substring(2,2);
 				}
 				else 
 					monthsHtml+="<font color=\"#644883\">.</font>";

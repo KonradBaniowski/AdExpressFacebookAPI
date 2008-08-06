@@ -8,13 +8,13 @@
 #endregion
 
 using System;
-
+using System.Globalization;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Exceptions;
-
+using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork;
 using TNS.FrameWork.Date;
 
@@ -36,6 +36,7 @@ namespace TNS.AdExpress.Web.UI
 		public static string GetPeriodDetail(WebSession webSession){
 			try{
 				string str = "";
+                CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 
 				switch(webSession.PeriodType){
 					case CustomerSessions.Period.Type.nLastMonth:
@@ -60,19 +61,19 @@ namespace TNS.AdExpress.Web.UI
 						string yearBegin;
 						string yearEnd;
 						if(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2))<10){
-							monthBegin = MonthString.Get(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(5,1)),webSession.SiteLanguage,10);
+							monthBegin = MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(5,1)),cultureInfo,10);
 							yearBegin = webSession.PeriodBeginningDate.ToString().Substring(0,4);
 						}
 						else{
-							monthBegin = MonthString.Get(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2)),webSession.SiteLanguage,10);
+							monthBegin = MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2)),cultureInfo,10);
 							yearBegin = webSession.PeriodBeginningDate.ToString().Substring(0,4);
 						}
 						if(int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2))<10){
-							monthEnd = MonthString.Get(int.Parse(webSession.PeriodEndDate.ToString().Substring(5,1)),webSession.SiteLanguage,10);
+							monthEnd = MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.ToString().Substring(5,1)),cultureInfo,10);
 							yearEnd = webSession.PeriodEndDate.ToString().Substring(0,4);
 						}
 						else{
-							monthEnd = MonthString.Get(int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2)),webSession.SiteLanguage,10);
+							monthEnd = MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2)),cultureInfo,10);
 							yearEnd = webSession.PeriodEndDate.ToString().Substring(0,4);
 						}					
 						return Convertion.ToHtmlString(GestionWeb.GetWebWord(846,webSession.SiteLanguage)+" "+monthBegin+" "+yearBegin+" "+GestionWeb.GetWebWord(847,webSession.SiteLanguage)+" "+monthEnd+" "+yearEnd);
@@ -263,6 +264,7 @@ namespace TNS.AdExpress.Web.UI
 		public static string GetPeriodDetailForExcel(WebSession webSession){
 			try{
 				string str = "";
+                CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 
 				switch(webSession.PeriodType){
 					case CustomerSessions.Period.Type.nLastMonth:
@@ -287,19 +289,19 @@ namespace TNS.AdExpress.Web.UI
 						string yearBegin;
 						string yearEnd;
 						if(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2))<10){
-							monthBegin = MonthString.Get(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(5,1)),webSession.SiteLanguage,10);
+							monthBegin = MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(5,1)),cultureInfo,10);
 							yearBegin = webSession.PeriodBeginningDate.ToString().Substring(0,4);
 						}
 						else{
-							monthBegin = MonthString.Get(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2)),webSession.SiteLanguage,10);
+							monthBegin = MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2)),cultureInfo,10);
 							yearBegin = webSession.PeriodBeginningDate.ToString().Substring(0,4);
 						}
 						if(int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2))<10){
-							monthEnd = MonthString.Get(int.Parse(webSession.PeriodEndDate.ToString().Substring(5,1)),webSession.SiteLanguage,10);
+							monthEnd = MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.ToString().Substring(5,1)),cultureInfo,10);
 							yearEnd = webSession.PeriodEndDate.ToString().Substring(0,4);
 						}
 						else{
-							monthEnd = MonthString.Get(int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2)),webSession.SiteLanguage,10);
+							monthEnd = MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2)),cultureInfo,10);
 							yearEnd = webSession.PeriodEndDate.ToString().Substring(0,4);
 						}					
 						return GestionWeb.GetWebWord(846,webSession.SiteLanguage)+" "+monthBegin+" "+yearBegin+" "+GestionWeb.GetWebWord(847,webSession.SiteLanguage)+" "+monthEnd+" "+yearEnd;

@@ -12,6 +12,7 @@
 using System;
 using System.Collections;
 using System.Text;
+using System.Globalization;
 
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstFrequency = TNS.AdExpress.Constantes.Customer.DB.Frequency;
@@ -23,6 +24,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.Date;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -153,6 +155,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
 
             string periodText;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+
             switch (_session.PeriodType)
             {
 
@@ -164,9 +168,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstPeriod.Type.nextToLastYear:
 
                     if (beginPeriod != endPeriod)
-                        periodText = MonthString.Get(int.Parse(beginPeriod.Substring(4, 2)), _session.SiteLanguage, 0) + "-" + MonthString.Get(int.Parse(endPeriod.Substring(4, 2)), _session.SiteLanguage, 0) + " " + beginPeriod.Substring(0, 4);
+                        periodText = MonthString.GetCharacters(int.Parse(beginPeriod.Substring(4, 2)), cultureInfo, 0) + "-" + MonthString.GetCharacters(int.Parse(endPeriod.Substring(4, 2)), cultureInfo, 0) + " " + beginPeriod.Substring(0, 4);
                     else
-                        periodText = MonthString.Get(int.Parse(beginPeriod.Substring(4, 2)), _session.SiteLanguage, 0) + " " + beginPeriod.Substring(0, 4);
+                        periodText = MonthString.GetCharacters(int.Parse(beginPeriod.Substring(4, 2)), cultureInfo, 0) + " " + beginPeriod.Substring(0, 4);
                     break;
                 default:
                     throw new Exception("switchPeriod(_session _session,string beginPeriod,string endPeriod)-->Unable to determine type of period.");

@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Text;
+using System.Globalization;
 using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.Date;
 using CustomerWebConstantes=TNS.AdExpress.Constantes.Web.CustomerSessions;
@@ -369,10 +370,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			StringBuilder htmlBuilder=new StringBuilder(10500);
 			string dateSelectedString="&nbsp;";
             string themeName = WebApplicationParameters.Themes[language].Name;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[language].Localization); 
 
 			if(isDateSelected())
 			{
-				dateSelectedString=MonthString.Get(int.Parse(selectedDate.ToString().Substring(4,2)),language,12)+"&nbsp;"+selectedYear.ToString();
+				dateSelectedString=MonthString.GetCharacters(int.Parse(selectedDate.ToString().Substring(4,2)),cultureInfo,12)+"&nbsp;"+selectedYear.ToString();
 				
 			}
 			htmlBuilder.Append("<table cellspacing=1 cellpadding=0 border=0 bgcolor="+_tableBorderColor+">");

@@ -9,6 +9,7 @@
 using System;
 using System.Windows.Forms;
 using System.Text;
+using System.Globalization;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -21,6 +22,7 @@ using TNS.FrameWork;
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Exceptions{
 	
@@ -173,6 +175,8 @@ namespace TNS.AdExpress.Web.Exceptions{
 		/// </summary>
 		public void SendMail(){
 			string body="";
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
+
 			if(webSession==null){
 				body+="<html><b><u>"+serverName+":</u></b><br>"+"<font color=#FF0000>Erreur client:<br></font>";
 				body+="<hr>";
@@ -240,16 +244,16 @@ namespace TNS.AdExpress.Web.Exceptions{
 							break;
 						}
 						if(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2))<10){
-							monthBegin=TNS.FrameWork.Date.MonthString.Get(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(5,1)),webSession.SiteLanguage,10);
+							monthBegin=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(5,1)),cultureInfo,10);
 						}
 						else{
-							monthBegin=TNS.FrameWork.Date.MonthString.Get(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2)),webSession.SiteLanguage,10);
+							monthBegin=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2)),cultureInfo,10);
 						}
 						if(int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2))<10){
-							monthEnd=TNS.FrameWork.Date.MonthString.Get(int.Parse(webSession.PeriodEndDate.ToString().Substring(5,1)),webSession.SiteLanguage,10);
+							monthEnd=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.ToString().Substring(5,1)),cultureInfo,10);
 						}
 						else{
-							monthEnd=TNS.FrameWork.Date.MonthString.Get(int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2)),webSession.SiteLanguage,10);
+							monthEnd=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2)),cultureInfo,10);
 						}					
 						periodText=GestionWeb.GetWebWord(846,webSession.SiteLanguage)+" "+monthBegin+" "+GestionWeb.GetWebWord(847,webSession.SiteLanguage)+" "+monthEnd;					
 						break;

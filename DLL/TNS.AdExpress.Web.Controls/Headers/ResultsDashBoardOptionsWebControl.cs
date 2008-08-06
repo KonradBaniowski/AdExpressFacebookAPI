@@ -14,6 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
+using System.Globalization;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -1415,13 +1416,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <param name="monthlyDate">liste des mois</param>
 		private void FillMonthlyDate(DropDownList monthlyDate){
 			string ItemValue="";
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[customerWebSession.SiteLanguage].Localization);
  			int BeginningMonth=int.Parse(customerWebSession.PeriodBeginningDate.ToString().Substring(4,2));
 			int EndMonth=int.Parse(customerWebSession.PeriodEndDate.ToString().Substring(4,2));;
 			 monthlyDate.Items.Add(new ListItem("----------------","0"));							
 			//liste des mois 
 			 for(int i= BeginningMonth;i<=EndMonth;i++){	
 			 ItemValue=i.ToString().Length==1?customerWebSession.PeriodBeginningDate.ToString().Substring(0,4)+"0"+i.ToString():customerWebSession.PeriodBeginningDate.ToString().Substring(0,4)+i.ToString();
-				monthlyDate.Items.Add(new ListItem(MonthString.Get(i,customerWebSession.SiteLanguage,0),ItemValue));												
+				monthlyDate.Items.Add(new ListItem(MonthString.GetCharacters(i,cultureInfo,0),ItemValue));												
 			}										
 			if(customerWebSession.DetailPeriod==CstWeb.CustomerSessions.Period.DisplayLevel.monthly){
 				try{

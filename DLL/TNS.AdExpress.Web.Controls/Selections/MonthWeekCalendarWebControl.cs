@@ -10,9 +10,11 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Text;
+using System.Globalization;
 using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.Date;
 using CustomerWebConstantes=TNS.AdExpress.Constantes.Web.CustomerSessions;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -486,13 +488,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output){
             string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[language].Name;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[language].Localization);
 			StringBuilder htmlBuilder=new StringBuilder(10500);
 			string dateSelectedString="&nbsp;";
 			string colSpan="";
 			if(isDateSelected()){
 				switch(selectedDateType){
 					case CustomerWebConstantes.Period.Type.dateToDateMonth:
-						dateSelectedString=MonthString.Get(int.Parse(selectedDate.ToString().Substring(4,2)),language,12)+"&nbsp;"+selectedYear.ToString();
+						dateSelectedString=MonthString.GetCharacters(int.Parse(selectedDate.ToString().Substring(4,2)),cultureInfo,12)+"&nbsp;"+selectedYear.ToString();
 						break;
 					case CustomerWebConstantes.Period.Type.dateToDateWeek:
 						AtomicPeriodWeek week=new AtomicPeriodWeek(int.Parse(selectedDate.ToString().Substring(0,4)),int.Parse(selectedDate.ToString().Substring(4,2)));

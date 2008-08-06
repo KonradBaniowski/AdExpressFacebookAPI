@@ -9,6 +9,7 @@ using System;
 using System.Data;
 using System.Collections;
 using System.Windows.Forms;
+using System.Globalization;
 
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -32,6 +33,7 @@ using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Rules.Results
 {
@@ -1009,6 +1011,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			int m = 1;
 			int i = 0;
 			AtomicPeriodWeek week;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			switch(webSession.PreformatedTable){
 
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media :
@@ -1046,14 +1049,14 @@ namespace TNS.AdExpress.Web.Rules.Results
 								case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
 									i++;
 									if (i == 1 || i == dimendionIdList.GetLongLength(0)) {//Si premier ou dernier mois de l'univers
-										dateLabel = MonthString.Get(int.Parse(currentDate.Substring(4, 2)), webSession.SiteLanguage, 9) + " " + currentDate.Substring(0, 4);
+										dateLabel = MonthString.GetCharacters(int.Parse(currentDate.Substring(4, 2)), cultureInfo, 9) + " " + currentDate.Substring(0, 4);
 										if (webSession.PeriodType == WebConstantes.CustomerSessions.Period.Type.dateToDate) {
 											dateLabel += (i == 1) ? "<br>" + DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodBeginningDate, webSession.SiteLanguage) : "<br>" + DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodEndDate, webSession.SiteLanguage);
 											if (dimendionIdList.GetLongLength(0) == 1 && !webSession.PeriodBeginningDate.Equals(webSession.PeriodEndDate))
 												dateLabel = dateLabel + " - " + DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodEndDate, webSession.SiteLanguage);
 										}
 									}
-									else dateLabel = MonthString.Get(int.Parse(currentDate.Substring(4, 2)), webSession.SiteLanguage, 9) + " " + currentDate.Substring(0, 4);
+									else dateLabel = MonthString.GetCharacters(int.Parse(currentDate.Substring(4, 2)), cultureInfo, 9) + " " + currentDate.Substring(0, 4);
 									break;
 								case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
 									dateLabel = DateString.YYYYMMDDToDD_MM_YYYY(currentDate,webSession.SiteLanguage);//TODO vérifier la forme du libellé date retourné par la fonction DateString.YYYYMMDDToDD_MM_YYYY

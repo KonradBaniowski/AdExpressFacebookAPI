@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections;
-
+using System.Globalization;
 using TNS.AdExpress.Web.DataAccess.Results;
 using FrameWorkDate=TNS.FrameWork.Date;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using AdExpressWebRules=TNS.AdExpress.Web.Rules;
 using WebExceptions = TNS.AdExpress.Web.Exceptions;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Rules.Results{
 	/// <summary>
@@ -145,11 +146,12 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			string fileNameTemp="";
 			string monthName="";
 			string service="";
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			#endregion
 
 			#region Formatage du nom du fichier
 			idMonth		= int.Parse(fileName.Substring(fileName.LastIndexOf(@"_")+5,2));
-			monthName	= FrameWorkDate.MonthString.Get(idMonth, webSession.SiteLanguage, 0);
+			monthName	= FrameWorkDate.MonthString.GetCharacters(idMonth, cultureInfo, 0);
 			fileNameTemp= monthName +" "+ fileName.Substring(fileName.LastIndexOf(@"_")+1,4);
 
 			if(name==WebConstantes.ModuleInfosNews.NOUVEAUTES){

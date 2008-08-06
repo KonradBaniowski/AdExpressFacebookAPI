@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Text;
+using System.Globalization;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core;
 using TNS.FrameWork.Date;
@@ -289,6 +290,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		protected override void Render(HtmlTextWriter output){
 			string dateSelectedString="&nbsp;";
             string themeName = WebApplicationParameters.Themes[language].Name;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[language].Localization);
 			StringBuilder htmlBuilder=new StringBuilder(6500);
 			if(isDateSelected()){
 				dateSelectedString=DateString.YYYYMMDDToDD_MM_YYYY(selectedDate,language);
@@ -334,7 +336,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			htmlBuilder.Append("<table width=\"100%\"cellspacing=0 cellpadding=0 border=0 bgcolor="+_tableColor+">");
 			htmlBuilder.Append("<tr>");
 			htmlBuilder.Append(left_arrow_HTML);
-			htmlBuilder.Append("<td colspan=3 align=\"center\"><font size=1 color="+_fontColor+" face=\"Arial\">"+MonthString.Get(int.Parse(this.selectedMonth.ToString().Substring(4,2)),language,0)+"&nbsp;"+this.selectedMonth.ToString().Substring(0,4)+"</font></td>");
+			htmlBuilder.Append("<td colspan=3 align=\"center\"><font size=1 color="+_fontColor+" face=\"Arial\">"+MonthString.GetCharacters(int.Parse(this.selectedMonth.ToString().Substring(4,2)),cultureInfo,0)+"&nbsp;"+this.selectedMonth.ToString().Substring(0,4)+"</font></td>");
 			htmlBuilder.Append(right_arrow_HTML);
 			htmlBuilder.Append("</tr>");
 			htmlBuilder.Append("</table>");

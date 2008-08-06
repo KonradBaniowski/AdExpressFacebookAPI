@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Text;
+using System.Globalization;
 using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.Date;
 using CustomerWebConstantes=TNS.AdExpress.Constantes.Web.CustomerSessions;
@@ -378,11 +379,12 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			try{
 				StringBuilder htmlBuilder=new StringBuilder(10500);
                 string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[language].Name;
+                CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[language].Localization);
 				string dateSelectedString="&nbsp;";
 				if(isDateSelected()){
 					switch(selectedDateType){
 						case CustomerWebConstantes.Period.Type.dateToDateMonth:
-							dateSelectedString=MonthString.Get(int.Parse(selectedDate.ToString().Substring(4,2)),language,12)+"&nbsp;"+selectedDate.ToString().Substring(0,4);
+							dateSelectedString=MonthString.GetCharacters(int.Parse(selectedDate.ToString().Substring(4,2)),cultureInfo,12)+"&nbsp;"+selectedDate.ToString().Substring(0,4);
 							break;
 						case CustomerWebConstantes.Period.Type.dateToDateWeek:
 							AtomicPeriodWeek week=new AtomicPeriodWeek(int.Parse(selectedDate.ToString().Substring(0,4)),int.Parse(selectedDate.ToString().Substring(4,2)));

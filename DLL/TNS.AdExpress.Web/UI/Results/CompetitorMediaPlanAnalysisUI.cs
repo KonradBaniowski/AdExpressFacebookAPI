@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Web;
 using System.Web.UI;
+using System.Globalization;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -20,6 +21,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.Date;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -58,6 +60,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			bool premierCategory=true;
 		//	bool premierAdvertiser=true;
 			bool premierTotal=true;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			#endregion
 
 			#region Constantes
@@ -133,7 +136,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 				}
 				if(webSession.DetailPeriod==Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly){
-					HTML+="<td class=\"p10\"><a class=\"p10\" href=\""+ CstWeb.Links.ZOOM_COMPETITOR_PLAN_MEDIA + "?idSession=" + webSession.IdSession + "&zoomDate="+tab[0,j].ToString()+"\">&nbsp;"+TNS.FrameWork.Date.MonthString.Get(int.Parse(tab[0,j].ToString().Substring(4,2)),webSession.SiteLanguage,1)+"&nbsp;&nbsp;</td>";
+					HTML+="<td class=\"p10\"><a class=\"p10\" href=\""+ CstWeb.Links.ZOOM_COMPETITOR_PLAN_MEDIA + "?idSession=" + webSession.IdSession + "&zoomDate="+tab[0,j].ToString()+"\">&nbsp;"+TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(tab[0,j].ToString().Substring(4,2)),cultureInfo,1)+"&nbsp;&nbsp;</td>";
 				}
 				else{
 					HTML+="<td class=\"p10\"><a class=\"p10\" href=\""+ CstWeb.Links.ZOOM_COMPETITOR_PLAN_MEDIA + "?idSession=" + webSession.IdSession + "&zoomDate="+tab[0,j].ToString()+"\">"+tab[0,j].ToString().Substring(4,2)+"<a></td>";
@@ -383,6 +386,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			bool premierTotal=true;
 			const string PLAN_MEDIA_XLS_1_CLASSE="pmmediaxls1";
 			const string PLAN_MEDIA_XLS_2_CLASSE="pmmediaxls2";
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 
 			//MAJ GR : Colonnes totaux par année si nécessaire
 			int k = 0;
@@ -418,7 +422,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 				}
 				if(webSession.DetailPeriod==Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly){
-					HTML+="<td style=\"width:15pt\" class=\"p10\">"+TNS.FrameWork.Date.MonthString.Get(int.Parse(tab[0,j].ToString().Substring(4,2)),webSession.SiteLanguage,1)+"</td>";
+					HTML+="<td style=\"width:15pt\" class=\"p10\">"+TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(tab[0,j].ToString().Substring(4,2)),cultureInfo,1)+"</td>";
 				}
 				else{
 					HTML+="<td style=\"width:15pt\" class=\"p10\">"+tab[0,j].ToString().Substring(4,2)+"</td>";

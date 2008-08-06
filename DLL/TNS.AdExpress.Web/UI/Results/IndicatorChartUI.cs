@@ -13,6 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Globalization;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using Dundas.Charting.WebControl;
@@ -22,6 +23,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using TblFormatCst = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using TNS.FrameWork;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -617,6 +619,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 		public void SeasonalityLine(WebSession webSession,bool bigFormat,bool typeFlash){
 			
 			#region Variables
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
+
 			Series serieUnivers = new Series("Seasonality");
 			Series serieSectorMarket = new Series();
 			Series serieMediumMonth = new Series();
@@ -797,7 +801,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					if(long.Parse(tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())==FrameWorkConstantes.Results.Seasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX){
 						if(double.Parse(advertiserTotal[long.Parse( tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString())>0){
 							number= double.Parse(tab[i,FrameWorkConstantes.Results.Seasonality.INVEST_COLUMN_INDEX].ToString())/double.Parse(advertiserTotal[long.Parse( tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString()) *100;
-							serieUnivers.Points.AddXY(TNS.FrameWork.Date.MonthString.Get(PeriodBeginningDate.AddMonths(compteur).Month,webSession.SiteLanguage,0),double.Parse(number.ToString("0.00")));
+							serieUnivers.Points.AddXY(TNS.FrameWork.Date.MonthString.GetCharacters(PeriodBeginningDate.AddMonths(compteur).Month,cultureInfo,0),double.Parse(number.ToString("0.00")));
 						}
 					}else if(long.Parse(tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())==FrameWorkConstantes.Results.Seasonality.ID_TOTAL_SECTOR_COLUMN_INDEX
 						|| long.Parse(tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())==FrameWorkConstantes.Results.Seasonality.ID_TOTAL_MARKET_COLUMN_INDEX
@@ -805,10 +809,10 @@ namespace TNS.AdExpress.Web.UI.Results{
 						){
 						if(double.Parse(advertiserTotal[long.Parse( tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString())>0){
 							number= double.Parse(tab[i,FrameWorkConstantes.Results.Seasonality.INVEST_COLUMN_INDEX].ToString())/double.Parse(advertiserTotal[long.Parse( tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString()) *100;
-							serieSectorMarket.Points.AddXY(TNS.FrameWork.Date.MonthString.Get(PeriodBeginningDate.AddMonths(compteur).Month,webSession.SiteLanguage,0),double.Parse(number.ToString("0.00")));
+							serieSectorMarket.Points.AddXY(TNS.FrameWork.Date.MonthString.GetCharacters(PeriodBeginningDate.AddMonths(compteur).Month,cultureInfo,0),double.Parse(number.ToString("0.00")));
 						
 							number=(double)100/nbMonth;
-							serieMediumMonth.Points.AddXY(TNS.FrameWork.Date.MonthString.Get(PeriodBeginningDate.AddMonths(compteur).Month,webSession.SiteLanguage,0),double.Parse(number.ToString("0.00")));
+							serieMediumMonth.Points.AddXY(TNS.FrameWork.Date.MonthString.GetCharacters(PeriodBeginningDate.AddMonths(compteur).Month,cultureInfo,0),double.Parse(number.ToString("0.00")));
 							mediumMonth=double.Parse(number.ToString("0.00"));
 						}							
 					}
@@ -829,7 +833,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 						if(double.Parse(advertiserTotal[long.Parse( tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString())>0){
 							number= double.Parse(tab[i,FrameWorkConstantes.Results.Seasonality.INVEST_COLUMN_INDEX].ToString())/double.Parse(advertiserTotal[long.Parse( tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString()) *100;
-							((Series)advertiserSerie[long.Parse( tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())]).Points.AddXY(TNS.FrameWork.Date.MonthString.Get(PeriodBeginningDate.AddMonths(compteur).Month,webSession.SiteLanguage,0),double.Parse(number.ToString("0.00")));
+							((Series)advertiserSerie[long.Parse( tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())]).Points.AddXY(TNS.FrameWork.Date.MonthString.GetCharacters(PeriodBeginningDate.AddMonths(compteur).Month,cultureInfo,0),double.Parse(number.ToString("0.00")));
 							
 						}					
 					}

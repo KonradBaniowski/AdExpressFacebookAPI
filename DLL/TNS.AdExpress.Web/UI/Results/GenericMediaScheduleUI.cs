@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using ConstantePeriod=TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
@@ -27,6 +28,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Functions;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
 //using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpress.Web.UI.Results {
@@ -413,6 +415,7 @@ namespace TNS.AdExpress.Web.UI.Results {
             string extendedClass = "p5";
             string stringItem = "&nbsp;";
             string periodClass;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
             #endregion
 
             #region Rappel de sélection
@@ -466,7 +469,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                                 // Si c'est la dernière période et la date de fin n'est pas le dernier jour du mois
                                 #endregion
 
-                                HTML += "<td style=\"width:15pt\" class=\"" + periodClass + "\">" + TNS.FrameWork.Date.MonthString.Get(int.Parse(tab[0, j].ToString().Substring(4, 2)), webSession.SiteLanguage, 1) + "</td>";
+                                HTML += "<td style=\"width:15pt\" class=\"" + periodClass + "\">" + TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(tab[0, j].ToString().Substring(4, 2)), cultureInfo, 1) + "</td>";
 
                                 break;
                             case ConstantePeriod.DisplayLevel.weekly:
@@ -1155,6 +1158,7 @@ namespace TNS.AdExpress.Web.UI.Results {
             string stringItem = "&nbsp;";
             string periodClass;
             string tmpString = string.Empty;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
             #endregion
 
             #region Module
@@ -1234,11 +1238,11 @@ namespace TNS.AdExpress.Web.UI.Results {
                                     || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
                                     || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE)
                                 {
-                                    HTML += "<td class=\"" + periodClass + "\" width=\"17px\"><a class=\"pp\" href=\"" + Links.MEDIA_SCHEDULE_POP_UP + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + TNS.FrameWork.Date.MonthString.Get(int.Parse(tab[0, j].ToString().Substring(4, 2)), webSession.SiteLanguage, 1) + "&nbsp;</td>";
+                                    HTML += "<td class=\"" + periodClass + "\" width=\"17px\"><a class=\"pp\" href=\"" + Links.MEDIA_SCHEDULE_POP_UP + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(tab[0, j].ToString().Substring(4, 2)), cultureInfo, 1) + "&nbsp;</td>";
                                 }
                                 else
                                 {
-                                    HTML += "<td class=\"" + periodClass + "\" width=\"17px\"><a class=\"pp\" href=\"" + Links.ZOOM_PLAN_MEDIA + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + TNS.FrameWork.Date.MonthString.Get(int.Parse(tab[0, j].ToString().Substring(4, 2)), webSession.SiteLanguage, 1) + "&nbsp;</td>";
+                                    HTML += "<td class=\"" + periodClass + "\" width=\"17px\"><a class=\"pp\" href=\"" + Links.ZOOM_PLAN_MEDIA + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(tab[0, j].ToString().Substring(4, 2)), cultureInfo, 1) + "&nbsp;</td>";
                                 }
 
                                 break;
