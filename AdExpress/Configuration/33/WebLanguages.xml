@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <languages default="33">
-    <language id="33" name="Français" imageSourceText=""  localization="fr" classificationLanguageId="44" charset="utf-8" contentEncoding="utf-8" nlsSort="FRENCH"/>
+    <language id="33" name="Français" imageSourceText=""  localization="fr" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" nlsSort="FRENCH"/>
     <language id="44" name="English"  imageSourceText=""  localization="en" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" nlsSort="FRENCH"/>
   </languages>
 </configuration>
