@@ -125,50 +125,13 @@ namespace TNS.AdExpress.Web.Functions{
 
 			// Texte de période
 			if (webSession.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.weekly){
-				txt.Append(GestionWeb.GetWebWord(848, webSession.SiteLanguage) + " " + period.Substring(4,2) + " (" + period.Substring(0,4)+")");
+				txt.AppendFormat("{0} {1} ({2})", GestionWeb.GetWebWord(848, webSession.SiteLanguage), period.Substring(4,2), period.Substring(0,4));
 			}
 			else{
-				switch(period.Substring(4,2)){
-					case "01":
-						txt.Append(GestionWeb.GetWebWord(945, webSession.SiteLanguage));
-						break;
-					case "02":
-						txt.Append(GestionWeb.GetWebWord(946, webSession.SiteLanguage));
-						break;
-					case "03":
-						txt.Append(GestionWeb.GetWebWord(947, webSession.SiteLanguage));
-						break;
-					case "04":
-						txt.Append(GestionWeb.GetWebWord(948, webSession.SiteLanguage));
-						break;
-					case "05":
-						txt.Append(GestionWeb.GetWebWord(949, webSession.SiteLanguage));
-						break;
-					case "06":
-						txt.Append(GestionWeb.GetWebWord(950, webSession.SiteLanguage));
-						break;
-					case "07":
-						txt.Append(GestionWeb.GetWebWord(951, webSession.SiteLanguage));
-						break;
-					case "08":
-						txt.Append(GestionWeb.GetWebWord(952, webSession.SiteLanguage));
-						break;
-					case "09":
-						txt.Append(GestionWeb.GetWebWord(953, webSession.SiteLanguage));
-						break;
-					case "10":
-						txt.Append(GestionWeb.GetWebWord(954, webSession.SiteLanguage));
-						break;
-					case "11":
-						txt.Append(GestionWeb.GetWebWord(955, webSession.SiteLanguage));
-						break;
-					case "12":
-						txt.Append(GestionWeb.GetWebWord(956, webSession.SiteLanguage));
-						break;
-				}
-				txt.Append(" " + period.Substring(0,4));
+                txt.AppendFormat("{0} {1}", GetMonthLabel(Convert.ToInt32(period.Substring(4, 2)), webSession.SiteLanguage), period.Substring(0, 4));
 			}
 			return txt.ToString();
+
 		}
 		#endregion
 
@@ -272,7 +235,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// Utilise la classe:
 		///		public TNS.FrameWork.Date.AtomicPeriodWeek
 		/// </remarks>
-		public static DateTime getPeriodEndDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType){
+		/*public static DateTime getPeriodEndDate(string period, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType){
 			switch(periodType){
 				case CstCustomerSession.Period.Type.dateToDateWeek:
 				case CstCustomerSession.Period.Type.nLastWeek:
@@ -299,7 +262,7 @@ namespace TNS.AdExpress.Web.Functions{
 				case CstCustomerSession.Period.Type.previousDay:
                     return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
 			}
-		}
+		}*/
 		#endregion
 
 		#region Vérification de la validité de la fin de la période en fonction de la fréquence de livraison des données dans le module
@@ -814,245 +777,7 @@ namespace TNS.AdExpress.Web.Functions{
 		}
 		
 		#endregion
-
-		#region identifiant de l'année : 0==N , 1==N-1,2==N-2
-		/// <summary>
-		/// Obtient l'identifiant de l'année sélectionnée  : 0==N , 1==N-1,2==N-2
-		/// </summary>
-		/// <param name="webSession">session du client</param>
-		/// <param name="YearSelected">année sélectionné</param>
-		/// <param name="year">identifiant année sélectionné</param>
-		/// <param name="PeriodBeginningDate">date de début</param>
-		public static void GetYearSelected(WebSession webSession, ref string YearSelected,ref int year,DateTime PeriodBeginningDate){
-			if(PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-1)) {
-				if(DateTime.Now.Year>webSession.DownLoadDate){
-					YearSelected="";
-					year=0;
-				}				
-				else{
-					YearSelected="1";
-					year=1;
-				}
-			}
-			if(PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-2)) {
-				if(DateTime.Now.Year>webSession.DownLoadDate){
-					YearSelected="1";
-					year=1;				
-				}
-				else{				
-					YearSelected="2";
-					year=2;
-				}
-			}
-			if(PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-3)) {
-				if(DateTime.Now.Year>webSession.DownLoadDate){
-					YearSelected="2";
-					year=2;				
-				}				
-			}	
-		}
-
-		/// <summary>
-		/// Determine l'identifiant de l'année de l'étude : 0==N , 1==N-1,2==N-2
-		/// </summary>
-		/// <param name="PeriodDate">DateTime</param>		
-		///<param name="webSession">Session client</param>
-		/// <returns>entier identifiant</returns>
-		public static int yearID(DateTime PeriodDate,WebSession webSession){
-			int year=0;
-			int downLoadDate=webSession.DownLoadDate;
-			if(DateTime.Now.Year>downLoadDate){
-				if(PeriodDate.Year==DateTime.Now.Year-1)year=0;
-				else if(PeriodDate.Year==DateTime.Now.Year-2)year=1; 
-				else if(PeriodDate.Year==DateTime.Now.Year-3)year=2;
-			}else{
-				if(PeriodDate.Year==DateTime.Now.Year-1)year=1;
-				else if(PeriodDate.Year==DateTime.Now.Year-2)year=2; 
-			}
-			return year;
-		}
-		#endregion
 		
-		#region Identifie le mois actif 
-		/// <summary>
-		/// Identifie le mois actif 
-		/// </summary>
-		/// <param name="PeriodEndDate">fin de la période</param>
-		///<param name="webSession">Session client</param>
-		/// <returns>mois </returns>
-		public static string CurrentActiveMonth(DateTime PeriodEndDate,WebSession webSession){
-			string CurrentMonth="";
-			// mois actif
-			if(PeriodEndDate.Month==DateTime.Now.Month)
-				CurrentMonth =GetMonthAlias(PeriodEndDate.Month-1,yearID(PeriodEndDate.AddMonths(-1).Date,webSession),3,webSession);
-			else CurrentMonth = GetMonthAlias(PeriodEndDate.Month,yearID(PeriodEndDate,webSession),3,webSession);
-			
-			return CurrentMonth;
-		}
-		#endregion
-
-		#region Obtient les alias (lettres) d'un mois
-		/// <summary>
-		/// Obtient les alias (lettres) d'un mois
-		/// </summary>
-		/// <param name="monthNumber">Identifiant du mois</param>
-		/// <param name="YearSelected">année sélectionnée</param>
-		/// <param name="numberOfChar">Nombre de caractères</param>
-		/// <returns>Première lettres d'un mois</returns>
-		/// <param name="webSession">Session client</param>
-		public static string GetMonthAlias(int monthNumber,int YearSelected,int numberOfChar,WebSession webSession){
-			string month="";
-			string year="";
-			if(DateTime.Now.Year>webSession.DownLoadDate){
-				YearSelected++;
-			}
-
-			try{					
-				switch(monthNumber){
-					case 1:
-						month="January";
-						break;
-					case 2:
-						month="February";
-						break;
-					case 3:
-						month="March";
-						break;
-					case 4:
-						month="April";
-						break;
-					case 5:
-						month="May";
-						break;
-					case 6:
-						month="June";
-						break;
-					case 7:
-						month="July";
-						break;
-					case 8:
-						month="August";
-						break;
-					case 9:
-						month="September";
-						break;
-					case 10:
-						month="October";
-						break;
-					case 11:
-						month="November";
-						break;
-					case 12:
-						month="December";
-						break;
-					
-					default:
-						throw(new SQLGeneratorException("Le mois sélectionnée n'est pas correcte: "));
-				}
-
-				try{
-					switch(YearSelected){
-						case 0 :
-							year=(System.DateTime.Now.Year.ToString()).Substring(2,2);	
-							break;
-						case 1 :
-							year=((System.DateTime.Now.Year-1).ToString()).Substring(2,2);
-							break;
-						case 2 :
-							year=((System.DateTime.Now.Year-2).ToString()).Substring(2,2);
-							break;
-						case 3 :
-							year=((System.DateTime.Now.Year-3).ToString()).Substring(2,2);
-							break;
-						default:
-							throw(new SQLGeneratorException("L'année sélectionnée n'est pas correcte: "));
-					}
-				}
-				catch(System.Exception ex){
-					throw(new SQLGeneratorException("Impossible d'obtenir l'anné sélectionnée :"+ex.Message));
-				}
-				if(numberOfChar<=month.Length && numberOfChar>0)return(month.Substring(0,numberOfChar)+year);
-				return(month);
-			}
-			catch(System.Exception e){
-				throw(new SQLGeneratorException("Impossible d'obtenir les premières lettres d'une date:"+e.Message));
-				
-			}
-		}
-		#endregion
-
-		#region Donne la date en fonction de l'alias MMMYY
-		/// <summary>
-		/// Donne la date en fonction de l'alias MMMYY
-		/// </summary>
-		/// <param name="DateAlias">date MMMYY</param>		
-		/// <returns>retourne la date </returns>
-		public static DateTime GetDateFromAlias(string DateAlias){
-			string month="";
-			int intMonth=0;
-			string year="";
-			try{									
-				switch(DateAlias.Length){
-					case 5 :
-						month = DateAlias.ToString().Substring(0,3);
-						year = DateAlias.ToString().Substring(3,2);
-						year = DateTime.Now.Year.ToString().Substring(0,2)+year;
-						try{
-							switch(month){
-								case "Jan":
-									intMonth=1;
-									break;
-								case "Feb":
-									intMonth=2;
-									break;
-								case "Mar":
-									intMonth=3;
-									break;
-								case "Apr":
-									intMonth=4;
-									break;
-								case "May":
-									intMonth=5;
-									break;
-								case "Jun":
-									intMonth=6;
-									break;
-								case "Jul":
-									intMonth=7;
-									break;
-								case "Aug":
-									intMonth=8;
-									break;
-								case "Sep":
-									intMonth=9;
-									break;
-								case "Oct":
-									intMonth=10;
-									break;
-								case "Nov":
-									intMonth=11;
-									break;
-								case "Dec":
-									intMonth=12;
-									break;
-								default :
-									throw(new SQLGeneratorException("La date en entrée n'est pas valide"));
-							}	
-							return  new DateTime(int.Parse(year),int.Parse(intMonth.ToString()),1);
-							
-						}catch(Exception er){
-							throw (new SQLGeneratorException("Impossible de créer la date :"+er.Message));
-						}
-					default:
-						throw(new SQLGeneratorException("La date en entrée n'est pas valide"));
-				}					
-			}
-			catch(System.Exception e){
-				throw(new SQLGeneratorException("Impossible d'obtenir les éléments d'une date:"+e.Message));				
-			}
-		}
-		#endregion
-
         #region Compare two dates and return the greater
         /// <summary>
         /// Compare two dates and return the greater
