@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Data;
 using System.Collections;
+using System.Globalization;
 using System.Text;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core;
@@ -472,6 +473,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 class=\"paleVioletBackGroundV2 violetBorder\">");
 						//Chemin de fer
                         t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, webSession.SiteLanguage) + "</td></tr>");
+                        CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 						for(int i=0;i<dtVisuel.Rows.Count;i++) {
 							//date_media_num
 
@@ -482,8 +484,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 								pathWeb="/Images/"+webSession.SiteLanguage+"/Others/no_visuel.gif";
 							}
 							DateTime dayDT=new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0,4)),int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4,2)),int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6,2)));
-							day=PortofolioDateUI.GetDayOfWeek(webSession,dayDT.DayOfWeek.ToString())+" "+dayDT.ToString("dd/MM/yyyy");	
-
+                            day = DayString.GetCharacters(dayDT, cultureInfo) + " " + dayDT.ToString("dd/MM/yyyy");
 							if(compteur==0){
 								t.Append("<tr>");
 								compteur=1;
@@ -924,9 +925,9 @@ namespace TNS.AdExpress.Web.UI.Results{
 			string day;
 			string [] filesName=new string[2];
 			#endregion
-
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			DateTime dayDT=new DateTime(int.Parse(date.Substring(0,4)),int.Parse(date.Substring(4,2)),int.Parse(date.ToString().Substring(6,2)));
-			day=PortofolioDateUI.GetDayOfWeek(webSession,dayDT.DayOfWeek.ToString())+" "+dayDT.ToString("dd/MM/yyyy");
+            day = DayString.GetCharacters(dayDT, cultureInfo) + " " + dayDT.ToString("dd/MM/yyyy");
 
             t.Append("<table border=1 class=\"violetBorder paleVioletBackGroundV2\" cellpadding=0 cellspacing=0 width=100% ><tr>");
 			t.Append("<td class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-BOTTOM-STYLE: none\">"+day+"</td>");
@@ -1423,6 +1424,7 @@ namespace TNS.AdExpress.Web.UI.Results{
             t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 class=\"paleVioletBackGroundV2 violetBorder\">");
 			//Chemin de fer
             t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\" >" + support + "</td></tr>");
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			for(int i=0;i<dtVisuel.Rows.Count;i++) {
 				//date_media_num
 
@@ -1434,7 +1436,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					pathWeb="/Images/"+webSession.SiteLanguage+"/Others/no_visuel.gif";
 				}
 				DateTime dayDT=new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0,4)),int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4,2)),int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6,2)));
-				day=PortofolioDateUI.GetDayOfWeek(webSession,dayDT.DayOfWeek.ToString())+" "+WebFunctions.Dates.dateToString(dayDT,webSession.SiteLanguage);	
+                day = DayString.GetCharacters(dayDT, cultureInfo) + " " + WebFunctions.Dates.dateToString(dayDT, webSession.SiteLanguage);	
 
 				if(compteur==0){
 					t.Append("<tr>");
@@ -1545,22 +1547,24 @@ namespace TNS.AdExpress.Web.UI.Results{
 			t.Append("<table border=0 cellpadding=0 cellspacing=0 >");			
 			
 			#region Première ligne
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
+            string[] dayNames = cultureInfo.DateTimeFormat.DayNames;
 			t.Append("\r\n\t<tr height=\"20px\" >");
             t.Append("<td class=\"p2 violetBorderTop\" colspan=2>&nbsp;</td>");
 			// Lundi
-            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(654, webSession.SiteLanguage) + "</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + cultureInfo.TextInfo.ToTitleCase(dayNames[1]) + "</td>");
 			// Mardi
-            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(655, webSession.SiteLanguage) + "</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + cultureInfo.TextInfo.ToTitleCase(dayNames[2]) + "</td>");
 			// Mercredi
-            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(656, webSession.SiteLanguage) + "</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + cultureInfo.TextInfo.ToTitleCase(dayNames[3]) + "</td>");
 			// Jeudi
-            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(657, webSession.SiteLanguage) + "</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + cultureInfo.TextInfo.ToTitleCase(dayNames[4]) + "</td>");
 			// Vendredi
-            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(658, webSession.SiteLanguage) + "</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + cultureInfo.TextInfo.ToTitleCase(dayNames[5]) + "</td>");
 			// Samedi
-            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(659, webSession.SiteLanguage) + "</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + cultureInfo.TextInfo.ToTitleCase(dayNames[6]) + "</td>");
 			// Dimanche
-            t.Append("<td class=\"p2 violetBorderTop\">" + GestionWeb.GetWebWord(660, webSession.SiteLanguage) + "</td>");
+            t.Append("<td class=\"p2 violetBorderTop\">" + cultureInfo.TextInfo.ToTitleCase(dayNames[0]) + "</td>");
 			t.Append("</tr>");
 			#endregion
 

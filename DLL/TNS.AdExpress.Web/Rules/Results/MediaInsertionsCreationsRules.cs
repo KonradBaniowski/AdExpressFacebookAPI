@@ -14,6 +14,7 @@ using System;
 using System.Data;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Globalization;
 
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -31,7 +32,7 @@ using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
-
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Rules.Results{
 	/// <summary>
@@ -1278,9 +1279,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
                             int.Parse(cellValue.ToString().Substring(0, 4)),
                             int.Parse(cellValue.ToString().Substring(4, 2)),
                             int.Parse(cellValue.ToString().Substring(6, 2)));
-                        if (dat.DayOfWeek == System.DayOfWeek.Wednesday) return WebFunctions.Dates.getDay(webSession, "Wednesdays"); // s en trop
-                        return WebFunctions.Dates.getDay(webSession, dat.DayOfWeek.ToString());
-
+                        CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
+                        return DayString.GetCharacters(dat,cultureInfo);
 
                     case TOP_DIFFUSION://Top diffusion télé
                         if (dr != null && dr.Table.Columns.Contains("id_category") && Int64.Parse(dr["id_category"].ToString()) == TNS.AdExpress.Constantes.DB.Category.ID_DIGITAL_TV)

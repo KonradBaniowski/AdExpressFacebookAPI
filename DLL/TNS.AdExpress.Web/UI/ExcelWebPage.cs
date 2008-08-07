@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Text;
+using System.Globalization;
 using System.Web.UI.HtmlControls;
 
 using Oracle.DataAccess.Client;
@@ -763,6 +764,8 @@ namespace TNS.AdExpress.Web.UI{
 		/// <returns>HTML</returns>
 		private static string GetDaySelected(WebSession webSession){
 			string namedDay=string.Empty;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
+            string[] dayNames = cultureInfo.DateTimeFormat.DayNames;
 			switch(webSession.NamedDay){
 				case CstWeb.Repartition.namedDay.Week_5_day:
 					namedDay=GestionWeb.GetWebWord(1553, webSession.SiteLanguage);
@@ -774,11 +777,15 @@ namespace TNS.AdExpress.Web.UI{
 					namedDay=GestionWeb.GetWebWord(1561, webSession.SiteLanguage);
 					break;
 				default:
-					namedDay=TNS.AdExpress.Web.Functions.Dates.getDay(webSession,webSession.NamedDay.ToString());
+                    if (webSession.NamedDay.GetHashCode() == 7)
+                        namedDay = cultureInfo.TextInfo.ToTitleCase(dayNames[0]);
+                    else if (webSession.NamedDay.GetHashCode() >= 0 && webSession.NamedDay.GetHashCode() < 7)
+                        namedDay = cultureInfo.TextInfo.ToTitleCase(dayNames[webSession.NamedDay.GetHashCode()]);
 					break;
 			}
+
 			if(namedDay.Length>0){
-				return("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1574,webSession.SiteLanguage)+" :</font> "+ namedDay +"</td></tr>");
+                return ("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1574, webSession.SiteLanguage) + " :</font> " + namedDay + "</td></tr>");
 			}
 			return("");
 		}
@@ -1497,7 +1504,19 @@ namespace TNS.AdExpress.Web.UI{
 							// Période
 							t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
 							// jour nommé
-							t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1574,webSession.SiteLanguage) +" :</font> "+ TNS.AdExpress.Web.Functions.Dates.getDay(webSession,nameDay) +"</td></tr>");
+                            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
+                            string[] dayNames = cultureInfo.DateTimeFormat.DayNames;
+                            string namedDay = string.Empty;
+                            CstWeb.Repartition.namedDay dayNamed = CstWeb.Repartition.namedDay.Monday;
+                            if (Enum.IsDefined(typeof(CstWeb.Repartition.namedDay), nameDay))
+                                dayNamed = (CstWeb.Repartition.namedDay)Enum.Parse(typeof(CstWeb.Repartition.namedDay), nameDay, true);
+
+                            if(dayNamed.GetHashCode() == 7)
+                                namedDay = cultureInfo.TextInfo.ToTitleCase(dayNames[0]);
+                            else if (dayNamed.GetHashCode() >= 0 && dayNamed.GetHashCode() < 7)
+                                namedDay = cultureInfo.TextInfo.ToTitleCase(dayNames[dayNamed.GetHashCode()]);
+
+                            t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1574, webSession.SiteLanguage) + " :</font> " + namedDay + "</td></tr>");
 							// code écran
 							t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1431,webSession.SiteLanguage) +" :</font> "+ codeEcran +"</td></tr>");
 							break;

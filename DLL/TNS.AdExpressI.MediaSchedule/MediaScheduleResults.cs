@@ -1418,9 +1418,9 @@ namespace TNS.AdExpressI.MediaSchedule
                         periods.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;{1}&nbsp;</td>", _style.CellPeriod, currentDay.ToString("dd"));
                         //Period day
                         if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
-                            days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDayWE, FctWeb.Dates.getDayOfWeek(_session, currentDay.DayOfWeek.ToString()));
+                            days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDayWE, DayString.GetCharacters(currentDay,cultureInfo,1));
                         else
-                            days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDay, FctWeb.Dates.getDayOfWeek(_session, currentDay.DayOfWeek.ToString()));
+                            days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDay, DayString.GetCharacters(currentDay, cultureInfo, 1));
 
                     }
                     if (nbPeriod >= 8)

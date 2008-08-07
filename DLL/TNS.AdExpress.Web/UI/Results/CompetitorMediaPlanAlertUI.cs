@@ -9,7 +9,7 @@
 
 using System;
 using System.Web;
-
+using System.Globalization;
 using System.Web.UI;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -28,6 +28,7 @@ using TNS.AdExpress.Web.Functions;
 using DBConstantesClassification=TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -250,21 +251,19 @@ namespace TNS.AdExpress.Web.UI.Results{
 				t.Append("<td class=\"p10\">&nbsp;"+((DateTime)tab[0,j]).ToString("dd")+"&nbsp;</td>");
 			}
 			string dayClass="";
-			char day;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			t.Append("\r\n\t</tr><tr>");
 			for(j=CompetitorMediaPlanAlert.FIRST_PEDIOD_INDEX;j<nbColTab;j++){
-				day=TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,((DateTime)tab[0,j]).DayOfWeek.ToString()).ToCharArray()[0];
-							
-				
-				if(day==GestionWeb.GetWebWord(545,webSession.SiteLanguage).ToCharArray()[0]
-					|| day==GestionWeb.GetWebWord(546,webSession.SiteLanguage).ToCharArray()[0]
-					){
+                DateTime dt = ((DateTime)tab[0, j]);
+                if (dt.DayOfWeek == DayOfWeek.Saturday
+                    || dt.DayOfWeek == DayOfWeek.Sunday
+                    ) {
 					dayClass="p132";
 				}
 				else{
 					dayClass="p131";
 				}	
-				t.Append("<td class=\""+dayClass+"\">"+TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,((DateTime)tab[0,j]).DayOfWeek.ToString())+"</td>");
+                t.Append("<td class=\"" + dayClass + "\">" + DayString.GetCharacters(dt, cultureInfo, 1) + "</td>");
 			}
 			t.Append("\r\n\t</tr>");
 
@@ -634,19 +633,19 @@ namespace TNS.AdExpress.Web.UI.Results{
 			dateHtml += "</tr>";
 
 			string dayClass="";
-			char day;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			dateHtml+="\r\n\t<tr>";
 			for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++){
-				day=TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,((DateTime)tab[0,j]).DayOfWeek.ToString()).ToCharArray()[0];
-				if(day==GestionWeb.GetWebWord(545,webSession.SiteLanguage).ToCharArray()[0]
-					|| day==GestionWeb.GetWebWord(546,webSession.SiteLanguage).ToCharArray()[0]
-					){
+                DateTime dt = ((DateTime)tab[0, j]);
+                if (dt.DayOfWeek == DayOfWeek.Saturday
+                    || dt.DayOfWeek == DayOfWeek.Sunday
+                    ) {
 					dayClass="p132";
 				}
 				else{
 					dayClass="p131";
 				}	
-				dateHtml+="<td class=\""+dayClass+"\">"+TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,((DateTime)tab[0,j]).DayOfWeek.ToString())+"</td>";
+                dateHtml += "<td class=\"" + dayClass + "\">" + DayString.GetCharacters(dt, cultureInfo, 1) + "</td>";
 			}
 			dateHtml+="\r\n\t</tr>";
 
@@ -1002,19 +1001,19 @@ namespace TNS.AdExpress.Web.UI.Results{
 			dateHtml += "</tr>";
 
 			string dayClass="";
-			char day;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			dateHtml+="\r\n\t<tr>";
 			for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++){
-				day=TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,((DateTime)tab[0,j]).DayOfWeek.ToString()).ToCharArray()[0];
-				if(day==GestionWeb.GetWebWord(545,webSession.SiteLanguage).ToCharArray()[0]
-					|| day==GestionWeb.GetWebWord(546,webSession.SiteLanguage).ToCharArray()[0]
-					){
+                DateTime dt = ((DateTime)tab[0, j]);
+                if (dt.DayOfWeek == DayOfWeek.Saturday
+                    || dt.DayOfWeek == DayOfWeek.Sunday
+                    ) {
 					dayClass="p133";
 				}
 				else{
 					dayClass="p132";
 				}	
-				dateHtml+="<td class=\""+dayClass+"\">"+TNS.AdExpress.Web.Functions.Dates.getDayOfWeek(webSession,((DateTime)tab[0,j]).DayOfWeek.ToString())+"</td>";
+                dateHtml += "<td class=\"" + dayClass + "\">" + DayString.GetCharacters(dt, cultureInfo, 1) + "</td>";
 			}
 			dateHtml+="\r\n\t</tr>";
 

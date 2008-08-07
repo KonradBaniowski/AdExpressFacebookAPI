@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Globalization;
 using System.Data;
 
 using System.Text;
@@ -1316,6 +1316,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <returns>HTML</returns>
 		private string GetDaySelected(WebSession webSession){
 			string namedDay=string.Empty;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
+            string[] dayNames = cultureInfo.DateTimeFormat.DayNames;
 			switch(webSession.NamedDay){
 				case WebConstantes.Repartition.namedDay.Week_5_day:
 					namedDay=GestionWeb.GetWebWord(1553, webSession.SiteLanguage);
@@ -1326,9 +1328,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				case WebConstantes.Repartition.namedDay.Week_end:
 					namedDay=GestionWeb.GetWebWord(1561, webSession.SiteLanguage);
 					break;
-				default:
-					namedDay=TNS.AdExpress.Web.Functions.Dates.getDay(webSession,webSession.NamedDay.ToString());
-					break;
+                default:
+                    if (webSession.NamedDay.GetHashCode() == 7)
+                        namedDay = cultureInfo.TextInfo.ToTitleCase(dayNames[0]);
+                    else if (webSession.NamedDay.GetHashCode() >= 0 && webSession.NamedDay.GetHashCode() < 7)
+                        namedDay = cultureInfo.TextInfo.ToTitleCase(dayNames[webSession.NamedDay.GetHashCode()]);
+                    break;
 			}
 			if(namedDay.Length>0){
 				return("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+GestionWeb.GetWebWord(1574,webSession.SiteLanguage)+" :</font> "+ namedDay +"</td></tr>");

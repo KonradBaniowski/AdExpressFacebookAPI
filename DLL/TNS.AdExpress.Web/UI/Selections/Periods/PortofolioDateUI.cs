@@ -8,6 +8,7 @@
 using System;
 using System.Data;
 using System.Text;
+using System.Globalization;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Selections.Periods;
 using TNS.AdExpress.Domain.Translation;
@@ -15,6 +16,7 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Web;
+using TNS.FrameWork.Date;
 
 namespace TNS.AdExpress.Web.UI.Selections.Periods{
 
@@ -117,6 +119,7 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 				
 				#region Parcours du tableau
 				if(dt.Rows.Count>1){
+                    CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 					for(int i=1;i<dt.Rows.Count;i++) {
                         if ((int)idVehicle == DBClassificationConstantes.Vehicles.names.press.GetHashCode()
                             || (int)idVehicle == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode())
@@ -134,7 +137,7 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 						date= TNS.FrameWork.Date.MonthString.GetHTMLCharacters(monthDate,webSession.SiteLanguage,20);
 						date+=" "+dt.Rows[i][0].ToString().Substring(0,4);
 				
-						day=GetDayOfWeek(webSession,dayDT.DayOfWeek.ToString())+" "+dt.Rows[i][0].ToString().Substring(6,2);
+                        day = DayString.GetCharacters(dayDT, cultureInfo) + " " + dt.Rows[i][0].ToString().Substring(6, 2);
 						//Premier
 						if(parent!=oldParent && start!=0){
 
@@ -237,7 +240,7 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 		/// <param name="webSession">Session client</param>
 		/// <param name="dayOfWeek">Jour de la semaine en anglais</param>
 		/// <returns>Donne le jour de la semaine</returns>
-		public static string GetDayOfWeek(WebSession webSession, string dayOfWeek){
+		/*public static string GetDayOfWeek(WebSession webSession, string dayOfWeek){
 			string txt="";
 			switch(dayOfWeek){
 				case "Monday":
@@ -263,7 +266,7 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 					break;						
 			}
 			return txt;
-		}
+		}*/
 
 	}
 }
