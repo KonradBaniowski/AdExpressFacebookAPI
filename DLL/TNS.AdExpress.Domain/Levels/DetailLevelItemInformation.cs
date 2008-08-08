@@ -121,7 +121,11 @@ namespace TNS.AdExpress.Domain.Level{
 			/// <summary>
 			/// Forme de parrainage
 			/// </summary>
-			sponsorshipForm=25  
+			sponsorshipForm=25,
+            /// <summary>
+            /// Pays
+            /// </summary>
+            country=26
 		}
 		#endregion
 

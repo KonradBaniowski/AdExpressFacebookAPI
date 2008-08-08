@@ -71,6 +71,7 @@
     <Compile Include="Exceptions\ModuleCategoryListXLException.cs" />
     <Compile Include="Exceptions\ModuleException.cs" />
     <Compile Include="Exceptions\TranslationException.cs" />
+    <Compile Include="Exceptions\VehicleException.cs" />
     <Compile Include="Exceptions\WebLanguagesXLException.cs" />
     <Compile Include="Exceptions\WebThemesXLException.cs" />
     <Compile Include="Flag.cs" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <vehicles>
+  <!-- PRESS -->
   <vehicle id="press" databaseId="1" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits>
@@ -12,20 +13,219 @@
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
       <allowedMediaLevelItems>
-        <allowedMediaLevelItem>1</allowedMediaLevelItem>    <!-- Media -->
-        <allowedMediaLevelItem>2</allowedMediaLevelItem>    <!-- Categorie -->
-        <allowedMediaLevelItem>3</allowedMediaLevelItem>    <!-- Support -->
-        <allowedMediaLevelItem>4</allowedMediaLevelItem>    <!-- Centre d'interet -->
-        <allowedMediaLevelItem>5</allowedMediaLevelItem>    <!-- Régie -->
-        <allowedMediaLevelItem>17</allowedMediaLevelItem>   <!-- Titre -->
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>    <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>    <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>    <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>    <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>    <!-- Régie -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>   <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents>
-      <MediaSelectionParent>2</MediaSelectionParent>         <!-- Categorie -->
-      <MediaSelectionParent>5</MediaSelectionParent>         <!-- Centre d'interet -->
-      <MediaSelectionParent>4</MediaSelectionParent>         <!-- Régie -->
-      <MediaSelectionParent>17</MediaSelectionParent>        <!-- Titre -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>         <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>         <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>        <!-- Titre -->
+    </MediaSelectionParents>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="6"/>
+  </vehicle>
+  <!-- RADIO -->
+  <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="true">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>duration</allowedUnit>
+      <allowedUnit>spot</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents>
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
+    </MediaSelectionParents>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="7"/>
+  </vehicle>
+  <!-- TV -->
+  <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="true">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>duration</allowedUnit>
+      <allowedUnit>spot</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents>
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
+    </MediaSelectionParents>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="8"/>
+  </vehicle>
+  <!-- OTHERS -->  
+  <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>duration</allowedUnit>
+      <allowedUnit>spot</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents>
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
+    </MediaSelectionParents>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="8"/>
+  </vehicle>
+  <!-- INTERNET -->
+  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents>
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
+    </MediaSelectionParents>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="-1"/>
+  </vehicle>
+  <!-- OUTDOOR -->
+  <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>numberBoard</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents>
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
+    </MediaSelectionParents>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="-1"/>
+  </vehicle>
+  <!-- DIRECT_MARKETING -->
+  <vehicle id="directMarketing" databaseId="10" showInsertions="true" showCreations="true">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>volume</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents>
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
+    </MediaSelectionParents>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="-1"/>
+  </vehicle>
+  <!-- INTERNATIONAL_PRESS -->
+  <vehicle id="internationalPress" databaseId="11" showInsertions="true" showCreations="true">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>insertion</allowedUnit>
+      <allowedUnit>mmPerCol</allowedUnit>
+      <allowedUnit>pages</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents>
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>country</MediaSelectionParent>      <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>

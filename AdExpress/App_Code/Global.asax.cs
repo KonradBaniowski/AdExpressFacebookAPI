@@ -19,10 +19,12 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 using TNS.Classification;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
+
 
 namespace AdExpress {
 	/// <summary>
@@ -71,8 +73,9 @@ namespace AdExpress {
 				
                 //Units
                 UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
-                
-                
+
+                //Vehicles
+                VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
                 
                 // Chargement des noms de modules et des catégories de modules
                 //ModulesList.Init(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CONFIGURATION_FILENAME,WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME);

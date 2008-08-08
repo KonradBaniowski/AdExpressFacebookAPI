@@ -1,8 +1,184 @@
+#region Information
+//  Author : Y. R'kaina
+//  Creation  date: 06/08/2008
+//  Modifications:
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 
+using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Units; 
+using TNS.AdExpress.Constantes.Web;
+
 namespace TNS.AdExpress.Domain.Classification {
-    class VehicleInformation {
+    /// <summary>
+    /// Vehicle description
+    /// </summary>
+    public class VehicleInformation {
+
+        #region Variables
+        /// <summary>
+        /// Vehicle id
+        /// </summary>
+        private Vehicles.names _id;
+        /// <summary>
+        /// Data base id
+        /// </summary>
+        private Int64 _databaseId;
+        /// <summary>
+        /// Show insertions
+        /// </summary>
+        private bool _showInsertions;
+        /// <summary>
+        /// Show creations
+        /// </summary>
+        private bool _showCreations;
+        /// <summary>
+        /// Allowed units list
+        /// </summary>
+        private List<CustomerSessions.Unit> _allowedUnitsList;
+        /// <summary>
+        /// Allowed media level items list
+        /// </summary>
+        private List<DetailLevelItemInformation.Levels> _allowedMediaLevelItemsList;
+        /// <summary>
+        /// Media selection parents list
+        /// </summary>
+        private List<DetailLevelItemInformation.Levels> _mediaSelectionParentsList;
+        /// <summary>
+        /// Detail column id
+        /// </summary>
+        private Int64 _detailColumnId;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">Vehicle id</param>
+        /// <param name="databaseId">Data base id</param>
+        /// <param name="showInsertions">Show insertions</param>
+        /// <param name="showCreations">Show creations</param>
+        /// <param name="allowedUnitsList">Allowed units list</param>
+        /// <param name="allowedMediaLevelItemsList">Allowed media level items list</param>
+        /// <param name="mediaSelectionParentsList">Media selection parents list</param>
+        /// <param name="detailColumnId">Detail column id</param>
+        public VehicleInformation(string id, 
+                                  Int64 databaseId, 
+                                  bool showInsertions, 
+                                  bool showCreations, 
+                                  List<CustomerSessions.Unit> allowedUnitsList, 
+                                  List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList, 
+                                  List<DetailLevelItemInformation.Levels> mediaSelectionParentsList, 
+                                  Int64 detailColumnId) {
+
+            if (id == null || id.Length == 0) throw (new ArgumentException("Invalid paramter vehicle id"));
+            if (allowedUnitsList == null) throw (new ArgumentException("Invalid paramter allowed units list"));
+            else _allowedUnitsList = allowedUnitsList;
+            if (allowedMediaLevelItemsList == null) throw (new ArgumentException("Invalid paramter allowed media level items list"));
+            else _allowedMediaLevelItemsList = allowedMediaLevelItemsList;
+            if (mediaSelectionParentsList == null) throw (new ArgumentException("Invalid paramter media selection parents list"));
+            else _mediaSelectionParentsList = mediaSelectionParentsList;
+            try {
+                _id = (Vehicles.names)Enum.Parse(typeof(Vehicles.names), id, true);
+            }
+            catch (System.Exception err) {
+                throw (new ArgumentException("Invalid parameter  vehicle id", err));
+            }
+            _databaseId = databaseId;
+            _showInsertions = showInsertions;
+            _showCreations = showCreations;
+            _detailColumnId = detailColumnId;
+
+        }
+        #endregion
+
+        #region Accessors
+        /// <summary>
+        /// Get vehicle id
+        /// </summary>
+        public Vehicles.names Id {
+            get { return _id; }
+        }
+        /// <summary>
+        /// Get database id
+        /// </summary>
+        public Int64 DatabaseId {
+            get { return _databaseId; }
+        }
+        /// <summary>
+        /// Get show insertions authorization
+        /// </summary>
+        public bool ShowInsertions {
+            get { return _showInsertions; }
+        }
+        /// <summary>
+        /// Get show creations authorization
+        /// </summary>
+        public bool ShowCreations {
+            get { return _showCreations; }
+        }
+        /// <summary>
+        /// Get allowed units enum list
+        /// </summary>
+        public List<CustomerSessions.Unit> AllowedUnitEnumList {
+            get { return _allowedUnitsList; }
+        }
+        /// <summary>
+        /// Get allowed UnitInformation list
+        /// </summary>
+        public List<UnitInformation> AllowedUnitInformationList {
+            get { 
+                List<UnitInformation> list = new List<UnitInformation>();
+                foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList)
+                    list.Add(UnitsInformation.Get(currentUnit));
+                return list;
+            }
+        }
+        /// <summary>
+        /// Get allowed media level items enum list
+        /// </summary>
+        public List<DetailLevelItemInformation.Levels> AllowedMediaLevelItemsEnumList {
+            get { return _allowedMediaLevelItemsList; }
+        }
+        /// <summary>
+        /// Get allowed media level items information list
+        /// </summary>
+        public List<DetailLevelItemInformation> AllowedMediaLevelItemsInformationList {
+            get {
+                List<DetailLevelItemInformation> list = new List<DetailLevelItemInformation>();
+                foreach(DetailLevelItemInformation.Levels currentLevel in _allowedMediaLevelItemsList)
+                    list.Add(DetailLevelItemsInformation.Get(currentLevel.GetHashCode()));
+                return list;
+            }
+        }
+        /// <summary>
+        /// Get media selection parents items enum list
+        /// </summary>
+        public List<DetailLevelItemInformation.Levels> MediaSelectionParentsItemsEnumEnumList {
+            get { return _mediaSelectionParentsList; }
+        }
+        /// <summary>
+        /// Get media selection parents items information list
+        /// </summary>
+        public List<DetailLevelItemInformation> MediaSelectionParentsItemsInformationList {
+            get {
+                List<DetailLevelItemInformation> list = new List<DetailLevelItemInformation>();
+                foreach (DetailLevelItemInformation.Levels currentLevel in _mediaSelectionParentsList)
+                    list.Add(DetailLevelItemsInformation.Get(currentLevel.GetHashCode()));
+                return list;
+            }
+        }
+        /// <summary>
+        /// Get detail column id
+        /// </summary>
+        public Int64 DetailColumnId {
+            get { return _detailColumnId; }
+        }
+        #endregion
+
     }
 }

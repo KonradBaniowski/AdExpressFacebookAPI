@@ -20,7 +20,6 @@ namespace TNS.AdExpress.Domain.Units {
     public class UnitsInformation {
 
         #region variables
-        
 		///<summary>
 		/// Units description list
 		/// </summary>
@@ -36,7 +35,12 @@ namespace TNS.AdExpress.Domain.Units {
 		#endregion
 
 		#region Accesseurs
-		
+        /// <summary>
+        /// Get units description list
+        /// </summary>
+        public static Dictionary<CustomerSessions.Unit, UnitInformation> List {
+            get { return _list; }
+        }
 		#endregion
 
 		#region Méthodes publiques

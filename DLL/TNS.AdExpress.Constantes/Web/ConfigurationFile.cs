@@ -89,6 +89,10 @@ namespace TNS.AdExpress.Constantes.Web {
         /// Units configuration file
         /// </summary>
         public const string UNITS_CONFIGURATION_FILENAME = @"Units.xml";
+        /// <summary>
+        /// Vehicles configuration file
+        /// </summary>
+        public const string VEHICLES_CONFIGURATION_FILENAME = @"Vehicles.xml";
 
     }
 }
