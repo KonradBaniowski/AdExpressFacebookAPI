@@ -36,7 +36,7 @@ namespace AdExpress.Private.Selection
 		/// <summary>
 		/// Texte
 		/// </summary>
-		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText AdExpressText1;
+		//protected TNS.AdExpress.Web.Controls.Translation.AdExpressText AdExpressText1;
 		/// <summary>
 		/// Entête de la page
 		/// </summary>
@@ -86,13 +86,18 @@ namespace AdExpress.Private.Selection
 
 				#region Textes et langage du site
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_siteLanguage);
+                for (int i = 0; i < this.Controls.Count; i++) {
+                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                }
 
 				// Initialisation de la liste des média
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
-				validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+                titreAdexpresstext.Language = _webSession.SiteLanguage;
+                HeaderWebControl1.Language = _webSession.SiteLanguage;
+
+				//validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
+				//validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 				#endregion			
 			
 				#region Remise à zéro de CompetitorUniversMedia
