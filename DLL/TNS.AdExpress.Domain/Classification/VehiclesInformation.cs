@@ -83,10 +83,15 @@ namespace TNS.AdExpress.Domain.Classification {
                 communUnitList.Add(currentKey);
             }
 
-            foreach (Vehicles.names currentVehicle in vehicleList) {
-                foreach (CustomerSessions.Unit currentUnit in unitList)
-                    if (!Get(currentVehicle).AllowedUnitEnumList.Contains(currentUnit))
-                        communUnitList.Remove(currentUnit);
+            if (vehicleList.Count == 1)
+                return Get(vehicleList[0]).AllowedUnitEnumList;
+            else {
+
+                foreach (Vehicles.names currentVehicle in vehicleList) {
+                    foreach (CustomerSessions.Unit currentUnit in unitList)
+                        if (!Get(currentVehicle).AllowedBaseUnitInformationList.Contains(currentUnit))
+                            communUnitList.Remove(currentUnit);
+                }
             }
 
             return communUnitList;
