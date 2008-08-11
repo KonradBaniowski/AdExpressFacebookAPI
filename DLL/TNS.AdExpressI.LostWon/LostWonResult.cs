@@ -33,6 +33,7 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpressI.LostWon.Exceptions;
 using TNS.AdExpressI.LostWon.DAL;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Classification;
 
 #endregion
 
@@ -151,7 +152,7 @@ namespace TNS.AdExpressI.LostWon
         /// <summary>
         /// Current vehicle univers
         /// </summary>
-        protected CstDBClassif.Vehicles.names _vehicle;
+        protected VehicleInformation _vehicleInformation;
         /// <summary>
         /// Current Module
         /// </summary>
@@ -176,9 +177,9 @@ namespace TNS.AdExpressI.LostWon
         /// <summary>
         /// Get Current Vehicle
         /// </summary>
-        public CstDBClassif.Vehicles.names Vehicle
+        public VehicleInformation VehicleInformationObject
         {
-            get { return _vehicle; }
+            get { return _vehicleInformation; }
         }
         /// <summary>
         /// Get Current Module
@@ -201,8 +202,8 @@ namespace TNS.AdExpressI.LostWon
 
             #region Sélection du vehicle
             string vehicleSelection = session.GetSelection(session.SelectionUniversMedia, CstCustom.Right.type.vehicleAccess);
-            _vehicle = (CstDBClassif.Vehicles.names)int.Parse(vehicleSelection);
             if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new LostWonException("Uncorrect Media Selection"));
+            _vehicleInformation = VehiclesInformation.Get(Int64.Parse(vehicleSelection));
             #endregion
 
         }
@@ -1335,7 +1336,7 @@ namespace TNS.AdExpressI.LostWon
             long nbLine = GetNbLineFromPreformatedTableToResultTable(tabData) + 1;
 			#region Add Line for  Nb parution data
 			Dictionary<string, double> resNbParution = null;
-			if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (CstDBClassif.Vehicles.names.press == _vehicle || CstDBClassif.Vehicles.names.internationalPress == _vehicle)) {
+            if(columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)) {
 				resNbParution = GetNbParutionsByMedia();
 				if (resNbParution != null && resNbParution.Count > 0)
 					nbLine = nbLine + 1;

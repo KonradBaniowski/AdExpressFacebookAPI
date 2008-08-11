@@ -33,6 +33,7 @@ using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain.Classification;
 
 #endregion
 
@@ -52,7 +53,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
         /// <summary>
         /// Current vehicle
         /// </summary>
-        protected CstDBClassif.Vehicles.names _vehicle;
+        protected VehicleInformation _vehicleInformation;
         #endregion
 
         #region Accessors
@@ -66,9 +67,9 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
         /// <summary>
         /// Get Vehicle
         /// </summary>
-        protected CstDBClassif.Vehicles.names Vehicle
+        protected VehicleInformation VehicleInformationObject
         {
-            get { return _vehicle; }
+            get { return _vehicleInformation; }
         }
         #endregion
 
@@ -84,7 +85,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             #region Sélection du vehicle
             string vehicleSelection = _session.GetSelection(_session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
             if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new PresentAbsentDALException("Selection of media is not correct"));
-            _vehicle = (CstDBClassif.Vehicles.names)int.Parse(vehicleSelection);
+            _vehicleInformation = VehiclesInformation.Get(Int64.Parse(vehicleSelection));
             #endregion
 
         }
@@ -134,10 +135,10 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 // Table de données
                 switch (type) {
                     case CstDB.TableType.Type.dataVehicle4M:
-                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.alert);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.alert);
                         break;
                     case CstDB.TableType.Type.dataVehicle:
-                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.analysis);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.analysis);
                         break;
                     case CstDB.TableType.Type.webPlan:
                         dataTableName = tblWebPlan.SqlWithPrefix;
@@ -161,7 +162,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                         break;
                 }
                 //option encarts (pour la presse)
-                if (CstDBClassif.Vehicles.names.press == _vehicle || CstDBClassif.Vehicles.names.internationalPress == _vehicle)
+                if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                     dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, DATA_TABLE_PREFIXE);
             }
             catch (Exception e) {
@@ -216,7 +217,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             }
 
             //Jointures encart
-            if (CstDBClassif.Vehicles.names.press == _vehicle || CstDBClassif.Vehicles.names.internationalPress == _vehicle)
+            if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                 sql.AppendFormat(" {0}", dataJointForInsert);
 
             //Jointures groupe agences/agences		
@@ -455,11 +456,11 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 // Table de données, date
                 switch (type) {
                     case CstDB.TableType.Type.dataVehicle4M:
-                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.alert);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.alert);
                         dateField = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + CstDB.Fields.DATE_MEDIA_NUM;
                         break;
                     case CstDB.TableType.Type.dataVehicle:
-                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.analysis);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.analysis);
                         dateField = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + CstDB.Fields.DATE_MEDIA_NUM;
                         break;
                     case CstDB.TableType.Type.webPlan:
@@ -490,7 +491,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 // Liste des produits à exclure
                 listExcludeProduct = FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
                 //option encarts (pour la presse)
-                if (CstDBClassif.Vehicles.names.press == _vehicle || CstDBClassif.Vehicles.names.internationalPress == _vehicle)
+                if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                     dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,type);
                 if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
                     try {
@@ -575,7 +576,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 sql.AppendFormat(" {0}", dataJointForGad);
                 sql.AppendFormat(" {0}", mediaAgencyJoins);
                 //Jointures encart
-                if (CstDBClassif.Vehicles.names.press == _vehicle || CstDBClassif.Vehicles.names.internationalPress == _vehicle)
+                if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                     sql.AppendFormat(" {0}", dataJointForInsert);
 
                 #region Sélection de Médias
@@ -745,7 +746,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 			#region Construction de la requête
 			try {
 				CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
-				dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicle, CstWeb.Module.Type.analysis);
+                dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.analysis);
 				dateField = CstDB.Fields.DATE_MEDIA_NUM;
 
 				sql.Append(" select id_media, count(distinct " + dateField + ") as NbParution");

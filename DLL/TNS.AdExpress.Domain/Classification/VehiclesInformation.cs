@@ -58,9 +58,9 @@ namespace TNS.AdExpress.Domain.Classification {
         /// <summary>
         /// Get Vehicle informations
         /// </summary>
-        public static VehicleInformation Get(Int64 id) {
+        public static VehicleInformation Get(Int64 dataBaseVehicleId) {
             try {
-                return (_listDataBaseId[id]);
+                return (_listDataBaseId[dataBaseVehicleId]);
             }
             catch (System.Exception err) {
                 throw (new ArgumentException("impossible to reteive the requested vehicle", err));

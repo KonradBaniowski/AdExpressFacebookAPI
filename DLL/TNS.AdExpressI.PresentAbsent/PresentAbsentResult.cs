@@ -3,11 +3,10 @@
  * Author : G Ragneau
  * Creation : 18/03/2008
  * Updates :
- *      Author - Date - Description
- * 
+ *      Date        Author      Description
+ *      11/08/2008  G. Facon    Use Vehicle XML to show creatives & insertions or not
  */
 #endregion
-
 
 #region Using
 using System;
@@ -32,17 +31,17 @@ using System.Windows.Forms;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Result;
 using Navigation = TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Classification;
 
 using TNS.AdExpressI.PresentAbsent.DAL;
 #endregion
 
-namespace TNS.AdExpressI.PresentAbsent
-{
+namespace TNS.AdExpressI.PresentAbsent{
     /// <summary>
     /// Default Present/Absent reports
     /// </summary>
-    public abstract class PresentAbsentResult : IPresentAbsentResult
-    {
+    public abstract class PresentAbsentResult : IPresentAbsentResult{
+
         #region Constantes
         /// <summary>
         /// First Media Index
@@ -150,7 +149,7 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <summary>
         /// Current vehicle univers
         /// </summary>
-        protected CstDBClassif.Vehicles.names _vehicle;
+        protected VehicleInformation _vehicleInformation;
         /// <summary>
         /// Current Module
         /// </summary>
@@ -175,9 +174,9 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <summary>
         /// Get Current Vehicle
         /// </summary>
-        public CstDBClassif.Vehicles.names Vehicle
+        public VehicleInformation VehicleInformationObject
         {
-            get { return _vehicle; }
+            get { return _vehicleInformation; }
         }
         /// <summary>
         /// Get Current Module
@@ -200,8 +199,9 @@ namespace TNS.AdExpressI.PresentAbsent
 
             #region Sélection du vehicle
             string vehicleSelection = session.GetSelection(session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
-            _vehicle = (CstDBClassif.Vehicles.names)int.Parse(vehicleSelection);
-            if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new PresentAbsentException("Uncorrect Media Selection"));
+            if(vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new PresentAbsentException("Uncorrect Media Selection"));
+            _vehicleInformation = VehiclesInformation.Get(Int64.Parse(vehicleSelection));
+            
             #endregion
 
         }
@@ -1186,7 +1186,8 @@ namespace TNS.AdExpressI.PresentAbsent
             #region Obtention du vehicle
             string vehicleSelection = _session.GetSelection(_session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
             if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new PresentAbsentException("Media Selection is not valid"));
-            CstDBClassif.Vehicles.names vehicle = (CstDBClassif.Vehicles.names)int.Parse(vehicleSelection);
+            VehicleInformation vehicleInformation=VehiclesInformation.Get(Int64.Parse(vehicleSelection));
+            CstDBClassif.Vehicles.names vehicle =vehicleInformation.Id;
             #endregion
 
             #region Headers
@@ -1200,7 +1201,8 @@ namespace TNS.AdExpressI.PresentAbsent
             // Ajout Création ?
             bool showCreative = false;
             //A vérifier Création où version
-            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) &&
+            if (vehicleInformation.ShowCreations &&
+                _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) &&
                 (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)))
             {
@@ -1212,7 +1214,8 @@ namespace TNS.AdExpressI.PresentAbsent
 
             // Ajout Insertions ?
             bool showInsertions = false;
-            if ((_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
+            if (vehicleInformation.ShowInsertions &&
+                (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)))
             {
                 headers.Root.Add(new HeaderInsertions(false, GestionWeb.GetWebWord(2245, _session.SiteLanguage), INSERTION_HEADER_ID));

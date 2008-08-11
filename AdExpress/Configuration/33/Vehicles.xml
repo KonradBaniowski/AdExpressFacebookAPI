@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <vehicles>
   <!-- PRESS -->
-  <vehicle id="press" databaseId="1" showInsertions="true" showCreations="true">
+  <vehicle id="press" databaseId="1" showInsertions="false" showCreations="false">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
