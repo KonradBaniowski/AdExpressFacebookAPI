@@ -83,14 +83,12 @@ namespace TNS.AdExpress.Domain.Classification {
             if (id == null || id.Length == 0) throw (new ArgumentException("Invalid paramter vehicle id"));
             if (allowedUnitsList == null) throw (new ArgumentException("Invalid paramter allowed units list"));
             else _allowedUnitsList = allowedUnitsList;
-            if (allowedMediaLevelItemsList == null) throw (new ArgumentException("Invalid paramter allowed media level items list"));
-            else _allowedMediaLevelItemsList = allowedMediaLevelItemsList;
-            if (defaultMediaSelectionParent == null || defaultMediaSelectionParent.Length == 0) throw (new ArgumentException("Invalid paramter defaultMediaSelectionParent"));
-            if (mediaSelectionParentsList == null) throw (new ArgumentException("Invalid paramter media selection parents list"));
-            else _mediaSelectionParentsList = mediaSelectionParentsList;
+            _allowedMediaLevelItemsList = allowedMediaLevelItemsList;
+            _mediaSelectionParentsList = mediaSelectionParentsList;
             try {
                 _id = (Vehicles.names)Enum.Parse(typeof(Vehicles.names), id, true);
-                _defaultMediaSelectionParent = (DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), defaultMediaSelectionParent, true);
+                if(defaultMediaSelectionParent.Length>0)
+                    _defaultMediaSelectionParent = (DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), defaultMediaSelectionParent, true);
             }
             catch (System.Exception err) {
                 throw (new ArgumentException("Invalid parameter  vehicle id", err));
