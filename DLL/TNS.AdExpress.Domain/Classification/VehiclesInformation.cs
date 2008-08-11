@@ -129,6 +129,62 @@ namespace TNS.AdExpress.Domain.Classification {
         }
         #endregion
 
+        #region Get commun DetailLevelItemInformation list
+        /// <summary>
+        /// Get commun DetailLevelItemInformation list
+        /// </summary>
+        /// <param name="vehicleList">Vehicle Information List</param>
+        /// <returns>Detail Level Information List</returns>
+        public static List<DetailLevelItemInformation.Levels> GetCommunDetailLevelList(List<Vehicles.names> vehicleList) {
+
+            List<DetailLevelItemInformation.Levels> communlevelList = new List<DetailLevelItemInformation.Levels>();
+            if (vehicleList.Count > 0) {
+                List<DetailLevelItemInformation.Levels> levelList = Get(vehicleList[0]).AllowedMediaLevelItemsEnumList;
+                if (vehicleList.Count == 1)
+                    return levelList;
+                else {
+                    foreach (DetailLevelItemInformation.Levels currentKey in levelList) {
+                        communlevelList.Add(currentKey);
+                    }
+                    foreach (Vehicles.names currentVehicle in vehicleList) {
+                        foreach (DetailLevelItemInformation.Levels currentLevel in levelList)
+                            if (!Get(currentVehicle).AllowedMediaLevelItemsEnumList.Contains(currentLevel))
+                                communlevelList.Remove(currentLevel);
+                    }
+                }
+            }
+            return communlevelList;
+        }
+        /// <summary>
+        /// Get commun DetailLevelItemInformation list
+        /// </summary>
+        /// <param name="vehicleList">Vehicle Information List</param>
+        /// <returns>Detail Level Information List</returns>
+        /// <remarks>This method is used when we have a dataBaseId list</remarks>
+        public static List<DetailLevelItemInformation.Levels> GetCommunDetailLevelList(List<Int64> vehicleList) {
+
+            List<DetailLevelItemInformation.Levels> communlevelList = new List<DetailLevelItemInformation.Levels>();
+            if (vehicleList.Count > 0) {
+                List<DetailLevelItemInformation.Levels> levelList = Get(vehicleList[0]).AllowedMediaLevelItemsEnumList;
+                if (vehicleList.Count == 1)
+                    return levelList;
+                else {
+                    foreach (DetailLevelItemInformation.Levels currentKey in levelList) {
+                        communlevelList.Add(currentKey);
+                    }
+                    foreach (Int64 currentVehicle in vehicleList) {
+                        foreach (DetailLevelItemInformation.Levels currentLevel in levelList)
+                            if (!Get(currentVehicle).AllowedMediaLevelItemsEnumList.Contains(currentLevel))
+                                communlevelList.Remove(currentLevel);
+                    }
+                }
+            }
+
+            return communlevelList;
+
+        }
+        #endregion
+
         #region Init
         /// <summary>
         /// Initialisation de la liste à partir du fichier XML
