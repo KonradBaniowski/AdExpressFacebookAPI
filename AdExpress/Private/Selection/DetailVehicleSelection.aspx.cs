@@ -31,6 +31,8 @@ using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Classification;
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -185,10 +187,14 @@ namespace AdExpress.Private.Selection{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			try{
+			try {
 
-				#region Initialssation de la sélection supports
-				if(!Page.IsPostBack){
+                #region VehicleInformation
+                VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                #endregion
+
+                #region Initialssation de la sélection supports
+                if (!Page.IsPostBack){
 					_webSession.CompetitorUniversMedia = new Hashtable(5);
 					_webSession.CurrentUniversMedia = new System.Windows.Forms.TreeNode("Media");
 				}
@@ -209,7 +215,6 @@ namespace AdExpress.Private.Selection{
 				#endregion
 						
 				#region Evènements Boutons
-				
 				// Bouton valider
 				if(Request.Form.Get("__EVENTTARGET")=="validImageButtonRollOverWebControl" 
 					|| Request.Form.Get("__EVENTTARGET")=="formSponsoringshipImageButtonRollOverWebControl"
@@ -225,18 +230,11 @@ namespace AdExpress.Private.Selection{
 					// Bouton ok Option
 				}else if(Request.Form.Get("__EVENTTARGET")=="okImageButton"){
 					
-					if(Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")!=null){
-						if(Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString()=="MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia.GetHashCode().ToString()){
-							_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia;																	
-						}else if( Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString()=="MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia.GetHashCode().ToString()){
-							_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia;																							
-						}else if(Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString()=="MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia.GetHashCode().ToString()){
-							_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia;																							
-						}else if( Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString()=="MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia.GetHashCode().ToString()){
-							_webSession.PreformatedMediaDetail = CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia;																		
-						}
-					}
-													
+                    if (Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2") != null) {
+                        foreach (DetailLevelItemInformation.Levels currentLevel in vehicleInformation.MediaSelectionParentsItemsEnumList)
+                            if (Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString() == "MediaSeller_" + currentLevel.GetHashCode())
+                                _webSession.MediaSelectionParent = currentLevel;
+                    }
 
 					eventButton=constEvent.eventSelection.OK_OPTION_MEDIA_EVENT;
 
@@ -263,7 +261,7 @@ namespace AdExpress.Private.Selection{
 					eventButton=constEvent.eventSelection.ALL_INITIALIZE_EVENT;
 				}
 				else
-					_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia;
+                    _webSession.MediaSelectionParent = vehicleInformation.DefaultMediaSelectionParent;
 
 				#endregion
 

@@ -21,6 +21,8 @@ using TNS.AdExpress.Web.DataAccess.Selections.Medias;
 using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -60,21 +62,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			int eventButton=-1;	
 			string textOpenclose="";
 			bool loadIsPossible=true;
-			
-			if(webSession.PreformatedMediaDetail==CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia) {
-				dsListMedia=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.keyWordInterestCenterListDataAccess(webSession,keyWord,"");
+            VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
-			}else if(webSession.PreformatedMediaDetail==CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia){
-				dsListMedia=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.keyWordMediaSellerListDataAccess(webSession,keyWord,"");
-			}
-			else if(webSession.PreformatedMediaDetail==CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia){
-				dsListMedia=TNS.AdExpress.Web.DataAccess.Selections.Medias.TitleListDataAccess.keyWordTitleListDataAccess(webSession,keyWord,"");
-			}
-			else if(webSession.PreformatedMediaDetail==CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia){
-				dsListMedia=TNS.AdExpress.Web.DataAccess.Selections.Medias.CountryListDataAccess.keyWordCountryListDataAccess(webSession,keyWord,"");
-			}
-			
-			//dsListMedia=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.keyWordInterestCenterListDataAccess(webSession,keyWord,"");
+            dsListMedia = TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.keyWordDetailMediaListDataAccess(webSession, keyWord, "", DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
 			
 			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
 			
@@ -99,14 +89,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				isEmptyListPortofolio=true;
 
 			//Tableau global
-			if(webSession.PreformatedMediaDetail ==CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia) 	
-				textOpenclose=GestionWeb.GetWebWord(1617,webSession.SiteLanguage);
-			else if(webSession.PreformatedMediaDetail ==CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia)
-				textOpenclose=GestionWeb.GetWebWord(1616,webSession.SiteLanguage);
-			else if(webSession.PreformatedMediaDetail ==CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia)
-				textOpenclose=GestionWeb.GetWebWord(1977,webSession.SiteLanguage);
-			else if(webSession.PreformatedMediaDetail ==CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia)
-				textOpenclose=GestionWeb.GetWebWord(2094,webSession.SiteLanguage);
+            textOpenclose = GestionWeb.GetWebWord(2461, webSession.SiteLanguage);
 					
 			t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 			insertIndex = t.Length;

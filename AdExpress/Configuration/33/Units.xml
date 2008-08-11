@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <units>
+  <unit id="kEuro"       webTextId="1789"  baseId ="none"       field="expenditure_euro"  multimediaField="totalunit"/>
   <unit id="euro"        webTextId="938"   baseId ="none"       field="expenditure_euro"  multimediaField="totalunit"/>
   <unit id="spot"        webTextId="939"   baseId ="insertion"  field="insertion"         multimediaField="totalinsert"/>
   <unit id="insertion"   webTextId="940"   baseId ="none"       field="insertion"         multimediaField="totalinsert"/>
@@ -7,6 +8,5 @@
   <unit id="mmPerCol"    webTextId="941"   baseId ="none"       field="area_mmc"          multimediaField="totalmmc"/>
   <unit id="pages"       webTextId="943"   baseId ="none"       field="area_page"         multimediaField="totalpages"/>
   <unit id="numberBoard" webTextId="936"   baseId ="insertion"  field="number_board"      multimediaField="totalinsert"/>
-  <unit id="kEuro"       webTextId="1789"  baseId ="none"       field="expenditure_euro"  multimediaField="totalunit"/>
   <unit id="volume"      webTextId="2216"  baseId ="none"       field="volume"            multimediaField="totalvolume"/>
 </units>

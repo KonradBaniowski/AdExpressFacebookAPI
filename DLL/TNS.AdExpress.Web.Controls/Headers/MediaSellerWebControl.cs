@@ -21,6 +21,8 @@ using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using CustomerCst = TNS.AdExpress.Constantes.Customer.Right;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using ClassificationCst = TNS.AdExpress.Constantes.Classification;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.Controls.Headers
 {
@@ -280,21 +282,20 @@ namespace TNS.AdExpress.Web.Controls.Headers
             {
                 mediaDetail = new RadioButtonList();
                 mediaDetail.Width = new System.Web.UI.WebControls.Unit("100%");
-                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1384, customerWebSession.SiteLanguage), "MediaSeller_" + SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia.GetHashCode().ToString()));
-                if (((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)ClassificationCst.DB.Vehicles.names.internationalPress.GetHashCode())
-                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2091, customerWebSession.SiteLanguage), "MediaSeller_" + SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia.GetHashCode().ToString()));
-                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1383, customerWebSession.SiteLanguage), "MediaSeller_" + SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia.GetHashCode().ToString()));
-                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1976, customerWebSession.SiteLanguage), "MediaSeller_" + SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia.GetHashCode().ToString()));
+
+                VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
+
+                foreach (DetailLevelItemInformation currentLevel in vehicleInformation.MediaSelectionParentsItemsInformationList)
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(currentLevel.WebTextId, customerWebSession.SiteLanguage), "MediaSeller_" + currentLevel.Id.GetHashCode().ToString()));
+
                 mediaDetail.ID = "mediaDetail_" + this.ID;
                 mediaDetail.AutoPostBack = autoPostBackOption;
                 mediaDetail.CssClass = cssClass;
 
-                try
-                {
-                    mediaDetail.Items.FindByValue("MediaSeller_" + customerWebSession.PreformatedMediaDetail.GetHashCode().ToString()).Selected = true;
+                try                {
+                    mediaDetail.Items.FindByValue("MediaSeller_" + customerWebSession.MediaSelectionParent.GetHashCode().ToString()).Selected = true;
                 }
-                catch (System.Exception)
-                {
+                catch (System.Exception)                {
                     mediaDetail.Items[0].Selected = true;
                 }
 

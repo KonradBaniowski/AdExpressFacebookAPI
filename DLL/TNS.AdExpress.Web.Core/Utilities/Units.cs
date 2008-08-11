@@ -17,6 +17,7 @@ using System.Text;
 using System.Collections;
 
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Classification;
 
 using TNS.FrameWork.Date;
 
@@ -187,74 +188,85 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
             List<String> vehicles = new List<String>(vehicleSelection.Split(','));
 
-            if (vehicles != null && vehicles.Count > 0)
-            {
-                if (vehicles.Contains("7") || vehicles.Contains("9"))
-                {
-                    //cinéma or internet in the list
-                    units.Add(CstWeb.CustomerSessions.Unit.euro);
-                }
-                else
-                {
-                    if (vehicles.Count == 2 && vehicles.Contains("2") && vehicles.Contains("3"))
-                    {
-                        //radio or tv only
-                        units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                        units.Add(CstWeb.CustomerSessions.Unit.euro);
-                        units.Add(CstWeb.CustomerSessions.Unit.duration);
-                        units.Add(CstWeb.CustomerSessions.Unit.spot);
-                    }
-                    else if (vehicles.Count >= 2)
-                    {
-                        //more than one media (different of "radio, tv")
-                        units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                        units.Add(CstWeb.CustomerSessions.Unit.euro);
-                        if (!vehicles.Contains("10"))
-                            units.Add(CstWeb.CustomerSessions.Unit.insertion);
-                    }
-                    else
-                    {
-                        switch (vehicles[0])
-                        {
-                            case "1":
-                            case "11":
-                                //presse
-                                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                                units.Add(CstWeb.CustomerSessions.Unit.pages);
-                                units.Add(CstWeb.CustomerSessions.Unit.mmPerCol);
-                                units.Add(CstWeb.CustomerSessions.Unit.insertion);
-                                break;
-                            case "2":
-                            //radio
-                            case "3":
-                            case "5":
-                                //tv
-                                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                                units.Add(CstWeb.CustomerSessions.Unit.duration);
-                                units.Add(CstWeb.CustomerSessions.Unit.spot);
-                                break;
-                            case "8":
-                                //affichage
-                                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                                units.Add(CstWeb.CustomerSessions.Unit.numberBoard);
-                                //units.Add(CstWeb.CustomerSessions.Unit.insertion);
-                                break;
-                            case "10":
-                                //MarketingDirect
-                                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                                units.Add(CstWeb.CustomerSessions.Unit.volume);
-                                break;
-                            default:
-                                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                                break;
-                        }
-                    }
-                }
+            List<Int64> vehiclesLong = new List<Int64>();
+                      
+
+            if (vehicles != null && vehicles.Count > 0) {
+
+                foreach (string currentVehicle in vehicles)
+                    vehiclesLong.Add(Int64.Parse(currentVehicle));
+
+                units = VehiclesInformation.GetCommunUnitList(vehiclesLong);
+
+                #region Old Code
+                //if (vehicles.Contains("7") || vehicles.Contains("9"))
+                //{
+                //    //cinéma or internet in the list
+                //    units.Add(CstWeb.CustomerSessions.Unit.euro);
+                //}
+                //else
+                //{
+                //    if (vehicles.Count == 2 && vehicles.Contains("2") && vehicles.Contains("3"))
+                //    {
+                //        //radio or tv only
+                //        units.Add(CstWeb.CustomerSessions.Unit.kEuro);
+                //        units.Add(CstWeb.CustomerSessions.Unit.euro);
+                //        units.Add(CstWeb.CustomerSessions.Unit.duration);
+                //        units.Add(CstWeb.CustomerSessions.Unit.spot);
+                //    }
+                //    else if (vehicles.Count >= 2)
+                //    {
+                //        //more than one media (different of "radio, tv")
+                //        units.Add(CstWeb.CustomerSessions.Unit.kEuro);
+                //        units.Add(CstWeb.CustomerSessions.Unit.euro);
+                //        if (!vehicles.Contains("10"))
+                //            units.Add(CstWeb.CustomerSessions.Unit.insertion);
+                //    }
+                //    else
+                //    {
+                //        switch (vehicles[0])
+                //        {
+                //            case "1":
+                //            case "11":
+                //                //presse
+                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
+                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
+                //                units.Add(CstWeb.CustomerSessions.Unit.pages);
+                //                units.Add(CstWeb.CustomerSessions.Unit.mmPerCol);
+                //                units.Add(CstWeb.CustomerSessions.Unit.insertion);
+                //                break;
+                //            case "2":
+                //            //radio
+                //            case "3":
+                //            case "5":
+                //                //tv
+                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
+                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
+                //                units.Add(CstWeb.CustomerSessions.Unit.duration);
+                //                units.Add(CstWeb.CustomerSessions.Unit.spot);
+                //                break;
+                //            case "8":
+                //                //affichage
+                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
+                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
+                //                units.Add(CstWeb.CustomerSessions.Unit.numberBoard);
+                //                //units.Add(CstWeb.CustomerSessions.Unit.insertion);
+                //                break;
+                //            case "10":
+                //                //MarketingDirect
+                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
+                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
+                //                units.Add(CstWeb.CustomerSessions.Unit.volume);
+                //                break;
+                //            default:
+                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
+                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
+                //                break;
+                //        }
+                //    }
+                //}
+                #endregion
+
             }
             else
             {

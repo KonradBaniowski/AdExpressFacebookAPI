@@ -196,7 +196,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Generic detail level type for Column Level detail Object
             /// </summary>			
-            genericColumnDetailLevelType = 43
+            genericColumnDetailLevelType = 43,
+            /// <summary>
+            /// Media selection parent 
+            /// </summary>
+            mediaSelectionParent = 44
 		}
 	
 	}

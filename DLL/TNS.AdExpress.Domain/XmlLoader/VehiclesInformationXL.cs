@@ -36,6 +36,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             List<DetailLevelItemInformation.Levels> mediaSelectionParentsList = new List<DetailLevelItemInformation.Levels>();
             XmlTextReader reader = null;
             string id= string.Empty;
+            string defaultMediaSelectionParent = string.Empty;
             Int64 baseId=0;
             Int64 detailColumnId = 0;
             bool showInsertions=false;
@@ -51,8 +52,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                         switch (reader.LocalName) {
                             case "vehicle":
                                 if (id.Length > 0) { 
-                                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList, mediaSelectionParentsList, detailColumnId));
+                                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId));
                                     id = string.Empty;
+                                    defaultMediaSelectionParent = string.Empty;
                                     allowedUnitsList = new List<CustomerSessions.Unit>();
                                     allowedMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
                                     mediaSelectionParentsList = new List<DetailLevelItemInformation.Levels>();
@@ -76,6 +78,11 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 if (readString == null || readString.Length == 0) throw (new InvalidXmlValueException("Invalid allowedMediaLevelItem parameter"));
                                 allowedMediaLevelItemsList.Add((DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), readString, true));
                                 break;
+                            case "DefaultMediaSelectionParent":
+                                readString = reader.ReadString();
+                                if (readString == null || readString.Length == 0) throw (new InvalidXmlValueException("Invalid DefaultMediaSelectionParent parameter"));
+                                defaultMediaSelectionParent = readString;
+                                break;
                             case "MediaSelectionParent":
                                 readString = reader.ReadString();
                                 if (readString == null || readString.Length == 0) throw (new InvalidXmlValueException("Invalid MediaSelectionParent parameter"));
@@ -89,7 +96,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                     }
                 }
                 if (id.Length > 0) {
-                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList, mediaSelectionParentsList, detailColumnId));
+                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId));
                 }
             }
             catch (System.Exception err) {

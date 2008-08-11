@@ -523,6 +523,14 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		protected GenericColumns _genericColumns = null;
 		#endregion
 
+        #region Media Selection Parent
+        /// <summary>
+        /// Media Selection Parent
+        /// </summary>
+        [System.NonSerialized]
+        protected DetailLevelItemInformation.Levels _mediaSelectionParent;
+        #endregion
+
         #region Période sélectionée
         /// <summary>
         /// Période sélectionnée à partir de GlobalDateSelection
@@ -1724,8 +1732,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 			}
 		}
 		#endregion
-
-
+        
 		#region Niveaux de détail génériques
 		/// <summary>
 		/// Obtient et définit le niveau de détail générique
@@ -1969,6 +1976,28 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 			}
 		}
 		#endregion
+
+        #region Media Selection Parent
+        /// <summary>
+        /// GET / SET Media Selection Parent
+        /// </summary>
+        public DetailLevelItemInformation.Levels MediaSelectionParent {
+            get {
+                if (_mediaSelectionParent.ToString() == "0") {
+                    if (userParameters.ContainsKey(CoreConstantes.SessionParamters.mediaSelectionParent)) {
+                        _mediaSelectionParent = (DetailLevelItemInformation.Levels)userParameters[CoreConstantes.SessionParamters.mediaSelectionParent];
+                    }
+                }
+                return _mediaSelectionParent;
+
+            }
+            set {
+                _mediaSelectionParent = value;
+                userParameters[CoreConstantes.SessionParamters.mediaSelectionParent] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+        #endregion
 
         #region Période sélectionnée
         /// <summary>

@@ -33,6 +33,8 @@ using TNS.AdExpress.Web.Controls.Selections;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Level;
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -117,7 +119,9 @@ namespace AdExpress.Private.Selection{
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
-		
+
+                VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+
 				#region Suppression des espaces
 				keyWordTextBox.Text=keyWordTextBox.Text.TrimEnd();
 				keyWordTextBox.Text=keyWordTextBox.Text.TrimStart();
@@ -135,35 +139,30 @@ namespace AdExpress.Private.Selection{
 				#region Evènements Boutons
 				//_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia;
 				// Bouton valider
-				if(Request.Form.Get("__EVENTTARGET")=="validImageButtonRollOverWebControl" || Request.Form.Get("__EVENTTARGET")=="MenuWebControl2"){
-					eventButton=constEvent.eventSelection.VALID_EVENT;
-				}
-					// Bouton ok
-				else if(Request.Form.Get("__EVENTTARGET")=="OkImageButtonRollOverWebControl"){
-					eventButton=constEvent.eventSelection.OK_EVENT;
-				}			
-				else if(Request.Form.Get("__EVENTTARGET")=="initializeButton"){
-					eventButton=constEvent.eventSelection.INITIALIZE_EVENT;
+                if (Request.Form.Get("__EVENTTARGET") == "validImageButtonRollOverWebControl" || Request.Form.Get("__EVENTTARGET") == "MenuWebControl2") {
+                    eventButton = constEvent.eventSelection.VALID_EVENT;
+                }
+                // Bouton ok
+                else if (Request.Form.Get("__EVENTTARGET") == "OkImageButtonRollOverWebControl") {
+                    eventButton = constEvent.eventSelection.OK_EVENT;
+                }
+                else if (Request.Form.Get("__EVENTTARGET") == "initializeButton") {
+                    eventButton = constEvent.eventSelection.INITIALIZE_EVENT;
 
-					// Bouton ok Option
-				}else if(Request.Form.Get("__EVENTTARGET")=="okImageButton"){
-					if( Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")!=null &&
-						Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString()=="MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia.GetHashCode().ToString()){
-						_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia;																	
-					}
-					else if(Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")!=null && Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString()=="MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia.GetHashCode().ToString()){
-						_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia;																		
-					}
-					else if(Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")!=null && Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString()=="MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia.GetHashCode().ToString()){
-						_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia;																		
-					}
-					else if(Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")!=null && Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString()=="MediaSeller_"+SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia.GetHashCode().ToString()){
-						_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia;																		
-					}
-					eventButton=constEvent.eventSelection.OK_OPTION_MEDIA_EVENT;
-				}
-				else
-					_webSession.PreformatedMediaDetail =CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia;
+                    // Bouton ok Option
+                }
+                else if (Request.Form.Get("__EVENTTARGET") == "okImageButton") {
+
+                    if (Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2") != null) {
+                        foreach (DetailLevelItemInformation.Levels currentLevel in vehicleInformation.MediaSelectionParentsItemsEnumList)
+                            if (Page.Request.Form.GetValues("mediaDetail_MediaSellerWebControl2")[0].ToString() == "MediaSeller_" + currentLevel.GetHashCode())
+                                _webSession.MediaSelectionParent = currentLevel;
+                    }
+
+                    eventButton = constEvent.eventSelection.OK_OPTION_MEDIA_EVENT;
+                }
+                else
+                    _webSession.MediaSelectionParent = vehicleInformation.DefaultMediaSelectionParent;
 				#endregion
 
 				#region Gestion Entrer

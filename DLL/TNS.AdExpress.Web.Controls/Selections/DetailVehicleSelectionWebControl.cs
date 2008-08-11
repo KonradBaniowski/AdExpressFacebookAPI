@@ -22,7 +22,8 @@ using TNS.AdExpress.Web.DataAccess.Selections.Medias;
 using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Constantes.Web;
-
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Classification;
 
 
 namespace TNS.AdExpress.Web.Controls.Selections{
@@ -249,7 +250,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			if (listMediaSelected.Count >= MAX_SELECTABLE_ELEMENTS && eventButton == constEvent.eventSelection.OK_EVENT)
 				nbElement=constEvent.error.MAX_ELEMENTS;
 
-			dsListMedia = GetData(webSession.PreformatedMediaDetail,eventButton,keyWord,listAccessMedia);
+			dsListMedia = GetData(eventButton,keyWord,listAccessMedia);
 			if(Page.IsPostBack && eventButton!=constEvent.eventSelection.INITIALIZE_EVENT &&  eventButton!=constEvent.eventSelection.ALL_INITIALIZE_EVENT){
 				if(eventButton==constEvent.eventSelection.OK_OPTION_MEDIA_EVENT 
 					|| (eventButton==constEvent.eventSelection.OK_OPTION_MEDIA_EVENT && (keyWord.Length >=2 || keyWord.Length ==0 ||  TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(keyWord)))
@@ -394,28 +395,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				int labelIndex=0;
 				#endregion
 
-
 				if(!isEmptyList){
-					switch(webSession.PreformatedMediaDetail){
-						case CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia :
-								textOpenclose=GestionWeb.GetWebWord(1617,webSession.SiteLanguage);	
-							break;
-						case CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia :
-								textOpenclose=GestionWeb.GetWebWord(1616,webSession.SiteLanguage);
-							break;
-						case CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia :
-								textOpenclose=GestionWeb.GetWebWord(1977,webSession.SiteLanguage);
-							break;
-						case CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia : 
-								textOpenclose=GestionWeb.GetWebWord(2094,webSession.SiteLanguage);
-							break;
-						default :
-							break;
-					}
-					
+                    textOpenclose = GestionWeb.GetWebWord(2461, webSession.SiteLanguage);
 				}
-					
-					
 			
 				if(IsMediaFound(keyWord,eventButton,isEmptyList)){
 					t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
@@ -762,33 +744,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="keyWord">Mot clé recherché</param>
 		/// <param name="listAccessMedia">liste des medias en accès</param>
 		/// <returns>Liste des supports à aficher</returns>
-		private DataSet GetData(CustomerSessions.PreformatedDetails.PreformatedMediaDetails preformatedMediaDetail,int eventButton,string keyWord,string listAccessMedia){
-			
-			switch(preformatedMediaDetail){
+		private DataSet GetData(int eventButton,string keyWord,string listAccessMedia){
 
-				case CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia :
-					if(eventButton==constEvent.eventSelection.OK_EVENT && nbElement!=constEvent.error.MAX_ELEMENTS)
-						return  VehicleListDataAccess.keyWordInterestCenterListDataAccess(webSession,keyWord,listAccessMedia);
-					else return VehicleListDataAccess.DetailInterestCenterListDataAccess(webSession);
-										
-				case CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSellerMedia :
-					if(eventButton==constEvent.eventSelection.OK_EVENT && nbElement!=constEvent.error.MAX_ELEMENTS)
-						return  VehicleListDataAccess.keyWordMediaSellerListDataAccess(webSession,keyWord,listAccessMedia);
-					else return VehicleListDataAccess.DetailMediaSellerListDataAccess(webSession);
-					
-				case CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleTitleMedia :
-					if(eventButton==constEvent.eventSelection.OK_EVENT && nbElement!=constEvent.error.MAX_ELEMENTS)
-						return  TitleListDataAccess.keyWordTitleListDataAccess(webSession,keyWord,listAccessMedia);
-					else return TitleListDataAccess.DetailTitleListDataAccess(webSession);
+            if (eventButton == constEvent.eventSelection.OK_EVENT && nbElement != constEvent.error.MAX_ELEMENTS)
+                return VehicleListDataAccess.keyWordDetailMediaListDataAccess(webSession, keyWord, listAccessMedia, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
+            else return VehicleListDataAccess.DetailMediaListDataAccess(webSession, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
 
-				case CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCountryMedia :
-					if(eventButton==constEvent.eventSelection.OK_EVENT && nbElement!=constEvent.error.MAX_ELEMENTS)
-						return  CountryListDataAccess.keyWordCountryListDataAccess(webSession,keyWord,listAccessMedia);
-					else return CountryListDataAccess.DetailCountryListDataAccess(webSession);
-					
-
-				default : throw new Exceptions.DetailVehicleSelectionWebControlException("Impossible d'identifier le niveau de détail média.");
-			}
 		}
 		
 		/// <summary>

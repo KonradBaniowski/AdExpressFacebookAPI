@@ -45,6 +45,10 @@ namespace TNS.AdExpress.Domain.Classification {
         /// </summary>
         private List<DetailLevelItemInformation.Levels> _allowedMediaLevelItemsList;
         /// <summary>
+        /// Default media selection parent
+        /// </summary>
+        private DetailLevelItemInformation.Levels _defaultMediaSelectionParent;
+        /// <summary>
         /// Media selection parents list
         /// </summary>
         private List<DetailLevelItemInformation.Levels> _mediaSelectionParentsList;
@@ -71,7 +75,8 @@ namespace TNS.AdExpress.Domain.Classification {
                                   bool showInsertions, 
                                   bool showCreations, 
                                   List<CustomerSessions.Unit> allowedUnitsList, 
-                                  List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList, 
+                                  List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList,
+                                  string defaultMediaSelectionParent,
                                   List<DetailLevelItemInformation.Levels> mediaSelectionParentsList, 
                                   Int64 detailColumnId) {
 
@@ -80,10 +85,12 @@ namespace TNS.AdExpress.Domain.Classification {
             else _allowedUnitsList = allowedUnitsList;
             if (allowedMediaLevelItemsList == null) throw (new ArgumentException("Invalid paramter allowed media level items list"));
             else _allowedMediaLevelItemsList = allowedMediaLevelItemsList;
+            if (defaultMediaSelectionParent == null || defaultMediaSelectionParent.Length == 0) throw (new ArgumentException("Invalid paramter defaultMediaSelectionParent"));
             if (mediaSelectionParentsList == null) throw (new ArgumentException("Invalid paramter media selection parents list"));
             else _mediaSelectionParentsList = mediaSelectionParentsList;
             try {
                 _id = (Vehicles.names)Enum.Parse(typeof(Vehicles.names), id, true);
+                _defaultMediaSelectionParent = (DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), defaultMediaSelectionParent, true);
             }
             catch (System.Exception err) {
                 throw (new ArgumentException("Invalid parameter  vehicle id", err));
@@ -139,6 +146,23 @@ namespace TNS.AdExpress.Domain.Classification {
             }
         }
         /// <summary>
+        /// Get allowed base UnitInformation list
+        /// </summary>
+        public List<CustomerSessions.Unit> AllowedBaseUnitInformationList {
+            get {
+                List<CustomerSessions.Unit> list = new List<CustomerSessions.Unit>();
+                UnitInformation unit;
+                foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList) {
+                    unit = UnitsInformation.Get(currentUnit);
+                    if (unit.BaseId != CustomerSessions.Unit.none)
+                        list.Add(unit.BaseId);
+                    else
+                        list.Add(unit.Id);
+                }
+                return list;
+            }
+        }
+        /// <summary>
         /// Get allowed media level items enum list
         /// </summary>
         public List<DetailLevelItemInformation.Levels> AllowedMediaLevelItemsEnumList {
@@ -156,9 +180,15 @@ namespace TNS.AdExpress.Domain.Classification {
             }
         }
         /// <summary>
+        /// Get Default media selection parent
+        /// </summary>
+        public DetailLevelItemInformation.Levels DefaultMediaSelectionParent {
+            get { return _defaultMediaSelectionParent; }
+        }
+        /// <summary>
         /// Get media selection parents items enum list
         /// </summary>
-        public List<DetailLevelItemInformation.Levels> MediaSelectionParentsItemsEnumEnumList {
+        public List<DetailLevelItemInformation.Levels> MediaSelectionParentsItemsEnumList {
             get { return _mediaSelectionParentsList; }
         }
         /// <summary>

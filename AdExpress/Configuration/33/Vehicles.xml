@@ -10,7 +10,7 @@
       <allowedUnit>mmPerCol</allowedUnit>
       <allowedUnit>pages</allowedUnit>
     </allowedUnits>
-    <!-- Media detail level in results-->
+    <!-- Media detail level in results -->
     <allowedMediaDetailLevels>
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>    <!-- Media -->
@@ -22,7 +22,9 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
+    <!-- TODO : Pour le moment le niveau Catégorie n'est pas géré, étant donné que la table category n'est pas liée directement à la table media -->
     <MediaSelectionParents>
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>interestCenter</MediaSelectionParent>         <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>         <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>        <!-- Titre -->
@@ -52,6 +54,7 @@
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents>
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -81,6 +84,7 @@
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents>
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -110,6 +114,7 @@
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents>
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -136,6 +141,7 @@
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents>
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -164,6 +170,7 @@
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents>
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -192,6 +199,7 @@
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents>
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -222,6 +230,7 @@
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents>
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>country</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
