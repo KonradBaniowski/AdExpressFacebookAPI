@@ -541,6 +541,10 @@
       <Project>{459F24EC-384D-404F-A6D2-F3B76C288A57}</Project>
       <Name>TNS.AdExpressI.PresentAbsent</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.ProductClassIndicators\TNS.AdExpressI.ProductClassIndicators.csproj">
+      <Project>{F0E136B5-AA9D-468D-BAE4-3599B11D854F}</Project>
+      <Name>TNS.AdExpressI.ProductClassIndicators</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Protofolio.Default\TNS.AdExpressI.Portofolio.Default.csproj">
       <Project>{638BEFDD-6370-4AEA-8943-DD6961FE3FDE}</Project>
       <Name>TNS.AdExpressI.Portofolio.Default</Name>

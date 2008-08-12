@@ -10,18 +10,20 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 
-using TNS.AdExpress.Web.Core.Sessions;
+using Navigation = TNS.AdExpress.Domain.Web.Navigation;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 
+using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.FrameWork.Results;
-using WebFunctions = TNS.AdExpress.Web.Functions;
-using WebSystem=TNS.AdExpress.Web.BusinessFacade;
-
 using Dundas.Charting.WebControl;
-
 using AjaxPro;
 
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpressI.ProductClassIndicators;
+using System.Reflection;
 
 namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 {
@@ -40,7 +42,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
         /// <summary>
         /// Product level chart (or default if only one)
         /// </summary>
-        protected WebControl _refrenceChart = null;
+        protected WebControl _referenceChart = null;
         /// <summary>
         /// Advertiser level chart
         /// </summary>
@@ -49,6 +51,10 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
         /// Report as table
         /// </summary>
         protected WebControl _tableChart = null;
+        /// <summary>
+        /// Big Charts ?
+        /// </summary>
+        protected bool _bigSize = false;
         #endregion
 
 		#region Accesseurs
@@ -58,6 +64,13 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 		public WebSession Session{
 			set{_session = value;}
 			get{return _session;}
+		}
+		/// <summary>
+		/// Get / Set Big Size Param
+		/// </summary>
+		public bool BigSize{
+			set{_bigSize = value;}
+            get { return _bigSize; }
 		}
 		#endregion
 		
@@ -72,21 +85,34 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 			Controls.Clear();
 		
 			//Graphical mode
-            if (_session != null && _session.Graphics && _session.CurrentTab != MotherRecap.NOVELTY)
+            if (_session != null && _session.Graphics && _session.CurrentTab != MotherRecap.NOVELTY && _session.CurrentTab != MotherRecap.SYNTHESIS)
             {
+                Navigation.Module module = ModulesList.GetModule(CstWeb.Module.Name.INDICATEUR);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Indicator result"));
+                object[] param = new object[1] { _session };
+                IProductClassIndicators productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
 				switch(_session.CurrentTab){
 					case MotherRecap.MEDIA_STRATEGY :
+                        _advertiserChart = productClassIndicator.GetMediaStrategyChart();
 						break;
                     case MotherRecap.PALMARES:
-						break;
+                        _advertiserChart = productClassIndicator.GetTopsChart(MotherRecap.ElementType.advertiser);
+                        _referenceChart = productClassIndicator.GetTopsChart(MotherRecap.ElementType.product);
+                        break;
 					case MotherRecap.SEASONALITY:
-						break;
+                        _advertiserChart = productClassIndicator.GetSeasonalityChart(_bigSize);
+                        break;
+                    case EvolutionRecap.EVOLUTION:
+                        _advertiserChart = productClassIndicator.GetEvolutionChart(MotherRecap.ElementType.advertiser);
+                        _referenceChart = productClassIndicator.GetEvolutionChart(MotherRecap.ElementType.product);
+                        break;
                     default:
                         break;
                 }
-                if (_refrenceChart != null) {
-                    _refrenceChart.ID = "referenceChartWebControl_" + this.ID;
-                    Controls.Add(_refrenceChart);
+                if (_referenceChart != null) {
+                    _referenceChart.ID = "referenceChartWebControl_" + this.ID;
+                    Controls.Add(_referenceChart);
                 }
                 if (_advertiserChart != null)
                 {
@@ -98,7 +124,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 			//Table mode
             else if (_session != null && !_session.Graphics)
             {
-					_tableChart = new ProductClassTableWebControl();
+					_tableChart = new ProductClassTableWebControl(_session);
                     //_tableChart.Session= _session;
                     _tableChart.ID = "tableChartWebControl_" + this.ID;
                     Controls.Add(_tableChart);

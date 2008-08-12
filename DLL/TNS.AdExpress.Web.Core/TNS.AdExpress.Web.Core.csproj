@@ -316,6 +316,7 @@
     <Compile Include="Utilities\Dates.cs" />
     <Compile Include="Utilities\ExtendedHashTable.cs" />
     <Compile Include="Utilities\SqlGenerator.cs" />
+    <Compile Include="Utilities\Text.cs" />
     <Compile Include="Utilities\Units.cs" />
   </ItemGroup>
   <ItemGroup>

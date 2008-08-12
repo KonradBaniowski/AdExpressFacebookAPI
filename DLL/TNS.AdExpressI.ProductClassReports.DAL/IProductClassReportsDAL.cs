@@ -31,5 +31,6 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         /// </summary>
         /// <param name="resultType">Type of report</param>
         DataSet GetData(int resultType);
+
     }
 }

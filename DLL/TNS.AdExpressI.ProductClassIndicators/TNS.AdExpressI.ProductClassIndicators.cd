@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TNS.AdExpressI.ProductClassIndicators.Charts.ChartProductClassIndicator">
+    <Position X="0.5" Y="5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Charts\ChartProductClassIndicator.cs</FileName>
+      <HashCode>QEAIQAAAIKASCYAACAAAgAAIAACABAigABIcEAgBGAI=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpressI.ProductClassIndicators.Charts.ChartSeasonality">
+    <Position X="5" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Charts\ChartSeasonality.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.ProductClassIndicators.ChartMediaStartegy">
+    <Position X="5" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Charts\ChartMediaStartegy.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.ProductClassIndicators.Charts.ChartEvolution">
+    <Position X="3" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Charts\ChartEvolution.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.ProductClassIndicators.Charts.ChartTop">
+    <Position X="3" Y="6.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Charts\ChartTop.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <InheritanceLine Type="TNS.AdExpressI.ProductClassIndicators.Charts.ChartProductClassIndicator" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.5" Y="7.029" />
+        <Point X="1.5" Y="7.269" />
+        <Point X="2.76" Y="7.269" />
+        <Point X="2.76" Y="6.875" />
+        <Point X="3" Y="6.875" />
+      </Path>
+    </InheritanceLine>
+  </Class>
+  <Class Name="TNS.AdExpressI.ProductClassIndicators.Engines.Engine">
+    <Position X="8.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Engines\Engine.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAQAAAAAEAAAAAAAAAAAgAEAAAAAgAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.ProductClassIndicators.Engines.EngineTop">
+    <Position X="10.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Engines\EngineTop.cs</FileName>
+      <HashCode>AAAAAAAAMAAAASCQAAABAAAAAAAAAAAAAMEAABCAAAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="TNS.AdExpressI.ProductClassIndicators.ProductClassIndicators">
+    <Position X="0.75" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>ProductClassIndicators.cs</FileName>
+      <HashCode>QAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAgAAIAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="TNS.AdExpressI.ProductClassIndicators.DAL.IProductClassIndicatorsDAL">
+    <Position X="8.25" Y="5" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="TNS.AdExpressI.ProductClassIndicators.IProductClassIndicators">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>IProductClassIndicators.cs</FileName>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>
