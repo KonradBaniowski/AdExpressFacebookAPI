@@ -76,6 +76,18 @@
             </detailSelections>
           </page>
           <page id="1" resultid="9" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <!-- s'il n'y en a pas toutes les unites sont disponibles-->
+            <allowedUnits>
+              <!--<allowedUnit>kEuro</allowedUnit>-->
+              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+              <allowedUnit>mmPerCol</allowedUnit>
+              <allowedUnit>pages</allowedUnit>
+              <allowedUnit>numberBoard</allowedUnit>
+              <allowedUnit>volume</allowedUnit>
+            </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
