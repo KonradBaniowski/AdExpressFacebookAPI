@@ -838,17 +838,10 @@
         <selections>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
           <selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/PortofolioDetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
-          <!--<selection id="4" name="Date" traductioncode="854" url="/Private/Selection/AnalyseDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/AnalyseDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>-->
-          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/PortofolioGlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
-          <!-- <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">-->
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
-            <!-- <loadableUnivers>
-              <type id="4" name="sector_subsector"/>
-              <type id="5" name="subsector_group"/>             
-              <type id="7" name="group"/>
-            </loadableUnivers>-->
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >            
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -881,9 +874,40 @@
               <detailSelection id="5" name="Vehicle Selected"/>
               <detailSelection id="9" name="Competitor Media Selected"/>
               <detailSelection id="6" name="Product Selected"/>
-              <!--<detailSelection id="8" name="Product Level Detail"/>-->
               <detailSelection id="10" name="Inset selected"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
+            </detailSelections>
+          </page>
+          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" />
+          <detailSelections>
+            <detailSelection id="1" name="Module name"/>
+            <detailSelection id="2" name="Result name"/>
+            <detailSelection id="3" name="Date"/>
+            <detailSelection id="5" name="Vehicle Selected"/>
+            <detailSelection id="9" name="Competitor Media Selected"/>
+            <detailSelection id="6" name="Product Selected"/>
+          </detailSelections>
+          <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          </page>
+          <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
             </detailSelections>
           </page>
         </results>
