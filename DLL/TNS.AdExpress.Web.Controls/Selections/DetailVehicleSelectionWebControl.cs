@@ -739,7 +739,6 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <summary>
 		/// Obtient la liste des supports à afficher
 		/// </summary>
-		/// <param name="preformatedMediaDetail">Niveau de détail preformaté</param>
 		/// <param name="eventButton">evenement</param>
 		/// <param name="keyWord">Mot clé recherché</param>
 		/// <param name="listAccessMedia">liste des medias en accès</param>
@@ -747,8 +746,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		private DataSet GetData(int eventButton,string keyWord,string listAccessMedia){
 
             if (eventButton == constEvent.eventSelection.OK_EVENT && nbElement != constEvent.error.MAX_ELEMENTS)
-                return VehicleListDataAccess.keyWordDetailMediaListDataAccess(webSession, keyWord, listAccessMedia, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
-            else return VehicleListDataAccess.DetailMediaListDataAccess(webSession, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
+                return Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(webSession, keyWord, listAccessMedia, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
+            else return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(webSession, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
 
 		}
 		

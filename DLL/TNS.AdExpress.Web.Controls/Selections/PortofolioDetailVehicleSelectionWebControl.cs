@@ -28,10 +28,27 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
 	/// Affiche la liste des categories/media d'un vehicle que peut sélectionner un client en fonction de ses droits.
 	/// </summary>
-	public class PortofolioDetailVehicleSelectionWebControl{
-	
-		#region propriétés
-		/// <summary>
+    [DefaultProperty("Text"),
+  ToolboxData("<{0}:PortofolioDetailVehicleSelectionWebControl runat=server></{0}:PortofolioDetailVehicleSelectionWebControl>")]
+    public class PortofolioDetailVehicleSelectionWebControl : System.Web.UI.WebControls.WebControl {
+
+        #region Variables
+        /// <summary>
+        /// Customer session
+        /// </summary>
+        protected WebSession _webSession = null;
+        /// <summary>
+        /// Media list dataSet
+        /// </summary>
+        private DataSet _dsListMedia = null;
+        /// <summary>
+        /// Key word
+        /// </summary>
+        protected string _keyWord = "";
+        #endregion
+
+        #region propriétés
+        /// <summary>
 		/// boolean si listeMedia est vide
 		/// </summary>
 		private static bool isEmptyListPortofolio=true;
@@ -47,217 +64,248 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		}
 		#endregion
 
-		#region Liste des médias
+        #region Accesseurs
+        /// <summary>
+        /// Get / Set the customer session
+        /// </summary>
+        public virtual WebSession CustomerWebSession {
+            set { _webSession = value; }
+        }
+
+        /// <summary>
+        /// Get / Set The Key word
+        /// </summary>
+        public string KeyWord {
+            get { return _keyWord; }
+            set { _keyWord = value; }
+        }
+        #endregion
+
+        #region Evènements
+		
+		#region Chargement 
 		/// <summary>
-		/// Génère la liste des supports
+		/// OnLoad
 		/// </summary>
-		/// <param name="webSession">Session client</param>
-		/// <param name="keyWord">Mot clé</param>
-		/// <returns></returns>	
-		public static string listMedia(WebSession webSession,string keyWord) {
-			
-			DataSet dsListMedia=null;
-			int insertIndex = 0;
-			string 	vhList="";		 	
-			int eventButton=-1;	
-			string textOpenclose="";
-			bool loadIsPossible=true;
-            VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+		/// <param name="e">Evènement</param>
+        protected override void OnLoad(EventArgs e) {
 
-            dsListMedia = TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.keyWordDetailMediaListDataAccess(webSession, keyWord, "", DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
-			
-			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
-			
-			#region Affichage à partir du dataset		
-				
-			#region Variables
-			Int64 idParentOld=-1;
-			Int64 idParent;				
-			string textParent;
-			string textParentOld;
-			int nbColumn=0;
-			int start=-1;
-			int i =0;
-			string insertLabel=string.Empty;
-			int labelIndex=0;
-			#endregion
-	
-			if (dsListMedia.Tables[0].Rows.Count>0){
-				isEmptyListPortofolio=false;
-			}
-			else
-				isEmptyListPortofolio=true;
+            VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
-			//Tableau global
-            textOpenclose = GestionWeb.GetWebWord(2461, webSession.SiteLanguage);
-					
-			t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
-			insertIndex = t.Length;
-			t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;");
-			labelIndex=t.Length;
-			t.Append("</a>");	
-			//			
-			t.Append("<tr class=\"whiteBackGround\"><td  vAlign=\"top\"><table id=\"AdvertiserSelectionWebControl1\">");			
-			t.Append("<tr><td vAlign=\"top\" class=\"whiteBackGround\">");
-			if(dsListMedia!=null){
-				
-				foreach(DataRow currentRow in dsListMedia.Tables[0].Rows){								
-										
-					#region Foreach 		
-					
-					idParent=(Int64)currentRow[0];
-					textParent=currentRow[1].ToString();		
-					
-					if(idParentOld!=idParent && start==0){																	
-						if(nbColumn!=0){
-							t.Append("</tr>");
-							nbColumn=0;
-						}
-						t.Append("</table>");
-						t.Append("</div>");
+            _dsListMedia = TNS.AdExpress.Web.Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(_webSession, _keyWord, "", DetailLevelItemsInformation.Get(_webSession.MediaSelectionParent.GetHashCode()));
+
+        }
+        #endregion
+
+        #region Render
+        /// <summary>
+        /// Render
+        /// </summary>
+        /// <param name="output"></param>
+        protected override void Render(HtmlTextWriter output) {
+
+            #region Variables
+            int insertIndex = 0;
+            string vhList = "";
+            int eventButton = -1;
+            string textOpenclose = "";
+            bool loadIsPossible = true;
+            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+            #endregion
+
+            #region Affichage à partir du dataset
+
+            #region Variables
+            Int64 idParentOld = -1;
+            Int64 idParent;
+            string textParent;
+            string textParentOld;
+            int nbColumn = 0;
+            int start = -1;
+            int i = 0;
+            string insertLabel = string.Empty;
+            int labelIndex = 0;
+            #endregion
+
+            if (_dsListMedia.Tables[0].Rows.Count > 0) {
+                isEmptyListPortofolio = false;
+            }
+            else
+                isEmptyListPortofolio = true;
+
+            //Tableau global
+            textOpenclose = GestionWeb.GetWebWord(2461, _webSession.SiteLanguage);
+
+            t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
+            insertIndex = t.Length;
+            t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;");
+            labelIndex = t.Length;
+            t.Append("</a>");
+            //			
+            t.Append("<tr class=\"whiteBackGround\"><td  vAlign=\"top\"><table id=\"AdvertiserSelectionWebControl1\">");
+            t.Append("<tr><td vAlign=\"top\" class=\"whiteBackGround\">");
+            if (_dsListMedia != null) {
+
+                foreach (DataRow currentRow in _dsListMedia.Tables[0].Rows) {
+
+                    #region Foreach
+
+                    idParent = (Int64)currentRow[0];
+                    textParent = currentRow[1].ToString();
+
+                    if (idParentOld != idParent && start == 0) {
+                        if (nbColumn != 0) {
+                            t.Append("</tr>");
+                            nbColumn = 0;
+                        }
+                        t.Append("</table>");
+                        t.Append("</div>");
                         t.Append("<table class=\"listMediaHeaderBorder txtViolet11Bold\" cellpadding=0 cellspacing=0 width=645>");
-						t.Append("<tr onClick=\"DivDisplayer('"+idParent+"Ct"+"');\" class=\"cursorHand\">");
+                        t.Append("<tr onClick=\"DivDisplayer('" + idParent + "Ct" + "');\" class=\"cursorHand\">");
                         t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"arrowBackGround\">");
-						//t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
+                        //t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
                         t.Append("<label class=\"txtNowrap\">  ");
-						t.Append("&nbsp;&nbsp;"+currentRow[1].ToString()+"");
-						t.Append("</label>");
-						t.Append("</td>");
+                        t.Append("&nbsp;&nbsp;" + currentRow[1].ToString() + "");
+                        t.Append("</label>");
+                        t.Append("</td>");
                         //t.Append("<td height=\"15\" width=\"15\" class=\"arrowBackGround\"></td>");		
-						t.Append("</tr>");
-						t.Append("</table>");
-						t.Append("<div id=\""+idParent+"Ct\" class=\"listMediaHeaderBorderNone\" style=\"display: none; width: 100%;\">");
-                        t.Append("<table id=\"AdvertiserSelectionWebControl1\" class=\"listMediaHeaderBorder paleVioletBackGround\" width=645>");
-						vhList=vhList+(Int64)currentRow[0]+"Ct"+",";
-						idParentOld=idParent;
-						textParentOld=textParent;
-					
-					}
-					//Premier	
-					if(idParentOld!=idParent && start!=0){
-
-                        t.Append("<table class=\"listMediaBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=645>");
-						t.Append("<tr onClick=\"DivDisplayer('"+idParent+"Ct"+"');\" class=\"cursorHand\" >");
-                        t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"arrowBackGround\">");
-						//		t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
-                        t.Append("<label class=\"txtNowrap\">");
-						t.Append("&nbsp;&nbsp;"+currentRow[1].ToString()+"");
-						t.Append("</label>");
-						t.Append("</td>");
-                        //t.Append("<td><IMG height=\"15\" width=\"15\" src=\"/App_Themes/DefaultAdExpressFr/images/Common/button/bt_arrow_down.gif\"></td>");	
-						t.Append("</tr>");
-						t.Append("</table>");
+                        t.Append("</tr>");
+                        t.Append("</table>");
                         t.Append("<div id=\"" + idParent + "Ct\" class=\"listMediaHeaderBorderNone\" style=\"display: none; width: 100%;\">");
                         t.Append("<table id=\"AdvertiserSelectionWebControl1\" class=\"listMediaHeaderBorder paleVioletBackGround\" width=645>");
-					
-						vhList=vhList+(Int64)currentRow[0]+"Ct"+",";
-						idParentOld=idParent;
-						textParentOld=textParent;
-						start=0;
-				
-					}
-					
-					#region Affichage des fils							
-					// Milieu
-					if(nbColumn==2){				
-						t.Append("<td class=\"txtViolet10\" width=215>");
-						//		t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
-						t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+currentRow[3].ToString()+"\" onClick=\"insertValueInHidden('"+currentRow[2]+"','"+currentRow[3]+"');\" />"+currentRow[3].ToString()+"<br>");
-						t.Append("</td>");
-						nbColumn=1;
-						i++;
-					
-					}
-						// Dernier
-					else if(nbColumn==1 ){
-                        t.Append("<td class=\"txtViolet10\" width=215>");								
-						//	t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
-						t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+currentRow[3].ToString()+"\" onClick=\"insertValueInHidden('"+currentRow[2]+"','"+currentRow[3]+"');\" value=\""+currentRow[2]+"\" />"+currentRow[3].ToString()+"<br>");
-						t.Append("</td>");								
-						t.Append("</tr>");
-						nbColumn=0;
-						i++;	
-					
-					}
-						// Premier
-					else {
-						t.Append("<tr>");
-						t.Append("<td class=\"txtViolet10\" width=215>");
-						//	t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
-						t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+currentRow[3].ToString()+"\" onClick=\"insertValueInHidden('"+currentRow[2]+"','"+currentRow[3]+"');\" />"+currentRow[3].ToString()+"<br>");
-						t.Append("</td>");								
-						nbColumn=2;
-						i++;
-					}
-					#endregion
+                        vhList = vhList + (Int64)currentRow[0] + "Ct" + ",";
+                        idParentOld = idParent;
+                        textParentOld = textParent;
 
-					#endregion
-				}
-				
-				if(dsListMedia.Tables[0].Rows.Count!=0){
-					if(nbColumn!=0){
-						t.Append("</tr>"); 
-						nbColumn=0;
-					}
-					else{
-						nbColumn=0;
-					}
-					t.Append("</table></div>");
-				}
+                    }
+                    //Premier	
+                    if (idParentOld != idParent && start != 0) {
 
-				#region Message d'erreurs
-				// Message d'erreur : veuillez saisir 3 caractères minimums
-				if(keyWord.Length<3 && keyWord.Length>0 && eventButton==constEvent.eventSelection.OK_EVENT){
+                        t.Append("<table class=\"listMediaBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=645>");
+                        t.Append("<tr onClick=\"DivDisplayer('" + idParent + "Ct" + "');\" class=\"cursorHand\" >");
+                        t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"arrowBackGround\">");
+                        //		t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
+                        t.Append("<label class=\"txtNowrap\">");
+                        t.Append("&nbsp;&nbsp;" + currentRow[1].ToString() + "");
+                        t.Append("</label>");
+                        t.Append("</td>");
+                        //t.Append("<td><IMG height=\"15\" width=\"15\" src=\"/App_Themes/DefaultAdExpressFr/images/Common/button/bt_arrow_down.gif\"></td>");	
+                        t.Append("</tr>");
+                        t.Append("</table>");
+                        t.Append("<div id=\"" + idParent + "Ct\" class=\"listMediaHeaderBorderNone\" style=\"display: none; width: 100%;\">");
+                        t.Append("<table id=\"AdvertiserSelectionWebControl1\" class=\"listMediaHeaderBorder paleVioletBackGround\" width=645>");
+
+                        vhList = vhList + (Int64)currentRow[0] + "Ct" + ",";
+                        idParentOld = idParent;
+                        textParentOld = textParent;
+                        start = 0;
+
+                    }
+
+                    #region Affichage des fils
+                    // Milieu
+                    if (nbColumn == 2) {
+                        t.Append("<td class=\"txtViolet10\" width=215>");
+                        //		t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
+                        t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" />" + currentRow[3].ToString() + "<br>");
+                        t.Append("</td>");
+                        nbColumn = 1;
+                        i++;
+
+                    }
+                    // Dernier
+                    else if (nbColumn == 1) {
+                        t.Append("<td class=\"txtViolet10\" width=215>");
+                        //	t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
+                        t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" value=\"" + currentRow[2] + "\" />" + currentRow[3].ToString() + "<br>");
+                        t.Append("</td>");
+                        t.Append("</tr>");
+                        nbColumn = 0;
+                        i++;
+
+                    }
+                    // Premier
+                    else {
+                        t.Append("<tr>");
+                        t.Append("<td class=\"txtViolet10\" width=215>");
+                        //	t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
+                        t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" />" + currentRow[3].ToString() + "<br>");
+                        t.Append("</td>");
+                        nbColumn = 2;
+                        i++;
+                    }
+                    #endregion
+
+                    #endregion
+                }
+
+                if (_dsListMedia.Tables[0].Rows.Count != 0) {
+                    if (nbColumn != 0) {
+                        t.Append("</tr>");
+                        nbColumn = 0;
+                    }
+                    else {
+                        nbColumn = 0;
+                    }
+                    t.Append("</table></div>");
+                }
+
+                #region Message d'erreurs
+                // Message d'erreur : veuillez saisir 3 caractères minimums
+                if (_keyWord.Length < 3 && _keyWord.Length > 0 && eventButton == constEvent.eventSelection.OK_EVENT) {
                     t.Append("<tr class=\"whiteBackGround\"><td class=\"whiteBackGround txtGris11Bold\" ><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
-					t.Append(" "+GestionWeb.GetWebWord(352,webSession.SiteLanguage)+" "+keyWord+".</p> ");
-					t.Append(" </td> ");
-					t.Append(" </tr> ");
-				}
-					// Message d'erreur : mot incorrect
-				else if(!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(keyWord) && keyWord.Length>0 && eventButton==constEvent.eventSelection.OK_EVENT){
+                    t.Append(" " + GestionWeb.GetWebWord(352, _webSession.SiteLanguage) + " " + _keyWord + ".</p> ");
+                    t.Append(" </td> ");
+                    t.Append(" </tr> ");
+                }
+                // Message d'erreur : mot incorrect
+                else if (!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(_keyWord) && _keyWord.Length > 0 && eventButton == constEvent.eventSelection.OK_EVENT) {
                     t.Append("<tr><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
-					t.Append(" "+GestionWeb.GetWebWord(1088,webSession.SiteLanguage)+" "+keyWord+".</p> ");
-					t.Append(" </td> ");
-					t.Append(" </tr> ");
-				}
-					// Message d'erreur : aucun résultat avec le mot clé
-				else if(dsListMedia!=null){
-					if(dsListMedia.Tables[0].Rows.Count==0){
+                    t.Append(" " + GestionWeb.GetWebWord(1088, _webSession.SiteLanguage) + " " + _keyWord + ".</p> ");
+                    t.Append(" </td> ");
+                    t.Append(" </tr> ");
+                }
+                // Message d'erreur : aucun résultat avec le mot clé
+                else if (_dsListMedia != null) {
+                    if (_dsListMedia.Tables[0].Rows.Count == 0) {
                         t.Append("<tr><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
-						t.Append(" "+GestionWeb.GetWebWord(819,webSession.SiteLanguage)+" "+keyWord+".</p> ");
-						t.Append("</table>");
-						t.Append("</td>");
-						t.Append("</tr>");
-						t.Append(" </td> ");
-						t.Append(" </tr> ");
-					}
-				}
-				#endregion
-				int listLenght=0;
-				if (vhList!=""){
-					t.Append("</td></tr></table></td></tr>");			
-					vhList = vhList.Remove(vhList.Length-1, 1);
-					t.Insert(insertIndex, vhList);
-					listLenght=vhList.Length;
-					insertLabel=textOpenclose;
-				}
-				t.Insert(labelIndex+listLenght,insertLabel);
-					
+                        t.Append(" " + GestionWeb.GetWebWord(819, _webSession.SiteLanguage) + " " + _keyWord + ".</p> ");
+                        t.Append("</table>");
+                        t.Append("</td>");
+                        t.Append("</tr>");
+                        t.Append(" </td> ");
+                        t.Append(" </tr> ");
+                    }
+                }
+                #endregion
 
-			}
-			#endregion	
+                int listLenght = 0;
+                if (vhList != "") {
+                    t.Append("</td></tr></table></td></tr>");
+                    vhList = vhList.Remove(vhList.Length - 1, 1);
+                    t.Insert(insertIndex, vhList);
+                    listLenght = vhList.Length;
+                    insertLabel = textOpenclose;
+                }
+                t.Insert(labelIndex + listLenght, insertLabel);
 
-			// Message d'erreur : Chargement de l'univers impossible
-			if(!loadIsPossible){
+
+            }
+            #endregion
+
+            // Message d'erreur : Chargement de l'univers impossible
+            if (!loadIsPossible) {
                 t.Append("<tr class=\"whiteBackGround\"><td class=\"whiteBackGround txtGris11Bold\" ><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
-				t.Append(" load impossible </p> ");
-				t.Append(" </td> ");
-				t.Append(" </tr> ");
-				
-			}
-			return(t.ToString());
-		}
-		#endregion
-		
-	} 
+                t.Append(" load impossible </p> ");
+                t.Append(" </td> ");
+                t.Append(" </tr> ");
+
+            }
+            output.Write(t.ToString());
+        }
+        #endregion
+
+        #endregion
+
+    } 
 }

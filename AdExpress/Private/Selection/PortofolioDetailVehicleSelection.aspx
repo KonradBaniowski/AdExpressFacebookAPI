@@ -170,7 +170,7 @@
 							</tr>
 							<tr class="whiteBackGround">
 								<td style="WIDTH: 772px; HEIGHT: 17px">
-									<%=listMedia%>
+									<cc3:PortofolioDetailVehicleSelectionWebControl id="portofolioDetailVehicleSelectionWebControl" runat="server"></cc3:PortofolioDetailVehicleSelectionWebControl>
 									<input id="idMedia" type="hidden" name="nameMedia">
 								</td>
 							</tr>

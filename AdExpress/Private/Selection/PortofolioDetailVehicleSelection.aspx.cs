@@ -134,6 +134,7 @@ namespace AdExpress.Private.Selection{
                 }
 				ModuleTitleWebControl2.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
+                portofolioDetailVehicleSelectionWebControl.CustomerWebSession = _webSession;
 				#endregion						
 
 				#region Evènements Boutons
@@ -181,16 +182,16 @@ namespace AdExpress.Private.Selection{
 
 				#region Liste des Médias
 				if(!IsPostBack || eventButton==constEvent.eventSelection.INITIALIZE_EVENT){
-					listMedia=TNS.AdExpress.Web.Controls.Selections.PortofolioDetailVehicleSelectionWebControl.listMedia(_webSession,"");
+                    portofolioDetailVehicleSelectionWebControl.KeyWord = "";
 				}
 				else if(eventButton==constEvent.eventSelection.OK_EVENT){
-					listMedia=TNS.AdExpress.Web.Controls.Selections.PortofolioDetailVehicleSelectionWebControl.listMedia(_webSession,keyWordTextBox.Text);
+                    portofolioDetailVehicleSelectionWebControl.KeyWord = keyWordTextBox.Text;
 				
 				}else if(eventButton==constEvent.eventSelection.OK_OPTION_MEDIA_EVENT){
-					listMedia=TNS.AdExpress.Web.Controls.Selections.PortofolioDetailVehicleSelectionWebControl.listMedia(_webSession,keyWordTextBox.Text);
+                    portofolioDetailVehicleSelectionWebControl.KeyWord = keyWordTextBox.Text;
 	
 				}else
-					listMedia=TNS.AdExpress.Web.Controls.Selections.PortofolioDetailVehicleSelectionWebControl.listMedia(_webSession,keyWordTextBox.Text);
+                    portofolioDetailVehicleSelectionWebControl.KeyWord = keyWordTextBox.Text;
 					
 				#endregion		
 

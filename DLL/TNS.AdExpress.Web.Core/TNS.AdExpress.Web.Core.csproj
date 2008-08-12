@@ -143,7 +143,9 @@
     </Compile>
     <Compile Include="CustomerPeriod.cs" />
     <Compile Include="DataAccess\ClassificationList\SearchLevelDataAccess.cs" />
+    <Compile Include="DataAccess\DetailMediaDataAccess.cs" />
     <Compile Include="DataAccess\Session\GenericDetailLevelDataAccess.cs" />
+    <Compile Include="Exceptions\DetailMediaDataAccessException.cs" />
     <Compile Include="Exceptions\ExtendedHashTableException.cs" />
     <Compile Include="Exceptions\SQLGeneratorException.cs" />
     <Compile Include="Exceptions\WebThemesDataAccessException.cs" />
