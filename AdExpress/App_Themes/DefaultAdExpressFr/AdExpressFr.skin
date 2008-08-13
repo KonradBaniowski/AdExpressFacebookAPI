@@ -30,6 +30,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Result/bt_detail_up.gif" SkinID="bt_detail" />
 <asp:image runat="server" ImageUrl="Images/Common/Logo_Adnettrack.jpg" SkinID="Logo_Adnettrack" />
 <asp:image runat="server" ImageUrl="Images/Common/await.gif" SkinID="await" />
+<asp:image runat="server" ImageUrl="Images/Common/vide.gif" SkinID="visual_cover" />
 
 <%-- Icons du menu contextuel --%>
 <asp:image runat="server" ImageUrl="Images/Common/Menu/selectedMenuIcon.gif" SkinID="selected" />
@@ -50,6 +51,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Menu/sponsorshipMenuIcon.gif" SkinID="sponsorship" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/programMenuIcon.gif" SkinID="program" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/helpMenuIcon.gif" SkinID="help" />
+
 
 <%-- Boutons --%>
 <asp:image runat="server" ImageUrl="Images/Culture/Button/valider_up.gif" SkinID="valider" />
