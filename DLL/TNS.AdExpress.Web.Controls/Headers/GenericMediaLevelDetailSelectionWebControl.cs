@@ -11,6 +11,7 @@
 using System;
 using System.Data;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -26,6 +27,7 @@ using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
@@ -755,24 +757,68 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 
 		#region Méthode privée
 		/// <summary>
-		/// Retourne les éléments des niveaux de détail autorisés
+		/// Return allowed detail level items
 		/// </summary>
 		/// <remarks>
 		/// AdNetTrack selection [Ok]
 		/// </remarks>
-		/// <returns>Niveaux de détail</returns>
+		/// <returns>Detail level list</returns>
 		private ArrayList GetAllowedDetailLevelItems(){
-			switch(_componentProfile){
-				case WebConstantes.GenericDetailLevel.ComponentProfile.media:
-					return(_currentModule.AllowedMediaDetailLevelItems);
-				case WebConstantes.GenericDetailLevel.ComponentProfile.product:
-					return(_currentModule.AllowedProductDetailLevelItems);
-				case WebConstantes.GenericDetailLevel.ComponentProfile.adnettrack:
-					return(AdNetTrackDetailLevelsDescription.AllowedAdNetTrackLevelItems);
-				default:
-					return(new ArrayList());
-			}
+
+            List<DetailLevelItemInformation.Levels> vehicleAllowedDetailLevelList;
+            ArrayList allowedDetailLevelList;
+            ArrayList list = new ArrayList();
+
+            switch (_componentProfile) { 
+                case WebConstantes.GenericDetailLevel.ComponentProfile.adnettrack:
+                    return GetModuleAllowedDetailLevelItems();
+                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
+                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
+                default:
+
+                    vehicleAllowedDetailLevelList = GetVehicleAllowedDetailLevelItems();
+                    allowedDetailLevelList = GetModuleAllowedDetailLevelItems();
+
+                    foreach (DetailLevelItemInformation currentLevel in allowedDetailLevelList)
+                        if (vehicleAllowedDetailLevelList.Contains(currentLevel.Id))
+                            list.Add(currentLevel);
+
+                    return list;
+            }
 		}
+
+        /// <summary>
+        /// Return allowed detail level list contained in the module object
+        /// </summary>
+        /// <returns>Detail level list</returns>
+        private ArrayList GetModuleAllowedDetailLevelItems() {
+
+            switch (_componentProfile) {
+                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
+                    return (_currentModule.AllowedMediaDetailLevelItems);
+                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
+                    return (_currentModule.AllowedProductDetailLevelItems);
+                case WebConstantes.GenericDetailLevel.ComponentProfile.adnettrack:
+                    return (AdNetTrackDetailLevelsDescription.AllowedAdNetTrackLevelItems);
+                default:
+                    return (new ArrayList());
+            }
+
+        }
+
+        /// <summary>
+        /// Return allowed detail level list for vehicle list seleceted
+        /// </summary>
+        /// <returns>Detail level list</returns>
+        private List<DetailLevelItemInformation.Levels> GetVehicleAllowedDetailLevelItems(){
+
+            List<Int64> vehicleList = new List<Int64>();
+
+            foreach (System.Windows.Forms.TreeNode currentVehicle in _customerWebSession.SelectionUniversMedia.Nodes)
+                vehicleList.Add(((LevelInformation)currentVehicle.Tag).ID);
+
+            return VehiclesInformation.GetCommunDetailLevelList(vehicleList);
+        }
 
 		/// <summary>
 		/// Retourne le niveau de détail par defaut
