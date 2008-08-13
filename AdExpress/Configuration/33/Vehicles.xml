@@ -18,7 +18,19 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>    <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>    <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>    <!-- Régie -->
-        <allowedMediaLevelItem>title</allowedMediaLevelItem>   <!-- Titre -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>        <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>        <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>        <!-- Agence -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>        <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -49,7 +61,19 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>        <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>        <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>        <!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>        <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -79,7 +103,22 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>        <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>        <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>        <!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+        <allowedMediaLevelItem>programType</allowedMediaLevelItem>        <!-- Genre d'émission -->
+        <allowedMediaLevelItem>program</allowedMediaLevelItem>        <!-- Emission -->
+        <allowedMediaLevelItem>sponsorshipForm</allowedMediaLevelItem>        <!-- Forme de parrainage -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>        <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -116,7 +155,19 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>        <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>        <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>        <!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>        <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -150,7 +201,19 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>        <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>        <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>        <!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>        <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -177,7 +240,19 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>        <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>        <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>        <!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>        <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -211,7 +286,19 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>        <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>        <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>        <!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>        <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -240,7 +327,19 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>        <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>        <!-- Régie -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>        <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>        <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>        <!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>        <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
