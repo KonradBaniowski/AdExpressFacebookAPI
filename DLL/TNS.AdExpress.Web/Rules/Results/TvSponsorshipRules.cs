@@ -34,6 +34,8 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpress.Web.Rules.Results
 {
@@ -158,9 +160,17 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 			#endregion
 
-			#region Headers
+            #region Vahicle Informations
+            string vehicleSelection = webSession.GetSelection(webSession.SelectionUniversMedia,CustomerConstantes.Right.type.vehicleAccess);
+            if(vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new System.Exception("Media Selection is not valid"));
+            VehicleInformation vehicleInformation=VehiclesInformation.Get(Int64.Parse(vehicleSelection));
+            Vehicles.names vehicle =vehicleInformation.Id;
+            #endregion
 
-			Headers headers=new Headers();
+
+            #region Headers
+
+            Headers headers=new Headers();
 			// Ajout de la colonne des libellés des Autres dimensions
 			if(webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES )
 				headers.Root.Add(new Header(true,GestionWeb.GetWebWord(1164,webSession.SiteLanguage),FrameWorkResultConstantes.TvSponsorship.LEVEL_HEADER_ID));
@@ -172,11 +182,12 @@ namespace TNS.AdExpress.Web.Rules.Results
 			// Ajout Création 
 			bool showCreative=false;
 			//A vérifier Création où version
-            if (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
+            if (vehicleInformation.ShowCreations &&
+                (webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
                 (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES &&
                 (webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)) ||
-                webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
+                webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES))
                 ) {
                 headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(1994, webSession.SiteLanguage), FrameWorkResultConstantes.TvSponsorship.CREATIVE_HEADER_ID));
                 showCreative = true;
@@ -184,11 +195,12 @@ namespace TNS.AdExpress.Web.Rules.Results
                 startDataColIndexInit++;
             }
             bool showInsertions = false;
-            if((webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES &&
+            if(vehicleInformation.ShowInsertions &&
+                ((webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES &&
                 (webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 webSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product))) ||
                 webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES
-                ){
+                )){
                 headers.Root.Add(new HeaderInsertions(false, GestionWeb.GetWebWord(2245, webSession.SiteLanguage), FrameWorkResultConstantes.TvSponsorship.INSERTIONS_HEADER_ID));
                 startDataColIndex++;
                 startDataColIndexInit++;

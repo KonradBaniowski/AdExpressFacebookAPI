@@ -198,6 +198,13 @@ namespace AdExpress{
 						_webSession.PreformatedTable =CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Period;
 					else 
 						_webSession.PreformatedTable =CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.media_X_Year;
+                    
+                    if(_webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS) {
+                        _webSession.SelectionUniversMedia.Nodes.Clear();
+                        System.Windows.Forms.TreeNode tmpNode=new System.Windows.Forms.TreeNode("TELEVISION");
+                        tmpNode.Tag=new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv.GetHashCode(),"TELEVISION");
+                        _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+                    }
 					#endregion
 
 					#region paramètres rajoutés pour Bilan de campagne

@@ -508,6 +508,13 @@ namespace AdExpress.Private.MyAdExpress{
                     }
                     #endregion
 
+                    if(_webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS && (_webSession.SelectionUniversMedia.FirstNode==null || _webSession.SelectionUniversMedia.FirstNode.Tag==null)) {
+                        _webSession.SelectionUniversMedia.Nodes.Clear();
+                        System.Windows.Forms.TreeNode tmpNode=new System.Windows.Forms.TreeNode("TELEVISION");
+                        tmpNode.Tag=new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv.GetHashCode(),"TELEVISION");
+                        _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+                    }
+
                     _webSession.CompetitorUniversAdvertiser=webSessionSave.CompetitorUniversAdvertiser;
 					_webSession.CompetitorUniversMedia=webSessionSave.CompetitorUniversMedia;
 					_webSession.CompetitorUniversProduct=webSessionSave.CompetitorUniversProduct;
