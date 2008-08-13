@@ -540,8 +540,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			switch(webSession.PreformatedTable){
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :
 					if(IsRepartitionSelected(webSession)){
-						sql+=WebFunctions.SQLGenerator.GetUnitFields(vehicleType,DBConstantes.Tables.DASH_BOARD_PREFIXE);
-					}else sql+=WebFunctions.SQLGenerator.getTotalUnitFields(vehicleType,DBConstantes.Tables.DASH_BOARD_PREFIXE);
+                        sql += WebFunctions.SQLGenerator.GetUnitFieldsName(webSession, Constantes.DB.TableType.Type.dataVehicle, DBConstantes.Tables.DASH_BOARD_PREFIXE);
+                    }
+                    else sql += WebFunctions.SQLGenerator.GetUnitFieldsName(webSession, Constantes.DB.TableType.Type.webPlan, DBConstantes.Tables.DASH_BOARD_PREFIXE);
 					break;
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual :					
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual :
@@ -569,7 +570,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay :												
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice :
 					if(IsRepartitionSelected(webSession)){
-						sql+=WebFunctions.SQLGenerator.GetUnitFields(vehicleType,DBConstantes.Tables.DASH_BOARD_PREFIXE);
+                        sql += WebFunctions.SQLGenerator.GetUnitFieldsName(webSession,Constantes.DB.TableType.Type.dataVehicle, DBConstantes.Tables.DASH_BOARD_PREFIXE);
 					}
 					break;																					
 				default :

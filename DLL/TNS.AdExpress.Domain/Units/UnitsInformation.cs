@@ -56,6 +56,20 @@ namespace TNS.AdExpress.Domain.Units {
 			}
 		}
 
+        /// <summary>
+        /// Get Parent unit id 
+        /// </summary>
+        /// <param name="id">Unit id</param>
+        /// <returns>Parent unit id </returns>
+        public static CustomerSessions.Unit GetParentUnitId(CustomerSessions.Unit id) {
+            CustomerSessions.Unit currentParentUnit = Get(id).BaseId;
+            CustomerSessions.Unit currentUnit = id;
+            if (currentParentUnit != CustomerSessions.Unit.none && currentParentUnit != id)
+                currentUnit = GetParentUnitId(currentParentUnit);
+
+            return currentUnit;
+        }
+
 		/// <summary>
 		/// Initialisation de la liste à partir du fichier XML
 		/// </summary>

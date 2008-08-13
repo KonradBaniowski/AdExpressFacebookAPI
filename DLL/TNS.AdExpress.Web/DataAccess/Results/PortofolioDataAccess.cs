@@ -853,7 +853,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				detailProductTablesNames=webSession.GenericProductDetailLevel.GetSqlTables(DBConstantes.Schema.ADEXPRESS_SCHEMA);
 				detailProductFields=webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints=webSession.GenericProductDetailLevel.GetSqlJoins(webSession.SiteLanguage,DATA_TABLE_PREFIXE);
-				unitsFields = WebFunctions.SQLGenerator.GetUnitFields(vehicleName,DATA_TABLE_PREFIXE);
+				unitsFields = WebFunctions.SQLGenerator.GetUnitFieldsName(webSession,Constantes.DB.TableType.Type.dataVehicle,DATA_TABLE_PREFIXE);
 				mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DATA_TABLE_PREFIXE,true);
 				productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DATA_TABLE_PREFIXE,true);
 				detailProductOrderBy=webSession.GenericProductDetailLevel.GetSqlOrderFields();

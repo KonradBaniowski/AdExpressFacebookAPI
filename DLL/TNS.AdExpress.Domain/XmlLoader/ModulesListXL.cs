@@ -9,6 +9,7 @@ using System;
 using System.Data;
 using System.Xml;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using TNS.AdExpress.Constantes;
 using ClassificationUniverse = TNS.Classification.Universe;
@@ -17,7 +18,8 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Layers;
-
+using Except = TNS.FrameWork.Exceptions;
+using Constante = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Domain.XmlLoader{
 	///<summary>
@@ -57,6 +59,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 				string remoteExcelUrlValue="";
 				string valueExcelUrlValue="";
                 string functionName="";
+                string allowedUnitValue="";
 				Int64 module=0;
 				ResultPageInformation currentResultPageInformation=null;
 				while(Reader.Read()){
@@ -156,9 +159,13 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 							case "detailSelection":
 								if (Reader.GetAttribute("id")!=null)
 									currentResultPageInformation.DetailSelectionItemsType.Add(int.Parse(Reader.GetAttribute("id")));
-									
 								break;
-							case "link":
+                            case "allowedUnit":
+                                allowedUnitValue = Reader.ReadString();
+                                if (allowedUnitValue != null && allowedUnitValue.Length > 0 && module != 0 && currentResultPageInformation!=null)
+                                    currentResultPageInformation.AllowedUnitEnumList.Add((Constante.CustomerSessions.Unit)Enum.Parse(typeof(Constante.CustomerSessions.Unit), allowedUnitValue, true));
+                                break;
+                            case "link":
 								if(Reader.GetAttribute("privilegecode")!=null && module!=0){
 									((Module)HtModule[module]).Bridges.Add(Int64.Parse(Reader.GetAttribute("privilegecode")));
 								}
@@ -212,7 +219,20 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 break;
 						}					
 					}				
-				}		
+				}
+                List<Constantes.Web.CustomerSessions.Unit> totalUnit = new List<Constantes.Web.CustomerSessions.Unit>();
+                foreach(KeyValuePair<Constantes.Web.CustomerSessions.Unit,Domain.Units.UnitInformation> kvp in Units.UnitsInformation.List)
+                    totalUnit.Add(kvp.Key);
+
+                foreach (Module curentModule in HtModule.Values) {
+                    ArrayList tab = curentModule.GetResultPageInformationsList();
+                    for (int i = 0; i < tab.Count; i++) {
+                        ResultPageInformation currentPage = ((ResultPageInformation)tab[i]);
+                        if (currentPage.AllowedUnitEnumList.Count == 0)
+                            currentPage.AllowedUnitEnumList = totalUnit;
+                    }
+                    
+                }
 			}
 			catch(System.Exception e){
 				throw(new ModuleException("Erreur : "+e.Message)); 

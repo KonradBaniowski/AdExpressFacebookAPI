@@ -43,6 +43,83 @@ namespace TNS.AdExpress.Domain.Classification {
 
         #region Méthodes publiques
 
+
+        #region Convert
+
+        #region Convert Enum Id to databaseId
+        /// <summary>
+        /// Get the Convert from Enum Id to databaseId
+        /// </summary>
+        /// <param name="id">Enum Id</param>
+        /// <returns>databaseId</returns>
+        public static Int64 EnumToDatabaseId(Vehicles.names id) {
+            try {
+                return (_listVehicleNames[id].DatabaseId);
+            }
+            catch (System.Exception err) {
+                throw (new ArgumentException("impossible to reteive the requested vehicle", err));
+            }
+        }
+        #endregion
+
+        #region Convert databaseId Id to Enum
+        /// <summary>
+        /// Get the Convert from databaseId to Enum Id
+        /// </summary>
+        /// <param name="dataBaseVehicleId">databaseId</param>
+        /// <returns>Enum Id</returns>
+        public static Vehicles.names DatabaseIdToEnum(Int64 dataBaseVehicleId) {
+            try {
+                return (_listDataBaseId[dataBaseVehicleId].Id);
+            }
+            catch (System.Exception err) {
+                throw (new ArgumentException("impossible to reteive the requested vehicle", err));
+            }
+        }
+        #endregion
+
+        #region Convert Enum List to databaseId list
+        /// <summary>
+        /// Get the Convert from Enum Id List to databaseId List
+        /// </summary>
+        /// <param name="vehicleList">Enum Id List</param>
+        /// <returns>databaseId List</returns>
+        public static List<Int64> EnumListToDatabaseIdList(List<Vehicles.names> vehicleList) {
+            try {
+                List<Int64> databaseIdList = new List<Int64>();
+                foreach (Vehicles.names currentVehicle in vehicleList) {
+                    databaseIdList.Add(VehiclesInformation.EnumToDatabaseId(currentVehicle));
+                }
+                return (databaseIdList);
+            }
+            catch (System.Exception err) {
+                throw (new ArgumentException("impossible to reteive the requested vehicle", err));
+            }
+        }
+        #endregion
+
+        #region Convert databaseId list to Enum List
+        /// <summary>
+        /// Get the Convert from databaseId List to Enum Id List
+        /// </summary>
+        /// <param name="databaseIdList">databaseId List</param>
+        /// <returns>Enum Id List</returns>
+        public static List<Vehicles.names> DatabaseIdToEnumListList(List<Int64> databaseIdList) {
+            try {
+                List<Vehicles.names> vehicleList = new List<Vehicles.names>();
+                foreach (Int64 currentDatabaseId in databaseIdList) {
+                    vehicleList.Add(VehiclesInformation.DatabaseIdToEnum(currentDatabaseId));
+                }
+                return (vehicleList);
+            }
+            catch (System.Exception err) {
+                throw (new ArgumentException("impossible to reteive the requested vehicle", err));
+            }
+        }
+        #endregion
+
+        #endregion
+
         #region Get Vehicle informations
         /// <summary>
         /// Get Vehicle informations

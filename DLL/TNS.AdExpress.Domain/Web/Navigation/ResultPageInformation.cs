@@ -8,6 +8,11 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -60,6 +65,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// Liste des types de détail sélection à afficher dans les rappels de la sélection
 		/// </summary>
 		protected ArrayList _detailSelectionItemsType=new ArrayList();
+        /// <summary>
+        /// Allowed units list
+        /// </summary>
+        protected List<CustomerSessions.Unit> _allowedUnitsList = new List<CustomerSessions.Unit>();
 		#endregion
 
 		#region Constructeur
@@ -190,6 +199,13 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			set{_detailSelectionItemsType=value;}
 		}
 
+        /// <summary>
+        /// Get / Set allowed units enum list
+        /// </summary>
+        public List<CustomerSessions.Unit> AllowedUnitEnumList {
+            get { return _allowedUnitsList; }
+            set { _allowedUnitsList = value; }
+        }
 		#endregion
 
 		#region Méthodes Externe
@@ -274,7 +290,87 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			if(_remoteExcelUrl.Length==0) return (false);
 			return (true);
 		}
+
+
+        /// <summary>
+        /// Get commun Unit list
+        /// </summary>
+        /// <param name="databaseVehiclesList">Database vehicle List</param>
+        /// <returns>commun Unit list</returns>
+        public List<CustomerSessions.Unit> GetValidUnitsEnum(List<Int64> databaseVehiclesList) {
+            return (GetValidUnitsEnum(VehiclesInformation.DatabaseIdToEnumListList(databaseVehiclesList)));       
+        }
+
+        /// <summary>
+        /// Get commun Unit list
+        /// </summary>
+        /// <param name="vehiclesList">Vehicle List</param>
+        /// <returns>commun Unit list</returns>
+        public List<CustomerSessions.Unit> GetValidUnitsEnum(List<Vehicles.names> vehiclesList) {
+            List<CustomerSessions.Unit> validUnitsList = new List<CustomerSessions.Unit>();
+            List<CustomerSessions.Unit> vehicleUnitList=VehiclesInformation.GetCommunUnitList(vehiclesList);
+            CustomerSessions.Unit currentParentUnit;
+            UnitInformation currentParentUnitInformation;
+            UnitInformation currentUnitInformation;
+            foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList) {
+                currentParentUnit = UnitsInformation.GetParentUnitId(currentUnit);
+                #region field priority
+                currentParentUnitInformation = UnitsInformation.Get(currentParentUnit);
+                currentUnitInformation = UnitsInformation.Get(currentUnit);
+                if ((currentUnitInformation.DatabaseField != currentParentUnitInformation.DatabaseField
+                    || currentUnitInformation.DatabaseMultimediaField != currentParentUnitInformation.DatabaseMultimediaField)
+                    && !vehicleUnitList.Contains(currentParentUnit)) {
+                    currentParentUnit = currentUnit;
+                }
+                #endregion
+                if (vehicleUnitList.Contains(currentParentUnit) && !validUnitsList.Contains(currentParentUnit)) validUnitsList.Add(currentParentUnit);
+            }
+            return (validUnitsList);
+        }
+
+        /// <summary>
+        /// Get commun UnitInformation list
+        /// </summary>
+        /// <param name="databaseVehiclesList">Database vehicle List</param>
+        /// <returns>commun UnitInformation list</returns>
+        public List<UnitInformation> GetValidUnits(List<Int64> databaseVehiclesList) {
+            return (GetValidUnits(VehiclesInformation.DatabaseIdToEnumListList(databaseVehiclesList)));
+        }
+
+
+
+        /// <summary>
+        /// Get commun UnitInformation list
+        /// </summary>
+        /// <param name="vehiclesList">Vehicle List</param>
+        /// <returns>commun UnitInformation list</returns>
+        public List<UnitInformation> GetValidUnits(List<Vehicles.names> vehiclesList) {
+            List<UnitInformation> validUnitsList = new List<UnitInformation>();
+            List<CustomerSessions.Unit> vehicleUnitList = VehiclesInformation.GetCommunUnitList(vehiclesList);
+            CustomerSessions.Unit currentParentUnit;
+            UnitInformation currentParentUnitInformation;
+            UnitInformation currentUnitInformation;
+            foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList) {
+                currentParentUnit = UnitsInformation.GetParentUnitId(currentUnit);
+
+                #region field priority
+                currentParentUnitInformation = UnitsInformation.Get(currentParentUnit);
+                currentUnitInformation = UnitsInformation.Get(currentUnit);
+                if ((currentUnitInformation.DatabaseField != currentParentUnitInformation.DatabaseField
+                    || currentUnitInformation.DatabaseMultimediaField != currentParentUnitInformation.DatabaseMultimediaField)
+                    && !vehicleUnitList.Contains(currentParentUnit)) {
+                    currentParentUnit = currentUnit;
+                }
+                #endregion
+
+                if (vehicleUnitList.Contains(currentParentUnit) && !validUnitsList.Contains(UnitsInformation.Get(currentParentUnit))) validUnitsList.Add(UnitsInformation.Get(currentParentUnit));
+            }
+            return (validUnitsList);
+        }
+
 		#endregion
+
+
 
 	}
 }

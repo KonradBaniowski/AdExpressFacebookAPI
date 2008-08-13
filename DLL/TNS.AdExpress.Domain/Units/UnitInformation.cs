@@ -99,5 +99,37 @@ namespace TNS.AdExpress.Domain.Units {
             get { return (_databaseMultimediaField); }
         }
         #endregion
+
+        #region Public methods
+
+        #region SQL
+        /// <summary>
+        /// Get SQL database field sum query with Alias
+        /// </summary>
+        /// <returns>SQL sum Query with Alias</returns>
+        public string GetSQLDetailledSum() {
+            if (_databaseField == null || _databaseField.Length == 0) throw (new NullReferenceException("DatabaseField is not defined"));
+            return (" sum("+_databaseField+") as "+_id.ToString()+" ");
+        }
+
+        /// <summary>
+        /// Get SQL database field multimedia sum query with Alias
+        /// </summary>
+        /// <returns>SQL sum Query with Alias</returns>
+        public string GetSQLSum() {
+            if (_databaseMultimediaField == null || _databaseMultimediaField.Length == 0) throw (new NullReferenceException("DatabaseField is not defined"));
+            return (" sum(" + _databaseMultimediaField + ") as " + _id.ToString() + " ");
+        }
+
+        /// <summary>
+        /// Get SQL database id sum query with Alias
+        /// </summary>
+        /// <returns>SQL sum Query with Alias</returns>
+        public string GetSQLUnionSum() {
+            return (" sum(" + _id.ToString() + ") as " + _id.ToString() + " ");
+        }
+
+        #endregion
+        #endregion
     }
 }

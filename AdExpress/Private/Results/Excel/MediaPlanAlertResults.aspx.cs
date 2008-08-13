@@ -63,12 +63,12 @@ namespace AdExpress.Private.Results.Excel{
 
 				#region Résultats
 				try{
-					if(_webSession.isCompetitorAdvertiserSelected()){
-						result=CompetitorMediaPlanAlertUI.GetMediaPlanAlertExcelUI(CompetitorMediaPlanAlertRules.GetFormattedTable(_webSession, _webSession.PeriodBeginningDate, _webSession.PeriodEndDate),_webSession,_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
-					}
-					else{
+                    //if(_webSession.isCompetitorAdvertiserSelected()){
+                    //    result=CompetitorMediaPlanAlertUI.GetMediaPlanAlertExcelUI(CompetitorMediaPlanAlertRules.GetFormattedTable(_webSession, _webSession.PeriodBeginningDate, _webSession.PeriodEndDate),_webSession,_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
+                    //}
+                    //else{
 						result=GenericMediaPlanAlertUI.GetMediaPlanAlertWithMediaDetailLevelExcelUI(GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession),_webSession,_webSession.PeriodBeginningDate, _webSession.PeriodEndDate,false);
-					}
+                    //}
 				}
 				catch(System.Exception){
 					Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(958, _webSession.SiteLanguage)));

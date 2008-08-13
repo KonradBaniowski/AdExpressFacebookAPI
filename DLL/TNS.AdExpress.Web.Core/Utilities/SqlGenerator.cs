@@ -15,7 +15,8 @@
 
 using System;
 using System.Data;
-
+using System.Text;
+using System.Collections.Generic;
 using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Web.Core.Sessions;
@@ -32,6 +33,7 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -1841,6 +1843,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </remarks>
         /// <param name="webSession">Session du client</param>
         /// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
+        [Obsolete("Use GetUnitFieldName with paramter type !!!")]
         public static string GetUnitFieldName(WebSession webSession)
         {
             WebConstantes.Module.Type moduleType = (ModulesList.GetModule(webSession.CurrentModule)).ModuleType;
@@ -1848,50 +1851,21 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 case WebConstantes.Module.Type.tvSponsorship:
                 case WebConstantes.Module.Type.alert:
-                    switch (webSession.Unit)
-                    {
-                        case WebConstantes.CustomerSessions.Unit.duration:
-                            return (DBConstantes.Fields.DURATION);
-                        case WebConstantes.CustomerSessions.Unit.euro:
-                        case WebConstantes.CustomerSessions.Unit.kEuro:
-                            return (DBConstantes.Fields.EXPENDITURE_EURO);
-                        case WebConstantes.CustomerSessions.Unit.insertion:
-                        case WebConstantes.CustomerSessions.Unit.spot:
-                            return (DBConstantes.Fields.INSERTION);
-                        case WebConstantes.CustomerSessions.Unit.mmPerCol:
-                            return (DBConstantes.Fields.AREA_MMC);
-                        case WebConstantes.CustomerSessions.Unit.pages:
-                            return (DBConstantes.Fields.AREA_PAGE);
-                        case WebConstantes.CustomerSessions.Unit.numberBoard:
-                            return (DBConstantes.Fields.NUMBER_BOARD);
-                        case WebConstantes.CustomerSessions.Unit.grp:
-                            return (DBConstantes.Fields.GRP);
-                        default:
-                            throw new SQLGeneratorException("Unité non gérée (Module Alerte)");
+                    try {
+                        return webSession.GetSelectedUnit().DatabaseField;
                     }
-
+                    catch {
+                        throw new SQLGeneratorException("Not managed unit (Alert Module)");
+                    }
                 case WebConstantes.Module.Type.analysis:
-                    switch (webSession.Unit)
-                    {
-                        case WebConstantes.CustomerSessions.Unit.euro:
-                        case WebConstantes.CustomerSessions.Unit.kEuro:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.mmPerCol:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.pages:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.numberBoard:
-                        case WebConstantes.CustomerSessions.Unit.insertion:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.spot:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.duration:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
-                        default:
-                            throw (new SQLGeneratorException("Unité non gérée (Module Analyse)"));
+                    try {
+                        return webSession.GetSelectedUnit().DatabaseMultimediaField;
+                    }
+                    catch {
+                        throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
                     }
                 default:
-                    throw (new SQLGeneratorException("Le type de module n'est pas géré pour la sélecetion d'unité"));
+                    throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
             }
         }
         /// <summary>
@@ -1911,50 +1885,21 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 case DBConstantes.TableType.Type.dataVehicle4M:
                 case DBConstantes.TableType.Type.dataVehicle:
-                    switch (webSession.Unit)
-                    {
-                        case WebConstantes.CustomerSessions.Unit.duration:
-                            return (DBConstantes.Fields.DURATION);
-                        case WebConstantes.CustomerSessions.Unit.euro:
-                        case WebConstantes.CustomerSessions.Unit.kEuro:
-                            return (DBConstantes.Fields.EXPENDITURE_EURO);
-                        case WebConstantes.CustomerSessions.Unit.insertion:
-                        case WebConstantes.CustomerSessions.Unit.spot:
-                            return (DBConstantes.Fields.INSERTION);
-                        case WebConstantes.CustomerSessions.Unit.mmPerCol:
-                            return (DBConstantes.Fields.AREA_MMC);
-                        case WebConstantes.CustomerSessions.Unit.pages:
-                            return (DBConstantes.Fields.AREA_PAGE);
-                        case WebConstantes.CustomerSessions.Unit.numberBoard:
-                            return (DBConstantes.Fields.NUMBER_BOARD);
-                        case WebConstantes.CustomerSessions.Unit.grp:
-                            return (DBConstantes.Fields.GRP);
-                        default:
-                            throw new SQLGeneratorException("Unité non gérée (Module Alerte)");
+                    try {
+                        return webSession.GetSelectedUnit().DatabaseField;
                     }
-
+                    catch {
+                        throw new SQLGeneratorException("Not managed unit (Alert Module)");
+                    }
                 case DBConstantes.TableType.Type.webPlan:
-                    switch (webSession.Unit)
-                    {
-                        case WebConstantes.CustomerSessions.Unit.euro:
-                        case WebConstantes.CustomerSessions.Unit.kEuro:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.mmPerCol:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.pages:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.numberBoard:
-                        case WebConstantes.CustomerSessions.Unit.insertion:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.spot:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                        case WebConstantes.CustomerSessions.Unit.duration:
-                            return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
-                        default:
-                            throw (new SQLGeneratorException("Unité non gérée (Module Analyse)"));
+                    try {
+                        return webSession.GetSelectedUnit().DatabaseMultimediaField;
                     }
+                    catch {
+                        throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
+                    }                    
                 default:
-                    throw (new SQLGeneratorException("Le type de module n'est pas géré pour la sélecetion d'unité"));
+                    throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
             }
         }
         #endregion
@@ -2202,25 +2147,11 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <returns>Le champ correspondant au type d'unité</returns>
         internal static string getUnitFieldNameForAnalysisResult(WebConstantes.CustomerSessions.Unit unit)
         {
-            switch (unit)
-            {
-                case WebConstantes.CustomerSessions.Unit.euro:
-                case WebConstantes.CustomerSessions.Unit.kEuro:
-                    return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-                case WebConstantes.CustomerSessions.Unit.mmPerCol:
-                    return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD);
-                case WebConstantes.CustomerSessions.Unit.pages:
-                    return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD);
-                case WebConstantes.CustomerSessions.Unit.numberBoard:
-                case WebConstantes.CustomerSessions.Unit.insertion:
-                    return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                case WebConstantes.CustomerSessions.Unit.spot:
-                    return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                case WebConstantes.CustomerSessions.Unit.duration:
-                    return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
-
-                default:
-                    throw (new SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
+            try {
+                return UnitsInformation.Get(unit).DatabaseMultimediaField;
+            }
+            catch {
+                throw (new SQLGeneratorException("Details unit chosen am wrong for the choice of the field"));
             }
         }
 
@@ -3277,11 +3208,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <exception cref="TNS.AdExpress.Web.Exceptions.MediaPlanAlertDataAccessException">
         /// Lancée au cas ou l'unité considérée n'est pas un cas traité
         /// </exception>
-        [Obsolete("La méthode est obsolete; Utilisez GetUnitFieldName qui peut gérer les modules d'alerte et d'analyse")]
-        public static string getUnitField(WebConstantes.CustomerSessions.Unit unit)
-        {
-            switch (unit)
-            {
+        [Obsolete("La méthode est obsolete; Utilisez GetUnitFieldsName qui peut gérer les modules d'alerte et d'analyse")]
+        public static string getUnitField(WebConstantes.CustomerSessions.Unit unit) {
+            switch (unit) {
                 case WebConstantes.CustomerSessions.Unit.duration:
                     return DBConstantes.Fields.DURATION;
                 case WebConstantes.CustomerSessions.Unit.euro:
@@ -3311,11 +3240,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <exception cref="SQLGeneratorException">
         /// Lancée au cas ou l'unité considérée n'est pas un cas traité
         /// </exception>
-        [Obsolete("La méthode est obsolete; Utilisez GetUnitFieldName qui peut gérer les modules d'alerte et d'analyse")]
-        public static string getTotalUnitField(WebConstantes.CustomerSessions.Unit unit)
-        {
-            switch (unit)
-            {
+        [Obsolete("La méthode est obsolete; Utilisez GetUnitFieldsName qui peut gérer les modules d'alerte et d'analyse")]
+        public static string getTotalUnitField(WebConstantes.CustomerSessions.Unit unit) {
+            switch (unit) {
                 case WebConstantes.CustomerSessions.Unit.duration:
                     return DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD;
                 case WebConstantes.CustomerSessions.Unit.euro:
@@ -3334,215 +3261,67 @@ namespace TNS.AdExpress.Web.Core.Utilities
             }
         }
 
-        /// <summary>
-        /// Obtient les champs unités à utiliser en fonction du media
-        /// </summary>
-        ///<param name="vehicleName">typde du média</param>
-        ///<param name="dataTablePrefixe">préfixe de la table des données</param>
-        /// <returns>Noms des champs</returns>
-        /// <exception cref="SQLGeneratorException">
-        /// Lancée au cas ou les unités considérées ne sont traitées
-        /// </exception>
-        public static string GetUnitFields(DBClassificationConstantes.Vehicles.names vehicleName, string dataTablePrefixe)
-        {
-
-            switch (vehicleName)
-            {
-                case DBClassificationConstantes.Vehicles.names.tv:
-                case DBClassificationConstantes.Vehicles.names.radio:
-                case DBClassificationConstantes.Vehicles.names.others:
-                    return ("sum(" + dataTablePrefixe + ".expenditure_euro) as euro,sum(" + dataTablePrefixe + ".duration) as duration,sum(" + dataTablePrefixe + ".insertion) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.internationalPress:
-                case DBClassificationConstantes.Vehicles.names.press:
-                    return ("sum(" + dataTablePrefixe + ".expenditure_euro) as euro,sum(" + dataTablePrefixe + ".area_mmc) as mmPerCol,sum(" + dataTablePrefixe + ".area_page) as pages,sum(" + dataTablePrefixe + ".insertion) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.outdoor:
-                    return ("sum(" + dataTablePrefixe + ".expenditure_euro) as euro,sum(" + dataTablePrefixe + ".number_board) as insertion");
-
-                default:
-                    throw new SQLGeneratorException("getUnitFields(ClassificationConstantes.Vehicle.type vehicleType)-->Le cas de cette média n'est pas gérer. Pas de champs correspondant.");
-            }
-        }
 
         /// <summary>
         /// Obtient les champs unités à utiliser en fonction du media
         /// </summary>
-        ///<param name="vehicleName">type du média</param>
-        ///<param name="dataTablePrefixe">préfixe de la table des données</param>
-        /// <returns>Noms des champs</returns>
-        /// <exception cref="TNS.AdExpress.Web.Exceptions.MediaPlanAlertDataAccessException">
-        /// Lancée au cas ou les unités considérées ne sont traitées
-        /// </exception>
-        public static string getTotalUnitFields(DBClassificationConstantes.Vehicles.names vehicleName, string dataTablePrefixe)
-        {
-
-            switch (vehicleName)
-            {
-                case DBClassificationConstantes.Vehicles.names.tv:
-                case DBClassificationConstantes.Vehicles.names.radio:
-                case DBClassificationConstantes.Vehicles.names.others:
-                    return ("sum(" + dataTablePrefixe + ".totalunite) as euro,sum(" + dataTablePrefixe + ".totalduree) as duration,sum(" + dataTablePrefixe + ".totalinsert) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.internationalPress:
-                case DBClassificationConstantes.Vehicles.names.press:
-                    return ("sum(" + dataTablePrefixe + ".totalunite) as euro,sum(" + dataTablePrefixe + ".totalmmc) as mmPerCol,sum(" + dataTablePrefixe + ".totalpages) as pages,sum(" + dataTablePrefixe + ".totalinsert) as insertion ");
-                default:
-                    throw new SQLGeneratorException("getUnitFields(ClassificationConstantes.Vehicle.type vehicleType)-->Le cas de cette média n'est pas gérer. Pas de champs correspondant.");
-            }
-        }
-
-        /// <summary>
-        /// Obtient les champs unités à utiliser en fonction du media
-        /// </summary>
-        ///<param name="vehicleName">typde du média</param>
-        ///<param name="dataTablePrefixe">préfixe de la table des données</param>
-        /// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
-        public static string getUnitFieldsNameForMediaDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, string dataTablePrefixe)
-        {
-            switch (vehicleName)
-            {
-                case DBClassificationConstantes.Vehicles.names.tv:
-                case DBClassificationConstantes.Vehicles.names.others:
-                case DBClassificationConstantes.Vehicles.names.radio:
-                    return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD + " ) as duration,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD + " ) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.internationalPress:
-                case DBClassificationConstantes.Vehicles.names.press:
-                    return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD + " ) as mmPerCol,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD + " ) as pages,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD + " ) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.outdoor:
-                    return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD + " ) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.internet:
-                    return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro");
-                case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_VOLUME_FIELD + " ) as volume ");
-                default:
-                    throw new SQLGeneratorException("getUnitFieldsNameForMediaDetailResult(ClassificationConstantes.Vehicle.type vehicleType,string dataTablePrefixe)-->Le cas de cette média n'est pas gérer. Pas de champs correspondant.");
-            }
-        }
-
-        /// <summary>
-        /// Obtient les champs unités à utiliser en fonction du media
-        /// </summary>
-        ///<param name="vehicleName">typde du média</param>
+        ///<param name="webSession">Web session</param>
         /// <param name="type">Type de la table</param>
         ///<param name="dataTablePrefixe">préfixe de la table des données</param>
         /// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
-        public static string getUnitFieldsNameForMediaDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type, string dataTablePrefixe)
-        {
-            switch (vehicleName)
-            {
-                case DBClassificationConstantes.Vehicles.names.tv:
-                case DBClassificationConstantes.Vehicles.names.others:
-                case DBClassificationConstantes.Vehicles.names.radio:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD + " ) as duration,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD + " ) as insertion ");
-                    else
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.EXPENDITURE_EURO + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.DURATION + " ) as duration,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.INSERTION + " ) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.internationalPress:
-                case DBClassificationConstantes.Vehicles.names.press:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD + " ) as mmPerCol,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD + " ) as pages,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD + " ) as insertion ");
-                    else
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.EXPENDITURE_EURO + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.AREA_MMC + " ) as mmPerCol,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.AREA_PAGE + " ) as pages,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.INSERTION + " ) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.outdoor:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD + " ) as insertion ");
-                    else
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.EXPENDITURE_EURO + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.NUMBER_BOARD + " ) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.internet:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro");
-                    else
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.EXPENDITURE_EURO + " ) as euro");
-                case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_VOLUME_FIELD + " ) as volume ");
-                    else
-                        return ("sum(" + dataTablePrefixe + "." + DBConstantes.Fields.EXPENDITURE_EURO + " ) as euro,sum(" + dataTablePrefixe + "." + DBConstantes.Fields.VOLUME + " ) as volume ");
-                default:
-                    throw new SQLGeneratorException("getUnitFieldsNameForMediaDetailResult(ClassificationConstantes.Vehicle.type vehicleType,string dataTablePrefixe)-->Le cas de cette média n'est pas gérer. Pas de champs correspondant.");
+        public static string GetUnitFieldsName(WebSession webSession, DBConstantes.TableType.Type type, string dataTablePrefixe) {
+            List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
+            StringBuilder sqlUnit = new StringBuilder();
+            if (dataTablePrefixe != null && dataTablePrefixe.Length > 0)
+                dataTablePrefixe += ".";
+            else
+                dataTablePrefixe = "";
+            for (int i = 0; i < unitsList.Count; i++) {
+                if (i > 0) sqlUnit.Append(",");
+                switch (type) {
+                    case DBConstantes.TableType.Type.dataVehicle:
+                    case DBConstantes.TableType.Type.dataVehicle4M:
+                        sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseField, unitsList[i].Id.ToString());
+                        break;
+                    case DBConstantes.TableType.Type.webPlan:
+                        sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+                        break;
+                }
             }
+            return sqlUnit.ToString();
         }
 
         /// <summary>
         /// Obtient les champs unités à utiliser en fonction du media
         /// </summary>
-        ///<param name="vehicleName">typde du média</param>
-        /// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
-        public static string getUnitFieldsNameForMediaDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, int resultType)
-        {
-            switch (vehicleName)
-            {
-                case DBClassificationConstantes.Vehicles.names.tv:
-                case DBClassificationConstantes.Vehicles.names.others:
-                case DBClassificationConstantes.Vehicles.names.radio:
-                    if (resultType == FWKConstantes.Results.Portofolio.DETAIL_PORTOFOLIO)
-                        return ("sum(euro) as euro,sum(duration) as duration,sum(insertion) as insertion ");
-                    else
-                        return ("sum(investment) as investment,sum(duree) as duree,sum(insertion) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.internationalPress:
-                case DBClassificationConstantes.Vehicles.names.press:
-                    if (resultType == FWKConstantes.Results.Portofolio.DETAIL_PORTOFOLIO)
-                        return ("sum(euro) as euro,sum(mmPerCol) as mmPerCol,sum(pages) as pages,sum(insertion) as insertion ");
-                    else
-                        return ("sum(investment) as investment,sum(totalmmc) as totalmmc,sum(page) as page,sum(insertion) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.outdoor:
-                    if (resultType == FWKConstantes.Results.Portofolio.DETAIL_PORTOFOLIO)
-                        return ("sum(euro) as euro,sum(insertion) as insertion ");
-                    else
-                        return ("sum(investment) as investment,sum(insertion) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.internet:
-                    if (resultType == FWKConstantes.Results.Portofolio.DETAIL_PORTOFOLIO)
-                        return ("sum(euro) as euro");
-                    else
-                        return ("sum(investment) as investment");
-                case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    if (resultType == FWKConstantes.Results.Portofolio.DETAIL_PORTOFOLIO)
-                        return ("sum(euro) as euro,sum(volume) as volume ");
-                    else
-                        return ("sum(investment) as investment,sum(volume) as volume ");
-                default:
-                    throw new SQLGeneratorException("getUnitFieldsNameForMediaDetailResult(ClassificationConstantes.Vehicle.type vehicleType,string dataTablePrefixe)-->Le cas de cette média n'est pas gérer. Pas de champs correspondant.");
-            }
-        }
-
-        /// <summary>
-        /// Obtient les champs unités à utiliser en fonction du media
-        /// </summary>
-        /// <param name="vehicleName">typde du média</param>
+        /// <param name="webSession">Web Session</param>
         /// <param name="type">Type de la table</param>
         /// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
-        public static string getUnitFieldsNameForAnalysisPortofolio(DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type)
-        {
-            switch (vehicleName)
-            {
-                case DBClassificationConstantes.Vehicles.names.tv:
-                case DBClassificationConstantes.Vehicles.names.others:
-                case DBClassificationConstantes.Vehicles.names.radio:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(totalduree) as duree,sum(totalinsert) as insertion,sum(totalunite) as investment");
-                    else
-                        return ("sum(duration) as duree,sum(insertion) as insertion,sum(expenditure_euro) as investment ");
-                case DBClassificationConstantes.Vehicles.names.internationalPress:
-                case DBClassificationConstantes.Vehicles.names.press:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(totalpages) as page,sum(totalinsert) as insertion,sum(totalunite) as investment,sum(totalmmc) as totalmmc ");
-                    else
-                        return ("sum(area_page) as page,sum(insertion) as insertion,sum(expenditure_euro) as investment,sum(area_mmc) as totalmmc ");
-                case DBClassificationConstantes.Vehicles.names.outdoor:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(totalunite) as investment,sum(totalinsert) as insertion ");
-                    else
-                        return ("sum(expenditure_euro) as investment,sum(number_board) as insertion ");
-                case DBClassificationConstantes.Vehicles.names.internet:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(totalunite) as investment");
-                    else
-                        return ("sum(expenditure_euro) as investment");
-                case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    if (type == DBConstantes.TableType.Type.webPlan)
-                        return ("sum(totalunite) as investment,sum(totalvolume) as volume ");
-                    else
-                        return ("sum(expenditure_euro) as investment,sum(volume) as volume ");
-                default:
-                    throw new SQLGeneratorException("getUnitFieldsNameForMediaDetailResult(ClassificationConstantes.Vehicle.type vehicleType,string dataTablePrefixe)-->Le cas de cette média n'est pas gérer. Pas de champs correspondant.");
+        public static string GetUnitFieldsNameForPortofolio(WebSession webSession, DBConstantes.TableType.Type type){
+            try {
+                List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
+                string sqlUnit = "";
+                bool first = true;
+
+                foreach (UnitInformation currentUnit in unitsList) {
+                    switch (type) {
+                        case DBConstantes.TableType.Type.dataVehicle:
+                        case DBConstantes.TableType.Type.dataVehicle4M:
+                            if (!first) sqlUnit += ", ";
+                            else first = false;
+                            sqlUnit += currentUnit.GetSQLDetailledSum();
+                            break;
+                        case DBConstantes.TableType.Type.webPlan:
+                            if (!first) sqlUnit += ", ";
+                            else first = false;
+                            sqlUnit += currentUnit.GetSQLSum();
+                            break;
+                    }
+                }
+                return sqlUnit;
+            }
+            catch {
+                throw new SQLGeneratorException("GetUnitFieldsNameForPortofolio(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type)-->The type of module is not managed for the selection of unit.");
             }
         }
 

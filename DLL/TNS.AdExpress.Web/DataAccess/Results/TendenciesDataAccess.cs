@@ -183,111 +183,111 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 		}
 		
-		/// <summary>
-		/// Dataset avec les données nécessaire au module tendance
-		/// </summary>
-		/// <param name="webSession">Session Client</param>
-		/// <param name="vehicleName">Nom du vehicle</param>
-		/// <returns>DataSet</returns>
-		public static DataSet GetData(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName){
+        ///// <summary>
+        ///// Dataset avec les données nécessaire au module tendance
+        ///// </summary>
+        ///// <param name="webSession">Session Client</param>
+        ///// <param name="vehicleName">Nom du vehicle</param>
+        ///// <returns>DataSet</returns>
+        //public static DataSet GetData(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName){
 			
-			#region Variables
+        //    #region Variables
 
-			string dataTableName="";
-			string getUnitsFields="";
-			string getMediaFields="";
-			string getTableForTendencies="";
-			string getPeriodForTendencies="";
-			string getJointForTendencies="";
-			string getGroupByForTendencies="";
-			string getOrderByForTendencies="";
-			//string productsRights="";
-			//string mediaRights="";
-			string listExcludeProduct="";
-			string listMedia="";
-			string sql="";
+        //    string dataTableName="";
+        //    string getUnitsFields="";
+        //    string getMediaFields="";
+        //    string getTableForTendencies="";
+        //    string getPeriodForTendencies="";
+        //    string getJointForTendencies="";
+        //    string getGroupByForTendencies="";
+        //    string getOrderByForTendencies="";
+        //    //string productsRights="";
+        //    //string mediaRights="";
+        //    string listExcludeProduct="";
+        //    string listMedia="";
+        //    string sql="";
 		
-			#endregion
+        //    #endregion
 
-			#region Construction de la requête
-			dataTableName=WebFunctions.SQLGenerator.getTableNameForDashBoardResult(webSession.DetailPeriod);
-			getUnitsFields=WebFunctions.SQLGenerator.getTotalUnitFields(vehicleName,DBConstantes.Tables.WEB_PLAN_PREFIXE);
-			getMediaFields=WebFunctions.SQLGenerator.getMediaFieldsForTendencies(vehicleName);
-			getTableForTendencies=WebFunctions.SQLGenerator.getTableForTendencies(vehicleName);
-			getPeriodForTendencies=WebFunctions.SQLGenerator.getPeriodForTendencies(webSession.DetailPeriod,webSession.PeriodBeginningDate,webSession.PeriodEndDate,GetPeriodN1(webSession.PeriodBeginningDate),GetPeriodN1(webSession.PeriodEndDate));
-			getJointForTendencies=WebFunctions.SQLGenerator.getJointForTendencies(webSession,vehicleName);
-			getGroupByForTendencies=WebFunctions.SQLGenerator.getGroupByForTendencies(vehicleName);
-			getOrderByForTendencies=WebFunctions.SQLGenerator.getOrderByForTendencies(vehicleName);
-		//	productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true);
-		//	mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true);
-			listExcludeProduct=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DBConstantes.Tables.WEB_PLAN_PREFIXE,true,false);
+        //    #region Construction de la requête
+        //    dataTableName=WebFunctions.SQLGenerator.getTableNameForDashBoardResult(webSession.DetailPeriod);
+        //    getUnitsFields=WebFunctions.SQLGenerator.getTotalUnitFields(vehicleName,DBConstantes.Tables.WEB_PLAN_PREFIXE);
+        //    getMediaFields=WebFunctions.SQLGenerator.getMediaFieldsForTendencies(vehicleName);
+        //    getTableForTendencies=WebFunctions.SQLGenerator.getTableForTendencies(vehicleName);
+        //    getPeriodForTendencies=WebFunctions.SQLGenerator.getPeriodForTendencies(webSession.DetailPeriod,webSession.PeriodBeginningDate,webSession.PeriodEndDate,GetPeriodN1(webSession.PeriodBeginningDate),GetPeriodN1(webSession.PeriodEndDate));
+        //    getJointForTendencies=WebFunctions.SQLGenerator.getJointForTendencies(webSession,vehicleName);
+        //    getGroupByForTendencies=WebFunctions.SQLGenerator.getGroupByForTendencies(vehicleName);
+        //    getOrderByForTendencies=WebFunctions.SQLGenerator.getOrderByForTendencies(vehicleName);
+        ////	productsRights=WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true);
+        ////	mediaRights=WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true);
+        //    listExcludeProduct=WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DBConstantes.Tables.WEB_PLAN_PREFIXE,true,false);
 
-			int idMediaListToLoad;
-			switch(vehicleName){
-				//TODO:INTER
-				case DBClassificationConstantes.Vehicles.names.press:
-					idMediaListToLoad=WebConstantes.AdExpressUniverse.TENDENCY_PRESS_MEDIA_LIST_ID;
-					break;
-				case DBClassificationConstantes.Vehicles.names.radio:
-					idMediaListToLoad=WebConstantes.AdExpressUniverse.TENDENCY_RADIO_MEDIA_LIST_ID;
-					break;
-				case DBClassificationConstantes.Vehicles.names.tv:
-					idMediaListToLoad=WebConstantes.AdExpressUniverse.TENDENCY_TV_MEDIA_LIST_ID;
-					break;
-				case DBClassificationConstantes.Vehicles.names.others:
-					idMediaListToLoad=WebConstantes.AdExpressUniverse.TENDENCY_PANEURO_MEDIA_LIST_ID;
-					break;
-				default:
-					throw(new TendenciesDataAccessException ("Impossible de charger la liste des média à afficher"));
-			}
-			listMedia=WebFunctions.SQLGenerator.getAdExpressUniverseCondition(idMediaListToLoad,DBConstantes.Tables.WEB_PLAN_PREFIXE,true);
+        //    int idMediaListToLoad;
+        //    switch(vehicleName){
+        //        //TODO:INTER
+        //        case DBClassificationConstantes.Vehicles.names.press:
+        //            idMediaListToLoad=WebConstantes.AdExpressUniverse.TENDENCY_PRESS_MEDIA_LIST_ID;
+        //            break;
+        //        case DBClassificationConstantes.Vehicles.names.radio:
+        //            idMediaListToLoad=WebConstantes.AdExpressUniverse.TENDENCY_RADIO_MEDIA_LIST_ID;
+        //            break;
+        //        case DBClassificationConstantes.Vehicles.names.tv:
+        //            idMediaListToLoad=WebConstantes.AdExpressUniverse.TENDENCY_TV_MEDIA_LIST_ID;
+        //            break;
+        //        case DBClassificationConstantes.Vehicles.names.others:
+        //            idMediaListToLoad=WebConstantes.AdExpressUniverse.TENDENCY_PANEURO_MEDIA_LIST_ID;
+        //            break;
+        //        default:
+        //            throw(new TendenciesDataAccessException ("Impossible de charger la liste des média à afficher"));
+        //    }
+        //    listMedia=WebFunctions.SQLGenerator.getAdExpressUniverseCondition(idMediaListToLoad,DBConstantes.Tables.WEB_PLAN_PREFIXE,true);
 
-			sql+=" select "+getUnitsFields+", "+getMediaFields+" ";
-			switch(webSession.DetailPeriod){
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
-					sql+=" ,month_media_num as period";
-					break;
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly :
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly :
-					sql+=" ,week_media_num as period";
-					break;
-				default:
-					throw(new TendenciesDataAccessException ("Impossible de charger la période"));
-			}	
-			sql+=" from  "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+dataTableName+" "+DBConstantes.Tables.WEB_PLAN_PREFIXE+" ";
-			sql+=","+getTableForTendencies;
-			sql+=" where  "+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_vehicle="+vehicleName.GetHashCode().ToString()+" ";
-			sql+=" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_vehicle="+vehicleName.GetHashCode().ToString()+" ";
-			sql+=getPeriodForTendencies;
-			sql+=getJointForTendencies;
-			sql+=listMedia;
-			sql+=listExcludeProduct;
-			sql+=getGroupByForTendencies;
-			switch(webSession.DetailPeriod){
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
-					sql+=" ,month_media_num";
-					break;
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly :
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly :
-					sql+=" ,week_media_num";
-					break;
-				default:
-					throw(new TendenciesDataAccessException ("Impossible de charger la période"));
-			}
+        //    sql+=" select "+getUnitsFields+", "+getMediaFields+" ";
+        //    switch(webSession.DetailPeriod){
+        //        case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
+        //            sql+=" ,month_media_num as period";
+        //            break;
+        //        case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly :
+        //        case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly :
+        //            sql+=" ,week_media_num as period";
+        //            break;
+        //        default:
+        //            throw(new TendenciesDataAccessException ("Impossible de charger la période"));
+        //    }	
+        //    sql+=" from  "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+dataTableName+" "+DBConstantes.Tables.WEB_PLAN_PREFIXE+" ";
+        //    sql+=","+getTableForTendencies;
+        //    sql+=" where  "+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_vehicle="+vehicleName.GetHashCode().ToString()+" ";
+        //    sql+=" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_vehicle="+vehicleName.GetHashCode().ToString()+" ";
+        //    sql+=getPeriodForTendencies;
+        //    sql+=getJointForTendencies;
+        //    sql+=listMedia;
+        //    sql+=listExcludeProduct;
+        //    sql+=getGroupByForTendencies;
+        //    switch(webSession.DetailPeriod){
+        //        case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
+        //            sql+=" ,month_media_num";
+        //            break;
+        //        case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly :
+        //        case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly :
+        //            sql+=" ,week_media_num";
+        //            break;
+        //        default:
+        //            throw(new TendenciesDataAccessException ("Impossible de charger la période"));
+        //    }
 
-			sql+=getOrderByForTendencies;
-			#endregion
+        //    sql+=getOrderByForTendencies;
+        //    #endregion
 
-			#region Execution de la requête
-			try{
-				return webSession.Source.Fill(sql.ToString());
-			}
-			catch(System.Exception err){
-				throw(new TendenciesDataAccessException ("Impossible de charger les tendances: "+sql,err));
-			}
-			#endregion
+        //    #region Execution de la requête
+        //    try{
+        //        return webSession.Source.Fill(sql.ToString());
+        //    }
+        //    catch(System.Exception err){
+        //        throw(new TendenciesDataAccessException ("Impossible de charger les tendances: "+sql,err));
+        //    }
+        //    #endregion
 		
-		}
+        //}
 
 		#region Méthodes Internes
 

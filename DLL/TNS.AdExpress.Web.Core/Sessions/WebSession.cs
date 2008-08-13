@@ -37,6 +37,7 @@ using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 
 namespace TNS.AdExpress.Web.Core.Sessions {
@@ -3114,6 +3115,35 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 			}
 
 		}
+
+        /// <summary>
+        /// Get Valid Unit List for current result
+        /// </summary>
+        /// <returns>Valid Unit List for current result</returns>
+        public List<UnitInformation> GetValidUnitForResult() {
+            try {
+                Module moduleDescription = ModulesList.GetModule(currentModule);
+                ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformationsList()[(int)currentTab];
+                string listStr = GetSelection(SelectionUniversMedia,  TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                string[] list = listStr.Split(',');
+                List<Vehicles.names> vehicleList = new List<Vehicles.names>();
+                for (int i = 0; i < list.Length; i++)
+                    vehicleList.Add(((Vehicles.names)Convert.ToInt64(list[i])));
+
+                return resultPageInformation.GetValidUnits(vehicleList);
+            }
+            catch {
+                throw (new UnitException("Unit selection is not managed"));
+            }
+        }
+
+        /// <summary>
+        /// Get selected unit information
+        /// </summary>
+        /// <returns>Selected unit information</returns>
+        public Domain.Units.UnitInformation GetSelectedUnit() {
+            return Domain.Units.UnitsInformation.Get(this.unit);
+        }
 		#endregion
 
 		#region Universes
