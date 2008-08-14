@@ -3125,11 +3125,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 Module moduleDescription = ModulesList.GetModule(currentModule);
                 ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformationsList()[(int)currentTab];
                 string listStr = GetSelection(SelectionUniversMedia,  TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-                string[] list = listStr.Split(',');
                 List<Vehicles.names> vehicleList = new List<Vehicles.names>();
-                for (int i = 0; i < list.Length; i++)
-                    vehicleList.Add(((Vehicles.names)Convert.ToInt64(list[i])));
-
+                if (listStr != null && listStr.Length > 0) {
+                    string[] list = listStr.Split(',');
+                    for (int i = 0; i < list.Length; i++)
+                        vehicleList.Add(((Vehicles.names)Convert.ToInt64(list[i])));
+                }
+                else {
+                    //When a vehicle is not checked but one or more category, this get the vehicle correspondly
+                    string Vehicle = ((LevelInformation)SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+                    vehicleList.Add(((Vehicles.names)Convert.ToInt64(Vehicle)));
+                }
                 return resultPageInformation.GetValidUnits(vehicleList);
             }
             catch {
