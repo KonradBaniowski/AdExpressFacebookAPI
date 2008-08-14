@@ -21,6 +21,7 @@ using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
+using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using ClassificationConstantes = TNS.AdExpress.Constantes.Classification;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
@@ -1973,6 +1974,25 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix du champ"));
             }
         }
+
+        /// <summary>
+        /// Get Field to use for date
+        /// </summary>
+        /// <param name="period">Type of period</param>
+        /// <returns>Date Filed Name matchnig the type of period</returns>
+        public static string GetDateFieldName(CstPeriod.PeriodBreakdownType period) {
+            switch (period) {
+                case CstPeriod.PeriodBreakdownType.month:
+                    return (DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DATE_FIELD);
+                case CstPeriod.PeriodBreakdownType.week:
+                    return (DBConstantes.Fields.WEB_PLAN_MEDIA_WEEK_DATE_FIELD);
+                case CstPeriod.PeriodBreakdownType.data:
+                case CstPeriod.PeriodBreakdownType.data_4m:
+                    return (DBConstantes.Fields.DATE_MEDIA_NUM);
+                default:
+                    throw (new SQLGeneratorException("Selected detail period is uncorrect. Unable to determine date field to use."));
+            }
+        }
         #endregion
 
         #region Recap (Analyses sectorielles)
@@ -2402,8 +2422,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
         #endregion
         #endregion
-
-
+        
         #region Analyse portefeuille
 
         /// <summary>
@@ -2628,6 +2647,67 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).Label);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
+            }
+        }
+
+        /// <summary>
+        /// Get data table to use in queries
+        /// </summary>
+        /// <param name="period">Type of period</param>
+        /// <param name="vehicleId">Vehicle Id</param>
+        /// <returns>Table matching the vehicle and the type of period</returns>
+        public static string GetDataTableName(CstPeriod.PeriodBreakdownType period, Int64 vehicleId) {
+            switch (period) {
+                case CstPeriod.PeriodBreakdownType.month:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix;
+                case CstPeriod.PeriodBreakdownType.week:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).SqlWithPrefix;
+                case CstPeriod.PeriodBreakdownType.data_4m:
+                    switch ((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId)) {
+                        case DBClassificationConstantes.Vehicles.names.press:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.internationalPress:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.radio:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.tv:
+                        case DBClassificationConstantes.Vehicles.names.others:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.outdoor:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.adnettrack:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrackAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.internet:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.directMarketing:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).SqlWithPrefix;
+                        default:
+                            throw (new SQLGeneratorException("Unable to determine table to use."));
+                    }
+                case CstPeriod.PeriodBreakdownType.data:
+                    switch ((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())) {
+                        case DBClassificationConstantes.Vehicles.names.press:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.internationalPress:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.radio:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.tv:
+                        case DBClassificationConstantes.Vehicles.names.others:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.outdoor:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.adnettrack:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.internet:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.directMarketing:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).SqlWithPrefix;
+                        default:
+                            throw (new SQLGeneratorException("Unable to determine the table to use"));
+                    }
+                default:
+                    throw (new SQLGeneratorException("The detail selected is not a correct one to to choos of the tablme"));
             }
         }
         #endregion
@@ -3205,31 +3285,19 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="unit">Unité</param>
         /// <returns>Nom du champ</returns>
-        /// <exception cref="TNS.AdExpress.Web.Exceptions.MediaPlanAlertDataAccessException">
+        /// <exception cref="SQLGeneratorException">
         /// Lancée au cas ou l'unité considérée n'est pas un cas traité
         /// </exception>
         [Obsolete("La méthode est obsolete; Utilisez GetUnitFieldsName qui peut gérer les modules d'alerte et d'analyse")]
         public static string getUnitField(WebConstantes.CustomerSessions.Unit unit) {
-            switch (unit) {
-                case WebConstantes.CustomerSessions.Unit.duration:
-                    return DBConstantes.Fields.DURATION;
-                case WebConstantes.CustomerSessions.Unit.euro:
-                case WebConstantes.CustomerSessions.Unit.kEuro:
-                    return DBConstantes.Fields.EXPENDITURE_EURO;
-                case WebConstantes.CustomerSessions.Unit.insertion:
-                case WebConstantes.CustomerSessions.Unit.spot:
-                    return DBConstantes.Fields.INSERTION;
-                case WebConstantes.CustomerSessions.Unit.mmPerCol:
-                    return DBConstantes.Fields.AREA_MMC;
-                case WebConstantes.CustomerSessions.Unit.pages:
-                    return DBConstantes.Fields.AREA_PAGE;
-                case WebConstantes.CustomerSessions.Unit.numberBoard:
-                    return DBConstantes.Fields.NUMBER_BOARD;
-                case WebConstantes.CustomerSessions.Unit.grp:
-                    return DBConstantes.Fields.GRP;
-                default:
-                    throw new SQLGeneratorException("getField(TNS.AdExpress.Constantes.Web.CustomerSessions.Unit unit)-->Le cas de cette unité n'est pas gérer. Pas de champ correspondante.");
+
+            try {
+                return UnitsInformation.List[unit].DatabaseField;
             }
+            catch (System.Exception ex) {
+                throw new SQLGeneratorException("getField(TNS.AdExpress.Constantes.Web.CustomerSessions.Unit unit)-->Le cas de cette unité n'est pas gérer. Pas de champ correspondante.");
+            }
+
         }
 
         /// <summary>
@@ -3242,23 +3310,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </exception>
         [Obsolete("La méthode est obsolete; Utilisez GetUnitFieldsName qui peut gérer les modules d'alerte et d'analyse")]
         public static string getTotalUnitField(WebConstantes.CustomerSessions.Unit unit) {
-            switch (unit) {
-                case WebConstantes.CustomerSessions.Unit.duration:
-                    return DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD;
-                case WebConstantes.CustomerSessions.Unit.euro:
-                case WebConstantes.CustomerSessions.Unit.kEuro:
-                    return DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD;
-                case WebConstantes.CustomerSessions.Unit.insertion:
-                case WebConstantes.CustomerSessions.Unit.spot:
-                case WebConstantes.CustomerSessions.Unit.numberBoard:
-                    return DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD;
-                case WebConstantes.CustomerSessions.Unit.mmPerCol:
-                    return DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD;
-                case WebConstantes.CustomerSessions.Unit.pages:
-                    return DBConstantes.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD;
-                default:
-                    throw new SQLGeneratorException("getTotalUnitField(WebConstantes.CustomerSessions.Unit unit)-->Le cas de cette unité n'est pas gérer. Pas de champ correspondante.");
+
+            try {
+                return UnitsInformation.List[unit].DatabaseMultimediaField;
             }
+            catch(System.Exception ex){
+                throw new SQLGeneratorException("getTotalUnitField(WebConstantes.CustomerSessions.Unit unit)-->Le cas de cette unité n'est pas gérer. Pas de champ correspondante.");
+            }
+
         }
 
 
@@ -3289,6 +3348,40 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 }
             }
             return sqlUnit.ToString();
+        }
+
+        /// <summary>
+        /// Get unit field to use in query
+        /// </summary>
+        ///<param name="webSession">Web session</param>
+        /// <param name="periodType">Period type</param>
+        /// <returns>Unit field name</returns>
+        public static string GetUnitFieldName(WebSession webSession, CstPeriod.PeriodBreakdownType periodType) {
+            switch (periodType) {
+                case CstPeriod.PeriodBreakdownType.week:
+                case CstPeriod.PeriodBreakdownType.month:
+
+                    try {
+                        return UnitsInformation.List[webSession.Unit].DatabaseMultimediaField;
+                    }
+                    catch (System.Exception ex) {
+                        throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
+                    }
+
+                case CstPeriod.PeriodBreakdownType.data:
+                case CstPeriod.PeriodBreakdownType.data_4m:
+
+                    try {
+                        return UnitsInformation.List[webSession.Unit].DatabaseField;
+                    }
+                    catch (System.Exception ex) {
+                        throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
+                    }
+
+                default:
+                    throw (new SQLGeneratorException("Selected period detail is uncorrect. Unable to determine unit field."));
+
+            }
         }
 
         /// <summary>
