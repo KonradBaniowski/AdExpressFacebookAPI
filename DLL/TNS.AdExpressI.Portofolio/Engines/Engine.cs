@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Reflection;
+using System.Globalization;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Exceptions;
@@ -21,6 +22,7 @@ using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Web.Core.Utilities;
 
+using TNS.FrameWork.Date;
 using TNS.FrameWork.WebResultUI;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
@@ -153,6 +155,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 align=center class=\"paleVioletBackGroundV2 violetBorder\">");
 						//Vehicle view
 						t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, _webSession.SiteLanguage) + "</td></tr>");
+                        CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
 						for (int i = 0; i < dtVisuel.Rows.Count; i++) {
 							//date_media_num
 
@@ -163,8 +166,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 								pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
 							}
 							DateTime dayDT = new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
-							day = GetDayOfWeek(dayDT.DayOfWeek.ToString()) + " " + dayDT.ToString("dd/MM/yyyy");
-
+                            day = DayString.GetCharacters(dayDT, cultureInfo) + " " + dayDT.ToString("dd/MM/yyyy"); ;
 							if (compteur == 0) {
 								t.Append("<tr>");
 								compteur = 1;
@@ -254,7 +256,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		#endregion
 
 		#region Protected methods
-
+        /*
 		#region Get day of week
 		/// <summary>
 		/// Get day of week
@@ -289,7 +291,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			return txt;
 		}
 		#endregion		
-
+        */
 		/// <summary>
 		/// No data message
 		/// </summary>
