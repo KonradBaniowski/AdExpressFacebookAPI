@@ -3419,6 +3419,28 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
 
         /// <summary>
+        /// Obtient les champs unités à utiliser en fonction du media
+        /// </summary>
+        /// <param name="webSession">Web Session</param>
+        /// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
+        public static string GetUnitFieldsNameUnionForPortofolio(WebSession webSession) {
+            try {
+                List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
+                string sqlUnit = "";
+                bool first = true;
+
+                foreach (UnitInformation currentUnit in unitsList) {
+                    sqlUnit += currentUnit.GetSQLUnionSum();
+                    break;
+                }
+                return sqlUnit;
+            }
+            catch {
+                throw new SQLGeneratorException("GetUnitFieldsNameUnionForPortofolio(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type)-->The type of module is not managed for the selection of unit.");
+            }
+        }
+
+        /// <summary>
         /// Obtient les champs unités à utiliser en fonction du media pour les tendances
         /// </summary>
         /// <param name="vehicleName">type du média</param>
