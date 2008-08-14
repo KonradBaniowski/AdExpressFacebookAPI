@@ -7,6 +7,9 @@
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.IndicatorSeasonalityResults" CodeFile="IndicatorSeasonalityResults.aspx.cs" %>
+
+<%@ Register Assembly="TNS.AdExpress.Web.Controls" Namespace="TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis"
+    TagPrefix="cc6" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD runat="server">
@@ -152,12 +155,9 @@
 								<tr>
 									<!-- Courbe saisonnalité -->
 									<td class="whiteBackGround">
-										<P><%=result%>
-											<%if(displayChart){%>
-											<DCWC:INDICATORCHARTUI id="advertiserChart" runat="server"></DCWC:INDICATORCHARTUI><br>
-											<br>
-											<DCWC:INDICATORCHARTUI id="referenceChart" runat="server"></DCWC:INDICATORCHARTUI>
-											<%}%>
+										<P>
+                                            <cc6:ProductClassContainerWebControl ID="ProductClassContainerWebControl1" runat="server" />
+                                            <%=result%>
 										</P>
 									</td>
 								</tr>

@@ -176,7 +176,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             //Total famille
             if (compareasonCriterion == CstComparaisonCriterion.sectorTotal)
             {
-                sql.AppendFormat(" and {0}.id_sector in ( ", _recapSector.Prefix);
+                sql.AppendFormat(" and {0}.id_sector in ( ", dataTable.Prefix);
                 sql.Append(" select distinct id_sector ");
                 sql.AppendFormat(" from {0} where", dataTable.SqlWithPrefix);
                 // Product selection
@@ -327,7 +327,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             //Total famille
             if (compareasonCriterion == CstComparaisonCriterion.sectorTotal)
             {
-                sql.AppendFormat(" and {0}.id_sector in ( ", _recapSector.Prefix);
+                sql.AppendFormat(" and {0}.id_sector in ( ", dataTable.Prefix);
                 sql.Append(" select distinct id_sector ");
                 sql.AppendFormat(" from {0} where", dataTable.SqlWithPrefix);
                 // Product selection

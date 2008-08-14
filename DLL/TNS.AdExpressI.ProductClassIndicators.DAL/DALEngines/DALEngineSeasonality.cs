@@ -64,18 +64,18 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
             DataSet ds = null;
             StringBuilder sql = new StringBuilder();
-            Table dataTable = GetDataTable(false);
+            Table dataTable = GetDataTable(true);
 
             #region Request Building
 
             sql.Append("select");
 
             #region Select Clause
-            sql.AppendFormat(" {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
+            sql.AppendFormat(" {0}.id_advertiser, {1}.advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
             //Sector selection
             if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && !withAdvertisers && !withRights)
             {
-                sql.AppendFormat(", {0}.id_sector, {0}.sector", _recapSector.Prefix);
+                sql.AppendFormat(", {0}.id_sector, {1}.sector", dataTable.Prefix, _recapSector.Prefix);
             }
             //Product
             sql.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
@@ -104,7 +104,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             {
                 sql.AppendFormat(" and {0}.id_sector={1}.id_sector and {1}.id_language={2}", dataTable.Prefix, _recapSector.Prefix, _session.SiteLanguage);
             }
-            sql.AppendFormat(" {0}.id_product={1}.id_product and {1}.id_language={2}", dataTable.Prefix, _recapProduct.Prefix, _session.SiteLanguage);
+            sql.AppendFormat(" and {0}.id_product={1}.id_product and {1}.id_language={2}", dataTable.Prefix, _recapProduct.Prefix, _session.SiteLanguage);
             #endregion
 
             #region Media selection
@@ -159,7 +159,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             //Total famille
             if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && !withAdvertisers && !withRights)
             {
-                sql.AppendFormat(" and {0}.id_sector in ( ", _recapSector.Prefix);
+                sql.AppendFormat(" and {0}.id_sector in ( ", dataTable.Prefix);
                 sql.Append(" select distinct id_sector ");
                 sql.AppendFormat(" from {0} where", dataTable.SqlWithPrefix);
                 // Product selection
@@ -175,10 +175,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             sql.Append(" group by ");
 
             #region group by
-            sql.AppendFormat(" {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
+            sql.AppendFormat(" {0}.id_advertiser, {1}.advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
             if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && !withAdvertisers && !withRights)
             {
-                sql.AppendFormat(", {0}.id_sector, {0}.sector", _recapSector.Prefix);
+                sql.AppendFormat(", {0}.id_sector, {1}.sector", dataTable.Prefix, _recapSector.Prefix);
             }
             sql.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
             #endregion
@@ -186,10 +186,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             sql.Append(" order by ");
 
             #region order by
-            sql.AppendFormat(" {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
+            sql.AppendFormat(" {0}.id_advertiser, {1}.advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
             if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && !withAdvertisers && !withRights)
             {
-                sql.AppendFormat(", {0}.id_sector, {0}.sector", _recapSector.Prefix);
+                sql.AppendFormat(", {0}.id_sector, {1}.sector", dataTable.Prefix, _recapSector.Prefix);
             }
             sql.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
             #endregion
@@ -227,7 +227,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
             DataSet ds = null;
             StringBuilder sql = new StringBuilder();
-            Table dataTable = GetDataTable(false);
+            Table dataTable = GetDataTable(true);
 
             #region variables
             ////Libéllé de la table "recap" cible
@@ -255,7 +255,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #region Select
             if (withAdvertisers)
             {
-                sql.AppendFormat(" {0}.id_advertiser, {1}.advertiser,", _recapAdvertiser.Prefix);
+                sql.AppendFormat(" {0}.id_advertiser, {1}.advertiser,", dataTable.Prefix, _recapAdvertiser.Prefix);
             }
             sql.AppendFormat(" {0}", this.GetExpenditureClause(true));
             #endregion
@@ -331,7 +331,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             //Sector total
             if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && !withAdvertisers && !withRights)
             {
-                sql.AppendFormat(" and {0}.id_sector in ( ", _recapSector.Prefix);
+                sql.AppendFormat(" and {0}.id_sector in ( ", dataTable.Prefix);
                 sql.Append(" select distinct id_sector ");
                 sql.AppendFormat(" from {0} where", dataTable.SqlWithPrefix);
                 // Product selection
@@ -347,14 +347,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #region Group by 
             if (withAdvertisers)
             {
-                sql.AppendFormat(" group by {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
+                sql.AppendFormat(" group by {0}.id_advertiser, {1}.advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
             }
             #endregion
 
             #region Sort
             if (withAdvertisers)
             {
-                sql.AppendFormat(" order by {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
+                sql.AppendFormat(" order by {0}.id_advertiser, {1}.advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
             }
             #endregion
 
@@ -389,7 +389,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
             DataSet ds = null;
             StringBuilder sql = new StringBuilder();
-            Table dataTable = GetDataTable(false);
+            Table dataTable = GetDataTable(true);
 
             #region Construction de la requête
             //Foreach month of the selected period
@@ -403,7 +403,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 //Evolution N/N-1
                 if (_session.ComparativeStudy)
                 {
-                    sql.Append(", decode(request1.Total_N_1,0,-1,ROUND(((request1.Total_N/request1.Total_N_1)*100)-100,0)) as evol");
+                    sql.Append(", decode(request1.Total_N1,0,-1,ROUND(((request1.Total_N/request1.Total_N1)*100)-100,0)) as evol");
                 }
                 sql.Append(", round((request1.Total_N/request1.nbref)) as budget_moyen");
                 sql.AppendFormat(", {0}.product", _recapProduct.Prefix);
@@ -424,11 +424,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
                 #region Select
                 //Investissement année N												
-                sql.AppendFormat(" sum(exp_euro_N{0}_{1}) as Total_N", _strYearId, i);
+                sql.AppendFormat(" sum(exp_euro_N{0}_{1}) as Total_N{0}", _strYearId, i);
                 //Investissement année N-1						 
                 if (_session.ComparativeStudy)
                 {
-                    sql.AppendFormat(", sum(exp_euro_N{0}_{1}) as Total_N", _strYearN1Id, i);
+                    sql.AppendFormat(", sum(exp_euro_N{0}_{1}) as Total_N{0}", _strYearN1Id, i);
                 }
                 try
                 {
@@ -437,11 +437,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     {
                         string cat = _session.GetSelection(_session.CurrentUniversMedia, CstRight.type.categoryAccess);
                         string med = _session.GetSelection(_session.CurrentUniversMedia, CstRight.type.mediaAccess);
-                        if (cat.Length > 0) cat = string.Format("'{0}'", cat);
-                        if (med.Length > 0) med = string.Format("'{0}'", med);
+                        if (cat.Length > 0) cat = string.Format("'{0}'", cat); else cat = "null";
+                        if (med.Length > 0) med = string.Format("'{0}'", med); else med = "null";
                         sql.AppendFormat(", pkg_recap_test.NB_REF_BY_MONTH_TOTAL_MARKET('exp_euro_N{0}_{1}','{2}',{3},{4}) as nbref",_strYearId, i, dataTable.Label, cat, med);
                         sql.AppendFormat(", pkg_recap_test.FIRST_PRODUCT_TOTAL_MARKET('exp_euro_N{0}_{1}','{2}',{3},{4}) as id_product",_strYearId, i, dataTable.Label, cat, med);
                         sql.AppendFormat(", pkg_recap_test.FIRST_ADVERTISER_TOTAL_MARKET('exp_euro_N{0}_{1}','{2}',{3},{4}) as id_advertiser", _strYearId, i, dataTable.Label, cat, med);
+                        sql.AppendFormat(", {0} as MOIS", i);
                     }
 
                 }
@@ -474,7 +475,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 //Si la requete porte sur le total famille
                 if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal)
                 {
-                    sql.AppendFormat(" and {0}.id_sector in ( ", _recapSector.Prefix);
+                    sql.AppendFormat(" and {0}.id_sector in ( ", dataTable.Prefix);
                     sql.Append(" select distinct id_sector ");
                     sql.AppendFormat(" from {0} where", dataTable.SqlWithPrefix);
                     // Product selection
@@ -488,7 +489,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 #endregion
                 
                 sql.Append(" ) request1");
-                sql.AppendFormat(" {0}", _recapProduct.SqlWithPrefix);
+                sql.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
                 sql.AppendFormat(", {0}", _recapAdvertiser.SqlWithPrefix);
                 #endregion
 

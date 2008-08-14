@@ -39,23 +39,23 @@ namespace TNS.AdExpressI.ProductClassIndicators
         #endregion
 
         #region Novelty
-        /// <summary>
-        /// Get indicator novelties as a graph
-        /// </summary>
-        /// <param name="_classifLevel">Classification level to display (product or advertiser)</param>
-        /// <returns>Chart control filled with top elements</returns>
-        string GetNoveltyChart(CstResult.MotherRecap.ElementType _classifLevel);
+        ///// <summary>
+        ///// Get indicator novelties as a graph
+        ///// </summary>
+        ///// <param name="_classifLevel">Classification level to display (product or advertiser)</param>
+        ///// <returns>Chart control filled with top elements</returns>
+        //string GetNoveltyChart(CstResult.MotherRecap.ElementType _classifLevel);
         /// <summary>
         /// Get indicator novelties as a graph (product and advertiser)
         /// </summary>
         /// <returns>Chart control filled with top elements</returns>
         string GetNoveltyChart();
-        /// <summary>
-        /// Get indicator novelties as a table
-        /// </summary>
-        /// <param name="_classifLevel">Classification level to display (product or advertiser)</param>
-        /// <returns>Chart control filled with top elements</returns>
-        string GetNoveltyTable(CstResult.MotherRecap.ElementType _classifLevel);
+        ///// <summary>
+        ///// Get indicator novelties as a table
+        ///// </summary>
+        ///// <param name="_classifLevel">Classification level to display (product or advertiser)</param>
+        ///// <returns>Chart control filled with top elements</returns>
+        //string GetNoveltyTable(CstResult.MotherRecap.ElementType _classifLevel);
         /// <summary>
         /// Get indicator novelties as a Table (product and advertiser)
         /// </summary>

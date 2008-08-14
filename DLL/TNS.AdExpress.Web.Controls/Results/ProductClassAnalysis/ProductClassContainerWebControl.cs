@@ -110,19 +110,19 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
                     default:
                         break;
                 }
-                if (_referenceChart != null) {
-                    _referenceChart.ID = "referenceChartWebControl_" + this.ID;
-                    Controls.Add(_referenceChart);
-                }
                 if (_advertiserChart != null)
                 {
                     _advertiserChart.ID = "advertiserChartWebControl_" + this.ID;
                     Controls.Add(_advertiserChart);
                 }
+                if (_referenceChart != null) {
+                    _referenceChart.ID = "referenceChartWebControl_" + this.ID;
+                    Controls.Add(_referenceChart);
+                }
             }
 
 			//Table mode
-            else if (_session != null && !_session.Graphics)
+            else if (_session != null)
             {
 					_tableChart = new ProductClassTableWebControl(_session);
                     //_tableChart.Session= _session;

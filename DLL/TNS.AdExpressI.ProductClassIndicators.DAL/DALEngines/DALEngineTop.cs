@@ -75,7 +75,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             StringBuilder sql = new StringBuilder();
 
             #region Request building
-            Table dataTable = this.GetDataTable(_classifLevel == CstResult.MotherRecap.ElementType.product);
+            Table dataTable = this.GetDataTable(true);
             sql.AppendFormat(" select {0}.id_advertiser, {0}.advertiser, ", _recapAdvertiser.Prefix);
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
@@ -89,7 +89,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             sql.AppendFormat(" {0} ", _recapAdvertiser.SqlWithPrefix);
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
-                sql.AppendFormat(", {0}, ", _recapProduct.SqlWithPrefix);
+                sql.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
             }
 
             sql.Append(" where  ");

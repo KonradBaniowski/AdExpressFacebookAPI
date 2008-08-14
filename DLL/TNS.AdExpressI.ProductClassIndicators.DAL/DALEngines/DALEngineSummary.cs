@@ -84,17 +84,21 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             sql.Append(" where");
 
             #region Product classification
+            bool and = false;
             if (type == CstComparaisonCriterion.universTotal)
             {
                 //Product selection
                 if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
-                    sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
+                {
+                    sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, false));
+                }
                 //product rights
-                sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+                sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, false));
+                and = true;
             }
             if (type == CstComparaisonCriterion.sectorTotal)
             {
-                sql.AppendFormat(" {0}.id_sector in ( ", _recapSector.Prefix);
+                sql.AppendFormat(" {0}.id_sector in ( ", dataTable.Prefix);
                 sql.Append(" select distinct id_sector ");
                 sql.AppendFormat(" from {0} where", dataTable.SqlWithPrefix);
                 // Product selection
@@ -102,10 +106,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, false, TNS.Classification.Universe.AccessType.includes));
 
                 sql.Append(" ) ");
+                and = true;
             }
             #endregion
 
             #region sélection des médias
+            if (and) sql.Append(" and ");
             sql.AppendFormat(" {0}", this.GetMediaSelection(dataTable.Prefix));
             #endregion
 
@@ -161,20 +167,22 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             {
                 //Product selection
                 if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
-                    sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
+                    sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, false));
                 //product rights
                 sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+                sql.Append(" and ");
             }
             if (type == CstComparaisonCriterion.sectorTotal)
             {
-                sql.AppendFormat(" {0}.id_sector in ( ", _recapSector.Prefix);
+                sql.AppendFormat(" {0}.id_sector in ( ", dataTable.Prefix);
                 sql.Append(" select distinct id_sector ");
                 sql.AppendFormat(" from {0} where", dataTable.SqlWithPrefix);
                 // Product selection
                 if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, false, TNS.Classification.Universe.AccessType.includes));
 
-                sql.Append(" ) ");
+                sql.Append(" ) and ");
+
             }
             #endregion
 
@@ -190,11 +198,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #endregion
 
             #region Request building
-            sql2.AppendFormat(sql.ToString(), this.GetExpenditureClause(CstResult.PalmaresRecap.typeYearSelected.currentYear), "total_n");
+            string model = sql.ToString();
+            sql2.AppendFormat(model, this.GetExpenditureClause(CstResult.PalmaresRecap.typeYearSelected.currentYear), "total_n");
             if (_session.ComparativeStudy)
             {
                 sql2.Append(" UNION ALL ");
-                sql2.AppendFormat(sql.ToString(), this.GetExpenditureClause(CstResult.PalmaresRecap.typeYearSelected.previousYear), "total_n1");
+                sql2.AppendFormat(model, this.GetExpenditureClause(CstResult.PalmaresRecap.typeYearSelected.previousYear), "total_n1");
             }
             #endregion
 
@@ -202,7 +211,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
             try
             {
-                ds = dataSource.Fill(sql.ToString());
+                ds = dataSource.Fill(sql2.ToString());
             }
             catch (System.Exception err)
             {

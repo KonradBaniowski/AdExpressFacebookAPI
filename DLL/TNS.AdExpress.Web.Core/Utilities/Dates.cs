@@ -451,42 +451,42 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 throw new ArgumentException("Date format not supported. Must be MMMYY.");
             }
-            switch (month)
+            switch (month.ToUpper())
             {
-                case "Jan":
+                case "JAN":
                     intMonth = 1;
                     break;
-                case "Feb":
+                case "FEB":
                     intMonth = 2;
                     break;
-                case "Mar":
+                case "MAR":
                     intMonth = 3;
                     break;
-                case "Apr":
+                case "APR":
                     intMonth = 4;
                     break;
-                case "May":
+                case "MAY":
                     intMonth = 5;
                     break;
-                case "Jun":
+                case "JUN":
                     intMonth = 6;
                     break;
-                case "Jul":
+                case "JUL":
                     intMonth = 7;
                     break;
-                case "Aug":
+                case "AUG":
                     intMonth = 8;
                     break;
-                case "Sep":
+                case "SEP":
                     intMonth = 9;
                     break;
-                case "Oct":
+                case "OCT":
                     intMonth = 10;
                     break;
-                case "Nov":
+                case "NOV":
                     intMonth = 11;
                     break;
-                case "Dec":
+                case "DEC":
                     intMonth = 12;
                     break;
                 default:

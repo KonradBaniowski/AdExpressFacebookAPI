@@ -280,14 +280,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 str.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 			}
 			//First advertiser (optionnels)		
-			str.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1154,_session.SiteLanguage));
+			str.AppendFormat("<td nowrap class=\"p2\" colSpan=\"2\">{0}</td>", GestionWeb.GetWebWord(1154,_session.SiteLanguage));
 			str.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(437,_session.SiteLanguage));
 			//Separator
 			if(!_excel){
                 str.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
 			}
 			//1er références (optionnels)		
-			str.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1155,_session.SiteLanguage));
+            str.AppendFormat("<td nowrap class=\"p2\" colSpan=\"2\">{0}</td>", GestionWeb.GetWebWord(1155, _session.SiteLanguage));
 			str.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(437,_session.SiteLanguage));
 			str.Append("</tr>");
 			#endregion
@@ -1229,7 +1229,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             if (refNb != null)
             {
-                str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refNb, _session.Unit), cssNb);
+                str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refNb, CstUnit.euro), cssNb);
             }
             else
             {
@@ -1248,7 +1248,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 str.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
             }
-            if ((Convert.ToDecimal(invest) / (Decimal)1000) > 0)
+            if ((Convert.ToDecimal(advInvest) / (Decimal)1000) > 0)
             {
                 //1er advertiser (optionnels)
                 if (advLabel != null)

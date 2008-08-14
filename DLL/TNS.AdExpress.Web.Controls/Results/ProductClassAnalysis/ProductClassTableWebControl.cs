@@ -38,6 +38,11 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
         {
             _customerWebSession = session;
         }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        [Obsolete()]
+        public ProductClassTableWebControl(){}
         #endregion
 
         #region Abstract method implemantation
@@ -56,7 +61,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
 
 				_customerWebSession=(WebSession)WebSession.Load(sessionId);
 
-				html = GetHTML(webSession);
+                html = GetHTML(_customerWebSession);
 
 			}
 			catch(System.Exception err){

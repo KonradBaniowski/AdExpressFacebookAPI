@@ -282,6 +282,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             {
                 writer.Write(txt.InnerWriter.ToString());
             }
+            writer.Write("<br/><br/>");
 
         }
         #endregion

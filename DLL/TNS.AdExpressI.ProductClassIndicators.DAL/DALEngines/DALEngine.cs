@@ -370,17 +370,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
             #region Query Building
             sql.Append(" select sum(total) from (");
-            sql.AppendFormat(" select {0}.id_sector, {0}.sector,", _recapSector.Prefix);
+            sql.AppendFormat(" select {0}.id_sector, {1}.sector,", dataTable.Prefix, _recapSector.Prefix);
             sql.AppendFormat(" {0} as total", expenditureClause);
             sql.AppendFormat(" from {0}, ", dataTable.SqlWithPrefix);
             sql.AppendFormat(" {0}", _recapSector.SqlWithPrefix);
             sql.AppendFormat(" where {0}.id_sector={1}.id_sector", dataTable.Prefix, _recapSector.Prefix);
             sql.AppendFormat(" and {0}.id_language={1}", _recapSector.Prefix, _session.SiteLanguage);
-            sql.AppendFormat(" and {0}.id_language={1}", _recapSegment.Prefix, _session.SiteLanguage);
 
             if (this._session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal)
             {
-                sql.AppendFormat(" and {0}.id_sector in ( ", _recapSector.Prefix);
+                sql.AppendFormat(" and {0}.id_sector in ( ", dataTable.Prefix);
                 sql.Append(" select distinct id_sector ");
                 sql.AppendFormat(" from {0} where", dataTable.SqlWithPrefix );
                 // Product selection
@@ -404,7 +403,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             sql.Append(FctUtilities.SQLGenerator.GetRecapMediaSelection(_session.GetSelection(_session.CurrentUniversMedia, CstRight.type.categoryAccess), _session.GetSelection(_session.CurrentUniversMedia, CstRight.type.mediaAccess), true));
             #endregion
 
-            sql.AppendFormat(" group by {0}.id_sector, {0}.sector ", _recapSector.Prefix);
+            sql.AppendFormat(" group by {0}.id_sector, {1}.sector ", dataTable.Prefix, _recapSector.Prefix);
             sql.Append(" ) ");
 
             #endregion

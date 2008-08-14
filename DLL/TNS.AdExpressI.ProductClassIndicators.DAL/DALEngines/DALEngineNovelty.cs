@@ -72,7 +72,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             StringBuilder sql = new StringBuilder();
 
             #region Request building
-            Table dataTable = this.GetDataTable(this._classifLevel == CstResult.MotherRecap.ElementType.product);
+            Table dataTable = this.GetDataTable(true);
 
             #region Check Period
             if (!HasData(_periodEnd))

@@ -136,7 +136,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
                 idAdv = Convert.ToInt64(row["id_advertiser"]);
                 idLev = (classifLevel == CstResult.MotherRecap.ElementType.advertiser) ? idAdv : Convert.ToInt64(row["id_product"]);
-
+                dN = Convert.ToDouble(row[strTotalColName]);
                 tabResult[i, ID_PRODUCT_INDEX] = idLev;
                 tabResult[i, PRODUCT] = row[strLabColName].ToString();
 
@@ -191,7 +191,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
                 }
             }
-            else
+            if (_session.ComparaisonCriterion != CstWeb.CustomerSessions.ComparisonCriterion.universTotal)
             {
                 totalUniverse = _dalLayer.GetTotal(typeYear);
             }
@@ -209,8 +209,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 dN = Convert.ToDouble(tabResult[i, TOTAL_N]);
                 cumulTops += dN;
-                tabResult[i, SOV] = dN / totalUniverse;
-                tabResult[i, CUMUL_SOV] = cumulTops / totalUniverse;
+                tabResult[i, SOV] = 100.00 * dN / totalUniverse;
+                tabResult[i, CUMUL_SOV] = 100.00 * cumulTops / totalUniverse;
                 if (computeProgress && topN1Values[topIds[i]] > 0)
                 {
                     tabResult[i, PROGRESS_RANK] = topN1ranks[topIds[i]] - Convert.ToInt32(tabResult[i, RANK]);
@@ -240,7 +240,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             string styleClassTitle = "";
             string styleClassNumber = "";
             string total = "";
-            string PeriodDate = "";
+            string periodDate = "";
             #endregion
 
             #region Constantes
@@ -261,25 +261,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             const string totalNb = "pmtotalnb";
             #endregion
 
-
-            string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
-
-            if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
-                throw new NoDataException();
-
-            DateTime PeriodBeginningDate = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            DateTime PeriodEndDate = FctUtilities.Dates.getPeriodEndDate(absolutEndPeriod, _session.PeriodType);
-
-
-
             object[,] tab = this.GetData(typeYear, classifLevel);
             if (typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear)
             {
-                PeriodDate = string.Format("{0}-{1}", PeriodBeginningDate.Date.ToString("dd/MM/yyyy"), PeriodEndDate.Date.ToString("dd/MM/yyyy"));
+                periodDate = string.Format("{0}-{1}", _periodBegin.Date.ToString("dd/MM/yyyy"), _periodEnd.Date.ToString("dd/MM/yyyy"));
             }
             else
             {
-                PeriodDate = string.Format("{0}-{1}", PeriodBeginningDate.Date.AddYears(-1).ToString("dd/MM/yyyy"), PeriodEndDate.Date.AddYears(-1).ToString("dd/MM/yyyy"));
+                periodDate = string.Format("{0}-{1}", _periodBegin.Date.AddYears(-1).ToString("dd/MM/yyyy"), _periodEnd.Date.AddYears(-1).ToString("dd/MM/yyyy"));
             }
 
             if (tab.GetLongLength(0) == 1 || Convert.ToDouble(tab[0, TOTAL_N]) == 0)
@@ -302,11 +291,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             t.Append("\r\n\t<tr height=\"30px\" >");
             if (classifLevel == TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.ElementType.product)
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}<br>{2}</td>", P2, GestionWeb.GetWebWord(1314, _session.SiteLanguage), PeriodDate);
+                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}<br>{2}</td>", P2, GestionWeb.GetWebWord(1314, _session.SiteLanguage), periodDate);
             }
             else
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}<br>{2}</td>", P2, GestionWeb.GetWebWord(1184, _session.SiteLanguage), PeriodDate);
+                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}<br>{2}</td>", P2, GestionWeb.GetWebWord(1184, _session.SiteLanguage), periodDate);
             }
             //Unit
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1170, _session.SiteLanguage));
@@ -315,12 +304,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1171, _session.SiteLanguage));
             //Rank
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1172, _session.SiteLanguage));
-            if (typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear)
+            if (typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear && _session.ComparativeStudy)
             {
-                if (_session.ComparativeStudy)
-                {
-                    t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1173, _session.SiteLanguage));
-                }
+                t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1173, _session.SiteLanguage));
             }
             t.Append("</tr>");
             #endregion
@@ -419,18 +405,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     #endregion
 
                     #region Progression rank
-                    if (typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear)
+                    if (typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear && _session.ComparativeStudy)
                     {
-                        if (_session.ComparativeStudy)
+                        if (tab[i, PROGRESS_RANK] != null && !tab[i, PROGRESS_RANK].Equals(0))
                         {
-                            if (tab[i, PROGRESS_RANK] != null && !tab[i, PROGRESS_RANK].Equals(0))
-                            {
-                                t.AppendFormat("<td class=\"{0}\">{1}</td>", styleClassNumber, tab[i, PROGRESS_RANK]);
-                            }
-                            else
-                            {
-                                t.AppendFormat("<td class=\"{0}></td>", styleClassNumber);
-                            }
+                            t.AppendFormat("<td class=\"{0}\">{1}</td>", styleClassNumber, tab[i, PROGRESS_RANK]);
+                        }
+                        else
+                        {
+                            t.AppendFormat("<td class=\"{0}\"></td>", styleClassNumber);
                         }
                     }
                     #endregion

@@ -90,6 +90,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrCreatives" Namespace="TNS.AdExpress.Web.Controls.Results.Creatives" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrMadiaPlan" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrAppm" Namespace="TNS.AdExpress.Web.Controls.Results.Appm" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="indicatorCharts" Namespace="TNS.AdExpressI.ProductClassIndicators.Charts" Assembly="TNS.AdExpressI.ProductClassIndicators" %>
 
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
@@ -456,7 +457,33 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            PieLineColor="Black"
                            TitleColor="#644883"
 />
-
+<%-- Indicators charts--%>
+<indicatorCharts:ChartSeasonality
+                           runat="server"
+                           ChartAreasBackColor="#DECFE7"
+                           ChartBorderLineColor="#634984"
+                           SeriesColor="#9479B5"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#644883"
+/>
+<indicatorCharts:ChartTop
+                           runat="server"
+                           ChartAreasBackColor="#DECFE7"
+                           ChartBorderLineColor="#634984"
+                           SeriesColor="#9479B5"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#644883"
+/>
 <%-- Result options web control : used to display result options : insertOption, percentage, pdmOption ... --%>
 <ctrHeader:resultsoptionswebcontrol  
                            runat="server" 

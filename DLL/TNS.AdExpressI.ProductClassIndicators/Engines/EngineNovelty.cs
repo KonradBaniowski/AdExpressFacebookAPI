@@ -176,13 +176,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             int firstN1month = 0;
             if (_session.ComparativeStudy){
                 int j = dtNovelties.Columns.Count-2;
-                while (j > 0 && !dtNovelties.Columns[j].ColumnName.Equals(monthColumn))
+                while (j > 0 && !dtNovelties.Columns[j].ColumnName.ToUpper().Equals(monthColumn.ToUpper()))
                 {
                     j--;
                 }
                 if (j > 0)
                 {
-                    firstN1month = j;
+                    firstN1month = j+1;
                     lastN1month = dtNovelties.Columns.Count - 2;
                 }
             }
@@ -201,7 +201,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] = Convert.ToInt64(currentRow[advIdName]);
                 double d = Convert.ToDouble(currentRow[monthColumn]);
                 tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX] = d;
-                tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX] = d * Convert.ToDouble(0) / total;
+                tab[i, SOV_COLUMN_INDEX] = d * Convert.ToDouble(100) / total;
 
                 #region Last active month
                 /*
@@ -251,21 +251,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             StringBuilder str = new StringBuilder();
             StringBuilder tmp = null;
 
-            this._classifLevel = CstResult.MotherRecap.ElementType.product;
-            tmp = this.BuildTable();
-            str.Append("<center>");
-            if (tmp.Length > 0)
-            {
-                str.Append(tmp.ToString());
-            }
-            else
-            {
-                str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
-                str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
-                str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
-                str.Append("</td></tr></table>");
-            }
-            str.Append("</center><br>");
             this._classifLevel = CstResult.MotherRecap.ElementType.advertiser;
             tmp = this.BuildTable();
             str.Append("<center>");
@@ -278,6 +263,21 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                 str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
                 str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1239, _session.SiteLanguage));
+                str.Append("</td></tr></table>");
+            }
+            str.Append("</center><br>");
+            this._classifLevel = CstResult.MotherRecap.ElementType.product;
+            tmp = this.BuildTable();
+            str.Append("<center>");
+            if (tmp.Length > 0)
+            {
+                str.Append(tmp.ToString());
+            }
+            else
+            {
+                str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+                str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
                 str.Append("</td></tr></table>");
             }
             str.Append("</center>");
@@ -300,8 +300,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             string cssNbNone = "p9";
             string cssRefLabel = "p15";
             string cssRefNb = "p151";
-            string cssCompLabel = (this._excel)?"p14":"p142";
-            string cssCompNb = (this._excel)?"p141":"p143";
+            string cssCompLabel = (this._excel) ? "p142" : "p14";
+            string cssCompNb = (this._excel) ? "p143" : "p141";
             #endregion
 
             object[,] tab = this.GetData();
@@ -314,11 +314,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             #region Period
-            string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
-            if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
-                throw new NoDataException();
-            DateTime periodEnd = FctUtilities.Dates.getPeriodEndDate(absolutEndPeriod, _session.PeriodType);
-            string monthAlias = FctUtilities.Dates.CurrentActiveMonth(periodEnd, _session);
+            string monthAlias = FctUtilities.Dates.CurrentActiveMonth(_periodEnd, _session);
             #endregion
 
             t.Append("\n<TABLE border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"p2\"><TR><TD>");
@@ -341,7 +337,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1220, _session.SiteLanguage));
             }
             //Current month (KE)
-            t.AppendFormat("<td nowrap class=\"p2\">{0}{1}-{2} </td>", GestionWeb.GetWebWord(1221, _session.SiteLanguage), periodEnd.ToString("MM"), periodEnd.Year);
+            t.AppendFormat("<td nowrap class=\"p2\">{0}{1}-{2} </td>", GestionWeb.GetWebWord(1221, _session.SiteLanguage), _periodEnd.ToString("MM"), _periodEnd.Year);
             //SOV			
             t.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(437, _session.SiteLanguage));
             t.Append("\n</tr>");
@@ -402,7 +398,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     t.AppendFormat("<td nowrap class={0}>&nbsp;</td>", cssNb);
                 //SOV
                 if (tab[i, SOV_COLUMN_INDEX] != null) 
-                    t.AppendFormat("<td nowrap class={0}>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, SOV_COLUMN_INDEX], _session.Unit, true));
+                    t.AppendFormat("<td nowrap class={0}>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, SOV_COLUMN_INDEX], _session.Unit, true));
                 else
                     t.AppendFormat("<td nowrap class={0}>&nbsp;</td>", cssNb);
                 t.Append("</tr>");
@@ -443,25 +439,20 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 string cssColored = "p9ind";
                 string cssRefLabel = "p15";
                 string cssRefNb = "p151";
-                string cssCompLabel = (this._excel) ? "p14" : "p142";
-                string cssCompNb = (this._excel) ? "p141" : "p143";
+                string cssCompLabel = (this._excel) ? "p142" : "p14";
+                string cssCompNb = (this._excel) ? "p143" : "p141";
                 #endregion
 
                 #region Legend
-                t.AppendFormat("<table><tr><td nowrap class=pmcategorynb width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{0}</td></tr>", GestionWeb.GetWebWord(1225, _session.SiteLanguage));
-                t.AppendFormat("<tr><td nowrap class={0} width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{1}</td></tr></table>", cssColored, GestionWeb.GetWebWord(1226, _session.SiteLanguage));
+                t.AppendFormat("<table align=\"left\"><tr><td nowrap class=pmcategorynb width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{0}</td></tr>", GestionWeb.GetWebWord(1225, _session.SiteLanguage));
+                t.AppendFormat("<tr><td nowrap class={0} width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{1}</td></tr></table><br/>", cssColored, GestionWeb.GetWebWord(1226, _session.SiteLanguage));
                 #endregion
 
                 #region Build graph
                 t.Append("\n<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"p2\"><TR><TD>");
 
-                string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
-                if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
-                    throw new NoDataException();
-                DateTime periodEnd = FctUtilities.Dates.getPeriodEndDate(absolutEndPeriod, _session.PeriodType);
-
                 //Mois actif
-                string monthAlias = FctUtilities.Dates.CurrentActiveMonth(periodEnd, _session);
+                string monthAlias = FctUtilities.Dates.CurrentActiveMonth(_periodEnd, _session);
 
                 #region headers
                 //Label column
@@ -480,20 +471,20 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 //N-1 year cells
                 for (int j = 1; j <= 12; j++)
                 {
-                    t.AppendFormat("<td nowrap class=\"p2\">&nbsp;{0}-{1}</td>", j.ToString("00"), periodEnd.AddYears(-1).Year);
+                    t.AppendFormat("<td nowrap class=\"p2\">&nbsp;{0}-{1}</td>", j.ToString("00"), _periodEnd.AddYears(-1).Year);
                 }
                 //Year separator
                 t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
 
                 //N cells
-                for (int m = 1; m < periodEnd.Month; m++)
+                for (int m = 1; m < _periodEnd.Month; m++)
                 {
-                    t.AppendFormat("<td nowrap class=\"p2\">&nbsp;{0}-{1}</td>", m.ToString("00"), periodEnd.Year);
+                    t.AppendFormat("<td nowrap class=\"p2\">&nbsp;{0}-{1}</td>", m.ToString("00"), _periodEnd.Year);
                 }
                 //Separator
                 t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
                 //Currnet month
-                t.AppendFormat("<td nowrap align=center class=\"p2\">{2}<br>{0}-{1}</td>", periodEnd.Month.ToString("00"), periodEnd.Year, GestionWeb.GetWebWord(1221, _session.SiteLanguage));
+                t.AppendFormat("<td nowrap align=center class=\"p2\">{2}<br>{0}-{1}</td>", _periodEnd.Month.ToString("00"), _periodEnd.Year, GestionWeb.GetWebWord(1221, _session.SiteLanguage));
                 t.Append("\n</tr>");
                 #endregion
 
@@ -571,7 +562,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     //Separator
                     t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
                     //N Cells
-                    for (int l = 1; l < periodEnd.Month; l++)
+                    for (int l = 1; l < _periodEnd.Month; l++)
                     {
                         if (found)
                         {
@@ -621,21 +612,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 StringBuilder tmp = null;
 
-                this._classifLevel = CstResult.MotherRecap.ElementType.product;
-                tmp = this.BuildGraph();
-                str.Append("<center>");
-                if (tmp.Length > 0)
-                {
-                    str.Append(tmp.ToString());
-                }
-                else
-                {
-                    str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
-                    str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
-                    str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
-                    str.Append("</td></tr></table>");
-                }
-                str.Append("</center><br>");
                 this._classifLevel = CstResult.MotherRecap.ElementType.advertiser;
                 tmp = this.BuildGraph();
                 str.Append("<center>");
@@ -648,6 +624,21 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                     str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
                     str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1239, _session.SiteLanguage));
+                    str.Append("</td></tr></table>");
+                }
+                str.Append("</center><br>");
+                this._classifLevel = CstResult.MotherRecap.ElementType.product;
+                tmp = this.BuildGraph();
+                str.Append("<center>");
+                if (tmp.Length > 0)
+                {
+                    str.Append(tmp.ToString());
+                }
+                else
+                {
+                    str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                    str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+                    str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
                     str.Append("</td></tr></table>");
                 }
                 str.Append("</center>");

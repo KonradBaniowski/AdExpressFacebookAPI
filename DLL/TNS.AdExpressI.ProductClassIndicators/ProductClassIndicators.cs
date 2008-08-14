@@ -104,20 +104,19 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// </summary>
         /// <param name="_classifLevel">Classification level to display (product or advertiser)</param>
         /// <returns>Chart control filled with top elements</returns>
-        public virtual string GetNoveltyChart(CstResult.MotherRecap.ElementType classifLevel)
-        {
+        //public virtual string GetNoveltyChart(CstResult.MotherRecap.ElementType classifLevel)
+        //{
 
-            EngineNovelty e = null;
-            try{
-                e = (EngineNovelty)this._engine;
-            }catch(Exception){
-                e = new EngineNovelty(this._session, this._dalLayer);
-            }
-            e.ClassifLevel = classifLevel;
+        //    if (this._engine == null || !(this._engine is EngineNovelty))
+        //    {
+        //        this._engine = new EngineNovelty(this._session, this._dalLayer);
+        //    }
+        //    EngineNovelty e = (EngineNovelty)this._engine;
+        //    e.ClassifLevel = classifLevel;
 
-            return e.GetGraph().ToString();
+        //    return e.GetGraph().ToString();
 
-        }
+        //}
         /// <summary>
         /// Get indicator novelties as a graph (product and advertiser)
         /// </summary>
@@ -125,12 +124,12 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual string GetNoveltyChart()
         {
 
-            StringBuilder str = new StringBuilder();
-
-            str.AppendFormat("<center>{0}", this.GetNoveltyChart(CstResult.MotherRecap.ElementType.product));
-            str.AppendFormat("<br>{0}</center>", this.GetNoveltyChart(CstResult.MotherRecap.ElementType.advertiser));
-
-            return str.ToString();
+            if (this._engine == null || !(this._engine is EngineNovelty))
+            {
+                this._engine = new EngineNovelty(this._session, this._dalLayer);
+            }
+            EngineNovelty e = (EngineNovelty)this._engine;
+            return e.GetGraph().ToString();
 
         }
         /// <summary>
@@ -138,21 +137,17 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// </summary>
         /// <param name="_classifLevel">Classification level to display (product or advertiser)</param>
         /// <returns>Chart control filled with top elements</returns>
-        public virtual string GetNoveltyTable(CstResult.MotherRecap.ElementType classifLevel)
-        {
-            EngineNovelty e = null;
-            try
-            {
-                e = (EngineNovelty)this._engine;
-            }
-            catch (Exception)
-            {
-                e = new EngineNovelty(this._session, this._dalLayer);
-            }
-            e.ClassifLevel = classifLevel;
+        //public virtual string GetNoveltyTable(CstResult.MotherRecap.ElementType classifLevel)
+        //{
+        //    if (this._engine == null || !(this._engine is EngineNovelty))
+        //    {
+        //        this._engine = new EngineNovelty(this._session, this._dalLayer);
+        //    }
+        //    EngineNovelty e = (EngineNovelty)this._engine;
+        //    e.ClassifLevel = classifLevel;
 
-            return e.GetResult().ToString();
-        }
+        //    return e.GetResult().ToString();
+        //}
         /// <summary>
         /// Get indicator novelties as a Table (product and advertiser)
         /// </summary>
@@ -160,12 +155,12 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual string GetNoveltyTable()
         {
 
-            StringBuilder str = new StringBuilder();
-
-            str.AppendFormat("<center>{0}", this.GetNoveltyTable(CstResult.MotherRecap.ElementType.product));
-            str.AppendFormat("<br>{0}</center>", this.GetNoveltyTable(CstResult.MotherRecap.ElementType.advertiser));
-
-            return str.ToString();
+            if (this._engine == null || !(this._engine is EngineNovelty))
+            {
+                this._engine = new EngineNovelty(this._session, this._dalLayer);
+            }
+            EngineNovelty e = (EngineNovelty)this._engine;
+            return e.GetResult().ToString();
 
         }
         #endregion

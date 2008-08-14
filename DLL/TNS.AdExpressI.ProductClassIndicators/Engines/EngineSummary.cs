@@ -199,10 +199,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     //Nb of active advertisers
                     if (!dtNbAdvert.Equals(System.DBNull.Value) && dtNbAdvert.Rows.Count > 0)
                     {
-                        tab[NB_ADVERTISER_LINE_INDEX, TOTAL_N_COLUMN_INDEX] = dtNbAdvert.Rows[0]["nbProduct"];//Année N
+                        tab[NB_ADVERTISER_LINE_INDEX, TOTAL_N_COLUMN_INDEX] = dtNbAdvert.Rows[0]["nbElt"];//Année N
                         if (_session.ComparativeStudy)
                         {
-                            tab[NB_ADVERTISER_LINE_INDEX, TOTAL_N1_COLUMN_INDEX] = dtNbAdvert.Rows[1]["nbProduct"];//Année N-1
+                            tab[NB_ADVERTISER_LINE_INDEX, TOTAL_N1_COLUMN_INDEX] = dtNbAdvert.Rows[1]["nbElt"];//Année N-1
                             //Evolution and difference of N / N-1
                             ComputeEvolAndEcart(tab, NB_ADVERTISER_LINE_INDEX, TOTAL_N_COLUMN_INDEX, TOTAL_N1_COLUMN_INDEX, EVOLUTION_COLUMN_INDEX, ECART_COLUMN_INDEX);
                         }
@@ -221,10 +221,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     //Nb of active products
                     if (!dtNbRef.Equals(System.DBNull.Value) && dtNbRef.Rows.Count > 0)
                     {
-                        tab[NB_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX] = dtNbRef.Rows[0]["nbProduct"];//Année N
+                        tab[NB_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX] = dtNbRef.Rows[0]["nbElt"];//Année N
                         if (_session.ComparativeStudy)
                         {
-                            tab[NB_PRODUCT_LINE_INDEX, TOTAL_N1_COLUMN_INDEX] = dtNbRef.Rows[1]["nbProduct"];//Année N-1
+                            tab[NB_PRODUCT_LINE_INDEX, TOTAL_N1_COLUMN_INDEX] = dtNbRef.Rows[1]["nbElt"];//Année N-1
                             //Evolution and difference of N / N-1
                             ComputeEvolAndEcart(tab, NB_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX, TOTAL_N1_COLUMN_INDEX, EVOLUTION_COLUMN_INDEX, ECART_COLUMN_INDEX);
                         }
@@ -280,7 +280,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #region Styles
             string cssHeader = "p2";
             string cssLabel = (_excel) ? "acl11" : "acl1";
-            string cssNb = (_excel) ? "violetBackGroundV2 acl21" : "acl2";
+            string cssNb = (_excel) ? "acl21" : "violetBackGroundV2 acl2";
             #endregion
 
             t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 align=center>");
@@ -343,11 +343,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     case PDV_UNIV_TOTAL_MARKET_LINE_INDEX:
                     case PDV_UNIV_TOTAL_SECTOR_LINE_INDEX:
                         //N
-                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N_COLUMN_INDEX], _session.Unit, true));
+                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1} %</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N_COLUMN_INDEX], _session.Unit, true));
                         //N-1
                         if (_session.ComparativeStudy)
                         {
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap></td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N1_COLUMN_INDEX], _session.Unit, true));
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1} %</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N1_COLUMN_INDEX], _session.Unit, true));
                             t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap></td>", cssNb);
                             t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap></td>", cssNb);
                         }

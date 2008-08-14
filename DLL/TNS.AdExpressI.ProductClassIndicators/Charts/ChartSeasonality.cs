@@ -93,18 +93,21 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 for (int i = 0; i < tab.GetLength(0); i++)
                 {
                     idElement = Convert.ToInt64(tab[i, EngineSeasonality.ID_ELEMENT_COLUMN_INDEX]);
-                    if (!advertiserTotal.ContainsKey(idElement))
+                    if (idElement != 0)
                     {
-                        advertiserTotal.Add(idElement, Convert.ToDouble(tab[i, EngineSeasonality.INVEST_COLUMN_INDEX]));
-                        if (idElement != EngineSeasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX && idElement != EngineSeasonality.ID_TOTAL_MARKET_COLUMN_INDEX && idElement != EngineSeasonality.ID_TOTAL_SECTOR_COLUMN_INDEX)
+                        if (!advertiserTotal.ContainsKey(idElement))
                         {
-                            advertiserSerie.Add(idElement, new Series());
-                            this.Series.Add(advertiserSerie[idElement]);
+                            advertiserTotal.Add(idElement, Convert.ToDouble(tab[i, EngineSeasonality.INVEST_COLUMN_INDEX]));
+                            if (idElement != EngineSeasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX && idElement != EngineSeasonality.ID_TOTAL_MARKET_COLUMN_INDEX && idElement != EngineSeasonality.ID_TOTAL_SECTOR_COLUMN_INDEX)
+                            {
+                                advertiserSerie.Add(idElement, new Series());
+                                this.Series.Add(advertiserSerie[idElement]);
+                            }
                         }
-                    }
-                    else
-                    {
-                        advertiserTotal[idElement] = advertiserTotal[idElement] + Convert.ToDouble(tab[i, EngineSeasonality.INVEST_COLUMN_INDEX]);
+                        else
+                        {
+                            advertiserTotal[idElement] = advertiserTotal[idElement] + Convert.ToDouble(tab[i, EngineSeasonality.INVEST_COLUMN_INDEX]);
+                        }
                     }
                     cMonth = Convert.ToInt32(tab[i, EngineSeasonality.ID_MONTH_COLUMN_INDEX]);
                     if (oldMonth != cMonth)
@@ -197,44 +200,46 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                         compteur++;
                         oldMonth = cMonth;
                     }
-
                     idElement = Convert.ToInt64(tab[i, EngineSeasonality.ID_ELEMENT_COLUMN_INDEX]);
                     invest = Convert.ToDouble(tab[i, EngineSeasonality.INVEST_COLUMN_INDEX]);
                     month = MonthString.Get(periodBegin.AddMonths(compteur).Month, _session.SiteLanguage, 0);
-                    if (idElement == EngineSeasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX)
+                    if (idElement != 0)
                     {
-                        if (advertiserTotal[idElement] > 0)
+                        if (idElement == EngineSeasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX)
                         {
-                            serieUnivers.Points.AddXY(month, Math.Round(invest / advertiserTotal[idElement] * 100, 2));
+                            if (advertiserTotal[idElement] > 0)
+                            {
+                                serieUnivers.Points.AddXY(month, Math.Round(invest / advertiserTotal[idElement] * 100, 2));
+                            }
                         }
-                    }
-                    else if (idElement == EngineSeasonality.ID_TOTAL_SECTOR_COLUMN_INDEX || idElement == EngineSeasonality.ID_TOTAL_MARKET_COLUMN_INDEX)
-                    {
-                        if (advertiserTotal[idElement] > 0)
+                        else if (idElement == EngineSeasonality.ID_TOTAL_SECTOR_COLUMN_INDEX || idElement == EngineSeasonality.ID_TOTAL_MARKET_COLUMN_INDEX)
                         {
-                            serieSectorMarket.Points.AddXY(month, Math.Round(invest / advertiserTotal[idElement] * 100, 2));
-                            serieMediumMonth.Points.AddXY(month, mediumMonth = Math.Round((double)100 / nbMonth, 2));
+                            if (advertiserTotal[idElement] > 0)
+                            {
+                                serieSectorMarket.Points.AddXY(month, Math.Round(invest / advertiserTotal[idElement] * 100, 2));
+                                serieMediumMonth.Points.AddXY(month, mediumMonth = Math.Round((double)100 / nbMonth, 2));
+                            }
                         }
-                    }
-                    else
-                    {
-                        Series s = advertiserSerie[idElement];
-                        s.Type = SeriesChartType.Line;
-                        s.ShowLabelAsValue = true;
-                        s.XValueType = Dundas.Charting.WebControl.ChartValueTypes.String;
-                        s.YValueType = Dundas.Charting.WebControl.ChartValueTypes.Double;
-                        s.Enabled = true;
-                        s.Font = new Font("Arial", (float)8);
-                        s.LegendText = tab[i, EngineSeasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
-                        s.SmartLabels.Enabled = true;
-                        s.SmartLabels.CalloutLineStyle = ChartDashStyle.Dot;
-                        s.SmartLabels.MinMovingDistance = 3;
-                        s.LabelToolTip = tab[i, EngineSeasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
-
-                        if (advertiserTotal[idElement] > 0)
+                        else
                         {
-                            advertiserSerie[idElement].Points.AddXY(month, Math.Round(invest / advertiserTotal[idElement] * 100, 2));
+                            Series s = advertiserSerie[idElement];
+                            s.Type = SeriesChartType.Line;
+                            s.ShowLabelAsValue = true;
+                            s.XValueType = Dundas.Charting.WebControl.ChartValueTypes.String;
+                            s.YValueType = Dundas.Charting.WebControl.ChartValueTypes.Double;
+                            s.Enabled = true;
+                            s.Font = new Font("Arial", (float)8);
+                            s.LegendText = tab[i, EngineSeasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
+                            s.SmartLabels.Enabled = true;
+                            s.SmartLabels.CalloutLineStyle = ChartDashStyle.Dot;
+                            s.SmartLabels.MinMovingDistance = 3;
+                            s.LabelToolTip = tab[i, EngineSeasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
 
+                            if (advertiserTotal[idElement] > 0)
+                            {
+                                advertiserSerie[idElement].Points.AddXY(month, Math.Round(invest / advertiserTotal[idElement] * 100, 2));
+
+                            }
                         }
                     }
                 }
