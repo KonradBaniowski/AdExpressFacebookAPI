@@ -245,7 +245,8 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			parameters[1] = _adBreak;
 			parameters[2] = _dayOfWeek;
 			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-			return (portofolioResult.GetPortofolioDetailMediaResultTable());
+			//return (portofolioResult.GetPortofolioDetailMediaResultTable());
+			return (portofolioResult.GetInsertionDetailResultTable());
         }
         #endregion
 

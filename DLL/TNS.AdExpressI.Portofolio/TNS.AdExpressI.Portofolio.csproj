@@ -53,6 +53,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engines\CalendarEngine.cs" />
+    <Compile Include="Engines\Engine.cs" />
+    <Compile Include="Engines\InsertionDetailEngine.cs" />
+    <Compile Include="Engines\MediaDetailEngine.cs" />
+    <Compile Include="Engines\PortofolioDetailEngine.cs" />
+    <Compile Include="Engines\StructureEngine.cs" />
+    <Compile Include="Engines\SynthesisEngine.cs" />
     <Compile Include="Exceptions\PortofolioException.cs" />
     <Compile Include="IPortofolioResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

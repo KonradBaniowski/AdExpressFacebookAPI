@@ -1,0 +1,122 @@
+#region Information
+// Author: D. Mussuma
+// Creation date: 08/08/2008
+// Modification date:
+#endregion
+
+using System;
+using System.Data;
+using System.Collections;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Text;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpressI.Portofolio.DAL.Exceptions;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using WebFunctions = TNS.AdExpress.Web.Functions;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Classification;
+
+using TNS.AdExpress.Web.Exceptions;
+using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
+using CstProject = TNS.AdExpress.Constantes.Project;
+using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Web.Core.Exceptions;
+
+
+namespace TNS.AdExpressI.Portofolio.DAL.Engines {
+	/// <summary>
+	/// Compute data for different results of portofolio
+	/// </summary>
+	public abstract class Engine {
+
+		#region Variables
+		/// <summary>
+		/// Customer session
+		/// </summary>
+		protected WebSession _webSession;
+		/// <summary>
+		/// Current Module
+		/// </summary>
+		protected Module _module;
+		/// <summary>
+		/// Vehicle information
+		/// </summary>
+		protected VehicleInformation _vehicleInformation;
+		/// <summary>
+		/// Media Id
+		/// </summary>
+		protected Int64 _idMedia;
+		/// <summary>
+		/// Begining Date
+		/// </summary>
+		protected string _beginingDate;
+		/// <summary>
+		/// End Date
+		/// </summary>
+		protected string _endDate;		
+
+		#endregion
+
+		#region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>
+		/// <param name="vehicleInformation">Vehicle information</param>
+		/// <param name="idMedia">Media Id</param>
+        /// <param name="beginingDate">begining Date</param>
+        /// <param name="endDate">end Date</param>
+		protected Engine(WebSession webSession, VehicleInformation vehicleInformation, Module module, Int64 idMedia, string beginingDate, string endDate) {
+            if(webSession==null) throw (new ArgumentNullException("Customer session is null"));
+            if(beginingDate==null || beginingDate.Length==0) throw (new ArgumentException("Begining Date is invalid"));
+            if(endDate==null || endDate.Length==0) throw (new ArgumentException("End Date is invalid"));
+			if (module == null) throw (new ArgumentNullException("Module is null"));
+			if (vehicleInformation == null) throw (new ArgumentNullException("vehicleInformation session is null"));
+            _webSession=webSession;
+            _beginingDate=beginingDate;
+            _endDate=endDate;
+			_vehicleInformation = vehicleInformation;
+            _idMedia = idMedia;                          
+             _module=module;          
+        
+        }
+		
+        #endregion
+
+
+		/// <summary>
+		/// Get data
+		/// </summary>
+		/// <returns></returns>
+		public virtual DataSet GetData() {
+			return ComputeData();
+		}
+
+		/// <summary>
+		/// Get result table
+		/// </summary>
+		/// <returns></returns>
+		protected abstract DataSet ComputeData();
+
+		#region Get Product Data
+		/// <summary>
+		/// Récupère la liste produit de référence
+		/// </summary>
+		/// <returns>la liste produit de référence</returns>
+		protected virtual string GetProductData() {
+			string sql = "";
+			if (_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
+				sql = _webSession.PrincipalProductUniverses[0].GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+
+			return sql;
+		}
+		#endregion
+	}
+}

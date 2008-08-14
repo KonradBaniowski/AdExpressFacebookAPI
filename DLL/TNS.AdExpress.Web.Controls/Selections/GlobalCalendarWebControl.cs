@@ -164,6 +164,26 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// Calendar theme name
         /// </summary>
         protected string _themeName = "";
+		/// <summary>
+		/// Precise if calendar contained parution dates
+		/// </summary>
+		protected bool _withParutionDates = false;
+		/// <summary>
+		/// Parution date list dictionary
+		/// <remarks>
+		/// - key =parution date
+		/// - value = magazine cover's url
+		/// </remarks>
+		/// </summary>
+		protected Dictionary<string,string> _parutionDateList = null;
+		/// <summary>
+		/// ID div contanining cover
+		/// </summary>
+		protected string _idDivCover = "";
+		/// <summary>
+		/// ID visual cover
+		/// </summary>
+		protected string _idVisualCover = "";
         #endregion
 
         #region Accesseurs
@@ -257,6 +277,34 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             get { return _themeName; }
             set { _themeName = value; }
         }
+		/// <summary>
+		/// Get / Set if calendar manages parution dates
+		/// </summary>
+		public bool WithParutionDates {
+			get { return _withParutionDates; }
+			set { _withParutionDates = value; }
+		}
+		/// <summary>
+		/// Get / Set parution date list
+		/// </summary>
+		public Dictionary<string,string> ParutionDateList {
+			get { return _parutionDateList; }
+			set { _parutionDateList = value; }
+		}
+		/// <summary>
+		/// Get / Set ID div cover
+		/// </summary>
+		public string IdDivCover {
+			get { return _idDivCover; }
+			set { _idDivCover = value; }
+		}
+		/// <summary>
+		/// Get / Set ID visual cover
+		/// </summary>
+		public string IdVisualCover {
+			get { return _idVisualCover; }
+			set { _idVisualCover = value; }
+		}
         #endregion
 
         #region Constructeur
@@ -450,7 +498,15 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.Append("\r\n\t for(i=1;i<=31;i++){");
             js.AppendFormat("\r\n\t dayImageListNC_{0}[i] = new Image();", this.ID);
             js.AppendFormat("\r\n\t dayImageListNC_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/' + i + 'NC.gif';", this.ID);
-            js.Append("\r\n\t }");
+            js.Append("\r\n\t }");			
+			//Init parutions dates' day images
+			if (_withParutionDates) {
+				js.AppendFormat("\r\n\t var dayImageListP_{0} = new Array();", this.ID);
+				js.Append("\r\n\t for(i=1;i<=31;i++){");
+				js.AppendFormat("\r\n\t dayImageListP_{0}[i] = new Image();", this.ID);
+				js.AppendFormat("\r\n\t dayImageListP_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/' + i + 'p.gif';", this.ID);//TODO replace r by p (for parutions) when parution's images would be created
+				js.Append("\r\n\t }");
+			}
             js.AppendFormat("\r\n\t var monthImageList_{0} = new Array();", this.ID);
             js.Append("\r\n\t for(i=1;i<=12;i++){");
             js.AppendFormat("\r\n\t monthImageList_{0}[i] = new Image();", this.ID);
@@ -510,8 +566,17 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.Append("\r\n\t for(i=" + _startYear + ";i<=" + _stopYear + ";i++){");
             js.AppendFormat("\r\n\t yearImageListNC_{0}[i] = new Image();", this.ID);
             js.AppendFormat("\r\n\t yearImageListNC_{0}[i].src = '/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/' + i + 'NC.gif';", this.ID);
-            js.Append("\r\n\t }");
+            js.Append("\r\n\t }");			
 
+			if (_withParutionDates) {
+				js.AppendFormat("\r\n\t var parutionDateList_{0} = null;", this.ID);
+				if (_parutionDateList != null && _parutionDateList.Count > 0) {
+					js.AppendFormat("\r\n\t parutionDateList_{0} = new Array({1});", this.ID, _parutionDateList.Count);					
+					foreach (KeyValuePair<string,string> kpv in _parutionDateList) {
+						js.AppendFormat("\r\n\t parutionDateList_{0}['{1}'] = {2};", this.ID, kpv.Key, kpv.Key);
+					}										
+				}
+			}
             return (js.ToString());
         }
         #endregion
@@ -769,6 +834,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.Append("\r\n\t for(i=1;i<=31;i++){");
             js.AppendFormat("\r\n\t dayImageList_{0}[i]=null;", this.ID);
             js.AppendFormat("\r\n\t dayImageListI_{0}[i]=null;", this.ID);
+			//Empty parution dates table
+			if(_withParutionDates)
+			js.AppendFormat("\r\n\t dayImageListP_{0}[i]=null;", this.ID);
             js.Append("\r\n\t }");
             js.Append("\r\n\t for(i=1;i<=12;i++){");
             js.AppendFormat("\r\n\t monthImageList_{0}[i]=null;", this.ID);
@@ -1222,7 +1290,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             StringBuilder js = new StringBuilder();
 
             js.Append("\r\n\n function PeriodPrintDayToDay(dateBegin, dateEnd, year, init, periodType, initAll){");
-
+			
             js.Append("\r\n\t var dayBegin, dayEnd, monthBegin, monthEnd, yearBegin, yearEnd, dayStr, monthStr;");
             js.Append("\r\n\t var monthYearBegin, monthYearEnd, monthIndexBegin, monthIndexEnd;");
 
@@ -1551,6 +1619,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
             js.Append("\r\n\t var dayStr='', monthStr='';");
             js.Append("\r\n\t var dImageList = new Array();");
+			js.Append("\r\n\t var dImageListP = new Array();");
             js.Append("\r\n\t var mImageList = new Array();");
 
             js.Append("\r\n\t if(init==1){");
@@ -1561,6 +1630,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.AppendFormat("\r\n\t\t dImageList = dayImageList_{0};", this.ID);
             js.AppendFormat("\r\n\t\t mImageList = monthImageList_{0};", this.ID);
             js.Append("\r\n\t }");
+			if (_withParutionDates) js.AppendFormat("\r\n\t dImageListP = dayImageListP_{0};", this.ID);
             js.Append("\r\n\t if(periodType!='Day')");
             js.Append("\r\n\t\t elementsPeriod['month_'+year+''+month].src=mImageList[parseFloat(month)].src;");
             js.Append("\r\n\t\t monthStr=month+'';");
@@ -1568,9 +1638,19 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.Append("\r\n\t\t for(i=1;i<=elementsYear[year][year+''+monthStr][year+''+monthStr+''+'00'];i++){");
             js.Append("\r\n\t\t\t dayStr=i+'';");
             js.Append("\r\n\t\t\t if(dayStr.length==1)dayStr='0'+i;");
+			//Set parutions images 
+			if (_withParutionDates) {
+				js.AppendFormat("\r\n\t if(init==1 && && parutionDateList_{0} != null && parutionDateList_{0}[year+monthStr+dayStr] != null && typeof(parutionDateList_{0}[year+monthStr+dayStr]) != 'undefined')", this.ID);
+				js.Append("\r\n\t\t\t {");
+				js.Append("\r\n\t\t\t\t	elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = dImageListP[i].src;");
+				js.Append("\r\n\t\t\t }");
+				js.Append("\r\n\t\t\t else { ");
+			}
             js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = dImageList[i].src;");
+			if (_withParutionDates) js.Append("\r\n\t\t\t }");
             js.Append("\r\n\t }");
             js.Append("\r\n\t dImageList = null;");
+			js.Append("\r\n\t dImageListP = null;");
             js.Append("\r\n\t mImageList = null;");
 
             js.Append("\r\n }");
@@ -1592,6 +1672,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.Append("\r\n\t var dayStr='', monthStr='';");
             js.Append("\r\n\t var dImageList = new Array();");
             js.Append("\r\n\t var dImageListNC = new Array();");
+			js.Append("\r\n\t var dImageListP = new Array();");
             js.Append("\r\n\t var mImageList = new Array();");
             js.AppendFormat("\r\n\t var firstDayNotEnable = firstDayNotEnable_{0}.substr(0,6);", this.ID);
             js.Append("\r\n\t\t monthStr=month+'';");
@@ -1599,6 +1680,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.Append("\r\n\t var dateMonth = year+monthStr;");
             js.Append("\r\n\t var dateDay;");
             js.Append("\r\n\t var enable=1;");
+			js.Append("\r\n\t var withParutionDates = false;");			
 
             js.Append("\r\n\t if(init==1){");
             js.Append("\r\n\t\t if(firstDayNotEnable<=dateMonth){");
@@ -1616,19 +1698,29 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.AppendFormat("\r\n\t\t dImageList = dayImageList_{0};", this.ID);
             js.AppendFormat("\r\n\t\t mImageList = monthImageList_{0};", this.ID);
             js.Append("\r\n\t }");
+			if (_withParutionDates) js.AppendFormat("\r\n\t dImageListP = dayImageListP_{0};", this.ID);
             js.Append("\r\n\t if(periodType!='Day')");
             js.Append("\r\n\t\t elementsPeriod['month_'+year+''+month].src=mImageList[parseFloat(month)].src;");
 
-            js.Append("\r\n\t\t for(i=1;i<=elementsYear[year][year+''+monthStr][year+''+monthStr+''+'00'];i++){");
-            js.Append("\r\n\t\t\t dayStr=i+'';");
+            js.Append("\r\n\t\t for(i=1;i<=elementsYear[year][year+''+monthStr][year+''+monthStr+''+'00'];i++){");			
+			js.Append("\r\n\t\t\t dayStr=i+'';");
             js.Append("\r\n\t\t\t if(dayStr.length==1)dayStr='0'+i;");
             js.Append("\r\n\t\t\t dateDay = year+monthStr+dayStr;");
+			//Get parution images dates
+			if (_withParutionDates) {
+				js.AppendFormat("\r\n\t\t\t if(init==1 && parutionDateList_{0} != null && parutionDateList_{0}[''+dateDay+''] != null && typeof(parutionDateList_{0}[''+dateDay+'']) != 'undefined')", this.ID);
+				js.Append("\r\n\t\t\t {");
+				js.Append("\r\n\t\t\t\t	withParutionDates = true;");
+				js.Append("\r\n\t\t\t }");
+			}
             js.AppendFormat("\r\n\t\t\t if(firstDayNotEnable_{0}<=dateDay && init==1)", this.ID);
-            js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = dImageListNC[i].src;");
+			js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = (withParutionDates) ? dImageListP[i].src : dImageListNC[i].src;");
             js.Append("\r\n\t\t\t else");
-            js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = dImageList[i].src;");
-            js.Append("\r\n\t }");
+			js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = (withParutionDates) ? dImageListP[i].src : dImageList[i].src;");
+			js.Append("\r\n\t\t\t withParutionDates = false;");
+			js.Append("\r\n\t }");
             js.Append("\r\n\t dImageList = null;");
+			js.Append("\r\n\t dImageListP = null;");
             js.Append("\r\n\t mImageList = null;");
             js.Append("\r\n\t return enable;");
 
@@ -1647,25 +1739,37 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             StringBuilder js = new StringBuilder();
             
             js.Append("\r\n\n function PeriodPrintDay(dateBegin, dateEnd, year, init, initAll){");
-
+			
             js.Append("\r\n\t var dayStr='', monthStr=dateBegin.substr(4,2);");
             js.Append("\r\n\t var dayBegin = parseFloat(dateBegin.substr(6,2));");
             js.Append("\r\n\t var dayEnd = parseFloat(dateEnd.substr(6,2));");
             js.Append("\r\n\t var imageList = new Array();");
+			js.Append("\r\n\t var imageListP = new Array();");
 
             js.Append("\r\n\t if(init==1)");
             js.AppendFormat("\r\n\t\t imageList = dayImageListI_{0};", this.ID);
             js.Append("\r\n\t else");
             js.AppendFormat("\r\n\t\t imageList = dayImageList_{0};", this.ID);
+			if (_withParutionDates) js.AppendFormat("\r\n\t\t imageListP = dayImageListP_{0};", this.ID);
 
             js.Append("\r\n\t if(monthStr.length==1)monthStr = '0'+monthStr;");
             js.Append("\r\n\t if(init==1 && initAll==0) dayBegin++;");
             js.Append("\r\n\t\t for(i=dayBegin;i<=dayEnd;i++){");
             js.Append("\r\n\t\t\t dayStr=i+'';");
             js.Append("\r\n\t\t\t if(dayStr.length==1)dayStr='0'+i;");
+			//Set parutions images 
+			if (_withParutionDates) {
+				js.AppendFormat("\r\n\t if(init==1 && parutionDateList_{0} != null && parutionDateList_{1}[year+monthStr+dayStr] != null && typeof(parutionDateList_{2}[year+monthStr+dayStr]) != 'undefined')", this.ID, this.ID, this.ID);
+				js.Append("\r\n\t\t\t {");
+				js.Append("\r\n\t\t\t\t	elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = imageListP[i].src;");
+				js.Append("\r\n\t\t\t }");
+				js.Append("\r\n\t\t\t else { ");
+			}
             js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = imageList[i].src;");
-            js.Append("\r\n\t\t }");
+			if (_withParutionDates) js.Append("\r\n\t\t\t }");
+			js.Append("\r\n\t\t }");
             js.Append("\r\n\t imageList = null;");
+			js.Append("\r\n\t imageListP = null;");
 
             js.Append("\r\n}"); 
             
@@ -1681,15 +1785,17 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         protected virtual string PeriodRestrictedPrintDay() {
             StringBuilder js = new StringBuilder();
 
-            js.Append("\r\n\n function PeriodPrintDay(dateBegin, dateEnd, year, init, initAll){");
+            js.Append("\r\n\n function PeriodPrintDay(dateBegin, dateEnd, year, init, initAll){");			
 
             js.Append("\r\n\t var dayStr='', monthStr=dateBegin.substr(4,2);");
             js.Append("\r\n\t var dayBegin = parseFloat(dateBegin.substr(6,2));");
             js.Append("\r\n\t var dayEnd = parseFloat(dateEnd.substr(6,2));");
             js.Append("\r\n\t var imageList = new Array();");
             js.Append("\r\n\t var imageListNC = new Array();");
+			js.Append("\r\n\t var imageListP = new Array();");
             js.AppendFormat("\r\n\t var firstDayNotEnable = firstDayNotEnable_{0};", this.ID);
             js.Append("\r\n\t var dateDay;");
+			js.Append("\r\n\t var withParutionDates = false;");			
 
             js.Append("\r\n\t if(init==1){");
             js.AppendFormat("\r\n\t\t imageList = dayImageListI_{0};", this.ID);
@@ -1697,6 +1803,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.Append("\r\n\t }");
             js.Append("\r\n\t else");
             js.AppendFormat("\r\n\t\t imageList = dayImageList_{0};", this.ID);
+			if (_withParutionDates) js.AppendFormat("\r\n\t\t imageListP = dayImageListP_{0};", this.ID);
 
             js.Append("\r\n\t if(monthStr.length==1)monthStr = '0'+monthStr;");
             js.Append("\r\n\t if(init==1 && initAll==0) dayBegin++;");
@@ -1704,23 +1811,33 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             js.Append("\r\n\t\t\t dayStr=i+'';");
             js.Append("\r\n\t\t\t if(dayStr.length==1)dayStr='0'+i;");
             js.Append("\r\n\t\t\t dateDay = year+monthStr+dayStr;");
+
+			//Get parution images dates
+			if (_withParutionDates) {
+				js.AppendFormat("\r\n\t\t\t if(init==1 && parutionDateList_{0} != null && parutionDateList_{1}[''+dateDay+''] != null && typeof(parutionDateList_{2}[''+dateDay+'']) != 'undefined')", this.ID, this.ID, this.ID);
+				js.Append("\r\n\t\t\t {");
+				js.Append("\r\n\t\t\t\t	withParutionDates = true;");
+				js.Append("\r\n\t\t\t }");				
+			}
             js.Append("\r\n\t\t\t if(firstDayNotEnable<=dateDay && init==1)");
-            js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = imageListNC[i].src;");
+			js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = (withParutionDates && init==1) ? imageListP[i].src : imageListNC[i].src;");
             js.Append("\r\n\t\t\t else");
-            js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = imageList[i].src;");
+			js.Append("\r\n\t\t\t\t elementsYear[year][year+''+monthStr][year+''+monthStr+''+dayStr].src = (withParutionDates && init==1) ? imageListP[i].src : imageList[i].src;");
+			js.Append("\r\n\t\t\t withParutionDates = false;");
             js.Append("\r\n\t\t }");
             js.Append("\r\n\t imageList = null;");
+			js.Append("\r\n\t imageListP = null;");
 
             js.Append("\r\n}");
 
             return (js.ToString());
         }
         #endregion
+		
+		#endregion
 
-        #endregion
-
-        #region ImagesLoadScript
-        /// <summary>
+		#region ImagesLoadScript
+		/// <summary>
         /// Génération du javascript pour le chargement des images
         /// </summary>
         /// <param name="output">Html text writer</param>
@@ -1796,7 +1913,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Init event
 		/// </summary>
         /// <param name="e">Arguments</param>
-        protected override void OnInit(EventArgs e) {
+        protected override void OnInit(EventArgs e) {			
             base.OnInit(e);
         }
         #endregion
@@ -2332,7 +2449,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_6.gif\" border=0></td>");
             htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_7.gif\" border=0></td>");
             htmlBuilder.Append("\r\n\t\t\t\t\t</tr>");
-
+			string pathWeb = "";
             for (int i = 0; i < dayCalendar.DaysTable.GetLength(0); i++) {
 
                 htmlBuilder.Append("\r\n\t\t\t\t\t<tr>");
@@ -2340,12 +2457,18 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 for (int j = 0; j < dayCalendar.DaysTable.GetLength(1); j++) {
 
                     if (dayCalendar.DaysTable[i, j] != 0) {
-                        if (IsDayLinkEnabled(yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00")))
+						
+						if (_withParutionDates && IsParutionDate(yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00"))) {
+							pathWeb = _parutionDateList[yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00")];
+							htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\" onmouseout=\""+_idVisualCover+".src = '/App_Themes/" + _themeName + "/Images/Common/vide.gif';"+_idDivCover+".style.display='none';\" onmouseover=\""+_idVisualCover+".src = '" + pathWeb + "';"+_idDivCover+".style.display='block';\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + "p.gif\"></a></td>");
+						}
+                        else if (IsDayLinkEnabled(yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00"))){
                             htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + ".gif\"></a></td>");
-                        else {
-                            htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + "NC.gif\"></a></td>");
-                            isMonthLinkEnable = false;
-                        }
+						
+						}else {
+							htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><a style=\"outline:none;\" href=\"javascript:SelectedDate('" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "'," + (yearMonth.ToString()).Substring(0, 4) + ",'Day','day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "','" + dayCalendar.DaysTable[i, j] + "')\"><img id=\"day_" + yearMonth.ToString() + dayCalendar.DaysTable[i, j].ToString("00") + "\" border=0 style=\"outline:none;\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/" + dayCalendar.DaysTable[i, j] + "NC.gif\"></a></td>");
+							isMonthLinkEnable = false;
+						}
                     }
                     else
                         htmlBuilder.Append("\r\n\t\t\t\t\t\t<td class=\"violetBackGroundV4\"><img width=\"17\" height=\"13\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/pixel.gif\"></td>");
@@ -2500,7 +2623,18 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         }
         #endregion
 
-        #endregion
+		#region IsParutionDate
+		/// <summary>
+		/// Get if it's parution date
+		/// </summary>
+		/// <param name="date">date string</param>
+		/// <returns>True if parution date</returns>
+		protected bool IsParutionDate(string date) {
+			return (_parutionDateList != null && _parutionDateList.Count > 0 && date != null && _parutionDateList.ContainsKey(date.Trim()));			
+		}
+		#endregion
 
-    }
+		#endregion
+
+	}
 }

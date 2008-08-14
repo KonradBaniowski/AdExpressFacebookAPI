@@ -1,5 +1,5 @@
 #region Information
-// Author: G. Facon
+// Author: Y. Rkaina
 // Creation date: 17/03/2007
 // Modification date:
 #endregion
@@ -7,7 +7,7 @@
 using System;
 using TNS.FrameWork.Exceptions;
 
-namespace TNS.AdExpressI.Web.Exceptions{
+namespace TNS.AdExpressI.Portofolio.Exceptions {
 	/// <summary>
 	/// Portofolio result exception
 	/// </summary>

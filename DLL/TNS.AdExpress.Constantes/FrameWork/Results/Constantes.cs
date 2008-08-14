@@ -2120,7 +2120,39 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
 		/// </summary>
 		public const int PRODUCT_COLUMN_INDEX=1;
 		#endregion
-	
+
+	}
+
+	public class PortofolioSynthesis {
+		/// <summary>
+		/// Investment result type
+		/// </summary>
+		public const int INVESTMENT_DATA = 0;
+		/// <summary>
+		/// Insertion number result type
+		/// </summary>
+		public const int INSERTION_NUMBER_DATA = 1;
+		/// <summary>
+		/// Category medida seller result type
+		/// </summary>
+		public const int CATEGORY_MEDIA_SELLER_DATA = 2;
+		/// <summary>
+		/// Type sale result type
+		/// </summary>
+		public const int TYPE_SALE_NUMBER_DATA = 3;
+		/// <summary>
+		/// Number product advertiser result type
+		/// </summary>
+		public const int NUMBER_PRODUCT_ADVERTISER_DATA = 4;
+		/// <summary>
+		/// Number inset result type
+		/// </summary>
+		public const int NUMBER_INSET_DATA = 5;
+		/// <summary>
+		/// Number page result type
+		/// </summary>
+		public const int NUMBER_PAGE_DATA = 6;
+
 	}
 
 	#region Structure

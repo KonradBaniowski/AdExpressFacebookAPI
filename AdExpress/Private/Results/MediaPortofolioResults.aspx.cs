@@ -139,6 +139,7 @@ namespace AdExpress.Private.Results{
 			switch (tabSelected) {
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
 					_ResultWebControl.SkinID = "portofolioSynthesisResultTable";
+					_ResultWebControl.ShowContainer = false;
 					break;
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
@@ -184,17 +185,19 @@ namespace AdExpress.Private.Results{
 					_webSession.Save();				
 				}
 				#endregion
-		
+
+				#region Choix affichage graphique ou tableau ( planche structure)
+				ResultsOptionsWebControl1.ChartTitle = GestionWeb.GetWebWord(1191, _webSession.SiteLanguage);
+				ResultsOptionsWebControl1.TableTitle = GestionWeb.GetWebWord(1192, _webSession.SiteLanguage);
+				ResultsOptionsWebControl1.ResultFormat = false;
+				#endregion	
+
 				#region Sélection du vehicle
 				string vehicleSelection=_webSession.GetSelection(_webSession.SelectionUniversMedia,Right.type.vehicleAccess);
 				DBClassificationConstantes.Vehicles.names vehicleName=(DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
 				if(vehicleSelection==null || vehicleSelection.IndexOf(",")>0) throw(new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 				#endregion
-
-				//#region Agence média
-				//displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
-				//#endregion
-
+				
 				#region Option encart
 				ResultsOptionsWebControl1.InsertOption=false;											
 				#endregion
@@ -210,6 +213,7 @@ namespace AdExpress.Private.Results{
 				//Choix de la planche à afficher
 				_ResultWebControl.Visible = false;
 				_genericProductLevel = false;
+				portofolioChartWebControl1.Visible = false;
 				if(DBClassificationConstantes.Vehicles.names.press==vehicleName 
 					|| DBClassificationConstantes.Vehicles.names.internationalPress==vehicleName){
 					ResultsOptionsWebControl1.InsertOption=true;	
@@ -223,7 +227,57 @@ namespace AdExpress.Private.Results{
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
 						_ResultWebControl.Visible = true;
 						_genericProductLevel = true;
-						break;				
+						break;								
+					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+						_genericMediaLevelDetailSelectionWebControl.Visible = false;
+						ResultsOptionsWebControl1.InsertOption = false;
+						ResultsOptionsWebControl1.UnitOption = false;
+						ResultsOptionsWebControl1.Percentage = false;
+						ResultsOptionsWebControl1.ResultFormat = true;
+
+						#region Choix affichage graphique ou tableau ( planche structure)
+						ResultsOptionsWebControl1.ChartTitle = GestionWeb.GetWebWord(1191, _webSession.SiteLanguage);
+						ResultsOptionsWebControl1.TableTitle = GestionWeb.GetWebWord(1192, _webSession.SiteLanguage);
+
+						if (!IsPostBack) {
+							ResultsOptionsWebControl1.GraphRadioButton.Checked = _webSession.Graphics;
+							ResultsOptionsWebControl1.TableRadioButton.Checked = !_webSession.Graphics;
+						}
+						else {
+							_webSession.Graphics = ResultsOptionsWebControl1.GraphRadioButton.Checked;
+							_webSession.Save();
+						}
+						if (_webSession.Graphics) {
+							//portofolioChart.Visible = true;
+							portofolioChartWebControl1.Visible = true;
+							ResultsOptionsWebControl1.GraphRadioButton.Checked = true;
+						}
+						else {
+							ResultsOptionsWebControl1.TableRadioButton.Checked = true;
+						}
+						#endregion
+
+						if (_webSession.Unit == WebConstantes.CustomerSessions.Unit.kEuro) {
+							//unité en euro pour cette planche
+							_webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
+							_webSession.Save();
+						}
+						break;
+
+					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+						_genericProductLevel = true;
+						_genericMediaLevelDetailSelectionWebControl.Visible = true;
+						ResultsOptionsWebControl1.UnitOption = true;
+						ResultsOptionsWebControl1.Percentage = true;
+						_ResultWebControl.Visible = true;
+						if (DBClassificationConstantes.Vehicles.names.press == vehicleName
+							|| DBClassificationConstantes.Vehicles.names.internationalPress == vehicleName) {
+							ResultsOptionsWebControl1.InsertOption = true;
+						}
+						else ResultsOptionsWebControl1.InsertOption = false;
+						_webSession.Save();
+						break;
+
 					default:					
 						break;
 				}	
@@ -272,12 +326,37 @@ namespace AdExpress.Private.Results{
 			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession = _webSession;
 			_ResultWebControl.CustomerWebSession = _webSession;
 
+			portofolioChartWebControl1.CustomerWebSession = _webSession;
+			portofolioChartWebControl1.TypeFlash = true;
 			return tmp;
 		}
 		#endregion
 
 		#region PreRender
 		protected override void OnPreRender(EventArgs e) {
+			
+
+			Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+			if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+			object[] parameters = new object[1];
+			parameters[0] = _webSession;
+		
+			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+
+			switch (_webSession.CurrentTab) {
+
+				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+					result = (_webSession.CustomerPeriodSelected.Is4M) ? portofolioResult.GetVehicleViewHtml(false) : "";
+					break;
+				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+					result = portofolioResult.GetDetailMediaHtml(false);
+					break;
+				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+					if (!_webSession.Graphics)
+						result = portofolioResult.GetStructureHtml(false);
+					break;
+
+			}
 			base.OnPreRender (e);
 			try{
 
@@ -301,17 +380,7 @@ namespace AdExpress.Private.Results{
 		/// Render
 		/// </summary>
 		/// <param name="output">sortie html</param>
-		protected override void Render(HtmlTextWriter output){
-			//Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
-			//if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
-			//object[] parameters = new object[1];
-			//parameters[0] = _webSession;
-			//Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-				
-			// Calcul du résultat pour portefeuille
-			if (!_ResultWebControl.Visible)
-				result=WebBF.Results.PortofolioSystem.GetHtml(this.Page,_webSession);
-			//id Média
+		protected override void Render(HtmlTextWriter output){			
 			string idVehicle=_webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
 			
 			switch((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())){
@@ -345,7 +414,9 @@ namespace AdExpress.Private.Results{
 			//
 			// CODEGEN : Cet appel est requis par le Concepteur Web Form ASP.NET.
 			//
-			InitializeComponent();			
+			InitializeComponent();
+			//ChangeCurrentTab();
+			//_webSession.Save();
 			base.OnInit(e);
 		}
 		
@@ -368,5 +439,20 @@ namespace AdExpress.Private.Results{
 			return MenuWebControl2.NextUrl;
 		}
 		#endregion
+
+		protected void ChangeCurrentTab() {
+			switch (_webSession.CurrentTab) {
+				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+					string idVehicle = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+					if (!_webSession.CustomerPeriodSelected.Is4M
+						|| (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.internet
+						|| (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.directMarketing)
+						_webSession.CurrentTab = TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS;
+					break;
+
+			}
+		}
 	}
 }

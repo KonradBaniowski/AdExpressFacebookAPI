@@ -1,6 +1,6 @@
 #region Information
-// Author: G. Facon
-// Creation date: 26/03/2007
+// Author: Y. Rkaina & D. Mussuma
+// Creation date: 26/08/2008
 // Modification date:
 #endregion
 
@@ -10,72 +10,42 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpressI.Portofolio.DAL {
     /// <summary>
     /// Portofolio Data access Interface
     /// </summary>
     public interface IPortofolioDAL {
-        /// <summary>
-        /// Get Data for the Media portofolio
-        /// </summary>
-        /// <returns>Data Set</returns>
-        DataSet GetMediaPortofolio();
+
 		/// <summary>
-		/// Get medai detail data
+		/// Get data
 		/// </summary>
 		/// <returns></returns>
-		DataSet GetGenericData();
-        /// <summary>
-        /// Get Data for the portofolio calendar
-        /// </summary>
-        /// <returns>Data Set</returns>
-        DataSet GetDataCalendar();
-        /// <summary>
-        /// Get the following fields : Category, Media Owner, Interest Center and Periodicity for press
-        /// </summary>
-        /// <returns>Data Set</returns>
-        DataSet GetCategoryMediaSellerData();
-        /// <summary>
-        /// Get total investment and date of issue
-        /// </summary>
-        /// <returns>Data Set</returns>
-        DataSet GetInvestment();
+		DataSet GetData();		
+
 		/// <summary>
-		/// Get total investment  nb ad,  duration 
+		/// Get insertion data
 		/// </summary>
-		/// <returns>Data Set</returns>
-		DataSet GetSynthsesisUnitsData();
-        /// <summary>
-        /// Get insertions number
-        /// </summary>
-        /// <returns>Data Set</returns>
-        DataSet GetInsertionNumber();
-        /// <summary>
-        /// Get type sale
-        /// </summary>
-        /// <returns>Data Set</returns>
-        DataSet GetTypeSale();
-        /// <summary>
-        /// Get Page number
-        /// </summary>
-        /// <returns>Data Set</returns>
-        DataSet GetPage();
-        /// <summary>
-        /// Get number of products, number of products in the pige, number of products in the media and number of advertisers
-        /// </summary>
-        /// <returns>Data Set</returns>
-        object[] NumberProductAdvertiser();
+		/// <returns></returns>
+		DataSet GetInsertionData();
+
+		#region Synthesis Interface methods
 		/// <summary>
-		/// Get number of products, number of products in the pige, number of products in the media and number of advertisers
+		/// Get synthsesis data
 		/// </summary>
-		/// <returns>Data table</returns>
-		object[] GetNumberProductAdvertiser();
-        /// <summary>
-        /// Get Encart 
-        /// </summary>
-        /// <returns>Data Set</returns>
-        object[] NumberPageEncart();
+		/// <param name="idDataType">type data</param>
+		/// <returns></returns>
+		DataSet GetSynthisData(int idDataType);
+		/// <summary>
+		/// Get Number
+		/// </summary>
+		/// <example>Get pages number</example>
+		/// <param name="idDataType">type data</param>
+		/// <returns></returns>
+		object[] GetNumber(int idDataType);
+		#endregion
+
         /// <summary>
         /// Get Investment By Media
         /// </summary>
@@ -86,31 +56,13 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// </summary>
         /// <returns>Data Set</returns>
         DataSet GetEcranData();      
-		/// <summary>
-		/// Get structure data 
-		/// </summary>
-		/// <remarks>Used for tv or radio</remarks>
-		/// <param name="HourBegin">Hour Begin</param>
-		/// <param name="HourEnd">Hour End</param>
-		/// <returns>DataSet</returns>
-		DataSet GetStructData(int HourBegin, int HourEnd);
-        /// <summary>
-        /// Get Press Struct Data
-        /// </summary>
-        /// <param name="ventilation">ventilation</param>
-        /// <returns>Data Set</returns>
-        DataSet GetPressStructData(PortofolioStructure.Ventilation ventilation);
+		
         /// <summary>
         /// Get dates list
         /// </summary>
         /// <param name="conditionEndDate">Add condition end date</param>
         /// <returns>Data Set</returns>
-        DataSet GetListDate(bool conditionEndDate);
-        /// <summary>
-        /// Get Commercial Break For Tv & Radio
-        /// </summary>
-        /// <returns>Data Set</returns>
-        DataSet GetCommercialBreakForTvRadio();	
+		DataSet GetListDate(bool conditionEndDate, DBConstantes.TableType.Type tableType);			
 		/// <summary>
 		/// Checks if media belong t category
 		/// </summary>
@@ -118,11 +70,6 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// <param name="idCategory">Id Category</param>
 		/// <returns></returns>
 		bool IsMediaBelongToCategory(Int64 idMedia, Int64 idCategory);
-		/// <summary>
-		/// GetGeneric detail media
-		/// </summary>
-		/// <returns></returns>
-		DataSet GetGenericDetailMedia();
-        
+		
     }
 }
