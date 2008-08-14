@@ -287,7 +287,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 					if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
 						sql = "";
-						sql += " select " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession,DBConstantes.TableType.Type.dataVehicle);
+						sql += " select " + WebFunctions.SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
 						sql += " from (";
 						sql += sqlDataVehicle;
 						sql += " UNION ";
@@ -869,16 +869,16 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 				case DBClassificationConstantes.Vehicles.names.press:
-					return " select sum(EXPENDITURE_EURO) as investment, min(DATE_MEDIA_NUM) first_date, max(DATE_MEDIA_NUM) last_date ";
+					return " select sum(EXPENDITURE_EURO) as euro, min(DATE_MEDIA_NUM) first_date, max(DATE_MEDIA_NUM) last_date ";
 				case DBClassificationConstantes.Vehicles.names.radio:
-					return " select sum(EXPENDITURE_EURO) as investment, min(DATE_MEDIA_NUM) first_date, max(DATE_MEDIA_NUM) last_date, "
+                    return " select sum(EXPENDITURE_EURO) as euro, min(DATE_MEDIA_NUM) first_date, max(DATE_MEDIA_NUM) last_date, "
 						+ " sum(insertion) as insertion, sum(duration) as duration";
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
-					return " select sum(EXPENDITURE_EURO) as investment, min(DATE_MEDIA_NUM) first_date, max(DATE_MEDIA_NUM) last_date, "
+                    return " select sum(EXPENDITURE_EURO) as euro, min(DATE_MEDIA_NUM) first_date, max(DATE_MEDIA_NUM) last_date, "
 						+ " sum(insertion) as insertion, sum(duration) as duration";
 				case DBClassificationConstantes.Vehicles.names.outdoor:
-					return " select sum(EXPENDITURE_EURO) as investment, min(DATE_CAMPAIGN_BEGINNING) first_date, max(DATE_CAMPAIGN_END) last_date, "
+                    return " select sum(EXPENDITURE_EURO) as euro, min(DATE_CAMPAIGN_BEGINNING) first_date, max(DATE_CAMPAIGN_END) last_date, "
 						+ " sum(NUMBER_BOARD) as number_board ";
 				default:
 					throw new PortofolioDALException("GetSelectData()-->Vehicle unknown.");

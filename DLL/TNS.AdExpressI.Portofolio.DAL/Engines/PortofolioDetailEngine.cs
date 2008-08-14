@@ -96,7 +96,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						if (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
 							dataFieldsForGadWithoutTablePrefix = ", " + WebFunctions.SQLGenerator.GetFieldsAddressForGad("");
 						sql = "";
-						sql += " select id_media, " + productFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix + ", " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession,DBConstantes.TableType.Type.dataVehicle);
+                        sql += " select id_media, " + productFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix + ", " + WebFunctions.SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
 						sql += " from (";
 						sql += sqlDataVehicle;
 						sql += " UNION ";

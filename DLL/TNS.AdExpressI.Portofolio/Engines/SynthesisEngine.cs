@@ -145,7 +145,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			#region For each table's row
 			foreach (DataRow row in dtInvestment.Rows) {
-				investment = row["investment"].ToString();
+				investment = row["euro"].ToString();
 				if (isAlertModule) {
 					firstDate = row["first_date"].ToString();
 					lastDate = row["last_date"].ToString();
