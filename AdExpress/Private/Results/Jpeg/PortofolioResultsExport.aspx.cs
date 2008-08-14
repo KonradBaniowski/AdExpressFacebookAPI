@@ -67,10 +67,10 @@ namespace AdExpress.Private.Results.Jpeg{
 				Page.Response.Flush();
 				#endregion				
 			
-				if(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE){
-					portofolioChart.Visible=true;
-					portofolioChart.StructureChart(_webSession,false);				
-				}
+                //if(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE){
+                //    portofolioChart.Visible=true;
+                //    portofolioChart.StructureChart(_webSession,false);				
+                //}
 			}		
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){

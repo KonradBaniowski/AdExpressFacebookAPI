@@ -470,7 +470,7 @@ namespace AdExpress.Private.Results{
                         result = portofolioResult.GetDetailMediaHtml(false);
                         break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.NOVELTY:
-						result = WebBF.Results.PortofolioSystem.GetAlertHtml(this.Page, _webSession);
+                        //result = WebBF.Results.PortofolioSystem.GetAlertHtml(this.Page, _webSession);
 						break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
 						if (!_webSession.Graphics)

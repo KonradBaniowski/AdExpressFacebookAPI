@@ -68,7 +68,8 @@ namespace AdExpress.Public{
 				else _siteLanguage = int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
 
 				if(idMedia.Length>0 && date.Length>0 && nameMedia.Length>0){
-					result=PortofolioUI.GetPortofolioCreationMedia(date,parution,idMedia,nameMedia,_siteLanguage);
+					// BUG A DEDE
+                    //result=PortofolioUI.GetPortofolioCreationMedia(date,parution,idMedia,nameMedia,_siteLanguage);
 				}
 
 				#region Scripts

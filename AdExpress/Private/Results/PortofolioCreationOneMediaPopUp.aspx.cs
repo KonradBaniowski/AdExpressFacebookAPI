@@ -69,7 +69,7 @@ namespace AdExpress.Private.Results{
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			
-			result= PortofolioUI.GetPortofolioOneCreationMedia(date,idMedia,fileName1,fileName2);
+            //result= PortofolioUI.GetPortofolioOneCreationMedia(date,idMedia,fileName1,fileName2);
 			
 		}
 		#endregion

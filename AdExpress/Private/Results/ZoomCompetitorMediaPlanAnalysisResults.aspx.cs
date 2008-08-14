@@ -108,7 +108,7 @@ namespace AdExpress.Private.Results{
 
 				#region Résultat
 				try{
-					result=CompetitorMediaPlanAlertUI.GetMediaPlanAlertUI(this,CompetitorMediaPlanAlertRules.GetFormattedTable(_webSession, Page.Request.QueryString.Get("zoomDate")),_webSession,Page.Request.QueryString.Get("zoomDate"),Page.Request.Url.AbsolutePath);
+                    //result=CompetitorMediaPlanAlertUI.GetMediaPlanAlertUI(this,CompetitorMediaPlanAlertRules.GetFormattedTable(_webSession, Page.Request.QueryString.Get("zoomDate")),_webSession,Page.Request.QueryString.Get("zoomDate"),Page.Request.Url.AbsolutePath);
 				}
 				catch(System.Exception){
 					Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(958, _webSession.SiteLanguage)));

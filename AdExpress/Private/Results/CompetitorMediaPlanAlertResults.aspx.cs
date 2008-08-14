@@ -218,7 +218,7 @@ namespace AdExpress.Private.Results{
 				#region Résultat
 				//Code html des résultats
 				if(eventButton==9){
-					result=TNS.AdExpress.Web.UI.Results.CompetitorMediaPlanAlertUI.GetMediaPlanAlertUI(this,CompetitorMediaPlanAlertRules.GetFormattedTable(_webSession,_webSession.PeriodBeginningDate, _webSession.PeriodEndDate),_webSession);
+                    //result=TNS.AdExpress.Web.UI.Results.CompetitorMediaPlanAlertUI.GetMediaPlanAlertUI(this,CompetitorMediaPlanAlertRules.GetFormattedTable(_webSession,_webSession.PeriodBeginningDate, _webSession.PeriodEndDate),_webSession);
 				}
 				#endregion
 

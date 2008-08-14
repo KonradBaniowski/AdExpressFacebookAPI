@@ -267,7 +267,6 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			#region Construction de la requête
 			try {
-
 				if (customerPeriod.Is4M) {
 					sql4M = GetRequestForAnalysisPortofolio(DBConstantes.TableType.Type.dataVehicle4M);
 					sql = sql4M;
@@ -276,7 +275,6 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql = GetRequestForAnalysisPortofolio(DBConstantes.TableType.Type.dataVehicle);
 				}
 				else {
-
 					if (customerPeriod.IsDataVehicle) {
 						sqlDataVehicle = GetRequestForAnalysisPortofolio(DBConstantes.TableType.Type.dataVehicle);
 						sql = sqlDataVehicle;
@@ -289,7 +287,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 					if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
 						sql = "";
-						sql += " select " + WebFunctions.SQLGenerator.getUnitFieldsNameForMediaDetailResult(_vehicleInformation.Id, TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS);
+						sql += " select " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession,DBConstantes.TableType.Type.dataVehicle);
 						sql += " from (";
 						sql += sqlDataVehicle;
 						sql += " UNION ";
@@ -364,10 +362,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			switch (type) {
 				case DBConstantes.TableType.Type.dataVehicle4M:
 				case DBConstantes.TableType.Type.dataVehicle:
-					sql += "select " + WebFunctions.SQLGenerator.getUnitFieldsNameForAnalysisPortofolio(_vehicleInformation.Id, DBConstantes.TableType.Type.dataVehicle);
+					sql += "select " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle);
 					break;
 				case DBConstantes.TableType.Type.webPlan:
-					sql += "select " + WebFunctions.SQLGenerator.getUnitFieldsNameForAnalysisPortofolio(_vehicleInformation.Id, DBConstantes.TableType.Type.webPlan);
+                    sql += "select " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.webPlan);
 					break;
 			}
 			if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {

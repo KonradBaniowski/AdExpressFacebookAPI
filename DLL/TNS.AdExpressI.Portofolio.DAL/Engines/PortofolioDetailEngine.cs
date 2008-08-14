@@ -96,7 +96,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						if (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
 							dataFieldsForGadWithoutTablePrefix = ", " + WebFunctions.SQLGenerator.GetFieldsAddressForGad("");
 						sql = "";
-						sql += " select id_media, " + productFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix + ", " + WebFunctions.SQLGenerator.getUnitFieldsNameForMediaDetailResult(_vehicleInformation.Id, TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO);
+						sql += " select id_media, " + productFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix + ", " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession,DBConstantes.TableType.Type.dataVehicle);
 						sql += " from (";
 						sql += sqlDataVehicle;
 						sql += " UNION ";
@@ -176,7 +176,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				detailProductTablesNames = _webSession.GenericProductDetailLevel.GetSqlTables(DBConstantes.Schema.ADEXPRESS_SCHEMA);
 				detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-				unitFields = WebFunctions.SQLGenerator.getUnitFieldsNameForMediaDetailResult(_vehicleInformation.Id, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+				unitFields = WebFunctions.SQLGenerator.GetUnitFieldsName(_webSession,type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 				detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
 
 				switch (type) {

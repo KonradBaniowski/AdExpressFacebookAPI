@@ -448,7 +448,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				case DBClassificationConstantes.Vehicles.names.internationalPress:						
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
-				case DBClassificationConstantes.Vehicles.names.radio:
+				case DBClassificationConstantes.Vehicles.names.radio: 
 					if (dt == null || dt.Rows.Count == 0) {
 						//No data to show
 						this.Visible = false;
@@ -474,7 +474,10 @@ namespace TNS.AdExpress.Web.Controls.Results {
 									SetSeries(chartArea, series, xValues, yValues, pieColors, oldUnitLabel, _typeFlash, _pieLineColor);
 									if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.press
 										|| (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.internationalPress)
-										InitializeComponentForPress(chartArea, _typeFlash, _webSession, _defaultBorderLineColor, _chartBorderLineColor, _titleColor, indexTitle);
+
+                                        // BUG A DEDE
+                                        InitializeComponent(chartArea, _typeFlash, _webSession, _defaultBorderLineColor, _chartBorderLineColor, _titleColor, indexTitle);
+										//InitializeComponentForPress(chartArea, _typeFlash, _webSession, _defaultBorderLineColor, _chartBorderLineColor, _titleColor, indexTitle);
 									else
 										InitializeComponent(chartArea, _typeFlash, _webSession, _defaultBorderLineColor, _chartBorderLineColor, _titleColor, indexTitle);
 									this.Series.Add(series);
@@ -502,7 +505,9 @@ namespace TNS.AdExpress.Web.Controls.Results {
 								SetSeries(chartArea, series, xValues, yValues, pieColors, oldUnitLabel, _typeFlash, _pieLineColor);
 								if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.press
 										|| (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.internationalPress)
-									InitializeComponentForPress(chartArea, _typeFlash, _webSession, _defaultBorderLineColor, _chartBorderLineColor, _titleColor, indexTitle);
+                                    // BUG A DEDE
+                                    InitializeComponent(chartArea, _typeFlash, _webSession, _defaultBorderLineColor, _chartBorderLineColor, _titleColor, indexTitle);//TODO chek for all vehicle
+                                    //InitializeComponentForPress(chartArea, _typeFlash, _webSession, _defaultBorderLineColor, _chartBorderLineColor, _titleColor, indexTitle);
 								else InitializeComponent(chartArea, _typeFlash, _webSession, _defaultBorderLineColor, _chartBorderLineColor, _titleColor, indexTitle);//TODO chek for all vehicle
 								if (!_typeFlash) {
 									//CopyRight

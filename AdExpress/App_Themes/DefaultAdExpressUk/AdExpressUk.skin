@@ -422,14 +422,14 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Portofolio chart web control : used to show charts for protofolio module --%>
-<webUiResults:PortofolioChartUI   
+<%--<webUiResults:PortofolioChartUI   
                            runat="server" 
                            PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 
                            PieLineColor="Black" 
                            DefaultBorderLineColor="#C0C0C0" 
                            ChartBorderLineColor="#634984" 
                            TitleColor="#644883"  
-/>
+/>--%>
 <ctrResults:PortofolioChartWebControl  
                            runat="server" 
                            PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 

@@ -62,7 +62,7 @@ namespace AdExpress.Private.Result.ValueExcel{
 				#region Résultats
 				try{
 					if(_webSession.isCompetitorAdvertiserSelected()){
-						result=CompetitorMediaPlanAlertUI.GetMediaPlanAlertExcelUI(CompetitorMediaPlanAlertRules.GetFormattedTable(_webSession, _webSession.PeriodBeginningDate, _webSession.PeriodEndDate),_webSession,_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
+                        //result=CompetitorMediaPlanAlertUI.GetMediaPlanAlertExcelUI(CompetitorMediaPlanAlertRules.GetFormattedTable(_webSession, _webSession.PeriodBeginningDate, _webSession.PeriodEndDate),_webSession,_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
 					}
 					else{
 						result=GenericMediaPlanAlertUI.GetMediaPlanAlertWithMediaDetailLevelExcelUI(GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession),_webSession,_webSession.PeriodBeginningDate, _webSession.PeriodEndDate,true);

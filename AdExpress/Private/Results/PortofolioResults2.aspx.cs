@@ -132,7 +132,7 @@ namespace AdExpress.Private.Results{
 		/// <summary>
 		/// Graphique du portefeuille d'un support
 		/// </summary>
-		protected TNS.AdExpress.Web.UI.Results.PortofolioChartUI portofolioChart;
+        //protected TNS.AdExpress.Web.UI.Results.PortofolioChartUI portofolioChart;
 		/// <summary>
 		/// Annule la personnalisation des éléments de références et concurrents
 		/// </summary>

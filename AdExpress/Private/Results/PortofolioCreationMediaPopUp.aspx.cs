@@ -80,7 +80,7 @@ namespace AdExpress.Private.Results{
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
-				result=PortofolioUI.GetPortofolioCreationMedia(_webSession,date,parution,idMedia,nameMedia,nbrePages,pageAnchor);
+                //result=PortofolioUI.GetPortofolioCreationMedia(_webSession,date,parution,idMedia,nameMedia,nbrePages,pageAnchor);
 
 				#region Scripts
 				// Ouverture de la popup une création
