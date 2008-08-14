@@ -3430,8 +3430,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 bool first = true;
 
                 foreach (UnitInformation currentUnit in unitsList) {
+                    if (!first) sqlUnit += ", ";
+                    else first = false;
                     sqlUnit += currentUnit.GetSQLUnionSum();
-                    break;
                 }
                 return sqlUnit;
             }
