@@ -3106,7 +3106,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         public List<UnitInformation> GetValidUnitForResult() {
             try {
                 Module moduleDescription = ModulesList.GetModule(currentModule);
-                ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformationsList()[(int)currentTab];
+                ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformation((int)currentTab);
                 string listStr = GetSelection(SelectionUniversMedia,  TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
                 List<Vehicles.names> vehicleList = new List<Vehicles.names>();
                 if (listStr != null && listStr.Length > 0) {
