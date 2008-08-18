@@ -132,9 +132,9 @@ namespace AdExpress.Private.MyAdExpress{
 			try{
                 _theme = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 				//Modification de la langue pour les Textes AdExpress
-                for (int i = 0; i < this.Controls.Count; i++) {
-                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                }
+                //for (int i = 0; i < this.Controls.Count; i++) {
+                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                //}
 			
 				HeaderWebControl1.ActiveMenu = CstWeb.MenuTraductions.MY_ADEXPRESS;
 

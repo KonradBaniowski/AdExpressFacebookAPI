@@ -1,4 +1,3 @@
-<%@ Import Namespace="TNS.AdExpress.Web.Translation" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.CompetitorMediaPlanResults" CodeFile="CompetitorMediaPlanResults.aspx.cs" %>

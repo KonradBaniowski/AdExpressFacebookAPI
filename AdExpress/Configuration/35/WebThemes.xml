@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <themes>
+    <!--<theme id="1" description="Default AdExpress Theme using French"  name="DefaultAdExpressFr" siteLanguage="33"/>
+    <theme id="2" description="Default AdExpress Theme using English" name="DefaultAdExpressUk" siteLanguage="44"/>-->
+    <theme id="3" description="Default AdExpress Theme using English For Finland" name="DefaultAdExpressUk" siteLanguage="44"/>
+  </themes>
+</configuration>

@@ -77,7 +77,7 @@ public partial class Private_Selection_CompetitorUniverseProductSelection : TNS.
         HeaderWebControl1.Language = _webSession.SiteLanguage;
         universAdExpressText.Language = _webSession.SiteLanguage;
 		//Modification de la langue pour les Textes AdExpress
-		TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls, _webSession.SiteLanguage);
+		//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls, _webSession.SiteLanguage);
 			
 
 		#region  Images buttons 

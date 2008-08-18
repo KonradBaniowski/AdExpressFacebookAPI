@@ -111,9 +111,10 @@ namespace AdExpress{
                     _setLanguage = string.Format("setPermanentCookie(\"{1}\",{0});", _siteLanguage, Cookies.LANGUAGE);
 				}
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_siteLanguage);
+                //TNS.AdExpress.Web.Translation.Functions.Translate.SetAllTextLanguage(this,_siteLanguage);
+                
 				//langage de l'entête
-				HeaderWebControl1.Language = _siteLanguage;
+				//HeaderWebControl1.Language = _siteLanguage;
 				//Bouton valider
 				//ImageButtonRollOverWebControl1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
 				//ImageButtonRollOverWebControl1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";

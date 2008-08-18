@@ -1,4 +1,3 @@
-<%@ Import Namespace="TNS.AdExpress.Web.Translation" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Page language="c#" Inherits="AdExpress.selectionModule" CodeFile="selectionModule.aspx.cs" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>

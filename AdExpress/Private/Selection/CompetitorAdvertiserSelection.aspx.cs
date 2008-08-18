@@ -229,7 +229,7 @@ namespace AdExpress.Private.Selection{
 			
 				#region Langues et textes
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
 				_webSession.Save();
 				initializeImageButtonRollOverWebControl1.Text=GestionWeb.GetWebWord(974,_webSession.SiteLanguage);
 				initializeAllImageButtonRollOverWebControl.Text=GestionWeb.GetWebWord(979,_webSession.SiteLanguage);

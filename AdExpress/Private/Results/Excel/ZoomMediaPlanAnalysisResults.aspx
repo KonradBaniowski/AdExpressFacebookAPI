@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.Excel.ZoomMediaPlanAnalysisResults" CodeFile="ZoomMediaPlanAnalysisResults.aspx.cs" %>
 <%@ Import Namespace="System.Data" %>
-<%@ Import Namespace="TNS.AdExpress.Web.Translation" %>
+
 <%Response.ContentType = "application/vnd.ms-excel";%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>

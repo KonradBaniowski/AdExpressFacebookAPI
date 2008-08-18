@@ -14,6 +14,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.UI {
     /// <summary>
@@ -66,6 +67,10 @@ namespace TNS.AdExpress.Web.UI {
         }
         #endregion
 
+        protected override void OnLoad(EventArgs e) {
+            base.OnLoad(e);
+            Translate.SetAllTextLanguage(this,_siteLanguage);
+        }
         #endregion
     }
 }

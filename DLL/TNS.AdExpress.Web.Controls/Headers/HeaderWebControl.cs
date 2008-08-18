@@ -33,7 +33,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 	/// </summary>
 	[DefaultProperty("IdLanguage"),
 	ToolboxData("<{0}:HeaderWebControl Language=33 runat=server></{0}:HeaderWebControl>")]
-	public class HeaderWebControl : System.Web.UI.WebControls.WebControl {
+	public class HeaderWebControl : System.Web.UI.WebControls.WebControl,ITranslation {
 
 		#region Variables
 		/// <summary>

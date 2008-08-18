@@ -124,7 +124,7 @@ namespace AdExpress.Private.Results{
 			
 				#region Texte et langage du site
 				creativeSelectionWebControl.CustomerSession=_webSession;
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
 				advertiserScript= TNS.AdExpress.Web.Functions.DisplayTreeNode.AddScript();
 				allChecked=GestionWeb.GetWebWord(856,_webSession.SiteLanguage);			
 				#endregion

@@ -16,7 +16,6 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 
-
 namespace AdExpress.Private.Universe{
 
 	/// <summary>
@@ -139,7 +138,7 @@ namespace AdExpress.Private.Universe{
 			idSession=Int64.Parse(_webSession.IdSession);
 
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+			Translate.SetAllTextLanguage(this,_webSession.SiteLanguage);
 						
 			//Langage du site
 			_siteLanguage = _webSession.SiteLanguage;

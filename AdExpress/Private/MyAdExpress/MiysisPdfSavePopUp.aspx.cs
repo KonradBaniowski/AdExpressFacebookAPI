@@ -69,7 +69,7 @@ namespace AdExpress.Private.MyAdExpress{
 		protected void Page_Load(object sender, System.EventArgs e){
 
 			#region Textes et Langage du site
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
+			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);
 			#endregion
 
 			#region Rollover des boutons

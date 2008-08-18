@@ -236,7 +236,7 @@ namespace AdExpress.Private.Selection {
 				#endregion			
 			
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
 						 
 				#region Evènemment
 				// Connaître le boutton qui a été cliqué 

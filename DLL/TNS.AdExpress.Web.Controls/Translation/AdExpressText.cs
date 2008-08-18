@@ -18,7 +18,7 @@ namespace TNS.AdExpress.Web.Controls.Translation{
 	/// Composant affichant un texte extrait de la base de données AdExpress pour le site AdExpress
 	/// </summary>
 	[ToolboxData("<{0}:AdExpressText Language='33' Code='0' runat='server'></{0}:AdExpressText>")]
-	public class AdExpressText: WebControl{
+	public class AdExpressText: WebControl,ITranslation{
 
 		#region Variables
 
@@ -81,5 +81,6 @@ namespace TNS.AdExpress.Web.Controls.Translation{
 
 		#endregion
 
-	}
+
+    }
 }

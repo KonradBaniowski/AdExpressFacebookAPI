@@ -101,7 +101,7 @@ namespace AdExpress.Private.Results{
 				#endregion
 				
 				#region Textes et langage AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
 				Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 				#endregion

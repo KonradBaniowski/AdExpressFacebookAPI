@@ -28,7 +28,7 @@ namespace AdExpress.Private.Helps{
 		/// <param name="e">Aguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
+			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
 		}
 		#endregion
 

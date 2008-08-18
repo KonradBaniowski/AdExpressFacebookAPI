@@ -139,9 +139,9 @@ namespace AdExpress.Private.Selection {
 				#endregion															
 
 				#region Textes et langage du site
-                for (int i = 0; i < this.Controls.Count; i++) {
-                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                }
+                //for (int i = 0; i < this.Controls.Count; i++) {
+                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                //}
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 				//validateButton1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";

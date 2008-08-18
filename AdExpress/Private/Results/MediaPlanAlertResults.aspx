@@ -1,4 +1,3 @@
-<%@ Import Namespace="TNS.AdExpress.Web.Translation" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.MediaPlanAlertResults" CodeFile="MediaPlanAlertResults.aspx.cs" %>
 <%@ Register TagPrefix="cc5" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>

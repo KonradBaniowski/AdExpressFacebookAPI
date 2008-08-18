@@ -3,7 +3,6 @@
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.ZoomCompetitorMediaPlanAnalysisResults" CodeFile="ZoomCompetitorMediaPlanAnalysisResults.aspx.cs" %>
 <%@ Import Namespace="System.Data" %>
-<%@ Import Namespace="TNS.AdExpress.Web.Translation" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>

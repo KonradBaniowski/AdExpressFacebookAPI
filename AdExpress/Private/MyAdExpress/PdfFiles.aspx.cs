@@ -135,7 +135,7 @@ namespace AdExpress.Private.MyAdExpress{
 
                 #region Textes et Langage du site
                 //Modification de la langue pour les Textes AdExpress
-                TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls, _webSession.SiteLanguage);
+                //TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls, _webSession.SiteLanguage);
 
                 HeaderWebControl1.ActiveMenu = CstWeb.MenuTraductions.MY_ADEXPRESS;
                 #endregion

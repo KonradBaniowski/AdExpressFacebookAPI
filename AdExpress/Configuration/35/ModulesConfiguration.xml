@@ -1,0 +1,1418 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <moduleGroups>
+
+
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- **													Modules d'alertes 					                                  **-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+
+
+    <moduleGroup name="Alertes" type="0" privilegecode="138" traductioncode="2183" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2187">
+      <!-- ***************************************** Alerte portefeuille d'un support *****************************************-->
+      <module name="Alerte portefeuille d'un support" privilegecode="282" traductioncode="2164" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2193" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
+        <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
+        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
+        <ProductDetailLevel>
+          <defaultProductDetailLevels>
+            <defaultProductDetailLevel id="11" name="famille" />
+            <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
+            <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
+            <defaultProductDetailLevel id="19" name="groupe" />
+            <defaultProductDetailLevel id="20" name="groupe\annonceur" />
+            <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="21" name="produit" />
+          </defaultProductDetailLevels>
+          <allowedProductLevelItems>
+            <allowedProductLevelItem id="11" name="Famille"/>
+            <allowedProductLevelItem id="12" name="Classe"/>
+            <allowedProductLevelItem id="13" name="Groupe"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="10" name="Produit"/>
+            <allowedProductLevelItem id="9" name="Marque"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
+            <allowedProductLevelItem id="8" name="Annonceur"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <allowedProductLevelItem id="16" name="Agence"/>
+          </allowedProductLevelItems>
+        </ProductDetailLevel>
+        <selections>
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media"  menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false" />
+          <selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/PortofolioDetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
+          <selection id="4" name="Date" showLink="true" traductioncode="854" url="/Private/Selection/PortofolioDateSelection.aspx" icone="calendar"  menuTextId="1986" helpUrl="/Private/Helps/PortofolioDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <optionalSelections>
+         <!-- <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">-->
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
+           <!-- <loadableUnivers>
+              <type id="4" name="sector_subsector"/>
+              <type id="5" name="subsector_group"/>             
+              <type id="7" name="group"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="8" name="Synthèse publicitaire" traductioncode="1375" url="/Private/Results/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          </page>
+          <page id="1" resultid="9" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <!-- s'il n'y en a pas toutes les unites sont disponibles-->
+            <allowedUnits>
+              <!--<allowedUnit>kEuro</allowedUnit>-->
+              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+              <allowedUnit>mmPerCol</allowedUnit>
+              <allowedUnit>pages</allowedUnit>
+              <allowedUnit>numberBoard</allowedUnit>
+              <allowedUnit>volume</allowedUnit>
+            </allowedUnits>
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <!--<page id="2" resultid="10" name="Nouveautés" traductioncode="1377" url="/Private/Results/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="11" name="New in Media"/>
+            </detailSelections>
+          </page>-->
+          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" />
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          </page>
+          <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+    </moduleGroup>
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- **													Modules d'Analyse 					                                  **-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+
+    <moduleGroup name="Analyses" type="1" privilegecode="136" traductioncode="2184"  flashUrl="/Flash/common/GroupedeModuleAnalyse.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAnalyse.gif" descriptionWebTextId="2188">
+
+      <!-- *****************************************  Analyse Plan Média  *****************************************-->
+      <!--<module name="Analyse Plan Média" privilegecode="196" traductioncode="2171" moduleCategoryId="2" urlNextPage="/Private/Selection/AdvertiserSelection.aspx" descriptionWebTextId="2200" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">-->
+      <module name="Analyse Plan Média" privilegecode="196" traductioncode="2171" moduleCategoryId="2" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2200" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">
+        <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
+        <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Default.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Default.MediaScheduleResultDAL"/>
+        <MediaDetailLevel>
+          <defaultMediaDetailLevels>
+            <defaultMediaDetailLevel id="1" name="media\catégorie" />
+            <defaultMediaDetailLevel id="2" name="media\catégorie\support" />
+            <defaultMediaDetailLevel id="3" name="media\catégorie\support\version" />
+            <defaultMediaDetailLevel id="4" name="media\centre d'interet\support" />
+            <defaultMediaDetailLevel id="5" name="media\centre d'interet\support\version" />
+            <defaultMediaDetailLevel id="6" name="media\regie\support" />
+            <defaultMediaDetailLevel id="7" name="media\regie\support\version" />
+            <defaultMediaDetailLevel id="8" name="media\version\support" />
+          </defaultMediaDetailLevels>
+          <allowedMediaLevelItems>
+            <allowedMediaLevelItem id="1" name="Media"/>
+            <allowedMediaLevelItem id="2" name="Categorie"/>
+            <allowedMediaLevelItem id="3" name="Support"/>
+            <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+            <allowedMediaLevelItem id="5" name="Régie"/>
+            <allowedMediaLevelItem id="6" name="Version"/>
+            <allowedMediaLevelItem id="8" name="Annonceur"/>
+            <allowedMediaLevelItem id="9" name="Marque"/>
+            <allowedMediaLevelItem id="10" name="Produit"/>
+            <allowedMediaLevelItem id="11" name="Famille"/>
+            <allowedMediaLevelItem id="12" name="Classe"/>
+            <allowedMediaLevelItem id="13" name="Groupe"/>
+            <allowedMediaLevelItem id="14" name="Variété"/>
+            <allowedMediaLevelItem id="17" name="Titre"/>
+            <allowedMediaLevelItem id="26" name="Pays"/>
+          </allowedMediaLevelItems>
+        </MediaDetailLevel>
+        <selections>
+          
+          <!--<selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/AdvertiserSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserSelectionHelp.aspx" validationMethod="isAdvertisersSelected">-->
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+           <!--<loadableUnivers>
+              <type id="1" name="holding_advertiser"/>
+              <type id="2" name="advertiser_product"/>
+              <type id="3" name="product"/>
+              <type id="4" name="sector_subsector"/>
+              <type id="5" name="subsector_group"/>
+              <type id="7" name="group"/>
+              <type id="10" name="brand_product"/>
+              <type id="6" name="group_segment"/>
+              <type id="15" name="segment"/>
+            </loadableUnivers>-->
+              <allowedUniverseLevels>
+                <allowedUniverseLevel id="1" name="sector"/>
+                <allowedUniverseLevel id="2" name="subsector"/>
+                <allowedUniverseLevel id="3" name="group_"/>
+                <allowedUniverseLevel id="4" name="segment"/>
+                <allowedUniverseLevel id="7" name="holding_company"/>
+                <allowedUniverseLevel id="6" name="advertiser"/>
+                <allowedUniverseLevel id="8" name="brand"/>
+                <allowedUniverseLevel id="5" name="product"/>
+              </allowedUniverseLevels>
+              <allowedUniverseBranches>
+                <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+                <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
+                <allowedUniverseBranch id="3" name="brand\product"/>
+              </allowedUniverseBranches>
+          </selection>
+          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
+          <!--<selection id="4" name="Date" traductioncode="854" url="/Private/Selection/AnalyseDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/AnalyseDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>-->
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <optionalSelections>
+          <optionalSelection id="7" name="Slogan" traductioncode="1993" url="/Private/Selection/SloganPersonalisationSelection.aspx" icone="slogan" menuTextId="1987" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx">
+            <!--<page name="Synthèses" traductioncode="750" url="#" />-->
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="18" name="Generic Media Level Detail"/>
+              <detailSelection id="19" name="Slogan Selected"/>
+            </detailSelections>
+          </page>
+        </results>
+        <!--<moduleBridge>
+						<link name="Plan Média Annonceur Concurrentiel" privilegecode="184" />
+					</moduleBridge>-->
+      </module>
+      <!-- ***************************************** Modules Plan Média Concurrentiel *****************************************-->
+      <!-- <module name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184" traductioncode="2172" moduleCategoryId="2" urlNextPage="/Private/Selection/CompetitorAdvertiserSelection.aspx" descriptionWebTextId="2201" descriptionImageName="/Images/Common/Infobulle/PlanMediaConcurrentiel.png">-->
+      <module name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184" traductioncode="2172" moduleCategoryId="2" urlNextPage="/Private/Selection/CompetitorUniverseProductSelection.aspx" descriptionWebTextId="2201" descriptionImageName="/Images/Common/Infobulle/PlanMediaConcurrentiel.png">
+        <selections>
+          <!--<selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/CompetitorAdvertiserSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserCompetitorSelectionHelp.aspx" validationMethod="isCompetitorAdvertiserSelected">
+            <loadableUnivers>
+              <type id="1" name="holding_advertiser"/>
+              <type id="2" name="advertiser_product"/>
+              <type id="3" name="product"/>
+              <type id="10" name="brand_product"/>
+            </loadableUnivers>
+          </selection>-->
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/CompetitorUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserCompetitorSelectionHelp.aspx" validationMethod="isCompetitorAdvertiserSelected">        
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="7" name="holding_company"/>
+              <allowedUniverseLevel id="6" name="advertiser"/>
+              <allowedUniverseLevel id="8" name="brand"/>
+              <allowedUniverseLevel id="5" name="product"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
+              <allowedUniverseBranch id="3" name="brand\product"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/AnalyseDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/AnalyseDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <results>
+          <page id="0" resultid="17" name="Résultats" traductioncode="1474" url="/Private/Results/CompetitorMediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorMediaPlanResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorMediaPlanResultsHelp.aspx">
+            <!--<page name="Synthèses" traductioncode="750" url="#" />-->
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+            </detailSelections>
+          </page>
+        </results>
+        <!--<moduleBridge>
+                        <link name="Alerte Plan Média" privilegecode="198" />
+                  </moduleBridge>-->
+      </module>
+      <!-- ***************************************** Modules d'Analyse concurrentielle*****************************************-->
+      <module name="Analyse concurrentielle" privilegecode="278" traductioncode="2167" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
+        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
+        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
+        <ProductDetailLevel>
+          <defaultProductDetailLevels>
+            <defaultProductDetailLevel id="11" name="famille" />
+            <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
+            <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
+            <defaultProductDetailLevel id="19" name="groupe" />
+            <defaultProductDetailLevel id="20" name="groupe\annonceur" />
+            <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="21" name="produit" />
+          </defaultProductDetailLevels>
+          <allowedProductLevelItems>
+            <allowedProductLevelItem id="11" name="Famille"/>
+            <allowedProductLevelItem id="12" name="Classe"/>
+            <allowedProductLevelItem id="13" name="Groupe"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="10" name="Produit"/>
+            <allowedProductLevelItem id="9" name="Marque"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
+            <allowedProductLevelItem id="8" name="Annonceur"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <allowedProductLevelItem id="16" name="Agence"/>
+          </allowedProductLevelItems>
+        </ProductDetailLevel>
+        <ColumnDetailLevel>
+          <allowedColumnDetailLevelItems>
+            <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+            <allowedColumnDetailLevelItem id="3" name="Support"/>
+            <allowedColumnDetailLevelItem id="5" name="Régie"/>
+            <allowedColumnDetailLevelItem id="17" name="Titre"/>
+            <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+          </allowedColumnDetailLevelItems>
+        </ColumnDetailLevel>
+        <selections>
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
+          <selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected">
+            <loadableUnivers>
+              <type id="8" name="category_media"/>
+            </loadableUnivers>
+          </selection>
+          <!--<selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/AnalyseDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/AnalyseDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>-->
+          <selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <optionalSelections>
+          <!-- <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">-->
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
+            <!-- <loadableUnivers>
+              <type id="4" name="sector_subsector"/>
+              <type id="5" name="subsector_group"/>             
+              <type id="7" name="group"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </optionalSelection>         
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="18" name="Résultats portefeuille" traductioncode="1125" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="1" resultid="19" name="Résultats communs" traductioncode="1127" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="2" resultid="20" name="Résultats absents" traductioncode="1126" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="3" resultid="21" name="Résultats exclusifs" traductioncode="1128" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="4" resultid="6" name="Résultats Forces" traductioncode="1157" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" >
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="5" resultid="7" name="Résultats Potentiels" traductioncode="1158" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" >
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="6" resultid="52" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+        </results>
+        <!--<moduleBridge>
+							<link name="Alerte Plan Média" privilegecode="198" />
+					</moduleBridge>-->
+      </module>
+
+      <!-- ***************************************** Modules d'Analyse dynamique *****************************************-->
+      <module name="Analyse dynamique" privilegecode="197" traductioncode="2169" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
+        <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
+        <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
+        <ProductDetailLevel>
+          <defaultProductDetailLevels>
+            <defaultProductDetailLevel id="11" name="famille" />
+            <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
+            <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
+            <defaultProductDetailLevel id="19" name="groupe" />
+            <defaultProductDetailLevel id="20" name="groupe\annonceur" />
+            <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="21" name="produit" />
+          </defaultProductDetailLevels>
+          <allowedProductLevelItems>
+            <allowedProductLevelItem id="11" name="Famille"/>
+            <allowedProductLevelItem id="12" name="Classe"/>
+            <allowedProductLevelItem id="13" name="Groupe"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="10" name="Produit"/>
+            <allowedProductLevelItem id="9" name="Marque"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
+            <allowedProductLevelItem id="8" name="Annonceur"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <allowedProductLevelItem id="16" name="Agence"/>
+          </allowedProductLevelItems>
+        </ProductDetailLevel>
+        <ColumnDetailLevel>
+          <allowedColumnDetailLevelItems>
+            <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+            <allowedColumnDetailLevelItem id="3" name="Support"/>
+            <allowedColumnDetailLevelItem id="5" name="Régie"/>
+            <allowedColumnDetailLevelItem id="17" name="Titre"/>
+            <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+          </allowedColumnDetailLevelItems>
+        </ColumnDetailLevel>
+        <selections>
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
+          <selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">
+            <loadableUnivers>
+              <type id="8" name="category_media"/>
+            </loadableUnivers>
+          </selection>
+          <!--<selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/DynamicDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/AnalyseDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+          <selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/GlobalDynamicDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="" validationMethod="isDatesSelected"/>-->
+          <selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"  functionName="PostBack"/>
+
+        </selections>
+        <optionalSelections>
+          <!-- <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">-->
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
+            <!-- <loadableUnivers>
+              <type id="4" name="sector_subsector"/>
+              <type id="5" name="subsector_group"/>             
+              <type id="7" name="group"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="22" name="Résultats portefeuille" traductioncode="1240" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="25" name="Comparative Date"/>
+              <detailSelection id="26" name="Comparative Perid Type"/>
+              <detailSelection id="27" name="Period Disponibility Type"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="1" resultid="23" name="Résultats fidèles" traductioncode="1241" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="25" name="Comparative Date"/>
+              <detailSelection id="26" name="Comparative Perid Type"/>
+              <detailSelection id="27" name="Period Disponibility Type"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="2" resultid="24" name="Résultats fidèles en baisse" traductioncode="1242" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="25" name="Comparative Date"/>
+              <detailSelection id="26" name="Comparative Perid Type"/>
+              <detailSelection id="27" name="Period Disponibility Type"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="3" resultid="25" name="Résultats fidèles en développement" traductioncode="1243" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="25" name="Comparative Date"/>
+              <detailSelection id="26" name="Comparative Perid Type"/>
+              <detailSelection id="27" name="Period Disponibility Type"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="4" resultid="26" name="Résultats gagnés" traductioncode="1244" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="25" name="Comparative Date"/>
+              <detailSelection id="26" name="Comparative Perid Type"/>
+              <detailSelection id="27" name="Period Disponibility Type"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="5" resultid="27" name="Résultats perdus" traductioncode="1245" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="25" name="Comparative Date"/>
+              <detailSelection id="26" name="Comparative Perid Type"/>
+              <detailSelection id="27" name="Period Disponibility Type"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="28" name="Generic Column Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="6" resultid="50" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="25" name="Comparative Date"/>
+              <detailSelection id="26" name="Comparative Perid Type"/>
+              <detailSelection id="27" name="Period Disponibility Type"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+        </results>
+        <!--<moduleBridge>
+                        <link name="Alerte Plan Média" privilegecode="198" />
+                  </moduleBridge>-->
+      </module>
+      <!-- ***************************************** Modules d'Analyse de potentiels *****************************************-->
+      <module name="Analyse de potentiels" privilegecode="281" traductioncode="2168" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2197" descriptionImageName="/Images/Common/Infobulle/Potentiel.png">
+        <ProductDetailLevel>
+          <defaultProductDetailLevels>
+            <defaultProductDetailLevel id="11" name="famille" />
+            <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
+            <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
+            <defaultProductDetailLevel id="19" name="groupe" />
+            <defaultProductDetailLevel id="20" name="groupe\annonceur" />
+            <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="21" name="produit" />
+          </defaultProductDetailLevels>
+          <allowedProductLevelItems>
+            <allowedProductLevelItem id="11" name="Famille"/>
+            <allowedProductLevelItem id="12" name="Classe"/>
+            <allowedProductLevelItem id="13" name="Groupe"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="10" name="Produit"/>
+            <allowedProductLevelItem id="9" name="Marque"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
+            <allowedProductLevelItem id="8" name="Annonceur"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <allowedProductLevelItem id="16" name="Agence"/>
+          </allowedProductLevelItems>
+        </ProductDetailLevel>
+        <selections>
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
+          <selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">
+            <loadableUnivers>
+              <type id="8" name="category_media"/>
+            </loadableUnivers>
+          </selection>
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/AnalyseDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/AnalyseDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <optionalSelections>          
+          <!-- <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">-->
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
+            <!-- <loadableUnivers>
+              <type id="4" name="sector_subsector"/>
+              <type id="5" name="subsector_group"/>             
+              <type id="7" name="group"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="28" name="Résultats portefeuille" traductioncode="1125" url="/Private/Results/MarketShareResults.aspx" printExcelUrl="/Private/Results/Excel/MarketShareResults.aspx" rawExcelUrl="/Private/Results/RawExcel/MarketShareResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MarketShareResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="1" resultid="29" name="Résultats Forces" traductioncode="1157" url="/Private/Results/MarketShareResults.aspx" printExcelUrl="/Private/Results/Excel/MarketShareResults.aspx" rawExcelUrl="/Private/Results/RawExcel/MarketShareResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MarketShareResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="2" resultid="30" name="Résultats Potentiels" traductioncode="1158" url="/Private/Results/MarketShareResults.aspx" printExcelUrl="/Private/Results/Excel/MarketShareResults.aspx" rawExcelUrl="/Private/Results/RawExcel/MarketShareResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MarketShareResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <!--<detailSelection id="8" name="Product Level Detail"/>-->
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+      <!-- **************************************** Module Justificatifs Presse ********************************************************-->
+      <!--<module name="Justificatifs Presse" privilegecode="1950" traductioncode="2212" moduleCategoryId="1" urlNextPage="/Private/Selection/AdvertiserSelection.aspx" descriptionWebTextId="2213" descriptionImageName="/Images/Common/Infobulle/Justificatifs.png">-->
+        <module name="Justificatifs Presse" privilegecode="1950" traductioncode="2212" moduleCategoryId="1" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2213" descriptionImageName="/Images/Common/Infobulle/Justificatifs.png">        
+        <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+          <!--<selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/AdvertiserSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <loadableUnivers>
+               <type id="2" name="advertiser_product"/>
+              <type id="3" name="product"/>
+              <type id="10" name="brand_product"/>
+            </loadableUnivers>-->
+           <allowedUniverseLevels>                         
+            <allowedUniverseLevel id="6" name="advertiser"/>
+            <allowedUniverseLevel id="8" name="brand"/>
+            <allowedUniverseLevel id="5" name="product"/>
+          </allowedUniverseLevels>
+          <allowedUniverseBranches>            
+            <allowedUniverseBranch id="4"  name="advertiser\product"/>
+            <allowedUniverseBranch id="3" name="brand\product"/>
+          </allowedUniverseBranches>
+        </selection>
+        <selection id="4" name="Date" showLink="true" traductioncode="854" url="/Private/Selection/ProofDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/ProofAlertDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
+        <optionalSelections>
+          <optionalSelection id="7" name="Slogan" traductioncode="1993" url="/Private/Selection/SloganPersonalisationSelection.aspx" icone="slogan" menuTextId="1987" helpUrl="/Private/Helps/Default.aspx">
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="58" name="Résultats Liste des Insertions" traductioncode="2104" url="/Private/Results/ProofResults.aspx" printExcelUrl="/Private/Results/Excel/ProofResults.aspx"  menuTextId="1983" helpUrl="/Private/Helps/ProofResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+
+      <!-- ***************************************** Modules Portefeuille d'un support *****************************************-->
+      <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
+        <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
+        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>       
+        <ProductDetailLevel>
+          <defaultProductDetailLevels>
+            <defaultProductDetailLevel id="11" name="famille" />
+            <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
+            <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
+            <defaultProductDetailLevel id="19" name="groupe" />
+            <defaultProductDetailLevel id="20" name="groupe\annonceur" />
+            <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="21" name="produit" />
+          </defaultProductDetailLevels>
+          <allowedProductLevelItems>
+            <allowedProductLevelItem id="11" name="Famille"/>
+            <allowedProductLevelItem id="12" name="Classe"/>
+            <allowedProductLevelItem id="13" name="Groupe"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="10" name="Produit"/>
+            <allowedProductLevelItem id="9" name="Marque"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
+            <allowedProductLevelItem id="8" name="Annonceur"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <allowedProductLevelItem id="16" name="Agence"/>
+          </allowedProductLevelItems>
+        </ProductDetailLevel>
+        <selections>
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
+          <selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/PortofolioDetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/PortofolioGlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <optionalSelections>
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >            
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="31" name="Synthèse publicitaire" traductioncode="1375" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          </page>
+          <page id="1" resultid="32" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="24" name="Study Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+            </detailSelections>
+          </page>
+          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" />
+          <detailSelections>
+            <detailSelection id="1" name="Module name"/>
+            <detailSelection id="2" name="Result name"/>
+            <detailSelection id="3" name="Date"/>
+            <detailSelection id="5" name="Vehicle Selected"/>
+            <detailSelection id="9" name="Competitor Media Selected"/>
+            <detailSelection id="6" name="Product Selected"/>
+          </detailSelections>
+          <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          </page>
+          <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+      <!--************************************************* Tableaux dynamiques **********************************************************************-->
+      <module name="Tableaux dynamiques" privilegecode="194" traductioncode="2174" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapProductSelection.aspx" descriptionWebTextId="2203" descriptionImageName="/Images/Common/Infobulle/TableauDynamique.png">
+        <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
+        <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
+        <selections>
+          <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
+            <!--<loadableUnivers>
+              <type id="6" name="group_segment"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="6" name="group_\segment"/>
+            </allowedUniverseBranches>
+            <subSelections>
+              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SectorAnalysisVehicleSelectionHelp.aspx" >                
+              </subSelection>
+              <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SectorDateSelectionHelp.aspx" >
+              </subSelection>
+            </subSelections>            
+          </selection>       
+        </selections>
+        <optionalSelections>
+          <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
+          </optionalSelection>       
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="33" name="Résultats" traductioncode="750" url="/Private/Results/ASDynamicTables.aspx" printExcelUrl="/Private/Results/Excel/DynamicTables.aspx" menuTextId="1983" helpUrl="/Private/Helps/ASDynamicTablesHelp.aspx">
+            <!--<page name="Synthèses" traductioncode="750" url="#" />-->
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="8" name="Product Level Detail"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+            </detailSelections>
+          </page>
+        </results>
+        <moduleBridge>
+          <link name="Indicateurs" privilegecode="195" />
+        </moduleBridge>
+      </module>
+      <!--************************************************* Indicateurs **********************************************************************-->
+      <module name="Indicateurs" privilegecode="195" traductioncode="2173" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapProductSelection.aspx" descriptionWebTextId="2202" descriptionImageName="/Images/Common/Infobulle/Indicateurs.png">
+        <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
+        <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
+        <selections>
+          <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
+           <!--<loadableUnivers>
+              <type id="6" name="group_segment"/>
+            </loadableUnivers>-->
+              <allowedUniverseLevels>               
+                <allowedUniverseLevel id="3" name="group_"/>
+                <allowedUniverseLevel id="4" name="segment"/>                
+              </allowedUniverseLevels>
+              <allowedUniverseBranches>
+                <allowedUniverseBranch id="6" name="group_\segment"/>               
+              </allowedUniverseBranches>
+            <subSelections>
+              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SectorAnalysisVehicleSelectionHelp.aspx" >
+              </subSelection>
+              <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SectorDateSelectionHelp.aspx" >
+              </subSelection>
+            </subSelections>
+          </selection>          
+        </selections>
+        <optionalSelections>
+          <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
+          </optionalSelection>         
+        </optionalSelections>
+        <results>
+
+          <page id="0" resultid="34" name="Seasonality" traductioncode="1139" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+          <page id="1" resultid="35" name="Palmares" traductioncode="1165" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+          <page id="2" resultid="36" name="Nouveautés" traductioncode="1197" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+          <page id="3" resultid="37" name="Evolution" traductioncode="1207" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+          <page id="4" resultid="38" name="Stratégie média" traductioncode="1227" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+            </detailSelections>
+          </page>
+          <page id="5" resultid="54" name="Synthèse" traductioncode="1664" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+        </results>
+        <moduleBridge>
+          <link name="Tableaux dynamiques" privilegecode="194" />
+        </moduleBridge>
+      </module>
+      <!-- **************************************** Modules Tendances ******************************************-->
+      <module name="Tendances" privilegecode="450" traductioncode="2178" moduleCategoryId="6" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2207" descriptionImageName="/Images/Common/Infobulle/Tendances.png">
+        <selections>
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
+        </selections>
+        <results>
+          <page id="0" resultid="39" name="Résultats" traductioncode="750" url="/Private/Results/TendenciesResult.aspx" printExcelUrl="/Private/Results/Excel/TendenciesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/TendenciesResultHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+      <!-- **************************************** Modules Tableaux de bord Presse******************************************-->
+      <module name="Tableaux de bord Presse" privilegecode="475" traductioncode="2175" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2204" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <selections>
+          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
+            <!--<loadableUnivers>
+              <type id="11" name="sector"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="5" name="sector"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="4" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/DashBoardMediaSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DashBoardMediaSelectionHelp.aspx" validationMethod="isMediaSelected">
+            <loadableUnivers>
+              <type id="12" name="vehicle_interestcenter_media"/>
+            </loadableUnivers>
+          </selection>
+          <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <results>
+          <page id="0" resultid="40" name="Résultats" traductioncode="1613" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+      <!-- **************************************** Modules Tableaux de bord Radio******************************************-->
+      <module name="Tableaux de bord Radio" privilegecode="601" traductioncode="2177" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2206" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <selections>
+          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
+            <!--<loadableUnivers>
+              <type id="11" name="sector"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="5" name="sector"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="4" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/DashBoardMediaSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DashBoardMediaSelectionHelp.aspx" validationMethod="isMediaSelected">
+            <loadableUnivers>
+              <type id="12" name="vehicle_interestcenter_media"/>
+            </loadableUnivers>
+          </selection>
+          <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <results>
+          <page id="0" resultid="41" name="Résultats" traductioncode="1614" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+              <detailSelection id="13" name="Format Selected"/>
+              <detailSelection id="14" name="Day Selected"/>
+              <detailSelection id="15" name="Time Slot Selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+      <!-- **************************************** Modules Tableaux de bord télévision******************************************-->
+      <module name="Tableaux de bord télévision" privilegecode="602" traductioncode="2176" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2205" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <selections>
+          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
+            <!--<loadableUnivers>
+              <type id="11" name="sector"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="5" name="sector"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="4" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/DashBoardMediaSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DashBoardMediaSelectionHelp.aspx" validationMethod="isMediaSelected">
+            <loadableUnivers>
+              <type id="12" name="vehicle_interestcenter_media"/>
+            </loadableUnivers>
+          </selection>
+          <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
+        </selections>
+        <results>
+          <page id="0" resultid="42" name="Résultats" traductioncode="1615" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+              <detailSelection id="13" name="Format Selected"/>
+              <detailSelection id="14" name="Day Selected"/>
+              <detailSelection id="15" name="Time Slot Selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+      <!-- **************************************** Modules Tableaux de bord Pan Euro******************************************-->
+      <module name="Tableaux de bord Pan Euro" privilegecode="1036" traductioncode="2214" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2215" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <selections>
+          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
+           <!--<loadableUnivers>
+              <type id="11" name="sector"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>              
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="5" name="sector"/>           
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="4" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/DashBoardMediaSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DashBoardMediaSelectionHelp.aspx" validationMethod="isMediaSelected">
+            <loadableUnivers>
+              <type id="12" name="vehicle_interestcenter_media"/>
+            </loadableUnivers>
+          </selection>
+          <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
+        </selections>
+        <results>
+          <page id="0" resultid="53" name="Résultats" traductioncode="1892" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+              <detailSelection id="13" name="Format Selected"/>
+              <detailSelection id="14" name="Day Selected"/>
+              <detailSelection id="15" name="Time Slot Selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+    </moduleGroup>
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- **													PARRAINAGE TV					                                      **-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+
+
+    <moduleGroup name="Parrainage TV" type="5" privilegecode="149" traductioncode="2185"  flashUrl="/Flash/common/GroupedeModuleParrainage.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleParrainage.gif" descriptionWebTextId="2189">
+      <!--************************************************* Analyse des dispositifs**********************************************************************-->
+      <!--<module name="Analyse des dispositifs" privilegecode="1780" traductioncode="2180" moduleCategoryId="0" urlNextPage="/Private/Selection/AdvertiserSelection.aspx" descriptionWebTextId="2208" descriptionImageName="/Images/Common/Infobulle/Dispositifs.png">-->
+      <module name="Analyse des dispositifs" privilegecode="1780" traductioncode="2180" moduleCategoryId="0" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2208" descriptionImageName="/Images/Common/Infobulle/Dispositifs.png">
+        <MediaDetailLevel>
+          <defaultMediaDetailLevels>
+            <defaultMediaDetailLevel id="12" name="support"/>
+            <defaultMediaDetailLevel id="13" name="genre d'émissions\émissions"/>
+            <defaultMediaDetailLevel id="14" name="formes de Parrainage"/>
+          </defaultMediaDetailLevels>
+          <allowedMediaLevelItems>
+            <allowedMediaLevelItem id="1" name="Media"/>
+            <allowedMediaLevelItem id="2" name="Categorie"/>
+            <allowedMediaLevelItem id="3" name="Support"/>
+            <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+            <allowedMediaLevelItem id="5" name="Régie"/>
+            <allowedMediaLevelItem id="6" name="Version"/>
+            <allowedMediaLevelItem id="23" name="Genre d'émissions"/>
+            <allowedMediaLevelItem id="24" name="Emissions"/>
+            <allowedMediaLevelItem id="25" name="Formes de Parrainage"/>
+            <allowedMediaLevelItem id="11" name="Famille"/>
+            <allowedMediaLevelItem id="12" name="Classe"/>
+            <allowedMediaLevelItem id="13" name="Groupe"/>
+            <allowedMediaLevelItem id="10" name="Produit"/>
+            <allowedMediaLevelItem id="9" name="Marque"/>
+            <allowedMediaLevelItem id="8" name="Annonceur"/>
+            <allowedMediaLevelItem id="7" name="Groupe de société"/>
+          </allowedMediaLevelItems>
+        </MediaDetailLevel>
+        <selections>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <!--<selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/AdvertiserSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserSelectionHelp.aspx" validationMethod="isAdvertisersSelected">-->
+            <!--<loadableUnivers>
+              <type id="1" name="holding_advertiser"/>
+              <type id="2" name="advertiser_product"/>
+              <type id="3" name="product"/>
+              <type id="4" name="sector_subsector"/>
+              <type id="5" name="subsector_group"/>
+              <type id="7" name="group"/>
+              <type id="10" name="brand_product"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+              <allowedUniverseLevel id="7" name="holding_company"/>
+              <allowedUniverseLevel id="6" name="advertiser"/>
+              <allowedUniverseLevel id="8" name="brand"/>
+              <allowedUniverseLevel id="5" name="product"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+              <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
+              <allowedUniverseBranch id="3" name="brand\product"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/SponsorshipDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SponsorshipDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <optionalSelections>
+          <optionalSelection id="3" name="Vehicle" traductioncode="2053" url="/Private/Selection/RefineOneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" optionalNextUrl="/Private/Selection/RefineMediaUniverseSelection.aspx">
+          </optionalSelection>
+          <optionalSelection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/RefineMediaUniverseSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/RefineMediaUniverseSelectionHelp.aspx">
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="56" name="Résultats" traductioncode="2048" url="/Private/Results/SponsorshipResults.aspx" printExcelUrl="/Private/Results/Excel/SponsorshipResults.aspx"  menuTextId="1983" helpUrl="/Private/Helps/SponsorshipResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="18" name="Generic Media Level Detail"/>
+              <detailSelection id="23" name="Percentage Alignment selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+      <!--************************************************* Analyse des programmes **********************************************************************-->
+      <module name="Analyse des programmes" privilegecode="1781" traductioncode="2179" moduleCategoryId="0" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2209" descriptionImageName="/Images/Common/Infobulle/Programmes.png">
+        <MediaDetailLevel>
+          <defaultMediaDetailLevels>
+            <defaultMediaDetailLevel id="10" name="annonceur"/>
+            <defaultMediaDetailLevel id="11" name="famille"/>
+          </defaultMediaDetailLevels>
+          <allowedMediaLevelItems>
+            <allowedMediaLevelItem id="11" name="Famille"/>
+            <allowedMediaLevelItem id="12" name="Classe"/>
+            <allowedMediaLevelItem id="13" name="Groupe"/>
+            <allowedMediaLevelItem id="10" name="Produit"/>
+            <allowedMediaLevelItem id="9" name="Marque"/>
+            <allowedMediaLevelItem id="8" name="Annonceur"/>
+            <allowedMediaLevelItem id="7" name="Groupe de société"/>
+            <allowedMediaLevelItem id="23" name="Genre d'émissions"/>
+            <allowedMediaLevelItem id="24" name="Emissions"/>
+            <allowedMediaLevelItem id="25" name="Formes de Parrainage"/>
+            <allowedMediaLevelItem id="3" name="Support"/>
+          </allowedMediaLevelItems>
+        </MediaDetailLevel>
+        <selections>
+          <selection id="3" name="Vehicle" showLink="false" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
+          <selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SponsorshipProgramDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">
+            <loadableUnivers>
+              <type id="8" name="category_media"/>
+            </loadableUnivers>
+            <subSelections>
+              <subSelection id="7" name="ProgramType" traductioncode="2050" url="/Private/Selection/ProgramTypeSelection.aspx" icone="program" menuTextId="2050" helpUrl="/Private/Helps/SponsorshipProgramDetailVehicleSelectionHelp.aspx" >
+                <loadableUnivers>
+                  <subType id="13" name="programtype_program"/>
+                </loadableUnivers>
+              </subSelection>
+              <subSelection id="8" name="Sponsorship" traductioncode="2052" url="/Private/Selection/FormSponsorshipSelection.aspx" icone="sponsorship" menuTextId="2052" helpUrl="/Private/Helps/SponsorshipProgramDetailVehicleSelectionHelp.aspx" >
+              </subSelection>
+            </subSelections>
+          </selection>
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/SponsorshipDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SponsorshipProgramDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <optionalSelections>          
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx">
+            <!--<optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">
+            <loadableUnivers>
+              <type id="1" name="holding_advertiser"/>
+              <type id="2" name="advertiser_product"/>
+              <type id="3" name="product"/>
+              <type id="4" name="sector_subsector"/>
+              <type id="5" name="subsector_group"/>
+              <type id="7" name="group"/>
+              <type id="10" name="brand_product"/>
+            </loadableUnivers>-->
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+              <allowedUniverseLevel id="7" name="holding_company"/>
+              <allowedUniverseLevel id="6" name="advertiser"/>
+              <allowedUniverseLevel id="8" name="brand"/>
+              <allowedUniverseLevel id="5" name="product"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+              <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
+              <allowedUniverseBranch id="3" name="brand\product"/>
+            </allowedUniverseBranches>
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="57" name="Résultats" traductioncode="2049" url="/Private/Results/SponsorshipResults.aspx" printExcelUrl="/Private/Results/Excel/SponsorshipResults.aspx"  menuTextId="1983" helpUrl="/Private/Helps/SponsorshipProgramResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="18" name="Generic Media Level Detail"/>
+              <detailSelection id="21" name="Program type selected"/>
+              <detailSelection id="22" name="Sponsorship form selected"/>
+              <detailSelection id="23" name="Percentage Alignment selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+    </moduleGroup>
+
+  </moduleGroups>
+</configuration>

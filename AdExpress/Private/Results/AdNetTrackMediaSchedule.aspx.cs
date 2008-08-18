@@ -112,7 +112,7 @@ namespace AdExpress.Private.Results{
 				#endregion
 			
 				#region Texte et langage du site
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
 				#endregion
 					
 				#region Chargement des paramètres

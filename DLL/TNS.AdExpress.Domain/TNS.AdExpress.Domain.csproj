@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -99,6 +100,8 @@
     <Compile Include="Results\SelectionSubGroup.cs" />
     <Compile Include="Results\VersionItem.cs" />
     <Compile Include="Translation\GestionWeb.cs" />
+    <Compile Include="Translation\ITranslation.cs" />
+    <Compile Include="Translation\Translate.cs" />
     <Compile Include="Translation\WordList.cs" />
     <Compile Include="Units\UnitInformation.cs" />
     <Compile Include="Units\UnitsInformation.cs" />

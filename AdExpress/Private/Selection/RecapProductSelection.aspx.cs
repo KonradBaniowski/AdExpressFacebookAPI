@@ -141,9 +141,9 @@ namespace AdExpress.Private.Selection{
 
 				#region Textes et langage du site
 				//Modification de la langue pour les Textes AdExpress
-                for (int i = 0; i < this.Controls.Count; i++) {
-                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                }
+                //for (int i = 0; i < this.Controls.Count; i++) {
+                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                //}
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 				recapProductSelectionWebControl.WebSession=_webSession;						

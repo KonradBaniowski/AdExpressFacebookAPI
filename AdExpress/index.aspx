@@ -20,14 +20,14 @@
 	<body class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
 			<script language="javascript" type="text/javascript">
-				var language = <%=_siteLanguage%>;
+/*				var language = <%=_siteLanguage%>;
 				<%=_setLanguage%>
 				var cook = GetCookie('language');
 				if (cook != null){
 					if (language != cook){
 						document.location="/index.aspx?sitelanguage="+cook;
 					}
-				}
+				}*/
 			</script>
 			<table cellSpacing="0" cellPadding="0" border="0">
 				<tr>

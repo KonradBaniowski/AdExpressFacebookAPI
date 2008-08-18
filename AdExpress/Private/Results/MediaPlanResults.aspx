@@ -1,4 +1,4 @@
-<%@ Import Namespace="TNS.AdExpress.Web.Translation" %>
+
 <%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="cc5" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>

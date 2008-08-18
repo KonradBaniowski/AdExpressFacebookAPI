@@ -155,9 +155,9 @@ namespace AdExpress.Private.Selection
 				// Gestion des Calendrier
 				this.dayCalendarBeginWebControl.Language=_webSession.SiteLanguage;
 				this.dayCalendarEndWebControl.Language=_webSession.SiteLanguage;
-                for (int i = 0; i < this.Controls.Count; i++) {
-                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                }
+                //for (int i = 0; i < this.Controls.Count; i++) {
+                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                //}
 
 
 				#endregion				

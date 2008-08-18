@@ -476,9 +476,7 @@
     <Compile Include="Translation\AdExpressText.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Translation\Functions\Translate.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Translation\Functions\Asupprimer.cs" />
     <EmbeddedResource Include="Buttons\ImageButtonRollOverWebControl.bmp" />
     <EmbeddedResource Include="Headers\ExportWebControl.bmp" />
     <EmbeddedResource Include="Headers\HeaderWebControl.bmp" />

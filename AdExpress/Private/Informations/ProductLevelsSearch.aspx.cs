@@ -79,7 +79,7 @@ namespace AdExpress.Private.Informations{
 
 			#region Textes et langage du site
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
 			#endregion 
 						
 			#region Gestion du flash d'attente

@@ -85,9 +85,9 @@ namespace AdExpress.Private.Selection{
 
 					#region Textes et langage du site
 					//Modification de la langue pour les Textes AdExpress
-                    for (int i = 0; i < this.Controls.Count; i++) {
-                        TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                    }
+                    //for (int i = 0; i < this.Controls.Count; i++) {
+                    //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                    //}
 					
 					//validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
 					//validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";

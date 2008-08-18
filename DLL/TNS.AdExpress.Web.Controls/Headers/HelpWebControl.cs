@@ -17,7 +17,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 	/// </summary>
 	[DefaultProperty("Text"), 
 		ToolboxData("<{0}:HelpWebControl runat=server></{0}:HelpWebControl>")]
-	public class HelpWebControl : System.Web.UI.WebControls.WebControl{
+	public class HelpWebControl : System.Web.UI.WebControls.WebControl,ITranslation{
 		
 		#region Constantes
 		/// <summary>
@@ -66,7 +66,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// Obtient ou définit la langue des textes du composant
 		/// </summary>
 		[Bindable(true),
-		Description("Url cible de l'aide"),
+		Description("Language"),
 		DefaultValue(33)]
 		public int  Language{
 			get{return language;}

@@ -106,7 +106,7 @@ namespace TNS.AdExpress.DataAccess {
                     loginId=Int64.Parse(currentRow[0].ToString());
                 }
             }
-            catch(System.Exception) {
+            catch(System.Exception err) {
                 return (loginId);
             }
             #endregion

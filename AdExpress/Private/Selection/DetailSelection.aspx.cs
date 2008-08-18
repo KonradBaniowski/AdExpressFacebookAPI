@@ -315,7 +315,7 @@ namespace AdExpress.Private.Selection{
 				//script= TNS.AdExpress.Web.Functions.DisplayTreeNode.AddScript();
 
 				//Modification de la langue pour les Textes AdExpress
-				TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_webSession.SiteLanguage);
+				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_webSession.SiteLanguage);
 				
 				MenuWebControl2.ForcePrint = "/Private/Selection/DetailSelectionExcel.aspx?idSession="
 					+ this._webSession.IdSession + ((_zoomDate.Length > 0)?"&zoomDate="+_zoomDate:"");

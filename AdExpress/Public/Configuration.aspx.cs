@@ -34,7 +34,7 @@ namespace AdExpress.Public{
                 _siteLanguage = int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
             }
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
+			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
 		}
 		#endregion
 	

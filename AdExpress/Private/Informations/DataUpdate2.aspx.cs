@@ -50,7 +50,7 @@ public partial class Private_Informations_DataUpdate2:TNS.AdExpress.Web.UI.Priva
         try {
 
             #region Modification de la langue pour les Textes AdExpress
-            TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls, _webSession.SiteLanguage);
+            //TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls, _webSession.SiteLanguage);
             #endregion
 
             #region Rollover

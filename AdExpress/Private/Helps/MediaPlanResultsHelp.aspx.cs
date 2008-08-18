@@ -133,7 +133,7 @@ namespace AdExpress.Private.Helps{
 			if(Page.Request.QueryString.Get("siteLanguage")!=null)
 				_siteLanguage=int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_siteLanguage);
+            TNS.AdExpress.Domain.Translation.Translate.SetAllTextLanguage(this,_siteLanguage);
 			#endregion
 
 		}

@@ -60,7 +60,7 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, EventArgs e) {
 			//Modification de la langue pour les Textes AdExpress
-			TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls, _webSession.SiteLanguage);
+			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls, _webSession.SiteLanguage);
 				
 			ModuleTitleWebControl1.CustomerWebSession = _webSession;
 			InformationWebControl1.Language = _webSession.SiteLanguage;

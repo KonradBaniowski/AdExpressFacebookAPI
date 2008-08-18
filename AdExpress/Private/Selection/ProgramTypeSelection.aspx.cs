@@ -173,9 +173,9 @@ namespace AdExpress.Private.Selection
 				#endregion			
 			
 				#region Modification de la langue pour les Textes AdExpress
-                for (int i = 0; i < this.Controls.Count; i++) {
-                    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                }
+                //for (int i = 0; i < this.Controls.Count; i++) {
+                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
+                //}
 				#endregion
 						 
 				#region Evènemment
