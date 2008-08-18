@@ -30,6 +30,7 @@ using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using Dundas.Charting.WebControl;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using System.IO;
 using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
@@ -236,6 +237,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
             base.OnPreRender(e);
 
+            this.AddHeader();
+
             #region Animation Params
             if (_chartType != ChartImageType.Flash)
             {
@@ -269,7 +272,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         protected override void Render(HtmlTextWriter writer)
         {
 
-            this.AddHeader();
 
             HtmlTextWriter txt = new HtmlTextWriter(new StringWriter());
             base.Render(txt);
@@ -296,13 +298,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             
             if (_chartType != ChartImageType.Flash)
             {
-                Title title = new Title("" + GestionWeb.GetWebWord(2266, _session.SiteLanguage) + "");
+                Title title = new Title(GestionWeb.GetWebWord(2266, _session.SiteLanguage));
                 title.Font = new Font("Arial", (float)8);
                 title.DockInsideChartArea = false;
                 title.Docking = Docking.Bottom;
                 this.Titles.Add(title);
 
-                this.BackImage = CstWeb.Images.LOGO_TNS_2;
+                this.BackImage = string.Format("/App_themes/{0}{1}", WebApplicationParameters.Themes[_session.SiteLanguage].Name, CstWeb.Images.LOGO_TNS_2);
                 this.BackImageAlign = ChartImageAlign.TopLeft;
                 this.BackImageMode = ChartImageWrapMode.Unscaled;
 

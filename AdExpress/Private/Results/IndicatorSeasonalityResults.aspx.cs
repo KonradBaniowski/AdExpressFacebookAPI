@@ -34,21 +34,7 @@ using TNS.AdExpress.Web.Translation.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.AdExpress.Web.Core.Sessions;
 
-//using TNS.AdExpress.Web.Core.Sessions;
-//using TNS.AdExpress.Domain.Translation;
-//using TNS.AdExpress.Constantes.Customer;
-//using TNS.AdExpress.Web.DataAccess.Results;
-//using TNS.AdExpress.Web.Rules.Results;
-//using TNS.AdExpress.Web.UI.Results;
-//using TNS.AdExpress.Domain.Web.Navigation;
-//using WebConstantes=TNS.AdExpress.Constantes.Web;
-//using ClassificationCst = TNS.AdExpress.Constantes.Classification;
-//using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-//using WebFunctions=TNS.AdExpress.Web.Functions;
-//using FrameWorkConstantes= TNS.AdExpress.Constantes.FrameWork.Results;
-//using ConstResults=TNS.AdExpress.Constantes.FrameWork.Results;
-//using Dundas.Charting.WebControl;
-//using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+
 #endregion
 
 namespace AdExpress.Private.Results {
@@ -241,6 +227,8 @@ namespace AdExpress.Private.Results {
                 ResultsOptionsWebControl1.ResultFormat = true;
                 InitializeProductWebControl1.Visible = true;
                 ResultsOptionsWebControl1.MediaDetailOption = false;
+                bigFormat = false;
+
 
                 try
                 {
@@ -251,16 +239,19 @@ namespace AdExpress.Private.Results {
                         ResultsOptionsWebControl1.ResultFormat = false;
                         InitializeProductWebControl1.Visible = false;
                     }
-                    //Seasonality
+                    //Seasonality and palmares
                     else if (_webSession.CurrentTab == CstResult.Seasonality.SEASONALITY || _webSession.CurrentTab == CstResult.PalmaresRecap.PALMARES)
                     {
                         totalChoice = true;
-                        bigFormat = true;
+                        if (_webSession.CurrentTab == CstResult.Seasonality.SEASONALITY)
+                        {
+                            bigFormat = true;
+                        }
                     }
                     //Novelty
                     else if (_webSession.CurrentTab == CstResult.Novelty.NOVELTY)
                     {
-                        totalChoice = !ResultsOptionsWebControl1.GraphRadioButton.Checked;
+                        totalChoice = false;
                     }
 
                     //EVOL

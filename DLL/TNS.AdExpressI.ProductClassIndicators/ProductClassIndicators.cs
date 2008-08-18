@@ -44,6 +44,14 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// Current running engine
         /// </summary>
         protected Engine _engine = null;
+        /// <summary>
+        /// Excel format?
+        /// </summary>
+        protected bool _excel = false;
+        /// <summary>
+        /// Chart Type
+        /// </summary>
+        protected ChartImageType _chartType = ChartImageType.Flash;
         #endregion
 
         #region Accessors
@@ -54,6 +62,22 @@ namespace TNS.AdExpressI.ProductClassIndicators
         {
             get { return _session; }
             set { _session = value; }
+        }
+        /// <summary>
+        /// Get / Set Excel format ?
+        /// </summary>
+        public bool Excel
+        {
+            get { return _excel; }
+            set { _excel = value; }
+        }
+        /// <summary>
+        /// Get / Set Chart Type
+        /// </summary>
+        public ChartImageType ChartType
+        {
+            get { return _chartType; }
+            set { _chartType = value; }
         }
         #endregion
 
@@ -85,6 +109,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual Chart GetTopsChart(CstResult.MotherRecap.ElementType _classifLevel)
         {
             ChartProductClassIndicator chart = new ChartTop(this._session, this._dalLayer, _classifLevel);
+            chart.ChartType = _chartType;
             return chart;
         }
         /// <summary>
@@ -94,29 +119,12 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual string GetTopsTable()
         {
             Engine engine = new EngineTop(this._session, this._dalLayer);
+            engine.Excel = _excel;
             return engine.GetResult().ToString();
         }
         #endregion
 
         #region Novelty
-        /// <summary>
-        /// Get indicator novelties as a graph
-        /// </summary>
-        /// <param name="_classifLevel">Classification level to display (product or advertiser)</param>
-        /// <returns>Chart control filled with top elements</returns>
-        //public virtual string GetNoveltyChart(CstResult.MotherRecap.ElementType classifLevel)
-        //{
-
-        //    if (this._engine == null || !(this._engine is EngineNovelty))
-        //    {
-        //        this._engine = new EngineNovelty(this._session, this._dalLayer);
-        //    }
-        //    EngineNovelty e = (EngineNovelty)this._engine;
-        //    e.ClassifLevel = classifLevel;
-
-        //    return e.GetGraph().ToString();
-
-        //}
         /// <summary>
         /// Get indicator novelties as a graph (product and advertiser)
         /// </summary>
@@ -129,26 +137,11 @@ namespace TNS.AdExpressI.ProductClassIndicators
                 this._engine = new EngineNovelty(this._session, this._dalLayer);
             }
             EngineNovelty e = (EngineNovelty)this._engine;
+            e.Excel = _excel;
             return e.GetGraph().ToString();
 
         }
-        /// <summary>
-        /// Get indicator novelties as a table
-        /// </summary>
-        /// <param name="_classifLevel">Classification level to display (product or advertiser)</param>
-        /// <returns>Chart control filled with top elements</returns>
-        //public virtual string GetNoveltyTable(CstResult.MotherRecap.ElementType classifLevel)
-        //{
-        //    if (this._engine == null || !(this._engine is EngineNovelty))
-        //    {
-        //        this._engine = new EngineNovelty(this._session, this._dalLayer);
-        //    }
-        //    EngineNovelty e = (EngineNovelty)this._engine;
-        //    e.ClassifLevel = classifLevel;
-
-        //    return e.GetResult().ToString();
-        //}
-        /// <summary>
+       /// <summary>
         /// Get indicator novelties as a Table (product and advertiser)
         /// </summary>
         /// <returns>Chart control filled with top elements</returns>
@@ -160,6 +153,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
                 this._engine = new EngineNovelty(this._session, this._dalLayer);
             }
             EngineNovelty e = (EngineNovelty)this._engine;
+            e.Excel = _excel;
             return e.GetResult().ToString();
 
         }
@@ -174,6 +168,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual Chart GetEvolutionChart(CstResult.MotherRecap.ElementType _classifLevel)
         {
             ChartProductClassIndicator chart = new ChartEvolution(this._session, this._dalLayer, _classifLevel);
+            chart.ChartType = _chartType;
             return chart;
         }
         /// <summary>
@@ -183,6 +178,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual string GetEvolutionTable()
         {
             Engine engine = new EngineEvolution(this._session, this._dalLayer);
+            engine.Excel = _excel;
             return engine.GetResult().ToString();
         }
         #endregion
@@ -195,6 +191,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual string GetSummary()
         {
             Engine engine = new EngineSummary(this._session, this._dalLayer);
+            engine.Excel = _excel;
             return engine.GetResult().ToString();
         }        
         #endregion
@@ -207,6 +204,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual Chart GetMediaStrategyChart()
         {
             ChartProductClassIndicator chart = new ChartMediaStartegy(this._session, this._dalLayer);
+            chart.ChartType = _chartType;
             return chart;
         }
         /// <summary>
@@ -216,6 +214,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual string GetMediaStrategyTable()
         {
             Engine engine = new EngineMediaStrategy(this._session, this._dalLayer);
+            engine.Excel = _excel;
             return engine.GetResult().ToString();
         }
         #endregion
@@ -229,6 +228,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual Chart GetSeasonalityChart(bool bigSize)
         {
             ChartProductClassIndicator chart = new ChartSeasonality(this._session, this._dalLayer, bigSize);
+            chart.ChartType = _chartType;
             return chart;
         }
         /// <summary>
@@ -238,10 +238,12 @@ namespace TNS.AdExpressI.ProductClassIndicators
         public virtual string GetSeasonalityTable()
         {
             Engine engine = new EngineSeasonality(this._session, this._dalLayer);
+            engine.Excel = _excel;
             return engine.GetResult().ToString();
         }
         #endregion
 
         #endregion
+
     }
 }

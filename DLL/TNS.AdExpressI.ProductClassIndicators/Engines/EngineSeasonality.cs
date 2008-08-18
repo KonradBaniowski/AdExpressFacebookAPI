@@ -159,10 +159,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
         #endregion
 
-        #region Attributes
-        protected int _iYearID = 0;
-        #endregion
-
         #region Constructor
         /// <summary>
         /// Default Constructor
@@ -170,9 +166,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <param name="session">User Session</param>
         /// <param name="dalLayer">Data Access Layer</param>
         public EngineSeasonality(WebSession session, IProductClassIndicatorsDAL dalLayer) : base(session, dalLayer) { 
-
-            _iYearID = FctUtilities.Dates.yearID(_periodBegin, _session);
-
         }
         #endregion
 
@@ -842,7 +835,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             object TempForAdSov = "";
             object TempForRefSov = "";
             string currentMonth = "";
-            int _iYearID = 0;
             ArrayList TempAdvertiserIds = new ArrayList();
             int MonthsInterval = (_periodEnd.Month - _periodBegin.Month) + 1;
             string[,] AdValues = null;

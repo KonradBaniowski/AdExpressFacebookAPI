@@ -20,6 +20,8 @@ using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpressI.ProductClassIndicators;
 using System.Reflection;
+using TNS.AdExpress.Web.UI;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
 	/// <summary>
@@ -29,6 +31,24 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
     public class ProductClassTableWebControl : TNS.AdExpress.Web.Controls.AjaxBaseWebControl
     {
 
+        #region Variables
+        /// <summary>
+        /// Excel format?
+        /// </summary>
+        protected bool _excel = false;
+        #endregion
+
+        #region Accesseurs
+        /// <summary>
+        /// Get / Set Excel format ?
+        /// </summary>
+        public bool Excel
+        {
+            get { return _excel; }
+            set { _excel = value; }
+        }
+        #endregion
+
         #region Constructor
         /// <summary>
         /// Default Constructor
@@ -37,6 +57,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
         public ProductClassTableWebControl(WebSession session)
         {
             _customerWebSession = session;
+            this._ajaxProTimeOut = 150;
         }
         /// <summary>
         /// Default Constructor
@@ -72,8 +93,30 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
 		}
 		#endregion
 
-		#region Méthodes internes
-		/// <summary>
+        #region Render
+        public override void RenderControl(HtmlTextWriter writer)
+        {
+            if (!_excel)
+            {
+                base.RenderControl(writer);
+            }
+            else
+            {
+                //header
+                writer.WriteLine(ExcelWebPage.GetLogo(_customerWebSession));
+                writer.WriteLine(ExcelWebPage.GetExcelHeader(_customerWebSession, false, true, false, GestionWeb.GetWebWord(1310, _customerWebSession.SiteLanguage)));
+                //result
+                writer.WriteLine(this.GetHTML(_customerWebSession));
+                //footer
+                writer.WriteLine(ExcelWebPage.GetFooter(_customerWebSession));
+
+            }
+
+        }
+        #endregion
+
+        #region Méthodes internes
+        /// <summary>
 		/// Compute result
 		/// </summary>
 		/// <param name="session">User session</param>
@@ -87,6 +130,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Indicator result"));
                 object[] param = new object[1] { _customerWebSession };
                 IProductClassIndicators productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                productClassIndicator.Excel = _excel;
 
                 switch (_customerWebSession.CurrentTab)
                 {

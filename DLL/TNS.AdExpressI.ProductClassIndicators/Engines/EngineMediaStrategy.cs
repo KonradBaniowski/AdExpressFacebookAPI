@@ -244,7 +244,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             string cssL2Label = "asl5";
             string cssL2nb = (_excel) ? "p142xls" : "asl5nb";
             string cssL3Label = "asl5b";
-            string cssL3Nb = (_excel) ? "asl5bxls" : "asl5b"; ;
+            string cssL3Nb = (_excel) ? "asl5bxls" : "asl5bnb"; ;
             string cssRefLabel = "p15";
             string cssRefNb = "p151";
             string cssCompLabel = (_excel) ? "p142" : "p14";
@@ -535,7 +535,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         }
                         oLevelLabel = null;
                         oLabel = tab[i, LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX];
-                        oTotal = tab[i, TOTAL_REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX];
+                        if (tab[i, TOTAL_REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null)
+                        {
+                            oTotal = tab[i, TOTAL_REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX];
+                        }
+                        else
+                        {
+                            oTotal = tab[i, REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX];
+                        }
                         oPDM = tab[i, PDM_COLUMN_INDEX];
                         oEvol = tab[i, EVOL_COLUMN_INDEX];
 
@@ -692,8 +699,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
 
             #region variables
+            CstComparaisonCriterion comparisonCriterion = this._session.ComparaisonCriterion;
             //données 1ere élément plurimédia
             #region variables tempon
+            //	string tempInvest="";
             string tempEvol = "";
             string tempPDM = "";
             #endregion
@@ -705,11 +714,19 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             Hashtable hPdmVehAdvert = new Hashtable();
             //liste des investissments par catégorie
             Hashtable hPdmCatAdvert = new Hashtable();
+            //			//PDM d'un media (vehicle)
+            //			double PdmVehicle = (double)0.0;
+            //			//PDM d'un support
+            //			double PdmMedia  = (double)0.0;
+            //			//PDM d'une catégorie
+            //			double	PdmCategory = (double)0.0;
             #endregion
 
             #region variables pour les dimensions du tableau de résultats
             // tableau de resultats
             object[,] tab = null;
+            //nombre maximal de lignes
+            //int nbMaxLines = 0;
             //Index d'une ligne du tableau
             int indexTabRow = 0;
             //booléen incrémentation d'une ligne
@@ -719,8 +736,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #region Variables annonceurs de références ou concurrents
             //identifiant  annonceurs de références ou concurrents
             string idAdvertiser = "";
+            //nombre  annonceurs de références ou concurrents
+            //int nbAdvertiser=0;
             //Y a t'il des annonceurs de références ou concurrents
             bool hasAdvertiser = false;
+            //Investissement d'un annonceur sur la période N
+            //string AdvertiserInvest="";
+            //Investissement d'un annonceur sur la période N-1
+            //string AdvertiserInvest_N1="";
             //Investissement total des annonceurs sur la période N
             string AdvertiserTotalInvest = "";
             //Investissement total des annonceurs sur la période N-1
@@ -942,10 +965,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             #endregion
-            
             try
             {
-
                 #region Chargement des données
 
                 #region chargement des données pour les annonceurs de références et/ou concurrents
@@ -955,7 +976,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 				 */
                 if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserAccessList))
                 {
-                    dsAdvertiser = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, true); //IndicatorDataAccess.getMediaStrategyData(_session, CstResult.PalmaresRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, true);
+                    dsAdvertiser = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, true);
                     if (dsAdvertiser != null && dsAdvertiser.Tables[0] != null && dsAdvertiser.Tables[0].Rows.Count > 0)
                     {
                         dtAdvertiser = dsAdvertiser.Tables[0];
@@ -968,7 +989,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 					* dsTotalUniverse : permet de récuperer pour chaque niveau support
 					* l'investissement,l'evolution,le PDM
 					*/
-                dsTotalUniverse = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, false); //IndicatorDataAccess.getMediaStrategyData(_session, CstResult.PalmaresRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, false);
+                dsTotalUniverse = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, false);
                 if (dsTotalUniverse != null && dsTotalUniverse.Tables[0] != null && dsTotalUniverse.Tables[0].Rows.Count > 0)
                 {
                     dtTotalUniverse = dsTotalUniverse.Tables[0];
@@ -977,7 +998,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     * dsTotalUniverseFirstProduct : permet de récuperer pour chaque niveau support
                     * l'investissement et le libellé de la première référence
                     */
-                CstMediaStrategy.MediaLevel mediaLevel = CstMediaStrategy.MediaLevel.vehicleLevel;
+                CstResult.MediaStrategy.MediaLevel mediaLevel = CstResult.MediaStrategy.MediaLevel.vehicleLevel;
                 mediaLevel = SwitchMedia();
                 Get1stElmtDataTbleByMedia(ref dtUniverse1stProductByVeh, ref dtUniverse1stAdvertiserByVeh, ref dtUniverse1stProductByCat, ref dtUniverse1stAdvertiserByCat, ref dtUniverse1stProductByMed, ref dtUniverse1stAdvertiserByMed, CstComparaisonCriterion.universTotal, mediaLevel);
                 #endregion
@@ -987,19 +1008,19 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 				 * A partir de ces données on peut calculer l'investissement,l'evolution,le PDM,
 				 * pour chaque annonceur et par niveau support
 				 */
-                if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal)
-                    dsTotalMarketOrSector = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.sectorTotal, false); //IndicatorDataAccess.getMediaStrategyData(_session, CstResult.PalmaresRecap.ElementType.advertiser, CstComparaisonCriterion.sectorTotal, false);
-                else if (_session.ComparaisonCriterion == CstComparaisonCriterion.marketTotal)
-                    dsTotalMarketOrSector = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.marketTotal, true); //IndicatorDataAccess.getMediaStrategyData(_session, CstResult.PalmaresRecap.ElementType.advertiser, CstComparaisonCriterion.marketTotal, false);
+                if (comparisonCriterion == CstComparaisonCriterion.sectorTotal)
+                    dsTotalMarketOrSector = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.sectorTotal, false);
+                else if (comparisonCriterion == CstComparaisonCriterion.marketTotal)
+                    dsTotalMarketOrSector = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.marketTotal, false);
                 if (dsTotalMarketOrSector != null && dsTotalMarketOrSector.Tables[0] != null && dsTotalMarketOrSector.Tables[0].Rows.Count > 0)
                 {
                     dtTotalMarketOrSector = dsTotalMarketOrSector.Tables[0];
                 }
                 /*Chargement des données pour les totaux univers
-                * dsTotalMarketOrSectorFirstProduct : permet de récuperer pour chaque niveau support
-                * l'investissement et le libéllé de la première référence
-                */
-                Get1stElmtDataTbleByMedia(ref dtMarketOrSector1stProductByVeh, ref dtMarketOrSector1stAdvertiserByVeh, ref dtMarketOrSector1stProductByCat, ref dtMarketOrSector1stAdvertiserByCat, ref dtMarketOrSector1stProductByMed, ref dtMarketOrSector1stAdvertiserByMed, _session.ComparaisonCriterion, mediaLevel);
+                    * dsTotalMarketOrSectorFirstProduct : permet de récuperer pour chaque niveau support
+                    * l'investissement et le libéllé de la première référence
+                    */
+                Get1stElmtDataTbleByMedia(ref dtMarketOrSector1stProductByVeh, ref dtMarketOrSector1stAdvertiserByVeh, ref dtMarketOrSector1stProductByCat, ref dtMarketOrSector1stAdvertiserByCat, ref dtMarketOrSector1stProductByMed, ref dtMarketOrSector1stAdvertiserByMed, comparisonCriterion, mediaLevel);
                 #endregion
 
                 #endregion
@@ -1035,10 +1056,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché et plurimédia 
                             if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorInvest.Trim()))
                             {
-                                tab = FillTabInvestPdmEvol( tab, indexTabRow, VehicleAccessList, GestionWeb.GetWebWord(210, _session.SiteLanguage), true, TotalMarketOrSectorInvest, "100", tempEvol, _session.ComparaisonCriterion, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                tab = FillTabInvestPdmEvol(tab, indexTabRow, VehicleAccessList, GestionWeb.GetWebWord(210, _session.SiteLanguage), true, TotalMarketOrSectorInvest, "100", tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                 increment = true;
                             }
-                            tab = FillTabFisrtElmt( tab, _session.ComparaisonCriterion, TotalMarketOrSectorInvest, ref indexTabRow, increment);
+                            tab = FillTabFisrtElmt(tab, comparisonCriterion, TotalMarketOrSectorInvest, ref indexTabRow, increment);
                             increment = false;
                             hasTotalMarketOrSector = true;
                         }
@@ -1052,10 +1073,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et plurimédia 
                             if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivInvest.Trim()))
                             {
-                                tab = FillTabInvestPdmEvol( tab, indexTabRow, VehicleAccessList, GestionWeb.GetWebWord(210, _session.SiteLanguage), true, TotalUnivInvest, "100", tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                tab = FillTabInvestPdmEvol(tab, indexTabRow, VehicleAccessList, GestionWeb.GetWebWord(210, _session.SiteLanguage), true, TotalUnivInvest, "100", tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                 increment = true;
                             }
-                            tab = FillTabFisrtElmt( tab, CstComparaisonCriterion.universTotal, TotalUnivInvest, ref indexTabRow, increment);
+                            tab = FillTabFisrtElmt(tab, CstComparaisonCriterion.universTotal, TotalUnivInvest, ref indexTabRow, increment);
                             increment = false;//ligne suivante
                             hasTotalUniv = true;
                         }
@@ -1066,7 +1087,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserAccessList) && dtAdvertiser != null && dtAdvertiser.Rows.Count > 0 && !hasAdvertiser)
                         {
                             //Pour chaque ligne  TOTAL annonceur de référence ou concurrent on récupère les données							
-                            FillAdvertisers( tab, dtAdvertiser, dtTotalMarketOrSector, "Sum(total_N)", "Sum(total_N1)", "", inTotUnivAdvertAlreadyUsedArr, ref hPdmTotAdvert, ref hPdmTotAdvert, ref AdvertiserTotalInvest, ref AdvertiserTotalInvest_N1, ref indexTabRow, VehicleAccessList, idVehicle, Vehicle, true, ref hasAdvertiser);
+                            FillAdvertisers(tab, dtAdvertiser, dtTotalMarketOrSector, "Sum(total_N)", "Sum(total_N1)", "", inTotUnivAdvertAlreadyUsedArr, ref hPdmTotAdvert, ref hPdmTotAdvert, ref AdvertiserTotalInvest, ref AdvertiserTotalInvest_N1, ref indexTabRow, VehicleAccessList, idVehicle, Vehicle, true, ref hasAdvertiser);
                         }
                         #endregion
                     }
@@ -1076,8 +1097,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
                         #region lignes univers et marché ou famille par média (vehicle)
                         /*Si utilisateur a sélectionné un MEDIA (vehicle) on calcule investissement total marché ou famille et univers, et
-                        * les paramètres associés (PDM,evolution,1er annonceurs et références)
-                        */
+					 * les paramètres associés (PDM,evolution,1er annonceurs et références)
+					 */
                         #region ligne total marché ou famille par média (vehicle)
                         //Colonne média (vehicle)
                         if (dtTotalMarketOrSector.Columns.Contains("id_vehicle") && dtTotalMarketOrSector.Columns.Contains("vehicle"))
@@ -1095,7 +1116,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                     // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et media (vehicle) 
                                     if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorVehicleInvest.Trim()))
                                     {
-                                        tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, false, TotalMarketOrSectorVehicleInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                        tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, false, TotalMarketOrSectorVehicleInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                         increment = true;
                                     }
                                 }
@@ -1121,7 +1142,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                     // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et media (vehicle) 
                                     if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivVehicleInvest.Trim()))
                                     {
-                                        tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, false, TotalUnivVehicleInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                        tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, false, TotalUnivVehicleInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                         increment = true;
                                     }
                                 }
@@ -1144,7 +1165,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                             hPdmVehAdvert = null;
                                             hPdmVehAdvert = new Hashtable();
                                             strSort = " id_vehicle=" + idVehicle;
-                                            FillAdvertisers( tab, dtAdvertiser, dtTotalMarketOrSector, "Sum(total_N)", "Sum(total_N1)", strSort, inAdvertVehicleAlreadyUsedArr, ref hPdmVehAdvert, ref hPdmTotAdvert, ref AdvertiserInvestByVeh, ref AdvertiserInvestByVeh_N1, ref indexTabRow, VehicleAccessList, idVehicle, Vehicle, false, ref hasAdvertiser);
+                                            FillAdvertisers(tab, dtAdvertiser, dtTotalMarketOrSector, "Sum(total_N)", "Sum(total_N1)", strSort, inAdvertVehicleAlreadyUsedArr, ref hPdmVehAdvert, ref hPdmTotAdvert, ref AdvertiserInvestByVeh, ref AdvertiserInvestByVeh_N1, ref indexTabRow, VehicleAccessList, idVehicle, Vehicle, false, ref hasAdvertiser);
                                         }
                                     }
 
@@ -1157,8 +1178,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
                         #region lignes univers et marché ou famille par catégorie
                         /*Si utilisateur a sélectionné des catégories on calcule investissement total marché ou famille et univers, et
-                        * les paramètres associés (PDM,evolution,1er annonceurs et références)
-                        */
+					 * les paramètres associés (PDM,evolution,1er annonceurs et références)
+					 */
                         if (TreatCategory())
                         {
                             #region ligne total marché ou famille par catégorie
@@ -1182,7 +1203,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                         // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et catégorie
                                         if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorCategoryInvest.Trim()))
                                         {
-                                            tab = FillTabInvestPdmEvol( tab, indexTabRow, "", "", idCategory, Category, "", "", "", "", false, TotalMarketOrSectorCategoryInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
+                                            tab = FillTabInvestPdmEvol(tab, indexTabRow, "", "", idCategory, Category, "", "", "", "", false, TotalMarketOrSectorCategoryInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
                                             increment = true;
                                         }
                                     }
@@ -1214,7 +1235,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                         // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et catégorie 
                                         if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivCategoryInvest.Trim()))
                                         {
-                                            tab = FillTabInvestPdmEvol( tab, indexTabRow, "", "", idCategory, Category, "", "", "", "", false, TotalUnivCategoryInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
+                                            tab = FillTabInvestPdmEvol(tab, indexTabRow, "", "", idCategory, Category, "", "", "", "", false, TotalUnivCategoryInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
                                             increment = true;
                                         }
                                     }
@@ -1269,7 +1290,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                                             {
                                                                 strExpr = "id_vehicle = " + idVehicle + " AND id_category = " + idCategory + " AND id_advertiser=" + idAdvertiser;
                                                                 strSort = "id_media ASC";
-                                                                tab = FillAdvertisers( tab, dtAdvertiser, dtTotalMarketOrSector, strExpr, strSort, ref hPdmVehAdvert, ref hPdmCatAdvert, ref indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, idAdvertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
+                                                                tab = FillAdvertisers(tab, dtAdvertiser, dtTotalMarketOrSector, strExpr, strSort, ref hPdmVehAdvert, ref hPdmCatAdvert, ref indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, idAdvertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
                                                             }
                                                             #endregion
                                                             if (!inAdvertCategoryAlreadyUsedArr.Contains(idAdvertiser)) inAdvertCategoryAlreadyUsedArr.Add(idAdvertiser);//annonceurs traités doivent être distincts au niveau catégorie
@@ -1280,7 +1301,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                                             strExpr = "id_vehicle = " + idVehicle + " AND id_category = " + idCategory;
                                                             strSort = "id_category ASC";
                                                             foundRows = dtAdvertiser.Select(strExpr, strSort, DataViewRowState.OriginalRows);
-                                                            tab = FillAdvertisers( tab, dtTotalMarketOrSector, foundRows, ref AdvertiserInvestByCat, ref AdvertiserInvestByCat_N1, ref hPdmVehAdvert, ref hPdmCatAdvert, ref indexTabRow, idVehicle, Vehicle, idCategory, Category, "", "", CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory, false);
+                                                            tab = FillAdvertisers(tab, dtTotalMarketOrSector, foundRows, ref AdvertiserInvestByCat, ref AdvertiserInvestByCat_N1, ref hPdmVehAdvert, ref hPdmCatAdvert, ref indexTabRow, idVehicle, Vehicle, idCategory, Category, "", "", CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory, false);
                                                             #endregion
                                                             if (!inAdvertCategoryAlreadyUsedArr.Contains(idCategory)) inAdvertCategoryAlreadyUsedArr.Add(idCategory);//catégories traités doivent être distincts 
                                                         }
@@ -1302,8 +1323,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
                         #region lignes univers et marché ou famille par supports (media)
                         /*Si utilisateur a sélectionné de(s) support(s) on calcule investissement total marché ou famille et univers, et
-                        * les paramètres associés (PDM,evolution,1er annonceurs et références)
-                        */
+					 * les paramètres associés (PDM,evolution,1er annonceurs et références)
+					 */
                         if (TreatMedia())
                         {
                             #region ligne total marché ou famille par support (media)
@@ -1326,7 +1347,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                         // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et support 
                                         if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorMediaInvest.ToString().Trim()))
                                         {
-                                            tab = FillTabInvestPdmEvol( tab, indexTabRow, "", "", "", "", idMedia, Media, "", "", false, TotalMarketOrSectorMediaInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
+                                            tab = FillTabInvestPdmEvol(tab, indexTabRow, "", "", "", "", idMedia, Media, "", "", false, TotalMarketOrSectorMediaInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
                                             increment = true;
                                         }
                                     }
@@ -1357,7 +1378,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                         // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et support 
                                         if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivMediaInvest.ToString().Trim()))
                                         {
-                                            tab = FillTabInvestPdmEvol( tab, indexTabRow, "", "", "", "", idMedia, Media, "", "", false, TotalUnivMediaInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
+                                            tab = FillTabInvestPdmEvol(tab, indexTabRow, "", "", "", "", idMedia, Media, "", "", false, TotalUnivMediaInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
                                             increment = true;
                                         }
                                     }
@@ -1387,13 +1408,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                                         strExpr = "id_vehicle = " + idVehicle + " AND id_category = " + idCategory + " AND id_media=" + idMedia;
                                                         strSort = "id_media ASC";
                                                         foundRows = dtAdvertiser.Select(strExpr, strSort, DataViewRowState.OriginalRows);
-                                                        tab = FillAdvertisers( tab, dtTotalMarketOrSector, foundRows, ref AdvertiserInvestByCat, ref AdvertiserInvestByCat_N1, ref hPdmCatAdvert, ref hPdmCatAdvert, ref indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia, false);
+                                                        tab = FillAdvertisers(tab, dtTotalMarketOrSector, foundRows, ref AdvertiserInvestByCat, ref AdvertiserInvestByCat_N1, ref hPdmCatAdvert, ref hPdmCatAdvert, ref indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia, false);
                                                         if (!inAdvertMediaAlreadyUsedArr.Contains(idMedia)) inAdvertMediaAlreadyUsedArr.Add(idMedia);//Traitement unique de support											
                                                     }
                                                 }
-                                                #endregion
+
                                             }
                                         }
+                                                #endregion
 
                                         #endregion
                                     }
@@ -1418,7 +1440,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             catch (Exception ex)
             {
-                throw new ProductClassIndicatorsException("Unbale to compute data to build a media strategy report.", ex);
+                throw new ProductClassIndicatorsException("GetFormattedTable(WebSession webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion comparisonCriterion )::Impossible de traiter les données pour la stratégir média.", ex);
             }
 
             return tab;
@@ -1446,6 +1468,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
 
             #region variables
+            CstComparaisonCriterion comparisonCriterion = _session.ComparaisonCriterion;
 
             #region variables tempon
             string tempEvol = "";
@@ -1596,7 +1619,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			 */
             if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserAccessList))
             {
-                dsAdvertiser = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, true); //IndicatorDataAccess.getMediaStrategyData(_session, CstResult.PalmaresRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, true);
+                dsAdvertiser = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, true);
                 if (dsAdvertiser != null && dsAdvertiser.Tables[0] != null && dsAdvertiser.Tables[0].Rows.Count > 0)
                 {
                     dtAdvertiser = dsAdvertiser.Tables[0];
@@ -1609,7 +1632,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 				* dsTotalUniverse : permet de récuperer pour chaque niveau support
 				* l'investissement,l'evolution,le PDM
 				*/
-            dsTotalUniverse = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, false); //IndicatorDataAccess.getMediaStrategyData(_session, CstResult.PalmaresRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, false);
+            dsTotalUniverse = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.universTotal, false);
             if (dsTotalUniverse != null && dsTotalUniverse.Tables[0] != null && dsTotalUniverse.Tables[0].Rows.Count > 0)
             {
                 dtTotalUniverse = dsTotalUniverse.Tables[0];
@@ -1621,10 +1644,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			 * A partir de ces données on peut calculer l'investissement,l'evolution,le PDM,
 			 * pour chaque annonceur et par niveau support
 			 */
-            if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal)
-                dsTotalMarketOrSector = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.sectorTotal, false); //IndicatorDataAccess.getMediaStrategyData(_session, CstResult.PalmaresRecap.ElementType.advertiser, CstComparaisonCriterion.sectorTotal, false);
-            else if (_session.ComparaisonCriterion == CstComparaisonCriterion.marketTotal)
-                dsTotalMarketOrSector = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.marketTotal, false); //IndicatorDataAccess.getMediaStrategyData(_session, CstResult.PalmaresRecap.ElementType.advertiser, CstComparaisonCriterion.marketTotal, false);
+            if (comparisonCriterion == CstComparaisonCriterion.sectorTotal)
+                dsTotalMarketOrSector = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.sectorTotal, false);
+            else if (comparisonCriterion == CstComparaisonCriterion.marketTotal)
+                dsTotalMarketOrSector = _dalLayer.GetMediaStrategyTblData(CstResult.MotherRecap.ElementType.advertiser, CstComparaisonCriterion.marketTotal, false);
             if (dsTotalMarketOrSector != null && dsTotalMarketOrSector.Tables[0] != null && dsTotalMarketOrSector.Tables[0].Rows.Count > 0)
             {
                 dtTotalMarketOrSector = dsTotalMarketOrSector.Tables[0];
@@ -1639,7 +1662,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             /*On instancie le tableau de résultats pour stratégie média
 			 */
             //création du tableau 			
-            tab = TabInstance( dtTotalMarketOrSector, dtAdvertiser, VehicleAccessList, NB_CHART_MAX_COLUMNS);
+            tab = TabInstance(dtTotalMarketOrSector, dtAdvertiser, VehicleAccessList, NB_CHART_MAX_COLUMNS);
 
             // Il n'y a pas de données
             if (tab == null) return (new object[0, 0]);
@@ -1664,10 +1687,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         //investissement total 										
                         TotalMarketOrSectorInvest = dtTotalMarketOrSector.Compute("Sum(total_N)", "").ToString();
                         if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorInvest.Trim()))
+                            //							TotalMarketOrSectorInvest = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalMarketOrSectorInvest)/(double)1000));																																									
                             // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché et plurimédia 
                             if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorInvest.Trim()))
                             {
-                                tab = FillTabInvestPdmEvol( tab, indexTabRow, VehicleAccessList, GestionWeb.GetWebWord(210, _session.SiteLanguage), "", "", "", "", "", "", true, TotalMarketOrSectorInvest, "", tempEvol, _session.ComparaisonCriterion, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                tab = FillTabInvestPdmEvol(tab, indexTabRow, VehicleAccessList, GestionWeb.GetWebWord(210, _session.SiteLanguage), "", "", "", "", "", "", true, TotalMarketOrSectorInvest, "", tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                 increment = true;
                             }
                         if (increment) indexTabRow++; //ligne suivante
@@ -1684,10 +1708,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         if (dtTotalUniverse.Columns.Contains("total_N"))
                             TotalUnivInvest = dtTotalUniverse.Compute("Sum(total_N)", "").ToString();
                         if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivInvest.Trim()))
+                            //							TotalUnivInvest = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalUnivInvest)/(double)1000));																						
                             // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et plurimédia 
                             if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivInvest.Trim()))
                             {
-                                tab = FillTabInvestPdmEvol( tab, indexTabRow, VehicleAccessList, GestionWeb.GetWebWord(210, _session.SiteLanguage), "", "", "", "", "", "", true, TotalUnivInvest, "", tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                tab = FillTabInvestPdmEvol(tab, indexTabRow, VehicleAccessList, GestionWeb.GetWebWord(210, _session.SiteLanguage), "", "", "", "", "", "", true, TotalUnivInvest, "", tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                 increment = true;
                             }
                         if (increment) indexTabRow++;
@@ -1716,7 +1741,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                         //										AdvertiserTotalInvest = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(AdvertiserTotalInvest)/(double)1000));																														
                                         //Insertion des données dans la ligne courante pour un annonceur
                                         if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserTotalInvest.Trim()))
-                                            tab = FillTabInvestPdmEvol( tab, indexTabRow, "", "", "", "", "", "", currentAdvertRow["id_advertiser"].ToString(), currentAdvertRow["advertiser"].ToString(), true, AdvertiserTotalInvest, "", tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                            tab = FillTabInvestPdmEvol(tab, indexTabRow, "", "", "", "", "", "", currentAdvertRow["id_advertiser"].ToString(), currentAdvertRow["advertiser"].ToString(), true, AdvertiserTotalInvest, "", tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                         indexTabRow++;
                                         if (!inTotUnivAdvertAlreadyUsedArr.Contains(idAdvertiser)) inTotUnivAdvertAlreadyUsedArr.Add(idAdvertiser);
                                     }
@@ -1752,7 +1777,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 {
                                     //									TotalMarketOrSectorVehicleInvest=String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalMarketOrSectorVehicleInvest)/(double)1000));																																
                                     // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et media (vehicle) 								
-                                    tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", "", "", false, TotalMarketOrSectorVehicleInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                    tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", "", "", false, TotalMarketOrSectorVehicleInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                     increment = true;
                                 }
                             }
@@ -1776,8 +1801,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 TotalUnivVehicleInvest = dtTotalUniverse.Compute("Sum(total_N)", "id_vehicle = " + idVehicle + "").ToString();
                                 if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivVehicleInvest.ToString().Trim()))
                                 {
+                                    //									TotalUnivVehicleInvest =  String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalUnivVehicleInvest)/(double)1000));																									
                                     // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et media (vehicle) 								
-                                    tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", "", "", false, TotalUnivVehicleInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                    tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", "", "", false, TotalUnivVehicleInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                     increment = true;
                                 }
                             }
@@ -1785,6 +1811,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             if (increment) indexTabRow++; //ligne suivante
                             increment = false;
 
+                    #endregion
 
                             if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserAccessList))
                             {
@@ -1809,30 +1836,32 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                                 {
                                                     //investissement annonceur de référence ou concurrent  par média (vehicle)
                                                     AdvertiserInvestByVeh = dtAdvertiser.Compute("Sum(total_N)", "id_advertiser = " + idAdvertiser + " AND id_vehicle=" + idVehicle).ToString();
+                                                    //													if(FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByVeh.Trim())){
+                                                    //														AdvertiserInvestByVeh = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(AdvertiserInvestByVeh)/(double)1000));														
+                                                    //													}													
                                                     //Insertion des données dans la ligne courante pour un annonceur et par média (vehicle)
                                                     if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByVeh.Trim()))
-                                                        tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", currentAdvertRow["id_advertiser"].ToString(), currentAdvertRow["advertiser"].ToString(), false, AdvertiserInvestByVeh, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                                        tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", currentAdvertRow["id_advertiser"].ToString(), currentAdvertRow["advertiser"].ToString(), false, AdvertiserInvestByVeh, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                                     if (!inAdvertVehicleAlreadyUsedArr.Contains(idAdvertiser)) inAdvertVehicleAlreadyUsedArr.Add(idAdvertiser);
                                                     indexTabRow++;
                                                 }
 
                                             }
-                                            #endregion
                                         }
                                     }
                                 }
+                                            #endregion
+
                                 #endregion
                             }
                         }
                     }
                     #endregion
 
-                    #endregion
-
                     #region lignes univers et marché ou famille par catégorie
                     /*Si utilisateur a sélectionné des catégories on calcule investissement total marché ou famille et univers, et
-                    * les paramètres associés (PDM,evolution,1er annonceurs et références)
-                    */
+				 * les paramètres associés (PDM,evolution,1er annonceurs et références)
+				 */
                     #region ligne total marché ou famille par catégorie
                     if (dtTotalMarketOrSector.Columns.Contains("id_category") && dtTotalMarketOrSector.Columns.Contains("category"))
                     {
@@ -1852,11 +1881,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 TotalMarketOrSectorCategoryInvest = dtTotalMarketOrSector.Compute("Sum(total_N)", "id_vehicle=" + idVehicle + " AND id_category = " + idCategory).ToString();
                                 if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorCategoryInvest.ToString().Trim()))
                                 {
+                                    //									TotalMarketOrSectorCategoryInvest = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalMarketOrSectorCategoryInvest)/(double)1000));
                                     increment = true;
                                 }
                                 // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et catégorie
                                 if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorCategoryInvest.Trim()))
-                                    tab = FillTabInvestPdmEvol( tab, indexTabRow, "", "", idCategory, Category, "", "", "", "", false, TotalMarketOrSectorCategoryInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
+                                    tab = FillTabInvestPdmEvol(tab, indexTabRow, "", "", idCategory, Category, "", "", "", "", false, TotalMarketOrSectorCategoryInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
                             }
                             if (!inTotMarketOrSectorCategoryAlreadyUsedArr.Contains(idCategory)) inTotMarketOrSectorCategoryAlreadyUsedArr.Add(idCategory);//Les catégories traitées doivent être distincts
                             if (increment) indexTabRow++; //ligne suivante
@@ -1884,10 +1914,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             {
                                 //investissement total univers par catégorie
                                 TotalUnivCategoryInvest = dtTotalUniverse.Compute("Sum(total_N)", "id_vehicle=" + idVehicle + " AND id_category = " + idCategory).ToString();
+                                //								if(FctUtilities.CheckedText.IsNotEmpty(TotalUnivCategoryInvest.ToString().Trim()))
+                                //									TotalUnivCategoryInvest = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalUnivCategoryInvest)/(double)1000));																
                                 // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et catégorie 
                                 if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivCategoryInvest.Trim()))
                                 {
-                                    tab = FillTabInvestPdmEvol( tab, indexTabRow, "", "", idCategory, Category, "", "", "", "", false, TotalUnivCategoryInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
+                                    tab = FillTabInvestPdmEvol(tab, indexTabRow, "", "", idCategory, Category, "", "", "", "", false, TotalUnivCategoryInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
                                     increment = true;
                                 }
                             }
@@ -1947,9 +1979,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                                                 if (_session.ComparativeStudy) CatInvest_N1 += double.Parse(foundRows[n]["total_N1"].ToString());
                                                             }
                                                             AdvertiserInvestByCat = CatInvest.ToString();
+                                                            //															if(FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByCat.Trim())){
+                                                            //																AdvertiserInvestByCat = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(AdvertiserInvestByCat)/(double)1000));																
+                                                            //															}																														
                                                             //Insertion des données dans la ligne courante pour un annonceur et par catégorie
                                                             if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByCat.Trim()))
-                                                                tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, "", "", foundRows[0]["id_advertiser"].ToString(), foundRows[0]["advertiser"].ToString(), false, AdvertiserInvestByCat, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
+                                                                tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, "", "", foundRows[0]["id_advertiser"].ToString(), foundRows[0]["advertiser"].ToString(), false, AdvertiserInvestByCat, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
                                                             indexTabRow++;
                                                         }
                                                     }
@@ -1967,9 +2002,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                                         for (int n = 0; n < foundRows.Length; n++)
                                                         {
                                                             //investissement annonceur de référence ou concurrent  par catégorie
+                                                            //															if(FctUtilities.CheckedText.IsNotEmpty(foundRows[n]["total_N"].ToString()))
+                                                            //																AdvertiserInvestByCat = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(foundRows[n]["total_N"].ToString())/(double)1000));																																													
                                                             //Insertion des données dans la ligne courante pour un annonceur et par catégorie
                                                             if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByCat.Trim()))
-                                                                tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, "", "", foundRows[n]["id_advertiser"].ToString(), foundRows[n]["advertiser"].ToString(), false, AdvertiserInvestByCat, tempPDM, tempEvol, _session.ComparaisonCriterion, CstInvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
+                                                                tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, "", "", foundRows[n]["id_advertiser"].ToString(), foundRows[n]["advertiser"].ToString(), false, AdvertiserInvestByCat, tempPDM, tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory);
                                                             indexTabRow++;
                                                         }
                                                     }
@@ -1993,8 +2030,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
                     #region lignes univers et marché ou famille par supports (media)
                     /*Si utilisateur a sélectionné de(s) support(s) on calcule investissement total marché ou famille et univers, et
-                    * les paramètres associés (PDM,evolution,1er annonceurs et références)
-                    */
+				 * les paramètres associés (PDM,evolution,1er annonceurs et références)
+				 */
                     #region ligne total marché ou famille par support (media)
                     if (dtTotalMarketOrSector.Columns.Contains("id_media") && dtTotalMarketOrSector.Columns.Contains("media"))
                     {
@@ -2019,7 +2056,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 }
                                 // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et support 
                                 if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorMediaInvest.ToString().Trim()))
-                                    tab = FillTabInvestPdmEvol( tab, indexTabRow, "", "", "", "", idMedia, Media, "", "", false, TotalMarketOrSectorMediaInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
+                                    tab = FillTabInvestPdmEvol(tab, indexTabRow, "", "", "", "", idMedia, Media, "", "", false, TotalMarketOrSectorMediaInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
                             }
                             if (!inTotMarketOrSectorMediaAlreadyUsedArr.Contains(idMedia)) inTotMarketOrSectorMediaAlreadyUsedArr.Add(idMedia);//On traite des média distincts
                             if (increment) indexTabRow++; //ligne suivante
@@ -2045,10 +2082,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             {
                                 //investissement total univers support (media)
                                 TotalUnivMediaInvest = dtTotalUniverse.Compute("Sum(total_N)", "id_vehicle=" + idVehicle + " AND id_category=" + idCategory + " AND id_media =" + idMedia).ToString();
+                                //								if(FctUtilities.CheckedText.IsNotEmpty(TotalUnivMediaInvest.ToString().Trim()))
+                                //									TotalUnivMediaInvest=String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalUnivMediaInvest)/(double)1000));																
                                 // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et support 
                                 if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivMediaInvest.ToString().Trim()))
                                 {
-                                    tab = FillTabInvestPdmEvol( tab, indexTabRow, "", "", "", "", idMedia, Media, "", "", false, TotalUnivMediaInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
+                                    tab = FillTabInvestPdmEvol(tab, indexTabRow, "", "", "", "", idMedia, Media, "", "", false, TotalUnivMediaInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
                                     increment = true;
                                 }
                             }
@@ -2084,19 +2123,21 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                                     {//														
                                                         //investissement annonceur de référence ou concurrent  par support												
                                                         AdvertiserInvest = foundRows[i]["total_N"].ToString();
+                                                        //														if(FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvest.Trim()))
+                                                        //															AdvertiserInvest=String.Format("{0:### ### ### ### ##0.##}",(double.Parse(AdvertiserInvest)/(double)1000));																												
                                                         //Insertion des données dans la ligne courante pour un annonceur et par support
                                                         if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByVeh.Trim()))
-                                                            tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, foundRows[i]["id_advertiser"].ToString(), foundRows[i]["advertiser"].ToString(), false, AdvertiserInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
+                                                            tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, foundRows[i]["id_advertiser"].ToString(), foundRows[i]["advertiser"].ToString(), false, AdvertiserInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia);
                                                         indexTabRow++;
                                                     }
                                                 }
                                                 if (!inAdvertMediaAlreadyUsedArr.Contains(idMedia)) inAdvertMediaAlreadyUsedArr.Add(idMedia);//Traitement unique de support											
                                             }
                                         }
-                                        #endregion
 
                                     }
                                 }
+                                        #endregion
                                 #endregion
                             }
                             if (!inTotUnivMediaAlreadyUsedArr.Contains(idMedia)) inTotUnivMediaAlreadyUsedArr.Add(idMedia);
@@ -2126,7 +2167,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <summary>
         /// Obtient les annonceurs de référence ou concurrents au niveau d'une catégorie ou d'un média(support).
         /// </summary>
-        /// <param name="_session"></param>
+        /// <param name="webSession"></param>
         /// <param name="tab">session du client</param>
         /// <param name="dtTotalMarketOrSector">tableau de données annonceurs total</param>
         /// <param name="foundRows">liste d'annonceurs</param>
@@ -2154,6 +2195,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             for (int n = 0; n < foundRows.Length; n++)
             {
                 //investissement annonceur de référence ou concurrent  par média
+                //				if(FctUtilities.CheckedText.IsNotEmpty(foundRows[n]["total_N"].ToString()))
+                //					AdvertiserInvest = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(foundRows[n]["total_N"].ToString())/(double)1000));															
                 //PDM annonceur de référence ou concurrent  par média																
                 if (hPdmParentAdvert != null && foundRows[n]["id_advertiser"] != null && hPdmParentAdvert[foundRows[n]["id_advertiser"].ToString()] != null && FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvest)
                     && FctUtilities.CheckedText.IsNotEmpty(foundRows[n]["id_advertiser"].ToString().Trim()) && double.Parse(hPdmParentAdvert[foundRows[n]["id_advertiser"].ToString()].ToString().Trim()) > (double)0.0)
@@ -2167,6 +2210,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 {
                     AdvertiserEvolution = (double)0.0;
                     //investissement période N-1 annonceur de référence ou concurrent  par média
+                    //					if(FctUtilities.CheckedText.IsNotEmpty(foundRows[n]["total_N1"].ToString()))
+                    //						AdvertiserInvest_N1 = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(foundRows[n]["total_N1"].ToString())/(double)1000));
                     if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvest_N1) && FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvest) && double.Parse(AdvertiserInvest_N1) > (double)0.0)
                     {
                         AdvertiserEvolution = ((double.Parse(AdvertiserInvest) - double.Parse(AdvertiserInvest_N1)) * (double)100.0) / double.Parse(AdvertiserInvest_N1);
@@ -2177,7 +2222,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 else tempEvol = "";
                 //Insertion des données dans la ligne courante pour un annonceur et par média
                 if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvest.Trim()))
-                    tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, foundRows[n]["id_advertiser"].ToString(), foundRows[n]["advertiser"].ToString(), isPluri, AdvertiserInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstInvestmentType.advertiser, preformatedMediaDetails);
+                    tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, foundRows[n]["id_advertiser"].ToString(), foundRows[n]["advertiser"].ToString(), isPluri, AdvertiserInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.advertiser, preformatedMediaDetails);
                 if (CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia != preformatedMediaDetails && hPdmChildAdvert[foundRows[n]["id_advertiser"].ToString()] == null)
                     hPdmChildAdvert.Add(foundRows[n]["id_advertiser"].ToString().Trim(), AdvertiserInvest);
                 indexTabRow++;
@@ -2188,7 +2233,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <summary>
         /// Obtient les annonceurs de référence ou concurrents au niveau d'une catégorie ou d'un média(support).
         /// </summary>
-        /// <param name="_session">session du client</param>
+        /// <param name="webSession">session du client</param>
         /// <param name="tab">tableau de résultats</param>
         /// <param name="dtAdvertiser">tableau de données annonceurs</param>
         /// <param name="dtTotalMarketOrSector">tableau de données annonceurs total</param>
@@ -2230,6 +2275,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     if (_session.ComparativeStudy) CatInvest_N1 += double.Parse(foundRows[n]["total_N1"].ToString());
                 }
                 AdvertiserInvestByCat = CatInvest.ToString();
+                //				if(FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByCat.Trim())){
+                //					AdvertiserInvestByCat = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(AdvertiserInvestByCat)/(double)1000));																
+                //				}
                 if (hPdmVehAdvert != null && hPdmVehAdvert[idAdvertiser] != null && FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByCat) && FctUtilities.CheckedText.IsNotEmpty(hPdmVehAdvert[idAdvertiser].ToString().Trim()) && double.Parse(hPdmVehAdvert[idAdvertiser].ToString().Trim()) > (double)0.0)
                 {
                     PdmVehicle = (double.Parse(AdvertiserInvestByCat.ToString()) * (double)100.0) / double.Parse(hPdmVehAdvert[idAdvertiser].ToString().Trim());
@@ -2244,6 +2292,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     AdvertiserInvestByCat_N1 = CatInvest_N1.ToString();
                     if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByCat_N1) && FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByCat))
                     {
+                        //						AdvertiserInvestByCat_N1 = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(AdvertiserInvestByCat_N1)/(double)1000));
                         if (double.Parse(AdvertiserInvestByCat_N1) > (double)0.0)
                         {
                             AdvertiserEvolution = ((double.Parse(AdvertiserInvestByCat) - double.Parse(AdvertiserInvestByCat_N1)) * (double)100.0) / double.Parse(AdvertiserInvestByCat_N1.Trim());
@@ -2256,7 +2305,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 else tempEvol = "";
                 //Insertion des données dans la ligne courante pour un annonceur et par catégorie
                 if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByCat.Trim()))
-                    tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, foundRows[0]["id_advertiser"].ToString(), foundRows[0]["advertiser"].ToString(), false, AdvertiserInvestByCat, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.advertiser, preformatedMediaDetails);
+                    tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, idCategory, Category, idMedia, Media, foundRows[0]["id_advertiser"].ToString(), foundRows[0]["advertiser"].ToString(), false, AdvertiserInvestByCat, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.advertiser, preformatedMediaDetails);
                 hPdmCatAdvert.Add(idAdvertiser, AdvertiserInvestByCat);
                 indexTabRow++;
             }
@@ -2268,7 +2317,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <summary>
         /// Obtient les annonceurs de référence ou concurrents au niveau d'un vehicle (média) ou plurimédia.
         /// </summary>
-        /// <param name="_session">session du client</param>
+        /// <param name="webSession">session du client</param>
         /// <param name="tab">tableau de résultats</param>
         /// <param name="dtAdvertiser">tableau de données annonceurs</param>
         /// <param name="dtTotalMarketOrSector">tableau de données annonceurs total</param>
@@ -2312,6 +2361,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         else localFilter = " id_advertiser=" + idAdvertiser;
                         //investissement annonceur de référence ou concurrent  par média (vehicle)
                         AdvertiserInvestByVeh = dtAdvertiser.Compute(expression, localFilter).ToString();
+                        //						if(FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByVeh.Trim())){
+                        //							AdvertiserInvestByVeh = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(AdvertiserInvestByVeh)/(double)1000));														
+                        //						}
                         //PDM annonceur de référence ou concurrent  par média (vehicle)												
                         if (!isPluri && CstDbClassif.Vehicles.names.plurimedia == (CstDbClassif.Vehicles.names)int.Parse(VehicleAccessList))
                         {
@@ -2331,6 +2383,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             AdvertiserInvestByVeh_N1 = dtAdvertiser.Compute(expressionPreviuousYear, localFilter).ToString();
                             if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByVeh_N1) && FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByVeh))
                             {
+                                //								AdvertiserInvestByVeh_N1 = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(AdvertiserInvestByVeh_N1)/(double)1000));
                                 if (double.Parse(AdvertiserInvestByVeh_N1) > (double)0.0)
                                 {
                                     AdvertiserEvolution = ((double.Parse(AdvertiserInvestByVeh) - double.Parse(AdvertiserInvestByVeh_N1)) * (double)100.0) / double.Parse(AdvertiserInvestByVeh_N1);
@@ -2343,7 +2396,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         else tempEvol = "";
                         //Insertion des données dans la ligne courante pour un annonceur et par média (vehicle)
                         if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByVeh.Trim()))
-                            tab = FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", currentAdvertRow["id_advertiser"].ToString(), currentAdvertRow["advertiser"].ToString(), false, AdvertiserInvestByVeh, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstInvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                            tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", currentAdvertRow["id_advertiser"].ToString(), currentAdvertRow["advertiser"].ToString(), false, AdvertiserInvestByVeh, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.advertiser, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                         if (hPdmVehAdvert[idAdvertiser] == null) hPdmVehAdvert.Add(idAdvertiser, AdvertiserInvestByVeh);
                         if (!inAdvertVehicleAlreadyUsedArr.Contains(idAdvertiser)) inAdvertVehicleAlreadyUsedArr.Add(idAdvertiser);
                         indexTabRow++;
@@ -2381,6 +2434,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             //Investissement total univers pour média (vehicle)
             totalInvestChild = dt.Compute(expression, filter).ToString();
+            //			if(FctUtilities.CheckedText.IsNotEmpty(totalInvestChild.ToString().Trim())){
+            //				totalInvestChild=String.Format("{0:### ### ### ### ##0.##}",(double.Parse(totalInvestChild)/(double)1000));
+            //			}
 
             //PDM pour média 				
             if (FctUtilities.CheckedText.IsNotEmpty(totalInvestParent) && FctUtilities.CheckedText.IsNotEmpty(totalInvestChild.ToString()))
@@ -2400,6 +2456,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 tempEvol = (double)0.0;
                 totalInvestChildPreviousYear = dt.Compute(expressionPreviuousYear, filter).ToString();
+                //				if(FctUtilities.CheckedText.IsNotEmpty(totalInvestChildPreviousYear))totalInvestChildPreviousYear =String.Format("{0:### ### ### ### ##0.##}",(double.Parse(totalInvestChildPreviousYear)/(double)1000));
                 //anneé N par rapport N-1 = ((N-(N-1))*100)/N-1 
                 if (FctUtilities.CheckedText.IsNotEmpty(totalInvestChildPreviousYear) && FctUtilities.CheckedText.IsNotEmpty(totalInvestChild) && double.Parse(totalInvestChildPreviousYear) > (double)0.0)
                 {
@@ -2409,12 +2466,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
         }
 
+
         /// <summary>
         /// Remplit chaque ligne du tableau de résultats avec
         /// Investissement pour un total univers ou marché ou famille, ou un annonceur de référence ou concurrent,
         /// par média ou catégorie ou support
         /// </summary>
-        /// <param name="_session">session client</param>
+        /// <param name="webSession">session client</param>
         /// <param name="tab">tableau de résultats</param>
         /// <param name="indexTabRow">index ligne du tableau</param>
         /// <param name="idVehicle">identifiant média</param>
@@ -2424,13 +2482,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// ou un annonceur de référence ou concurrent</param>
         /// <param name="PDM">Part de marché</param>
         /// <param name="Evolution">Evolution période N par rapport à N-1</param>
-        /// <param name="_session.ComparaisonCriterion">total marché ou famille ou univers</param>
-        /// <param name="CstInvestmentType">investissement total famille ou marché ou univers, ou pour un annonceur de référence ou concurrent</param>
+        /// <param name="comparisonCriterion">total marché ou famille ou univers</param>
+        /// <param name="investmentType">investissement total famille ou marché ou univers, ou pour un annonceur de référence ou concurrent</param>
         /// <param name="preformatedMediaDetail">niveau de détail média</param>
         /// <returns>tableau de résultats</returns>		
-        protected object[,] FillTabInvestPdmEvol(object[,] tab, int indexTabRow, string idVehicle, string Vehicle, bool plurimedia, string Invest, string PDM, string Evolution, CstComparaisonCriterion comparaisonCriterion, CstResult.MediaStrategy.InvestmentType investmentType, CstPreformatedDetail.PreformatedMediaDetails preformatedMediaDetail)
+        protected object[,] FillTabInvestPdmEvol(object[,] tab, int indexTabRow, string idVehicle, string Vehicle, bool plurimedia, string Invest, string PDM, string Evolution, CstComparaisonCriterion comparisonCriterion, CstResult.MediaStrategy.InvestmentType investmentType, CstPreformatedDetail.PreformatedMediaDetails preformatedMediaDetail)
         {
-            return FillTabInvestPdmEvol( tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", "", "", plurimedia, Invest, PDM, Evolution, comparaisonCriterion, investmentType, preformatedMediaDetail);
+            return FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", "", "", plurimedia, Invest, PDM, Evolution, comparisonCriterion, investmentType, preformatedMediaDetail);
         }
 
         /// <summary>
@@ -2438,7 +2496,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Investissement pour un total univers ou marché ou famille, ou un annonceur de référence ou concurrent,
         /// par média ou catégorie ou support
         /// </summary>
-        /// <param name="_session">session client</param>
+        /// <param name="webSession">session client</param>
         /// <param name="tab">tableau de résultats</param>
         /// <param name="indexTabRow">index ligne du tableau</param>
         /// <param name="idVehicle">identifiant média</param>
@@ -2454,11 +2512,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// ou un annonceur de référence ou concurrent</param>
         /// <param name="PDM">Part de marché</param>
         /// <param name="Evolution">Evolution période N par rapport à N-1</param>
-        /// <param name="_session.ComparaisonCriterion">total marché ou famille ou univers</param>
-        /// <param name="CstInvestmentType">investissement total famille ou marché ou univers, ou pour un annonceur de référence ou concurrent</param>
+        /// <param name="comparisonCriterion">total marché ou famille ou univers</param>
+        /// <param name="investmentType">investissement total famille ou marché ou univers, ou pour un annonceur de référence ou concurrent</param>
         /// <param name="preformatedMediaDetail">niveau de détail média</param>
         /// <returns>tableau de résultats</returns>		
-        protected object[,] FillTabInvestPdmEvol(object[,] tab, int indexTabRow, string idVehicle, string Vehicle, string idCategory, string Category, string idMedia, string Media, string idRefOrCompetAdvertiser, string RefOrCompetAdvertiser, bool plurimedia, string Invest, string PDM, string Evolution, CstComparaisonCriterion comparaisonCriterion, CstInvestmentType investmentType, CstPreformatedDetail.PreformatedMediaDetails preformatedMediaDetail)
+        protected object[,] FillTabInvestPdmEvol(object[,] tab, int indexTabRow, string idVehicle, string Vehicle, string idCategory, string Category, string idMedia, string Media, string idRefOrCompetAdvertiser, string RefOrCompetAdvertiser, bool plurimedia, string Invest, string PDM, string Evolution, TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion comparisonCriterion, CstResult.MediaStrategy.InvestmentType investmentType, CstPreformatedDetail.PreformatedMediaDetails preformatedMediaDetail)
         {
             /*Remplit chaqe colonne de la ligne courante du tableau*/
 
@@ -2479,18 +2537,18 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //EVOLUTION période N/N-1
             if (FctUtilities.CheckedText.IsNotEmpty(Evolution.Trim())) tab[indexTabRow, EVOL_COLUMN_INDEX] = Evolution;
 
-            if (investmentType == CstInvestmentType.total)
+            if (investmentType == CstResult.MediaStrategy.InvestmentType.total)
             {
                 //investissement année N pour total univers ou marché ou famille
                 if (FctUtilities.CheckedText.IsNotEmpty(Invest.Trim()))
                 {
                     //Remplit les investissement totaux pour la famille ou l'ensemble du marché
-                    if (comparaisonCriterion == CstComparaisonCriterion.marketTotal || _session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal)
+                    if (comparisonCriterion == CstComparaisonCriterion.marketTotal || comparisonCriterion == CstComparaisonCriterion.sectorTotal)
                     {
                         switch (preformatedMediaDetail)
                         {
                             case CstPreformatedDetail.PreformatedMediaDetails.vehicle:
-                                if (_session.ComparaisonCriterion == CstComparaisonCriterion.marketTotal)
+                                if (comparisonCriterion == CstComparaisonCriterion.marketTotal)
                                 {
                                     if (plurimedia) tab[indexTabRow, TOTAL_MARKET_INVEST_COLUMN_INDEX] = Invest;
                                     else tab[indexTabRow, TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] = Invest;
@@ -2516,7 +2574,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         }
                         //Remplit les investissement totaux pour l'univers
                     }
-                    else if (comparaisonCriterion == CstComparaisonCriterion.universTotal)
+                    else if (comparisonCriterion == CstComparaisonCriterion.universTotal)
                     {
                         switch (preformatedMediaDetail)
                         {
@@ -2539,7 +2597,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     }
                 }
             }
-            else if (investmentType == CstInvestmentType.advertiser)
+            else if (investmentType == CstResult.MediaStrategy.InvestmentType.advertiser)
             {
                 //investissement année N pour annonceur de référence ou concurrent
                 if (FctUtilities.CheckedText.IsNotEmpty(Invest.ToString().Trim()))
@@ -2565,24 +2623,22 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Remplit chaque ligne du tableau de résultats avec
         /// Investissement les données du premier annonceur ou référence de chauqe média.
         /// </summary>
-        /// <param name="_session">session</param>
+        /// <param name="webSession">session</param>
         /// <param name="tab">tableau de résultats</param>
-        /// <param name="_session.ComparaisonCriterion">critère de comparaison</param>
+        /// <param name="comparisonCriterion">critère de comparaison</param>
         /// <param name="TotalMarketOrSectorInvest">investissement total</param>
         /// <param name="indexTabRow">index des lignes du tableau résultas</param>
         /// <param name="increment">vrai si change de ligne</param>
         /// <returns>tableau de résultats</returns>
-        protected object[,] FillTabFisrtElmt(object[,] tab, CstComparaisonCriterion comparaisonCriterion, string TotalMarketOrSectorInvest, ref int indexTabRow, bool increment)
+        protected object[,] FillTabFisrtElmt(object[,] tab, CstComparaisonCriterion comparisonCriterion, string TotalMarketOrSectorInvest, ref int indexTabRow, bool increment)
         {
 
             //Remplit la ligne courante avec le libéllé et l'investissment du premier annonceur,	pour le total marché et plurimédia 					
-            DataSet dsPluri = _dalLayer.GetMediaStrategyTopsData(CstResult.PalmaresRecap.ElementType.advertiser, comparaisonCriterion, CstMediaStrategy.MediaLevel.vehicleLevel, true);
-            //IndicatorDataAccess.GetPluriMediaStrategy1stElmntData(_session, CstResult.MotherRecap.ElementType.advertiser, comparaisonCriterion);
+            DataSet dsPluri = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.advertiser, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.vehicleLevel,true);
             if (dsPluri != null && dsPluri.Tables[0] != null && dsPluri.Tables[0].Rows.Count == 1 && FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorInvest) && (double.Parse(TotalMarketOrSectorInvest) > (double)0.0))
                 tab = FillTabFisrtElmt(tab, indexTabRow, CstResult.MotherRecap.ElementType.advertiser, "", "", dsPluri.Tables[0], true);
             //Remplit la ligne courante avec le libéllé et l'investissment de la  premiere référence,	pour le total marché et plurimédia 						
-            dsPluri = _dalLayer.GetMediaStrategyTopsData(CstResult.PalmaresRecap.ElementType.product, comparaisonCriterion, CstMediaStrategy.MediaLevel.vehicleLevel, true);
-            //IndicatorDataAccess.GetPluriMediaStrategy1stElmntData(_session, CstResult.MotherRecap.ElementType.product, comparaisonCriterion);
+            dsPluri = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.vehicleLevel,true);
             if (dsPluri != null && dsPluri.Tables[0] != null && dsPluri.Tables[0].Rows.Count == 1 && FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorInvest) && (double.Parse(TotalMarketOrSectorInvest) > (double)0.0))
                 tab = FillTabFisrtElmt(tab, indexTabRow, CstResult.MotherRecap.ElementType.product, "", "", dsPluri.Tables[0], true);
             if (increment) indexTabRow++; //ligne suivante
@@ -2633,7 +2689,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <param name="idMediaName">libellé du média</param>
         /// <param name="pluri">booléen pour préciser s'il s'agit d'une sélection mono ou plurimédia</param>
         /// <returns>tableau de résultats</returns>
-        protected object[,] FillTabFisrtElmt(object[,] tab, int indexTabRow, CstResult.MotherRecap.ElementType elementType, string idMediaName, string idMedia, DataTable dtFirstElmt, bool pluri)
+        protected object[,] FillTabFisrtElmt(object[,] tab, int indexTabRow, CstResult.Novelty.ElementType elementType, string idMediaName, string idMedia, DataTable dtFirstElmt, bool pluri)
         {
             #region variables locales
             string strExpr = "";
@@ -2655,6 +2711,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
                 if (foundRows != null && foundRows.Length > 0 && foundRows[0] != null)
                 {
+                    //					tempInvest = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(foundRows[0]["total_N"].ToString())/(double)1000));
                     tempInvest = foundRows[0]["total_N"].ToString();
                     //Insertion des données dans la ligne courante
                     if (FctUtilities.CheckedText.IsNotEmpty(tempInvest.ToString().Trim()))
@@ -2687,7 +2744,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <param name="InvestElement">investissement annonceur de référence ou concurrent</param>
         /// <param name="elementType">référence ou annonceur</param>
         /// <returns>tableau de résultats</returns>
-        protected object[,] FillTabFirstElmt(object[,] tab, int indexTabRow, string idElement, string LabelElement, string InvestElement, CstResult.MotherRecap.ElementType elementType)
+        protected object[,] FillTabFirstElmt(object[,] tab, int indexTabRow, string idElement, string LabelElement, string InvestElement, CstResult.Novelty.ElementType elementType)
         {
             if (CstResult.MotherRecap.ElementType.advertiser == elementType)
             {
@@ -2726,16 +2783,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <summary>
         /// Récupère les tables de données pour les 1ers annonceurs ou références par média
         /// </summary>
-        /// <param name="_session">session du client</param>
+        /// <param name="webSession">session du client</param>
         /// <param name="dt1stProductByVeh">table de données 1ere référence par média </param>
         /// <param name="dt1stAdvertiserByVeh">table de données 1er annonceur par média</param>
         /// <param name="dt1stProductByCat">table de données 1ere référence par catégorie</param>
         /// <param name="dt1stAdvertiserByCat">table de données 1er annonceur par catégorie</param>
         /// <param name="dt1stProductByMed">table de données 1ere référence par support</param>
         /// <param name="dt1stAdvertiserByMed">table de données 1ere référence par annonceur</param>
-        /// <param name="_session.ComparaisonCriterion">critère de comparaisonn (univers,marché,famille)</param>
+        /// <param name="comparisonCriterion">critère de comparaisonn (univers,marché,famille)</param>
         /// <param name="mediaLevel">niveau média</param>
-        protected void Get1stElmtDataTbleByMedia(ref DataTable dt1stProductByVeh, ref DataTable dt1stAdvertiserByVeh, ref DataTable dt1stProductByCat, ref DataTable dt1stAdvertiserByCat, ref DataTable dt1stProductByMed, ref DataTable dt1stAdvertiserByMed, CstComparaisonCriterion comparaisonCriterion, CstMediaStrategy.MediaLevel mediaLevel)
+        protected void Get1stElmtDataTbleByMedia(ref DataTable dt1stProductByVeh, ref DataTable dt1stAdvertiserByVeh, ref DataTable dt1stProductByCat, ref DataTable dt1stAdvertiserByCat, ref DataTable dt1stProductByMed, ref DataTable dt1stAdvertiserByMed, CstComparaisonCriterion comparisonCriterion, CstResult.MediaStrategy.MediaLevel mediaLevel)
         {
 
             #region variables locales
@@ -2746,41 +2803,35 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             //Données pour première référence par média (vehicle)
-            dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.PalmaresRecap.ElementType.product, comparaisonCriterion, CstMediaStrategy.MediaLevel.vehicleLevel, false); 
-            //IndicatorDataAccess.GetMediaStrategy1stElmntData(_session, CstResult.PalmaresRecap.ElementType.product, comparaisonCriterion, CstMediaStrategy.MediaLevel.vehicleLevel);
+            dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.vehicleLevel, false);
             if (dsTotalFirstProduct != null && dsTotalFirstProduct.Tables[0] != null && dsTotalFirstProduct.Tables[0].Rows.Count > 0)
                 dt1stProductByVeh = dsTotalFirstProduct.Tables[0];
 
             //Données pour premier annonceur par média (vehicle)
-            dsTotalFirstAdvertiser = _dalLayer.GetMediaStrategyTopsData(CstResult.PalmaresRecap.ElementType.advertiser, comparaisonCriterion, CstMediaStrategy.MediaLevel.vehicleLevel, false);
-            //IndicatorDataAccess.GetMediaStrategy1stElmntData(_session, CstResult.PalmaresRecap.ElementType.advertiser, comparaisonCriterion, CstMediaStrategy.MediaLevel.vehicleLevel);
+            dsTotalFirstAdvertiser = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.advertiser, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.vehicleLevel, false);
             if (dsTotalFirstAdvertiser != null && dsTotalFirstAdvertiser.Tables[0] != null && dsTotalFirstAdvertiser.Tables[0].Rows.Count > 0)
                 dt1stAdvertiserByVeh = dsTotalFirstAdvertiser.Tables[0];
-            if ((CstMediaStrategy.MediaLevel.categoryLevel == mediaLevel) || (CstMediaStrategy.MediaLevel.mediaLevel == mediaLevel))
+            if ((CstResult.MediaStrategy.MediaLevel.categoryLevel == mediaLevel) || (CstResult.MediaStrategy.MediaLevel.mediaLevel == mediaLevel))
             {
                 //Données pour première référence par média (catégorie)
-                dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.PalmaresRecap.ElementType.product, comparaisonCriterion, CstMediaStrategy.MediaLevel.categoryLevel, false);
-                //IndicatorDataAccess.GetMediaStrategy1stElmntData(_session, CstResult.PalmaresRecap.ElementType.product, comparaisonCriterion, CstMediaStrategy.MediaLevel.categoryLevel);
+                dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.categoryLevel, false);
                 if (dsTotalFirstProduct != null && dsTotalFirstProduct.Tables[0] != null && dsTotalFirstProduct.Tables[0].Rows.Count > 0)
                     dt1stProductByCat = dsTotalFirstProduct.Tables[0];
 
                 //Données pour premier annonceur par média (catégorie)
-                dsTotalFirstAdvertiser = _dalLayer.GetMediaStrategyTopsData(CstResult.PalmaresRecap.ElementType.advertiser, comparaisonCriterion, CstMediaStrategy.MediaLevel.categoryLevel, false);
-                //IndicatorDataAccess.GetMediaStrategy1stElmntData(_session, CstResult.PalmaresRecap.ElementType.advertiser, comparaisonCriterion, CstMediaStrategy.MediaLevel.categoryLevel);
+                dsTotalFirstAdvertiser = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.advertiser, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.categoryLevel, false);
                 if (dsTotalFirstAdvertiser != null && dsTotalFirstAdvertiser.Tables[0] != null && dsTotalFirstAdvertiser.Tables[0].Rows.Count > 0)
                     dt1stAdvertiserByCat = dsTotalFirstAdvertiser.Tables[0];
             }
-            if (CstMediaStrategy.MediaLevel.mediaLevel == mediaLevel)
+            if (CstResult.MediaStrategy.MediaLevel.mediaLevel == mediaLevel)
             {
                 //Données pour première référence par support
-                dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.PalmaresRecap.ElementType.product, comparaisonCriterion, CstMediaStrategy.MediaLevel.mediaLevel, false);
-                //IndicatorDataAccess.GetMediaStrategy1stElmntData(_session, CstResult.PalmaresRecap.ElementType.product, comparaisonCriterion, CstMediaStrategy.MediaLevel.mediaLevel);
+                dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.mediaLevel, false);
                 if (dsTotalFirstProduct != null && dsTotalFirstProduct.Tables[0] != null && dsTotalFirstProduct.Tables[0].Rows.Count > 0)
                     dt1stProductByMed = dsTotalFirstProduct.Tables[0];
 
                 //Données pour premier annonceur par support
-                dsTotalFirstAdvertiser = _dalLayer.GetMediaStrategyTopsData(CstResult.PalmaresRecap.ElementType.advertiser, comparaisonCriterion, CstMediaStrategy.MediaLevel.mediaLevel, false);
-                //IndicatorDataAccess.GetMediaStrategy1stElmntData(_session, CstResult.PalmaresRecap.ElementType.advertiser, comparaisonCriterion, CstMediaStrategy.MediaLevel.mediaLevel);
+                dsTotalFirstAdvertiser = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.advertiser, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.mediaLevel, false);
                 if (dsTotalFirstAdvertiser != null && dsTotalFirstAdvertiser.Tables[0] != null && dsTotalFirstAdvertiser.Tables[0].Rows.Count > 0)
                     dt1stAdvertiserByMed = dsTotalFirstAdvertiser.Tables[0];
             }
@@ -2791,7 +2842,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <summary>
         /// Initialise le tableau de résultas des répartion média en investissments.
         /// </summary>
-        /// <param name="_session">session du client </param>
+        /// <param name="webSession">session du client </param>
         /// <param name="dtTotal">table de données total famille ou marché</param>
         /// <param name="dtAdvertiser">table de données annonceurs de références ou concurrents</param>		
         /// <param name="VehicleAccessList">média en accès</param>
@@ -2952,18 +3003,18 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <summary>
         /// Détermine le niveau Média (Média ou catégorie ou support)
         /// </summary>
-        /// <param name="_session">session client</param>		
+        /// <param name="webSession">session client</param>		
         /// <returns>niveau média</returns>
-        protected CstMediaStrategy.MediaLevel SwitchMedia()
+        protected CstResult.MediaStrategy.MediaLevel SwitchMedia()
         {
             switch (_session.PreformatedMediaDetail)
             {
                 case CstPreformatedDetail.PreformatedMediaDetails.vehicleCategoryMedia:
-                    return CstMediaStrategy.MediaLevel.mediaLevel;
+                    return CstResult.MediaStrategy.MediaLevel.mediaLevel;
                 case CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory:
-                    return CstMediaStrategy.MediaLevel.categoryLevel;
+                    return CstResult.MediaStrategy.MediaLevel.categoryLevel;
                 case CstPreformatedDetail.PreformatedMediaDetails.vehicle:
-                    return CstMediaStrategy.MediaLevel.vehicleLevel;
+                    return CstResult.MediaStrategy.MediaLevel.vehicleLevel;
                 default:
                     throw (new ProductClassIndicatorsException(GestionWeb.GetWebWord(1237, _session.SiteLanguage)));
             }
@@ -2971,7 +3022,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <summary>
         /// Un traitement peut être affectué si sélection média est au niveau catégorie
         /// </summary>
-        /// <param name="_session">session du client</param>
+        /// <param name="webSession">session du client</param>
         /// <returns>vrai si niveau catégorie</returns>
         protected bool TreatCategory()
         {
@@ -2987,7 +3038,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <summary>
         /// Un traitement peut être affectué si on la session contient le niveau support
         /// </summary>
-        /// <param name="_session">session du client</param>
+        /// <param name="webSession">session du client</param>
         /// <returns>vrai si niveau catégorie</returns>
         protected bool TreatMedia()
         {

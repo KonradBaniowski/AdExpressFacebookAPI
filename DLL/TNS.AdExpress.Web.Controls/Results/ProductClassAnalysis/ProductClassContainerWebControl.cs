@@ -50,11 +50,19 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
         /// <summary>
         /// Report as table
         /// </summary>
-        protected WebControl _tableChart = null;
+        protected ProductClassTableWebControl _tableChart = null;
         /// <summary>
         /// Big Charts ?
         /// </summary>
         protected bool _bigSize = false;
+        /// <summary>
+        /// Excel format?
+        /// </summary>
+        protected bool _excel = false;
+        /// <summary>
+        /// Chart Type
+        /// </summary>
+        protected ChartImageType _chartType = ChartImageType.Flash;
         #endregion
 
 		#region Accesseurs
@@ -72,7 +80,23 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 			set{_bigSize = value;}
             get { return _bigSize; }
 		}
-		#endregion
+        /// <summary>
+        /// Get / Set Excel format ?
+        /// </summary>
+        [Bindable(true)]
+        public bool Excel
+        {
+            get { return _excel; }
+            set { _excel = value; }
+        }
+        /// <summary>
+        /// Get / Set Chart Type
+        /// </summary>
+        public ChartImageType ChartType{
+            get { return _chartType; }
+            set { _chartType = value; }
+        }
+        #endregion
 		
 		#region Evènements
 
@@ -85,13 +109,13 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 			Controls.Clear();
 		
 			//Graphical mode
-            if (_session != null && _session.Graphics && _session.CurrentTab != MotherRecap.NOVELTY && _session.CurrentTab != MotherRecap.SYNTHESIS)
+            if (_session != null && !_excel && _session.Graphics && _session.CurrentTab != MotherRecap.NOVELTY && _session.CurrentTab != MotherRecap.SYNTHESIS)
             {
                 Navigation.Module module = ModulesList.GetModule(CstWeb.Module.Name.INDICATEUR);
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Indicator result"));
                 object[] param = new object[1] { _session };
                 IProductClassIndicators productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
-
+                productClassIndicator.ChartType = _chartType;
 				switch(_session.CurrentTab){
 					case MotherRecap.MEDIA_STRATEGY :
                         _advertiserChart = productClassIndicator.GetMediaStrategyChart();
@@ -125,7 +149,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
             else if (_session != null)
             {
 					_tableChart = new ProductClassTableWebControl(_session);
-                    //_tableChart.Session= _session;
+                    _tableChart.Excel = _excel;
                     _tableChart.ID = "tableChartWebControl_" + this.ID;
                     Controls.Add(_tableChart);
 			}			

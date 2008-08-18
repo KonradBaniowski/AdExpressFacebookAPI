@@ -39,6 +39,20 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <returns>Total of the last month of the selected period depending on User selection</returns>
         double GetMonthTotal(CstResult.PalmaresRecap.typeYearSelected typeYear);
         /// <summary>
+        /// Get Total on the Data from database for the report of the user session
+        /// </summary>
+        /// <param name="totalType">Type of total</param>
+        /// <param name="typeYear">Get total of year N or year N-1?</param>
+        /// <returns>Total depending on User selection</returns>
+        double GetTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear);
+        /// <summary>
+        /// Get Total on the Data from database for the report of the user session
+        /// </summary>
+        /// <param name="totalType">Type of total</param>
+        /// <param name="typeYear">Get total of year N or year N-1?</param>
+        /// <returns>Total depending on User selection</returns>
+        double GetMonthTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear);
+        /// <summary>
         /// Get data for Indocator Top (Table or graph)
         /// </summary>
         /// <param name="typeYear">Type of study</param>

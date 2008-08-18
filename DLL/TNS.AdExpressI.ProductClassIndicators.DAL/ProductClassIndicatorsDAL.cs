@@ -117,6 +117,26 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
             return (new DALEngine(this._session)).GetMonthTotal(typeYear);
         }
         /// <summary>
+        /// Get Total on the Data from database for the report of the user session
+        /// </summary>
+        /// <param name="totalType">Type of total</param>
+        /// <param name="typeYear">Get total of year N or year N-1?</param>
+        /// <returns>Total depending on User selection</returns>
+        public double GetTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear)
+        {
+            return (new DALEngine(this._session)).GetTotal(totalType, typeYear);
+        }
+        /// <summary>
+        /// Get Total on the Data from database for the report of the user session
+        /// </summary>
+        /// <param name="totalType">Type of total</param>
+        /// <param name="typeYear">Get total of year N or year N-1?</param>
+        /// <returns>Total depending on User selection</returns>
+        public double GetMonthTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear)
+        {
+            return (new DALEngine(this._session)).GetMonthTotal(totalType, typeYear);
+        }
+        /// <summary>
         /// Get required data to build a seasonality table
         /// </summary>
         /// <param name="withAdvertisers">Include advertiser dimension</param>

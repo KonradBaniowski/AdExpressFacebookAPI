@@ -16,7 +16,7 @@ using System.Data;
 using TNS.AdExpress.Domain.Web;
 using System.Web.UI.WebControls;
 
-namespace TNS.AdExpressI.ProductClassIndicators
+namespace TNS.AdExpressI.ProductClassIndicators.Charts
 {
 
     [ToolboxData("<{0}:ChartMediaStartegy runat=server></{0}:ChartMediaStartegy>")]
@@ -42,7 +42,29 @@ namespace TNS.AdExpressI.ProductClassIndicators
         #region OnPreRender
         protected override void OnPreRender(EventArgs e)
         {
-            base.OnPreRender(e);
+            //base.OnPreRender(e);
+
+            #region Animation Params
+            if (_chartType != ChartImageType.Flash)
+            {
+                this.ImageType = _chartType;
+            }
+            else
+            {
+                this.ImageType = ChartImageType.Flash;
+                this.AnimationTheme = AnimationTheme.GrowingAndFading;
+                this.AnimationDuration = 6;
+                this.RepeatAnimation = false;
+            }
+            #endregion
+
+            #region Rendering Params
+            this.BackGradientType = GradientType.TopBottom;
+            this.BorderStyle = ChartDashStyle.Solid;
+            this.BorderLineColor = (Color)_colorConverter.ConvertFrom(_chartBorderLineColor);
+            this.BorderLineWidth = 2;
+            #endregion
+
 
             #region Get Data
             EngineMediaStrategy engine = new EngineMediaStrategy(this._session, this._dalLayer);
@@ -84,7 +106,6 @@ namespace TNS.AdExpressI.ProductClassIndicators
             #region Chart Design
             this.Width = new Unit("850px");
             this.Height = new Unit("850px");
-            this.BorderLineColor = (Color)_colorConverter.ConvertFrom(_chartBorderLineColor);
             this.Legend.Enabled = false;
             #endregion
 
@@ -513,7 +534,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
                     xValues[i] = foundRows[i]["Name"].ToString();
                     yValues[i] = Convert.ToDouble(foundRows[i]["Position"]);
                     otherUniversValue += Convert.ToDouble(foundRows[i]["Position"]);
-                    index = i;
+                    index = i+1;
                 }
                 if (foundRows.Length > NBRE_MEDIA)
                 {
@@ -526,7 +547,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
                     xValuesSectorMarket[i] = foundRowsSectorMarket[i]["Name"].ToString();
                     yValuesSectorMarket[i] = Convert.ToDouble(foundRowsSectorMarket[i]["Position"]);
                     otherSectorMarketValue += Convert.ToDouble(foundRowsSectorMarket[i]["Position"]);
-                    index = i;
+                    index = i+1;
                 }
                 if (foundRowsSectorMarket.Length > NBRE_MEDIA)
                 {
@@ -593,7 +614,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
                             yVal[i] = Convert.ToDouble(foundRowsCompetitorRef[i]["Position"]);
 
                             otherCompetitorRefValue += Convert.ToDouble(foundRowsCompetitorRef[i]["Position"]);
-                            index = i;
+                            index = i+1;
                         }
                         if (foundRowsCompetitorRef.Length > NBRE_MEDIA)
                         {
@@ -648,7 +669,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
                     #endregion
 
                     #region Colors
-                    for (int l = 0; l < 6 && l < listSeriesMedia[listSeriesName[j]].Points.Count; k++)
+                    for (int l = 0; l < 6 && l < listSeriesMedia[listSeriesName[j]].Points.Count; l++)
                     {
                         listSeriesMedia[listSeriesName[j]].Points[l].Color = pieColors[l];
                     }

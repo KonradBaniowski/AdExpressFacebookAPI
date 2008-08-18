@@ -66,21 +66,21 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             StringBuilder sql = new StringBuilder();
 
             #region Request building
-            Table dataTable = this.GetDataTable(_classifLevel == CstResult.MotherRecap.ElementType.product);
-            sql.AppendFormat(" select {0}.id_advertiser, {0}.advertiser, ", _recapAdvertiser.Prefix);
+            Table dataTable = this.GetDataTable(true);
+            sql.AppendFormat(" select {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
-                sql.AppendFormat(" {0}.id_product, {0}.product,  ", _recapProduct.Prefix);
+                sql.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
             }
-            sql.Append(this.GetExpenditureClause());
+            sql.AppendFormat(", {0}", this.GetExpenditureClause());
 
 
             sql.Append(" from ");
-            sql.AppendFormat(" {0}, ", dataTable.SqlWithPrefix);
-            sql.AppendFormat(" {0} ", _recapAdvertiser.SqlWithPrefix);
+            sql.AppendFormat(" {0}", dataTable.SqlWithPrefix);
+            sql.AppendFormat(", {0}", _recapAdvertiser.SqlWithPrefix);
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
-                sql.AppendFormat(", {0}, ", _recapProduct.SqlWithPrefix);
+                sql.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
             }
 
             sql.Append(" where  ");

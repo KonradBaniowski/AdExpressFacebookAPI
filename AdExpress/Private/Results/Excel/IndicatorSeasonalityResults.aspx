@@ -1,5 +1,8 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.Excel.IndicatorSeasonalityResults" CodeFile="IndicatorSeasonalityResults.aspx.cs" %>
+
+<%@ Register Assembly="TNS.AdExpress.Web.Controls" Namespace="TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis"
+    TagPrefix="cc1" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD runat="server">
@@ -16,7 +19,7 @@
 	</HEAD>
 	<body>
 		<form id="Form1" method="post" runat="server">
-			<%=result%>
+            <cc1:productclasscontainerwebcontrol Excel="true" id="ProductClassContainerWebControl1" runat="server"></cc1:productclasscontainerwebcontrol>
 		</form>
 	</body>
 </HTML>

@@ -33,6 +33,7 @@ namespace AdExpress.Private.Results.Excel{
 	/// Description résumée de IndicatorSeasonalityResults.
 	/// </summary>
 	public partial class IndicatorSeasonalityResults : TNS.AdExpress.Web.UI.PrivateWebPage{		
+
 		#region variables
 		/// <summary>
 		/// Code HTML des résultats
@@ -68,37 +69,6 @@ namespace AdExpress.Private.Results.Excel{
 				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);			
 				#endregion
 
-				#region Calcul du résultat
-			
-				switch(_webSession.CurrentTab){
-					case TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.PALMARES:
-						result=TNS.AdExpress.Web.UI.Results.IndicatorPalmaresUI.GetAllPalmaresIndicatorExcelUI(_webSession,itemType);
-						break;
-					case TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.EVOLUTION:
-						result=TNS.AdExpress.Web.UI.Results.IndicatorEvolutionUI.GetAllEvolutionIndicatorExcelUI(_webSession);
-						break;
-					case 	
-					TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.NOVELTY:
-                        result = ExcelFunction.GetLogo(_webSession);
-						result += ExcelFunction.GetExcelHeader(_webSession, false, true, false, GestionWeb.GetWebWord(1310, _webSession.SiteLanguage));
-						result += TNS.AdExpress.Web.UI.Results.IndicatorNoveltyUI.GetIndicatorNoveltyExcelUI(this,IndicatorNoveltyRules.GetFormattedTable(_webSession,TNS.AdExpress.Constantes.FrameWork.Results.Novelty.ElementType.product),_webSession,TNS.AdExpress.Constantes.FrameWork.Results.Novelty.ElementType.product);
-						result += "<br>"+TNS.AdExpress.Web.UI.Results.IndicatorNoveltyUI.GetIndicatorNoveltyExcelUI(this,IndicatorNoveltyRules.GetFormattedTable(_webSession,TNS.AdExpress.Constantes.FrameWork.Results.Novelty.ElementType.advertiser),_webSession,TNS.AdExpress.Constantes.FrameWork.Results.Novelty.ElementType.advertiser);
-						result += ExcelFunction.GetFooter(_webSession);
-						break;
-					case TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.SEASONALITY:
-						result=TNS.AdExpress.Web.UI.Results.IndicatorSeasonalityUI.GetIndicatorSeasonalityExcelUI(this,IndicatorSeasonalityRules.GetFormattedTable(_webSession),_webSession);
-						break;
-					case TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.MEDIA_STRATEGY:
-						result=TNS.AdExpress.Web.UI.Results.IndicatorMediaStrategyUI.GetIndicatorMediaStrategyExcelUI(this,IndicatorMediaStrategyRules.GetFormattedTable(_webSession,_webSession.ComparaisonCriterion),_webSession,true);
-						break;
-					case TNS.AdExpress.Constantes.FrameWork.Results.SynthesisRecap.SYNTHESIS:						
-						result=TNS.AdExpress.Web.UI.Results.IndicatorSynthesisUI.GetIndicatorSynthesisExcelUI(_webSession,true);
-						break;
-					default:
-						break;					
-				}		
-			
-				#endregion
 			}			
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -107,6 +77,19 @@ namespace AdExpress.Private.Results.Excel{
 			}
 		}
 		#endregion
+
+        #region DeterminePostBackMode
+        /// <summary>
+        /// DeterminePostBackMode
+        /// </summary>
+        /// <returns></returns>
+        protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode()
+        {
+            ProductClassContainerWebControl1.Session = _webSession;
+
+            return base.DeterminePostBackMode();
+        }
+        #endregion
 
 		#region Déchargement de la page
 		/// <summary>

@@ -1,6 +1,9 @@
 <%@ Register TagPrefix="dcwc" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.Jpeg.IndicatorResultsExport" CodeFile="IndicatorResultsExport.aspx.cs" %>
+
+<%@ Register Assembly="TNS.AdExpress.Web.Controls" Namespace="TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis"
+    TagPrefix="cc2" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD runat="server">
@@ -17,9 +20,7 @@
 	<body class="whiteBackGround darkBackGround" bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0">
 		<form id="Form1" method="post" runat="server">
 			<div align="center">
-			<DCWC:INDICATORCHARTUI id="advertiserChart" runat="server"></DCWC:INDICATORCHARTUI><br>
-			<br>
-			<DCWC:INDICATORCHARTUI id="referenceChart" runat="server"></DCWC:INDICATORCHARTUI>
+                <cc2:ProductClassContainerWebControl ID="ProductClassContainerWebControl1" runat="server" />
 			</div>
 		</form>
 		<%=divClose%>

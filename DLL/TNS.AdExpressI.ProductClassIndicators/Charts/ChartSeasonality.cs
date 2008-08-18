@@ -140,10 +140,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             this.Titles.Add(title);
             #endregion
 
-            #region Copyright & Logo
-            this.AddHeader();
-            #endregion
-
             #region Series Design
             serieUnivers.Type = SeriesChartType.Line;
             serieUnivers.ShowLabelAsValue = true;

@@ -65,7 +65,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             StringBuilder sqlJoin = new StringBuilder();
             StringBuilder sqlGroup = new StringBuilder();
             StringBuilder sqlOrder = new StringBuilder();
-            Table dataTable = GetDataTable(false);
+            Table dataTable = GetDataTable(true);
 
 			#region Build request
 																
@@ -73,47 +73,47 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
 			#region Select
 			//Media Field
-            sql.AppendFormat(" {1}.id_vehicle, {0}.vehicle", _recapVehicle.Prefix, dataTable.Prefix);
+            sql.AppendFormat(" {0}.id_vehicle, {0}.vehicle", _recapVehicle.Prefix);
             sqlFrom.AppendFormat("{0}, {1}", dataTable.SqlWithPrefix, _recapVehicle.SqlWithPrefix);
             sqlJoin.AppendFormat(" {0}.id_vehicle = {1}.id_vehicle and {1}.id_language = {2}", dataTable.Prefix, _recapVehicle.Prefix, _session.SiteLanguage);
-            sqlGroup.AppendFormat(" {0}.id_vehicle, {1}.vehicle", dataTable.Prefix, _recapVehicle.Prefix);
-            sqlOrder.AppendFormat(" {0}.id_vehicle, {1}.vehicle", dataTable.Prefix, _recapVehicle.Prefix);
+            sqlGroup.AppendFormat(" {0}.id_vehicle, {0}.vehicle", _recapVehicle.Prefix);
+            sqlOrder.AppendFormat(" {0}.id_vehicle, {0}.vehicle", _recapVehicle.Prefix);
             if (_session.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory)
             {
-                sql.AppendFormat(", {1}.id_category, {0}.category", _recapCategory.Prefix, dataTable.Prefix);
+                sql.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapCategory.SqlWithPrefix);
                 sqlJoin.AppendFormat(" and {0}.id_category = {1}.id_category and {1}.id_language = {2}", dataTable.Prefix, _recapCategory.Prefix, _session.SiteLanguage);
-                sqlGroup.AppendFormat(", {0}.id_category, {1}.category", dataTable.Prefix, _recapCategory.Prefix);
-                sqlOrder.AppendFormat(", {0}.id_category, {1}.category", dataTable.Prefix, _recapCategory.Prefix);
+                sqlGroup.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
+                sqlOrder.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
             }
             else if (_session.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia)
             {
-                sql.AppendFormat(", {2}.id_category, {0}.category, {2}.id_media, {1}.media", _recapCategory.Prefix, _recapMedia.Prefix, dataTable.Prefix);
+                sql.AppendFormat(", {0}.id_category, {0}.category, {1}.id_media, {1}.media", _recapCategory.Prefix, _recapMedia.Prefix);
                 sqlFrom.AppendFormat(", {0}, {1}", _recapCategory.SqlWithPrefix, _recapMedia.SqlWithPrefix);
-                sqlJoin.AppendFormat(" and {0}.id_category = {1}.id_category and {1}.id_language = {2}", dataTable.Prefix, _recapCategory.Prefix, _session.SiteLanguage);
-                sqlJoin.AppendFormat(" and {0}.id_media = {1}.id_media and {1}.id_language = {2}", _recapCategory.Prefix, _recapMedia.Prefix, _session.SiteLanguage);
-                sqlGroup.AppendFormat(", {0}.id_category, {1}.category", dataTable.Prefix, _recapCategory.Prefix);
-                sqlOrder.AppendFormat(", {0}.id_category, {1}.category", dataTable.Prefix, _recapCategory.Prefix);
-                sqlGroup.AppendFormat(", {0}.id_media, {1}.media", dataTable.Prefix, _recapMedia.Prefix);
-                sqlOrder.AppendFormat(", {0}.id_media, {1}.media", dataTable.Prefix, _recapMedia.Prefix);
+                sqlJoin.AppendFormat(" and {0}.id_media = {1}.id_media and {1}.id_language = {2}", dataTable.Prefix, _recapMedia.Prefix, _session.SiteLanguage);
+                sqlJoin.AppendFormat(" and {0}.id_category = {1}.id_category and {1}.id_language = {2}", _recapMedia.Prefix, _recapCategory.Prefix, _session.SiteLanguage);
+                sqlGroup.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
+                sqlOrder.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
+                sqlGroup.AppendFormat(", {0}.id_media, {0}.media", _recapMedia.Prefix);
+                sqlOrder.AppendFormat(", {0}.id_media, {0}.media", _recapMedia.Prefix);
             }
 
 			//Product Field
             if (classifLevel == CstResult.MotherRecap.ElementType.product)
             {
-                sql.AppendFormat(", {1}.id_product, {0}.product", _recapProduct.Prefix, dataTable.Prefix);
+                sql.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
                 sqlJoin.AppendFormat(" and {0}.id_product = {1}.id_product and {1}.id_language = {2}", dataTable.Prefix, _recapProduct.Prefix, _session.SiteLanguage);
-                sqlGroup.AppendFormat(", {0}.id_product, {1}.product", dataTable.Prefix, _recapCategory.Prefix);
-                sqlOrder.AppendFormat(", {0}.id_product, {1}.product", dataTable.Prefix, _recapCategory.Prefix);
+                sqlGroup.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
+                sqlOrder.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
             }
             else
             {
-                sql.AppendFormat(", {1}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix, dataTable.Prefix);
+                sql.AppendFormat(", {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapAdvertiser.SqlWithPrefix);
                 sqlJoin.AppendFormat(" and {0}.id_advertiser = {1}.id_advertiser and {1}.id_language = {2}", dataTable.Prefix, _recapAdvertiser.Prefix, _session.SiteLanguage);
-                sqlGroup.AppendFormat(", {0}.id_advertiser, {1}.advertiser", dataTable.Prefix, _recapCategory.Prefix);
-                sqlOrder.AppendFormat(", {0}.id_advertiser, {1}.advertiser", dataTable.Prefix, _recapCategory.Prefix);
+                sqlGroup.AppendFormat(", {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
+                sqlOrder.AppendFormat(", {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
             }
             sql.AppendFormat(", {0}", this.GetExpenditureClause());
             #endregion
@@ -217,24 +217,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         }
         #endregion
 
-        #region Get Chart Data
-        /// <summary>
-        /// Get data for media strategy chart
-        /// </summary>
-        /// <remarks>Used to present data as a chart</remarks>
-        /// <returns>Media strategy data</returns>
-        public DataSet GetChartData()
-        {
-
-            DataSet ds = null;
-            StringBuilder sql = new StringBuilder();
-            Table dataTable = GetDataTable(false);
-
-
-            return (ds);
-        }
-        #endregion
-
         #region Get Top
         /// <summary>
         /// Get fisrt elements
@@ -250,7 +232,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             StringBuilder sqlPartition = new StringBuilder();
             StringBuilder sqlGroup = new StringBuilder();
             StringBuilder sqlOrder = new StringBuilder();
-            Table dataTable = GetDataTable(false);
+            Table dataTable = GetDataTable(true);
 
 
             #region Build request
@@ -263,21 +245,21 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 switch (mediaLevel)
                 {
                     case CstResult.MediaStrategy.MediaLevel.vehicleLevel:
-                        sql.AppendFormat(" {0}.id_vehicle", dataTable.Prefix);
-                        sqlGroup.AppendFormat(" {0}.id_vehicle", dataTable.Prefix);
-                        sqlOrder.AppendFormat(" {0}.id_vehicle", dataTable.Prefix);
+                        sql.AppendFormat(" {0}.id_vehicle, ", dataTable.Prefix);
+                        sqlGroup.AppendFormat(" {0}.id_vehicle, ", dataTable.Prefix);
+                        sqlOrder.AppendFormat(" {0}.id_vehicle, ", dataTable.Prefix);
                         sqlPartition.AppendFormat(" partition by {0}.id_vehicle", dataTable.Prefix);
                         break;
                     case CstResult.MediaStrategy.MediaLevel.categoryLevel:
-                        sql.AppendFormat(" {0}.id_category", dataTable.Prefix);
-                        sqlGroup.AppendFormat(" {0}.id_category", dataTable.Prefix);
-                        sqlOrder.AppendFormat(" {0}.id_category", dataTable.Prefix);
+                        sql.AppendFormat(" {0}.id_category, ", dataTable.Prefix);
+                        sqlGroup.AppendFormat(" {0}.id_category, ", dataTable.Prefix);
+                        sqlOrder.AppendFormat(" {0}.id_category, ", dataTable.Prefix);
                         sqlPartition.AppendFormat(" partition by {0}.id_category", dataTable.Prefix);
                         break;
                     case CstResult.MediaStrategy.MediaLevel.mediaLevel:
-                        sql.AppendFormat(" {0}.id_media", dataTable.Prefix);
-                        sqlGroup.AppendFormat(" {0}.id_media", dataTable.Prefix);
-                        sqlOrder.AppendFormat(" {0}.id_media", dataTable.Prefix);
+                        sql.AppendFormat(" {0}.id_media, ", dataTable.Prefix);
+                        sqlGroup.AppendFormat(" {0}.id_media, ", dataTable.Prefix);
+                        sqlOrder.AppendFormat(" {0}.id_media, ", dataTable.Prefix);
                         sqlPartition.AppendFormat(" partition by {0}.id_media", dataTable.Prefix);
                         break;
                 }
@@ -287,19 +269,19 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             //Product Field
             if (classifLevel == CstResult.MotherRecap.ElementType.product)
             {
-                sql.AppendFormat(", {1}.id_product, {0}.product", _recapProduct.Prefix, dataTable.Prefix);
+                sql.AppendFormat(" {0}.id_product, {0}.product", _recapProduct.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
-                sqlJoin.AppendFormat(" and {0}.id_product = {1}.id_product and {1}.id_language = {2}", dataTable.Prefix, _recapProduct.Prefix, _session.SiteLanguage);
-                sqlGroup.AppendFormat(", {0}.id_product, {1}.product", dataTable.Prefix, _recapCategory.Prefix);
-                sqlOrder.AppendFormat(", {0}.id_product, {1}.product", dataTable.Prefix, _recapCategory.Prefix);
+                sqlJoin.AppendFormat(" {0}.id_product = {1}.id_product and {1}.id_language = {2}", dataTable.Prefix, _recapProduct.Prefix, _session.SiteLanguage);
+                sqlGroup.AppendFormat("{0}.id_product, {0}.product", _recapProduct.Prefix);
+                sqlOrder.AppendFormat("{0}.id_product, {0}.product", _recapProduct.Prefix);
             }
             else
             {
-                sql.AppendFormat(", {1}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix, dataTable.Prefix);
+                sql.AppendFormat(" {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapAdvertiser.SqlWithPrefix);
-                sqlJoin.AppendFormat(" and {0}.id_advertiser = {1}.id_advertiser and {1}.id_language = {2}", dataTable.Prefix, _recapAdvertiser.Prefix, _session.SiteLanguage);
-                sqlGroup.AppendFormat(", {0}.id_advertiser, {1}.advertiser", dataTable.Prefix, _recapCategory.Prefix);
-                sqlOrder.AppendFormat(", {0}.id_advertiser, {1}.advertiser", dataTable.Prefix, _recapCategory.Prefix);
+                sqlJoin.AppendFormat(" {0}.id_advertiser = {1}.id_advertiser and {1}.id_language = {2}", dataTable.Prefix, _recapAdvertiser.Prefix, _session.SiteLanguage);
+                sqlGroup.AppendFormat("{0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
+                sqlOrder.AppendFormat("{0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
             }
             sql.AppendFormat(", {0}", this.GetExpenditureClause());
             sql.AppendFormat(", rank() over({0} order by {1} desc) rk", sqlPartition, this.GetExpenditureClause(CstResult.PalmaresRecap.typeYearSelected.currentYear));

@@ -63,8 +63,22 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// List of advertisers as competitors
         /// </summary>
         protected List<long> _competitorIDS = new List<long>();
+        /// <summary>
+        /// Begin of the period
+        /// </summary>
         protected DateTime _periodBegin;
+        /// <summary>
+        /// End of the period
+        /// </summary>
         protected DateTime _periodEnd;
+        /// <summary>
+        /// Year ID
+        /// </summary>
+        protected int _iYearID = 0;
+        /// <summary>
+        /// Year ID as a string
+        /// </summary>
+        protected string _strYearID = string.Empty;
         #endregion
 
         #endregion
@@ -77,6 +91,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
             get { return _session; }
             set { _session = value; }
+        }
+        /// <summary>
+        /// Get / Set Excel format ?
+        /// </summary>
+        public bool Excel
+        {
+            get { return _excel; }
+            set { _excel = value; }
         }
         #endregion
 
@@ -110,6 +132,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 throw new NoDataException();
             _periodBegin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
             _periodEnd = FctUtilities.Dates.getPeriodEndDate(absolutEndPeriod, _session.PeriodType);
+            FctUtilities.Dates.GetYearSelected(_session, ref _strYearID, ref _iYearID, _periodBegin);
             #endregion
         }
         #endregion

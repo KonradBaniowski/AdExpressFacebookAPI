@@ -283,10 +283,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="period">Begin of the period</param>
         public static void GetYearSelected(WebSession session, ref string yearStr, ref int idYear, DateTime period)
         {
-            int year = yearID(period, session);
-            if (year > 0)
+            idYear = yearID(period, session);
+            if (idYear > 0)
             {
-                yearStr = year.ToString();
+                yearStr = idYear.ToString();
             }
             else
             {

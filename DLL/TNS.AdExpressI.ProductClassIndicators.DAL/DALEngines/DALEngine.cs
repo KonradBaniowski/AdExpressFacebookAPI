@@ -356,12 +356,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
         #region Get Market or Sector Total
         /// <summary>
-        /// Get Market or Sector Total on the selected period or on the last studid month
+        /// Get Total on the selected period or on the last studid month
         /// </summary>
         /// <param name="typeYear">Current year or previous one?</param>
         /// <param name="expenditureClause">Expenditure clause (sum of monthes or simple month)</param>
         /// <returns>Market orSector total</returns>
-        protected double GetTotal(CstResult.PalmaresRecap.typeYearSelected typeYear, string expenditureClause)
+        protected double GetTotal(CstComparaisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear, string expenditureClause)
         {
 
             StringBuilder sql = new StringBuilder(5000);
@@ -377,7 +377,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             sql.AppendFormat(" where {0}.id_sector={1}.id_sector", dataTable.Prefix, _recapSector.Prefix);
             sql.AppendFormat(" and {0}.id_language={1}", _recapSector.Prefix, _session.SiteLanguage);
 
-            if (this._session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal)
+            if (totalType == CstComparaisonCriterion.sectorTotal)
             {
                 sql.AppendFormat(" and {0}.id_sector in ( ", dataTable.Prefix);
                 sql.Append(" select distinct id_sector ");
@@ -387,6 +387,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, false, TNS.Classification.Universe.AccessType.includes));
 
                 sql.Append(" ) ");
+            }
+            else if (totalType == CstComparaisonCriterion.universTotal)
+            {
+                sql.Append(" ");
+                // Product selection
+                if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+                    sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
+                // Product rights
+                sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
             }
 
             #region Media selection
@@ -429,7 +438,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         /// <param name="typeYear">Current year or previous one?</param>
         /// <returns>Market orSector total</returns>
         public double GetTotal(CstResult.PalmaresRecap.typeYearSelected typeYear){
-            return GetTotal(typeYear, GetExpenditureClause(typeYear));
+            return GetTotal(this._session.ComparaisonCriterion, typeYear, GetExpenditureClause(typeYear));
         }
         /// <summary>
         /// Get Market or Sector Total on the last month of the studied period
@@ -438,7 +447,26 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         /// <returns>Market orSector total</returns>
         public double GetMonthTotal(CstResult.PalmaresRecap.typeYearSelected typeYear)
         {
-            return GetTotal(typeYear, GetMonthExpenditureClause(typeYear));
+            return GetTotal(this._session.ComparaisonCriterion,typeYear, GetMonthExpenditureClause(typeYear));
+        }
+        /// <summary>
+        /// Get Total on the selected period
+        /// </summary>
+        /// <param name="totalType">Type of total</param>
+        /// <param name="typeYear">Current year or previous one?</param>
+        /// <returns>Market orSector total</returns>
+        public double GetTotal(CstComparaisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear){
+            return GetTotal(totalType, typeYear, GetExpenditureClause(typeYear));
+        }
+        /// <summary>
+        /// Get Market or Sector Total on the last month of the studied period
+        /// </summary>
+        /// <param name="totalType">Type of total</param>
+        /// <param name="typeYear">Current year or previous one?</param>
+        /// <returns>Market orSector total</returns>
+        public double GetMonthTotal(CstComparaisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear)
+        {
+            return GetTotal(totalType, typeYear, GetMonthExpenditureClause(typeYear));
         }
         #endregion
 

@@ -280,7 +280,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit));
                     if (!Double.IsInfinity(evol))
                     {
-                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true));
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true));
                     }
                     else
                     {
@@ -333,7 +333,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit));
                     if (!Double.IsInfinity(evol))
                     {
-                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true));
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true));
                     }
                     else
                     {

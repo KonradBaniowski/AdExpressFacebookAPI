@@ -156,19 +156,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 throw new NoDataException();
             }
-            dtNovelties = dsNovelties.Tables[0];
-            //Total reference (univers, market, sector)
-            double total = 0;
-            switch (_session.ComparaisonCriterion)
-            {
-                case CstWeb.CustomerSessions.ComparisonCriterion.marketTotal:
-                case CstWeb.CustomerSessions.ComparisonCriterion.sectorTotal:
-                    total = _dalLayer.GetMonthTotal(CstResult.PalmaresRecap.typeYearSelected.currentYear);
-                    break;
-                default:
-                    total = Convert.ToDouble(dtNovelties.Compute(string.Format("sum({0})", monthColumn), string.Empty));
-                    break;
-            }
+            dtNovelties = dsNovelties.Tables[0];            
+            double total = _dalLayer.GetMonthTotal(CstComparaisonCriterion.universTotal, CstResult.PalmaresRecap.typeYearSelected.currentYear);          
             #endregion
 
             #region Get N1 months indexes       
@@ -445,7 +434,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
                 #region Legend
                 t.AppendFormat("<table align=\"left\"><tr><td nowrap class=pmcategorynb width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{0}</td></tr>", GestionWeb.GetWebWord(1225, _session.SiteLanguage));
-                t.AppendFormat("<tr><td nowrap class={0} width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{1}</td></tr></table><br/>", cssColored, GestionWeb.GetWebWord(1226, _session.SiteLanguage));
+                t.AppendFormat("<tr><td nowrap class={0} width=25>&nbsp;&nbsp;</td><td class=txtNoir11>{1}</td></tr></table><br/><br/>", cssColored, GestionWeb.GetWebWord(1226, _session.SiteLanguage));
                 #endregion
 
                 #region Build graph
@@ -466,7 +455,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
                 //Iinactivity
                 t.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1220, _session.SiteLanguage));
-                t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                if (!_excel)
+                {
+                    t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                }
 
                 //N-1 year cells
                 for (int j = 1; j <= 12; j++)
@@ -474,7 +466,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     t.AppendFormat("<td nowrap class=\"p2\">&nbsp;{0}-{1}</td>", j.ToString("00"), _periodEnd.AddYears(-1).Year);
                 }
                 //Year separator
-                t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                if (!_excel)
+                {
+                    t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                }
 
                 //N cells
                 for (int m = 1; m < _periodEnd.Month; m++)
@@ -482,7 +477,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     t.AppendFormat("<td nowrap class=\"p2\">&nbsp;{0}-{1}</td>", m.ToString("00"), _periodEnd.Year);
                 }
                 //Separator
-                t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                if (!_excel)
+                {
+                    t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                }
                 //Currnet month
                 t.AppendFormat("<td nowrap align=center class=\"p2\">{2}<br>{0}-{1}</td>", _periodEnd.Month.ToString("00"), _periodEnd.Year, GestionWeb.GetWebWord(1221, _session.SiteLanguage));
                 t.Append("\n</tr>");
@@ -532,7 +530,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         t.AppendFormat("<td nowrap class={0}>&nbsp;</td>", cssNb);
                     }
                     //Separator
-                    t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    if (!_excel)
+                    {
+                        t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    }
 
                     //N-1 cells
                     for (int k = 1; k <= 12; k++)
@@ -560,7 +561,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         }
                     }
                     //Separator
-                    t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    if (!_excel)
+                    {
+                        t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    }
                     //N Cells
                     for (int l = 1; l < _periodEnd.Month; l++)
                     {
@@ -574,7 +578,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         }
                     }
                     //Separator
-                    t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    if (!_excel)
+                    {
+                        t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    }
 
                     //Current month
                     if (tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX] != null)

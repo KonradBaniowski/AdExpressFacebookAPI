@@ -23,6 +23,24 @@ namespace TNS.AdExpressI.ProductClassIndicators
     /// </summary>
     public interface IProductClassIndicators
     {
+        #region Properties
+        /// <summary>
+        /// Get / Set Excel format?
+        /// </summary>
+        bool Excel
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// Get / Set Chart Type
+        /// </summary>
+        ChartImageType ChartType
+        {
+            get;
+            set;
+        }
+        #endregion
 
         #region Tops
         /// <summary>

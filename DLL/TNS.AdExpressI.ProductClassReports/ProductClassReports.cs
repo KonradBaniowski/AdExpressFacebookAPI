@@ -93,35 +93,7 @@ namespace TNS.AdExpressI.ProductClassReports
         /// <returns>HTML Code</returns>
         public string GetProductClassReport(int resultType)
         {
-
-            switch (resultType)
-            {
-                case (int)CstTblFormat.media_X_Year:
-                case (int)CstTblFormat.product_X_Year:
-                    _engine = new Engine_Classif1_X_Year(_session, resultType);
-                    break;
-                case (int)CstTblFormat.productMedia_X_Year:
-                case (int)CstTblFormat.mediaProduct_X_Year:
-                    _engine = new Engine_Classif1Classif2_X_Years(_session, resultType);
-                    break;
-                case (int)CstTblFormat.productMedia_X_YearMensual:
-                case (int)CstTblFormat.mediaProduct_X_YearMensual:
-                     _engine = new Engine_Classif1Classif2_X_Monthes(_session, resultType);
-                    break;
-                case (int)CstTblFormat.productYear_X_Media:
-                     _engine = new Engine_Classif1Year_X_Classif2(_session, resultType);
-                    break;
-                case (int)CstTblFormat.mediaYear_X_Mensual:
-                case (int)CstTblFormat.mediaYear_X_Cumul:
-                case (int)CstTblFormat.productYear_X_Cumul:
-                case (int)CstTblFormat.productYear_X_Mensual:
-                    _engine = new Engine_Classif1Year_X_Monthes(_session, resultType);
-                    break;
-                default:
-                    throw new NotImplementedReportException(string.Format("Tableau {0} ({1}) is not implemented.", _session.PreformatedTable, _session.PreformatedTable.GetHashCode()));
-            }
-            return _engine.GetResult().ToString();
-
+            return this.GetProductClassReport(resultType, false);
         }
         /// <summary>
         /// Compute Product Class Report depending on type or fesult specified in user session (HTML code)
@@ -139,38 +111,50 @@ namespace TNS.AdExpressI.ProductClassReports
         /// <returns>HTML Code</returns>
         public string GetProductClassReportExcel(int resultType)
         {
+            return this.GetProductClassReport(resultType, true);
+        }
+        #endregion
 
+        #region GetProductClassReport
+        /// <summary>
+        /// Compute Product Class Report matching the "resultType" param (HTML code)
+        /// </summary>
+        /// <param name="resultType">Type of result</param>
+        /// <param name="excel">Report as Excel output ? </param>
+        /// <exception cref="TNS.AdExpressI.ProductClassReports.Exceptions.NotImplementedReportException">Thrown when the invoked report is not implemented.</exception>
+        /// <returns>HTML Code</returns>
+        protected string GetProductClassReport(int resultType, bool excel)
+        {
             switch (resultType)
             {
                 case (int)CstTblFormat.media_X_Year:
                 case (int)CstTblFormat.product_X_Year:
-                    //GetDynamicTableUI_1_2(webSession, html, data, excel);
+                    _engine = new Engine_Classif1_X_Year(_session, resultType);
                     break;
                 case (int)CstTblFormat.productMedia_X_Year:
                 case (int)CstTblFormat.mediaProduct_X_Year:
-                    //GetDynamicTableUI_3_4_10_11(webSession, html, data, excel, false);
+                    _engine = new Engine_Classif1Classif2_X_Years(_session, resultType);
                     break;
                 case (int)CstTblFormat.productMedia_X_YearMensual:
                 case (int)CstTblFormat.mediaProduct_X_YearMensual:
-                    //GetDynamicTableUI_3_4_10_11(webSession, html, data, excel, true);
+                    _engine = new Engine_Classif1Classif2_X_Monthes(_session, resultType);
                     break;
                 case (int)CstTblFormat.productYear_X_Media:
-                    //GetDynamicTableUI_5(webSession, html, data, excel);
+                    _engine = new Engine_Classif1Year_X_Classif2(_session, resultType);
                     break;
                 case (int)CstTblFormat.mediaYear_X_Mensual:
                 case (int)CstTblFormat.mediaYear_X_Cumul:
                 case (int)CstTblFormat.productYear_X_Cumul:
                 case (int)CstTblFormat.productYear_X_Mensual:
-                    //GetDynamicTableUI_6_7_8_9(webSession, html, data, excel);
+                    _engine = new Engine_Classif1Year_X_Monthes(_session, resultType);
                     break;
                 default:
                     throw new NotImplementedReportException(string.Format("Tableau {0} ({1}) is not implemented.", _session.PreformatedTable, _session.PreformatedTable.GetHashCode()));
             }
-
-            return string.Empty;
-
+            _engine.Excel = excel;
+            return _engine.GetResult().ToString();
         }
-
         #endregion
+
     }
 }

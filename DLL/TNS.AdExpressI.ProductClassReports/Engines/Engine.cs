@@ -76,6 +76,14 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
             get { return _tableType; }
             set { _tableType = value; }
         }
+        /// <summary>
+        /// Type of output
+        /// </summary>
+        public bool Excel
+        {
+            get { return _excel; }
+            set { _excel = value; }
+        }
         #endregion
 
         #region Constructor
