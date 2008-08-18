@@ -65,8 +65,8 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			#region Constantes
 
             //Advertiser filter ? last column == advertiser ==> _isPersonalized = last column
-			List<long> referenceIDS = null;
-            List<long> competitorIDS = null;
+            List<long> referenceIDS = new List<long>();
+            List<long> competitorIDS = new List<long>();
             if (dtData.Columns.Contains("id_advertiser"))
             {
                 _isPersonalized = 1;
