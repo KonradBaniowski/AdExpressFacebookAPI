@@ -3073,29 +3073,18 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		}
 
 		/// <summary>
-		/// Obtient la CellUnitfactory en fonction de l'unité sélectionnée par la client 
+        /// CellUnitfactory according to the unit chosen by customer acquires
 		/// </summary>
 		/// <returns></returns>
 		public CellUnitFactory GetCellUnitFactory() {
-            switch (unit) {
-                case WebConstantes.CustomerSessions.Unit.euro:
-                    return (new CellUnitFactory(new CellEuro(0.0)));
-                case WebConstantes.CustomerSessions.Unit.kEuro:
-                    return (new CellUnitFactory(new CellKEuro(0.0)));
-                case WebConstantes.CustomerSessions.Unit.pages:
-                    return (new CellUnitFactory(new CellPage(0.0)));
-                case WebConstantes.CustomerSessions.Unit.mmPerCol:
-                    return (new CellUnitFactory(new CellMMC(0.0)));
-                case WebConstantes.CustomerSessions.Unit.numberBoard:
-                case WebConstantes.CustomerSessions.Unit.spot:
-                case WebConstantes.CustomerSessions.Unit.insertion:
-                    return (new CellUnitFactory(new CellInsertion(0.0)));
-                case WebConstantes.CustomerSessions.Unit.duration:
-                    return (new CellUnitFactory(new CellDuration(0.0)));
-                case WebConstantes.CustomerSessions.Unit.grp:
-                    return (new CellUnitFactory(new CellGRP(0.0)));
-                default:
-                    throw (new UnitException("L'unité sélection n'est pas gérée"));
+            try {
+                System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
+                Type type = assembly.GetType(GetSelectedUnit().CellType);
+                CellUnit cellUnit = (CellUnit)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                return (new CellUnitFactory(cellUnit));
+            }
+            catch {
+                throw (new UnitException("Unit selection is not managed"));
             }
 		}
 

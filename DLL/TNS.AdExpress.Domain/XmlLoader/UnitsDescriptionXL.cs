@@ -34,6 +34,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             string baseId="";
             string databaseField="";
             string databaseMultimediaField="";
+            string cellType = "";
             UnitInformation unit;
             #endregion
             try {
@@ -49,12 +50,14 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 else baseId = reader.GetAttribute("baseId");
                                 if(reader.GetAttribute("webTextId") == null || reader.GetAttribute("webTextId").Length == 0) throw (new InvalidXmlValueException("Invalid webTextId parameter"));
                                 webTextId = Int64.Parse(reader.GetAttribute("webTextId"));
+                                if (reader.GetAttribute("cellType") == null || reader.GetAttribute("cellType").Length == 0) cellType = "";
+                                else cellType = reader.GetAttribute("cellType");
                                 if(reader.GetAttribute("field") == null || reader.GetAttribute("field").Length == 0) databaseField="";
                                 else databaseField = reader.GetAttribute("field");
                                 if(reader.GetAttribute("multimediaField") == null || reader.GetAttribute("multimediaField").Length == 0) databaseMultimediaField="";
                                 else databaseMultimediaField = reader.GetAttribute("multimediaField");
-
-                                unit = new UnitInformation(id,webTextId,baseId,databaseField,databaseMultimediaField);
+                                
+                                unit = new UnitInformation(id,webTextId,baseId,cellType,databaseField,databaseMultimediaField);
                                 list.Add(unit);
                                 break;
                         }
