@@ -3064,27 +3064,11 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		/// <returns>Identifiant du texte</returns>
 		public Int64 GetUnitLabelId() {
-			switch (unit) {
-				case WebConstantes.CustomerSessions.Unit.euro:
-					return (1423);
-				case WebConstantes.CustomerSessions.Unit.kEuro:
-					return (1789);
-				case WebConstantes.CustomerSessions.Unit.pages:
-					return (943);
-				case WebConstantes.CustomerSessions.Unit.mmPerCol:
-					return (941);
-				case WebConstantes.CustomerSessions.Unit.insertion:
-					return (940);
-				case WebConstantes.CustomerSessions.Unit.duration:
-					return (1933);
-				case WebConstantes.CustomerSessions.Unit.numberBoard:
-					return (1604);
-				case WebConstantes.CustomerSessions.Unit.grp:
-					return (1679);
-				case WebConstantes.CustomerSessions.Unit.spot:
-					return (939);
-				default:
-					throw (new UnitException("L'unité sélection n'est pas gérée"));
+            try{
+                return this.GetSelectedUnit().WebTextId;
+            }
+			catch {
+                throw (new UnitException("Unit selection is not managed"));
 			}
 		}
 
@@ -3093,27 +3077,26 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		/// <returns></returns>
 		public CellUnitFactory GetCellUnitFactory() {
-			switch (unit) {
-				case WebConstantes.CustomerSessions.Unit.euro:
-					return (new CellUnitFactory(new CellEuro(0.0)));
-				case WebConstantes.CustomerSessions.Unit.kEuro:
-					return (new CellUnitFactory(new CellKEuro(0.0)));
-				case WebConstantes.CustomerSessions.Unit.pages:
-					return (new CellUnitFactory(new CellPage(0.0)));
-				case WebConstantes.CustomerSessions.Unit.mmPerCol:
-					return (new CellUnitFactory(new CellMMC(0.0)));
-				case WebConstantes.CustomerSessions.Unit.numberBoard:
-				case WebConstantes.CustomerSessions.Unit.spot:
-				case WebConstantes.CustomerSessions.Unit.insertion:
-					return (new CellUnitFactory(new CellInsertion(0.0)));
-				case WebConstantes.CustomerSessions.Unit.duration:
-					return (new CellUnitFactory(new CellDuration(0.0)));
-				case WebConstantes.CustomerSessions.Unit.grp:
-					return (new CellUnitFactory(new CellGRP(0.0)));
-				default:
-					throw (new UnitException("L'unité sélection n'est pas gérée"));
-			}
-
+            switch (unit) {
+                case WebConstantes.CustomerSessions.Unit.euro:
+                    return (new CellUnitFactory(new CellEuro(0.0)));
+                case WebConstantes.CustomerSessions.Unit.kEuro:
+                    return (new CellUnitFactory(new CellKEuro(0.0)));
+                case WebConstantes.CustomerSessions.Unit.pages:
+                    return (new CellUnitFactory(new CellPage(0.0)));
+                case WebConstantes.CustomerSessions.Unit.mmPerCol:
+                    return (new CellUnitFactory(new CellMMC(0.0)));
+                case WebConstantes.CustomerSessions.Unit.numberBoard:
+                case WebConstantes.CustomerSessions.Unit.spot:
+                case WebConstantes.CustomerSessions.Unit.insertion:
+                    return (new CellUnitFactory(new CellInsertion(0.0)));
+                case WebConstantes.CustomerSessions.Unit.duration:
+                    return (new CellUnitFactory(new CellDuration(0.0)));
+                case WebConstantes.CustomerSessions.Unit.grp:
+                    return (new CellUnitFactory(new CellGRP(0.0)));
+                default:
+                    throw (new UnitException("L'unité sélection n'est pas gérée"));
+            }
 		}
 
         /// <summary>
@@ -3148,7 +3131,12 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         /// </summary>
         /// <returns>Selected unit information</returns>
         public Domain.Units.UnitInformation GetSelectedUnit() {
-            return Domain.Units.UnitsInformation.Get(this.unit);
+            try {
+                return UnitsInformation.Get(this.unit);
+            }
+            catch {
+                throw (new UnitException("Unit selection is not managed"));
+            }
         }
 		#endregion
 
