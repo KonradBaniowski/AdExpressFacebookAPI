@@ -39,7 +39,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
 
             #region Requête
             sql.Append("Select distinct " + detailLevel.DataBaseIdField + "," + detailLevel.DataBaseField + ", id_media , media");
-            sql.Append(" from " + WebApplicationParameters.DataBaseDescription.GetSqlViewLabelWithPrefix(ViewIds.allMedia) + " ");
+            sql.Append(" from " + WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia).Sql + webSession.DataLanguage + " ");
             sql.Append(" where");
 
             // Vehicle
@@ -174,7 +174,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
 
             #region Requête
             sql.Append("Select distinct " + detailLevel.DataBaseIdField + ", " + detailLevel.DataBaseField + " , id_media , media");
-            sql.Append(" from " + WebApplicationParameters.DataBaseDescription.GetSqlViewLabelWithPrefix(ViewIds.allMedia) + " ");
+            sql.Append(" from " + WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia).Sql + webSession.DataLanguage + " ");
             sql.Append(" where");
 
             #region Mot clé et médias déjà sélectionnés
