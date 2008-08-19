@@ -2,6 +2,6 @@
 <configuration>
   <languages default="44">
     <!--<language id="33" name="Français" imageSourceText=""  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" nlsSort="FRENCH"/>-->
-    <language id="44" name="English - Finland DB"  imageSourceText=""  localization="en-GB" classificationLanguageId="35" charset="utf-8" contentEncoding="utf-8" nlsSort="FINLAND"/>
+    <language id="44" name="English - Finland DB"  imageSourceText=""  localization="en-GB" classificationLanguageId="35" charset="utf-8" contentEncoding="utf-8" nlsSort="finnish"/>
   </languages>
 </configuration>
