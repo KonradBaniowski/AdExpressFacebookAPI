@@ -34,12 +34,11 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <!-- TODO : Pour le moment le niveau Catégorie n'est pas géré, étant donné que la table category n'est pas liée directement à la table media -->
     <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
-      <MediaSelectionParent>interestCenter</MediaSelectionParent>         <!-- Centre d'interet -->
-      <MediaSelectionParent>mediaSeller</MediaSelectionParent>         <!-- Régie -->
-      <MediaSelectionParent>title</MediaSelectionParent>        <!-- Titre -->
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>       <!-- Centre d'interet -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>                     <!-- Centre d 'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>                        <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>                              <!-- Titre -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>
@@ -78,7 +77,7 @@
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
+      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet --> 
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->

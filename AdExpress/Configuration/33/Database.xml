@@ -132,7 +132,7 @@
 
   </tables>
   <views>
-    <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media" prefix="allm"/>
+    <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_33" prefix="allm"/>
     <view enumId="1" description="Classif: all product" schemaEnumId="0" label="all_product_" prefix="allp"/>
   </views>  
 </database>
