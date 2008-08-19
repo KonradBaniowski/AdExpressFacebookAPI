@@ -1584,24 +1584,26 @@ tr.asl5rx{
 	height:18px;
 }
 td.asl5nb{
+	background-color:#E1E0DA;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
-	font-weight:normal;
-	text-align :right;
-	text-decoration : none;
-	background-color: #E1E0DA;
-	padding:0px,0px,0px,2px;
-	border-left-width:0px;
-	border-top-width:0px;
-	border-bottom-color:#FFFFFF;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
-	border-right-color:#FFFFFF;
-	border-right-width: 1px;
-	border-right-style:solid;
+	font-weight: normal;
+	text-align:right;
 	padding-left:4px;
 	padding-right:4px;
+
+	border-left-width:0px;
+	border-top-width:1px;
+	border-top-color:#FFFFFF;
+	border-top-style:solid;	
+	border-bottom-width:0px;
+	border-right-width: 1px; 
+	border-right-color:#FFFFFF;
+
+	border-right-style:solid;	
+	height:18px;
+
 }
 tr.asl5b{
 	background-color:#F1F1F1;
@@ -1641,6 +1643,27 @@ td.asl5b{
 	padding-left:4px;
 	padding-right:4px;
 }
+td.asl5bnb{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:normal;
+	text-decoration : none;
+	background-color: #F1F1F1;
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	text-align:right;
+
+}
 tr.asl5bx{
 	background-color:#C0C0C0;
 	font-family: Arial, Helvetica, sans-serif;
@@ -1660,13 +1683,14 @@ tr.asl5bx{
 	border-right-style:solid;	
 	height:18px;
 }
-td.asl5bxls{
+td.asl5bxls
+{
+	background-color:#F1F1F1;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
 	font-weight:normal;
 	text-decoration : none;
-	background-color: #C0C0C0;
 	padding:0px,0px,0px,2px;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -2410,3 +2434,49 @@ td.pmcategorynb
 	padding-right:4px;
 	text-align:right
 }
+/*
+Indicators
+*/
+td.p9ind
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:normal;
+	text-decoration : none;
+	background-color: #D0C8DA;	
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#D0C8DA;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	text-align:right
+}
+td.pmcategorynb
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #B1A3C1;
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	text-align:right
+}
+

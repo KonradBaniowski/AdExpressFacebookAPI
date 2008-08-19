@@ -241,12 +241,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             string cssHeader = "p2";
             string cssL1Label = "pmtotal";
             string cssL1Nb = "pmtotalnb";
-            string cssL2Label = "asl5";
+            string cssL2Label = (_excel) ? "p142xls" : "asl5";
             string cssL2nb = (_excel) ? "p142xls" : "asl5nb";
-            //string cssL2nb = "asl5nb";
-            string cssL3Label = "asl5b";
-            //string cssL3Nb = (_excel) ? "asl5bxls" : "asl5bnb"; ;
-            string cssL3Nb = "asl5bnb"; ;
+            string cssL3Label = (_excel) ? "asl5bxls" : "asl5b";
+            string cssL3Nb = (_excel) ? "asl5bxls" : "asl5bnb"; ;
+            //string cssL3Nb = "asl5bnb"; ;
             string cssRefLabel = "p15";
             string cssRefNb = "p151";
             string cssCompLabel = (_excel) ? "p142" : "p14";

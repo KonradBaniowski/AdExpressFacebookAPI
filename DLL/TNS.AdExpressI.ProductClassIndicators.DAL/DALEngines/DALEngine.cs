@@ -399,17 +399,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             }
 
             #region Media selection
-            // Multimedia
-            string list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
-            if (_vehicle == CstDBClassif.Vehicles.names.plurimedia)
-            {
-                sql.Append(FctUtilities.SQLGenerator.getAdExpressUniverseCondition(_session, CstWeb.AdExpressUniverse.RECAP_MEDIA_LIST_ID, dataTable.Prefix, true));
-            }
-            else
-            {
-                sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, dataTable.Prefix, true));
-            }
-            sql.Append(FctUtilities.SQLGenerator.GetRecapMediaSelection(_session.GetSelection(_session.CurrentUniversMedia, CstRight.type.categoryAccess), _session.GetSelection(_session.CurrentUniversMedia, CstRight.type.mediaAccess), true));
+            sql.AppendFormat(" and {0} ", this.GetMediaSelection(dataTable.Prefix));
             #endregion
 
             sql.AppendFormat(" group by {0}.id_sector, {1}.sector ", dataTable.Prefix, _recapSector.Prefix);
