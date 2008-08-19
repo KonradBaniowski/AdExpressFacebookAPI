@@ -223,10 +223,15 @@ namespace AdExpress.Private.Results{
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
 						_ResultWebControl.Visible = true;// false;
 						_genericProductLevel = false;
+                        ResultsOptionsWebControl1.UnitOption = false;
 						break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                        ResultsOptionsWebControl1.UnitOption = false;
+                        break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
 						_ResultWebControl.Visible = true;
 						_genericProductLevel = true;
+                        ResultsOptionsWebControl1.UnitOption = false;	
 						break;								
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
 						_genericMediaLevelDetailSelectionWebControl.Visible = false;
