@@ -16,6 +16,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Controls.Results;
+using TNS.AdExpress.Web.Controls.Buttons;
 
 using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using CustomerCst = TNS.AdExpress.Constantes.Customer.Right;
@@ -46,9 +47,16 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		
 		#endregion		
 
-		#region Propriétés
+        #region Variables MMI
+        /// <summary>
+        /// Valider la sélection
+        /// </summary>
+        public ImageButtonRollOverWebControl _buttonOk;
+        #endregion
 
-		/// <summary>
+        #region Propriétés
+
+        /// <summary>
 		/// Websession
 		///</summary>
 		public WebSession CustomerWebSession{
@@ -262,6 +270,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// </summary>
 		/// <param name="e">Arguments</param>
 		protected override void OnInit(EventArgs e) {
+
+            #region bouton OK
+            _buttonOk = new ImageButtonRollOverWebControl();
+            _buttonOk.ID = "okImageButton";
+            _buttonOk.ImageUrl = "/App_Themes/" + WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name + "/Images/Common/Button/ok_up.gif";
+            _buttonOk.RollOverImageUrl = "/App_Themes/" + WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name + "/Images/Common/Button/ok_down.gif";
+            Controls.Add(_buttonOk);
+            #endregion
+
 		}
 
 		#endregion
@@ -285,21 +302,26 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
                 VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
-                foreach (DetailLevelItemInformation currentLevel in vehicleInformation.MediaSelectionParentsItemsInformationList)
-                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(currentLevel.WebTextId, customerWebSession.SiteLanguage), "MediaSeller_" + currentLevel.Id.GetHashCode().ToString()));
+                if (vehicleInformation.MediaSelectionParentsItemsInformationList.Count > 1) {
+                    foreach (DetailLevelItemInformation currentLevel in vehicleInformation.MediaSelectionParentsItemsInformationList)
+                        mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(currentLevel.WebTextId, customerWebSession.SiteLanguage), "MediaSeller_" + currentLevel.Id.GetHashCode().ToString()));
 
-                mediaDetail.ID = "mediaDetail_" + this.ID;
-                mediaDetail.AutoPostBack = autoPostBackOption;
-                mediaDetail.CssClass = cssClass;
+                    mediaDetail.ID = "mediaDetail_" + this.ID;
+                    mediaDetail.AutoPostBack = autoPostBackOption;
+                    mediaDetail.CssClass = cssClass;
 
-                try                {
-                    mediaDetail.Items.FindByValue("MediaSeller_" + customerWebSession.MediaSelectionParent.GetHashCode().ToString()).Selected = true;
+                    try {
+                        mediaDetail.Items.FindByValue("MediaSeller_" + customerWebSession.MediaSelectionParent.GetHashCode().ToString()).Selected = true;
+                    }
+                    catch (System.Exception) {
+                        mediaDetail.Items[0].Selected = true;
+                    }
+
+                    Controls.Add(mediaDetail);
                 }
-                catch (System.Exception)                {
-                    mediaDetail.Items[0].Selected = true;
-                }
+                else
+                    mediaSellerOption = false;
 
-                Controls.Add(mediaDetail);
             }
             #endregion
         }
@@ -314,61 +336,75 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
 
-			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
-			output.Write("\n<tr>");
-			output.Write("\n<td>");
-			//debut tableau titre
-			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-			output.Write("\n<TR>");
-			output.Write("\n<TD height=\"5\"></TD>");
-			output.Write("\n</TR>");
-			output.Write("\n<tr>");
-			output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\"></td>");
-			output.Write("\n</tr>");
-			output.Write("\n<tr>");
-			output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\""+blockFlechePath+"\" width=\"12\"></td>");
-			output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\""+blockDupliPath+"\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" width=\"13\"></td>");
-            output.Write("\n<td class=\"txtNoir11Bold " + titleUppercaseCss + "\" width=\"100%\">" + GestionWeb.GetWebWord(1605, customerWebSession.SiteLanguage) + "</td>");
-            output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
-			output.Write("\n</tr>");
-			output.Write("\n<tr>");
-			output.Write("\n<td></td>");
-			output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/images/Common/pixel.gif\"></td>");
-			output.Write("\n</tr>");
-			output.Write("\n</table>");
-			output.Write("\n</td>");
-			output.Write("\n</tr>");
-			//Descriptif
-			output.Write("\n<TR>");
-			output.Write("\n<TD height=\"5\"></TD>");
-			output.Write("\n</TR>");
-			output.Write("\n<tr>");
-			output.Write("\n<td class=\"txtGris11Bold\">");
-			output.Write(GestionWeb.GetWebWord(1606,customerWebSession.SiteLanguage));
-			output.Write("\n</td>");
-			output.Write("\n</tr>");
-			output.Write("\n<TR>");
-			output.Write("\n<TD height=\"5\"></TD>");
-			output.Write("\n</TR>");
+            if (mediaSellerOption) {
+                output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
+                output.Write("\n<tr>");
+                output.Write("\n<td>");
+                //debut tableau titre
+                output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+                output.Write("\n<tr>");
+                output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
+                output.Write("\n</tr>");
+                output.Write("\n<tr>");
+                output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"" + blockFlechePath + "\" width=\"12\"></td>");
+                output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"" + blockDupliPath + "\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
+                output.Write("\n<td class=\"txtNoir11Bold " + titleUppercaseCss + "\" width=\"100%\">" + GestionWeb.GetWebWord(1605, customerWebSession.SiteLanguage) + "</td>");
+                output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
+                output.Write("\n</tr>");
+                output.Write("\n<tr>");
+                output.Write("\n<td></td>");
+                output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+                output.Write("\n</tr>");
+                output.Write("\n</table>");
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                //Descriptif
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+                output.Write("\n<tr>");
+                output.Write("\n<td class=\"txtGris11Bold\">");
+                output.Write(GestionWeb.GetWebWord(1606, customerWebSession.SiteLanguage));
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
 
-			//détail média
-			if (mediaSellerOption){
-				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
-				output.Write("\n</td>");
-				output.Write("\n</tr>");
-				output.Write("\n<tr>");
-				output.Write("\n<td>");
-				mediaDetail.RenderControl(output);				
-				output.Write("\n</td>");
+                //détail média
+                output.Write("\n<tr>");
+                output.Write("\n<td class=\"txtGris11Bold\">");
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<tr>");
+                output.Write("\n<td>");
+                mediaDetail.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+
+                #region Button
+                output.Write("\n<tr class=\"whiteBackGround\">");
+			    output.Write("\n<td height=\"10\"></td>");
 				output.Write("\n</tr>");
 				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n<td class=\"whiteBackGround\">");
+                _buttonOk.RenderControl(output); 
+                output.Write("\n</td>");
+                output.Write("\n</TR>");
+				output.Write("\n<TR>");
+				output.Write("\n<TD class=\"whiteBackGround\" height=\"5\"></TD>");
 				output.Write("\n</TR>");
-			}
+                #endregion
 
+                output.Write("\n</table>");
+            }
 
-			output.Write("\n</table>");
 		}
 		#endregion
 

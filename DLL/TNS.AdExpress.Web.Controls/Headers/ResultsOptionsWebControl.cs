@@ -24,6 +24,7 @@ using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
@@ -835,18 +836,17 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				list.CssClass =  cssClass;
 				list.AutoPostBack = autoPostBackOption;
 				if (!percentage)list.Width = new System.Web.UI.WebControls.Unit("100%");
-				ArrayList units;
-				if(customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS){
-					units = WebFunctions.Units.getUnitsFromVehicleSelection(ClassificationCst.DB.Vehicles.names.tv.GetHashCode().ToString());
-				}
-				else units = WebFunctions.Units.getUnitsFromVehicleSelection(customerWebSession.GetSelection(customerWebSession.SelectionUniversMedia,CustomerCst.type.vehicleAccess));
-				for(int i = 0; i<units.Count; i++){
-                    if ((SessionCst.Unit)units[i] != SessionCst.Unit.volume || customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
-                        list.Items.Add(new ListItem(GestionWeb.GetWebWord((int)SessionCst.UnitsTraductionCodes[(SessionCst.Unit)units[i]], customerWebSession.SiteLanguage), ((int)(SessionCst.Unit)units[i]).ToString()));
-                    else if(customerWebSession.Unit == SessionCst.Unit.volume)
+				//ArrayList units;
+                List<UnitInformation> units =  customerWebSession.GetValidUnitForResult();
+
+                foreach (UnitInformation currentUnit in units) { 
+                    if(currentUnit.Id != SessionCst.Unit.volume || customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
+                        list.Items.Add(new ListItem(GestionWeb.GetWebWord(currentUnit.WebTextId, customerWebSession.SiteLanguage), currentUnit.Id.GetHashCode().ToString()));
+                    else if (customerWebSession.Unit == SessionCst.Unit.volume)
                         customerWebSession.Unit = SessionCst.Unit.euro;
-				}
-				list.Items.FindByValue(((int)customerWebSession.Unit).ToString()).Selected=true;
+                }
+
+				list.Items.FindByValue(customerWebSession.Unit.GetHashCode().ToString()).Selected=true;
 
 				Controls.Add(list);
 			}

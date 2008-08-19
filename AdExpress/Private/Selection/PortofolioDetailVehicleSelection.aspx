@@ -87,15 +87,6 @@
 							<tr vAlign="top">
 								<td id="selectionRegie"><cc2:mediasellerwebcontrol id="MediaSellerWebControl2" runat="server" CodeDescription="1456" MediaDetailOption="True"></cc2:mediasellerwebcontrol></td>
 							</tr>
-							<tr class="whiteBackGround">
-								<td height="10"></td>
-							</tr>
-							<TR>
-								<td class="whiteBackGround"><cc4:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc4:imagebuttonrolloverwebcontrol></td>
-							</TR>
-							<TR>
-								<TD class="whiteBackGround" height="5"></TD>
-							</TR>
 							<!-- Info bt droit -->
 							<tr>
 								<td><asp:Image runat="server" height="5" width="1" SkinID="pixel" /></td>

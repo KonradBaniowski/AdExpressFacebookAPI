@@ -716,6 +716,18 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
     } 
     #endregion
 
+    #region View Ids
+    /// <summary>
+    /// View Ids
+    /// </summary>
+    public enum ViewIds {
+        /// <summary>
+        /// All Media
+        /// </summary>
+        allMedia=0
+    }
+    #endregion
+
     #endregion
 
     /// <summary>
@@ -741,6 +753,10 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         private Dictionary<TableIds,Table> _tables;
         /// <summary>
+        /// Views List
+        /// </summary>
+        private Dictionary<ViewIds, View> _views;
+        /// <summary>
         /// Default Result Table Prefix
         /// </summary>
         private string _defaultResultTablePrefix;
@@ -757,9 +773,8 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
             _defaultConnections=DataBaseDescriptionXL.LoadDefaultConnections(source);
             _schemas=DataBaseDescriptionXL.LoadSchemas(source);
             _tables=DataBaseDescriptionXL.LoadTables(source,_schemas);
+            _views=DataBaseDescriptionXL.LoadViews(source, _schemas);
             _defaultResultTablePrefix=DataBaseDescriptionXL.LoadDefaultResultTablePrefix(source);
-            
-
         }
         #endregion
 
@@ -856,7 +871,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
                 return (_tables[tableId].SqlWithPrefix);
             }
             catch(System.Exception err) {
-                throw (new DataBaseException("Impossible to retreive sql table code"));
+                throw (new DataBaseException("Impossible to retreive sql table code",err));
             }
         }
 
@@ -873,6 +888,41 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
             }
             catch(System.Exception err) {
                 throw (new DataBaseException("Impossible to retreive table object",err));
+            }
+        }
+
+        /// <summary>
+        /// Get view label with schema label and prefix
+        /// Schema.View prefix
+        /// </summary>
+        /// <remarks>
+        /// A space is put before the string
+        /// </remarks>
+        /// <example>adexpr03.all_media am</example>
+        /// <param name="viewId">View Id</param>
+        /// <returns>SQL View code</returns>
+        public string GetSqlViewLabelWithPrefix(ViewIds viewId) {
+            try {
+                return (_views[viewId].SqlWithPrefix);
+            }
+            catch (System.Exception err) {
+                throw (new DataBaseException("Impossible to retreive sql view code", err));
+            }
+        }
+
+        /// <summary>
+        /// Get view object
+        /// </summary>
+        /// <param name="viewId">View Id</param>
+        /// <returns>View Object</returns>
+        public View GetView(ViewIds viewId) {
+            try {
+                View view = _views[viewId];
+                if (view == null) throw (new DataBaseException("View Object is null"));
+                return (view);
+            }
+            catch (System.Exception err) {
+                throw (new DataBaseException("Impossible to retreive view object", err));
             }
         }
         #endregion

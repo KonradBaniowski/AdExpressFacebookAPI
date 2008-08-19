@@ -51,7 +51,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// <summary>
 		/// boolean si listeMedia est vide
 		/// </summary>
-		private static bool isEmptyListPortofolio=true;
+		private static bool isEmptyListPortofolio=false;
 
 		/// <summary>
 		/// Obtient ListeMedia est vide
@@ -83,8 +83,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
         #region Evènements
 		
-		#region Chargement 
-		/// <summary>
+        #region Chargement
+        /// <summary>
 		/// OnLoad
 		/// </summary>
 		/// <param name="e">Evènement</param>
@@ -93,6 +93,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
             _dsListMedia = TNS.AdExpress.Web.Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(_webSession, _keyWord, "", DetailLevelItemsInformation.Get(_webSession.MediaSelectionParent.GetHashCode()));
+
+            if (_dsListMedia.Tables[0].Rows.Count > 0) {
+                isEmptyListPortofolio = false;
+            }
+            else
+                isEmptyListPortofolio = true;
 
         }
         #endregion
@@ -126,12 +132,6 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             string insertLabel = string.Empty;
             int labelIndex = 0;
             #endregion
-
-            if (_dsListMedia.Tables[0].Rows.Count > 0) {
-                isEmptyListPortofolio = false;
-            }
-            else
-                isEmptyListPortofolio = true;
 
             //Tableau global
             textOpenclose = GestionWeb.GetWebWord(2461, _webSession.SiteLanguage);

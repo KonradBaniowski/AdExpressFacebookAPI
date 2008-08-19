@@ -296,6 +296,66 @@ namespace TNS.AdExpress.Domain.XmlLoader {
         }
         #endregion
 
+        #region Load Views
+        /// <summary>
+        /// Load views
+        /// </summary>
+        /// <example>
+        /// <view enumId="91" description="all media" schemaEnumId="0" label="all_media" prefix="am"/>
+        /// </example>
+        /// <param name="source">source</param>
+        /// <returns>Views list</returns>
+        public static Dictionary<ViewIds, View> LoadViews(IDataSource source, Dictionary<SchemaIds, Schema> schemas) {
+
+            #region Variables
+            Dictionary<ViewIds, View> list = new Dictionary<ViewIds, View>();
+            XmlTextReader reader = null;
+
+            View view = null;
+            ViewIds viewId;
+            SchemaIds schemaId;
+            string label = "";
+            string prefix = "";
+            #endregion
+
+            try {
+                source.Open();
+                reader = (XmlTextReader)source.GetSource();
+                while (reader.Read()) {
+                    if (reader.NodeType == XmlNodeType.Element) {
+
+                        switch (reader.LocalName) {
+                            case "view":
+                                view = null;
+                                if (reader.GetAttribute("enumId") == null || reader.GetAttribute("enumId").Length == 0) throw (new InvalidXmlValueException("Invalid enumId (view id) parameter"));
+                                viewId = (ViewIds)int.Parse(reader.GetAttribute("enumId"));
+                                if (reader.GetAttribute("schemaEnumId") == null || reader.GetAttribute("schemaEnumId").Length == 0) throw (new InvalidXmlValueException("Invalid schemaEnumId (schema id) parameter"));
+                                schemaId = (SchemaIds)int.Parse(reader.GetAttribute("schemaEnumId"));
+                                if (reader.GetAttribute("label") == null || reader.GetAttribute("label").Length == 0) throw (new InvalidXmlValueException("Invalid view label parameter"));
+                                label = reader.GetAttribute("label");
+                                if (reader.GetAttribute("prefix") == null || reader.GetAttribute("prefix").Length == 0) throw (new InvalidXmlValueException("Invalid view prefix parameter"));
+                                prefix = reader.GetAttribute("prefix");
+                                list.Add(viewId, new View(viewId, label, prefix, schemas[schemaId]));
+                                break;
+                        }
+                    }
+                }
+            }
+            #region Error Management
+            catch (System.Exception err) {
+
+                #region Close the file
+                if (source.GetSource() != null) source.Close();
+                #endregion
+
+                throw (new Exception(" Error : ", err));
+            }
+            #endregion
+
+            source.Close();
+            return (list);
+        }
+        #endregion
 
         #region Default result table prefix
         /// <summary>

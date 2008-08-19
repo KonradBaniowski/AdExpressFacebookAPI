@@ -55,6 +55,7 @@
     <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="DataBaseDescription\DataBase.cs" />
     <Compile Include="DataBaseDescription\DefaultConnection.cs" />
+    <Compile Include="DataBaseDescription\View.cs" />
     <Compile Include="Exceptions\UnitException.cs" />
     <Compile Include="Exceptions\DeliveryFrequencyException.cs" />
     <Compile Include="Exceptions\GenericColumnItemsInformationXLException.cs" />

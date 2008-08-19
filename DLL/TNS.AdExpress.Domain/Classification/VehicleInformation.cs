@@ -208,5 +208,21 @@ namespace TNS.AdExpress.Domain.Classification {
         }
         #endregion
 
+        #region Public Methods
+        /// <summary>
+        /// Get unit from specified baseId unit
+        /// </summary>
+        /// <param name="unit">Unit</param>
+        /// <returns>if baseId exist return baseId or unit if not</returns>
+        public CustomerSessions.Unit GetUnitFromBaseId(CustomerSessions.Unit baseIdUnit){
+
+            foreach (UnitInformation currentUnit in AllowedUnitInformationList)
+                if (currentUnit.BaseId == baseIdUnit)
+                    return currentUnit.Id;
+
+            return baseIdUnit;
+        }
+        #endregion
+
     }
 }
