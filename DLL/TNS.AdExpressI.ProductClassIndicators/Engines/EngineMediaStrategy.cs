@@ -242,9 +242,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             string cssL1Label = "pmtotal";
             string cssL1Nb = "pmtotalnb";
             string cssL2Label = "asl5";
-            string cssL2nb = (_excel) ? "p142xls" : "asl5nb";
+            //string cssL2nb = (_excel) ? "p142xls" : "asl5 asl5nb";
+            string cssL2nb = "asl5nb";
             string cssL3Label = "asl5b";
-            string cssL3Nb = (_excel) ? "asl5bxls" : "asl5bnb"; ;
+            //string cssL3Nb = (_excel) ? "asl5bxls" : "asl5bnb"; ;
+            string cssL3Nb = "asl5bnb"; ;
             string cssRefLabel = "p15";
             string cssRefNb = "p151";
             string cssCompLabel = (_excel) ? "p142" : "p14";
@@ -571,7 +573,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             else
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap></td>", cssLabel);
+                t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssLabel);
             }
             t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, oLabel);
             //Separator
@@ -585,7 +587,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             else
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap></td>", cssNb);
+                t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
             }
             //PDM
             if (oPDM != null)
@@ -594,7 +596,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             else
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap></td>", cssNb);
+                t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
             }
             //Evol
             if (_session.ComparativeStudy)
@@ -622,7 +624,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
                 else
                 {
-                    t.AppendFormat("<td class=\"{0}\" nowrap></td>", cssNb);
+                    t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
                 }
             }
             //Separator
@@ -637,7 +639,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             else
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap></td>", cssLabel);
+                t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssLabel);
             }
             if (oAdvInvest != null)
             {
@@ -645,7 +647,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             else
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap></td>", cssLabel);
+                t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
             }
             //Separator
             if (!_excel)
@@ -659,7 +661,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             else
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap></td>", cssLabel);
+                t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssLabel);
             }
             if (oRefInvest != null)
             {
@@ -667,7 +669,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             else
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap></td>", cssLabel);
+                t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
             }
             t.Append("</tr>");
         }

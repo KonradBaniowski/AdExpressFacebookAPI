@@ -86,7 +86,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             Dictionary<long, Series> advertiserSerie = new Dictionary<long, Series>();
             Int64 idElement = 0;
             int cMonth = 0;
-            int oldMonth = 0;
+            int oldMonth = -1;
             int nbMonth = 0;
             if (tab != null)
             {
@@ -110,7 +110,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                         }
                     }
                     cMonth = Convert.ToInt32(tab[i, EngineSeasonality.ID_MONTH_COLUMN_INDEX]);
-                    if (oldMonth != cMonth)
+                    if (cMonth != 0 && oldMonth != cMonth)
                     {
                         nbMonth++;
                         oldMonth = cMonth;

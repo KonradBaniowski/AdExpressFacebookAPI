@@ -116,7 +116,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         public static string ConvertUnitValueAndPdmToString(object value, CstWeb.CustomerSessions.Unit unit, bool pdm)
         {
             if (!pdm) return ConvertUnitValueToString(value, unit);
-            else return Convert.ToDouble(value).ToString("0.00");	// ToString("# ### ##0.##")
+            else return Convert.ToDouble(value).ToString("# ##0.00");	// ToString("# ### ##0.##")
         }
 
         /// <summary>

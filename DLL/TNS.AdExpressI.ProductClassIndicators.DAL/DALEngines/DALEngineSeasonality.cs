@@ -500,7 +500,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 sql.AppendFormat(" {0}.id_advertiser=request1.id_advertiser and {0}.id_language={1}", _recapAdvertiser.Prefix, _session.SiteLanguage);
                 sql.AppendFormat(" and {0}.id_product=request1.id_product and {0}.id_language={1}", _recapProduct.Prefix, _session.SiteLanguage);
 
-
                 #endregion
 
             }
