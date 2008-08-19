@@ -9,7 +9,7 @@
       <allowedUnit>duration</allowedUnit>
       <allowedUnit>spot</allowedUnit>
     </allowedUnits>
-    <!-- Media detail level in results-->
+    <!-- Media detail level in results--> 
     <allowedMediaDetailLevels>
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                      <!-- Media -->
@@ -36,8 +36,7 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents>
-      <DefaultMediaSelectionParent>category</DefaultMediaSelectionParent>         <!-- Categorie -->
+    <MediaSelectionParents DefaultMediaSelectionParent="category">
       <MediaSelectionParent>category</MediaSelectionParent>                       <!-- Categorie -->
       <!--<MediaSelectionParent>interestCenter</MediaSelectionParent>-->          <!-- Centre d'interet -->
       <!--<MediaSelectionParent>mediaSeller</MediaSelectionParent>-->             <!-- Régie -->

@@ -34,8 +34,7 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>       <!-- Centre d'interet -->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>                     <!-- Centre d 'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>                        <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>                              <!-- Titre -->
@@ -76,8 +75,7 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet --> 
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -121,8 +119,7 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -170,8 +167,7 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -216,8 +212,7 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -255,8 +250,7 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -301,8 +295,7 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
@@ -342,8 +335,7 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents>
-      <DefaultMediaSelectionParent>interestCenter</DefaultMediaSelectionParent>      <!-- Centre d'interet -->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>country</MediaSelectionParent>      <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->

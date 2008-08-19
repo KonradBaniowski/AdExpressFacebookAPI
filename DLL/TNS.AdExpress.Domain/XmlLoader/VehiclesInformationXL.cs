@@ -78,10 +78,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 if (readString == null || readString.Length == 0) throw (new InvalidXmlValueException("Invalid allowedMediaLevelItem parameter"));
                                 allowedMediaLevelItemsList.Add((DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), readString, true));
                                 break;
-                            case "DefaultMediaSelectionParent":
-                                readString = reader.ReadString();
-                                if (readString == null || readString.Length == 0) throw (new InvalidXmlValueException("Invalid DefaultMediaSelectionParent parameter"));
-                                defaultMediaSelectionParent = readString;
+                            case "MediaSelectionParents": 
+                                if (reader.GetAttribute("DefaultMediaSelectionParent") == null || reader.GetAttribute("DefaultMediaSelectionParent").Length == 0) throw (new InvalidXmlValueException("Invalid DefaultMediaSelectionParent parameter"));
+                                defaultMediaSelectionParent = reader.GetAttribute("DefaultMediaSelectionParent");
                                 break;
                             case "MediaSelectionParent":
                                 readString = reader.ReadString();
