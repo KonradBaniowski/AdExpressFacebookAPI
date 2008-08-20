@@ -246,6 +246,7 @@ namespace AdExpress.Private.Results {
                         if (_webSession.CurrentTab == CstResult.Seasonality.SEASONALITY && _webSession.Graphics)
                         {
                             bigFormat = true;
+                            ProductClassContainerWebControl1.BigSize = this.bigFormatCheckBox.Checked;
                         }
                     }
                     //Novelty

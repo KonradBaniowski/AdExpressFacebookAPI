@@ -535,15 +535,25 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             */
             object[,] tabTotal = null;
             object[] oTotal = null;
-            if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && dsTotal != null && dsTotal.Tables[0] != null && (dsTotal.Tables[0].Rows.Count > 0))
+            if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal)
             {
-                oTotal = GetGlobalParams(dsTotal.Tables[0], false);
-                if (oTotal != null) tabTotal = (object[,])oTotal[2];
+                if (dsTotal != null && dsTotal.Tables[0] != null && (dsTotal.Tables[0].Rows.Count > 0))
+                {
+                    oTotal = GetGlobalParams(dsTotal.Tables[0], false);
+                    if (oTotal != null)
+                    {
+                        tabTotal = (object[,])oTotal[2];
+                    }
+                }
+                else
+                {
+                        dsTotal = null;
+                }
             }
             #endregion
 
             // Il n'y a pas de données
-            if (tab == null && tabTotal == null && tabTotalUniv == null) return (new object[0]);
+            if (tab == null && tabTotal == null && tabTotalUniv == null && dsTotal == null) return (new object[0]);
             #endregion
 
             #region Construction du tableau de résultats pour les annonceurs de références ou concurrents sélectionnés (optionnel)
@@ -723,6 +733,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         nbMaxRow += dtTotalUniverse.Rows.Count * (dtTotalUniverse.Columns.Count);
                         break;
                     }
+                }
+                if (nbMaxRow < 1)
+                {
+                    dtTotalUniverse = null; 
                 }
             }
             if (dtTotal != null && dtTotal.Rows.Count == 1)

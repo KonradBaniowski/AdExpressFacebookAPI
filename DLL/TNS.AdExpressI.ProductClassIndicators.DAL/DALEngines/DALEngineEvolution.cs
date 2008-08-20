@@ -166,7 +166,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     }
                     else if (iStart == iEnd)
                     {
-                        sql.AppendFormat("sum(exp_euro_N{0}_{1} ", _strYearId, i);
+                        sql.AppendFormat("sum(exp_euro_N{0}_{1}) as total_N,", _strYearId, i);
                         sqlEvol.AppendFormat("sum(exp_euro_N{0}_{1} ", _strYearId, i);
                         sqlN1.AppendFormat("-(exp_euro_N{0}_{1})) as Ecart", _strYearN1Id, i);
                     }
