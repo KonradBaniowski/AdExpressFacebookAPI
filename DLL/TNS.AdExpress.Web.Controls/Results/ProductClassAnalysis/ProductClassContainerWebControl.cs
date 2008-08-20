@@ -24,6 +24,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.ProductClassIndicators;
 using System.Reflection;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 {
@@ -63,6 +64,14 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
         /// Chart Type
         /// </summary>
         protected ChartImageType _chartType = ChartImageType.Flash;
+        /// <summary>
+        /// Include Advertiser dimension
+        /// </summary>
+        protected bool _withAdvertiser = false;
+        /// <summary>
+        /// Include Reference dimension
+        /// </summary>
+        protected bool _withReference = false;
         #endregion
 
 		#region Accesseurs
@@ -121,13 +130,18 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
                         _advertiserChart = productClassIndicator.GetMediaStrategyChart();
 						break;
                     case MotherRecap.PALMARES:
+                        _withAdvertiser = true;
+                        _withReference = true;
                         _advertiserChart = productClassIndicator.GetTopsChart(MotherRecap.ElementType.advertiser);
+                        _withReference = true;
                         _referenceChart = productClassIndicator.GetTopsChart(MotherRecap.ElementType.product);
                         break;
 					case MotherRecap.SEASONALITY:
                         _advertiserChart = productClassIndicator.GetSeasonalityChart(_bigSize);
                         break;
                     case EvolutionRecap.EVOLUTION:
+                        _withAdvertiser = true;
+                        _withReference = true;
                         _advertiserChart = productClassIndicator.GetEvolutionChart(MotherRecap.ElementType.advertiser);
                         _referenceChart = productClassIndicator.GetEvolutionChart(MotherRecap.ElementType.product);
                         break;
@@ -164,7 +178,25 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output) {
+            if (_withReference || _withAdvertiser)
+            {
+                if (_withAdvertiser && !_advertiserChart.Visible)
+                {
+                    output.WriteLine("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                    output.WriteLine("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+                    output.WriteLine("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1239, _session.SiteLanguage));
+                    output.WriteLine("</td></tr></table>");
+                }
+                if (_withReference && !_referenceChart.Visible)
+                {
+                    output.WriteLine("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                    output.WriteLine("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+                    output.WriteLine("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
+                    output.WriteLine("</td></tr></table>");
+                }
+            }
 			base.Render(output);
+
 		}
 		#endregion
 

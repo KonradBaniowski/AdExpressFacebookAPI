@@ -241,9 +241,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             StringBuilder tmp = null;
 
             this._classifLevel = CstResult.MotherRecap.ElementType.advertiser;
-            tmp = this.BuildTable();
+            try
+            {
+                tmp = this.BuildTable();
+            }
+            catch(NoDataException e){}
             str.Append("<center>");
-            if (tmp.Length > 0)
+            if (tmp != null && tmp.Length > 0)
             {
                 str.Append(tmp.ToString());
             }
@@ -256,9 +260,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             str.Append("</center><br>");
             this._classifLevel = CstResult.MotherRecap.ElementType.product;
-            tmp = this.BuildTable();
+            try
+            {
+                tmp = this.BuildTable();
+            }
+            catch (NoDataException e1) { }
             str.Append("<center>");
-            if (tmp.Length > 0)
+            if (tmp != null && tmp.Length > 0)
             {
                 str.Append(tmp.ToString());
             }
@@ -620,9 +628,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 StringBuilder tmp = null;
 
                 this._classifLevel = CstResult.MotherRecap.ElementType.advertiser;
-                tmp = this.BuildGraph();
+                try
+                {
+                    tmp = this.BuildGraph();
+                }
+                catch (NoDataException) { }
                 str.Append("<center>");
-                if (tmp.Length > 0)
+                if (tmp != null && tmp.Length > 0)
                 {
                     str.Append(tmp.ToString());
                 }
@@ -635,9 +647,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
                 str.Append("</center><br>");
                 this._classifLevel = CstResult.MotherRecap.ElementType.product;
-                tmp = this.BuildGraph();
+                try
+                {
+                    tmp = this.BuildGraph();
+                }
+                catch (NoDataException) { }
                 str.Append("<center>");
-                if (tmp.Length > 0)
+                if (tmp != null && tmp.Length > 0)
                 {
                     str.Append(tmp.ToString());
                 }

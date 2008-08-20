@@ -272,7 +272,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         protected override void Render(HtmlTextWriter writer)
         {
 
-
             HtmlTextWriter txt = new HtmlTextWriter(new StringWriter());
             base.Render(txt);
             int i = -1;

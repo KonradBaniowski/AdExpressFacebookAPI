@@ -1210,7 +1210,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     }
                     else
                     {
-                        str.AppendFormat("<td nowrap class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(d, _session.Unit, true), img, cssNb);
+                        str.AppendFormat("<td nowrap class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(d, _session.Unit, true), cssNb);
                     }
                 }
                 else

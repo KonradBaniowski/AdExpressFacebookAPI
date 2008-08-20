@@ -22,6 +22,7 @@ using TNS.AdExpressI.ProductClassIndicators;
 using System.Reflection;
 using TNS.AdExpress.Web.UI;
 using TNS.AdExpress.Domain.Translation;
+using TNS.FrameWork;
 
 namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
 	/// <summary>
@@ -102,13 +103,16 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis{
             }
             else
             {
+                StringBuilder t = new StringBuilder();
                 //header
-                writer.WriteLine(ExcelWebPage.GetLogo(_customerWebSession));
-                writer.WriteLine(ExcelWebPage.GetExcelHeader(_customerWebSession, false, true, false, GestionWeb.GetWebWord(1310, _customerWebSession.SiteLanguage)));
+                t.AppendLine(ExcelWebPage.GetLogo(_customerWebSession));
+                t.AppendLine(ExcelWebPage.GetExcelHeader(_customerWebSession, false, true, false, GestionWeb.GetWebWord(1310, _customerWebSession.SiteLanguage)));
                 //result
-                writer.WriteLine(this.GetHTML(_customerWebSession));
+                t.AppendLine(this.GetHTML(_customerWebSession));
                 //footer
-                writer.WriteLine(ExcelWebPage.GetFooter(_customerWebSession));
+                t.AppendLine(ExcelWebPage.GetFooter(_customerWebSession));
+
+                writer.WriteLine(Convertion.ToHtmlString(t.ToString()));
 
             }
 

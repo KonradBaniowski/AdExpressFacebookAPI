@@ -83,6 +83,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             if (tab.GetLongLength(0) == 1 || Convert.ToDouble(tab[0, EngineTop.TOTAL_N]) == 0)
             {
                 this.Visible = false;
+                return;
             }
 
             #region Chart Design

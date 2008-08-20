@@ -23,10 +23,10 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using WebFunction = TNS.AdExpress.Web.Functions.Script;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
-
 using TNS.AdExpressI.ProductClassReports;
 using System.Text;
 using System.Reflection;
+using TNS.FrameWork;
 #endregion
 
 namespace AdExpress.Private.Results.Excel{
@@ -82,7 +82,7 @@ namespace AdExpress.Private.Results.Excel{
                 t.Append(GetFooter(_webSession));
                 t.Append("</td></tr></table>");
 
-                result = t.ToString();
+                result = Convertion.ToHtmlString(t.ToString());
 			}		
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){

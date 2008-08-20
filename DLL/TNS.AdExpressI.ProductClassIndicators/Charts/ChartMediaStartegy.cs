@@ -726,10 +726,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     }
                     else
                     {
-                        chartArea2.Position.X = 4;
-                        chartArea2.Position.Y = 3 + (((96 / pCount) * index) + 1);
-                        chartArea2.Position.Width = 80;
-                        chartArea2.Position.Height = (96 / pCount) - 1;
+                        chartArea2.Position.Auto = true;
+                        //chartArea2.Position.X = 4;
+                        //chartArea2.Position.Y = 3 + (((96 / pCount) * index) + 1);
+                        //chartArea2.Position.Width = 80;
+                        //chartArea2.Position.Height = (96 / pCount) - 1;
                         chartArea2.Area3DStyle.PointDepth = 45;
                     }
                     chartArea2.Area3DStyle.Enable3D = true;
@@ -750,6 +751,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             {
                 this.Height = (pCount > 12) ? ((pCount > 20) ? new Unit("3000") : new Unit("2500")) : new Unit("1100");
                 this.Width = (pCount > 12) ? new Unit("1500") : new Unit("1100");
+            }
+            else if (pCount < 2)
+            {
+                this.Height = new Unit("600");
             }
             #endregion
 

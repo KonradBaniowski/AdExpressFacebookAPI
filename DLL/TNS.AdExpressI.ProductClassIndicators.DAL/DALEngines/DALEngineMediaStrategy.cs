@@ -144,6 +144,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     if (l.Length > 0)
                     {
                         sql.Append(l);
+                        if (l2.Length < 1)
+                        {
+                            sql.Append(")");
+                        }
                     }
                     if (l2.Length > 0)
                     {
