@@ -195,6 +195,13 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
                     output.WriteLine("</td></tr></table>");
                 }
             }
+            else if ((_advertiserChart != null && !_advertiserChart.Visible) || (_referenceChart != null && !_referenceChart.Visible))
+            {
+                output.WriteLine("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                output.WriteLine("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+                output.WriteLine("{0}", GestionWeb.GetWebWord(177, _session.SiteLanguage));
+                output.WriteLine("</td></tr></table>");
+            }
 			base.Render(output);
 
 		}

@@ -118,7 +118,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #endregion
 
             sql.Append(" ) ");
-            
+            sql.Append(" where total_N <> null");
+            if (_session.ComparativeStudy)
+            {
+                sql.Append(" or total_N1 <> null");
+            }
+
             #endregion
 
             #region Execution de la requête

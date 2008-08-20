@@ -543,7 +543,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             // Il n'y a pas de données
-            if (tab == null && tabTotal == null && tabTotalUniv == null && dsTotal == null) return (new object[0]);
+            if (tab == null && tabTotal == null && tabTotalUniv == null) return (new object[0]);
             #endregion
 
             #region Construction du tableau de résultats pour les annonceurs de références ou concurrents sélectionnés (optionnel)
@@ -693,31 +693,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         public object[,] GetChartData()
         {
 
-            #region variables
-            ////index ligne tableau de résultats 
-            //int IndexTabRow = 0;
-            ////nombre max de lignes tab
-            //int nbMaxRow = 0;
-            ////Alias mois étudié
-            //string MonthAlias = "";
-            ////tableau des résultats investissements mensuels
-            //object[,] tab = null;
-            ////Groupes de données pour annonceurs de références ou concurrents
-            //DataSet ds = null;
-            ////Groupes de données pour total supports de l'univers
-            //DataSet dsTotalUniverse = null;
-            ////Groupes de données pour total supports de marché ou famille
-            //DataSet dsTotal = null;
-            ////Tables  de données pour annonceurs de références ou concurrents
-            //DataTable dt = null;
-            ////Tables de données pour total supports de l'univers
-            //DataTable dtTotalUniverse = null;
-            ////Tables de données pour total supports de marché ou famille
-            //DataTable dtTotal = null;
-            ////annonceurs concurrents
-            //string CompetitorAdvertiserAccessList = "";
-            #endregion
-
             #region Load data
             //Get investments of reference / competitors advertisers
             DataSet ds = null;
@@ -740,8 +715,27 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             int nbMaxRow = 0;
             //Max number of line = Sum(each datatable.rows.count * number of monthes)
             if (dt != null && dt.Rows.Count > 0) nbMaxRow += dt.Rows.Count * (dt.Columns.Count - 2);
-            if (dtTotalUniverse != null && dtTotalUniverse.Rows.Count == 1) nbMaxRow += dtTotalUniverse.Rows.Count * (dtTotalUniverse.Columns.Count);
-            if (dtTotal != null && dtTotal.Rows.Count == 1) nbMaxRow += dtTotal.Rows.Count * (dtTotal.Columns.Count);
+            if (dtTotalUniverse != null && dtTotalUniverse.Rows.Count == 1)
+            {
+                foreach (DataColumn dtc in dtTotalUniverse.Columns)
+                {
+                    if(dtTotalUniverse.Rows[0][dtc] != System.DBNull.Value){
+                        nbMaxRow += dtTotalUniverse.Rows.Count * (dtTotalUniverse.Columns.Count);
+                        break;
+                    }
+                }
+            }
+            if (dtTotal != null && dtTotal.Rows.Count == 1)
+            {
+                foreach (DataColumn dtc in dtTotal.Columns)
+                {
+                    if (dtTotal.Rows[0][dtc] != System.DBNull.Value)
+                    {
+                        nbMaxRow += dtTotal.Rows.Count * (dtTotal.Columns.Count);
+                        break;
+                    }
+                }
+            }
 
             //Init tab
             object[,] tab = null;

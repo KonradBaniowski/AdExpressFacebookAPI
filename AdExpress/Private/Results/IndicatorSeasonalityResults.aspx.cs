@@ -243,7 +243,7 @@ namespace AdExpress.Private.Results {
                     else if (_webSession.CurrentTab == CstResult.Seasonality.SEASONALITY || _webSession.CurrentTab == CstResult.PalmaresRecap.PALMARES)
                     {
                         totalChoice = true;
-                        if (_webSession.CurrentTab == CstResult.Seasonality.SEASONALITY)
+                        if (_webSession.CurrentTab == CstResult.Seasonality.SEASONALITY && _webSession.Graphics)
                         {
                             bigFormat = true;
                         }

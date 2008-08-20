@@ -193,7 +193,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
                 if (classifLevel == CstResult.MotherRecap.ElementType.advertiser)
                 {
-                    t.AppendFormat("{0}{1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), periodLabel);
+                    t.AppendFormat("{0}<br>{1} {2}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(2474, _session.SiteLanguage), periodLabel);
                 }
                 t.Append("</td></tr></table>");
                 return t;

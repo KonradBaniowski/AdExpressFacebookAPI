@@ -432,13 +432,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 if (comparativeStudy)
                 {
                     tab[lineIndex, TOTAL_N1_COLUMN_INDEX] = dt.Rows[0]["total_N1"];//Année N-1
-                    if (dt.Rows[0]["evol"].Equals(System.DBNull.Value))
+                    if (dt.Rows[0]["evol"].Equals(System.DBNull.Value) && tab[lineIndex, TOTAL_N1_COLUMN_INDEX] != DBNull.Value)
                     {
                         tempEvol = ((Convert.ToDouble(tab[lineIndex, TOTAL_N_COLUMN_INDEX]) - Convert.ToDouble(tab[lineIndex, TOTAL_N1_COLUMN_INDEX])) * (double)100.0) / Convert.ToDouble(tab[lineIndex, TOTAL_N1_COLUMN_INDEX]);
                         tab[lineIndex, EVOLUTION_COLUMN_INDEX] = tempEvol;
                     }
-                    else tab[lineIndex, EVOLUTION_COLUMN_INDEX] = dt.Rows[0]["evol"];//evolution
-                    tab[lineIndex, ECART_COLUMN_INDEX] = dt.Rows[0]["ecart"];//ecart
+                    else tab[lineIndex, EVOLUTION_COLUMN_INDEX] = Convert.ToDouble(dt.Rows[0]["evol"]);//evolution
+                    tab[lineIndex, ECART_COLUMN_INDEX] = Convert.ToDouble(dt.Rows[0]["ecart"]);//ecart
                 }
             }
         }
@@ -515,8 +515,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             return (!dtUniversTotal.Equals(System.DBNull.Value) && dtUniversTotal.Rows.Count > 0)
                 || (!dtSectorTotal.Equals(System.DBNull.Value) && dtSectorTotal.Rows.Count > 0)
                 || (!dtMarketTotal.Equals(System.DBNull.Value) && dtMarketTotal.Rows.Count > 0)
-                || (!dtNbRef.Equals(System.DBNull.Value) && dtNbRef.Rows.Count > 0)
-                || (!dtNbAdvert.Equals(System.DBNull.Value) && dtNbAdvert.Rows.Count > 0);
+                || (!dtNbRef.Equals(System.DBNull.Value) && dtNbRef.Rows.Count > 0 && Convert.ToDouble(dtNbRef.Compute("sum(nbelt)", string.Empty)) > 0)
+                || (!dtNbAdvert.Equals(System.DBNull.Value) && dtNbAdvert.Rows.Count > 0 && Convert.ToDouble(dtNbAdvert.Compute("sum(nbelt)", string.Empty)) > 0);
         }
         #endregion
     }

@@ -412,7 +412,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             {
                 IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
                 DataSet ds = source.Fill(sql.ToString());
-                total = Convert.ToDouble(ds.Tables[0].Rows[0][0]);
+                if (ds.Tables[0].Rows[0][0] != System.DBNull.Value)
+                {
+                    total = Convert.ToDouble(ds.Tables[0].Rows[0][0]);
+                }
+                else
+                    return 0;
             }
             catch (System.Exception err)
             {

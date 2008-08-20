@@ -278,7 +278,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 {
                     t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                     t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
-                    t.Append(GestionWeb.GetWebWord(177, _session.SiteLanguage));
+                    t.AppendFormat("{0}<br>{1} {2}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(2474, _session.SiteLanguage), periodDate);
                     t.Append("</td></tr></table>");
                 }
                 return t;
