@@ -136,7 +136,7 @@ namespace AdExpress {
 						throw(es);
 					}
 				}
-				TNSMail.SmtpUtilities errorMail=new TNSMail.SmtpUtilities(AppDomain.CurrentDomain.BaseDirectory+WebConstantes.ErrorManager.WEBSERVER_ERROR_MAIL_PATH);
+				TNSMail.SmtpUtilities errorMail=new TNSMail.SmtpUtilities(WebApplicationParameters.CountryConfigurationDirectoryRoot+WebConstantes.ErrorManager.WEBSERVER_ERROR_MAIL_FILE);
 				errorMail.Send("Erreur d'initialisation d'AdExpress "+(Server.MachineName),body,true,false);
 				throw(error);
 			}

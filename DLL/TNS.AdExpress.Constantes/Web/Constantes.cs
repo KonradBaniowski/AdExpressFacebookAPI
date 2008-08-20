@@ -2250,11 +2250,11 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// <summary>
 		/// Chemin du fichier de configuration du mail des erreurs client
 		/// </summary>
-		public const string CUSTOMER_ERROR_MAIL_PATH=@"config\ErrorMail.xml";
+		public const string CUSTOMER_ERROR_MAIL_FILE=@"ErrorMail.xml";
 		/// <summary>
 		/// Chemin du fichier de configuration du mail des erreurs du serveur
 		/// </summary>
-		public const string WEBSERVER_ERROR_MAIL_PATH=@"config\CustomerErrorMail.xml";
+		public const string WEBSERVER_ERROR_MAIL_FILE=@"CustomerErrorMail.xml";
 		#endregion
 
 		#region Enumérateur
