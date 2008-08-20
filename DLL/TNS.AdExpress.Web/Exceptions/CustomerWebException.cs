@@ -613,7 +613,7 @@ namespace TNS.AdExpress.Web.Exceptions{
 			
 				body+="</html>";
 			}
-			TNSMail.SmtpUtilities errorMail=new TNSMail.SmtpUtilities(AppDomain.CurrentDomain.BaseDirectory+WebConstantes.ErrorManager.CUSTOMER_ERROR_MAIL_PATH);
+			TNSMail.SmtpUtilities errorMail=new TNSMail.SmtpUtilities(WebApplicationParameters.ConfigurationDirectoryRoot+WebConstantes.ErrorManager.CUSTOMER_ERROR_MAIL_FILE);
 			errorMail.SendWithoutThread("Erreur AdExpress Client ("+serverName+")",Convertion.ToHtmlString(body),true,false);
 		
 		}
