@@ -10,6 +10,8 @@ using System.Data;
 using TNS.AdExpress.Classification.Exceptions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.DataAccess.Classification {
 	/// <summary>
@@ -22,6 +24,10 @@ namespace TNS.AdExpress.DataAccess.Classification {
 		/// Nom de la table
 		/// </summary>
 		protected TNS.AdExpress.Constantes.Classification.DB.Table.name table;
+        /// <summary>
+        /// Database schema
+        /// </summary>
+        protected string _dbSchema="";
 		/// <summary>
 		/// Liste des éléments
 		/// </summary>
@@ -40,6 +46,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
 		/// <summary>
 		/// Constructeur de la liste de tous les éléments d'un niveau d'une nomenclature
 		/// </summary>
+        /// <remarks>Use only in TNS AdExpress website</remarks>
 		/// <param name="table">Table servant à la construction de la liste</param>
 		/// <param name="language">Langue des données</param>
 		/// <param name="source">Connexion à la base de données</param>
@@ -48,10 +55,11 @@ namespace TNS.AdExpress.DataAccess.Classification {
 			this.table=table;
             DataTable dt;
 			list=new Hashtable();
+            if(_dbSchema==null || _dbSchema.Length==0) _dbSchema=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
 
 			#region Création de la requête
 			string sql="select id_"+table.ToString()+", "+table.ToString();
-			sql+=" from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+table.ToString();
+            sql+=" from "+_dbSchema+"."+table.ToString();
 			sql+=" where id_language="+language+" and activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			sql+=" order by "+table.ToString();
 			#endregion
@@ -85,6 +93,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
 		/// <summary>
 		/// Constructeur de la liste de tous les éléments d'un niveau d'une nomenclature
 		/// </summary>
+        /// <remarks>Use only in TNS AdExpress website</remarks>
 		/// <param name="table">Table servant à la construction de la liste</param>
 		/// <param name="source">Connexion à la base de données</param>
 		/// <param name="codeslist">Liste des codes</param>
@@ -95,9 +104,11 @@ namespace TNS.AdExpress.DataAccess.Classification {
 			list=new Hashtable();
             DataTable dt;
 
+            if(_dbSchema==null || _dbSchema.Length==0) if(_dbSchema==null || _dbSchema.Length==0) _dbSchema=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
+
 			#region Création de la requête
 			string sql="select id_"+table.ToString()+", "+table.ToString();
-			sql+=" from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+table.ToString();
+			sql+=" from "+_dbSchema+"."+table.ToString();
 			sql+=" where id_language="+language+" and activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			sql+=" and id_"+table.ToString()+" in("+codeslist+")";
 			sql+=" order by "+table.ToString();
@@ -130,6 +141,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
 		/// <summary>
 		/// Constructeur de la liste de tous les éléments d'un niveau d'une nomenclature
 		/// </summary>
+        /// <remarks>Use only in TNS AdExpress website</remarks>
 		/// <param name="table">Table servant à la construction de la liste</param>
 		/// <param name="source">Connexion à la base de données</param>
 		/// <param name="codeslist">Liste des codes</param>
@@ -139,9 +151,11 @@ namespace TNS.AdExpress.DataAccess.Classification {
 			list = new Hashtable();
             DataTable dt;
 
+            if(_dbSchema==null || _dbSchema.Length==0) if(_dbSchema==null || _dbSchema.Length==0) _dbSchema=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
+
 			#region Création de la requête
 			string sql = "select id_" + table + ", " + table;
-			sql += " from " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + table;
+			sql += " from " + _dbSchema + "." + table;
 			sql += " where id_language=" + language + " and activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			sql += " and id_" + table + " in(" + codeslist + ")";
 			sql += " order by " + table;
@@ -182,10 +196,11 @@ namespace TNS.AdExpress.DataAccess.Classification {
 			this.language = language;
             DataTable dt;
             list = new Hashtable();
+            _dbSchema=dbSchema;
 
 			#region Création de la requête
 			string sql = "select id_" + table + ", " + table;
-			sql += " from " + dbSchema + "." + table;
+			sql += " from " + _dbSchema + "." + table;
 			sql += " where id_language=" + language + " and activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			sql += " and id_" + table + " in(" + codeslist + ")";
 			sql += " order by " + table;

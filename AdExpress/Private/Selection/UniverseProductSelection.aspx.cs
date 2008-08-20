@@ -18,6 +18,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using FrameWorkSelection=TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Web;
 
 /// <summary>
 /// Class used to select product universe
@@ -355,6 +356,7 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 		if (!Page.IsPostBack && _webSession.LastWebPage.IndexOf(this.Page.Request.Url.AbsolutePath) < 0) _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 
 		MenuWebControl2.CustomerWebSession = _webSession;
+        SelectItemsInClassificationWebControl1.DBSchema=WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
 		SelectItemsInClassificationWebControl1.CustomerWebSession = _webSession;
 		SelectItemsInClassificationWebControl1.SearchRulesTextCode = 2287;
 		SelectItemsInClassificationWebControl1.SearchRulesTextCss = "SearchRulesTextCss";

@@ -12,6 +12,8 @@ using TNS.AdExpress.Web.Core.Sessions;
 using System.Collections.Generic;
 using CoreExceptions = TNS.AdExpress.Web.Core.Exceptions;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 	/// <summary>
@@ -29,14 +31,24 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 		/// <param name="dBSchema"> DB Schema</param>
 		/// <returns>Le nombre d'élément de la nomenclature trouvé</returns>
 		public static DataSet GetItems(string table, string wordToSearch, WebSession webSession,string dBSchema) {
-			
-			string productRight = getCustomerProductRight(webSession, "wp", true);
+
+            #region Tables initilization
+            View productView;
+            try {
+                productView=WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
+            }
+            catch(System.Exception err) {
+                throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or schema label",err));
+            }
+            #endregion
+
+            string productRight = getCustomerProductRight(webSession, "wp", true);
 			string productRightSql = "";
 
 			//Get all product rights
 			if (productRight != null && productRight.Length > 0) {
 				productRightSql  = " select id_" + table.ToString() +" from ";
-				productRightSql += dBSchema + ".ALL_PRODUCT_" + webSession.DataLanguage.ToString() + " wp";
+                productRightSql += productView.Sql + webSession.DataLanguage.ToString() + " wp";
 				productRightSql += " Where 0=0 " + productRight;
 			}
 
@@ -85,10 +97,20 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 		/// <returns>Le nombre d'élément de la nomenclature trouvé</returns>
 		public static DataSet GetOneLevelItems(string table, string idList, WebSession webSession, string dBSchema) {
 			string sqlRights = "";
+            
+            #region Tables initilization
+            View productView;
+            try {
+                productView=WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
+            }
+            catch(System.Exception err) {
+                throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or schema label",err));
+            }
+            #endregion
 
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-			sql += " from " + dBSchema + ".ALL_PRODUCT_" + webSession.DataLanguage.ToString() + " wp ";
+            sql += " from " + productView.Sql + webSession.DataLanguage.ToString() + " wp ";
 			sql += " where wp.id_" + table.ToString() + " in (" + idList + ")";
 			
 			#region Application des droits produits
@@ -122,9 +144,19 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 		public static DataSet GetSelectedItems(string table, string idList, WebSession webSession, string dBSchema) {
 			string sqlRights = "";
 
+            #region Tables initilization
+            View productView;
+            try {
+                productView=WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
+            }
+            catch(System.Exception err) {
+                throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or schema label",err));
+            }
+            #endregion
+
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-			sql += " from " + dBSchema + ".ALL_PRODUCT_" + webSession.DataLanguage.ToString() + " wp";
+            sql += " from " + productView.Sql + webSession.DataLanguage.ToString() + " wp";
 			sql += " where wp.id_" + table.ToString() + " in (" + idList + ")";
 
 			#region Application des droits produits
@@ -159,10 +191,20 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 		/// <returns>listes d'éléments </returns>
 		public static DataSet GetItems(string table, string selectedItemIds, string selectedItemTableName, WebSession webSession, string dBSchema) {
 			string sqlRights = "";
-			
+
+            #region Tables initilization
+            View productView;
+            try {
+                productView=WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
+            }
+            catch(System.Exception err) {
+                throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or schema label",err));
+            }
+            #endregion
+
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-			sql += " from " + dBSchema + ".ALL_PRODUCT_" + webSession.DataLanguage.ToString() + " wp"; 
+			sql += " from " +productView.Sql + webSession.DataLanguage.ToString() + " wp"; 
 			sql += " where wp.id_" + selectedItemTableName + " in ( " + selectedItemIds + " ) ";
 
 			#region Application des droits produits

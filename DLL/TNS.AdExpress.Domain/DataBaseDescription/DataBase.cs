@@ -711,7 +711,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 		/// <summary>
 		/// Group Advertising Agency
 		/// </summary>
-		groupAdvertisingAgency=202
+		groupAdvertisingAgency=202,
+        /// <summary>
+        /// Product class analysis years loaded information
+        /// </summary>
+        recapInfo=203,
 
     } 
     #endregion
@@ -724,7 +728,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// All Media
         /// </summary>
-        allMedia=0
+        allMedia=0,
+        /// <summary>
+        /// All Product
+        /// </summary>
+        allProduct=1
     }
     #endregion
 

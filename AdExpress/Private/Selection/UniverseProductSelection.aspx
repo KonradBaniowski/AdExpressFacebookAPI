@@ -158,7 +158,7 @@
 							</tr>														
 							<tr>
 								<td class="whiteBackGround"><!--<img height="15" src="/Images/Common/pixel.gif" width="1"> -->
-									<cc4:SelectItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" DefaultBranchId="1" NbMaxIncludeTree="2" DBSchema="adexpr03"></cc4:SelectItemsInClassificationWebControl>
+									<cc4:SelectItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" DefaultBranchId="1" NbMaxIncludeTree="2"></cc4:SelectItemsInClassificationWebControl>
 									</td>
 							</tr>
 							<tr>

@@ -29,13 +29,18 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 		/// <returns>Dernière année chargée</returns>
 		internal static int GetLastLoadedYear(){
 
-//			OracleConnection connection = null;
-//			OracleCommand sqlCommand=null;
-//			OracleDataAdapter sqlAdapter=null;
-//			DataSet ds=new DataSet();
+            #region Tables initilization
+            Table recapInfo;
+            try {
+                recapInfo=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInfo);
+            }
+            catch(System.Exception err) {
+                throw (new WebException.RecapDataAccessException("Impossible to get table names or schema label",err));
+            }
+            #endregion
 
 			#region Requête
-			string sql="select current_year from recap01.recap_info where id_recap_info = (select max(id_recap_info) from recap01.recap_info)";
+            string sql="select current_year from "+recapInfo.Sql+" where id_recap_info = (select max(id_recap_info) from "+recapInfo.Sql+")";
 			#endregion
 
 			#region Execution de la requête

@@ -18,7 +18,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 	/// </summary>
 	[DefaultProperty("Text"), 
 		ToolboxData("<{0}:InformationWebControl runat=server></{0}:InformationWebControl>")]
-	public class InformationWebControl : System.Web.UI.WebControls.WebControl,IOptionWebControl{
+	public class InformationWebControl : System.Web.UI.WebControls.WebControl,IOptionWebControl,ITranslation{
 
 		#region Variables
 		/// <summary>
