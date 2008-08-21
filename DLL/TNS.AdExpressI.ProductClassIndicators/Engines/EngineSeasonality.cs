@@ -340,7 +340,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         if (foundRows != null && foundRows.Length > 0 && foundRows[0] != null)
                         {
                             invest = foundRows[0]["TOTAL_N"];
-                            evol = foundRows[0]["EVOL"];
+                            evol = null;
+                            if (foundRows[0].Table.Columns.Contains("EVOL"))
+                            {
+                                evol = foundRows[0]["EVOL"];
+                            }
                             refNb = foundRows[0]["NBREF"];
                             avgInvest = foundRows[0]["BUDGET_MOYEN"];
                             advLabel = foundRows[0]["ADVERTISER"];
