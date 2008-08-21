@@ -11,6 +11,7 @@ using System.Globalization;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using CstCustomer = TNS.AdExpress.Constantes.Customer;
 
 using FctWeb = TNS.AdExpress.Web.Functions;
 using FctExcel = TNS.AdExpress.Web.UI.ExcelWebPage;
@@ -34,6 +35,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Results;
 
 using TNS.AdExpressI.MediaSchedule.DAL;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule
@@ -173,7 +175,24 @@ namespace TNS.AdExpressI.MediaSchedule
         }
         #endregion
 
-        #region Vehicle Id
+        #region Vehicle Ids
+        /// <summary>
+        /// List of selected vehicles
+        /// </summary>
+        protected List<VehicleInformation> _vehicles;
+        /// <summary>
+        /// List of selected vehicles
+        /// </summary>
+        protected List<VehicleInformation> Vehicles
+        {
+            get { 
+                if(_vehicles == null){
+                    _vehicles = GetVehicles();
+                }
+                return _vehicles;
+            }
+            set { _vehicles = value; }
+        }
         /// <summary>
         /// Vehicle Id filter
         /// </summary>
@@ -184,7 +203,10 @@ namespace TNS.AdExpressI.MediaSchedule
         public Int64 VehicleId
         {
             get{ return _vehicleId;}
-            set { _vehicleId = value; }
+            set { 
+                _vehicleId = value;
+                _vehicles = GetVehicles();
+            }
         }
         #endregion
 
@@ -461,7 +483,7 @@ namespace TNS.AdExpressI.MediaSchedule
 
         #endregion
 
-        #region Internal Methods
+        #region Protected Methods
 
         #region Compute Data
         /// <summary>
@@ -1887,8 +1909,14 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <returns>True if access authorised</returns>
         protected virtual bool AllowVersions()
         {
+            bool allow = false;
+            foreach (VehicleInformation v in Vehicles)
+            {
+                allow = allow || v.ShowCreations;
+            }
             return (
-                _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) 
+                allow
+                && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) 
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
@@ -1902,13 +1930,42 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <returns>True if access authorised</returns>
         protected virtual bool AllowInsertions()
         {
-            return 
-                !_isCreativeDivisionMS
+            bool allow = false;
+            foreach (VehicleInformation v in Vehicles)
+            {
+                allow = allow || v.ShowInsertions;
+            }
+
+            return
+                allow
+                && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
                 && _vehicleId != CstDBClassif.Vehicles.names.adnettrack.GetHashCode()
                 && (_module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE || _session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                 ;
+        }
+        #endregion
+
+        #region GetVehicles
+        /// <summary>
+        /// Get List of studied vehicles
+        /// </summary>
+        /// <returns>List of vehicles</returns>
+        protected List<VehicleInformation> GetVehicles()
+        {
+            List<VehicleInformation> vs = null;
+            if (_vehicleId > 0)
+            {
+                vs = new List<VehicleInformation>();
+                vs.Add(VehiclesInformation.Get(_vehicleId));
+            }
+            else
+            {
+                string vehicles = _session.GetSelection(_session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
+                vs = new List<VehicleInformation>(Array.ConvertAll<string, VehicleInformation>(vehicles.Split(','), new Converter<string, VehicleInformation>(delegate(string str) { return VehiclesInformation.Get(Convert.ToInt64(str)); })));
+            }
+            return vs;
         }
         #endregion
 

@@ -256,42 +256,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		#endregion
 
 		#region Protected methods
-        /*
-		#region Get day of week
-		/// <summary>
-		/// Get day of week
-		/// </summary>
-		/// <param name="dayOfWeek">Day Of Week</param>
-		/// <returns>Day Of Week</returns>
-		protected virtual string GetDayOfWeek(string dayOfWeek) {
-			string txt = "";
-			switch (dayOfWeek) {
-				case "Monday":
-					txt = GestionWeb.GetWebWord(654, _webSession.SiteLanguage);
-					break;
-				case "Tuesday":
-					txt = GestionWeb.GetWebWord(655, _webSession.SiteLanguage);
-					break;
-				case "Wednesday":
-					txt = GestionWeb.GetWebWord(656, _webSession.SiteLanguage);
-					break;
-				case "Thursday":
-					txt = GestionWeb.GetWebWord(657, _webSession.SiteLanguage);
-					break;
-				case "Friday":
-					txt = GestionWeb.GetWebWord(658, _webSession.SiteLanguage);
-					break;
-				case "Saturday":
-					txt = GestionWeb.GetWebWord(659, _webSession.SiteLanguage);
-					break;
-				case "Sunday":
-					txt = GestionWeb.GetWebWord(660, _webSession.SiteLanguage);
-					break;
-			}
-			return txt;
-		}
-		#endregion		
-        */
 		/// <summary>
 		/// No data message
 		/// </summary>
@@ -304,5 +268,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		}
 
 		#endregion
-	}
+
+    }
 }
