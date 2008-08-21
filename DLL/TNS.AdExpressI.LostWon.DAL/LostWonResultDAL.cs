@@ -526,11 +526,11 @@ namespace TNS.AdExpressI.LostWon.DAL
                         dataTableName = tblWebPlan.SqlWithPrefix;
                         break;
                     default:
-                        throw (new DynamicDALException("Unaable to determùine the type of table to use."));
+                        throw (new DynamicDALException("Unable to determùine the type of table to use."));
                 }
 
                 // Obtient les tables de la nomenclature
-                productTableName = _session.GenericProductDetailLevel.GetSqlTables(CstDB.Schema.ADEXPRESS_SCHEMA);
+                productTableName = _session.GenericProductDetailLevel.GetSqlTables(schAdExpr03.Label);
                 if (productTableName != null && productTableName.Length > 0) productTableName = "," + productTableName;
                 // Obtient les champs de la nomenclature
                 productFieldName = _session.GenericProductDetailLevel.GetSqlFields();
@@ -566,7 +566,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 {
                     try
                     {
-                        dataTableNameForGad = ", " + CstDB.Schema.ADEXPRESS_SCHEMA + "." + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
+                        dataTableNameForGad = ", " +schAdExpr03.Sql  + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
                         dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad();
                         dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
                     }
