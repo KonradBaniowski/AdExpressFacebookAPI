@@ -30,6 +30,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpressI.MediaSchedule.DAL.Exceptions;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule.DAL
@@ -283,18 +284,13 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             {
 
                 // Get the name of the data table
-                tableName = GetDataTableName(periodBreakDown, vehicleId);
+                tableName = SQLGenerator.GetDataTableName(periodBreakDown, vehicleId);
                 // Get the classification table
                 mediaTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
                 if (mediaTableName.Length > 0) mediaTableName += ",";
                 // Get unit field
-                dateFieldName = GetDateFieldName(periodBreakDown);
-                // Outdoor alert case
-                if ((CstDBClassif.Vehicles.names)vehicleId == CstDBClassif.Vehicles.names.outdoor && _session.Unit == CstWeb.CustomerSessions.Unit.insertion
-                    && (periodBreakDown == CstPeriod.PeriodBreakdownType.data_4m || periodBreakDown == CstPeriod.PeriodBreakdownType.data))
-                    unitFieldName = CstDB.Fields.NUMBER_BOARD;
-                else
-                    unitFieldName = GetUnitFieldName(periodBreakDown);
+                dateFieldName = SQLGenerator.GetDateFieldName(periodBreakDown);
+                unitFieldName = SQLGenerator.GetUnitFieldName(_session,vehicleId,periodBreakDown);
                 // Periodicity
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, vehicleId, periodDisplay);
                 // Get classification fields
@@ -442,164 +438,6 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         #endregion
 
         #region Queries building stuff
-
-        #region GetDataTableName
-        /// <summary>
-        /// Get data table to use in queries
-        /// </summary>
-        /// <param name="period">Type of period</param>
-        /// <param name="vehicleId">Vehicle Id</param>
-        /// <returns>Table matching the vehicle and the type of period</returns>
-        protected virtual string GetDataTableName(CstPeriod.PeriodBreakdownType period, Int64 vehicleId)
-        {
-            switch (period)
-            {
-                case CstPeriod.PeriodBreakdownType.month:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix;
-                case CstPeriod.PeriodBreakdownType.week:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).SqlWithPrefix;
-                case CstPeriod.PeriodBreakdownType.data_4m:
-                    switch ((CstDBClassif.Vehicles.names)Convert.ToInt32(vehicleId))
-                    {
-                        case CstDBClassif.Vehicles.names.press:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.internationalPress:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.radio:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.tv:
-                        case CstDBClassif.Vehicles.names.others:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.outdoor:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.adnettrack:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrackAlert).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.internet:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.directMarketing:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).SqlWithPrefix;
-                        default:
-                            throw (new MediaScheduleDALException("Unable to determine table to use."));
-                    }
-                case CstPeriod.PeriodBreakdownType.data:
-                    switch ((CstDBClassif.Vehicles.names)Convert.ToInt32(vehicleId.ToString()))
-                    {
-                        case CstDBClassif.Vehicles.names.press:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.internationalPress:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.radio:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.tv:
-                        case CstDBClassif.Vehicles.names.others:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.outdoor:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.adnettrack:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.internet:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).SqlWithPrefix;
-                        case CstDBClassif.Vehicles.names.directMarketing:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).SqlWithPrefix;
-                        default:
-                            throw (new MediaScheduleDALException("Unable to determine the table to use"));
-                    }
-                default:
-                    throw (new MediaScheduleDALException("The detail selected is not a correct one to to choos of the tablme"));
-            }
-        }
-        #endregion
-
-        #region GetDateFieldName
-        /// <summary>
-        /// Get Field to use for date
-        /// </summary>
-        /// <param name="period">Type of period</param>
-        /// <returns>Date Filed Name matchnig the type of period</returns>
-        protected virtual string GetDateFieldName(CstPeriod.PeriodBreakdownType period)
-        {
-            switch (period)
-            {
-                case CstPeriod.PeriodBreakdownType.month:
-                    return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_DATE_FIELD);
-                case CstPeriod.PeriodBreakdownType.week:
-                    return (CstDB.Fields.WEB_PLAN_MEDIA_WEEK_DATE_FIELD);
-                case CstPeriod.PeriodBreakdownType.data:
-                case CstPeriod.PeriodBreakdownType.data_4m:
-                    return ("date_media_num");
-                default:
-                    throw (new MediaScheduleDALException("Selected detail period is uncorrect. Unable to determine date field to use."));
-            }
-        }
-        #endregion
-
-        #region GetUnitFieldName
-        /// <summary>
-        /// Get unit field to use in query
-        /// </summary>
-        /// <returns>Unit field name</returns>
-        protected virtual string GetUnitFieldName(CstPeriod.PeriodBreakdownType periodType)
-        {
-            switch (periodType)
-            {
-                case CstPeriod.PeriodBreakdownType.week:
-                case CstPeriod.PeriodBreakdownType.month:
-                    switch (_session.Unit)
-                    {
-                        case CstWeb.CustomerSessions.Unit.euro:
-                        case CstWeb.CustomerSessions.Unit.kEuro:
-                            return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-                        case CstWeb.CustomerSessions.Unit.mmPerCol:
-                            return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD);
-                        case CstWeb.CustomerSessions.Unit.pages:
-                            return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD);
-                        case CstWeb.CustomerSessions.Unit.insertion:
-                        case CstWeb.CustomerSessions.Unit.numberBoard:
-                            return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                        case CstWeb.CustomerSessions.Unit.spot:
-                            return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                        case CstWeb.CustomerSessions.Unit.duration:
-                            return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
-                        case CstWeb.CustomerSessions.Unit.volume:
-                            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
-                                return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_VOLUME_FIELD);
-                            else
-                                return (CstDB.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-                        default:
-                            throw (new MediaScheduleDALException("Selected unit detail is uncorrect. Unable to determine unit field."));
-                    }
-                case CstPeriod.PeriodBreakdownType.data:
-                case CstPeriod.PeriodBreakdownType.data_4m:
-                    switch (_session.Unit)
-                    {
-                        case CstWeb.CustomerSessions.Unit.euro:
-                        case CstWeb.CustomerSessions.Unit.kEuro:
-                            return (CstDB.Fields.EXPENDITURE_EURO);
-                        case CstWeb.CustomerSessions.Unit.mmPerCol:
-                            return (CstDB.Fields.AREA_MMC);
-                        case CstWeb.CustomerSessions.Unit.pages:
-                            return (CstDB.Fields.AREA_PAGE);
-                        case CstWeb.CustomerSessions.Unit.spot:
-                        case CstWeb.CustomerSessions.Unit.insertion:
-                            return (CstDB.Fields.INSERTION);
-                        case CstWeb.CustomerSessions.Unit.numberBoard:
-                            return (CstDB.Fields.NUMBER_BOARD);
-                        case CstWeb.CustomerSessions.Unit.duration:
-                            return (CstDB.Fields.DURATION);
-                        case CstWeb.CustomerSessions.Unit.volume:
-                            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
-                                return (CstDB.Fields.VOLUME);
-                            else
-                                return (CstDB.Fields.EXPENDITURE_EURO);
-                        default:
-                            throw (new MediaScheduleDALException("Selected unit detail is uncorrect. Unable to determine unit field."));
-                    }
-                default:
-                    throw (new MediaScheduleDALException("Selected period detail is uncorrect. Unable to determine unit field."));
-
-            }
-        }
-        #endregion
 
         #region Périodicité
         /// <summary>

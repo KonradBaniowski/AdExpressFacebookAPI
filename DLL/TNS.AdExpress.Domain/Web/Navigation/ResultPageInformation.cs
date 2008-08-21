@@ -309,21 +309,12 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         public List<CustomerSessions.Unit> GetValidUnitsEnum(List<Vehicles.names> vehiclesList) {
             List<CustomerSessions.Unit> validUnitsList = new List<CustomerSessions.Unit>();
             List<CustomerSessions.Unit> vehicleUnitList=VehiclesInformation.GetCommunUnitList(vehiclesList);
-            CustomerSessions.Unit currentParentUnit;
-            UnitInformation currentParentUnitInformation;
-            UnitInformation currentUnitInformation;
+
             foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList) {
-                currentParentUnit = UnitsInformation.GetParentUnitId(currentUnit);
-                #region field priority
-                currentParentUnitInformation = UnitsInformation.Get(currentParentUnit);
-                currentUnitInformation = UnitsInformation.Get(currentUnit);
-                if ((currentUnitInformation.DatabaseField != currentParentUnitInformation.DatabaseField
-                    || currentUnitInformation.DatabaseMultimediaField != currentParentUnitInformation.DatabaseMultimediaField)
-                    && !vehicleUnitList.Contains(currentParentUnit)) {
-                    currentParentUnit = currentUnit;
-                }
-                #endregion
-                if (vehicleUnitList.Contains(currentParentUnit) && !validUnitsList.Contains(currentParentUnit)) validUnitsList.Add(currentParentUnit);
+
+                if(vehicleUnitList.Contains(currentUnit))
+                    validUnitsList.Add(currentUnit);
+
             }
             return (validUnitsList);
         }
@@ -347,23 +338,12 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         public List<UnitInformation> GetValidUnits(List<Vehicles.names> vehiclesList) {
             List<UnitInformation> validUnitsList = new List<UnitInformation>();
             List<CustomerSessions.Unit> vehicleUnitList = VehiclesInformation.GetCommunUnitList(vehiclesList);
-            CustomerSessions.Unit currentParentUnit;
-            UnitInformation currentParentUnitInformation;
-            UnitInformation currentUnitInformation;
+
             foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList) {
-                currentParentUnit = UnitsInformation.GetParentUnitId(currentUnit);
+                
+                if (vehicleUnitList.Contains(currentUnit))
+                    validUnitsList.Add(UnitsInformation.Get(currentUnit));
 
-                #region field priority
-                currentParentUnitInformation = UnitsInformation.Get(currentParentUnit);
-                currentUnitInformation = UnitsInformation.Get(currentUnit);
-                if ((currentUnitInformation.DatabaseField != currentParentUnitInformation.DatabaseField
-                    || currentUnitInformation.DatabaseMultimediaField != currentParentUnitInformation.DatabaseMultimediaField)
-                    && !vehicleUnitList.Contains(currentParentUnit)) {
-                    currentParentUnit = currentUnit;
-                }
-                #endregion
-
-                if (vehicleUnitList.Contains(currentParentUnit) && !validUnitsList.Contains(UnitsInformation.Get(currentParentUnit))) validUnitsList.Add(UnitsInformation.Get(currentParentUnit));
             }
             return (validUnitsList);
         }

@@ -214,12 +214,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 if (mediaTableName.Length > 0) mediaTableName += ",";
                 // Obtient le champs unité
                 dateFieldName = GetDateFieldName(periodBreakDown);
-                // cas particulier outdoor en alerte
-                if ((ConstantesDBClassif.Vehicles.names)vehicleId == ConstantesDBClassif.Vehicles.names.outdoor && session.Unit == TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion
-                    && (periodBreakDown == ConstantesPeriod.PeriodBreakdownType.data_4m || periodBreakDown == ConstantesPeriod.PeriodBreakdownType.data))
-                    unitFieldName = ConstantesDB.Fields.NUMBER_BOARD;
-                else
-                    unitFieldName = GetUnitFieldName(session, periodBreakDown);
+                unitFieldName = SQLGenerator.GetUnitFieldName(session, vehicleId, periodBreakDown);
                 //SQL Pour la périodicité
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, vehicleId, periodDisplay);
                 // Obtient les champs de la nomenclature
@@ -454,75 +449,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                     return ("date_media_num");
                 default:
                     throw (new MediaPlanDataAccessException("Selected detail period is uncorrect. Unable to determine date field to use."));
-            }
-        }
-        #endregion
-
-        #region GetUnitFieldName
-        /// <summary>
-        /// Get unit field to use in query
-        /// </summary>
-        /// <param name="session">Client Session</param>
-        /// <returns>Unit field name</returns>
-        private static string GetUnitFieldName(WebSession session, ConstantesPeriod.PeriodBreakdownType periodType)
-        {
-            switch (periodType)
-            {
-                case ConstantesPeriod.PeriodBreakdownType.week:
-                case ConstantesPeriod.PeriodBreakdownType.month:
-                    switch (session.Unit)
-                    {
-                        case ConstantesWeb.CustomerSessions.Unit.euro:
-                        case ConstantesWeb.CustomerSessions.Unit.kEuro:
-                            return (ConstantesDB.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-                        case ConstantesWeb.CustomerSessions.Unit.mmPerCol:
-                            return (ConstantesDB.Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD);
-                        case ConstantesWeb.CustomerSessions.Unit.pages:
-                            return (ConstantesDB.Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD);
-                        case ConstantesWeb.CustomerSessions.Unit.insertion:
-                        case ConstantesWeb.CustomerSessions.Unit.numberBoard:
-                            return (ConstantesDB.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                        case ConstantesWeb.CustomerSessions.Unit.spot:
-                            return (ConstantesDB.Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-                        case ConstantesWeb.CustomerSessions.Unit.duration:
-                            return (ConstantesDB.Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
-                        case ConstantesWeb.CustomerSessions.Unit.volume:
-                            if (session.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_MARKETING_DIRECT))
-                                return (ConstantesDB.Fields.WEB_PLAN_MEDIA_MONTH_VOLUME_FIELD);
-                            else
-                                return (ConstantesDB.Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-                        default:
-                            throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
-                    }
-                case ConstantesPeriod.PeriodBreakdownType.data:
-                case ConstantesPeriod.PeriodBreakdownType.data_4m:
-                    switch (session.Unit)
-                    {
-                        case ConstantesWeb.CustomerSessions.Unit.euro:
-                        case ConstantesWeb.CustomerSessions.Unit.kEuro:
-                            return (ConstantesDB.Fields.EXPENDITURE_EURO);
-                        case ConstantesWeb.CustomerSessions.Unit.mmPerCol:
-                            return (ConstantesDB.Fields.AREA_MMC);
-                        case ConstantesWeb.CustomerSessions.Unit.pages:
-                            return (ConstantesDB.Fields.AREA_PAGE);
-                        case ConstantesWeb.CustomerSessions.Unit.spot:
-                        case ConstantesWeb.CustomerSessions.Unit.insertion:
-                            return (ConstantesDB.Fields.INSERTION);
-                        case ConstantesWeb.CustomerSessions.Unit.numberBoard:
-                            return (ConstantesDB.Fields.NUMBER_BOARD);
-                        case ConstantesWeb.CustomerSessions.Unit.duration:
-                            return (ConstantesDB.Fields.DURATION);
-                        case ConstantesWeb.CustomerSessions.Unit.volume:
-                            if (session.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_MARKETING_DIRECT))
-                                return (ConstantesDB.Fields.VOLUME);
-                            else
-                                return (ConstantesDB.Fields.EXPENDITURE_EURO);
-                        default:
-                            throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
-                    }
-                default:
-                    throw (new SQLGeneratorException("Selected period detail is uncorrect. Unable to determine unit field."));
-
             }
         }
         #endregion

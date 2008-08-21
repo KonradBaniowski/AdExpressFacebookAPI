@@ -25,6 +25,8 @@ using DBTableFieldsName = TNS.AdExpress.Constantes.DB;
 using WebCommon=TNS.AdExpress.Web.Common;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -73,11 +75,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				tableName=GetMediaTableName(webSession,vehicleId);
 				mediaTableName=GetMediaTable(webSession.PreformatedMediaDetail);
 				dateFieldName=GetDateFieldName(webSession);
-				// cas particulier outdoor en alerte
-				if((DBClassificationConstantes.Vehicles.names)vehicleId==DBClassificationConstantes.Vehicles.names.outdoor && webSession.Unit== TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion && WebConstantes.CustomerSessions.Period.DisplayLevel.dayly==webSession.DetailPeriod)
-					unitFieldName=Fields.NUMBER_BOARD;
-				else
-					unitFieldName=GetUnitFieldName(webSession);
+				unitFieldName=GetUnitFieldName(webSession,vehicleId);
 				mediaFieldName=GetMediaFields(webSession.PreformatedMediaDetail);
 				orderFieldName=GetOrderMediaFields(webSession.PreformatedMediaDetail);
 				mediaJoinCondition=GetMediaJoinConditions(webSession,DbTables.WEB_PLAN_PREFIXE,false);
@@ -363,50 +361,32 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// Indique le champ à utiliser pour l'unité dans la requête
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
+        /// <param name="vehicleId">Vehicle id</param>
 		/// <returns>Le champ correspondant au type d'unité</returns>
-		private static string GetUnitFieldName(WebSession webSession){
+        private static string GetUnitFieldName(WebSession webSession, Int64 vehicleId) {
 			switch(webSession.DetailPeriod){
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
-					switch(webSession.Unit){
-						case WebConstantes.CustomerSessions.Unit.euro:
-						case WebConstantes.CustomerSessions.Unit.kEuro:
-							return(Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-						case WebConstantes.CustomerSessions.Unit.mmPerCol:
-							return(Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD);
-						case WebConstantes.CustomerSessions.Unit.pages:
-							return(Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD);
-						case WebConstantes.CustomerSessions.Unit.insertion:
-						case WebConstantes.CustomerSessions.Unit.numberBoard:
-							return(Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-						case WebConstantes.CustomerSessions.Unit.spot:
-							return(Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-						case WebConstantes.CustomerSessions.Unit.duration:
-							return(Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
-						default:
-							throw(new SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
-					}
+
+                    try {
+                        return UnitsInformation.List[webSession.Unit].DatabaseMultimediaField;
+                    }
+                    catch{
+                        throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
+                    }
+
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
-					switch(webSession.Unit){
-						case WebConstantes.CustomerSessions.Unit.euro:
-						case WebConstantes.CustomerSessions.Unit.kEuro:
-							return(Fields.EXPENDITURE_EURO);
-						case WebConstantes.CustomerSessions.Unit.mmPerCol:
-							return(Fields.AREA_MMC);
-						case WebConstantes.CustomerSessions.Unit.pages:
-							return(Fields.AREA_PAGE);
-						case WebConstantes.CustomerSessions.Unit.spot:
-						case WebConstantes.CustomerSessions.Unit.insertion:
-							return(Fields.INSERTION);
-						case WebConstantes.CustomerSessions.Unit.numberBoard:
-							return(Fields.NUMBER_BOARD);
-						case WebConstantes.CustomerSessions.Unit.duration:
-							return(Fields.DURATION);
-						default:
-							throw(new SQLGeneratorException("Le détails unité sélectionné est incorrect pour le choix du champ"));
-					}
+
+                    try {
+                        WebConstantes.CustomerSessions.Unit unit = VehiclesInformation.Get(vehicleId).GetUnitFromBaseId(webSession.Unit);
+                        return UnitsInformation.List[unit].DatabaseField;
+                    }
+                    catch{
+                        throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
+                    }
+
 				default:
-					throw(new SQLGeneratorException("Le détails Période sélectionné est incorrect pour le choix des unités"));
+                    throw (new SQLGeneratorException("Selected period detail is uncorrect. Unable to determine unit field."));
 
 			}
 		}

@@ -52,7 +52,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             //Condition univers des médias AdExpress en accès
             Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
             if (currentModuleDescription.ModuleType == WebConstantes.Module.Type.tvSponsorship)
-                sql.Append(Utilities.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID, true));
+                sql.Append(Utilities.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID, true, false));
 
             #region le bloc doit il commencer par AND
             premier = true;
@@ -196,7 +196,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             //Condition univers des médias AdExpress en accès
             Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
             if (currentModuleDescription.ModuleType == WebConstantes.Module.Type.tvSponsorship)
-                sql.Append(Utilities.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID, true));
+                sql.Append(Utilities.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID, true, false));
 
 
             #region le bloc doit il commencer par AND

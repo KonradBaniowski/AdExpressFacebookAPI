@@ -22,6 +22,7 @@ using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using CstCustomerSessions = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using ClassificationConstantes = TNS.AdExpress.Constantes.Classification;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
@@ -35,6 +36,7 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -1610,6 +1612,29 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="idMediaItemsList">Identifiant de l'univers média AdExpress</param>
         /// <param name="beginByAnd">La condition doit elle commencer par And</param>
+        /// <param name="withPrefixe">Request with tables prefixe</param>
+        /// <returns>Condition</returns>
+        /// <remarks>
+        /// Cette méthode doit être utilisée que si la nomenclature support n'est pas contenue
+        /// dans une même table (Média, catégorie, support).
+        /// </remarks>
+        public static string getAdExpressUniverseCondition(int idMediaItemsList, bool beginByAnd, bool withPrefixe) {
+            try {
+                if(withPrefixe)
+                    return (getAdExpressUniverseCondition(idMediaItemsList, DBConstantes.Tables.VEHICLE_PREFIXE, DBConstantes.Tables.CATEGORY_PREFIXE, DBConstantes.Tables.MEDIA_PREFIXE, beginByAnd));
+                else
+                    return (getAdExpressUniverseCondition(idMediaItemsList, "", "", "", beginByAnd));
+            }
+            catch (System.Exception e) {
+                throw (e);
+            }
+        }
+
+        /// <summary>
+        /// Donne la condition SQL pour intégrer la notion d'univers Adexpress
+        /// </summary>
+        /// <param name="idMediaItemsList">Identifiant de l'univers média AdExpress</param>
+        /// <param name="beginByAnd">La condition doit elle commencer par And</param>
         /// <returns>Condition</returns>
         /// <remarks>
         /// Cette méthode doit être utilisée que si la nomenclature support n'est pas contenue
@@ -1672,9 +1697,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 string sql = " ";
                 if (beginByAnd) sql += "And ";
                 TNS.AdExpress.Web.Core.ClassificationList.MediaItemsList adexpressMediaItemsList = Core.ClassificationList.Media.GetMediaItemsList(idMediaItemsList);
-                if (adexpressMediaItemsList.GetVehicleItemsList.Length > 0) sql += vehicleTablePrefixe + ".id_vehicle in(" + adexpressMediaItemsList.GetVehicleItemsList + ") ";
-                if (adexpressMediaItemsList.GetCategoryItemsList.Length > 0) sql += categoryTablePrefixe + ".id_category in(" + adexpressMediaItemsList.GetCategoryItemsList + ") ";
-                if (adexpressMediaItemsList.GetMediaItemsList.Length > 0) sql += mediaTablePrefixe + ".id_media in(" + adexpressMediaItemsList.GetMediaItemsList + ") ";
+                if (adexpressMediaItemsList.GetVehicleItemsList.Length > 0) sql += (vehicleTablePrefixe.Length>0 ?  vehicleTablePrefixe+"." : "") + "id_vehicle in(" + adexpressMediaItemsList.GetVehicleItemsList + ") ";
+                if (adexpressMediaItemsList.GetCategoryItemsList.Length > 0) sql += (categoryTablePrefixe.Length>0 ? categoryTablePrefixe+"." : "") + "id_category in(" + adexpressMediaItemsList.GetCategoryItemsList + ") ";
+                if (adexpressMediaItemsList.GetMediaItemsList.Length > 0) sql += (mediaTablePrefixe.Length>0 ? mediaTablePrefixe+"." : "") + "id_media in(" + adexpressMediaItemsList.GetMediaItemsList + ") ";
+
                 if (sql.Length < 6) return ("");
                 return (sql);
             }
@@ -3294,7 +3320,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             try {
                 return UnitsInformation.List[unit].DatabaseField;
             }
-            catch (System.Exception ex) {
+            catch{
                 throw new SQLGeneratorException("getField(TNS.AdExpress.Constantes.Web.CustomerSessions.Unit unit)-->Le cas de cette unité n'est pas gérer. Pas de champ correspondante.");
             }
 
@@ -3314,7 +3340,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             try {
                 return UnitsInformation.List[unit].DatabaseMultimediaField;
             }
-            catch(System.Exception ex){
+            catch{
                 throw new SQLGeneratorException("getTotalUnitField(WebConstantes.CustomerSessions.Unit unit)-->Le cas de cette unité n'est pas gérer. Pas de champ correspondante.");
             }
 
@@ -3354,9 +3380,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// Get unit field to use in query
         /// </summary>
         ///<param name="webSession">Web session</param>
+        /// <param name="vehicleId">Vehicle id</param>
         /// <param name="periodType">Period type</param>
         /// <returns>Unit field name</returns>
-        public static string GetUnitFieldName(WebSession webSession, CstPeriod.PeriodBreakdownType periodType) {
+        public static string GetUnitFieldName(WebSession webSession, Int64 vehicleId, CstPeriod.PeriodBreakdownType periodType) {
             switch (periodType) {
                 case CstPeriod.PeriodBreakdownType.week:
                 case CstPeriod.PeriodBreakdownType.month:
@@ -3364,7 +3391,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     try {
                         return UnitsInformation.List[webSession.Unit].DatabaseMultimediaField;
                     }
-                    catch (System.Exception ex) {
+                    catch {
                         throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
                     }
 
@@ -3372,9 +3399,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstPeriod.PeriodBreakdownType.data_4m:
 
                     try {
-                        return UnitsInformation.List[webSession.Unit].DatabaseField;
+                            CstCustomerSessions.Unit unit = VehiclesInformation.Get(vehicleId).GetUnitFromBaseId(webSession.Unit);
+                            return UnitsInformation.List[unit].DatabaseField;
                     }
-                    catch (System.Exception ex) {
+                    catch {
                         throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
                     }
 

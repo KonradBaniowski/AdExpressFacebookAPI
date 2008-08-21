@@ -26,6 +26,7 @@ using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using WebConbstantes=TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -499,24 +500,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <param name="unit">Type d'unité</param>
 		/// <returns>Le champ correspondant au type d'unité</returns>
 		private static string GetUnitFieldName(CustomerSessions.Unit unit){
-			switch(unit){
-				case CustomerSessions.Unit.euro:
-				case CustomerSessions.Unit.kEuro:
-					return(Fields.WEB_PLAN_MEDIA_MONTH_EURO_FIELD);
-				case CustomerSessions.Unit.mmPerCol:
-					return(Fields.WEB_PLAN_MEDIA_MONTH_MMC_FIELD);
-				case CustomerSessions.Unit.pages:
-					return(Fields.WEB_PLAN_MEDIA_MONTH_PAGES_FIELD);
-				case CustomerSessions.Unit.insertion:
-				case CustomerSessions.Unit.numberBoard:
-					return(Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-				case CustomerSessions.Unit.spot:
-					return(Fields.WEB_PLAN_MEDIA_MONTH_INSERT_FIELD);
-				case CustomerSessions.Unit.duration:
-					return(Fields.WEB_PLAN_MEDIA_MONTH_DUREE_FIELD);
-				default:
-					throw(new MediaPlanAnalysisDataAccessException("Le détails unité sélectionné est incorrect pour le choix du champ"));
-			}
+
+            try {
+                return UnitsInformation.Get(unit).DatabaseMultimediaField;
+            }
+            catch {
+                throw (new SQLGeneratorException("Details unit chosen am wrong for the choice of the field"));
+            }
+
 		}
 		
 		/// <summary>

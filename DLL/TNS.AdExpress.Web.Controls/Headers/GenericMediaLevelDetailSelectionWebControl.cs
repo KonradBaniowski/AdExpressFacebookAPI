@@ -813,9 +813,17 @@ namespace TNS.AdExpress.Web.Controls.Headers{
         private List<DetailLevelItemInformation.Levels> GetVehicleAllowedDetailLevelItems(){
 
             List<Int64> vehicleList = new List<Int64>();
-
-            foreach (System.Windows.Forms.TreeNode currentVehicle in _customerWebSession.SelectionUniversMedia.Nodes)
-                vehicleList.Add(((LevelInformation)currentVehicle.Tag).ID);
+            string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+            if (listStr != null && listStr.Length > 0) {
+                string[] list = listStr.Split(',');
+                for (int i = 0; i < list.Length; i++)
+                    vehicleList.Add(Convert.ToInt64(list[i]));
+            }
+            else {
+                //When a vehicle is not checked but one or more category, this get the vehicle correspondly
+                string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+                vehicleList.Add(Convert.ToInt64(Vehicle));
+            }
 
             return VehiclesInformation.GetCommunDetailLevelList(vehicleList);
         }
