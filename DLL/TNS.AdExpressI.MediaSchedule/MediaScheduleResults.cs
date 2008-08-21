@@ -1912,11 +1912,10 @@ namespace TNS.AdExpressI.MediaSchedule
             bool allow = false;
             foreach (VehicleInformation v in Vehicles)
             {
-                allow = allow || v.ShowCreations;
+                allow = allow || (v.ShowCreations && _session.CustomerLogin.ShowCreatives(v.Id));
             }
             return (
                 allow
-                && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) 
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport

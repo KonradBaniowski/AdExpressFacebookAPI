@@ -404,7 +404,8 @@ namespace TNS.AdExpressI.Portofolio {
         protected virtual bool ShowCreatives() {
 			if (!_webSession.CustomerPeriodSelected.Is4M ||
 				!_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_SLOGAN_ACCESS_FLAG) ||
-				!_vehicleInformation.ShowCreations) return (false);
+				!_vehicleInformation.ShowCreations ||
+                !_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id)) return (false);
 
             foreach(DetailLevelItemInformation item in _webSession.GenericProductDetailLevel.Levels) {
 				if (item.Id.Equals(DetailLevelItemInformation.Levels.advertiser)

@@ -1202,7 +1202,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             bool showCreative = false;
             //A vérifier Création où version
             if (vehicleInformation.ShowCreations &&
-                _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) &&
+                _session.CustomerLogin.ShowCreatives(vehicleInformation.Id) &&
                 (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)))
             {
