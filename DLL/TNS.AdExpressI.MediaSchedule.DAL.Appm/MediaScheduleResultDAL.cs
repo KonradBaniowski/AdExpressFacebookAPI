@@ -192,8 +192,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
                 // Get the classification table
                 mediaTableName = string.Format("{0}, {1}, ", detailLevel.GetSqlTables(_schAdexpr03.Label), tblTargetMediaAssignment.SqlWithPrefix);
                 // Get unit field
-                dateFieldName = GetDateFieldName(periodBreakDown);
-                unitFieldName = GetUnitFieldName(periodBreakDown);
+                dateFieldName = SQLGenerator.GetDateFieldName(periodBreakDown);
+                unitFieldName = SQLGenerator.GetUnitFieldName(_session, CstDBClassif.Vehicles.names.press.GetHashCode(), periodBreakDown);
                 // Periodicity
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, CstDBClassif.Vehicles.names.press.GetHashCode(), periodDisplay);
                 // Get classification fields
