@@ -6,8 +6,8 @@
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
-      <!--<allowedUnit>duration</allowedUnit>-->
-      <allowedUnit>spot</allowedUnit>
+      <allowedUnit>duration</allowedUnit>
+      <!--<allowedUnit>spot</allowedUnit>-->
     </allowedUnits>
     <!-- Media detail level in results--> 
     <allowedMediaDetailLevels>
