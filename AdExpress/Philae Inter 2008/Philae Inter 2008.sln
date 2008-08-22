@@ -25,6 +25,9 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\AdExpress\", "..\..\
 		VWDPort = "4990"
 		VWDVirtualPath = "/"
 	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{C0D576BE-BB8D-4F27-B361-385162442113} = {C0D576BE-BB8D-4F27-B361-385162442113}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress", "..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj", "{6E75699B-838C-4534-99F7-D4C3E768CD57}"
 	ProjectSection(WebsiteProperties) = preProject
