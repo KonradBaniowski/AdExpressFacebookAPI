@@ -29,6 +29,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Web.Core.Exceptions;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Functions{
 	/// <summary>
@@ -529,7 +530,7 @@ namespace TNS.AdExpress.Web.Functions{
             DateTime publicationDate;
             string lastDate = string.Empty;
 
-            switch ((DBClassificationConstantes.Vehicles.names)selectedVehicle) {
+            switch(VehiclesInformation.DatabaseIdToEnum(selectedVehicle)) {
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
 					lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle, dataSource);

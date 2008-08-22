@@ -31,6 +31,7 @@ using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpressI.MediaSchedule.DAL.Exceptions;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule.DAL
@@ -443,6 +444,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// <summary>
         /// Get field for periodicity data
         /// </summary>
+        /// <remarks>Finish implementation exists for Finland</remarks>
         ///<param name="detailPeriod">Detail period type</param>
         ///<param name="vehicleId">Vehicle Id</param>
         /// <param name="displayPeriod">Result display level</param>
@@ -459,8 +461,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                     return (" max(duration) as period_count ");
                 case CstPeriod.PeriodBreakdownType.data:
                 case CstPeriod.PeriodBreakdownType.data_4m:
-                    switch ((CstDBClassif.Vehicles.names)Convert.ToInt32(vehicleId.ToString()))
-                    {
+                    switch(VehiclesInformation.DatabaseIdToEnum(vehicleId)) {
                         case CstDBClassif.Vehicles.names.press:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:

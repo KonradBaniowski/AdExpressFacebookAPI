@@ -12,6 +12,8 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpress.Web.Core.DataAccess {
     /// <summary>
@@ -46,7 +48,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             sql.Append(" id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
 
             //Liste des supports actifs pour Internet
-            if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)VehicleClassificationCst.internet)
+            if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet))
                 sql.Append(" and id_media in (" + TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID) + ")");
 
             //Condition univers des médias AdExpress en accès

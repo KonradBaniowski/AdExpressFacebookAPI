@@ -2689,7 +2689,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstPeriod.PeriodBreakdownType.week:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).SqlWithPrefix;
                 case CstPeriod.PeriodBreakdownType.data_4m:
-                    switch ((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId)) {
+                    switch (VehiclesInformation.DatabaseIdToEnum(vehicleId)) {
                         case DBClassificationConstantes.Vehicles.names.press:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internationalPress:
@@ -2711,7 +2711,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             throw (new SQLGeneratorException("Unable to determine table to use."));
                     }
                 case CstPeriod.PeriodBreakdownType.data:
-                    switch ((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())) {
+                    switch(VehiclesInformation.DatabaseIdToEnum(vehicleId)) {
                         case DBClassificationConstantes.Vehicles.names.press:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internationalPress:

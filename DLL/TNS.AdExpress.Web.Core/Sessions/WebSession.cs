@@ -38,6 +38,7 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 
 namespace TNS.AdExpress.Web.Core.Sessions {
@@ -3100,13 +3101,13 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 List<Vehicles.names> vehicleList = new List<Vehicles.names>();
                 if (listStr != null && listStr.Length > 0) {
                     string[] list = listStr.Split(',');
-                    for (int i = 0; i < list.Length; i++)
-                        vehicleList.Add(((Vehicles.names)Convert.ToInt64(list[i])));
+                    for(int i = 0;i < list.Length;i++)
+                        vehicleList.Add(VehiclesInformation.DatabaseIdToEnum(Convert.ToInt64(list[i])));
                 }
                 else {
                     //When a vehicle is not checked but one or more category, this get the vehicle correspondly
-                    string Vehicle = ((LevelInformation)SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-                    vehicleList.Add(((Vehicles.names)Convert.ToInt64(Vehicle)));
+                    Int64 Vehicle = ((LevelInformation)SelectionUniversMedia.FirstNode.Tag).ID;
+                    vehicleList.Add(VehiclesInformation.DatabaseIdToEnum(Vehicle));
                 }
                 return resultPageInformation.GetValidUnits(vehicleList);
             }
