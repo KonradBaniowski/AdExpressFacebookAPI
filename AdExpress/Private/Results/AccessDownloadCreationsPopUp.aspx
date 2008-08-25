@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="AdExpress.Private.Results.AccessDownloadCreationsPopUp" CodeFile="AccessDownloadCreationsPopUp.aspx.cs" %>
+<%--%><%@ Page language="c#" Inherits="AdExpress.Private.Results.AccessDownloadCreationsPopUp" CodeFile="AccessDownloadCreationsPopUp.aspx.cs" %>
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
@@ -42,3 +42,4 @@
 		</form>
 	</body>
 </HTML>
+--%>

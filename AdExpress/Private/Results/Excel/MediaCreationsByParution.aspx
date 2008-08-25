@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="AdExpress.Private.Results.Excel.MediaCreationsByParution" CodeFile="MediaCreationsByParution.aspx.cs" %>
+<%--<%@ Page language="c#" Inherits="AdExpress.Private.Results.Excel.MediaCreationsByParution" CodeFile="MediaCreationsByParution.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>
@@ -21,3 +21,4 @@
 		</form>
 	</body>
 </HTML>
+--%>

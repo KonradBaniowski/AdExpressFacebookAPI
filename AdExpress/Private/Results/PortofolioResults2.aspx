@@ -1,4 +1,4 @@
-<%@ Import Namespace="System.Data" %>
+<%--<%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="dcwc" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
 <%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc5" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
@@ -224,3 +224,4 @@
 		<%=divClose%>
 	</body>
 </HTML>
+--%>

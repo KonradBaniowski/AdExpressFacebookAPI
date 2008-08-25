@@ -1,4 +1,4 @@
-<%@ Import Namespace="System.Data" %>
+<%--<%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.CompetitorMediaPlanAlertResults" CodeFile="CompetitorMediaPlanAlertResults.aspx.cs" %>
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
@@ -168,3 +168,4 @@
 		<%=divClose%>
 	</body>
 </HTML>
+--%>

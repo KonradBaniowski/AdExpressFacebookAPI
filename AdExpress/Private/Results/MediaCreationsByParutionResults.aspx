@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="AdExpress.Private.Results.MediaCreationsByParutionResults" CodeFile="MediaCreationsByParutionResults.aspx.cs" %>
+<%--<%@ Page language="c#" Inherits="AdExpress.Private.Results.MediaCreationsByParutionResults" CodeFile="MediaCreationsByParutionResults.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>
@@ -29,3 +29,4 @@
 		<%=divClose%>
 	</body>
 </HTML>
+--%>

@@ -1,4 +1,4 @@
-<%@ Import Namespace="System.Data" %>
+<%--<%@ Import Namespace="System.Data" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.RawExcel.MarketShareResults" CodeFile="MarketShareResults.aspx.cs" %>
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
@@ -26,3 +26,4 @@
 		</form>
 	</body>
 </HTML>
+--%>
