@@ -28,7 +28,7 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Selection;
-using TNS.AdExpress.Web.Functions;
+using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpressI.MediaSchedule.DAL.Exceptions;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
@@ -190,9 +190,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             DataSet ds = new DataSet();
 
             StringBuilder sql = new StringBuilder();
-
-            sql.AppendFormat("select {0},date_num, max(period_count) as period_count,sum(unit) as unit from (",
-                detailLevel.GetSqlFieldsWithoutTablePrefix());
+            sql.AppendFormat("select {0},date_num, max(period_count) as period_count,{1} from (",
+                detailLevel.GetSqlFieldsWithoutTablePrefix()
+                , FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
 
             //SubPeriod Management
             List<MediaScheduleSubPeriod> subPeriodsSet = _period.SubPeriods;
@@ -276,6 +276,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             string mediaPeriodicity = null;
             string orderFieldName = null;
             string unitFieldName = null;
+            string unitAlias = null;
             string mediaJoinCondition = null;
             string groupByFieldName = null;
             #endregion
@@ -285,13 +286,14 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             {
 
                 // Get the name of the data table
-                tableName = SQLGenerator.GetDataTableName(periodBreakDown, vehicleId);
+                tableName = FctWeb.SQLGenerator.GetDataTableName(periodBreakDown, vehicleId);
                 // Get the classification table
                 mediaTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
                 if (mediaTableName.Length > 0) mediaTableName += ",";
                 // Get unit field
-                dateFieldName = SQLGenerator.GetDateFieldName(periodBreakDown);
-                unitFieldName = SQLGenerator.GetUnitFieldName(_session,vehicleId,periodBreakDown);
+                dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
+                unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, vehicleId, periodBreakDown);
+                unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
                 // Periodicity
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, vehicleId, periodDisplay);
                 // Get classification fields
@@ -332,9 +334,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             sql.AppendFormat("{0}, ", mediaPeriodicity);
             // Unit selection expect for AdNetTrack
             if ((CstDBClassif.Vehicles.names)vehicleId == CstDBClassif.Vehicles.names.adnettrack)
-                sql.Append("sum(OCCURRENCE) as unit");
+                sql.AppendFormat("sum(OCCURRENCE) as {0}", unitAlias);
             else
-                sql.AppendFormat("sum({0}) as unit", unitFieldName);
+                sql.AppendFormat("sum({0}) as {1}", unitFieldName, unitAlias);
             // Tables
             sql.AppendFormat(" from {0}{1} ", mediaTableName, tableName);
             //Conditions media
@@ -386,14 +388,14 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
 
             #region Nomenclature Produit (droits)
             //Access rgithDroits en accès
-            sql.Append(SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             // Exclude product if radio selected)
-            sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false));
+            sql.Append(FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false));
             #endregion
 
             #region Nomenclature Produit (Niveau de détail)
             // Product level
-            sql.Append(SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(FctWeb.SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Advertiser classification rights
@@ -409,9 +411,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             #region Rights
             // No media right if AdNetTrack media schedule
             if ((CstDBClassif.Vehicles.names)vehicleId == CstDBClassif.Vehicles.names.adnettrack)
-                sql.Append(SQLGenerator.GetAdNetTrackMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+                sql.Append(FctWeb.SQLGenerator.GetAdNetTrackMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             else
-                sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+                sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Selection

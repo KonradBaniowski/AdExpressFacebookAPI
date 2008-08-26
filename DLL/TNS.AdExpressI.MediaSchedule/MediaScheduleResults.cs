@@ -929,7 +929,7 @@ namespace TNS.AdExpressI.MediaSchedule
                         Console.Write(e.Message);
                     }
                     // Set periodicity
-                    unit = double.Parse(currentRow["unit"].ToString());
+                    unit = double.Parse(currentRow[FctWeb.SQLGenerator.GetUnitAlias(_session)].ToString());
                     oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem(Int64.Parse(currentRow["period_count"].ToString()));
 
                     if (nbLevels >= 4)

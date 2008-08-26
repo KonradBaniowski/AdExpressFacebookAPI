@@ -28,7 +28,7 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Selection;
-using TNS.AdExpress.Web.Functions;
+using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpressI.MediaSchedule.DAL;
 using TNS.AdExpressI.MediaSchedule.DAL.Exceptions;
 #endregion
@@ -91,16 +91,19 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
         /// <returns>DataSet containing Data</returns>
         protected override DataSet GetData(string additionalWhereClause, GenericDetailLevel detailLevel)
         {
+            
 
             #region Query Building
+
+            #region Variables
             bool first = true;
-
             DataSet ds = new DataSet();
-
             StringBuilder sql = new StringBuilder();
+            #endregion
 
-            sql.AppendFormat("select {0},date_num, max(period_count) as period_count,sum(unit) as unit from (",
-                detailLevel.GetSqlFieldsWithoutTablePrefix());
+            sql.AppendFormat("select {0},date_num, max(period_count) as period_count,{1} from (",
+                detailLevel.GetSqlFieldsWithoutTablePrefix()
+                , FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
 
             //SubPeriod Management
             List<MediaScheduleSubPeriod> subPeriodsSet = _period.SubPeriods;
@@ -178,6 +181,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
             string mediaPeriodicity = null;
             string orderFieldName = null;
             string unitFieldName = null;
+            string unitAlias = null;
             string mediaJoinCondition = null;
             string groupByFieldName = null;
             Table tblTargetMediaAssignment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.appmTargetMediaAssignment);
@@ -192,8 +196,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
                 // Get the classification table
                 mediaTableName = string.Format("{0}, {1}, ", detailLevel.GetSqlTables(_schAdexpr03.Label), tblTargetMediaAssignment.SqlWithPrefix);
                 // Get unit field
-                dateFieldName = SQLGenerator.GetDateFieldName(periodBreakDown);
-                unitFieldName = SQLGenerator.GetUnitFieldName(_session, CstDBClassif.Vehicles.names.press.GetHashCode(), periodBreakDown);
+                dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
+                unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, CstDBClassif.Vehicles.names.press.GetHashCode(), periodBreakDown);
+                unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
                 // Periodicity
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, CstDBClassif.Vehicles.names.press.GetHashCode(), periodDisplay);
                 // Get classification fields
@@ -235,7 +240,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
             }
             //Periodicity selection
             sql.AppendFormat("{0}, ", mediaPeriodicity);
-            sql.AppendFormat("sum({0}) as unit", unitFieldName);
+            sql.AppendFormat("sum({0}) as {1}", unitFieldName, unitAlias);
             // Tables
             sql.AppendFormat(" from {0}{1} ", mediaTableName, tableName);
             //Conditions media
@@ -280,14 +285,14 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
 
 
             //Access rgith
-            sql.Append(SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
 
             //Advertiser classification rights
             sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
 
             //Media Rights
-            sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
 
             // Order
             sql.AppendFormat("Group by {0} ", groupByFieldName);
