@@ -1929,6 +1929,184 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
             }
         }
+
+        /// <summary>
+        /// Détermine le nom du champ à utiliser pour l'unité
+        /// 
+        /// Nouvelle version: 25/10/2007
+        /// </summary>
+        /// <remarks>
+        /// A utiliser pour différencier entre le type des tables (DATA_VEHICLE ou WEB_PLAN)
+        /// </remarks>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="type">Type de la table</param>
+        /// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
+        public static string GetUnitFieldNameWithAlias(WebSession webSession, DBConstantes.TableType.Type type) {
+            switch (type) {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                case DBConstantes.TableType.Type.dataVehicle:
+                    try {
+                        UnitInformation unitInformation = webSession.GetSelectedUnit();
+                        return unitInformation.DatabaseField + " as " + unitInformation.Id.ToString();
+                    }
+                    catch {
+                        throw new SQLGeneratorException("Not managed unit (Alert Module)");
+                    }
+                case DBConstantes.TableType.Type.webPlan:
+                    try {
+                        UnitInformation unitInformation = webSession.GetSelectedUnit();
+                        return unitInformation.DatabaseMultimediaField + " as " + unitInformation.Id.ToString();
+                    }
+                    catch {
+                        throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
+                    }
+                default:
+                    throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
+            }
+        }
+
+        /// <summary>
+        /// Détermine le nom du champ à utiliser pour l'unité
+        /// 
+        /// Nouvelle version: 25/10/2007
+        /// </summary>
+        /// <remarks>
+        /// A utiliser pour différencier entre le type des tables (DATA_VEHICLE ou WEB_PLAN)
+        /// </remarks>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="type">Type de la table</param>
+        /// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
+        public static string GetUnitFieldNameSumWithAlias(WebSession webSession, DBConstantes.TableType.Type type) {
+            StringBuilder sql = new StringBuilder();
+            switch (type) {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                case DBConstantes.TableType.Type.dataVehicle:
+                    try {
+                        UnitInformation unitInformation = webSession.GetSelectedUnit();
+                        sql.AppendFormat("sum({0}) as {1}", unitInformation.DatabaseField, unitInformation.Id.ToString());
+                        return sql.ToString();
+                    }
+                    catch {
+                        throw new SQLGeneratorException("Not managed unit (Alert Module)");
+                    }
+                case DBConstantes.TableType.Type.webPlan:
+                    try {
+                        UnitInformation unitInformation = webSession.GetSelectedUnit();
+                        sql.AppendFormat("sum({0}) as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                        return sql.ToString();
+                    }
+                    catch {
+                        throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
+                    }
+                default:
+                    throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
+            }
+        }
+
+        /// <summary>
+        /// Détermine le nom du champ à utiliser pour l'unité
+        /// 
+        /// Nouvelle version: 25/10/2007
+        /// </summary>
+        /// <remarks>
+        /// A utiliser pour différencier entre le type des tables (DATA_VEHICLE ou WEB_PLAN)
+        /// </remarks>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="type">Type de la table</param>
+        /// <param name="prefixe">Prefixe of field</param>
+        /// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
+        public static string GetUnitFieldNameSumWithAlias(WebSession webSession, DBConstantes.TableType.Type type, string prefixe) {
+            StringBuilder sql = new StringBuilder();
+            if (prefixe != null && prefixe.Length > 0)
+                prefixe += ".";
+            else
+                prefixe = "";
+            switch (type) {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                case DBConstantes.TableType.Type.dataVehicle:
+                    try {
+                        UnitInformation unitInformation = webSession.GetSelectedUnit();
+                        sql.AppendFormat("sum({0}{1}) as {2}", prefixe,unitInformation.DatabaseField, unitInformation.Id.ToString());
+                        return sql.ToString();
+                    }
+                    catch {
+                        throw new SQLGeneratorException("Not managed unit (Alert Module)");
+                    }
+                case DBConstantes.TableType.Type.webPlan:
+                    try {
+                        UnitInformation unitInformation = webSession.GetSelectedUnit();
+                        sql.AppendFormat("sum({0}{1}) as {2}", prefixe,unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                        return sql.ToString();
+                    }
+                    catch {
+                        throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
+                    }
+                default:
+                    throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
+            }
+        }
+
+        /// <summary>
+        /// Détermine le nom du champ à utiliser pour l'unité
+        /// 
+        /// Nouvelle version: 25/10/2007
+        /// </summary>
+        /// <remarks>
+        /// A utiliser pour différencier entre le type des tables (DATA_VEHICLE ou WEB_PLAN)
+        /// </remarks>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="type">Type de la table</param>
+        /// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
+        public static string GetUnitFieldNameSumUnionWithAlias(WebSession webSession) {
+            try {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendFormat("sum({0}) as {0}", webSession.GetSelectedUnit().Id.ToString());
+                return sql.ToString();
+            }
+            catch {
+                throw new SQLGeneratorException("Not managed unit (Alert Module)");
+            }
+        }
+
+        /// <summary>
+        /// Détermine le nom du champ à utiliser pour l'unité
+        /// 
+        /// Nouvelle version: 25/10/2007
+        /// </summary>
+        /// <remarks>
+        /// A utiliser pour différencier entre le type des tables (DATA_VEHICLE ou WEB_PLAN)
+        /// </remarks>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="type">Type de la table</param>
+        /// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
+        public static string GetUnitAlias(WebSession webSession) {
+            try {
+                return webSession.GetSelectedUnit().Id.ToString();
+            }
+            catch {
+                throw new SQLGeneratorException("Not managed unit (Alert Module)");
+            }
+        }
+
+        /// <summary>
+        /// Détermine le nom du champ à utiliser pour l'unité
+        /// 
+        /// Nouvelle version: 25/10/2007
+        /// </summary>
+        /// <remarks>
+        /// A utiliser pour différencier entre le type des tables (DATA_VEHICLE ou WEB_PLAN)
+        /// </remarks>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="type">Type de la table</param>
+        /// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
+        public static string GetUnitAliasSum(WebSession webSession) {
+            try {
+                return "sum(" + webSession.GetSelectedUnit().Id.ToString() + ")";
+            }
+            catch {
+                throw new SQLGeneratorException("Not managed unit (Alert Module)");
+            }
+        }
         #endregion
 
         #region champ à utiliser pour la sélection de dates
@@ -3389,7 +3567,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstPeriod.PeriodBreakdownType.month:
 
                     try {
-                        return UnitsInformation.List[webSession.Unit].DatabaseMultimediaField;
+                        return webSession.GetSelectedUnit().DatabaseMultimediaField;
                     }
                     catch {
                         throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
