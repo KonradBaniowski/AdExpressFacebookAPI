@@ -118,14 +118,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			DataTable dtInvestment = dsInvestment.Tables[0];
 
 			DataTable dtInsertionNumber = null;
-			if (isAlertModule && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
+			if (isAlertModule && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
 				DataSet dsInsertionNumber = portofolioDAL.GetSynthisData(PortofolioSynthesis.INSERTION_NUMBER_DATA);
 				dtInsertionNumber = dsInsertionNumber.Tables[0];
 			}
 			DataSet dsCategory = portofolioDAL.GetSynthisData(PortofolioSynthesis.CATEGORY_MEDIA_SELLER_DATA);
 			DataTable dtCategory = dsCategory.Tables[0];
 
-			if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
+			if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
 				DataSet dsPage = portofolioDAL.GetSynthisData(PortofolioSynthesis.NUMBER_PAGE_DATA);
 				 dtPage = dsPage.Tables[0];
 			}
@@ -303,7 +303,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			#region Building resultTable
 			// Date begin and date end for outdooor
-			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
 				lineIndex = resultTable.AddNewLine(lineType);
 				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtFirstDate.Date.ToString("dd/MM/yyyy"));
@@ -500,7 +500,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(tab[0].ToString()));
 			ChangeLineType(ref lineType);
 
-			if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) && isAlertModule) {
+			if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) && isAlertModule) {
 				//Nombre de nouveaux produits dans la pige
 				lineIndex = resultTable.AddNewLine(lineType);
 				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage));
@@ -516,7 +516,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			//Nombre d'annonceurs
 			lineIndex = resultTable.AddNewLine(lineType);
 			resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));
-			resultTable[lineIndex, SECOND_COLUMN_INDEX] = (isAlertModule && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) ? new CellNumber(double.Parse(tab[3].ToString())) : new CellNumber(double.Parse(tab[1].ToString()));
+			resultTable[lineIndex, SECOND_COLUMN_INDEX] = (isAlertModule && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) ? new CellNumber(double.Parse(tab[3].ToString())) : new CellNumber(double.Parse(tab[1].ToString()));
 			ChangeLineType(ref lineType);
 
 			// Cas tv, presse
