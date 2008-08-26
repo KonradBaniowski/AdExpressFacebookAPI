@@ -22,6 +22,7 @@ using DBCst = TNS.AdExpress.Constantes.DB;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 
+using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
@@ -98,9 +99,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			ResultTable resultTable = null;
 			LineType lineType = LineType.level1;
 			string typeReseauStr = string.Empty;
-			bool isAlertModule = _webSession.CustomerPeriodSelected.Is4M; //(_webSession.CurrentModule == WebCst.Module.Name.ALERTE_PORTEFEUILLE);
-			string durationlabel = (isAlertModule) ? "duration" : "duree";
+			bool isAlertModule = _webSession.CustomerPeriodSelected.Is4M; //(_webSession.CurrentModule == WebCst.Module.Name.ALERTE_PORTEFEUILLE);			
 			DataTable dtPage = null;
+			
 			#endregion
 			
 			#region Accès aux tables
@@ -144,20 +145,22 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#endregion
 
 			#region For each table's row
-			foreach (DataRow row in dtInvestment.Rows) {
+			if(dtInvestment !=null && dtInvestment.Rows.Count>0){
+			DataRow row = dtInvestment.Rows[0];
+			//foreach (DataRow row in dtInvestment.Rows) {
 				investment = row["euro"].ToString();
 				if (isAlertModule) {
-					firstDate = row["first_date"].ToString();
-					lastDate = row["last_date"].ToString();
+					if (dtInvestment.Columns.Contains("first_date"))firstDate = row["first_date"].ToString();
+					if (dtInvestment.Columns.Contains("last_date"))lastDate = row["last_date"].ToString();
+					if (dtInvestment.Columns.Contains("number_board"))numberBoard = row["number_board"].ToString();					
+				}
+				if (dtInvestment.Columns.Contains("duration")) {
+					totalDuration = row["duration"].ToString();
+				}
 
-					if (dtInvestment.Columns.Contains("number_board")) {
-						numberBoard = row["number_board"].ToString();
-					}
-				}
-				if (dtInvestment.Columns.Contains(durationlabel)) {
-					totalDuration = row[durationlabel].ToString();
-				}
-				if (dtInvestment.Columns.Contains("insertion")) nbrSpot = row["insertion"].ToString();
+				if (dtInvestment.Columns.Contains("insertion") ) nbrSpot = row["insertion"].ToString();
+				else if (dtInvestment.Columns.Contains("spot")) nbrSpot = row["spot"].ToString();
+
 				//Volume
 				if (dtInvestment.Columns.Contains("volume")) {
 					if (row["volume"].ToString().Length > 0) {
@@ -172,7 +175,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			}
 			//nombre d'insertions
 			if (isAlertModule && dtInsertionNumber != null && !dtInsertionNumber.Equals(System.DBNull.Value) && dtInsertionNumber.Rows.Count > 0) {
-				nbrSpot = dtInsertionNumber.Rows[0]["insertion"].ToString();
+				if(dtInsertionNumber.Columns.Contains("insertion"))nbrSpot = dtInsertionNumber.Rows[0]["insertion"].ToString();
+				else if (dtInsertionNumber.Columns.Contains("spot")) nbrSpot = dtInsertionNumber.Rows[0]["spot"].ToString();
 			}
 
 			foreach (DataRow row in dtCategory.Rows) {
@@ -218,7 +222,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#region Period
 			DateTime dtFirstDate = DateTime.Today;
 			DateTime dtLastDate = DateTime.Today;
-			if (isAlertModule) {
+			if (isAlertModule && (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)) {
 				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
 					if (firstDate.Length > 0) {
 						dtFirstDate = Convert.ToDateTime(firstDate);
@@ -312,37 +316,38 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			}
 			// Period selected
 			else {
-				if (firstDate.Length > 0 || !isAlertModule) {
+				//if (firstDate.Length > 0 || !isAlertModule) {
 					lineIndex = resultTable.AddNewLine(lineType);
 					if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
 					|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && isAlertModule)
 						resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage));
 					else resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
-					if ((firstDate == lastDate && isAlertModule) || (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
+					if ((firstDate != null && firstDate.Length>0 && lastDate != null && lastDate.Length>0 && firstDate.Equals(lastDate) && isAlertModule) 
+						|| (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
 						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtFirstDate.Date.ToString("dd/MM/yyyy"));
 					}
 					else {
 						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + dtFirstDate.Date.ToString("dd/MM/yyyy") + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + dtLastDate.Date.ToString("dd/MM/yyyy"));
 					}
-				}
+				//}
 			}
 
 			ChangeLineType(ref lineType);
 
-			// Périodicité
+			// Periodicity
 			if (dtCategory.Columns.Contains("periodicity")) {
 				lineIndex = resultTable.AddNewLine(lineType);
 				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1450, _webSession.SiteLanguage));
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(periodicity);
 				ChangeLineType(ref lineType);
 			}
-			// Categorie
+			// Category
 			lineIndex = resultTable.AddNewLine(lineType);
 			resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1416, _webSession.SiteLanguage));
 			resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(category);
 			ChangeLineType(ref lineType);
 
-			// Régie
+			// Media seller
 			if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
 				lineIndex = resultTable.AddNewLine(lineType);
 				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1417, _webSession.SiteLanguage));
@@ -359,7 +364,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				ChangeLineType(ref lineType);
 			}
 
-			// Centre d'intérêt
+			// Interest center
 			if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
 				lineIndex = resultTable.AddNewLine(lineType);
 				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1411, _webSession.SiteLanguage));
@@ -367,7 +372,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				ChangeLineType(ref lineType);
 			}
 
-			//number board et type de reseau ,cas de l'Affichage
+			//number board and newtwork type 
 			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && dtTypeSale != null && dtTypeSale.Rows.Count > 0) {
 				//number board
 				lineIndex = resultTable.AddNewLine(lineType);
@@ -394,7 +399,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					ChangeLineType(ref lineType);
 				}
 			}
-			// Cas de la presse
+			// Case vehicle press
 			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
 				|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
 				// Nombre de page
@@ -404,7 +409,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				ChangeLineType(ref lineType);
 
 				if (adNumber != null && adNumber.Length > 0) {
-					// Nombre de page pub		
+					// Nb de page pub		
 					lineIndex = resultTable.AddNewLine(lineType);
 					resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1386, _webSession.SiteLanguage));
 					resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(adNumber));
@@ -495,7 +500,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(tab[0].ToString()));
 			ChangeLineType(ref lineType);
 
-			if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor) && isAlertModule) {
+			if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) && isAlertModule) {
 				//Nombre de nouveaux produits dans la pige
 				lineIndex = resultTable.AddNewLine(lineType);
 				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage));
@@ -511,7 +516,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			//Nombre d'annonceurs
 			lineIndex = resultTable.AddNewLine(lineType);
 			resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));
-			resultTable[lineIndex, SECOND_COLUMN_INDEX] = (isAlertModule) ? new CellNumber(double.Parse(tab[3].ToString())) : new CellNumber(double.Parse(tab[1].ToString()));
+			resultTable[lineIndex, SECOND_COLUMN_INDEX] = (isAlertModule && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) ? new CellNumber(double.Parse(tab[3].ToString())) : new CellNumber(double.Parse(tab[1].ToString()));
 			ChangeLineType(ref lineType);
 
 			// Cas tv, presse
@@ -544,9 +549,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		protected override string BuildHtmlResult() {
 			throw new PortofolioException("The method or operation is not implemented.");
 		}
-		#endregion
-
-		
+		#endregion		
 
 		#endregion
 
