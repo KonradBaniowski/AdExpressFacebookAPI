@@ -305,7 +305,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         dataPressInter=49,
         /// <summary>
-        /// 4M presse Data
+        /// 4M press Data
         /// </summary>
         dataPressAlert=50,
         /// <summary>
@@ -716,6 +716,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Product class analysis years loaded information
         /// </summary>
         recapInfo=203,
+        /// <summary>
+        /// Cinema Data
+        /// </summary>
+        dataCinema=204,
+        /// <summary>
+        /// 4M cinema Data
+        /// </summary>
+        dataCinemaAlert=205,
 
     } 
     #endregion

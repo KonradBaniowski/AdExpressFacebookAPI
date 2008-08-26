@@ -481,6 +481,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                         case CstDBClassif.Vehicles.names.others:
                         case CstDBClassif.Vehicles.names.internet:
                         case CstDBClassif.Vehicles.names.adnettrack:
+                        case CstDBClassif.Vehicles.names.cinema: // A Changer quand les durées seront bonnes
                             return (" 1 as period_count ");
                         case CstDBClassif.Vehicles.names.directMarketing:
                             return (" 7 as period_count ");

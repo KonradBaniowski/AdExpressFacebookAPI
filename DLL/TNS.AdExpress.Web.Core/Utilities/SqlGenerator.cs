@@ -2706,6 +2706,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.cinema:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).SqlWithPrefix);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -2747,6 +2749,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.cinema:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).SqlWithPrefix);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -2808,6 +2812,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).Label);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).Label);
+                case DBClassificationConstantes.Vehicles.names.cinema:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).Label);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -2849,6 +2855,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).Label);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).Label);
+                case DBClassificationConstantes.Vehicles.names.cinema:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinemaAlert).Label);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -2885,6 +2893,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.directMarketing:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.cinema:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinemaAlert).SqlWithPrefix;
                         default:
                             throw (new SQLGeneratorException("Unable to determine table to use."));
                     }
@@ -2907,6 +2917,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.directMarketing:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.cinema:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).SqlWithPrefix;
                         default:
                             throw (new SQLGeneratorException("Unable to determine the table to use"));
                     }

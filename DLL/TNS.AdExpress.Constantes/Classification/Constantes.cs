@@ -144,41 +144,4 @@ namespace TNS.AdExpress.Constantes.Classification{
 		#endregion
 
 	}
-//
-////	/// <summary>
-////	/// Classe qui définit les éléments dans vehicle
-//	/// </summary>
-//	public class Vehicle{
-//		#region Enumérateur
-//		/// <summary>
-//		/// Types de nomenclature
-//		/// </summary>
-//		public enum type{
-//			/// <summary>
-//			/// Aucun
-//			/// </summary>
-//			Press=1,
-//			/// <summary>
-//			/// Type de support
-//			/// </summary>
-//			Radio=2,
-//			/// <summary>
-//			/// Type de produit
-//			/// </summary>
-//			Tele=3,
-//			/// <summary>
-//			/// Type press
-//			/// </summary>
-//			MediaPress=4,
-//			/// <summary>
-//			/// Type radio
-//			/// </summary>
-//			MediaRadio=5,
-//			/// <summary>
-//			/// type tv
-//			/// </summary>
-//			MediaTv=6
-//		}
-//		#endregion
-//	}
 }
