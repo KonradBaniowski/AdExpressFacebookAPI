@@ -2068,19 +2068,19 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// <summary>
 		/// Liste des supports presse pour les tendances
 		/// </summary>
-		public const int TENDENCY_PRESS_MEDIA_LIST_ID=4;
+		//public const int TENDENCY_PRESS_MEDIA_LIST_ID=4;
 		/// <summary>
 		/// Liste des supports presse pour les tendances
 		/// </summary>
-		public const int TENDENCY_RADIO_MEDIA_LIST_ID=5;
+		//public const int TENDENCY_RADIO_MEDIA_LIST_ID=5;
 		/// <summary>
 		/// Liste des supports presse pour les tendances
 		/// </summary>
-		public const int TENDENCY_TV_MEDIA_LIST_ID=6;
+		//public const int TENDENCY_TV_MEDIA_LIST_ID=6;
 		/// <summary>
 		/// Liste des supports presse pour les tendances
 		/// </summary>
-		public const int TENDENCY_PANEURO_MEDIA_LIST_ID=7;
+		//public const int TENDENCY_PANEURO_MEDIA_LIST_ID=7;
 		/// <summary>
 		/// Liste des produits à exclure dans le tableau de bord presse
 		/// </summary>

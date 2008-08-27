@@ -33,6 +33,7 @@ using TNS.AdExpress.Web.DataAccess.Selections.Medias;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace TNS.AdExpress.Web.Controls.Headers
@@ -1443,7 +1444,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		private void FillSectorList(){	
 			
 			#region variables locales
-			Core.ClassificationList.ProductItemsList adexpressProductItemsList;
+			ProductItemsList adexpressProductItemsList;
 			IList excludeSector = null;
 			string delimStr = ",";
 			char [] delimiter = delimStr.ToCharArray();
@@ -1451,7 +1452,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			
 			//Famille à exclure pour la presse
 			if(customerWebSession.CurrentModule==CstWeb.Module.Name.TABLEAU_DE_BORD_PRESSE){
-				adexpressProductItemsList=Core.ClassificationList.Product.GetProductItemsList(CstWeb.AdExpressUniverse.DASHBOARD_PRESS_EXCLUDE_PRODUCT_LIST_ID);
+				adexpressProductItemsList=Product.GetItemsList(CstWeb.AdExpressUniverse.DASHBOARD_PRESS_EXCLUDE_PRODUCT_LIST_ID);
 				if(adexpressProductItemsList.GetSectorItemsList.Length>0)excludeSector=adexpressProductItemsList.GetSectorItemsList.Split(delimiter);
 			}
 			//Liste des familles sélectionnables

@@ -1,31 +1,30 @@
 #region Informations
 // Author: G. Facon
-// Creation date: 07/12/2004 
-// Modification date: 07/12/2004 (G. Facon)
+// Creation date: 29/10/2004 
+// Modification date: 29/10/2004 (G. Facon)
 #endregion
 
 using System;
 using TNS.FrameWork.Exceptions;
 
-namespace TNS.AdExpress.Web.Core.Exceptions{
-
+namespace TNS.AdExpress.Domain.Exceptions {
 	/// <summary>
-	/// Thrown when is impossible to initialize product classification items Lists used in AdExpress
+	/// Thrown when is impossible to create media Items list used to determine an AdExpress universe
 	/// </summary>
-	public class ProduitException:BaseException{
+	public class MediaListException:BaseException{
 		
 		#region Constructors
 		/// <summary>
 		/// Base constructor
 		/// </summary>
-		public ProduitException():base(){			
+		public MediaListException():base(){			
 		}
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="message">Error message</param>
-		public ProduitException(string message):base(message){			
+		public MediaListException(string message):base(message){			
 		}
 
 		/// <summary>
@@ -33,7 +32,7 @@ namespace TNS.AdExpress.Web.Core.Exceptions{
 		/// </summary>
 		/// <param name="message">Error message</param>
 		/// <param name="innerException">Inner Exception</param>
-		public ProduitException(string message,System.Exception innerException):base(message,innerException){
+		public MediaListException(string message,System.Exception innerException):base(message,innerException){
 		}
 		#endregion
 	}

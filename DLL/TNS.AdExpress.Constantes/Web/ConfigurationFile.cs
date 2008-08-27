@@ -93,6 +93,10 @@ namespace TNS.AdExpress.Constantes.Web {
         /// Vehicles configuration file
         /// </summary>
         public const string VEHICLES_CONFIGURATION_FILENAME = @"Vehicles.xml";
+        /// <summary>
+        /// Vehicles configuration file
+        /// </summary>
+        public const string BAAL_CONFIGURATION_FILENAME = @"BaalList.xml";
 
     }
 }

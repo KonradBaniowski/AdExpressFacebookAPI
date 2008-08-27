@@ -25,7 +25,7 @@ using TNS.FrameWork.Date;
 using Oracle.DataAccess.Client;
 using WebModule = TNS.AdExpress.Constantes.Web.Module;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.Core.ClassificationList;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results {
@@ -832,7 +832,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             //sélection Pan euro
             if (!WebFunctions.CheckedText.IsStringEmpty(InterestCenterAccessList) && !WebFunctions.CheckedText.IsStringEmpty(MediaAccessList)
                 && vehicleType == ClassificationCst.DB.Vehicles.names.others)
-                sql += " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_category in (" + Media.GetMediaItemsList(CstWeb.AdExpressUniverse.DASHBOARD_PANEURO_MEDIA_LIST_ID).GetCategoryItemsList + ")";
+                sql += " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_category in (" + Media.GetItemsList(CstWeb.AdExpressUniverse.DASHBOARD_PANEURO_MEDIA_LIST_ID).GetCategoryItemsList + ")";
 
             switch (webSession.PreformatedTable) {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:

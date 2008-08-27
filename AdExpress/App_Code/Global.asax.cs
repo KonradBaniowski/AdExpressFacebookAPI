@@ -5,7 +5,6 @@ using System.Web;
 
 using System.Web.SessionState;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Web.Core.ClassificationList;
 using TNS.AdExpress.Domain.Web.Navigation;
 //using TNS.AdExpress.Rules.Customer;
 using TNS.AdExpress.Web;
@@ -50,6 +49,8 @@ namespace AdExpress {
 		protected void Application_Start(Object sender, EventArgs e){
 		
 			try{
+                Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+                Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
                 //Langues 
                 Int64 dd=WebApplicationParameters.DefaultLanguage;
                 IDataSource tt= WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.session);
@@ -90,9 +91,9 @@ namespace AdExpress {
 				//Configuration.load(AppDomain.CurrentDomain.BaseDirectory+@"config\AdExpressConfiguration.xml");
 
 				// Initialisation des listes d'univers média d'AdExpress
-				TNS.AdExpress.Web.Core.ClassificationList.Media.Init();
+				//TNS.AdExpress.Web.Core.ClassificationList.Media.Init();
 				// Initialisation des listes d'univers produit d'AdExpress
-				TNS.AdExpress.Web.Core.ClassificationList.Product.Init();
+				//TNS.AdExpress.Web.Core.ClassificationList.Product.Init();
 
                 ActiveMediaList.Init(WebApplicationParameters.DefaultLanguage); 
 

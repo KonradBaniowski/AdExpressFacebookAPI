@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TNS.AdExpress.Domain.Classification.ListContener&lt;T&gt;">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Classification\ListContener.cs</FileName>
+      <HashCode>AAIAABACCAAAAAAAAAAAAAAAAAAAAAAAUAAAAAAQAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Classification.Media">
+    <Position X="2.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classification\Media.cs</FileName>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Classification.MediaItemsList">
+    <Position X="7.25" Y="2.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Classification\MediaItemsList.cs</FileName>
+      <HashCode>AAAAAACAAAAAAAAAIAAAAAAAAAAQABAQAAAQCAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Classification.Product">
+    <Position X="0.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classification\Product.cs</FileName>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <InheritanceLine Type="TNS.AdExpress.Domain.Classification.ListContener&lt;T&gt;" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.875" Y="3.066" />
+        <Point X="1.875" Y="3.375" />
+        <Point X="1.5" Y="3.375" />
+        <Point X="1.5" Y="3.75" />
+      </Path>
+    </InheritanceLine>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Classification.ProductItemsList">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classification\ProductItemsList.cs</FileName>
+      <HashCode>AAAAAAAAQAAAAAAEJAAAAAAABAADAAAAgoAAAAIAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="TNS.AdExpress.Domain.Classification.IBaalItemsList">
+    <Position X="6" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classification\IBaalItemsList.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>

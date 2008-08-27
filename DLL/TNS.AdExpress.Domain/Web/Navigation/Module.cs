@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -106,6 +107,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// Identifiant de la catégorie du module
 		/// </summary>
 		protected Int64 _moduleCategoryId;
+        /// <summary>
+        /// Allowed media list
+        /// </summary>
+        protected MediaItemsList allowedMediaUnivers; 
 		#endregion
 
 		#region Constructeur

@@ -26,6 +26,7 @@ using TNS.AdExpress.Web.Controls.Exceptions;
 using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.Classification;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Selections
 {
@@ -199,7 +200,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		protected override void OnPreRender(EventArgs e) {			
 
 			#region variables locales
-			Core.ClassificationList.ProductItemsList adexpressProductItemsList;
+			ProductItemsList adexpressProductItemsList;
 			
 			string delimStr = ",";
 			char [] delimiter = delimStr.ToCharArray();
@@ -210,7 +211,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 			//Famille à exclure pour la presse
 			if(webSession.CurrentModule==WebModule.Name.TABLEAU_DE_BORD_PRESSE){
-				adexpressProductItemsList=Core.ClassificationList.Product.GetProductItemsList(WebConstantes.AdExpressUniverse.DASHBOARD_PRESS_EXCLUDE_PRODUCT_LIST_ID);
+				adexpressProductItemsList=Product.GetItemsList(WebConstantes.AdExpressUniverse.DASHBOARD_PRESS_EXCLUDE_PRODUCT_LIST_ID);
 				if(adexpressProductItemsList.GetSectorItemsList.Length>0)excludeSector=adexpressProductItemsList.GetSectorItemsList.Split(delimiter);
 			}
 				

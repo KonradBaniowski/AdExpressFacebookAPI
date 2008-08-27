@@ -164,18 +164,6 @@
     <Compile Include="Result\CellAdExpressDetailLink.cs" />
     <Compile Include="Result\CellSponsorshipCreativesLink.cs" />
     <Compile Include="Result\CellSponsorshipInsertionsLink.cs" />
-    <Compile Include="ClassificationList\Media.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassificationList\MediaItemsList.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassificationList\Product.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassificationList\ProductItemsList.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CssStylesList.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -221,19 +209,7 @@
     <Compile Include="Exceptions\GenericDetailLevelDataAccessExeption.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exceptions\MediaException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\MediaListException.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Exceptions\MySessionDataAccessException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\ProductListException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Exceptions\ProduitException.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exceptions\TrackingDataAccessExeption.cs">
@@ -340,6 +316,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Result\AdExpressCells.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClassificationList\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

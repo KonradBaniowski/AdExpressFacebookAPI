@@ -36,6 +36,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
+    <Reference Include="TNS.Baal.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Baal.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Baal.ExtractList, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Baal.ExtractList.dll</HintPath>
+    </Reference>
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.dll</HintPath>
@@ -50,12 +58,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classification\IBaalItemsList.cs" />
+    <Compile Include="Classification\ListContener.cs" />
+    <Compile Include="Classification\Media.cs" />
+    <Compile Include="Classification\MediaItemsList.cs" />
+    <Compile Include="Classification\Product.cs" />
+    <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
     <Compile Include="Classification\VehiclesInformation.cs" />
     <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="DataBaseDescription\DataBase.cs" />
     <Compile Include="DataBaseDescription\DefaultConnection.cs" />
     <Compile Include="DataBaseDescription\View.cs" />
+    <Compile Include="Exceptions\ListContenerException.cs" />
+    <Compile Include="Exceptions\MediaListException.cs" />
+    <Compile Include="Exceptions\ProductListException.cs" />
     <Compile Include="Exceptions\UnitException.cs" />
     <Compile Include="Exceptions\DeliveryFrequencyException.cs" />
     <Compile Include="Exceptions\GenericColumnItemsInformationXLException.cs" />
@@ -123,6 +140,7 @@
     <Compile Include="Web\WebApplicationParameters.cs" />
     <Compile Include="Web\WebLanguage.cs" />
     <Compile Include="Web\WebTheme.cs" />
+    <Compile Include="XmlLoader\BaalListXL.cs" />
     <Compile Include="XmlLoader\DataBaseDescriptionXL.cs" />
     <Compile Include="XmlLoader\DetailLevelItemsInformationXL.cs" />
     <Compile Include="XmlLoader\DetailLevelsInformationXL.cs" />
@@ -139,6 +157,7 @@
     <Compile Include="XmlLoader\WebThemesXL.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Classification\ClassDiagram.cd" />
     <None Include="DataBaseDescription\DataBaseConfiguration.cd" />
   </ItemGroup>
   <ItemGroup>

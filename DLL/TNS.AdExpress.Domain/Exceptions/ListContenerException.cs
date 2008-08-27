@@ -7,25 +7,25 @@
 using System;
 using TNS.FrameWork.Exceptions;
 
-namespace TNS.AdExpress.Web.Core.Exceptions{
+namespace TNS.AdExpress.Domain.Exceptions {
 
 	/// <summary>
 	/// Thrown when is impossible to initialize media classification items Lists used in AdExpress
 	/// </summary>
-	public class MediaException:BaseException{
+	public class ListContenerException:BaseException{
 		
 		#region Constructors
 		/// <summary>
 		/// Base constructor
 		/// </summary>
-		public MediaException():base(){			
+		public ListContenerException():base(){			
 		}
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="message">Error message</param>
-		public MediaException(string message):base(message){			
+		public ListContenerException(string message):base(message){			
 		}
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace TNS.AdExpress.Web.Core.Exceptions{
 		/// </summary>
 		/// <param name="message">Error message</param>
 		/// <param name="innerException">Inner Exception</param>
-		public MediaException(string message,System.Exception innerException):base(message,innerException){
+		public ListContenerException(string message,System.Exception innerException):base(message,innerException){
 		}
 		#endregion
 	}

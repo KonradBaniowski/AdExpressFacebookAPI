@@ -1696,7 +1696,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 string sql = " ";
                 if (beginByAnd) sql += "And ";
-                TNS.AdExpress.Web.Core.ClassificationList.MediaItemsList adexpressMediaItemsList = Core.ClassificationList.Media.GetMediaItemsList(idMediaItemsList);
+                MediaItemsList adexpressMediaItemsList = Media.GetItemsList(idMediaItemsList);
                 if (adexpressMediaItemsList.GetVehicleItemsList.Length > 0) sql += (vehicleTablePrefixe.Length>0 ?  vehicleTablePrefixe+"." : "") + "id_vehicle in(" + adexpressMediaItemsList.GetVehicleItemsList + ") ";
                 if (adexpressMediaItemsList.GetCategoryItemsList.Length > 0) sql += (categoryTablePrefixe.Length>0 ? categoryTablePrefixe+"." : "") + "id_category in(" + adexpressMediaItemsList.GetCategoryItemsList + ") ";
                 if (adexpressMediaItemsList.GetMediaItemsList.Length > 0) sql += (mediaTablePrefixe.Length>0 ? mediaTablePrefixe+"." : "") + "id_media in(" + adexpressMediaItemsList.GetMediaItemsList + ") ";
@@ -1730,7 +1730,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 string sql = " ";
                 if (beginByAnd) sql += "And ";
-                TNS.AdExpress.Web.Core.ClassificationList.MediaItemsList adexpressMediaItemsList = Core.ClassificationList.Media.GetMediaItemsList(idMediaItemsList);
+                MediaItemsList adexpressMediaItemsList = Media.GetItemsList(idMediaItemsList);
                 if (adexpressMediaItemsList.GetVehicleItemsList.Length > 0) sql += vehicleTablePrefixe + ".id_vehicle in(" + adexpressMediaItemsList.GetVehicleItemsList + ") ";
 
                 if (adexpressMediaItemsList.GetCategoryItemsList.Length > 0)
@@ -1839,7 +1839,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 }
 
                 if (beginByAnd) sql += "And ";
-                Core.ClassificationList.ProductItemsList adexpressProductItemsList = Core.ClassificationList.Product.GetProductItemsList(idProductItemsList);
+                ProductItemsList adexpressProductItemsList = Product.GetItemsList(idProductItemsList);
                 if (adexpressProductItemsList.GetSectorItemsList.Length > 0) sql += sectorTablePrefixe + ".id_sector " + condition + " (" + adexpressProductItemsList.GetSectorItemsList + ") ";
                 if (adexpressProductItemsList.GetSubSectorItemsList.Length > 0) sql += subSectorTablePrefixe + ".id_subSector " + condition + " (" + adexpressProductItemsList.GetSubSectorItemsList + ") ";
                 if (adexpressProductItemsList.GetGroupItemsList.Length > 0) sql += groupTablePrefixe + ".id_group_ " + condition + "(" + adexpressProductItemsList.GetGroupItemsList + ") ";
