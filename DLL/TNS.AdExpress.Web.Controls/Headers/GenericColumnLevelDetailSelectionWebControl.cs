@@ -14,6 +14,7 @@ using TNS.AdExpress.Web.Core;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Headers {
     /// <summary>
@@ -332,7 +333,38 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <returns>Niveaux de détail colonne</returns>
         private ArrayList GetAllowedColumnDetailLevelItems() {
-            return (_currentModule.AllowedColumnDetailLevelItems);
+
+            List<DetailLevelItemInformation.Levels> vehicleAllowedDetailLevelList = GetVehicleAllowedDetailLevelItems();
+            ArrayList allowedColumnDetailLevelList = _currentModule.AllowedColumnDetailLevelItems;
+            ArrayList list = new ArrayList();
+
+            foreach (DetailLevelItemInformation currentLevel in allowedColumnDetailLevelList)
+                if (vehicleAllowedDetailLevelList.Contains(currentLevel.Id))
+                    list.Add(currentLevel);
+
+            return list;
+
+        }
+        /// <summary>
+        /// Return allowed detail level list for vehicle list seleceted
+        /// </summary>
+        /// <returns>Detail level list</returns>
+        private List<DetailLevelItemInformation.Levels> GetVehicleAllowedDetailLevelItems() {
+
+            List<Int64> vehicleList = new List<Int64>();
+            string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+            if (listStr != null && listStr.Length > 0) {
+                string[] list = listStr.Split(',');
+                for (int i = 0; i < list.Length; i++)
+                    vehicleList.Add(Convert.ToInt64(list[i]));
+            }
+            else {
+                //When a vehicle is not checked but one or more category, this get the vehicle correspondly
+                string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+                vehicleList.Add(Convert.ToInt64(Vehicle));
+            }
+
+            return VehiclesInformation.GetCommunDetailLevelList(vehicleList);
         }
         #endregion
 
