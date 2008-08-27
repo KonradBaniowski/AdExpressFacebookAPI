@@ -192,7 +192,10 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			#endregion
 		}
 		#endregion
-
+		/// <summary>
+		/// Render
+		/// </summary>
+		/// <param name="output">output</param>
 		protected override void Render(HtmlTextWriter output) {
 			
 			#region Chemin de fer popUp
@@ -203,7 +206,8 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			string path = WebCst.CreationServerPathes.LOCAL_PATH_IMAGE + _idMedia + @"\" + _dateCover + @"\imagette";
 
 			// Pour test en localhost :
-			//string path="\\\\localhost\\ImagesPresse\\"+_idMedia+"\\"+_dateCover+"\\imagette";
+			//string path = "\\\\localhost\\ImagesPresse\\" + _idMedia + "\\" + _dateCover + "\\imagette";
+			
 
 			string[] files = Directory.GetFiles(path, "*.jpg");
 			string[] endFile;

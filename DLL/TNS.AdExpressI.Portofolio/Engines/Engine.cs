@@ -166,7 +166,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 								pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
 							}
 							DateTime dayDT = new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
-							day = DayString.GetCharacters(dayDT, cultureInfo) + " " + dayDT.ToString("dd/MM/yyyy"); ;
+							day = DayString.GetCharacters(dayDT, cultureInfo) + " " + DateString.dateTimeToDD_MM_YYYY(dayDT,_webSession.SiteLanguage); 
+							
 							if (compteur == 0) {
 								t.Append("<tr>");
 								compteur = 1;

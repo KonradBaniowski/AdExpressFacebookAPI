@@ -162,14 +162,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			dt = portofolioResult.GetStructureChartData();
 
-			string idVehicle = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-			
-			switch ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())) {
-				case DBClassificationConstantes.Vehicles.names.press:
-				case DBClassificationConstantes.Vehicles.names.internationalPress:						
-				case DBClassificationConstantes.Vehicles.names.tv:
-				case DBClassificationConstantes.Vehicles.names.others:
-				case DBClassificationConstantes.Vehicles.names.radio: 
+			string idVehicle = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);					
 					if (dt == null || dt.Rows.Count == 0) {
 						//No data to show
 						this.Visible = false;
@@ -233,12 +226,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 							}
 						}
 					}
-					
-					break;
-				default:
-					throw new Exceptions.PortofolioChartWebControlException("Vehicle unknown.");
-			}
-
+								
 			#endregion
 
 		}
@@ -291,6 +279,8 @@ namespace TNS.AdExpress.Web.Controls.Results {
 
 				series.Label = "#PERCENT : #VALX";
 				series["3DLabelLineSize"] = "30";
+				series.Font = new Font("Arial", (float)7);
+
 
 				#endregion
 
@@ -315,7 +305,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 		/// <param name="titleColor">Titke color</param>
 		private void InitializeComponent(ChartArea chartArea, bool typeFlash, WebSession webSession, string defaultBorderLineColor, string borderLineColor, string titleColor, int indexTitle, int nbItem ,ref float posY) {
 			#region Variables
-			float imgHeight = 22;			
+			float imgHeight = 21;			
 			float spacer = 4;
 			#endregion
 
@@ -371,10 +361,9 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			chartArea.Position.Width = 60;
 			chartArea.Position.Height = imgHeight;
 				
-				this.Titles[indexTitle].Position.Y = posY - 2;
-				chartArea.Position.Y = posY;
-				posY = posY + imgHeight + spacer;
-
+			this.Titles[indexTitle].Position.Y = posY - 2;
+			chartArea.Position.Y = posY;
+			posY = posY + imgHeight + spacer;
 			
 			#endregion
 

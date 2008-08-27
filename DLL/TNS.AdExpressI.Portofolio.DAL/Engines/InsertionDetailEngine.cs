@@ -127,11 +127,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql.Append("  " + _webSession.GenericInsertionColumns.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, null));
 				sql.Append("  " + _webSession.GenericInsertionColumns.GetSqlContraintJoins());
 
-				if (tableName.CompareTo(DBConstantes.Tables.ALERT_DATA_RADIO) == 0 && _adBreak != null && _adBreak.Length > 0)
+				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio && _adBreak != null && _adBreak.Length > 0)
 					sql.Append("  and commercial_break = " + _adBreak + "");
 
 
-				if (tableName.CompareTo(DBConstantes.Tables.ALERT_DATA_TV) == 0 && _adBreak != null && _adBreak.Length > 0) {
+				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others )  && _adBreak != null && _adBreak.Length > 0) {
 					sql.Append(" and id_commercial_break = " + _adBreak + "");
 				}
 
@@ -214,6 +214,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			}
 		}
 		#endregion
+
+
 
 	}
 }

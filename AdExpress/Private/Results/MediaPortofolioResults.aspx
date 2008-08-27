@@ -57,7 +57,7 @@
 				</tr>
 				<tr vAlign="top">
 					<TD vAlign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" ShowPictures="False" UnitOption="True"
-							Percentage="False" AutoPostBackOption="False" ResultOption="True" MediaDetailOption="False" InsertOption="True" ProductDetailOption="False"></cc2:resultsoptionswebcontrol></TD>
+							Percentage="True" AutoPostBackOption="False" ResultOption="True" MediaDetailOption="False" InsertOption="True" ProductDetailOption="False"></cc2:resultsoptionswebcontrol></TD>
 				</tr>
 				<%if(_genericProductLevel){%>
 				<tr class="whiteBackGround" height="5">
