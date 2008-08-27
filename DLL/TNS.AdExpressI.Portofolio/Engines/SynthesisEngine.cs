@@ -82,12 +82,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			string investment = "";
 			string firstDate = "";
 			string lastDate = "";
-			string support = "";
+			string media = "";
 			string periodicity = "";
 			string category = "";
 			string regie = "";
 			string interestCenter = "";
-			string pageNumber = "", adNumber = null;
+			string pageNumber = "", adNumber = "";
+            string adNumberIncludingInsets = "", adNumberExcludingInsets="";
 			string ojd = "";
 			string nbrSpot = "";
 			string nbrEcran = "";
@@ -96,12 +97,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			string totalDuration = "";
 			string numberBoard = "";
 			string volume = "";
+            string numberProduct = "", numberNewProductInTracking = "", numberNewProductInVehicle = "", numberAdvertiser = "";
 			ResultTable resultTable = null;
 			LineType lineType = LineType.level1;
 			string typeReseauStr = string.Empty;
 			bool isAlertModule = _webSession.CustomerPeriodSelected.Is4M; //(_webSession.CurrentModule == WebCst.Module.Name.ALERTE_PORTEFEUILLE);			
-			DataTable dtPage = null;
-			
 			#endregion
 			
 			#region Accès aux tables
@@ -114,432 +114,523 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			parameters[4] = _periodEnd;
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 
-			DataSet dsInvestment = portofolioDAL.GetSynthisData(PortofolioSynthesis.INVESTMENT_DATA);
-			DataTable dtInvestment = dsInvestment.Tables[0];
+            DataSet ds;
+            DataTable dt;
+            DataTable dtTypeSale = null;
 
-			DataTable dtInsertionNumber = null;
-			if (isAlertModule && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
-				DataSet dsInsertionNumber = portofolioDAL.GetSynthisData(PortofolioSynthesis.INSERTION_NUMBER_DATA);
-				dtInsertionNumber = dsInsertionNumber.Tables[0];
-			}
-			DataSet dsCategory = portofolioDAL.GetSynthisData(PortofolioSynthesis.CATEGORY_MEDIA_SELLER_DATA);
-			DataTable dtCategory = dsCategory.Tables[0];
+            #region Media
+            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.media);
+            dt = ds.Tables[0];
+            media = dt.Rows[0]["media"].ToString();
+            #endregion
 
-			if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
-				DataSet dsPage = portofolioDAL.GetSynthisData(PortofolioSynthesis.NUMBER_PAGE_DATA);
-				 dtPage = dsPage.Tables[0];
-			}
+            #region Category
+            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.category);
+            dt = ds.Tables[0];
+            category = dt.Rows[0]["category"].ToString();
+            #endregion
 
-			DataTable dtTypeSale = null;
-			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
-				DataSet dsTypeSale = portofolioDAL.GetSynthisData(PortofolioSynthesis.TYPE_SALE_NUMBER_DATA);
-				dtTypeSale = dsTypeSale.Tables[0];
-			}
+            #region Media seller
+            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.mediaSeller);
+            dt = ds.Tables[0];
+            regie = dt.Rows[0]["media_seller"].ToString();
+            #endregion
 
-			object[] tab = portofolioDAL.GetNumber(PortofolioSynthesis.NUMBER_PRODUCT_ADVERTISER_DATA);
-			object[] tabEncart = null;
+            #region Interest center
+            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.interestCenter);
+            dt = ds.Tables[0];
+            interestCenter = dt.Rows[0]["interest_center"].ToString();
+            #endregion
 
-			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
-				tabEncart = portofolioDAL.GetNumber(PortofolioSynthesis.NUMBER_INSET_DATA);
-			}
-			#endregion
+            #region Periodicity
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press ||
+                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.periodicity);
+                dt = ds.Tables[0];
+                periodicity = dt.Rows[0]["periodicity"].ToString();
+            }
+            #endregion
 
-			#region For each table's row
-			if(dtInvestment !=null && dtInvestment.Rows.Count>0){
-			DataRow row = dtInvestment.Rows[0];
-			//foreach (DataRow row in dtInvestment.Rows) {
-				investment = row["euro"].ToString();
-				if (isAlertModule) {
-					if (dtInvestment.Columns.Contains("first_date"))firstDate = row["first_date"].ToString();
-					if (dtInvestment.Columns.Contains("last_date"))lastDate = row["last_date"].ToString();
-					if (dtInvestment.Columns.Contains("number_board"))numberBoard = row["number_board"].ToString();					
-				}
-				if (dtInvestment.Columns.Contains("duration")) {
-					totalDuration = row["duration"].ToString();
-				}
+            #region investment
+            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.investment);
+            dt = ds.Tables[0];
+            if (dt.Rows[0]["euro"].ToString().Length > 0)
+                investment = dt.Rows[0]["euro"].ToString();
+            else
+                investment = "0";
+            if (!isAlertModule) {
+                if (dt.Columns.Contains("insertion")) nbrSpot = dt.Rows[0]["insertion"].ToString();
+                else if (dt.Columns.Contains("spot")) nbrSpot = dt.Rows[0]["spot"].ToString();
+                if (dt.Columns.Contains("duration")) totalDuration = dt.Rows[0]["duration"].ToString();
+                if (dt.Columns.Contains("pages")) adNumber = dt.Rows[0]["pages"].ToString();
+                if (dt.Columns.Contains("numberBoard")) numberBoard = dt.Rows[0]["numberBoard"].ToString();
+            }
+            if (dt.Columns.Contains("volume")) {
+                if (dt.Rows[0]["volume"].ToString().Length > 0) {
+                    volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0]["volume"].ToString())));
+                    volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false);
+                }
+                else volume = "0";
+            }
+            #endregion
 
-				if (dtInvestment.Columns.Contains("insertion") ) nbrSpot = row["insertion"].ToString();
-				else if (dtInvestment.Columns.Contains("spot")) nbrSpot = row["spot"].ToString();
+            #region Period selected
+            if (isAlertModule 
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.periodSelected);
+                dt = ds.Tables[0];
+                if (dt.Columns.Contains("first_date")) firstDate = dt.Rows[0]["first_date"].ToString();
+                if (dt.Columns.Contains("last_date")) lastDate = dt.Rows[0]["last_date"].ToString();
+            }
+            #endregion
 
-				//Volume
-				if (dtInvestment.Columns.Contains("volume")) {
-					if (row["volume"].ToString().Length > 0) {
-						volume = Convert.ToString(Math.Round(decimal.Parse(row["volume"].ToString())));
-						volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false);
-					}
-					else volume = "0";
-				}
-				//Nb ad pages
-				if (dtInvestment.Columns.Contains("page") && row["page"] != System.DBNull.Value)
-					adNumber = row["page"].ToString();
-			}
-			//nombre d'insertions
-			if (isAlertModule && dtInsertionNumber != null && !dtInsertionNumber.Equals(System.DBNull.Value) && dtInsertionNumber.Rows.Count > 0) {
-				if(dtInsertionNumber.Columns.Contains("insertion"))nbrSpot = dtInsertionNumber.Rows[0]["insertion"].ToString();
-				else if (dtInsertionNumber.Columns.Contains("spot")) nbrSpot = dtInsertionNumber.Rows[0]["spot"].ToString();
-			}
+            #region Number Board
+            if (isAlertModule && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberBoard);
+                dt = ds.Tables[0];
+                if (dt.Columns.Contains("number_board")) numberBoard = dt.Rows[0]["number_board"].ToString();
+            }
+            #endregion
 
-			foreach (DataRow row in dtCategory.Rows) {
-				support = row["support"].ToString();
-				category = row["category"].ToString();
-				regie = row["media_seller"].ToString();
-				interestCenter = row["interest_center"].ToString();
-				if (dtCategory.Columns.Contains("periodicity"))
-					periodicity = row["periodicity"].ToString();
-				if (dtCategory.Columns.Contains("ojd"))
-					ojd = row["ojd"].ToString();
-			}
+            #region Duration
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv ||
+                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others ||
+                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) && isAlertModule) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.duration);
+                dt = ds.Tables[0];
+                if (dt.Columns.Contains("duration")) totalDuration = dt.Rows[0]["duration"].ToString();
+            }
+            #endregion
 
-			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-				|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
-				foreach (DataRow row in dtPage.Rows) {
-					pageNumber = row["page"].ToString();
-				}
-				if (pageNumber.Length == 0)
-					pageNumber = "0";
+            #region Insertion
+            if (isAlertModule && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.insertion);
+                dt = ds.Tables[0];
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor)
+                    numberBoard = dt.Rows[0]["insertion"].ToString();
+                if (dt.Columns.Contains("insertion")) nbrSpot = dt.Rows[0]["insertion"].ToString();
+            }
+            #endregion
 
-				if (isAlertModule & tabEncart != null && tabEncart[0] != null)
-					adNumber = tabEncart[0].ToString(); //Nb ad pages
-			}
+            #region Ad Number
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press 
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+                && isAlertModule) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumber);
+                dt = ds.Tables[0];
+                adNumber = dt.Rows[0]["page"].ToString();
+            }
+            #endregion
 
-			if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
-				|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-				|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-				&& isAlertModule) {
-				DataSet dsEcran = portofolioDAL.GetEcranData();
-				DataTable dtEcran = dsEcran.Tables[0];
+            #region ad Number Including Insets
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumberIncludingInsets);
+                dt = ds.Tables[0];
+                adNumberIncludingInsets = dt.Rows[0]["page"].ToString();
+            }
+            #endregion
 
-				foreach (DataRow row in dtEcran.Rows) {
-					nbrEcran = row["nbre_ecran"].ToString();
-					if (row["nbre_ecran"] != System.DBNull.Value) {
-						averageDurationEcran = decimal.Parse(row["ecran_duration"].ToString()) / decimal.Parse(row["nbre_ecran"].ToString());
-						nbrSpotByEcran = decimal.Parse(row["nbre_spot"].ToString()) / decimal.Parse(row["nbre_ecran"].ToString());
-					}
-				}
-			}
+            #region ad Number Excluding Insets
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumberExcludingInsets);
+                dt = ds.Tables[0];
+                adNumberExcludingInsets = dt.Rows[0]["page"].ToString();
+            }
+            #endregion
+
+            #region Page number
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing 
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.pageNumber);
+                dt = ds.Tables[0];
+                pageNumber = dt.Rows[0]["page"].ToString();
+                if (pageNumber.Length == 0)
+                    pageNumber = "0";
+            }
+            #endregion
+
+            #region Encart Data
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
+                && isAlertModule) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberAdBreaks);
+                dt = ds.Tables[0];
+                nbrEcran = dt.Rows[0]["nbre_ecran"].ToString();
+                if (nbrEcran.Length > 0) {
+                    averageDurationEcran = decimal.Parse(dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(dt.Rows[0]["nbre_ecran"].ToString());
+                    nbrSpotByEcran = decimal.Parse(dt.Rows[0]["nbre_spot"].ToString()) / decimal.Parse(dt.Rows[0]["nbre_ecran"].ToString());
+                }
+            }
+            #endregion
+
+            #region Number of product
+            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberProduct);
+            dt = ds.Tables[0];
+            numberProduct = dt.Rows[0]["nbLines"].ToString(); 
+            #endregion
+
+            #region Number of product in tracking
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInTracking);
+                dt = ds.Tables[0];
+                numberNewProductInTracking = dt.Rows[0]["nbLines"].ToString();
+            }
+            #endregion
+
+            #region Number of product in vehicle
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInVehicle);
+                dt = ds.Tables[0];
+                numberNewProductInVehicle = dt.Rows[0]["nbLines"].ToString();
+            }
+            #endregion
+
+            #region Number of advertiser
+            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberAdvertiser);
+            dt = ds.Tables[0];
+            numberAdvertiser = dt.Rows[0]["nbLines"].ToString();
+            #endregion
+
+            #region Type sale
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.typeSale);
+                dtTypeSale = ds.Tables[0];
+            }
+            #endregion
+
 			#endregion
 
 			#region Period
-			DateTime dtFirstDate = DateTime.Today;
-			DateTime dtLastDate = DateTime.Today;
-			if (isAlertModule && (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)) {
-				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
-					if (firstDate.Length > 0) {
-						dtFirstDate = Convert.ToDateTime(firstDate);
-						dtFirstDate = dtFirstDate.Date;
-					}
-					if (lastDate.Length > 0) {
-						dtLastDate = Convert.ToDateTime(lastDate);
-						dtLastDate = dtLastDate.Date;
-					}
-				}
-				else {
-					if (firstDate.Length > 0) {
-						dtFirstDate = new DateTime(int.Parse(firstDate.Substring(0, 4)), int.Parse(firstDate.Substring(4, 2)), int.Parse(firstDate.Substring(6, 2)));
-					}
+            DateTime dtFirstDate = DateTime.Today;
+            DateTime dtLastDate = DateTime.Today;
+            if (isAlertModule && (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)) {
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+                    if (firstDate.Length > 0) {
+                        dtFirstDate = Convert.ToDateTime(firstDate);
+                        dtFirstDate = dtFirstDate.Date;
+                    }
+                    if (lastDate.Length > 0) {
+                        dtLastDate = Convert.ToDateTime(lastDate);
+                        dtLastDate = dtLastDate.Date;
+                    }
+                }
+                else {
+                    if (firstDate.Length > 0) {
+                        dtFirstDate = new DateTime(int.Parse(firstDate.Substring(0, 4)), int.Parse(firstDate.Substring(4, 2)), int.Parse(firstDate.Substring(6, 2)));
+                    }
 
-					if (lastDate.Length > 0) {
-						dtLastDate = new DateTime(int.Parse(lastDate.Substring(0, 4)), int.Parse(lastDate.Substring(4, 2)), int.Parse(lastDate.Substring(6, 2)));
-					}
-				}
-			}
-			else {
-				dtFirstDate = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
-				dtLastDate = WebFunctions.Dates.getPeriodEndDate(_periodEnd, _webSession.PeriodType);
-			}
+                    if (lastDate.Length > 0) {
+                        dtLastDate = new DateTime(int.Parse(lastDate.Substring(0, 4)), int.Parse(lastDate.Substring(4, 2)), int.Parse(lastDate.Substring(6, 2)));
+                    }
+                }
+            }
+            else {
+                dtFirstDate = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
+                dtLastDate = WebFunctions.Dates.getPeriodEndDate(_periodEnd, _webSession.PeriodType);
+            }
 			#endregion
 
 			#region nbLines init
-			long nbLines = 0;
-			long lineIndex = 0;
-			switch (_vehicleInformation.Id) {
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
-					nbLines = 9;
-					if (adNumber != null && adNumber.Length > 0) nbLines = nbLines + 2;
-					if (isAlertModule && tabEncart != null && tabEncart[1] != null && ((string)tabEncart[1]).Length > 0) nbLines++;
-					if (isAlertModule && tabEncart != null && tabEncart[2] != null && ((string)tabEncart[2]).Length > 0) nbLines++;
-					if (investment != null && investment.Length > 0) nbLines++;
-					if (isAlertModule) nbLines = nbLines + 2; // nbLines = 16;
-					break;
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
-					nbLines = 10;
-					if (isAlertModule) nbLines = nbLines + 5;
-					if (investment != null && investment.Length > 0) nbLines++; // nbLines = 16;
-					break;
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
-					nbLines = 9;
-					if (dtTypeSale != null && dtTypeSale.Rows.Count > 0) {
-						nbLines++;//number board
-						if (isAlertModule) nbLines++;
-					}
-					if (investment != null && investment.Length > 0) nbLines++;//nbLines = 12;
-					break;
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
-					nbLines = 7;
-					if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT) && !isAlertModule) nbLines++;
-					if (investment != null && investment.Length > 0) nbLines++;
-					if (isAlertModule) nbLines = nbLines + 2; //nbLines = 11;
-					break;
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
-					nbLines = 8;
-					if (investment != null && investment.Length > 0) nbLines++;
-					break;
-				default:
-					throw (new PortofolioException("Vehicle unknown"));
-			}
+            long nbLines = 0;
+            long lineIndex = 0;
+            switch (_vehicleInformation.Id) {
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+                    nbLines = 9;
+                    if (adNumber != null && adNumber.Length > 0) nbLines = nbLines + 2;
+                    if (isAlertModule && adNumber.Length>0 && adNumberExcludingInsets.Length>0) nbLines++;
+                    if (isAlertModule && adNumber.Length > 0 && adNumberIncludingInsets.Length > 0) nbLines++;
+                    if (investment != null && investment.Length > 0) nbLines++;
+                    if (isAlertModule) nbLines = nbLines + 2; // nbLines = 16;
+                    break;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
+                    nbLines = 10;
+                    if (isAlertModule) nbLines = nbLines + 5;
+                    if (investment != null && investment.Length > 0) nbLines++; // nbLines = 16;
+                    break;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                    nbLines = 9;
+                    if (dtTypeSale != null && dtTypeSale.Rows.Count > 0) {
+                        nbLines++;//number board
+                        if (isAlertModule) nbLines++;
+                    }
+                    if (investment != null && investment.Length > 0) nbLines++;//nbLines = 12;
+                    break;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
+                    nbLines = 7;
+                    if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT) && !isAlertModule) nbLines++;
+                    if (investment != null && investment.Length > 0) nbLines++;
+                    if (isAlertModule) nbLines = nbLines + 2; //nbLines = 11;
+                    break;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+                    nbLines = 8;
+                    if (investment != null && investment.Length > 0) nbLines++;
+                    break;
+                default:
+                    throw (new PortofolioException("Vehicle unknown"));
+            }
 			#endregion
 
 			#region headers
-			Headers headers = new Headers();
-			TNS.FrameWork.WebResultUI.Header header = new TNS.FrameWork.WebResultUI.Header(support.ToString(), HEADER_COLUMN_INDEX, "SynthesisH1");
-			header.Add(new TNS.FrameWork.WebResultUI.Header("", FIRST_COLUMN_INDEX, "SynthesisH2"));
-			header.Add(new TNS.FrameWork.WebResultUI.Header("", SECOND_COLUMN_INDEX, "SynthesisH2"));
-			headers.Root.Add(header);
-			resultTable = new ResultTable(nbLines, headers);
+            Headers headers = new Headers();
+            TNS.FrameWork.WebResultUI.Header header = new TNS.FrameWork.WebResultUI.Header(media.ToString(), HEADER_COLUMN_INDEX, "SynthesisH1");
+            header.Add(new TNS.FrameWork.WebResultUI.Header("", FIRST_COLUMN_INDEX, "SynthesisH2"));
+            header.Add(new TNS.FrameWork.WebResultUI.Header("", SECOND_COLUMN_INDEX, "SynthesisH2"));
+            headers.Root.Add(header);
+            resultTable = new ResultTable(nbLines, headers);
 			#endregion
 
 			#region Building resultTable
-			// Date begin and date end for outdooor
-			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtFirstDate.Date.ToString("dd/MM/yyyy"));
+            // Date begin and date end for outdooor
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtFirstDate.Date.ToString("dd/MM/yyyy"));
 
-				ChangeLineType(ref lineType);
+                ChangeLineType(ref lineType);
 
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1608, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtLastDate.Date.ToString("dd/MM/yyyy"));
-			}
-			// Period selected
-			else {
-				//if (firstDate.Length > 0 || !isAlertModule) {
-					lineIndex = resultTable.AddNewLine(lineType);
-					if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-					|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && isAlertModule)
-						resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage));
-					else resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
-					if ((firstDate != null && firstDate.Length>0 && lastDate != null && lastDate.Length>0 && firstDate.Equals(lastDate) && isAlertModule) 
-						|| (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
-						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtFirstDate.Date.ToString("dd/MM/yyyy"));
-					}
-					else {
-						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + dtFirstDate.Date.ToString("dd/MM/yyyy") + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + dtLastDate.Date.ToString("dd/MM/yyyy"));
-					}
-				//}
-			}
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1608, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtLastDate.Date.ToString("dd/MM/yyyy"));
+            }
+            // Period selected
+            else {
+                //if (firstDate.Length > 0 || !isAlertModule) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && isAlertModule)
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage));
+                else resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
+                if ((firstDate != null && firstDate.Length > 0 && lastDate != null && lastDate.Length > 0 && firstDate.Equals(lastDate) && isAlertModule)
+                    || (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(dtFirstDate.Date.ToString("dd/MM/yyyy"));
+                }
+                else {
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + dtFirstDate.Date.ToString("dd/MM/yyyy") + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + dtLastDate.Date.ToString("dd/MM/yyyy"));
+                }
+                //}
+            }
 
-			ChangeLineType(ref lineType);
+            ChangeLineType(ref lineType);
 
-			// Periodicity
-			if (dtCategory.Columns.Contains("periodicity")) {
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1450, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(periodicity);
-				ChangeLineType(ref lineType);
-			}
-			// Category
-			lineIndex = resultTable.AddNewLine(lineType);
-			resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1416, _webSession.SiteLanguage));
-			resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(category);
-			ChangeLineType(ref lineType);
+            // Periodicity
+            if (periodicity.Length>0) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1450, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(periodicity);
+                ChangeLineType(ref lineType);
+            }
+            // Category
+            lineIndex = resultTable.AddNewLine(lineType);
+            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1416, _webSession.SiteLanguage));
+            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(category);
+            ChangeLineType(ref lineType);
 
-			// Media seller
-			if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1417, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(regie);
-				ChangeLineType(ref lineType);
-			}
+            // Media seller
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1417, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(regie);
+                ChangeLineType(ref lineType);
+            }
 
-			//  Volume for Marketing Direct
-			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.directMarketing &&
-				_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT) && !isAlertModule) {
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(2216, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellVolume(double.Parse(volume));
-				ChangeLineType(ref lineType);
-			}
+            //  Volume for Marketing Direct
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.directMarketing &&
+                _webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT)) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(2216, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellVolume(double.Parse(volume));
+                ChangeLineType(ref lineType);
+            }
 
-			// Interest center
-			if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1411, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(interestCenter);
-				ChangeLineType(ref lineType);
-			}
+            // Interest center
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1411, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(interestCenter);
+                ChangeLineType(ref lineType);
+            }
 
-			//number board and newtwork type 
-			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && dtTypeSale != null && dtTypeSale.Rows.Count > 0) {
-				//number board
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1604, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = (isAlertModule) ? new CellNumber(double.Parse(numberBoard)) : new CellNumber(double.Parse(nbrSpot));
-				ChangeLineType(ref lineType);
+            //number board and newtwork type 
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+                //number board
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1604, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberBoard));
+                ChangeLineType(ref lineType);
 
-				//Type sale
-				if (isAlertModule) {
-					int count = 0;
-					lineIndex = resultTable.AddNewLine(lineType);
-					resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1609, _webSession.SiteLanguage));
-					if (dtTypeSale.Rows.Count == 0) typeReseauStr = "&nbsp;";
-					else {
-						foreach (DataRow row in dtTypeSale.Rows) {
-							if (count > 0) {
-								typeReseauStr += "<BR>";
-							}
-							typeReseauStr += SQLGenerator.SaleTypeOutdoor(row["type_sale"].ToString(), _webSession.SiteLanguage);
-							count++;
-						}
-					}
-					resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(typeReseauStr);
-					ChangeLineType(ref lineType);
-				}
-			}
-			// Case vehicle press
-			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-				|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
-				// Nombre de page
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(pageNumber));
-				ChangeLineType(ref lineType);
+                if(dtTypeSale != null && dtTypeSale.Rows.Count > 0 && isAlertModule){
+                    //Type sale
+                    int count = 0;
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1609, _webSession.SiteLanguage));
+                    if (dtTypeSale.Rows.Count == 0) typeReseauStr = "&nbsp;";
+                    else {
+                        foreach (DataRow row in dtTypeSale.Rows) {
+                            if (count > 0) {
+                                typeReseauStr += "<BR>";
+                            }
+                            typeReseauStr += SQLGenerator.SaleTypeOutdoor(row["type_sale"].ToString(), _webSession.SiteLanguage);
+                            count++;
+                        }
+                    }
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(typeReseauStr);
+                    ChangeLineType(ref lineType);
+                }
+                
+            }
+            // Case vehicle press
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                // Nombre de page
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(pageNumber));
+                ChangeLineType(ref lineType);
 
-				if (adNumber != null && adNumber.Length > 0) {
-					// Nb de page pub		
-					lineIndex = resultTable.AddNewLine(lineType);
-					resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1386, _webSession.SiteLanguage));
-					resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(adNumber));
-					ChangeLineType(ref lineType);
+                if (adNumber != null && adNumber.Length > 0) {
+                    // Nb de page pub		
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1386, _webSession.SiteLanguage));
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(adNumber));
+                    ChangeLineType(ref lineType);
 
-					// Ratio
-					if (pageNumber != null && pageNumber.Length > 0) {
-						lineIndex = resultTable.AddNewLine(lineType);
-						resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage));
-						//resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(((decimal.Parse(adNumber) / decimal.Parse(pageNumber) * 100)/1000).ToString("0.###")+" %");
-						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPercent(((double.Parse(adNumber) / double.Parse(pageNumber) * 100) / (double)1000));
-					}
-					else {
-						lineIndex = resultTable.AddNewLine(lineType);
-						resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage));
-						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel("&nbsp;&nbsp;&nbsp;&nbsp;");
-					}
-					ChangeLineType(ref lineType);
-				}
-				if (isAlertModule) {
-					if (tabEncart != null && ((string)tabEncart[1]).Length > 0) {
-						// Nombre de page de pub hors encarts
-						if (((string)tabEncart[1]).Length == 0)
-							tabEncart[1] = "0";
-						lineIndex = resultTable.AddNewLine(lineType);
-						resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1388, _webSession.SiteLanguage));
-						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(tabEncart[1].ToString()));
-						ChangeLineType(ref lineType);
-					}
-					if (tabEncart != null && ((string)tabEncart[2]).Length > 0) {
-						// Nombre de page de pub encarts
-						if (((string)tabEncart[2]).Length == 0) {
-							tabEncart[2] = "0";
-						}
-						lineIndex = resultTable.AddNewLine(lineType);
-						resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1389, _webSession.SiteLanguage));
-						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(tabEncart[2].ToString()));
-						ChangeLineType(ref lineType);
-					}
-				}
-			}
+                    // Ratio
+                    if (pageNumber != null && pageNumber.Length > 0) {
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage));
+                        //resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(((decimal.Parse(adNumber) / decimal.Parse(pageNumber) * 100)/1000).ToString("0.###")+" %");
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPercent(((double.Parse(adNumber) / double.Parse(pageNumber) * 100) / (double)1000));
+                    }
+                    else {
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage));
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel("&nbsp;&nbsp;&nbsp;&nbsp;");
+                    }
+                    ChangeLineType(ref lineType);
+                }
+                if (isAlertModule) {
+                    if (adNumber != null && adNumberExcludingInsets.Length > 0) {
+                        // Nombre de page de pub hors encarts
+                        if (adNumberExcludingInsets.Length == 0)
+                            adNumberExcludingInsets = "0";
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1388, _webSession.SiteLanguage));
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(adNumberExcludingInsets));
+                        ChangeLineType(ref lineType);
+                    }
+                    if (adNumber != null && adNumberIncludingInsets.Length > 0) {
+                        // Nombre de page de pub encarts
+                        if (adNumberIncludingInsets.Length == 0) {
+                            adNumberIncludingInsets = "0";
+                        }
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1389, _webSession.SiteLanguage));
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(adNumberIncludingInsets));
+                        ChangeLineType(ref lineType);
+                    }
+                }
+            }
 
-			// Cas tv, radio
-			if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
-				|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-				|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others) {
+            // Cas tv, radio
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others) {
 
-				//Nombre de spot
-				if (nbrSpot.Length == 0) {
-					nbrSpot = "0";
-				}
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1404, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrSpot));
-				ChangeLineType(ref lineType);
+                //Nombre de spot
+                if (nbrSpot.Length == 0) {
+                    nbrSpot = "0";
+                }
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1404, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrSpot));
+                ChangeLineType(ref lineType);
 
-				if (isAlertModule) {
-					// Nombre d'ecran
-					if (nbrEcran.Length == 0) {
-						nbrEcran = "0";
-					}
-					lineIndex = resultTable.AddNewLine(lineType);
-					resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1412, _webSession.SiteLanguage));
-					resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrEcran));
-					ChangeLineType(ref lineType);
-				}
-				if (totalDuration.Length == 0) {
-					totalDuration = "0";
-				}
-				// total durée
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1413, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(double.Parse(totalDuration));
-				ChangeLineType(ref lineType);
-			}
+                if (isAlertModule) {
+                    // Nombre d'ecran
+                    if (nbrEcran.Length == 0) {
+                        nbrEcran = "0";
+                    }
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1412, _webSession.SiteLanguage));
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrEcran));
+                    ChangeLineType(ref lineType);
+                }
+                if (totalDuration.Length == 0) {
+                    totalDuration = "0";
+                }
+                // total durée
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1413, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(double.Parse(totalDuration));
+                ChangeLineType(ref lineType);
+            }
 
-			// Total investissements
-			if (investment != null && investment.Length > 0) {
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellEuro(double.Parse(investment));
-				ChangeLineType(ref lineType);
-			}
+            // Total investissements
+            if (investment != null && investment.Length > 0) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellEuro(double.Parse(investment));
+                ChangeLineType(ref lineType);
+            }
 
-			//Nombre de produits
-			lineIndex = resultTable.AddNewLine(lineType);
-			resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage));
-			resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(tab[0].ToString()));
-			ChangeLineType(ref lineType);
+            //Nombre de produits
+            lineIndex = resultTable.AddNewLine(lineType);
+            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage));
+            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberProduct.ToString()));
+            ChangeLineType(ref lineType);
 
-			if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) && isAlertModule) {
-				//Nombre de nouveaux produits dans la pige
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(tab[2].ToString()));
-				ChangeLineType(ref lineType);
+            if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) && isAlertModule) {
+                //Nombre de nouveaux produits dans la pige
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberNewProductInTracking.ToString()));
+                ChangeLineType(ref lineType);
 
-				//Nombre de nouveaux produits dans le support
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1395, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(tab[1].ToString()));
-				ChangeLineType(ref lineType);
-			}
-			//Nombre d'annonceurs
-			lineIndex = resultTable.AddNewLine(lineType);
-			resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));
-			resultTable[lineIndex, SECOND_COLUMN_INDEX] = (isAlertModule && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) ? new CellNumber(double.Parse(tab[3].ToString())) : new CellNumber(double.Parse(tab[1].ToString()));
-			ChangeLineType(ref lineType);
+                //Nombre de nouveaux produits dans le support
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1395, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberNewProductInVehicle.ToString()));
+                ChangeLineType(ref lineType);
+            }
+            //Nombre d'annonceurs
+            lineIndex = resultTable.AddNewLine(lineType);
+            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));
+            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberAdvertiser.ToString()));
+            ChangeLineType(ref lineType);
 
-			// Cas tv, presse
-			if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
-				|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-				|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-				&& isAlertModule) {
+            // Cas tv, radio, others
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
+                && isAlertModule) {
 
-				// Durée moyenne d'un écran
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1414, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
-				ChangeLineType(ref lineType);
+                // Durée moyenne d'un écran
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1414, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
+                ChangeLineType(ref lineType);
 
-				// Nombre moyen de spots par écran
-				lineIndex = resultTable.AddNewLine(lineType);
-				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1415, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(nbrSpotByEcran.ToString("0.00"));
+                // Nombre moyen de spots par écran
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1415, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(nbrSpotByEcran.ToString("0.00"));
 
-			}
+            }
 			#endregion
 
-			return resultTable;
+            return resultTable;
 
 		}
 		/// <summary>

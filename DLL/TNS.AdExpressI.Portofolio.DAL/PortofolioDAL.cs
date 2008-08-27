@@ -203,10 +203,10 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// <summary>
 		/// Get synthesis data
 		/// </summary>
-		/// <param name="idDataType">id data type</param>
+        /// <param name="synthesisDataType">Synthesis Data Type</param>
 		/// <returns></returns>
-		public virtual DataSet GetSynthisData(int idDataType){
-			Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, idDataType);
+        public virtual DataSet GetSynthisData(PortofolioSynthesis.dataType synthesisDataType) {
+            Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, synthesisDataType);
 			return res.GetData();
 		}
 
@@ -216,14 +216,24 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// <example>Number of product, advertiser</example>
 		/// <param name="idDataType">id data type</param>
 		/// <returns></returns>
-		public virtual object[] GetNumber(int idDataType) {
-			Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, idDataType);
-			return res.GetNumber();
-		}
-		#endregion
+        //public virtual object[] GetNumber(int idDataType) {
+        //    Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, idDataType);
+        //    return res.GetNumber();
+        //}
 
-		#region Get Struct Data
-		/// <summary>
+        /// <summary>
+        /// récupère les écrans
+        /// </summary>
+        /// <returns>Ecrans</returns>
+        public DataSet GetEcranData() {
+            Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
+            return res.GetEcranData();
+
+        }
+        #endregion
+
+        #region Get Struct Data
+        /// <summary>
         /// Get structure data 
         /// </summary>
 		/// <remarks>Used for tv or radio</remarks>
@@ -400,68 +410,6 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 			#endregion
 
 			return (htInvestment);
-		}
-		#endregion
-
-		#region Ecran
-		/// <summary>
-		/// récupère les écrans
-		/// </summary>
-		/// <returns>Ecrans</returns>
-		public DataSet GetEcranData() {
-
-			#region Variables
-			string select = "";
-			string table = "";
-			string product = "";
-			string productsRights = "";
-			string mediaRights = "";
-			string listProductHap = "";
-			#endregion
-
-			#region Construction de la requête
-			try {
-				select = GetSelectDataEcran();
-				table = GetTableData();
-				product = GetProductData();
-				productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-				mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-				listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
-			}
-			catch (System.Exception err) {
-				throw (new PortofolioDALException("Impossible to build the request for GetEcranData()", err));
-			}
-
-			string sql = "select sum(insertion) as nbre_ecran,sum(ecran_duration) as ecran_duration ,sum(nbre_spot) as nbre_spot";
-
-			sql += " from ( ";
-
-			sql += select;
-			sql += " from " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + table + " wp ";
-			sql += " where id_media=" + _idMedia + " ";
-			if (_beginingDate.Length > 0)
-				sql += " and date_media_num>=" + _beginingDate + " ";
-			if (_endDate.Length > 0)
-				sql += " and date_media_num<=" + _endDate + "";
-
-			sql += " and insertion=1";
-			sql += product;
-			sql += productsRights;
-			sql += mediaRights;
-			sql += listProductHap;
-			sql += " )";
-
-			#endregion
-
-			#region Execution de la requête
-			try {
-				return _webSession.Source.Fill(sql.ToString());
-			}
-			catch (System.Exception err) {
-				throw (new PortofolioDALException("Impossible to get data for GetEcranData() : " + sql, err));
-			}
-			#endregion
-
 		}
 		#endregion
 

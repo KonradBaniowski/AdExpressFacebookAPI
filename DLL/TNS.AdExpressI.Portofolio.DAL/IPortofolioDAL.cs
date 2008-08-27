@@ -34,16 +34,9 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// <summary>
 		/// Get synthsesis data
 		/// </summary>
-		/// <param name="idDataType">type data</param>
+        /// <param name="synthesisDataType">Synthesis Data Type</param>
 		/// <returns></returns>
-		DataSet GetSynthisData(int idDataType);
-		/// <summary>
-		/// Get Number
-		/// </summary>
-		/// <example>Get pages number</example>
-		/// <param name="idDataType">type data</param>
-		/// <returns></returns>
-		object[] GetNumber(int idDataType);
+		DataSet GetSynthisData(PortofolioSynthesis.dataType synthesisDataType);
 		#endregion
 
         /// <summary>

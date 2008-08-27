@@ -2152,7 +2152,111 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
 		/// Number page result type
 		/// </summary>
 		public const int NUMBER_PAGE_DATA = 6;
-
+        /// <summary>
+        /// Data type for portofolio synthesis
+        /// </summary>
+        public enum dataType { 
+            /// <summary>
+            /// Period selected
+            /// </summary>
+            periodSelected,
+            /// <summary>
+            /// Periodicity
+            /// </summary>
+            periodicity,
+            /// <summary>
+            /// Media
+            /// </summary>
+            media,
+            /// <summary>
+            /// Category
+            /// </summary>
+            category,
+            /// <summary>
+            /// Media seller
+            /// </summary>
+            mediaSeller,
+            /// <summary>
+            /// Volume
+            /// </summary>
+            volume,
+            /// <summary>
+            /// Interest center
+            /// </summary>
+            interestCenter,
+            /// <summary>
+            /// Number board
+            /// </summary>
+            numberBoard,
+            /// <summary>
+            /// Type sale
+            /// </summary>
+            typeSale,
+            /// <summary>
+            /// Number of pages
+            /// </summary>
+            pageNumber,
+            /// <summary>
+            /// Number of pages of advertisements
+            /// </summary>
+            adNumber,
+            /// <summary>
+            /// Number of pages of advertisements excluding insets
+            /// </summary>
+            adNumberExcludingInsets,
+            /// <summary>
+            /// Number of pages of advertisements including insets
+            /// </summary>
+            adNumberIncludingInsets,
+            /// <summary>
+            /// No. of spots (excl. self-promotion)
+            /// </summary>
+            numberSpot,
+            /// <summary>
+            /// Number of ad breaks
+            /// </summary>
+            numberAdBreaks,
+            /// <summary>
+            /// Total duration
+            /// </summary>
+            totalDuration,
+            /// <summary>
+            /// Total ad spends in euros
+            /// </summary>
+            investment,
+            /// <summary>
+            /// Number of products
+            /// </summary>
+            numberProduct,
+            /// <summary>
+            /// Number of new products in the advert tracking selection
+            /// </summary>
+            numberNewProductInTracking,
+            /// <summary>
+            /// Number of new products in the vehicle
+            /// </summary>
+            numberNewProductInVehicle,
+            /// <summary>
+            /// Number of advertisers
+            /// </summary>
+            numberAdvertiser,
+            /// <summary>
+            /// Average duration of a spot
+            /// </summary>
+            averageDurationEcran,
+            /// <summary>
+            /// Average number of spots per ad break
+            /// </summary>
+            numberSpotByEcran,
+            /// <summary>
+            /// Duration
+            /// </summary>
+            duration,
+            /// <summary>
+            /// Insertion
+            /// </summary>
+            insertion
+        }
 	}
 
 	#region Structure
