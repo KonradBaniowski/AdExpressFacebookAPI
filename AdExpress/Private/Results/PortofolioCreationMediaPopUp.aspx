@@ -1,4 +1,6 @@
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.PortofolioCreationMediaPopUp" CodeFile="PortofolioCreationMediaPopUp.aspx.cs" %>
+<%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD runat="server">
@@ -18,6 +20,7 @@
 		<BODY class="darkBackGround whiteBackGround" onload="javascript:goToAnchorImage('<%=pageAnchor%>');">
 		<form id="Form1" method="post" runat="server">
 		<%=result%>
+		<cc1:displaymediaPageswebcontrol id="displaymediaPageswebcontrol1" runat="server"></cc1:displaymediaPageswebcontrol>
 		</form>
 	</BODY>
 </HTML>

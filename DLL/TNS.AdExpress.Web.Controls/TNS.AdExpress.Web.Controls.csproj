@@ -177,6 +177,7 @@
     <Compile Include="Exceptions\AlertsCreationsResultsWebControlException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\ResultsOptionsWebControlException.cs" />
     <Compile Include="Exceptions\PortofolioChartWebControlException.cs" />
     <Compile Include="Exceptions\DetailVehicleSelectionWebControlException.cs">
       <SubType>Code</SubType>
@@ -353,6 +354,7 @@
     <Compile Include="Results\DisplayBannerWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Results\DisplayMediaPagesWebControl.cs" />
     <Compile Include="Results\ImageDropDownListWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -391,6 +393,7 @@
     <Compile Include="Results\ResultWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Results\ZoomMediaPagesWebControl.cs" />
     <Compile Include="Selections\AdvertiserSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

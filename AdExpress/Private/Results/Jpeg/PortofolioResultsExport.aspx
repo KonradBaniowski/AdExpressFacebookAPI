@@ -17,6 +17,7 @@
 	<body class="whiteBackGround darkBackGround" bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0">
 		<form id="Form1" method="post" runat="server">
 			<div align="center">
+			<cc1:PortofolioChartWebControl id="portofolioChartWebControl1" runat="server"></cc1:PortofolioChartWebControl>
 			</div>
 		</form>
 		<%=divClose%>

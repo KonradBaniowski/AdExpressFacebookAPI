@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Controls.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
@@ -19,12 +18,14 @@ using CustomerCst = TNS.AdExpress.Constantes.Customer.Right;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using ClassificationCst = TNS.AdExpress.Constantes.Classification;
+using FrameWorkResults = TNS.AdExpress.Constantes.FrameWork.Results;
 using ProductList=TNS.AdExpress.Web.DataAccess.Selections.Products.ProductListDataAccess;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
@@ -1495,15 +1496,48 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// <param name="current">Page en cours</param>
 		/// <returns>Vrai si un résultat doit être montré </returns>
 		private bool CanShowResult(WebSession webSession,ResultPageInformation current){
-			if((webSession.CurrentModule==WebConstantes.Module.Name.ALERTE_PORTEFEUILLE)&&
-						(((ClassificationCst.DB.Vehicles.names)((LevelInformation) webSession.SelectionUniversMedia.FirstNode.Tag).ID)==ClassificationCst.DB.Vehicles.names.outdoor)&&
-						(current.Id.ToString()=="2"||current.Id.ToString()=="3"||current.Id.ToString()=="4")
-				)return false;
-			else if((webSession.CurrentModule==WebConstantes.Module.Name.BILAN_CAMPAGNE)				
-				&& current.Id.ToString()=="7" && !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG))return false;
-			else return true;
+			switch (webSession.CurrentModule) {
+				case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE :
+				case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+					return CanShowPortofolioResult(webSession, current);
+				case WebConstantes.Module.Name.BILAN_CAMPAGNE :
+					 if((webSession.CurrentModule==WebConstantes.Module.Name.BILAN_CAMPAGNE)
+					&& current.Id == FrameWorkResults.APPM.mediaPlanByVersion && !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)) return false;
+					else return true;
+				default: return true;
+			}			
 		}
-
+		/// <summary>
+		/// Determine si un résultat doit être montré.
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="current">Page en cours</param>
+		private bool CanShowPortofolioResult(WebSession webSession, ResultPageInformation current) {
+			#region VehicleInformation
+			VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+			#endregion
+			switch (vehicleInformation.Id) {
+				case ClassificationCst.DB.Vehicles.names.outdoor :
+					if (current.Id == FrameWorkResults.Portofolio.NOVELTY || current.Id == FrameWorkResults.Portofolio.DETAIL_MEDIA || current.Id == FrameWorkResults.Portofolio.STRUCTURE || (current.Id == FrameWorkResults.Portofolio.CALENDAR && !webSession.CustomerPeriodSelected.Is4M))
+						return false;
+					else return true;
+				case ClassificationCst.DB.Vehicles.names.directMarketing :
+				case ClassificationCst.DB.Vehicles.names.internet :
+					if((current.Id == FrameWorkResults.Portofolio.NOVELTY || current.Id == FrameWorkResults.Portofolio.DETAIL_MEDIA || current.Id == FrameWorkResults.Portofolio.STRUCTURE || current.Id == FrameWorkResults.Portofolio.CALENDAR))
+						return false;
+					else  return true;
+				case ClassificationCst.DB.Vehicles.names.others:
+				case ClassificationCst.DB.Vehicles.names.tv:
+				case ClassificationCst.DB.Vehicles.names.radio:
+				case ClassificationCst.DB.Vehicles.names.press:
+				case ClassificationCst.DB.Vehicles.names.internationalPress:
+					if (!webSession.CustomerPeriodSelected.Is4M && (current.Id == FrameWorkResults.Portofolio.NOVELTY || current.Id == FrameWorkResults.Portofolio.DETAIL_MEDIA || current.Id == FrameWorkResults.Portofolio.STRUCTURE || current.Id == FrameWorkResults.Portofolio.CALENDAR))
+						return false;
+					else return true;
+				default: throw new Exceptions.ResultsOptionsWebControlException("ResultsOptionsWebControl : Vehicle unknown.");
+			}
+			
+		}
 		#endregion
 		
 		

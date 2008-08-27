@@ -16,6 +16,10 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.UI.Results;
+
+using Portofolio = TNS.AdExpressI.Portofolio;
+using Domain = TNS.AdExpress.Domain.Web.Navigation;
+using System.Reflection;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -69,8 +73,23 @@ namespace AdExpress.Private.Results{
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			
-            //result= PortofolioUI.GetPortofolioOneCreationMedia(date,idMedia,fileName1,fileName2);
-			
+            //result= PortofolioUI.GetPortofolioOneCreationMedia(date,idMedia,fileName1,fileName2);		
+		}
+		#endregion
+
+		#region DeterminePostBackMode
+		/// <summary>
+		/// Initialisation des composants
+		/// </summary>
+		/// <returns></returns>
+		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
+			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+			zoommediapageswebControl1.IdMedia = long.Parse(idMedia);
+			zoommediapageswebControl1.FileName1 = fileName1;
+			zoommediapageswebControl1.FileName2 = fileName2;
+			zoommediapageswebControl1.DateCover = date;
+
+			return tmp;
 		}
 		#endregion
 

@@ -1,4 +1,6 @@
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.PortofolioCreationOneMediaPopUp" CodeFile="PortofolioCreationOneMediaPopUp.aspx.cs" %>
+<%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>
@@ -24,6 +26,7 @@
 		
 		<form id="Form1" method="post" runat="server">
 		<%=result%>
+		<cc1:zoommediapageswebControl id="zoommediapageswebControl1" runat="server"></cc1:zoommediapageswebControl>
 		</form>
 	</BODY>
 </HTML>

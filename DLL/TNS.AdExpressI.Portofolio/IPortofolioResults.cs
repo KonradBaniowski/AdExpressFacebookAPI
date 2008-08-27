@@ -19,17 +19,7 @@ namespace TNS.AdExpressI.Portofolio {
     /// <summary>
     /// Portofolio result Interface
     /// </summary>
-    public interface IPortofolioResults {
-        /// <summary>
-        /// Get HTML code for some portofolio result
-        ///  - SYNTHESIS
-        ///  - NOVELTY
-        ///  - DETAIL_MEDIA
-        ///  - PERFORMANCES
-		/// </summary>
-		/// <param name="page">Page</param>
-		/// <returns>HTML Code</returns>
-        string GetHtml(Page page);
+    public interface IPortofolioResults {	
 
 		/// <summary>
 		/// Get Structure html result
@@ -41,26 +31,7 @@ namespace TNS.AdExpressI.Portofolio {
 		/// Get structure chart data
 		/// </summary>
 		/// <returns></returns>
-		DataTable GetStructureChartData();
-		///// <summary>
-		///// Get Press structure result
-		///// </summary>
-		///// <param name="portofolioDAL">Portofolio DAL</param>
-		///// <param name="dtFormat">data table Format</param>
-		///// <param name="dtColor">data table Color</param>
-		///// <param name="dtLocation">data table Location</param>
-		///// <param name="dtInsert">data table Inset</param>
-		//void GetStructPressResult(out DataTable dtFormat, out DataTable dtColor, out DataTable dtLocation, out DataTable dtInsert);
-		///// <summary>
-		///// Get structure Tv result
-		///// </summary>
-		///// <returns></returns>
-		//object[,] GetStructTV();
-		///// <summary>
-		///// Get structure Radio result
-		///// </summary>
-		///// <returns></returns>
-		//object[,] GetStructRadio();
+		DataTable GetStructureChartData();		
         /// <summary>
         /// Get ResultTable for some portofolio result
         ///  - DETAIL_PORTOFOLIO
@@ -84,24 +55,7 @@ namespace TNS.AdExpressI.Portofolio {
         /// </summary>
         /// <param name="excel">True for excel result</param>
         /// <returns>HTML Code</returns>
-        string GetDetailMediaHtml(bool excel);
-		///// <summary>
-		///// Get detail media for press
-		///// </summary>
-		///// <param name="excel">True for excel result</param>
-		///// <returns>HTML Code</returns>
-		//string GetDetailMediaPressHtml(bool excel);
-		//    /// <summary>
-		///// Get detail media for tv & radio
-		///// </summary>
-		///// <param name="excel">True for excel result</param>
-		///// <returns>HTML Code</returns>
-		//string GetDetailMediaTvRadioHtml(bool excel);
-
-		///// <summary>
-		///// Get portofolio media detail insertion result
-		///// </summary>
-		///// <returns>Result Table</returns>
-		//ResultTable GetPortofolioDetailMediaResultTable();
+        string GetDetailMediaHtml(bool excel);		
+	
     }
 }

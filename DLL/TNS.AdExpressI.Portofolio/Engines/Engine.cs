@@ -65,32 +65,32 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 		#region Constructor
 		/// <summary>
-        /// Constructor
-        /// </summary>
+		/// Constructor
+		/// </summary>
 		/// </summary>
 		/// <param name="webSession">Client Session</param>
 		/// <param name="vehicle">Vehicle</param>
 		/// <param name="idMedia">Id media</param>
 		/// <param name="periodBeginning">Period Beginning </param>
 		/// <param name="periodEnd">Period End</param>
-		protected Engine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd) {
-            if(webSession==null) throw (new ArgumentNullException("Customer session is null"));
-            _webSession=webSession;
-            try {
-                // Set Vehicle
+		public Engine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd) {
+			if (webSession == null) throw (new ArgumentNullException("Customer session is null"));
+			_webSession = webSession;
+			try {
+				// Set Vehicle
 				_vehicleInformation = vehicleInformation;
-                //Set Media Id
-                _idMedia = idMedia;
-                // Period
+				//Set Media Id
+				_idMedia = idMedia;
+				// Period
 				_periodBeginning = periodBeginning;
 				_periodEnd = periodEnd;
-                // Module
-                _module=ModulesList.GetModule(webSession.CurrentModule);                
-            }
-            catch(System.Exception err) {
+				// Module
+				_module = ModulesList.GetModule(webSession.CurrentModule);
+			}
+			catch (System.Exception err) {
 				throw (new PortofolioException("Impossible to set parameters", err));
-            }
-        }
+			}
+		}
 
 		#endregion
 
@@ -99,14 +99,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// Get result table
 		/// </summary>
 		/// <returns></returns>
-		public virtual ResultTable GetResultTable(){
+		public virtual ResultTable GetResultTable() {
 			return ComputeResultTable();
 		}
 		/// <summary>
 		/// Get Html result
 		/// </summary>
 		/// <returns></returns>
-		public virtual string GetHtmlResult(){
+		public virtual string GetHtmlResult() {
 			return BuildHtmlResult();
 		}
 
@@ -155,7 +155,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 align=center class=\"paleVioletBackGroundV2 violetBorder\">");
 						//Vehicle view
 						t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, _webSession.SiteLanguage) + "</td></tr>");
-                        CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+						CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
 						for (int i = 0; i < dtVisuel.Rows.Count; i++) {
 							//date_media_num
 
@@ -166,7 +166,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 								pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
 							}
 							DateTime dayDT = new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
-                            day = DayString.GetCharacters(dayDT, cultureInfo) + " " + dayDT.ToString("dd/MM/yyyy"); ;
+							day = DayString.GetCharacters(dayDT, cultureInfo) + " " + dayDT.ToString("dd/MM/yyyy"); ;
 							if (compteur == 0) {
 								t.Append("<tr>");
 								compteur = 1;
@@ -269,5 +269,5 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 		#endregion
 
-    }
+	}
 }

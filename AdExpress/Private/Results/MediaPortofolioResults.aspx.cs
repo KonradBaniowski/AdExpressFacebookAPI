@@ -18,12 +18,10 @@ using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.UI.Results;
-using TNS.AdExpress.Domain.Web.Navigation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
@@ -39,6 +37,9 @@ using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 
 using Portofolio = TNS.AdExpressI.Portofolio;
 using Domain = TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Classification;
 using System.Reflection;
 
 #endregion
@@ -130,6 +131,10 @@ namespace AdExpress.Private.Results{
 		protected override void OnPreInit(EventArgs e) {
 			base.OnPreInit(e);
 			Int64 tabSelected;
+
+			//Set default tab if necessary
+			ChangeCurrentTab();
+
 			try {
 				tabSelected = Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
 			}
@@ -209,7 +214,7 @@ namespace AdExpress.Private.Results{
 					_webSession.SelectionUniversProduct.Nodes.Clear();
 					_webSession.Save();
 				}
-
+				
 				//Choix de la planche à afficher
 				_ResultWebControl.Visible = false;
 				_genericProductLevel = false;
@@ -262,11 +267,11 @@ namespace AdExpress.Private.Results{
 						}
 						#endregion
 
-						if (_webSession.Unit == WebConstantes.CustomerSessions.Unit.kEuro) {
-							//unité en euro pour cette planche
-							_webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
-							_webSession.Save();
-						}
+						//if (_webSession.Unit == WebConstantes.CustomerSessions.Unit.kEuro) {
+						//    //unité en euro pour cette planche
+						//    _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
+						//    _webSession.Save();
+						//}
 						break;
 
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
@@ -326,7 +331,6 @@ namespace AdExpress.Private.Results{
 			Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;			
 			InitializeProductWebControl1.CustomerWebSession=_webSession;	
-			//MediaAgencyYearWebControl1.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession = _webSession;
 			_ResultWebControl.CustomerWebSession = _webSession;
@@ -445,18 +449,38 @@ namespace AdExpress.Private.Results{
 		}
 		#endregion
 
-		protected void ChangeCurrentTab() {
-			switch (_webSession.CurrentTab) {
-				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
-				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
-				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
-					string idVehicle = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-					if (!_webSession.CustomerPeriodSelected.Is4M
-						|| (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.internet
-						|| (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.directMarketing)
-						_webSession.CurrentTab = TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS;
+		/// <summary>
+		/// Set synthesis tab as default in some cases
+		/// </summary>
+		protected void ChangeCurrentTab() {			
+			#region VehicleInformation
+			VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+			#endregion
+			switch (vehicleInformation.Id) {
+				case ClassificationCst.DB.Vehicles.names.outdoor:
+					if (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR && !_webSession.CustomerPeriodSelected.Is4M)) {
+						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;						
+						_webSession.Save();
+					}
 					break;
-
+				case ClassificationCst.DB.Vehicles.names.directMarketing:
+				case ClassificationCst.DB.Vehicles.names.internet:
+					if ((_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
+						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;						
+						_webSession.Save();
+					}
+					break;
+				case ClassificationCst.DB.Vehicles.names.others:
+				case ClassificationCst.DB.Vehicles.names.tv:
+				case ClassificationCst.DB.Vehicles.names.radio:
+				case ClassificationCst.DB.Vehicles.names.press:
+				case ClassificationCst.DB.Vehicles.names.internationalPress:
+					if (!_webSession.CustomerPeriodSelected.Is4M && (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
+						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;						
+						_webSession.Save();
+					}
+					break;
+				default: throw new WebExceptions.PortofolioSystemException(" Vehicle unknown.");
 			}
 		}
 	}

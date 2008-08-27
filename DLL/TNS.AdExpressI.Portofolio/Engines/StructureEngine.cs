@@ -22,6 +22,7 @@ using FrameWorkResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using ExcelFunction = TNS.AdExpress.Web.UI.ExcelWebPage;
 
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Exceptions;
@@ -167,6 +168,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			ds = portofolioDAL.GetData();
 
+			// Selection recall
+			if (_excel) {
+				t.Append(ExcelFunction.GetLogo(_webSession));
+				t.Append(ExcelFunction.GetExcelHeader(_webSession, GestionWeb.GetWebWord(1379, _webSession.SiteLanguage)));
+			}
+
 			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				
 				dt = ds.Tables[0];
@@ -211,7 +218,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				t.Append("</table>");
 			}
 			else t.Append(GetNoDataMessageHtml());
-
+			if (_excel) {
+				t.Append(ExcelFunction.GetFooter(_webSession));
+			}
 			return t.ToString();
 		}
 		#endregion
@@ -245,6 +254,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			ds = portofolioDAL.GetData();
 
+			// Selection recall
+			if (_excel) {
+				t.Append(ExcelFunction.GetLogo(_webSession));
+				t.Append(ExcelFunction.GetExcelHeader(_webSession, GestionWeb.GetWebWord(1379, _webSession.SiteLanguage)));
+			}
 			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				dt = ds.Tables[0];
 
@@ -254,12 +268,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				// Première ligne
 				t.Append("\r\n\t<tr height=\"20px\" >");
 				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
-					t.Append("<td class=\"" + P2 + " whiteBackGround\" nowrap>" + GestionWeb.GetWebWord(1299, _webSession.SiteLanguage) + "</td>");
+					t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1299, _webSession.SiteLanguage) + "</td>");
 				else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-					t.Append("<td class=\"" + P2 + " whiteBackGround\" nowrap>" + GestionWeb.GetWebWord(1451, _webSession.SiteLanguage) + "</td>");
-				t.Append("<td class=\"" + P2 + " whiteBackGround\" nowrap>" + GestionWeb.GetWebWord(1423, _webSession.SiteLanguage) + "</td>");
-				t.Append("<td class=\"" + P2 + " whiteBackGround\" nowrap>" + GestionWeb.GetWebWord(869, _webSession.SiteLanguage) + "</td>");
-				t.Append("<td class=\"" + P2 + " whiteBackGround\" nowrap>" + GestionWeb.GetWebWord(1435, _webSession.SiteLanguage) + "</td>");
+					t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1451, _webSession.SiteLanguage) + "</td>");
+				t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1423, _webSession.SiteLanguage) + "</td>");
+				t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(869, _webSession.SiteLanguage) + "</td>");
+				t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1435, _webSession.SiteLanguage) + "</td>");
 				t.Append("</tr>");
 				#endregion
 
@@ -302,7 +316,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				}
 				t.Append("</table>");
 			}
-
+			if (_excel) {
+				t.Append(ExcelFunction.GetFooter(_webSession));
+			}
 			return t.ToString();
 		}
 
@@ -463,7 +479,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					hourIntervallLabel = GestionWeb.GetWebWord(GetHourIntervalWebWordCode()[dr["HourInterval"].ToString()], _webSession.SiteLanguage);
 
 					newRow["idUnit"] = WebCst.CustomerSessions.Unit.duration.GetHashCode();
-					newRow["unitLabel"] = GestionWeb.GetWebWord(1435, _webSession.SiteLanguage);
+					newRow["unitLabel"] = GestionWeb.GetWebWord(280, _webSession.SiteLanguage);
 					newRow["chartDataLabel"] = hourIntervallLabel;
 					newRow["chartDataValue"] = (dr["duration"] != System.DBNull.Value) ? double.Parse(dr["duration"].ToString()) : 0;
 				}

@@ -274,8 +274,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(SPOTS_COL, _webSession.SiteLanguage), SPOTS_COL));
 					iNbCol = 5 + creatives + insertions;
 					columnsName = new string[iNbCol];
+					
 					columnsName[3 + creatives + insertions] = "duration";
-					columnsName[4 + creatives + insertions] = "insertion";
+					columnsName[4 + creatives + insertions] = "spot";
 					cellFactories = new CellUnitFactory[iNbCol];
 					cellFactories[3 + creatives + insertions] = new CellUnitFactory(new CellDuration(0.0));
 					cellFactories[4 + creatives + insertions] = new CellUnitFactory(new CellNumber(0.0));
@@ -284,7 +285,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(PAN_COL, _webSession.SiteLanguage), PAN_COL));
 					iNbCol = 4 + creatives + insertions;
 					columnsName = new string[iNbCol];
-					columnsName[3 + creatives + insertions] = "insertion";
+					columnsName[3 + creatives + insertions] = "numberBoard";
 					cellFactories = new CellUnitFactory[iNbCol];
 					cellFactories[3 + creatives + insertions] = new CellUnitFactory(new CellNumber(0.0));
 					break;

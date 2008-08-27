@@ -79,6 +79,22 @@ namespace AdExpress.Private.Results.Jpeg{
 			}
 		}
 		#endregion
+		#region DeterminePostBackMode
+		/// <summary>
+		/// Initialisation des composants
+		/// </summary>
+		/// <returns></returns>
+		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
+			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();			
+
+			portofolioChartWebControl1.CustomerWebSession = _webSession;
+			portofolioChartWebControl1.TypeFlash = false;
+
+
+
+			return tmp;
+		}
+		#endregion
 
 		#region Code généré par le Concepteur Web Form
 		/// <summary>

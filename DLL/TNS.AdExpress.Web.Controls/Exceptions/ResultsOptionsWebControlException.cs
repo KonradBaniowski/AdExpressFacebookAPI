@@ -5,26 +5,25 @@
 #endregion
 
 using System;
-using TNS.FrameWork.Exceptions;
 
 namespace TNS.AdExpress.Web.Controls.Exceptions{
 	/// <summary>
 	/// Description résumée de ModuleException.
 	/// </summary>
-	public class PortofolioChartWebControlException : BaseException { 
+	public class ResultsOptionsWebControlException:System.Exception{ 
 		
 		#region Constructeur
 		/// <summary>
 		/// Constructeur de base
 		/// </summary>
-		public PortofolioChartWebControlException():base(){			
+		public ResultsOptionsWebControlException():base(){			
 		}
 
 		/// <summary>
 		/// Constructeur
 		/// </summary>
 		/// <param name="message">message d'erreur</param>
-		public PortofolioChartWebControlException(string message)
+		public ResultsOptionsWebControlException(string message)
 			: base(message) {
 		
 		}
@@ -34,7 +33,7 @@ namespace TNS.AdExpress.Web.Controls.Exceptions{
 		/// </summary>
 		/// <param name="message">Message d'erreur</param>
 		/// <param name="innerException">Exception source</param>
-		public PortofolioChartWebControlException(string message, System.Exception innerException)
+		public ResultsOptionsWebControlException(string message, System.Exception innerException)
 			: base(message, innerException) {
 		}
 		#endregion
