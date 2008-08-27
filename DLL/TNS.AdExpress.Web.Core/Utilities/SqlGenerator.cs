@@ -1977,30 +1977,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="type">Type de la table</param>
         /// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
         public static string GetUnitFieldNameSumWithAlias(WebSession webSession, DBConstantes.TableType.Type type) {
-            StringBuilder sql = new StringBuilder();
-            switch (type) {
-                case DBConstantes.TableType.Type.dataVehicle4M:
-                case DBConstantes.TableType.Type.dataVehicle:
-                    try {
-                        UnitInformation unitInformation = webSession.GetSelectedUnit();
-                        sql.AppendFormat("sum({0}) as {1}", unitInformation.DatabaseField, unitInformation.Id.ToString());
-                        return sql.ToString();
-                    }
-                    catch {
-                        throw new SQLGeneratorException("Not managed unit (Alert Module)");
-                    }
-                case DBConstantes.TableType.Type.webPlan:
-                    try {
-                        UnitInformation unitInformation = webSession.GetSelectedUnit();
-                        sql.AppendFormat("sum({0}) as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
-                        return sql.ToString();
-                    }
-                    catch {
-                        throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
-                    }
-                default:
-                    throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
-            }
+            return GetUnitFieldNameSumWithAlias(webSession, type, string.Empty);
         }
 
         /// <summary>
