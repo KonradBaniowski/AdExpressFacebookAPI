@@ -2060,7 +2060,7 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// <summary>
 		/// Liste des produits à exclure dans les alertes et analyse (radio)
 		/// </summary>
-		public const int EXCLUDE_PRODUCT_LIST_ID=2;
+        public const int EXCLUDE_PRODUCT_LIST_ID = 385;
 		/// <summary>
 		/// Liste des produits en autopromo pour la radio
 		/// </summary>

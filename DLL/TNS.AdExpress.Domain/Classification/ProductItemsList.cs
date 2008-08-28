@@ -44,8 +44,7 @@ namespace TNS.AdExpress.Domain.Classification {
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="idProductItemsList">List Id</param>
-		public ProductItemsList(int idProductItemsList){
+		public ProductItemsList(){
 		}
 		#endregion
 

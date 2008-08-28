@@ -34,7 +34,7 @@ namespace TNS.AdExpress.Domain.Classification {
         /// </summary>
         /// <param name="source">DataSource</param>
         public static new void LoadBaalLists(IDataSource source) {
-            ListContener<MediaItemsList>.LoadBaalLists(source);
+            ListContener<ProductItemsList>.LoadBaalLists(source);
         }
 
 	}
