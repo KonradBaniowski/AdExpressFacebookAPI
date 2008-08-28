@@ -1235,9 +1235,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
 
                         if (dataType == PortofolioSynthesis.dataType.numberProduct)
-                            sql += " select id_product, sum(nbLines) as nbLines";
+                            sql = " select id_product, sum(nbLines) as nbLines";
                         else if (dataType == PortofolioSynthesis.dataType.numberAdvertiser)
-                            sql += " select id_advertiser, sum(nbLines) as nbLines";
+                            sql = " select id_advertiser, sum(nbLines) as nbLines";
                         sql += " from (";
                         sql += sqlDataVehicle;
                         sql += " UNION ";
