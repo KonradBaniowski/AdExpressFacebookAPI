@@ -64,7 +64,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// <summary>
 		/// Cobranding condition
 		/// </summary>
-		protected int cobrandindConditionValue = 1;
+		protected int _cobrandindConditionValue = 1;
 		#endregion
 
 		#region Constructor
