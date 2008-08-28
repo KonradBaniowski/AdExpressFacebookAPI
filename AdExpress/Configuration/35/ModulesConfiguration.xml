@@ -762,15 +762,21 @@
               <detailSelection id="20" name="Generic Product Level Detail"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" />
-          <detailSelections>
-            <detailSelection id="1" name="Module name"/>
-            <detailSelection id="2" name="Result name"/>
-            <detailSelection id="3" name="Date"/>
-            <detailSelection id="5" name="Vehicle Selected"/>
-            <detailSelection id="9" name="Competitor Media Selected"/>
-            <detailSelection id="6" name="Product Selected"/>
-          </detailSelections>
+          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>insertion</allowedUnit>
+            </allowedUnits>
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          </page>
           <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
