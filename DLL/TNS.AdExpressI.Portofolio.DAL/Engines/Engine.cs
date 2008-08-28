@@ -60,8 +60,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// <summary>
 		/// End Date
 		/// </summary>
-		protected string _endDate;		
-
+		protected string _endDate;
+		/// <summary>
+		/// Cobranding condition
+		/// </summary>
+		protected int cobrandindConditionValue = 1;
 		#endregion
 
 		#region Constructor
