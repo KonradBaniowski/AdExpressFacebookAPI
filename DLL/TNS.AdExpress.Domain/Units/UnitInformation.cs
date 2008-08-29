@@ -121,8 +121,7 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         /// <returns>SQL sum Query with Alias</returns>
         public string GetSQLDetailledSum() {
-            if (_databaseField == null || _databaseField.Length == 0) throw (new NullReferenceException("DatabaseField is not defined"));
-            return (" sum("+_databaseField+") as "+_id.ToString()+" ");
+            return (GetSQLDetailledSum(string.Empty));
         }
 
         /// <summary>
@@ -130,8 +129,7 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         /// <returns>SQL sum Query with Alias</returns>
         public string GetSQLSum() {
-            if (_databaseMultimediaField == null || _databaseMultimediaField.Length == 0) throw (new NullReferenceException("DatabaseField is not defined"));
-            return (" sum(" + _databaseMultimediaField + ") as " + _id.ToString() + " ");
+            return (GetSQLSum(string.Empty));
         }
 
         /// <summary>
@@ -140,6 +138,30 @@ namespace TNS.AdExpress.Domain.Units {
         /// <returns>SQL sum Query with Alias</returns>
         public string GetSQLUnionSum() {
             return (" sum(" + _id.ToString() + ") as " + _id.ToString() + " ");
+        }
+
+        /// <summary>
+        /// Get SQL database field sum query with Alias
+        /// </summary>
+        /// <param name="prefixe">prefixe of table</param>
+        /// <returns>SQL sum Query with Alias</returns>
+        public string GetSQLDetailledSum(string prefixe) {
+            if (_databaseField == null || _databaseField.Length == 0) throw (new NullReferenceException("DatabaseField is not defined"));
+            if (prefixe != null && prefixe.Length > 0) prefixe += ".";
+            else prefixe = "";
+            return (" sum(" + prefixe + _databaseField + ") as " + _id.ToString() + " ");
+        }
+
+        /// <summary>
+        /// Get SQL database field multimedia sum query with Alias
+        /// </summary>
+        /// <param name="prefixe">prefixe of table</param>
+        /// <returns>SQL sum Query with Alias</returns>
+        public string GetSQLSum(string prefixe) {
+            if (_databaseMultimediaField == null || _databaseMultimediaField.Length == 0) throw (new NullReferenceException("DatabaseField is not defined"));
+            if (prefixe != null && prefixe.Length > 0) prefixe += ".";
+            else prefixe = "";
+            return (" sum(" + prefixe + _databaseMultimediaField + ") as " + _id.ToString() + " ");
         }
 
         #endregion

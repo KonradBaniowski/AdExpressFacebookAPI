@@ -3586,6 +3586,16 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="type">Type de la table</param>
         /// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
         public static string GetUnitFieldsNameForPortofolio(WebSession webSession, DBConstantes.TableType.Type type){
+            return GetUnitFieldsNameForPortofolio(webSession, type, string.Empty);
+        }
+
+        /// <summary>
+        /// Obtient les champs unités à utiliser en fonction du media
+        /// </summary>
+        /// <param name="webSession">Web Session</param>
+        /// <param name="type">Type de la table</param>
+        /// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
+        public static string GetUnitFieldsNameForPortofolio(WebSession webSession, DBConstantes.TableType.Type type, string prefixe) {
             try {
                 List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
                 string sqlUnit = "";
@@ -3597,12 +3607,12 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         case DBConstantes.TableType.Type.dataVehicle4M:
                             if (!first) sqlUnit += ", ";
                             else first = false;
-                            sqlUnit += currentUnit.GetSQLDetailledSum();
+                            sqlUnit += currentUnit.GetSQLDetailledSum(prefixe);
                             break;
                         case DBConstantes.TableType.Type.webPlan:
                             if (!first) sqlUnit += ", ";
                             else first = false;
-                            sqlUnit += currentUnit.GetSQLSum();
+                            sqlUnit += currentUnit.GetSQLSum(prefixe);
                             break;
                     }
                 }
@@ -3612,6 +3622,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 throw new SQLGeneratorException("GetUnitFieldsNameForPortofolio(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type)-->The type of module is not managed for the selection of unit.");
             }
         }
+
 
         /// <summary>
         /// Obtient les champs unités à utiliser en fonction du media
