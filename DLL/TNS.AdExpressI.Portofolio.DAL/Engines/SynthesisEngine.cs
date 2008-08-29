@@ -106,16 +106,12 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case PortofolioSynthesis.dataType.typeSale:
                     return GetTypeSale();
                 case PortofolioSynthesis.dataType.numberProduct:
-                    //verif = (_webSession.CustomerPeriodSelected.Is4M && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet);
-                //return verif ? NumberProduct(PortofolioSynthesis.dataType.numberProduct) : GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberProduct);
                     return GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberProduct);
                 case PortofolioSynthesis.dataType.numberNewProductInTracking:
                     return NumberProduct(PortofolioSynthesis.dataType.numberNewProductInTracking);
                 case PortofolioSynthesis.dataType.numberNewProductInVehicle:
                     return NumberProduct(PortofolioSynthesis.dataType.numberNewProductInVehicle);
                 case PortofolioSynthesis.dataType.numberAdvertiser:
-                    //verif = (_webSession.CustomerPeriodSelected.Is4M && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet);
-                    //return verif ? NumberAdvertiser() : GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberAdvertiser);
                     return GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberAdvertiser);
                 case PortofolioSynthesis.dataType.adNumberIncludingInsets:
                     return NumberPageEncart(PortofolioSynthesis.dataType.adNumberIncludingInsets);
