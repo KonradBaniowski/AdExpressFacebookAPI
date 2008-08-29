@@ -45,6 +45,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		protected const int TOTAL_COL = 1401;
 		protected const int POURCENTAGE_COL = 1236;
 		#endregion
+
 		#region Constructor
 		/// <summary>
 		/// Constructor
@@ -171,7 +172,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					//feuille ou niveau parent?
 					if (i == iNbLevels) {
 						lCol = tab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
-						valu = Convert.ToDouble(row["unit"]);
+						valu = Convert.ToDouble(row[_webSession.GetSelectedUnit().Id.ToString()]);
 						tab.AffectValueAndAddToHierarchy(1, iCurLine, lCol, valu);
 						tab.AffectValueAndAddToHierarchy(1, iCurLine, 4, valu);
 						tab.AffectValueAndAddToHierarchy(1, iCurLine, 3, valu);
@@ -266,29 +267,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				headers.Root.Add(new Header(true, DateString.YYYYMMDDToDD_MM_YYYY(parution.ToString(), _webSession.SiteLanguage), (long)parution));
 			}
 			if (!_webSession.Percentage) {
-				switch (_webSession.Unit) {
-					case WebCst.CustomerSessions.Unit.duration:
-						cellFactory = new CellUnitFactory(new CellDuration(0.0));
-						break;
-					case WebCst.CustomerSessions.Unit.euro:
-						cellFactory = new CellUnitFactory(new CellEuro(0.0));
-						break;
-					case WebCst.CustomerSessions.Unit.kEuro:
-						cellFactory = new CellUnitFactory(new CellKEuro(0.0));
-						break;
-					case WebCst.CustomerSessions.Unit.insertion:
-						cellFactory = new CellUnitFactory(new CellInsertion(0.0));
-						break;
-					case WebCst.CustomerSessions.Unit.pages:
-						cellFactory = new CellUnitFactory(new CellPage(0.0));
-						break;
-					case WebCst.CustomerSessions.Unit.mmPerCol:
-						cellFactory = new CellUnitFactory(new CellMMC(0.0));
-						break;
-					default:
-						cellFactory = new CellUnitFactory(new CellNumber(0.0));
-						break;
-				}
+                cellFactory = _webSession.GetCellUnitFactory();
 			}
 			else {
 				cellFactory = new CellUnitFactory(new CellPDM(0.0));

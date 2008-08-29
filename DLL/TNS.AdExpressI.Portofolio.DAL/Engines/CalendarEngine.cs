@@ -66,7 +66,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			string detailProductFields = "";
 			string detailProductJoints = "";
 			string detailProductOrderBy = "";
-			string unitField = "";
+            string unitFieldNameSumWithAlias = "";
 			string productsRights = "";
 			string sql = "";
 			string list = "";
@@ -79,14 +79,14 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			string mediaAgencyTable = string.Empty;
 			string mediaAgencyJoins = string.Empty;
 			#endregion
-
+            
 			#region Construction de la requête
 			try {
 				dataTableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,WebConstantes.Module.Type.alert);
 				detailProductTablesNames = _webSession.GenericProductDetailLevel.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
 				detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-				unitField = WebFunctions.SQLGenerator.GetUnitFieldName(_webSession, DBConstantes.TableType.Type.dataVehicle4M); //WebFunctions.SQLGenerator.GetUnitFieldName(_webSession);
+				unitFieldNameSumWithAlias = WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(_webSession, DBConstantes.TableType.Type.dataVehicle4M); //WebFunctions.SQLGenerator.GetUnitFieldName(_webSession);
 				mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
@@ -109,7 +109,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				throw (new PortofolioDALException("Impossible to init query parameters" + e.Message));
 			}
 
-			sql += " select " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + ",sum(" + unitField + ") as unit";
+			sql += " select " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + ","+unitFieldNameSumWithAlias;
 			sql += ", " + DBConstantes.Fields.DATE_MEDIA_NUM + "";
 			sql += " from " + mediaAgencyTable + dataTableName;
 			if (detailProductTablesNames.Length > 0)

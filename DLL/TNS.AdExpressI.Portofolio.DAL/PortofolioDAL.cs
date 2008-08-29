@@ -29,6 +29,7 @@ using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.Portofolio.DAL {
     /// <summary>
@@ -364,6 +365,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 			string productsRights = null;
 			string mediaRights = null;
 			string listProductHap = null;
+            string euroFieldNameSumWithAlias = null;
+            string insertionFieldNameSumWithAlias = null;
 			#endregion
 
 			try {
@@ -371,13 +374,15 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 				productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+                euroFieldNameSumWithAlias = "sum(" + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].DatabaseField + ") as " + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].Id.ToString();
+                insertionFieldNameSumWithAlias = "sum(" + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField + ") as " + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Id.ToString();
 			}
 			catch (System.Exception err) {
 				throw (new PortofolioDALException("Impossible to build the request for GetInvestmentByMedia() : " + sql, err));
 			}
 
 			#region Construction de la requête
-			sql += " select sum(insertion) insertion,sum(expenditure_euro) investment,date_cover_num date1";
+            sql += " select " + insertionFieldNameSumWithAlias + "," + euroFieldNameSumWithAlias + ",date_cover_num date1";
 			sql += "  from " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
 			sql += " where id_media=" + _idMedia + " ";
 			if (_beginingDate.Length > 0)
@@ -398,8 +403,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 					string[] value1 = null;
 					foreach (DataRow current in ds.Tables[0].Rows) {
 						value1 = new string[2];
-						value1[0] = current["investment"].ToString();
-						value1[1] = current["insertion"].ToString();
+                        value1[0] = current[UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].Id.ToString()].ToString();
+                        value1[1] = current[UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
 						htInvestment.Add(current["date1"], value1);
 					}
 				}
@@ -567,8 +572,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             return sql;
         }
         #endregion
-
-      
+ 
 		#region Get Table Data
 		/// <summary>
 		/// Get Table
@@ -614,7 +618,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                     sql += " select  distinct ID_COBRANDING_ADVERTISER";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " , NUMBER_spot_com_break nbre_spot";
-                    sql += " , insertion ";
+                    sql += " ," + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField + " ";
 
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.tv:
@@ -622,48 +626,11 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                     sql += "select  distinct id_commercial_break ";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " ,NUMBER_MESSAGE_COMMERCIAL_BREA nbre_spot ";
-                    sql += " ,insertion ";
+                    sql += " ," + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField + " ";
                     return sql;
                 default:
                     throw new PortofolioDALException("getTable(DBClassificationConstantes.Vehicles.value idMedia)-->Vehicle unknown.");
             }
-        }
-        #endregion
-
-        #region Get Select New Product
-        /// <summary>
-        /// Get Select New Product
-        /// </summary>
-        /// <returns>SQL</returns>
-		protected virtual string GetSelectNewProduct() {
-            string sql = "";
-            switch (_vehicleInformation.Id) {
-                case DBClassificationConstantes.Vehicles.names.internationalPress:
-                case DBClassificationConstantes.Vehicles.names.press:
-                    sql = "select  distinct " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_product";
-                    sql += " , sum(wp.expenditure_euro) as valeur ";
-                    sql += " ,sum (insertion) as insertion ";
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).Prefix + ".product as produit ";
-                    return sql;
-                case DBClassificationConstantes.Vehicles.names.radio:
-                    sql = " select distinct " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_product ";
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).Prefix + ".product as produit ";
-                    sql += " ,sum(" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".expenditure_euro) as valeur ";
-                    sql += " ,sum (insertion) as insertion ";
-                    sql += " ,sum (duration) as duree ";
-                    return sql;
-                case DBClassificationConstantes.Vehicles.names.tv:
-                case DBClassificationConstantes.Vehicles.names.others:
-                    sql = " select distinct " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_product ";
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).Prefix + ".product as produit ";
-                    sql += " ,sum(" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".expenditure_euro) as valeur ";
-                    sql += " ,sum (insertion) as insertion ";
-                    sql += " ,sum(duration) as duree ";
-                    return sql;
-                default:
-                    throw new PortofolioDALException("getTable(DBClassificationConstantes.Vehicles.value idMedia)-->Vehicle unknown.");
-            }
-
         }
         #endregion
 
