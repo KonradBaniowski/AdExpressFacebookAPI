@@ -3,6 +3,7 @@
 // Creation date: 11/08/2008
 // Modification date:
 #endregion
+
 using System;
 using System.Data;
 using System.Text;
@@ -29,6 +30,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -217,6 +219,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			int insertions = 0;
 			int creatives = 0;
 			int iNbCol = 0;
+            int columnIndex = 2;
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
+            Type type;
+            CellUnit cellUnit;
 
 			headers = new TNS.FrameWork.WebResultUI.Headers();
 			// Product column
@@ -235,31 +241,18 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			// Media schedule column
 			headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(PM_COL, _webSession.SiteLanguage), PM_COL));
 
-			headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(EUROS_COL, _webSession.SiteLanguage), EUROS_COL));
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.press:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(MM_COL, _webSession.SiteLanguage), MM_COL));
-					headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(PAGE_COL, _webSession.SiteLanguage), PAGE_COL));
-					headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(INSERTIONS_COL, _webSession.SiteLanguage), INSERTIONS_COL));
 					iNbCol = 6 + creatives + insertions;
 					cellFactories = new CellUnitFactory[iNbCol];
 					columnsName = new string[iNbCol];
-					columnsName[3 + creatives + insertions] = "mmpercol";
-					columnsName[4 + creatives + insertions] = "pages";
-					columnsName[5 + creatives + insertions] = "insertion";
-					cellFactories[3 + creatives + insertions] = new CellUnitFactory(new CellMMC(0.0));
-					cellFactories[4 + creatives + insertions] = new CellUnitFactory(new CellPage(0.0));
-					cellFactories[5 + creatives + insertions] = new CellUnitFactory(new CellInsertion(0.0));
 					break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
 					if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT)) {
-						headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(VOLUME, _webSession.SiteLanguage), VOLUME));
 						iNbCol = 4 + creatives + insertions;
 						cellFactories = new CellUnitFactory[iNbCol];
 						columnsName = new string[iNbCol];
-						columnsName[3 + creatives + insertions] = "volume";
-						cellFactories[3 + creatives + insertions] = new CellUnitFactory(new CellVolume(0.0));
 					}
 					else {
 						iNbCol = 3 + creatives + insertions;
@@ -270,30 +263,25 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
-					headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(DURATION_COL, _webSession.SiteLanguage), DURATION_COL));
-					headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(SPOTS_COL, _webSession.SiteLanguage), SPOTS_COL));
 					iNbCol = 5 + creatives + insertions;
 					columnsName = new string[iNbCol];
-					
-					columnsName[3 + creatives + insertions] = "duration";
-					columnsName[4 + creatives + insertions] = "spot";
 					cellFactories = new CellUnitFactory[iNbCol];
-					cellFactories[3 + creatives + insertions] = new CellUnitFactory(new CellDuration(0.0));
-					cellFactories[4 + creatives + insertions] = new CellUnitFactory(new CellNumber(0.0));
 					break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
-					headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(PAN_COL, _webSession.SiteLanguage), PAN_COL));
 					iNbCol = 4 + creatives + insertions;
 					columnsName = new string[iNbCol];
-					columnsName[3 + creatives + insertions] = "numberBoard";
 					cellFactories = new CellUnitFactory[iNbCol];
-					cellFactories[3 + creatives + insertions] = new CellUnitFactory(new CellNumber(0.0));
 					break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
 					iNbCol = 3 + creatives + insertions;
 					columnsName = new string[iNbCol];
 					cellFactories = new CellUnitFactory[iNbCol];
 					break;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
+                    iNbCol = 3 + creatives + insertions;
+                    columnsName = new string[iNbCol];
+                    cellFactories = new CellUnitFactory[iNbCol];
+                    break;
 				default:
 					throw new PortofolioException("Vehicle unknown.");
 			}
@@ -301,8 +289,31 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			cellFactories[1] = null;
 			if (_showCreatives) columnsName[1 + creatives] = null;
 			if (_showInsertions) columnsName[1 + creatives + insertions] = null;
-			columnsName[2 + creatives + insertions] = "euro";
-			cellFactories[2 + creatives + insertions] = new CellUnitFactory(new CellEuro(0.0));
+
+            switch (_vehicleInformation.Id) {
+                case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
+
+                    foreach (UnitInformation currentUnit in _webSession.GetValidUnitForResult()) {
+                        headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(currentUnit.WebTextId, _webSession.SiteLanguage), currentUnit.WebTextId));
+                        type = assembly.GetType(currentUnit.CellType);
+                        cellUnit = (CellUnit)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                        columnsName[columnIndex + creatives + insertions] = currentUnit.Id.ToString();
+                        cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory(cellUnit);
+                        columnIndex++;
+                    }
+                    break;
+
+                default:
+                    throw new PortofolioException("Vehicle unknown.");
+            }
+
 		}
 		#endregion
 

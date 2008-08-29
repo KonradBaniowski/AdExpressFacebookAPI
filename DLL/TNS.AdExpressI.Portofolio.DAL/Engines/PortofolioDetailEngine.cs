@@ -173,7 +173,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					default:
 						throw (new CompetitorDataAccessException("Table type unknown"));
 				}
-				detailProductTablesNames = _webSession.GenericProductDetailLevel.GetSqlTables(DBConstantes.Schema.ADEXPRESS_SCHEMA);
+				detailProductTablesNames = _webSession.GenericProductDetailLevel.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
 				detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 				unitFields = WebFunctions.SQLGenerator.GetUnitFieldsName(_webSession,type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
