@@ -18,8 +18,9 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Classification;
 
 using TNS.AdExpress.Web.Exceptions;
@@ -33,8 +34,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
 	/// Get different data for portofolio media detail
 	/// </summary>
-	public class MediaDetailEngine : Engine {
-		
+	public class MediaDetailEngine : Engine {		
+
 		#region Constructor
 		/// <summary>
 		/// Constructor
@@ -100,10 +101,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			sql += "select " + selectFields;
 			sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + "." + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
-			sql += " where id_media=" + _idMedia + "  ";
+			sql += " where id_media =" + _idMedia + "  ";
 			sql += " and date_media_num>=" + _beginingDate + " ";
 			sql += " and date_media_num<=" + _endDate + " ";
-			sql += " and insertion=1 ";
+			sql += GetCobrandingCondition(); 
 			sql += listProductHap;
 			sql += product;
 			sql += productsRights;
@@ -132,18 +133,16 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// <returns>SQL</returns>
 		protected virtual string GetFieldsDetailMedia() {
 			string sql = "";
+
+			sql = WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle4M);
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.radio:
-					sql += " sum(insertion) as insertion ";
 					sql += ",commercial_break as code_ecran";
-					sql += ",sum(expenditure_euro) value ";
 					sql += " , date_media_num  ";
 					return sql;
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
-					sql += " sum(insertion) as insertion ";
 					sql += ",id_commercial_break as code_ecran";
-					sql += ",sum(expenditure_euro) value ";
 					sql += ",date_media_num  ";
 					return sql;
 				default:
@@ -154,7 +153,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 		#region Get Group By Detail Media For Tv & Radio
         /// <summary>
-        /// Get Group By Detail Media For Tv & Radio
+        /// Get Group By Detail Media for vehicles Tv & Radio
         /// </summary>
         /// <returns>SQL</returns>
         protected virtual string GetGroupByDetailMedia() {
@@ -168,7 +167,19 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     throw new PortofolioDALException("GetGroupByDetailMediaForTvRadio()-->Vehicle unknown.");
             }
         }
-        #endregion		
+        #endregion	
 
+		#region Get cobranding condition
+		/// <summary>
+		/// Get cobranding condition
+		/// </summary>
+		/// <returns>cobranding condition sql string</returns>
+		protected virtual string GetCobrandingCondition() {
+			string sql = "";			
+			if(UnitsInformation.List.ContainsKey(TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.spot))
+				sql += " and " + UnitsInformation.Get(TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.spot).DatabaseField + " =  " + _cobrandindConditionValue;
+			return sql;
+		}
+		#endregion
 	}
 }

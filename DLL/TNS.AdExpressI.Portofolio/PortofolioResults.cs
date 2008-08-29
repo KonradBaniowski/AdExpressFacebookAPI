@@ -389,19 +389,19 @@ namespace TNS.AdExpressI.Portofolio {
         #endregion              		
 
 
-		/// <summary>
-		/// Vérifie qu'une datarow est vide
-		/// </summary>
-		/// <param name="ds">dataset</param>
-		/// <returns>vrai si non vide</returns>
-		protected virtual bool IsRowNull(DataSet ds) {
-			if (ds != null && ds.Tables[0].Rows.Count > 0) {
-				foreach (DataRow dr in ds.Tables[0].Rows) {
-					return (dr["euros"] != System.DBNull.Value && dr["spot"] != System.DBNull.Value && dr["duration"] != System.DBNull.Value);
-				}
-			}
-			return false;
-		}
+		///// <summary>
+		///// Vérifie qu'une datarow est vide
+		///// </summary>
+		///// <param name="ds">dataset</param>
+		///// <returns>vrai si non vide</returns>
+		//protected virtual bool IsRowNull(DataSet ds) {
+		//    if (ds != null && ds.Tables[0].Rows.Count > 0) {
+		//        foreach (DataRow dr in ds.Tables[0].Rows) {
+		//            return (dr["euros"] != System.DBNull.Value && dr["spot"] != System.DBNull.Value && dr["duration"] != System.DBNull.Value);
+		//        }
+		//    }
+		//    return false;
+		//}
 
 		/// <summary>
 		/// Get ventilation type list

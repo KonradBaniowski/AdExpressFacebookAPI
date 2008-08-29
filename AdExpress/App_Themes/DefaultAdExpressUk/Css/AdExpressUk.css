@@ -974,6 +974,27 @@ td.acl11{
 	padding-left:4px;
 	padding-right:4px;
 }
+td.sc1{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:normal;
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	text-decoration : none;
+	cursor: hand;
+	text-align :right;
+}
 td.acl2{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
