@@ -231,9 +231,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// </summary>		
 		/// <returns>SQL</returns>
 		protected virtual string GetStructFields(string hourIntevalKey) {
-			return " '"+hourIntevalKey+"' as HourInterval,sum(" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".expenditure_euro) as euros"
-				+ ", sum(" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".insertion) as spot"
-				+ ", sum(" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".duration) as duration";
+            return " '" + hourIntevalKey + "' as HourInterval," + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 		}
 		#endregion
 
@@ -377,20 +375,16 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// <param name="ventilation">format or coulor or location or encarts</param>
 		/// <returns>SQL</returns>
 		protected virtual string GetPressStructFields(PortofolioStructure.Ventilation ventilation) {
-			string temp = "'" + ventilation.GetHashCode() +"' as ventilationType, ";
+            string temp = "'" + ventilation.GetHashCode() + "' as ventilationType, " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle4M, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix)+", ";
 			switch (ventilation) {
 				case PortofolioStructure.Ventilation.color:
-					return temp + " color as ventilation"
-					+ ", sum(" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".insertion) as insertion";
+					return temp + " color as ventilation";
 				case PortofolioStructure.Ventilation.format:
-					return temp + " format as ventilation"
-					+ ", sum(" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".insertion) as insertion";
+					return temp + " format as ventilation";
 				case PortofolioStructure.Ventilation.insert:
-					return temp + " inset as ventilation"
-					+ ", sum(" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".insertion) as insertion";
+					return temp + " inset as ventilation";
 				case PortofolioStructure.Ventilation.location:
-					return temp + " location as ventilation"
-					+ ", sum(" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".insertion) as insertion";
+					return temp + " location as ventilation";
 				default:
 					throw new PortofolioDALException("getPressStructFields(PortofolioStructure.Ventilation ventilation)--> No ventilation (format, coulor) corresponding.");
 			}

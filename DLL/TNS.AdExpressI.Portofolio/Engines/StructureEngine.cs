@@ -33,6 +33,8 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -207,8 +209,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					if (dr["ventilation"] != null)
 						t.Append("\r\n\t<td align=\"left\" class=\"" + classCss + "\" nowrap>&nbsp;&nbsp;&nbsp;" + dr["ventilation"].ToString() + "</td>");
 					else t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>&nbsp;</td>");
-					if (dr["insertion"] != null) {
-						t.Append("\r\n\t<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["insertion"].ToString(), WebCst.CustomerSessions.Unit.insertion, false) + "</td>");
+                    UnitInformation unitInformation = UnitsInformation.Get(WebCst.CustomerSessions.Unit.insertion);
+                    if (dr[unitInformation.Id.ToString()] != null) {
+                        t.Append("\r\n\t<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr[unitInformation.Id.ToString()].ToString(), unitInformation.Id, false) + "</td>");
 					}
 					else t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>&nbsp;</td>");
 					t.Append("</tr>");
@@ -225,7 +228,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		}
 		#endregion
 
-		#region GetPressStructureHtml
+		#region GetStructureHtml
 		/// <summary>
 		/// Get structure html
 		/// <remarks>Used currently for vehicle , tv,others an radio</remarks>
@@ -235,11 +238,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			StringBuilder t = new StringBuilder(5000);
 			DataSet ds = null;
 			DataTable dt = null;
+            List<UnitInformation> unitInformationList = new List<UnitInformation>();
 			string P2 = "p2";
 			string backGround = "whiteBackGround";
 			string classCss = "acl1";
 			string hourIntervallLabel = "";
-			double totalEuros = 0, totalSpot = 0, totalDuration = 0;
+			double totalUnit = 0;
 
 			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
 			object[] parameters = new object[7];
@@ -262,6 +266,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				dt = ds.Tables[0];
 
+
+                unitInformationList = _webSession.GetValidUnitForResult();   
+                    
 				t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 >");
 
 				#region libellés colonnes
@@ -271,27 +278,26 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1299, _webSession.SiteLanguage) + "</td>");
 				else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
 					t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1451, _webSession.SiteLanguage) + "</td>");
-				t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1423, _webSession.SiteLanguage) + "</td>");
-				t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(869, _webSession.SiteLanguage) + "</td>");
-				t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1435, _webSession.SiteLanguage) + "</td>");
+
+                for (int i = 0; i < unitInformationList.Count; i++) {
+                    t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(unitInformationList[i].WebTextId, _webSession.SiteLanguage) + "</td>");
+                }
+
 				t.Append("</tr>");
 				#endregion
-
-				//line total
-				foreach (DataRow dr in dt.Rows) {
-					totalEuros += (dr["euros"] != System.DBNull.Value) ? double.Parse(dr["euros"].ToString()) : 0;
-					totalSpot += (dr["spot"] != System.DBNull.Value) ? double.Parse(dr["spot"].ToString()) : 0;
-					totalDuration += (dr["duration"] != System.DBNull.Value) ? double.Parse(dr["duration"].ToString()) : 0;
-				}
+                
 				t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='" + backGround + "';\"  class=\"" + backGround + "\" height=\"20px\" >");
 				//time interval										
 				t.Append("\r\n\t<td align=\"left\" class=\"" + classCss + "\" nowrap>" + GestionWeb.GetWebWord(1401,_webSession.SiteLanguage) + "</td>");
-				//Euros						
-				t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(totalEuros.ToString(), WebCst.CustomerSessions.Unit.euro, false) + "</td>");
-				//Spot						
-				t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(totalSpot.ToString(), WebCst.CustomerSessions.Unit.spot, false) + "</td>");
-				//Duration
-				t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(totalDuration.ToString(), WebCst.CustomerSessions.Unit.duration, false) + "</td>");
+                ////line total units
+                for (int i = 0; i < unitInformationList.Count; i++) {
+                    totalUnit = 0;
+                    foreach (DataRow dr in dt.Rows) {
+                        totalUnit += (dr[unitInformationList[i].Id.ToString()] != System.DBNull.Value) ? double.Parse(dr[unitInformationList[i].Id.ToString()].ToString()) : 0;
+                    }
+                    t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(totalUnit.ToString(), unitInformationList[i].Id, false) + "</td>");
+                }
+
 				t.Append("</tr>");
 				backGround = "violetBackGroundV3";
 
@@ -303,12 +309,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='" + backGround + "';\"  class=\"" + backGround + "\" height=\"20px\" >");
 					//time interval										
 					t.Append("\r\n\t<td align=\"left\" class=\"" + classCss + "\" nowrap>" + hourIntervallLabel + "</td>");
-					//Euros						
-					t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["euros"].ToString(), WebCst.CustomerSessions.Unit.euro, false) + "</td>");
-					//Spot						
-					t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["spot"].ToString(), WebCst.CustomerSessions.Unit.spot, false) + "</td>");
-					//Duration
-					t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["duration"].ToString(), WebCst.CustomerSessions.Unit.duration, false) + "</td>");
+                    //Unit Value
+                    for (int i = 0; i < unitInformationList.Count; i++) {
+                        t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr[unitInformationList[i].Id.ToString()].ToString(), unitInformationList[i].Id, false) + "</td>");
+                    }
 					t.Append("</tr>");
 
 					classCss = "acl2";
@@ -377,7 +381,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				dtResult.Columns.Add("unitLabel", System.Type.GetType("System.String"));
 				dtResult.Columns.Add("chartDataLabel", System.Type.GetType("System.String"));
 				dtResult.Columns.Add("chartDataValue", System.Type.GetType("System.Double"));
-
+                UnitInformation unitInformation = UnitsInformation.Get(WebCst.CustomerSessions.Unit.insertion);
 				foreach (DataRow dr in dt.Rows) {
 					if (oldIdVentilationType != int.Parse(dr["ventilationType"].ToString())) {
 						switch ((FrameWorkResultConstantes.PortofolioStructure.Ventilation)long.Parse(dr["ventilationType"].ToString())) {
@@ -403,7 +407,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					newRow["idUnit"] = long.Parse(dr["ventilationType"].ToString());
 					newRow["unitLabel"] = GestionWeb.GetWebWord(labelCode, _webSession.SiteLanguage);
 					newRow["chartDataLabel"] = dr["ventilation"].ToString();
-					newRow["chartDataValue"] = (dr["insertion"] != System.DBNull.Value) ? double.Parse(dr["insertion"].ToString()) : 0;
+                    newRow["chartDataValue"] = (dr[unitInformation.Id.ToString()] != System.DBNull.Value) ? double.Parse(dr[unitInformation.Id.ToString()].ToString()) : 0;
 
 					oldIdVentilationType = long.Parse(dr["ventilationType"].ToString());
 
@@ -425,6 +429,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			DataTable dt = null, dtResult = null;
 			DataRow newRow = null;
 			string hourIntervallLabel = "";
+            List<UnitInformation> unitInformationList = new List<UnitInformation>();
 
 			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
 			object[] parameters = new object[7];
@@ -442,48 +447,28 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				dt = ds.Tables[0];
 
+                unitInformationList = _webSession.GetValidUnitForResult();  
+
 				dtResult = new DataTable();
 				dtResult.Columns.Add("idUnit", System.Type.GetType("System.Int64"));
 				dtResult.Columns.Add("unitLabel", System.Type.GetType("System.String"));
 				dtResult.Columns.Add("chartDataLabel", System.Type.GetType("System.String"));
 				dtResult.Columns.Add("chartDataValue", System.Type.GetType("System.Double"));
 
-				//One line by time interval and euro
-				foreach (DataRow dr in dt.Rows) {
-					newRow = dtResult.NewRow();
-					dtResult.Rows.Add(newRow);
-					hourIntervallLabel = GestionWeb.GetWebWord(GetHourIntervalWebWordCode()[dr["HourInterval"].ToString()], _webSession.SiteLanguage);
 
-					newRow["idUnit"] = WebCst.CustomerSessions.Unit.euro.GetHashCode();
-					newRow["unitLabel"] = GestionWeb.GetWebWord(1423, _webSession.SiteLanguage);
-					newRow["chartDataLabel"] = hourIntervallLabel;
-					newRow["chartDataValue"] = (dr["euros"]!=System.DBNull.Value) ? double.Parse(dr["euros"].ToString()) : 0;
-				}
+                for (int i = 0; i < unitInformationList.Count; i++) {
+                    //One line by time interval and unit
+                    foreach (DataRow dr in dt.Rows) {
+                        newRow = dtResult.NewRow();
+                        dtResult.Rows.Add(newRow);
+                        hourIntervallLabel = GestionWeb.GetWebWord(GetHourIntervalWebWordCode()[dr["HourInterval"].ToString()], _webSession.SiteLanguage);
 
-				//One line by time interval and spot
-				foreach (DataRow dr in dt.Rows) {
-					newRow = dtResult.NewRow();
-					dtResult.Rows.Add(newRow);
-					hourIntervallLabel = GestionWeb.GetWebWord(GetHourIntervalWebWordCode()[dr["HourInterval"].ToString()], _webSession.SiteLanguage);
-
-					newRow["idUnit"] = WebCst.CustomerSessions.Unit.spot.GetHashCode();
-					newRow["unitLabel"] = GestionWeb.GetWebWord(869, _webSession.SiteLanguage);
-					newRow["chartDataLabel"] = hourIntervallLabel;
-					newRow["chartDataValue"] = (dr["spot"] != System.DBNull.Value) ? double.Parse(dr["spot"].ToString()) : 0;
-				}
-
-				//One line by time interval and duration
-				foreach (DataRow dr in dt.Rows) {
-					newRow = dtResult.NewRow();
-					dtResult.Rows.Add(newRow);
-					hourIntervallLabel = GestionWeb.GetWebWord(GetHourIntervalWebWordCode()[dr["HourInterval"].ToString()], _webSession.SiteLanguage);
-
-					newRow["idUnit"] = WebCst.CustomerSessions.Unit.duration.GetHashCode();
-					newRow["unitLabel"] = GestionWeb.GetWebWord(280, _webSession.SiteLanguage);
-					newRow["chartDataLabel"] = hourIntervallLabel;
-					newRow["chartDataValue"] = (dr["duration"] != System.DBNull.Value) ? double.Parse(dr["duration"].ToString()) : 0;
-				}
-
+                        newRow["idUnit"] = unitInformationList[i].Id.GetHashCode();
+                        newRow["unitLabel"] = GestionWeb.GetWebWord(unitInformationList[i].WebTextId, _webSession.SiteLanguage);
+                        newRow["chartDataLabel"] = hourIntervallLabel;
+                        newRow["chartDataValue"] = (dr[unitInformationList[i].Id.ToString()] != System.DBNull.Value) ? double.Parse(dr[unitInformationList[i].Id.ToString()].ToString()) : 0;
+                    }
+                }
 			}
 
 			return dtResult;
