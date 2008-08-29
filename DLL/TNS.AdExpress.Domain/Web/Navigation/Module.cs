@@ -2,7 +2,8 @@
 // Auteur: g. Facon
 // Date de création:
 // Date de modification:
-//	G. Facon 11/08/2005 Nom de variables
+//	G. Facon    11/08/2005      Nom de variables
+//  G. Facon    27/08/2008      Add Allowed Media universe
 #endregion
 
 using System;
@@ -18,6 +19,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 	public class Module:ModuleItem{
 		
 		#region Variable
+        /// <summary>
+        /// Allowed Media universe
+        /// </summary>
+        protected MediaItemsList _allowedMediaUniverse;
         /// <summary>
         /// Country rules Layer
         /// </summary>
@@ -107,10 +112,6 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// Identifiant de la catégorie du module
 		/// </summary>
 		protected Int64 _moduleCategoryId;
-        /// <summary>
-        /// Allowed media list
-        /// </summary>
-        protected MediaItemsList allowedMediaUnivers; 
 		#endregion
 
 		#region Constructeur
@@ -132,6 +133,30 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		#endregion
 
 		#region Accesseurs
+        /// <summary>
+        /// Get if allowed Media universe is null
+        /// </summary>
+        public bool IsNullAllowedMediaUniverse {
+            get {
+                if(_allowedMediaUniverse==null) return (true);
+                return (false);
+            }
+        }
+        /// <summary>
+        /// Get/Set Allowed Media Universe
+        /// </summary>
+        public MediaItemsList AllowedMediaUniverse {
+            get {
+                if(_allowedMediaUniverse==null) {
+                    MediaItemsList mediaItemsList=new MediaItemsList();
+                    mediaItemsList.VehicleList=VehiclesInformation.GetDatabaseIds();
+                    _allowedMediaUniverse=mediaItemsList;
+                }
+                return _allowedMediaUniverse;
+            }
+            set { _allowedMediaUniverse=value; }
+        }
+
         /// <summary>
         /// Get/Set Rules Layer
         /// </summary>
@@ -225,6 +250,13 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		#endregion
 
 		#region Méthode Externe
+
+        /// <summary>
+        /// Initialize allowed media universe with a default instance
+        /// </summary>
+        public void InitAllowedMediaUniverse() {
+            _allowedMediaUniverse=new MediaItemsList();
+        }
 
 		#region Gestion des pages de résultat
 		///<author>G. Facon</author>

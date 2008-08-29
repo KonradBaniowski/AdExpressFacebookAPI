@@ -73,7 +73,7 @@ namespace TNS.AdExpress.Domain.Classification {
 		/// <summary>
 		/// Get the list of vehicles
 		/// </summary>
-		public string GetVehicleItemsList{
+		public string VehicleList{
 			get{return(_vehicleItemsList);}
             set { _vehicleItemsList=value; }
 		}
@@ -81,7 +81,7 @@ namespace TNS.AdExpress.Domain.Classification {
 		/// <summary>
 		/// Get the list of categories
 		/// </summary>
-		public string GetCategoryItemsList{
+		public string CategoryList{
 			get{return(_categoryItemsList);}
             set { _categoryItemsList=value; }
 		}
@@ -89,7 +89,7 @@ namespace TNS.AdExpress.Domain.Classification {
 		/// <summary>
 		/// Get the list of media
 		/// </summary>
-		public string GetMediaItemsList{
+		public string MediaList{
 			get{return(_mediaItemsList);}
             set { _mediaItemsList=value; }
 		}

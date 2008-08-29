@@ -42,7 +42,19 @@ namespace TNS.AdExpress.Domain.Classification {
 		#endregion
 
         #region Méthodes publiques
-
+        /// <summary>
+        /// Get Databasids
+        /// </summary>
+        /// <remarks>List like 1,2,3</remarks>
+        /// <returns>Id list</returns>
+        public static string GetDatabaseIds() {
+            string list="";
+            foreach(Int64 currentDatabaseId in _listDataBaseId.Keys) {
+                list+=currentDatabaseId.ToString()+",";
+            }
+            if(list.Length>0) list=list.Substring(0,list.Length-1);
+            return (list);
+        }
 
         #region Convert
 

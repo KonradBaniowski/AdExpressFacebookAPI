@@ -69,6 +69,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// Allowed units list
         /// </summary>
         protected List<CustomerSessions.Unit> _allowedUnitsList = new List<CustomerSessions.Unit>();
+        /// <summary>
+        /// Allowed media list
+        /// </summary>
+        protected MediaItemsList _allowedMediaUniverse;
+        /// <summary>
+        /// Parent Module
+        /// </summary>
+        protected Module _parentModule;
 		#endregion
 
 		#region Constructeur
@@ -118,6 +126,37 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		#endregion
 
 		#region Accesseur
+        /// <summary>
+        /// Set parent module
+        /// </summary>
+        public Module ParentModule {
+            set { _parentModule=value; }
+        }
+
+        /// <summary>
+        /// Get if allowed Media universe is null
+        /// </summary>
+        public bool IsNullAllowedMediaUniverse {
+            get {
+                if(_allowedMediaUniverse==null) return (true);
+                return (false);
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Allowed Media Universe
+        /// </summary>
+        public MediaItemsList AllowedMediaUniverse {
+            get {
+                if(_allowedMediaUniverse==null) {
+                    if(_parentModule==null) throw (new NullReferenceException("Parent module has to be initialized"));
+                    return (_parentModule.AllowedMediaUniverse);
+                }
+                return _allowedMediaUniverse;
+            }
+            set { _allowedMediaUniverse=value; }
+        }
+
 		/// <summary>
 		/// Obtient l'identifiant du MAU01 du résultat
 		/// </summary>
@@ -209,6 +248,13 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		#endregion
 
 		#region Méthodes Externe
+        /// <summary>
+        /// Initialize allowed media universe with a default instance
+        /// </summary>
+        public void InitAllowedMediaUniverse() {
+            _allowedMediaUniverse=new MediaItemsList();
+        }
+
 		/// <summary>
 		/// Il existe ou pas un lien vers la page Excel des données brutes
 		/// </summary>

@@ -1697,9 +1697,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 string sql = " ";
                 if (beginByAnd) sql += "And ";
                 MediaItemsList adexpressMediaItemsList = Media.GetItemsList(idMediaItemsList);
-                if (adexpressMediaItemsList.GetVehicleItemsList.Length > 0) sql += (vehicleTablePrefixe.Length>0 ?  vehicleTablePrefixe+"." : "") + "id_vehicle in(" + adexpressMediaItemsList.GetVehicleItemsList + ") ";
-                if (adexpressMediaItemsList.GetCategoryItemsList.Length > 0) sql += (categoryTablePrefixe.Length>0 ? categoryTablePrefixe+"." : "") + "id_category in(" + adexpressMediaItemsList.GetCategoryItemsList + ") ";
-                if (adexpressMediaItemsList.GetMediaItemsList.Length > 0) sql += (mediaTablePrefixe.Length>0 ? mediaTablePrefixe+"." : "") + "id_media in(" + adexpressMediaItemsList.GetMediaItemsList + ") ";
+                if (adexpressMediaItemsList.VehicleList.Length > 0) sql += (vehicleTablePrefixe.Length>0 ?  vehicleTablePrefixe+"." : "") + "id_vehicle in(" + adexpressMediaItemsList.VehicleList + ") ";
+                if (adexpressMediaItemsList.CategoryList.Length > 0) sql += (categoryTablePrefixe.Length>0 ? categoryTablePrefixe+"." : "") + "id_category in(" + adexpressMediaItemsList.CategoryList + ") ";
+                if (adexpressMediaItemsList.MediaList.Length > 0) sql += (mediaTablePrefixe.Length>0 ? mediaTablePrefixe+"." : "") + "id_media in(" + adexpressMediaItemsList.MediaList + ") ";
 
                 if (sql.Length < 6) return ("");
                 return (sql);
@@ -1731,19 +1731,19 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 string sql = " ";
                 if (beginByAnd) sql += "And ";
                 MediaItemsList adexpressMediaItemsList = Media.GetItemsList(idMediaItemsList);
-                if (adexpressMediaItemsList.GetVehicleItemsList.Length > 0) sql += vehicleTablePrefixe + ".id_vehicle in(" + adexpressMediaItemsList.GetVehicleItemsList + ") ";
+                if (adexpressMediaItemsList.VehicleList.Length > 0) sql += vehicleTablePrefixe + ".id_vehicle in(" + adexpressMediaItemsList.VehicleList + ") ";
 
-                if (adexpressMediaItemsList.GetCategoryItemsList.Length > 0)
+                if (adexpressMediaItemsList.CategoryList.Length > 0)
                 {
                     if (WebConstantes.AdExpressUniverse.RECAP_MEDIA_LIST_ID == idMediaItemsList
                         && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
                     {
                         //Rajout de la catégorie parrainage tv pour les recap
-                        sql += categoryTablePrefixe + ".id_category in(" + adexpressMediaItemsList.GetCategoryItemsList + ",68) ";
+                        sql += categoryTablePrefixe + ".id_category in(" + adexpressMediaItemsList.CategoryList + ",68) ";
                     }
-                    else sql += categoryTablePrefixe + ".id_category in(" + adexpressMediaItemsList.GetCategoryItemsList + ") ";
+                    else sql += categoryTablePrefixe + ".id_category in(" + adexpressMediaItemsList.CategoryList + ") ";
                 }
-                if (adexpressMediaItemsList.GetMediaItemsList.Length > 0) sql += mediaTablePrefixe + ".id_media in(" + adexpressMediaItemsList.GetMediaItemsList + ") ";
+                if (adexpressMediaItemsList.MediaList.Length > 0) sql += mediaTablePrefixe + ".id_media in(" + adexpressMediaItemsList.MediaList + ") ";
                 if (sql.Length < 6) return ("");
                 return (sql);
             }

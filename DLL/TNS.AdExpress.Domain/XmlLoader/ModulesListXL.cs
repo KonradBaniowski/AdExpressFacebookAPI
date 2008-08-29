@@ -20,6 +20,7 @@ using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Layers;
 using Except = TNS.FrameWork.Exceptions;
 using Constante = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Domain.XmlLoader{
 	///<summary>
@@ -60,6 +61,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 				string valueExcelUrlValue="";
                 string functionName="";
                 string allowedUnitValue="";
+                bool useBaalForModule=false;
+                bool useBaalForResult=false;
 				Int64 module=0;
 				ResultPageInformation currentResultPageInformation=null;
 				while(Reader.Read()){
@@ -153,6 +156,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 
 								if(Reader.GetAttribute("id")!=null && Reader.GetAttribute("resultid")!=null && Reader.GetAttribute("traductioncode")!=null && Reader.GetAttribute("url")!=null && Reader.GetAttribute("menuTextId")!=null && module!=0){
 									currentResultPageInformation=new ResultPageInformation(int.Parse(Reader.GetAttribute("id")),Int64.Parse(Reader.GetAttribute("resultid")), Reader.GetAttribute("url"),Int64.Parse(Reader.GetAttribute("traductioncode")),rawExcelUrlValue,printExcelUrlValue,printBisExcelUrlValue,exportJpegUrlValue,remotePdfUrlValue,remoteResultPdfUrlValue,valueExcelUrlValue,remoteTextUrlValue,remoteExcelUrlValue,Reader.GetAttribute("helpUrl"),Int64.Parse(Reader.GetAttribute("menuTextId")));
+                                    currentResultPageInformation.ParentModule=(Module)HtModule[module];
 									((Module)HtModule[module]).AddResultPageInformation(currentResultPageInformation);
 								}
 								break;
@@ -215,6 +219,66 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 if(Reader.GetAttribute("name")!=null&&Reader.GetAttribute("assemblyName")!=null&&Reader.GetAttribute("class")!=null&&
                                     Reader.GetAttribute("name").Length>0&&Reader.GetAttribute("assemblyName").Length>0&&Reader.GetAttribute("class").Length>0) {
                                     ((Module)HtModule[module]).CountryDataAccessLayer=new DataAccessLayer(Reader.GetAttribute("name"),Reader.GetAttribute("assemblyName"),Reader.GetAttribute("class"));
+                                }
+                                break;
+                            case "ModuleAllowedMediaUniverse":
+                                useBaalForModule=false;
+                                if(Reader.GetAttribute("initFromBaal")!=null && Reader.GetAttribute("initFromBaal").Length>0){
+                                    // Baal list must be use
+                                    if(Boolean.Parse(Reader.GetAttribute("initFromBaal"))){
+                                        if(Reader.GetAttribute("baalId")==null || Reader.GetAttribute("baalId").Length==0)
+                                            throw(new ArgumentNullException("baalId must be declared if initFromBaal is true"));
+                                        ((Module)HtModule[module]).AllowedMediaUniverse=Media.GetItemsList(int.Parse(Reader.GetAttribute("baalId")));
+                                        useBaalForModule=true;
+                                    }
+                                }
+                                break;
+                            case "ModuleVehicles":
+                                if(!useBaalForModule && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
+                                    if(((Module)HtModule[module]).IsNullAllowedMediaUniverse)((Module)HtModule[module]).InitAllowedMediaUniverse();
+                                    ((Module)HtModule[module]).AllowedMediaUniverse.VehicleList=Reader.GetAttribute("list");
+                                }
+                                break;
+                            case "ModuleCategories":
+                                if(!useBaalForModule && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
+                                    if(((Module)HtModule[module]).IsNullAllowedMediaUniverse) ((Module)HtModule[module]).InitAllowedMediaUniverse();
+                                    ((Module)HtModule[module]).AllowedMediaUniverse.CategoryList=Reader.GetAttribute("list");
+                                }
+                                break;
+                            case "ModuleMedias":
+                                if(!useBaalForModule && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
+                                    if(((Module)HtModule[module]).IsNullAllowedMediaUniverse) ((Module)HtModule[module]).InitAllowedMediaUniverse();
+                                    ((Module)HtModule[module]).AllowedMediaUniverse.MediaList=Reader.GetAttribute("list");
+                                }
+                                break;
+                            case "ResultAllowedMediaUniverse":
+                                useBaalForResult=false;
+                                if(Reader.GetAttribute("initFromBaal")!=null && Reader.GetAttribute("initFromBaal").Length>0) {
+                                    // Baal list must be use
+                                    if(Boolean.Parse(Reader.GetAttribute("initFromBaal"))) {
+                                        if(Reader.GetAttribute("baalId")==null || Reader.GetAttribute("baalId").Length==0)
+                                            throw (new ArgumentNullException("baalId must be declared if initFromBaal is true"));
+                                        currentResultPageInformation.AllowedMediaUniverse=Media.GetItemsList(int.Parse(Reader.GetAttribute("baalId")));
+                                        useBaalForResult=true;
+                                    }
+                                }
+                                break;
+                            case "ResultVehicles":
+                                if(!useBaalForResult && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
+                                    if(currentResultPageInformation.IsNullAllowedMediaUniverse) currentResultPageInformation.InitAllowedMediaUniverse();
+                                    currentResultPageInformation.AllowedMediaUniverse.VehicleList=Reader.GetAttribute("list");
+                                }
+                                break;
+                            case "ResultCategories":
+                                if(!useBaalForResult && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
+                                    if(currentResultPageInformation.IsNullAllowedMediaUniverse) currentResultPageInformation.InitAllowedMediaUniverse();
+                                    currentResultPageInformation.AllowedMediaUniverse.CategoryList=Reader.GetAttribute("list");
+                                }
+                                break;
+                            case "ResultMedias":
+                                if(!useBaalForResult && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
+                                    if(currentResultPageInformation.IsNullAllowedMediaUniverse) currentResultPageInformation.InitAllowedMediaUniverse();
+                                    currentResultPageInformation.AllowedMediaUniverse.MediaList=Reader.GetAttribute("list");
                                 }
                                 break;
 						}					

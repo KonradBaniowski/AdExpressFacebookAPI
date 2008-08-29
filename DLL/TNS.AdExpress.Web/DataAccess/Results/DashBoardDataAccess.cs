@@ -832,7 +832,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             //sélection Pan euro
             if (!WebFunctions.CheckedText.IsStringEmpty(InterestCenterAccessList) && !WebFunctions.CheckedText.IsStringEmpty(MediaAccessList)
                 && vehicleType == ClassificationCst.DB.Vehicles.names.others)
-                sql += " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_category in (" + Media.GetItemsList(CstWeb.AdExpressUniverse.DASHBOARD_PANEURO_MEDIA_LIST_ID).GetCategoryItemsList + ")";
+                sql += " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_category in (" + Media.GetItemsList(CstWeb.AdExpressUniverse.DASHBOARD_PANEURO_MEDIA_LIST_ID).CategoryList + ")";
 
             switch (webSession.PreformatedTable) {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:

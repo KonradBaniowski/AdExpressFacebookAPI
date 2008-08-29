@@ -15,11 +15,11 @@
       <module name="Analyse Plan Média" privilegecode="196" traductioncode="2171" moduleCategoryId="2" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2200" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">
         <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Finland.MediaScheduleResultDAL"/>
-        <AllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <vehicles list="1,3,5,6,7"/> <!--identifiant base de données-->
-          <!--<categories list="1,2,3,4"/>-->
-          <!--<medias list="1,2,3,4"/>-->
-        </AllowedMediaUniverse>
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1,3,5,6,7"/> <!--identifiant base de données-->
+          <!--<ModuleCategories list="1,2,3,4"/>-->
+          <!--<ModuleMedias list="1,2,3,4"/>-->
+        </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="1" name="media\catégorie" />
@@ -90,7 +90,11 @@
         </optionalSelections>
         <results>
           <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx">
-            <!--<page name="Synthèses" traductioncode="750" url="#" />-->
+            <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
+              <ResultVehicles list="1,3,5,6,7"/>
+              <ResultCategories list="1,2,3,4"/>
+              <ResultMedias list="1,2,3,4"/>
+            </ResultAllowedMediaUniverse>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
