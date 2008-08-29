@@ -98,33 +98,25 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case PortofolioSynthesis.dataType.periodicity:
 					return GetPeriodicityData();
                 case PortofolioSynthesis.dataType.investment:
-					return (_webSession.CustomerPeriodSelected.Is4M && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) ? GetInvestment() : GetSynthsesisUnitsData();
+                    return GetSynthsesisUnitsData();
                 case PortofolioSynthesis.dataType.periodSelected:
                     return GetPeriod();
-                case PortofolioSynthesis.dataType.numberSpot:
-                case PortofolioSynthesis.dataType.numberBoard:
-                case PortofolioSynthesis.dataType.insertion:
-                    return GetInsertionNumber();
                 case PortofolioSynthesis.dataType.pageNumber:
                     return GetPage();
-                case PortofolioSynthesis.dataType.duration:
-                    return GetDuration();
-                case PortofolioSynthesis.dataType.volume:
-                    return GetVolume();
                 case PortofolioSynthesis.dataType.typeSale:
                     return GetTypeSale();
                 case PortofolioSynthesis.dataType.numberProduct:
-                    verif = (_webSession.CustomerPeriodSelected.Is4M && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet);
-                    return verif ? NumberProduct(PortofolioSynthesis.dataType.numberProduct) : GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberProduct);
+                    //verif = (_webSession.CustomerPeriodSelected.Is4M && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet);
+                //return verif ? NumberProduct(PortofolioSynthesis.dataType.numberProduct) : GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberProduct);
+                    return GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberProduct);
                 case PortofolioSynthesis.dataType.numberNewProductInTracking:
                     return NumberProduct(PortofolioSynthesis.dataType.numberNewProductInTracking);
                 case PortofolioSynthesis.dataType.numberNewProductInVehicle:
                     return NumberProduct(PortofolioSynthesis.dataType.numberNewProductInVehicle);
                 case PortofolioSynthesis.dataType.numberAdvertiser:
-                    verif = (_webSession.CustomerPeriodSelected.Is4M && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet);
-                    return verif ? NumberAdvertiser() : GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberAdvertiser);
-                case PortofolioSynthesis.dataType.adNumber:
-                    return NumberPageEncart(PortofolioSynthesis.dataType.adNumber);
+                    //verif = (_webSession.CustomerPeriodSelected.Is4M && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet);
+                    //return verif ? NumberAdvertiser() : GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberAdvertiser);
+                    return GetNumberAdvertiserProduct(PortofolioSynthesis.dataType.numberAdvertiser);
                 case PortofolioSynthesis.dataType.adNumberIncludingInsets:
                     return NumberPageEncart(PortofolioSynthesis.dataType.adNumberIncludingInsets);
                 case PortofolioSynthesis.dataType.adNumberExcludingInsets:
@@ -284,7 +276,15 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql += " and " + date + " <=" + customerPeriod.PeriodMonthEnd[0].ToString().Substring(0, 6);
 					break;
 			}
-
+            switch (type) {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                case DBConstantes.TableType.Type.dataVehicle:
+                    if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) 
+                        sql += " and insertion=" + this._cobrandindConditionValue;
+                    break;
+            }
 			sql += product;
 			sql += productsRights;
 			sql += mediaRights;
@@ -354,16 +354,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			#region Construction de la requête
 			if (dataType == PortofolioSynthesis.dataType.numberProduct) {
-				if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
-					sql = " select id_product, " + date + " as date_num, count(rowid) as nbLines";
-				else
-					sql = " select id_product, count(rowid) as nbLines";
+                sql = " select distinct id_product";
 			}
             else if (dataType == PortofolioSynthesis.dataType.numberAdvertiser) {
-				if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
-					sql = " select id_advertiser, " + date + " as date_num, count(rowid) as nbLines";
-				else
-					sql = " select id_advertiser, count(rowid) as nbLines";
+                sql = " select distinct id_advertiser";
 			}
 			sql += " from " + tableName;
 			sql += " where id_media=" + _idMedia + "";
@@ -400,16 +394,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql += mediaRights;
 			sql += listProductHap;
             if (dataType == PortofolioSynthesis.dataType.numberProduct) {
-				if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
-					sql += " group by id_product, " + date;
-				else
-					sql += " group by id_product ";
+                sql += " group by id_product ";
 			}
             else if (dataType == PortofolioSynthesis.dataType.numberAdvertiser) {
-				if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
-					sql += " group by id_advertiser, " + date;
-				else
-					sql += " group by id_advertiser ";
+				sql += " group by id_advertiser ";
 			}
 			#endregion
 
@@ -936,140 +924,6 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         }
         #endregion
 
-        #region GetInsertionNumber
-        /// <summary>
-        /// Get insertions number
-        /// </summary>
-        /// <returns>DataSet</returns>
-        protected virtual DataSet GetInsertionNumber() {
-
-            #region Construction de la requête
-
-            string table = GetTableData();
-            string product = GetProductData();
-            string productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-            //liste des produit hap
-            string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
-
-
-            string insertionField = "insertion";
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor)
-                insertionField = "NUMBER_BOARD";
-
-            string sql = " select sum(" + insertionField + ") as insertion ";
-
-            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + table + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
-            sql += " where id_media=" + _idMedia + "";
-            if (_beginingDate.Length > 0)
-                sql += " and date_media_num>=" + _beginingDate + " ";
-            if (_endDate.Length > 0)
-                sql += " and date_media_num<=" + _endDate + "";
-
-            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor) sql += " and insertion=1";
-            sql += product;
-            sql += productsRights;
-            sql += mediaRights;
-            sql += listProductHap;
-
-            #endregion
-
-            #region Execution de la requête
-            try {
-                return _webSession.Source.Fill(sql.ToString());
-            }
-            catch (System.Exception err) {
-                throw (new PortofolioDALException("Impossible to get data for GetInsertionNumber(): " + sql, err));
-            }
-            #endregion
-
-        }
-        #endregion
-
-        #region Get Duration
-        /// <summary>
-        /// Get duration
-        /// </summary>
-        /// <returns>DataSet</returns>
-        protected virtual DataSet GetDuration() {
-
-            #region Construction de la requête
-            string table = GetTableData();
-            string product = GetProductData();
-            string productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-            //liste des produit hap
-            string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
-
-            string sql = "select sum(duration) as duration";
-
-            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + table + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
-            sql += " where id_media = " + _idMedia + "";
-            if (_beginingDate.Length > 0)
-                sql += " and date_media_num>=" + _beginingDate + " ";
-            if (_endDate.Length > 0)
-                sql += " and date_media_num<=" + _endDate + "";
-
-            sql += product;
-            sql += productsRights;
-            sql += mediaRights;
-            sql += listProductHap;
-            #endregion
-
-            #region Execution de la requête
-            try {
-                return _webSession.Source.Fill(sql.ToString());
-            }
-            catch (System.Exception err) {
-                throw (new PortofolioDALException("Impossible to get data for GetDuration(): " + sql, err));
-            }
-            #endregion
-
-        }
-        #endregion
-
-        #region Get Volume
-        /// <summary>
-        /// Get volume
-        /// </summary>
-        /// <returns>DataSet</returns>
-        protected virtual DataSet GetVolume() {
-
-            #region Construction de la requête
-            string table = GetTableData();
-            string product = GetProductData();
-            string productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-            //liste des produit hap
-            string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
-
-            string sql = "select sum(volume) as volume";
-
-            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + table + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
-            sql += " where id_media = " + _idMedia + "";
-            if (_beginingDate.Length > 0)
-                sql += " and date_media_num>=" + _beginingDate + " ";
-            if (_endDate.Length > 0)
-                sql += " and date_media_num<=" + _endDate + "";
-
-            sql += product;
-            sql += productsRights;
-            sql += mediaRights;
-            sql += listProductHap;
-            #endregion
-
-            #region Execution de la requête
-            try {
-                return _webSession.Source.Fill(sql.ToString());
-            }
-            catch (System.Exception err) {
-                throw (new PortofolioDALException("Impossible to get data for GetVolume(): " + sql, err));
-            }
-            #endregion
-
-        }
-        #endregion
-
         #region Get NumberProduct
         /// <summary>
         /// Get Number of products, Number of new products in the advert tracking selection
@@ -1235,9 +1089,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
 
                         if (dataType == PortofolioSynthesis.dataType.numberProduct)
-                            sql = " select id_product, sum(nbLines) as nbLines";
+                            sql = " select distinct id_product";
                         else if (dataType == PortofolioSynthesis.dataType.numberAdvertiser)
-                            sql = " select id_advertiser, sum(nbLines) as nbLines";
+                            sql = " select distinct id_advertiser";
                         sql += " from (";
                         sql += sqlDataVehicle;
                         sql += " UNION ";

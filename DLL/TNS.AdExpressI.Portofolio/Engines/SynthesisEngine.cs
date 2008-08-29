@@ -158,13 +158,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 investment = dt.Rows[0]["euro"].ToString();
             else
                 investment = "0";
-            if (!isAlertModule) {
-                if (dt.Columns.Contains("insertion")) nbrSpot = dt.Rows[0]["insertion"].ToString();
-                else if (dt.Columns.Contains("spot")) nbrSpot = dt.Rows[0]["spot"].ToString();
-                if (dt.Columns.Contains("duration")) totalDuration = dt.Rows[0]["duration"].ToString();
-                if (dt.Columns.Contains("pages")) adNumber = dt.Rows[0]["pages"].ToString();
-                if (dt.Columns.Contains("numberBoard")) numberBoard = dt.Rows[0]["numberBoard"].ToString();
-            }
+
+            if (dt.Columns.Contains("insertion")) nbrSpot = dt.Rows[0]["insertion"].ToString();
+            else if (dt.Columns.Contains("spot")) nbrSpot = dt.Rows[0]["spot"].ToString();
+            if (dt.Columns.Contains("pages")) adNumber = dt.Rows[0]["pages"].ToString();
+            if (dt.Columns.Contains("numberBoard")) numberBoard = dt.Rows[0]["numberBoard"].ToString();
+            if (dt.Columns.Contains("duration")) totalDuration = dt.Rows[0]["duration"].ToString();
             if (dt.Columns.Contains("volume")) {
                 if (dt.Rows[0]["volume"].ToString().Length > 0) {
                     volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0]["volume"].ToString())));
@@ -182,45 +181,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 dt = ds.Tables[0];
                 if (dt.Columns.Contains("first_date")) firstDate = dt.Rows[0]["first_date"].ToString();
                 if (dt.Columns.Contains("last_date")) lastDate = dt.Rows[0]["last_date"].ToString();
-            }
-            #endregion
-
-            #region Number Board
-            if (isAlertModule && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
-                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberBoard);
-                dt = ds.Tables[0];
-                if (dt.Columns.Contains("number_board")) numberBoard = dt.Rows[0]["number_board"].ToString();
-            }
-            #endregion
-
-            #region Duration
-            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv ||
-                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others ||
-                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) && isAlertModule) {
-                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.duration);
-                dt = ds.Tables[0];
-                if (dt.Columns.Contains("duration")) totalDuration = dt.Rows[0]["duration"].ToString();
-            }
-            #endregion
-
-            #region Insertion
-            if (isAlertModule && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
-                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.insertion);
-                dt = ds.Tables[0];
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor)
-                    numberBoard = dt.Rows[0]["insertion"].ToString();
-                if (dt.Columns.Contains("insertion")) nbrSpot = dt.Rows[0]["insertion"].ToString();
-            }
-            #endregion
-
-            #region Ad Number
-            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press 
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
-                && isAlertModule) {
-                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumber);
-                dt = ds.Tables[0];
-                adNumber = dt.Rows[0]["page"].ToString();
             }
             #endregion
 
