@@ -2,6 +2,8 @@
 <BaalList>
   <MediaUniverses>
     <MediaUniverse baalId="327" levels="vehicle"/>      <!-- MEDIA_DEFAULT_LIST_ID-->
+    <MediaUniverse baalId="331" levels="vehicle"/>      <!-- MEDIA_SCHEDULE_ANALYSIS_LIST_ID -->
+    <MediaUniverse baalId="337" levels="vehicle"/>      <!-- VEHICLE_PORTOFOLIO_LIST_ID -->
     <MediaUniverse baalId="341" levels="category"/>     <!-- RECAP_MEDIA_LIST_ID-->
     <MediaUniverse baalId="345" levels="vehicle"/>      <!-- TRENDS_LIST_ID-->
     <MediaUniverse baalId="339" levels="category"/>     <!-- TV_SPONSORINGSHIP_MEDIA_LIST_ID-->
