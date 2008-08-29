@@ -28,6 +28,7 @@ using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
@@ -228,48 +229,40 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					break;
 			}
 
-			string sql = null;
+			StringBuilder sql = new StringBuilder();
 
-			switch (type) {
-				case DBConstantes.TableType.Type.dataVehicle4M:
-				case DBConstantes.TableType.Type.dataVehicle:
-					sql += "select " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle);
-					break;
-				case DBConstantes.TableType.Type.webPlan:
-                    sql += "select " + WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.webPlan);
-					break;
-			}
+            sql.AppendFormat("select {0}",WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, type));
+
 			if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
-				sql += ", " + date + " as date_num ";
+                sql.AppendFormat(", {0} as date_num ",date);
 			}
-			sql += " from " + table;
-			sql += " where id_media=" + _idMedia + "";
+			sql.AppendFormat(" from {0} where id_media={1}",table,_idMedia);
 			// Period
 			switch (type) {
 				case DBConstantes.TableType.Type.dataVehicle4M:
-					sql += " and " + date + " >=" + customerPeriod.StartDate;
-					sql += " and " + date + " <=" + customerPeriod.EndDate;
+                    sql.AppendFormat(" and {0}>={1} and {0}<={2}", date, customerPeriod.StartDate, customerPeriod.EndDate);
 					break;
 				case DBConstantes.TableType.Type.dataVehicle:
 					if (_webSession.CustomerPeriodSelected.PeriodDayBegin.Count == 0) {
-						sql += " and " + date + " >=" + customerPeriod.StartDate;
-						sql += " and " + date + " <=" + customerPeriod.EndDate;
+						sql.AppendFormat(" and {0}>={1} and {0}<={2}", date, customerPeriod.StartDate, customerPeriod.EndDate);
 					}
 					else if (_webSession.CustomerPeriodSelected.PeriodDayBegin.Count == 2) {
-						sql += " and ((" + date + " >=" + customerPeriod.PeriodDayBegin[0];
-						sql += " and " + date + " <=" + customerPeriod.PeriodDayEnd[0];
-						sql += " ) or (" + date + " >=" + customerPeriod.PeriodDayBegin[1];
-						sql += " and " + date + " <=" + customerPeriod.PeriodDayEnd[1];
-						sql += "))";
+                        sql.AppendFormat(" and (({0}>={1} and {0}<={2}) or ({0}>={3} and {0}<={4}))"
+                            , date
+                            , customerPeriod.PeriodDayBegin[0]
+                            , customerPeriod.PeriodDayEnd[0]
+                            , customerPeriod.PeriodDayBegin[1]
+                            , customerPeriod.PeriodDayEnd[1]);
 					}
 					else {
-						sql += " and " + date + " >=" + customerPeriod.PeriodDayBegin[0];
-						sql += " and " + date + " <=" + customerPeriod.PeriodDayEnd[0];
+                        sql.AppendFormat(" and {0}>={1} and {0}<={2}", date, customerPeriod.PeriodDayBegin[0], customerPeriod.PeriodDayEnd[0]);
 					}
 					break;
 				case DBConstantes.TableType.Type.webPlan:
-					sql += " and " + date + " >=" + customerPeriod.PeriodMonthBegin[0].ToString().Substring(0, 6);
-					sql += " and " + date + " <=" + customerPeriod.PeriodMonthEnd[0].ToString().Substring(0, 6);
+                    sql.AppendFormat(" and {0}>={1} and {0}<={2}"
+                        , date
+                        , customerPeriod.PeriodMonthBegin[0].ToString().Substring(0, 6)
+                        , customerPeriod.PeriodMonthEnd[0].ToString().Substring(0, 6));
 					break;
 			}
             switch (type) {
@@ -277,16 +270,19 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case DBConstantes.TableType.Type.dataVehicle:
                     if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                         && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
-                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) 
-                        sql += " and insertion=" + this._cobrandindConditionValue;
+                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                        sql.AppendFormat(" and {0}={1}"
+                            , UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).DatabaseField
+                            , this._cobrandindConditionValue);
+                        }
                     break;
             }
-			sql += product;
-			sql += productsRights;
-			sql += mediaRights;
-			sql += listProductHap;
+            sql.Append(product);
+			sql.Append(productsRights);
+			sql.Append(mediaRights);
+			sql.Append(listProductHap);
 			if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
-				sql += " group by " + date;
+				sql.AppendFormat(" group by {0}",date);
 			}
 			#endregion
 
@@ -415,6 +411,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             string productsRights = "";
             string mediaRights = "";
             string listProductHap = "";
+            StringBuilder sql = new StringBuilder();
+            UnitInformation unitInformation = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion);
             #endregion
 
             #region Construction de la requête
@@ -430,24 +428,29 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 throw (new PortofolioDALException("Impossible to build the request for GetEcranData()", err));
             }
 
-            string sql = "select sum(insertion) as nbre_ecran,sum(ecran_duration) as ecran_duration ,sum(nbre_spot) as nbre_spot";
+            sql.AppendFormat("select sum({0}) as {0},sum(ecran_duration) as ecran_duration ,sum(nbre_spot) as nbre_spot"
+                , unitInformation.Id.ToString());
 
-            sql += " from ( ";
+            sql.Append(" from ( ");
 
-            sql += select;
-            sql += " from " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + table + " wp ";
-            sql += " where id_media=" + _idMedia + " ";
+            sql.Append(select);
+            sql.AppendFormat(" from {0}.{1} wp ",DBConstantes.Schema.ADEXPRESS_SCHEMA,table);
+            sql.AppendFormat(" where id_media={0} ",_idMedia);
             if (_beginingDate.Length > 0)
-                sql += " and date_media_num>=" + _beginingDate + " ";
+                sql.AppendFormat(" and date_media_num>={0} ",_beginingDate);
             if (_endDate.Length > 0)
-                sql += " and date_media_num<=" + _endDate + "";
+                sql.AppendFormat(" and date_media_num<={0} ", _endDate);
 
-            sql += " and insertion=1";
-            sql += product;
-            sql += productsRights;
-            sql += mediaRights;
-            sql += listProductHap;
-            sql += " )";
+            sql.AppendFormat(" and {0}={1}"
+                            , unitInformation.DatabaseField
+                            , this._cobrandindConditionValue);
+
+
+            sql.Append(product);
+            sql.Append(productsRights);
+            sql.Append(mediaRights);
+            sql.Append(listProductHap);
+            sql.Append(" )");
 
             #endregion
 
@@ -456,7 +459,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 return _webSession.Source.Fill(sql.ToString());
             }
             catch (System.Exception err) {
-                throw (new PortofolioDALException("Impossible to get data for GetEcranData() : " + sql, err));
+                throw (new PortofolioDALException("Impossible to get data for GetEcranData() : " + sql.ToString(), err));
             }
             #endregion
 
@@ -469,6 +472,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         /// </summary>
         /// <returns>SQL</returns>
         protected virtual string GetSelectDataEcran() {
+            UnitInformation unitInformation = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion);
             string sql = "";
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
@@ -479,15 +483,14 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     sql += " select  distinct ID_COBRANDING_ADVERTISER";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " , NUMBER_spot_com_break nbre_spot";
-                    sql += " , insertion ";
-
+                    sql += " ," + unitInformation.DatabaseField + " as " + unitInformation.Id.ToString() + " ";
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
                     sql += "select  distinct id_commercial_break ";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " ,NUMBER_MESSAGE_COMMERCIAL_BREA nbre_spot ";
-                    sql += " ,insertion ";
+                    sql += " ," + unitInformation.DatabaseField + " as " + unitInformation.Id.ToString() + " ";
                     return sql;
                 default:
                     throw new PortofolioDALException("getTable(DBClassificationConstantes.Vehicles.value idMedia)-->Vehicle unknown.");
@@ -845,20 +848,22 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
             //liste des produit hap
             string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+            StringBuilder sql = new StringBuilder();
 
-            string sql = "select sum(EXPENDITURE_EURO) as euro";
+            UnitInformation unitInformation = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro);
+            sql.AppendFormat("select sum({0}) as {1}",unitInformation.DatabaseField,unitInformation.Id.ToString());
 
-            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + table + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
-            sql += " where id_media = " + _idMedia + "";
+            sql.AppendFormat(" from {0}{1} {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, table, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            sql.AppendFormat(" where id_media = {0}",_idMedia);
             if (_beginingDate.Length > 0)
-                sql += " and date_media_num>=" + _beginingDate + " ";
+                sql.AppendFormat(" and date_media_num>={0} ",_beginingDate);
             if (_endDate.Length > 0)
-                sql += " and date_media_num<=" + _endDate + "";
+                sql.AppendFormat(" and date_media_num<={0} ",_endDate);
 
-            sql += product;
-            sql += productsRights;
-            sql += mediaRights;
-            sql += listProductHap;
+            sql.Append(product);
+            sql.Append(productsRights);
+            sql.Append(mediaRights);
+            sql.Append(listProductHap);
             #endregion
 
             #region Execution de la requête
@@ -866,7 +871,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 return _webSession.Source.Fill(sql.ToString());
             }
             catch (System.Exception err) {
-                throw (new PortofolioDALException("Impossible to get data for GetInvestment(): " + sql, err));
+                throw (new PortofolioDALException("Impossible to get data for GetInvestment(): " + sql.ToString(), err));
             }
             #endregion
 
@@ -1131,12 +1136,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         protected virtual DataSet NumberPageEncart(PortofolioSynthesis.dataType dataType) {
 
             #region Variables
-            string sql = "";
+            StringBuilder sql = new StringBuilder();
             string tableName = "";
             string productsRights = null;
             string mediaRights = null;
             string product = null;
             string listProductHap = null;
+            UnitInformation unitInformation = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages);
             #endregion
 
             #region Build query
@@ -1147,30 +1153,35 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 product = GetProductData();
                 listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 
-                sql += " select sum(area_page) as page ";
-                sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-                sql += " where ID_MEDIA=" + _idMedia + " ";
+                sql.AppendFormat(" select sum({0}) as {1} "
+                    , unitInformation.DatabaseField
+                    , unitInformation.Id.ToString());
+                sql.AppendFormat(" from {0}{1} {2}"
+                    , WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql
+                    , tableName
+                    , WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                sql.AppendFormat(" where ID_MEDIA={0} ",_idMedia);
                 // hors encart
                 if (dataType == PortofolioSynthesis.dataType.adNumberExcludingInsets) {
-                    sql += " and id_inset=null ";
+                    sql.Append(" and id_inset=null ");
                 }
                 // Encart
                 if (dataType == PortofolioSynthesis.dataType.adNumberIncludingInsets) {
-                    sql += " and id_inset in (" + LIST_ENCART + ") ";
+                    sql.AppendFormat(" and id_inset in ({0}) ",LIST_ENCART);
                 }
                 if (_beginingDate.Length > 0)
-                    sql += " and  DATE_MEDIA_NUM>=" + _beginingDate + " ";
+                    sql.AppendFormat(" and  DATE_MEDIA_NUM>={0} ",_beginingDate);
                 if (_endDate.Length > 0)
-                    sql += " and  DATE_MEDIA_NUM<=" + _endDate + " ";
+                    sql.AppendFormat(" and  DATE_MEDIA_NUM<={0} ", _endDate);
 
-                sql += product;
-                sql += productsRights;
-                sql += mediaRights;
-                sql += listProductHap;
+                sql.Append(product);
+                sql.Append(productsRights);
+                sql.Append(mediaRights);
+                sql.Append(listProductHap);
 
             }
             catch (System.Exception err) {
-                throw (new PortofolioDALException("Impossible to build request for NumberPageEncart(): " + sql, err));
+                throw (new PortofolioDALException("Impossible to build request for NumberPageEncart(): " + sql.ToString(), err));
             }
             #endregion
 
@@ -1179,7 +1190,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 return _webSession.Source.Fill(sql.ToString());
             }
             catch (System.Exception err) {
-                throw (new PortofolioDALException("Impossible to get data for NumberPageEncart(): " + sql, err));
+                throw (new PortofolioDALException("Impossible to get data for NumberPageEncart(): " + sql.ToString(), err));
             }
             #endregion
 

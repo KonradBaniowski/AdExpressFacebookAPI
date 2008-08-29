@@ -32,6 +32,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -154,19 +155,20 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region investment
             ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.investment);
             dt = ds.Tables[0];
-            if (dt.Rows[0]["euro"].ToString().Length > 0)
-                investment = dt.Rows[0]["euro"].ToString();
+
+            if (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString().Length > 0)
+                investment = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString();
             else
                 investment = "0";
 
-            if (dt.Columns.Contains("insertion")) nbrSpot = dt.Rows[0]["insertion"].ToString();
-            else if (dt.Columns.Contains("spot")) nbrSpot = dt.Rows[0]["spot"].ToString();
-            if (dt.Columns.Contains("pages")) adNumber = dt.Rows[0]["pages"].ToString();
-            if (dt.Columns.Contains("numberBoard")) numberBoard = dt.Rows[0]["numberBoard"].ToString();
-            if (dt.Columns.Contains("duration")) totalDuration = dt.Rows[0]["duration"].ToString();
-            if (dt.Columns.Contains("volume")) {
-                if (dt.Rows[0]["volume"].ToString().Length > 0) {
-                    volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0]["volume"].ToString())));
+            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString())) nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
+            else if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString())) nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString();
+            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString())) adNumber = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
+            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString())) numberBoard = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString();
+            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString())) totalDuration = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString();
+            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString())) {
+                if (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString().Length > 0) {
+                    volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString())));
                     volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false);
                 }
                 else volume = "0";
@@ -189,7 +191,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumberIncludingInsets);
                 dt = ds.Tables[0];
-                adNumberIncludingInsets = dt.Rows[0]["page"].ToString();
+                adNumberIncludingInsets = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
             }
             #endregion
 
@@ -198,7 +200,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumberExcludingInsets);
                 dt = ds.Tables[0];
-                adNumberExcludingInsets = dt.Rows[0]["page"].ToString();
+                adNumberExcludingInsets = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
             }
             #endregion
 
@@ -220,10 +222,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && isAlertModule) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberAdBreaks);
                 dt = ds.Tables[0];
-                nbrEcran = dt.Rows[0]["nbre_ecran"].ToString();
+                nbrEcran = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
                 if (nbrEcran.Length > 0) {
-                    averageDurationEcran = decimal.Parse(dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(dt.Rows[0]["nbre_ecran"].ToString());
-                    nbrSpotByEcran = decimal.Parse(dt.Rows[0]["nbre_spot"].ToString()) / decimal.Parse(dt.Rows[0]["nbre_ecran"].ToString());
+                    averageDurationEcran = decimal.Parse(dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+                    nbrSpotByEcran = decimal.Parse(dt.Rows[0]["nbre_spot"].ToString()) / decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
                 }
             }
             #endregion
