@@ -36,6 +36,7 @@ using TNS.AdExpress.Domain.Results;
 
 using TNS.AdExpressI.MediaSchedule.DAL;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule
@@ -1284,7 +1285,7 @@ namespace TNS.AdExpressI.MediaSchedule
             // Insertions
             if (_allowInsertions)
             {
-                t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(2245, _session.SiteLanguage), rowSpanNb);
+                t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].WebTextId, _session.SiteLanguage), rowSpanNb);
             }
             // Years necessary if the period consists of several years
             for (int k = FIRST_PERIOD_INDEX; k < firstPeriodIndex; k++)
