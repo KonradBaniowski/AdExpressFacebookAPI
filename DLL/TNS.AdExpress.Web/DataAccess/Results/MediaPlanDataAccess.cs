@@ -65,6 +65,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string mediaFieldName=null;
 			string orderFieldName=null;
 			string unitFieldName=null;
+            string unitAlias = null;
 			string mediaJoinCondition=null;
 			#endregion
 			
@@ -76,6 +77,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				mediaTableName=GetMediaTable(webSession.PreformatedMediaDetail);
 				dateFieldName=GetDateFieldName(webSession);
 				unitFieldName=GetUnitFieldName(webSession,vehicleId);
+                unitAlias = SQLGenerator.GetUnitAlias(webSession);
 				mediaFieldName=GetMediaFields(webSession.PreformatedMediaDetail);
 				orderFieldName=GetOrderMediaFields(webSession.PreformatedMediaDetail);
 				mediaJoinCondition=GetMediaJoinConditions(webSession,DbTables.WEB_PLAN_PREFIXE,false);
@@ -92,7 +94,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//sql+=",max(wp.id_periodicity) as id_periodicity ";
 			sql+=" "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".RECUP_ID_PERIOD(max("+DbTables.PERIODICITY_PREFIXE+".value_second)) as id_periodicity,";
 			// Sélection de l'unité
-			sql+="sum("+unitFieldName+") as unit";
+            sql += "sum(" + unitFieldName + ") as " + unitAlias;
 			// Tables
 			sql+=" from "+mediaTableName+", "+tableName+" wp,"+DbSchemas.ADEXPRESS_SCHEMA+"."+DbTables.PERIODICITY+" "+DbTables.PERIODICITY_PREFIXE+" ";
 			//Conditions media

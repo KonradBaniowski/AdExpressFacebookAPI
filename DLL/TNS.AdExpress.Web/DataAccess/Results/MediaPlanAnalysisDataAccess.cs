@@ -59,7 +59,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				tableName=GetTableName(webSession.DetailPeriod);
 				mediaTableName=GetMediaTable(webSession.PreformatedMediaDetail);
 				dateFieldName=GetDateFieldName(webSession.DetailPeriod);
-				unitFieldName=GetUnitFieldName(webSession.Unit);
+                unitFieldName = SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, TableType.Type.webPlan);
 				mediaFieldName=GetMediaFields(webSession.PreformatedMediaDetail);
 				orderFieldName=GetOrderMediaFields(webSession.PreformatedMediaDetail);
 				mediaJoinCondition=GetMediaJoinConditions(webSession,DbTables.WEB_PLAN_PREFIXE,false);
@@ -77,7 +77,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//sql+=",max(wp.id_periodicity) as id_periodicity ";
 			sql+=" "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".RECUP_ID_PERIOD(max("+DbTables.PERIODICITY_PREFIXE+".value_second)) as id_periodicity,";
 			// Sélection de l'unité
-			sql+="sum("+unitFieldName+") as unit";
+			sql+=unitFieldName;
 			// Tables
 			sql+=" from "+mediaTableName+", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+tableName+" wp,"+DbSchemas.ADEXPRESS_SCHEMA+"."+DbTables.PERIODICITY+" "+DbTables.PERIODICITY_PREFIXE+" ";
 			//Conditions media
@@ -284,7 +284,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			try{
 				tableName=GetTableName(webSession.DetailPeriod);
 				dateFieldName=GetDateFieldName(webSession.DetailPeriod);
-				unitFieldName=GetUnitFieldName(webSession.Unit);
+                unitFieldName = SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, TableType.Type.webPlan);
 			}
 			catch(System.Exception err){
 				throw(new MediaPlanAnalysisDataAccessException("Impossible de construire la requête",err));
@@ -297,7 +297,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			// Sélection de la date
 			sql+=", "+dateFieldName+" as date_num";
 			// Sélection de l'unité
-			sql+=", sum("+unitFieldName+") as unit";
+			sql+=", " + unitFieldName;
 			// Tables
 			sql+=" from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".vehicle vh, "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".category ct, "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".media md, "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+tableName+" wp ";
 			// Conditions de jointure
@@ -494,21 +494,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		}
 
 		#region Méthode internes
-		/// <summary>
-		/// Indique le champ à utilisée pour l'unité dans la requête
-		/// </summary>
-		/// <param name="unit">Type d'unité</param>
-		/// <returns>Le champ correspondant au type d'unité</returns>
-		private static string GetUnitFieldName(CustomerSessions.Unit unit){
-
-            try {
-                return UnitsInformation.Get(unit).DatabaseMultimediaField;
-            }
-            catch {
-                throw (new SQLGeneratorException("Details unit chosen am wrong for the choice of the field"));
-            }
-
-		}
 		
 		/// <summary>
 		/// Indique la table à utilisée pour la requête

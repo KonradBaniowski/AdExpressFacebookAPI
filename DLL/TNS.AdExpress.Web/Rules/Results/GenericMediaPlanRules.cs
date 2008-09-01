@@ -454,7 +454,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
                     }
                     //tab[currentLineIndex,FIRST_PERIOD_INDEX+currentDate]=true;
                     // On met la périodicité
-                    unit = double.Parse(currentRow["unit"].ToString());
+                    unit = double.Parse(currentRow[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
                     tab[currentLineIndex, FIRST_PERIOD_INDEX + currentDate] = new MediaPlanItem(Int64.Parse(currentRow["period_count"].ToString()));
                     //((MediaPlanItem)tab[currentLineIndex,FIRST_PERIOD_INDEX+currentDate]).Unit+=unit;
 

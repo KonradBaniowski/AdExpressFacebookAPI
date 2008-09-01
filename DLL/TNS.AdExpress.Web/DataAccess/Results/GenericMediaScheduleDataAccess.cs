@@ -112,8 +112,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 
             StringBuilder sql = new StringBuilder();
 
-            sql.AppendFormat("select {0},date_num, max(period_count) as period_count,sum(unit) as unit from (",
+            sql.AppendFormat("select {0},date_num, max(period_count) as period_count,sum({1}) as {1} from (",
                 detailLevel.GetSqlFieldsWithoutTablePrefix(),
+                SQLGenerator.GetUnitAlias(session),
                 ConstantesDB.Schema.ADEXPRESS_SCHEMA);
 
             //SubPeriod Management
@@ -199,6 +200,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             string mediaPeriodicity = null;
             string orderFieldName = null;
             string unitFieldName = null;
+            string unitAlias = null;
             string mediaJoinCondition = null;
             string groupByFieldName = null;
             #endregion
@@ -215,6 +217,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 // Obtient le champs unité
                 dateFieldName = GetDateFieldName(periodBreakDown);
                 unitFieldName = SQLGenerator.GetUnitFieldName(session, vehicleId, periodBreakDown);
+                unitAlias = SQLGenerator.GetUnitAlias(session);
                 //SQL Pour la périodicité
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, vehicleId, periodDisplay);
                 // Obtient les champs de la nomenclature
@@ -255,9 +258,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             sql += mediaPeriodicity + ",";
             // Sélection de l'unité sauf pour AdNetTrack
             if ((ConstantesDBClassif.Vehicles.names)vehicleId == ConstantesDBClassif.Vehicles.names.adnettrack)
-                sql += "sum(OCCURRENCE) as unit";
+                sql += "sum(OCCURRENCE) as " + unitAlias + "";
             else
-                sql += "sum(" + unitFieldName + ") as unit";
+                sql += "sum(" + unitFieldName + ") as " + unitAlias + "";
             // Tables
             sql += " from " + mediaTableName + tableName + " wp ";
             //Conditions media

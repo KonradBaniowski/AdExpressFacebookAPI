@@ -20,6 +20,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebException=TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Web.Functions;
 
 
 namespace TNS.AdExpress.Web.Rules.Results{
@@ -254,7 +255,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				//tab[currentVehicleIndex,MediaPlan.FIRST_PEDIOD_INDEX+currentDate]=true;
 				//tab[currentCategoryIndex,MediaPlan.FIRST_PEDIOD_INDEX+currentDate]=true;
 				//tab[currentTotalIndex,MediaPlan.FIRST_PEDIOD_INDEX+currentDate]=true;
-				unit=double.Parse(currentRow["unit"].ToString());
+				unit=double.Parse(currentRow[SQLGenerator.GetUnitAlias(webSession)].ToString());
 				tab[currentLineIndex,FrameWorkResultConstantes.MediaPlan.TOTAL_COLUMN_INDEX]=(double)tab[currentLineIndex,FrameWorkResultConstantes.MediaPlan.TOTAL_COLUMN_INDEX]+unit;
 				tab[currentCategoryIndex,FrameWorkResultConstantes.MediaPlan.TOTAL_COLUMN_INDEX]=(double)tab[currentCategoryIndex,FrameWorkResultConstantes.MediaPlan.TOTAL_COLUMN_INDEX]+unit;
 				tab[currentVehicleIndex,FrameWorkResultConstantes.MediaPlan.TOTAL_COLUMN_INDEX]=(double)tab[currentVehicleIndex,FrameWorkResultConstantes.MediaPlan.TOTAL_COLUMN_INDEX]+unit;
