@@ -91,6 +91,11 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// Checkbox dédiée à l'affichage de l'option évolution 
 		/// </summary>
 		protected System.Web.UI.WebControls.CheckBox PersonalizedElementsCheckBox;
+        /// <summary>
+        /// Checkbox dédiée à l'auto-promo Evaliant
+        /// </summary>
+        protected System.Web.UI.WebControls.CheckBox AutopromoEvaliantCheckBox;
+
 		
 		/// <summary>
 		/// Contrôle Choix du type de résultat sous forme graphique
@@ -244,6 +249,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			get{return personalizedElementsOption;}
 			set{personalizedElementsOption=value;}
 		}
+
+        /// <summary>
+        /// Option Auto-promo Evaliant
+        /// </summary>
+        [Bindable(true),
+      Description("Option Auto-promo Evaliant")]
+        protected bool autopromoEvaliantOption = false;
+        /// <summary></summary>
+        public bool AutopromoEvaliantOption {
+            get { return autopromoEvaliantOption; }
+            set { autopromoEvaliantOption = value; }
+        }
 
 	
 		/// <summary>Option pourcentage</summary>
@@ -567,9 +584,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// </summary>
 		/// <param name="e">Arguments</param>
 		protected override void OnInit(EventArgs e) {
-			
-			
-
 			//Option Initialisation des éléments de références
 			_initializeProductWebControl = new TNS.AdExpress.Web.Controls.Headers.InitializeProductWebControl();			
 			_initializeProductWebControl.CustomerWebSession = customerWebSession;
@@ -579,7 +593,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			_initializeProductWebControl.InitializeAdvertiser = InializeAdVertiserOption;			
 			_initializeProductWebControl.ID=this.ID+"_initializeAdvertiser";
 			Controls.Add(_initializeProductWebControl);
-
 
 			if (Page.IsPostBack){
 				if (unitOption){
@@ -637,6 +650,14 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					}catch(System.Exception) {
 						customerWebSession.PersonalizedElementsOnly=false;}						
 				}
+                if(autopromoEvaliantOption) {
+                    try {
+                        if(Page.Request.Form.GetValues(this.ID + "_autopromoEvaliant")[0] != null) customerWebSession.AutopromoEvaliant = true;
+                    }
+                    catch(System.Exception) {
+                        customerWebSession.AutopromoEvaliant = false;
+                    }
+                }
 				
 				if(tblChoiceOption){
 					customerWebSession.PreformatedTable = (SessionCst.PreformatedDetails.PreformatedTables) Int64.Parse(Page.Request.Form.GetValues("DDL"+this.ID)[0]);					
@@ -689,11 +710,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			
 			#endregion
 
-		
-			
-			
-			
-			
 			base.OnInit (e);
 		}
 
@@ -960,6 +976,16 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				PersonalizedElementsCheckBox.Checked=customerWebSession.PersonalizedElementsOnly;
 				Controls.Add(PersonalizedElementsCheckBox);
 			}
+            if(autopromoEvaliantOption) {
+                AutopromoEvaliantCheckBox = new System.Web.UI.WebControls.CheckBox();
+                AutopromoEvaliantCheckBox.ID = this.ID + "_autopromoEvaliant";
+                AutopromoEvaliantCheckBox.ToolTip = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
+                AutopromoEvaliantCheckBox.CssClass = cssClass;
+                AutopromoEvaliantCheckBox.AutoPostBack = autoPostBackOption;
+                AutopromoEvaliantCheckBox.Text = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
+                AutopromoEvaliantCheckBox.Checked = customerWebSession.AutopromoEvaliant;
+                Controls.Add(AutopromoEvaliantCheckBox);
+            }
 
 			
 
@@ -1361,6 +1387,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n<TD height=\"5\"></TD>");
 				output.Write("\n</TR>");
 			}
+
+            // Option auto-promo Evaliant
+            if(autopromoEvaliantOption) {
+                output.Write("\n<tr>");
+                output.Write("\n<td>");
+                AutopromoEvaliantCheckBox.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
 
 
 			//options de visu des elements perso

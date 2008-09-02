@@ -413,8 +413,13 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		protected bool personalizedElementsOnly = false;
 
+        /// <summary>
+        /// Utilisation de l'auto-promo Evaliant
+        /// </summary>
+        protected bool autopromoEvaliant = false;
+
 		/// <summary>
-		/// Dans le cas de résultat disponibles sou formes de tableaux ou de graphiques, indique si on doit affiocher le graphique
+		/// Dans le cas de résultat disponibles sous formes de tableaux ou de graphiques, indique si on doit affiocher le graphique
 		/// </summary>
 		protected bool graphics = true;
 
@@ -1523,6 +1528,19 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				}
 			}
 		}
+
+        /// <summary>
+        /// Get/Set AutopromoEvaliant qui indique si on utilise l'auto-promo ou non pour Evaliant
+        /// </summary>
+        public bool AutopromoEvaliant {
+            get { return autopromoEvaliant; }
+            set {
+                if(autopromoEvaliant != value) {
+                    autopromoEvaliant = value;
+                    modificationDate = DateTime.Now;
+                }
+            }
+        }
 
 		/// <summary>
 		/// Get/Set l'affichage uniquement des éléménts personnalisés (exemple : dans les tableaux dynamiques, 
