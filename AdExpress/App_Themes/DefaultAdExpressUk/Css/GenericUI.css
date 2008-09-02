@@ -378,6 +378,33 @@ tr.h2 td{
 	border-right-width: 1px; 
 	border-right-style:solid;
 }
+td.SynthesisH1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color : #FFFFFF;
+	font-weight: bold;
+	text-align:center;
+	height:20px;
+	white-space:nowrap;
+	text-decoration : none;
+	background-color: #644883;
+	padding-left:5px;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-right:5px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+}
+td.SynthesisH2 {
+	visibility:hidden;
+	height:0px;
+}
 td.exh2{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;

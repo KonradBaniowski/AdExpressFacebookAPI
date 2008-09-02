@@ -274,7 +274,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         sql.AppendFormat(" and {0}={1}"
                             , UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).DatabaseField
                             , this._cobrandindConditionValue);
-                        }
+                    }
                     break;
             }
             sql.Append(product);
@@ -434,7 +434,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             sql.Append(" from ( ");
 
             sql.Append(select);
-            sql.AppendFormat(" from {0}.{1} wp ",DBConstantes.Schema.ADEXPRESS_SCHEMA,table);
+            sql.AppendFormat(" from {0}.{1} wp ",WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label,table);
             sql.AppendFormat(" where id_media={0} ",_idMedia);
             if (_beginingDate.Length > 0)
                 sql.AppendFormat(" and date_media_num>={0} ",_beginingDate);
@@ -619,6 +619,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).Label;
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).Label;
+                case DBClassificationConstantes.Vehicles.names.cinema:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinemaAlert).Label;
 				default:
 					throw new PortofolioDALException("GetTableData()-->Vehicle unknown.");
 			}

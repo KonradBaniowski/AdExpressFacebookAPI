@@ -1513,9 +1513,11 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// <param name="webSession">Session du client</param>
 		/// <param name="current">Page en cours</param>
 		private bool CanShowPortofolioResult(WebSession webSession, ResultPageInformation current) {
+
 			#region VehicleInformation
 			VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			#endregion
+
 			switch (vehicleInformation.Id) {
 				case ClassificationCst.DB.Vehicles.names.outdoor :
 					if (current.Id == FrameWorkResults.Portofolio.NOVELTY || current.Id == FrameWorkResults.Portofolio.DETAIL_MEDIA || current.Id == FrameWorkResults.Portofolio.STRUCTURE || (current.Id == FrameWorkResults.Portofolio.CALENDAR && !webSession.CustomerPeriodSelected.Is4M))
@@ -1531,6 +1533,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				case ClassificationCst.DB.Vehicles.names.radio:
 				case ClassificationCst.DB.Vehicles.names.press:
 				case ClassificationCst.DB.Vehicles.names.internationalPress:
+                case ClassificationCst.DB.Vehicles.names.cinema:
 					if (!webSession.CustomerPeriodSelected.Is4M && (current.Id == FrameWorkResults.Portofolio.NOVELTY || current.Id == FrameWorkResults.Portofolio.DETAIL_MEDIA || current.Id == FrameWorkResults.Portofolio.STRUCTURE || current.Id == FrameWorkResults.Portofolio.CALENDAR))
 						return false;
 					else return true;

@@ -452,10 +452,12 @@ namespace AdExpress.Private.Results{
 		/// <summary>
 		/// Set synthesis tab as default in some cases
 		/// </summary>
-		protected void ChangeCurrentTab() {			
+		protected void ChangeCurrentTab() {
+			
 			#region VehicleInformation
 			VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			#endregion
+
 			switch (vehicleInformation.Id) {
 				case ClassificationCst.DB.Vehicles.names.outdoor:
 					if (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR && !_webSession.CustomerPeriodSelected.Is4M)) {
@@ -475,6 +477,7 @@ namespace AdExpress.Private.Results{
 				case ClassificationCst.DB.Vehicles.names.radio:
 				case ClassificationCst.DB.Vehicles.names.press:
 				case ClassificationCst.DB.Vehicles.names.internationalPress:
+                case ClassificationCst.DB.Vehicles.names.cinema:
 					if (!_webSession.CustomerPeriodSelected.Is4M && (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;						
 						_webSession.Save();

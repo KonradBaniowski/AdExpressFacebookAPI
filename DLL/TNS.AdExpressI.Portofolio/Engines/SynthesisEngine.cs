@@ -3,6 +3,7 @@
 // Creation date: 08/08/2008
 // Modification date:
 #endregion
+
 using System;
 using System.Data;
 using System.Text;
@@ -90,7 +91,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			string interestCenter = "";
 			string pageNumber = "", adNumber = "";
             string adNumberIncludingInsets = "", adNumberExcludingInsets="";
-			string ojd = "";
 			string nbrSpot = "";
 			string nbrEcran = "";
 			decimal averageDurationEcran = 0;
@@ -122,25 +122,29 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region Media
             ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.media);
             dt = ds.Tables[0];
-            media = dt.Rows[0]["media"].ToString();
+            if (dt.Rows.Count > 0)
+                media = dt.Rows[0]["media"].ToString();
             #endregion
 
             #region Category
             ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.category);
             dt = ds.Tables[0];
-            category = dt.Rows[0]["category"].ToString();
+            if (dt.Rows.Count > 0)
+                category = dt.Rows[0]["category"].ToString();
             #endregion
 
             #region Media seller
             ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.mediaSeller);
             dt = ds.Tables[0];
-            regie = dt.Rows[0]["media_seller"].ToString();
+            if (dt.Rows.Count > 0)
+                regie = dt.Rows[0]["media_seller"].ToString();
             #endregion
 
             #region Interest center
             ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.interestCenter);
             dt = ds.Tables[0];
-            interestCenter = dt.Rows[0]["interest_center"].ToString();
+            if (dt.Rows.Count > 0)
+                interestCenter = dt.Rows[0]["interest_center"].ToString();
             #endregion
 
             #region Periodicity
@@ -205,7 +209,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Page number
-            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing 
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.pageNumber);
                 dt = ds.Tables[0];
@@ -394,13 +398,15 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 ChangeLineType(ref lineType);
             }
             // Category
-            lineIndex = resultTable.AddNewLine(lineType);
-            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1416, _webSession.SiteLanguage));
-            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(category);
-            ChangeLineType(ref lineType);
+            if (category.Length > 0) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1416, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(category);
+                ChangeLineType(ref lineType);
+            }
 
             // Media seller
-            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && regie.Length>0) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1417, _webSession.SiteLanguage));
                 resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(regie);
@@ -417,7 +423,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             }
 
             // Interest center
-            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && interestCenter.Length>0) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1411, _webSession.SiteLanguage));
                 resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(interestCenter);
