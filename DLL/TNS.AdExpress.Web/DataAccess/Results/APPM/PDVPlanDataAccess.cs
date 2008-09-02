@@ -23,6 +23,7 @@ using Cst = TNS.AdExpress.Constantes;
 using TNS.AdExpress.Web.DataAccess;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 {
@@ -56,7 +57,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			#region Construction of the query
 			
 			#region select
-			sql.Append(" select distinct id_target,target,id_product,product,id_group_,sum(euro) as euros,sum(page) as pages,sum(insertion) as insertions,sum(totalgrp) as GRP");
+            sql.AppendFormat(" select distinct id_target,target,id_product,product,id_group_,sum({0}) as {0},sum({1}) as {1},sum({2}) as {2},sum(totalgrp) as {3}"
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString());
 			#endregion
 
 			#region from
@@ -65,8 +70,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			#region select
 			sql.Append("select distinct "+DBTables.WEB_PLAN_PREFIXE+".id_product,product,"+DBTables.WEB_PLAN_PREFIXE+".id_group_,");
 			sql.Append(DBTables.TARGET_PREFIXE+".id_target,target");
-			sql.Append(",sum(totalunite) as euro,sum(totalpages) as page,sum(totalinsert) as insertion");
-			sql.Append(",sum(totalinsert)*grp as totalgrp");
+            sql.AppendFormat(",sum({0}) as {1},sum({2}) as {3},sum({4}) as {5},sum({4})*{6} as totalgrp"
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 	     	#endregion
 
 			#region from
@@ -165,7 +176,15 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 
 			#region select
 			sql.Append(" select "+DBTables.TARGET_PREFIXE+".id_target,target,");
-			sql.Append(" sum(totalunite) as euros,sum(totalpages) as pages,sum(totalinsert) as insertions,sum(grp) as GRP");
+			sql.AppendFormat(" sum({0}) as {1},sum({2}) as {3},sum({4}) as {5},sum({6}) as {7}"
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString());
 			#endregion
 			
 			#region from
@@ -266,7 +285,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 
 			#region select
 			sql.Append("select "+fields);
-			sql.Append(" ,sum(euro) as euros,sum(page) as pages,sum(insertion) as insertions,sum(totalgrp) as GRP");
+            sql.AppendFormat(" ,sum({0}) as {0},sum({1}) as {1},sum({2}) as {2},sum(totalgrp) as {3}"
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString());
 			#endregion
 
 			#region from
@@ -275,8 +298,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			#region select
 			fields = GetFields(webSession,true);
 			sql.Append(" select "+fields);
-			sql.Append(",sum(totalunite) as euro,sum(totalpages) as page,sum(totalinsert) as insertion");
-			sql.Append(",sum(totalinsert)*grp as totalgrp");
+            sql.AppendFormat(",sum({0}) as {1},sum({2}) as {3},sum({4}) as {5},sum({4})*{6} as totalgrp"
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			#endregion
 
 			#region from
@@ -311,7 +340,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 
 			#region group by
 			sql.Append(" group by "+fields);
-			sql.Append(", grp)");
+            sql.AppendFormat(", {0})", UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			#endregion
             
 			#endregion

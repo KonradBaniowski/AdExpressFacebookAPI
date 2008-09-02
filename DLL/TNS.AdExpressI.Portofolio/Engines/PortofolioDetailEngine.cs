@@ -40,21 +40,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		
 		#region Constantes
 		protected const int PROD_COL = 1164;
-		protected const int INSERTIONS_LIST_COL = 2245;
 		protected const int CREATIVES_COL = 1994;
 		protected const int PM_COL = 751;
-		protected const int EUROS_COL = 1423;
-		protected const int MM_COL = 1424;
-		protected const int SPOTS_COL = 939;
-		protected const int INSERTIONS_COL = 940;
-		protected const int PAGE_COL = 943;
 		protected const int PAN_COL = 1604;
-		protected const int DURATION_COL = 1435;
-		protected const int VOLUME = 2216;
-		#endregion
+        protected const int INSERTIONS_LIST_COL = 2245;
+        #endregion
 
-		#region Variables
-		/// <summary>
+        #region Variables
+        /// <summary>
 		/// Define if show creatives
 		/// </summary>
 		protected bool _showCreatives = false;

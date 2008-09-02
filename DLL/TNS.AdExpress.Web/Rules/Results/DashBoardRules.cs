@@ -24,6 +24,8 @@ using TNS.FrameWork.Date;
 using WebModule=TNS.AdExpress.Constantes.Web.Module;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
+using TNS.FrameWork;
 
 
 namespace TNS.AdExpress.Web.Rules.Results
@@ -246,8 +248,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			
 			string criteriaPeriodN = "period>="+webSession.PeriodBeginningDate+" AND period<="+webSession.PeriodEndDate;
 			string criteriaPeriodN1 ="";		
-			CstWeb.CustomerSessions.Unit unit = webSession.Unit;
-			string sumUnit = "sum("+unit.ToString()+")";
+			string sumUnit = WebFunctions.SQLGenerator.GetUnitAliasSum(webSession);
 			string PeriodBeginningDate = "";
 			string PeriodEndDate ="";
 			string PeriodBeginningDateN1 = "";
@@ -630,8 +631,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			#region variables
 			string vehicleId = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
 			string vehicleName = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).Text.ToString();		
-			CstWeb.CustomerSessions.Unit unit = webSession.Unit;
-			string sumUnit = "sum("+unit.ToString()+")";
+			string sumUnit = WebFunctions.SQLGenerator.GetUnitAliasSum(webSession);
 			string operation="";							
 			int oldRowL1=0;
 			int oldRowL2=0;
@@ -781,7 +781,6 @@ namespace TNS.AdExpress.Web.Rules.Results
 //		private static object[,] BuildDataTableType_Media_X_Sector(WebSession webSession, DataTable dt,ref object[,] tab,ref int row,ref int col, int[] coordCellTab,ArrayList sectorIdList,int year){
 		private static object[,] BuildDataTableType_Media_X_Sector(WebSession webSession, DataTable dt,ref object[,] tab,ref int row,ref int col, int[] coordCellTab,Hashtable sectorHashtable,int year){	
 			#region variables
-			CstWeb.CustomerSessions.Unit unit = webSession.Unit;
 			string sumUnit = "";			
 			int oldRowL1=0;
 			int oldRowL2=0;
@@ -806,7 +805,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			#endregion
 				
 			//Unité traitée
-			sumUnit="sum("+unit.ToString()+")";
+			sumUnit= WebFunctions.SQLGenerator.GetUnitAliasSum(webSession);
 			
 			//Critères de type période
 //			CriteriaPeriod(webSession,ref PeriodBeginningDate,ref PeriodEndDate,year,false);
@@ -894,11 +893,11 @@ namespace TNS.AdExpress.Web.Rules.Results
 					}
 										
 					//Calcul investissment année N et par famille
-					FillCellTableType_Media_X_Sector(tab,oldRowL2,dr,year,sectorHashtable,webSession.Unit.ToString());					
+					FillCellTableType_Media_X_Sector(tab,oldRowL2,dr,year,sectorHashtable,WebFunctions.SQLGenerator.GetUnitAlias(webSession));					
 
 					//Calcul investissment année N-1 et par famille
 					if(webSession.ComparativeStudy)
-						FillCellTableType_Media_X_Sector(tab,oldRowL2+1,dr,yearN1,sectorHashtable,webSession.Unit.ToString());	
+                        FillCellTableType_Media_X_Sector(tab, oldRowL2 + 1, dr, yearN1, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession));	
 				
 					
 					oldIdL2=Int64.Parse(dr[GetL2Id(webSession)].ToString());
@@ -955,11 +954,11 @@ namespace TNS.AdExpress.Web.Rules.Results
 					}
 
 					//Calcul investissment année N et par famille
-					FillCellTableType_Media_X_Sector(tab,oldRowL3,dr,year,sectorHashtable,webSession.Unit.ToString());					
+                    FillCellTableType_Media_X_Sector(tab, oldRowL3, dr, year, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession));					
 
 					//Calcul investissment année N-1 et par famille
 					if(webSession.ComparativeStudy)
-					FillCellTableType_Media_X_Sector(tab,oldRowL3+1,dr,yearN1,sectorHashtable,webSession.Unit.ToString());	
+                        FillCellTableType_Media_X_Sector(tab, oldRowL3 + 1, dr, yearN1, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession));	
 					
 					oldIdL3=Int64.Parse(dr[GetL3Id(webSession)].ToString());
 					firstL3=false;
@@ -1432,7 +1431,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			//unité euro	
 			tab = SetTabLinesLabel(tab,"1",GestionWeb.GetWebWord(1423,webSession.SiteLanguage),row,CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX,CstResults.DashBoard.LABEL_ELMT_L2_COLUMN_INDEX);
 			if(webSession.ComparativeStudy)tab = SetTabLinesLabel(tab,"1",GestionWeb.GetWebWord(1423,webSession.SiteLanguage),row+1,CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX,CstResults.DashBoard.LABEL_ELMT_L2_COLUMN_INDEX);
-			operation="sum(euro)";
+			operation="sum("+UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()+")";
 			if(!webSession.DetailPeriodBeginningDate.Equals("0") && WebFunctions.CheckedText.IsStringEmpty(webSession.DetailPeriodBeginningDate)) {
 				criteriaPeriodN =" period="+webSession.DetailPeriodBeginningDate.Substring(0,4);
 				yearN1 = int.Parse(webSession.DetailPeriodBeginningDate.Substring(0,4))-1;
@@ -1517,32 +1516,56 @@ namespace TNS.AdExpress.Web.Rules.Results
 		/// <param name="isTotalLine">vrai si ligne totale</param>	
 		/// <param name="vehicleType">type de média</param>
 		/// <returns>tableau de résultats</returns>
-		private static object[,] FillTabUnits(WebSession webSession, DataTable dt,ref object[,] tab,ref int row,ref int col,string criteriaPeriodN,string criteriaPeriodN1, int[] coordCellTab,bool isTotalLine,ClassificationCst.DB.Vehicles.names vehicleType){
+		private static object[,] FillTabUnits(WebSession webSession, DataTable dt,ref object[,] tab,ref int row,ref int col,string criteriaPeriodN,string criteriaPeriodN1, int[] coordCellTab,bool isTotalLine,ClassificationCst.DB.Vehicles.names vehicleType) {
 
-			//Total euro
+            #region Variables Opération Unité
+            string opEuro = string.Empty;
+            string opMmPerCol = string.Empty;
+            string opPages = string.Empty;
+            string opInsertion = string.Empty;
+            string opDuration = string.Empty;
+            #endregion
+
+            #region Init Variables Opération Unité
+
+            opEuro = "Sum(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString() + ")";
+            opMmPerCol = "Sum(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.mmPerCol].Id.ToString() + ")";
+            opPages = "Sum(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.pages].Id.ToString() + ")";
+            opDuration = "Sum(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.duration].Id.ToString() + ")";
+
+            if (dt.Columns.Contains(UnitsInformation.List[CstWeb.CustomerSessions.Unit.insertion].Id.ToString()))
+                opInsertion = "Sum(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.insertion].Id.ToString() + ")";
+            else if (dt.Columns.Contains(UnitsInformation.List[CstWeb.CustomerSessions.Unit.spot].Id.ToString()))
+                opInsertion = "Sum(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.spot].Id.ToString() + ")";
+            else if(dt.Columns.Contains(UnitsInformation.List[CstWeb.CustomerSessions.Unit.numberBoard].Id.ToString()))
+                opInsertion = "Sum(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.numberBoard].Id.ToString() + ")";
+
+            #endregion
+
+            //Total euro
 			col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS;
-			coordCellTab = InsertValue(webSession,dt,ref tab,ref row,ref col,"Sum(euro)",criteriaPeriodN,criteriaPeriodN1,coordCellTab,isTotalLine,false);					
+            coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opEuro, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);					
 
 			if(ClassificationCst.DB.Vehicles.names.press==vehicleType){
 				//Total Mm/Col sur période N,N-1
 				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+1;
-				coordCellTab = InsertValue(webSession,dt,ref tab,ref row,ref col,"Sum(mmPerCol)",criteriaPeriodN,criteriaPeriodN1,coordCellTab,isTotalLine,false);				
+                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opMmPerCol, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);				
 
 				//Total  pages période N,N-1
 				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2;
-				coordCellTab = InsertValue(webSession,dt,ref tab,ref row,ref col,"Sum(pages)",criteriaPeriodN,criteriaPeriodN1,coordCellTab,isTotalLine,false);
+                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opPages, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);
 				//Total  insertion période N,N-1
 				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+3;
-				coordCellTab = InsertValue(webSession,dt,ref tab,ref row,ref col,"Sum(insertion)",criteriaPeriodN,criteriaPeriodN1,coordCellTab,isTotalLine,true);
+                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opInsertion, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, true);
 				//Vérifie la présence de données pour les lignes traitées
 							
 			}else{							
 				//Total  durée période N,N-1	
 				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+1;
-				coordCellTab = InsertValue(webSession,dt,ref tab,ref row,ref col,"Sum(duration)",criteriaPeriodN,criteriaPeriodN1,coordCellTab,isTotalLine,false);
+                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opDuration, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);
 				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2;
 				//Total insertion/spot période N-1
-				coordCellTab = InsertValue(webSession,dt,ref tab,ref row,ref col,"Sum(insertion)",criteriaPeriodN,criteriaPeriodN1,coordCellTab,isTotalLine,true);
+                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opInsertion, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, true);
 			}		
 
 			return tab;
@@ -1628,8 +1651,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			string detailDate="";
 			AtomicPeriodWeek week;
 			AtomicPeriodWeek weekN1;
-			CstWeb.CustomerSessions.Unit unit = webSession.Unit;
-			string sumUnit = "sum("+unit.ToString()+")";
+			string sumUnit = WebFunctions.SQLGenerator.GetUnitAliasSum(webSession);
 			string criteriaPeriodN = "";
 			string criteriaPeriodN1 = "";
 			string PeriodBeginningDate = "";
@@ -2927,15 +2949,15 @@ namespace TNS.AdExpress.Web.Rules.Results
 					#region Unités
 					if(ClassificationCst.DB.Vehicles.names.press==vehicleType){
 						//libellés unités : Euros,Mm/Col,pages,Isertions
-						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS] = GestionWeb.GetWebWord(1423,webSession.SiteLanguage);
-						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+1] = GestionWeb.GetWebWord(1424,webSession.SiteLanguage);
-						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2] = GestionWeb.GetWebWord(943,webSession.SiteLanguage);
-						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+3] = GestionWeb.GetWebWord(940,webSession.SiteLanguage);
+						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].WebTextId,webSession.SiteLanguage));
+                        tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.mmPerCol].WebTextId, webSession.SiteLanguage));
+						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.pages].WebTextId,webSession.SiteLanguage));
+                        tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 3] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage));
 					}else{
 						//libellés unités : Euros,Durée,Spots
-						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS] = GestionWeb.GetWebWord(1423,webSession.SiteLanguage);
-						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+1] = GestionWeb.GetWebWord(1435,webSession.SiteLanguage);						
-						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2] = GestionWeb.GetWebWord(939,webSession.SiteLanguage);
+                        tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].WebTextId, webSession.SiteLanguage));
+                        tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.duration].WebTextId, webSession.SiteLanguage));
+                        tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 2] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.spot].WebTextId, webSession.SiteLanguage));
 					}
 					#endregion
 					break;

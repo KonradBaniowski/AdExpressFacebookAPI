@@ -78,7 +78,7 @@
 				                    <td style="HEIGHT: 9px"></td>
 			                    </tr>
 			                    <tr valign="top" class="whiteBackGround">
-				                    <td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validateButton"></cc1:imagebuttonrolloverwebcontrol></td>
+				                    <td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
 			                    </tr>
 			                    <!-- Info bt droit -->
 			                    <tr>

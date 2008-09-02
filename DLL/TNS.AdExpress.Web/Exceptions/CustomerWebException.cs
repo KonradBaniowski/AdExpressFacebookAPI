@@ -211,7 +211,7 @@ namespace TNS.AdExpress.Web.Exceptions{
 				// Module
 				body+="<u>Module:</u> "+Convertion.ToHtmlString(GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule),webSession.SiteLanguage))+"<br>";
 				// Unité
-				body+="<u>Unité:</u> "+GestionWeb.GetWebWord((int)TNS.AdExpress.Constantes.Web.CustomerSessions.UnitsTraductionCodes[webSession.Unit],webSession.SiteLanguage)+"<br>";	
+				body+="<u>Unité:</u> "+GestionWeb.GetWebWord(webSession.GetSelectedUnit().WebTextId,webSession.SiteLanguage)+"<br>";	
 			
 				#region période
 				string periodText="";

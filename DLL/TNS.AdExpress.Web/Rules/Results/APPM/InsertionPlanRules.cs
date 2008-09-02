@@ -16,6 +16,7 @@ using TNS.FrameWork.DB.Common;
 using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Web.Functions;
 
 using DataAccesFct = TNS.AdExpress.Web.DataAccess; 
 
@@ -106,11 +107,11 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 						nRow["date"] = new DateTime(int.Parse(date.Substring(0,4)), int.Parse(date.Substring(4,2)), int.Parse(date.Substring(6,2)));
 						nRow["format"] = row["format"].ToString();
 						nRow["location"] = row["location"].ToString();
-						nRow["budget"] = Decimal.Parse(row["euro"].ToString());
+						nRow["budget"] = Decimal.Parse(row[SQLGenerator.GetUnitAlias(webSession)].ToString());
 						//nRow["pdm"] = 100 * Decimal.Parse(nRow["budget"].ToString()) / mdBudg;
 						nRow["idProduct"] = row["id_product"].ToString();
 						nRow["mediaPaging"] = row["media_paging"].ToString();
-						oldMediaRow["budget"] = Decimal.Parse(oldMediaRow["budget"].ToString()) + Decimal.Parse(row["euro"].ToString());
+                        oldMediaRow["budget"] = Decimal.Parse(oldMediaRow["budget"].ToString()) + Decimal.Parse(row[SQLGenerator.GetUnitAlias(webSession)].ToString());
 					}
 					else{
 						nRow["location"] = nRow["location"].ToString() + " , " + row["location"].ToString();

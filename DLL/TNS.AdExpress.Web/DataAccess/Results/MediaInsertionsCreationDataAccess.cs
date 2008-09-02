@@ -37,6 +37,7 @@ using  ConstantesFrameWork=TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -1078,9 +1079,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", format"
-						+", "+prefixeMediaPlanTable+".area_page"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
 						+", color"
-						+", "+prefixeMediaPlanTable+".expenditure_euro"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", location"
 						+", "+prefixeMediaPlanTable+".visual "
 						+", "+prefixeMediaPlanTable+".id_advertisement"
@@ -1100,14 +1101,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", "+prefixeMediaPlanTable+".duration"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", "+prefixeMediaPlanTable+".rank"
 						+", "+prefixeMediaPlanTable+".duration_commercial_break"
 						+", "+prefixeMediaPlanTable+".number_spot_com_break"
 						+", "+prefixeMediaPlanTable+".rank_wap"
 						+", "+prefixeMediaPlanTable+".duration_com_break_wap"
 						+", "+prefixeMediaPlanTable+".number_spot_com_break_wap"
-						+", "+prefixeMediaPlanTable+".expenditure_euro"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", "+prefixeMediaPlanTable+".id_cobranding_advertiser";
 					sql+=" ,"+GetMediaFields(webSesssion,webSesssion.PreformatedMediaDetail,prefixeMediaPlanTable);
 					return sql;
@@ -1122,11 +1123,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", "+prefixeMediaPlanTable+".duration"
+						+", "+prefixeMediaPlanTable+"."+UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", "+prefixeMediaPlanTable+".id_rank"
 						+", "+prefixeMediaPlanTable+".duration_commercial_break"
 						+", "+prefixeMediaPlanTable+".number_message_commercial_brea"
-						+", "+prefixeMediaPlanTable+".expenditure_euro"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", "+prefixeMediaPlanTable+".id_commercial_break";
 					sql+=" ,"+GetMediaFields(webSesssion,webSesssion.PreformatedMediaDetail,prefixeMediaPlanTable);
 					return sql;
@@ -1137,12 +1138,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", "+prefixeMediaPlanTable+".number_board"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].Id.ToString()
 						+", "+prefixeMediaPlanTable+".type_board"
 						+", "+prefixeMediaPlanTable+".type_sale"
 						+", "+prefixeMediaPlanTable+".poster_network"
-						+", "+DbTables.AGGLOMERATION_PREFIXE+".agglomeration"																	
-						+", "+prefixeMediaPlanTable+".expenditure_euro";
+						+", "+DbTables.AGGLOMERATION_PREFIXE+".agglomeration"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString();
 					sql+=" ,"+GetMediaFields(webSesssion,webSesssion.PreformatedMediaDetail,prefixeMediaPlanTable);
 					return sql;
 				case DBClassificationConstantes.Vehicles.names.adnettrack:
@@ -1164,8 +1165,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                        + ", " + DbTables.GROUP_PREFIXE + ".id_group_, group_"
                        + ", " + prefixeMediaPlanTable + ".weight"
                        + ", " + prefixeMediaPlanTable + ".associated_file"
-                       + ", sum(" + prefixeMediaPlanTable + ".expenditure_euro) as expenditure_euro"
-                       + ", sum(" + prefixeMediaPlanTable + ".volume) as volume"
+                       + ", sum(" + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + ") as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                       + ", sum(" + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].DatabaseField + ") as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].Id.ToString()
                        + ", " + prefixeMediaPlanTable + ".id_slogan";
                        
                     sql += GetMDFields(idVehicle, mediaList, webSesssion, prefixeMediaPlanTable,true); 
@@ -1849,8 +1850,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 + ", id_group_, group_"
                 + ", weight"
                 + ", associated_file"
-                + (!export ? ", expenditure_euro" : ", sum(expenditure_euro) as expenditure_euro")
-                + (!export ? ", volume" : ", sum(volume) as volume")
+                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField : ", sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + ")")
+                + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].DatabaseField : ", sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].DatabaseField + ")")
+                + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].Id.ToString()
                 + ", id_slogan";
             sql += GetMDFields(idVehicle, mediaList, webSesssion, prefixeMediaPlanTable, withPrefix);
 
@@ -1900,8 +1903,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 + ", id_group_, group_"
                 + ", weight"
                 + ", associated_file"
-                + (!export ? ", expenditure_euro" : "")
-                + (!export ? ", volume" : "")
+                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString() : "")
+
+                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].DatabaseField : "")
                 + ", id_slogan";
             sql += GetMDGroupByFields(idVehicle, mediaList, webSesssion, prefixeMediaPlanTable, withPrefix);
             return sql;

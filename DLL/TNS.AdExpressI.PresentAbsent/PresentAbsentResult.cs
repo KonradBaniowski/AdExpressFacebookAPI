@@ -24,6 +24,7 @@ using TNS.AdExpress;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
+using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpressI.PresentAbsent.Exceptions;
@@ -879,6 +880,7 @@ namespace TNS.AdExpressI.PresentAbsent{
 			
 			#region Variables
 			double unit;
+            string unitAlias = string.Empty;
 			Int64 idMedia;
 			long oldIdL1=-1;
 			long oldIdL2=-1;
@@ -925,6 +927,7 @@ namespace TNS.AdExpressI.PresentAbsent{
 			#endregion
 
 			#region Tableau de résultat
+            unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
 			foreach(DataRow currentRow in dt.Rows){
                 if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 1) > 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 1) != oldIdL1) changeLine = true;
                 if (!changeLine && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) > 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) != oldIdL2) changeLine = true;
@@ -970,8 +973,8 @@ namespace TNS.AdExpressI.PresentAbsent{
 				#endregion
 
 
-				
-				unit=double.Parse(currentRow["unit"].ToString());
+
+                unit = double.Parse(currentRow[unitAlias].ToString());
                 idMedia = (Int64)currentRow["id_media"];
 				// Ecriture du résultat du média
                 tabResult[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].IndexInResultTable, currentLine] = (double)tabResult[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].IndexInResultTable, currentLine] + unit;
@@ -1627,6 +1630,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         {
             double unitReferenceMedia = 0;
             double unitCompetitorMedia = 0;
+            string unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
             Int64 presentNumberColumnIndex = tabResult.GetHeadersIndexInResultTable(PRESENT_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
             Int64 absentNumberColumnIndex = tabResult.GetHeadersIndexInResultTable(ABSENT_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
             Int64 exclusiveNumberColumnIndex = tabResult.GetHeadersIndexInResultTable(EXCLUSIVE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
@@ -1647,15 +1651,15 @@ namespace TNS.AdExpressI.PresentAbsent{
                 {
                     //Unité supports de référence
                     if (foundRows[i]["id_media"] != null && foundRows[i]["id_media"] != System.DBNull.Value && referenceUniversMedia != null &&
-                        foundRows[i]["unit"] != null && foundRows[i]["unit"] != System.DBNull.Value && referenceUniversMedia.Contains(foundRows[i]["id_media"].ToString()))
+                        foundRows[i][unitAlias] != null && foundRows[i][unitAlias] != System.DBNull.Value && referenceUniversMedia.Contains(foundRows[i]["id_media"].ToString()))
                     {
-                        unitReferenceMedia += double.Parse(foundRows[i]["unit"].ToString());
+                        unitReferenceMedia += double.Parse(foundRows[i][unitAlias].ToString());
                     }
                     //Unité supports concurrents
                     if (foundRows[i]["id_media"] != null && foundRows[i]["id_media"] != System.DBNull.Value && competitorUniversMedia != null &&
-                        foundRows[i]["unit"] != null && foundRows[i]["unit"] != System.DBNull.Value && competitorUniversMedia.Contains(foundRows[i]["id_media"].ToString()))
+                        foundRows[i][unitAlias] != null && foundRows[i][unitAlias] != System.DBNull.Value && competitorUniversMedia.Contains(foundRows[i]["id_media"].ToString()))
                     {
-                        unitCompetitorMedia += double.Parse(foundRows[i]["unit"].ToString());
+                        unitCompetitorMedia += double.Parse(foundRows[i][unitAlias].ToString());
                     }
                 }
             }

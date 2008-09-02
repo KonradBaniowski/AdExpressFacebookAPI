@@ -22,6 +22,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TblFormatCst = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
+using TNS.FrameWork;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM{
 	/// <summary>
@@ -140,24 +141,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					string chartAreaAdditionalName="";
 					string chartAreaCgrpName="";
 					#region sélection par rappot à l'unité choisit
-					switch (webSession.Unit){
-						case WebConstantes.CustomerSessions.Unit.euro:  
-							unitName= GestionWeb.GetWebWord(1669,webSession.SiteLanguage);
-							break;
-						case WebConstantes.CustomerSessions.Unit.kEuro :  
-							unitName= GestionWeb.GetWebWord(1790,webSession.SiteLanguage);
-							break;
-						case WebConstantes.CustomerSessions.Unit.grp:  
-							unitName= GestionWeb.GetWebWord(1679,webSession.SiteLanguage);						
-							break;
-						case WebConstantes.CustomerSessions.Unit.insertion:  
-							unitName= GestionWeb.GetWebWord(940,webSession.SiteLanguage);
-							break;
-						case WebConstantes.CustomerSessions.Unit.pages:  
-							unitName= GestionWeb.GetWebWord(566,webSession.SiteLanguage);
-							break;
-						default : break;
-					}
+                    unitName = Convertion.ToHtmlString(GestionWeb.GetWebWord(webSession.GetSelectedUnit().WebTextId, webSession.SiteLanguage));
+
 					#region Titres des graphiques
 					if (webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
 						//Titre graphique cible de base

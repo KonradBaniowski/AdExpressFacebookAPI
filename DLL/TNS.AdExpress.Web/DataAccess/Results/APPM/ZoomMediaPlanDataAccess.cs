@@ -15,6 +15,8 @@ using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using  DBCst=TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Units;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 {
@@ -50,7 +52,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			//Media and its periodicity
 			sql.Append(DBTables.DATA_PRESS_APPM_PREFIXE+".id_media, media,"+DBTables.DATA_PRESS_APPM_PREFIXE+".id_periodicity,");
 			//Units
-			sql.Append("sum("+DBCst.Fields.EXPENDITURE_EURO+") as euros,sum("+DBCst.Fields.AREA_PAGE+") as pages,(sum("+DBCst.Fields.INSERTION+")*grp) as totalGRP");
+			sql.AppendFormat("sum({0}) as {1},sum({2}) as {3},(sum({4})*{5}) as totalGRP"
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			//Date of publication
 			sql.Append(", date_parution_num as publication_date");
 			#endregion
@@ -91,7 +99,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(" group by ");
 			sql.Append(DBTables.DATA_PRESS_APPM_PREFIXE+".id_vehicle, vehicle, ");
 			sql.Append(DBTables.DATA_PRESS_APPM_PREFIXE+".id_category, category,");
-			sql.Append(DBTables.DATA_PRESS_APPM_PREFIXE+".id_media, media, "+DBTables.DATA_PRESS_APPM_PREFIXE+".id_periodicity , grp, date_parution_num");
+            sql.Append(DBTables.DATA_PRESS_APPM_PREFIXE + ".id_media, media, " + DBTables.DATA_PRESS_APPM_PREFIXE + ".id_periodicity , date_parution_num, " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			#endregion
 
 			#region Order by

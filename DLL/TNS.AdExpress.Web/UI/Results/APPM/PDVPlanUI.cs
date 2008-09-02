@@ -17,6 +17,7 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Units;
 namespace TNS.AdExpress.Web.UI.Results.APPM
 {
 	/// <summary>
@@ -66,10 +67,10 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					#region Table Headers
 					html.Append("<tr class=\"" + header_css + "\">");
 					html.Append("<td>" +""+"</td>");
-					html.Append("<td>" + GestionWeb.GetWebWord(1423, webSession.SiteLanguage) + "</td>");
-					html.Append("<td>" + GestionWeb.GetWebWord(943, webSession.SiteLanguage) + "</td>");
-					html.Append("<td>" + GestionWeb.GetWebWord(940, webSession.SiteLanguage) + "</td>");
-					html.Append("<td>" + GestionWeb.GetWebWord(1679, webSession.SiteLanguage) + "</td>");
+                    html.Append("<td>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].WebTextId, webSession.SiteLanguage)) + "</td>");
+                    html.Append("<td>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].WebTextId, webSession.SiteLanguage)) + "</td>");
+                    html.Append("<td>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage)) + "</td>");
+                    html.Append("<td>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].WebTextId, webSession.SiteLanguage)) + "</td>");
 					html.Append("<td>" + GestionWeb.GetWebWord(1735, webSession.SiteLanguage) + "</td>");
 					
 					html.Append("</tr>");

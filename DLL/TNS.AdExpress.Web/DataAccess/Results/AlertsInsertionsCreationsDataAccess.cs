@@ -28,6 +28,7 @@ using ConstantesCustomer=TNS.AdExpress.Constantes.Customer;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using  ConstantesFrameWork=TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -294,9 +295,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", format"
-						+", "+prefixeMediaPlanTable+".area_page"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
 						+", color"
-						+", "+prefixeMediaPlanTable+".expenditure_euro"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", location"
 						+", "+prefixeMediaPlanTable+".visual "
 						+", "+prefixeMediaPlanTable+".id_advertisement"
@@ -315,14 +316,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", "+prefixeMediaPlanTable+".duration"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", "+prefixeMediaPlanTable+".rank"
 						+", "+prefixeMediaPlanTable+".duration_commercial_break"
 						+", "+prefixeMediaPlanTable+".number_spot_com_break"
 						+", "+prefixeMediaPlanTable+".rank_wap"
 						+", "+prefixeMediaPlanTable+".duration_com_break_wap"
 						+", "+prefixeMediaPlanTable+".number_spot_com_break_wap"
-						+", "+prefixeMediaPlanTable+".expenditure_euro"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", "+prefixeMediaPlanTable+".id_cobranding_advertiser"
 						+", "+prefixeMediaPlanTable+".id_slogan"
 						+", vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan";
@@ -336,11 +337,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", "+prefixeMediaPlanTable+".duration"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", "+prefixeMediaPlanTable+".id_rank"
 						+", "+prefixeMediaPlanTable+".duration_commercial_break"
 						+", "+prefixeMediaPlanTable+".number_message_commercial_brea"
-						+", "+prefixeMediaPlanTable+".expenditure_euro"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", "+prefixeMediaPlanTable+".id_commercial_break"
 						+", "+prefixeMediaPlanTable+".id_slogan"
 						+", vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan";
@@ -352,12 +353,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", "+prefixeMediaPlanTable+".number_board"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].Id.ToString()
 						+", "+prefixeMediaPlanTable+".type_board"
 						+", "+prefixeMediaPlanTable+".type_sale"
 						+", "+prefixeMediaPlanTable+".poster_network"
-						+", "+DbTables.AGGLOMERATION_PREFIXE+".agglomeration"																	
-						+", "+prefixeMediaPlanTable+".expenditure_euro"
+						+", "+DbTables.AGGLOMERATION_PREFIXE+".agglomeration"
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 					    +", vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan";
 					return sql;
 				case DBClassificationConstantes.Vehicles.names.adnettrack:
@@ -584,7 +585,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 				case DBClassificationConstantes.Vehicles.names.outdoor:					
 					sql+=" vehicle ,category, media ,"+prefixeMediaPlanTable+".id_slogan"
-					+","+TNS.AdExpress.Web.DataAccess.Functions.GetOutDoorInsertionsOrder(0)+" asc, wp.number_board";
+                    + "," + TNS.AdExpress.Web.DataAccess.Functions.GetOutDoorInsertionsOrder(0) + " asc, wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField;
 					return sql;
 
 				default:

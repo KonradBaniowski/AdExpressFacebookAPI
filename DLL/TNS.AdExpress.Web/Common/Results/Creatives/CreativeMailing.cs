@@ -19,6 +19,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.WebResultUI.TableControl;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Common.Results.Creatives {
 
@@ -211,7 +212,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         protected override void FieldInstance(DataRow row, CreativeItem item) {
             base.FieldInstance(row, item);
             CreativeMailing itemMailing = (CreativeMailing)item;
-            itemMailing.Budget = Convert.ToInt32(row["budget"]);
+            itemMailing.Budget = Convert.ToInt32(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()]);
             itemMailing.InsertNb = Convert.ToInt32(row["volume"]);
             itemMailing.Media = row["media"].ToString();
             itemMailing.Weight = Convert.ToDecimal(row["weight"]);

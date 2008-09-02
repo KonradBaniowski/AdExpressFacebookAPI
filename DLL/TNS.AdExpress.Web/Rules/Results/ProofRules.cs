@@ -22,6 +22,9 @@ using TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork.Date;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Units;
+using WebCste = TNS.AdExpress.Constantes.Web;
+using TNS.FrameWork;
 
 namespace TNS.AdExpress.Web.Rules.Results
 {
@@ -98,13 +101,13 @@ namespace TNS.AdExpress.Web.Rules.Results
 					headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(1731,webSession.SiteLanguage), PROOF_COL_INDEX));
 								
 					//Colonne euro
-					headers.Root.Add(new Header(false, GestionWeb.GetWebWord(1423,webSession.SiteLanguage), EUROS_COL_INDEX));
+					headers.Root.Add(new Header(false, Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].WebTextId,webSession.SiteLanguage)), EUROS_COL_INDEX));
 								
 					//Colonne Pages
-					headers.Root.Add(new Header(false, GestionWeb.GetWebWord(943,webSession.SiteLanguage), PAGE_COL_INDEX));
+                    headers.Root.Add(new Header(false, Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].WebTextId, webSession.SiteLanguage)), PAGE_COL_INDEX));
 				
 					//Colonne Insertion
-					headers.Root.Add(new Header(false,GestionWeb.GetWebWord(940,webSession.SiteLanguage), INSERTION_COL_INDEX));
+                    headers.Root.Add(new Header(false, Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebCste.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage)), INSERTION_COL_INDEX));
 
 					//Colonne format
 					headers.Root.Add(new Header(false,GestionWeb.GetWebWord(1420,webSession.SiteLanguage), FORMAT_COL_INDEX));
@@ -186,15 +189,15 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 							// Euro
 							tab[iCurLine, EUROS_COL_INDEX] = new CellEuro(0.0);
-							tab.AffectValueAndAddToHierarchy(FIRST_COL_INDEX,iCurLine,EUROS_COL_INDEX,double.Parse(dr["euro"].ToString()));
+							tab.AffectValueAndAddToHierarchy(FIRST_COL_INDEX,iCurLine,EUROS_COL_INDEX,double.Parse(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString()));
 
 							// Pages
 							tab[iCurLine, PAGE_COL_INDEX] =  new CellPage(0.0);
-							tab.AffectValueAndAddToHierarchy(FIRST_COL_INDEX,iCurLine,PAGE_COL_INDEX,double.Parse(dr["pages"].ToString()));
+                            tab.AffectValueAndAddToHierarchy(FIRST_COL_INDEX, iCurLine, PAGE_COL_INDEX, double.Parse(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].Id.ToString()].ToString()));
 
 							// Insertion
 							tab[iCurLine, INSERTION_COL_INDEX] = new CellInsertion(0.0);
-							tab.AffectValueAndAddToHierarchy(FIRST_COL_INDEX,iCurLine,INSERTION_COL_INDEX,double.Parse(dr["insertion"].ToString()));
+                            tab.AffectValueAndAddToHierarchy(FIRST_COL_INDEX, iCurLine, INSERTION_COL_INDEX, double.Parse(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
 
 							// Format
 							tab[iCurLine, FORMAT_COL_INDEX] = new CellLabel(dr["format"].ToString());
@@ -286,15 +289,15 @@ namespace TNS.AdExpress.Web.Rules.Results
 						dr["product"]			= currentRow["product"].ToString();
 						dr["group_"]			= currentRow["group_"].ToString();
 						dr["media_paging"]		= currentRow["media_paging"].ToString();
-						dr["area_page"]			= Decimal.Parse(currentRow["area_page"].ToString()) / 1000;
-						dr["area_mmc"]			= Decimal.Parse(currentRow["area_mmc"].ToString());
+                        dr["area_page"]         = Decimal.Parse(currentRow[UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].Id.ToString()].ToString()) / 1000;
+                        dr["area_mmc"]          = Decimal.Parse(currentRow[UnitsInformation.List[WebCste.CustomerSessions.Unit.mmPerCol].Id.ToString()].ToString());
 						dr["color"]				= currentRow["color"].ToString();
 						dr["format"]			= currentRow["format"].ToString();
 						dr["rank_sector"]		= currentRow["rank_sector"].ToString();
 						dr["rank_group_"]		= currentRow["rank_group_"].ToString();
 						dr["rank_media"]		= currentRow["rank_media"].ToString();
 						dr["visual"]			= currentRow["visual"].ToString();
-						dr["expenditure_euro"]	= Decimal.Parse(currentRow["expenditure_euro"].ToString());
+                        dr["expenditure_euro"]  = Decimal.Parse(currentRow[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 
 						#region Date
                         if (currentRow["date_cover_num"].ToString().Length > 0)

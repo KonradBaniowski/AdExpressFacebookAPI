@@ -22,6 +22,7 @@ using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Exceptions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Units;
 
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -463,7 +464,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string dateEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
 			#endregion
 
-			 query = "SELECT id_slogan as id, min(date_media_num) as datenum, count(distinct ID_MEDIA) as nbsupports, sum(EXPENDITURE_EURO) as budget, sum(INSERTION) as nbinsertions"
+            query = "SELECT id_slogan as id, min(date_media_num) as datenum, count(distinct ID_MEDIA) as nbsupports"
+                + ", sum(" + UnitsInformation.List[CustomerSessions.Unit.euro].DatabaseField + ") as " + UnitsInformation.List[CustomerSessions.Unit.euro].Id.ToString() 
+                + ", sum(" + UnitsInformation.List[CustomerSessions.Unit.insertion].DatabaseField + ") as " + UnitsInformation.List[CustomerSessions.Unit.insertion].Id.ToString()
 				+ " FROM " + dbSchema + "." + dbTbl + " " +tablePrefixe
 				+ " WHERE "
 				+"  date_media_num>="+dateBegin+" and  date_media_num<="+dateEnd+"  " 
@@ -670,7 +673,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
             string dateEnd = WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
             #endregion
 
-            query = "SELECT id_slogan as id, count(distinct id_media) as nbsupports, sum(EXPENDITURE_EURO) as budget, sum(number_board) as nbpanneau"
+            query = "SELECT id_slogan as id, count(distinct id_media) as nbsupports"
+               + ", sum(" + UnitsInformation.List[CustomerSessions.Unit.euro].DatabaseField + ") as " + UnitsInformation.List[CustomerSessions.Unit.euro].Id.ToString()
+               + ", sum(" + UnitsInformation.List[CustomerSessions.Unit.numberBoard].DatabaseField + ") as " + UnitsInformation.List[CustomerSessions.Unit.numberBoard].Id.ToString()
                + " FROM " + dbSchema + "." + dbTbl + " " + tablePrefixe
                + " WHERE "
                + "  date_media_num>=" + dateBegin + " and  date_media_num<=" + dateEnd + "  "

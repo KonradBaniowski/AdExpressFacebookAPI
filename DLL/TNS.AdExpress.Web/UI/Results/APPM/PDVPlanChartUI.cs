@@ -15,6 +15,9 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using Dundas.Charting.WebControl;
+using TNS.AdExpress.Domain.Units;
+using TNS.FrameWork;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 namespace TNS.AdExpress.Web.UI.Results.APPM
 {
 	/// <summary>
@@ -92,7 +95,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					#region pages
 					//Creates chart area and series for pages
 					GetSeriesData(PDVGraphicsData,PDVPlanData,xUnitValues,yUnitValues,"pages");
-					chartAreaName=GestionWeb.GetWebWord(943,webSession.SiteLanguage);
+                    chartAreaName = GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].WebTextId, webSession.SiteLanguage);
 					ChartArea chartAreaPages=new ChartArea();
 					Series pageSeries=new Series();	
 					//Allignments of the chart
@@ -108,7 +111,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					#region insertions
 					//Creates chart area and series for insertions
 					GetSeriesData(PDVGraphicsData,PDVPlanData,xUnitValues,yUnitValues,"insertions");
-					chartAreaName=GestionWeb.GetWebWord(940,webSession.SiteLanguage);
+					chartAreaName=Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage));
 					ChartArea chartAreaInsertions=new ChartArea();
 					Series insertionSeries=new Series();
 					//Allignments of the chart

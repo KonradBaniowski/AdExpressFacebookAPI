@@ -18,6 +18,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.WebResultUI;
 using APPMConstantes=TNS.AdExpress.Constantes.FrameWork.Results.APPM;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM{
 	/// <summary>
@@ -155,15 +156,15 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 							#endregion
 
 							#region Budget (Moyenne, Min, Max)
-							avgBudget+=Convert.ToDouble(dr["euros"].ToString());
+							avgBudget+=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 
 							if(start)
-								minBudget=Convert.ToDouble(dr["euros"].ToString());
-							else if(minBudget>Convert.ToDouble(dr["euros"].ToString()))
-								minBudget=Convert.ToDouble(dr["euros"].ToString());
+								minBudget=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()].ToString());
+							else if(minBudget>Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()].ToString()))
+								minBudget=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 
-							if(maxBudget<Convert.ToDouble(dr["euros"].ToString()))
-								maxBudget=Convert.ToDouble(dr["euros"].ToString());
+							if(maxBudget<Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()].ToString()))
+								maxBudget=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 							#endregion
 
 							#region Nombre de titres (Moyenne, Min, Max)
@@ -179,32 +180,32 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 							#endregion
 
 							#region Nombre d'insertions (Moyenne, Min, Max)
-							avgInsertions+=Convert.ToDouble(dr["insertions"].ToString());
+							avgInsertions+=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
 
 							if(start)
-								minInsertions=Convert.ToDouble(dr["insertions"].ToString());
-							else if(minInsertions>Convert.ToDouble(dr["insertions"].ToString()))
-								minInsertions=Convert.ToDouble(dr["insertions"].ToString());
+								minInsertions=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+							else if(minInsertions>Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()].ToString()))
+								minInsertions=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
 
-							if(maxInsertions<Convert.ToDouble(dr["insertions"].ToString()))
-								maxInsertions=Convert.ToDouble(dr["insertions"].ToString());
+							if(maxInsertions<Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()].ToString()))
+								maxInsertions=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
 							#endregion
 
 							#region Nombre de pages (Moyenne, Min, Max)
-							avgPages+=Convert.ToDouble(dr["pages"]);
+							avgPages+=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]);
 
 							if(start)
-								minPages=Convert.ToDouble(dr["pages"]);
-							else if(minPages>Convert.ToDouble(dr["pages"]))
-								minPages=Convert.ToDouble(dr["pages"]);
+								minPages=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]);
+							else if(minPages>Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]))
+								minPages=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]);
 
-							if(maxPages<Convert.ToDouble(dr["pages"]))
-								maxPages=Convert.ToDouble(dr["pages"]);
+							if(maxPages<Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]))
+								maxPages=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]);
 							#endregion
 
 							#region Coût GRP (Moyenne, Min, Max)
 							if(Convert.ToDouble(dr["totalgrp"].ToString())>0)
-								baseTargetCost=Convert.ToDouble(dr["euros"].ToString())/Convert.ToDouble(dr["totalgrp"].ToString());
+								baseTargetCost=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()].ToString())/Convert.ToDouble(dr["totalgrp"].ToString());
 							else
 								baseTargetCost=0;
 
@@ -239,7 +240,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 							#region Coût GRP (Moyenne, Min, Max)
 							if(Convert.ToDouble(dr["totalgrp"].ToString())>0)
-								additionalTargetCost=Convert.ToDouble(dr["euros"].ToString())/Convert.ToDouble(dr["totalgrp"].ToString());
+								additionalTargetCost=Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()].ToString())/Convert.ToDouble(dr["totalgrp"].ToString());
 							else
 								additionalTargetCost=0;
 

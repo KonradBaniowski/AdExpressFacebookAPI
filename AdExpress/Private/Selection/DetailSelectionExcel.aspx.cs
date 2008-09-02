@@ -329,7 +329,7 @@ namespace AdExpress.Private.Selection{
 
 				// Unité
 				unitTitle=Convertion.ToHtmlString(GestionWeb.GetWebWord(849,_webSession.SiteLanguage));
-				unitLabel.Text=Convertion.ToHtmlString(GestionWeb.GetWebWord((int)TNS.AdExpress.Constantes.Web.CustomerSessions.UnitsTraductionCodes[_webSession.Unit],_webSession.SiteLanguage));	
+				unitLabel.Text=Convertion.ToHtmlString(GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId,_webSession.SiteLanguage));	
 
 				// Media
 				if (_webSession.isMediaSelected()){

@@ -855,7 +855,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <returns>HTML</returns>
 		private string GetUnitSelected(WebSession webSession){
 			if(webSession.PreformatedTable.ToString().ToUpper().IndexOf("UNITS")==-1)
-				return("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+GestionWeb.GetWebWord(1313,webSession.SiteLanguage)+"</font> "+GestionWeb.GetWebWord((int)TNS.AdExpress.Constantes.Web.CustomerSessions.XLSUnitsTraductionCodes[webSession.Unit],webSession.SiteLanguage)+"</td></tr>");
+				return("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+GestionWeb.GetWebWord(1313,webSession.SiteLanguage)+"</font> "+Convertion.ToHtmlString(GestionWeb.GetWebWord(webSession.GetSelectedUnit().WebTextId,webSession.SiteLanguage))+"</td></tr>");
 			return("");
 		}
 		#endregion

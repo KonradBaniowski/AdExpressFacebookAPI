@@ -14,9 +14,10 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;
-
+using WebCste = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using Cst = TNS.AdExpress.Constantes;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 	/// <summary>
@@ -40,15 +41,23 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 
 			#region Select
 			sql.Append("select "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_media, "+ DBCst.Tables.MEDIA_PREFIXE +".media, ");
-			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".date_media_num, "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".date_cover_num,"); 
+			 
 			sql.Append(DBCst.Tables.ADVERTISER_PREFIXE +".advertiser, ");
 			sql.Append(DBCst.Tables.PRODUCT_PREFIXE +".product, "+ DBCst.Tables.GROUP_PREFIXE +".group_, ");
-			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".media_paging, "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".area_page, ");
-			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".area_mmc, "+ DBCst.Tables.COLOR_PREFIXE +".color, ");
-			sql.Append(DBCst.Tables.FORMAT_PREFIXE +".format, "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".rank_sector, ");
+            sql.Append(DBCst.Tables.FORMAT_PREFIXE + ".format, " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".rank_sector, ");
+            sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".date_media_num, " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".date_cover_num,");
+			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".visual, "+ DBCst.Tables.COLOR_PREFIXE +".color, ");
 			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".rank_group_, "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".rank_media, ");
 			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_inset, "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_advertisement, ");
-			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".visual, "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".expenditure_euro ");
+            sql.AppendFormat("{0}.media_paging, {0}.{1} as {2}, {0}.{3} as {4}, {0}.{5} as {6} "
+                , DBCst.Tables.DATA_PRESS_APPM_PREFIXE
+                , UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].DatabaseField
+                , UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].Id.ToString()
+                , UnitsInformation.List[WebCste.CustomerSessions.Unit.mmPerCol].DatabaseField
+                , UnitsInformation.List[WebCste.CustomerSessions.Unit.mmPerCol].Id.ToString()
+                , UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].DatabaseField
+                , UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString());
+
 			#endregion
 
 			#region From

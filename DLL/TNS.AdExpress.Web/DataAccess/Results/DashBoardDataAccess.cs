@@ -88,7 +88,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
             //Requête spécifique pour tableau 13 (medias\familles)
             if (sql.Length > 0 && webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector) {
-                tempSql = " Select " + GetMediaSelectFields(webSession, "") + "," + GetSectorSelectFields(webSession, "") + ",period,sum(" + webSession.Unit + ") as " + webSession.Unit + " from (";
+                tempSql = " Select " + GetMediaSelectFields(webSession, "") + "," + GetSectorSelectFields(webSession, "") + ",period," + WebFunctions.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(webSession) + " from (";
                 tempSql += "  " + sql;
                 tempSql += " ) group by " + GetMediaGroupBy(webSession) + "," + GetSectorGroupBy(webSession) + ",period ";
                 sql = tempSql += "  order by " + GetMediaOrderFields(webSession, true, "") + "," + GetSectorOrderFields(webSession, true) + ",period ";
@@ -555,12 +555,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector:
                     if (IsRepartitionSelected(webSession)) {
-                        sql += " sum(" + WebFunctions.SQLGenerator.getUnitField(webSession.Unit) + " ) as  "
-                            + webSession.Unit;
+                        sql += WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, Constantes.DB.TableType.Type.dataVehicle);
 
                     }
-                    else sql += " sum(" + WebFunctions.SQLGenerator.getTotalUnitField(webSession.Unit) + " )  as  "
-                             + webSession.Unit;
+                    else sql += WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, Constantes.DB.TableType.Type.webPlan);
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
@@ -570,8 +568,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice:
 
                     if (IsRepartitionSelected(webSession)) {
-                        sql += " sum(" + WebFunctions.SQLGenerator.getUnitField(webSession.Unit) + " ) as  "
-                            + webSession.Unit;
+                        sql += WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, Constantes.DB.TableType.Type.dataVehicle);
                     }
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format:

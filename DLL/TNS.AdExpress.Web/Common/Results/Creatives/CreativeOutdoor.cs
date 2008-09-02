@@ -18,6 +18,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.WebResultUI.TableControl;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Common.Results.Creatives {
 
@@ -68,9 +69,9 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         protected override void FieldInstance(DataRow row, CreativeItem item) {
             base.FieldInstance(row, item);
             CreativeOutdoor itemPress = (CreativeOutdoor)item;
-            itemPress.Budget = Convert.ToDecimal(row["budget"]);
+            itemPress.Budget = Convert.ToDecimal(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()]);
             itemPress.MediaNb = Convert.ToInt32(row["nbsupport"]);
-            itemPress.InsertNb = Convert.ToInt32(row["nbpanneau"]);
+            itemPress.InsertNb = Convert.ToInt32(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()]);
 
         }
         #endregion

@@ -27,6 +27,7 @@ using CstProject = TNS.AdExpress.Constantes.Project;
 using ResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -502,9 +503,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", format"
-						+", wp.area_page"
+                        + ", wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
 						+", color"
-						+", wp.expenditure_euro"
+                        + ", wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", location"
 						+", wp.visual "
 						+", wp.id_advertisement"
@@ -523,14 +524,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", wp.duration"
+                        + ", wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", wp.rank"
 						+", wp.duration_commercial_break"
 						+", wp.number_spot_com_break"
 						+", wp.rank_wap"
 						+", wp.duration_com_break_wap"
 						+", wp.number_spot_com_break_wap"
-						+", wp.expenditure_euro"
+                        + ", wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", wp.id_cobranding_advertiser"
 						+", category"
 						+", vehicle"
@@ -544,11 +545,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", wp.duration"
+                        + ", wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", wp.id_rank"
 						+", wp.duration_commercial_break"
 						+", wp.number_message_commercial_brea"
-						+", wp.expenditure_euro"
+                        + ", wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", wp.id_commercial_break"
 						+", category"
 						+", vehicle"
@@ -559,12 +560,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", wp.number_board"
+                        + ", wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].Id.ToString()
 						+", wp.type_board"
 						+", wp.type_sale"
 						+", wp.poster_network"
 						+", ag.agglomeration"
-						+", wp.expenditure_euro"						
+                        + ", wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()						
 						+", category"
 						+", vehicle"
 						+ ", wp.associated_file";
@@ -609,7 +610,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					return  "category"
 						+", media"
 						+", wp.date_media_num"
-						+", wp.number_board"
+                        + ", wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].Id.ToString()
 						+", wp.type_board";
 				default:
 					throw new Exceptions.MediaCreationDataAccessException("GetTable(DBClassificationConstantes.Vehicles.value idMedia)-->Le cas de ce média n'est pas gérer. Pas de table correspondante.");

@@ -22,6 +22,8 @@ using TNS.AdExpress.Web.Functions;
 
 using DBCst = TNS.AdExpress.Constantes.DB;
 using Cst = TNS.AdExpress.Constantes;
+using TNS.AdExpress.Domain.Units;
+using WebConstante = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 {
@@ -51,11 +53,27 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(DBCst.Tables.WEB_PLAN_PREFIXE + ".id_category," + DBCst.Tables.CATEGORY_PREFIXE + ".category,");
 			sql.Append(DBCst.Tables.WEB_PLAN_PREFIXE + ".id_media," + DBCst.Tables.MEDIA_PREFIXE + ".media,");
 			sql.Append(DBCst.Tables.TARGET_PREFIXE + ".id_target," + DBCst.Tables.TARGET_PREFIXE + ".target,");
-			sql.Append("sum(" + DBCst.Tables.WEB_PLAN_PREFIXE + ".totalunite) as euro,");
-			sql.Append("(sum(" + DBCst.Tables.WEB_PLAN_PREFIXE + ".totalinsert)*" + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".grp) as totalgrp,");
-			sql.Append(DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".grp as grp,");
+			sql.AppendFormat("sum({0}.{1}) as {2},"
+                , DBCst.Tables.WEB_PLAN_PREFIXE
+                , UnitsInformation.List[WebConstante.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstante.CustomerSessions.Unit.euro].Id.ToString());
+			sql.AppendFormat("(sum({0}.{2})*{1}.{3}) as totalgrp,"
+                , DBCst.Tables.WEB_PLAN_PREFIXE
+                , DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE
+                , UnitsInformation.List[WebConstante.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstante.CustomerSessions.Unit.grp].DatabaseField);
+
+			sql.AppendFormat("{0}.{1} as {2},"
+                , DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE
+                , UnitsInformation.List[WebConstante.CustomerSessions.Unit.grp].DatabaseField
+                , UnitsInformation.List[WebConstante.CustomerSessions.Unit.grp].Id.ToString());
 			//modifications to avoid division by zero while calculating CGRP by using decode function
-			sql.Append("decode(sum(totalinsert)*" + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".grp,0,0,round(sum(" + DBCst.Tables.WEB_PLAN_PREFIXE + ".totalunite)/(sum(" + DBCst.Tables.WEB_PLAN_PREFIXE + ".totalinsert)*" + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".grp),3))as cgrp ");
+            sql.AppendFormat("decode(sum({2})*{0}.{3},0,0,round(sum({1}.{4})/(sum({1}.{2})*{0}.{3}),3))as cgrp "
+                , DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE
+                , DBCst.Tables.WEB_PLAN_PREFIXE
+                , UnitsInformation.List[WebConstante.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstante.CustomerSessions.Unit.grp].DatabaseField
+                , UnitsInformation.List[WebConstante.CustomerSessions.Unit.euro].DatabaseMultimediaField);
 			//sql.Append("round(sum(" + DBCst.Tables.WEB_PLAN_PREFIXE + ".totalunite)/(sum(" + DBCst.Tables.WEB_PLAN_PREFIXE + ".totalinsert)*" + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".grp),3)as cgrp ");
 			#endregion
 
@@ -113,7 +131,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(DBCst.Tables.WEB_PLAN_PREFIXE + ".id_category," + DBCst.Tables.CATEGORY_PREFIXE + ".category,");
 			sql.Append(DBCst.Tables.WEB_PLAN_PREFIXE + ".id_media," + DBCst.Tables.MEDIA_PREFIXE + ".media,");
 			sql.Append(DBCst.Tables.TARGET_PREFIXE + ".id_target," + DBCst.Tables.TARGET_PREFIXE + ".target,");
-			sql.Append(DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".grp");
+            sql.Append(DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + "." + UnitsInformation.List[WebConstante.CustomerSessions.Unit.grp].DatabaseField);
 			#endregion
 
 			sql.Append(" order by category asc ,id_category , euro desc, media, id_media");

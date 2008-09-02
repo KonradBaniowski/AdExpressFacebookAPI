@@ -23,6 +23,8 @@ using TblFormatCst = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDe
 
 using TNS.AdExpress.Web.Rules.Results.APPM;
 using Dundas.Charting.WebControl;
+using TNS.AdExpress.Domain.Units;
+using TNS.FrameWork;
 
 namespace TNS.AdExpress.Web.Controls.Results.Appm
 {
@@ -477,14 +479,14 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 						case WebConstantes.CustomerSessions.Unit.kEuro :  
 							unitName= GestionWeb.GetWebWord(2111,this._customerWebSession.SiteLanguage);
 							break;
-						case WebConstantes.CustomerSessions.Unit.grp:  
-							unitName= GestionWeb.GetWebWord(1679,this._customerWebSession.SiteLanguage);						
+						case WebConstantes.CustomerSessions.Unit.grp:
+                            unitName = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].WebTextId, _customerWebSession.SiteLanguage));						
 							break;
-						case WebConstantes.CustomerSessions.Unit.insertion:  
-							unitName= GestionWeb.GetWebWord(940,this._customerWebSession.SiteLanguage);
+						case WebConstantes.CustomerSessions.Unit.insertion:
+                            unitName = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, _customerWebSession.SiteLanguage));
 							break;
-						case WebConstantes.CustomerSessions.Unit.pages:  
-							unitName= GestionWeb.GetWebWord(566,this._customerWebSession.SiteLanguage);
+						case WebConstantes.CustomerSessions.Unit.pages:
+                            unitName = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].WebTextId, _customerWebSession.SiteLanguage));
 							break;
 						default : break;
 					}

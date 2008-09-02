@@ -17,7 +17,9 @@ using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Exceptions;
-using DataAccesFct = TNS.AdExpress.Web.DataAccess; 
+using DataAccesFct = TNS.AdExpress.Web.DataAccess;
+using TNS.AdExpress.Domain.Units;
+using WebCste = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM{
 	/// <summary>
@@ -85,15 +87,15 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 						dr["product"]			= currentRow["product"].ToString();
 						dr["group_"]			= currentRow["group_"].ToString();
 						dr["media_paging"]		= currentRow["media_paging"].ToString();
-						dr["area_page"]			= Decimal.Parse(currentRow["area_page"].ToString()) / 1000;
-						dr["area_mmc"]			= Decimal.Parse(currentRow["area_mmc"].ToString());
+                        dr["area_page"] = Decimal.Parse(currentRow[UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].Id.ToString()].ToString()) / 1000;
+                        dr["area_mmc"] = Decimal.Parse(currentRow[UnitsInformation.List[WebCste.CustomerSessions.Unit.mmPerCol].Id.ToString()].ToString());
 						dr["color"]				= currentRow["color"].ToString();
 						dr["format"]			= currentRow["format"].ToString();
 						dr["rank_sector"]		= currentRow["rank_sector"].ToString();
 						dr["rank_group_"]		= currentRow["rank_group_"].ToString();
 						dr["rank_media"]		= currentRow["rank_media"].ToString();
 						dr["visual"]			= currentRow["visual"].ToString();
-						dr["expenditure_euro"]	= Decimal.Parse(currentRow["expenditure_euro"].ToString());
+                        dr["expenditure_euro"] = Decimal.Parse(currentRow[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 
 						#region Date
 						if (currentRow["date_cover_num"].ToString().Length > 0) {

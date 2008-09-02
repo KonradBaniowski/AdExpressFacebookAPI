@@ -17,6 +17,7 @@ using DBConstantes=TNS.AdExpress.Constantes.DB;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using Cst = TNS.AdExpress.Constantes;
 using TNS.AdExpress.Web.DataAccess;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 	/// <summary>
@@ -49,26 +50,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 
 			#region Select
 			sql.Append("select ");
-			sql.Append(""+dateField+", id_target , target,  sum(totalgrp) as totalgrp, sum(euro) as euros , ");
+            sql.AppendFormat("{0}, id_target , target,  sum(totalgrp) as totalgrp, sum({1}) as {1} "
+                , dateField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
 			
 			#region sélection par rappot à l'unité choisit
-			switch (webSession.Unit){
-				case WebConstantes.CustomerSessions.Unit.euro:  
-				case WebConstantes.CustomerSessions.Unit.kEuro:  
-					sql.Append("   sum(budget) as unit  " );
-					break;
-				case WebConstantes.CustomerSessions.Unit.grp:  
-					sql.Append(" sum(grp) as unit " );					
-					break;
-				case WebConstantes.CustomerSessions.Unit.insertion:  
-					sql.Append("   sum(insertion) as unit  " );
-					break;
-				case WebConstantes.CustomerSessions.Unit.pages:  
-					//					sql.Append("   sum(page)/1000 as unit " );
-					sql.Append("   sum(page) as unit " );
-					break;
-				default : break;
-			}
+            if (webSession.Unit != WebConstantes.CustomerSessions.Unit.euro)
+                sql.AppendFormat(", {0}",WebFunctions.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(webSession));
 			#endregion
 
 			#endregion
@@ -83,27 +71,22 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 				sql.Append(dateField+", " );
 				sql.Append(DBConstantes.Tables.TARGET_PREFIXE+".id_target, " );
 				sql.Append(DBConstantes.Tables.TARGET_PREFIXE+".target," );
-				sql.Append("sum(Totalinsert)* GRP as totalgrp , " );
-				sql.Append(" sum(Totalunite )as euro , " );
+                sql.AppendFormat("sum({0})* {1} as totalgrp , "
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
+				sql.AppendFormat("sum({0})as {1} "
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
 	
-				#region sélection par rappot à l'unité choisit
-				switch (webSession.Unit){
-					case WebConstantes.CustomerSessions.Unit.euro: 
-					case WebConstantes.CustomerSessions.Unit.kEuro:
-						sql.Append("sum(Totalunite)as budget  " );
-						break;
-					case WebConstantes.CustomerSessions.Unit.grp: 
-						sql.Append(DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".grp as grp" );					
-						break;
-					case WebConstantes.CustomerSessions.Unit.insertion: 
-						sql.Append("sum(Totalinsert) as insertion  " );
-						break;
-					case WebConstantes.CustomerSessions.Unit.pages: 
-						sql.Append("sum(Totalpages) as page  " );
-						break;
-					default : break;
-				}
-				#endregion
+                if(webSession.Unit != WebConstantes.CustomerSessions.Unit.euro
+                    && webSession.Unit != WebConstantes.CustomerSessions.Unit.grp)
+                    sql.AppendFormat(", {0}",WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, DBConstantes.TableType.Type.webPlan));
+                else if(webSession.Unit == WebConstantes.CustomerSessions.Unit.grp)
+                    sql.AppendFormat("{0}.{1} as {2}"
+                        , DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE
+                        , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField
+                        , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString());
+
 				#endregion
 
 				#region From
@@ -149,7 +132,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 				#endregion
 
 				#region group by
-				sql.Append(" group by "+dateField+", "+DBConstantes.Tables.TARGET_PREFIXE+".id_target ,"+DBConstantes.Tables.TARGET_PREFIXE+".target ,"+DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".grp ");
+                sql.Append(" group by " + dateField + ", " + DBConstantes.Tables.TARGET_PREFIXE + ".id_target ," + DBConstantes.Tables.TARGET_PREFIXE + ".target ," + DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField+" ");
 				#endregion
 
 			#region group by

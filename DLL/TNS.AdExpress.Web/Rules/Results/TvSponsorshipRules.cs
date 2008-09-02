@@ -36,6 +36,7 @@ using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Rules.Results
 {
@@ -962,7 +963,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media :
 					
-					unit=double.Parse(currentRow["unit"].ToString());				
+					unit=double.Parse(currentRow[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());				
 					
 					// Ecriture du résultat des dimensions en colonnes
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
@@ -973,7 +974,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 					break;
 
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Period :
-					unit=double.Parse(currentRow["unit"].ToString());				
+                    unit = double.Parse(currentRow[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());				
 
 					// Ecriture du résultat des dimensions en colonnes
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
@@ -986,23 +987,23 @@ namespace TNS.AdExpress.Web.Rules.Results
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units :
 														
 					// Ecriture du résultat des keuros en colonnes
-					unit=double.Parse(currentRow["euro"].ToString());
-					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode()]).IndexInResultTable]=unit;
+					unit=double.Parse(currentRow[UnitsInformation.List[CustomerSessions.Unit.euro].Id.ToString()].ToString());
+                    tabResult[currentLine, ((GroupItemForTableResult)dimensionColIndex[UnitsInformation.List[CustomerSessions.Unit.kEuro].Id.GetHashCode()]).IndexInResultTable] = unit;
 					
 					// Ecriture du résultat des euro en colonnes
-					unit=double.Parse(currentRow["euro"].ToString());
+                    unit = double.Parse(currentRow[UnitsInformation.List[CustomerSessions.Unit.euro].Id.ToString()].ToString());
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
-					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.euro.GetHashCode()]).IndexInResultTable]=unit;								
+                        tabResult[currentLine, ((GroupItemForTableResult)dimensionColIndex[UnitsInformation.List[CustomerSessions.Unit.euro].Id.GetHashCode()]).IndexInResultTable] = unit;								
 					
 					// Ecriture du résultat des durée en colonnes
-					unit=double.Parse(currentRow["duration"].ToString());
+                unit = double.Parse(currentRow[UnitsInformation.List[CustomerSessions.Unit.duration].Id.ToString()].ToString());
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
-					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.duration.GetHashCode()]).IndexInResultTable]=unit;	
+                        tabResult[currentLine, ((GroupItemForTableResult)dimensionColIndex[UnitsInformation.List[CustomerSessions.Unit.duration].Id.GetHashCode()]).IndexInResultTable] = unit;	
 					
 					// Ecriture du résultat des spots en colonnes
-					unit=double.Parse(currentRow["insertion"].ToString());
+                unit = double.Parse(currentRow[UnitsInformation.List[CustomerSessions.Unit.insertion].Id.ToString()].ToString());
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
-					tabResult[currentLine,((GroupItemForTableResult)dimensionColIndex[Constantes.Web.CustomerSessions.Unit.spot.GetHashCode()]).IndexInResultTable]=unit;								
+                        tabResult[currentLine, ((GroupItemForTableResult)dimensionColIndex[UnitsInformation.List[CustomerSessions.Unit.spot].Id.GetHashCode()]).IndexInResultTable] = unit;								
 							
 					break;
 			}
@@ -1096,16 +1097,16 @@ namespace TNS.AdExpress.Web.Rules.Results
 							
 							switch(unit){
 								case Constantes.Web.CustomerSessions.Unit.euro :
-									unitLabel  = GestionWeb.GetWebWord(1423,webSession.SiteLanguage);
+									unitLabel  = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CustomerSessions.Unit.euro].WebTextId,webSession.SiteLanguage));
 									break;
 								case Constantes.Web.CustomerSessions.Unit.kEuro :
-									unitLabel  = GestionWeb.GetWebWord(1789,webSession.SiteLanguage);
+                                    unitLabel = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CustomerSessions.Unit.kEuro].WebTextId, webSession.SiteLanguage));
 									break;
 								case Constantes.Web.CustomerSessions.Unit.duration :
-									unitLabel  = GestionWeb.GetWebWord(1933,webSession.SiteLanguage);
+                                    unitLabel = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CustomerSessions.Unit.duration].WebTextId, webSession.SiteLanguage));
 									break;
 								case Constantes.Web.CustomerSessions.Unit.spot :
-									unitLabel  = GestionWeb.GetWebWord(939,webSession.SiteLanguage);
+                                    unitLabel = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CustomerSessions.Unit.spot].WebTextId, webSession.SiteLanguage));
 									break;
 							}
 

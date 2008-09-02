@@ -25,6 +25,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 	/// <summary>
@@ -72,7 +73,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 
 				#region select
 				sql.Append("select "+productDetail+", count(id_media) as nbMedia,id_target,target, ");
-				sql.Append("sum(euros) as euros,sum(insertions) as insertions,sum(pages) as pages, ");
+                sql.AppendFormat("sum({0}) as {0},sum({1}) as {1},sum({2}) as {2}, "
+                        , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                        , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString());
 				sql.Append("sum(totalgrp) as totalgrp");
 				#endregion
 
@@ -82,7 +86,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 
 					#region select
 					sql.Append("select "+productDetail+", id_media, id_target,target, ");
-					sql.Append("sum(euros) as euros,sum(insertions) as insertions,sum(pages) as pages, ");
+					sql.AppendFormat("sum({0}) as {0},sum({1}) as {1},sum({2}) as {2}, "
+                        , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                        , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString());
 					sql.Append("sum(totalgrp) as totalgrp ");
 					#endregion
 
@@ -92,8 +99,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 		
 						#region select
 						sql.Append("select "+productDetail+", id_media, "+ DBTables.TARGET_PREFIXE+".id_target,target, ");
-						sql.Append("sum(TOTALUNITE) as euros,sum(TOTALINSERT) as insertions,sum(TOTALPAGES) as pages, ");
-						sql.Append("sum(TOTALINSERT)*GRP as totalgrp ");
+                        sql.AppendFormat("sum({0}) as {1},sum({2}) as {3},sum({4}) as {5}, sum({2})*{6} as totalgrp "
+                            , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                            , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                            , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                            , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                            , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseMultimediaField
+                            , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
+                            , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 						#endregion
 
 						#region from
@@ -132,7 +145,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 						#endregion
 
 						#region group by
-						sql.Append(" group by "+ DBTables.TARGET_PREFIXE+".id_target, target, "+DBConstantes.Tables.WEB_PLAN_PREFIXE+"."+productDetail+", id_media, GRP");
+						sql.Append(" group by "+ DBTables.TARGET_PREFIXE+".id_target, target, "+DBConstantes.Tables.WEB_PLAN_PREFIXE+"."+productDetail+", id_media, " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 						#endregion
 
 					#region group by
@@ -221,7 +234,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 
 						#region select
 						sql.Append("select "+productDetail +", "+dateField+", ");
-						sql.Append("sum(TOTALINSERT)*GRP as totalgrp ");
+						sql.AppendFormat("sum({0})*{1} as totalgrp "
+                            , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                            , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 						#endregion
 
 						#region from
@@ -255,7 +270,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 						#endregion
 
 						#region group by
-						sql.Append(" group by "+DBConstantes.Tables.WEB_PLAN_PREFIXE+"."+productDetail+", "+dateField+", GRP");
+                        sql.Append(" group by " + DBConstantes.Tables.WEB_PLAN_PREFIXE + "." + productDetail + ", " + dateField + ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 						#endregion
 
 					#region group by

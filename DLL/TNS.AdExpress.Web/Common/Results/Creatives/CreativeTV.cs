@@ -19,6 +19,7 @@ using TNS.FrameWork.WebResultUI.TableControl;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBClassifCst = TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Units;
 
 
 namespace TNS.AdExpress.Web.Common.Results.Creatives {
@@ -99,10 +100,10 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         protected override void FieldInstance(DataRow row, CreativeItem item) {
             base.FieldInstance(row, item);
             CreativeTV itemTv = (CreativeTV)item;
-            itemTv.Budget = Convert.ToDecimal(row["budget"]);
+            itemTv.Budget = Convert.ToDecimal(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()]);
             itemTv.MediaNb = Convert.ToInt32(row["nbsupport"]);
-            itemTv.Duration = new TimeSpan(0, 0, Convert.ToInt32(row["duree"]));
-            itemTv.InsertNb = Convert.ToInt32(row["nbinsertion"]);
+            itemTv.Duration = new TimeSpan(0, 0, Convert.ToInt32(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()]));
+            itemTv.InsertNb = Convert.ToInt32(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()]);
             ((CreativeTV)item).Vehicle = this.Vehicle;
 
         }

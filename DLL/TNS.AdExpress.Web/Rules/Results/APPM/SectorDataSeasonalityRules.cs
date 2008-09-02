@@ -16,6 +16,8 @@ using TNS.AdExpress.Domain.Translation;
 using WebDataAccess=TNS.AdExpress.Web.DataAccess;
 using APPMConstantes=TNS.AdExpress.Constantes.FrameWork.Results.APPM;
 using TNS.FrameWork.WebResultUI;
+using TNS.FrameWork;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM{
 	/// <summary>
@@ -74,7 +76,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 					//Calcul des total grp pour la cible de base et la cible additionnée
 					foreach(DataRow current in SeasonalityPlanTable.Rows){
-						currentUnit=Convert.ToDouble(current["unit"].ToString());
+						currentUnit=Convert.ToDouble(current[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 
 						#region Traitement en fonction de l'unité seléctionner
 						switch(webSession.Unit){
@@ -95,7 +97,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					SeasonalityData.Rows.Add(SeasonalityData.NewRow());
 					foreach(DataRow dt in SeasonalityPlanTable.Rows){	
 						SeasonalityData.Rows[i]["seasonality"]=dt[""+dateField+""].ToString();
-						currentUnit=Convert.ToDouble(dt["unit"].ToString());
+						currentUnit=Convert.ToDouble(dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 
 						#region Traitement en fonction de l'unité seléctionner
 						switch(webSession.Unit){
@@ -174,7 +176,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 					#region Calcul des total grp pour la cible de base et la cible additionnée
 					foreach(DataRow current in SeasonalityPlanTable.Rows){
-						currentUnit=Convert.ToDouble(current["unit"].ToString());
+						currentUnit=Convert.ToDouble(current[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 						
 						if(Convert.ToInt32(current["id_target"])==idBaseTarget){
 							totalBaseTargetUnit+=currentUnit;
@@ -209,10 +211,10 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 								headers.Root.Add(new Header(GestionWeb.GetWebWord(1669,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
 							case WebConstantes.CustomerSessions.Unit.kEuro:
 								headers.Root.Add(new Header(GestionWeb.GetWebWord(1790,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
-							case WebConstantes.CustomerSessions.Unit.pages:
-								headers.Root.Add(new Header(GestionWeb.GetWebWord(943,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
-							case WebConstantes.CustomerSessions.Unit.insertion:
-								headers.Root.Add(new Header(GestionWeb.GetWebWord(940,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
+                            case WebConstantes.CustomerSessions.Unit.pages:
+                                headers.Root.Add(new Header(Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].WebTextId, webSession.SiteLanguage)), APPMConstantes.UNIT_COLUMN_INDEX)); break;
+                            case WebConstantes.CustomerSessions.Unit.insertion:
+                                headers.Root.Add(new Header(Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage)), APPMConstantes.UNIT_COLUMN_INDEX)); break;
 						}
 						headers.Root.Add(new Header(GestionWeb.GetWebWord(1743,webSession.SiteLanguage),APPMConstantes.DISTRIBUTION_COLUMN_INDEX));
 					}
@@ -257,7 +259,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 					foreach(DataRow dt in SeasonalityPlanTable.Rows){
 					
-						currentUnit=Convert.ToDouble(dt["unit"].ToString());
+						currentUnit=Convert.ToDouble(dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 
 						if(Convert.ToInt32(dt["id_target"])==idBaseTarget){
 							

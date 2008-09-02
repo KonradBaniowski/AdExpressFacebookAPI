@@ -14,6 +14,8 @@ using DataAcces = TNS.AdExpress.Web.DataAccess;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using APPMConstantes=TNS.AdExpress.Constantes.FrameWork.Results.APPM;
+using TNS.AdExpress.Domain.Units;
+using WebCste = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM{
 	/// <summary>
@@ -76,8 +78,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					for(int i=0;i<data.Rows.Count && baseTargetNotFound;i++){
 						if(Convert.ToInt64(data.Rows[i]["id_target"])==idBaseTarget){
 							baseTarget=data.Rows[i]["target"].ToString();
-							grpBaseTarget+=Convert.ToDouble(data.Rows[i]["GRP"]);
-							euros+=Convert.ToInt64(data.Rows[i]["euros"]);
+                            grpBaseTarget += Convert.ToDouble(data.Rows[i][UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]);
+							euros+=Convert.ToInt64(data.Rows[i][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]);
 							baseTargetNotFound=false;
 						}
 					}
@@ -110,15 +112,15 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 						else{
 							lineIndex = resultTable.AddNewLine(LineType.level1);
 							resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(row["target"].ToString());
-							resultTable[lineIndex,APPMConstantes.GRP_COLUMN_INDEX]=new CellGRP(Math.Round(Convert.ToDouble(row["GRP"]),3));
+                            resultTable[lineIndex, APPMConstantes.GRP_COLUMN_INDEX] = new CellGRP(Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3));
 							if(grpBaseTarget!=0)
-								resultTable[lineIndex,APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX]=new CellAffinity(Math.Round((Convert.ToDouble(row["GRP"])/grpBaseTarget)*100,3));
+                                resultTable[lineIndex, APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX] = new CellAffinity(Math.Round((Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]) / grpBaseTarget) * 100, 3));
 							else
 								resultTable[lineIndex,APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX]=new CellAffinity(0);
-					
-							if(Convert.ToDouble(row["GRP"])!=0){
-								resultTable[lineIndex,APPMConstantes.CGRP_COLUMN_INDEX]=new CellCGRP(Math.Round(Convert.ToDouble(row["euros"])/Convert.ToDouble(row["GRP"]),3));
-								cgrp=Math.Round(Convert.ToDouble(row["euros"])/Convert.ToDouble(row["GRP"]),3);
+
+                            if (Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]) != 0) {
+                                resultTable[lineIndex, APPMConstantes.CGRP_COLUMN_INDEX] = new CellCGRP(Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]) / Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3));
+                                cgrp = Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]) / Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3);
 							}
 							else{
 								resultTable[lineIndex,APPMConstantes.CGRP_COLUMN_INDEX]=new CellCGRP(0);

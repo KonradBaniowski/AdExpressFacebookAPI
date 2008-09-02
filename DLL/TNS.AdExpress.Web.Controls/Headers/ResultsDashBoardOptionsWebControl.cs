@@ -34,6 +34,7 @@ using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpress.Web.Controls.Headers
@@ -764,7 +765,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 //				ArrayList units = WebFunctions.Units.getUnitsFromVehicleSelection(customerWebSession.GetSelection(customerWebSession.SelectionUniversMedia,CustomerRightConstante.type.vehicleAccess));
 				ArrayList units = WebFunctions.Units.getUnitsFromVehicleSelection(Vehicle);
 				for(int i = 0; i<units.Count; i++){
-					list.Items.Add(new ListItem(GestionWeb.GetWebWord((int)SessionCst.UnitsTraductionCodes[(SessionCst.Unit)units[i]],customerWebSession.SiteLanguage) ,((int)(SessionCst.Unit)units[i]).ToString()));
+					//list.Items.Add(new ListItem(GestionWeb.GetWebWord((int)SessionCst.UnitsTraductionCodes[(SessionCst.Unit)units[i]],customerWebSession.SiteLanguage) ,((int)(SessionCst.Unit)units[i]).ToString()));
+                    list.Items.Add(new ListItem(GestionWeb.GetWebWord(UnitsInformation.List[(SessionCst.Unit)units[i]].WebTextId, customerWebSession.SiteLanguage), UnitsInformation.List[(SessionCst.Unit)units[i]].Id.ToString()));
 				}
 				list.Items.FindByValue(((int)customerWebSession.Unit).ToString()).Selected=true;
 

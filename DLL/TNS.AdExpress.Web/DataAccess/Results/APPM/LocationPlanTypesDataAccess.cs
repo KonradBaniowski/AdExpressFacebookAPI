@@ -15,6 +15,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using  DBCst=TNS.AdExpress.Constantes.DB;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
+using TNS.AdExpress.Domain.Units;
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 {
 	/// <summary>
@@ -36,23 +37,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 				
 			StringBuilder sql = new StringBuilder(1000);
 			sql.Append(" select  id_media,date_media_num,id_advertisement,id_location,location,id_target,target ");
-			switch(webSession.Unit){				
-				case WebConstantes.CustomerSessions.Unit.euro:
-					sql.Append(" ,sum(euro) as "+webSession.Unit+ "");
-					break;
-				case WebConstantes.CustomerSessions.Unit.insertion:				
-					 sql.Append(" ,sum(insertion) as "+webSession.Unit+ "");
-					break;
-				case WebConstantes.CustomerSessions.Unit.pages:
-					 sql.Append(" ,sum(pages) as  "+webSession.Unit+ "");
-					break;
-				case WebConstantes.CustomerSessions.Unit.grp:
-					sql.Append(" ,sum(totalgrp) as "+webSession.Unit+ "");
-					break;
-				default:
-					throw new WebExceptions.LocationPlanTypesDataAccessException("GetData(WebSession webSession,IDataSource dataSource,int dateBegin, int dateEnd,Int64 baseTarget,Int64 additionalTarget)-->Le cas de cette unité n'est pas gérer. Pas de champ correspondante.");
-					
-			}	
+
+            sql.AppendFormat(", {0}", WebFunctions.SQLGenerator.GetUnitAliasSum(webSession));
+
 			sql.Append("  from (  ");
 			//Sous requête type d'emplacements
 			sql.Append("  select  "+GetFields(webSession));						
@@ -84,27 +71,23 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 		/// <param name="webSession">session du client</param>
 		/// <returns>Champs de la requêtes</returns>
 		private static string GetFields(WebSession webSession){
-			string sql="";
- 			sql+= DBTables.DATA_PRESS_APPM_PREFIXE+".id_media,"+DBTables.DATA_PRESS_APPM_PREFIXE+".DATE_MEDIA_NUM,"+DBTables.DATA_LOCATION_PREFIXE+".id_advertisement,";
-				sql+=  DBTables.TARGET_PREFIXE+".id_target,"+DBTables.TARGET_PREFIXE+".target"
-				+","+DBTables.LOCATION_PREFIXE+".id_location,"+DBTables.LOCATION_PREFIXE+".location";
-			switch(webSession.Unit){				
-				case WebConstantes.CustomerSessions.Unit.euro:
-					sql+= " ,sum("+DBCst.Fields.EXPENDITURE_EURO+") as euro ";
-					break;
-				case WebConstantes.CustomerSessions.Unit.insertion:				
-					sql+= ", sum("+DBCst.Fields.INSERTION+") as insertion ";
-					break;
-				case WebConstantes.CustomerSessions.Unit.pages:
-					sql+= ", sum("+DBCst.Fields.AREA_PAGE+") as pages ";
-					break;
-				case WebConstantes.CustomerSessions.Unit.grp:
-					sql+= " ,sum("+DBCst.Fields.INSERTION+")*"+DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".grp as totalgrp ";
-					break;
-				default:
-					throw new WebExceptions.LocationPlanTypesDataAccessException("GetFields(WebSession webSession)-->Le cas de cette unité n'est pas gérer. Pas de champ correspondante.");					
-			}	
-			return sql;
+			StringBuilder sql=new StringBuilder();
+            sql.AppendFormat("{0}.id_media, {0}.DATE_MEDIA_NUM,{1}.id_advertisement, {2}.id_target, {2}.target, {3}.id_location, {3}.location"
+                , DBTables.DATA_PRESS_APPM_PREFIXE
+                , DBTables.DATA_LOCATION_PREFIXE
+                , DBTables.TARGET_PREFIXE
+                , DBTables.LOCATION_PREFIXE);
+
+            if(webSession.Unit != WebConstantes.CustomerSessions.Unit.grp)
+                sql.AppendFormat(", {0}",WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, DBCst.TableType.Type.dataVehicle4M));
+            else
+                sql.AppendFormat(", sum({0})*{1}.{2} as {3} "
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField
+                    , DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString());
+			
+			return sql.ToString();
 		}
 		
 		/// <summary>
@@ -170,7 +153,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			string 
 				sql= DBTables.DATA_PRESS_APPM_PREFIXE+".id_media,"+DBTables.DATA_PRESS_APPM_PREFIXE+".DATE_MEDIA_NUM,"+DBTables.DATA_LOCATION_PREFIXE+".id_advertisement,";
 				sql+=DBCst.Tables.TARGET_PREFIXE + ".id_target,"+DBCst.Tables.TARGET_PREFIXE + ".target ";
-				if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp )sql+=","+DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".grp";
+                if (webSession.Unit == WebConstantes.CustomerSessions.Unit.grp) sql += "," + DBCst.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField;
 				sql+=","+DBCst.Tables.LOCATION_PREFIXE + ".id_location,"+DBCst.Tables.LOCATION_PREFIXE + ".location";
 			return sql;
 		}

@@ -18,6 +18,7 @@ using FWkResults=TNS.AdExpress.Constantes.FrameWork.Results;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM
 {
@@ -134,19 +135,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 		/// <param name="targetText">texte</param>
 		/// <returns>titre</returns>
 		private static string HeaderTitle(WebSession webSession,string targetText){
-			switch(webSession.Unit){				
-				case WebConstantes.CustomerSessions.Unit.euro:
-					return GestionWeb.GetWebWord(1423,webSession.SiteLanguage);				
-				case WebConstantes.CustomerSessions.Unit.insertion:				
-					return GestionWeb.GetWebWord(940,webSession.SiteLanguage);				
-				case WebConstantes.CustomerSessions.Unit.pages:
-					return GestionWeb.GetWebWord(943,webSession.SiteLanguage);				
-				case WebConstantes.CustomerSessions.Unit.grp:
-					return GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+" ("+targetText+")";					
-				default:
-					throw new WebExceptions.LocationPlanTypesUIException("HeaderTitle(webSession.Unit unit,FWkResults.APPM.Target.Type targetType)-->Le cas de cette unité n'est pas gérer. Pas de champ correspondante.");
-					
-			}	
+            return Convertion.ToHtmlString(GestionWeb.GetWebWord(webSession.GetSelectedUnit().WebTextId, webSession.SiteLanguage));
 		}
 		#endregion
 	}

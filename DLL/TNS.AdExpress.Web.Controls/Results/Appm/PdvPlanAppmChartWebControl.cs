@@ -19,6 +19,8 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 using TNS.FrameWork.DB.Common;
 using Dundas.Charting.WebControl;
+using TNS.FrameWork;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Controls.Results.Appm {
     /// <summary>
@@ -321,7 +323,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm {
                 #region pages
                 //Creates chart area and series for pages
                 GetSeriesData(PDVGraphicsData, PDVPlanData, xUnitValues, yUnitValues, "pages");
-                chartAreaName = GestionWeb.GetWebWord(943, this._customerWebSession.SiteLanguage);
+                chartAreaName = GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].WebTextId, _customerWebSession.SiteLanguage);
                 ChartArea chartAreaPages = new ChartArea();
                 Series pageSeries = new Series();
                 //Allignments of the chart
@@ -337,7 +339,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm {
                 #region insertions
                 //Creates chart area and series for insertions
                 GetSeriesData(PDVGraphicsData, PDVPlanData, xUnitValues, yUnitValues, "insertions");
-                chartAreaName = GestionWeb.GetWebWord(940, this._customerWebSession.SiteLanguage);
+                chartAreaName = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, _customerWebSession.SiteLanguage));
                 ChartArea chartAreaInsertions = new ChartArea();
                 Series insertionSeries = new Series();
                 //Allignments of the chart

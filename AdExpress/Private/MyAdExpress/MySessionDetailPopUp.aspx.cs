@@ -526,7 +526,7 @@ namespace AdExpress.Private.MyAdExpress{
 				#endregion
 
 				mySessionLabel.Text = TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionsDataAccess.GetSession(idMySession,_webSession);
-				unitLabel.Text=GestionWeb.GetWebWord((int)TNS.AdExpress.Constantes.Web.CustomerSessions.UnitsTraductionCodes[webSessionSave.Unit],_webSession.SiteLanguage);	
+				unitLabel.Text=GestionWeb.GetWebWord(webSessionSave.GetSelectedUnit().WebTextId,_webSession.SiteLanguage);	
 	
 				mediaText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSessionSave.SelectionUniversMedia,false,false,false,600,false,false,_webSession.SiteLanguage,2,1,true);
 				//if(webSessionSave.isAdvertisersSelected()){

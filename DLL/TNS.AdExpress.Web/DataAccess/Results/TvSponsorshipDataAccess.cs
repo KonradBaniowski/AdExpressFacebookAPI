@@ -25,6 +25,7 @@ using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results
@@ -50,7 +51,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			string orderFieldName = null,orderFieldNameWithoutTablePrefix = null;
 			string groupByFieldName = null,groupByFieldNameWithoutTablePrefix = null;
 			string tableName = null;
-			string unitFieldName = null;
+            string unitFieldNameSumWithAlias = null;
 //			string mediaFieldName = null;
 			string mediaJoinCondition = null;
 			string detailLevelFieldName = null;
@@ -79,7 +80,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 
 				// Obtinet le(s) champ(s) de(s) unité(s) sélectioné(s)
 				if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units)
-				unitFieldName =	WebFunctions.SQLGenerator.GetUnitFieldName(webSession);
+                    unitFieldNameSumWithAlias = WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle4M);
 			
 				// Obtient les champs de la nomenclature
 				detailLevelFieldName = GetSqlFields(webSession);
@@ -134,13 +135,19 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 		
 			// Sélection de l'unité
 			if(webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units){
-							
-				sql.Append(" sum("+DBConstantes.Fields.EXPENDITURE_EURO+") as euro ,");
-				sql.Append(" sum("+DBConstantes.Fields.DURATION+") as duration ,");
-				sql.Append(" sum("+DBConstantes.Fields.INSERTION+") as insertion ");
+
+                sql.AppendFormat(" sum({0}) as {1} ,"
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
+                sql.AppendFormat(" sum({0}) as {1} ,"
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString());
+                sql.AppendFormat(" sum({0}) as {1} "
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField
+                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString());
 				
-			}else{ 
-				sql.Append(" sum("+unitFieldName+") as unit ");				
+			}else{
+                sql.AppendFormat(" {0} ", unitFieldNameSumWithAlias);				
 			}
 
 			// Tables

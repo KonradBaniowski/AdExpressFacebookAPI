@@ -22,6 +22,7 @@ using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Dis
 using TNS.FrameWork.DB.Common;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM{
 
@@ -97,14 +98,14 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					case WebConstantes.CustomerSessions.Unit.kEuro:
 						unitName= GestionWeb.GetWebWord(1790,webSession.SiteLanguage);
 						break;
-					case WebConstantes.CustomerSessions.Unit.insertion:  
-						unitName= GestionWeb.GetWebWord(940,webSession.SiteLanguage);
+					case WebConstantes.CustomerSessions.Unit.insertion:
+                        unitName = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage));
 						break;
 					case WebConstantes.CustomerSessions.Unit.grp:  
 						unitName= GestionWeb.GetWebWord(573,webSession.SiteLanguage);
 						break;
-					case WebConstantes.CustomerSessions.Unit.pages:  
-						unitName= GestionWeb.GetWebWord(566,webSession.SiteLanguage);
+					case WebConstantes.CustomerSessions.Unit.pages:
+                        unitName = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].WebTextId, webSession.SiteLanguage));
 						break;
 					default : break;
 				}

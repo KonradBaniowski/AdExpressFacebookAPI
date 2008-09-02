@@ -21,6 +21,8 @@ using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Units;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -295,9 +297,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", format"
-						+", "+prefix+"area_page"
+                        + ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
 						+", color"
-						+", "+prefix+"expenditure_euro"
+                        + ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", location"
 						+", "+prefix+"visual "
 						+", "+prefix+"id_advertisement"
@@ -316,14 +318,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", "+prefix+"duration"
+                        + ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", "+prefix+"rank"
 						+", "+prefix+"duration_commercial_break"
 						+", "+prefix+"number_spot_com_break"
 						+", "+prefix+"rank_wap"
 						+", "+prefix+"duration_com_break_wap"
 						+", "+prefix+"number_spot_com_break_wap"
-						+", "+prefix+"expenditure_euro"
+						+", "+prefix+ UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", "+prefix+"id_cobranding_advertiser"
 						+", category"
 						+", vehicle"
@@ -337,11 +339,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", "+prefix+"duration"
+                        + ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", "+prefix+"id_rank"
 						+", "+prefix+"duration_commercial_break"
 						+", "+prefix+"number_message_commercial_brea"
-						+", "+prefix+"expenditure_euro"
+                        + ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+", "+prefix+"id_commercial_break"
 						+", category"
 						+", vehicle"
@@ -352,12 +354,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", advertiser"
 						+", product"
 						+", group_"
-						+", "+prefix+"number_board"
+                        + ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].Id.ToString()
 						+", "+prefix+"type_board"
 						+", "+prefix+"type_sale"
 						+", "+prefix+"poster_network"
-                        + ", " + prefix2 + "agglomeration"											
-						+", "+prefix+"expenditure_euro"
+                        + ", " + prefix2 + "agglomeration"
+                        + ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
 						+ ", "+prefix+"associated_file"
 						+", category"
 						+", vehicle";
@@ -417,7 +419,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					return  "category"
 						+", media"
 						+", "+prefix+"date_media_num"
-						+", "+prefix+"number_board";
+                        + ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].Id.ToString();
 				default:
 					throw new Exceptions.MediaCreationDataAccessException("GetTable(DBClassificationConstantes.Vehicles.value idMedia)-->Le cas de ce média n'est pas gérer. Pas de table correspondante.");
 			}

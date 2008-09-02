@@ -26,6 +26,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.DataAccess.Results {
 
@@ -309,9 +310,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             if (vehicle != DBClassifCst.Vehicles.names.adnettrack)
             {
                 if (withOutPrefix)
-                    sql.Append(", budget");
+                    sql.AppendFormat(", {0}", UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
                 else
-                    sql.AppendFormat(", sum({0}expenditure_euro) as budget", prefix);
+                    sql.AppendFormat(", sum({0}{1}) as {2}"
+                        , prefix
+                        , UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].DatabaseField
+                        , UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
 
             }
 
@@ -320,25 +324,39 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case DBClassifCst.Vehicles.names.press:
                 case DBClassifCst.Vehicles.names.internationalPress:
                     if (withOutPrefix)
-                        sql.Append(",  version,  volume, nbinsertion, nbsupport, visuel ");
+                        sql.AppendFormat(",  version,  volume, {0}, nbsupport, visuel ", UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString());
                     else
-                        sql.AppendFormat(", {0}id_slogan as version, sum({0}area_page)/1000 as volume, sum({0}insertion) as nbinsertion, count(distinct {0}id_media) as nbsupport, max({0}id_media || '/' || {0}date_cover_num || '/imagette/' || replace({0}visual, ',' , ',' || {0}id_media || '/' || {0}date_cover_num || '/imagette/') ) as visuel ", prefix);
+                        sql.AppendFormat(", {0}id_slogan as version, sum({0}{1})/1000 as volume, sum({0}{2}) as {3}, count(distinct {0}id_media) as nbsupport, max({0}id_media || '/' || {0}date_cover_num || '/imagette/' || replace({0}visual, ',' , ',' || {0}id_media || '/' || {0}date_cover_num || '/imagette/') ) as visuel "
+                            , prefix
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].DatabaseField
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].DatabaseField
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString());
                     break;
 
                 case DBClassifCst.Vehicles.names.radio:
                 case DBClassifCst.Vehicles.names.tv:
                 case DBClassifCst.Vehicles.names.others:
                     if (withOutPrefix)
-                        sql.Append(", version,  duree,  nbinsertion,  nbsupport,  visuel ");
+                        sql.AppendFormat(", version,  {0},  {1},  nbsupport,  visuel "
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString());
                     else
-                        sql.AppendFormat(", {0}id_slogan as version, sum({0}duration) as duree, sum({0}insertion) as nbinsertion, count(distinct {0}id_media) as nbsupport, max({0}associated_file) as visuel ", prefix);
+                        sql.AppendFormat(", {0}id_slogan as version, sum({0}{1}) as {2}, sum({0}{3}) as {4}, count(distinct {0}id_media) as nbsupport, max({0}associated_file) as visuel "
+                            , prefix
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].DatabaseField
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].DatabaseField
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString());
                     break;
 
                 case DBClassifCst.Vehicles.names.outdoor:
                     if (withOutPrefix)
-                        sql.Append(", version,  nbpanneau,  nbsupport,  visuel ");
+                        sql.AppendFormat(", version,  {0},  nbsupport,  visuel ", UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString());
                     else 
-                        sql.AppendFormat(", {0}id_slogan as version, sum({0}number_board) as nbpanneau, count(distinct {0}id_media) as nbsupport, max({0}associated_file) as visuel ", prefix);
+                        sql.AppendFormat(", {0}id_slogan as version, sum({0}{1}) as {2}, count(distinct {0}id_media) as nbsupport, max({0}associated_file) as visuel "
+                            , prefix
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].DatabaseField
+                            , UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString());
                     break;
 
                 case DBClassifCst.Vehicles.names.adnettrack:
@@ -862,7 +880,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         private static void SetMDRequest(StringBuilder sql) {
             StringBuilder md = new StringBuilder();
             md.Append("select idadvertiser, advertiser, id_address, idgroup, groupe, idproduct, product");
-            md.Append(", budget");
+            md.AppendFormat(", {0}", UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
             md.Append(", version, media, weight, volume, nbobjet, visuel ");
             md.Append(", format, mail_format, mail_type, standard, rapidity"); 
             md.AppendFormat(",max(decode(id_mail_content,{0},MAIL_CONTENT || ', ')) || ", DBCst.MailContent.ID_LETTRE_ACCOMP_PERSONALIS);
@@ -881,7 +899,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             sql.Insert(0, md.ToString());
 
             sql.Append(") group by idadvertiser, advertiser, id_address, idgroup, groupe, idproduct, product");
-            sql.Append(", budget");
+            sql.AppendFormat(", {0}", UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
             sql.Append(", version, media, weight, volume, nbobjet, visuel ");
             sql.Append(", format, mail_format, mail_type, standard, rapidity");
 

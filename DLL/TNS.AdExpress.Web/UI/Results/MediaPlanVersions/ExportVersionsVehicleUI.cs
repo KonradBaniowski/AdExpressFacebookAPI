@@ -31,6 +31,7 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 using TNS.FrameWork;
 using TNS.FrameWork.Exceptions;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 {
@@ -247,9 +248,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 						foreach(DataRow rowdetail in dtSetDetails.Tables[0].Rows) {
 							if(item.Id.ToString()==rowdetail["id"].ToString()) {
 								item.FirstInsertionDate=rowdetail["datenum"].ToString();
-								item.NbMedia=Int64.Parse(rowdetail["nbsupports"].ToString());	
-								item.NbInsertion=Int64.Parse(rowdetail["nbinsertions"].ToString());
-								item.ExpenditureEuro=Double.Parse(rowdetail["budget"].ToString());
+								item.NbMedia=Int64.Parse(rowdetail["nbsupports"].ToString());
+                                item.NbInsertion = Int64.Parse(rowdetail[UnitsInformation.List[WeBCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+                                item.ExpenditureEuro = Double.Parse(rowdetail[UnitsInformation.List[WeBCst.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 							}
 						}
 						
@@ -407,11 +408,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								item.DateBegin = hTable["dateBegin"].ToString();
 								item.DateEnd = hTable["dateEnd"].ToString();	
 								//Budget brut (euros)
-								item.Budget = hTable["budget"].ToString();	
+                                item.Budget = hTable[UnitsInformation.List[WeBCst.CustomerSessions.Unit.euro].Id.ToString()].ToString();	
 								//Nombre d'insertions
-								item.Insertions = hTable["insertions"].ToString();
+                                item.Insertions = hTable[UnitsInformation.List[WeBCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
 								//Nombre des pages
-								item.Pages = hTable["pages"].ToString();
+                                item.Pages = hTable[UnitsInformation.List[WeBCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
 								//Nombre de supports utilisés
 								item.Supports = hTable["supports"].ToString();	
 								//Secteur de référence
@@ -536,9 +537,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 						foreach(DataRow rowdetail in dtSetDetails.Tables[0].Rows) {
 							if(item.Id.ToString()==rowdetail["id"].ToString()) {
 								item.FirstInsertionDate=rowdetail["datenum"].ToString();
-								item.NbMedia=Int64.Parse(rowdetail["nbsupports"].ToString());	
-								item.NbInsertion=Int64.Parse(rowdetail["nbinsertions"].ToString());
-								item.ExpenditureEuro=Double.Parse(rowdetail["budget"].ToString());
+								item.NbMedia=Int64.Parse(rowdetail["nbsupports"].ToString());
+                                item.NbInsertion = Int64.Parse(rowdetail[UnitsInformation.List[WeBCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+                                item.ExpenditureEuro = Double.Parse(rowdetail[UnitsInformation.List[WeBCst.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 							}
 						}
 
@@ -609,9 +610,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 						foreach(DataRow rowdetail in dtSetDetails.Tables[0].Rows) {
 							if(item.Id.ToString()==rowdetail["id"].ToString()) {
 								item.FirstInsertionDate=rowdetail["datenum"].ToString();
-								item.NbMedia=Int64.Parse(rowdetail["nbsupports"].ToString());	
-								item.NbInsertion=Int64.Parse(rowdetail["nbinsertions"].ToString());
-								item.ExpenditureEuro=Double.Parse(rowdetail["budget"].ToString());
+								item.NbMedia=Int64.Parse(rowdetail["nbsupports"].ToString());
+                                item.NbInsertion = Int64.Parse(rowdetail[UnitsInformation.List[WeBCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+                                item.ExpenditureEuro = Double.Parse(rowdetail[UnitsInformation.List[WeBCst.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 							}
 						}
 
@@ -710,8 +711,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                         item.Group = row["group_"].ToString();
                         item.Product = row["product"].ToString();
                         item.Weight = long.Parse(row["weight"].ToString());
-                        item.ExpenditureEuro = long.Parse(row["expenditure_euro"].ToString());
-                        item.Volume = double.Parse(row["volume"].ToString());
+                        item.ExpenditureEuro = long.Parse(row[UnitsInformation.List[WeBCst.CustomerSessions.Unit.euro].Id.ToString()].ToString());
+                        item.Volume = double.Parse(row[UnitsInformation.List[WeBCst.CustomerSessions.Unit.volume].Id.ToString()].ToString());
                         item.IdMedia = Int64.Parse(row["id_media"].ToString());
 
                         switch (row["id_media"].ToString()) {
@@ -825,8 +826,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                         foreach (DataRow rowdetail in dtSetDetails.Tables[0].Rows) {
                             if (item.Id.ToString() == rowdetail["id"].ToString()) {
                                 item.NbMedia = Int64.Parse(rowdetail["nbsupports"].ToString());
-                                item.NbBoards = Int64.Parse(rowdetail["nbpanneau"].ToString());
-                                item.ExpenditureEuro = Double.Parse(rowdetail["budget"].ToString());
+                                item.NbBoards = Int64.Parse(rowdetail[UnitsInformation.List[WeBCst.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString());
+                                item.ExpenditureEuro = Double.Parse(rowdetail[UnitsInformation.List[WeBCst.CustomerSessions.Unit.euro].Id.ToString()].ToString());
                             }
                         }
 

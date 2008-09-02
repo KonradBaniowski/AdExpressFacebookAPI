@@ -12,7 +12,9 @@ using TNS.FrameWork.Date;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using SQLFunctions=TNS.AdExpress.Web.DataAccess;
 using WebFnc = TNS.AdExpress.Web.Functions;
+using WebCste = TNS.AdExpress.Constantes.Web;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Units;
 namespace TNS.AdExpress.Web.Rules.Results.APPM{
 	/// <summary>
 	/// Provides formatting rules for APPM Synthesis
@@ -101,11 +103,11 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 						//Values for the base target
 						if(Convert.ToInt64(dr["id_target"])==baseTarget){
 							baseTargetGRP+=Convert.ToDouble(dr["totalgrp"].ToString());
-							budget+=Convert.ToInt64(dr["euros"].ToString());
+							budget+=Convert.ToInt64(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 							targetBase=dr["target"].ToString();
-							insertions+=Convert.ToInt32(dr["insertions"].ToString());
+                            insertions += Convert.ToInt32(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
 							//numberOfMedias+=Convert.ToInt32(dr["medias"].ToString());
-							pages+=Convert.ToDouble(dr["pages"]);
+                            pages += Convert.ToDouble(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].Id.ToString()]);
 						}
 						//values for the supplementary target
 						else{
@@ -150,8 +152,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					//UniversGroupInvestment method in the SynthesisDataAccess class will return the budegt of the groups of the products selected
 					//or of the competitor univers if it was selected. 
 					synthesisPDV=TNS.AdExpress.Web.DataAccess.Results.APPM.SynthesisDataAccess.UniversGroupInvestment(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,groupIds.Remove(groupIds.Length-1,1)).Tables[0];
-					if(synthesisPDV!=null && synthesisPDV.Rows.Count>0 && !synthesisPDV.Rows[0]["euros"].ToString().Equals("") ){
-						universgroupInvestment=Convert.ToInt64(synthesisPDV.Rows[0]["euros"]);					
+                    if (synthesisPDV != null && synthesisPDV.Rows.Count > 0 && !synthesisPDV.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString().Equals("")) {
+                        universgroupInvestment = Convert.ToInt64(synthesisPDV.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]);					
 						//if the competitor univers was selected we will add its bugdet to the budget of the reference univers
 						//to calculate the PDV
 						//if(webSession.CompetitorUniversAdvertiser.Count>1){
@@ -325,11 +327,11 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 							//Values for the base target
 							if(Convert.ToInt64(dr["id_target"])==baseTarget){
 								baseTargetGRP+=Convert.ToDouble(dr["totalgrp"].ToString());
-								budget+=Convert.ToInt64(dr["euros"].ToString());
+                                budget += Convert.ToInt64(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 								targetBase=dr["target"].ToString();
-								insertions+=Convert.ToInt32(dr["insertions"].ToString());
+                                insertions += Convert.ToInt32(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
 								//numberOfMedias+=Convert.ToInt32(dr["medias"].ToString());
-								pages+=Convert.ToDouble(dr["pages"]);
+                                pages += Convert.ToDouble(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].Id.ToString()]);
 							}
 								//values for the supplementary target
 							else{
@@ -378,8 +380,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 						//UniversGroupInvestment method in the SynthesisDataAccess class will return the budegt of the groups of the products selected
 						//or of the competitor univers if it was selected. 
 						synthesisPDV=TNS.AdExpress.Web.DataAccess.Results.APPM.SynthesisDataAccess.UniversGroupInvestment(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,groupIds.Remove(groupIds.Length-1,1)).Tables[0];
-						if(synthesisPDV!=null && synthesisPDV.Rows.Count>0 && !synthesisPDV.Rows[0]["euros"].ToString().Equals("") ){
-							universgroupInvestment=Convert.ToInt64(synthesisPDV.Rows[0]["euros"]);					
+                        if (synthesisPDV != null && synthesisPDV.Rows.Count > 0 && !synthesisPDV.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString().Equals("")) {
+                            universgroupInvestment = Convert.ToInt64(synthesisPDV.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]);					
 							//if the competitor univers was selected we will add its bugdet to the budget of the reference univers
 							//to calculate the PDV
 							//if(webSession.CompetitorUniversAdvertiser.Count>1){
@@ -399,9 +401,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 						//Poids de la version vs produit correspondant
 						if( synthesisTable.Rows[0]["id_product"]!=System.DBNull.Value){
-							investProduct = TNS.AdExpress.Web.DataAccess.Results.APPM.SynthesisDataAccess.GetProductInvestment(webSession,dataSource,dateBegin,dateEnd,baseTarget,synthesisTable.Rows[0]["id_product"].ToString()).Tables[0];			
-							if(investProduct!=null && investProduct.Rows.Count>0 && !investProduct.Rows[0]["euros"].ToString().Equals("") ){
-								tempInvestProduct=Convert.ToInt64(investProduct.Rows[0]["euros"]);	
+							investProduct = TNS.AdExpress.Web.DataAccess.Results.APPM.SynthesisDataAccess.GetProductInvestment(webSession,dataSource,dateBegin,dateEnd,baseTarget,synthesisTable.Rows[0]["id_product"].ToString()).Tables[0];
+                            if (investProduct != null && investProduct.Rows.Count > 0 && !investProduct.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString().Equals("")) {
+                                tempInvestProduct = Convert.ToInt64(investProduct.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]);	
 								if(tempInvestProduct>0){
 									double versionWeight=Math.Round(Convert.ToDouble(budget)/Convert.ToDouble(tempInvestProduct)*100,2);
 									synthesisData.Add("versionWeight",versionWeight.ToString());
@@ -628,11 +630,11 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 								if(Convert.ToInt64(dr["id_target"])==baseTarget) 
 								{
 									baseTargetGRP+=Convert.ToDouble(dr["totalgrp"].ToString());
-									budget+=Convert.ToInt64(dr["euros"].ToString());
+                                    budget += Convert.ToInt64(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 									targetBase=dr["target"].ToString();
-									insertions+=Convert.ToInt32(dr["insertions"].ToString());
+                                    insertions += Convert.ToInt32(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
 									//numberOfMedias+=Convert.ToInt32(dr["medias"].ToString());
-									pages+=Convert.ToDouble(dr["pages"]);
+                                    pages += Convert.ToDouble(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].Id.ToString()]);
 								}
 									//values for the supplementary target
 								else 
@@ -683,9 +685,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 							//UniversGroupInvestment method in the SynthesisDataAccess class will return the budegt of the groups of the products selected
 							//or of the competitor univers if it was selected. 
 							synthesisPDV=TNS.AdExpress.Web.DataAccess.Results.APPM.SynthesisDataAccess.UniversGroupInvestment(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,groupIds.Remove(groupIds.Length-1,1)).Tables[0];
-							if(synthesisPDV!=null && synthesisPDV.Rows.Count>0 && !synthesisPDV.Rows[0]["euros"].ToString().Equals("") ) 
+                            if (synthesisPDV != null && synthesisPDV.Rows.Count > 0 && !synthesisPDV.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString().Equals("")) 
 							{
-								universgroupInvestment=Convert.ToInt64(synthesisPDV.Rows[0]["euros"]);					
+                                universgroupInvestment = Convert.ToInt64(synthesisPDV.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]);					
 								//if the competitor univers was selected we will add its bugdet to the budget of the reference univers
 								//to calculate the PDV
 								//if(webSession.CompetitorUniversAdvertiser.Count>1)
@@ -710,9 +712,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 							if( synthesisTableTmp.Rows[0]["id_product"]!=System.DBNull.Value) 
 							{
 								investProduct = TNS.AdExpress.Web.DataAccess.Results.APPM.SynthesisDataAccess.GetProductInvestment(webSession,dataSource,dateBegin,dateEnd,baseTarget,synthesisTableTmp.Rows[0]["id_product"].ToString()).Tables[0];			
-								if(investProduct!=null && investProduct.Rows.Count>0 && !investProduct.Rows[0]["euros"].ToString().Equals("") ) 
+								if(investProduct!=null && investProduct.Rows.Count>0 && !investProduct.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString().Equals("") ) 
 								{
-									tempInvestProduct=Convert.ToInt64(investProduct.Rows[0]["euros"]);	
+                                    tempInvestProduct = Convert.ToInt64(investProduct.Rows[0][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]);	
 									if(tempInvestProduct>0) 
 									{
 										double versionWeight=Math.Round(Convert.ToDouble(budget)/Convert.ToDouble(tempInvestProduct)*100,2);

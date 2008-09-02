@@ -16,7 +16,9 @@ using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 
-using DataAccesFct = TNS.AdExpress.Web.DataAccess; 
+using DataAccesFct = TNS.AdExpress.Web.DataAccess;
+using TNS.AdExpress.Domain.Units;
+using WebConstante = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM {
 
@@ -114,7 +116,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 					dtResult.Rows.Add(oldVh);
 					oldVh["rowType"] = CustomerCst.Right.type.vehicleAccess.ToString();
 					oldVh["label"] = "Total";//row["vehicle"].ToString();
-					oldVh["budget"] = Decimal.Parse(data.Compute("sum(euro)","id_vehicle=" + idOldVeh + " and id_target=" + dtTargets.Rows[0][0].ToString()).ToString());
+                    oldVh["budget"] = Decimal.Parse(data.Compute("sum(" + UnitsInformation.List[WebConstante.CustomerSessions.Unit.euro].Id.ToString() + ")", "id_vehicle=" + idOldVeh + " and id_target=" + dtTargets.Rows[0][0].ToString()).ToString());
 					foreach(object obj in targetsCol.Keys){
 						t = (TargetColumns)targetsCol[obj];
 						tmp = Decimal.Parse(data.Compute("sum(totalgrp)","id_vehicle=" + idOldVeh + " and id_target=" + obj.ToString()).ToString());
@@ -140,7 +142,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 					dtResult.Rows.Add(oldCt);
                     oldCt["rowType"] = CustomerCst.Right.type.categoryAccess.ToString();
 					oldCt["label"] = row["category"].ToString();
-					oldCt["budget"] = int.Parse(data.Compute("sum(euro)","id_vehicle=" + idOldVeh + " and id_category=" + idOldCat + " and id_target=" + dtTargets.Rows[0][0].ToString()).ToString());
+                    oldCt["budget"] = int.Parse(data.Compute("sum(" + UnitsInformation.List[WebConstante.CustomerSessions.Unit.euro].Id.ToString() + ")", "id_vehicle=" + idOldVeh + " and id_category=" + idOldCat + " and id_target=" + dtTargets.Rows[0][0].ToString()).ToString());
 					foreach(object obj in targetsCol.Keys){
 						t = (TargetColumns)targetsCol[obj];
 						tmp = Decimal.Parse(data.Compute("sum(totalgrp)","id_vehicle=" + idOldVeh + " and id_category=" + idOldCat + " and id_target=" + obj.ToString()).ToString());
@@ -170,7 +172,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
                     oldMedia["rowType"] = CustomerCst.Right.type.mediaAccess.ToString();
 					oldMedia["idMedia"] = idOldMedia;
 					oldMedia["label"] = row["media"].ToString();
-					oldMedia["budget"] = int.Parse(row["euro"].ToString());
+                    oldMedia["budget"] = int.Parse(row[UnitsInformation.List[WebConstante.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 					if(Decimal.Parse(oldCt["budget"].ToString())>0)
 					oldMedia["pdm"] = 100 * Decimal.Parse(oldMedia["budget"].ToString()) / Decimal.Parse(oldCt["budget"].ToString());
 					else oldMedia["pdm"] = 0;

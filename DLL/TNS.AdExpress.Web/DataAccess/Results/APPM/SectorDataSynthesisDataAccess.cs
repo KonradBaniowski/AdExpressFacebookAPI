@@ -24,6 +24,7 @@ using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 	/// <summary>
@@ -57,8 +58,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 	
 			#region select
 			sql.Append("select id_media, id_advertiser, id_brand, id_product, "+ DBTables.TARGET_PREFIXE+".id_target,target, ");
-			sql.Append("sum(TOTALUNITE) as euros,sum(TOTALINSERT) as insertions,sum(TOTALPAGES) as pages, ");
-			sql.Append("sum(TOTALINSERT)*GRP as totalgrp ");
+            sql.AppendFormat("sum({0}) as {1},sum({2}) as {3},sum({4}) as {5}, sum({2})*{6} as totalgrp "
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			#endregion
 
 			#region from
@@ -99,7 +106,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			#endregion
 
 			#region group by
-			sql.Append(" group by "+ DBTables.TARGET_PREFIXE+".id_target, target, "+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_media, "+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_advertiser, "+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_brand, "+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_product, GRP");
+            sql.Append(" group by " + DBTables.TARGET_PREFIXE + ".id_target, target, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_advertiser, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_brand, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_product, " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			#endregion
 
 			#endregion

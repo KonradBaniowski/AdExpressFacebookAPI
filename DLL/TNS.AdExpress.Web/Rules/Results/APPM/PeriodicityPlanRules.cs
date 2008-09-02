@@ -15,9 +15,12 @@ using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.FrameWork.DB.Common;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Translation;
 using APPMConstantes=TNS.AdExpress.Constantes.FrameWork.Results.APPM;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Units;
+using TNS.FrameWork;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM
 {
@@ -85,9 +88,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 					//Calcul des total grp pour la cible de base et la cible additionnée
 					foreach(DataRow current in periodicityPlanTable.Rows){
 						if(Convert.ToInt32(current["id_target"])==idBaseTarget){
-							totalBaseTargetUnit+=Convert.ToDouble(current["unit"].ToString());
+							totalBaseTargetUnit+=Convert.ToDouble(current[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 							//totalBaseCgrp+=Convert.ToDouble(current["cgrp"].ToString());
-						}else totalAdditionalTargetUnit+=Convert.ToDouble(current["unit"].ToString());
+						}else totalAdditionalTargetUnit+=Convert.ToDouble(current[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 							//totalAdditionalCgrp+=Convert.ToDouble(current["cgrp"].ToString());
 					}
 						periodicityData.Rows.Add(periodicityData.NewRow());
@@ -98,20 +101,20 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 					foreach(DataRow dt in periodicityPlanTable.Rows){					
 						periodicityData.Rows[i]["periodicity"]=dt["periodicity"].ToString();
 						if(Convert.ToInt32(dt["id_target"])==idBaseTarget){
-							periodicityData.Rows[i]["unitBase"]=dt["unit"].ToString();
-							periodicityData.Rows[i]["distributionBase"]=Math.Round((Convert.ToDouble(dt["unit"])*100/totalBaseTargetUnit),2).ToString() ;
+							periodicityData.Rows[i]["unitBase"]=dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString();
+							periodicityData.Rows[i]["distributionBase"]=Math.Round((Convert.ToDouble(dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)])*100/totalBaseTargetUnit),2).ToString() ;
 							if(Convert.ToDouble(dt["totalgrp"])!=0){
-								periodicityData.Rows[i]["cgrpBase"]=Math.Round(Convert.ToDouble(dt["euros"])/Convert.ToDouble(dt["totalgrp"]),0).ToString(); 				
+								periodicityData.Rows[i]["cgrpBase"]=Math.Round(Convert.ToDouble(dt[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()])/Convert.ToDouble(dt["totalgrp"]),0).ToString(); 				
 							}
 							else
 								periodicityData.Rows[i]["cgrpBase"]=0;
 							periodicityData.Rows[0]["baseTarget"]=dt["target"].ToString();
 
 						}else{
-							periodicityData.Rows[i]["unitSelected"]=dt["unit"].ToString();
-							periodicityData.Rows[i]["distributionSelected"]=Math.Round((Convert.ToDouble(dt["unit"])*100/totalAdditionalTargetUnit),2).ToString() ;
+							periodicityData.Rows[i]["unitSelected"]=dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString();
+							periodicityData.Rows[i]["distributionSelected"]=Math.Round((Convert.ToDouble(dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)])*100/totalAdditionalTargetUnit),2).ToString() ;
 							if (Convert.ToDouble(dt["totalgrp"])!=0){
-								periodicityData.Rows[i]["cgrpSelected"]=Math.Round(Convert.ToDouble(dt["euros"])/Convert.ToDouble(dt["totalgrp"]),0).ToString();
+								periodicityData.Rows[i]["cgrpSelected"]=Math.Round(Convert.ToDouble(dt[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()])/Convert.ToDouble(dt["totalgrp"]),0).ToString();
 							}else
 								periodicityData.Rows[i]["cgrpSelected"]=0;
 							periodicityData.Rows[0]["additionalTarget"]=dt["target"].ToString();
@@ -168,7 +171,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 					#region Calcul des total grp pour la cible de base et la cible additionnée
 					foreach(DataRow current in periodicityPlanTable.Rows){
 
-						currentUnit=Convert.ToDouble(current["unit"].ToString());
+						currentUnit=Convert.ToDouble(current[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 						
 						if(Convert.ToInt32(current["id_target"])==idBaseTarget){
 							totalBaseTargetUnit+=currentUnit;
@@ -203,10 +206,10 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 								headers.Root.Add(new Header(GestionWeb.GetWebWord(1669,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
 							case WebConstantes.CustomerSessions.Unit.kEuro:
 								headers.Root.Add(new Header(GestionWeb.GetWebWord(1790,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
-							case WebConstantes.CustomerSessions.Unit.pages:
-								headers.Root.Add(new Header(GestionWeb.GetWebWord(943,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
-							case WebConstantes.CustomerSessions.Unit.insertion:
-								headers.Root.Add(new Header(GestionWeb.GetWebWord(940,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
+                            case WebConstantes.CustomerSessions.Unit.pages:
+                                headers.Root.Add(new Header(Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].WebTextId, webSession.SiteLanguage)), APPMConstantes.UNIT_COLUMN_INDEX)); break;
+                            case WebConstantes.CustomerSessions.Unit.insertion:
+                                headers.Root.Add(new Header(Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage)), APPMConstantes.UNIT_COLUMN_INDEX)); break;
 						}
 						headers.Root.Add(new Header(GestionWeb.GetWebWord(1743,webSession.SiteLanguage),APPMConstantes.DISTRIBUTION_COLUMN_INDEX));
 					}
@@ -251,7 +254,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 
 					foreach(DataRow dt in periodicityPlanTable.Rows){
 					
-						currentUnit=Convert.ToDouble(dt["unit"].ToString());
+						currentUnit=Convert.ToDouble(dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 
 						if(Convert.ToInt32(dt["id_target"])==idBaseTarget){
 							

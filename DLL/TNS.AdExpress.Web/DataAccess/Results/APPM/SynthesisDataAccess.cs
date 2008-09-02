@@ -25,6 +25,7 @@ using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 	/// <summary>
@@ -81,11 +82,19 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql.Append("select "+fieldProduct);
 			sql.Append(" id_media, group_,"+ DBTables.TARGET_PREFIXE+".id_target,target, ");
 			sql.Append(DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_group_,");
-			sql.Append("sum(TOTALUNITE) as euros,sum(TOTALINSERT) as insertions,sum(TOTALPAGES) as pages, ");
+			sql.AppendFormat("sum({0}) as {1},sum({2}) as {3},sum({4}) as {5}, "
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString());
 			//sql.Append("count(distinct id_media) medias, ");
 
 			//sql.Append("tm.GRP as totalgrp, ");
-			sql.Append("sum(TOTALINSERT)*GRP as totalgrp ");
+			sql.AppendFormat("sum({0})*{1} as totalgrp "
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			//sql.Append("ROUND(sum((TOTALUNITE)/tm.GRP),2) as grpcost");
 			//sql.Append("ROUND(sum(TOTALUNITE)/(sum(TOTALINSERT)*tm.GRP),2) as grpcost");
 			
@@ -207,8 +216,17 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql.Append(" id_media, group_,"+ DBTables.TARGET_PREFIXE+".id_target,target, ");
 			sql.Append(DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE+".id_group_,");
 			sql.Append(DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE+".id_slogan,");
-			sql.Append("sum("+DBConstantes.Fields.EXPENDITURE_EURO+") as euros,sum("+DBConstantes.Fields.INSERTION+") as insertions,sum("+DBConstantes.Fields.AREA_PAGE+") as pages, ");					
-			sql.Append("sum("+DBConstantes.Fields.INSERTION+")*"+DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".grp as totalgrp ");
+			sql.AppendFormat("sum({0}) as {1},sum({2}) as {3},sum({4}) as {5}, "
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString());					
+			sql.AppendFormat("sum({0})*{1}.{2} as totalgrp "
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField
+                , DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			
 			#endregion
 
@@ -359,8 +377,17 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql.Append(" id_media, group_,"+ DBTables.TARGET_PREFIXE+".id_target,target, ");
 			sql.Append(DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE+".id_group_,");
 			sql.Append(DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE+".id_slogan,");
-			sql.Append("sum("+DBConstantes.Fields.EXPENDITURE_EURO+") as euros,sum("+DBConstantes.Fields.INSERTION+") as insertions,sum("+DBConstantes.Fields.AREA_PAGE+") as pages, ");					
-			sql.Append("sum("+DBConstantes.Fields.INSERTION+")*"+DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".grp as totalgrp ");
+            sql.AppendFormat("sum({0}) as {1},sum({2}) as {3},sum({4}) as {5}, "
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString());					
+			sql.AppendFormat("sum({0})*{1}.{2} as totalgrp "
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField
+                , DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			
 			#endregion
 
@@ -414,7 +441,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			#endregion
 
 			#region groupby			
-			sql.Append(" group by "+groupByProduct+ DBTables.TARGET_PREFIXE+".id_target,group_,target,GRP,"+DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE+".id_group_,"+DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE+".id_media,"+DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE+".id_slogan");
+			sql.AppendFormat(" group by {0}{1}.id_target,group_,target,{2},{3}.id_group_,{3}.id_media,{3}.id_slogan"
+                , groupByProduct
+                , DBTables.TARGET_PREFIXE
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField
+                , DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE);
 			#endregion
 
 			#endregion
@@ -461,7 +492,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			StringBuilder sql = new StringBuilder(1000);
 
 			#region select
-			sql.Append("select sum(TOTALUNITE) as euros");
+			sql.AppendFormat("select sum({0}) as {1}"
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
 			#endregion
 			
 			#region from
@@ -561,7 +594,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			StringBuilder sql = new StringBuilder(1000);
 
 			#region select
-			sql.Append("select sum(TOTALUNITE) as euros");
+            sql.AppendFormat("select sum({0}) as {1}"
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
 			#endregion
 			
 			#region from

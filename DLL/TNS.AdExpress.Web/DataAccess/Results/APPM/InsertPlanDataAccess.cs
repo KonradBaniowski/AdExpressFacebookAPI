@@ -48,7 +48,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append("select distinct " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_media," + DBCst.Tables.MEDIA_PREFIXE + ".media,");
 			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_advertisement,");
 			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_product," + DBCst.Tables.PRODUCT_PREFIXE + ".product,");
- 			sql.Append("sum(" + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".expenditure_euro) as euro,");
+ 			//sql.Append("sum(" + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".expenditure_euro) as euro,");
+            sql.AppendFormat("{0},",SQLGenerator.GetUnitFieldNameSumWithAlias(webSession,DBCst.TableType.Type.dataVehicle,DBCst.Tables.DATA_PRESS_APPM_PREFIXE));
 			sql.Append(DBCst.Tables.FORMAT_PREFIXE+ ".format,");
 			sql.Append(DBCst.Tables.LOCATION_PREFIXE + ".location,");
 			//sql.Append("'toto' as location,");
@@ -117,13 +118,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(SQLGenerator.getAnalyseCustomerProductRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true));
 
 			#endregion
-
+            
 			#region Group By
 			sql.Append(" group by " + DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_product," + DBCst.Tables.PRODUCT_PREFIXE + ".product,");
 			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_media," + DBCst.Tables.MEDIA_PREFIXE + ".media,");
 			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".date_media_num,");
 			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".id_advertisement,");
-			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".expenditure_euro,");
+            sql.AppendFormat(DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".{0},", webSession.GetSelectedUnit().DatabaseField);
 			sql.Append(DBCst.Tables.FORMAT_PREFIXE + ".format,");
 			sql.Append(DBCst.Tables.LOCATION_PREFIXE + ".location,");
 			sql.Append(DBCst.Tables.DATA_PRESS_APPM_PREFIXE + ".date_cover_num,");

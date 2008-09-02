@@ -16,6 +16,8 @@ using WebFnc = TNS.AdExpress.Web.Functions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Units;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM{
 	/// <summary>
@@ -107,10 +109,10 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 						//Values for the base target
 						if(Convert.ToInt64(dr["id_target"])==baseTarget){
 							baseTargetGRP+=Convert.ToDouble(dr["totalgrp"].ToString());
-							budget+=Convert.ToInt64(dr["euros"].ToString());
+                            budget += Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()].ToString());
 							targetBase=dr["target"].ToString();
-							insertions+=Convert.ToInt32(dr["insertions"].ToString());
-							pages+=Convert.ToDouble(dr["pages"]);
+                            insertions += Convert.ToInt32(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+                            pages += Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]);
 						}
 							//values for the supplementary target
 						else{

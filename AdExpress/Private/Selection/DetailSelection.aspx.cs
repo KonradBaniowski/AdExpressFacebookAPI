@@ -334,7 +334,7 @@ namespace AdExpress.Private.Selection{
 				moduleLabel.Text=GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_webSession.CurrentModule),_webSession.SiteLanguage);
 
 				// Unité
-				unitLabel.Text=GestionWeb.GetWebWord((int)TNS.AdExpress.Constantes.Web.CustomerSessions.UnitsTraductionCodes[_webSession.Unit],_webSession.SiteLanguage);	
+				unitLabel.Text=GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId,_webSession.SiteLanguage);	
 
 				// Media
 				if (_webSession.isMediaSelected()){

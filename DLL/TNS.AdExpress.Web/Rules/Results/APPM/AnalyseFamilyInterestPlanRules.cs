@@ -18,6 +18,9 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using APPMConstantes=TNS.AdExpress.Constantes.FrameWork.Results.APPM;
 using TNS.FrameWork.WebResultUI;
+using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Units;
+using TNS.FrameWork;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM {
 		/// <summary>
@@ -84,10 +87,10 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 					//Calcul des total grp pour la cible de base et la cible additionnée
 					foreach(DataRow current in InterestFamilyPlanTable.Rows){
 						if(Convert.ToInt32(current["id_target"])==idBaseTarget){
-							totalBaseTargetUnit+=Convert.ToDouble(current["unit"].ToString());
+							totalBaseTargetUnit+=Convert.ToDouble(current[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 						//	totalBaseCgrp+=Convert.ToDouble(current["cgrp"].ToString());
 						}else 
-							totalAdditionalTargetUnit+=Convert.ToDouble(current["unit"].ToString());
+							totalAdditionalTargetUnit+=Convert.ToDouble(current[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 						//totalAdditionalCgrp+=Convert.ToDouble(current["cgrp"].ToString());
 					}
 					InterestFamilyData.Rows.Add(InterestFamilyData.NewRow());
@@ -98,19 +101,19 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 					foreach(DataRow dt in InterestFamilyPlanTable.Rows){					
 						InterestFamilyData.Rows[i]["InterestFamily"]=dt["Interest_Center"].ToString();
 						if(Convert.ToInt32(dt["id_target"])==idBaseTarget){
-							InterestFamilyData.Rows[i]["unitBase"]=dt["unit"].ToString();
-							InterestFamilyData.Rows[i]["distributionBase"]=Math.Round((Convert.ToDouble(dt["unit"])*100/totalBaseTargetUnit),2).ToString() ;
+							InterestFamilyData.Rows[i]["unitBase"]=dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString();
+							InterestFamilyData.Rows[i]["distributionBase"]=Math.Round((Convert.ToDouble(dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)])*100/totalBaseTargetUnit),2).ToString() ;
 							if (Convert.ToDouble(dt["totalgrp"])!=0){
-								InterestFamilyData.Rows[i]["cgrpBase"]=Math.Round(Convert.ToDouble(dt["euros"])/Convert.ToDouble(dt["totalgrp"]),0).ToString(); 
+								InterestFamilyData.Rows[i]["cgrpBase"]=Math.Round(Convert.ToDouble(dt[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()])/Convert.ToDouble(dt["totalgrp"]),0).ToString(); 
 							}else
 								InterestFamilyData.Rows[i]["cgrpBase"]=0;
 							InterestFamilyData.Rows[0]["baseTarget"]=dt["target"].ToString();
 
 						}else{
-							InterestFamilyData.Rows[i]["unitSelected"]=dt["unit"].ToString();
-							InterestFamilyData.Rows[i]["distributionSelected"]=Math.Round((Convert.ToDouble(dt["unit"])*100/totalAdditionalTargetUnit),2).ToString() ;
+							InterestFamilyData.Rows[i]["unitSelected"]=dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString();
+							InterestFamilyData.Rows[i]["distributionSelected"]=Math.Round((Convert.ToDouble(dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)])*100/totalAdditionalTargetUnit),2).ToString() ;
 							if (Convert.ToDouble(dt["totalgrp"])!=0){
-								InterestFamilyData.Rows[i]["cgrpSelected"]=Math.Round(Convert.ToDouble(dt["euros"])/Convert.ToDouble(dt["totalgrp"]),0).ToString(); 
+								InterestFamilyData.Rows[i]["cgrpSelected"]=Math.Round(Convert.ToDouble(dt[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()])/Convert.ToDouble(dt["totalgrp"]),0).ToString(); 
 							}else
 								InterestFamilyData.Rows[i]["cgrpSelected"]=0;
 							InterestFamilyData.Rows[0]["additionalTarget"]=dt["target"].ToString();
@@ -166,7 +169,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 				
 					#region Calcul des total grp pour la cible de base et la cible additionnée
 					foreach(DataRow current in InterestFamilyPlanTable.Rows){
-						currentUnit=Convert.ToDouble(current["unit"].ToString());
+						currentUnit=Convert.ToDouble(current[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 						
 						if(Convert.ToInt32(current["id_target"])==idBaseTarget){
 							totalBaseTargetUnit+=currentUnit;
@@ -202,9 +205,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 							case WebConstantes.CustomerSessions.Unit.kEuro:
 								headers.Root.Add(new Header(GestionWeb.GetWebWord(1790,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
 							case WebConstantes.CustomerSessions.Unit.pages:
-								headers.Root.Add(new Header(GestionWeb.GetWebWord(943,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
+								headers.Root.Add(new Header(Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].WebTextId,webSession.SiteLanguage)),APPMConstantes.UNIT_COLUMN_INDEX));break;
 							case WebConstantes.CustomerSessions.Unit.insertion:
-								headers.Root.Add(new Header(GestionWeb.GetWebWord(940,webSession.SiteLanguage),APPMConstantes.UNIT_COLUMN_INDEX));break;
+                                headers.Root.Add(new Header(Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage)), APPMConstantes.UNIT_COLUMN_INDEX)); break;
 						}
 						headers.Root.Add(new Header(GestionWeb.GetWebWord(1743,webSession.SiteLanguage),APPMConstantes.DISTRIBUTION_COLUMN_INDEX));
 					}
@@ -249,7 +252,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 
 					foreach(DataRow dt in InterestFamilyPlanTable.Rows){
 					
-						currentUnit=Convert.ToDouble(dt["unit"].ToString());
+						currentUnit=Convert.ToDouble(dt[WebFunctions.SQLGenerator.GetUnitAlias(webSession)].ToString());
 
 						if(Convert.ToInt32(dt["id_target"])==idBaseTarget){
 							

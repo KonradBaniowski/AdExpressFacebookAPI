@@ -14,8 +14,10 @@ using TNS.AdExpress.Domain.Translation;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using SQLFunctions=TNS.AdExpress.Web.DataAccess;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM
 {
@@ -77,14 +79,14 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 					foreach(DataRow dr in refUnivData.Rows){
 						//Base target Values
 						if(Convert.ToInt64(dr["id_target"])==baseTarget){
-							refGRPBaseTarget+=Convert.ToDouble(dr["GRP"]);
+                            refGRPBaseTarget += Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString()]);
 						}
 						//Supplementary target values
 						else{
-							refEuros+=Convert.ToInt64(dr["euros"]);
-							refPages+=Convert.ToDouble(dr["pages"]);
-							refInsertions+=Convert.ToInt64(dr["insertions"]);
-							refGRP+=Convert.ToDouble(dr["GRP"]);
+                            refEuros += Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()]);
+                            refPages += Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]);
+                            refInsertions += Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()]);
+                            refGRP += Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString()]);
 						}
 					}
 					
@@ -103,14 +105,14 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 							foreach(DataRow dr in conUniversData.Rows){
 								//Base target Values
 								if(Convert.ToInt64(dr["id_target"])==baseTarget){
-									compGroupGRPBaseTarget+=Convert.ToDouble(dr["GRP"]);
+                                    compGroupGRPBaseTarget += Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString()]);
 								}
 								//Supplementary target values
 								else{
-									compGroupEuros+=Convert.ToInt64(dr["euros"]);
-									compGroupPages+=Convert.ToDouble(dr["pages"]);
-									compGroupInsertions+=Convert.ToInt64(dr["insertions"]);
-									compGroupGRP+=Convert.ToDouble(dr["GRP"]);
+                                    compGroupEuros += Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()]);
+                                    compGroupPages += Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]);
+                                    compGroupInsertions += Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()]);
+                                    compGroupGRP += Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString()]);
 								}
 							}
 						}
@@ -138,14 +140,14 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 							foreach(DataRow dr in groupData.Rows){
 								//Base target Values
 								if(Convert.ToInt64(dr["id_target"])==baseTarget){
-									compGroupGRPBaseTarget+=Convert.ToDouble(dr["GRP"]);
+                                    compGroupGRPBaseTarget += Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString()]);
 								}
 								//Supplementary target values
-								else{						
-									compGroupEuros+=Convert.ToInt64(dr["euros"]);
-									compGroupPages+=Convert.ToInt64(dr["pages"]);
-									compGroupInsertions+=Convert.ToInt64(dr["insertions"]);
-									compGroupGRP+=Convert.ToDouble(dr["GRP"]);
+								else{
+                                    compGroupEuros += Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()]);
+                                    compGroupPages += Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]);
+                                    compGroupInsertions += Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()]);
+                                    compGroupGRP += Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString()]);
 								}
 							}							
 						}
@@ -231,14 +233,14 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 									newRow=true;
 								}
 								if(Convert.ToInt64(dr["id_target"])==baseTarget){
-									resultRow["GRPBaseTarget"]=Convert.ToDouble(dr["GRP"]);
+                                    resultRow["GRPBaseTarget"] = Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString()]);
 								}
 								else{
 									resultRow["products"]=dr["product"].ToString();
-									resultRow["euros"]=Convert.ToInt64(dr["euros"]);
-									resultRow["pages"]=Convert.ToDecimal(dr["pages"]);
-									resultRow["insertions"]=Convert.ToInt64(dr["insertions"]);
-									resultRow["GRP"]=Convert.ToDouble(dr["GRP"]);							
+                                    resultRow["euros"] = Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()]);
+                                    resultRow["pages"] = Convert.ToDecimal(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()]);
+                                    resultRow["insertions"] = Convert.ToInt64(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString()]);
+                                    resultRow["GRP"] = Convert.ToDouble(dr[UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString()]);							
 								}						
 							}
 						}
@@ -341,10 +343,10 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 							
 							if (!oldIdItems.Contains(Convert.ToInt64(dr["id_advertiser"].ToString()))) {
 								elementName = dr["advertiser"].ToString();
-								euros = Convert.ToDouble(graphicsData.Compute("Sum(euros)", "id_advertiser = " + dr["id_advertiser"].ToString() + "").ToString());
-								insertions = Convert.ToDouble(graphicsData.Compute("Sum(insertions)", "id_advertiser = " + dr["id_advertiser"].ToString() + "").ToString());
-								pages = Convert.ToDouble(graphicsData.Compute("Sum(pages)", "id_advertiser = " + dr["id_advertiser"].ToString() + "").ToString());
-								grp = Convert.ToDouble(graphicsData.Compute("Sum(grp)", "id_advertiser = " + dr["id_advertiser"].ToString() + "").ToString());
+                                euros = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString() + ")", "id_advertiser = " + dr["id_advertiser"].ToString() + "").ToString());
+                                insertions = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString() + ")", "id_advertiser = " + dr["id_advertiser"].ToString() + "").ToString());
+                                pages = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString() + ")", "id_advertiser = " + dr["id_advertiser"].ToString() + "").ToString());
+                                grp = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString() + ")", "id_advertiser = " + dr["id_advertiser"].ToString() + "").ToString());
 
 								//if the data exists for the advertiser we add it to the new table "graphicsTable"
 								resultRow = graphicsTable.NewRow();
@@ -385,10 +387,10 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 
 							if (!oldIdItems.Contains(Convert.ToInt64(dr["id_brand"].ToString()))) {
 								elementName = dr["brand"].ToString();
-								euros = Convert.ToDouble(graphicsData.Compute("Sum(euros)", "id_brand = " + dr["id_brand"].ToString() + "").ToString());
-								insertions = Convert.ToDouble(graphicsData.Compute("Sum(insertions)", "id_brand = " + dr["id_brand"].ToString() + "").ToString());
-								pages = Convert.ToDouble(graphicsData.Compute("Sum(pages)", "id_brand = " + dr["id_brand"].ToString() + "").ToString());
-								grp = Convert.ToDouble(graphicsData.Compute("Sum(grp)", "id_brand = " + dr["id_brand"].ToString() + "").ToString());
+                                euros = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString() + ")", "id_brand = " + dr["id_brand"].ToString() + "").ToString());
+                                insertions = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString() + ")", "id_brand = " + dr["id_brand"].ToString() + "").ToString());
+                                pages = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString() + ")", "id_brand = " + dr["id_brand"].ToString() + "").ToString());
+                                grp = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString() + ")", "id_brand = " + dr["id_brand"].ToString() + "").ToString());
 
 								//if the data exists for the advertiser we add it to the new table "graphicsTable"
 								resultRow = graphicsTable.NewRow();
@@ -427,10 +429,10 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 
 							if (!oldIdItems.Contains(Convert.ToInt64(dr["id_product"].ToString()))) {
 								elementName = dr["product"].ToString();
-								euros = Convert.ToDouble(graphicsData.Compute("Sum(euros)", "id_product = " + dr["id_product"].ToString() + "").ToString());
-								insertions = Convert.ToDouble(graphicsData.Compute("Sum(insertions)", "id_product = " + dr["id_product"].ToString() + "").ToString());
-								pages = Convert.ToDouble(graphicsData.Compute("Sum(pages)", "id_product = " + dr["id_product"].ToString() + "").ToString());
-								grp = Convert.ToDouble(graphicsData.Compute("Sum(grp)", "id_product = " + dr["id_product"].ToString() + "").ToString());
+                                euros = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString() + ")", "id_product = " + dr["id_product"].ToString() + "").ToString());
+                                insertions = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString() + ")", "id_product = " + dr["id_product"].ToString() + "").ToString());
+                                pages = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString() + ")", "id_product = " + dr["id_product"].ToString() + "").ToString());
+                                grp = Convert.ToDouble(graphicsData.Compute("Sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString() + ")", "id_product = " + dr["id_product"].ToString() + "").ToString());
 
 								//if the data exists for the advertiser we add it to the new table "graphicsTable"
 								resultRow = graphicsTable.NewRow();

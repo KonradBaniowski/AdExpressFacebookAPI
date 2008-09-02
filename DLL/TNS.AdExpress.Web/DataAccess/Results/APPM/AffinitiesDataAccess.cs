@@ -15,6 +15,7 @@ using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using Cst = TNS.AdExpress.Constantes;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 {
@@ -42,15 +43,21 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			#region construction of the query
 			
 			#region Select
-			sql.Append(" select distinct id_target,target,sum(totalGRP) as GRP,sum(euro) as euros");
+			sql.AppendFormat(" select distinct id_target,target,sum(totalGRP) as {0},sum({1}) as {1}"
+                , UnitsInformation.List[Cst.Web.CustomerSessions.Unit.grp].DatabaseField
+                , UnitsInformation.List[Cst.Web.CustomerSessions.Unit.euro].Id.ToString() );
 			#endregion
 
 			#region from
 			sql.Append(" from (");
 			
 			#region select
-			sql.Append("select distinct " + DBTables.TARGET_PREFIXE+".id_target,target,(sum(totalinsert)*grp) totalGRP,");
-			sql.Append("sum(TOTALUNITE) as euro");
+            sql.AppendFormat("select distinct {0}.id_target,target,(sum({1})*{2}) totalGRP,sum({3}) as {4}"
+                , DBTables.TARGET_PREFIXE
+                , UnitsInformation.List[Cst.Web.CustomerSessions.Unit.insertion].DatabaseMultimediaField
+                , UnitsInformation.List[Cst.Web.CustomerSessions.Unit.grp].DatabaseField
+                , UnitsInformation.List[Cst.Web.CustomerSessions.Unit.euro].DatabaseMultimediaField
+                , UnitsInformation.List[Cst.Web.CustomerSessions.Unit.euro].Id.ToString());
 			#endregion
 
 			#region from
@@ -83,7 +90,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 
 			#region Group By
 			sql.Append(" group by ");
-			sql.Append(DBTables.TARGET_PREFIXE + ".id_target,target,grp");
+			sql.AppendFormat("{0}.id_target,target,{1}"
+                , DBTables.TARGET_PREFIXE
+                , UnitsInformation.List[Cst.Web.CustomerSessions.Unit.grp].DatabaseField);
 			#endregion
 
 			#region order by

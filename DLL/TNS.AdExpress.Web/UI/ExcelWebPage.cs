@@ -46,6 +46,7 @@ using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
 using ProductClassification=TNS.AdExpress.DataAccess.Classification.ProductBranch;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 #endregion
 
@@ -473,7 +474,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// <returns>HTML</returns>
 		private static string GetUnitSelected(WebSession webSession){
 			if(webSession.PreformatedTable.ToString().ToUpper().IndexOf("UNITS")==-1)
-				return("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1313,webSession.SiteLanguage)+"</font> "+GestionWeb.GetWebWord((int)TNS.AdExpress.Constantes.Web.CustomerSessions.XLSUnitsTraductionCodes[webSession.Unit],webSession.SiteLanguage)+"</td></tr>");
+				return("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1313,webSession.SiteLanguage)+"</font> "+Convertion.ToHtmlString(GestionWeb.GetWebWord(webSession.GetSelectedUnit().WebTextId,webSession.SiteLanguage))+"</td></tr>");
 			return("");
 		}
 		#endregion
@@ -1378,7 +1379,7 @@ namespace TNS.AdExpress.Web.UI{
 				#endregion
 
 				// Résultat : Insertions
-				t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(793,webSession.SiteLanguage) +" :</font> "+ GestionWeb.GetWebWord(940,webSession.SiteLanguage) +"</td></tr>");
+				t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(793,webSession.SiteLanguage) +" :</font> "+ Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId,webSession.SiteLanguage)) +"</td></tr>");
 				// Période
 				t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
 				// Media
@@ -1424,7 +1425,7 @@ namespace TNS.AdExpress.Web.UI{
 				#endregion
 
 				// Résultat : Insertions
-				t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(793,webSession.SiteLanguage) +" :</font> "+ GestionWeb.GetWebWord(940,webSession.SiteLanguage) +"</td></tr>");
+                t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(793, webSession.SiteLanguage) + " :</font> " + Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage)) + "</td></tr>");
 				// Période
 				t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));			
 				// Media

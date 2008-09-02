@@ -33,6 +33,7 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.DataAccess{
 	/// <summary>
@@ -502,7 +503,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 				case WebConstantes.RadioInsertionsColumnIndex.TOP_DIFFUSION_INDEX:
 					return DBConstantes.Fields.ID_TOP_DIFFUSION;
 				case WebConstantes.RadioInsertionsColumnIndex.DURATION_INDEX:
-					return DBConstantes.Fields.DURATION;
+                    return UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField;
 				case WebConstantes.RadioInsertionsColumnIndex.RANK_INDEX:
 					return DBConstantes.Fields.RANK;
 				case WebConstantes.RadioInsertionsColumnIndex.BREAK_DURATION_INDEX:
@@ -540,7 +541,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 				case WebConstantes.TVInsertionsColumnIndex.ID_COMMERCIAL_BREAK_INDEX:
 					return DBConstantes.Fields.ID_COMMERCIAL_BREAK_INDEX;
 				case WebConstantes.TVInsertionsColumnIndex.DURATION_INDEX:
-					return DBConstantes.Fields.DURATION;
+                    return UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField;
 				case WebConstantes.TVInsertionsColumnIndex.RANK_INDEX:
 					return DBConstantes.Fields.ID_RANK;
 				case WebConstantes.TVInsertionsColumnIndex.BREAK_DURATION_INDEX:
@@ -548,7 +549,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 				case WebConstantes.TVInsertionsColumnIndex.BREAK_SPOTS_NB_INDEX:
 					return DBConstantes.Fields.NUMBER_MESSAGE_COMMERCIAL_BREA;
 				case WebConstantes.TVInsertionsColumnIndex.EXPENDITURE_INDEX:
-					return DBConstantes.Fields.EXPENDITURE_EURO;								
+                    return UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField;								
 				default :	throw new WebExceptions.FunctionsDataAccessException(" GetTvInsertionsOrder : Impossible de déterminer la colonne à trier."); 		
 			}
 				
@@ -570,7 +571,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 				case WebConstantes.OutDoorInsertionsColumnIndex.GROUP_INDEX :
 					return DBConstantes.Fields.GROUP_;				
 				case WebConstantes.OutDoorInsertionsColumnIndex.NUMBER_BOARD_INDEX:
-					return DBConstantes.Fields.NUMBER_BOARD;
+                    return UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField;
 				case WebConstantes.OutDoorInsertionsColumnIndex.TYPE_BOARD_INDEX:
 					return DBConstantes.Fields.TYPE_BOARD;
 				case WebConstantes.OutDoorInsertionsColumnIndex.TYPE_SALE_INDEX:
@@ -578,7 +579,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 				case WebConstantes.OutDoorInsertionsColumnIndex.POSTER_NETWORK_INDEX:
 					return DBConstantes.Fields.POSTER_NETWORK;				
 				case WebConstantes.OutDoorInsertionsColumnIndex.EXPENDITURE_INDEX:
-					return DBConstantes.Fields.EXPENDITURE_EURO;								
+                    return UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField;								
 				default :	throw new WebExceptions.FunctionsDataAccessException(" GetTvInsertionsOrder : Impossible de déterminer la colonne à trier."); 		
 			}
 				

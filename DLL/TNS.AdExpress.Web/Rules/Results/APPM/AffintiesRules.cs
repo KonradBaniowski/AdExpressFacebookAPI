@@ -11,6 +11,9 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using DataAcces = TNS.AdExpress.Web.DataAccess;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
+using TNS.AdExpress.Domain.Units;
+using WebCste = TNS.AdExpress.Constantes.Web;
+
 namespace TNS.AdExpress.Web.Rules.Results.APPM
 {
 	/// <summary>
@@ -66,8 +69,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 					for(int i=0;i<data.Rows.Count && baseTargetNotFound;i++){
 						if(Convert.ToInt64(data.Rows[i]["id_target"])==idBaseTarget){
 							baseTarget=data.Rows[i]["target"].ToString();
-							grpBaseTarget+=Convert.ToDouble(data.Rows[i]["GRP"]);
-							euros+=Convert.ToInt64(data.Rows[i]["euros"]);
+							grpBaseTarget+=Convert.ToDouble(data.Rows[i][UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]);
+                            euros += Convert.ToInt64(data.Rows[i][UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]);
 							baseTargetNotFound=false;
 						}
 					}
@@ -101,13 +104,13 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 							resultRow=dtAffinities.NewRow();						
 							resultRow["id_target"]=row["id_Target"];
 							resultRow["target"]=row["target"];
-							resultRow["totalGRP"]=Math.Round(Convert.ToDouble(row["GRP"]),3);
+                            resultRow["totalGRP"] = Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3);
 							if(grpBaseTarget!=0)
-								resultRow["GRPAffinities"]=Math.Round((Convert.ToDouble(row["GRP"])/grpBaseTarget)*100,3);
+                                resultRow["GRPAffinities"] = Math.Round((Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]) / grpBaseTarget) * 100, 3);
 							else
 								resultRow["GRPAffinities"]=0;
-							if(Convert.ToDouble(row["GRP"])!=0)
-								resultRow["cgrp"]=Math.Round(Convert.ToDouble(row["euros"])/Convert.ToDouble(row["GRP"]),3);
+                            if (Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]) != 0)
+                                resultRow["cgrp"] = Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]) / Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3);
 							else
 								resultRow["cgrp"]=0;
 							if(cgrpBaseTarget!=0)
