@@ -2084,7 +2084,7 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// <summary>
 		/// Liste des produits à exclure dans le tableau de bord presse
 		/// </summary>
-		public const int DASHBOARD_PRESS_EXCLUDE_PRODUCT_LIST_ID=8;
+		public const int DASHBOARD_PRESS_EXCLUDE_PRODUCT_LIST_ID=387; //8
 		/// <summary>
 		/// Liste des média pour les pan euro
 		/// </summary>
