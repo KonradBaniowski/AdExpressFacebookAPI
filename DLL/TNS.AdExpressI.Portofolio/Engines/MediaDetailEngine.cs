@@ -121,7 +121,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			DataTable dt = null, dtResult = null;
 			DataRow newRow = null;
 			DateTime dayDT;
-			CellUnit cellUnit;
+			Cell cellUnit;
 			int currentLine = 0;
 			int oldEcranCode = -1;
 			int ecranCode;
@@ -160,8 +160,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				listCellUnitFactory = new List<CellUnitFactory>();
 				for (int i = 0; i < unitsList.Count; i++) {
 					Type type = assembly.GetType(unitsList[i].CellType);
-					cellUnit = (CellUnit)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);					
-					listCellUnitFactory.Add(new CellUnitFactory(cellUnit));
+					cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);					
+                    if (cellUnit is CellUnit<double>)
+                        listCellUnitFactory.Add(new CellUnitFactory((CellUnit<double>)cellUnit));
+                    else
+                        listCellUnitFactory.Add(new CellUnitFactory((CellUnit<double>)cellUnit));
 				}
 				foreach (DataRow row in dt.Rows) {
 					ecranCode = int.Parse(row["code_ecran"].ToString());
