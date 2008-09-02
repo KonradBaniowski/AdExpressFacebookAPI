@@ -29,6 +29,7 @@ using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
+using FctWeb = TNS.AdExpress.Web.Functions;
 
 using TNS.AdExpressI.LostWon.Exceptions;
 using TNS.AdExpressI.LostWon.DAL;
@@ -387,7 +388,7 @@ namespace TNS.AdExpressI.LostWon
             Int64 agencyGroupLineIndex = 0;
             Int64 agencyLineIndex = 0;
 
-            string expression = "sum(unit)";
+            string expression = FctWeb.SQLGenerator.GetUnitAliasSum(_session);
             string filterN = "";
             string filterN1 = "";
             DataTable dt = null;
@@ -774,6 +775,8 @@ namespace TNS.AdExpressI.LostWon
 
             #region Tableau de résultat
 
+            string unitAliasName = FctWeb.SQLGenerator.GetUnitAlias(_session);
+
             foreach (DataRow currentRow in dt.Rows)
             {
                 idMedia = (Int64)currentRow["id_media"];
@@ -826,7 +829,7 @@ namespace TNS.AdExpressI.LostWon
                 }
                 #endregion
 
-                unit = double.Parse(currentRow["unit"].ToString());
+                unit = double.Parse(currentRow[unitAliasName].ToString());
 
 
                 if (IsComparativeDateLine(Int64.Parse(currentRow["date_num"].ToString()), beginningDate, endPeriodDate))

@@ -110,7 +110,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             string orderFieldName = string.Empty;
             string orderFieldNameWithoutTablePrefix = string.Empty;
             string productFieldNameWithoutTablePrefix = string.Empty;
-            string unitField = string.Empty;
+            string unitFieldSumWithAlias = string.Empty;
             string dataFieldsForGadWithoutTablePrefix = string.Empty;
             CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
@@ -121,6 +121,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 orderFieldName = _session.GenericProductDetailLevel.GetSqlOrderFields();
                 orderFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlOrderFieldsWithoutTablePrefix();
                 groupByFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
+                unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session);
 
                 if (customerPeriod.Is4M) {
                     sql4M.Append(GetRequest(CstDB.TableType.Type.dataVehicle4M));
@@ -145,9 +146,10 @@ namespace TNS.AdExpressI.LostWon.DAL
                         dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
 
                     sql = new StringBuilder();
-                    sql.AppendFormat(" select id_media, columnDetailLevel, {0} {1}, date_num, sum(unit) as unit"
+                    sql.AppendFormat(" select id_media, columnDetailLevel, {0} {1}, date_num, {2}"
                         , productFieldNameWithoutTablePrefix
-                        , dataFieldsForGadWithoutTablePrefix);
+                        , dataFieldsForGadWithoutTablePrefix
+                        , unitFieldSumWithAlias);
                     sql.Append(" from (");
                     sql.Append(sql4M);
                     sql.Append(" UNION ");
@@ -182,9 +184,10 @@ namespace TNS.AdExpressI.LostWon.DAL
                         if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
                             dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
                         sql = new StringBuilder();
-                        sql.AppendFormat(" select id_media, columnDetailLevel, {0} {1}, date_num, sum(unit) as unit"
+                        sql.AppendFormat(" select id_media, columnDetailLevel, {0} {1}, date_num, {2}"
                             , productFieldNameWithoutTablePrefix
-                            , dataFieldsForGadWithoutTablePrefix);
+                            , dataFieldsForGadWithoutTablePrefix
+                            , unitFieldSumWithAlias);
                         sql.Append(" from (");
                         sql.Append(sqlDataVehicle);
                         sql.Append(" UNION ");
@@ -240,7 +243,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             string orderFieldName = string.Empty;
             string orderFieldNameWithoutTablePrefix = string.Empty;
             string productFieldNameWithoutTablePrefix = string.Empty;
-            string unitField = string.Empty;
+            string unitFieldSumUnionWithAlias = string.Empty;
             CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
             #endregion
 
@@ -250,6 +253,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 orderFieldName = _session.GenericProductDetailLevel.GetSqlOrderFields();
                 orderFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlOrderFieldsWithoutTablePrefix();
                 groupByFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
+                unitFieldSumUnionWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session);
 
                 if (customerPeriod.Is4M)
                 {
@@ -277,7 +281,7 @@ namespace TNS.AdExpressI.LostWon.DAL
 
                     sql = new StringBuilder();
                     sql.Append("  select id_sector, id_subsector, id_group_, id_advertiser, id_brand, id_product");
-                    sql.Append(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num, sum(unit) as unit");
+                    sql.AppendFormat(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num, {0}", unitFieldSumUnionWithAlias);
                     sql.Append(" from (");
                     sql.Append(sql4M);
                     sql.Append(" UNION ");
@@ -317,7 +321,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     {
                         sql = new StringBuilder();
                         sql.Append("  select id_sector, id_subsector, id_group_, id_advertiser, id_brand, id_product");
-                        sql.Append(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num, sum(unit) as unit");
+                        sql.AppendFormat(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num, {0}", unitFieldSumUnionWithAlias);
                         sql.Append(" from (");
                         sql.Append(sqlDataVehicle);
                         sql.Append(" UNION ");
@@ -492,7 +496,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             string dataTableNameForGad = "";
             string dataFieldsForGad = "";
             string dataJointForGad = "";
-            string unitField = "";
+            string unitFieldSumWithAlias = "";
             string productsRights = "";
             string mediaRights = "";
             string listExcludeProduct = "";
@@ -541,7 +545,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 // Obtient les jointures pour la nomenclature
                 productJoinCondition = _session.GenericProductDetailLevel.GetSqlJoins(_session.DataLanguage, DATA_TABLE_PREFIXE);
                 // Unités
-                unitField = FctWeb.SQLGenerator.GetUnitFieldName(_session, type);
+                unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
                 // Droits produit
                 productsRights = FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, DATA_TABLE_PREFIXE, true);
                 // Droits media
@@ -585,13 +589,13 @@ namespace TNS.AdExpressI.LostWon.DAL
                 throw (new DynamicDALException("Unable to init parameters for request : " + e.Message));
             }
 
-            sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2} {3}, {4} as date_num, sum({5}) as unit"
+            sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2} {3}, {4} as date_num, {5}"
                 , DATA_TABLE_PREFIXE
                 , columnDetailLevel.GetSqlFieldIdWithoutTablePrefix()
                 , productFieldName
                 , dataFieldsForGad
                 , dateField
-                , unitField);
+                , unitFieldSumWithAlias);
             sql.AppendFormat(" from {0} {1} {2} {3}"
                 , mediaAgencyTable
                 , dataTableName
@@ -695,7 +699,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             #region Variables
             string dateField = "";
             string dataTableName = "";
-            string unitField = "";
+            string unitFieldSumWithAlias = "";
             string productsRights = "";
             string mediaRights = "";
             string listExcludeProduct = "";
@@ -730,7 +734,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     throw (new DynamicDALException("Unable to determine the type of table to use."));
             }
 
-            unitField = FctWeb.SQLGenerator.GetUnitFieldName(_session, type);
+            unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
             productsRights = FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, DATA_TABLE_PREFIXE, true);
             mediaRights = FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, DATA_TABLE_PREFIXE, true);
             // Dates
@@ -752,7 +756,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             sql.AppendFormat("  select {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
             sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
 			sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
-            sql.AppendFormat(",{0} as date_num, sum({1}) as unit", dateField, unitField);
+            sql.AppendFormat(",{0} as date_num, {1}", dateField, unitFieldSumWithAlias);
 
             sql.AppendFormat(" from {0}", dataTableName);
 			sql.AppendFormat(",{0}.{1} {2}", schAdExpr03.Label, tblAdvertisingAgengy.Label, tblAdvertisingAgengy.Prefix);
