@@ -154,19 +154,22 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE + ".date_media_num, " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".date_cover_num, ");
 			sql.Append(DBConstantes.Tables.ADVERTISER_PREFIXE +".advertiser, ");
 			sql.Append(DBConstantes.Tables.PRODUCT_PREFIXE +".product, "+ DBConstantes.Tables.GROUP_PREFIXE +".group_, ");
-			sql.AppendFormat("{0}.media_paging, {0}.{1}, "
+			sql.AppendFormat("{0}.media_paging, {0}.{1} as {2}, "
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
-                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField);
-			sql.AppendFormat("{0}.{1}, {2}.color, "
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString());
+			sql.AppendFormat("{0}.{1} as {2}, {3}.color, "
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.mmPerCol].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.mmPerCol].Id.ToString()
                 , DBConstantes.Tables.COLOR_PREFIXE);
 			sql.Append(DBConstantes.Tables.FORMAT_PREFIXE +".format, "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".rank_sector, ");
 			sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE +".rank_group_, "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".rank_media, ");
 			sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_advertisement, ");
-			sql.AppendFormat("{0}.visual, {0}.{1} "
+			sql.AppendFormat("{0}.visual, {0}.{1} as {2}"
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
-                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField);
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField
+                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
 			#endregion
 
 			#region From
@@ -300,7 +303,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString());
-            sql.AppendFormat("{0}.{1} as {2},"
+            sql.AppendFormat("{0}.{1} as {2} "
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].Id.ToString());
@@ -374,7 +377,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             sql.AppendFormat("{0}.{1},"
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField);
-            sql.AppendFormat("{0}.{1},"
+            sql.AppendFormat("{0}.{1} "
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField);
 		}
@@ -400,7 +403,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             sql.AppendFormat("{0}.{1},"
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField);
-            sql.AppendFormat("{0}.{1},"
+            sql.AppendFormat("{0}.{1} "
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField);
 		}
