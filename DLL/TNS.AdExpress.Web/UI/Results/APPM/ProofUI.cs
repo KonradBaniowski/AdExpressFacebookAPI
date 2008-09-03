@@ -23,6 +23,7 @@ using ExcelFct = TNS.AdExpress.Web.UI.ExcelWebPage;
 using TxtFct = TNS.AdExpress.Web.Functions.Text;
 using TNS.FrameWork;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM{
 	/// <summary>
@@ -56,6 +57,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			string pathWeb = CstWeb.CreationServerPathes.IMAGES + "/" + idMedia + "/" + dateCover + "/imagette/";
 			string pathWeb2 = CstWeb.CreationServerPathes.IMAGES + "/" + idMedia + "/" + dateCover + "/";
 			string[] fileList = null;
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 			int i = 0;
 			#endregion
 			
@@ -88,8 +90,9 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					#region html
 
 					#region Début tableau général
-					html.Append("<TABLE  bgColor=\"#ffffff\" style=\"MARGIN-TOP: 5px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 25px;\"");
-					html.Append("cellPadding=\"0\" cellSpacing=\"3\" align=\"center\" border=\"0\" width=\"900\" >");
+                    html.Append("<TABLE  class=\"insertionBorderV2 whiteBackGround\"");
+                    html.Append("cellPadding=\"0\" cellSpacing=\"1\" align=\"center\" border=\"0\" width=\"900\">");	
+
 					html.Append("<tr align=\"center\"><td>");
 					#endregion
 
@@ -101,15 +104,15 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					html.Append("<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
 					html.Append("<td>");
 					html.Append("<!-- fleche -->");
-					html.Append("<td style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/Images/Common/fleche_1.gif\" border=\"0\"></td>");
-					html.Append("<td  vAlign=\"top\" width=\"100%\" class=\"popuptitle1\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
+                    html.Append("<td style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/" + themeName + "/Images/Common/fleche_1.gif\" border=\"0\"></td>");
+                    html.Append("<td  vAlign=\"top\" width=\"100%\" class=\"popuptitle1 creationpopUpBackGround\" >");
 					html.Append(GestionWeb.GetWebWord(1766, webSession.SiteLanguage));
 					html.Append("</td>");
 					html.Append("</td>");
 					html.Append("</table>");
 					html.Append("</td>");
 					html.Append("</tr>");
-					html.Append("\n<tr><td colspan=\"3\" bgcolor=\"#FFFFFF\" style=\"HEIGHT: 3px;\" ></td></tr>");
+                    html.Append("\n<tr><td colspan=\"3\" class=\"whiteBackGround\" style=\"HEIGHT: 3px;\" ></td></tr>");
 					html.Append("\n<tr valign=\"top\">");
 					#endregion				
 					
@@ -121,7 +124,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 						html.Append("<img name=\"displayImg\" src='"+pathWeb2+fileList.GetValue(0).ToString()+"' border=\"0\">");
 					}
 					else{
-						html.Append("<img src=\"/Images/"+webSession.SiteLanguage+"/Others/no_visuel.gif\">");
+                        html.Append("<img src=\"/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif\">");
 					}
 					html.Append("\n</td></tr>");
 					html.Append("\n</table>");
@@ -129,7 +132,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					#endregion
 					
 					#region Colone séparatrice
-					html.Append("\n<td bgcolor=\"#FFFFFF\">&nbsp;</td>");
+                    html.Append("\n<td class=\"whiteBackGround\">&nbsp;</td>");
 					#endregion
 					
 					#region Table Informations

@@ -22,6 +22,7 @@ using ExcelFct = TNS.AdExpress.Web.UI.ExcelWebPage;
 using TxtFct = TNS.AdExpress.Web.Functions.Text;
 using TNS.FrameWork;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM{
 	/// <summary>
@@ -46,10 +47,11 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			DataTable dtResult = RulesFct.APPM.InsertionPlanRules.GetData(dataSource, webSession , dateBegin, dateEnd, idBaseTarget, idMedia, idWave);
 
 			StringBuilder html = new StringBuilder();
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
-			if (dtResult.Rows.Count > 0){	
-				html.Append("<TABLE  bgColor=\"#ffffff\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 25px;\"");
-				html.Append("cellPadding=\"0\" cellSpacing=\"3\" align=\"center\" border=\"0\">");					
+			if (dtResult.Rows.Count > 0){
+                html.Append("<TABLE  class=\"insertionBorderV2 whiteBackGround\"");
+				html.Append("cellPadding=\"0\" cellSpacing=\"1\" align=\"center\" border=\"0\">");					
 
 				#region TEMP : Info sur le clic droit de la souris
 				if (!excel){
@@ -59,14 +61,14 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					html.Append("\n<script language=\"javascript\" type=\"text/javascript\">");
 					html.Append("\nif(hasRightFlashVersion==true){");
 					html.Append("\ndocument.writeln('<object id=\"infoOptionFlash\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"400\" height=\"20\" VIEWASTEXT>');");
-					html.Append("\ndocument.writeln('<param name=\"movie\" value=\"/Flash/"+webSession.SiteLanguage+"/infoOptionsOneLine.swf\">');");
+                    html.Append("\ndocument.writeln('<param name=\"movie\" value=\"/App_Themes/" + themeName + "/Flash/Culture/infoOptionsOneLine.swf\">');");
 					html.Append("\ndocument.writeln('<param name=\"quality\" value=\"high\">');");
 					html.Append("\ndocument.writeln('<param name=\"menu\" value=\"false\">');");
 					html.Append("\ndocument.writeln('<param name=\"wmode\" value=\"transparent\">');");
-					html.Append("\ndocument.writeln('<embed src=\"/Flash/"+webSession.SiteLanguage+"/infoOptionsOneLine.swf\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"400\" height=\"20\"></embed>');");
+                    html.Append("\ndocument.writeln('<embed src=\"/App_Themes/" + themeName + "/Flash/Culture/infoOptionsOneLine.swf\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"400\" height=\"20\"></embed>');");
 					html.Append("\ndocument.writeln('</object></td>');");
 					html.Append("\n}\nelse{");
-					html.Append("\ndocument.writeln('<img src=\"/Images/"+webSession.SiteLanguage+"/FlashReplacement/infoOptionsOneLine.gif\"></td>');");
+                    html.Append("\ndocument.writeln('<img src=\"/App_Themes/" + themeName + "/Images/Culture/FlashReplacement/infoOptionsOneLine.gif\"></td>');");
 					html.Append("\n}");
 					html.Append("\n</script>");
 					html.Append("\n</tr>");
@@ -136,7 +138,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 						}
 						else{						
 							//html.Append("<td align=\"center\"><a href=\"javascript:openPopUpJustificatif('"+webSession.IdSession+"','"+ row["idMedia"].ToString().Trim() +"','"+ row["idProduct"].ToString().Trim() +"','"+ row["mediaPaging"].ToString().Trim() +"','"+ DateString.DateTimeToYYYYMMDD((DateTime)row["date"]) +"','"+ DateString.DateTimeToYYYYMMDD((DateTime)row["dateParution"]) +"');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a></td>");
-							html.Append("<td align=\"center\"><a href=\"javascript:openPopUpJustificatif('" + webSession.IdSession + "','" + row["idMedia"].ToString().Trim() + "','" + row["idProduct"].ToString().Trim() + "','" + row["mediaPaging"].ToString().Trim() + "','" + DateString.DateTimeToYYYYMMDD((DateTime)row["date"]) + "','" + DateString.DateTimeToYYYYMMDD((DateTime)row["dateCover"]) + "');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a></td>");
+                            html.Append("<td align=\"center\"><a href=\"javascript:openPopUpJustificatif('" + webSession.IdSession + "','" + row["idMedia"].ToString().Trim() + "','" + row["idProduct"].ToString().Trim() + "','" + row["mediaPaging"].ToString().Trim() + "','" + DateString.DateTimeToYYYYMMDD((DateTime)row["date"]) + "','" + DateString.DateTimeToYYYYMMDD((DateTime)row["dateCover"]) + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a></td>");
 						}
 					}
 
