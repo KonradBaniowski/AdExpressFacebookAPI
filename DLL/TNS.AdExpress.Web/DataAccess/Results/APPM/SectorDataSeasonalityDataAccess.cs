@@ -71,7 +71,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 				sql.Append(dateField+", " );
 				sql.Append(DBConstantes.Tables.TARGET_PREFIXE+".id_target, " );
 				sql.Append(DBConstantes.Tables.TARGET_PREFIXE+".target," );
-                sql.AppendFormat("sum({0})* {1} as totalgrp , "
+                sql.AppendFormat("sum({0})* {1} as totalgrp, "
                     , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseMultimediaField
                     , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 				sql.AppendFormat("sum({0})as {1} "
@@ -82,7 +82,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
                     && webSession.Unit != WebConstantes.CustomerSessions.Unit.grp)
                     sql.AppendFormat(", {0}",WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, DBConstantes.TableType.Type.webPlan));
                 else if(webSession.Unit == WebConstantes.CustomerSessions.Unit.grp)
-                    sql.AppendFormat("{0}.{1} as {2}"
+                    sql.AppendFormat(", {0}.{1} as {2}"
                         , DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE
                         , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField
                         , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].Id.ToString());

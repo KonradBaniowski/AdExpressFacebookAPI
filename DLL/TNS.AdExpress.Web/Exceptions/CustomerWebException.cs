@@ -175,7 +175,6 @@ namespace TNS.AdExpress.Web.Exceptions{
 		/// </summary>
 		public void SendMail(){
 			string body="";
-            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 
 			if(webSession==null){
 				body+="<html><b><u>"+serverName+":</u></b><br>"+"<font color=#FF0000>Erreur client:<br></font>";
@@ -190,6 +189,8 @@ namespace TNS.AdExpress.Web.Exceptions{
 				body+="</html>";
 			}
 			else{
+                CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
+
 				#region Identifiaction du client
 				body+="<html><b><u>"+serverName+":</u></b><br>"+"<font color=#FF0000>Erreur client:<br></font>";
 				body+="Numéro de session: "+webSession.IdSession+"<br>";
