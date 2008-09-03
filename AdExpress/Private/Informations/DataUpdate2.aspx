@@ -9,12 +9,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title>AdExpress</title>
-    <link href="/Css/AdExpress.css" type="text/css" rel="stylesheet"/>
 </head>
-<body background="../../Images/Common/backgroundPopUp.gif">
+<body class="popUpBackGround">
     <form id="form1" runat="server">
     <div>
-<table border="0" align="center" cellpadding="3" cellspacing="0" bgcolor="#FFFFFF">
+<table border="0" align="center" cellpadding="3" cellspacing="0" class="whiteBackGround">
   <!-- Titre -->
   <tr>
     <td class="txtViolet14Bold"><cc1:AdExpressText ID="AdExpressText1" runat="server" Code="1831" Language="33" /></td>
@@ -28,24 +27,24 @@
   </td></tr>
   <tr>
     <td>
-    <table width="935" border="0" cellpadding="1" cellspacing="0" bgcolor="#FFFFFF" class="txtViolet11">
+    <table width="935" border="0" cellpadding="1" cellspacing="0" class="whiteBackGround txtViolet11">
       <!-- HEADER -->
       <tr align="center" class="txtBlanc11Bold"> 
-        <td width="99" bgcolor="#644883" class="CellSolid"><cc1:AdExpressText ID="AdExpressText3" runat="server" Code="2310" Language="33" /></td>
+        <td width="99" class="violetBackGround CellSolid"><cc1:AdExpressText ID="AdExpressText3" runat="server" Code="2310" Language="33" /></td>
         <td width="3"></td>
         <td width="60">&nbsp;</td>
         <td width="3"></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeaderLeft"><cc1:AdExpressText ID="AdExpressText4" runat="server" Code="1298" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText5" runat="server" Code="2311" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText6" runat="server" Code="2312" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText7" runat="server" Code="2313" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText8" runat="server" Code="2314" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText9" runat="server" Code="2315" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText10" runat="server" Code="2316" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText11" runat="server" Code="1302" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText12" runat="server" Code="2317" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText13" runat="server" Code="2318" Language="33" /></td>
-        <td width="70" bgcolor="#644883" class="ColumnHeaderRight"><cc1:AdExpressText ID="AdExpressText14" runat="server" Code="1301" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeaderLeft"><cc1:AdExpressText ID="AdExpressText4" runat="server" Code="1298" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText5" runat="server" Code="2311" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText6" runat="server" Code="2312" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText7" runat="server" Code="2313" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText8" runat="server" Code="2314" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText9" runat="server" Code="2315" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText10" runat="server" Code="2316" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText11" runat="server" Code="1302" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText12" runat="server" Code="2317" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText13" runat="server" Code="2318" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeaderRight"><cc1:AdExpressText ID="AdExpressText14" runat="server" Code="1301" Language="33" /></td>
       </tr>
       <!-- LUNDI -->
       <tr align="center" class="txtViolet11Bold"> 
@@ -520,21 +519,21 @@
       </tr>
       <!-- HEADER -->
       <tr align="center" class="txtBlanc11Bold"> 
-        <td bgcolor="#644883" class="CellSolid"><cc1:AdExpressText ID="AdExpressText46" runat="server" Code="2310" Language="33" /></td>
+        <td class="violetBackGround CellSolid"><cc1:AdExpressText ID="AdExpressText46" runat="server" Code="2310" Language="33" /></td>
         <td></td>
         <td>&nbsp;</td>
         <td></td>
-        <td bgcolor="#644883" class="ColumnHeaderLeft"><cc1:AdExpressText ID="AdExpressText70" runat="server" Code="1298" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText73" runat="server" Code="2311" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText82" runat="server" Code="2312" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText86" runat="server" Code="2313" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText90" runat="server" Code="2314" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText94" runat="server" Code="2315" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText98" runat="server" Code="2316" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText102" runat="server" Code="1302" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText106" runat="server" Code="2317" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText110" runat="server" Code="2318" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeaderRight"><cc1:AdExpressText ID="AdExpressText114" runat="server" Code="1301" Language="33" /></td>
+        <td class="violetBackGround ColumnHeaderLeft"><cc1:AdExpressText ID="AdExpressText70" runat="server" Code="1298" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText73" runat="server" Code="2311" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText82" runat="server" Code="2312" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText86" runat="server" Code="2313" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText90" runat="server" Code="2314" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText94" runat="server" Code="2315" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText98" runat="server" Code="2316" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText102" runat="server" Code="1302" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText106" runat="server" Code="2317" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText110" runat="server" Code="2318" Language="33" /></td>
+        <td class="violetBackGround ColumnHeaderRight"><cc1:AdExpressText ID="AdExpressText114" runat="server" Code="1301" Language="33" /></td>
       </tr>
       <!-- JEUDI -->
       <tr align="center" class="txtViolet11Bold"> 
@@ -844,21 +843,21 @@
       </tr>
       <!-- HEADER -->
       <tr align="center" class="txtBlanc11Bold"> 
-        <td bgcolor="#644883" class="CellSolid"><cc1:AdExpressText ID="AdExpressText75" runat="server" Code="2310" Language="33" /></td>
+        <td class="violetBackGround CellSolid"><cc1:AdExpressText ID="AdExpressText75" runat="server" Code="2310" Language="33" /></td>
         <td></td>
         <td>&nbsp;</td>
         <td></td>
-        <td bgcolor="#644883" class="ColumnHeaderLeft"><cc1:AdExpressText ID="AdExpressText78" runat="server" Code="1298" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText80" runat="server" Code="2311" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText84" runat="server" Code="2312" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText88" runat="server" Code="2313" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText92" runat="server" Code="2314" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText96" runat="server" Code="2315" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText100" runat="server" Code="2316" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText104" runat="server" Code="1302" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText108" runat="server" Code="2317" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText112" runat="server" Code="2318" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeaderRight"><cc1:AdExpressText ID="AdExpressText116" runat="server" Code="1301" Language="33" /></td>
+        <td class="violetBackGround ColumnHeaderLeft"><cc1:AdExpressText ID="AdExpressText78" runat="server" Code="1298" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText80" runat="server" Code="2311" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText84" runat="server" Code="2312" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText88" runat="server" Code="2313" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText92" runat="server" Code="2314" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText96" runat="server" Code="2315" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText100" runat="server" Code="2316" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText104" runat="server" Code="1302" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText108" runat="server" Code="2317" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText112" runat="server" Code="2318" Language="33" /></td>
+        <td class="violetBackGround ColumnHeaderRight"><cc1:AdExpressText ID="AdExpressText116" runat="server" Code="1301" Language="33" /></td>
       </tr>
       <tr align="center" class="txtViolet11Bold"> 
         <td>&nbsp;</td>
@@ -900,21 +899,21 @@
       </tr>
       <!-- HEADER -->
       <tr align="center" class="txtBlanc11Bold"> 
-        <td bgcolor="#644883" class="CellSolid"><cc1:AdExpressText ID="AdExpressText76" runat="server" Code="2310" Language="33" /></td>
+        <td class="violetBackGround CellSolid"><cc1:AdExpressText ID="AdExpressText76" runat="server" Code="2310" Language="33" /></td>
         <td></td>
         <td>&nbsp;</td>
         <td></td>
-        <td bgcolor="#644883" class="ColumnHeaderLeft"><cc1:AdExpressText ID="AdExpressText79" runat="server" Code="1298" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText81" runat="server" Code="2311" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText85" runat="server" Code="2312" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText89" runat="server" Code="2313" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText93" runat="server" Code="2314" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText97" runat="server" Code="2315" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText101" runat="server" Code="2316" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText105" runat="server" Code="1302" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText109" runat="server" Code="2317" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeader"><cc1:AdExpressText ID="AdExpressText113" runat="server" Code="2318" Language="33" /></td>
-        <td bgcolor="#644883" class="ColumnHeaderRight"><cc1:AdExpressText ID="AdExpressText117" runat="server" Code="1301" Language="33" /></td>
+        <td class="violetBackGround ColumnHeaderLeft"><cc1:AdExpressText ID="AdExpressText79" runat="server" Code="1298" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText81" runat="server" Code="2311" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText85" runat="server" Code="2312" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText89" runat="server" Code="2313" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText93" runat="server" Code="2314" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText97" runat="server" Code="2315" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText101" runat="server" Code="2316" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText105" runat="server" Code="1302" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText109" runat="server" Code="2317" Language="33" /></td>
+        <td class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText113" runat="server" Code="2318" Language="33" /></td>
+        <td class="violetBackGround ColumnHeaderRight"><cc1:AdExpressText ID="AdExpressText117" runat="server" Code="1301" Language="33" /></td>
       </tr>
       <tr align="center" class="txtViolet11Bold"> 
         <td>&nbsp;</td>
@@ -956,11 +955,11 @@
       </tr>
       <!-- HEADER -->
       <tr align="center" class="txtBlanc11Bold"> 
-        <td bgcolor="#644883" class="CellSolid"><cc1:AdExpressText ID="AdExpressText77" runat="server" Code="2310" Language="33" /></td>
+        <td class="violetBackGround CellSolid"><cc1:AdExpressText ID="AdExpressText77" runat="server" Code="2310" Language="33" /></td>
         <td></td>
         <td>&nbsp;</td>
         <td></td>
-        <td colspan="11" bgcolor="#644883" class="CellSolid"><cc1:AdExpressText ID="AdExpressText118" runat="server" Code="1596" Language="33" /></td>
+        <td colspan="11" class="violetBackGround CellSolid"><cc1:AdExpressText ID="AdExpressText118" runat="server" Code="1596" Language="33" /></td>
       </tr>
       <tr align="center"> 
         <td>&nbsp;</td>
