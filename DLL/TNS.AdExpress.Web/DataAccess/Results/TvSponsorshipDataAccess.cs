@@ -116,7 +116,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 		
 			// Sélection de la nomenclature 
 			if(detailLevelFieldNameWithoutTablePrefix.Length>0)
-				sql.Append(" select "+detailLevelFieldNameWithoutTablePrefix+dataFieldsForGadWithoutTablePrefix+" ,date_num, sum(unit) as unit from (  ");
+				sql.Append(" select "+detailLevelFieldNameWithoutTablePrefix+dataFieldsForGadWithoutTablePrefix+" ,date_num, "+WebFunctions.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(webSession)+" from (  ");
 			sql.Append(" select "+detailLevelFieldName+dataFieldsForGad+" ,");
 
 
