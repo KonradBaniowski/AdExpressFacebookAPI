@@ -38,10 +38,10 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		/// Session du client
 		/// </summary>
 		protected WebSession webSession=null; 
-		/// <summary>
-		/// Dataset contenant la liste des médias
-		/// </summary>
-		protected DataSet dsListVehicle;
+		///// <summary>
+		///// Dataset contenant la liste des médias
+		///// </summary>
+		//protected DataSet dsListVehicle;
 		/// <summary>
 		/// liste des médias(vehicle) dont le clients à accès
 		/// </summary>		
@@ -50,6 +50,10 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		/// Indique si la liste doit être rechargée ou non.
 		/// </summary>
 		protected bool _reload = false;
+		/// <summary>
+		/// liste des médias(vehicle) dont le clients à accès
+		/// </summary>
+		protected DataTable dtVehicle;
 		#endregion
 
 		#region Accesseurs
@@ -84,7 +88,9 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			if(!Page.IsPostBack){
 				if( webSession != null) {
 					//Chargement du DataSet des Médias
-					dsListVehicle=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleCatMediaListDataAccess(webSession);		
+					VehicleListDataAccess vl = new VehicleListDataAccess(webSession);
+					//dsListVehicle=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleCatMediaListDataAccess(webSession);		
+					dtVehicle = vl.List;
 				}
 				else throw (new WebControlInitializationException("Impossible d'initialiser le composant, la session n'est pas définie"));
 			}
@@ -116,7 +122,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				
 				//Construction de la liste de checkbox
 				this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(210,webSession.SiteLanguage),"vh_"+VhCstes.plurimedia.GetHashCode().ToString()));
-				foreach(DataRow currentRow in dsListVehicle.Tables[0].Rows) 
+				foreach(DataRow currentRow in dtVehicle.Rows) 
 				{					
 					if ( (IdVehicle = (Int64)currentRow["id_vehicle"]) != oldIdVehicle )
 					{							
@@ -152,13 +158,15 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			if(_reload){
 				if( webSession != null) {
 					//Chargement du DataSet des Médias
-					dsListVehicle=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleCatMediaListDataAccess(webSession);		
+					//dsListVehicle=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleCatMediaListDataAccess(webSession);		
+					VehicleListDataAccess vl = new VehicleListDataAccess(webSession);
+					dtVehicle = vl.List;
 				}
 				else throw (new WebControlInitializationException("Impossible de recharger le composant, la session n'est pas définie"));
 			}
 
 
-			if(dsListVehicle != null && dsListVehicle.Tables[0].Rows.Count != 0)
+			if (dtVehicle != null && dtVehicle.Rows.Count > 0)
 			{
 				#region variables locales				
 				//variables du niveau  Media
@@ -211,7 +219,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 				#region Foreach  Dataset des médias
 
-				foreach(DataRow currentRow in dsListVehicle.Tables[0].Rows)
+				foreach(DataRow currentRow in dtVehicle.Rows)
 				{	
 					//Initialisation des identifiants parents
 					idVehicle=(Int64)currentRow["id_vehicle"];
