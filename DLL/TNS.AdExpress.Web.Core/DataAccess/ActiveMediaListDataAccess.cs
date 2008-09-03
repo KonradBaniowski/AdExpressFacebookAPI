@@ -15,6 +15,9 @@ using TNS.AdExpress.Web.Core.Sessions;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
+
 namespace TNS.AdExpress.Web.Core.DataAccess{
 
     /// <summary>
@@ -27,18 +30,21 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
         /// Méthode utilisée pour renvoyer la liste des supports actifs pour un vehicle
         /// </summary>
         /// <param name="vehicleId">Id du vehicle</param>
+		/// <param name="siteLanguage">Site language</param>
         /// <returns></returns>
         public static DataSet GetActiveMediaData(Int64 vehicleId, int siteLanguage) {
 
             StringBuilder sql = new StringBuilder(500);
-
-            TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(DBConstantes.Connection.DEV_CONNECTION_STRING));
-
-            sql.Append("Select distinct m.id_media ");
-            sql.Append("from " + GetVehicleTableName(vehicleId) + ", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media m");
-            sql.Append(" where m.id_media = " + GetVehiclePrefixe(vehicleId) + ".id_media");
-            sql.AppendFormat(" and m.id_language = {0}", siteLanguage);
-            sql.Append(" and m.activation <" + DBConstantes.ActivationValues.UNACTIVATED.ToString());
+						
+			TNS.FrameWork.DB.Common.IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.webAdministration);
+			Table mediaTable;
+			string tableName = Utilities.SQLGenerator.GetDataTableName(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.PeriodBreakdownType.data, vehicleId);
+			mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media);
+			sql.Append("Select distinct " + mediaTable.Prefix + ".id_media ");
+			sql.Append("from " + tableName + " , " + mediaTable.SqlWithPrefix);
+			sql.Append(" where " + mediaTable.Prefix + ".id_media = " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media");
+			sql.AppendFormat(" and " + mediaTable.Prefix + ".id_language = "+ siteLanguage);
+			sql.Append(" and " + mediaTable.Prefix + ".activation <" + DBConstantes.ActivationValues.UNACTIVATED.ToString());
 
             #region Execution de la requête
             try{
@@ -51,39 +57,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
         }
         #endregion
 
-        #region Méthodes privées
-        /// <summary>
-		/// Indique la table à utilisée pour la requête
-		/// </summary>
-		/// <param name="vehicleId">Identifiant du media</param>
-		/// <returns>La table correspondant</returns>
-		private static string GetVehicleTableName(Int64 vehicleId){
-
-			switch((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())){
-				case DBClassificationConstantes.Vehicles.names.internet:
-                    return DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.DATA_INTERNET + " " + DBConstantes.Tables.DATA_INTERNET_PREFIXE;
-				default:
-					throw(new TNS.AdExpress.Web.Core.Exceptions.ActiveMediaListDataAccessException("Impossible de déterminer la table media à utiliser"));
-			}
-			
-		}
-
-        /// <summary>
-        /// Indique le prefixe à utilisé pour la requête
-        /// </summary>
-        /// <param name="vehicleId">Identifiant du media</param>
-        /// <returns>Le prefixe correspondant</returns>
-        private static string GetVehiclePrefixe(Int64 vehicleId){
-
-            switch ((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())){
-                case DBClassificationConstantes.Vehicles.names.internet:
-                    return DBConstantes.Tables.DATA_INTERNET_PREFIXE;
-                default:
-                    throw (new TNS.AdExpress.Web.Core.Exceptions.ActiveMediaListDataAccessException("Impossible de déterminer le prefixe à utiliser"));
-            }
-
-        }
-        #endregion
+     
 
     }
 }

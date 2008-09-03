@@ -17,10 +17,12 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Domain.DataBaseDescription;
+
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
+using WebNavigation=TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 	/// <summary>
@@ -33,6 +35,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 		/// Liste des Vehicles que peut sélectionner un client
 		/// </summary>
 		protected DataTable _list;
+		string sql = "";
 		#endregion
 
 		#region Constructeur
@@ -42,146 +45,36 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 		/// <param name="webSession">Session du client</param>
 		public VehicleListDataAccess(WebSession webSession){
 
-			#region Variables
-			bool premier=true;
-			#endregion
-
-            #region Tables initilization
-            Table vehicleTable,categoryTable,basicMediaTable,mediaTable;
-            try {
-                vehicleTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.vehicle);
-                categoryTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category);
-                basicMediaTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia);
-                mediaTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media);
-            }
-            catch(System.Exception err) {
-                throw (new VehicleListDataAccessException("Impossible to get table names or schema label",err));
-            }
-            #endregion
-
-			#region Requête
-            string sql="Select distinct "+vehicleTable.Prefix+".id_vehicle,"+vehicleTable.Prefix+".vehicle ";
-            sql+=" from "+vehicleTable.SqlWithPrefix+",";
-            sql+=categoryTable.SqlWithPrefix+",";
-            sql+=basicMediaTable.SqlWithPrefix+",";
-            sql+=mediaTable.SqlWithPrefix+" ";
-			sql+=" where";
-			// Langue
-            sql+=" "+vehicleTable.Prefix+".id_language="+webSession.DataLanguage.ToString();
-            sql+=" and "+categoryTable.Prefix+".id_language="+webSession.DataLanguage.ToString();
-            sql+=" and "+basicMediaTable.Prefix+".id_language="+webSession.DataLanguage.ToString();
-            sql+=" and "+mediaTable.Prefix+".id_language="+webSession.DataLanguage.ToString();
-			// Activation
-            sql+=" and "+vehicleTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
-            sql+=" and "+categoryTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
-            sql+=" and "+basicMediaTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
-            sql+=" and "+mediaTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;	
-
-			// Jointure
-            sql+=" and "+vehicleTable.Prefix+".id_vehicle="+categoryTable.Prefix+".id_vehicle";
-            sql+=" and "+categoryTable.Prefix+".id_category="+basicMediaTable.Prefix+".id_category";
-            sql+=" and "+basicMediaTable.Prefix+".id_basic_media="+mediaTable.Prefix+".id_basic_media";
-
-			//Univers des véhicles AdExpress en accès
-
-			//condition added to exclude outdoor from tendances
-			if(webSession.CurrentModule==WebConstantes.Module.Name.TENDACES)
-			{
-				sql+=" and vh.id_vehicle not in(8)";
-			}
-
-			sql+=WebFunctions.SQLGenerator.getAdExpressUniverseCondition(webSession,true);
 			
-			#region Droits en accès
-			premier=true;
-			bool beginByAnd=true;
-			// le bloc doit il commencer par AND
-			// Vehicle
-			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length>0)
-			{
-				if(beginByAnd) sql+=" and";
-				sql+=" (("+vehicleTable.Prefix+".id_vehicle in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess]+") ";
-				premier=false;
-			}
-			// Category
-			if(webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess].Length>0)
-			{
-				if(!premier) sql+=" or";
-				else 
-				{
-					if(beginByAnd) sql+=" and";
-					sql+=" ((";
-				}
-				sql+=" "+categoryTable.Prefix+".id_category in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess]+") ";
-				premier=false;
-			}
-			// Media
-			if(webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess].Length>0) 
-			{
-				if(!premier) sql+=" or";
-				else 
-				{
-					if(beginByAnd) sql+=" and";
-					sql+=" ((";
-				}
-				sql+=" "+mediaTable.Prefix+".id_media in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess]+") ";
-				premier=false;
-			}
-			if(!premier) sql+=" )";
+				WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+				string sql="";
+				bool isRecap = false;
+				
+				try {
+			
+					if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+					|| webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+						isRecap = true;
 
-			// Droits en exclusion
-			// Vehicle
-			if(webSession.CustomerLogin[CustomerRightConstante.type.vehicleException].Length>0)
-			{
-				if(!premier) sql+=" and";
-				else 
-				{
-					if(beginByAnd) sql+=" and";
-					sql+=" (";
-				}
-				sql+=" "+vehicleTable.Prefix+".id_vehicle not in ("+webSession.CustomerLogin[CustomerRightConstante.type.vehicleException]+") ";
-				premier=false;
+				sql = GetSqlQuery(webSession);
+				
 			}
-			// Category
-			if(webSession.CustomerLogin[CustomerRightConstante.type.categoryException].Length>0)
-			{
-				if(!premier) sql+=" and";
-				else 
-				{
-					if(beginByAnd) sql+=" and";
-					sql+=" (";
-				}
-				sql+=" "+categoryTable.Prefix+".id_category not in ("+webSession.CustomerLogin[CustomerRightConstante.type.categoryException]+") ";
-				premier=false;
+			catch (System.Exception err) {
+				throw (new VehicleListDataAccessException("Impossible to  build vehicle data access sql query", err));
 			}
-			// Media
-			if(webSession.CustomerLogin[CustomerRightConstante.type.mediaException].Length>0)
-			{
-				if(!premier) sql+=" and";
-				else 
-				{
-					if(beginByAnd) sql+=" and";
-					sql+=" (";
-				}
-				sql+=" "+mediaTable.Prefix+".id_media not in ("+webSession.CustomerLogin[CustomerRightConstante.type.mediaException]+") ";
-				premier=false;
-			}
-			if(!premier) sql+=" )";
-			#endregion
-
-			sql+=" order by "+vehicleTable.Prefix+".vehicle";
-
-			#endregion
+		
 
 			#region Execution de la requête
 			try{
-				DataSet ds = webSession.Source.Fill(sql.ToString());
-				ds.Tables[0].Columns[0].ColumnName="idVehicle";
-				ds.Tables[0].Columns[1].ColumnName="vehicle";
+				DataSet ds = GetSource(webSession).Fill(sql);
+				if (!isRecap) {
+					ds.Tables[0].Columns[0].ColumnName = "idVehicle";
+					ds.Tables[0].Columns[1].ColumnName = "vehicle";
+				}
 				_list = ds.Tables[0];
 			}
 			catch(System.Exception err){
-				throw (new VehicleListDataAccessException("Impossible de charger la liste des vehicles visible par le client",err));
+				throw (new VehicleListDataAccessException("Impossible to execute query",err));
 			}
 			#endregion			
 
@@ -1015,78 +908,230 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			string listMedia =webSession.GetSelection(webSession.SelectionUniversMedia,CustomerRightConstante.type.mediaAccess);													
 			return InterestCenterList(webSession,listInterestCenter,listMedia);			
 		}
-		#endregion
-				
-		#region Choix media pour Analyse Sectorielle
+		#endregion					
+
+		#region Recap sql
 		/// <summary>
-		/// Dataset retournant la liste des média, catégories, support
-		/// en fonction des droits d'un utilisateur
+		/// Get source
 		/// </summary>
-		/// <param name="webSession">webSession</param>
-		/// <returns>dataset</returns>
-		public static DataSet VehicleCatMediaListDataAccess(WebSession webSession){
-
-			#region Construction de la requête
-			string sql="";
-			string listCategory="";
-
-			sql+=" select "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle,"+DBConstantes.Tables.VEHICLE_PREFIXE+".vehicle,"+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category,"+DBConstantes.Tables.CATEGORY_PREFIXE+".category,"+DBConstantes.Tables.MEDIA_PREFIXE+".id_media,"+DBConstantes.Tables.MEDIA_PREFIXE+".media";
-			sql+=" from vehicle "+DBConstantes.Tables.VEHICLE_PREFIXE+", category "+DBConstantes.Tables.CATEGORY_PREFIXE+",media "+DBConstantes.Tables.MEDIA_PREFIXE+"";
-			sql+=" Where";
-			// Langue
-			sql+=" "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage.ToString();
-			sql+=" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_language="+webSession.DataLanguage.ToString();
-			sql+=" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString();
-			// Activation
-			sql+=" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".activation<"+DBConstantes.ActivationValues.DEAD;
-			sql+=" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".activation<"+DBConstantes.ActivationValues.DEAD;
-			sql+=" and "+DBConstantes.Tables.MEDIA_PREFIXE+".activation<"+DBConstantes.ActivationValues.DEAD;
-			// jointure
-			sql+=" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle="+DBConstantes.Tables.CATEGORY_PREFIXE+".id_vehicle";
-			sql+=" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category="+DBConstantes.Tables.MEDIA_PREFIXE+".id_category";			
-			
-			// Sélection des médias (on ne devrait plus en avoir besoin grâce au filtre des média
-			
-			//Univers des véhicles AdExpress en accès
-			sql+=WebFunctions.SQLGenerator.getAdExpressUniverseCondition(webSession,WebConstantes.AdExpressUniverse.RECAP_MEDIA_LIST_ID,true);			
-
-			#region Nomenclature Produit (droits)
-			//Droits en accès
-			//sql+=WebFunctions.SQLGenerator.getClassificationCustomerRecapMediaRight(webSession,true);
-			#endregion
-			
-			#region Droits médias spécifique au media
-			sql+=WebFunctions.SQLGenerator.getAccessVehicleList(webSession,DBConstantes.Tables.VEHICLE_PREFIXE,true);
-            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
-                || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
-                && !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
-            {
-                sql += " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category not in (68) ";
-            }
-			#endregion
-
-
-			// Tri
-			sql+=" order by "+DBConstantes.Tables.VEHICLE_PREFIXE+".vehicle,"+DBConstantes.Tables.CATEGORY_PREFIXE+".category,"+DBConstantes.Tables.MEDIA_PREFIXE+".media";
-
-			#endregion
-			
-			#region Execution de la requête
-			try{
-				string nlsSort = "";
+		/// <param name="webSession">Web session</param>
+		/// <returns>IDataSource</returns>
+		protected IDataSource GetSource(WebSession webSession) {
+			switch (webSession.CurrentModule) {
+				case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR :
+				case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE :
+					string nlsSort = "";
 				bool isUTF8 = false;
 				if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(webSession.DataLanguage.ToString()))) {
 					nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(webSession.DataLanguage.ToString())].NlsSort;
 				} 
-                IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis,nlsSort); 
-				return(source.Fill(sql.ToString()));
+                return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis,nlsSort);
+			default: return webSession.Source;
 			}
-			catch(System.Exception err){
-				throw (new TNS.AdExpress.Web.Exceptions.VehicleListDataAccessException("Impossible de charger la liste des régies avec les supports d'un utilisateur ayant une partie du mot keyWord",err));
-			}
+		}
+		/// <summary>
+		/// Get recap media conditions
+		/// </summary>
+		/// <param name="webSession">Web session</param>
+		/// <returns>string sql</returns>
+		protected string GetRecapMediaConditions(WebSession webSession, Table vehicleTable, Table categoryTable, Table mediaTable ) {
+			string sql = "";
+
+			#region media rigths conditions
+			sql += WebFunctions.SQLGenerator.getAccessVehicleList(webSession, vehicleTable.Prefix, true);
+            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+                || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
+                && !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
+            {
+                sql += " and " + categoryTable.Prefix+ ".id_category not in (68) ";
+            }
 			#endregion
+
+			return sql;
+		}
+
+		#endregion
+
+		#region GetMediaRights
+		/// <summary>
+		/// Get media rights
+		/// </summary>
+		/// <param name="webSession">web session</param>
+		/// <param name="categoryTable">category Table</param>
+		/// <param name="mediaTable">media Table</param>
+		/// <param name="vehicleTable">vehicle Table</param>
+		/// <returns>string sql</returns>
+		protected string GetMediaRights(WebSession webSession,Table vehicleTable, Table categoryTable, Table mediaTable) {
+			string sql = "";
+			#region Droits en accès
+			bool premier = true;
+			bool beginByAnd = true;
+			// le bloc doit il commencer par AND
+			// Vehicle
+			if (webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length > 0) {
+				if (beginByAnd) sql += " and";
+				sql += " ((" + vehicleTable.Prefix + ".id_vehicle in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess] + ") ";
+				premier = false;
+			}
+			// Category
+			if (webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess].Length > 0) {
+				if (!premier) sql += " or";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " ((";
+				}
+				sql += " " + categoryTable.Prefix + ".id_category in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess] + ") ";
+				premier = false;
+			}
+			// Media
+			if (webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess].Length > 0) {
+				if (!premier) sql += " or";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " ((";
+				}
+				sql += " " + mediaTable.Prefix + ".id_media in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess] + ") ";
+				premier = false;
+			}
+			if (!premier) sql += " )";
+
+			// Droits en exclusion
+			// Vehicle
+			if (webSession.CustomerLogin[CustomerRightConstante.type.vehicleException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += " " + vehicleTable.Prefix + ".id_vehicle not in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleException] + ") ";
+				premier = false;
+			}
+			// Category
+			if (webSession.CustomerLogin[CustomerRightConstante.type.categoryException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += " " + categoryTable.Prefix + ".id_category not in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryException] + ") ";
+				premier = false;
+			}
+			// Media
+			if (webSession.CustomerLogin[CustomerRightConstante.type.mediaException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += " " + mediaTable.Prefix + ".id_media not in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaException] + ") ";
+				premier = false;
+			}
+			if (!premier) sql += " )";
+			#endregion
+
+			return sql;
 		}
 		#endregion
+
+		#region GetTables
+
+		protected void GetTables(WebSession webSession, Table vehicleTable, Table categoryTable, Table basicMediaTable, Table mediaTable) {
+			if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+				|| webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE) {
+				vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapVehicle);
+				categoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCategory);
+				mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMedia);
+			}
+			else {
+				vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.vehicle);
+				categoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category);
+				basicMediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia);
+				mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media);
+			}
+		}
+		#endregion
+
+
+		protected string GetSqlQuery(WebSession webSession) {
+			string sql = "";
+			#region Variables
+			bool premier=true;
+			#endregion
+
+			
+			bool isRecap = false;
+
+			WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+			Table vehicleTable = null, categoryTable = null, basicMediaTable = null, mediaTable = null;
+
+			if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+					|| webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+				isRecap = true;
+
+			if (isRecap) {
+				vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapVehicle);
+				categoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCategory);
+				mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMedia);
+			}
+			else {
+				vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.vehicle);
+				categoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category);
+				basicMediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia);
+				mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media);
+			}
+
+			#region Requête
+			
+				
+			sql = "Select distinct " + vehicleTable.Prefix + ".id_vehicle," + vehicleTable.Prefix + ".vehicle ";
+			if (isRecap) sql += ", " + categoryTable.Prefix + ".id_category," + categoryTable.Prefix + ".category, " + mediaTable.Prefix + ".id_media ," + mediaTable.Prefix + ".media";
+			sql += " from " + vehicleTable.SqlWithPrefix + ",";
+			sql += categoryTable.SqlWithPrefix + ",";
+			if(!isRecap) sql += basicMediaTable.SqlWithPrefix + ",";
+			sql += mediaTable.SqlWithPrefix + " ";
+			sql += " where";
+			// Langue
+			sql += " " + vehicleTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+			sql += " and " + categoryTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+			if (!isRecap) sql += " and " + basicMediaTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+			sql += " and " + mediaTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+			// Activation
+			sql += " and " + vehicleTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
+			sql += " and " + categoryTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
+			if (!isRecap) sql += " and " + basicMediaTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
+			sql += " and " + mediaTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
+
+			// Jointure
+			if (isRecap) {
+				sql += " and " + vehicleTable.Prefix + ".id_vehicle=" + categoryTable.Prefix + ".id_vehicle";
+				sql += " and " + categoryTable.Prefix + ".id_category=" + mediaTable.Prefix + ".id_category";
+			}
+			else {
+				sql += " and " + vehicleTable.Prefix + ".id_vehicle=" + categoryTable.Prefix + ".id_vehicle";
+				sql += " and " + categoryTable.Prefix + ".id_category=" + basicMediaTable.Prefix + ".id_category";
+				sql += " and " + basicMediaTable.Prefix + ".id_basic_media=" + mediaTable.Prefix + ".id_basic_media";
+			}
+			#endregion
+
+			#region Media universe
+			//Media universe
+			if (module != null)
+				sql += module.GetAllowedMediaUniverseSql(vehicleTable.Prefix,categoryTable.Prefix,mediaTable.Prefix, true);
+			#endregion
+
+			#region Media Rights
+			if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+				|| webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+				sql += GetRecapMediaConditions(webSession, vehicleTable, categoryTable, mediaTable);
+			else
+				sql += GetMediaRights(webSession, vehicleTable, categoryTable, mediaTable);
+			#endregion
+
+			sql += " order by " + vehicleTable.Prefix + ".vehicle";
+			return sql;
+		}
+
+	
 
 	}
 }

@@ -8,9 +8,11 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Classification;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -22,7 +24,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// <summary>
         /// Allowed Media universe
         /// </summary>
-        protected MediaItemsList _allowedMediaUniverse;
+        protected MediaItemsList _allowedMediaUniverse;		
         /// <summary>
         /// Country rules Layer
         /// </summary>
@@ -146,17 +148,13 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// Get/Set Allowed Media Universe
         /// </summary>
         public MediaItemsList AllowedMediaUniverse {
-            get {
-                if(_allowedMediaUniverse==null) {
-                    MediaItemsList mediaItemsList=new MediaItemsList();
-                    mediaItemsList.VehicleList=VehiclesInformation.GetDatabaseIds();
-                    _allowedMediaUniverse=mediaItemsList;
-                }
+            get {			
+				SetMediaUniverse();
                 return _allowedMediaUniverse;
             }
             set { _allowedMediaUniverse=value; }
         }
-
+		
         /// <summary>
         /// Get/Set Rules Layer
         /// </summary>
@@ -457,6 +455,115 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 
 		}
 		#endregion
+
+		#region SQL Generator
+		/// <summary>
+		/// Get media universe sql conditions
+		/// </summary>
+		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
+		/// <returns>Sql conditions</returns>
+		public string GetAllowedMediaUniverseSql(bool startWithAnd) {
+			string sql = "";
+			MediaItemsList mediaList = AllowedMediaUniverse;
+
+			if (mediaList != null) {
+				sql = AllowedMediaUniverse.GetVehicleListSQL(startWithAnd);
+				sql += AllowedMediaUniverse.GetCategoryListSQL(startWithAnd);
+				sql += AllowedMediaUniverse.GetMediaListSQL(startWithAnd);
+			}
+			return sql;
+		}
+		/// <summary>
+		/// Get media universe sql conditions without prefix
+		/// </summary>
+		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
+		/// <returns>Sql conditions</returns>
+		public string GetAllowedMediaUniverseSqlWithOutPrefix(bool startWithAnd) {
+			return GetAllowedMediaUniverseSql("", startWithAnd);
+		}
+		/// <summary>
+		/// Get media universe sql conditions
+		/// </summary>
+		/// <param name="prefix">prefix</param>		
+		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
+		/// <returns>Sql conditions</returns>
+		public string GetAllowedMediaUniverseSql(string prefix, bool startWithAnd) {
+			return GetAllowedMediaUniverseSql(prefix,prefix, prefix,startWithAnd);
+		}
+		/// <summary>
+		/// Get media universe sql conditions
+		/// </summary>
+		/// <param name="vehiclePrefix">Vehicle prefix</param>
+		/// <param name="categoryPrefix">Category prefix</param>
+		/// <param name="mediaPrefix">Media prefix</param>
+		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
+		/// <returns>Sql conditions</returns>
+		public string GetAllowedMediaUniverseSql(string vehiclePrefix,string categoryPrefix,string mediaPrefix,bool startWithAnd) {
+			string sql = "";
+			MediaItemsList mediaList = AllowedMediaUniverse;
+
+			if (mediaList != null) {
+				sql = AllowedMediaUniverse.GetVehicleListSQL(startWithAnd, vehiclePrefix);
+				sql += AllowedMediaUniverse.GetCategoryListSQL(startWithAnd, categoryPrefix);
+				sql += AllowedMediaUniverse.GetMediaListSQL(startWithAnd, mediaPrefix);
+			}
+			return sql;
+
+		}
+
+		#endregion
+
+		#region protected methods
+
+		#region SetMediaUniverse
+		/// <summary>
+		/// Define media universe
+		/// </summary>
+		protected void SetMediaUniverse() {
+			string[] list;
+			string res = "";
+			//Set vehicle list
+			if (_allowedMediaUniverse == null) {
+				MediaItemsList mediaItemsList = new MediaItemsList();
+				mediaItemsList.VehicleList = VehiclesInformation.GetDatabaseIds();
+				_allowedMediaUniverse = mediaItemsList;
+			}
+			else {
+				string vehicles = _allowedMediaUniverse.VehicleList;
+				if (vehicles != null && vehicles.Length > 0) {
+					List<Int64> vehicleList = new List<Int64>(Array.ConvertAll<string, Int64>(vehicles.Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
+					for (int i = 0; i < vehicleList.Count; i++) {
+						if (VehiclesInformation.Contains(vehicleList[i])) {
+							res += vehicleList[i].ToString() + ",";
+						}
+					}
+					if (res.Length > 0) res = res.Substring(0, res.Length - 1);
+					_allowedMediaUniverse.VehicleList = res;
+				}			
+			}
+		}
+		#endregion
 		
+		#endregion
+
+		/// <summary>
+		/// Get valid result page
+		/// </summary>
+		/// <remarks>Valid results pages depends of universe selection , like vehicle selected</remarks>
+		/// <param name="selectedMediaUniverse">selected Media Universe</param>
+		/// <returns></returns>
+		public List<ResultPageInformation> GetValidResultsPage(MediaItemsList selectedMediaUniverse) {
+			List<ResultPageInformation> res = new List<ResultPageInformation>();
+
+			if (_resultsPages != null && _resultsPages.Count > 0) {
+				for (int i = 0; i < _resultsPages.Count; i++) {
+					if (((ResultPageInformation)_resultsPages[i]).IsValidResultPage(selectedMediaUniverse)) {
+						res.Add((ResultPageInformation)_resultsPages[i]);
+					}
+				}
+			}
+			return res;
+		}
+
 	}
 }

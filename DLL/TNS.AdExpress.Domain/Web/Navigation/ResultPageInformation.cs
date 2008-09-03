@@ -72,7 +72,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// <summary>
         /// Allowed media list
         /// </summary>
-        protected MediaItemsList _allowedMediaUniverse;
+        protected MediaItemsList _allowedMediaUniverse;		
         /// <summary>
         /// Parent Module
         /// </summary>
@@ -156,7 +156,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
             }
             set { _allowedMediaUniverse=value; }
         }
-
+		
 		/// <summary>
 		/// Obtient l'identifiant du MAU01 du résultat
 		/// </summary>
@@ -393,7 +393,32 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
             }
             return (validUnitsList);
         }
-
+		/// <summary>
+		/// Detrmine if result page if valid according media universe selection
+		/// </summary>
+		/// <param name="selectedMediaUniverse">Selected media universe</param>
+		/// <returns></returns>
+		public bool IsValidResultPage(MediaItemsList selectedMediaUniverse) {
+			bool isValidPage = true;
+			int nbValidItems = 0;
+			MediaItemsList allowedMediaUniverse = AllowedMediaUniverse;
+			if (selectedMediaUniverse != null && selectedMediaUniverse.VehicleList != null && selectedMediaUniverse.VehicleList.Length>0 ) {
+				//Determine if valid vehicles exist for current result
+				if (allowedMediaUniverse != null) {
+					List<Int64> vehicleList = allowedMediaUniverse.GetVehicles();
+					if (vehicleList != null && vehicleList.Count > 0) {
+						List<Int64> selectedVehicles = selectedMediaUniverse.GetVehicles();
+						if (selectedVehicles != null && selectedVehicles.Count > 0) {
+							for (int i = 0; i < selectedVehicles.Count; i++) {
+								if(vehicleList.Contains(selectedVehicles[i]))nbValidItems++;
+							}
+						}
+					}
+					if(nbValidItems==0)isValidPage = false;
+				}
+			}
+			return isValidPage;
+		}
 		#endregion
 
 

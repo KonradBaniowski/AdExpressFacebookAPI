@@ -14,7 +14,8 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
-using TNS.AdExpress.Domain.Classification;
+
+using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 
 namespace TNS.AdExpress.Web.Core.DataAccess {
     /// <summary>
@@ -41,106 +42,111 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             #endregion
 
             #region Requête
-            sql.Append("Select distinct " + detailLevel.DataBaseIdField + "," + detailLevel.DataBaseField + ", id_media , media");
-            sql.Append(" from " + WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia).Sql + webSession.DataLanguage + " ");
-            sql.Append(" where");
+			try {
+				sql.Append("Select distinct " + detailLevel.DataBaseIdField + "," + detailLevel.DataBaseField + ", id_media , media");
+				sql.Append(" from " + WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia).Sql + webSession.DataLanguage + " ");
+				sql.Append(" where");
 
-            // Vehicle
-            sql.Append(" id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
+				// Vehicle
+				sql.Append(" id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
 
-            //Liste des supports actifs pour Internet
-            if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet))
-                sql.Append(" and id_media in (" + TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID) + ")");
+				//Liste des supports actifs pour Internet
+				if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet))
+					sql.Append(" and id_media in (" + TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID) + ")");
+				
+				//Condition universe media in access
+				WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+				if (module != null && module.ModuleType == WebConstantes.Module.Type.tvSponsorship)
+					sql.Append(module.GetAllowedMediaUniverseSqlWithOutPrefix(true));
 
-            //Condition univers des médias AdExpress en accès
-            Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
-            if (currentModuleDescription.ModuleType == WebConstantes.Module.Type.tvSponsorship)
-                sql.Append(Utilities.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID, true, false));
+				#region le bloc doit il commencer par AND
+				premier = true;
+				bool beginByAnd = true;
 
-            #region le bloc doit il commencer par AND
-            premier = true;
-            bool beginByAnd = true;
+				#region Vehicle
+				if (webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length > 0) {
+					if (beginByAnd) sql.Append(" and");
+					sql.Append(" ((id_vehicle in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess] + ") ");
+					premier = false;
+				}
+				#endregion
 
-            #region Vehicle
-            if (webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess].Length > 0) {
-                if (beginByAnd) sql.Append(" and");
-                sql.Append(" ((id_vehicle in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleAccess] + ") ");
-                premier = false;
-            }
-            #endregion
+				#region Category
+				if (webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess].Length > 0) {
+					if (!premier) sql.Append(" or");
+					else {
+						if (beginByAnd) sql.Append(" and");
+						sql.Append("((");
+					}
+					sql.Append(" id_category in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess] + ") ");
+					premier = false;
+				}
+				#endregion
 
-            #region Category
-            if (webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess].Length > 0) {
-                if (!premier) sql.Append(" or");
-                else {
-                    if (beginByAnd) sql.Append(" and");
-                    sql.Append("((");
-                }
-                sql.Append(" id_category in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess] + ") ");
-                premier = false;
-            }
-            #endregion
+				#region Media
+				if (webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess].Length > 0) {
+					if (!premier) sql.Append(" or");
+					else {
+						if (beginByAnd) sql.Append(" and");
+						sql.Append(" ((");
+					}
+					sql.Append(" id_media in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess] + ") ");
+					premier = false;
+				}
+				#endregion
 
-            #region Media
-            if (webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess].Length > 0) {
-                if (!premier) sql.Append(" or");
-                else {
-                    if (beginByAnd) sql.Append(" and");
-                    sql.Append(" ((");
-                }
-                sql.Append(" id_media in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess] + ") ");
-                premier = false;
-            }
-            #endregion
+				#endregion
 
-            #endregion
+				if (!premier) sql.Append(" )");
 
-            if (!premier) sql.Append(" )");
+				#region Droits en exclusion
 
-            #region Droits en exclusion
+				#region Vehicle
+				if (webSession.CustomerLogin[CustomerRightConstante.type.vehicleException].Length > 0) {
+					if (!premier) sql.Append(" and");
+					else {
+						if (beginByAnd) sql.Append(" and");
+						sql.Append(" (");
+					}
+					sql.Append(" ");
+					sql.Append("id_vehicle not in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleException] + ") ");
+					premier = false;
+				}
+				#endregion
 
-            #region Vehicle
-            if (webSession.CustomerLogin[CustomerRightConstante.type.vehicleException].Length > 0) {
-                if (!premier) sql.Append(" and");
-                else {
-                    if (beginByAnd) sql.Append(" and");
-                    sql.Append(" (");
-                }
-                sql.Append(" ");
-                sql.Append("id_vehicle not in (" + webSession.CustomerLogin[CustomerRightConstante.type.vehicleException] + ") ");
-                premier = false;
-            }
-            #endregion
+				#region Category
+				if (webSession.CustomerLogin[CustomerRightConstante.type.categoryException].Length > 0) {
+					if (!premier) sql.Append(" and");
+					else {
+						if (beginByAnd) sql.Append(" and");
+						sql.Append(" (");
+					}
+					sql.Append(" id_category not in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryException] + ") ");
+					premier = false;
+				}
+				#endregion
 
-            #region Category
-            if (webSession.CustomerLogin[CustomerRightConstante.type.categoryException].Length > 0) {
-                if (!premier) sql.Append(" and");
-                else {
-                    if (beginByAnd) sql.Append(" and");
-                    sql.Append(" (");
-                }
-                sql.Append(" id_category not in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryException] + ") ");
-                premier = false;
-            }
-            #endregion
+				#region Media
+				if (webSession.CustomerLogin[CustomerRightConstante.type.mediaException].Length > 0) {
+					if (!premier) sql.Append(" and");
+					else {
+						if (beginByAnd) sql.Append(" and");
+						sql.Append(" (");
+					}
+					sql.Append(" id_media not in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaException] + ") ");
+					premier = false;
+				}
+				#endregion
 
-            #region Media
-            if (webSession.CustomerLogin[CustomerRightConstante.type.mediaException].Length > 0) {
-                if (!premier) sql.Append(" and");
-                else {
-                    if (beginByAnd) sql.Append(" and");
-                    sql.Append(" (");
-                }
-                sql.Append(" id_media not in (" + webSession.CustomerLogin[CustomerRightConstante.type.mediaException] + ") ");
-                premier = false;
-            }
-            #endregion
+				#endregion
 
-            #endregion
+				if (!premier) sql.Append(" )");
 
-            if (!premier) sql.Append(" )");
-
-            sql.Append(" order by " + detailLevel.DataBaseField + " , media ");
+				sql.Append(" order by " + detailLevel.DataBaseField + " , media ");
+			}
+			catch (System.Exception err) {
+				throw (new Exceptions.DetailMediaDataAccessException("Impossible to build sql query for detail media ", err));
+			}
             #endregion
 
             #region Execution de la requête
@@ -196,11 +202,10 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet))
                 sql.Append(" and id_media in (" + TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID) + ")");
 
-            //Condition univers des médias AdExpress en accès
-            Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
-            if (currentModuleDescription.ModuleType == WebConstantes.Module.Type.tvSponsorship)
-                sql.Append(Utilities.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID, true, false));
-
+			//Condition universe media in access
+			WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+			if (module != null && module.ModuleType == WebConstantes.Module.Type.tvSponsorship)
+				sql.Append(module.GetAllowedMediaUniverseSqlWithOutPrefix(true));
 
             #region le bloc doit il commencer par AND
 

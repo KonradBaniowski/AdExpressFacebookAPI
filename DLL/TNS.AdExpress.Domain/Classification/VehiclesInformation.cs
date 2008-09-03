@@ -157,8 +157,24 @@ namespace TNS.AdExpress.Domain.Classification {
         }
         #endregion
 
-        #region Get commun UnitInformation list
-        /// <summary>
+		#region Contains
+		/// <summary>
+		/// Verifiy if contains vehicle Id
+		/// </summary>
+		/// <param name="dataBaseVehicleId">Database vehicle Id</param>
+		/// <returns></returns>
+		public static bool Contains(Int64 dataBaseVehicleId) {
+			try {
+				return (_listDataBaseId.ContainsKey(dataBaseVehicleId));
+			}
+			catch (System.Exception err) {
+				throw (new ArgumentException("impossible to reteive the requested vehicle", err));
+			}
+		}
+		#endregion
+
+		#region Get commun UnitInformation list
+		/// <summary>
         /// Get commun UnitInformation list
         /// </summary>
         /// <param name="vehicleInformationList">Vehicle Information List</param>

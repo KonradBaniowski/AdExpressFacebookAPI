@@ -25,7 +25,13 @@
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
     <table enumId="1" description="List detail table" schemaEnumId="5" label="list_detail" prefix="lstd"/>
     <table enumId="2" description="tracking table" schemaEnumId="5" label="tracking" prefix="tr"/>
-
+    
+    <table enumId="4" description="Classif: Sector" schemaEnumId="0" label="sector" prefix="sc"/>
+    <table enumId="5" description="Classif: SubSector" schemaEnumId="0" label="sub_sector" prefix="ss"/>
+    <table enumId="6" description="Classif: Group" schemaEnumId="0" label="group_" prefix="gr"/>
+    <table enumId="7" description="Classif: Segment" schemaEnumId="0" label="segment" prefix="sg"/>
+    <table enumId="8" description="Classif: Product" schemaEnumId="0" label="product" prefix="pr"/>
+    
     <table enumId="12" description="Right: Template" schemaEnumId="2" label="template" prefix="t"/>
     <table enumId="13" description="Right: Template assignment" schemaEnumId="2" label="template_assignment" prefix="ta"/>
     <table enumId="14" description="Right: Media type" schemaEnumId="2" label="type_media" prefix="tm"/>
