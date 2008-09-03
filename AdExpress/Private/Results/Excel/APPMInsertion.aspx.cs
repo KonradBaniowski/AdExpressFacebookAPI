@@ -47,7 +47,7 @@ namespace AdExpress.Private.Results.Excel {
 		/// <param name="sender">page</param>
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e) {
-
+            this._dataSource = _webSession.Source;
 			try{
 				_idMedia = Page.Request.QueryString.Get("idMed");
 			}
