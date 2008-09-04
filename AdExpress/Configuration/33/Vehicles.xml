@@ -351,4 +351,18 @@
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
   </vehicle>
+  <!-- EMAILING -->
+  <vehicle id="emailing" databaseId="13" showInsertions="false" showCreations="false">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+    </allowedUnits>
+  </vehicle>  
+  <!--TELEPHONIE MOBILE-->
+  <vehicle id="mobileTelephony" databaseId="12" showInsertions="false" showCreations="false">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+    </allowedUnits>
+  </vehicle>
 </vehicles>

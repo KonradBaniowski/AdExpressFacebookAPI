@@ -6,12 +6,14 @@
 
 using System;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
-using System.Collections;
+
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Controls.Exceptions;
@@ -24,6 +26,7 @@ using VhCstes=TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
 using TableName=TNS.AdExpress.Constantes.Classification.DB.Table.name;
 using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Selections
 {
@@ -108,9 +111,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			if(webSession != null) {
 				//Chargement du DataSet des Médias
 				if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-					dsListMedia=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleInterestCenterMediaListDataAccess(webSession,GetIdVehicle(webSession).ToString(),webSession.GetSelection(webSession.CurrentUniversMedia,RightConstantes.type.interestCenterAccess),webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.mediaAccess));		
+					//dsListMedia=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleInterestCenterMediaListDataAccess(webSession,GetIdVehicle(webSession).ToString(),webSession.GetSelection(webSession.CurrentUniversMedia,RightConstantes.type.interestCenterAccess),webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.mediaAccess));
+					dsListMedia = TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleInterestCenterMediaListDataAccess(webSession, webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.interestCenterAccess), webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.mediaAccess));		
 				}else
-				dsListMedia=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleInterestCenterMediaListDataAccess(webSession,GetIdVehicle(webSession).ToString());		
+				//dsListMedia=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleInterestCenterMediaListDataAccess(webSession,GetIdVehicle(webSession).ToString());	
+					dsListMedia = TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleInterestCenterMediaListDataAccess(webSession);		
 			}
 			else throw (new WebControlInitializationException("Impossible d'initialiser le composant, la session n'est pas définie."));				
 			#endregion
@@ -145,38 +150,36 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 		#region Prerender
 		/// <summary>
-		/// Contruction des éléments du cheboxlist
+		/// Bulid cheboxlist box items
 		/// </summary>
 		/// <param name="e">arguments</param>
 		protected override void OnPreRender(EventArgs e){		
 				
-			#region Variables locales
-				//Variables media
+			#region Variables 
+				//Variables 
 				Int64 IdVehicle = 0;
-				Int64 oldIdVehicle = 0;
-				
-				//Variables centre d'intérêts
+				Int64 oldIdVehicle = 0;								
 				Int64 IdInterestCenter = 0;
 				Int64 oldIdInterestCenter = 0;				
 				#endregion
 				
-			//Initialisation de la liste d'items
+			//Item list initialization 
 			this.Items.Clear();
 				
-			//Construction de la liste de checkbox				
+			//Inset items into check box list 				
 			foreach(DataRow currentRow in dsListMedia.Tables[0].Rows) {	
 				if(showMedia((Int64)currentRow["id_vehicle"])){
-					//Ajout d'un média
+					//Add vehcile
 					if ((IdVehicle = (Int64)currentRow["id_vehicle"]) != oldIdVehicle){							
 						oldIdVehicle = IdVehicle;
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["vehicle"].ToString(),"vh_"+IdVehicle));
 					}
-					//Ajout d'un centre d'intrêts
+					//Add interest center
 					if ( ((IdInterestCenter  = (Int64)currentRow["id_interest_center"]) != oldIdInterestCenter )) {
 						oldIdInterestCenter = IdInterestCenter ;
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["interest_center"].ToString(),"ic_"+(Int64)currentRow["id_interest_center"]));
 					}
-					//Ajout d'un support
+					//Add media
 					this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["media"].ToString(),"md_"+(Int64)currentRow["id_media"]));							
 				}
 			}
@@ -194,9 +197,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
             string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 			
 			#region Traitement des sauvegardes et chargement des média
-			IList savedVehicle=null;
-			IList savedInterestCenter=null;
-			IList savedMedia=null;
+			List<Int64> savedVehicle = null, savedInterestCenter = null, savedMedia = null;			
 			string delimStr = ",";
 			char [] delimiter = delimStr.ToCharArray();
 			string displayVh="";
@@ -205,20 +206,20 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			string icList="";		
 						
 			if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-				//Média sauvegardés 
-				savedVehicle = new ArrayList();
+				//Vehicle saved 
+				savedVehicle = new List<Int64>();
 				try{
-					savedVehicle  = webSession.GetSelection(webSession.CurrentUniversMedia,RightConstantes.type.vehicleAccess).Split(delimiter);		
+					savedVehicle = new List<Int64>(Array.ConvertAll<string, Int64>(webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.vehicleAccess).Split(delimiter), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
 				}catch(Exception){} 
-				//Centres d'intérêts sauvegardés
-				 savedInterestCenter = new ArrayList();
+				//Interest center saved
+				savedInterestCenter = new List<Int64>();
 				try{
-					savedInterestCenter  = webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.interestCenterAccess).Split(delimiter);		
+					savedInterestCenter = new List<Int64>(Array.ConvertAll<string, Int64>(webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.interestCenterAccess).Split(delimiter), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));					
 				}catch(Exception){} 
-				//supports sauvegardés
-				savedMedia = new ArrayList();
+				//Media saved
+				savedMedia = new List<Int64>();
 				try{
-					savedMedia  = webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.mediaAccess).Split(delimiter);		
+					savedMedia = new List<Int64>(Array.ConvertAll<string, Int64>(webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.mediaAccess).Split(delimiter), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));					
 				}catch(Exception){}
 			}		
 			
@@ -236,7 +237,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				string VehicleIds="";			
 				string 	vhlist="";	
 				//Chargement de la liste des média(vehicle) dans l'arbre SelectionUniversMedia si nécessaire (post-enregistrement) et de leur index dans l'arbre
-				Hashtable vehicles = null;
+				Dictionary<long, int> vehicles = null;
 				if (LoadSession){
 					vehicles = LoadChilds(webSession.SelectionUniversMedia);
 				}
@@ -244,14 +245,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				//variables du niveau centre d'intérêts
 				Int64 idInterestCenterOld=-1;
 				Int64 idInterestCenter;										
-				int startInterestCenter=-1;	
-				Hashtable interestCenters = null;
+				int startInterestCenter=-1;
+				Dictionary<long, int> interestCenters = null;
 				int indexIc	=-1;
 					
 				//variables du niveau Support
 				Int64 i = 0;				
 				int numColumn = 0;
-				Hashtable medias = null;	
+				Dictionary<long, int> medias = null;	
 				//Variables état des checkbox	
 				string disabled="none";
 				string checkBox="";
@@ -274,24 +275,24 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					idVehicle=(Int64)currentRow["id_vehicle"];
 					idInterestCenter=(Int64)currentRow["id_interest_center"];
 					
-					if(showMedia(idVehicle)){ //&& showSavedVehicle(savedVehicle,parentVehicle,idVehicle.ToString(),eventButton)){
+					if(showMedia(idVehicle)){ 
 						#region contruction tableau principal
 						//Fermeture centre d'intérêt			
 						if (idInterestCenter!= idInterestCenterOld && startInterestCenter==0 ) {
-							//Fermeture support							
+							//Close media							
 							if (numColumn!=0)t.Append("</tr>");						
 							t.Append("</table>");							
 							t.Append("</td></tr></table></div></DIV></td></tr>");										
 						}
-						//Fermeture Media				
+						//Close vehicle				
 						if (idVehicle!= idVehicleOld && startVehicle==0 ) {
 							startInterestCenter=-1;
 							t.Append("\n</TD></TR></TABLE></Div>");
 							t.Append("\n</td></tr></table></div></td></tr>");
 						}
 											
-						#region Nouveau Media
-						//Nouveau Media
+						#region New vehicle
+						//New vehicle
 						if (idVehicle!= idVehicleOld) {							
 							//bordure du haut de tableau						
 							t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px;  \" id=\"vh_"+idVehicle+"\" >");
@@ -301,22 +302,22 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							//Curseur sur toute la ligne
 							t.Append("\n<tr  style=\"cursor : hand\">");
 																		
-							#region Etat de cochage du média(vehicle)	
+							#region Check box vehicle state	
 							try{
 								checkVh = checkBox = "";
 								disabled="";																
 								//Vérification de l'état du média (sélectionner ou non)
-								if(webSession.SelectionUniversMedia.Nodes[(int)vehicles[idVehicle]].Checked){
+								if(webSession.SelectionUniversMedia.Nodes[vehicles[idVehicle]].Checked){
 									checkVh = checkBox = " Checked ";
 								}
 									//Gestion éléments sauvegardés
 								else if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-									if(savedVehicle!=null && savedVehicle.Contains(idVehicle.ToString()))
+									if(savedVehicle!=null && savedVehicle.Contains(idVehicle))
 										checkVh = checkBox = " Checked ";
 								}
 								//Construction de la liste de ses fils present dans l 'arbre
-								indexVh = (int)vehicles[idVehicle];
-								interestCenters = LoadChilds(webSession.SelectionUniversMedia.Nodes[(int)vehicles[idVehicle]]);
+								indexVh = vehicles[idVehicle];
+								interestCenters = LoadChilds(webSession.SelectionUniversMedia.Nodes[vehicles[idVehicle]]);
 								
 							}
 								//Exceptions si le centre d'intérêt n'est pas trouver dans l'arbre
@@ -324,7 +325,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 								interestCenters  = null;
 								//Gestion éléments sauvegardés
 								if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-									if(savedVehicle!=null && savedVehicle.Contains(idVehicle.ToString()))
+									if(savedVehicle!=null && savedVehicle.Contains(idVehicle))
 										checkVh = checkBox = " Checked ";
 								}
 							}
@@ -353,7 +354,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						}
 						#endregion
 
-						#region Nouveau centre d'intérêts
+						#region New interest center
 						if (idInterestCenter!=idInterestCenterOld ) {	
 							numColumn=0;
                             if (startInterestCenter == -1) t.Append("<tr><td ><div style=\" display ='" + displayIc + "' MARGIN-LEFT: 5px; width=100%;\" class=\"violetBackGroundV3\"  id=\"ic_" + idInterestCenter + "\"><table class=\"txtViolet11Bold violetBackGroundV3\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
@@ -365,8 +366,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							idInterestCenterOld=idInterestCenter;
 							startInterestCenter=0;
 							t.Append("<td  align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">");
-							
-							#region Gestion de l'etat de cochage du centre d'intérêts
+
+							#region Check box interest center state
 							//si le centre d'intérêts est dans la liste de centre d'intérêts de l'arbre média
 							try{
 								checkBox =checkIc="";
@@ -376,12 +377,12 @@ namespace TNS.AdExpress.Web.Controls.Selections
 									disabled="disabled";
 								}else{
 									//Vérification de l'état du centre d'intérêts (sélectionner ou non)
-									if(webSession.SelectionUniversMedia.Nodes[indexVh].Nodes[(int)interestCenters[(Int64)currentRow["id_interest_center"]]].Checked){
+									if(webSession.SelectionUniversMedia.Nodes[indexVh].Nodes[interestCenters[Int64.Parse(currentRow["id_interest_center"].ToString())]].Checked){
 										checkBox = checkIc = " Checked ";
 										if (checkVh.Length>0)disabled="disabled";
 									}//Gestion éléments sauvegardés
 									else if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-										if(savedInterestCenter!=null && savedInterestCenter.Contains(currentRow["id_interest_center"].ToString())){
+										if (savedInterestCenter != null && savedInterestCenter.Contains(Int64.Parse(currentRow["id_interest_center"].ToString()))) {
 											checkBox = checkIc = " Checked ";	
 											//ouverture du calque
 											if(checkIc.Equals(" Checked "))
@@ -391,14 +392,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 										
 									}
 									//Construction de la liste de ses fils present dans l 'arbre
-									indexIc = (int)interestCenters[idInterestCenter];
-									medias = LoadChilds(webSession.SelectionUniversMedia.Nodes[indexVh].Nodes[(int)interestCenters[(Int64)currentRow["id_interest_center"]]]);
+									indexIc = interestCenters[idInterestCenter];
+									medias = LoadChilds(webSession.SelectionUniversMedia.Nodes[indexVh].Nodes[interestCenters[Int64.Parse(currentRow["id_interest_center"].ToString())]]);
 								}
 							}
 								//Exceptions si le centre d'intérêts  n'est pas trouver dans l'arbre
 							catch(System.ArgumentOutOfRangeException) {
 								if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-									if(savedInterestCenter!=null && savedInterestCenter.Contains(currentRow["id_interest_center"].ToString())){
+									if(savedInterestCenter!=null && savedInterestCenter.Contains(Int64.Parse(currentRow["id_interest_center"].ToString()))){
 										checkBox = checkIc = " Checked ";	
 										//ouverture du calque
 										if(checkIc.Equals(" Checked "))displayIc="";
@@ -413,7 +414,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							}
 							catch(System.NullReferenceException){
 								if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-									if(savedInterestCenter!=null && savedInterestCenter.Contains(currentRow["id_interest_center"].ToString())){
+									if(savedInterestCenter!=null && savedInterestCenter.Contains(Int64.Parse(currentRow["id_interest_center"].ToString()))){
 										checkBox = checkIc = " Checked ";
 										//ouverture du calque
 										if(checkIc.Equals(" Checked "))displayIc="";
@@ -458,12 +459,12 @@ namespace TNS.AdExpress.Web.Controls.Selections
 								checkBox = checkIc = " Checked ";
 								disabled="disabled";
 							}else{
-								if(webSession.SelectionUniversMedia.Nodes[indexVh].Nodes[(int)interestCenters[(Int64)currentRow["id_interest_center"]]].Nodes[(int)medias[(Int64)currentRow["id_media"]]].Checked){
+								if(webSession.SelectionUniversMedia.Nodes[indexVh].Nodes[interestCenters[Int64.Parse(currentRow["id_interest_center"].ToString())]].Nodes[medias[Int64.Parse(currentRow["id_media"].ToString())]].Checked){
 									checkBox = " Checked ";
 									if(checkVh.Length>0 || checkIc.Length>0)disabled="disabled";
 								}//Gestion éléments sauvegardés
 								else if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-									if(savedMedia!=null && savedMedia.Contains(currentRow["id_media"].ToString()))
+									if(savedMedia!=null && savedMedia.Contains(Int64.Parse(currentRow["id_media"].ToString())))
 										checkBox = " Checked ";
 									if (checkVh.Length>0 || checkIc.Length>0)disabled="disabled";
 								}
@@ -472,7 +473,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							//Exceptions si le groupe n'est pas trouver dans l'arbre
 						catch(System.ArgumentOutOfRangeException) {
 							if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-								if(savedMedia!=null && savedMedia.Contains(currentRow["id_media"].ToString()))
+								if(savedMedia!=null && savedMedia.Contains(Int64.Parse(currentRow["id_media"].ToString())))
 									checkBox = " Checked ";
 								if (checkVh.Length>0 || checkIc.Length>0)disabled="disabled";
 							}
@@ -480,7 +481,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						}
 						catch(System.NullReferenceException){
 							if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
-								if(savedMedia!=null && savedMedia.Contains(currentRow["id_media"].ToString()))
+								if(savedMedia!=null && savedMedia.Contains(Int64.Parse(currentRow["id_media"].ToString())))
 									checkBox = " Checked ";
 								if (checkVh.Length>0 || checkIc.Length>0)disabled="disabled";
 							}
@@ -545,9 +546,9 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		/// </summary>
 		/// <param name="tree">arbre</param>
 		/// <returns>liste des fils d'un noeud</returns>
-        private Hashtable LoadChilds(System.Windows.Forms.TreeNode tree)
+        private Dictionary<long,int> LoadChilds(System.Windows.Forms.TreeNode tree)
         {
-			Hashtable t = new Hashtable();
+			Dictionary<long, int> t = new Dictionary<long, int>();
 			foreach(System.Windows.Forms.TreeNode node in tree.Nodes){
 				t.Add(((LevelInformation)node.Tag).ID,node.Index);
 			}
@@ -561,8 +562,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		/// <param name="idVehicle">Média à traiter</param>
 		/// <returns>True s'il doit être montrer, false sinon</returns>
 		private bool showMedia(Int64 idVehicle) {
-			DBConstantesClassification.Vehicles.names vehicletype=(DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString());
-			switch(vehicletype) {
+			VehicleInformation vehicleInformation = VehiclesInformation.Get(idVehicle);
+			switch (vehicleInformation.Id) {
 				case DBConstantesClassification.Vehicles.names.radio:
 				case DBConstantesClassification.Vehicles.names.press:
 				case DBConstantesClassification.Vehicles.names.internationalPress:
@@ -574,29 +575,29 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			}
 		}
 		
-		/// <summary>
-		/// Indique si le niveau média(vehcile) doit être montrer pour le vehicle.		
-		/// </summary>
-		/// <param name="savedVehicle">média sauvegardé</param>		
-		/// <param name="idVehicle">média</param>
-		/// <param name="parentVehicle">vehicle parent</param>
-		/// <param name="eventButton">evenement</param>
-		/// <returns>Vrai si le vehicle est chargé depuis l'univers sauvegardé</returns>
-		private static bool showSavedVehicle(IList savedVehicle,IList parentVehicle, string idVehicle,int eventButton){
-			bool isShow=false;
-			if(eventButton==constEvent.eventSelection.LOAD_EVENT){
-				if(savedVehicle!=null && savedVehicle[0].ToString().Length>0){
-					if(savedVehicle.Contains(idVehicle))isShow=true;
-					else isShow=false;
-				}
-				else if(parentVehicle!=null && parentVehicle[0].ToString().Length>0){
-					if(parentVehicle.Contains(idVehicle))isShow=true;
-					else isShow=false;
-				}
-				else isShow=false;
-			}else isShow=true;
-			return isShow;
-		}
+		///// <summary>
+		///// Indique si le niveau média(vehcile) doit être montrer pour le vehicle.		
+		///// </summary>
+		///// <param name="savedVehicle">média sauvegardé</param>		
+		///// <param name="idVehicle">média</param>
+		///// <param name="parentVehicle">vehicle parent</param>
+		///// <param name="eventButton">evenement</param>
+		///// <returns>Vrai si le vehicle est chargé depuis l'univers sauvegardé</returns>
+		//private static bool showSavedVehicle(IList savedVehicle,IList parentVehicle, string idVehicle,int eventButton){
+		//    bool isShow=false;
+		//    if(eventButton==constEvent.eventSelection.LOAD_EVENT){
+		//        if(savedVehicle!=null && savedVehicle[0].ToString().Length>0){
+		//            if(savedVehicle.Contains(idVehicle))isShow=true;
+		//            else isShow=false;
+		//        }
+		//        else if(parentVehicle!=null && parentVehicle[0].ToString().Length>0){
+		//            if(parentVehicle.Contains(idVehicle))isShow=true;
+		//            else isShow=false;
+		//        }
+		//        else isShow=false;
+		//    }else isShow=true;
+		//    return isShow;
+		//}
 
 		/// <summary>
 		/// Récupère la liste des médias (vehicle) autorisés pour l'utilisateur courant
@@ -621,25 +622,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 		}
 		
-		/// <summary>
-		/// Donne le media (vehicle) à afficher
-		/// </summary>
-		/// <param name="webSession">session du client</param>
-		/// <returns></returns>
-		private Int64 GetIdVehicle(WebSession webSession){
-			switch(webSession.CurrentModule){
-				case Module.Name.TABLEAU_DE_BORD_PRESSE :
-					return Int64.Parse(DBConstantesClassification.Vehicles.names.press.GetHashCode().ToString());
-				case Module.Name.TABLEAU_DE_BORD_RADIO :
-					return Int64.Parse(DBConstantesClassification.Vehicles.names.radio.GetHashCode().ToString());
-				case Module.Name.TABLEAU_DE_BORD_TELEVISION :
-					return Int64.Parse(DBConstantesClassification.Vehicles.names.tv.GetHashCode().ToString());
-				case Module.Name.TABLEAU_DE_BORD_PAN_EURO :
-					return Int64.Parse(DBConstantesClassification.Vehicles.names.others.GetHashCode().ToString());
-				default :
-					throw (new MediaSelectionWebControlException(" GetIdVehicle(WebSession webSession) : Impossible d'identifier le module sélectionné."));				
-			}			
-		}
+		
 		
 		#endregion
 	}

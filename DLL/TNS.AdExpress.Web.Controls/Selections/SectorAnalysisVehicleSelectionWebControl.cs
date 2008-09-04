@@ -7,6 +7,7 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.DataAccess.Selections.Medias;
 using TNS.AdExpress.Web.Core.Sessions;
 using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
+using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Translation;
 using DBConstantesClassification=TNS.AdExpress.Constantes.Classification.DB;
 using VhCstes=TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
@@ -27,7 +29,7 @@ using TableName=TNS.AdExpress.Constantes.Classification.DB.Table.name;
 namespace TNS.AdExpress.Web.Controls.Selections
 {
 	/// <summary>
-	/// Affiche la liste des médias, catégories et support que le client peut sélectionner en fonction de ses droits.
+	/// Show media list to select.
 	/// </summary>
 	[DefaultProperty("Text"), 
 		ToolboxData("<{0}:SectorAnalysisVehicleSelectionWebControl runat=server></{0}:SectorAnalysisVehicleSelectionWebControl>")]
@@ -37,15 +39,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		/// <summary>
 		/// Session du client
 		/// </summary>
-		protected WebSession webSession=null; 
-		///// <summary>
-		///// Dataset contenant la liste des médias
-		///// </summary>
-		//protected DataSet dsListVehicle;
+		protected WebSession webSession=null; 		
 		/// <summary>
-		/// liste des médias(vehicle) dont le clients à accès
+		/// Current vehicle list
 		/// </summary>		
-		protected string  _vhlist;
+		protected List<long>  _currentVehicleList=null;
 		/// <summary>
 		/// Indique si la liste doit être rechargée ou non.
 		/// </summary>
@@ -87,12 +85,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			#region Creation du dataSet
 			if(!Page.IsPostBack){
 				if( webSession != null) {
-					//Chargement du DataSet des Médias
+					//Data loading
 					VehicleListDataAccess vl = new VehicleListDataAccess(webSession);
-					//dsListVehicle=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleCatMediaListDataAccess(webSession);		
 					dtVehicle = vl.List;
 				}
-				else throw (new WebControlInitializationException("Impossible d'initialiser le composant, la session n'est pas définie"));
+				else throw (new WebControlInitializationException("Impossible to init component, web session is not define"));
 			}
 			#endregion
 		}
@@ -100,9 +97,9 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 		#region PreRender
 		/// <summary>
-		/// Construction de la liste de checkbox
+		/// Bulid checkbox list
 		/// </summary>
-		/// <param name="e">arguments</param>
+		/// <param name="e">event arguments</param>
 		protected override void OnPreRender(EventArgs e) 
 		{
 			if (!Page.IsPostBack)
@@ -116,15 +113,22 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				Int64 IdCategory = 0;
 				Int64 oldCategory = 0;				
 				#endregion
-				
-				//Initialisation de la liste d'items
+
+				//Clear items list
 				this.Items.Clear();
 				
-				//Construction de la liste de checkbox
-				this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(210,webSession.SiteLanguage),"vh_"+VhCstes.plurimedia.GetHashCode().ToString()));
+				//Build checkbox list
+				_currentVehicleList = new List<long>();
+				VehicleInformation vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+				if (vehicleInfo != null) {
+					//Remark : It's always possible to select plurimedia vehicle
+					this.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(210, webSession.SiteLanguage), "vh_" + vehicleInfo.DatabaseId.ToString()));
+					_currentVehicleList.Add(vehicleInfo.DatabaseId);
+				}
+				
 				foreach(DataRow currentRow in dtVehicle.Rows) 
 				{					
-					if ( (IdVehicle = (Int64)currentRow["id_vehicle"]) != oldIdVehicle )
+					if ( (IdVehicle = Int64.Parse(currentRow["id_vehicle"].ToString())) != oldIdVehicle )
 					{							
 						oldIdVehicle = IdVehicle;
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["vehicle"].ToString(),"vh_"+IdVehicle));
@@ -133,11 +137,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					{	oldCategory = IdCategory ;
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["category"].ToString(),"ct_"+(Int64)currentRow["id_category"]));
 					}
-					//if ( (Int64)VhCstes.cinema != (Int64)currentRow["id_vehicle"] && (Int64)VhCstes.internet != (Int64)currentRow["id_vehicle"] && (Int64)VhCstes.press != (Int64)currentRow["id_vehicle"])
-					if (showMedia((Int64)currentRow["id_vehicle"]))
+					if (showMedia(Int64.Parse(currentRow["id_vehicle"].ToString())))
 					{						
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["media"].ToString(),"md_"+(Int64)currentRow["id_media"]));
-					}					
+					}
+					if (!_currentVehicleList.Contains(Int64.Parse(currentRow["id_vehicle"].ToString()))) _currentVehicleList.Add(Int64.Parse(currentRow["id_vehicle"].ToString()));
 				}	
 						
 			}
@@ -157,12 +161,11 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			
 			if(_reload){
 				if( webSession != null) {
-					//Chargement du DataSet des Médias
-					//dsListVehicle=TNS.AdExpress.Web.DataAccess.Selections.Medias.VehicleListDataAccess.VehicleCatMediaListDataAccess(webSession);		
+					//Data loading
 					VehicleListDataAccess vl = new VehicleListDataAccess(webSession);
 					dtVehicle = vl.List;
 				}
-				else throw (new WebControlInitializationException("Impossible de recharger le composant, la session n'est pas définie"));
+				else throw (new WebControlInitializationException("Impossible to load data, webSession is not define"));
 			}
 
 
@@ -187,49 +190,60 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				string checkBox="";						
 				#endregion
 
-				//Récupération de la liste des média autorisés pour l'utilisateur courant
-				if(webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap].Length>0){
-                    vhlist=webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap];
-					VehicleIdsArr = vhlist.Split(',');
-					for(int v=0;v<VehicleIdsArr.Length;v++){
-						if(v>0)vhSeparator="-";
-						VehicleIds+=vhSeparator+"vh_"+VehicleIdsArr[v].ToString();
-					}
-					if(VehicleIds.Length>0)VehicleIds+="-vh_"+VhCstes.plurimedia.GetHashCode().ToString();
-				}
-				else  throw (new WebControlInitializationException("Impossible d'initialiser le composant, aucun média n'est accessible."));				
+				#region Old version
+				////Récupération de la liste des média autorisés pour l'utilisateur courant
+				//if(webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap].Length>0){
+				//    vhlist=webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap];
+				//    VehicleIdsArr = vhlist.Split(',');
+				//    for(int v=0;v<VehicleIdsArr.Length;v++){
+				//        if(v>0)vhSeparator="-";
+				//        VehicleIds+=vhSeparator+"vh_"+VehicleIdsArr[v].ToString();
+				//    }
+				//    if(VehicleIds.Length>0)VehicleIds+="-vh_"+VhCstes.plurimedia.GetHashCode().ToString();
+				//}
+				//else  throw (new WebControlInitializationException("Impossible d'initialiser le composant, aucun média n'est accessible."));	
+				#endregion
 
-				//Tableau global 
+				if (_currentVehicleList != null && _currentVehicleList.Count>0) {
+					
+					for (int v = 0; v < _currentVehicleList.Count; v++) {
+						if (v > 0) vhSeparator = "-";
+						VehicleIds += vhSeparator + "vh_" + _currentVehicleList[v].ToString();
+					}					
+				}
+
+				//Global table 
                 t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td class=\"whiteBackGround\">\n");	
 				t.Append("<a href=\"javascript: ExpandColapseAllDivs('"+vhlist+"')\" ");
-				//insertIndex = t.Length;
 				t.Append("\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+GestionWeb.GetWebWord(1117,webSession.SiteLanguage)+"</a>");	
 				
 				#region  PluriMedia
-				//bordure du haut de tableau
-				t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_"+VhCstes.plurimedia.GetHashCode().ToString()+"\" >");
-				if (idVehicleOld == -1)t.Append("\n<table class=\"whiteBackGround violetBorderWithoutBottom txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
-                else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");							
-				t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" width=100%>");
-				t.Append("\n<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$"+i+"\" name=\"SectorAnalysisVehicleSelectionWebControl1_"+i+"\" onClick=\"CheckAllChilds('vh_50','"+VehicleIds+"','vh_50')\" value=\"vh_50\">"+GestionWeb.GetWebWord(210,webSession.SiteLanguage)+"");							
-				t.Append("\n</td>\n</tr>");		
-				t.Append("\n</table></div></td></tr>");				
-				i++;
+				VehicleInformation vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+				if (vehicleInfo != null) {
+					//Top table border
+					t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_" + vehicleInfo.DatabaseId.ToString() + "\" >");
+					if (idVehicleOld == -1) t.Append("\n<table class=\"whiteBackGround violetBorderWithoutBottom txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
+					else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
+					t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" width=100%>");
+					t.Append("\n<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$" + i + "\" name=\"SectorAnalysisVehicleSelectionWebControl1_" + i + "\" onClick=\"CheckAllChilds('vh_" + vehicleInfo.DatabaseId.ToString() + "','" + VehicleIds + "','vh_" + vehicleInfo.DatabaseId.ToString() + "')\" value=\"vh_" + vehicleInfo.DatabaseId.ToString() + "\">" + GestionWeb.GetWebWord(210, webSession.SiteLanguage) + "");
+					t.Append("\n</td>\n</tr>");
+					t.Append("\n</table></div></td></tr>");
+					i++;
+				}
 				#endregion
 
-				#region Foreach  Dataset des médias
+				#region For each  vehicle
 
 				foreach(DataRow currentRow in dtVehicle.Rows)
 				{	
-					//Initialisation des identifiants parents
+					//Initialisation of parents Id
 					idVehicle=(Int64)currentRow["id_vehicle"];
 					idCategory=(Int64)currentRow["id_category"];
 					
 					#region contruction tableau principal
-						//Fermeture Category				
-					if (idCategory != idCategoryOld && startCategory == 0)//&& idVehicle!=9
+						//Close Category				
+					if (idCategory != idCategoryOld && startCategory == 0)
 						{	//Fermeture support
-							//if(idVehicle!=7 && idVehicle!=1 && idVehicle!=9)
 							if (showMedia(idVehicle))
 							{
 								if (numColumn!=0)t.Append("</tr>");
@@ -238,37 +252,37 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							t.Append("</td></tr></table></div></DIV></td></tr>");										
 						}
 
-						//Fermeture Media				
+						//Close Vehicle				
 						if (idVehicle!= idVehicleOld && startVehicle==0 )
 						{
 							startCategory=-1;
 							t.Append("\n</TD></TR></TABLE></Div>");
 							t.Append("\n</td></tr></table></div></td></tr>");
 						}
-											
-						#region Nouveau Media
-						//Nouveau Media
+
+						#region New Vehicle
+						//New Vehicle 
 						if (idVehicle!= idVehicleOld)
 						{							
-							//bordure du haut de tableau						
+							//Border top table						
 							t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_"+idVehicle+"\" >");
 							if (idVehicleOld == -1)t.Append("\n<table class=\"whiteBackGround violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
                             else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
 
-								//Curseur sur toute la ligne
-							if (OpenVehicleDiv((Int64)idVehicle))
+								//Cursor on  line
+							if (OpenVehicleDiv(idVehicle))
 									t.Append("\n<tr  style=\"cursor : hand\">");
 							else t.Append("\n<tr>");						
 														
 							idVehicleOld=idVehicle;
 							startVehicle=0;							
 
-							//checkbox média (nouvelle version)
+							//checkbox vehicle 
 							t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" >");
 							t.Append("\n<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$"+i+"\" name=\"SectorAnalysisVehicleSelectionWebControl1_"+i+"\" onClick=\"CheckAllChilds('vh_"+idVehicle+"','"+VehicleIds+"','vh_"+idVehicle+"')\" value=vh_"+idVehicle+"></td>");																											
 
-							//fin libellé média (nouvelle version)							
-							if(OpenVehicleDiv((Int64)idVehicle)){
+							//End label vehicle 						
+							if(OpenVehicleDiv(idVehicle)){
 								t.Append("<td width=100% align=\"left\" onClick=\"javascript : DivDisplayer('vhDiv" + idVehicle + "');\" >" + currentRow["vehicle"].ToString() + "");
 								t.Append("</td><td align=\"right\" onClick=\"javascript : DivDisplayer('vhDiv" + idVehicle + "');\">");
 								t.Append("<IMG src=\"/App_Themes/"+themeName+"/images/Common/button/bt_arrow_down.gif\" width=\"15\">");
@@ -277,7 +291,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							t.Append("<tr><td colspan=\"3\" >");
 							t.Append("<Div  style=\"display ='none'\" id=\"vhDiv" + idVehicle + "\">");
                             t.Append("<TABLE cellpadding=0 cellspacing=0 width=100% class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\">");
-							if(OpenVehicleDiv((Int64)idVehicle)){	
+							if(OpenVehicleDiv(idVehicle)){	
 							t.Append("<tr><td class=\"roll04\"><a href=\"javascript: SelectExclusiveAllChilds('vh_"+idVehicle+"','"+VehicleIds+"','vh_"+idVehicle+"','vh_','ct_')\" title=\""+GestionWeb.GetWebWord(1151,webSession.SiteLanguage)+"\" class=\"roll04\">&nbsp;&nbsp;"+GestionWeb.GetWebWord(1151,webSession.SiteLanguage)+"</td></tr>");
 								t.Append("<TR><TD>");	
 							}
@@ -285,27 +299,27 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						}
 						#endregion
 
-						#region Nouvelle Categorie
-						if (idCategory!=idCategoryOld && showMediaBranchItem(TableName.category,(Int64)idVehicle))
+						#region New category
+						if (idCategory!=idCategoryOld && showMediaBranchItem(TableName.category,idVehicle))
 						{	
 							numColumn=0;															
 							if(startCategory== -1)t.Append("<tr><td ><div style=\"MARGIN-LEFT: 5px; width=100%;\" class=\"violetBackGroundV3\"  id=\"ct_"+idCategory+"\"><table class=\"violetBackGroundV3 txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 							else t.Append("<tr><td><div style=\"MARGIN-LEFT: 5px; width=100%;\" class=\"violetBackGroundV3\"  id=\"ct_"+idCategory+"\"><table class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 
-							//Curseur sur toute la ligne
-							if(showMediaBranchItem(TableName.media,(Int64)idVehicle)) t.Append("\n<tr  style=\"cursor : pointer\">");
+							//Cursor on  line
+							if(showMediaBranchItem(TableName.media,idVehicle)) t.Append("\n<tr  style=\"cursor : pointer\">");
 							else t.Append("\n<tr>");
 
 							idCategoryOld=idCategory;
 							startCategory=0;
 							t.Append("<td  align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">");
 							
-							// checkbox choix catégorie (nouvelle version)
+							// checkbox category 
 							t.Append("<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$"+i+"\" id=\"SectorAnalysisVehicleSelectionWebControl1_"+i+"\" onClick=\"CheckAllChilds('ct_"+idCategory+"','"+VehicleIds+"','vh_"+idVehicle+"')\" value=\"ct_"+idCategory+"\">");
 							t.Append("\n</td>\n");
-							//Libellé catégorie
+							//Label category
 							t.Append("<td width=100% valign=\"middle\" height=\"10\" onClick=\"javascript : DivDisplayer('"+idCategory+"');\" align=\"left\"  ");
-							if(showMediaBranchItem(TableName.media,(Int64)idVehicle)){
+							if(showMediaBranchItem(TableName.media,idVehicle)){
 								t.Append(">&nbsp;"+currentRow["category"].ToString()+"</td>");
 								t.Append("<td valign=\"baseline\"  onClick=\"javascript : DivDisplayer('"+idCategory+"');\"   ");
 								t.Append(">&nbsp;<IMG height=\"15\" src=\"/App_Themes/"+themeName+"/images/Common/button/bt_arrow_down.gif\" width=\"15\" align=\"right\"></td>");
@@ -313,7 +327,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							else t.Append(" width=\"15\" colspan=\"2\" >&nbsp;"+currentRow["category"].ToString()+"</td>");
 
 							t.Append("</tr><tr><td colspan=\"3\"><DIV id=\""+idCategory+"\" ><table cellpadding=0 cellspacing=0 border=\"0\" width=100%>");							
-							if(showMediaBranchItem(TableName.media,(Int64)idVehicle))
+							if(showMediaBranchItem(TableName.media,idVehicle))
 							{
                                 t.Append("<table cellpadding=0 cellspacing=0 border=\"0\" width=100% class=\"mediumPurple1 whiteTopBorder txtViolet10\">");	
 								t.Append("<tr><td colspan=\"3\" class=\"roll04\" ><a href=\"javascript: SelectExclusiveAllChilds('ct_"+idCategory+"','"+VehicleIds+"','vh_"+idVehicle+"','vh_','ct_')\" title=\""+GestionWeb.GetWebWord(1066,webSession.SiteLanguage)+"\" class=\"roll04\">&nbsp;"+GestionWeb.GetWebWord(1066,webSession.SiteLanguage)+"</a></td></tr>");
@@ -322,8 +336,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						}							
 						#endregion
 
-						#region Affichage des supports
-						if(showMediaBranchItem(TableName.media,(Int64)idVehicle))
+						#region Show media checkbox
+						if(showMediaBranchItem(TableName.media,idVehicle))
 						{
 							if(numColumn==0)
 							{								
@@ -379,14 +393,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 		#endregion
 
-		#region Methodes internes
-		
+		#region Internal methods
+
 		/// <summary>
-		/// Indique si le niveau catégorie doit être montrer pour le vehicle
+		/// Dermine if category level can be shown for the current vehicle 
 		/// </summary>
-		/// <param name="mediaBranchItem">item branche média</param>
-		/// <param name="idVehicle">identifiant média</param>
-		/// <returns>vrai si le média doit être affiché</returns>
+		/// <param name="idVehicle">Id Vehicle</param>
+		/// <param name="mediaBranchItem">Media branch</param>
+		/// <returns>True if category level can be shown </returns>
 		private bool showMediaBranchItem(DBConstantesClassification.Table.name mediaBranchItem, Int64 idVehicle)
 		{
 			switch(mediaBranchItem)
@@ -402,14 +416,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		}
 
 		/// <summary>
-		/// Indique si le niveau catégorie doit être montrer pour le vehicle
+		/// Dermine if category level can be shown 
 		/// </summary>
-		/// <param name="idVehicle">Vehicle à traiter</param>
-		/// <returns>True s'il doit être montrer, false sinon</returns>
+		/// <param name="idVehicle">Id Vehicle</param>
+		/// <returns>True if category level can be shown </returns>
 		private bool showCategory(Int64 idVehicle)
 		{
-			DBConstantesClassification.Vehicles.names vehicletype=(DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString());
-			switch(vehicletype)
+			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
+			switch (vehicleInfo.Id)
 			{
 				case DBConstantesClassification.Vehicles.names.cinema:
 					return(false);
@@ -419,14 +433,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		}
 
 		/// <summary>
-		/// Indique si le niveau média(support) doit être montrer pour le vehicle
+		/// Dermine if media level can be shown 
 		/// </summary>
-		/// <param name="idVehicle">Vehicle à traiter</param>
-		/// <returns>True s'il doit être montrer, false sinon</returns>
+		/// <param name="idVehicle">Id Vehicle</param>
+		/// <returns>True if media level can be shown </returns>
 		private bool showMedia(Int64 idVehicle)
 		{
-			DBConstantesClassification.Vehicles.names vehicletype=(DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString());
-			switch(vehicletype)
+			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
+			switch (vehicleInfo.Id)
 			{
 				case DBConstantesClassification.Vehicles.names.internet:
 				case DBConstantesClassification.Vehicles.names.press:
@@ -448,8 +462,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		/// <returns>True s'il doit être montrer, false sinon</returns>
 		private bool OpenVehicleDiv(Int64 idVehicle)
 		{
-			DBConstantesClassification.Vehicles.names vehicletype=(DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString());
-			switch(vehicletype)
+			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
+			switch (vehicleInfo.Id)
 			{
 				case DBConstantesClassification.Vehicles.names.cinema:
 					return(false);

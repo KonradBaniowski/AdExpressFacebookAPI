@@ -47,12 +47,7 @@
         </selections>
         <optionalSelections>
          <!-- <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">-->
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
-           <!-- <loadableUnivers>
-              <type id="4" name="sector_subsector"/>
-              <type id="5" name="subsector_group"/>             
-              <type id="7" name="group"/>
-            </loadableUnivers>-->
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >          
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -346,12 +341,7 @@
         </selections>
         <optionalSelections>
           <!-- <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">-->
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
-            <!-- <loadableUnivers>
-              <type id="4" name="sector_subsector"/>
-              <type id="5" name="subsector_group"/>             
-              <type id="7" name="group"/>
-            </loadableUnivers>-->
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >           
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -533,12 +523,7 @@
         </selections>
         <optionalSelections>
           <!-- <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">-->
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
-            <!-- <loadableUnivers>
-              <type id="4" name="sector_subsector"/>
-              <type id="5" name="subsector_group"/>             
-              <type id="7" name="group"/>
-            </loadableUnivers>-->
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >           
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -788,14 +773,11 @@
       </module>
       <!-- **************************************** Module Justificatifs Presse ********************************************************-->
       <!--<module name="Justificatifs Presse" privilegecode="1950" traductioncode="2212" moduleCategoryId="1" urlNextPage="/Private/Selection/AdvertiserSelection.aspx" descriptionWebTextId="2213" descriptionImageName="/Images/Common/Infobulle/Justificatifs.png">-->
-        <module name="Justificatifs Presse" privilegecode="1950" traductioncode="2212" moduleCategoryId="1" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2213" descriptionImageName="/Images/Common/Infobulle/Justificatifs.png">        
-        <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
-          <!--<selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/AdvertiserSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
-            <loadableUnivers>
-               <type id="2" name="advertiser_product"/>
-              <type id="3" name="product"/>
-              <type id="10" name="brand_product"/>
-            </loadableUnivers>-->
+        <module name="Justificatifs Presse" privilegecode="1950" traductioncode="2212" moduleCategoryId="1" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2213" descriptionImageName="/Images/Common/Infobulle/Justificatifs.png">
+          <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+            <ModuleVehicles list="1"/>          
+          </ModuleAllowedMediaUniverse>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">         
            <allowedUniverseLevels>                         
             <allowedUniverseLevel id="6" name="advertiser"/>
             <allowedUniverseLevel id="8" name="brand"/>
@@ -828,8 +810,8 @@
       <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
-        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1"> <!-- initFromBaal="true" baalId="337" -->
-          <ModuleVehicles list="1,2,3,5,6,7,8,11"/> <!--identifiant base de données-->
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="337"> 
+          <!--<ModuleVehicles list="1,2,3,5,6,7,8,11"/>--> <!--identifiant base de données-->
           <!--<ModuleCategories list="1,2,3,4"/>-->
           <!--<ModuleMedias list="1,2,3,4"/>-->
         </ModuleAllowedMediaUniverse>
@@ -1141,11 +1123,11 @@
       </module>
       <!-- **************************************** Modules Tableaux de bord Presse******************************************-->
       <module name="Tableaux de bord Presse" privilegecode="475" traductioncode="2175" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2204" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1"/>
+        </ModuleAllowedMediaUniverse>
         <selections>
-          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
-            <!--<loadableUnivers>
-              <type id="11" name="sector"/>
-            </loadableUnivers>-->
+          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">            
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
             </allowedUniverseLevels>
@@ -1177,11 +1159,11 @@
       </module>
       <!-- **************************************** Modules Tableaux de bord Radio******************************************-->
       <module name="Tableaux de bord Radio" privilegecode="601" traductioncode="2177" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2206" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="2"/>
+        </ModuleAllowedMediaUniverse>
         <selections>
-          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
-            <!--<loadableUnivers>
-              <type id="11" name="sector"/>
-            </loadableUnivers>-->
+          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">          
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
             </allowedUniverseLevels>
@@ -1215,11 +1197,11 @@
       </module>
       <!-- **************************************** Modules Tableaux de bord télévision******************************************-->
       <module name="Tableaux de bord télévision" privilegecode="602" traductioncode="2176" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2205" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">        
+          <ModuleVehicles list="3"/>         
+        </ModuleAllowedMediaUniverse>
         <selections>
-          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
-            <!--<loadableUnivers>
-              <type id="11" name="sector"/>
-            </loadableUnivers>-->
+          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">           
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
             </allowedUniverseLevels>
@@ -1253,11 +1235,10 @@
       </module>
       <!-- **************************************** Modules Tableaux de bord Pan Euro******************************************-->
       <module name="Tableaux de bord Pan Euro" privilegecode="1036" traductioncode="2214" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2215" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="340">         
+        </ModuleAllowedMediaUniverse>
         <selections>
-          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
-           <!--<loadableUnivers>
-              <type id="11" name="sector"/>
-            </loadableUnivers>-->
+          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">         
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>              
             </allowedUniverseLevels>
@@ -1303,12 +1284,10 @@
       <module name="Bilan Campagne" privilegecode="546" traductioncode="2181" moduleCategoryId="0" urlNextPage="/Private/Selection/CompetitorUniverseProductSelection.aspx" descriptionWebTextId="2210" descriptionImageName="/Images/Common/Infobulle/Chronopresse.png">
         <RulesLayer name="APPM Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Appm.dll" class="TNS.AdExpressI.MediaSchedule.Appm.MediaScheduleResults"/>
         <DataAccessLayer name="APPM Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Appm.MediaScheduleResultDAL"/>
-        <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/CompetitorUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserCompetitorSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
-         <!--<loadableUnivers>
-            <type id="2" name="advertiser_product"/>
-            <type id="3" name="product"/>
-            <type id="10" name="brand_product"/>
-          </loadableUnivers>-->        
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1"/>
+        </ModuleAllowedMediaUniverse>       
+        <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/CompetitorUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserCompetitorSelectionHelp.aspx" validationMethod="isAdvertisersSelected">              
             <allowedUniverseLevels>
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
@@ -1417,12 +1396,10 @@
       <!--<module name="Données de cadrage" privilegecode="1920" traductioncode="2182" moduleCategoryId="0" urlNextPage="/Private/Selection/SectorSelection.aspx" descriptionWebTextId="2211" descriptionImageName="/Images/Common/Infobulle/Cadrage.png">
        <selection id="2" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">-->
         <module name="Données de cadrage" privilegecode="1920" traductioncode="2182" moduleCategoryId="0" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2211" descriptionImageName="/Images/Common/Infobulle/Cadrage.png">
-          <selection id="2" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
-          <!-- <loadableUnivers>
-              <type id="4" name="sector_subsector"/>
-              <type id="5" name="subsector_group"/>             
-              <type id="7" name="group"/>
-            </loadableUnivers>-->
+          <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+            <ModuleVehicles list="1"/>
+          </ModuleAllowedMediaUniverse>
+          <selection id="2" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">        
           <allowedUniverseLevels>
             <allowedUniverseLevel id="1" name="sector"/>
             <allowedUniverseLevel id="2" name="subsector"/>
@@ -1514,6 +1491,8 @@
       <!--************************************************* Analyse des dispositifs**********************************************************************-->
       <!--<module name="Analyse des dispositifs" privilegecode="1780" traductioncode="2180" moduleCategoryId="0" urlNextPage="/Private/Selection/AdvertiserSelection.aspx" descriptionWebTextId="2208" descriptionImageName="/Images/Common/Infobulle/Dispositifs.png">-->
       <module name="Analyse des dispositifs" privilegecode="1780" traductioncode="2180" moduleCategoryId="0" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2208" descriptionImageName="/Images/Common/Infobulle/Dispositifs.png">
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="339">
+        </ModuleAllowedMediaUniverse>       
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="12" name="support"/>
@@ -1540,17 +1519,7 @@
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <selections>
-          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
-            <!--<selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/AdvertiserSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/AdvertiserSelectionHelp.aspx" validationMethod="isAdvertisersSelected">-->
-            <!--<loadableUnivers>
-              <type id="1" name="holding_advertiser"/>
-              <type id="2" name="advertiser_product"/>
-              <type id="3" name="product"/>
-              <type id="4" name="sector_subsector"/>
-              <type id="5" name="subsector_group"/>
-              <type id="7" name="group"/>
-              <type id="10" name="brand_product"/>
-            </loadableUnivers>-->
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">            
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -1632,17 +1601,7 @@
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/SponsorshipDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SponsorshipProgramDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>          
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx">
-            <!--<optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/SectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/SectorSelectionHelp.aspx">
-            <loadableUnivers>
-              <type id="1" name="holding_advertiser"/>
-              <type id="2" name="advertiser_product"/>
-              <type id="3" name="product"/>
-              <type id="4" name="sector_subsector"/>
-              <type id="5" name="subsector_group"/>
-              <type id="7" name="group"/>
-              <type id="10" name="brand_product"/>
-            </loadableUnivers>-->
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx">           
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>

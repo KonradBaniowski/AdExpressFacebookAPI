@@ -31,6 +31,7 @@
     <table enumId="6" description="Classif: Group" schemaEnumId="0" label="group_" prefix="gr"/>
     <table enumId="7" description="Classif: Segment" schemaEnumId="0" label="segment" prefix="sg"/>
     <table enumId="8" description="Classif: Product" schemaEnumId="0" label="product" prefix="pr"/>
+    <table enumId="10" description="Classif: advertiser" schemaEnumId="0" label="advertiser" prefix="ad"/>
     
     <table enumId="12" description="Right: Template" schemaEnumId="2" label="template" prefix="t"/>
     <table enumId="13" description="Right: Template assignment" schemaEnumId="2" label="template_assignment" prefix="ta"/>

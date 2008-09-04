@@ -711,7 +711,15 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 		public static DataSet VehicleInterestCenterMediaListDataAccess(WebSession webSession,string listVehicle){		
 			return VehicleInterestCenterMediaListDataAccess(webSession,listVehicle,"","");
 		}
-		
+		/// Donne la liste des Media/Centre d'intérêts/supports en fonctions des droits de l'utilisateur
+		/// </summary>
+		/// <param name="webSession">Session du client</param>	
+		/// <param name="listInterestCenter">liste des centres d'intérêts déjà sélectionnés</param>
+		/// <param name="listMedia">liste des supports (media) déjà sélectionnés</param>	
+		/// <returns>dataset avec 6 colonnes : id_vehicle,vehicle,id_interest_center, interest_center, id_media, media</returns>
+		public static DataSet VehicleInterestCenterMediaListDataAccess(WebSession webSession, string listInterestCenter, string listMedia) {
+			return VehicleInterestCenterMediaListDataAccess(webSession, "", listInterestCenter, listMedia);
+		}
 		/// <summary>
 		/// Donne la liste des Media/Centre d'intérêts/supports en fonctions des droits de l'utilisateur
 		/// </summary>
@@ -729,51 +737,58 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			DataSet ds;
 			#endregion
 
+			WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+			Table vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.vehicle);
+			Table categoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category);
+			Table interestCenterTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.interestCenter);
+			Table basicMediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia);
+			Table mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media);
+
 			#region Requête
-			sql.Append("Select distinct "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle,"+DBConstantes.Tables.VEHICLE_PREFIXE+".vehicle,"+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_interest_center,"+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".interest_center , "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media , "+DBConstantes.Tables.MEDIA_PREFIXE+".media");
-			sql.Append(" from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".vehicle "+DBConstantes.Tables.VEHICLE_PREFIXE+","+DBConstantes.Schema.ADEXPRESS_SCHEMA+".interest_center "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+","+DBConstantes.Schema.ADEXPRESS_SCHEMA+".media "+DBConstantes.Tables.MEDIA_PREFIXE+" , "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".category "+DBConstantes.Tables.CATEGORY_PREFIXE+", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".basic_media "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+" ");
+			sql.Append("Select distinct " + vehicleTable.Prefix + ".id_vehicle," + vehicleTable.Prefix + ".vehicle," + interestCenterTable.Prefix + ".id_interest_center," + interestCenterTable.Prefix + ".interest_center , " + mediaTable.Prefix + ".id_media , " + mediaTable.Prefix + ".media");
+			sql.Append(" from " + vehicleTable.SqlWithPrefix + "," + interestCenterTable.SqlWithPrefix + "," + mediaTable.SqlWithPrefix + " , " + categoryTable.SqlWithPrefix + ", " + basicMediaTable.SqlWithPrefix + " ");
 			sql.Append(" where");
 			// Langue
-			sql.Append(" "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" " + vehicleTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString());
+			sql.Append(" and " + interestCenterTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString());
+			sql.Append(" and " + mediaTable.Prefix+".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+ basicMediaTable.Prefix + ".id_language="+webSession.DataLanguage.ToString());
+			sql.Append(" and "+ categoryTable.Prefix +".id_language="+webSession.DataLanguage.ToString());
 			// Activation
-			sql.Append(" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+DBConstantes.Tables.MEDIA_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);	
-			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);	
+			sql.Append(" and " + vehicleTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+			sql.Append(" and " + interestCenterTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+			sql.Append(" and " + mediaTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+			sql.Append(" and " + categoryTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+			sql.Append(" and " + basicMediaTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);	
 			// Jointure
-			sql.Append(" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle="+DBConstantes.Tables.CATEGORY_PREFIXE+".id_vehicle");
-			sql.Append(" and "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_interest_center="+DBConstantes.Tables.MEDIA_PREFIXE+".id_interest_center");
-			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category="+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_category");
-			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_basic_media="+DBConstantes.Tables.MEDIA_PREFIXE+".id_basic_media");
+			sql.Append(" and " + vehicleTable.Prefix + ".id_vehicle=" + categoryTable.Prefix + ".id_vehicle");
+			sql.Append(" and " + interestCenterTable.Prefix + ".id_interest_center=" + DBConstantes.Tables.MEDIA_PREFIXE + ".id_interest_center");
+			sql.Append(" and " + categoryTable.Prefix + ".id_category=" + basicMediaTable.Prefix + ".id_category");
+			sql.Append(" and " + basicMediaTable.Prefix + ".id_basic_media=" + mediaTable.Prefix + ".id_basic_media");
 			
-			#region sélection média
+			#region Media selection
 			bool premier=true;
-			// vehicle (media)
-			if(WebFunctions.CheckedText.IsStringEmpty(listVehicle)){
+			// vehicle 
+			if (listVehicle != null && listVehicle.Length > 0) {
 				if(beginByAnd) sql2+=" and ";
-				sql2+=" "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle in (  "+listVehicle+" ) ";				
+				sql2+=" "+vehicleTable.Prefix+".id_vehicle in (  "+listVehicle+" ) ";				
 			}
-			// interest Center (centre d'intérêt)
-			if(WebFunctions.CheckedText.IsStringEmpty(listInterestCenter)){
+			// interest Center 
+			if (listInterestCenter != null && listInterestCenter.Length > 0) {
 				if(beginByAnd){ sql2+=" and ";					
 					sql2+=" ( ";
 				}
-				sql2+=" "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_interest_center in ( "+listInterestCenter+" ) ";
+				sql2+=" "+interestCenterTable.Prefix+".id_interest_center in ( "+listInterestCenter+" ) ";
 				premier=false;
 			}
-			// media (support)
-			if(WebFunctions.CheckedText.IsStringEmpty(listMedia)){
+			// media 
+			if (listMedia != null && listMedia.Length>0) {
 				if(!premier) sql2+=" or ";
 				else{
 					if(beginByAnd) sql2+=" and ";
 					sql2+=" ( ";
 				}
-				sql2+=" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+listMedia+" ) ";
+				sql2+=" "+mediaTable.Prefix+".id_media in ("+listMedia+" ) ";
 				premier=false;
 			}
 
@@ -782,20 +797,27 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			if(sql2.Length>0)sql.Append(sql2);
 			#endregion
 
-			#region droits média
-			sql.Append(WebFunctions.SQLGenerator.getClassificationCustomerRecapMediaRight(webSession,DBConstantes.Tables.VEHICLE_PREFIXE,DBConstantes.Tables.CATEGORY_PREFIXE,DBConstantes.Tables.MEDIA_PREFIXE,true));
+			#region Media universe
+			//Media universe
+			if (module != null)
+				sql.Append(module.GetAllowedMediaUniverseSql(vehicleTable.Prefix, categoryTable.Prefix, mediaTable.Prefix, true));
+			#endregion
+		
+
+			#region Media rights
+			sql.Append(WebFunctions.SQLGenerator.getClassificationCustomerRecapMediaRight(webSession, vehicleTable.Prefix, categoryTable.Prefix, mediaTable.Prefix, true));
 			#endregion			
 			
-			sql.Append(" order by  "+DBConstantes.Tables.VEHICLE_PREFIXE+".vehicle , "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".interest_center , "+DBConstantes.Tables.MEDIA_PREFIXE+".media ");
+			sql.Append(" order by  "+vehicleTable.Prefix+".vehicle , "+interestCenterTable.Prefix+".interest_center , "+mediaTable.Prefix+".media ");
 
 			#endregion
 
-			#region Execution de la requête
+			#region Execution query
 			try{
 				ds = webSession.Source.Fill(sql.ToString());
 			}
 			catch(System.Exception err){
-				throw (new VehicleListDataAccessException("Impossible de charger la liste des Media/Centre d'intérêts/supports en fonctions des droits d'un utilisateur",err));
+				throw (new VehicleListDataAccessException("Impossible to exectue query", err));
 			}
 			#endregion			
 
@@ -1051,7 +1073,12 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 		}
 		#endregion
 
-
+		#region GetSqlQuery
+		/// <summary>
+		/// Get sql query
+		/// </summary>
+		/// <param name="webSession">Client Session </param>
+		/// <returns>Sql query</returns>
 		protected string GetSqlQuery(WebSession webSession) {
 			string sql = "";
 			#region Variables
@@ -1127,11 +1154,12 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 				sql += GetMediaRights(webSession, vehicleTable, categoryTable, mediaTable);
 			#endregion
 
-			sql += " order by " + vehicleTable.Prefix + ".vehicle";
+			sql += " order by " + vehicleTable.Prefix + ".vehicle,"+vehicleTable.Prefix + ".id_vehicle";
+			if (isRecap) sql += ", " + categoryTable.Prefix + ".category," + categoryTable.Prefix + ".id_category, " + mediaTable.Prefix + ".media ," + mediaTable.Prefix + ".id_media";
 			return sql;
 		}
 
-	
+		#endregion
 
 	}
 }
