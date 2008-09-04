@@ -133,7 +133,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						oldIdVehicle = IdVehicle;
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["vehicle"].ToString(),"vh_"+IdVehicle));
 					}
-					if ( ((IdCategory  = (Int64)currentRow["id_category"]) != oldCategory ) && (Int64)VhCstes.cinema != (Int64)currentRow["id_vehicle"])
+					if ( ((IdCategory  = (Int64)currentRow["id_category"]) != oldCategory ) && showCategory(Int64.Parse(currentRow["id_vehicle"].ToString())) )
 					{	oldCategory = IdCategory ;
 						this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["category"].ToString(),"ct_"+(Int64)currentRow["id_category"]));
 					}
