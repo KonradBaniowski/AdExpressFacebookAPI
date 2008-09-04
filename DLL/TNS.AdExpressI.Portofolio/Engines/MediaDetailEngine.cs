@@ -35,6 +35,7 @@ using TNS.AdExpress.Domain.Classification;
 
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
+using TNS.FrameWork.Collections;
 
 
 namespace TNS.AdExpressI.Portofolio.Engines {
@@ -127,11 +128,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			int ecranCode;
 			string dayString="";
 			bool start = true;
-			List<CellUnitFactory> listCellUnitFactory = null;
-			string classStyleValue = "sc1";
-			string cursorHand = (portofolioDAL.IsMediaBelongToCategory(_idMedia, DBCst.Category.ID_THEMATIC_TV)) ? "" : "cursorHand";
-			string cssClass = classStyleValue ;
-			
+			List<CellUnitFactory> listCellUnitFactory = null;		
 			#endregion
 
 			List<UnitInformation> unitsList = _webSession.GetValidUnitForResult();
@@ -140,76 +137,96 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0 && unitsList != null && unitsList.Count>0) {
 				dt = ds.Tables[0];
 
+                #region Get Type list of unit list
+                //Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
+                //listCellUnitFactory = new List<CellUnitFactory>();
+                //for (int i = 0; i < unitsList.Count; i++) {
+                //    Type type = assembly.GetType(unitsList[i].CellType);
+                //    cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                //    if (cellUnit is CellUnit<double>)
+                //        listCellUnitFactory.Add(new CellUnitFactory((CellUnit<double>)cellUnit));
+                //    else
+                //        listCellUnitFactory.Add(new CellUnitFactory((CellUnit<double>)cellUnit));
+                //}
+                #endregion
+
 				#region Init table
 
 				dtResult = new DataTable();
 				dtResult.Columns.Add("screenCode", System.Type.GetType("System.Int64"));
-				dtResult.Columns.Add("Monday", System.Type.GetType("System.String"));
-				dtResult.Columns.Add("Tuesday", System.Type.GetType("System.String"));
-				dtResult.Columns.Add("Wednesday", System.Type.GetType("System.String"));
-				dtResult.Columns.Add("Thursday", System.Type.GetType("System.String"));
-				dtResult.Columns.Add("Friday", System.Type.GetType("System.String"));
-				dtResult.Columns.Add("Saturday", System.Type.GetType("System.String"));
-				dtResult.Columns.Add("Sunday", System.Type.GetType("System.String"));
+				dtResult.Columns.Add("Monday", System.Type.GetType("System.Double"));
+                dtResult.Columns.Add("Tuesday", System.Type.GetType("System.Double"));
+                dtResult.Columns.Add("Wednesday", System.Type.GetType("System.Double"));
+                dtResult.Columns.Add("Thursday", System.Type.GetType("System.Double"));
+                dtResult.Columns.Add("Friday", System.Type.GetType("System.Double"));
+                dtResult.Columns.Add("Saturday", System.Type.GetType("System.Double"));
+                dtResult.Columns.Add("Sunday", System.Type.GetType("System.Double"));
 				dtResult.Columns.Add("IdUnit", System.Type.GetType("System.Int32"));
 
 				#endregion
 
 				#region for each table row
-				Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
-				listCellUnitFactory = new List<CellUnitFactory>();
-				for (int i = 0; i < unitsList.Count; i++) {
-					Type type = assembly.GetType(unitsList[i].CellType);
-					cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);					
-                    if (cellUnit is CellUnit<double>)
-                        listCellUnitFactory.Add(new CellUnitFactory((CellUnit<double>)cellUnit));
-                    else
-                        listCellUnitFactory.Add(new CellUnitFactory((CellUnit<double>)cellUnit));
-				}
-				foreach (DataRow row in dt.Rows) {
-					ecranCode = int.Parse(row["code_ecran"].ToString());
-					dayDT = new DateTime(int.Parse(row["date_media_num"].ToString().Substring(0, 4)), int.Parse(row["date_media_num"].ToString().Substring(4, 2)), int.Parse(row["date_media_num"].ToString().Substring(6, 2)));
-					if (ecranCode != oldEcranCode) {						
-						for (int i = 0; i < unitsList.Count; i++) {
+                foreach (DataRow row in dt.Rows) {
+
+                    #region get Day of Week
+                    dayDT = new DateTime(int.Parse(row["date_media_num"].ToString().Substring(0, 4)), int.Parse(row["date_media_num"].ToString().Substring(4, 2)), int.Parse(row["date_media_num"].ToString().Substring(6, 2)));
+                    switch (dayDT.DayOfWeek) {
+                        case DayOfWeek.Monday:
+                            dayString = "Monday";
+                            break;
+                        case DayOfWeek.Tuesday:
+                            dayString = "Tuesday";
+                            break;
+                        case DayOfWeek.Wednesday:
+                            dayString = "Wednesday";
+                            break;
+                        case DayOfWeek.Thursday:
+                            dayString = "Thursday";
+                            break;
+                        case DayOfWeek.Friday:
+                            dayString = "Friday";
+                            break;
+                        case DayOfWeek.Saturday:
+                            dayString = "Saturday";
+                            break;
+                        case DayOfWeek.Sunday:
+                            dayString = "Sunday";
+                            break;
+                    }
+                    #endregion
+
+                    #region Get Current code ecran
+                    ecranCode = int.Parse(row["code_ecran"].ToString());
+                    #endregion
+
+                    if (ecranCode != oldEcranCode) {
+
+                        #region Create new lines
+                        for (int i = 0; i < unitsList.Count; i++) {
 							newRow = dtResult.NewRow();
 							dtResult.Rows.Add(newRow);
-						}
-						oldEcranCode = ecranCode;
-						if(!start)currentLine += unitsList.Count;
-					}
-					switch (dayDT.DayOfWeek) {
+                        }
+                        #endregion
 
-						case DayOfWeek.Monday :
-							dayString = "Monday";					
-							break; 
-						case DayOfWeek.Tuesday:
-							dayString = "Tuesday";
-							break;
-						case DayOfWeek.Wednesday:
-							dayString = "Wednesday";
-							break;
-						case DayOfWeek.Thursday:
-							dayString = "Thursday";
-							break;
-						case DayOfWeek.Friday:
-							dayString = "Friday";
-							break;
-						case DayOfWeek.Saturday:
-							dayString = "Saturday";
-							break;
-						case DayOfWeek.Sunday:
-							dayString = "Sunday";
-							break;
-					}
-					
-					for (int i = 0; i < unitsList.Count; i++) {												
+                        oldEcranCode = ecranCode;
+
+                        if (!start) {
+                            currentLine += unitsList.Count;
+                        }
+                    }
+
+                    for (int i = 0; i < unitsList.Count; i++) {												
 						dtResult.Rows[currentLine + i]["screenCode"] = long.Parse(row["code_ecran"].ToString());
-						cellUnit = listCellUnitFactory[i].Get(double.Parse(row[unitsList[i].Id.ToString()].ToString()));
-						dtResult.Rows[currentLine + i][dayString] = cellUnit.Render(cssClass);
+						//cellUnit = listCellUnitFactory[i].Get(double.Parse(row[unitsList[i].Id.ToString()].ToString()));
+						//dtResult.Rows[currentLine + i][dayString] = cellUnit.Render(cssClass);
+                        if (dtResult.Rows[currentLine + i][dayString] != null && dtResult.Rows[currentLine + i][dayString] != System.DBNull.Value) 
+                            dtResult.Rows[currentLine + i][dayString] = ((double)dtResult.Rows[currentLine + i][dayString])+ double.Parse(row[unitsList[i].Id.ToString()].ToString());
+                        else
+                            dtResult.Rows[currentLine + i][dayString] = double.Parse(row[unitsList[i].Id.ToString()].ToString());
 						dtResult.Rows[currentLine + i]["IdUnit"] = unitsList[i].Id.GetHashCode();
 					}
 					start = false;
-				}				
+				}		
 				#endregion
 			}
 			return dtResult;
@@ -226,6 +243,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			string classStyleValue = "acl2";
 			bool color = true;
+            string cssClass = "sc1";
 			bool isTvNatThematiques = false;
 			//string style = "cursorHand";
 			DataTable dt = null;
@@ -252,6 +270,20 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			//Checks if media belong to TV Nat Thematics
 			isTvNatThematiques = portofolioDAL.IsMediaBelongToCategory(_idMedia, DBCst.Category.ID_THEMATIC_TV);
 			List<UnitInformation> unitsList = _webSession.GetValidUnitForResult();
+
+            #region Get Type list of unit list
+            Cell cellUnit;
+            Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
+            Dictionary<int,CellUnitFactory> listCellUnitFactory = new Dictionary<int,CellUnitFactory>();
+            for (int i = 0; i < unitsList.Count; i++) {
+                Type type = assembly.GetType(unitsList[i].CellType);
+                cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                if (cellUnit is CellUnit<double>)
+                    listCellUnitFactory.Add(unitsList[i].Id.GetHashCode(),new CellUnitFactory((CellUnit<double>)cellUnit));
+                else
+                    listCellUnitFactory.Add(unitsList[i].Id.GetHashCode(), new CellUnitFactory((CellUnit<HybridList>)cellUnit));
+            }
+            #endregion
 
 			//if (isTvNatThematiques) style = "";
 			if (!_excel && !isTvNatThematiques) {
@@ -307,7 +339,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Monday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage)+"\"> ");
 
 					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Monday"].ToString() + "</td>");
-					t.Append(dr["Monday"].ToString());
+
+
+                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Monday"].ToString()));
+                    t.Append(cellUnit.Render(cssClass));
 					if (!_excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -320,7 +355,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Tuesday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
 
 					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Tuesday"].ToString() + "</td>");
-					t.Append(dr["Tuesday"].ToString());
+                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Tuesday"].ToString()));
+                    t.Append(cellUnit.Render(cssClass));
 					if (!_excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -333,7 +369,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Wednesday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
 
 					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Wednesday"].ToString() + "</td>");
-					t.Append(dr["Wednesday"].ToString());
+                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Wednesday"].ToString()));
+                    t.Append(cellUnit.Render(cssClass));
 					if (!_excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -346,7 +383,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Thursday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
 
 					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Thursday"].ToString() + "</td>");
-					t.Append(dr["Thursday"].ToString());
+                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Thursday"].ToString()));
+                    t.Append(cellUnit.Render(cssClass));
 					if (!_excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -359,7 +397,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Friday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
 
 					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Friday"].ToString() + "</td>");
-					t.Append(dr["Friday"].ToString());
+                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Friday"].ToString()));
+                    t.Append(cellUnit.Render(cssClass));
 					if (!_excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -372,7 +411,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Saturday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
 
 					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Saturday"].ToString() + "</td>");
-					t.Append(dr["Saturday"].ToString());
+                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Saturday"].ToString()));
+                    t.Append(cellUnit.Render(cssClass));
 					if (!_excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
@@ -385,7 +425,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Sunday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
 
 					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Sunday"].ToString() + "</td>");
-					t.Append(dr["Sunday"].ToString());
+                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Sunday"].ToString()));
+                    t.Append(cellUnit.Render(cssClass));
 					if (!_excel && !isTvNatThematiques)
 						t.Append("</a>");
 				}
