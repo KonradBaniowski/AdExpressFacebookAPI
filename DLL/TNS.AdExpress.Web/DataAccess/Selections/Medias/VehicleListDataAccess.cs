@@ -1082,7 +1082,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 		protected string GetSqlQuery(WebSession webSession) {
 			string sql = "";
 			#region Variables
-			bool premier=true;
+			//bool premier=true;
 			#endregion
 
 			
@@ -1094,6 +1094,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
 					|| webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
 				isRecap = true;
+
+			int activationCode = (isRecap) ? DBConstantes.ActivationValues.DEAD : DBConstantes.ActivationValues.UNACTIVATED;
 
 			if (isRecap) {
 				vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapVehicle);
@@ -1123,10 +1125,10 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			if (!isRecap) sql += " and " + basicMediaTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
 			sql += " and " + mediaTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
 			// Activation
-			sql += " and " + vehicleTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
-			sql += " and " + categoryTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
-			if (!isRecap) sql += " and " + basicMediaTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
-			sql += " and " + mediaTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
+			sql += " and " + vehicleTable.Prefix + ".activation<" + activationCode;
+			sql += " and " + categoryTable.Prefix + ".activation<" + activationCode;
+			if (!isRecap) sql += " and " + basicMediaTable.Prefix + ".activation<" + activationCode;
+			sql += " and " + mediaTable.Prefix + ".activation<" + activationCode;
 
 			// Jointure
 			if (isRecap) {
