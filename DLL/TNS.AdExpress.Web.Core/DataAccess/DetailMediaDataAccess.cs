@@ -43,17 +43,17 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
 
             #region Requête
 			try {
-				sql.Append("Select distinct " + detailLevel.DataBaseIdField + "," + detailLevel.DataBaseField + ", id_media , media");
+				sql.Append("Select distinct " + detailLevel.DataBaseIdField + "," + detailLevel.DataBaseField + ", id_media , media, activation");
 				sql.Append(" from " + WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia).Sql + webSession.DataLanguage + " ");
 				sql.Append(" where");
 
 				// Vehicle
 				sql.Append(" id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
 
-				//Liste des supports actifs pour Internet
+                //Liste des supports actifs pour Internet
 				if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet))
 					sql.Append(" and id_media in (" + TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID) + ")");
-				
+
 				//Condition universe media in access
 				WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 				if (module != null && module.ModuleType == WebConstantes.Module.Type.tvSponsorship)
@@ -182,7 +182,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             #endregion
 
             #region Requête
-            sql.Append("Select distinct " + detailLevel.DataBaseIdField + ", " + detailLevel.DataBaseField + " , id_media , media");
+            sql.Append("Select distinct " + detailLevel.DataBaseIdField + ", " + detailLevel.DataBaseField + " , id_media , media, activation");
             sql.Append(" from " + WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia).Sql + webSession.DataLanguage + " ");
             sql.Append(" where");
 

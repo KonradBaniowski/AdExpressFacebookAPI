@@ -24,7 +24,7 @@ using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
-
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -393,6 +393,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				int counter=0;
 				string insertLabel=string.Empty;
 				int labelIndex=0;
+                string cssTextItem = "txtViolet10";
 				#endregion
 
 				if(!isEmptyList){
@@ -403,162 +404,159 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 					insertIndex = t.Length;
 					t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+textOpenclose+"</a>");	
-					//				t.Append("<td><tr>");
+					//t.Append("<td><tr>");
 				}
 
                 t.Append("<tr class=\"whiteBackGround\"><td  vAlign=\"top\"><table >");
                 t.Append("<tr><td vAlign=\"top\" class=\"whiteBackGround\">");
 
-				
 				if(dsListMedia!=null && !isEmptyList && IsMediaFound(keyWord,eventButton,isEmptyList)){
-					foreach(DataRow currentRow in dsListMedia.Tables[0].Rows){								
-										
-							#region Foreach 		
-							counter+=1;
-							idParent=(Int64)currentRow[0];
-							textParent=currentRow[1].ToString();		
-						
-							if(start!=0) {
-								idParentDiv=idParent;
-							}
-							//to maintain the state of the list 
-							if(idParentDiv!=idParent) {
-								t.Insert(displayIndex, displayDiv);
-								displayDiv="None";
-								idParentDiv=idParent;
-							}
+                    foreach(DataRow currentRow in dsListMedia.Tables[0].Rows) {
 
+                        #region Foreach
+                        counter += 1;
+                        idParent = (Int64)currentRow[0];
+                        textParent = currentRow[1].ToString();
 
-							if(idParentOld!=idParent && start==0){																	
-								if(nbColumn!=0){
-									t.Append("</tr>");
-									nbColumn=0;
-								}
-								t.Append("</table>");
-								t.Append("</div>");
-                                t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=645>");
-								t.Append("<tr onClick=\"DivDisplayer('"+idParent+"Ct"+"');\" class=\"cursorHand\">");
-								t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
-								//t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
-								t.Append("<label>  ");
-								t.Append("&nbsp;&nbsp;"+currentRow[1].ToString()+"");
-								t.Append("</label>");
-								t.Append("</td>");
-                                t.Append("<td class=\"arrowBackGround\"></td>");		
-								t.Append("</tr>");
-								t.Append("</table>");
-                                t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY:");
-								displayIndex=t.Length;
-								t.Append("; WIDTH: 100%\">");
-								t.Append("<table id="+idParent+" class=\"violetBorderWithoutTop paleVioletBackGround\" width=645>");
-								t.Append("<tr><td colspan=\"3\"><a href=# style=\"TEXT-DECORATION: none\" class=\"roll04\" onclick=\"allSelection('"+idParent+"',"+i+")\" ID=\""+currentRow[0]+"\">");
-								t.Append(GestionWeb.GetWebWord(1066,webSession.SiteLanguage));
-								t.Append("</a></td></tr>");
-								vhList=vhList+(Int64)currentRow[0]+"Ct"+",";
-								idParentOld=idParent;
-								textParentOld=textParent;
-							
-							}
-							//Premier	
-							if(idParentOld!=idParent && start!=0){
+                        if(start != 0) {
+                            idParentDiv = idParent;
+                        }
+                        //to maintain the state of the list 
+                        if(idParentDiv != idParent) {
+                            t.Insert(displayIndex, displayDiv);
+                            displayDiv = "None";
+                            idParentDiv = idParent;
+                        }
 
-                                t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=645>");
-								t.Append("<tr onClick=\"DivDisplayer('"+idParent+"Ct"+"');\" class=\"cursorHand\" >");
-								//							t.Append("<tr onClick=\"showHideContent('"+idParent+"');\" style=\"cursor : hand\" >");
-								t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
-								//		t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
-								t.Append("<label>");
-								t.Append("&nbsp;&nbsp;"+currentRow[1].ToString()+"");
-								t.Append("</label>");
-								t.Append("</td>");
-                                t.Append("<td class=\"arrowBackGround\"></td>");	
-								t.Append("</tr>");
-								t.Append("</table>");
-                                t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: ");
-								displayIndex=t.Length;
-								t.Append("; WIDTH: 100%\" >");
-                                t.Append("<table id=" + idParent + " class =\"violetBorderWithoutTop paleVioletBackGround\" width=645>");
-								t.Append("<tr><td colspan=\"3\"><a href=# class=\"roll04\" style=\"TEXT-DECORATION: none\" onclick=\"allSelection('"+idParent+"',"+i+")\" ID=\""+currentRow[0]+"\">");
-								t.Append(GestionWeb.GetWebWord(1066,webSession.SiteLanguage));
-								t.Append("</a></td></tr>");	
-								idParentOld=idParent;
-								textParentOld=textParent;
-								vhList=vhList+(Int64)currentRow[0]+"Ct"+",";
-								start=0;
-							
-							}
-					
-							#region Affichage des fils
-				
-							checkBox="";
-							disabled="";
-							if(tabListMedia!=null){
-								foreach(string item1  in tabListMedia){
-									if(item1==currentRow[2].ToString()){
-										checkBox="checked";
-									
-										break;
-									}
-								}
-							}
-							int j=1;
-							while(j<=webSession.CompetitorUniversMedia.Count){
+                        if(idParentOld != idParent && start == 0) {
+                            if(nbColumn != 0) {
+                                t.Append("</tr>");
+                                nbColumn = 0;
+                            }
+                            t.Append("</table>");
+                            t.Append("</div>");
+                            t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=645>");
+                            t.Append("<tr onClick=\"DivDisplayer('" + idParent + "Ct" + "');\" class=\"cursorHand\">");
+                            t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
+                            //t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
+                            t.Append("<label>  ");
+                            t.Append("&nbsp;&nbsp;" + currentRow[1].ToString() + "");
+                            t.Append("</label>");
+                            t.Append("</td>");
+                            t.Append("<td class=\"arrowBackGround\"></td>");
+                            t.Append("</tr>");
+                            t.Append("</table>");
+                            t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY:");
+                            displayIndex = t.Length;
+                            t.Append("; WIDTH: 100%\">");
+                            t.Append("<table id=" + idParent + " class=\"violetBorderWithoutTop paleVioletBackGround\" width=645>");
+                            t.Append("<tr><td colspan=\"3\"><a href=# style=\"TEXT-DECORATION: none\" class=\"roll04\" onclick=\"allSelection('" + idParent + "'," + i + ")\" ID=\"" + currentRow[0] + "\">");
+                            t.Append(GestionWeb.GetWebWord(1066, webSession.SiteLanguage));
+                            t.Append("</a></td></tr>");
+                            vhList = vhList + (Int64)currentRow[0] + "Ct" + ",";
+                            idParentOld = idParent;
+                            textParentOld = textParent;
+                        }
 
-                                System.Windows.Forms.TreeNode competitorMedia = (System.Windows.Forms.TreeNode)webSession.CompetitorUniversMedia[j];
-                                foreach (System.Windows.Forms.TreeNode item2 in competitorMedia.Nodes)
-                                {
-									if(((LevelInformation)item2.Tag).ID==(long)currentRow[2]){
-										disabled="disabled";
-										checkBox="checked";
-										displayDiv="''";
-										break;
-									}
-								}
-								j++;
-							}
+                        //Premier	
+                        if(idParentOld != idParent && start != 0) {
+                            t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=645>");
+                            t.Append("<tr onClick=\"DivDisplayer('" + idParent + "Ct" + "');\" class=\"cursorHand\" >");
+                            //t.Append("<tr onClick=\"showHideContent('"+idParent+"');\" style=\"cursor : hand\" >");
+                            t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
+                            //t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
+                            t.Append("<label>");
+                            t.Append("&nbsp;&nbsp;" + currentRow[1].ToString() + "");
+                            t.Append("</label>");
+                            t.Append("</td>");
+                            t.Append("<td class=\"arrowBackGround\"></td>");
+                            t.Append("</tr>");
+                            t.Append("</table>");
+                            t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: ");
+                            displayIndex = t.Length;
+                            t.Append("; WIDTH: 100%\" >");
+                            t.Append("<table id=" + idParent + " class =\"violetBorderWithoutTop paleVioletBackGround\" width=645>");
+                            t.Append("<tr><td colspan=\"3\"><a href=# class=\"roll04\" style=\"TEXT-DECORATION: none\" onclick=\"allSelection('" + idParent + "'," + i + ")\" ID=\"" + currentRow[0] + "\">");
+                            t.Append(GestionWeb.GetWebWord(1066, webSession.SiteLanguage));
+                            t.Append("</a></td></tr>");
+                            idParentOld = idParent;
+                            textParentOld = textParent;
+                            vhList = vhList + (Int64)currentRow[0] + "Ct" + ",";
+                            start = 0;
+                        }
 
+                        #region Affichage des fils
+                        checkBox = "";
+                        disabled = "";
+                        if(tabListMedia != null) {
+                            foreach(string item1 in tabListMedia) {
+                                if(item1 == currentRow[2].ToString()) {
+                                    checkBox = "checked";
+                                    break;
+                                }
+                            }
+                        }
+                        int j = 1;
+                        while(j <= webSession.CompetitorUniversMedia.Count) {
 
-				
-							// Milieu
-							if(nbColumn==2){				
-								t.Append("<td class=\"txtViolet10\" width=215>");
-								t.Append("<input type=\"checkbox\" "+checkBox+" "+disabled+" ID=\"AdvertiserSelectionWebControl1_"+i+"\" value="+idParent+" name=\"AdvertiserSelectionWebControl1$"+i+"\"><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
-								t.Append("</td>");
-								nbColumn=1;
-								i++;
-					
-							}
-								// Dernier
-							else if(nbColumn==1 ){
-								t.Append("<td class=\"txtViolet10\" width=215>");								
-								t.Append("<input type=\"checkbox\" "+checkBox+" "+disabled+" ID=\"AdvertiserSelectionWebControl1_"+i+"\"  value="+idParent+"  name=\"AdvertiserSelectionWebControl1$"+i+"\"><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
-								t.Append("</td>");								
-								t.Append("</tr>");
-								nbColumn=0;
-								i++;	
-					
-							}
-								// Premier
-							else {
-								t.Append("<tr>");
-								t.Append("<td class=\"txtViolet10\" width=215>");
-								t.Append("<input type=\"checkbox\" "+checkBox+" "+disabled+" ID=\"AdvertiserSelectionWebControl1_"+i+"\" value="+idParent+" name=\"AdvertiserSelectionWebControl1$"+i+"\"><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
-								t.Append("</td>");								
-								nbColumn=2;
-								i++;
-							}
-							#endregion
-							//To maintain the state of the list when its the last div as it wont be handeled by the first check
-							if(idParentDiv==idParent&&dsListMedia.Tables[0].Rows.Count==counter) {
-								t.Insert(displayIndex, displayDiv);
-								displayDiv="None";
-								idParentDiv=idParent;
-							}
-						
-							#endregion
-						
-						
-					}
+                            System.Windows.Forms.TreeNode competitorMedia = (System.Windows.Forms.TreeNode)webSession.CompetitorUniversMedia[j];
+                            foreach(System.Windows.Forms.TreeNode item2 in competitorMedia.Nodes) {
+                                if(((LevelInformation)item2.Tag).ID == (long)currentRow[2]) {
+                                    disabled = "disabled";
+                                    checkBox = "checked";
+                                    displayDiv = "''";
+                                    break;
+                                }
+                            }
+                            j++;
+                        }
+
+                        // Milieu
+                        if(nbColumn == 2) {
+                            cssTextItem = int.Parse(currentRow[4].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
+
+                            t.Append("<td class=\"" + cssTextItem + "\" width=215>");
+                            t.Append("<input type=\"checkbox\" " + checkBox + " " + disabled + " ID=\"AdvertiserSelectionWebControl1_" + i + "\" value=" + idParent + " name=\"AdvertiserSelectionWebControl1$" + i + "\"><label for=\"AdvertiserSelectionWebControl1_" + i + "\">" + currentRow[3].ToString() + "<br></label>");
+                            t.Append("</td>");
+                            nbColumn = 1;
+                            i++;
+
+                        }
+                        // Dernier
+                        else if(nbColumn == 1) {
+                            cssTextItem = int.Parse(currentRow[4].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
+
+                            t.Append("<td class=\"" + cssTextItem + "\" width=215>");
+                            t.Append("<input type=\"checkbox\" " + checkBox + " " + disabled + " ID=\"AdvertiserSelectionWebControl1_" + i + "\"  value=" + idParent + "  name=\"AdvertiserSelectionWebControl1$" + i + "\"><label for=\"AdvertiserSelectionWebControl1_" + i + "\">" + currentRow[3].ToString() + "<br></label>");
+                            t.Append("</td>");
+                            t.Append("</tr>");
+                            nbColumn = 0;
+                            i++;
+
+                        }
+                        // Premier
+                        else {
+                            cssTextItem = int.Parse(currentRow[4].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
+
+                            t.Append("<tr>");
+                            t.Append("<td class=\"" + cssTextItem + "\" width=215>");
+                            t.Append("<input type=\"checkbox\" " + checkBox + " " + disabled + " ID=\"AdvertiserSelectionWebControl1_" + i + "\" value=" + idParent + " name=\"AdvertiserSelectionWebControl1$" + i + "\"><label for=\"AdvertiserSelectionWebControl1_" + i + "\">" + currentRow[3].ToString() + "<br></label>");
+                            t.Append("</td>");
+                            nbColumn = 2;
+                            i++;
+                        }
+                        #endregion
+
+                        //To maintain the state of the list when its the last div as it wont be handeled by the first check
+                        if(idParentDiv == idParent && dsListMedia.Tables[0].Rows.Count == counter) {
+                            t.Insert(displayIndex, displayDiv);
+                            displayDiv = "None";
+                            idParentDiv = idParent;
+                        }
+
+                        #endregion
+
+                    }
 				
 					if(dsListMedia.Tables[0].Rows.Count!=0){
 						if(nbColumn!=0){
@@ -571,6 +569,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						t.Append("</table></div>");
 					}
 				}
+
 				#region  Message d'erreurs
 				// Message d'erreur : veuillez saisir 2 caractères minimums
 				if(keyWord.Length<2 && keyWord.Length>0 && eventButton==constEvent.eventSelection.OK_EVENT){
@@ -605,6 +604,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					}
 				}
 				#endregion
+
 				int listLenght=0;
 				if (vhList!=""){
 					t.Append("</td></tr></table></td></tr>");			
@@ -655,7 +655,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		}
 		#endregion
 
-		#region création de l'arbre
+		#region Création de l'arbre
 		/// <summary>
 		/// Création de l'arbre à partir de la liste des Items
 		/// </summary>
@@ -667,7 +667,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			int compteurChild=0;		
 				
 			foreach(System.Web.UI.WebControls.ListItem currentItem in this.Items){
-				#region foreach				
+				#region foreach
 				string[] tabParent=currentItem.Text.Split('_') ;
 				if(tabParent[0]=="Children"  && currentItem.Selected){
 					tmpNode=new System.Windows.Forms.TreeNode(tabParent[1]);						
@@ -768,7 +768,6 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			return true;
 		}
 		#endregion
-
 
 		#endregion
 		

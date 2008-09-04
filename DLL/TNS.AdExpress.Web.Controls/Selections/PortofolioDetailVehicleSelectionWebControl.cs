@@ -23,6 +23,7 @@ using constEvent=TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -131,6 +132,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             int i = 0;
             string insertLabel = string.Empty;
             int labelIndex = 0;
+            string cssTextItem = "txtViolet10";
             #endregion
 
             //Tableau global
@@ -149,7 +151,6 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 foreach (DataRow currentRow in _dsListMedia.Tables[0].Rows) {
 
                     #region Foreach
-
                     idParent = (Int64)currentRow[0];
                     textParent = currentRow[1].ToString();
 
@@ -184,7 +185,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                         t.Append("<table class=\"listMediaBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=645>");
                         t.Append("<tr onClick=\"DivDisplayer('" + idParent + "Ct" + "');\" class=\"cursorHand\" >");
                         t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"arrowBackGround\">");
-                        //		t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
+                        //t.Append("<input type=\"checkbox\"  onclick=\"integration('"+idParent+"',"+i+")\" ID=\"AdvertiserSelectionWebControl1_"+i+"\" name=\"AdvertiserSelectionWebControl1:"+i+"\">");
                         t.Append("<label class=\"txtNowrap\">");
                         t.Append("&nbsp;&nbsp;" + currentRow[1].ToString() + "");
                         t.Append("</label>");
@@ -205,8 +206,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     #region Affichage des fils
                     // Milieu
                     if (nbColumn == 2) {
-                        t.Append("<td class=\"txtViolet10\" width=215>");
-                        //		t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
+                        cssTextItem = int.Parse(currentRow[4].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
+
+                        t.Append("<td class=\"" + cssTextItem + "\" width=215>");
+                        //t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
                         t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" />" + currentRow[3].ToString() + "<br>");
                         t.Append("</td>");
                         nbColumn = 1;
@@ -215,8 +218,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     }
                     // Dernier
                     else if (nbColumn == 1) {
-                        t.Append("<td class=\"txtViolet10\" width=215>");
-                        //	t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
+                        cssTextItem = int.Parse(currentRow[4].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
+
+                        t.Append("<td class=\"" + cssTextItem + "\" width=215>");
+                        //t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
                         t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" value=\"" + currentRow[2] + "\" />" + currentRow[3].ToString() + "<br>");
                         t.Append("</td>");
                         t.Append("</tr>");
@@ -226,9 +231,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     }
                     // Premier
                     else {
+                        cssTextItem = int.Parse(currentRow[4].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
+
                         t.Append("<tr>");
-                        t.Append("<td class=\"txtViolet10\" width=215>");
-                        //	t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
+                        t.Append("<td class=\"" + cssTextItem + "\" width=215>");
+                        //t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
                         t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" />" + currentRow[3].ToString() + "<br>");
                         t.Append("</td>");
                         nbColumn = 2;
