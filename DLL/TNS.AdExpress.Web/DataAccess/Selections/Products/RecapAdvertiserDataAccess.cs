@@ -65,11 +65,13 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			#endregion
 
 			#region from
-			sql.Append(" from " + DBCst.Schema.RECAP_SCHEMA + ".advertiser " + DBCst.Tables.ADVERTISER_PREFIXE);
-			sql.Append(" ," + DBCst.Schema.RECAP_SCHEMA + ".product " + DBCst.Tables.PRODUCT_PREFIXE);
-			sql.Append(" ," + DBCst.Schema.RECAP_SCHEMA + ".segment " + DBCst.Tables.SEGMENT_PREFIXE);
-			sql.Append(" ," + DBCst.Schema.RECAP_SCHEMA + ".group_ " + DBCst.Tables.GROUP_PREFIXE);
-			sql.Append(" ," + DBCst.Schema.RECAP_SCHEMA + ".holding_company " + DBCst.Tables.HOLDING_PREFIXE);
+            sql.AppendFormat(" from {0}.advertiser {1}, {0}.product {2}, {0}.segment {3}, {0}.group_ {4}, {0}.holding_company {5} "
+                , WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.recap01).Label
+                , DBCst.Tables.ADVERTISER_PREFIXE
+                , DBCst.Tables.PRODUCT_PREFIXE
+                , DBCst.Tables.SEGMENT_PREFIXE
+                , DBCst.Tables.GROUP_PREFIXE
+                , DBCst.Tables.HOLDING_PREFIXE);
 
 			#endregion
 

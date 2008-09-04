@@ -99,12 +99,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #region Where
 
             #region  Joins
-            sql.AppendFormat(" {0}.id_advertiser={1}.id_advertiser and {1}.id_language={2}", dataTable.Prefix, _recapAdvertiser.Prefix, _session.SiteLanguage);
+            sql.AppendFormat(" {0}.id_advertiser={1}.id_advertiser and {1}.id_language={2}", dataTable.Prefix, _recapAdvertiser.Prefix, _session.DataLanguage);
             if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && !withAdvertisers && !withRights)
             {
-                sql.AppendFormat(" and {0}.id_sector={1}.id_sector and {1}.id_language={2}", dataTable.Prefix, _recapSector.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_sector={1}.id_sector and {1}.id_language={2}", dataTable.Prefix, _recapSector.Prefix, _session.DataLanguage);
             }
-            sql.AppendFormat(" and {0}.id_product={1}.id_product and {1}.id_language={2}", dataTable.Prefix, _recapProduct.Prefix, _session.SiteLanguage);
+            sql.AppendFormat(" and {0}.id_product={1}.id_product and {1}.id_language={2}", dataTable.Prefix, _recapProduct.Prefix, _session.DataLanguage);
             #endregion
 
             #region Media selection
@@ -277,7 +277,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #region Joins
             if (withAdvertisers)
             {
-                sql.AppendFormat(" {0}.id_advertiser={1}.id_advertiser and {1}.id_language={2} and", dataTable.Prefix, _recapAdvertiser.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" {0}.id_advertiser={1}.id_advertiser and {1}.id_language={2} and", dataTable.Prefix, _recapAdvertiser.Prefix, _session.DataLanguage);
             }
             #endregion
 
@@ -403,15 +403,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 //Evolution N/N-1
                 if (_session.ComparativeStudy)
                 {
-                    sql.Append(", decode(request1.Total_N1,0,-1,ROUND(((request1.Total_N/request1.Total_N1)*100)-100,0)) as evol");
+                    sql.AppendFormat(", decode(request1.Total_N{1},0,-1,ROUND(((request1.Total_N{0}/request1.Total_N{1})*100)-100,0)) as evol", _strYearId, _strYearN1Id);
                 }
-                sql.Append(", round((request1.Total_N/request1.nbref)) as budget_moyen");
+                sql.AppendFormat(", round((request1.Total_N{0}/request1.nbref)) as budget_moyen", _strYearId);
                 sql.AppendFormat(", {0}.product", _recapProduct.Prefix);
                 sql.AppendFormat(", {0}.advertiser", _recapAdvertiser.Prefix);
                 sql.AppendFormat(", pkg_recap_test.FIRST_PRODUCT_INVEST(request1.id_product,'exp_euro_N{0}_{1}','{2}') as INVESTMENT_PRODUCT", _strYearId, i, dataTable.Label);
                 sql.AppendFormat(", pkg_recap_test.FIRST_ADVERTISER_INVEST(request1.id_advertiser,'exp_euro_N{0}_{1}','{2}') as INVESTMENT_ADVERTISER", _strYearId, i, dataTable.Label);
-                sql.AppendFormat(", ROUND((pkg_recap_test.FIRST_PRODUCT_INVEST(request1.id_product,'exp_euro_N{0}_{1}','{2}')/request1.Total_N)*100,3) as SOV_FIRST_PRODUCT", _strYearId, i, dataTable.Label);
-                sql.AppendFormat(", ROUND((pkg_recap_test.FIRST_ADVERTISER_INVEST(request1.id_advertiser,'exp_euro_N{0}_{1}','{2}')/request1.Total_N)*100,3) as SOV_FIRST_ADVERTISER", _strYearId, i, dataTable.Label);
+                sql.AppendFormat(", ROUND((pkg_recap_test.FIRST_PRODUCT_INVEST(request1.id_product,'exp_euro_N{0}_{1}','{2}')/request1.Total_N{3})*100,3) as SOV_FIRST_PRODUCT", _strYearId, i, dataTable.Label, _strYearId);
+                sql.AppendFormat(", ROUND((pkg_recap_test.FIRST_ADVERTISER_INVEST(request1.id_advertiser,'exp_euro_N{0}_{1}','{2}')/request1.Total_N{3})*100,3) as SOV_FIRST_ADVERTISER", _strYearId, i, dataTable.Label, _strYearId);
                 #endregion
 
                 sql.Append(" from (");
@@ -497,8 +497,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
                 #region Where
 
-                sql.AppendFormat(" {0}.id_advertiser=request1.id_advertiser and {0}.id_language={1}", _recapAdvertiser.Prefix, _session.SiteLanguage);
-                sql.AppendFormat(" and {0}.id_product=request1.id_product and {0}.id_language={1}", _recapProduct.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" {0}.id_advertiser=request1.id_advertiser and {0}.id_language={1}", _recapAdvertiser.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.id_product=request1.id_product and {0}.id_language={1}", _recapProduct.Prefix, _session.DataLanguage);
 
                 #endregion
 

@@ -85,11 +85,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
             sql.Append(" where  ");
             sql.AppendFormat(" {0}.id_advertiser={1}.id_advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
-            sql.AppendFormat(" and {0}.id_language={1}", _recapAdvertiser.Prefix, _session.SiteLanguage);
+            sql.AppendFormat(" and {0}.id_language={1}", _recapAdvertiser.Prefix, _session.DataLanguage);
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
                 sql.AppendFormat(" and {0}.id_product={1}.id_product", dataTable.Prefix, _recapProduct.Prefix);
-                sql.AppendFormat(" and {0}.id_language={1}", _recapProduct.Prefix, _session.SiteLanguage);
+                sql.AppendFormat(" and {0}.id_language={1}", _recapProduct.Prefix, _session.DataLanguage);
             }
 
             //Media Selection

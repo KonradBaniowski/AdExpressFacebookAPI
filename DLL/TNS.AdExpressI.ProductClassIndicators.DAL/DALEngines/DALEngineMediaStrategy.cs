@@ -75,14 +75,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 			//Media Field
             sql.AppendFormat(" {0}.id_vehicle, {0}.vehicle", _recapVehicle.Prefix);
             sqlFrom.AppendFormat("{0}, {1}", dataTable.SqlWithPrefix, _recapVehicle.SqlWithPrefix);
-            sqlJoin.AppendFormat(" {0}.id_vehicle = {1}.id_vehicle and {1}.id_language = {2}", dataTable.Prefix, _recapVehicle.Prefix, _session.SiteLanguage);
+            sqlJoin.AppendFormat(" {0}.id_vehicle = {1}.id_vehicle and {1}.id_language = {2}", dataTable.Prefix, _recapVehicle.Prefix, _session.DataLanguage);
             sqlGroup.AppendFormat(" {0}.id_vehicle, {0}.vehicle", _recapVehicle.Prefix);
             sqlOrder.AppendFormat(" {0}.id_vehicle, {0}.vehicle", _recapVehicle.Prefix);
             if (_session.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory)
             {
                 sql.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapCategory.SqlWithPrefix);
-                sqlJoin.AppendFormat(" and {0}.id_category = {1}.id_category and {1}.id_language = {2}", dataTable.Prefix, _recapCategory.Prefix, _session.SiteLanguage);
+                sqlJoin.AppendFormat(" and {0}.id_category = {1}.id_category and {1}.id_language = {2}", dataTable.Prefix, _recapCategory.Prefix, _session.DataLanguage);
                 sqlGroup.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
                 sqlOrder.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
             }
@@ -90,8 +90,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             {
                 sql.AppendFormat(", {0}.id_category, {0}.category, {1}.id_media, {1}.media", _recapCategory.Prefix, _recapMedia.Prefix);
                 sqlFrom.AppendFormat(", {0}, {1}", _recapCategory.SqlWithPrefix, _recapMedia.SqlWithPrefix);
-                sqlJoin.AppendFormat(" and {0}.id_media = {1}.id_media and {1}.id_language = {2}", dataTable.Prefix, _recapMedia.Prefix, _session.SiteLanguage);
-                sqlJoin.AppendFormat(" and {0}.id_category = {1}.id_category and {1}.id_language = {2}", _recapMedia.Prefix, _recapCategory.Prefix, _session.SiteLanguage);
+                sqlJoin.AppendFormat(" and {0}.id_media = {1}.id_media and {1}.id_language = {2}", dataTable.Prefix, _recapMedia.Prefix, _session.DataLanguage);
+                sqlJoin.AppendFormat(" and {0}.id_category = {1}.id_category and {1}.id_language = {2}", _recapMedia.Prefix, _recapCategory.Prefix, _session.DataLanguage);
                 sqlGroup.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
                 sqlOrder.AppendFormat(", {0}.id_category, {0}.category", _recapCategory.Prefix);
                 sqlGroup.AppendFormat(", {0}.id_media, {0}.media", _recapMedia.Prefix);
@@ -103,7 +103,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             {
                 sql.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
-                sqlJoin.AppendFormat(" and {0}.id_product = {1}.id_product and {1}.id_language = {2}", dataTable.Prefix, _recapProduct.Prefix, _session.SiteLanguage);
+                sqlJoin.AppendFormat(" and {0}.id_product = {1}.id_product and {1}.id_language = {2}", dataTable.Prefix, _recapProduct.Prefix, _session.DataLanguage);
                 sqlGroup.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
                 sqlOrder.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
             }
@@ -111,7 +111,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             {
                 sql.AppendFormat(", {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapAdvertiser.SqlWithPrefix);
-                sqlJoin.AppendFormat(" and {0}.id_advertiser = {1}.id_advertiser and {1}.id_language = {2}", dataTable.Prefix, _recapAdvertiser.Prefix, _session.SiteLanguage);
+                sqlJoin.AppendFormat(" and {0}.id_advertiser = {1}.id_advertiser and {1}.id_language = {2}", dataTable.Prefix, _recapAdvertiser.Prefix, _session.DataLanguage);
                 sqlGroup.AppendFormat(", {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
                 sqlOrder.AppendFormat(", {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
             }
@@ -275,7 +275,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             {
                 sql.AppendFormat(" {0}.id_product, {0}.product", _recapProduct.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
-                sqlJoin.AppendFormat(" {0}.id_product = {1}.id_product and {1}.id_language = {2}", dataTable.Prefix, _recapProduct.Prefix, _session.SiteLanguage);
+                sqlJoin.AppendFormat(" {0}.id_product = {1}.id_product and {1}.id_language = {2}", dataTable.Prefix, _recapProduct.Prefix, _session.DataLanguage);
                 sqlGroup.AppendFormat("{0}.id_product, {0}.product", _recapProduct.Prefix);
                 sqlOrder.AppendFormat("{0}.id_product, {0}.product", _recapProduct.Prefix);
             }
@@ -283,7 +283,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             {
                 sql.AppendFormat(" {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
                 sqlFrom.AppendFormat(", {0}", _recapAdvertiser.SqlWithPrefix);
-                sqlJoin.AppendFormat(" {0}.id_advertiser = {1}.id_advertiser and {1}.id_language = {2}", dataTable.Prefix, _recapAdvertiser.Prefix, _session.SiteLanguage);
+                sqlJoin.AppendFormat(" {0}.id_advertiser = {1}.id_advertiser and {1}.id_language = {2}", dataTable.Prefix, _recapAdvertiser.Prefix, _session.DataLanguage);
                 sqlGroup.AppendFormat("{0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
                 sqlOrder.AppendFormat("{0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
             }

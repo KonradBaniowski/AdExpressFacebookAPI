@@ -375,7 +375,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             sql.AppendFormat(" from {0}, ", dataTable.SqlWithPrefix);
             sql.AppendFormat(" {0}", _recapSector.SqlWithPrefix);
             sql.AppendFormat(" where {0}.id_sector={1}.id_sector", dataTable.Prefix, _recapSector.Prefix);
-            sql.AppendFormat(" and {0}.id_language={1}", _recapSector.Prefix, _session.SiteLanguage);
+            sql.AppendFormat(" and {0}.id_language={1}", _recapSector.Prefix, _session.DataLanguage);
 
             if (totalType == CstComparaisonCriterion.sectorTotal)
             {

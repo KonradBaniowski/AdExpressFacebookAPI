@@ -33,14 +33,18 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			
 			#region Construction de la requête
 			string sql="";
+            string shema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
 			sql+=" select "+TablesDBConstantes.SECTOR_PREFIXE+".id_sector,"+TablesDBConstantes.SECTOR_PREFIXE+".sector,"+TablesDBConstantes.SUBSECTOR_PREFIXE+".id_subsector,"+TablesDBConstantes.SUBSECTOR_PREFIXE+".subsector,"+TablesDBConstantes.GROUP_PREFIXE+".id_group_,"+TablesDBConstantes.GROUP_PREFIXE+".group_,"+TablesDBConstantes.SEGMENT_PREFIXE+".id_segment,"+TablesDBConstantes.SEGMENT_PREFIXE+".segment";
-			sql+=" from sector "+TablesDBConstantes.SECTOR_PREFIXE+", subsector "+TablesDBConstantes.SUBSECTOR_PREFIXE+",group_ "+TablesDBConstantes.GROUP_PREFIXE+",segment "+TablesDBConstantes.SEGMENT_PREFIXE+"";
+            sql += " from " + shema + ".sector " + TablesDBConstantes.SECTOR_PREFIXE 
+                + ", " + shema + ".subsector " + TablesDBConstantes.SUBSECTOR_PREFIXE
+                + ", " + shema + ".group_ " + TablesDBConstantes.GROUP_PREFIXE
+                + ", " + shema + ".segment " + TablesDBConstantes.SEGMENT_PREFIXE + "";
 			sql+=" Where";
 			// Langue
-			sql+=" "+TablesDBConstantes.SECTOR_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();
-			sql+=" and "+TablesDBConstantes.SUBSECTOR_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();
-			sql+=" and "+TablesDBConstantes.GROUP_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();
-			sql+=" and "+TablesDBConstantes.SEGMENT_PREFIXE+".id_language="+webSession.SiteLanguage.ToString();
+			sql+=" "+TablesDBConstantes.SECTOR_PREFIXE+".id_language="+webSession.DataLanguage.ToString();
+            sql += " and " + TablesDBConstantes.SUBSECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
+            sql += " and " + TablesDBConstantes.GROUP_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
+            sql += " and " + TablesDBConstantes.SEGMENT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString();
 			// Activation
 			sql+=" and "+TablesDBConstantes.SECTOR_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
 			sql+=" and "+TablesDBConstantes.SUBSECTOR_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
