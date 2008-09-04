@@ -768,7 +768,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					//list.Items.Add(new ListItem(GestionWeb.GetWebWord((int)SessionCst.UnitsTraductionCodes[(SessionCst.Unit)units[i]],customerWebSession.SiteLanguage) ,((int)(SessionCst.Unit)units[i]).ToString()));
                     list.Items.Add(new ListItem(GestionWeb.GetWebWord(UnitsInformation.List[(SessionCst.Unit)units[i]].WebTextId, customerWebSession.SiteLanguage), UnitsInformation.List[(SessionCst.Unit)units[i]].Id.ToString()));
 				}
-				list.Items.FindByValue(((int)customerWebSession.Unit).ToString()).Selected=true;
+				list.Items.FindByValue(customerWebSession.GetSelectedUnit().Id.ToString()).Selected=true;
 
 				Controls.Add(list);
 			}
