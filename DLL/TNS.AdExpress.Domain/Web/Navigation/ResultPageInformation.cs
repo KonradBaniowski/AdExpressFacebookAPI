@@ -148,10 +148,11 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// </summary>
         public MediaItemsList AllowedMediaUniverse {
             get {
-                if(_allowedMediaUniverse==null) {
-                    if(_parentModule==null) throw (new NullReferenceException("Parent module has to be initialized"));
-                    return (_parentModule.AllowedMediaUniverse);
-                }
+				//if(_allowedMediaUniverse==null) {
+				//    if(_parentModule==null) throw (new NullReferenceException("Parent module has to be initialized"));
+				//    return (_parentModule.AllowedMediaUniverse);
+				//}
+				SetMediaUniverse();
                 return _allowedMediaUniverse;
             }
             set { _allowedMediaUniverse=value; }
@@ -402,26 +403,135 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			bool isValidPage = true;
 			int nbValidItems = 0;
 			MediaItemsList allowedMediaUniverse = AllowedMediaUniverse;
-			if (selectedMediaUniverse != null && selectedMediaUniverse.VehicleList != null && selectedMediaUniverse.VehicleList.Length>0 ) {
-				//Determine if valid vehicles exist for current result
+			if (selectedMediaUniverse != null && selectedMediaUniverse.VehicleList != null && selectedMediaUniverse.VehicleList.Length>0 ) {				
 				if (allowedMediaUniverse != null) {
+					//Determine if valid vehicles exist for current result
 					List<Int64> vehicleList = allowedMediaUniverse.GetVehicles();
 					if (vehicleList != null && vehicleList.Count > 0) {
 						List<Int64> selectedVehicles = selectedMediaUniverse.GetVehicles();
-						if (selectedVehicles != null && selectedVehicles.Count > 0) {
-							for (int i = 0; i < selectedVehicles.Count; i++) {
-								if(vehicleList.Contains(selectedVehicles[i]))nbValidItems++;
-							}
-						}
+						nbValidItems = GetNbValidItems(selectedVehicles, vehicleList);
+					}
+					//Determine if valid categories exist for current result
+					List<Int64> categoryList = allowedMediaUniverse.GetCategories();
+					if (nbValidItems ==0 && categoryList != null && categoryList.Count > 0) {
+						List<Int64> selectedCategories = selectedMediaUniverse.GetCategories();
+						nbValidItems = GetNbValidItems(selectedCategories, categoryList);
+					}
+					//Determine if valid medias exist for current result
+					List<Int64> mediaList = allowedMediaUniverse.GetMedias();
+					if (nbValidItems == 0 && mediaList != null && mediaList.Count > 0) {
+						List<Int64> selectedMedias = selectedMediaUniverse.GetMedias();
+						nbValidItems = GetNbValidItems(selectedMedias, mediaList);
 					}
 					if(nbValidItems==0)isValidPage = false;
 				}
 			}
 			return isValidPage;
 		}
+
+		
+
 		#endregion
 
+		#region SQL Generator
+		/// <summary>
+		/// Get media universe sql conditions
+		/// </summary>
+		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
+		/// <returns>Sql conditions</returns>
+		public string GetAllowedMediaUniverseSql(bool startWithAnd) {
+			string sql = "";
+			MediaItemsList mediaList = AllowedMediaUniverse;
 
+			if (mediaList != null) {
+				sql = AllowedMediaUniverse.GetVehicleListSQL(startWithAnd);
+				sql += AllowedMediaUniverse.GetCategoryListSQL(startWithAnd);
+				sql += AllowedMediaUniverse.GetMediaListSQL(startWithAnd);
+			}
+			return sql;
+		}
+		/// <summary>
+		/// Get media universe sql conditions without prefix
+		/// </summary>
+		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
+		/// <returns>Sql conditions</returns>
+		public string GetAllowedMediaUniverseSqlWithOutPrefix(bool startWithAnd) {
+			return GetAllowedMediaUniverseSql("", startWithAnd);
+		}
+		/// <summary>
+		/// Get media universe sql conditions
+		/// </summary>
+		/// <param name="prefix">prefix</param>		
+		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
+		/// <returns>Sql conditions</returns>
+		public string GetAllowedMediaUniverseSql(string prefix, bool startWithAnd) {
+			return GetAllowedMediaUniverseSql(prefix, prefix, prefix, startWithAnd);
+		}
+		/// <summary>
+		/// Get media universe sql conditions
+		/// </summary>
+		/// <param name="vehiclePrefix">Vehicle prefix</param>
+		/// <param name="categoryPrefix">Category prefix</param>
+		/// <param name="mediaPrefix">Media prefix</param>
+		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
+		/// <returns>Sql conditions</returns>
+		public string GetAllowedMediaUniverseSql(string vehiclePrefix, string categoryPrefix, string mediaPrefix, bool startWithAnd) {
+			string sql = "";
+			MediaItemsList mediaList = AllowedMediaUniverse;
+
+			if (mediaList != null) {
+				sql = AllowedMediaUniverse.GetVehicleListSQL(startWithAnd, vehiclePrefix);
+				sql += AllowedMediaUniverse.GetCategoryListSQL(startWithAnd, categoryPrefix);
+				sql += AllowedMediaUniverse.GetMediaListSQL(startWithAnd, mediaPrefix);
+			}
+			return sql;
+
+		}
+
+		#endregion
+
+		#region Internal methods
+		/// <summary>
+		/// Define media universe
+		/// </summary>
+		protected void SetMediaUniverse() {
+			string res = "";
+			//Set vehicle list
+			if (_allowedMediaUniverse == null) {
+				if (_parentModule == null) throw (new NullReferenceException("Parent module has to be initialized"));
+				_allowedMediaUniverse = _parentModule.AllowedMediaUniverse;
+			}
+			else {
+				string vehicles = _allowedMediaUniverse.VehicleList;
+				if (vehicles != null && vehicles.Length > 0) {
+					List<Int64> vehicleList = new List<Int64>(Array.ConvertAll<string, Int64>(vehicles.Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
+					for (int i = 0; i < vehicleList.Count; i++) {
+						if (VehiclesInformation.Contains(vehicleList[i])) {
+							res += vehicleList[i].ToString() + ",";
+						}
+					}
+					if (res.Length > 0) res = res.Substring(0, res.Length - 1);
+					_allowedMediaUniverse.VehicleList = res;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Get Nb valid items for current result page
+		/// </summary>
+		/// <param name="selectedItems">Selected Items</param>
+		/// <param name="allowedUniverseItems">Allowed universe Items in configurations file or Baal</param>
+		/// <returns>Nb valid items for current result page</returns>
+		protected virtual int GetNbValidItems(List<Int64> selectedItems, List<Int64> allowedUniverseItems) {
+			int nbValidItems = 0;
+			if (selectedItems != null && selectedItems.Count > 0) {
+				for (int i = 0; i < selectedItems.Count; i++) {
+					if (allowedUniverseItems.Contains(selectedItems[i])) nbValidItems++;
+				}
+			}
+			return nbValidItems;
+		}
+		#endregion
 
 	}
 }

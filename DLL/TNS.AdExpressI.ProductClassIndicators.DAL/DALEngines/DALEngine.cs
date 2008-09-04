@@ -474,23 +474,37 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         protected virtual string GetMediaSelection(string prefix){
 
             StringBuilder sql = new StringBuilder();
+			bool first = true;
+			string temp = "";
             // Multimedia
-            if (_vehicle == CstDBClassif.Vehicles.names.plurimedia)
-            {
-                sql.Append(FctUtilities.SQLGenerator.getAdExpressUniverseCondition(_session, CstWeb.AdExpressUniverse.RECAP_MEDIA_LIST_ID, prefix, false));
-            }
-            else
-            {
-                sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, prefix, false));
-            }
+			//if (_vehicle == CstDBClassif.Vehicles.names.plurimedia)
+			//{
+
+			//    sql.Append(FctUtilities.SQLGenerator.getAdExpressUniverseCondition(_session, CstWeb.AdExpressUniverse.RECAP_MEDIA_LIST_ID, prefix, false));
+			//}
+			//else
+			//{
+			//    sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, prefix, false));
+			//    first = false;
+			//}
+			temp = FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, prefix, !first);
+			sql.Append(" " + temp);
+
+			if (_vehicle != CstDBClassif.Vehicles.names.plurimedia) {
+				if (temp != null && temp.Length > 0) first = false;
+				sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, prefix, !first));
+				first = false;
+			}
             //TV Sponsorship rights
             if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
             {
                 sql.AppendFormat("  and  {0}.id_category not in (68) ", prefix);
+				first = false;
             }
             sql.Append(FctUtilities.SQLGenerator.GetRecapMediaSelection(_session.GetSelection(_session.CurrentUniversMedia, CstRight.type.categoryAccess), _session.GetSelection(_session.CurrentUniversMedia, CstRight.type.mediaAccess), true));
 
-            return sql.ToString();
+            
+			return sql.ToString();
         }
         #endregion
     }

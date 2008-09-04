@@ -37,6 +37,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
+using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -1756,6 +1757,29 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
         #region Univers Support AdExpress
 
+		/// <summary>
+		/// Get media Universe
+		/// </summary>
+		/// <param name="webSession">Web Session</param>
+		/// <param name="prefix">Prefix</param>
+		/// <param name="startWithAnd">start with And</param>
+		/// <returns>string sql</returns>
+		public static string GetResultMediaUniverse(WebSession webSession,string prefix) {		
+			return GetResultMediaUniverse(webSession, prefix,true);
+		}
+		/// <summary>
+		/// Get media Universe
+		/// </summary>
+		/// <param name="webSession">Web Session</param>
+		/// <param name="prefix">Prefix</param>
+		/// <param name="startWithAnd">start with And</param>
+		/// <returns>string sql</returns>
+		public static string GetResultMediaUniverse(WebSession webSession, string prefix,bool startWithAnd) {
+			string sql = "";
+			WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+			sql = module.GetResultPageInformation(webSession.CurrentTab).GetAllowedMediaUniverseSql(prefix, startWithAnd);
+			return sql;
+		}
 
         /// <summary>
         /// Donne la condition SQL pour intégrer la notion d'univers Adexpress

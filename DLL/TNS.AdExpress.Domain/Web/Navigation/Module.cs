@@ -292,7 +292,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		///</remarks>
 		///<param name="currentTab">Identifiant du resultat (currentTab)</param>
 		///<returns>Inforamtions de la page de résultat</returns>
-		public ResultPageInformation GetResultPageInformation(int currentTab) {
+		public ResultPageInformation GetResultPageInformation(long currentTab) {
 			try{
 				foreach(ResultPageInformation currentPage in _resultsPages){
 					if(currentPage.Id==currentTab)
