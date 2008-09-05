@@ -123,6 +123,7 @@ namespace AdExpress.Private.Results{
 		#endregion		
 
 		#region Evènements
+
 		#region On PreInit
 		/// <summary>
 		/// On preinit event
@@ -200,12 +201,12 @@ namespace AdExpress.Private.Results{
 
 				#region Sélection du vehicle
 				string vehicleSelection=_webSession.GetSelection(_webSession.SelectionUniversMedia,Right.type.vehicleAccess);
-				DBClassificationConstantes.Vehicles.names vehicleName=(DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
+				DBClassificationConstantes.Vehicles.names vehicleName= VehiclesInformation.DatabaseIdToEnum(Int64.Parse(vehicleSelection));
 				if(vehicleSelection==null || vehicleSelection.IndexOf(",")>0) throw(new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 				#endregion
-				
-				#region Option encart
-				ResultsOptionsWebControl1.InsertOption=false;											
+
+                #region Option encart
+                ResultsOptionsWebControl1.InsertOption=false;											
 				#endregion
 
 				#region Résultat
@@ -333,14 +334,21 @@ namespace AdExpress.Private.Results{
 
 			portofolioChartWebControl1.CustomerWebSession = _webSession;
 			portofolioChartWebControl1.TypeFlash = true;
+
+            // Option autopromo (Evaliant)
+            string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
+            DBClassificationConstantes.Vehicles.names vehicleName = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(vehicleSelection));
+            if(vehicleName == DBClassificationConstantes.Vehicles.names.adnettrack)
+                ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
+            else
+                ResultsOptionsWebControl1.AutopromoEvaliantOption = false;
+
 			return tmp;
 		}
 		#endregion
 
 		#region PreRender
 		protected override void OnPreRender(EventArgs e) {
-			
-
 			Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
 			if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
 			object[] parameters = new object[1];
@@ -377,7 +385,6 @@ namespace AdExpress.Private.Results{
 				}
 			}
 		}
-
 		#endregion
 
 		#region Render
@@ -386,23 +393,24 @@ namespace AdExpress.Private.Results{
 		/// </summary>
 		/// <param name="output">sortie html</param>
 		protected override void Render(HtmlTextWriter output){			
-			string idVehicle=_webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+            //string idVehicle=_webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
 			
-			switch((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())){
-				case DBClassificationConstantes.Vehicles.names.press :
-				case DBClassificationConstantes.Vehicles.names.internationalPress :
-				case DBClassificationConstantes.Vehicles.names.internet:
-                case DBClassificationConstantes.Vehicles.names.directMarketing:
-					break;
-				case DBClassificationConstantes.Vehicles.names.radio :					
-				case DBClassificationConstantes.Vehicles.names.tv :
-				case DBClassificationConstantes.Vehicles.names.others :	
-				case DBClassificationConstantes.Vehicles.names.outdoor:
-					ResultsOptionsWebControl1.resultsPages.Items.Remove(ResultsOptionsWebControl1.resultsPages.Items.FindByValue("5"));				
-					break;
-				default :				
-					throw new  WebExceptions.PortofolioSystemException("Le cas de ce média n'est pas gérer.");
-			}			
+            //switch((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())){
+            //    case DBClassificationConstantes.Vehicles.names.press :
+            //    case DBClassificationConstantes.Vehicles.names.internationalPress :
+            //    case DBClassificationConstantes.Vehicles.names.internet:
+            //    case DBClassificationConstantes.Vehicles.names.directMarketing:
+            //    case DBClassificationConstantes.Vehicles.names.adnettrack:
+            //        break;
+            //    case DBClassificationConstantes.Vehicles.names.radio :					
+            //    case DBClassificationConstantes.Vehicles.names.tv :
+            //    case DBClassificationConstantes.Vehicles.names.others :	
+            //    case DBClassificationConstantes.Vehicles.names.outdoor:
+            //        ResultsOptionsWebControl1.resultsPages.Items.Remove(ResultsOptionsWebControl1.resultsPages.Items.FindByValue("5"));				
+            //        break;
+            //    default :				
+            //        throw new  WebExceptions.PortofolioSystemException("Le cas de ce média n'est pas gérer.");
+            //}			
 			base.Render(output);
 		}
 		#endregion
@@ -464,6 +472,7 @@ namespace AdExpress.Private.Results{
 					break;
 				case ClassificationCst.DB.Vehicles.names.directMarketing:
 				case ClassificationCst.DB.Vehicles.names.internet:
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
 					if ((_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
 						_webSession.Save();
@@ -474,7 +483,6 @@ namespace AdExpress.Private.Results{
 				case ClassificationCst.DB.Vehicles.names.radio:
 				case ClassificationCst.DB.Vehicles.names.press:
 				case ClassificationCst.DB.Vehicles.names.internationalPress:
-			
 					if (!_webSession.CustomerPeriodSelected.Is4M && (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
 						_webSession.Save();
@@ -495,9 +503,7 @@ namespace AdExpress.Private.Results{
 			selectedUniverseMedia.VehicleList = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
 			return selectedUniverseMedia;
 		}
-
-
-
 		#endregion
+
 	}
 }
