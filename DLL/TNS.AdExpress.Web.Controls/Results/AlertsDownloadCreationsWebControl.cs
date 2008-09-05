@@ -30,6 +30,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.Exceptions;
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Results
 {
@@ -186,7 +187,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 				if(_errorMessage == null){
 					if(Page.Request.QueryString.Get("idVehicle")!=null){
 						_idVehicle = Int64.Parse(Page.Request.QueryString.Get("idVehicle"));
-						_vehicle = (CstClassification.DB.Vehicles.names) _idVehicle;
+						_vehicle = VehiclesInformation.DatabaseIdToEnum(_idVehicle);
 					}
 					if(Page.Request.QueryString.Get("creation")!=null) _creationfile = Page.Request.QueryString.Get("creation");
 					if (Page.Request.QueryString.Get("idSlogan") != null) _idSlogan = Page.Request.QueryString.Get("idSlogan");

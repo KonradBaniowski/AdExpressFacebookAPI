@@ -23,6 +23,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using Cst = TNS.AdExpress.Constantes;
 using TNS.AdExpress.Web.DataAccess;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
     /// <summary>
@@ -205,7 +206,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
             #region Conditions
             // Jointures
             sql.Append(DBConstantes.Tables.WAVE_PREFIXE + ".id_wave=" + DBConstantes.Tables.TARGET_PREFIXE + ".id_wave");
-            sql.Append(" and " + DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle=" + ClassificationCst.DB.Vehicles.names.press.GetHashCode());  /*"+ClassificationCst.DB.Vehicles.names.press)*/
+            sql.Append(" and " + DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle=" + VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.press));  /*"+ClassificationCst.DB.Vehicles.names.press)*/
             sql.Append(" and " + DBConstantes.Tables.TARGET_PREFIXE + ".id_target=" + DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".id_target");
             sql.Append(" and " + DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE + ".ID_MEDIA_SECODIP=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media");
             sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media");

@@ -16,6 +16,7 @@ using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Classification;
 
 
 namespace TNS.AdExpress.Web.Controls.Selections {
@@ -667,7 +668,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             int days = 0;
             string lastDate = string.Empty;
            
-            switch ((Vehicles.names)_selectedVehicle) {
+            switch (VehiclesInformation.DatabaseIdToEnum(_selectedVehicle)) {
                 case Vehicles.names.press:
                 case Vehicles.names.internationalPress:
                     days = _firstDayNotEnable.Subtract(currentDay).Days;
@@ -713,7 +714,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             DateTime publicationDate;
             string lastDate = string.Empty;
 
-            switch ((Vehicles.names)_selectedVehicle) {
+            switch (VehiclesInformation.DatabaseIdToEnum(_selectedVehicle)) {
                 case Vehicles.names.press:
                 case Vehicles.names.internationalPress:
 					lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(_customerWebSession, _selectedVehicle, _customerWebSession.Source);

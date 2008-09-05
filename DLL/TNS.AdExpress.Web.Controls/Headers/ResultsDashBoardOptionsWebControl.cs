@@ -751,8 +751,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <param name="e">arguments</param>
 		private void Custom_PreRender(object sender, System.EventArgs e){	
 			//identification du Média  sélectionné
-			Vehicle = ((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-			vehicleType = (DBClassificationConstantes.Vehicles.names)int.Parse(Vehicle);
+			//Vehicle = ((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+			vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			
 			#region Unité
 			if(unitOption){
@@ -975,7 +975,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//Option choix du format spots
 			if(formatOption){
 				format = new DropDownList();				
-				switch((ClassificationCst.DB.Vehicles.names)((LevelInformation) customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID){					
+				switch(VehiclesInformation.DatabaseIdToEnum(((LevelInformation) customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID)){					
 					case ClassificationCst.DB.Vehicles.names.tv:
 					case ClassificationCst.DB.Vehicles.names.radio:	
 					case ClassificationCst.DB.Vehicles.names.others:
@@ -1009,8 +1009,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			#region choix du jour nommé
 			//Option choix du jour nommé
 			if(namedDayOption){
-				namedDay = new DropDownList();				
-				switch((ClassificationCst.DB.Vehicles.names)((LevelInformation) customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID){
+				namedDay = new DropDownList();
+				switch (VehiclesInformation.DatabaseIdToEnum(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID)) {
 					case ClassificationCst.DB.Vehicles.names.tv:
 					case ClassificationCst.DB.Vehicles.names.radio:
 					case ClassificationCst.DB.Vehicles.names.others:
@@ -1047,7 +1047,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//Option choix de la tranche horaire
 			if(timeIntervalOption){
 				drpTimeInterval = new DropDownList();				
-				switch((ClassificationCst.DB.Vehicles.names)((LevelInformation) customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID){
+				switch(VehiclesInformation.DatabaseIdToEnum(((LevelInformation) customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID)){
 					case ClassificationCst.DB.Vehicles.names.tv:
 					case ClassificationCst.DB.Vehicles.names.others:
 						drpTimeInterval.Items.Add(new ListItem(GestionWeb.GetWebWord(1401, customerWebSession.SiteLanguage),CstWeb.Repartition.timeInterval.Total.GetHashCode().ToString()));
@@ -1507,10 +1507,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// Condition pour afficher les repartitions pour TV et Radio seulement
 		/// </summary>
 		/// <returns>false s'il doit être montrer, true sinon</returns>
-		private bool showRepartition() {
-			Int64 idVehicle = ((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID;
-			ClassificationCst.DB.Vehicles.names vehicletype=(ClassificationCst.DB.Vehicles.names)idVehicle;
-			switch(vehicletype) {
+		private bool showRepartition() {			
+			switch(VehiclesInformation.DatabaseIdToEnum(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID)) {
 				case ClassificationCst.DB.Vehicles.names.tv:
 				case ClassificationCst.DB.Vehicles.names.radio:
 				case ClassificationCst.DB.Vehicles.names.others:

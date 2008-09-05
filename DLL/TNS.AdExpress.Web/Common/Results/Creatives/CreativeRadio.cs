@@ -20,6 +20,7 @@ using DBCst = TNS.AdExpress.Constantes.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBClassifCst = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Common.Results.Creatives {
 
@@ -108,7 +109,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
 
             output.AppendFormat("<tr><td class=\"creativeVisualCell\">");
             if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_RADIO_CREATION_ACCESS_FLAG)) {
-                output.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\" class=\"audioFileBackGround\"></a>", this._path, this._id, this._session.IdSession, (int)DBClassifCst.Vehicles.names.radio);
+                output.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\" class=\"audioFileBackGround\"></a>", this._path, this._id, this._session.IdSession, VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radio));
             }
             else {
                 output.AppendFormat("<p class=\"txtViolet12Bold\" valign=\"top\" width=\"240\">{0}</p>", GestionWeb.GetWebWord(2250, _session.SiteLanguage));

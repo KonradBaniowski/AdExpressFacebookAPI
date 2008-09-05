@@ -504,7 +504,9 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 
 			if (mediaList != null) {
 				sql = AllowedMediaUniverse.GetVehicleListSQL(startWithAnd, vehiclePrefix);
+				if (sql != null && sql.Length > 0) startWithAnd = true;
 				sql += AllowedMediaUniverse.GetCategoryListSQL(startWithAnd, categoryPrefix);
+				if (sql != null && sql.Length > 0) startWithAnd = true;
 				sql += AllowedMediaUniverse.GetMediaListSQL(startWithAnd, mediaPrefix);
 			}
 			return sql;

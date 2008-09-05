@@ -12,6 +12,7 @@ using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Core.Result {
 
@@ -47,7 +48,7 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <returns>Adresse du lien</returns>
         public override string GetLink() {
             if (_creative.Length > 0)
-                return (string.Format(_link, _creative, _webSession.IdSession, Vehicles.names.radio.GetHashCode()));
+                return (string.Format(_link, _creative, _webSession.IdSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio)));
             else
                 return "";
         }

@@ -34,6 +34,7 @@ using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 
 #endregion
 
@@ -1174,8 +1175,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
 		private string GetInsetSelected(WebSession webSession){
-			string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-			ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+			//string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			if(vehicleType==ClassificationCst.DB.Vehicles.names.press ||vehicleType==ClassificationCst.DB.Vehicles.names.internationalPress){
 				int code=0;
 				switch(webSession.Insert){

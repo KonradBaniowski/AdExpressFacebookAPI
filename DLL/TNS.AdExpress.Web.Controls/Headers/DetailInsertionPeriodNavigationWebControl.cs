@@ -17,6 +17,7 @@ using PeriodConstantes = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.Controls.Buttons;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Headers
 {
@@ -185,7 +186,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             string vehicle = "";
 
             #region Mise en forme des dates et du media
-            switch ((DBClassificationConstantes.Vehicles.names)_idVehicle)
+            switch (VehiclesInformation.DatabaseIdToEnum(_idVehicle))
             {
                 case DBClassificationConstantes.Vehicles.names.press: vehicle = GestionWeb.GetWebWord(1298, _customerWebSession.SiteLanguage).ToUpper(); break;
                 case DBClassificationConstantes.Vehicles.names.radio: vehicle = GestionWeb.GetWebWord(205, _customerWebSession.SiteLanguage); break;

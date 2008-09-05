@@ -26,6 +26,7 @@ using WebConstantes= TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Controls.Buttons;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Selections {
 	/// <summary>
@@ -420,10 +421,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 							string dateField = "date_media_num";
 
 							//if( webSession.CustomerLogin.GetFlag(Flags.ID_CREATION_ACCESS_FLAG)!=null){//droit créations
-							if (webSession.CustomerLogin.ShowCreatives((DBConstantesClassification.Vehicles.names)idVehicle)) {//droit créations
+							if (webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(idVehicle))) {//droit créations
 								if(currentRow["sloganFile"]!=null && currentRow["sloganFile"].ToString().Length > 0){
 									
-									switch ((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString())) {
+									switch (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))) {
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press :
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
 											#region Construction de la liste des images presse
@@ -481,7 +482,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 #endif
 											
 
-											if ((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString()) == DBConstantesClassification.Vehicles.names.directMarketing)
+											if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBConstantesClassification.Vehicles.names.directMarketing)
 											pathWeb = WebConstantes.CreationServerPathes.IMAGES_MD;
 											else pathWeb = WebConstantes.CreationServerPathes.IMAGES_OUTDOOR;
 											string dir1 = idAssociatedFile.Substring(idAssociatedFile.Length - 8, 1);
@@ -522,8 +523,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 							sloganDetail+="\n<tr><td  nowrap align=\"center\">";
 							sloganDetail+=currentRow["id_slogan"].ToString();
 							if (currentRow["advertDimension"] != null) {
-								if ((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString()) != DBConstantesClassification.Vehicles.names.directMarketing 
-									||((DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString()) == DBConstantesClassification.Vehicles.names.directMarketing && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_POIDS_MARKETING_DIRECT)))
+								if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) != DBConstantesClassification.Vehicles.names.directMarketing 
+									||(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBConstantesClassification.Vehicles.names.directMarketing && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_POIDS_MARKETING_DIRECT)))
 								sloganDetail += " - " + currentRow["advertDimension"].ToString();
 							}
 							sloganDetail+="\n</td></tr>";

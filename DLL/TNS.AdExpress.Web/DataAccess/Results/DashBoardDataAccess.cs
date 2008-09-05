@@ -156,8 +156,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
         private static string GetTablesName(WebSession webSession, string year) {
             //identification du Média  sélectionné
-            string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-            ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             string sql = "  ";
             switch (webSession.PreformatedTable) {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
@@ -253,8 +252,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
         private static string GetTBord_1_2_3_TableName(WebSession webSession, string year) {
             //identification du Média  sélectionné
-            string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-            ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             //Obtient la table à attaquer
             if (IsRepartitionSelected(webSession)) {
                 if (IsCrossRepartitionType(webSession)) {
@@ -294,8 +292,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
         private static string GetTBord_4_to_12_TableName(WebSession webSession, string year) {
             //identification du Média  sélectionné
-            string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-            ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+			//string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             //Obtient la table à attaquer
             switch (vehicleType) {
                 case ClassificationCst.DB.Vehicles.names.radio:
@@ -540,8 +538,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         private static string GetUnitSelectFields(WebSession webSession) {
             string sql = "";
             //identification du Média  sélectionné
-            string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-            ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             //Choix de l'unité
             switch (webSession.PreformatedTable) {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
@@ -593,8 +590,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <returns></returns>
         private static string GetRepartitionField(WebSession webSession) {
             //identification du Média  sélectionné
-            string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-            ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
             string repartition = "repartition";
             switch (webSession.PreformatedTable) {
@@ -801,9 +797,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             string MediaAccessList = "";
             string VehicleAccessList = "";
             string InterestCenterAccessList = "";
-            //identification du Média  sélectionné
-            string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-            ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+            //identification du Média  sélectionné          
+			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
             if (IsInterestCenterSelected(webSession)) {
                 InterestCenterAccessList = webSession.GetSelection(webSession.CurrentUniversMedia, CustomerRightConstante.type.interestCenterAccess);
@@ -1002,8 +997,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <returns>Chaîne de caractère correspondant aux Répartition sélectionnées</returns>
         private static string GetRepartitionSelectionClause(WebSession webSession) {
             string sql = "";
-            Int64 idVehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID;
-            ClassificationCst.DB.Vehicles.names vehicletype = (ClassificationCst.DB.Vehicles.names)idVehicle;
+			//Int64 idVehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+			ClassificationCst.DB.Vehicles.names vehicletype = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             switch (webSession.PreformatedTable) {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
@@ -1517,9 +1512,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session</param>
         /// <returns>vrai si répartition sélectionné</returns>
         private static bool IsRepartitionSelected(WebSession webSession) {
-            //identification du Média  sélectionné
-            string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-            ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+            //identification du Média  sélectionné			
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             bool isRepartition = false;
             if (ClassificationCst.DB.Vehicles.names.press != vehicleType) {
                 isRepartition = !(webSession.Format == CstWeb.Repartition.Format.Total

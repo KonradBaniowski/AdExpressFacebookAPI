@@ -29,6 +29,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using  ConstantesFrameWork=TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -76,18 +77,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#region Construction de la requête
 				try{
-					
-					fields = GetFields((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()),DbTables.WEB_PLAN_PREFIXE);
+
+					fields = GetFields(VehiclesInformation.DatabaseIdToEnum(idVehicle), DbTables.WEB_PLAN_PREFIXE);
 					// Sélection de la nomenclature Support
 					sql.Append("select " + fields);
 
 					// Tables TODO ADNETTRACK
-					sql.Append(" from "); 
-					sql.Append(GetTables((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())));
+					sql.Append(" from ");
+					sql.Append(GetTables(VehiclesInformation.DatabaseIdToEnum(idVehicle)));
 
 					// Conditions de jointure
 					sql.Append(" Where ");
-					GetJoinConditions(sql,(DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()),DbTables.WEB_PLAN_PREFIXE,false,siteLanguage);
+					GetJoinConditions(sql, VehiclesInformation.DatabaseIdToEnum(idVehicle), DbTables.WEB_PLAN_PREFIXE, false, siteLanguage);
 
 					//Sélection produit
 					sql.Append(" and  "+DbTables.WEB_PLAN_PREFIXE+".id_product="+idProduct);
@@ -100,7 +101,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql.Append(" and "+DbTables.WEB_PLAN_PREFIXE+".date_media_num<="+dateEnd);
 
 					// Ordre
-					sql.Append(" order by " + GetInsertionsOrder((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()),DbTables.WEB_PLAN_PREFIXE));
+					sql.Append(" order by " + GetInsertionsOrder(VehiclesInformation.DatabaseIdToEnum(idVehicle),DbTables.WEB_PLAN_PREFIXE));
 
 				}catch(System.Exception err){
 					throw(new AlertsInsertionsCreationsDataAccessException("Impossible de construire la requête",err));

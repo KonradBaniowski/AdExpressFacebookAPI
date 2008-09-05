@@ -24,6 +24,7 @@ using TNS.AdExpress.Web.Controls.Headers;
 using DBClassifCst = TNS.AdExpress.Constantes.Classification.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
@@ -213,7 +214,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             for (int i = 0; i < _vehicles.Count; i++) {
 
                 #region Vehicle Label
-                switch ((DBClassifCst.Vehicles.names)_vehicles[i]) {
+                switch (VehiclesInformation.DatabaseIdToEnum(_vehicles[i])) {
                     case DBClassifCst.Vehicles.names.press: 
                         vehicle = GestionWeb.GetWebWord(1298, _webSession.SiteLanguage); 
                         break;

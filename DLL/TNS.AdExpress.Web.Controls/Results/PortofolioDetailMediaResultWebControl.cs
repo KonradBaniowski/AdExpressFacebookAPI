@@ -24,6 +24,7 @@ using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using CustomerConstantes = TNS.AdExpress.Constantes.Customer;
 using WebExceptions = TNS.AdExpress.Web.Exceptions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Classification;
 
 
 namespace TNS.AdExpress.Web.Controls.Results {
@@ -159,7 +160,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
                     #region Obtention du vehicle
                     string vehicleSelection = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, CustomerConstantes.Right.type.vehicleAccess);
                     if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
-                    DBClassificationConstantes.Vehicles.names vehicle = (DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
+                    DBClassificationConstantes.Vehicles.names vehicle = VehiclesInformation.DatabaseIdToEnum(long.Parse(vehicleSelection));
                     #endregion
 
                     DateTime dayOfWeek = DateTime.Now;
@@ -278,7 +279,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
                 #region Obtention du vehicle
                 string vehicleSelection = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, CustomerConstantes.Right.type.vehicleAccess);
                 if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
-                DBClassificationConstantes.Vehicles.names vehicle = (DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
+                DBClassificationConstantes.Vehicles.names vehicle = VehiclesInformation.DatabaseIdToEnum(long.Parse(vehicleSelection));
                 #endregion
 
                 if (_dayOfWeek.Length > 0) {

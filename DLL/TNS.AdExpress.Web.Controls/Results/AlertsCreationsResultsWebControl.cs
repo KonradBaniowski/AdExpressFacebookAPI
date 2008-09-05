@@ -29,6 +29,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.Exceptions;
 using TNS.AdExpress.Web.Controls.Exceptions;
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Results
 {
@@ -740,7 +741,7 @@ namespace TNS.AdExpress.Web.Controls.Results
             {
 
                 #region Construction du txt HTLM
-                switch ((CstClassification.DB.Vehicles.names)idVehicle)
+                switch (VehiclesInformation.DatabaseIdToEnum(idVehicle))
                 {
                     case CstClassification.DB.Vehicles.names.radio:
                         return GetUIRadio(tab, siteLanguage, idMedia, idProduct, dateBegin, dateEnd, idVehicle, key);

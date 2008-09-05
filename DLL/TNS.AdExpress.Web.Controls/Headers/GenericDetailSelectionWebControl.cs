@@ -22,6 +22,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Classification;
 
 
 namespace TNS.AdExpress.Web.Controls.Headers
@@ -672,7 +673,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				//output.Write("<td><cc1:imagebuttonrolloverwebcontrol id=\"okImageButton\" runat=\"server\" ImageUrl=\"/Images/Common/Button/ok_up.gif\" RollOverImageUrl=\"/Images/Common/Button/ok_down.gif\"></cc1:imagebuttonrolloverwebcontrol></td>");
 				output.Write("<td><div style=\"MARGIN-LEFT: 0px;\">");
 				_buttonOk.RenderControl(output); 
-				if (_idVehicleFromTab==(Int64)DBClassificationConstantes.Vehicles.names.radio){
+				if (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab)==DBClassificationConstantes.Vehicles.names.radio){
 					if (_customerWebSession.SiteLanguage == 33)
                         output.Write("<FONT face=Arial size=1 class=\"txtViolet\" style=\"LEFT: 781px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
 					else
@@ -707,8 +708,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			dropDownList.AutoPostBack=false;
 			dropDownList.CssClass=_cssListBox;
 			dropDownList.Items.Add(new ListItem("-------","-1"));
-			
-			if(((_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))&&(_idVehicleFromTab==(Int64)DBClassificationConstantes.Vehicles.names.outdoor))||(_idVehicleFromTab!=(Int64)DBClassificationConstantes.Vehicles.names.outdoor)){
+
+			if (((_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.outdoor)) || (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) != DBClassificationConstantes.Vehicles.names.outdoor)) {
 				
 				foreach(DetailLevelItemInformation currentDetailLevelItem in _allowedDetailItemList){
 					if(CanAddDetailLevelItem(currentDetailLevelItem)){
@@ -811,7 +812,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					//    return (false);
 					//else
 					//    return (true);
-                    return _customerWebSession.CustomerLogin.ShowCreatives((DBClassificationConstantes.Vehicles.names)_idVehicleFromTab);
+					return _customerWebSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab));
 				
 				default:
 					return(true);

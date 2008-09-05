@@ -1047,7 +1047,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 
 				}
 				else{
-					switch((ClassificationCst.DB.Vehicles.names)((LevelInformation) customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID){
+					switch(VehiclesInformation.DatabaseIdToEnum(((LevelInformation) customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID)){
 						case ClassificationCst.DB.Vehicles.names.tv:
 						case ClassificationCst.DB.Vehicles.names.radio:
 						case ClassificationCst.DB.Vehicles.names.outdoor:

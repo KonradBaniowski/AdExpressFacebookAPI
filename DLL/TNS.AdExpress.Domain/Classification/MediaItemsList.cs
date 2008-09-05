@@ -202,7 +202,7 @@ namespace TNS.AdExpress.Domain.Classification {
 			if (_mediaItemsList != null && _mediaItemsList.Length > 0) {
 				if (withAnd) sql = " And ";
 				if (prefix != null && prefix.Length > 0) sql += prefix + ".";
-				sql = "id_" + media.Label + " in ( " + _mediaItemsList + " ) ";
+				sql += "id_" + media.Label + " in ( " + _mediaItemsList + " ) ";
 			}
 			return sql;
 		}

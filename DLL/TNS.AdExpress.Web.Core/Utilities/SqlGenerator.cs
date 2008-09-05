@@ -72,7 +72,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             //				premier=false;
             //			}
             if (beginByAnd) sql += " and";
-            sql += " ((" + tablePrefixe + ".id_vehicle in (" + DBClassificationConstantes.Vehicles.names.adnettrack.GetHashCode().ToString() + " )";
+            sql += " ((" + tablePrefixe + ".id_vehicle in (" + VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.adnettrack).ToString() + " )";
             premier = false;
 
             // Category
