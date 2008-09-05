@@ -17,6 +17,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.UI.Selections.Periods{
 
@@ -57,8 +58,8 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 			ds=PortofolioDateDataAccess.GetListDate(webSession,idVehicle,idMedia,dateBegin,dateEnd,false);
 
 			DataTable dt=ds.Tables[0];
-			if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
-				|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
+			if(VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.press 
+				|| VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.internationalPress ){
 				width=500;
 			}
 
@@ -67,8 +68,8 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 				date= TNS.FrameWork.Date.MonthString.GetHTMLCharacters(monthDate,webSession.SiteLanguage,20);
 				date+=" "+dt.Rows[0][0].ToString().Substring(0,4);
                 string pathWeb;
-                if ((int)idVehicle == DBClassificationConstantes.Vehicles.names.press.GetHashCode()
-                    || (int)idVehicle == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode())
+                if (VehiclesInformation.DatabaseIdToEnum(idVehicle) == DBClassificationConstantes.Vehicles.names.press
+                    || VehiclesInformation.DatabaseIdToEnum(idVehicle) == DBClassificationConstantes.Vehicles.names.internationalPress)
                 {
                     pathWeb = CstWeb.CreationServerPathes.IMAGES + "/" + idMedia.ToString() + "/" + dt.Rows[0]["date_cover_num"].ToString() + "/Imagette/" + CstWeb.CreationServerPathes.COUVERTURE + "";
                 }
@@ -77,8 +78,8 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
                     pathWeb = CstWeb.CreationServerPathes.IMAGES + "/" + idMedia.ToString() + "/" + dt.Rows[0]["date_media_num"].ToString() + "/Imagette/" + CstWeb.CreationServerPathes.COUVERTURE + "";
                 }
 				if(dt.Rows.Count>0){
-					if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode()
-						|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
+					if(VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.press
+						|| VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.internationalPress ){
 						if(dt.Rows[0][1]!= System.DBNull.Value && int.Parse(dt.Rows[0][1].ToString())<10){
                             couverture = "onmouseover=\"graph.src = '/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif';\" onmouseout=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/vide.gif';\"";
 						}
@@ -88,8 +89,8 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 					}
 				}
 
-				if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
-					|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
+				if(VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.press 
+					|| VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.internationalPress ){
 					t.Append("<table><tr valign=top><td>");
 				}
 
@@ -97,8 +98,8 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 				t.Append("<tr><td width=50%>");
 			
 				// Dans le cas de la presse
-				if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
-					|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
+				if(VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.press 
+					|| VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.internationalPress ){
 
 					t.Append("<a href=\"javascript:__doPostBack('link','"+dt.Rows[0][0].ToString()+"');\"  "+couverture+" class=\"txtGroupViolet11Bold\">"+GestionWeb.GetWebWord(1374,webSession.SiteLanguage)+" : "+dt.Rows[0][0].ToString().Substring(6,2)+" "+date+"</a>");
 
@@ -121,8 +122,8 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 				if(dt.Rows.Count>1){
                     CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 					for(int i=1;i<dt.Rows.Count;i++) {
-                        if ((int)idVehicle == DBClassificationConstantes.Vehicles.names.press.GetHashCode()
-                            || (int)idVehicle == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode())
+                        if (VehiclesInformation.DatabaseIdToEnum(idVehicle) == DBClassificationConstantes.Vehicles.names.press
+                            || VehiclesInformation.DatabaseIdToEnum(idVehicle) == DBClassificationConstantes.Vehicles.names.internationalPress)
                         {
                             pathWeb = CstWeb.CreationServerPathes.IMAGES + "/" + idMedia.ToString() + "/" + dt.Rows[i]["date_cover_num"].ToString() + "/Imagette/" + CstWeb.CreationServerPathes.COUVERTURE + "";
                         }
@@ -179,8 +180,8 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 							compteur=0;
 						}				
 				
-						if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
-							|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
+						if(VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.press 
+							|| VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.internationalPress ){
                                 if (dt.Rows[0][1] != System.DBNull.Value && int.Parse(dt.Rows[i][1].ToString()) < 10)
                                 {
                                     couverture = "onmouseover=\"graph.src = '/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif';\" onmouseout=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/vide.gif';\"";
@@ -218,8 +219,8 @@ namespace TNS.AdExpress.Web.UI.Selections.Periods{
 				#endregion	
 			
 				// Cas de la presse : affichage de la couverture
-				if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
-					|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
+				if(VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.press 
+					|| VehiclesInformation.DatabaseIdToEnum(idVehicle)==DBClassificationConstantes.Vehicles.names.internationalPress ){
 					t.Append("</td>");
 					t.Append("<td>");
                     t.Append("<img src='/App_Themes/" + themeName + "/Images/Common/vide.gif' id=\"graph\" width=180 height=220>");

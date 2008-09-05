@@ -144,7 +144,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         public virtual DataSet GetMediaScheduleAdNetTrackData()
         {
             string additionalConditions = "";
-            this._vehicleId = CstDBClassif.Vehicles.names.adnettrack.GetHashCode();
+            this._vehicleId = VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack);
             switch (_session.AdNetTrackSelection.SelectionType)
             {
                 case CstFmk.Results.AdNetTrackMediaSchedule.Type.advertiser:
@@ -336,7 +336,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             //Periodicity selection
             sql.AppendFormat("{0}, ", mediaPeriodicity);
             // Unit selection expect for AdNetTrack
-            if ((CstDBClassif.Vehicles.names)vehicleId == CstDBClassif.Vehicles.names.adnettrack)
+            if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
                 sql.AppendFormat("sum(OCCURRENCE) as {0}", unitAlias);
             else
                 sql.AppendFormat("sum({0}) as {1}", unitFieldName, unitAlias);
@@ -414,14 +414,14 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
 
             #region Rights
             // No media right if AdNetTrack media schedule
-            if ((CstDBClassif.Vehicles.names)vehicleId == CstDBClassif.Vehicles.names.adnettrack)
+            if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
                 sql.Append(FctWeb.SQLGenerator.GetAdNetTrackMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             else
                 sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Selection
-            if (periodDisplay != CstPeriod.DisplayLevel.dayly && (CstDBClassif.Vehicles.names)vehicleId != CstDBClassif.Vehicles.names.adnettrack)
+            if (periodDisplay != CstPeriod.DisplayLevel.dayly && VehiclesInformation.DatabaseIdToEnum(vehicleId) != CstDBClassif.Vehicles.names.adnettrack)
             {
                 list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
                 if (list.Length > 0) sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, list);

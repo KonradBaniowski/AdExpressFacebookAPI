@@ -22,6 +22,7 @@ using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
 {
@@ -56,7 +57,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 
 			#region Variables
 			object[,] data;
-            bool isPluri = ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == CstDBClassif.Vehicles.names.plurimedia.GetHashCode();
+            bool isPluri = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimedia;
 
 			int i,j,k;
 

@@ -27,6 +27,7 @@ using WebExceptions = TNS.AdExpress.Web.Exceptions;
 using TNS.FrameWork;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace TNS.AdExpress.Web.UI.Results{
@@ -52,7 +53,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 		public static string GetAlertCompetitorCreationsResultsUI(WebSession webSession,int periodBegin, int periodEnd, string idVehicle,Int64 idElement,int level ,Page page) {
 
             #region cas du média Internet
-            if ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle) == CstClassification.DB.Vehicles.names.internet)
+            if (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(idVehicle)) == CstClassification.DB.Vehicles.names.internet)
                 return GetUIInternet(webSession.SiteLanguage);
             #endregion
 
@@ -67,7 +68,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region Table building
-            switch ((CstClassification.DB.Vehicles.names)int.Parse(idVehicle))
+            switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(idVehicle)))
             {
                 case CstClassification.DB.Vehicles.names.press:
                 case CstClassification.DB.Vehicles.names.internationalPress:
@@ -202,7 +203,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						}
 						HtmlTxt.Append("<tr class=\"popupinsertionligne\"><td ><TABLE cellSpacing=\"0\" border=\"0\"><tr>");
 						if (((string)data[i, CstWeb.PressInsertionsColumnIndex.VISUAL_INDEX]).CompareTo("")==0
-                            || !webSession.CustomerLogin.ShowCreatives((CstClassification.DB.Vehicles.names)int.Parse(idVehicle))) {
+                            || !webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(idVehicle)))) {
 							//|| webSession.CustomerLogin.GetFlag(CstDB.Flags.ID_CREATION_ACCESS_FLAG)==null){
 							//Pas de créations
 							HtmlTxt.Append("<td class=\"txtViolet12Bold\" valign=\"top\">"+GestionWeb.GetWebWord(843,webSession.SiteLanguage)+"</td>");
@@ -549,7 +550,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							classe=CLASSE_2;
 						}
 						if(data[i,CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString().CompareTo("")!=0
-							&& webSession.CustomerLogin.ShowCreatives((CstClassification.DB.Vehicles.names)int.Parse(idVehicle))
+							&& webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(idVehicle)))
 							){
 							HtmlTxt.Append("<tr><td class=\""+classe+"\" nowrap><a href=\"javascript:openDownload('"+data[i,CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString()+"','"+webSession.IdSession+"','"+idVehicle+"');\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_pellicule.gif\"></a></td>");
 						}
@@ -892,7 +893,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion
 
 			#region construction du txt Excel
-			switch((CstClassification.DB.Vehicles.names) int.Parse(idVehicle)){
+			switch(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(idVehicle))){
 				case CstClassification.DB.Vehicles.names.press:
 				case CstClassification.DB.Vehicles.names.internationalPress:
 					return GetUIPressExcel(tab, webSession, page,webSession.PeriodBeginningDate, webSession.PeriodEndDate, idElement, level);

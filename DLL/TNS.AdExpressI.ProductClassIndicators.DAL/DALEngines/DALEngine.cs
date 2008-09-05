@@ -29,6 +29,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.ProductClassIndicators.DAL.Exceptions;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Classification;
 
 
 namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
@@ -126,7 +127,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         public DALEngine(WebSession session)
         {
             _session = session;
-            _vehicle = (CstDBClassif.Vehicles.names)((LevelInformation)_session.CurrentUniversMedia.FirstNode.Tag).ID;
+            _vehicle = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.CurrentUniversMedia.FirstNode.Tag).ID);
 
             #region Dates
             //Get last available month depending on data delivering frequency

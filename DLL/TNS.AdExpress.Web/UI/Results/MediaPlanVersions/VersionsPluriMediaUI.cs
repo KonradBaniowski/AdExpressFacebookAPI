@@ -21,6 +21,7 @@ using DBCst = TNS.AdExpress.Constantes.Classification.DB;
 using CustomCst = TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Classification;
 
 
 
@@ -132,11 +133,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			_vehicles = new ArrayList();
 			if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))){ 
 				foreach(string str in vehicles){
-					if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives((DBCst.Vehicles.names)int.Parse(str))){   
+					if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))){   
                         if(Period != null)
-                            _vehicles.Add(new VersionsVehicleUI(_webSession, _versions, (DBCst.Vehicles.names)int.Parse(str), Period));
+                            _vehicles.Add(new VersionsVehicleUI(_webSession, _versions, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)), Period));
                         else
-                            _vehicles.Add(new VersionsVehicleUI(_webSession, _versions, (DBCst.Vehicles.names)int.Parse(str)));
+                            _vehicles.Add(new VersionsVehicleUI(_webSession, _versions, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str))));
 					}
 				}
 			}
@@ -166,8 +167,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			_vehicles = new ArrayList();
 			if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))){ 
 				foreach(string str in vehicles){
-                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives((DBCst.Vehicles.names)int.Parse(str))){
-						_vehicles.Add(new ExportVersionsVehicleUI(_webSession, _versions, (DBCst.Vehicles.names)int.Parse(str)));
+                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))){
+						_vehicles.Add(new ExportVersionsVehicleUI(_webSession, _versions, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str))));
 					}
 				}
 			}
@@ -196,8 +197,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			_vehicles = new ArrayList();
 			if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))){ 
 				foreach(string str in vehicles){
-                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives((DBCst.Vehicles.names)int.Parse(str))){
-						_vehicles.Add(new ExportVersionsVehicleUI(_webSession, _versions, (DBCst.Vehicles.names)int.Parse(str)));
+                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))){
+						_vehicles.Add(new ExportVersionsVehicleUI(_webSession, _versions, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str))));
 					}
 				}
 			}

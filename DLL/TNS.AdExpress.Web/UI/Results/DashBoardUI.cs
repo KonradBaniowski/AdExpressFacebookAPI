@@ -32,6 +32,7 @@ using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using DateFrameWork=TNS.FrameWork.Date;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 
 
 namespace TNS.AdExpress.Web.UI.Results {
@@ -69,7 +70,7 @@ namespace TNS.AdExpress.Web.UI.Results {
 			#region Variables 
 			StringBuilder t=new StringBuilder(5000);
 			string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-			ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
 			#endregion
 			string module=""; 
 			try{
@@ -597,7 +598,7 @@ namespace TNS.AdExpress.Web.UI.Results {
 		private static string CurrentPeriode(object[,] tab,WebSession webSession, StringBuilder html ,int i,string classCss){	
 			
 			string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-			ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
 			
 			#region  colonne Totale
 			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
@@ -721,7 +722,7 @@ namespace TNS.AdExpress.Web.UI.Results {
 		private static string PrecedingPeriode(object[,] tab,WebSession webSession, StringBuilder html ,int i,string classCss){
 	
 			string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-			ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
 			
 			#region  colonne Totale
 			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){

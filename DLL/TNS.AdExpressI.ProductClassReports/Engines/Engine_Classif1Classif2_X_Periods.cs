@@ -12,6 +12,7 @@ using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Translation;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
 {
@@ -887,7 +888,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					MAIN_L1_CSS = "asl0";
 					MAIN_L1_REF_CSS = "asl0r";
 					MAIN_L1_CON_CSS = "asl0c";
-					MAIN_L2_CSS = (((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == CstClassif.DB.Vehicles.names.plurimedia.GetHashCode())
+                    MAIN_L2_CSS = (VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimedia)
 						?"asl2":"asl5";
 					MAIN_L3_CSS = "asl5b";
 					SCD_L1_CSS = "asl3";
@@ -901,7 +902,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					SCD_L3_CON_CSS = "asl5b";
 					MAIN_LEVEL_L1 = 0;
 					MAIN_LEVEL_L2 = (MEDIA_LEVEL_NUMBER>1 ||
-                        ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == CstClassif.DB.Vehicles.names.plurimedia.GetHashCode()
+                        VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimedia
 						)?1:-1;
 					MAIN_LEVEL_L3 = (MEDIA_LEVEL_NUMBER>2)?2:-1;
 					SCD_LEVEL_L1 = 0;
@@ -916,7 +917,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					MAIN_L1_CSS = "asl0";
 					MAIN_L1_REF_CSS = "asl0rx";
 					MAIN_L1_CON_CSS = "asl0cx";
-                    MAIN_L2_CSS = (((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == CstClassif.DB.Vehicles.names.plurimedia.GetHashCode())
+                    MAIN_L2_CSS = (VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimedia)
 						?"asl2x":"asl5x";
 					MAIN_L3_CSS = "asl5bx";
 					SCD_L1_CSS = "asl3x";
@@ -930,7 +931,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					SCD_L3_CON_CSS = "asl5bx";
 					MAIN_LEVEL_L1 = 0;
 					MAIN_LEVEL_L2 = (MEDIA_LEVEL_NUMBER>1 ||
-                        ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == CstClassif.DB.Vehicles.names.plurimedia.GetHashCode()
+                        VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimedia
 						)?1:-1;
 					MAIN_LEVEL_L3 = (MEDIA_LEVEL_NUMBER>2)?2:-1;
 					SCD_LEVEL_L1 = 0;

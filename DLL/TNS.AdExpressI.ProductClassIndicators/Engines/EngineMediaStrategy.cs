@@ -37,6 +37,7 @@ using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpressI.ProductClassIndicators.Exceptions;
 using System.Collections;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -1047,7 +1048,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     /*Si utilisateur a sélectionné PLURIMEDIA on calcule investissement total marché ou famille et univers, et
                      * les paramètres associés (PDM,evolution,1er annonceurs et références)
                      */
-                    if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == (CstDbClassif.Vehicles.names)int.Parse(VehicleAccessList))
+                    if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                     {
                         #region ligne total marché ou famille pour PLURIMEDIA
                         //Traitement ligne total marché ou famille pour Plurimedia : Investissment,Evolution,PDM,1er nnonceur et son investissment, première référence et son investissment
@@ -1111,7 +1112,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 if (dtTotalMarketOrSector.Columns.Contains("total_N"))
                                 {
                                     //investissement total univers pour média (vehicle)									
-                                    if (CstDbClassif.Vehicles.names.plurimedia == (CstDbClassif.Vehicles.names)int.Parse(VehicleAccessList))
+                                    if (CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                                         ComputeInvestPdmEvol(dtTotalMarketOrSector, ref TotalMarketOrSectorInvest, ref TotalMarketOrSectorVehicleInvest, ref TotalMarketOrSectorVehicleInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "id_vehicle = " + idVehicle + "", _session.ComparativeStudy);
                                     else ComputeInvestPdmEvol(dtTotalMarketOrSector, ref TotalMarketOrSectorVehicleInvest, ref TotalMarketOrSectorVehicleInvest, ref TotalMarketOrSectorVehicleInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "id_vehicle = " + idVehicle + "", _session.ComparativeStudy);
                                     // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et media (vehicle) 
@@ -1137,7 +1138,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 if (dtTotalUniverse.Columns.Contains("total_N"))
                                 {
                                     //investissement total univers pour média (vehicle)									
-                                    if (CstDbClassif.Vehicles.names.plurimedia == (CstDbClassif.Vehicles.names)int.Parse(VehicleAccessList))
+                                    if (CstDbClassif.Vehicles.names.plurimedia ==  VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                                         ComputeInvestPdmEvol(dtTotalUniverse, ref TotalUnivInvest, ref TotalUnivVehicleInvest, ref TotalUnivVehicleInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "id_vehicle = " + idVehicle + "", _session.ComparativeStudy);
                                     else ComputeInvestPdmEvol(dtTotalUniverse, ref TotalUnivVehicleInvest, ref TotalUnivVehicleInvest, ref TotalUnivVehicleInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "id_vehicle = " + idVehicle + "", _session.ComparativeStudy);
                                     // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et media (vehicle) 
@@ -1679,7 +1680,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 /*Si utilisateur a sélectionné PLURIMEDIA on calcule investissement total marché ou famille et univers, et
                  * les paramètres associés (PDM,evolution,1er annonceurs et références)
                  */
-                if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == (CstDbClassif.Vehicles.names)int.Parse(VehicleAccessList))
+                if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                 {
                     #region ligne total marché ou famille pour PLURIMEDIA
                     //Traitement ligne total marché ou famille pour Plurimedia : Investissment,Evolution,PDM,1er nnonceur et son investissment, première référence et son investissment
@@ -2366,7 +2367,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         //							AdvertiserInvestByVeh = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(AdvertiserInvestByVeh)/(double)1000));														
                         //						}
                         //PDM annonceur de référence ou concurrent  par média (vehicle)												
-                        if (!isPluri && CstDbClassif.Vehicles.names.plurimedia == (CstDbClassif.Vehicles.names)int.Parse(VehicleAccessList))
+                        if (!isPluri && CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                         {
                             if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByVeh) && hPdmTotAdvert != null && hPdmTotAdvert[idAdvertiser] != null && FctUtilities.CheckedText.IsNotEmpty(hPdmTotAdvert[idAdvertiser].ToString().Trim()) && double.Parse(hPdmTotAdvert[idAdvertiser].ToString().Trim()) > (double)0.0)
                             {
@@ -2907,7 +2908,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             }
                         }
                         //calcule du nombre maximal de lignes
-                        if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == (CstDbClassif.Vehicles.names)int.Parse(VehicleAccessList))
+                        if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                             nbMaxLines = 2 + nbAdvertiser + (2 + nbAdvertiser) * nbVehicle;
                         else nbMaxLines = (2 + nbAdvertiser) * nbVehicle;
                         break;
@@ -2941,7 +2942,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             }
                         }
                         //calcule du nombre maximal de lignes
-                        if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == (CstDbClassif.Vehicles.names)int.Parse(VehicleAccessList))
+                        if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                             nbMaxLines = 2 + nbAdvertiser + ((2 + nbAdvertiser) * nbCategory) * nbVehicle;
                         else nbMaxLines = 2 + nbAdvertiser + (2 + nbAdvertiser) * nbCategory;
                         break;
@@ -2981,7 +2982,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             }
                         }
                         //calcule du nombre maximal de lignes
-                        if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == (CstDbClassif.Vehicles.names)int.Parse(VehicleAccessList))
+                        if (FctUtilities.CheckedText.IsNotEmpty(VehicleAccessList) && CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                             nbMaxLines = 2 + nbAdvertiser + (2 + nbAdvertiser + (2 + nbAdvertiser + (2 + nbAdvertiser) * nbMedia) * nbCategory) * nbVehicle;
                         else nbMaxLines = 2 + nbAdvertiser + (2 + nbAdvertiser + (2 + nbAdvertiser) * nbMedia) * nbCategory;
                         break;

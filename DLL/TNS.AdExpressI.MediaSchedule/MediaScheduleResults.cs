@@ -407,7 +407,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE;
+            _allowTotal = _allowPdm = (VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE;
             _style = new DefaultMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -424,7 +424,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack);
+            _allowTotal = _allowPdm = (VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack);
             _style = new DefaultMediaScheduleStyle();
             return ComputeDesign(ComputeData());
 
@@ -442,7 +442,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = true;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack);
+            _allowTotal = _allowPdm = (VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack);
             _style = new PDFMediaScheduleStyle();
             throw new Exception("The method or operation is not implemented.");
         }
@@ -460,7 +460,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE; 
+            _allowTotal = _allowPdm = (VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE; 
             _style = new ExcelMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -477,7 +477,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (_vehicleId != (Int64)CstDBClassif.Vehicles.names.adnettrack);
+            _allowTotal = _allowPdm = (VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack);
             _style = new ExcelMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -509,7 +509,7 @@ namespace TNS.AdExpressI.MediaSchedule
             param[1] = _period;
             IMediaScheduleResultDAL mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 
-            if (_vehicleId == (Int64)CstDBClassif.Vehicles.names.adnettrack)
+            if (VehiclesInformation.DatabaseIdToEnum(_vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
             {
                 detailLevel = _session.GenericAdNetTrackDetailLevel;
                 ds = mediaScheduleDAL.GetMediaScheduleAdNetTrackData();
@@ -1502,7 +1502,7 @@ namespace TNS.AdExpressI.MediaSchedule
                             }
                             else if (isExport)
                             {
-                                switch ((CstDBClassif.Vehicles.names)_vehicleId)
+                                switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId))
                                 {
                                     case CstDBClassif.Vehicles.names.directMarketing:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, cssClasse));
@@ -1526,7 +1526,7 @@ namespace TNS.AdExpressI.MediaSchedule
                             }
                             else if (isExport)
                             {
-                                switch ((CstDBClassif.Vehicles.names)_vehicleId)
+                                switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId))
                                 {
                                     case CstDBClassif.Vehicles.names.directMarketing:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
@@ -1920,7 +1920,7 @@ namespace TNS.AdExpressI.MediaSchedule
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
-                && _vehicleId!=CstDBClassif.Vehicles.names.adnettrack.GetHashCode()
+                && VehiclesInformation.DatabaseIdToEnum(_vehicleId)!=CstDBClassif.Vehicles.names.adnettrack
                 && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE
                 );
         }
@@ -1941,7 +1941,7 @@ namespace TNS.AdExpressI.MediaSchedule
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
-                && _vehicleId != CstDBClassif.Vehicles.names.adnettrack.GetHashCode()
+                && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack
                 && (_module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE || _session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                 ;
         }

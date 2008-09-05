@@ -32,6 +32,7 @@ using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpressI.MediaSchedule.DAL;
 using TNS.AdExpressI.MediaSchedule.DAL.Exceptions;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Classification;
 
 #endregion
 
@@ -199,10 +200,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
                 mediaTableName = string.Format("{0}, {1}, ", detailLevel.GetSqlTables(_schAdexpr03.Label), tblTargetMediaAssignment.SqlWithPrefix);
                 // Get unit field
                 dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
-                unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, CstDBClassif.Vehicles.names.press.GetHashCode(), periodBreakDown);
+                unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.press), periodBreakDown);
                 unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
                 // Periodicity
-                mediaPeriodicity = GetPeriodicity(periodBreakDown, CstDBClassif.Vehicles.names.press.GetHashCode(), periodDisplay);
+                mediaPeriodicity = GetPeriodicity(periodBreakDown, VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.press), periodDisplay);
                 // Get classification fields
                 mediaFieldName = detailLevel.GetSqlFields();
                 // Get field order

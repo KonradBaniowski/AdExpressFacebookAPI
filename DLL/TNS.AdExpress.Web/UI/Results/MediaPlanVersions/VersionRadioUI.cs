@@ -13,6 +13,7 @@ using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Common.Results;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 {
@@ -74,7 +75,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		///  <since>mardi 5 septembre 2006</since>
 		protected override void RenderImage(StringBuilder output) {
 			
-			output.Append("<a href=\"javascript:openDownload('"+this._version.Path+","+this._version.Id+"','"+this._webSession.IdSession+"','"+DBCst.Vehicles.names.radio.GetHashCode().ToString()+"');\">");		
+			output.Append("<a href=\"javascript:openDownload('"+this._version.Path+","+this._version.Id+"','"+this._webSession.IdSession+"','"+VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radio).ToString()+"');\">");		
 			output.Append("<img border=0 src=\"/Images/common/Picto_Radio.gif\">");			
 			output.Append("</a>");
 			

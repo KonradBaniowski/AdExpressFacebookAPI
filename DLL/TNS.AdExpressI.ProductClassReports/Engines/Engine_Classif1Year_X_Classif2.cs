@@ -13,6 +13,7 @@ using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.Classification.Universe;
 using TNS.AdExpressI.ProductClassReports.Exceptions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
 {
@@ -186,7 +187,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			int numColumn;
 			//Pluri or not ? Yes ==> total pluri to do, else no
 			//Column total : plurimedia ou field "m1"
-			if (((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID != CstDBClassif.Vehicles.names.plurimedia.GetHashCode()){
+			if (VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) != CstDBClassif.Vehicles.names.plurimedia){
 				numColumn = FIRST_MEDIA_RESULT_INDEX;
 			}
 			else{
@@ -323,7 +324,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			}
 
 			
-            bool isPluri = ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == CstDBClassif.Vehicles.names.plurimedia.GetHashCode();
+            bool isPluri = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimedia;
 			foreach(DataRow currentRow in dtData.Rows){
 				
 				#region Données qualitatives

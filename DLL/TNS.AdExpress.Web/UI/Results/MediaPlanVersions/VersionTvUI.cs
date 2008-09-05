@@ -13,6 +13,7 @@ using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Common.Results;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 {
@@ -75,7 +76,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		///  <since>mardi 5 septembre 2006</since>
 		protected override void RenderImage(StringBuilder output) {
 		
-			output.Append("<a href=\"javascript:openDownload('"+this._version.Path+"','"+this._webSession.IdSession+"','"+DBCst.Vehicles.names.tv.GetHashCode().ToString()+"');\">");			
+			output.Append("<a href=\"javascript:openDownload('"+this._version.Path+"','"+this._webSession.IdSession+"','"+VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tv).ToString()+"');\">");			
 			output.Append("<img border=0 src=\"/Images/common/Picto_pellicule.gif\">");			
 			output.Append("</a>");
 		
@@ -86,7 +87,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		///  <since>vendredi 06 septembre 2006</since>
 		protected override void RenderImageExport(StringBuilder output) {
 		
-			output.Append("<a href=\"javascript:openDownload('"+this._exportVersion.Path+"','"+this._webSession.IdSession+"','"+DBCst.Vehicles.names.tv.GetHashCode().ToString()+"');\">");			
+			output.Append("<a href=\"javascript:openDownload('"+this._exportVersion.Path+"','"+this._webSession.IdSession+"','"+VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tv).ToString()+"');\">");			
 			output.Append("<img border=0 src=\"http://www.tnsadexpress.com/Images/common/Picto_pellicule.gif\">");			
 			output.Append("</a>");
 		

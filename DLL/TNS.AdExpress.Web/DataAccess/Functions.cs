@@ -34,6 +34,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.DataAccess{
 	/// <summary>
@@ -92,7 +93,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 
 			sql = sql.Remove(sql.Length-1, 1);
 
-			sql += " from " + WebFunctions.SQLGenerator.getVehicleTableNameForSectorAnalysisResult((ClassificationConstantes.DB.Vehicles.names)idVehicle);
+			sql += " from " + WebFunctions.SQLGenerator.getVehicleTableNameForSectorAnalysisResult(VehiclesInformation.DatabaseIdToEnum(idVehicle));
 			#endregion
 
 			#region Exécution de la requete

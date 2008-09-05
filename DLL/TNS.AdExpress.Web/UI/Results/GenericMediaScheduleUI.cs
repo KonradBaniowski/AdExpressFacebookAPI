@@ -28,6 +28,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Functions;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Classification;
 //using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpress.Web.UI.Results {
@@ -1360,7 +1361,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                                 mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new VersionItem((Int64)tab[i, sloganIndex], "pc" + colorNumberToUse.ToString())); //TODO
                             }
                             else if(isExport){
-                                switch ((DBClassificationConstantes.Vehicles.names)idVehicle) {
+                                switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
                                     case DBClassificationConstantes.Vehicles.names.directMarketing:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportMDVersionItem((Int64)tab[i, sloganIndex], "pc" + colorNumberToUse.ToString()));
                                         break;
@@ -1380,7 +1381,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                                 mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new VersionItem((Int64)tab[i, sloganIndex], webSession.SloganColors[(Int64)tab[i, sloganIndex]].ToString()));
                             }
                             else if(isExport){
-                                switch ((DBClassificationConstantes.Vehicles.names)idVehicle) {
+                                switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
                                     case DBClassificationConstantes.Vehicles.names.directMarketing:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportMDVersionItem((Int64)tab[i, sloganIndex], webSession.SloganColors[(Int64)tab[i, sloganIndex]].ToString()));
                                         break;

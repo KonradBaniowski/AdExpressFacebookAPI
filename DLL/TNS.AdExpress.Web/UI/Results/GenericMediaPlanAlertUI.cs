@@ -27,6 +27,7 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 //using TNS.AdExpress.Domain.Results;
 
 
@@ -3103,7 +3104,7 @@ namespace TNS.AdExpress.Web.UI.Results{
                         {
                             colorNumberToUse = (colorItemIndex % 30) + 1;
                             webSession.SloganColors.Add((Int64)tab[i, sloganIndex], "pc" + colorNumberToUse.ToString());
-                            switch ((DBCst.Vehicles.names)idVehicle) { 
+                            switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) { 
                                 case DBCst.Vehicles.names.directMarketing:
                                     mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportMDVersionItem((Int64)tab[i, sloganIndex], "pc" + colorNumberToUse.ToString()));
                                     break;
@@ -3118,7 +3119,7 @@ namespace TNS.AdExpress.Web.UI.Results{
                         }
                         if ((Int64)tab[i, sloganIndex] != 0 && !mediaPlanResultData.VersionsDetail.ContainsKey((Int64)tab[i, sloganIndex]))
                         {
-                            switch ((DBCst.Vehicles.names)idVehicle) {
+                            switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
                                 case DBCst.Vehicles.names.directMarketing:
                                     mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportMDVersionItem((Int64)tab[i, sloganIndex], webSession.SloganColors[(Int64)tab[i, sloganIndex]].ToString()));
                                     break;

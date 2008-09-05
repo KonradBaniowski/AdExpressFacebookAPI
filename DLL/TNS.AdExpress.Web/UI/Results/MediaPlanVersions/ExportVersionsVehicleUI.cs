@@ -32,6 +32,7 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork;
 using TNS.FrameWork.Exceptions;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 {
@@ -651,7 +652,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             switch (this._vehicle) {
 
                 case DBCst.Vehicles.names.directMarketing:
-                    dtSetDetails = MediaCreationDataAccess.GetMDData(_webSession, mediaImpactedList, int.Parse(dateBegin), int.Parse(dateEnd), (long)DBCst.Vehicles.names.directMarketing, true); 
+                    dtSetDetails = MediaCreationDataAccess.GetMDData(_webSession, mediaImpactedList, int.Parse(dateBegin), int.Parse(dateEnd), VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.directMarketing), true); 
                     break;
                 default:
                     throw new VersionUIException("Non authorized vehicle level : " + this._vehicle.ToString());

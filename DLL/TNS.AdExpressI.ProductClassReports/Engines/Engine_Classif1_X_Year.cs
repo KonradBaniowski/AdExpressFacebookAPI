@@ -12,6 +12,7 @@ using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Classification;
 //using FctWeb = TNS.AdExpress.Web.
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
@@ -60,7 +61,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 
 			int nbLine = 0;
 			int currentLine;
-            CstDBClassif.Vehicles.names vehicle = (CstDBClassif.Vehicles.names)((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID;
+            CstDBClassif.Vehicles.names vehicle = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
 
 			#region Constantes
 

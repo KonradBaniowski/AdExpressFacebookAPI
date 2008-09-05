@@ -47,6 +47,7 @@ using TNS.Classification.Universe;
 using ProductClassification=TNS.AdExpress.DataAccess.Classification.ProductBranch;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 #endregion
 
@@ -663,7 +664,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// <returns>HTML</returns>
 		private static string GetInsetSelected(WebSession webSession){
 			string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-			ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
 			if(vehicleType==ClassificationCst.DB.Vehicles.names.press ||vehicleType==ClassificationCst.DB.Vehicles.names.internationalPress){
 				int code=0;
 				switch(webSession.Insert){
@@ -1493,7 +1494,7 @@ namespace TNS.AdExpress.Web.UI{
 					t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
 				}
 				else{ 
-					switch((ClassificationConstant.Vehicles.names)idVehicle){
+					switch(VehiclesInformation.DatabaseIdToEnum(idVehicle)){
 						case ClassificationConstant.Vehicles.names.press:
 						case ClassificationConstant.Vehicles.names.internationalPress:
 							// Date de parution (presse)
@@ -1898,7 +1899,7 @@ namespace TNS.AdExpress.Web.UI{
 					if(i!=0){
 						mediaNames+=",";
 					}
-					vehicletype=( ClassificationConstant.Vehicles.names)int.Parse(mediaList[i].ToString());
+					vehicletype=VehiclesInformation.DatabaseIdToEnum(Int64.Parse(mediaList[i].ToString()));
 					switch(vehicletype){
 						case ClassificationConstant.Vehicles.names.press:
 							mediaNames+=GestionWeb.GetWebWord(204,webSession.SiteLanguage);
