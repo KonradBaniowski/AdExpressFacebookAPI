@@ -208,6 +208,7 @@ namespace TNS.AdExpress.Web.Functions{
 		public	static string ToExcel(TreeNode root,int SiteLanguage,bool displayCheckbox){
 
 			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
+            string themeName = WebApplicationParameters.Themes[SiteLanguage].Name;
 			//int nbElement=0;
 			string treeNode="";
 			int i=0;
@@ -220,23 +221,23 @@ namespace TNS.AdExpress.Web.Functions{
 			classCss=violet;
 
 			foreach(TreeNode currentNode in root.Nodes){				
-				if(start==0){					
-					t.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\""+classCss+"\"  cellpadding=0 cellspacing=0 >");
+				if(start==0){
+                    t.Append("<table class=\"detailSelectionH\" cellpadding=0 cellspacing=0 >");
 					start=1;
 				}
-				else{					
-					t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; border-top :#644883 1px solid; \" class=\""+classCss+"\"  cellpadding=0 cellspacing=0 >");
+				else{
+                    t.Append("<table class=\"detailSelectionH\" cellpadding=0 cellspacing=0 >");
 				}
 				t.Append("<tr>");
 				t.Append("<td align=\"left\" height=\"10\"  valign=\"middle\" nowrap>");		
 				
 				//Non cocher
 				if(displayCheckbox && !currentNode.Checked){
-					t.Append("<img src=/Images/Common/checkbox_not_checked.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    t.Append("<img src=/App_Themes/" + themeName + "/Images/Common/checkbox_not_checked.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 				}
 				//cocher
-				else if(displayCheckbox && currentNode.Checked){					
-					t.Append("<img src=/Images/Common/checkbox.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+				else if(displayCheckbox && currentNode.Checked){
+                    t.Append("<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 				}
 				t.Append(""+((LevelInformation)currentNode.Tag).Text+"");
 				t.Append("</td>");
@@ -252,8 +253,8 @@ namespace TNS.AdExpress.Web.Functions{
 					}
 					t.Append("</tr>");
 					t.Append("</table>");
-					
-					t.Append("<table style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#FFFFFF width=100%>");
+
+                    t.Append("<table class=\"detailSelection\" width=100%>");
 				}
 				
 				colonne=0;
@@ -261,11 +262,11 @@ namespace TNS.AdExpress.Web.Functions{
 				while(i<currentNode.Nodes.Count){
 					//Non cocher
 					if(!currentNode.Nodes[i].Checked){
-						tmp="<img src=/Images/Common/checkbox_not_checked.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br>";
+                        tmp = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox_not_checked.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
 					}
 					//En lecture et cocher
 					else if(currentNode.Nodes[i].Checked){
-						tmp="<img src=/Images/Common/checkbox.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br>";
+                        tmp = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
 							
 					}else {
 						tmp="";
@@ -424,6 +425,7 @@ namespace TNS.AdExpress.Web.Functions{
 		private static string ToHtml(TreeNode root,bool write,bool displayArrow,bool displayCheckbox,int witdhTable,bool displayBorderTable,bool allSelection,int SiteLanguage,int typetree,int showHideContent,bool div,bool percentage){
 		
 			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
+            string themeName = WebApplicationParameters.Themes[SiteLanguage].Name;
 			//int nbElement=0;
 			string treeNode="", percentageSymbol="";
 			int i=0;
@@ -531,19 +533,19 @@ namespace TNS.AdExpress.Web.Functions{
 				t.Append("</td>");
 				if(displayArrow && currentNode.Nodes.Count>0){
 					if(showHideContent==1){
-						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent1('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
+						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent1('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/App_Themes/" + themeName + "/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
 					}
 					else if(showHideContent==2){
-						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent2('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
+						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent2('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/App_Themes/" + themeName + "/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
 					}
 					else if(showHideContent==3){
-						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent3('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
+						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent3('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/App_Themes/" + themeName + "/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
 					}
 					else if(showHideContent==4){
-						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent4('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
+						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent4('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/App_Themes/" + themeName + "/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
 					}
 					else if(showHideContent==5){
-						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent5('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
+						t.Append("<td width=\"100%\" align=right onClick=\"showHideContent5('"+((LevelInformation)currentNode.Tag).ID+"');\" style=\"cursor : hand\"><IMG height=\"15\" src=\"/App_Themes/" + themeName + "/images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");		
 					}
 				}
 				else{
