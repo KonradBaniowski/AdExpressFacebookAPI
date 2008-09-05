@@ -586,13 +586,10 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			this.PreRender += new EventHandler(Custom_PreRender);
 			
 		}
-
 		#endregion
 
 		#region Evenements
 
-		
-		
 		#region Init
         /// <summary>
 		/// Initialisation
@@ -853,7 +850,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		#endregion
 
 		#region Custom PreRender
-
 		/// <summary>
 		///custom prerender 
 		/// </summary>
@@ -861,7 +857,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// <param name="e">arguments</param>
 		private void Custom_PreRender(object sender, System.EventArgs e)
 		{
-
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
 			
 			#region Unité
@@ -1252,7 +1247,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
 
-			
 			//option unité
 			if (unitOption){
 				output.Write("\n<tr>");
@@ -1270,7 +1264,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					
 				}
 
-				
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
 				output.Write("\n<TR>");
@@ -1278,7 +1271,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n</TR>");
 			}
 
-				//option unité Appm
+			//option unité Appm
 			if (unitOptionAppm){
 				output.Write("\n<tr>");
 				output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182,customerWebSession.SiteLanguage) + "\" class=\"txtGris11Bold\">");
@@ -1295,9 +1288,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n</TR>");
 				
 			}
-
-			
-
 
 			//option detail media
 			if (mediaDetailOption){
@@ -1347,7 +1337,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n<TD height=\"5\"></TD>");
 				output.Write("\n</TR>");
 			}
-			
 
 			//option format de tableau
 			if (tblChoiceOption){
@@ -1365,8 +1354,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n<TD height=\"5\"></TD>");
 				output.Write("\n</TR>");
 			}
-
-			
 
 			//options PDM, PDV, evolution
 			if (pdmOption || pdvOption || evolutionOption){
@@ -1406,7 +1393,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                 output.Write("\n</TR>");
             }
 
-
 			//options de visu des elements perso
 			if (personalizedElementsOption){
 				output.Write("\n<tr>");
@@ -1443,8 +1429,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n<TD height=\"5\"></TD>");
 				output.Write("\n</TR>");
 			}
-
-
 
 			//option résultat
 			if (resultOption){
@@ -1515,7 +1499,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					output.Write("\n</TR>");
 				
 			}
-			
 
 			//fin tableau
 			output.Write("\n</table>");
@@ -1558,6 +1541,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				
 				case ClassificationCst.DB.Vehicles.names.directMarketing:
 				case ClassificationCst.DB.Vehicles.names.internet:
+                case ClassificationCst.DB.Vehicles.names.adnettrack:
 					return ((current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO));						
 				case ClassificationCst.DB.Vehicles.names.outdoor:
 				case ClassificationCst.DB.Vehicles.names.cinema:
