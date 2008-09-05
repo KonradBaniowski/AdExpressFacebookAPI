@@ -64,6 +64,47 @@ namespace TNS.AdExpress.Domain.XmlLoader{
         }
         #endregion
 
+		#region Default Language
+		/// <summary>
+		/// Load default Data Language
+		/// </summary>
+		/// <param name="dataSource">Data source</param>
+		/// <returns>Return the default data language of the application</returns>
+		internal static int LoadDefaultDataLanguage(IDataSource dataSource) {
+
+			#region Variables
+			XmlTextReader reader = null;
+			int defaultDataLanguageId = -1;
+			#endregion
+
+			try {
+				reader = (XmlTextReader)dataSource.GetSource();
+				while (reader.Read()) {
+					if (reader.NodeType == XmlNodeType.Element) {
+						switch (reader.LocalName) {
+							case "languages":
+								if (reader.GetAttribute("defaultDataLanguage") == null) throw (new XmlNullValueException("The default data language value is null"));
+								if (reader.GetAttribute("defaultDataLanguage").Length == 0) throw (new XmlException("The default data language is empty"));
+								defaultDataLanguageId = int.Parse(reader.GetAttribute("defaultDataLanguage"));
+								break;
+						}
+					}
+				}
+			}
+			#region Traitement des erreurs
+			catch (System.Exception err) {
+				#region Fermeture du fichier
+				if (dataSource.GetSource() != null) dataSource.Close();
+				#endregion
+
+				throw (new WebLanguagesXLException(" Error : ", err));
+			}
+			#endregion
+
+			return (defaultDataLanguageId);
+		}
+		#endregion
+
         #region Web Languages
         /// <summary>
         /// Chargement de la langue par defaut de Cyberpub

@@ -9,8 +9,10 @@ using System.Data;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 using TNS.AdExpress.Web.Core.DataAccess;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Core{
     /// <summary>
@@ -26,7 +28,7 @@ namespace TNS.AdExpress.Web.Core{
         /// <summary>
         /// Liste des vehicles
         /// </summary>
-        private static string[] _vehicleList = new string[1]{"7"};
+		private static Vehicles.names[] _vehicleList = new Vehicles.names[1] { Vehicles.names.internet };
         #endregion
 
         #region Constructeur
@@ -47,15 +49,15 @@ namespace TNS.AdExpress.Web.Core{
             ArrayList activeMediaList=new ArrayList();
             DataSet ds;
 
-            foreach (string str in _vehicleList) {
+			foreach (Vehicles.names str in _vehicleList) {
 
-                ds = ActiveMediaListDataAccess.GetActiveMediaData(Int64.Parse(str), siteLanguage);
+                ds = ActiveMediaListDataAccess.GetActiveMediaData(VehiclesInformation.EnumToDatabaseId(str), siteLanguage);
 
                 foreach (DataRow row in ds.Tables[0].Rows) { 
                     activeMediaList.Add(row["id_media"]);
                 }
-                   
-                _htActiveMedia.Add(Int64.Parse(str),activeMediaList);
+
+				_htActiveMedia.Add(VehiclesInformation.EnumToDatabaseId(str), activeMediaList);
 
             }
             

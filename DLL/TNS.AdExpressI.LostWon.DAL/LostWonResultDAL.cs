@@ -281,7 +281,11 @@ namespace TNS.AdExpressI.LostWon.DAL
 
                     sql = new StringBuilder();
                     sql.Append("  select id_sector, id_subsector, id_group_, id_advertiser, id_brand, id_product");
-                    sql.AppendFormat(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num, {0}", unitFieldSumUnionWithAlias);
+                   if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+					   sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+				   if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+					   sql.Append(", ID_ADVERTISING_AGENCY");
+					sql.AppendFormat(", date_num, {0}", unitFieldSumUnionWithAlias);
                     sql.Append(" from (");
                     sql.Append(sql4M);
                     sql.Append(" UNION ");
@@ -289,17 +293,27 @@ namespace TNS.AdExpressI.LostWon.DAL
                     sql.Append(" ) ");
 
                     sql.Append("  group by id_sector, id_subsector, id_group_, id_advertiser, id_brand, id_product");
-                    sql.Append(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num");
-                    
+					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+					sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+					sql.Append(", ID_ADVERTISING_AGENCY");
+					sql.Append(", date_num");
                     sql.Append("  order by  id_sector, id_subsector,  id_group_, id_advertiser, id_brand, id_product");
-                    sql.Append(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num");
+					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+						sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+						sql.Append(", ID_ADVERTISING_AGENCY");
+					sql.Append(", date_num");
                 }
                 else if (!customerPeriod.IsDataVehicle && !customerPeriod.IsWebPlan)
                 {
                     sql.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
                     sql.AppendFormat("  order by {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
                     sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
-					sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+					sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+						sql.AppendFormat(",{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
                     sql.Append(", date_num");
                 }
                 else
@@ -321,18 +335,30 @@ namespace TNS.AdExpressI.LostWon.DAL
                     {
                         sql = new StringBuilder();
                         sql.Append("  select id_sector, id_subsector, id_group_, id_advertiser, id_brand, id_product");
-                        sql.AppendFormat(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num, {0}", unitFieldSumUnionWithAlias);
-                        sql.Append(" from (");
+						if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+							sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+						if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+							sql.Append(", ID_ADVERTISING_AGENCY");
+						sql.AppendFormat(", date_num, {0}", unitFieldSumUnionWithAlias);
+						sql.Append(" from (");
                         sql.Append(sqlDataVehicle);
                         sql.Append(" UNION ");
                         sql.Append(sqlWebPlan);
                         sql.Append(" ) ");
                         sql.Append("  group by id_sector, id_subsector, id_group_, id_advertiser, id_brand, id_product");
-                        sql.Append(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num");
+						if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+							sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+						if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+							sql.Append(", ID_ADVERTISING_AGENCY");
+						sql.Append(", date_num");
                     }
 
                     sql.Append("  order by  id_sector, id_subsector,  id_group_, id_advertiser, id_brand, id_product");
-                    sql.Append(", ID_GROUP_ADVERTISING_AGENCY, ID_ADVERTISING_AGENCY, date_num");
+					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+						sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+						sql.Append(", ID_ADVERTISING_AGENCY");
+					sql.Append(", date_num");
 
                 }
 
@@ -576,14 +602,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                         dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
                     }
                     catch (SQLGeneratorException) { ;}
-                }
-				////Agence_media
-				//if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.groupMediaAgency) || _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.agency))
-				//{
-				//    mediaAgencyTable = CstDB.Schema.ADEXPRESS_SCHEMA + "." + _session.MediaAgencyFileYear + " " + CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ",";
-				//    mediaAgencyJoins = "And " + DATA_TABLE_PREFIXE + ".id_product=" + CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_product ";
-				//    mediaAgencyJoins += "And " + DATA_TABLE_PREFIXE + ".id_vehicle=" + CstDB.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE + ".id_vehicle ";
-				//}
+                }				
             }
             catch (Exception e)
             {
@@ -758,11 +777,18 @@ namespace TNS.AdExpressI.LostWon.DAL
 
             sql.AppendFormat("  select {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
             sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
-			sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
+				sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+			}
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
+				sql.AppendFormat(",{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+			}
             sql.AppendFormat(",{0} as date_num, {1}", dateField, unitFieldSumWithAlias);
 
             sql.AppendFormat(" from {0}", dataTableName);
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) 
 			sql.AppendFormat(",{0}.{1} {2}", schAdExpr03.Label, tblAdvertisingAgengy.Label, tblAdvertisingAgengy.Prefix);
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) 
 			sql.AppendFormat(",{0}.{1} {2}", schAdExpr03.Label, tblGroupAdvertisingAgengy.Label, tblGroupAdvertisingAgengy.Prefix);
 
             // Période
@@ -793,11 +819,15 @@ namespace TNS.AdExpressI.LostWon.DAL
             if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                 sql.AppendFormat(" {0}", dataJointForInsert);
 
-            //Jointures groupe agences/agences		
+            //Jointures groupe agences/agences	
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
 			sql.AppendFormat(" and {0}.ID_ADVERTISING_AGENCY(+)={1}.ID_ADVERTISING_AGENCY ", tblAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
 			sql.AppendFormat(" and {0}.id_language(+)={1}", tblAdvertisingAgengy.Prefix, _session.DataLanguage);
-			sql.AppendFormat(" and {0}.ID_GROUP_ADVERTISING_AGENCY(+)={1}.ID_GROUP_ADVERTISING_AGENCY ", tblGroupAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
-			sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.DataLanguage);
+			}
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
+				sql.AppendFormat(" and {0}.ID_GROUP_ADVERTISING_AGENCY(+)={1}.ID_GROUP_ADVERTISING_AGENCY ", tblGroupAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
+				sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.DataLanguage);
+			}
 
             #region Sélection de Médias
             while (_session.CompetitorUniversMedia[positionUnivers] != null) {
@@ -824,7 +854,12 @@ namespace TNS.AdExpressI.LostWon.DAL
             // Group by			
             sql.AppendFormat("  group by {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
             sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
-			sql.AppendFormat(", {0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
+				sql.AppendFormat(", {0}.ID_GROUP_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+			}
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
+				sql.AppendFormat(",{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+			}
             sql.AppendFormat(", {0}", dateField);
 
             #region Execution de la requête

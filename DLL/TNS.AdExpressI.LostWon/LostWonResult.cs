@@ -444,7 +444,12 @@ namespace TNS.AdExpressI.LostWon
             #region Création des headers
             nbLine = 5;
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) nbLine++;
-			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) nbLine += 2;
+			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
+				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) 
+				nbLine++;
+				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+				nbLine++;
+			}
 
             // Ajout de la colonne Produit
             Headers headers = new Headers();
@@ -534,10 +539,14 @@ namespace TNS.AdExpressI.LostWon
             // Groupe d'Agence && Agence
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
             {
-                agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
-                resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
-                agencyLineIndex = resultTable.AddNewLine(LineType.level1);
-                resultTable[agencyLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1851, _session.SiteLanguage));
+				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
+					agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
+					resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
+				}
+				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
+					agencyLineIndex = resultTable.AddNewLine(LineType.level1);
+					resultTable[agencyLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1851, _session.SiteLanguage));
+				}
             }
             #endregion
 
@@ -643,10 +652,10 @@ namespace TNS.AdExpressI.LostWon
                     groups.Add(currentRow["id_group_"].ToString());
                 }
 
-                if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
+                if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY) )
                 {//droits agences média					
                     //activité publicitaire Groupes d'agences
-                    if (currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))
+                    if ( _vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency) && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))
                     {
                         filterN = "ID_GROUP_ADVERTISING_AGENCY=" + currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                         filterN1 = "ID_GROUP_ADVERTISING_AGENCY=" + currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
@@ -655,7 +664,7 @@ namespace TNS.AdExpressI.LostWon
                     }
 
                     //activité publicitaire agence
-                    if (currentRow["ID_ADVERTISING_AGENCY"] != null && currentRow["ID_ADVERTISING_AGENCY"] != System.DBNull.Value && !agency.Contains(currentRow["ID_ADVERTISING_AGENCY"].ToString()))
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency) && currentRow["ID_ADVERTISING_AGENCY"] != null && currentRow["ID_ADVERTISING_AGENCY"] != System.DBNull.Value && !agency.Contains(currentRow["ID_ADVERTISING_AGENCY"].ToString()))
                     {
                         filterN = "ID_ADVERTISING_AGENCY=" + currentRow["ID_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                         filterN1 = "ID_ADVERTISING_AGENCY=" + currentRow["ID_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";

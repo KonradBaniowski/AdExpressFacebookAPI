@@ -42,13 +42,16 @@ namespace TNS.AdExpress.Domain.Web {
         /// <summary>
         /// Database description
         /// </summary>
-        private static DataBase _dataBase;
-        
+        private static DataBase _dataBase;        
 	
         /// <summary>
         /// Default Language
         /// </summary>
         protected static int _defaultLanguage;
+		/// <summary>
+		/// Default data language
+		/// </summary>
+		protected static int _defaultDataLanguage;
         /// <summary>
         /// Allowed languages List 
         /// </summary>
@@ -71,7 +74,8 @@ namespace TNS.AdExpress.Domain.Web {
             _configurationDirectoryRoot=AppDomain.CurrentDomain.BaseDirectory+CONFIGARION_DIRECTORY_NAME+@"\";
             _webSiteName=WebParamtersXL.LoadSiteName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
             _countryConfigurationDirectoryRoot=_configurationDirectoryRoot+WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME))+@"\";
-            _defaultLanguage=WebLanguagesXL.LoadDefaultLanguage(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
+            _defaultDataLanguage=WebLanguagesXL.LoadDefaultDataLanguage(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
+			_defaultLanguage = WebLanguagesXL.LoadDefaultLanguage(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
             _allowedLanguages=WebLanguagesXL.LoadLanguages(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
             _themes=WebThemesXL.LoadThemes(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBTHEMES_CONFIGURATION_FILENAME));
             _dataBase=new DataBase(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
@@ -104,6 +108,12 @@ namespace TNS.AdExpress.Domain.Web {
         public static int DefaultLanguage {
             get { return _defaultLanguage; }
         }
+		/// <summary>
+		/// Get Default data Language
+		/// </summary>
+		public static int DefaultDataLanguage {
+			get { return _defaultDataLanguage; }
+		}
         /// <summary>
         /// Get allowed languages List 
         /// </summary>

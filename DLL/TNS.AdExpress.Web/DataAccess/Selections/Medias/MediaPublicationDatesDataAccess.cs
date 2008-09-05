@@ -23,6 +23,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 {
@@ -54,12 +55,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 
 			#region From
 			sql.Append(" from ");			
-			sql.Append(DBSchema.APPM_SCHEMA+"."+DBTables.DATA_PRESS_APPM+" "+DBTables.DATA_PRESS_APPM_PREFIXE);			
+			sql.Append(WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAPPM).SqlWithPrefix); 
 			#endregion
 
 			#region Where
 			sql.Append(" where ");
-			//sql.Append("date_parution_num >="+dateBegin+" and date_parution_num<="+dateEnd);				
 			sql.Append("date_media_num >=" + dateBegin + " and date_media_num<=" + dateEnd);				
 			#endregion			
 
@@ -96,15 +96,15 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 			
 			#region Construction de la requête
 			sql+=" select max("+SQLGenerator.GetDateFieldName(moduleType,periodType)+") last_date ";
-			sql+=" from "+DBSchema.ADEXPRESS_SCHEMA+".";
+			sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + ".";
 			
 			switch(periodType){
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
 				case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
-					sql+=DBTables.WEB_PLAN_MEDIA_MONTH;
+					sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).Label;
 					break;
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:				
-					sql+=DBTables.WEB_PLAN_MEDIA_WEEK;
+				case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
+					sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).Label; 
 					break;
 				default:
 					throw(new WebExceptions.MediaPublicationDatesDataAccessException("Le détails période sélectionné est incorrect pour le choix de la table"));
@@ -141,26 +141,24 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
             #region Construction de la requête
 
 
-            switch ((DBClassificationConstantes.Vehicles.names)idVehicle) {
+            switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
                 case DBClassificationConstantes.Vehicles.names.internet:
                     sql += " select max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-                    sql += " from " + DBSchema.ADEXPRESS_SCHEMA + ".";
-                    sql += DBTables.DATA_INTERNET;
+                    sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     sql += " select max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-                    sql += " from " + DBSchema.ADEXPRESS_SCHEMA + ".";
-                    sql += DBTables.DATA_MARKETING_DIRECT;
+					sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     sql += " select min(last_date) as last_date ";
                     sql += " from (";
                     sql += " select id_media, max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-                    sql += " from " + DBSchema.ADEXPRESS_SCHEMA + ".";
-                    sql += DBTables.DATA_PRESS;
+					sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Sql;
 
-                    #region Sélection de Médias
+
+                    #region Media selection
                     if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE)
                         mediaList += webSession.GetSelection((TreeNode)webSession.ReferenceUniversMedia, CustormerConstantes.Right.type.mediaAccess)+",";
                     else {
