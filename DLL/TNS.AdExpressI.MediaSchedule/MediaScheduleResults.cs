@@ -407,7 +407,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE;
+            _allowTotal = _allowPdm = ((!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack)) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
             _style = new DefaultMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -424,7 +424,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack);
+            _allowTotal = _allowPdm = (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack));
             _style = new DefaultMediaScheduleStyle();
             return ComputeDesign(ComputeData());
 
@@ -442,7 +442,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = true;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack);
+            _allowTotal = _allowPdm = (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack));
             _style = new PDFMediaScheduleStyle();
             throw new Exception("The method or operation is not implemented.");
         }
@@ -460,7 +460,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE; 
+            _allowTotal = _allowPdm = (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack)) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE; 
             _style = new ExcelMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -477,7 +477,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack);
+            _allowTotal = _allowPdm = (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack));
             _style = new ExcelMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -1920,7 +1920,7 @@ namespace TNS.AdExpressI.MediaSchedule
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
-                && VehiclesInformation.DatabaseIdToEnum(_vehicleId)!=CstDBClassif.Vehicles.names.adnettrack
+                && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack))
                 && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE
                 );
         }
@@ -1941,7 +1941,7 @@ namespace TNS.AdExpressI.MediaSchedule
                 && !_isCreativeDivisionMS
                 && !_isExcelReport
                 && !_isPDFReport
-                && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack
+                && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack))
                 && (_module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE || _session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                 ;
         }
