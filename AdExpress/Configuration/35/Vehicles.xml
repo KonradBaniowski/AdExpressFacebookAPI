@@ -205,4 +205,11 @@
       <!--<MediaSelectionParent>title</MediaSelectionParent>-->                 <!-- Titre -->
     </MediaSelectionParents>
   </vehicle>
+  <!-- PLURIMEDIA -->
+  <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>euro</allowedUnit>
+    </allowedUnits>
+  </vehicle>
 </vehicles>
