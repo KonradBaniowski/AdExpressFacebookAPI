@@ -336,7 +336,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             //Periodicity selection
             sql.AppendFormat("{0}, ", mediaPeriodicity);
             // Unit selection expect for AdNetTrack
-            if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
+            if (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
                 sql.AppendFormat("sum(OCCURRENCE) as {0}", unitAlias);
             else
                 sql.AppendFormat("sum({0}) as {1}", unitFieldName, unitAlias);
@@ -414,20 +414,21 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
 
             #region Rights
             // No media right if AdNetTrack media schedule
-            if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
+            if (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
                 sql.Append(FctWeb.SQLGenerator.GetAdNetTrackMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             else
                 sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Selection
-            if (periodDisplay != CstPeriod.DisplayLevel.dayly && VehiclesInformation.DatabaseIdToEnum(vehicleId) != CstDBClassif.Vehicles.names.adnettrack)
-            {
+            if (periodDisplay == CstPeriod.DisplayLevel.dayly || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)) {
+                sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, vehicleId);
+            }
+            else {
                 list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
                 if (list.Length > 0) sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, list);
             }
-            else
-                sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, vehicleId);
+                
             #endregion
 
 			//Universe media
