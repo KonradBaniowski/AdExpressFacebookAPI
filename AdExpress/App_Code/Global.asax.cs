@@ -95,7 +95,7 @@ namespace AdExpress {
 				// Initialisation des listes d'univers produit d'AdExpress
 				//TNS.AdExpress.Web.Core.ClassificationList.Product.Init();
 
-                ActiveMediaList.Init(WebApplicationParameters.DefaultLanguage); 
+				ActiveMediaList.Init(WebApplicationParameters.DefaultDataLanguage); 
 
 				//Initialisation de la configuration Reseau pour les résultats PDF
 				//AnubisCommon.Network.Configuration networkConfig=AnubisBF.Network.ConfigurationSystem.Load(AppDomain.CurrentDomain.BaseDirectory+@"config\"+AnubisConstantes.Application.Configuration.NETWORK_FILE);
