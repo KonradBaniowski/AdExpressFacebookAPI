@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Domain.Web {
     /// <summary>
@@ -56,7 +57,11 @@ namespace TNS.AdExpress.Domain.Web {
 		/// NLS SORT to use any linguistic sort for an ORDER BY clause
 		/// <example> France ="FRENCH"</example>
 		/// </summary>
-		private string _nlsSort="";		
+		private string _nlsSort="";
+        /// <summary>
+        /// Extended culture info for the specific language
+        /// </summary>
+        private AdExpressCultureInfo _cInfo = null;
         #endregion
 
         #region Constructor
@@ -68,6 +73,7 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="localization">Localisation text string id</param>
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
+        /// <param name="cInfo">Extended culture info</param>
         public WebLanguage(int id,string imageSourceText,string localization,string charset,string contentEncoding) {
             if(id<0) throw (new ArgumentException("The language Id cannot be inferior to 0"));
             _id=id;
@@ -91,12 +97,13 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="classificationLanguageId">Classification language Id</param>
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
-        public WebLanguage(int id,string name,string imageSourceText,string localization,int classificationLanguageId,string charset,string contentEncoding,string nlsSort)
+        public WebLanguage(int id,string name,string imageSourceText,string localization,int classificationLanguageId,string charset,string contentEncoding,string nlsSort, AdExpressCultureInfo cInfo)
             : this(id,imageSourceText,localization,charset,contentEncoding) {
             if(name!=null&&name.Length>0) _name=name;
 			if (nlsSort != null && nlsSort.Length > 0) _nlsSort = nlsSort;		
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
             _classificationLanguageId=classificationLanguageId;
+            _cInfo = cInfo;
             
         }
         #endregion
@@ -147,9 +154,18 @@ namespace TNS.AdExpress.Domain.Web {
 		/// <summary>
 		/// Get NLS SORT to use any linguistic sort for an ORDER BY clause
 		/// </summary>
-		public string NlsSort {
-			get { return (_nlsSort); }
-		}		
+        public string NlsSort
+        {
+            get { return (_nlsSort); }
+        }
+        /// <summary>
+        /// Get Set AdExpress Culture Info for this language
+        /// </summary>
+        public AdExpressCultureInfo CultureInfo
+        {
+            get { return _cInfo; }
+            set { _cInfo = value; }
+        }
         #endregion
     }
 }

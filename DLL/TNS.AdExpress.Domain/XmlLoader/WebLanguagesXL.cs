@@ -11,6 +11,7 @@ using System.Text;
 using System.Xml;
 using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Exceptions;
 
@@ -84,6 +85,9 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             string contentEncoding="";
 			string nlsSort = "";
 			bool isUTF8 = false;
+            AdExpressCultureInfo cInfo = null;
+            string formatName = string.Empty;
+            string format = string.Empty;
             #endregion
 
             try {
@@ -112,7 +116,13 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     classificationLanguageId=id;
 								if (reader.GetAttribute("nlsSort") != null && reader.GetAttribute("nlsSort").Length > 0)
 									nlsSort = reader.GetAttribute("nlsSort");															
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,nlsSort));
+                                cInfo = new AdExpressCultureInfo(localization);
+                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,nlsSort, cInfo));
+                                break;
+                            case "unitformat":
+                                if(reader.GetAttribute("name")!=null) formatName=reader.GetAttribute("name");
+                                if(reader.GetAttribute("format")!=null) format=reader.GetAttribute("format");
+                                cInfo.AddPattern(formatName, format);
                                 break;
                         }
                     }

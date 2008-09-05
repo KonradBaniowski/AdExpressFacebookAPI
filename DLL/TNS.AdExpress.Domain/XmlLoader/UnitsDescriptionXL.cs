@@ -35,8 +35,10 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             string databaseField="";
             string databaseMultimediaField="";
             string cellType = "";
+            string format = "";
             UnitInformation unit;
             #endregion
+
             try {
                 source.Open();
                 reader = (XmlTextReader)source.GetSource();
@@ -56,8 +58,10 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 else databaseField = reader.GetAttribute("field");
                                 if(reader.GetAttribute("multimediaField") == null || reader.GetAttribute("multimediaField").Length == 0) databaseMultimediaField="";
                                 else databaseMultimediaField = reader.GetAttribute("multimediaField");
+                                if (reader.GetAttribute("format") == null || reader.GetAttribute("format").Length == 0) format = "";
+                                else format = reader.GetAttribute("format");
                                 
-                                unit = new UnitInformation(id,webTextId,baseId,cellType,databaseField,databaseMultimediaField);
+                                unit = new UnitInformation(id,format,webTextId,baseId,cellType,databaseField,databaseMultimediaField);
                                 list.Add(unit);
                                 break;
                         }
@@ -65,6 +69,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 }
             }
             catch(System.Exception err) {
+
                 #region Close the file
                 if(source.GetSource() != null) source.Close();
                 #endregion

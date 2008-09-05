@@ -116,9 +116,14 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
 
                 string images = string.Empty;
                 string html = string.Empty;
-                for (int j = 0; j < files.Length; j++) {
-                    images += string.Format("{0}/{1},", WebCst.CreationServerPathes.IMAGES, files[j].Replace("/imagette",""));
-                    html += "<a class=\"imageMD\" href=\"javascript:openPressCreation('{0}');\">" + string.Format("<img src=\"{0}/{1}\" border=\"0\"></a>", WebCst.CreationServerPathes.IMAGES, files[j], GestionWeb.GetWebWord(843, _session.SiteLanguage));
+                for (int j = 0; j < files.Length; j++)
+                {
+                    if (files[j].Length > 0)
+                    {
+                        images += string.Format("{0}/{1},", WebCst.CreationServerPathes.IMAGES, files[j].Replace("/imagette", ""));
+                        html += "<a class=\"imageMD\" href=\"javascript:openPressCreation('{0}');\">" + string.Format("<img src=\"{0}/{1}\" border=\"0\"></a>", WebCst.CreationServerPathes.IMAGES, files[j], GestionWeb.GetWebWord(843, _session.SiteLanguage));
+
+                    }
                 }
                 if (images.Length > 0) {
                     output.AppendFormat(html, images.Substring(0, images.Length - 1));

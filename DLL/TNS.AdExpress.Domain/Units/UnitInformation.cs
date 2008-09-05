@@ -41,6 +41,10 @@ namespace TNS.AdExpress.Domain.Units {
         /// Full type name of cell
         /// </summary>
         private string _cellType="";
+        /// <summary>
+        /// String format name
+        /// </summary>
+        private string _strFormat = "N";
         #endregion
 
         #region Constructor
@@ -48,11 +52,12 @@ namespace TNS.AdExpress.Domain.Units {
         /// Constructor
         /// </summary>
         /// <param name="id">Unit Id</param>
+        /// <param name="format">String format for output</param>
         /// <param name="webTextId">Text Id</param>
         /// <param name="baseId">Parent Id</param>
         /// <param name="databaseField">Field name in occurencies data</param>
         /// <param name="databaseMultimediaField">Field name in aggregated data</param>
-        public UnitInformation(string id,Int64 webTextId,string baseId,string cellType,string databaseField,string databaseMultimediaField) {
+        public UnitInformation(string id, string format,Int64 webTextId,string baseId,string cellType,string databaseField,string databaseMultimediaField) {
             if(id==null || id.Length==0) throw (new ArgumentException("Invalid paramter unit id"));
             if (cellType != null || cellType.Length > 0) _cellType = cellType;
             if(databaseField!=null || databaseField.Length>0) _databaseField=databaseField;
@@ -111,6 +116,13 @@ namespace TNS.AdExpress.Domain.Units {
             get { return(_cellType); }
         }
 
+        /// <summary>
+        /// Get Unit format when displayed
+        /// </summary>
+        public string Format
+        {
+            get { return _strFormat; }
+        }
         #endregion
 
         #region Public methods
@@ -165,6 +177,7 @@ namespace TNS.AdExpress.Domain.Units {
         }
 
         #endregion
+
         #endregion
     }
 }
