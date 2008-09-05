@@ -108,6 +108,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql += listProductHap;
 			sql += product;
 			sql += productsRights;
+			sql += " " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 			sql += mediaRights;
 			sql += groupByFields;
 

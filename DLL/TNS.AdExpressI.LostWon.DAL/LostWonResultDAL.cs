@@ -562,7 +562,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                         break;
                 }
                 // Liste des produits à exclure
-                listExcludeProduct = FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
+				listExcludeProduct = GetExcludeProducts(DATA_TABLE_PREFIXE);
+
                 //option encarts (pour la presse)
                 if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                     dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, DATA_TABLE_PREFIXE, type);
@@ -655,6 +656,8 @@ namespace TNS.AdExpressI.LostWon.DAL
 
             // Produit exclus
             sql.Append(listExcludeProduct);
+			//Media Universe
+			sql.Append(FctWeb.SQLGenerator.GetResultMediaUniverse(_session, DATA_TABLE_PREFIXE));
 
             // Droits des Médias
             // Droits des Produits
@@ -747,7 +750,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     dateField = DATA_TABLE_PREFIXE + "." + CstDB.Fields.WEB_PLAN_MEDIA_MONTH_DATE_FIELD;
                     break;
             }
-            listExcludeProduct = FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
+			listExcludeProduct = GetExcludeProducts(DATA_TABLE_PREFIXE);
 
             //option encarts (pour la presse)
             if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
@@ -810,6 +813,9 @@ namespace TNS.AdExpressI.LostWon.DAL
 
             // Produit exclus
             sql.Append(listExcludeProduct);
+
+			//Media Universe
+			sql.Append(FctWeb.SQLGenerator.GetResultMediaUniverse(_session, DATA_TABLE_PREFIXE));
 
             // Droits des Médias
             // Droits des Produits
@@ -967,6 +973,19 @@ namespace TNS.AdExpressI.LostWon.DAL
 		}
 		#endregion
 
+		/// <summary>
+		/// Get excluded products
+		/// </summary>
+		/// <param name="sql">String builder</param>
+		/// <returns></returns>
+		protected virtual string GetExcludeProducts(string prefix) {
+			// Exclude product 
+			string sql = "";
+			ProductItemsList prList = Product.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
+			if (prList != null)
+				sql = prList.GetExcludeItemsSql(true, prefix);
+			return sql;
+		}
 		#endregion
 
 	}

@@ -10,6 +10,8 @@ using System.Data;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Domain;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Programs{
@@ -36,7 +38,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Programs{
 			
 			sql+=" select distinct "+programLevel.GetSqlFields();		
 	
-			sql+=" from "+programLevel.GetSqlTables(TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA);
+			sql+=" from "+programLevel.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label);
 			
 			sql+=" where 0=0 ";
 
@@ -46,12 +48,12 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Programs{
 
 			#endregion
 
-			#region Execution de la requête
+			#region Query Execution 
 			try{
 				return(webSession.Source.Fill(sql));
 			}
 			catch(System.Exception err){
-				throw(new TNS.AdExpress.Web.Exceptions.ProgramTypeListException("Impossible de charger le dataset",err));
+				throw(new TNS.AdExpress.Web.Exceptions.ProgramTypeListException("Impossible to execute query",err));
 			}
 			#endregion
 		

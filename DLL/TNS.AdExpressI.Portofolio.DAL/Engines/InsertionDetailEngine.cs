@@ -155,6 +155,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				sql.Append(productsRights);
 				sql.Append(mediaRights);
 
+				//Media Universe
+				sql.Append( " " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
 				//Rights detail spot to spot TNT
 				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
 					&& !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG))

@@ -26,6 +26,8 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Units;
+using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
+
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results
@@ -89,10 +91,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			#endregion			
 
 			#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
-		
-			#region Ancienne version Sélection produit
-			//sql.Append(WebFunctions.SQLGenerator.GetAnalyseCustomerProductSelection(webSession,DbTables.DATA_PRESS_PREFIXE,DbTables.DATA_PRESS_PREFIXE,DbTables.DATA_PRESS_PREFIXE,true));			
-			#endregion
+			
 
 			//Sélection produit
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
@@ -107,9 +106,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DbTables.DATA_PRESS_PREFIXE,true));
 			#endregion
 
-            #region Sélection
-            sql.Append(" and (( " + DbTables.DATA_PRESS_PREFIXE + ".id_vehicle = " + DBClassificationConstantes.Vehicles.names.press.GetHashCode() + ")) ");
-            #endregion
+			//#region Sélection
+			//sql.Append(" and (( " + DbTables.DATA_PRESS_PREFIXE + ".id_vehicle = " + DBClassificationConstantes.Vehicles.names.press.GetHashCode() + ")) ");
+			//#endregion
+
+			//Media Univers
+			sql.Append(GetMediaUniverse(webSession));
 
 			#endregion
 
@@ -406,6 +408,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             sql.AppendFormat("{0}.{1} "
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].DatabaseField);
+		}
+
+		/// <summary>
+		/// Get media Universe
+		/// </summary>
+		/// <param name="webSession">Web Session</param>
+		/// <returns>string sql</returns>
+		protected static string GetMediaUniverse(WebSession webSession) {
+			string sql = "";
+				WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+				sql = module.GetResultPageInformation(webSession.CurrentTab).GetAllowedMediaUniverseSql(DBConstantes.Tables.DATA_PRESS_PREFIXE, true);
+			return sql;
 		}
 		#endregion
 	}

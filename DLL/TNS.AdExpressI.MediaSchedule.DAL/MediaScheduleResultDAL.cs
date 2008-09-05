@@ -32,6 +32,9 @@ using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpressI.MediaSchedule.DAL.Exceptions;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web.Navigation;
+using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
+
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule.DAL
@@ -390,7 +393,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             //Access rgithDroits en accès
             sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             // Exclude product if radio selected)
-            sql.Append(FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false));
+			//sql.Append(FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false));
+			GetExcludeProudcts(sql);
             #endregion
 
             #region Nomenclature Produit (Niveau de détail)
@@ -425,6 +429,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             else
                 sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, vehicleId);
             #endregion
+
+			//Universe media
+			sql.Append(GetMediaUniverse( _session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
             #endregion
 
@@ -511,7 +518,30 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             return sql;
         }
         #endregion
-
+		/// <summary>
+		/// Get excluded products
+		/// </summary>
+		/// <param name="sql">String builder</param>
+		/// <returns></returns>
+		protected virtual void GetExcludeProudcts(StringBuilder sql) {
+			// Exclude product 
+			ProductItemsList prList = Product.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
+			if(prList !=null)
+				sql.Append(prList.GetExcludeItemsSql(true, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+		}
+		/// <summary>
+		/// Get media Universe
+		/// </summary>
+		/// <param name="webSession">Web Session</param>
+		/// <returns>string sql</returns>
+		protected virtual string GetMediaUniverse(WebSession webSession, string prefix) {
+			string sql = "";
+			WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+			ResultPageInformation resPageInfo = module.GetResultPageInformation(webSession.CurrentTab);
+			if (resPageInfo != null)
+				sql = resPageInfo.GetAllowedMediaUniverseSql(prefix, true);
+			return sql;
+		}
         #endregion
 
 

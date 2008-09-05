@@ -135,6 +135,7 @@ namespace AdExpress.Private.Results{
 			//Set default tab if necessary
 			ChangeCurrentTab();
 
+
 			try {
 				tabSelected = Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
 			}
@@ -265,13 +266,7 @@ namespace AdExpress.Private.Results{
 						else {
 							ResultsOptionsWebControl1.TableRadioButton.Checked = true;
 						}
-						#endregion
-
-						//if (_webSession.Unit == WebConstantes.CustomerSessions.Unit.kEuro) {
-						//    //unité en euro pour cette planche
-						//    _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
-						//    _webSession.Save();
-						//}
+						#endregion					
 						break;
 
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
@@ -329,7 +324,8 @@ namespace AdExpress.Private.Results{
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();			
 			Moduletitlewebcontrol2.CustomerWebSession=_webSession;
-			ResultsOptionsWebControl1.CustomerWebSession=_webSession;			
+			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
+			ResultsOptionsWebControl1.SelectedMediaUniverse = GetSelectedUniverseMedia();
 			InitializeProductWebControl1.CustomerWebSession=_webSession;	
 			MenuWebControl2.CustomerWebSession = _webSession;
 			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession = _webSession;
@@ -453,22 +449,23 @@ namespace AdExpress.Private.Results{
 		/// Set synthesis tab as default in some cases
 		/// </summary>
 		protected void ChangeCurrentTab() {
-			
+
 			#region VehicleInformation
 			VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			#endregion
 
 			switch (vehicleInformation.Id) {
-				case ClassificationCst.DB.Vehicles.names.outdoor:
+				case ClassificationCst.DB.Vehicles.names.outdoor :
+				case ClassificationCst.DB.Vehicles.names.cinema :
 					if (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR && !_webSession.CustomerPeriodSelected.Is4M)) {
-						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;						
+						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
 						_webSession.Save();
 					}
 					break;
 				case ClassificationCst.DB.Vehicles.names.directMarketing:
 				case ClassificationCst.DB.Vehicles.names.internet:
 					if ((_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
-						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;						
+						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
 						_webSession.Save();
 					}
 					break;
@@ -477,14 +474,30 @@ namespace AdExpress.Private.Results{
 				case ClassificationCst.DB.Vehicles.names.radio:
 				case ClassificationCst.DB.Vehicles.names.press:
 				case ClassificationCst.DB.Vehicles.names.internationalPress:
-                case ClassificationCst.DB.Vehicles.names.cinema:
+			
 					if (!_webSession.CustomerPeriodSelected.Is4M && (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
-						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;						
+						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
 						_webSession.Save();
 					}
 					break;
 				default: throw new WebExceptions.PortofolioSystemException(" Vehicle unknown.");
 			}
 		}
+
+		#region Get selected universe media
+		/// <summary>
+		/// Get selected media universe
+		/// </summary>
+		/// <returns></returns>
+		protected MediaItemsList GetSelectedUniverseMedia() {
+			MediaItemsList selectedUniverseMedia = new MediaItemsList();
+			// vehicle Selected
+			selectedUniverseMedia.VehicleList = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
+			return selectedUniverseMedia;
+		}
+
+
+
+		#endregion
 	}
 }

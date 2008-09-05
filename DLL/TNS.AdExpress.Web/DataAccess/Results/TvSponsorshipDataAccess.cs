@@ -25,7 +25,9 @@ using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Units;
+using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results
@@ -194,8 +196,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			#endregion
 
 			//Catégorie exclusive du parrainage TV
-			if(WebFunctions.Modules.IsSponsorShipTVModule(webSession))
-				sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID,DbTables.DATA_SPONSORSHIP_PREFIXE,DbTables.DATA_SPONSORSHIP_PREFIXE,DbTables.DATA_SPONSORSHIP_PREFIXE,true));
+			sql.Append(GetMediaUniverse(webSession));
 
 			#region Sélection
 
@@ -352,9 +353,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			
 			#endregion
 			
-			//Catégorie exclusive du parrainage TV
-			if(WebFunctions.Modules.IsSponsorShipTVModule(webSession))
-				sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID,DbTables.DATA_SPONSORSHIP_PREFIXE,DbTables.DATA_SPONSORSHIP_PREFIXE,DbTables.DATA_SPONSORSHIP_PREFIXE,true));
+			//Catégorie exclusive du parrainage TV					
+			sql.Append(GetMediaUniverse(webSession));
 			#endregion
 
 			#region Nomenclature Emission
@@ -591,6 +591,19 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 //					detailLevelTableName += ","+ DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DbTables.MEDIA+" "+DbTables.MEDIA_PREFIXE;
 //			}
 			return detailLevelTableName;
+		}
+		/// <summary>
+		/// Get media Universe
+		/// </summary>
+		/// <param name="webSession">Web Session</param>
+		/// <returns>string sql</returns>
+		protected static string GetMediaUniverse(WebSession webSession) {
+			string sql = "";
+			if (WebFunctions.Modules.IsSponsorShipTVModule(webSession)) {
+				WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+				sql = module.GetResultPageInformation(webSession.CurrentTab).GetAllowedMediaUniverseSql(DbTables.DATA_SPONSORSHIP_PREFIXE,true);
+			}
+			return sql;
 		}
 		#endregion
 	}

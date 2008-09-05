@@ -150,7 +150,8 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 unitFieldNameSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
                 productsRights = FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, DATA_TABLE_PREFIXE, true);
                 mediaRights = FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, DATA_TABLE_PREFIXE, true);
-                listExcludeProduct = FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
+                listExcludeProduct = GetExcludeProducts(DATA_TABLE_PREFIXE);//FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
+
                 // Dates
                 switch (type) {
                     case CstDB.TableType.Type.dataVehicle4M:
@@ -292,6 +293,9 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
             // Produit exclus
             sql.Append(listExcludeProduct);
+
+			//Media Universe
+			sql.Append(FctWeb.SQLGenerator.GetResultMediaUniverse(_session, DATA_TABLE_PREFIXE));
 
             // Droits des Médias
             sql.Append(mediaRights);
@@ -489,7 +493,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 // Droits media
                 mediaRights = FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
                 // Liste des produits à exclure
-                listExcludeProduct = FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+				listExcludeProduct = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);//;FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
                 //option encarts (pour la presse)
                 if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                     dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,type);
@@ -882,5 +886,19 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
         #endregion
 
         #endregion
+
+		/// <summary>
+		/// Get excluded products
+		/// </summary>
+		/// <param name="sql">String builder</param>
+		/// <returns></returns>
+		protected virtual string GetExcludeProducts(string prefix) {
+			// Exclude product 
+			string sql = "";
+			ProductItemsList prList = Product.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
+			if (prList != null)
+				sql = prList.GetExcludeItemsSql(true, prefix);
+			return sql;
+		}
     }
 }

@@ -140,6 +140,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			get{return customerWebSession;}
 			set{customerWebSession=value;}
 		}
+
 		#endregion
 
 		#region Propriétés
@@ -581,8 +582,9 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// Constructeur
 		/// </summary>
 		public ResultsOptionsWebControl():base(){
-			this.EnableViewState = true;
+			this.EnableViewState = true;			
 			this.PreRender += new EventHandler(Custom_PreRender);
+			
 		}
 
 		#endregion
@@ -590,7 +592,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		#region Evenements
 
 		
-
+		
 		#region Init
         /// <summary>
 		/// Initialisation
@@ -723,8 +725,11 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			
 			#endregion
 
-				
 
+				if (resultOption) {					
+
+					SetResultPageOption();
+				}
 			base.OnInit (e);
 		}
 
@@ -921,25 +926,9 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			}
 			#endregion
 
-			if (resultOption) {
-				////Création des options concernant le choix du resultat
-				//resultsPages = new DropDownList(); 
-				//resultsPages.ID = "_resultsPages";
-				//resultsPages.CssClass =  cssClass;
-				//resultsPages.AutoPostBack = autoPostBackOption;
-				////ArrayList resultPages=((Module)customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule)).GetResultPageInformationsList();
-				//List<ResultPageInformation> resultPages = ((Module)customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule)).GetValidResultsPage(_selectedMediaUniverse);
-				//foreach(ResultPageInformation current in resultPages){					
-				//    if(!CanShowResult(customerWebSession,current))continue;
-
-				//    resultsPages.Items.Add(new ListItem(GestionWeb.GetWebWord((int)current.IdWebText,customerWebSession.SiteLanguage),current.Id.ToString()));
-				//}
-
-				//resultsPages.Items.FindByValue(customerWebSession.CurrentTab.ToString()).Selected=true;
-				//Controls.Add(resultsPages);
-
-				SetResultPageOption();
-			}
+			//if (resultOption) {				
+			//    SetResultPageOption();
+			//}
 
 			if(percentage){
 				percentageCheckBox=new System.Web.UI.WebControls.CheckBox();

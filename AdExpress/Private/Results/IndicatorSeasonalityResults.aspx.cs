@@ -29,6 +29,8 @@ using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Prefo
 using CstComparisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
+
+using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Translation.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
@@ -280,11 +282,13 @@ namespace AdExpress.Private.Results {
                         totalChoice = true;
                         if (_webSession.Graphics)
                         {
-                            // si WebSession est au niveau media on se met au niveau categorie/media
-                            if (_webSession.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicle && (CstDBClassif.Vehicles.names)((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID != CstDBClassif.Vehicles.names.plurimedia)
-                            {
-                                _webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory;
-                            }
+							VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+							if (vehicleInfo != null) {
+								// si WebSession est au niveau media on se met au niveau categorie/media
+								if (_webSession.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicle && vehicleInfo.Id != CstDBClassif.Vehicles.names.plurimedia) {
+									_webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory;
+								}
+							}
                         }
                     }
 
@@ -377,27 +381,29 @@ namespace AdExpress.Private.Results {
             // Suppime les items inutiles de la list "niveau media" pour le graphe de strategie Media
             if (_webSession.CurrentTab == CstResult.PalmaresRecap.MEDIA_STRATEGY && ResultsOptionsWebControl1.GraphRadioButton.Checked)
             {
-                switch ((CstDBClassif.Vehicles.names)((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID)
-                {
-                    case CstDBClassif.Vehicles.names.tv:
-                    case CstDBClassif.Vehicles.names.radio:
-                    case CstDBClassif.Vehicles.names.outdoor:
-                    case CstDBClassif.Vehicles.names.mediasTactics:
-                    case CstDBClassif.Vehicles.names.mobileTelephony:
-                    case CstDBClassif.Vehicles.names.emailing:
-                        ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
-                        break;
-                    case CstDBClassif.Vehicles.names.press:
-                    case CstDBClassif.Vehicles.names.internet:
-                        ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
-                        break;
-                    case CstDBClassif.Vehicles.names.cinema:
-                        result = noResult("");
-                        break;
-                    default:
-                        ResultsOptionsWebControl1.mediaDetail.Enabled = false;
-                        break;
-                }
+				VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+				if (vehicleInfo != null) {
+					switch (vehicleInfo.Id) {
+						case CstDBClassif.Vehicles.names.tv:
+						case CstDBClassif.Vehicles.names.radio:
+						case CstDBClassif.Vehicles.names.outdoor:
+						case CstDBClassif.Vehicles.names.mediasTactics:
+						case CstDBClassif.Vehicles.names.mobileTelephony:
+						case CstDBClassif.Vehicles.names.emailing:
+							ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
+							break;
+						case CstDBClassif.Vehicles.names.press:
+						case CstDBClassif.Vehicles.names.internet:
+							ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
+							break;
+						case CstDBClassif.Vehicles.names.cinema:
+							result = noResult("");
+							break;
+						default:
+							ResultsOptionsWebControl1.mediaDetail.Enabled = false;
+							break;
+					}
+				}
             }
             base.Render(output);
         }

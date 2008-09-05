@@ -280,6 +280,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             sql.Append(product);
 			sql.Append(productsRights);
 			sql.Append(mediaRights);
+			sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 			sql.Append(listProductHap);
 			if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
 				sql.AppendFormat(" group by {0}",date);
@@ -384,6 +385,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql += product;
 			sql += productsRights;
 			sql += mediaRights;
+			sql += GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 			sql += listProductHap;
             if (dataType == PortofolioSynthesis.dataType.numberProduct) {
                 sql += " group by id_product ";
@@ -449,6 +451,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             sql.Append(product);
             sql.Append(productsRights);
             sql.Append(mediaRights);
+			sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             sql.Append(listProductHap);
             sql.Append(" )");
 
@@ -865,6 +868,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             sql.Append(product);
             sql.Append(productsRights);
             sql.Append(mediaRights);
+			sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             sql.Append(listProductHap);
             #endregion
 
@@ -911,6 +915,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
             sql += product;
             sql += productsRights;
+			sql += GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             sql += mediaRights;
             sql += listProductHap;
             #endregion
@@ -970,6 +975,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
                 sql += product;
                 sql += productsRights;
+				sql += GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 sql += mediaRights;
                 sql += listProductHap;
 
@@ -1032,6 +1038,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 sql += product;
                 sql += productsRights;
                 sql += mediaRights;
+				sql += GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 sql += listProductHap;
 
                 sql += " group by id_advertiser )";
@@ -1179,6 +1186,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 sql.Append(product);
                 sql.Append(productsRights);
                 sql.Append(mediaRights);
+				sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
                 sql.Append(listProductHap);
 
             }

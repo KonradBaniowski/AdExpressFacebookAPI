@@ -139,6 +139,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			//in case of single product
 			else
 				sql.Append(" and "+ DBTables.WEB_PLAN_PREFIXE+".id_product in ("+idProduct.ToString()+")");
+			
+			//Media Universe
+			sql.Append(WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBTables.WEB_PLAN_PREFIXE));
 
 			sql.Append(" and "+dateField+" >="+dateBegin);
 			sql.Append(" and "+dateField+" <="+dateEnd);
@@ -267,6 +270,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			//Version
 			sql.Append(" and " + DBTables.DATA_PRESS_APPM_PREFIXE + ".id_slogan in ("+idVersion+") ");
 
+			//Media Universe
+			sql.Append(WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBTables.DATA_PRESS_APPM_PREFIXE));
 
 			//all results without inset
 			sql.Append(" and " + DBTables.DATA_PRESS_APPM_PREFIXE + ".id_inset is null ");
@@ -430,6 +435,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 
 			sql.Append(" and (" + versionCondition + ")");
 
+
+			//Media Universe
+			sql.Append(WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBTables.DATA_PRESS_APPM_PREFIXE));
+
+
 			//all results without inset
 			sql.Append(" and " + DBTables.DATA_PRESS_APPM_PREFIXE + ".id_inset is null ");
 			
@@ -532,8 +542,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 				sql.Append(" and "+ DBTables.WEB_PLAN_PREFIXE+".id_group_ in ("+idGroup+")");	
 			}
 
-			
-			
+
+
+			//Media Universe
+			sql.Append(WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBTables.WEB_PLAN_PREFIXE));
+
 			
 				sql.Append(" and "+dateField+" >="+dateBegin);
 				sql.Append(" and "+dateField+" <="+dateEnd);
@@ -627,6 +640,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			//Period
 			sql.Append(" and "+dateField+" >="+dateBegin);
 			sql.Append(" and "+dateField+" <="+dateEnd);
+
+			//Media Universe
+			sql.Append(WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBConstantes.Tables.DATA_PRESS_APPM_PREFIXE));			
 
 			//all results without inset
 			sql.Append(" and " + DBTables.DATA_PRESS_APPM_PREFIXE + ".id_inset = " + Cst.Classification.DB.insertType.EXCEPT_INSERT.GetHashCode());

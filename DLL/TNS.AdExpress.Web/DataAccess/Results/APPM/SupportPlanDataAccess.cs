@@ -19,6 +19,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Functions;
+using WebFunctions = TNS.AdExpress.Web.Core.Utilities;
 
 using DBCst = TNS.AdExpress.Constantes.DB;
 using Cst = TNS.AdExpress.Constantes;
@@ -117,8 +118,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 
 			// Sélection de Produits
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
-				sql.Append(webSession.PrincipalProductUniverses[0].GetSqlConditions(DBCst.Tables.WEB_PLAN_PREFIXE, true));						
-			
+				sql.Append(webSession.PrincipalProductUniverses[0].GetSqlConditions(DBCst.Tables.WEB_PLAN_PREFIXE, true));
+			//Media Universe
+			sql.Append(WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBCst.Tables.WEB_PLAN_PREFIXE));
+
 			//Media Rights
 			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBCst.Tables.WEB_PLAN_PREFIXE, true));
 			//Product rights

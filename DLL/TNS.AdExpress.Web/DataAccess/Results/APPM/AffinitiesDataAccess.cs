@@ -81,11 +81,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 
 			// Sélection de Produits
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
-				sql.Append(webSession.PrincipalProductUniverses[0].GetSqlConditions(DBTables.WEB_PLAN_PREFIXE, true));						
-			
+				sql.Append(webSession.PrincipalProductUniverses[0].GetSqlConditions(DBTables.WEB_PLAN_PREFIXE, true));
+
+			//Media Universe
+			sql.Append(SQLGenerator.GetResultMediaUniverse(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE));
+
 			//Rights
-			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBTables.WEB_PLAN_PREFIXE,true));	
-			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DBTables.WEB_PLAN_PREFIXE,true));	
+			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBTables.WEB_PLAN_PREFIXE,true));	
+			sql.Append(SQLGenerator.getAnalyseCustomerProductRight(webSession,DBTables.WEB_PLAN_PREFIXE,true));	
 			#endregion
 
 			#region Group By

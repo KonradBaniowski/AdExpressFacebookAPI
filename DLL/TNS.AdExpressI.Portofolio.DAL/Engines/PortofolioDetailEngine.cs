@@ -263,6 +263,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				// Rights products
 				sql += " " + productsRights;
 				sql += listProductHap;
+				sql +=" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 				// Rights media
 				sql += mediaRights;
 

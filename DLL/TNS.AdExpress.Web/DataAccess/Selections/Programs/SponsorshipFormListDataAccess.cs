@@ -11,6 +11,7 @@ using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Programs {
 	/// <summary>
@@ -34,8 +35,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Programs {
 			#region requête
 
 			sql+=" select "+ programLevel.GetSqlFields();
-	
-			sql+=" from "+programLevel.GetSqlTables(TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA);
+
+			sql += " from " + programLevel.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label);
 			
 			sql+=" where 0=0 ";
 

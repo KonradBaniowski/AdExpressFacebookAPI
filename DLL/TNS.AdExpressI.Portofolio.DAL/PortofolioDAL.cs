@@ -209,18 +209,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         public virtual DataSet GetSynthisData(PortofolioSynthesis.dataType synthesisDataType) {
             Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, synthesisDataType);
 			return res.GetData();
-		}
-
-		/// <summary>
-		/// Get synthesis number of element 
-		/// </summary>
-		/// <example>Number of product, advertiser</example>
-		/// <param name="idDataType">id data type</param>
-		/// <returns></returns>
-        //public virtual object[] GetNumber(int idDataType) {
-        //    Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, idDataType);
-        //    return res.GetNumber();
-        //}
+		}		
 
         /// <summary>
         /// récupère les écrans
@@ -261,95 +250,6 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		}
 		#endregion
 
-		#region  Synthesis
-		              
-
-        #region Page Encart
-		///// <summary>
-		///// Encart
-		///// </summary>
-		///// <returns>Données</returns>
-		//public virtual object[] NumberPageEncart() {
-
-		//    #region Constantes
-		//    //préfixe table à utiliser
-		//    const string LIST_ENCART = "85,108,999";
-		//    #endregion
-
-		//    #region Variables
-		//    object[] tab = new object[4];
-		//    DataSet ds = null;
-		//    string sql = "";
-		//    string tableName = "";
-		//    string productsRights = null;
-		//    string mediaRights = null;
-		//    string product = null;
-		//    string listProductHap = null;
-		//    int index=0;
-		//    #endregion
-
-		//    #region Build query
-		//    try {
-		//        tableName = GetTableData();
-		//        productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-		//        mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-		//        product = GetProductData();
-		//        listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
-
-		//        for (int i = 0; i <= 2; i++) {
-
-		//            sql += " select sum(area_page) as page ";
-		//            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-		//            sql += " where ID_MEDIA=" + _idMedia + " ";
-		//            // hors encart
-		//            if (i == 1) {
-		//                sql += " and id_inset=null ";
-		//            }
-		//            // Encart
-		//            if (i == 2) {
-		//                sql += " and id_inset in (" + LIST_ENCART + ") ";
-		//            }
-		//            if (_beginingDate.Length > 0)
-		//                sql += " and  DATE_MEDIA_NUM>=" + _beginingDate + " ";
-		//            if (_endDate.Length > 0)
-		//                sql += " and  DATE_MEDIA_NUM<=" + _endDate + " ";
-
-		//            sql += product;
-		//            sql += productsRights;
-		//            sql += mediaRights;
-		//            sql += listProductHap;
-
-		//            if (i < 2)
-		//                sql += " UNION ALL ";
-
-		//        }
-		//    }
-		//    catch (System.Exception err) {
-		//        throw (new PortofolioDALException("Impossible to build request for NumberPageEncart(): " + sql, err));
-		//    }
-		//    #endregion
-
-		//    #region Execution de la requête
-		//    try {
-		//        ds = _webSession.Source.Fill(sql.ToString());
-		//        if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
-		//            foreach (DataRow row in ds.Tables[0].Rows) {
-		//                tab[index] = row["page"].ToString();
-		//                index++;
-		//            }
-
-		//    }
-		//    catch (System.Exception err) {
-		//        throw (new PortofolioDALException("Impossible to get data for NumberPageEncart(): " + sql, err));
-		//    }
-		//    #endregion
-
-		//    return tab;
-
-		//}
-        #endregion
-        
-        #endregion
 
 		#region Investment By Media
 		/// <summary>
@@ -472,6 +372,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).SqlWithPrefix + " ");
             sql.Append(" where " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media" + " ");
             sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=" + _idMedia + " ");
+			sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media=" + _webSession.DataLanguage + " ");
             // Période			
 
             if (_beginingDate.Length > 0)

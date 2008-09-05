@@ -205,6 +205,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 					sql+=" and "+DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target in("+additionalTarget+") "; 			
 					//outside encart
 					sql+=" and "+DBCst.Tables.DATA_PRESS_APPM_PREFIXE+".id_inset is null ";
+
+					//Media Universe
+					sql+=WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE);			
+
 					//media rights
 					sql+=SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true);
 					//product rights

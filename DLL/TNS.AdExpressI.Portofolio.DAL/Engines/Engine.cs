@@ -21,6 +21,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
+using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 
 using TNS.AdExpress.Web.Exceptions;
 using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
@@ -118,6 +119,21 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			if (_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
 				sql = _webSession.PrincipalProductUniverses[0].GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 
+			return sql;
+		}
+		#endregion
+
+		#region Get media universe
+		/// <summary>
+		/// Get media Universe
+		/// </summary>
+		/// <param name="webSession">Web Session</param>
+		/// <returns>string sql</returns>
+		protected virtual string GetMediaUniverse( string prefix) {
+			string sql = "";
+			ResultPageInformation resPageInfo = _module.GetResultPageInformation(_webSession.CurrentTab);
+			if(resPageInfo != null)
+				sql = resPageInfo.GetAllowedMediaUniverseSql(prefix, true);
 			return sql;
 		}
 		#endregion

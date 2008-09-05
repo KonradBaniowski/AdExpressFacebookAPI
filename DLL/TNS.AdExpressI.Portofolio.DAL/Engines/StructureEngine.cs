@@ -192,6 +192,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 					#region Nomenclature Media (Rights and selection)
 
+					sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
 					#region Media Rights
 					sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
 					#endregion
@@ -331,6 +333,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					#endregion
 
 					#region Nomenclature Media (Rights and selection)
+
+					sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
 					#region Media Rights
 					sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));

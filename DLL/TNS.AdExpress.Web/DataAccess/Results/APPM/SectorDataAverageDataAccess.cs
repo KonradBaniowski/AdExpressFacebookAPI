@@ -137,7 +137,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 						sql.Append(" and "+dateField+" <="+dateEnd);
 						//all results without inset
 						sql.Append(" and " + DBTables.WEB_PLAN_PREFIXE + ".id_inset = " + Cst.Classification.DB.insertType.EXCEPT_INSERT.GetHashCode());
-						
+
+						//Media Universe
+						sql.Append(WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBTables.WEB_PLAN_PREFIXE));
+
+	
 						//media rights
 						sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBTables.WEB_PLAN_PREFIXE, true));
 						//product rights

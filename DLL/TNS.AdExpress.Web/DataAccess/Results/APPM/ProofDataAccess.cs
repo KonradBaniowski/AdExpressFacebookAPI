@@ -91,6 +91,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_group_ = "+ DBCst.Tables.GROUP_PREFIXE +".id_group_ ");
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_color = "+ DBCst.Tables.COLOR_PREFIXE +".id_color ");
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_format = "+ DBCst.Tables.FORMAT_PREFIXE +".id_format ");
+
+			//Media Universe
+			sql.Append(SQLGenerator.GetResultMediaUniverse(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE));
+
 			//media rights
 			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true));
 			//product rights

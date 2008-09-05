@@ -82,6 +82,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			
 			//all results without inset
 			sql.Append(" and " + DBCst.Tables.WEB_PLAN_PREFIXE + ".id_inset = " + Cst.Classification.DB.insertType.EXCEPT_INSERT.GetHashCode());
+
+			//Media Universe
+			sql.Append(WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBCst.Tables.WEB_PLAN_PREFIXE));
+
 			//Rights
 			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBCst.Tables.WEB_PLAN_PREFIXE,true));	
 			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DBCst.Tables.WEB_PLAN_PREFIXE,true));				

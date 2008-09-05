@@ -565,6 +565,7 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 		IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 		DataSet ds = portofolioDAL.GetListDate(true, TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle);
 
+		dic.Clear();
 		foreach (DataRow dr in ds.Tables[0].Rows) {
 			if (dr["disponibility_visual"] != System.DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10)
 				dic.Add(dr["date_media_num"].ToString(), WebConstantes.CreationServerPathes.IMAGES + "/" + idMedia + "/" + dr["date_cover_num"].ToString() + "/Imagette/" + WebConstantes.CreationServerPathes.COUVERTURE + "");

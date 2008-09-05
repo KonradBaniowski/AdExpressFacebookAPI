@@ -134,7 +134,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			#region Sélection de Produits
 			sql += " " + GetProductData();
 			#endregion
-			
+
+			//Media Universe
+			sql += " " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+
 			// Media rights
 			sql += " " + productsRights;
 			// Products rights

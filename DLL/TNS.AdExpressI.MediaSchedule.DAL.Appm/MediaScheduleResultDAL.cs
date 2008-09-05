@@ -31,6 +31,8 @@ using TNS.AdExpress.Web.Core.Selection;
 using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpressI.MediaSchedule.DAL;
 using TNS.AdExpressI.MediaSchedule.DAL.Exceptions;
+using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
+
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
@@ -293,6 +295,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
 
             //Media Rights
             sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+
+			//Universe media
+			sql.Append(GetMediaUniverse(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
             // Order
             sql.AppendFormat("Group by {0} ", groupByFieldName);
