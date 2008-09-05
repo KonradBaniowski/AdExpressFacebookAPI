@@ -701,6 +701,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 		/// </summary>
 		groupUniverseClient = 148,
         /// <summary>
+        /// AdNetTrack (for Internet Version)
+        /// </summary>
+        dataInternetVersion = 149,
+        /// <summary>
+        /// AdNetTrack 4M (for Internet Version)
+        /// </summary>
+        dataInternetVersionAlert = 150,
+        /// <summary>
         /// Product Group Advertising Agency
         /// </summary>
         productGroupAgency=200,

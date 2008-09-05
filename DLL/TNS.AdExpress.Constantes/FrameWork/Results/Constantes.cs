@@ -2255,7 +2255,11 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
             /// <summary>
             /// Insertion
             /// </summary>
-            insertion
+            insertion,
+            /// <summary>
+            /// Number of banners (Evaliant)
+            /// </summary>
+            numberBanners,
         }
 	}
 

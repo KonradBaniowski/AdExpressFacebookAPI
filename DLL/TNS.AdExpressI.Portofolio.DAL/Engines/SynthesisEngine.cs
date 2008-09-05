@@ -624,7 +624,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).Label;
                 case DBClassificationConstantes.Vehicles.names.cinema:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinemaAlert).Label;
-				default:
+                
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrackAlert).Label;
+				
+                default:
 					throw new PortofolioDALException("GetTableData()-->Vehicle unknown.");
 			}
 		}
@@ -1207,5 +1211,5 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         }
         #endregion
 
-	}
+    }
 }

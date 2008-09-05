@@ -27,6 +27,8 @@ using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Web.DataAccess.Results {
 
@@ -35,57 +37,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
     /// </summary>
     public class CreativesDataAccess {
 
-
-        #region GetData
-		///// <summary>
-		///// Get Creatives Data
-		///// </summary>
-		///// <param name="session">Web Session</param>
-		///// <param name="vehicle">Vehicle Id</param>
-		///// <param name="filters">Filters to consider</param>
-		///// <param name="fromDate">Period beginning</param>
-		///// <param name="toDate">Period End</param>
-		///// <param name="universId">Competitor Univers Id</param>
-		///// <returns>DataSet containing creatives Data</returns>
-		//public static DataSet GetData(WebSession session, DBClassifCst.Vehicles.names vehicle, string filters, int fromDate, int toDate, int universId, Int64 moduleId) {
-
-		//    #region Variables
-		//    StringBuilder sql = new StringBuilder();
-		//    string table = string.Empty;
-		//    string dataTable = string.Empty;
-		//    #endregion
-
-		//    try {
-
-		//        Module module = ModulesList.GetModule(session.CurrentModule);
-		//        dataTable = SQLGenerator.getVehicleTableNameForDetailResult(vehicle, module.ModuleType);
-		//        sql.Append("select ");
-		//        GetFields(sql, vehicle);
-		//        sql.Append(" from ");
-		//        GetTables(sql, vehicle, session, dataTable);
-		//        sql.Append(" where ");
-		//        GetJoins(sql, vehicle, session);
-		//        sql.Append(" and ");
-		//        GetUniversFilters(sql, session, fromDate, toDate, vehicle.GetHashCode(), universId, moduleId, filters, module);
-
-		//        //group by
-		//        sql.Append(" group by ");
-		//        GetGroupBy(sql, vehicle);
-		//        //order by 
-		//        sql.Append(" order by version");
-
-		//        if (vehicle == DBClassifCst.Vehicles.names.directMarketing) {
-		//            SetMDRequest(sql);
-		//        }
-
-		//        return session.Source.Fill(sql.ToString());
-		//    }
-		//    catch (System.Exception err) {
-		//        throw (new MediaCreationDataAccessException("GetData::Impossible de charger les données des créations publicitaires " + sql.ToString(), err));
-		//    }
-
-		//}
-        #endregion
 
 		#region GetData (Nouvelle version)
 		/// <summary>
@@ -166,32 +117,37 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 			string dataTable = string.Empty;
 			#endregion
 
-			try {
+            try {
 
-				Module module = ModulesList.GetModule(session.CurrentModule);
-				dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(vehicle, module.ModuleType);
-				sql.Append("select ");
-				GetFields(sql, vehicle);
-				sql.Append(" from ");
-				GetTables(sql, vehicle, session, dataTable);
-				sql.Append(" where ");
-				GetJoins(sql, vehicle, session);
-				sql.Append(" and ");
-				GetUniversFilters(sql, session, fromDate, toDate, vehicle.GetHashCode(), universId, moduleId, filters, module);
+                Module module = ModulesList.GetModule(session.CurrentModule);
+                if(vehicle != DBClassifCst.Vehicles.names.internet) {
+                    dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(vehicle, module.ModuleType);
+                }
+                else {
+                    dataTable = GetInternetTable(module.ModuleType);
+                }
+                sql.Append("select ");
+                GetFields(sql, vehicle);
+                sql.Append(" from ");
+                GetTables(sql, vehicle, session, dataTable);
+                sql.Append(" where ");
+                GetJoins(sql, vehicle, session);
+                sql.Append(" and ");
+                GetUniversFilters(sql, session, fromDate, toDate, vehicle.GetHashCode(), universId, moduleId, filters, module);
 
-				//group by
-				sql.Append(" group by ");
-				GetGroupBy(sql, vehicle);
-				
-				if (vehicle == DBClassifCst.Vehicles.names.directMarketing) {
-					SetMDRequest(sql);
-				}
+                //group by
+                sql.Append(" group by ");
+                GetGroupBy(sql, vehicle);
 
-				return sql.ToString();
-			}
-			catch (System.Exception err) {
-				throw (new MediaCreationDataAccessException("GetOneUniverseData::Impossible de construire la requete " + sql.ToString(), err));
-			}
+                if(vehicle == DBClassifCst.Vehicles.names.directMarketing) {
+                    SetMDRequest(sql);
+                }
+
+                return sql.ToString();
+            }
+            catch(System.Exception err) {
+                throw (new MediaCreationDataAccessException("GetOneUniverseData::Impossible de construire la requete " + sql.ToString(), err));
+            }
 
 		}
         #endregion
@@ -222,8 +178,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 bool first = true;
 
                 universId--;
-
+                string dataTable;
                 foreach (int i in vehicles) {
+                    if(DBClassifCst.Vehicles.names.internet != (DBClassifCst.Vehicles.names)i) {
+                        dataTable = SQLGenerator.GetVehicleTableNameForDetailResult((DBClassifCst.Vehicles.names)i, module.ModuleType);
+                    }
+                    else {
+                        dataTable = GetInternetTable(module.ModuleType);
+                    }
 
                     if (session.CurrentModule == WebCst.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE
                         || session.CurrentModule == WebCst.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE)
@@ -240,7 +202,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                                 else
                                     first = false;
                                 sql.Append(" select id_vehicle from ");
-                                sql.AppendFormat(" {0}.{1} wp ", DBCst.Schema.ADEXPRESS_SCHEMA, SQLGenerator.GetVehicleTableNameForDetailResult((DBClassifCst.Vehicles.names)i, module.ModuleType));
+                                sql.AppendFormat(" {0}.{1} wp ", DBCst.Schema.ADEXPRESS_SCHEMA, dataTable);
                                 sql.Append(" where ");
                                 GetUniversFilters(sql, session, fromDate, toDate, i, universId, moduleId, filters, module);
                                 sql.AppendFormat(" and rownum < 2 ");
@@ -256,7 +218,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                         else
                             first = false;
                         sql.Append(" select id_vehicle from ");
-                        sql.AppendFormat(" {0}.{1} wp ", DBCst.Schema.ADEXPRESS_SCHEMA, SQLGenerator.GetVehicleTableNameForDetailResult((DBClassifCst.Vehicles.names)i, module.ModuleType));
+                        sql.AppendFormat(" {0}.{1} wp ", dataTable);
                         sql.Append(" where ");
                         GetUniversFilters(sql, session, fromDate, toDate, i, universId, moduleId, filters, module);
                         sql.AppendFormat(" and rownum < 2 ");
@@ -282,8 +244,25 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         }
         #endregion
 
+        #region GetInternetTable
+        protected static string GetInternetTable(WebCst.Module.Type moduleType) {
+            switch(moduleType) {
+                case WebCst.Module.Type.alert:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersionAlert).Label);
+                    break;
+                case WebCst.Module.Type.analysis:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersion).Label);
+                    break;
+                default:
+                    throw new ArgumentException("Type of module is not supported");
+                    break;
+
+            }
+        }
+        #endregion
+
         #region GetFields
-		  /// <summary>
+        /// <summary>
         /// Build select clause
         /// </summary>
         /// <param name="sql">Output</param>

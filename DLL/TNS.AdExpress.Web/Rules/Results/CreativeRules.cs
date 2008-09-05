@@ -69,6 +69,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
             #region Set Creative Type
             switch (vehicle) {
                 case DBClassifCst.Vehicles.names.adnettrack:
+                case DBClassifCst.Vehicles.names.internet:
                     CreativeAdNetTrack itemAdNet = new CreativeAdNetTrack(-1);
                     itemAdNet.UrlParameters = filters;
                     itemAdNet.ZoomDate = zoom;
@@ -149,10 +150,6 @@ namespace TNS.AdExpress.Web.Rules.Results {
                             ds = MediaCreationDataAccess.GetIdsVehicle(session, -1, ((LevelInformation)nd.Tag).ID);
                             foreach (DataRow dr in ds.Tables[0].Rows) {
                                 id = Convert.ToInt32(dr["id_vehicle"]);
-                                if (id == DBClassifCst.Vehicles.names.internet.GetHashCode()) {
-                                    //Remplacer média Internet par Adnettrack
-                                    id = DBClassifCst.Vehicles.names.adnettrack.GetHashCode();
-                                }
                                 if ( ! vehicles.Contains(id))
                                     vehicles.Add(id);
 
@@ -170,10 +167,6 @@ namespace TNS.AdExpress.Web.Rules.Results {
                     if (session.SelectionUniversMedia != null)
                         tree = session.SelectionUniversMedia;
                     id = (int)((LevelInformation)tree.Nodes[0].Tag).ID;
-                    if (id == DBClassifCst.Vehicles.names.internet.GetHashCode()) {
-                        //Remplacer média Internet par Adnettrack
-                        id = DBClassifCst.Vehicles.names.adnettrack.GetHashCode();
-                    }
                     vehicles.Add(id);
                     break;
                 case WebCst.Module.Name.ALERTE_PLAN_MEDIA:
@@ -185,10 +178,6 @@ namespace TNS.AdExpress.Web.Rules.Results {
                     id = -1;
                     foreach (object o in tmp) {
                         id = Convert.ToInt32(o);
-                        if (id == DBClassifCst.Vehicles.names.internet.GetHashCode()) {
-                            //Remplacer média Internet par Adnettrack
-                            id = DBClassifCst.Vehicles.names.adnettrack.GetHashCode();
-                        }
                         vehicles.Add(id);
                     }
                     break;
@@ -196,10 +185,6 @@ namespace TNS.AdExpress.Web.Rules.Results {
                 case WebCst.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE:
                     ids = filters.Split(',');
                     id = Convert.ToInt32(ids[0]);
-                    if (id == DBClassifCst.Vehicles.names.internet.GetHashCode()) {
-                        //Remplacer média Internet par Adnettrack
-                        id = DBClassifCst.Vehicles.names.adnettrack.GetHashCode();
-                    }
                     vehicles.Add(id);
                     break;
                 case WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS:
@@ -211,6 +196,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
             if (vehicles.Count <= 0) {
                 vehicles.Add(DBClassifCst.Vehicles.names.others.GetHashCode());
                 vehicles.Add(DBClassifCst.Vehicles.names.directMarketing.GetHashCode());
+                vehicles.Add(DBClassifCst.Vehicles.names.internet.GetHashCode());
                 vehicles.Add(DBClassifCst.Vehicles.names.adnettrack.GetHashCode());
                 vehicles.Add(DBClassifCst.Vehicles.names.press.GetHashCode());
                 vehicles.Add(DBClassifCst.Vehicles.names.outdoor.GetHashCode());

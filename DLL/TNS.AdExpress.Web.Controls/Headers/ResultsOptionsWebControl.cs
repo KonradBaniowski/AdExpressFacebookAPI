@@ -595,73 +595,81 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// Initialisation
 		/// </summary>
 		/// <param name="e">Arguments</param>
-		protected override void OnInit(EventArgs e) {
-			//Option Initialisation des éléments de références
-			_initializeProductWebControl = new TNS.AdExpress.Web.Controls.Headers.InitializeProductWebControl();			
-			_initializeProductWebControl.CustomerWebSession = customerWebSession;
-			_initializeProductWebControl.AutoPostBackOption = this.autoPostBackOption;
-			_initializeProductWebControl.EnableViewState = true;
-			_initializeProductWebControl.initializeAdvertiserCheckBox.EnableViewState =true;
-			_initializeProductWebControl.InitializeAdvertiser = InializeAdVertiserOption;			
-			_initializeProductWebControl.ID=this.ID+"_initializeAdvertiser";
-			Controls.Add(_initializeProductWebControl);
+        protected override void OnInit(EventArgs e) {
+            //Option Initialisation des éléments de références
+            _initializeProductWebControl = new TNS.AdExpress.Web.Controls.Headers.InitializeProductWebControl();
+            _initializeProductWebControl.CustomerWebSession = customerWebSession;
+            _initializeProductWebControl.AutoPostBackOption = this.autoPostBackOption;
+            _initializeProductWebControl.EnableViewState = true;
+            _initializeProductWebControl.initializeAdvertiserCheckBox.EnableViewState = true;
+            _initializeProductWebControl.InitializeAdvertiser = InializeAdVertiserOption;
+            _initializeProductWebControl.ID = this.ID + "_initializeAdvertiser";
+            Controls.Add(_initializeProductWebControl);
 
-			if (Page.IsPostBack){
-				if (unitOption){
-					try{
-						SessionCst.Unit unitSelected=(SessionCst.Unit) Int64.Parse(Page.Request.Form.GetValues("_units")[0]);
-						if(customerWebSession.Unit!=unitSelected)customerWebSession.Unit = unitSelected;
-					}
-					catch(SystemException){
-					}
-				}
-				
-				if (insertOption){
-					if(Page.Request.Form.GetValues("_inserts")!=null){
-						customerWebSession.Insert = (SessionCst.Insert) Int64.Parse(Page.Request.Form.GetValues("_inserts")[0]);					
-					}
-				}
-				if(resultOption){
-					Int64 tabSelected=Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
-					if(customerWebSession.CurrentTab!=tabSelected)
-						customerWebSession.CurrentTab=tabSelected;
-				}
-				
-				if(percentage){
-					try{
-						if(Page.Request.Form.GetValues("_percentage")[0]!=null)customerWebSession.Percentage=true;
-					}catch(System.Exception)
-					{customerWebSession.Percentage=false;}						
-				}
-				if(pdmOption){
-					try{
-						if(Page.Request.Form.GetValues(this.ID+"_pdm")[0]!=null)customerWebSession.PDM=true;
-					}catch(System.Exception) {
-					 customerWebSession.PDM=false;}						
-				}				
-				if(pdvOption){
-					try{
-						if(Page.Request.Form.GetValues(this.ID+"_pdv")[0]!=null)customerWebSession.PDV=true;
-					}catch(System.Exception) {
-					 customerWebSession.PDV=false;}						
-				}
-				if(evolutionOption){
-					try{
-						if(Page.Request.Form.GetValues(this.ID+"_evol")[0]!=null)customerWebSession.Evolution=true;
-					}catch(System.Exception) {
-					 customerWebSession.Evolution=false;}						
-				}
-				if(personalizedElementsOption){
-					try{
-						if(Page.Request.Form.GetValues(this.ID+"_perso")[0]!=null && (Page.Request.Form.GetValues("_initializeAdvertiser")==null)
-							)customerWebSession.PersonalizedElementsOnly=true;
-						else{
-							customerWebSession.PersonalizedElementsOnly=false;
-							if(PersonalizedElementsCheckBox!=null)PersonalizedElementsCheckBox.Checked =false;
-						}
-					}catch(System.Exception) {
-						customerWebSession.PersonalizedElementsOnly=false;}						
-				}
+            if(Page.IsPostBack) {
+                if(unitOption) {
+                    try {
+                        SessionCst.Unit unitSelected = (SessionCst.Unit)Int64.Parse(Page.Request.Form.GetValues("_units")[0]);
+                        if(customerWebSession.Unit != unitSelected) customerWebSession.Unit = unitSelected;
+                    }
+                    catch(SystemException) {
+                    }
+                }
+
+                if(insertOption) {
+                    if(Page.Request.Form.GetValues("_inserts") != null) {
+                        customerWebSession.Insert = (SessionCst.Insert)Int64.Parse(Page.Request.Form.GetValues("_inserts")[0]);
+                    }
+                }
+                if(resultOption) {
+                    Int64 tabSelected = Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
+                    if(customerWebSession.CurrentTab != tabSelected)
+                        customerWebSession.CurrentTab = tabSelected;
+                }
+
+                if(percentage) {
+                    try {
+                        if(Page.Request.Form.GetValues("_percentage")[0] != null) customerWebSession.Percentage = true;
+                    }
+                    catch(System.Exception) { customerWebSession.Percentage = false; }
+                }
+                if(pdmOption) {
+                    try {
+                        if(Page.Request.Form.GetValues(this.ID + "_pdm")[0] != null) customerWebSession.PDM = true;
+                    }
+                    catch(System.Exception) {
+                        customerWebSession.PDM = false;
+                    }
+                }
+                if(pdvOption) {
+                    try {
+                        if(Page.Request.Form.GetValues(this.ID + "_pdv")[0] != null) customerWebSession.PDV = true;
+                    }
+                    catch(System.Exception) {
+                        customerWebSession.PDV = false;
+                    }
+                }
+                if(evolutionOption) {
+                    try {
+                        if(Page.Request.Form.GetValues(this.ID + "_evol")[0] != null) customerWebSession.Evolution = true;
+                    }
+                    catch(System.Exception) {
+                        customerWebSession.Evolution = false;
+                    }
+                }
+                if(personalizedElementsOption) {
+                    try {
+                        if(Page.Request.Form.GetValues(this.ID + "_perso")[0] != null && (Page.Request.Form.GetValues("_initializeAdvertiser") == null)
+                            ) customerWebSession.PersonalizedElementsOnly = true;
+                        else {
+                            customerWebSession.PersonalizedElementsOnly = false;
+                            if(PersonalizedElementsCheckBox != null) PersonalizedElementsCheckBox.Checked = false;
+                        }
+                    }
+                    catch(System.Exception) {
+                        customerWebSession.PersonalizedElementsOnly = false;
+                    }
+                }
                 if(autopromoEvaliantOption) {
                     try {
                         if(Page.Request.Form.GetValues(this.ID + "_autopromoEvaliant")[0] != null) customerWebSession.AutopromoEvaliant = true;
@@ -670,66 +678,60 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                         customerWebSession.AutopromoEvaliant = false;
                     }
                 }
-				
-				if(tblChoiceOption){
-					customerWebSession.PreformatedTable = (SessionCst.PreformatedDetails.PreformatedTables) Int64.Parse(Page.Request.Form.GetValues("DDL"+this.ID)[0]);					
-				}
-				if (productDetailOption)
-					try{
-						SessionCst.PreformatedDetails.PreformatedProductDetails detailSelected=(SessionCst.PreformatedDetails.PreformatedProductDetails) int.Parse(Page.Request.Form.GetValues("productDetail_"+this.ID)[0]);
-						if(customerWebSession.PreformatedProductDetail != detailSelected)
-							customerWebSession.PreformatedProductDetail =detailSelected;
-					}
-					catch(System.Exception){}
-				if (mediaDetailOption)
-					try{
-						customerWebSession.PreformatedMediaDetail = (SessionCst.PreformatedDetails.PreformatedMediaDetails) int.Parse(Page.Request.Form.GetValues("mediaDetail_"+this.ID)[0]);
-					}
-					catch(System.Exception){}
 
-				//Sauvegarde du type d'alignement des résultats en pourcentage lorsque la page est publiée
-				if (_percentageTypeOption){
-					try{
-						//int productID=Convert.ToInt32(products.SelectedItem.Value);
-						int percentageTypeID=Convert.ToInt32(Page.Request.Form.GetValues("_percentageTypePercentageDropDownList")[0]);	
-						if(customerWebSession.PreformatedTable == WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units
-							&& (WebConstantes.Percentage.Alignment)percentageTypeID==WebConstantes.Percentage.Alignment.horizontal){
-							customerWebSession.PercentageAlignment = WebConstantes.Percentage.Alignment.none;	
+                if(tblChoiceOption) {
+                    customerWebSession.PreformatedTable = (SessionCst.PreformatedDetails.PreformatedTables)Int64.Parse(Page.Request.Form.GetValues("DDL" + this.ID)[0]);
+                }
+                if(productDetailOption)
+                    try {
+                        SessionCst.PreformatedDetails.PreformatedProductDetails detailSelected = (SessionCst.PreformatedDetails.PreformatedProductDetails)int.Parse(Page.Request.Form.GetValues("productDetail_" + this.ID)[0]);
+                        if(customerWebSession.PreformatedProductDetail != detailSelected)
+                            customerWebSession.PreformatedProductDetail = detailSelected;
+                    }
+                    catch(System.Exception) { }
+                if(mediaDetailOption)
+                    try {
+                        customerWebSession.PreformatedMediaDetail = (SessionCst.PreformatedDetails.PreformatedMediaDetails)int.Parse(Page.Request.Form.GetValues("mediaDetail_" + this.ID)[0]);
+                    }
+                    catch(System.Exception) { }
 
-						}
-						else customerWebSession.PercentageAlignment = (WebConstantes.Percentage.Alignment)percentageTypeID;		
-						
-					}
-					catch(SystemException){
-					}
-				}
-			}
+                //Sauvegarde du type d'alignement des résultats en pourcentage lorsque la page est publiée
+                if(_percentageTypeOption) {
+                    try {
+                        //int productID=Convert.ToInt32(products.SelectedItem.Value);
+                        int percentageTypeID = Convert.ToInt32(Page.Request.Form.GetValues("_percentageTypePercentageDropDownList")[0]);
+                        if(customerWebSession.PreformatedTable == WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units
+                            && (WebConstantes.Percentage.Alignment)percentageTypeID == WebConstantes.Percentage.Alignment.horizontal) {
+                            customerWebSession.PercentageAlignment = WebConstantes.Percentage.Alignment.none;
 
-			#region Option format du résultat (graphique ou tableau)
-			
-				graphRadioButton = new System.Web.UI.WebControls.RadioButton();
-				graphRadioButton.EnableViewState=true;
-				graphRadioButton.ID="graphRadioButton";
-				graphRadioButton.GroupName="graphTableRadioButton";																	
-				Controls.Add(graphRadioButton);
+                        }
+                        else customerWebSession.PercentageAlignment = (WebConstantes.Percentage.Alignment)percentageTypeID;
 
-				tableRadioButton = new System.Web.UI.WebControls.RadioButton();
-				tableRadioButton.EnableViewState=true;
-				tableRadioButton.ID="tableRadioButton";
-				tableRadioButton.GroupName="graphTableRadioButton";																	
-				Controls.Add(tableRadioButton);
-							
-			
-			#endregion
+                    }
+                    catch(SystemException) {
+                    }
+                }
+            }
 
+            #region Option format du résultat (graphique ou tableau)
+            graphRadioButton = new System.Web.UI.WebControls.RadioButton();
+            graphRadioButton.EnableViewState = true;
+            graphRadioButton.ID = "graphRadioButton";
+            graphRadioButton.GroupName = "graphTableRadioButton";
+            Controls.Add(graphRadioButton);
 
-				if (resultOption) {					
+            tableRadioButton = new System.Web.UI.WebControls.RadioButton();
+            tableRadioButton.EnableViewState = true;
+            tableRadioButton.ID = "tableRadioButton";
+            tableRadioButton.GroupName = "graphTableRadioButton";
+            Controls.Add(tableRadioButton);
+            #endregion
 
-					SetResultPageOption();
-				}
-			base.OnInit (e);
-		}
-
+            if(resultOption) {
+                SetResultPageOption();
+            }
+            base.OnInit(e);
+        }
 		#endregion
  
 		#region Load
@@ -738,8 +740,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// </summary>
 		/// <param name="e">arguments</param>
 		protected override void OnLoad(EventArgs e){
-			#region initializing controls
 
+			#region initializing controls
 			AdExpressUniverse adExpressUniverse = null;
 			NomenclatureElementsGroup nomenclatureElementsGroup = null;
 			Dictionary<int, AdExpressUniverse> adExpressUniverseDictionary = null;
@@ -755,7 +757,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			
 
 			#region loading controls for the first time
-
 
 			//Création de la liste des produits appm
 			if(productsOption){
@@ -858,7 +859,15 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		private void Custom_PreRender(object sender, System.EventArgs e)
 		{
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
-			
+
+            //if(autopromoEvaliantOption) {
+            //    try {
+            //        if(Page.Request.Form.GetValues(this.ID + "_autopromoEvaliant")[0] != null) customerWebSession.AutopromoEvaliant = true;
+            //    }
+            //    catch(System.Exception) {
+            //        customerWebSession.AutopromoEvaliant = false;
+            //    }
+            //}
 			#region Unité
 			if(unitOption)
 			{
@@ -1541,10 +1550,10 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				
 				case ClassificationCst.DB.Vehicles.names.directMarketing:
 				case ClassificationCst.DB.Vehicles.names.internet:
-                case ClassificationCst.DB.Vehicles.names.adnettrack:
 					return ((current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO));						
 				case ClassificationCst.DB.Vehicles.names.outdoor:
 				case ClassificationCst.DB.Vehicles.names.cinema:
+                case ClassificationCst.DB.Vehicles.names.adnettrack:
 					return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.Is4M));
 				case ClassificationCst.DB.Vehicles.names.others:
 				case ClassificationCst.DB.Vehicles.names.tv:

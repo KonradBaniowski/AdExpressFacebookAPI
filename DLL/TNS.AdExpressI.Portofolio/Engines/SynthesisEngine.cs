@@ -134,10 +134,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Media seller
-            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.mediaSeller);
-            dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-                regie = dt.Rows[0]["media_seller"].ToString();
+            if(_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.mediaSeller);
+                dt = ds.Tables[0];
+                if(dt.Rows.Count > 0)
+                    regie = dt.Rows[0]["media_seller"].ToString();
+            }
             #endregion
 
             #region Interest center
@@ -157,25 +159,27 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region investment
-            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.investment);
-            dt = ds.Tables[0];
+            if(_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.investment);
+                dt = ds.Tables[0];
 
-            if (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString().Length > 0)
-                investment = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString();
-            else
-                investment = "0";
+                if(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString().Length > 0)
+                    investment = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString();
+                else
+                    investment = "0";
 
-            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString())) nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
-            else if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString())) nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString();
-            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString())) adNumber = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
-            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString())) numberBoard = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString();
-            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString())) totalDuration = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString();
-            if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString())) {
-                if (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString().Length > 0) {
-                    volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString())));
-                    volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false);
+                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString())) nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
+                else if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString())) nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString();
+                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString())) adNumber = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
+                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString())) numberBoard = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString();
+                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString())) totalDuration = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString();
+                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString())) {
+                    if(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString().Length > 0) {
+                        volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString())));
+                        volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false);
+                    }
+                    else volume = "0";
                 }
-                else volume = "0";
             }
             #endregion
 
@@ -210,7 +214,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             #region Page number
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.pageNumber);
                 dt = ds.Tables[0];
                 pageNumber = dt.Rows[0]["page"].ToString();
@@ -243,7 +248,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region Number of product in tracking
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInTracking);
                 dt = ds.Tables[0];
                 numberNewProductInTracking = dt.Rows[0]["nbLines"].ToString();
@@ -253,7 +259,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region Number of product in vehicle
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInVehicle);
                 dt = ds.Tables[0];
                 numberNewProductInVehicle = dt.Rows[0]["nbLines"].ToString();
@@ -273,9 +280,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             }
             #endregion
 
-			#endregion
+            #endregion
 
-			#region Period
+            #region Period
             DateTime dtFirstDate = DateTime.Today;
             DateTime dtLastDate = DateTime.Today;
             if (isAlertModule && (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)) {
@@ -340,6 +347,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     if (isAlertModule) nbLines = nbLines + 2; //nbLines = 11;
                     break;
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
                     nbLines = 8;
                     if (investment != null && investment.Length > 0) nbLines++;
                     break;
@@ -559,7 +567,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberProduct.ToString()));
             ChangeLineType(ref lineType);
 
-            if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) && isAlertModule) {
+            if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor 
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing 
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) && isAlertModule) {
                 //Nombre de nouveaux produits dans la pige
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage));
