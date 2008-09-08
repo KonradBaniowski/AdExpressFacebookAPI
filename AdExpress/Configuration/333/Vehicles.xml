@@ -179,7 +179,7 @@
   <vehicle id="adnettrack" databaseId="6" showInsertions="false" showCreations="true">
     <!-- Units-->
     <allowedUnits>
-      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>insertion</allowedUnit>
     </allowedUnits>
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
