@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <languages default="44" defaultDataLanguage="35">
-    <!--<language id="33" name="Français" imageSourceText=""  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" nlsSort="FRENCH"/>-->
-  <language id="44" name="English - Finland DB" imageSourceText=""  localization="en-GB" classificationLanguageId="35" charset="utf-8" contentEncoding="utf-8" nlsSort="finnish"/>
+    <!--<language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" nlsSort="FRENCH"/>-->
+  <language id="44" name="English - Finland DB" imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="35" charset="utf-8" contentEncoding="utf-8" nlsSort="finnish"/>
     <unitformats>
       <unitformat name="max0" format="#,##0;-#,##0;-"/>
       <unitformat name="max2" format="#,##0.##;-#,##0.##;-"/>
