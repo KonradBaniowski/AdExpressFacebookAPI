@@ -27,6 +27,7 @@ using TNS.AdExpress.Constantes.Classification.DB;
 using AccessCstAlias = TNS.AdExpress.Constantes.Customer.Right.type;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.FrameWork.Collections;
 using TNS.FrameWork.DB.Common;
 using DATracking = TNS.AdExpress.Web.Core.DataAccess.Session.TrackingDataAccess;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -2292,7 +2293,6 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		}
 		#endregion
 
-
 		#region Blob
 		/// <summary>
 		/// Méthode qui sauvegarde l'objet webSession courant dans la table de sauvegarde des sessions
@@ -3099,8 +3099,11 @@ namespace TNS.AdExpress.Web.Core.Sessions {
             try {
                 System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
                 Type type = assembly.GetType(GetSelectedUnit().CellType);
-                CellUnit cellUnit = (CellUnit)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
-                return (new CellUnitFactory(cellUnit));
+                Cell cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                if (cellUnit is CellUnit<double>)
+                    return (new CellUnitFactory((CellUnit<double>)cellUnit));
+                else
+                    return (new CellUnitFactory((CellUnit<HybridList>)cellUnit));
             }
             catch {
                 throw (new UnitException("Unit selection is not managed"));

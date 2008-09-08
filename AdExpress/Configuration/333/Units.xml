@@ -7,7 +7,8 @@
   <unit id="duration"    webTextId="280"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellDuration"   field="duration"          multimediaField="totalduree"/>
   <unit id="mmPerCol"    webTextId="941"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellMMC"        field="area_mmc"          multimediaField="totalmmc"/>
   <unit id="pages"       webTextId="943"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellPage"       field="area_page"         multimediaField="totalpages"/>
-  <unit id="numberBoard" webTextId="1604"   baseId ="insertion"  cellType="TNS.FrameWork.WebResultUI.CellInsertion" field="number_board"      multimediaField="totalinsert"/>
-  <unit id="grp"         webTextId="1679"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellGRP"        field="grp"               />
+  <unit id="numberBoard" webTextId="1604"  baseId ="insertion"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="number_board"      multimediaField="totalinsert"/>
+  <unit id="grp"         webTextId="1679"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellGRP"        field="grp"/>
   <unit id="volume"      webTextId="2216"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellVolume"     field="volume"            multimediaField="totalvolume"/>
+  <unit id="versionNb"   webTextId="2479"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellIdsNumber"  field="hashcode"          multimediaField="list_banners"/>
 </units>
