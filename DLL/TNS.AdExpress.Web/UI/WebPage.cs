@@ -63,6 +63,9 @@ namespace TNS.AdExpress.Web.UI {
             // TODO Gestion des exceptions
             if (_useThemes)
                 this.Theme = WebApplicationParameters.Themes[_siteLanguage].Name;
+
+            this.Response.Charset = WebApplicationParameters.AllowedLanguages[_siteLanguage].Charset;
+            this.Response.ContentEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_siteLanguage].ContentEncoding);
         }
         #endregion
 
