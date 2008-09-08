@@ -199,7 +199,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 			Engines.Engine res = new Engines.InsertionDetailEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate,_adBreak);
 			return res.GetData();
 		}
-		
+
 		#region Synthesis membres
 		/// <summary>
 		/// Get synthesis data
