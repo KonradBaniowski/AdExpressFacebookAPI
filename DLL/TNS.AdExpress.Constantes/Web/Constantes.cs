@@ -421,7 +421,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Unité = Volumes
             /// </summary>
-            volume=9
+            volume=9,
+            /// <summary>
+            /// Unité = Nombres de versions
+            /// </summary>
+            versionNb = 10
 		
 		}
 		#endregion
