@@ -31,6 +31,7 @@ using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+using TNS.FrameWork.Collections;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -215,7 +216,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             int columnIndex = 2;
             System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
             Type type;
-            CellUnit cellUnit;
+            Cell cellUnit;
 
 			headers = new TNS.FrameWork.WebResultUI.Headers();
 			// Product column
@@ -275,6 +276,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     columnsName = new string[iNbCol];
                     cellFactories = new CellUnitFactory[iNbCol];
                     break;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                    iNbCol = 4 + creatives + insertions;
+                    columnsName = new string[iNbCol];
+                    cellFactories = new CellUnitFactory[iNbCol];
+                    break;
 				default:
 					throw new PortofolioException("Vehicle unknown.");
 			}
@@ -292,13 +298,18 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
 
                     foreach (UnitInformation currentUnit in _webSession.GetValidUnitForResult()) {
                         headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(currentUnit.WebTextId, _webSession.SiteLanguage), currentUnit.WebTextId));
                         type = assembly.GetType(currentUnit.CellType);
-                        cellUnit = (CellUnit)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                        cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
                         columnsName[columnIndex + creatives + insertions] = currentUnit.Id.ToString();
-                        cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory(cellUnit);
+                        if(cellUnit is CellUnit<double>)
+                            cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory((CellUnit<double>)cellUnit);
+                        else
+                            cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory((CellUnit<HybridList>)cellUnit);
+
                         columnIndex++;
                     }
                     break;
