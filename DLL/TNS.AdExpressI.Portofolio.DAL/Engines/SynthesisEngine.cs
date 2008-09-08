@@ -120,6 +120,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return NumberPageEncart(PortofolioSynthesis.dataType.adNumberExcludingInsets);
                 case PortofolioSynthesis.dataType.numberAdBreaks:
                     return GetEcranData(); 
+                case PortofolioSynthesis.dataType.numberBanners:
+                    return GetNumberBanner();
 				default: throw new PortofolioDALException("The synthesis result type is not defined.");
 			}
 		}
@@ -130,7 +132,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// Get total investment, nb advet, spot duration
 		/// </summary>		
 		/// <returns>Query string</returns>
-		protected virtual DataSet GetSynthsesisUnitsData() {
+        protected virtual DataSet GetSynthsesisUnitsData() {
 
 			#region Variables
 			string sql = string.Empty, sql4M = string.Empty, sqlDataVehicle = string.Empty, sqlWebPlan = string.Empty;
@@ -237,6 +239,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 sql.AppendFormat(", {0} as date_num ",date);
 			}
 			sql.AppendFormat(" from {0} where id_media={1}",table,_idMedia);
+
+            // Autopromo Evaliant
+            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
+                    sql.Append(" and auto_promotion = 0 ");
+            }
+
 			// Period
 			switch (type) {
 				case DBConstantes.TableType.Type.dataVehicle4M:
@@ -270,7 +279,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case DBConstantes.TableType.Type.dataVehicle:
                     if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                         && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
-                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
                         sql.AppendFormat(" and {0}={1}"
                             , UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).DatabaseField
                             , this._cobrandindConditionValue);
@@ -354,6 +364,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			}
 			sql += " from " + tableName;
 			sql += " where id_media=" + _idMedia + "";
+
+            // Autopromo Evaliant
+            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
+                    sql += " and auto_promotion = 0 ";
+            }
+
 			// Period
 			switch (type) {
 				case DBConstantes.TableType.Type.dataVehicle4M:
@@ -624,10 +641,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).Label;
                 case DBClassificationConstantes.Vehicles.names.cinema:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinemaAlert).Label;
-                
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrackAlert).Label;
-				
                 default:
 					throw new PortofolioDALException("GetTableData()-->Vehicle unknown.");
 			}
@@ -1205,6 +1220,71 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }
             catch (System.Exception err) {
                 throw (new PortofolioDALException("Impossible to get data for NumberPageEncart(): " + sql.ToString(), err));
+            }
+            #endregion
+
+        }
+        #endregion
+
+        #region Get NumberBanner (Evaliant)
+        /// <summary>
+        /// Get number of banners
+        /// </summary>
+        /// <returns>Number of banners</returns>
+        protected virtual DataSet GetNumberBanner() {
+
+            #region Variables
+            string sql = "";
+            string tableName = "";
+            string productsRights = null;
+            string product = null;
+            string mediaRights = null;
+            string listProductHap = null;
+            #endregion
+
+            #region Construction de la requête
+            try {
+                tableName = GetTableData();
+                productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                product = GetProductData();
+                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+
+                sql += " select count(hashcode) as nbLines ";
+                sql += " from( ";
+                sql += " select distinct hashcode ";
+
+                sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                sql += " where id_media=" + _idMedia + "";
+
+                if( _webSession.AutopromoEvaliant ) // Hors autopromo (checkbox = checked)
+                    sql += " and auto_promotion = 0 ";
+
+                if(_beginingDate.Length > 0)
+                    sql += " and  DATE_MEDIA_NUM>= " + _beginingDate + " ";
+                if(_endDate.Length > 0)
+                    sql += " and  DATE_MEDIA_NUM<= " + _endDate + " ";
+
+                sql += product;
+                sql += productsRights;
+                sql += mediaRights;
+                sql += GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                sql += listProductHap;
+
+                sql += " group by hashcode )";
+
+            }
+            catch(System.Exception err) {
+                throw (new PortofolioDALException("Impossible to build request for : GetNumberBanner()" + sql, err));
+            }
+            #endregion
+
+            #region Execution de la requête
+            try {
+                return _webSession.Source.Fill(sql.ToString());
+            }
+            catch(System.Exception err) {
+                throw (new PortofolioDALException("Impossible to get data for GetNumberBanner(): " + sql, err));
             }
             #endregion
 
