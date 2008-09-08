@@ -48,7 +48,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// Get adbreak data
         /// </summary>
         /// <returns>Data Set</returns>
-        DataSet GetEcranData();      
+        DataSet GetEcranData();
 		
         /// <summary>
         /// Get dates list
