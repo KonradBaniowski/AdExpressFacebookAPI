@@ -98,7 +98,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			string totalDuration = "";
 			string numberBoard = "";
 			string volume = "";
-            string numberProduct = "", numberNewProductInTracking = "", numberNewProductInVehicle = "", numberAdvertiser = "";
+            string numberProduct = "", numberNewProductInTracking = "", numberNewProductInVehicle = "", numberAdvertiser = "", numberBanner = "";
 			ResultTable resultTable = null;
 			LineType lineType = LineType.level1;
 			string typeReseauStr = string.Empty;
@@ -159,27 +159,29 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region investment
-            if(_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
-                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.investment);
-                dt = ds.Tables[0];
+            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.investment);
+            dt = ds.Tables[0];
 
-                if(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString().Length > 0)
-                    investment = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString();
-                else
-                    investment = "0";
+            if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()) && dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString().Length > 0 )
+                investment = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString();
+            else
+                investment = "0";
 
-                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString())) nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
-                else if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString())) nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString();
-                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString())) adNumber = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
-                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString())) numberBoard = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString();
-                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString())) totalDuration = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString();
-                if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString())) {
-                    if(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString().Length > 0) {
-                        volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString())));
-                        volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false);
-                    }
-                    else volume = "0";
+            if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString())
+                && dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString().Length > 0)
+                nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
+            else if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString())) 
+                nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString();
+            
+            if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString())) adNumber = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
+            if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString())) numberBoard = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString();
+            if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString())) totalDuration = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString();
+            if(dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString())) {
+                if(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString().Length > 0) {
+                    volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString())));
+                    volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false);
                 }
+                else volume = "0";
             }
             #endregion
 
@@ -271,6 +273,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberAdvertiser);
             dt = ds.Tables[0];
             numberAdvertiser = dt.Rows[0]["nbLines"].ToString();
+            #endregion
+
+            #region Number of banners (Evaliant)
+            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberBanners);
+                dt = ds.Tables[0];
+                numberBanner = dt.Rows[0]["nbLines"].ToString();
+            }
             #endregion
 
             #region Type sale
@@ -438,6 +448,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 ChangeLineType(ref lineType);
             }
 
+            // Number of banners
+            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack && interestCenter.Length > 0) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(2479, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberBanner.ToString()));
+                ChangeLineType(ref lineType);
+            }
+
             //number board and newtwork type 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
                 //number board
@@ -552,9 +570,19 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(double.Parse(totalDuration));
                 ChangeLineType(ref lineType);
             }
+            else if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                // Number of insertion (occurrences) Evaliant
+                if(nbrSpot.Length == 0) {
+                    nbrSpot = "0";
+                }
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1398, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrSpot));
+                ChangeLineType(ref lineType);
+            }
 
             // Total investissements
-            if (investment != null && investment.Length > 0) {
+            if(investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage));
                 resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellEuro(double.Parse(investment));
