@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-  <languages default="33">
+  <languages default="33" defaultDataLanguage="33">
     <language id="33" name="Français" imageSourceText=""  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" nlsSort="FRENCH"/>
     <language id="44" name="English"  imageSourceText=""  localization="en-GB" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" nlsSort="FRENCH"/>
   </languages>

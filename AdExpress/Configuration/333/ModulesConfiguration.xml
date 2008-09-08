@@ -900,6 +900,7 @@
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
+              <allowedUnit>versionNb</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
