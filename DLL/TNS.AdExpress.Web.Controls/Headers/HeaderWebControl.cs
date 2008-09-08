@@ -2,14 +2,17 @@ using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
+using System.Drawing;
 
 using System.Collections;
 
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Constantes.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using System.Collections.Generic;
+using TNS.AdExpress.Web.Controls.Results;
 
 namespace TNS.AdExpress.Web.Controls.Headers {
 
@@ -59,6 +62,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Missing Flash URL
         /// </summary>
         private string missingFlashUrl = string.Empty;
+        /// <summary>
+        /// Language selection web control
+        /// </summary>
+        private LanguageSelectionWebControl languageSelectionWebControl;
 		#endregion
 
 		#region Accesseurs
@@ -124,6 +131,20 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             if(!Page.ClientScript.IsClientScriptBlockRegistered("detectFlash")) {
                 string tmp = "\n<SCRIPT LANGUAGE=\"JavaScript\" type=\"text/javascript\" src=\"/scripts/FlashChecking.js\"></SCRIPT>";
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "detectFlash", tmp);
+            }
+
+            if (!Page.ClientScript.IsClientScriptBlockRegistered("LanguageSelectionScripts")) {
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "LanguageSelectionScripts", TNS.AdExpress.Web.Functions.Script.LanguageSelectionScripts(true));
+            }
+
+            if (Page.Request.QueryString.Get("siteLanguage") != null) {
+                if (!Page.ClientScript.IsClientScriptBlockRegistered("SetCookieScript")) {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetCookieScript", TNS.AdExpress.Web.Functions.Script.SetCookieScript(language));
+                }
+            }
+
+            if (!Page.ClientScript.IsClientScriptBlockRegistered("CookieScripts")) {
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "CookieScripts", TNS.AdExpress.Web.Functions.Script.CookieScripts(language,GetLinkPath()));
             }
 
             if(!Page.ClientScript.IsClientScriptBlockRegistered(TNS.AdExpress.Web.Functions.Script.RESIZABLE_POPUP_REGISTER)) {
@@ -252,28 +273,82 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			menus = menus.Substring(0, menus.Length - 2);
 			output.Write("{0}\n</p>", menus);
 			output.Write("\n</td>");
-			// A remettre s'il on veut pouvoir avoir accès à la traduction du site
-			if (pageType == PageType.homepage) {
-				string langButton = "";
-				string link = "";
-				switch (language) {
-					case TNS.AdExpress.Constantes.DB.Language.ENGLISH:
-						langButton = "Version française";
-						link = this.Parent.Page.Request.Url.AbsolutePath.ToString() + "?siteLanguage=" + TNS.AdExpress.Constantes.DB.Language.FRENCH;
-						break;
-					default:
-						langButton = "English version";
-						link = this.Parent.Page.Request.Url.AbsolutePath.ToString() + "?siteLanguage=" + TNS.AdExpress.Constantes.DB.Language.ENGLISH;
-						break;
-				}
-                output.Write("\n<td align=\"right\">\n<p class=\"paragraphePaddingHeader\">| <a class=\"roll01\" href=\"" + link + "\">" + langButton + " </a></p>\n</td>");
-			}
-			output.Write("\n</tr>");
+
+            if (WebApplicationParameters.AllowedLanguages.Count > 1) {
+
+                languageSelectionWebControl = new LanguageSelectionWebControl();
+                languageSelectionWebControl.Language = language;
+                languageSelectionWebControl.BackColor = Color.FromArgb(143, 123, 166);
+                languageSelectionWebControl.BorderColor = Color.FromArgb(143, 123, 166);
+                languageSelectionWebControl.BorderWidth = new System.Web.UI.WebControls.Unit(0);
+                languageSelectionWebControl.ImageButtonArrow = "/App_Themes/" + themeName + "/Images/Common/Button/bt_arrow_down_white.gif";
+                languageSelectionWebControl.ID = "DDL" + this.ID;
+                languageSelectionWebControl.ImageHeight = 11;
+                languageSelectionWebControl.ImageWidth = 16;
+                languageSelectionWebControl.Height = 15;
+                languageSelectionWebControl.OutCssClass = "ddlOut1";
+                languageSelectionWebControl.OverCssClass = "ddlOver1";
+                languageSelectionWebControl.ShowPictures = true;
+
+                if (pageType == PageType.homepage) {
+                    languageSelectionWebControl.Width = new System.Web.UI.WebControls.Unit("80");
+                    languageSelectionWebControl.ShowText = true;
+                }
+                else {
+                    languageSelectionWebControl.Width = new System.Web.UI.WebControls.Unit("25");
+                }
+
+                Controls.Add(languageSelectionWebControl);
+
+
+                output.Write("\n<td align=\"right\" valign=\"top\">");
+                languageSelectionWebControl.RenderControl(output);
+                output.Write("</td>");
+
+            }
+
+            output.Write("\n</tr>");
 			output.Write("\n</table>");
 
 		}
 		#endregion
 
 		#endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Get Path and Query
+        /// </summary>
+        /// <returns>Path string</returns>
+        private string GetLinkPath() {
+
+            string link = this.Parent.Page.Request.Url.PathAndQuery.ToString();
+            string[] linkParam = link.Split('?');
+            string[] paramsList;
+            bool verif = true;
+
+            link = linkParam[0];
+
+            if (linkParam.Length > 1) {
+                paramsList = linkParam[1].Split('&');
+                for (int i = 0; i < paramsList.Length; i++)
+                    if (!paramsList[i].Contains("siteLanguage"))
+                        if (verif) {
+                            link += "?" + paramsList[i];
+                            verif = false;
+                        }
+                        else
+                            link += "&" + paramsList[i];
+            }
+
+            if (verif)
+                link += "?siteLanguage=";
+            else
+                link += "&siteLanguage=";
+
+            return link;
+        }
+        #endregion
+
 	}
 }

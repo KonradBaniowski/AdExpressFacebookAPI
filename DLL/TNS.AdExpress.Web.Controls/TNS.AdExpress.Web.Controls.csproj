@@ -245,6 +245,7 @@
     <Compile Include="Headers\IOptionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Headers\LanguageSelectionWebControl.cs" />
     <Compile Include="Headers\LoginInformationWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

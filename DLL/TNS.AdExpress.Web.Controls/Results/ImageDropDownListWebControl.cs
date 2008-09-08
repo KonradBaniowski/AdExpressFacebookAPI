@@ -15,18 +15,18 @@ namespace TNS.AdExpress.Web.Controls.Results{
 	public class ImageDropDownListWebControl : System.Web.UI.WebControls.WebControl {
 
 		#region Propriétés
-		private string texts = "";
-		private string images = "";
-		private int index;
-		private bool pictShow;
-		private string outCssClass = "";
-		private string overCssClass = "";
-		private double imageWidth = 15.0;
-		private double imageHeight = 15.0;
+		internal string texts = "";
+        internal string images = "";
+        internal int index;
+        internal bool pictShow;
+        internal string outCssClass = "";
+        internal string overCssClass = "";
+        internal double imageWidth = 15.0;
+        internal double imageHeight = 15.0;
         /// <summary>
         /// Arrow button image
         /// </summary>
-        private string imageButtonArrow = "";
+        internal string imageButtonArrow = "";
 
 		/// <summary>
 		/// Obtient ou définit la hauteur de l'image
@@ -150,7 +150,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			#region Génération du code HTML
 
 			#region Entete combolist
-			writer.Write("\n\t <input class=\"" + OutCssClass + "\" type=\"hidden\" name=\"" + this.ID + "\"  id=\"" + this.ID + "\" value=\"" + index + "\">");
+            writer.Write("\n\t <input class=\"" + OutCssClass + "\" type=\"hidden\" name=\"" + this.ID + "\"  id=\"" + this.ID + "\" value=\"" + index + "\">");
 			writer.Write("\n\t <div>");
 			writer.Write("\n\t\t <table width=\"" + this.Width + "\" border=\"0\" cellSpacing=\"0\">");
 			writer.Write("\n\t\t\t <tr>");
@@ -245,7 +245,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// </summary>
 		/// <param name="color">Couleur à convertire</param>
 		/// <returns>Couleur HTMl</returns>
-		private string ColorToStr(System.Drawing.Color color){
+		internal string ColorToStr(System.Drawing.Color color){
 			string s;
 			if (!color.IsEmpty){
 				return "#" + (s = "000000" + color.ToArgb().ToString("X")).Substring(s.Length-6);

@@ -14,6 +14,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 using Oracle.DataAccess.Client;
 using TNS.FrameWork.DB.Common;
@@ -106,21 +107,9 @@ namespace AdExpress{
 			
 				#region Textes et langage du site
 				_setLanguage = string.Empty;
-				if(Page.Request.QueryString.Get("siteLanguage")!=null){
-                    //_siteLanguage=int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
-                    _setLanguage = string.Format("setPermanentCookie(\"{1}\",{0});", _siteLanguage, Cookies.LANGUAGE);
-				}
-				//Modification de la langue pour les Textes AdExpress
-                //TNS.AdExpress.Web.Translation.Functions.Translate.SetAllTextLanguage(this,_siteLanguage);
-                
-				//langage de l'entête
-				//HeaderWebControl1.Language = _siteLanguage;
-				//Bouton valider
-				//ImageButtonRollOverWebControl1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				//ImageButtonRollOverWebControl1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
 				#endregion
 
-			}
+            }
 			catch(System.Exception et){
 				string bobo=et.Message;
 			}

@@ -39,8 +39,8 @@ namespace TNS.AdExpress.Web.UI {
         /// </summary>
         public WebPage() {
             try {
-                if(HttpContext.Current.Request.QueryString.Get("sitelanguage")!=null) {
-                    _siteLanguage=int.Parse(HttpContext.Current.Request.QueryString.Get("sitelanguage"));
+                if(HttpContext.Current.Request.QueryString.Get("siteLanguage")!=null) {
+                    _siteLanguage=int.Parse(HttpContext.Current.Request.QueryString.Get("siteLanguage"));
                 }
                 else {
                     _siteLanguage = WebApplicationParameters.DefaultLanguage;
@@ -63,14 +63,25 @@ namespace TNS.AdExpress.Web.UI {
             // TODO Gestion des exceptions
             if (_useThemes)
                 this.Theme = WebApplicationParameters.Themes[_siteLanguage].Name;
-            
         }
         #endregion
 
+        #region OnLoad
+        /// <summary>
+        /// On Load event
+        /// </summary>
+        /// <param name="e">Arguments</param>
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
             Translate.SetAllTextLanguage(this,_siteLanguage);
+
+            if (!Page.ClientScript.IsClientScriptBlockRegistered("CookiesJScript")) {
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "CookiesJScript", TNS.AdExpress.Web.Functions.Script.CookiesJScript());
+            }
+
         }
+        #endregion
+
         #endregion
     }
 }

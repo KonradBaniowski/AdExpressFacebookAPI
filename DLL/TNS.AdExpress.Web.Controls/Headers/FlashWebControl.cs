@@ -66,7 +66,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("document.writeln('<PARAM NAME=\"FlashVars\" VALUE=\"\">');");										
 			output.Write("document.writeln('<PARAM NAME=\"Movie\" VALUE=\""+flashUrl+"\">');");
 			output.Write("document.writeln('<PARAM NAME=\"Src\" VALUE=\""+flashUrl+"\">');");
-            output.Write("document.writeln('<PARAM NAME=\"WMode\" VALUE=\"Window\">');");
+            output.Write("document.writeln('<PARAM NAME=\"WMode\" VALUE=\"Transparent\">');");
             output.Write("document.writeln('<PARAM NAME=\"Play\" VALUE=\"-1\">');");
             output.Write("document.writeln('<PARAM NAME=\"Loop\" VALUE=\"-1\">');");
             output.Write("document.writeln('<PARAM NAME=\"Quality\" VALUE=\"High\">');");

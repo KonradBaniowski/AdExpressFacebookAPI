@@ -173,6 +173,25 @@ background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 	font-weight: bold;
 	color: #000000;
 }
+.ddlOut1{
+	/*background-color: #73598F;*/
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #FFFFFF;
+	vertical-align:middle;
+}
+.ddlOver1{
+	background-color: #DED8E5;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #000000;
+	vertical-align:middle;
+}
+.imgVAlign{
+	vertical-align:bottom;	
+} 
 /* Generic Media Level Detail Selection Header */
 .GenericMediaLevelDetailSelectionHeader{
 	background-color:#FFFFFF;

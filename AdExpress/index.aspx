@@ -11,7 +11,6 @@
 		<meta content="JavaScript" name="vs_defaultClientScript" />
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
 		<link href="/favicon.ico" rel="SHORTCUT ICON"/>
-		<script language="javascript" type="text/javascript" src="/scripts/CookiesJScript.js"></script>
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT"/>
 		<meta http-equiv="expires" content="0"/>
 		<meta http-equiv="pragma" content="no-cache"/>
@@ -19,16 +18,6 @@
 	</head>
 	<body class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
-			<script language="javascript" type="text/javascript">
-/*				var language = <%=_siteLanguage%>;
-				<%=_setLanguage%>
-				var cook = GetCookie('language');
-				if (cook != null){
-					if (language != cook){
-						document.location="/index.aspx?sitelanguage="+cook;
-					}
-				}*/
-			</script>
 			<table cellSpacing="0" cellPadding="0" border="0">
 				<tr>
 					<!-- marge de gauche-->
