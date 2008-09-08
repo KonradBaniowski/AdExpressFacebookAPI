@@ -261,6 +261,18 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             }
             //Mois Moyen théorique
             serieMediumMonth.LegendText = string.Format("{0} {1} %", GestionWeb.GetWebWord(1233, _session.SiteLanguage), mediumMonth);
+
+            #region size legend
+            int sizeLegend = serieUnivers.LegendText.Length;
+            if(sizeLegend<serieSectorMarket.LegendText.Length)
+                sizeLegend = serieSectorMarket.LegendText.Length;
+            if (sizeLegend < serieMediumMonth.LegendText.Length)
+                sizeLegend = serieMediumMonth.LegendText.Length;
+
+            this.Legends[strChartArea].TextWrapThreshold = sizeLegend;
+
+            #endregion
+
             #endregion
 
             #region X axe
