@@ -687,51 +687,43 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Recap Cell phone aggregated bu segment
         /// </summary>
-        recapMobileTelSegment = 145,
-		/// <summary>
-		/// Universe client 
-		/// </summary>
-		universeClient = 146,
-		/// <summary>
-		/// Universe client description
-		/// </summary>
-		universeClientDescription = 147,
-		/// <summary>
-		/// Group universe client
-		/// </summary>
-		groupUniverseClient = 148,
+        recapMobileTelSegment = 145,		
         /// <summary>
         /// AdNetTrack (for Internet Version)
         /// </summary>
-        dataInternetVersion = 149,
+        dataInternetVersion = 147,
         /// <summary>
         /// AdNetTrack 4M (for Internet Version)
         /// </summary>
-        dataInternetVersionAlert = 150,
+        dataInternetVersionAlert = 148,
         /// <summary>
         /// Product Group Advertising Agency
         /// </summary>
-        productGroupAgency=200,
+        productGroupAgency=149,
 		/// <summary>
 		/// Advertising Agency
 		/// </summary>
-		advertisingAgency=201,
+		advertisingAgency=150,
 		/// <summary>
 		/// Group Advertising Agency
 		/// </summary>
-		groupAdvertisingAgency=202,
+		groupAdvertisingAgency=151,
         /// <summary>
         /// Product class analysis years loaded information
         /// </summary>
-        recapInfo=203,
+        recapInfo=152,
         /// <summary>
         /// Cinema Data
         /// </summary>
-        dataCinema=204,
+        dataCinema=153,
         /// <summary>
         /// 4M cinema Data
         /// </summary>
-        dataCinemaAlert=205,
+        dataCinemaAlert=154,
+		/// <summary>
+		/// Customer directory
+		/// </summary>
+		customerDirectory = 155
 
     } 
     #endregion
