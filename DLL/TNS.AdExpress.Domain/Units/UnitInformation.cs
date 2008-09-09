@@ -123,6 +123,12 @@ namespace TNS.AdExpress.Domain.Units {
         {
             get { return _strFormat; }
         }
+        /// <summary>
+        /// Get Unit format ready for ToString methods ==> "{0:Format}"
+        /// </summary>
+        public string StringFormat {
+            get { return "{0:"+_strFormat+"}"; }
+        }
         #endregion
 
         #region Public methods
