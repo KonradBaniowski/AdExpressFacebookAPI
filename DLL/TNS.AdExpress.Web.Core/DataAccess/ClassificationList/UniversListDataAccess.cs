@@ -97,23 +97,23 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 
 			#region Request construction		
 
-			string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".UNIVERSE_CLIENT ";
-			sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).SqlWithPrefix + " , "
-				+ WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).SqlWithPrefix + " , "
-				+ WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClientDescription).SqlWithPrefix;
-			sql += " where " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin.ToString();
-			sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED;
-			sql += " and (" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED + " or " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ACTIVATION is null) ";
-			sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".ID_GROUP_UNIVERSE_CLIENT=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ID_GROUP_UNIVERSE_CLIENT(+) ";
+			string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
+			sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).SqlWithPrefix + " , "
+				+ WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).SqlWithPrefix + " , "
+				+ WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseDescription).SqlWithPrefix;
+			sql += " where " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin.ToString();
+			sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED;
+			sql += " and (" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED + " or " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ACTIVATION is null) ";
+			sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_GROUP_UNIVERSE_CLIENT(+) ";
 
 			if (ListUniverseClientDescription.Trim().Length > 0) {
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION = " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClientDescription).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION";
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION in (" + ListUniverseClientDescription + ") ";
+				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION = " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseDescription).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION";
+				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION in (" + ListUniverseClientDescription + ") ";
 			}
 			if (branch.Length > 0) {
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".id_type_universe_client in (" + branch + ")";
+				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".id_type_universe_client in (" + branch + ")";
 			}
-			sql += " order by " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupUniverseClient).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.universeClient).Prefix + ".UNIVERSE_CLIENT ";
+			sql += " order by " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
 			#endregion
 
 			#region Request execution
@@ -180,14 +180,14 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Liste des Groupes d'univers</returns>
 		public static DataSet GetGroupUniverses(WebSession webSession){
-		
+			Table universeGroupTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup);
 			#region Request construction
 			//Requête pour récupérer tous les univers d'un idLogin
-			string sql="select distinct dir.ID_GROUP_UNIVERSE_CLIENT, dir.GROUP_UNIVERSE_CLIENT ";
-			sql+=" from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.GROUP_UNIVERSE_CLIENT + " dir ";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin;
-			sql+=" and dir.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" order by dir.GROUP_UNIVERSE_CLIENT ";		
+			string sql = "select distinct " + universeGroupTable.Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + universeGroupTable.Prefix + ".GROUP_UNIVERSE_CLIENT ";
+			sql += " from " + universeGroupTable.SqlWithPrefix;
+			sql += " where " + universeGroupTable.Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin;
+			sql += " and " + universeGroupTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " order by " + universeGroupTable.Prefix + ".GROUP_UNIVERSE_CLIENT ";		
 			#endregion
 
 			#region Request execution
@@ -211,16 +211,17 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="universeName">Nom de l'univers</param>
 		/// <returns>True s'il existe, false sinon</returns>
 		public static bool IsUniverseExist(WebSession webSession, string universeName){
+			Table universeGroupTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup);
+			Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
 
 			#region Request construction
-			string sql="select se.UNIVERSE_CLIENT from "
-				+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.UNIVERSE_CLIENT + " se, ";
-			sql+=" "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.GROUP_UNIVERSE_CLIENT + " dir";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin;
-			sql+=" and dir.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and se.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and dir.ID_GROUP_UNIVERSE_CLIENT = se.ID_GROUP_UNIVERSE_CLIENT ";
-			sql+=" and UPPER(se.UNIVERSE_CLIENT) like UPPER('"+universeName+"')";
+			string sql="select se.UNIVERSE_CLIENT from "+ universeTable.SqlWithPrefix + ", ";
+			sql += " " + universeGroupTable.SqlWithPrefix;
+			sql+=" where "+universeGroupTable.Prefix +".ID_LOGIN="+webSession.CustomerLogin.IdLogin;
+			sql += " and " + universeGroupTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql+=" and "+universeTable.Prefix+".ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
+			sql += " and " + universeGroupTable.Prefix + ".ID_GROUP_UNIVERSE_CLIENT = " + universeTable.Prefix + ".ID_GROUP_UNIVERSE_CLIENT ";
+			sql += " and UPPER(" + universeTable.Prefix + ".UNIVERSE_CLIENT) like UPPER('" + universeName + "')";
 			#endregion
 
 			#region Request execution
@@ -245,13 +246,14 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="idUniverseClientDescription">id Univers Client Description</param>
 		/// <returns></returns>
 		public static bool IsUniverseBelongToClientDescription(WebSession webSession, Int64 idUniverse,Int64 idUniverseClientDescription) {
-			
+			Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
 			#region Request construction
-			string sql = "select se.UNIVERSE_CLIENT from "
-				+ TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.UNIVERSE_CLIENT + " se ";
-			sql += " where se.ID_UNIVERSE_CLIENT = " + idUniverse;
-			sql += " and se.ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
-			sql += " and se.ID_UNIVERSE_CLIENT_DESCRIPTION  = " + idUniverseClientDescription;			
+			string sql = "select " + universeTable.Prefix + ".UNIVERSE_CLIENT from "
+				+ universeTable.SqlWithPrefix;
+			sql += " where " + universeTable.Prefix + ".ID_UNIVERSE_CLIENT = " + idUniverse;
+			sql += " and " + universeTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " and " + universeTable.Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION  = " + idUniverseClientDescription;			
 			#endregion
 
 			#region Request execution
@@ -310,10 +312,12 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 			byte[] binaryData=null;
 			Object o = null;
 			try{
+				Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
 				binaryData = new byte[0];
 				//create anonymous PL/SQL command
 				string block = " BEGIN "+
-					" SELECT blob_universe_client INTO :1 FROM " + DBConstantes.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.UNIVERSE_CLIENT 
+					" SELECT blob_universe_client INTO :1 FROM " + universeTable.Sql 
 					+ " WHERE id_universe_client = " + idUniverse + "; " +
 					" END; ";
 				sqlCommand = new OracleCommand(block);
@@ -409,6 +413,8 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 			
 
 			try{
+				Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+				Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
 				//"Serialization"
 				ms = new MemoryStream();
 				bf = new BinaryFormatter();
@@ -418,10 +424,10 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 
 				//create anonymous PL/SQL command
 				string block = " BEGIN "+
-					" INSERT INTO " + DBConstantes.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.UNIVERSE_CLIENT +
+					" INSERT INTO " + universeTable.Sql +
 					" (ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT,ID_TYPE_UNIVERSE_CLIENT ,ID_UNIVERSE_CLIENT_DESCRIPTION ,DATE_CREATION, DATE_MODIFICATION, ACTIVATION) "+
 					" VALUES "+
-					" ("+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".seq_universe_client.nextval, "+idGroupUniverse+", '"+universe+"', :1, "+idTypeUniverseClient+","+idUniverseClientDescription+",sysdate, sysdate,"+DBConstantes.ActivationValues.ACTIVATED+"); " +
+					" (" + schema .Label+ ".seq_universe_client.nextval, " + idGroupUniverse + ", '" + universe + "', :1, " + idTypeUniverseClient + "," + idUniverseClientDescription + ",sysdate, sysdate," + DBConstantes.ActivationValues.ACTIVATED + "); " +
 					" END; ";
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = connection;
@@ -507,6 +513,9 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 
 
 			try {
+				Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+				Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
+
 				//"Serialization"
 				ms = new MemoryStream();
 				bf = new BinaryFormatter();
@@ -516,10 +525,10 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 
 				//create anonymous PL/SQL command
 				string block = " BEGIN " +
-					" INSERT INTO " + DBConstantes.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.UNIVERSE_CLIENT +
+					" INSERT INTO " + universeTable.Sql +
 					" (ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT,ID_TYPE_UNIVERSE_CLIENT ,ID_UNIVERSE_CLIENT_DESCRIPTION ,DATE_CREATION, DATE_MODIFICATION, ACTIVATION) " +
 					" VALUES " +
-					" (" + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + ".seq_universe_client.nextval, " + idGroupUniverse + ", '" + universe + "', :1, " + idTypeUniverseClient + "," + idUniverseClientDescription + ",sysdate, sysdate," + DBConstantes.ActivationValues.ACTIVATED + "); " +
+					" (" + schema.Label + ".seq_universe_client.nextval, " + idGroupUniverse + ", '" + universe + "', :1, " + idTypeUniverseClient + "," + idUniverseClientDescription + ",sysdate, sysdate," + DBConstantes.ActivationValues.ACTIVATED + "); " +
 					" END; ";
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = connection;
@@ -576,13 +585,14 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="GroupUniverseName">Non du groupe d'univers</param>
 		/// <returns>True s'il existe, false sinon</returns>
 		public static bool IsGroupUniverseExist(WebSession webSession, string GroupUniverseName){
+			Table universeGroupTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup);
 
 			#region Request construction
-			string sql="select distinct dir.ID_GROUP_UNIVERSE_CLIENT, dir.GROUP_UNIVERSE_CLIENT ";
-			sql+=" from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.GROUP_UNIVERSE_CLIENT + " dir ";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin;
-			sql+=" and dir.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and UPPER(dir.GROUP_UNIVERSE_CLIENT)=UPPER('"+GroupUniverseName+"') ";
+			string sql = "select distinct " + universeGroupTable.Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + universeGroupTable.Prefix + ".GROUP_UNIVERSE_CLIENT ";
+			sql += " from " + universeGroupTable.SqlWithPrefix;
+			sql+=" where " + universeGroupTable.Prefix +".ID_LOGIN="+webSession.CustomerLogin.IdLogin;
+			sql += " and " + universeGroupTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " and UPPER(" + universeGroupTable.Prefix + ".GROUP_UNIVERSE_CLIENT)=UPPER('" + GroupUniverseName + "') ";
 			#endregion
 
 			#region Request execution
@@ -606,11 +616,13 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="nameGroupUniverse">Nom du groupe d'univers</param>
 		/// <param name="webSession">Session du client</param>
 		public static bool CreateGroupUniverse(string nameGroupUniverse, WebSession webSession){
-			
+			Table universeGroupTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup);
+			Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
+
 			#region Requête pour insérer les champs dans la table Group_universe_client	
-			string sql="INSERT INTO "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.GROUP_UNIVERSE_CLIENT 
+			string sql = "INSERT INTO " + universeGroupTable.Sql
 				+ " (ID_GROUP_UNIVERSE_CLIENT,ID_LOGIN,GROUP_UNIVERSE_CLIENT,DATE_CREATION,ACTIVATION) ";
-			sql+="values ("+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".seq_GROUPE_UNIVERSE_CLIENT.nextval,"+webSession.CustomerLogin.IdLogin+",'"+nameGroupUniverse+"',SYSDATE,"+TNS.AdExpress.Constantes.DB.ActivationValues.ACTIVATED+")";
+			sql += "values (" + schema .Label+ ".seq_GROUPE_UNIVERSE_CLIENT.nextval," + webSession.CustomerLogin.IdLogin + ",'" + nameGroupUniverse + "',SYSDATE," + TNS.AdExpress.Constantes.DB.ActivationValues.ACTIVATED + ")";
 			#endregion
 
 			#region Request execution
@@ -632,15 +644,18 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="idGroupUniverse">Identifiant du groupe d'univers</param>
 		/// <returns>True s'il existe, false sinon</returns>
 		public static bool IsUniversInGroupUniverseExist(WebSession webSession, Int64 idGroupUniverse){
+			
+			Table universeGroupTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup);
+			Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
 
 			#region Request construction
-			string sql="select se.UNIVERSE_CLIENT from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.UNIVERSE_CLIENT + " se, ";
-			sql+=" "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.GROUP_UNIVERSE_CLIENT + " dir";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin;
-			sql+=" and dir.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and se.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and dir.ID_GROUP_UNIVERSE_CLIENT = se.ID_GROUP_UNIVERSE_CLIENT ";
-			sql+=" and dir.ID_GROUP_UNIVERSE_CLIENT="+idGroupUniverse+" ";
+			string sql = "select " + universeTable.Prefix + ".UNIVERSE_CLIENT from " + universeTable.SqlWithPrefix + ", ";
+			sql += " " + universeGroupTable.SqlWithPrefix;
+			sql+=" where "+ universeGroupTable.Prefix +".ID_LOGIN="+webSession.CustomerLogin.IdLogin;
+			sql += " and " + universeGroupTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " and " + universeTable.Prefix +".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " and " + universeGroupTable.Prefix + ".ID_GROUP_UNIVERSE_CLIENT = "+universeTable.Prefix+".ID_GROUP_UNIVERSE_CLIENT ";
+			sql += " and " + universeGroupTable.Prefix + ".ID_GROUP_UNIVERSE_CLIENT=" + idGroupUniverse + " ";
 			#endregion
 
 			#region Request execution
@@ -664,9 +679,13 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="webSession">Session du client</param>
 		public static void DropGroupUniverse(Int64 idGroupUniverse,WebSession webSession){
 
+			Table universeGroupTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup);
+			Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
+
+
 			#region Request construction
-			string sql="delete from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.GROUP_UNIVERSE_CLIENT + " ";
-			sql+=" where "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".GROUP_UNIVERSE_CLIENT.ID_GROUP_UNIVERSE_CLIENT="+idGroupUniverse+"";
+			string sql = "delete from " + universeGroupTable .Sql+ " ";
+			sql += " where " + schema.Label+ ".GROUP_UNIVERSE_CLIENT.ID_GROUP_UNIVERSE_CLIENT=" + idGroupUniverse + "";
 			#endregion
 
 			#region Request execution
@@ -686,10 +705,12 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="idUniverse">Identifiant du répertoire</param>
 		/// <param name="webSession">Session du client</param>
 		public static bool DropUniverse(Int64 idUniverse,WebSession webSession){
+			Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+			Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
 
 			#region Request construction
-			string sql="delete from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.UNIVERSE_CLIENT + " ";
-			sql+=" where "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".UNIVERSE_CLIENT.ID_UNIVERSE_CLIENT="+idUniverse+"";
+			string sql = "delete from " + universeTable.Sql + " ";
+			sql += " where " + universeTable.Sql+ ".ID_UNIVERSE_CLIENT=" + idUniverse + "";
 			#endregion
 
 			#region Request execution
@@ -711,9 +732,10 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="idGroupUniverse">Identifiant du groupe d'univers</param>
 		/// <param name="webSession">Session du client</param>
 		public static void RenameGroupUniverse(string newName, Int64 idGroupUniverse,WebSession webSession){
+			Table universeGroupTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup);
 
 			#region Requête pour mettre à jour le nom du Groupe d'univers dans la table	
-			string sql1="update "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.GROUP_UNIVERSE_CLIENT + " ";
+			string sql1 = "update " + universeGroupTable.Sql + " ";
 			sql1+="set GROUP_UNIVERSE_CLIENT ='"+newName+"', DATE_MODIFICATION = SYSDATE ";
 			sql1+="where ID_GROUP_UNIVERSE_CLIENT ="+idGroupUniverse+"";
 			#endregion
@@ -737,9 +759,10 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="idUniverse">Identifiant de l'univers</param>
 		/// <param name="webSession">Session du client</param>
 		public static void RenameUniverse(string newName, Int64 idUniverse,WebSession webSession){
-
+			Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+			
 			#region Requête pour mettre à jour le nom de l'univers dans la table	
-			string sql1=" update  "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.UNIVERSE_CLIENT + " ";
+			string sql1 = " update  " + universeTable.Sql + " ";
 			sql1+=" set  UNIVERSE_CLIENT='"+newName+"' ,DATE_MODIFICATION=SYSDATE ";
 			sql1+=" where  ID_UNIVERSE_CLIENT="+idUniverse+" ";
 			#endregion
@@ -764,9 +787,10 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="idUniverse">Identifiant Univers</param>
 		/// <param name="webSession">Session du client</param>	
 		public static void MoveUniverse(Int64 idOldGroupUniverse,Int64 idNewGroupUniverse,Int64 idUniverse,WebSession webSession){
-		
+			Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
 			#region Request construction
-			string sql="UPDATE "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.UNIVERSE_CLIENT;
+			string sql = "UPDATE " + universeTable.Sql;
 			sql+=" SET ID_GROUP_UNIVERSE_CLIENT="+idNewGroupUniverse+", DATE_MODIFICATION=sysdate ";
 			sql+=" WHERE ID_GROUP_UNIVERSE_CLIENT="+idOldGroupUniverse+"";
 			sql+=" and ID_UNIVERSE_CLIENT="+idUniverse+"";
@@ -791,10 +815,11 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 		/// <param name="webSession">Session du client</param>
 		/// <returns></returns>
 		public static string GetUniverse(Int64 idUnivers,WebSession webSession){
-			
+			Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
 			#region Request construction
 			string sql=" select UNIVERSE_CLIENT ";
-			sql+=" FROM "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+"." + DBConstantes.Tables.UNIVERSE_CLIENT + " ";
+			sql += " FROM " + universeTable.Sql + " ";
 			sql+=" WHERE ID_UNIVERSE_CLIENT="+idUnivers+"";
 			#endregion
 
@@ -839,6 +864,8 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 			byte[] binaryData = null;
 
 			try {
+				Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
 				//"Serialization"
 				ms = new MemoryStream();
 				bf = new BinaryFormatter();
@@ -847,7 +874,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 				binaryData = ms.GetBuffer();
 
 				//mise à jour de la session
-				string sql = " UPDATE  " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.UNIVERSE_CLIENT + " ";
+				string sql = " UPDATE  " + universeTable.Sql + " ";
 				sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription;
 				sql += " WHERE  ID_UNIVERSE_CLIENT=" + idUniverse + " ";
 
@@ -930,6 +957,8 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 			byte[] binaryData = null;
 
 			try {
+				Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
 				//"Serialization"
 				ms = new MemoryStream();
 				bf = new BinaryFormatter();
@@ -938,7 +967,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 				binaryData = ms.GetBuffer();
 
 				//mise à jour de la session
-				string sql = " UPDATE  " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.UNIVERSE_CLIENT + " ";
+				string sql = " UPDATE  " + universeTable.Sql + " ";
 				sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription;
 				sql += " WHERE  ID_UNIVERSE_CLIENT=" + idUniverse + " ";
 
