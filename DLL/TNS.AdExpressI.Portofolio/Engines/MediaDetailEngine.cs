@@ -43,12 +43,16 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 	/// Compute media detail's results
 	/// </summary>
 	public class MediaDetailEngine : Engine {
-		
-		#region Variables
-		/// <summary>
+
+        #region Variables
+        /// <summary>
 		/// Determine if render will be into excel file
 		/// </summary>
 		protected bool _excel = false;
+        /// <summary>
+        /// Day name of Week
+        /// </summary>
+        private string[] dayName = new string[7]{"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
 		#endregion
 
 		#region Constructor
@@ -122,13 +126,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			DataTable dt = null, dtResult = null;
 			DataRow newRow = null;
 			DateTime dayDT;
-			Cell cellUnit;
 			int currentLine = 0;
 			int oldEcranCode = -1;
 			int ecranCode;
 			string dayString="";
 			bool start = true;
-			List<CellUnitFactory> listCellUnitFactory = null;		
 			#endregion
 
 			List<UnitInformation> unitsList = _webSession.GetValidUnitForResult();
@@ -137,30 +139,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0 && unitsList != null && unitsList.Count>0) {
 				dt = ds.Tables[0];
 
-                #region Get Type list of unit list
-                //Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
-                //listCellUnitFactory = new List<CellUnitFactory>();
-                //for (int i = 0; i < unitsList.Count; i++) {
-                //    Type type = assembly.GetType(unitsList[i].CellType);
-                //    cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
-                //    if (cellUnit is CellUnit<double>)
-                //        listCellUnitFactory.Add(new CellUnitFactory((CellUnit<double>)cellUnit));
-                //    else
-                //        listCellUnitFactory.Add(new CellUnitFactory((CellUnit<double>)cellUnit));
-                //}
-                #endregion
-
 				#region Init table
 
 				dtResult = new DataTable();
 				dtResult.Columns.Add("screenCode", System.Type.GetType("System.Int64"));
-				dtResult.Columns.Add("Monday", System.Type.GetType("System.Double"));
-                dtResult.Columns.Add("Tuesday", System.Type.GetType("System.Double"));
-                dtResult.Columns.Add("Wednesday", System.Type.GetType("System.Double"));
-                dtResult.Columns.Add("Thursday", System.Type.GetType("System.Double"));
-                dtResult.Columns.Add("Friday", System.Type.GetType("System.Double"));
-                dtResult.Columns.Add("Saturday", System.Type.GetType("System.Double"));
-                dtResult.Columns.Add("Sunday", System.Type.GetType("System.Double"));
+                for (int i = 0; i < dayName.Length; i++) {
+                    dtResult.Columns.Add(dayName[i], System.Type.GetType("System.Double"));
+                }
 				dtResult.Columns.Add("IdUnit", System.Type.GetType("System.Int32"));
 
 				#endregion
@@ -217,8 +202,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
                     for (int i = 0; i < unitsList.Count; i++) {												
 						dtResult.Rows[currentLine + i]["screenCode"] = long.Parse(row["code_ecran"].ToString());
-						//cellUnit = listCellUnitFactory[i].Get(double.Parse(row[unitsList[i].Id.ToString()].ToString()));
-						//dtResult.Rows[currentLine + i][dayString] = cellUnit.Render(cssClass);
                         if (dtResult.Rows[currentLine + i][dayString] != null && dtResult.Rows[currentLine + i][dayString] != System.DBNull.Value) 
                             dtResult.Rows[currentLine + i][dayString] = ((double)dtResult.Rows[currentLine + i][dayString])+ double.Parse(row[unitsList[i].Id.ToString()].ToString());
                         else
@@ -241,16 +224,21 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// <returns>HTML Code</returns>
 		protected string GetDetailMediaHtml() {
 
-			string classStyleValue = "acl2";
-			bool color = true;
+            #region Variables
+            string classStyleValue = "acl2";
+			bool color = false;
+            UnitInformation unitInformation = null;
+            string unitWebText = string.Empty;
             string cssClass = "sc1";
 			bool isTvNatThematiques = false;
-			//string style = "cursorHand";
+			string style = "cursorHand";
 			DataTable dt = null;
 			StringBuilder t = new StringBuilder(20000);
 			long oldEcranCode = -1;
+            #endregion
 
-			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            #region Get Data
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
 			object[] parameters = new object[5];
 			parameters[0] = _webSession;
 			parameters[1] = _vehicleInformation;
@@ -260,9 +248,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 
 			 dt = GetFormattedTableDetailMedia(portofolioDAL);
+            #endregion  
 
-			#region	No data
-			if (dt==null || dt.Rows.Count == 0) {
+             #region	No data
+             if (dt==null || dt.Rows.Count == 0) {
 				return GetNoDataMessageHtml();
 			}
 			#endregion
@@ -270,20 +259,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			//Checks if media belong to TV Nat Thematics
 			isTvNatThematiques = portofolioDAL.IsMediaBelongToCategory(_idMedia, DBCst.Category.ID_THEMATIC_TV);
 			List<UnitInformation> unitsList = _webSession.GetValidUnitForResult();
-
-            #region Get Type list of unit list
-            Cell cellUnit;
-            Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
-            Dictionary<int,CellUnitFactory> listCellUnitFactory = new Dictionary<int,CellUnitFactory>();
-            for (int i = 0; i < unitsList.Count; i++) {
-                Type type = assembly.GetType(unitsList[i].CellType);
-                cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
-                if (cellUnit is CellUnit<double>)
-                    listCellUnitFactory.Add(unitsList[i].Id.GetHashCode(),new CellUnitFactory((CellUnit<double>)cellUnit));
-                else
-                    listCellUnitFactory.Add(unitsList[i].Id.GetHashCode(), new CellUnitFactory((CellUnit<HybridList>)cellUnit));
-            }
-            #endregion
 
 			//if (isTvNatThematiques) style = "";
 			if (!_excel && !isTvNatThematiques) {
@@ -316,128 +291,70 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#region Table
 			foreach(DataRow dr in dt.Rows) {
 
-				if (color) {
+                #region Define color line
+                if (oldEcranCode != long.Parse(dr["screenCode"].ToString())) {
+                    color = !color;
+                }
+                #endregion
+
+                #region Init line
+                if (color) {
 					t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV2';\" class=\"violetBackGroundV2\">");
 				}
 				else {
 					t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='greyBackGround';\" class=\"greyBackGround\">");
-				}
-				if (oldEcranCode != long.Parse(dr["screenCode"].ToString())) {
+                }
+                #endregion
+
+                #region First column : screenCode
+                if (oldEcranCode != long.Parse(dr["screenCode"].ToString())) {
 					// Screen code
 					t.Append("<td class=\"p2\" rowspan=" + unitsList.Count + " align=\"left\" nowrap>" + dr["screenCode"].ToString() + "</td>");
-					color = !color;
-				}
+                }
+                #endregion
 
-				if (color) {
-					t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + GestionWeb.GetWebWord(UnitsInformation.Get((TNS.AdExpress.Constantes.Web.CustomerSessions.Unit) long.Parse(dr["idUnit"].ToString())).WebTextId,_webSession.SiteLanguage) + "</td>");
-				}
-				else {
-					t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + GestionWeb.GetWebWord(UnitsInformation.Get((TNS.AdExpress.Constantes.Web.CustomerSessions.Unit)long.Parse(dr["idUnit"].ToString())).WebTextId, _webSession.SiteLanguage) + "</td>");
-				}
-				if (dr["Monday"] != null && dr["Monday"] !=System.DBNull.Value && !dr["Monday"].ToString().Equals("0")) {
-					if (!_excel && !isTvNatThematiques)
-						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Monday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage)+"\"> ");
+                #region Get current information for current unit result
+                unitInformation = UnitsInformation.Get((TNS.AdExpress.Constantes.Web.CustomerSessions.Unit)long.Parse(dr["idUnit"].ToString()));
+                #endregion
 
-					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Monday"].ToString() + "</td>");
-
-
-                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Monday"].ToString()));
-                    t.Append(cellUnit.Render(cssClass));
-					if (!_excel && !isTvNatThematiques)
-						t.Append("</a>");
+                #region Column units
+                if (unitInformation.Id == WebCst.CustomerSessions.Unit.euro || unitInformation.Id == WebCst.CustomerSessions.Unit.kEuro)
+                    unitWebText = GestionWeb.GetWebWord(471, _webSession.SiteLanguage) + " (" + GestionWeb.GetWebWord(unitInformation.WebTextId, _webSession.SiteLanguage) + ")";
+                else
+                    unitWebText = GestionWeb.GetWebWord(unitInformation.WebTextId, _webSession.SiteLanguage);
+                if (color) {
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + unitWebText + "</td>");
 				}
 				else {
-					t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
-				}
+                    t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + unitWebText + "</td>");
+                }
+                #endregion
 
-				if (dr["Tuesday"] != null && dr["Tuesday"] != System.DBNull.Value && !dr["Tuesday"].ToString().Equals("0")) {
-					if (!_excel && !isTvNatThematiques)
-						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Tuesday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
+                #region Column day of week
+                for (int i = 0; i < dayName.Length; i++) {
+                    if (dr[dayName[i]] != null && dr[dayName[i]] != System.DBNull.Value && !dr[dayName[i]].ToString().Equals("0")) {
 
-					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Tuesday"].ToString() + "</td>");
-                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Tuesday"].ToString()));
-                    t.Append(cellUnit.Render(cssClass));
-					if (!_excel && !isTvNatThematiques)
-						t.Append("</a>");
-				}
+                        t.Append("<td class=\"" + cssClass + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
+                        if (!_excel && !isTvNatThematiques)
+                            t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','" + dayName[i] + "','" + dr["screenCode"].ToString() + "');\" class=\"txtLinkBlack11\"> ");
+                        
+                        t.Append(Units.ConvertUnitValueAndPdmToString(dr[dayName[i]].ToString(), unitInformation.Id, false));
 
-				else {
-					t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
-				}
-				if (dr["Wednesday"] != null && dr["Wednesday"] != System.DBNull.Value && !dr["Wednesday"].ToString().Equals("0")) {
-					if (!_excel && !isTvNatThematiques)
-						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Wednesday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
+                        if (!_excel && !isTvNatThematiques)
+                            t.Append("</a>");
+                        t.Append("</td>");
+                    }
+                    else {
+                        t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                    }
+                }
+                #endregion
 
-					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Wednesday"].ToString() + "</td>");
-                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Wednesday"].ToString()));
-                    t.Append(cellUnit.Render(cssClass));
-					if (!_excel && !isTvNatThematiques)
-						t.Append("</a>");
-				}
+                #region End line
+                t.Append("</tr>");
+                #endregion
 
-				else {
-					t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
-				}
-				if (dr["Thursday"] != null && dr["Thursday"] != System.DBNull.Value && !dr["Thursday"].ToString().Equals("0")) {
-					if (!_excel && !isTvNatThematiques)
-						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Thursday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
-
-					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Thursday"].ToString() + "</td>");
-                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Thursday"].ToString()));
-                    t.Append(cellUnit.Render(cssClass));
-					if (!_excel && !isTvNatThematiques)
-						t.Append("</a>");
-				}
-
-				else {
-					t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
-				}
-				if (dr["Friday"] != null && dr["Friday"] != System.DBNull.Value && !dr["Friday"].ToString().Equals("0")) {
-					if (!_excel && !isTvNatThematiques)
-						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Friday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
-
-					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Friday"].ToString() + "</td>");
-                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Friday"].ToString()));
-                    t.Append(cellUnit.Render(cssClass));
-					if (!_excel && !isTvNatThematiques)
-						t.Append("</a>");
-				}
-
-				else {
-					t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
-				}
-				if (dr["Saturday"] != null && dr["Saturday"] != System.DBNull.Value && !dr["Saturday"].ToString().Equals("0")) {
-					if (!_excel && !isTvNatThematiques)
-						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Saturday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
-
-					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Saturday"].ToString() + "</td>");
-                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Saturday"].ToString()));
-                    t.Append(cellUnit.Render(cssClass));
-					if (!_excel && !isTvNatThematiques)
-						t.Append("</a>");
-				}
-
-				else {
-					t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
-				}
-				if (dr["Sunday"] != null && dr["Sunday"] != System.DBNull.Value && !dr["Sunday"].ToString().Equals("0")) {
-					if (!_excel && !isTvNatThematiques)
-						t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','Sunday','" + dr["screenCode"].ToString() + "');\" title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
-
-					//t.Append("<td class=\"" + classStyleValue + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">" + dr["Sunday"].ToString() + "</td>");
-                    cellUnit = listCellUnitFactory[int.Parse(dr["IdUnit"].ToString())].Get(double.Parse(dr["Sunday"].ToString()));
-                    t.Append(cellUnit.Render(cssClass));
-					if (!_excel && !isTvNatThematiques)
-						t.Append("</a>");
-				}
-
-				else {
-					t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
-				}
-				t.Append("</tr>");
-
-				
-				oldEcranCode = long.Parse(dr["screenCode"].ToString());
+                oldEcranCode = long.Parse(dr["screenCode"].ToString());
 				
 			}
 			#endregion

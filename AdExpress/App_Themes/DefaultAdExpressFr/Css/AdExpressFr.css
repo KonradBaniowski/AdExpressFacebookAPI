@@ -650,6 +650,20 @@ a.txtGroupViolet11Bold:hover{
 	font-weight: bold;
 	text-decoration : none;	
 }
+a.txtLinkBlack11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	font-weight: normal;
+	text-decoration : none;
+}
+a.txtLinkBlack11:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	font-weight: normal;
+	text-decoration : none;
+}
 /* Portofolio Data */
 tr.portofolioSynthesisL1 td{
 	font-family: Arial, Helvetica, sans-serif;
