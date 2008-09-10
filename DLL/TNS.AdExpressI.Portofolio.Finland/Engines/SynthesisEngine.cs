@@ -173,6 +173,14 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
 
             #endregion
 
+            #region No data
+            if ((investment == null || investment.Length < 1 || investment == "0")
+                && (numberProduct == null || numberProduct.Length < 1 || numberProduct == "0")
+                && (numberAdvertiser == null || numberAdvertiser.Length < 1 || numberAdvertiser == "0")) {
+                return resultTable;
+            }
+            #endregion
+
             #region Period
             DateTime dtFirstDate = DateTime.Today;
             DateTime dtLastDate = DateTime.Today;
