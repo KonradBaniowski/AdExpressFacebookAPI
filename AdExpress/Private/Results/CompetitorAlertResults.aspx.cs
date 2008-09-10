@@ -40,6 +40,7 @@ using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpressI.PresentAbsent.DAL;
 using System.Reflection;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -130,6 +131,10 @@ namespace AdExpress.Private.Results{
         /// Vehicle name
         /// </summary>
         public DBClassificationConstantes.Vehicles.names _vehicleName;
+		/// <summary>
+		/// Vehicle information
+		/// </summary>
+		public VehicleInformation _vehicleInformation = null;
         #endregion
 
 		#region Constructeur
@@ -253,16 +258,16 @@ namespace AdExpress.Private.Results{
 
 				#region Sélection du vehicle
 				string vehicleSelection=_webSession.GetSelection(_webSession.SelectionUniversMedia,Right.type.vehicleAccess);
-				DBClassificationConstantes.Vehicles.names _vehicleName=(DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
-				if(vehicleSelection==null || vehicleSelection.IndexOf(",")>0) throw(new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
+				if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
+				VehicleInformation _vehicleInformation = VehiclesInformation.Get(long.Parse(vehicleSelection));
+				if (_vehicleInformation == null) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 				#endregion
 
-				//displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
 
 				#region choix du type d'encarts
-						
-				if(DBClassificationConstantes.Vehicles.names.press==_vehicleName 
-					|| DBClassificationConstantes.Vehicles.names.internationalPress==_vehicleName){
+
+				if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id
+					|| DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id) {
 
 					#region Affichage encarts en fonction du module
 					switch(_webSession.CurrentModule){
@@ -285,30 +290,13 @@ namespace AdExpress.Private.Results{
 
                 #region Résultat
                 //Code html des résultats
-				result="";			
-				// Initialisation de preformatedProductDetail				
-//				if(_webSession.PreformatedProductDetail==TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupAdvertiserProduct
-//					|| !_webSession.ReachedModule
-//					) {			
-//					_webSession.PreformatedProductDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;	 
-//				}
+				result="";
 
-				if(_webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess) == DBClassificationConstantes.Vehicles.names.press.GetHashCode().ToString()
+				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && _vehicleInformation.AllowedUnitEnumList.Contains(WebConstantes.CustomerSessions.Unit.pages)
 					&& !_webSession.ReachedModule
 					){
 					_webSession.Unit=WebConstantes.CustomerSessions.Unit.pages;
-				}
-				if(_webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess) == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode().ToString()
-					&& !_webSession.ReachedModule
-					){
-					_webSession.Unit=WebConstantes.CustomerSessions.Unit.pages;
-				}
-				
-				// }
-				// Calcul du résultat
-				//result=WebBF.Results.CompetitorSystem.GetHtml(this.Page,_webSession);
-
-			
+				}												
 				#endregion
 
 				#region MAJ _webSession
@@ -384,8 +372,10 @@ namespace AdExpress.Private.Results{
 			try{
 				TNS.AdExpress.Domain.Level.DetailLevelItemInformation columnDetailLevel = (TNS.AdExpress.Domain.Level.DetailLevelItemInformation)_webSession.GenericColumnDetailLevel.Levels[0];
 				string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
-				_vehicleName = (DBClassificationConstantes.Vehicles.names)int.Parse(vehicleSelection);
-				if ((_vehicleName == DBClassificationConstantes.Vehicles.names.press || _vehicleName == DBClassificationConstantes.Vehicles.names.internationalPress) && columnDetailLevel.Id == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.media)
+				if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
+				 _vehicleInformation = VehiclesInformation.Get(long.Parse(vehicleSelection));
+				if (_vehicleInformation == null) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
+				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && columnDetailLevel.Id == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.media)
                     _resultWebControl.NbTableBeginningLinesToRepeat = 2;
                 else
                 {
@@ -396,10 +386,7 @@ namespace AdExpress.Private.Results{
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
 				_webSession.Save();
 				#endregion
-
-                //				ResultTable resultTable=TNS.AdExpress.Web.BusinessFacade.Results.CompetitorSystem.GetHtml(_webSession);
-//				WebControlResultTable1.Data=resultTable;
-			
+  			
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){

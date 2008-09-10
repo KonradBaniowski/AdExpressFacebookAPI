@@ -299,6 +299,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
 
                     foreach (UnitInformation currentUnit in _webSession.GetValidUnitForResult()) {
                         headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(currentUnit.WebTextId, _webSession.SiteLanguage), currentUnit.WebTextId));

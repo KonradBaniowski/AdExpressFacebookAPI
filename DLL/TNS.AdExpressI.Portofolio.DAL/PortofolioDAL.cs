@@ -373,7 +373,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).SqlWithPrefix + " ");
             sql.Append(" where " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media" + " ");
             sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=" + _idMedia + " ");
-			sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media=" + _webSession.DataLanguage + " ");
+			sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_language=" + _webSession.DataLanguage + " ");
             // Période			
 
             if (_beginingDate.Length > 0)
