@@ -739,6 +739,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             //vehicle
             string list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
 
+			sql.Append(FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, _dataTable.Prefix, true));
 
             //on ne teste pas le vehicle si on est en pluri
             if (list.Length > 0 && list.IndexOf(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.plurimedia).ToString()) < 0)
@@ -746,7 +747,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 first = false;
                 sql.AppendFormat(" and ( {0}.id_vehicle in ({1})", _dataTable.Prefix, list);
             }
-            sql.Append(FctUtilities.SQLGenerator.getAdExpressUniverseCondition(_session, CstWeb.AdExpressUniverse.RECAP_MEDIA_LIST_ID, _dataTable.Prefix, true));
+			//sql.Append(FctUtilities.SQLGenerator.getAdExpressUniverseCondition(_session, CstWeb.AdExpressUniverse.RECAP_MEDIA_LIST_ID, _dataTable.Prefix, true));
             // Vérifie s'il à toujours les droits pour accéder aux données de ce Vehicle
             if (list.IndexOf(VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.plurimedia).ToString()) < 0)
             {
