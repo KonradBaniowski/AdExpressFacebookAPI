@@ -32,6 +32,7 @@ using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.Date;
 using DBCst = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -662,7 +663,7 @@ namespace AdExpress.Private.Selection{
 					selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
 					selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
 					selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
-					selectItemsInClassificationWebControl.DBSchema = TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA;
+					selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
 					for(int k =0; k<_webSession.PrincipalProductUniverses.Count;k++){
 						if (_webSession.PrincipalProductUniverses.Count > 1) {
 							if (_webSession.PrincipalProductUniverses.ContainsKey(k)) {
@@ -704,7 +705,7 @@ namespace AdExpress.Private.Selection{
 						}
 						else {
 							if (_webSession.PrincipalProductUniverses.ContainsKey(k)) {
-								productText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.SiteLanguage, _webSession.Source);
+								productText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source);
 							}
 						}						
 					}
@@ -713,14 +714,7 @@ namespace AdExpress.Private.Selection{
 				}
 
 				//Univers produit secondaire selectionné
-				if (_webSession.SecondaryProductUniverses != null && _webSession.SecondaryProductUniverses.Count > 0) {
-
-					//if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
-					//        || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
-					//)
-					//    oConnection = new Oracle.DataAccess.Client.OracleConnection(DBCst.Connection.RECAP_CONNECTION_STRING);
-					//else 
-					//oConnection = _webSession.CustomerLogin.Connection;
+				if (_webSession.SecondaryProductUniverses != null && _webSession.SecondaryProductUniverses.Count > 0) {					
 
 					if (WebFunctions.Modules.IsDashBoardModule(_webSession)) {
 						displayProduct = true;
@@ -750,7 +744,7 @@ namespace AdExpress.Private.Selection{
 					selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
 					selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
 					selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
-					selectItemsInClassificationWebControl.DBSchema = TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA;
+					selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
 					
 					if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
 							|| _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE){

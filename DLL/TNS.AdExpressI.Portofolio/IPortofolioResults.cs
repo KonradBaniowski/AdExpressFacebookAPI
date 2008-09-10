@@ -55,7 +55,14 @@ namespace TNS.AdExpressI.Portofolio {
         /// </summary>
         /// <param name="excel">True for excel result</param>
         /// <returns>HTML Code</returns>
-        string GetDetailMediaHtml(bool excel);		
+        string GetDetailMediaHtml(bool excel);
+		/// <summary>
+		/// Get visual list
+		/// </summary>
+		/// <param name="beginnDate">beginning Date</param>
+		/// <param name="endDate">end Date</param>
+		/// <returns></returns>
+		Dictionary<string, string> GetVisualList(string beginnDate, string endDate);
 	
     }
 }

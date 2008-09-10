@@ -39,6 +39,7 @@ using TNS.FrameWork.Exceptions;
 using Oracle.DataAccess.Client;
 
 using AjaxPro;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Results
 {
@@ -719,7 +720,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 			int i = 0;
 
             #region Cas du media Internet
-			if ((CstClassification.DB.Vehicles.names)int.Parse(_idVehicle) == CstClassification.DB.Vehicles.names.adnettrack) {
+			if (VehiclesInformation.DatabaseIdToEnum(long.Parse(_idVehicle)) == CstClassification.DB.Vehicles.names.adnettrack) {
 				newtab = new object[1];
 				newtab[0] = GetUIEmpty(_customerWebSession.SiteLanguage, 2244);
 				return newtab;

@@ -137,5 +137,21 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			return sql;
 		}
 		#endregion
+
+		#region Get excluded products
+		/// <summary>
+		/// Get excluded products
+		/// </summary>
+		/// <param name="sql">String builder</param>
+		/// <returns></returns>
+		protected virtual string GetExcludeProducts(string prefix) {
+			// Exclude product 
+			string sql = "";
+			ProductItemsList prList = Product.GetItemsList(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
+			if (prList != null)
+				sql = prList.GetExcludeItemsSql(true, prefix);
+			return sql;
+		}
+		#endregion
 	}
 }

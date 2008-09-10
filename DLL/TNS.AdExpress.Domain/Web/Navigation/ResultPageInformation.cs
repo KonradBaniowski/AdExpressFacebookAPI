@@ -147,11 +147,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// Get/Set Allowed Media Universe
         /// </summary>
         public MediaItemsList AllowedMediaUniverse {
-            get {
-				//if(_allowedMediaUniverse==null) {
-				//    if(_parentModule==null) throw (new NullReferenceException("Parent module has to be initialized"));
-				//    return (_parentModule.AllowedMediaUniverse);
-				//}
+            get {				
 				SetMediaUniverse();
                 return _allowedMediaUniverse;
             }
@@ -403,25 +399,31 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			bool isValidPage = true;
 			int nbValidItems = 0;
 			MediaItemsList allowedMediaUniverse = AllowedMediaUniverse;
-			if (selectedMediaUniverse != null && selectedMediaUniverse.VehicleList != null && selectedMediaUniverse.VehicleList.Length>0 ) {				
+			if (selectedMediaUniverse != null ) {				
 				if (allowedMediaUniverse != null) {
 					//Determine if valid vehicles exist for current result
-					List<Int64> vehicleList = allowedMediaUniverse.GetVehicles();
-					if (vehicleList != null && vehicleList.Count > 0) {
-						List<Int64> selectedVehicles = selectedMediaUniverse.GetVehicles();
-						nbValidItems = GetNbValidItems(selectedVehicles, vehicleList);
+					if (selectedMediaUniverse.VehicleList != null && selectedMediaUniverse.VehicleList.Length > 0) {
+						List<Int64> vehicleList = allowedMediaUniverse.GetVehicles();
+						if (vehicleList != null && vehicleList.Count > 0) {
+							List<Int64> selectedVehicles = selectedMediaUniverse.GetVehicles();
+							nbValidItems = GetNbValidItems(selectedVehicles, vehicleList);
+						}
 					}
-					//Determine if valid categories exist for current result
-					List<Int64> categoryList = allowedMediaUniverse.GetCategories();
-					if (nbValidItems ==0 && categoryList != null && categoryList.Count > 0) {
-						List<Int64> selectedCategories = selectedMediaUniverse.GetCategories();
-						nbValidItems = GetNbValidItems(selectedCategories, categoryList);
+					if (selectedMediaUniverse.CategoryList != null && selectedMediaUniverse.CategoryList.Length > 0) {
+						//Determine if valid categories exist for current result
+						List<Int64> categoryList = allowedMediaUniverse.GetCategories();
+						if (nbValidItems == 0 && categoryList != null && categoryList.Count > 0) {
+							List<Int64> selectedCategories = selectedMediaUniverse.GetCategories();
+							nbValidItems = GetNbValidItems(selectedCategories, categoryList);
+						}
 					}
-					//Determine if valid medias exist for current result
-					List<Int64> mediaList = allowedMediaUniverse.GetMedias();
-					if (nbValidItems == 0 && mediaList != null && mediaList.Count > 0) {
-						List<Int64> selectedMedias = selectedMediaUniverse.GetMedias();
-						nbValidItems = GetNbValidItems(selectedMedias, mediaList);
+					if (selectedMediaUniverse.MediaList != null && selectedMediaUniverse.MediaList.Length > 0) {
+						//Determine if valid medias exist for current result
+						List<Int64> mediaList = allowedMediaUniverse.GetMedias();
+						if (nbValidItems == 0 && mediaList != null && mediaList.Count > 0) {
+							List<Int64> selectedMedias = selectedMediaUniverse.GetMedias();
+							nbValidItems = GetNbValidItems(selectedMedias, mediaList);
+						}
 					}
 					if(nbValidItems==0)isValidPage = false;
 				}
@@ -440,13 +442,42 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
 		/// <returns>Sql conditions</returns>
 		public string GetAllowedMediaUniverseSql(bool startWithAnd) {
-			string sql = "";
+			string sql = "", temp="";
+			bool first = true;
+
 			MediaItemsList mediaList = AllowedMediaUniverse;
 
 			if (mediaList != null) {
-				sql = AllowedMediaUniverse.GetVehicleListSQL(startWithAnd);
-				sql += AllowedMediaUniverse.GetCategoryListSQL(startWithAnd);
-				sql += AllowedMediaUniverse.GetMediaListSQL(startWithAnd);
+				//Vehicle
+				temp = AllowedMediaUniverse.GetVehicleListSQL(false);
+				if (temp.Length > 0) {
+					if (startWithAnd) sql = " and ";
+					sql += " ( " + temp;
+					first = false;
+				}
+				// Category
+				temp = AllowedMediaUniverse.GetCategoryListSQL(false);
+				if (temp.Length > 0) {
+					if (!first) sql += " or";
+					else {
+						if (startWithAnd) sql += " and";
+						sql += " (";
+					}
+					sql += " " + temp;
+					first = false;
+				}
+				//Media 
+				temp = AllowedMediaUniverse.GetMediaListSQL(false);
+				if (temp.Length > 0) {
+					if (!first) sql += " or";
+					else {
+						if (startWithAnd) sql += " and";
+						sql += " (";
+					}
+					sql += " " + temp;
+					first = false;
+				}
+				if (!first) sql += " ) ";
 			}
 			return sql;
 		}
@@ -476,15 +507,42 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
 		/// <returns>Sql conditions</returns>
 		public string GetAllowedMediaUniverseSql(string vehiclePrefix, string categoryPrefix, string mediaPrefix, bool startWithAnd) {
-			string sql = "";
+			string sql = "", temp = "";
+			bool first = true;
+
 			MediaItemsList mediaList = AllowedMediaUniverse;
 
 			if (mediaList != null) {
-				sql = AllowedMediaUniverse.GetVehicleListSQL(startWithAnd, vehiclePrefix);
-				if (sql != null && sql.Length > 0) startWithAnd = true;
-				sql += AllowedMediaUniverse.GetCategoryListSQL(startWithAnd, categoryPrefix);
-				if (sql != null && sql.Length > 0) startWithAnd = true;
-				sql += AllowedMediaUniverse.GetMediaListSQL(startWithAnd, mediaPrefix);
+				//Vehicle
+				temp = AllowedMediaUniverse.GetVehicleListSQL(false, vehiclePrefix);
+				if (temp.Length > 0) {
+					if (startWithAnd) sql = " and ";
+					sql += " ( " + temp;
+					first = false;
+				}
+				// Category
+				temp = AllowedMediaUniverse.GetCategoryListSQL(false, categoryPrefix);
+				if (temp.Length > 0) {
+					if (!first) sql += " or";
+					else {
+						if (startWithAnd) sql += " and";
+						sql += " (";
+					}
+					sql += " " + temp;
+					first = false;
+				}
+				//Media 
+				temp = AllowedMediaUniverse.GetMediaListSQL(false, mediaPrefix);
+				if (temp.Length > 0) {
+					if (!first) sql += " or";
+					else {
+						if (startWithAnd) sql += " and";
+						sql += " (";
+					}
+					sql += " " + temp;
+					first = false;
+				}
+				if (!first) sql += " )";
 			}
 			return sql;
 

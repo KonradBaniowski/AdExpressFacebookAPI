@@ -273,7 +273,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 				product = GetProductData();
 				productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-				listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+				//listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+				listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 euroFieldNameSumWithAlias = "sum(" + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].DatabaseField + ") as " + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].Id.ToString();
                 insertionFieldNameSumWithAlias = "sum(" + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField + ") as " + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Id.ToString();
 			}
@@ -328,7 +329,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// </summary>
         /// <param name="conditionEndDate">Add condition end date</param>
         /// <returns>DataSet</returns>
-        public DataSet GetListDate(bool conditionEndDate,DBConstantes.TableType.Type tableType) {
+        public virtual DataSet GetListDate(bool conditionEndDate,DBConstantes.TableType.Type tableType) {
 
             string tableName = "";
             try {
@@ -570,6 +571,21 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         }
         #endregion
 
+		#region Get excluded products
+		/// <summary>
+		/// Get excluded products
+		/// </summary>
+		/// <param name="sql">String builder</param>
+		/// <returns></returns>
+		protected virtual string GetExcludeProducts(string prefix) {
+			// Exclude product 
+			string sql = "";
+			ProductItemsList prList = Product.GetItemsList(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
+			if (prList != null)
+				sql = prList.GetExcludeItemsSql(true, prefix);
+			return sql;
+		}
+		#endregion
     
 		#endregion
 	}

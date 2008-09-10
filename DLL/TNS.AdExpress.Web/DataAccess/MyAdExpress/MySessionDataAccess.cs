@@ -18,6 +18,8 @@ using TNS.AdExpress.Web.Core.Exceptions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Constantes.Web;
 using DateFrameWork=TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 	/// <summary>
@@ -126,6 +128,8 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 			
 
 			try{
+				Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+				Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
 				//"Serialization"
 				ms = new MemoryStream();
 				bf = new BinaryFormatter();
@@ -135,11 +139,10 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 
 				//create anonymous PL/SQL command
 				string block = " BEGIN "+
-		//			" DELETE " + DBConstantes.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.MY_SESSION + " WHERE MY_SESSION=" + mySession + "; " +
-					" INSERT INTO " + DBConstantes.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.MY_SESSION +
+					" INSERT INTO " + mySessionTable.Sql +
 					" (ID_MY_SESSION, ID_DIRECTORY, MY_SESSION, BLOB_CONTENT, DATE_CREATION, DATE_MODIFICATION, ACTIVATION) "+
 					" VALUES "+
-					" ("+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".seq_my_session.nextval, "+idDirectory+", '"+mySession+"', :1, sysdate, sysdate,"+DBConstantes.ActivationValues.ACTIVATED+"); " +
+					" (" + schema.Label + ".seq_my_session.nextval, " + idDirectory + ", '" + mySession + "', :1, sysdate, sysdate," + DBConstantes.ActivationValues.ACTIVATED + "); " +
 					" END; ";
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = connection;
@@ -218,6 +221,7 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 			byte[] binaryData = null;
 
 			try {
+				Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
 				//"Serialization"
 				ms = new MemoryStream();
 				bf = new BinaryFormatter();
@@ -227,7 +231,7 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 
 				//mise à jour de la session
 				string sql = " BEGIN " +
-					" UPDATE " + DBConstantes.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.MY_SESSION +
+					" UPDATE " + mySessionTable .Sql +
 					" SET BLOB_CONTENT = :1,ID_DIRECTORY=" + idDirectory + ",MY_SESSION='" + mySession + "',DATE_MODIFICATION=sysdate" +
 					" WHERE ID_MY_SESSION=" + idMySession + " ;" +
 					" END; ";
@@ -277,77 +281,6 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		}
 
 		#region Action sur la sauvegarde
-//		/// <summary>
-//		/// Déplace la sauvegarde vers un nouveau répertoire
-//		/// </summary>
-//		/// <param name="name">Nom du répertoire</param>
-//		public void Move(Int64 name){
-//			if(_isSaved) throw(new MySessionDataAccessException("La sauvegarde de session n'est pas indiquée comme présente dans la base de données"));
-//			if(_idMySession<0) throw(new MySessionDataAccessException("L'identifiant de la sauvegarde de session n'est pas défini"));
-//
-//			#region Construction de la requête SQL
-//			string sql="update "+DBConstantes.Schema.UNIVERS_SCHEMA+".my_session ";
-//			sql+=" set id_directory="+name+", date_modification=To_date('"+DateFrameWork.DateString.dateTimeToYYYYMMDD_HH24_MI_SS(DateTime.Now)+"','YYYYMMDD:HH24:MI:SS') ";
-//			#endregion
-//
-//			#region Execution de la requête
-//			try{
-//				_webSession.Source.Update(sql);
-//			}
-//			catch(System.Exception err){
-//				throw(new MySessionDataAccessException("Impossible de déplacer la sauvegarde vers un nouveau répertoire",err)); 
-//			}
-//			#endregion
-//
-//			#region Ancien code
-////			
-////			#region Ouverture de la base de données
-////			bool DBToClosed=false;
-////			if (_connection.State==System.Data.ConnectionState.Closed){
-////				DBToClosed=true;
-////				try{
-////					_connection.Open();
-////				}
-////				catch(System.Exception e){
-////					throw(new MySessionDataAccessException("Impossible d'ouvrir la base de données",e));
-////				}
-////			}
-////			#endregion
-////
-////			OracleCommand sqlCommand=null;
-////			try{
-////				sqlCommand=new OracleCommand(sql,_connection);
-////				sqlCommand.ExecuteNonQuery();
-////			}
-////			#region Traitement d'erreur du chargement des données
-////			catch(System.Exception e){
-////				try{
-////					// Fermeture de la base de données
-////					if(sqlCommand!=null)sqlCommand.Dispose();
-////					if (DBToClosed) _connection.Close();
-////				}
-////				catch(System.Exception et){
-////					throw(new MySessionDataAccessException("Impossible de fermer la base de données, après une erreur d'exécution de requête",et));
-////				}
-////				throw (new MySessionDataAccessException("Impossible de mettre à jour le nom du répertoire pour la sauvegarde",e));
-////			}
-////			#endregion
-////
-////			#region Fermeture de la base de données
-////			try{
-////				// Fermeture de la base de données
-////				if(sqlCommand!=null)sqlCommand.Dispose();
-////				if (DBToClosed) _connection.Close();
-////			}
-////			catch(System.Exception e){
-////				throw(new MySessionDataAccessException("Impossible de fermer la base de données",e));
-////			}
-////			#endregion
-////
-//			#endregion
-//
-//			_isSaved=true;
-//		}
 
 		/// <summary>
 		/// Suppression de la sauvegarde
@@ -358,7 +291,9 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 			if(_idMySession<0) throw(new MySessionDataAccessException("L'identifiant de la sauvegarde de session n'est pas défini"));
 
 			#region Construction de la requête SQL
-			string sql="delete from "+DBConstantes.Schema.UNIVERS_SCHEMA+".my_session ";
+			Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
+			string sql="delete from "+mySessionTable.Sql;
 			sql+=" where id_my_session="+_idMySession;
 			#endregion
 
@@ -370,132 +305,11 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 			catch(System.Exception err){
 				throw(new MySessionDataAccessException("Impossible de supprimer la sauvegarde",err)); 
 			}
-			#endregion
-
-			#region Ancien code
-//
-//			#region Ouverture de la base de données
-//			bool DBToClosed=false;
-//			if (_connection.State==System.Data.ConnectionState.Closed){
-//				DBToClosed=true;
-//				try{
-//					_connection.Open();
-//				}
-//				catch(System.Exception e){
-//					throw(new MySessionDataAccessException("Impossible d'ouvrir la base de données",e));
-//				}
-//			}
-//			#endregion
-//
-//			OracleCommand sqlCommand=null;
-//			try{
-//				sqlCommand=new OracleCommand(sql,_connection);
-//				sqlCommand.ExecuteNonQuery();
-//			}
-//			#region Traitement d'erreur du chargement des données
-//			catch(System.Exception e){
-//				try{
-//					// Fermeture de la base de données
-//					if(sqlCommand!=null)sqlCommand.Dispose();
-//					if (DBToClosed) _connection.Close();
-//				}
-//				catch(System.Exception et){
-//					throw(new MySessionDataAccessException("Impossible de fermer la base de données, après une erreur d'exécution de requête",et));
-//				}
-//				throw (new MySessionDataAccessException("Impossible de supprimer la sauvegarde: ",e));
-//			}
-//			#endregion
-//
-//			#region Fermeture de la base de données
-//			try{
-//				// Fermeture de la base de données
-//				if(sqlCommand!=null)sqlCommand.Dispose();
-//				if (DBToClosed) _connection.Close();
-//				isValid=true;
-//			}
-//			catch(System.Exception e){
-//				throw(new MySessionDataAccessException("Impossible de fermer la base de données",e));
-//			}
-//			#endregion
-//
-			#endregion
+			#endregion			
 
 			_isSaved=true;
 			return isValid ;
 		}
-
-//		/// <summary>
-//		/// Renommer la sauvegarde
-//		/// </summary>
-//		/// <param name="name">Nouveau Nom</param>
-//		public void Rename(string name){
-//			if(_isSaved) throw(new MySessionDataAccessException("La sauvegarde de session n'est pas indiquée comme présente dans la base de données"));
-//			if(_idMySession<0) throw(new MySessionDataAccessException("L'identifiant de la sauvegarde de session n'est pas défini"));
-//
-//			#region Construction de la requête SQL
-//			string sql="update "+DBConstantes.Schema.UNIVERS_SCHEMA+".my_session ";
-//			sql+=" set my_session="+name+", date_modification=To_date('"+DateFrameWork.DateString.dateTimeToYYYYMMDD_HH24_MI_SS(DateTime.Now)+"','YYYYMMDD:HH24:MI:SS') ";
-//			#endregion
-//
-//			#region Execution de la requête
-//			try{
-//				_webSession.Source.Update(sql);
-//			}
-//			catch(System.Exception err){
-//				throw(new MySessionDataAccessException("Impossible de renommer la sauvegarde",err)); 
-//			}
-//			#endregion
-//
-//			#region Ancien code
-////
-////			#region Ouverture de la base de données
-////			bool DBToClosed=false;
-////			if (_connection.State==System.Data.ConnectionState.Closed){
-////				DBToClosed=true;
-////				try{
-////					_connection.Open();
-////				}
-////				catch(System.Exception e){
-////					throw(new MySessionDataAccessException("Impossible d'ouvrir la base de données",e));
-////				}
-////			}
-////			#endregion
-////
-////			OracleCommand sqlCommand=null;
-////			try{
-////				sqlCommand=new OracleCommand(sql,_connection);
-////				sqlCommand.ExecuteNonQuery();
-////			}
-////			#region Traitement d'erreur du chargement des données
-////			catch(System.Exception e){
-////				try{
-////					// Fermeture de la base de données
-////					if(sqlCommand!=null)sqlCommand.Dispose();
-////					if (DBToClosed) _connection.Close();
-////				}
-////				catch(System.Exception et){
-////					throw(new MySessionDataAccessException("Impossible de fermer la base de données, après une erreur d'exécution de requête",et));
-////				}
-////				throw (new MySessionDataAccessException("Impossible de mettre à jour le nom de la sauvegarde",e));
-////			}
-////			#endregion
-////
-////			#region Fermeture de la base de données
-////			try{
-////				// Fermeture de la base de données
-////				if(sqlCommand!=null)sqlCommand.Dispose();
-////				if (DBToClosed) _connection.Close();
-////			}
-////			catch(System.Exception e){
-////				throw(new MySessionDataAccessException("Impossible de fermer la base de données",e));
-////			}
-////			#endregion
-////
-//			#endregion
-//
-//			_isSaved=true;
-//
-//		}
 		#endregion
 
 		#region Méthodes internes
@@ -506,9 +320,10 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		public bool CheckInDataBase(){
 			bool found=false;
 			if(_idMySession<0) throw(new MySessionDataAccessException("L'identifiant de la sauvegarde de session n'est pas défini"));
+			Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);			
 
 			#region Construction de la requête SQL
-			string sql="select count(rownum) as nb from "+DBConstantes.Schema.UNIVERS_SCHEMA+".my_session ";
+			string sql = "select count(rownum) as nb from " + mySessionTable.Sql;
 			sql+=" where id_my_session="+_idMySession.ToString();
 			sql+=" and activation<"+DBConstantes.ActivationValues.UNACTIVATED;
 			#endregion
@@ -521,69 +336,7 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 			catch(System.Exception err){
 				throw(new MySessionDataAccessException("Impossible de déplacer la sauvegarde vers un nouveau répertoire",err)); 
 			}
-			#endregion
-
-			#region Ancien code
-//
-//			OracleCommand sqlCommand=null;
-//			OracleDataReader sqlReader=null;
-//
-//			#region Ouverture de la base de données
-//			bool DBToClosed=false;
-//			// On teste si la base est déjà ouverte
-//			if (_connection.State==System.Data.ConnectionState.Closed){
-//				DBToClosed=true;
-//				try{
-//					_connection.Open();
-//				}
-//				catch(System.Exception et){
-//					throw(new MySessionDataAccessException("Impossible d'ouvrir la base de données",et));
-//				}
-//			}
-//			#endregion
-//
-//			// Traitement
-//			try{
-//				sqlCommand=new OracleCommand(sql,_connection);
-//				sqlReader=sqlCommand.ExecuteReader();
-//				if(sqlReader.Read()){
-//					if(Int64.Parse(sqlReader["nb"].ToString())>0) found=true;
-//				}
-//			}
-//			#region Traitement d'erreur du chargement des données
-//			catch(System.Exception ex){
-//				try{
-//					// Fermeture de la base de données
-//					if (sqlReader!=null){
-//						sqlReader.Close();
-//						sqlReader.Dispose();
-//					}
-//					if(sqlCommand!=null) sqlCommand.Dispose();
-//					if (DBToClosed) _connection.Close();
-//				}
-//				catch(System.Exception et){
-//					throw(new MySessionDataAccessException ("Impossible de fermer la base de données, lors de la gestion d'erreur",et));
-//				}
-//				throw(new MySessionDataAccessException ("Impossible de vérififier si la sauvegarde est présente dans la base de données",ex));
-//			}
-//			#endregion
-//
-//			#region Fermeture de la base de données
-//			try{
-//				// Fermeture de la base de données
-//				if (sqlReader!=null){
-//					sqlReader.Close();
-//					sqlReader.Dispose();
-//				}
-//				if(sqlCommand!=null)sqlCommand.Dispose();
-//				if (DBToClosed) _connection.Close();
-//			}
-//			catch(System.Exception et){
-//				throw(new MySessionDataAccessException ("Impossible de fermer la base de données",et));
-//			}
-//			#endregion
-//
-			#endregion
+			#endregion			
 
 			return(found);
 		}
@@ -620,10 +373,12 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 			byte[] binaryData=null;
 			Object o = null;
 			try{
+				Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
 				binaryData = new byte[0];
 				//create anonymous PL/SQL command
 				string block = " BEGIN "+
-					" SELECT Blob_content INTO :1 FROM " + DBConstantes.Schema.UNIVERS_SCHEMA + "." + DBConstantes.Tables.MY_SESSION + " WHERE id_my_session = " + idWebSession + "; " +
+					" SELECT Blob_content INTO :1 FROM " + mySessionTable.Sql + " WHERE id_my_session = " + idWebSession + "; " +
 					" END; ";
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = cnx;

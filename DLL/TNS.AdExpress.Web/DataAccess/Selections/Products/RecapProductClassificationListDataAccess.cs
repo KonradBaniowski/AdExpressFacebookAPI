@@ -33,7 +33,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			
 			#region Construction de la requête
 			string sql="";
-            string shema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
+            string shema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.recap01).Label;
 			sql+=" select "+TablesDBConstantes.SECTOR_PREFIXE+".id_sector,"+TablesDBConstantes.SECTOR_PREFIXE+".sector,"+TablesDBConstantes.SUBSECTOR_PREFIXE+".id_subsector,"+TablesDBConstantes.SUBSECTOR_PREFIXE+".subsector,"+TablesDBConstantes.GROUP_PREFIXE+".id_group_,"+TablesDBConstantes.GROUP_PREFIXE+".group_,"+TablesDBConstantes.SEGMENT_PREFIXE+".id_segment,"+TablesDBConstantes.SEGMENT_PREFIXE+".segment";
             sql += " from " + shema + ".sector " + TablesDBConstantes.SECTOR_PREFIXE 
                 + ", " + shema + ".subsector " + TablesDBConstantes.SUBSECTOR_PREFIXE

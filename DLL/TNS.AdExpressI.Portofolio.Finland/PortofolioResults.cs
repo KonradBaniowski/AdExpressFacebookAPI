@@ -25,7 +25,7 @@ namespace TNS.AdExpressI.Portofolio.Finland {
         /// <param name="webSession">Customer Session</param>
         public PortofolioResults(WebSession webSession):base(webSession){
         }
-
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -33,7 +33,16 @@ namespace TNS.AdExpressI.Portofolio.Finland {
         public PortofolioResults(WebSession webSession, string adBreak, string dayOfWeek)
 			: base(webSession,adBreak,dayOfWeek) {
 		}
-
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="webSession">Customer Session</param>
+		/// <param name="periodBeginning">Period Beginning</param>
+		/// <param name="periodEnd">period end</param>
+		/// <param name="tableType">tableType</param>
+		public PortofolioResults(WebSession webSession,  TNS.AdExpress.Constantes.DB.TableType.Type tableType) 
+		: base(webSession,tableType){
+		}
         #endregion
 
         #region Implementation of abstract methods
@@ -52,7 +61,6 @@ namespace TNS.AdExpressI.Portofolio.Finland {
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
                         return base.GetResultTable();
-                        break;
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
                         result = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
                         break;
@@ -66,6 +74,26 @@ namespace TNS.AdExpressI.Portofolio.Finland {
 
             return result.GetResultTable();
         }
+		/// <summary>
+		/// Get visual list
+		/// </summary>
+		/// <param name="beginDate">begin Date</param>
+		/// <param name="endDate"></param>
+		/// <returns></returns>
+		public override Dictionary<string, string> GetVisualList(string beginDate, string endDate) {
+			return null;
+		}
+
+		/// <summary>
+		/// Get view of the vehicle (HTML)
+		/// </summary>
+		/// <param name="excel">True for excel result</param>
+		/// <returns>HTML code</returns>
+		public override string GetVehicleViewHtml(bool excel) {
+			
+			return "";
+		}			
+
         #endregion
 
     }

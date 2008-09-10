@@ -18,6 +18,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace AdExpress.Private.Universe{
 
@@ -132,11 +134,12 @@ namespace AdExpress.Private.Universe{
 
 				if (adExpressUniverse != null && adExpressUniverse.Count > 0) {					
 					advertiserAdexpressText.Code = 1759;
-					
+
+					string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 					TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
-					selectItemsInClassificationWebControl.TreeViewIcons = "/Styles/TreeView/Icons";
-					selectItemsInClassificationWebControl.TreeViewScripts = "/Styles/TreeView/Scripts";
-					selectItemsInClassificationWebControl.TreeViewStyles = "/Styles/TreeView/Css";
+					selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/"+themeName+"/Styles/TreeView/Icons";
+					selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + themeName + "/Styles/TreeView/Scripts";
+					selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + themeName + "/Styles/TreeView/Css";
 					selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
 					selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
 					selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
@@ -148,7 +151,7 @@ namespace AdExpress.Private.Universe{
 					selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
 					selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
 					selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
-					selectItemsInClassificationWebControl.DBSchema = TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA;
+					selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
 					for (int k = 0; k < adExpressUniverse.Count; k++) {
 						if (adExpressUniverse.ContainsKey(k)) {
 							advertiserText += selectItemsInClassificationWebControl.ShowUniverse(adExpressUniverse[k], _webSession.DataLanguage, _webSession.Source);

@@ -27,6 +27,7 @@ using TNS.AdExpress.Domain.Translation;
 
 using TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpressI.Portofolio.Finland.Engines {
 
@@ -103,31 +104,38 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             DataTable dt;
 
             #region Media
-            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.media);
-            dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-                media = dt.Rows[0]["media"].ToString();
+				ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.media);
+				dt = ds.Tables[0];
+				if (dt.Rows.Count > 0)
+					media = dt.Rows[0]["media"].ToString();
+			
             #endregion
 
             #region Category
-            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.category);
-            dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-                category = dt.Rows[0]["category"].ToString();
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)) {
+				ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.category);
+				dt = ds.Tables[0];
+				if (dt.Rows.Count > 0)
+					category = dt.Rows[0]["category"].ToString();
+			}
             #endregion
 
             #region Media seller
+			if( _vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.mediaSeller)){
             ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.mediaSeller);
             dt = ds.Tables[0];
             if (dt.Rows.Count > 0)
                 regie = dt.Rows[0]["media_seller"].ToString();
+			}
             #endregion
 
             #region Interest center
-            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.interestCenter);
-            dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-                interestCenter = dt.Rows[0]["interest_center"].ToString();
+			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.interestCenter)) {
+				ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.interestCenter);
+				dt = ds.Tables[0];
+				if (dt.Rows.Count > 0)
+					interestCenter = dt.Rows[0]["interest_center"].ToString();
+			}
             #endregion
 
             #region investment
@@ -210,6 +218,13 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                     nbLines = 9;
                     if (investment != null && investment.Length > 0) nbLines++;//nbLines = 12;
                     break;
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+					nbLines = 3;
+					if (investment != null && investment.Length > 0) nbLines++;
+					if (category != null && category.Length > 0 ) nbLines++;
+					if (regie != null && regie.Length > 0 ) nbLines++;
+					if (interestCenter != null && interestCenter.Length > 0 ) nbLines++;
+					break;
                 default:
                     throw (new PortofolioException("Vehicle unknown"));
             }

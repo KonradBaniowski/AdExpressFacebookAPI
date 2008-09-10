@@ -209,8 +209,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                         cssTextItem = int.Parse(currentRow[4].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
 
                         t.Append("<td class=\"" + cssTextItem + "\" width=215>");
-                        //t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
-                        t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" />" + currentRow[3].ToString() + "<br>");
+						//t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" />" + currentRow[3].ToString() + "<br>");
+						t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "');\" />" + currentRow[3].ToString() + "<br>");
+
                         t.Append("</td>");
                         nbColumn = 1;
                         i++;
@@ -221,8 +222,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                         cssTextItem = int.Parse(currentRow[4].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
 
                         t.Append("<td class=\"" + cssTextItem + "\" width=215>");
-                        //t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
-                        t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" value=\"" + currentRow[2] + "\" />" + currentRow[3].ToString() + "<br>");
+						//t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" value=\"" + currentRow[2] + "\" />" + currentRow[3].ToString() + "<br>");
+						t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "');\" value=\"" + currentRow[2] + "\" />" + currentRow[3].ToString() + "<br>");
                         t.Append("</td>");
                         t.Append("</tr>");
                         nbColumn = 0;
@@ -235,8 +236,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
                         t.Append("<tr>");
                         t.Append("<td class=\"" + cssTextItem + "\" width=215>");
-                        //t.Append("<input ID=\"AdvertiserSelectionWebControl1_"+i+"\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\""+idParent+"\" /><label for=\"AdvertiserSelectionWebControl1_"+i+"\">"+currentRow[3].ToString()+"<br></label>");
-                        t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" />" + currentRow[3].ToString() + "<br>");
+						//t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "','" + currentRow[3] + "');\" />" + currentRow[3].ToString() + "<br>");
+						t.Append("<input ID=\"AdvertiserSelectionWebControl1_" + i + "\" type=\"radio\"  name=\"AdvertiserSelectionWebControl1\"  value=\"" + currentRow[3].ToString() + "\" onClick=\"insertValueInHidden('" + currentRow[2] + "');\" />" + currentRow[3].ToString() + "<br>");
                         t.Append("</td>");
                         nbColumn = 2;
                         i++;

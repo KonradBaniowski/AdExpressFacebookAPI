@@ -35,7 +35,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.FrameWork.Date;
 
-using TNS.AdExpressI.Portofolio.DAL;
+using Portofolio = TNS.AdExpressI.Portofolio;
 using Domain = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Classification;
 
@@ -222,10 +222,13 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 		previousWeekCheckBox.Language = previousMonthCheckbox.Language = previousYearCheckbox.Language = previousDayCheckBox.Language = currentYearCheckbox.Language = _webSession.SiteLanguage;
 		if (VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID).Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press
 			|| VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID).Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress) {
-			GlobalCalendarWebControl1.IdDivCover = "div_press_Cover";
-			GlobalCalendarWebControl1.IdVisualCover = "visual_cover";
-			GlobalCalendarWebControl1.ParutionDateList = GetDatesParution();
-			GlobalCalendarWebControl1.WithParutionDates = true;
+			Dictionary<string, string> parutionsDates = GetDatesParution();
+			if (parutionsDates != null && parutionsDates.Count > 0) {
+				GlobalCalendarWebControl1.IdDivCover = "div_press_Cover";
+				GlobalCalendarWebControl1.IdVisualCover = "visual_cover";
+				GlobalCalendarWebControl1.ParutionDateList = parutionsDates;
+				GlobalCalendarWebControl1.WithParutionDates = true;
+			}
 		}
 		return tmp;
 	}
@@ -551,29 +554,15 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 	/// </summary>
 	/// <returns>Dates parution</returns>
 	protected Dictionary<string, string> GetDatesParution() {
-		Dictionary<string, string> dic = new Dictionary<string, string>();
-		Domain.Module _module = ModulesList.GetModule(_webSession.CurrentModule);
-		long idMedia = (((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID);
-		if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-		object[] parameters = new object[5];
+		
+		Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+		if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+		object[] parameters = new object[2];
 		parameters[0] = _webSession;
-		parameters[1] = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-		parameters[2] = idMedia;
-		parameters[3] = DateTime.Now.AddYears(-2).ToString("yyyy0101");
-		parameters[4] = DateTime.Now.ToString("yyyyMMdd");
-		string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-		IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-		DataSet ds = portofolioDAL.GetListDate(true, TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle);
-
-		dic.Clear();
-		foreach (DataRow dr in ds.Tables[0].Rows) {
-			if (dr["disponibility_visual"] != System.DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10)
-				dic.Add(dr["date_media_num"].ToString(), WebConstantes.CreationServerPathes.IMAGES + "/" + idMedia + "/" + dr["date_cover_num"].ToString() + "/Imagette/" + WebConstantes.CreationServerPathes.COUVERTURE + "");
-			else
-				dic.Add(dr["date_media_num"].ToString(), "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif");
-		}
-
-		return dic;
+		parameters[1] = TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle;
+		Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+		return portofolioResult.GetVisualList(DateTime.Now.AddYears(-2).ToString("yyyy0101"), DateTime.Now.ToString("yyyyMMdd"));
+		//return null;
 	}
 	#endregion
 }

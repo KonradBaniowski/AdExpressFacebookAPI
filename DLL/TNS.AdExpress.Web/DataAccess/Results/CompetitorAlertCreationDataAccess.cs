@@ -28,6 +28,7 @@ using ResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAler
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -91,8 +92,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			try{
 				//tableName = GetTable((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()),webSession.CurrentModule);
-                tableName = SQLGenerator.GetVehicleTableNameForDetailResult((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), currentModuleDescription.ModuleType);
-				fields = GetFields((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
+                tableName = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), currentModuleDescription.ModuleType);
+				fields = GetFields(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())));
 				element=GetIdElement(webSession,idElement,level,idVehicle);
 			}
 			catch(System.Exception ex){
@@ -115,7 +116,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA+".vehicle ve, ");
 			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+tableName+" wp, ");
 			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA+".product_group_adver_agency pga ");
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.outdoor)
+			if(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==DBClassificationConstantes.Vehicles.names.outdoor)
 			{
 				sql.Append("," +DBConstantes.Schema.ADEXPRESS_SCHEMA+".agglomeration ag ");
 			
@@ -155,7 +156,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql.Append(" and co.id_color (+)=wp.id_color ");
 				sql.Append(" and fo.id_format (+)=wp.id_format ");
 			}
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.outdoor)
+			if(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==DBClassificationConstantes.Vehicles.names.outdoor)
 			{
 				sql.Append(" and ag.id_agglomeration (+)= wp.id_agglomeration ");
 				sql.Append(" and ag.id_language (+)= "+webSession.DataLanguage.ToString());
@@ -223,7 +224,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
             
             //Droit detail spot à spot TNT
-            if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
+            if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.tv
                 && !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG))
                 sql.Append(" and wp.id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
 
@@ -248,7 +249,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#endregion
 	
 			// Ordre
-			sql.Append("Order by " + GetOrder((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())));
+			sql.Append("Order by " + GetOrder(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))));
 			#endregion
 
 			#region Execution de la requête

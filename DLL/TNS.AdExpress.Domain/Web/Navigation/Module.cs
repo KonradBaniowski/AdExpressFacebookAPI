@@ -463,15 +463,44 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
 		/// <returns>Sql conditions</returns>
 		public string GetAllowedMediaUniverseSql(bool startWithAnd) {
-			string sql = "";
+			string sql = "", temp = "";
+			bool first = true;
+
 			MediaItemsList mediaList = AllowedMediaUniverse;
 
 			if (mediaList != null) {
-				sql = AllowedMediaUniverse.GetVehicleListSQL(startWithAnd);
-				sql += AllowedMediaUniverse.GetCategoryListSQL(startWithAnd);
-				sql += AllowedMediaUniverse.GetMediaListSQL(startWithAnd);
+				//Vehicle
+				temp = AllowedMediaUniverse.GetVehicleListSQL(false);
+				if (temp.Length > 0) {
+					if (startWithAnd) sql = " and ";
+					sql += " ( " + temp;
+					first = false;
+				}
+				// Category
+				temp = AllowedMediaUniverse.GetCategoryListSQL(false);
+				if (temp.Length > 0) {
+					if (!first) sql += " or";
+					else {
+						if (startWithAnd) sql += " and";
+						sql += " (";
+					}
+					sql += " " + temp;
+					first = false;
+				}
+				//Media 
+				temp = AllowedMediaUniverse.GetMediaListSQL(false);
+				if (temp.Length > 0) {
+					if (!first) sql += " or";
+					else {
+						if (startWithAnd) sql += " and";
+						sql += " (";
+					}
+					sql += " " + temp;
+					first = false;
+				}
+				if (!first) sql += " ) ";
 			}
-			return sql;
+			return sql;			
 		}
 		/// <summary>
 		/// Get media universe sql conditions without prefix
@@ -499,15 +528,42 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// <param name="startWithAnd">Determine if sql condition start with "and"</param>
 		/// <returns>Sql conditions</returns>
 		public string GetAllowedMediaUniverseSql(string vehiclePrefix,string categoryPrefix,string mediaPrefix,bool startWithAnd) {
-			string sql = "";
+			string sql = "", temp = "";
+			bool first = true;
+
 			MediaItemsList mediaList = AllowedMediaUniverse;
 
 			if (mediaList != null) {
-				sql = AllowedMediaUniverse.GetVehicleListSQL(startWithAnd, vehiclePrefix);
-				if (sql != null && sql.Length > 0) startWithAnd = true;
-				sql += AllowedMediaUniverse.GetCategoryListSQL(startWithAnd, categoryPrefix);
-				if (sql != null && sql.Length > 0) startWithAnd = true;
-				sql += AllowedMediaUniverse.GetMediaListSQL(startWithAnd, mediaPrefix);
+				//Vehicle
+				temp = AllowedMediaUniverse.GetVehicleListSQL(false,vehiclePrefix);
+				if (temp.Length > 0) {
+					if (startWithAnd) sql = " and ";
+					sql += " ( " + temp;
+					first = false;
+				}
+				// Category
+				temp = AllowedMediaUniverse.GetCategoryListSQL(false,categoryPrefix);
+				if (temp.Length > 0) {
+					if (!first) sql += " or";
+					else {
+						if (startWithAnd) sql += " and";
+						sql += " (";
+					}
+					sql += " " + temp;
+					first = false;
+				}
+				//Media 
+				temp = AllowedMediaUniverse.GetMediaListSQL(false,mediaPrefix);
+				if (temp.Length > 0) {
+					if (!first) sql += " or";
+					else {
+						if (startWithAnd) sql += " and";
+						sql += " (";
+					}
+					sql += " " + temp;
+					first = false;
+				}
+				if (!first) sql += " )";
 			}
 			return sql;
 

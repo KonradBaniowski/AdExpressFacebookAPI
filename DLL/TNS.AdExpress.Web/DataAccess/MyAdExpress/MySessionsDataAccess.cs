@@ -40,14 +40,16 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		public static DataSet GetData(WebSession webSession){
 
 			#region Construction de la requête
+			Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+			Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
 
-			string sql="select dir.ID_DIRECTORY, dir.DIRECTORY, se.ID_MY_SESSION, se.MY_SESSION ";
-			sql += " from " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + ".DIRECTORY dir, " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + ". " + TNS.AdExpress.Constantes.DB.Tables.MY_SESSION + "  se ";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin.ToString();
-			sql+=" and dir.ACTIVATION<"+DBConstantes.ActivationValues.UNACTIVATED ;
-			sql+=" and (se.ACTIVATION<"+DBConstantes.ActivationValues.UNACTIVATED+" or se.ACTIVATION is null) ";
-			sql+=" and dir.ID_DIRECTORY=se.ID_DIRECTORY(+) ";			
-			sql +=" order by dir.DIRECTORY, se.MY_SESSION ";
+			string sql = "select " + directoryTable.Prefix + ".ID_DIRECTORY, " + directoryTable.Prefix + ".DIRECTORY, " +mySessionTable.Prefix+".ID_MY_SESSION, "+mySessionTable.Prefix+".MY_SESSION ";
+			sql += " from " + directoryTable.SqlWithPrefix + " , " + mySessionTable.SqlWithPrefix;
+			sql += " where " + directoryTable.Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin.ToString();
+			sql += " and " + directoryTable.Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED;
+			sql += " and (" + mySessionTable.Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED + " or " + mySessionTable.Prefix + ".ACTIVATION is null) ";
+			sql += " and " + directoryTable.Prefix + ".ID_DIRECTORY=" + mySessionTable.Prefix + ".ID_DIRECTORY(+) ";
+			sql += " order by " + directoryTable.Prefix + ".DIRECTORY, " + mySessionTable.Prefix + ".MY_SESSION ";
 
 			#endregion
 
@@ -71,13 +73,14 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		public static DataSet GetDirectories(WebSession webSession){
 		
 			#region Construction de la requête
+			Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
 
 			//Requête pour récupérer tous les univers d'un idLogin
-			string sql="select distinct dir.ID_DIRECTORY, dir.DIRECTORY ";
-			sql+=" from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".DIRECTORY dir ";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin;
-			sql+=" and dir.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";			
-			sql+=" order by dir.DIRECTORY ";
+			string sql = "select distinct " + directoryTable.Prefix + ".ID_DIRECTORY, " + directoryTable.Prefix+ ".DIRECTORY ";
+			sql+=" from "+directoryTable.SqlWithPrefix;
+			sql += " where " + directoryTable.Prefix +".ID_LOGIN=" + webSession.CustomerLogin.IdLogin;
+			sql += " and " + directoryTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " order by " + directoryTable.Prefix + ".DIRECTORY ";
 		
 			#endregion
 
@@ -99,15 +102,17 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		/// <param name="sessionName">Nom de la session</param>
 		/// <returns>Retourne vrai si la session existe</returns>
 		public static bool IsSessionExist(WebSession webSession, string sessionName){
+			Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+			Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
 
 			#region Construction de la requête
-			string sql="select se.MY_SESSION from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".MY_SESSION se, ";
-			sql+=" "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".DIRECTORY dir";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin;
-			sql+=" and dir.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and se.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and dir.ID_DIRECTORY = se.ID_DIRECTORY ";
-			sql+=" and UPPER(se.MY_SESSION) like UPPER('"+sessionName+"')";
+			string sql="select "+mySessionTable.Prefix+".MY_SESSION from "+mySessionTable.SqlWithPrefix+", ";
+			sql += " " + directoryTable.SqlWithPrefix;
+			sql += " where " + directoryTable.Prefix+ ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin;
+			sql += " and " + directoryTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " and " + mySessionTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " and " + directoryTable.Prefix + ".ID_DIRECTORY = " + mySessionTable.Prefix + ".ID_DIRECTORY ";
+			sql += " and UPPER(" + mySessionTable.Prefix + ".MY_SESSION) like UPPER('" + sessionName + "')";
 			#endregion
 
 			#region Execution de la requête
@@ -134,15 +139,17 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		/// <param name="idDirectory">Identifiant répertoire</param>
 		/// <returns>Retourne vrai s'il existe des sessions dans un répertoire</returns>
 		public static bool IsSessionsInDirectoryExist(WebSession webSession, Int64 idDirectory){
+			Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+			Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
 
 			#region Construction de la requête
-			string sql="select se.MY_SESSION from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".MY_SESSION se, ";
-			sql+=" "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".DIRECTORY dir";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin;
-			sql+=" and dir.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and se.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and dir.ID_DIRECTORY = se.ID_DIRECTORY ";
-			sql+=" and dir.ID_DIRECTORY="+idDirectory+" ";
+			string sql = "select " + mySessionTable.Prefix + ".MY_SESSION from " + mySessionTable.SqlWithPrefix +", ";
+			sql += " " + directoryTable.SqlWithPrefix;
+			sql += "  where " + directoryTable.Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin;
+			sql += " and " + directoryTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " and " + mySessionTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " and " + directoryTable.Prefix + ".ID_DIRECTORY = " + mySessionTable.Prefix + ".ID_DIRECTORY ";
+			sql += " and " + directoryTable.Prefix + ".ID_DIRECTORY=" + idDirectory + " ";
 			#endregion
 
 			#region Execution de la requête
@@ -168,13 +175,14 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		/// <param name="DirectoryName">Nom du répertoire</param>
 		/// <returns>Retourne vrai si le répertoire existe</returns>
 		public static bool IsDirectoryExist(WebSession webSession, string DirectoryName){
+			Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
 
 			#region Construction de la requête
-			string sql="select distinct dir.ID_DIRECTORY, dir.DIRECTORY ";
-			sql+=" from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".DIRECTORY dir ";
-			sql+=" where dir.ID_LOGIN="+webSession.CustomerLogin.IdLogin;
-			sql+=" and dir.ACTIVATION<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ";
-			sql+=" and UPPER(dir.DIRECTORY)=UPPER('"+DirectoryName+"') ";
+			string sql = "select distinct " + directoryTable.Prefix + ".ID_DIRECTORY, " + directoryTable.Prefix + ".DIRECTORY ";
+			sql += "  from " + directoryTable.SqlWithPrefix;
+			sql += " where " + directoryTable.Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin;
+			sql += " and " + directoryTable.Prefix + ".ACTIVATION<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ";
+			sql += " and UPPER(" + directoryTable.Prefix + ".DIRECTORY)=UPPER('" + DirectoryName + "') ";
 			#endregion
 
 			#region Execution de la requête
@@ -200,10 +208,12 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		/// <param name="nameDirectory">Nom du répertoire</param>
 		/// <param name="webSession">webSession</param>
 		public static bool CreateDirectory(string nameDirectory, WebSession webSession){
+			Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
+			Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
 
 			#region Requête pour insérer les champs dans la table Group_universe_client	
-			string sql="INSERT INTO "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".DIRECTORY(ID_DIRECTORY,id_login,DIRECTORY,DATE_CREATION,ACTIVATION) ";
-			sql+="values ("+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".seq_directory.nextval,"+webSession.CustomerLogin.IdLogin+",'"+nameDirectory+"',SYSDATE,"+TNS.AdExpress.Constantes.DB.ActivationValues.ACTIVATED+")";
+			string sql = "INSERT INTO " + directoryTable.Sql +"(ID_DIRECTORY,id_login,DIRECTORY,DATE_CREATION,ACTIVATION) ";
+			sql += "  values (" + schema.Label + ".seq_directory.nextval," + webSession.CustomerLogin.IdLogin + ",'" + nameDirectory + "',SYSDATE," + TNS.AdExpress.Constantes.DB.ActivationValues.ACTIVATED + ")";
 			#endregion
 
 			#region Execution de la requête
@@ -226,11 +236,12 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		/// <param name="idDirectory">Identifiant Répertoire</param>
 		/// <param name="webSession">webSession</param>
 		public static void RenameDirectory(string newName, Int64 idDirectory,WebSession webSession){
+			Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
 
 			#region Requête pour mettre à jour le nom du répertoire dans la table	
-			string sql1="update "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".Directory ";
-			sql1+="set DIRECTORY ='"+newName+"', DATE_MODIFICATION = SYSDATE ";
-			sql1+="where ID_DIRECTORY ="+idDirectory+"";
+			string sql1 = "update " + directoryTable.Sql ;
+			sql1 += "  SET DIRECTORY ='" + newName + "', DATE_MODIFICATION = SYSDATE ";
+			sql1+=" where ID_DIRECTORY ="+idDirectory+"";
 			#endregion
 
 			#region Execution de la requête
@@ -251,9 +262,10 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		/// <param name="idMySession">Identifiant de la session</param>
 		/// <param name="webSession">web Session</param>
 		public static void RenameSession(string newName, Int64 idMySession, WebSession webSession) {
-			
+			Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
 			#region requête
-			string sql = "UPDATE " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + ".MY_SESSION";
+			string sql = "UPDATE " + mySessionTable.Sql;
 			sql += " SET MY_SESSION ='" + newName + "', DATE_MODIFICATION=sysdate ";
 			sql += " WHERE ID_MY_SESSION=" + idMySession + "";			
 			#endregion
@@ -275,10 +287,11 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		/// <param name="idDirectory">Identifiant Répertoire</param>
 		/// <param name="webSession">webSession</param>
 		public static void DropDirectory(Int64 idDirectory,WebSession webSession){
+			Table directoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerDirectory);
 
 			#region requête
-			string sql="delete from "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".DIRECTORY ";
-			sql+=" where "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".DIRECTORY.ID_DIRECTORY="+idDirectory+"";
+			string sql = " delete from " + directoryTable.Sql;
+			sql+=" where ID_DIRECTORY="+idDirectory+"";
 			#endregion
 
 			#region Execution de la requête
@@ -300,9 +313,10 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		/// <param name="idMySession">Identifiant du résultat</param>
 		/// <param name="webSession">Session du client</param>	
 		public static void MoveSession(Int64 idOldDirectory,Int64 idNewDirectory,Int64 idMySession,WebSession webSession){
-		
+			Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
+
 			#region requête
-			string sql="UPDATE "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".MY_SESSION";
+			string sql = "UPDATE " + mySessionTable.Sql;
 			sql+=" SET ID_DIRECTORY="+idNewDirectory+", DATE_MODIFICATION=sysdate ";
 			sql+=" WHERE ID_DIRECTORY="+idOldDirectory+"";
 			sql+=" and ID_MY_SESSION="+idMySession+"";
@@ -326,10 +340,11 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 		/// <param name="webSession">Session du client</param>
 		/// <returns></returns>
 		public static string GetSession(Int64 idSession,WebSession webSession){
+			Table mySessionTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerSessionSaved);
 
 			#region Requête
 			string sql=" select MY_SESSION ";
-			sql+=" FROM "+TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA+".MY_SESSION ";		
+			sql += " FROM " + mySessionTable.Sql;		
 			sql +=" WHERE ID_MY_SESSION="+idSession+"";
 			#endregion
 			

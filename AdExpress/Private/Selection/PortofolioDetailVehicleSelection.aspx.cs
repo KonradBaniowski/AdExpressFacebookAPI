@@ -35,6 +35,7 @@ using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
+using DALClassif = TNS.AdExpress.DataAccess.Classification;
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -339,7 +340,7 @@ namespace AdExpress.Private.Selection{
 					tabParent=currentKey.Split('_');
 					if(tabParent[0]=="CKB") {
 						valueMedia=Int64.Parse(tabParent[1]);	
-						nameMedia=tabParent[2];
+						//nameMedia=tabParent[2];
 					}
 				}
 				#endregion			
@@ -348,8 +349,10 @@ namespace AdExpress.Private.Selection{
 			
 					#region Création de l'arbre
 					// Création de l'arbre que l'on place dans RéférenceUniversMédia
-					tmpNode=new System.Windows.Forms.TreeNode(tabParent[2]);						
-					tmpNode.Tag=new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.mediaAccess,valueMedia,nameMedia);
+					DALClassif.MediaBranch.PartialMediaListDataAccess mediaLabelList = new DALClassif.MediaBranch.PartialMediaListDataAccess(valueMedia.ToString(), _webSession.DataLanguage, _webSession.Source);
+					if (mediaLabelList != null) nameMedia = mediaLabelList[valueMedia];
+					tmpNode = new System.Windows.Forms.TreeNode(nameMedia);					
+					tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.mediaAccess, valueMedia, nameMedia);
 					tmpNode.Checked=true;
 					mediaTree.Nodes.Add(tmpNode);
 					_webSession.ReferenceUniversMedia=mediaTree;

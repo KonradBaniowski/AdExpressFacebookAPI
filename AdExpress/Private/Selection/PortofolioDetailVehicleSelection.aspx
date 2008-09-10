@@ -36,8 +36,11 @@
 			if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
 			}
 			
-			function insertValueInHidden(idSession,idRepertory){
+			/*function insertValueInHidden(idSession,idRepertory){
 				document.Form2.idMedia.name="CKB_"+idSession+"_"+idRepertory;
+			}*/
+			function insertValueInHidden(idMedia){
+				document.Form2.idMedia.name="CKB_"+idMedia;
 			}
 								
 			//-->

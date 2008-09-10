@@ -29,6 +29,7 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.DataAccess.Results {
 
@@ -498,16 +499,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 sql.AppendFormat(" and wp.id_slogan is not null ");
             #endregion
 
-            #region Ancienne version Sélection Nomenclature produit
-			//if (session.CurrentModule == WebCst.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE
-			//    || session.CurrentModule == WebCst.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE) {
-			//    GetCompetitorSelection(sql, session, universId);
-			//}
-			//else {
-			//    GetSelection(sql, session);
-			//}
-
-            #endregion
+          
 
 			//Sélection Nomenclature produit
             if (session.PrincipalProductUniverses != null && session.PrincipalProductUniverses.Count > 0)
@@ -564,7 +556,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
             #region Droits Nomenclature Supports
             // On ne tient pas compte des droits vehicle pour les plans media AdNetTrack
-            if (vehicle == DBClassifCst.Vehicles.names.adnettrack.GetHashCode())
+            if (vehicle == VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.adnettrack))
                 sql.Append(SQLGenerator.GetAdNetTrackMediaRight(session, "wp", true));
             else
                 sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(session, "wp", true));
@@ -637,7 +629,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                         break;
                 }
                 sql.Append(GetFiltersClause(session, detailLevels, filters, vehicle));
-                sql.AppendFormat(CheckZeroVersion(detailLevels, (DBClassifCst.Vehicles.names) vehicle, filters));
+                sql.AppendFormat(CheckZeroVersion(detailLevels, VehiclesInformation.DatabaseIdToEnum(vehicle), filters));
             }
             if (session.SloganIdZoom > -1)
             {
@@ -925,11 +917,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 id = Convert.ToInt32(ids[i]);
                 level = (DetailLevelItemInformation)detailLevels.Levels[i];
                 if (id > 0) {
-                    if (level.DataBaseIdField == DBCst.Fields.ID_VEHICLE && id == DBClassifCst.Vehicles.names.internet.GetHashCode())
+					if (level.DataBaseIdField == DBCst.Fields.ID_VEHICLE && id == VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.internet))
                         id = DBClassifCst.Vehicles.names.adnettrack.GetHashCode();
                     str.AppendFormat(" and wp.{0} = {1}", level.DataBaseIdField, id);
                 }
-                if (id == 0 && level.Id == DetailLevelItemInformation.Levels.slogan && vehicle != DBClassifCst.Vehicles.names.adnettrack.GetHashCode()) {
+                if (id == 0 && level.Id == DetailLevelItemInformation.Levels.slogan && vehicle != VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.adnettrack)) {
                     str.AppendFormat(" and wp.{0} = {1}",level.DataBaseIdField,id);
                 }
                 

@@ -91,7 +91,11 @@ namespace TNS.AdExpressI.Portofolio {
 		/// <summary>
 		/// Day of Week
 		/// </summary>
-		protected string _dayOfWeek;		
+		protected string _dayOfWeek;
+		/// <summary>
+		/// Table type
+		/// </summary>
+		TNS.AdExpress.Constantes.DB.TableType.Type _tableType;
         #endregion
 
         #region Constructor
@@ -119,7 +123,7 @@ namespace TNS.AdExpressI.Portofolio {
                 throw (new PortofolioException("Impossible to set parameters",err));
             }
         }
-
+	
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -130,7 +134,29 @@ namespace TNS.AdExpressI.Portofolio {
 			: this(webSession) {
 			_adBreak = adBreak;
 			_dayOfWeek = dayOfWeek;
-		}		
+		}
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="webSession">Customer Session</param>		
+		/// <param name="tableType">tableType</param>
+		public PortofolioResults(WebSession webSession,TNS.AdExpress.Constantes.DB.TableType.Type tableType) {
+			if (webSession == null) throw (new ArgumentNullException("Customer session is null"));
+			_webSession = webSession;
+			try {
+				// Set Vehicle
+				_vehicleInformation = GetVehicleInformation();
+				//Set Media Id
+				_idMedia = GetMediaId();				
+				// Module
+				_module = ModulesList.GetModule(webSession.CurrentModule);
+				//Table type
+				_tableType = tableType;				
+			}
+			catch (System.Exception err) {
+				throw (new PortofolioException("Impossible to set parameters", err));
+			}
+		}
         #endregion
 
 		#region Implementation of abstract methods
@@ -275,6 +301,37 @@ namespace TNS.AdExpressI.Portofolio {
 		}
 		#endregion		
 
+		#region Gets Visula list
+		/// <summary>
+		/// Get dates parution
+		/// </summary>
+		/// <param name="beginDate">Begin date</param>
+		/// <param name="endDate">End date</param>
+		/// <returns>Dates parution</returns>
+		public virtual Dictionary<string, string> GetVisualList(string beginDate, string endDate) {
+			Dictionary<string, string> dic = new Dictionary<string, string>();
+			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+			object[] parameters = new object[5];
+			parameters[0] = _webSession;
+			parameters[1] = _vehicleInformation;
+			parameters[2] = _idMedia;
+			parameters[3] = beginDate;
+			parameters[4] = endDate;
+			string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+			DataSet ds = portofolioDAL.GetListDate(true, _tableType);
+
+			dic.Clear();
+			foreach (DataRow dr in ds.Tables[0].Rows) {
+				if (dr["disponibility_visual"] != System.DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10)
+					dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
+				else
+					dic.Add(dr["date_media_num"].ToString(), "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif");
+			}
+			return dic;
+		}
+		#endregion
+
 		#endregion
 
 		#region Methods
@@ -387,21 +444,6 @@ namespace TNS.AdExpressI.Portofolio {
             return (false);
         }
         #endregion              		
-
-
-		///// <summary>
-		///// Vérifie qu'une datarow est vide
-		///// </summary>
-		///// <param name="ds">dataset</param>
-		///// <returns>vrai si non vide</returns>
-		//protected virtual bool IsRowNull(DataSet ds) {
-		//    if (ds != null && ds.Tables[0].Rows.Count > 0) {
-		//        foreach (DataRow dr in ds.Tables[0].Rows) {
-		//            return (dr["euros"] != System.DBNull.Value && dr["spot"] != System.DBNull.Value && dr["duration"] != System.DBNull.Value);
-		//        }
-		//    }
-		//    return false;
-		//}
 
 		/// <summary>
 		/// Get ventilation type list
