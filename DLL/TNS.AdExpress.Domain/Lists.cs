@@ -75,7 +75,7 @@ namespace TNS.AdExpress.Domain {
 				}
 			}
 			catch (System.Exception err) {
-				throw (new InsetException("Impossible to init the inset list", err));
+				throw (new ListsException("Impossible to init the inset list", err));
 			}
 		}
 		#endregion

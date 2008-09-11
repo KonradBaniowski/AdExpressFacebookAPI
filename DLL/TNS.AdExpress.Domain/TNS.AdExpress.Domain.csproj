@@ -70,7 +70,7 @@
     <Compile Include="DataBaseDescription\DataBase.cs" />
     <Compile Include="DataBaseDescription\DefaultConnection.cs" />
     <Compile Include="DataBaseDescription\View.cs" />
-    <Compile Include="Exceptions\InsetException.cs" />
+    <Compile Include="Exceptions\ListsException.cs" />
     <Compile Include="Exceptions\ListContenerException.cs" />
     <Compile Include="Exceptions\MediaListException.cs" />
     <Compile Include="Exceptions\ProductListException.cs" />
