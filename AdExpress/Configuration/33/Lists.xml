@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<insets>
+  <inset id="encart"   dataBaseId ="108"/>
+  <inset id="flyingEncart"  dataBaseId ="85"/>
+  <inset id="Excart"  dataBaseId ="999"/>
+</insets>

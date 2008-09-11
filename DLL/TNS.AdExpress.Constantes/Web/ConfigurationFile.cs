@@ -98,5 +98,10 @@ namespace TNS.AdExpress.Constantes.Web {
         /// </summary>
         public const string BAAL_CONFIGURATION_FILENAME = @"BaalList.xml";
 
+		/// <summary>
+		/// Lists configuration file
+		/// </summary>
+		public const string LISTS_CONFIGURATION_FILENAME = @"Lists.xml";
+
     }
 }
