@@ -165,11 +165,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="moduleId">User Current Module</param>
         /// <param name="vehicles">Vehicles to check</param>
         /// <returns>List of vehicles present</returns>
-        public static List<int> GetPresentVehicles(WebSession session, string filters, int fromDate, int toDate, int universId, Int64 moduleId, List<int> vehicles) {
+        public static List<long> GetPresentVehicles(WebSession session, string filters, int fromDate, int toDate, int universId, Int64 moduleId, List<long> vehicles) {
 
             #region Variables
             StringBuilder sql = new StringBuilder();
-            List<int> found = new List<int>();
+			List<long> found = new List<long>();
             DataSet ds = null;
             #endregion
 
@@ -181,8 +181,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 universId--;
                 string dataTable;
                 foreach (int i in vehicles) {
-                    if(DBClassifCst.Vehicles.names.internet != (DBClassifCst.Vehicles.names)i) {
-                        dataTable = SQLGenerator.GetVehicleTableNameForDetailResult((DBClassifCst.Vehicles.names)i, module.ModuleType);
+                    if(DBClassifCst.Vehicles.names.internet != VehiclesInformation.DatabaseIdToEnum(i)) {
+						dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(i), module.ModuleType);
                     }
                     else {
                         dataTable = GetInternetTable(module.ModuleType);
@@ -250,14 +250,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             switch(moduleType) {
                 case WebCst.Module.Type.alert:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersionAlert).Label);
-                    break;
                 case WebCst.Module.Type.analysis:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersion).Label);
-                    break;
                 default:
                     throw new ArgumentException("Type of module is not supported");
-                    break;
-
             }
         }
         #endregion
@@ -495,7 +491,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             if (session.CurrentModule == WebCst.Module.Name.ALERTE_PLAN_MEDIA && session.SloganIdList != null && session.SloganIdList.Length > 0) {
                 sql.AppendFormat(" and wp.id_slogan in ( {0} ) ", session.SloganIdList);
             }
-            if (vehicle != DBClassifCst.Vehicles.names.adnettrack.GetHashCode())
+            if (vehicle != VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.adnettrack))
                 sql.AppendFormat(" and wp.id_slogan is not null ");
             #endregion
 

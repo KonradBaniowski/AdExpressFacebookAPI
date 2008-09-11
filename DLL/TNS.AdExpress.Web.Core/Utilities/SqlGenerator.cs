@@ -38,6 +38,7 @@ using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -3777,81 +3778,35 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="webSession">Session du client</param>
         /// <param name="dataTablePrefixe">Préfixe de la table des données</param>
         /// <returns>Jointures</returns>
-        public static string GetJointForInsertDetail(WebSession webSession, string dataTablePrefixe)
-        {
+        public static string GetJointForInsertDetail(WebSession webSession, string dataTablePrefixe) {
+			
+			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
+			switch (webSession.Insert) {
+				case WebConstantes.CustomerSessions.Insert.total:
+					return "";
+				case WebConstantes.CustomerSessions.Insert.withOutInsert:
+					return " and  (" + dataTablePrefixe + ".id_inset=0 or " + dataTablePrefixe + ".id_inset is null )";
+				case WebConstantes.CustomerSessions.Insert.insert:
+					string fieldsList = Lists.GetInsetIdList();
+					if (fieldsList != null && fieldsList.Length > 0)
+						return " and  " + dataTablePrefixe + ".id_inset in (" + fieldsList + ")";
+					else return "";
+				default:
+					throw new SQLGeneratorException("getJointForInsertDetail(WebSession webSession,string dataTablePrefixe)--> Impossible to retreive inset type..");
+			}
+		}
 
-            Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
-            switch (webSession.Insert)
-            {
-                case WebConstantes.CustomerSessions.Insert.total:
-                    return "";
-                case WebConstantes.CustomerSessions.Insert.withOutInsert:
-                    if (WebConstantes.Module.Type.alert == currentModuleDescription.ModuleType)
-                        return " and  " + dataTablePrefixe + ".id_inset is null ";
-                    else if (WebConstantes.Module.Type.analysis == currentModuleDescription.ModuleType
-                        ||
-
-                       //UnresolvedMergeConflict : Modification GR - 14/05/2007 - Modification Homepage
-
-                       //WebConstantes.Module.Type.dashBoard==currentModuleDescription.ModuleType
-
-                       (currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD
-                       || currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD_PAN_EURO
-                       || currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD_PRESSE
-                       || currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD_RADIO
-                       || currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD_TELEVISION)
-
-                       //Fin Modification GR - 14/05/2007 - Modification Homepage
-                        )
-                        return " and  " + dataTablePrefixe + ".id_inset=0 ";
-                    else throw new SQLGeneratorException("getJointForInsertDetail(WebSession webSession,string dataTablePrefixe)--> Impossible de déterminer le type de module.");
-                case WebConstantes.CustomerSessions.Insert.insert:
-                    return " and " + dataTablePrefixe + ".id_inset in (" + ClassificationConstantes.DB.insertType.EXCART + "," + ClassificationConstantes.DB.insertType.FLYING_INSERT + "," + ClassificationConstantes.DB.insertType.INSERT + ")";
-                default:
-                    throw new SQLGeneratorException("getJointForInsertDetail(WebSession webSession,string dataTablePrefixe)--> Impossible de déterminer le type d'encart.");
-            }
-        }
-        /// <summary>
-        /// Obtient les encarts pour le media presse
-        /// </summary>
-        /// <param name="webSession">Session du client</param>
-        /// <param name="dataTablePrefixe">Préfixe de la table des données</param>
-        /// <param name="type">Type de la table</param>
-        /// <returns>Jointures</returns>
-        public static string GetJointForInsertDetail(WebSession webSession, string dataTablePrefixe, DBConstantes.TableType.Type type)
-        {
-
-            Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
-            switch (webSession.Insert)
-            {
-                case WebConstantes.CustomerSessions.Insert.total:
-                    return "";
-                case WebConstantes.CustomerSessions.Insert.withOutInsert:
-                    if (type == DBConstantes.TableType.Type.dataVehicle4M || type == DBConstantes.TableType.Type.dataVehicle)
-                        return " and  " + dataTablePrefixe + ".id_inset is null ";
-                    else if (type == DBConstantes.TableType.Type.webPlan
-                        ||
-
-                       //UnresolvedMergeConflict : Modification GR - 14/05/2007 - Modification Homepage
-
-                       //WebConstantes.Module.Type.dashBoard==currentModuleDescription.ModuleType
-
-                       (currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD
-                       || currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD_PAN_EURO
-                       || currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD_PRESSE
-                       || currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD_RADIO
-                       || currentModuleDescription.Id == WebConstantes.Module.Name.TABLEAU_DE_BORD_TELEVISION)
-
-                       //Fin Modification GR - 14/05/2007 - Modification Homepage
-                        )
-                        return " and  " + dataTablePrefixe + ".id_inset=0 ";
-                    else throw new SQLGeneratorException("getJointForInsertDetail(WebSession webSession,string dataTablePrefixe)--> Impossible de déterminer le type de module.");
-                case WebConstantes.CustomerSessions.Insert.insert:
-                    return " and " + dataTablePrefixe + ".id_inset in (" + ClassificationConstantes.DB.insertType.EXCART + "," + ClassificationConstantes.DB.insertType.FLYING_INSERT + "," + ClassificationConstantes.DB.insertType.INSERT + ")";
-                default:
-                    throw new SQLGeneratorException("getJointForInsertDetail(WebSession webSession,string dataTablePrefixe)--> Impossible de déterminer le type d'encart.");
-            }
-        }
+		//TODO : Fonction a supprimer des que G.R aura archiver module presents/absent
+		/// <summary>
+		/// Obtient les encarts pour le media presse
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="dataTablePrefixe">Préfixe de la table des données</param>
+		/// <param name="type">Type de la table</param>
+		/// <returns>Jointures</returns>
+		public static string GetJointForInsertDetail(WebSession webSession, string dataTablePrefixe, DBConstantes.TableType.Type type) {
+			return GetJointForInsertDetail( webSession,  dataTablePrefixe);
+		}
         #endregion
 
         #region Niveau Produit

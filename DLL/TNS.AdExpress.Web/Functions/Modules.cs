@@ -19,6 +19,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 
 using DateDll = TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Functions
 {
@@ -68,7 +69,7 @@ namespace TNS.AdExpress.Web.Functions
 			if(webSessionSave.SelectionUniversMedia!=null && webSessionSave.SelectionUniversMedia.FirstNode !=null)
 			 selectedVehicle = ((LevelInformation)webSessionSave.SelectionUniversMedia.FirstNode.Tag).ID;
 				
-			if(selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode())
+			if(selectedVehicle == VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.internet))
 			 lastCompleteMonth = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(webSessionSave,WebConstantes.CustomerSessions.Period.DisplayLevel.monthly,WebConstantes.Module.Type.analysis,selectedVehicle);
 
 		
@@ -77,7 +78,7 @@ namespace TNS.AdExpress.Web.Functions
 					//Mois précédent
 				case CstCustomerSession.Period.Type.previousMonth : 
 					//Dates de chargement des données pour Internet
-					if(selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()){						
+					if(selectedVehicle == VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.internet)){						
 						if(lastCompleteMonth !=null && lastCompleteMonth.Length>0 && int.Parse(lastCompleteMonth) >= int.Parse(DateTime.Now.AddMonths(-1).ToString("yyyyMM")))
 							webSession.PeriodEndDate = webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
 						else throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(2157,webSessionSave.SiteLanguage));
@@ -107,7 +108,7 @@ namespace TNS.AdExpress.Web.Functions
 					webSession.PeriodType = CstPeriodType.nLastMonth;
 
 					//Dates de chargement des données pour Internet
-					if(selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()){
+					if (selectedVehicle == VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.internet)) {
 						if(lastCompleteMonth !=null && lastCompleteMonth.Length>0){
 							webSession.PeriodEndDate = lastCompleteMonth;
 							monthPeriod = new DateTime(int.Parse(lastCompleteMonth.Substring(0,4)),int.Parse(lastCompleteMonth.Substring(4,2)),01);						
@@ -129,7 +130,7 @@ namespace TNS.AdExpress.Web.Functions
 					webSession.PeriodLength=1;		
 			
 					//Dates de chargement des données pour Internet
-					if(selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()){
+					if(selectedVehicle == VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.internet)){
 						if( lastCompleteMonth !=null && lastCompleteMonth.Length>0 && int.Parse(lastCompleteMonth.Substring(0,4))==DateTime.Now.Year){
 							webSession.PeriodBeginningDate = DateTime.Now.ToString("yyyy01");						
 							webSession.PeriodEndDate = lastCompleteMonth;
@@ -169,7 +170,7 @@ namespace TNS.AdExpress.Web.Functions
 					webSession.PeriodLength = 1;
 
 					//Dates de chargement des données pour Internet
-					if(selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()){						
+					if(selectedVehicle == VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.internet)){						
 						if(lastCompleteMonth !=null && lastCompleteMonth.Length>0 && int.Parse(lastCompleteMonth.Substring(0,4))>DateTime.Now.AddYears(-2).Year){
 							webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
 							webSession.PeriodEndDate = (int.Parse(lastCompleteMonth.Substring(0,4))== DateTime.Now.Year)? DateTime.Now.AddYears(-1).ToString("yyyy12") : lastCompleteMonth;

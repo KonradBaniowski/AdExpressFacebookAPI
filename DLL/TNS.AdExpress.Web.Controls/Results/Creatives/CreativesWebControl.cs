@@ -76,11 +76,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// <summary>
         /// Vehicle List
         /// </summary>
-        protected IList<int> _vehicles = new List<int>();
+		protected IList<long> _vehicles = new List<long>();
         /// <summary>
         /// Get / Set list of vehicles
         /// </summary>
-        public IList<int> Vehicles {
+        public IList<long> Vehicles {
             get {
                 return _vehicles;
             }
@@ -92,11 +92,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// <summary>
         /// Cuurent Vehicle Id
         /// </summary>
-        protected int _idVehicle = -1;
+        protected long _idVehicle = -1;
         /// <summary>
         /// Get / Set current vehicle id
         /// </summary>
-        public int IdVehicle {
+        public long IdVehicle {
             get {
                 return _idVehicle;
             }

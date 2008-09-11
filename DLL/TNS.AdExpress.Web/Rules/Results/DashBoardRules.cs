@@ -26,6 +26,7 @@ using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
 using TNS.FrameWork;
+using TNS.AdExpress.Domain.Classification;
 
 
 namespace TNS.AdExpress.Web.Rules.Results
@@ -59,8 +60,8 @@ namespace TNS.AdExpress.Web.Rules.Results
 			try{
 				#region type de média
 				//identification du Média  sélectionné
-				string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-				ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
+				//string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+				ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 				#endregion
 			
 				//Chargement des données du tableau de bord
@@ -3097,210 +3098,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			tab[row,colName]=name;
 			return tab;
 		}
-		#endregion
-
-		#region Libellés du tableau for Generic UI
-//		/// <summary>
-//		/// Insert les libellés du tableau
-//		/// </summary>
-//		/// <param name="webSession">session du client</param>
-//		/// <param name="tab">tableau </param>
-//		/// <param name="vehicleType">type de média</param>
-//		/// <param name="dt">Table de données résultats</param>
-//		/// <param name="sectorHashTable">Liste identifiant des familles à afficher en colonne pour tableau Media\Famille</param>
-//		/// <returns>tableau de résultats</returns>
-//		private static ResultTable SetTabLabelForGenericUI(WebSession webSession,ResultTable tab,ClassificationCst.DB.Vehicles.names vehicleType,DataTable dt,Hashtable sectorHashTable)
-//		{
-//			#region variables
-//			AtomicPeriodWeek week;
-//			//DateTime dateBegin;
-//			//DateTime dateEnd;
-//			string dateString;
-//			long level1CurrentIndex=0;
-//			int j=0;
-//			
-//			#endregion
-//
-//			switch(webSession.PreformatedTable)
-//			{
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :
-//					#region Unités
-//					level1CurrentIndex=tab.AddNewLine(LineType.level1);
-//					if(ClassificationCst.DB.Vehicles.names.press==vehicleType)
-//					{
-//						//libellés unités : Euros,Mm/Col,pages,Isertions
-//						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS] = new CellLevel(0,GestionWeb.GetWebWord(1423,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+1] = new CellLevel(0,GestionWeb.GetWebWord(1424,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2] = new CellLevel(0,GestionWeb.GetWebWord(943,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+3] = new CellLevel(0,GestionWeb.GetWebWord(940,webSession.SiteLanguage),0);
-//					}
-//					else
-//					{
-//						//libellés unités : Euros,Durée,Spots
-//						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS] = new CellLevel(0,GestionWeb.GetWebWord(1423,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+1] = new CellLevel(0,GestionWeb.GetWebWord(1435,webSession.SiteLanguage),0);						
-//						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2] = new CellLevel(0,GestionWeb.GetWebWord(939,webSession.SiteLanguage),0);
-//					}
-//					#endregion
-//					break;
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual :
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual :										
-//					#region période
-//					if(webSession.DetailPeriod==CstPeriodDetail.monthly)
-//					{
-//						//libellés mois
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX] = new CellLevel(0,GestionWeb.GetWebWord(1401,webSession.SiteLanguage),0);
-//						j++;
-//						if(!webSession.DetailPeriodBeginningDate.Equals("0") && WebFunctions.CheckedText.IsStringEmpty(webSession.DetailPeriodBeginningDate))
-//						{
-//							for(int i=int.Parse(webSession.DetailPeriodBeginningDate.Substring(4,2));i<=int.Parse(webSession.DetailPeriodEndDate.Substring(4,2));i++)
-//							{
-//								tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = new CellLevel(0,MonthString.Get(i,webSession.SiteLanguage,0),0);
-//								j++;
-//							}
-//						}
-//						else
-//						{							
-//							for(int i=int.Parse(webSession.PeriodBeginningDate.Substring(4,2));i<=int.Parse(webSession.PeriodEndDate.Substring(4,2));i++)
-//							{
-//								tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = new CellLevel(0,MonthString.Get(i,webSession.SiteLanguage,0),0);
-//								j++;
-//							}
-//						}
-//					}
-//					else if(webSession.DetailPeriod==CstPeriodDetail.weekly)
-//					{
-//						//libellés semaines
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX] = new CellLevel(0,GestionWeb.GetWebWord(1401,webSession.SiteLanguage),0);
-//						j++;
-//						if(!webSession.DetailPeriodBeginningDate.Equals("0") && WebFunctions.CheckedText.IsStringEmpty(webSession.DetailPeriodBeginningDate)) 
-//						{
-//							for(int i=int.Parse(webSession.DetailPeriodBeginningDate.Substring(4,2));i<=int.Parse(webSession.DetailPeriodEndDate.Substring(4,2));i++)
-//							{							
-//								week=new AtomicPeriodWeek(int.Parse(webSession.DetailPeriodBeginningDate.Substring(0,4)),i);														
-//								dateString=week.FirstDay.Day.ToString()+"/"+week.FirstDay.Month.ToString()+"/"+week.FirstDay.Year.ToString()+" - "+week.LastDay.Day.ToString()+"/"+week.LastDay.Month.ToString()+"/"+week.LastDay.Year.ToString();
-//								tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j]=new CellLevel(0,dateString,0);
-//								j++;
-//							}
-//						}
-//						else
-//						{
-//							for(int i=int.Parse(webSession.PeriodBeginningDate.Substring(4,2));i<=int.Parse(webSession.PeriodEndDate.Substring(4,2));i++)
-//							{							
-//								week=new AtomicPeriodWeek(int.Parse(webSession.PeriodBeginningDate.Substring(0,4)),i);														
-//								dateString=week.FirstDay.Day.ToString()+"/"+week.FirstDay.Month.ToString()+"/"+week.FirstDay.Year.ToString()+" - "+week.LastDay.Day.ToString()+"/"+week.LastDay.Month.ToString()+"/"+week.LastDay.Year.ToString();
-//								tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j]=new CellLevel(0,dateString,0);
-//								j++;
-//							}
-//						}
-//					}									
-//					#endregion
-//					break;																			
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format :
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format :	
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format :	
-//					//libellés format
-//					tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX] = new CellLevel(0,GestionWeb.GetWebWord(1401,webSession.SiteLanguage),0);
-//					for(int i=0;i<=7;i++)
-//					{
-//						j++;
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = new CellLevel(0,GestionWeb.GetWebWord(1545+i,webSession.SiteLanguage),0);											
-//					}
-//					break;				
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_NamedDay :
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay :
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_NamedDay :	
-//					//libellés jour nommés
-//					tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX] = new CellLevel(0,GestionWeb.GetWebWord(848,webSession.SiteLanguage),0);
-//					for(int i=0;i<=5;i++)
-//					{
-//						j++;
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = new CellLevel(0,GestionWeb.GetWebWord(1553+i,webSession.SiteLanguage),0);											
-//					}
-//					//week end
-//					j++;
-//					tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = new CellLevel(0,GestionWeb.GetWebWord(1561,webSession.SiteLanguage),0);
-//					//Samedi
-//					j++;
-//					tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = new CellLevel(0,GestionWeb.GetWebWord(1559,webSession.SiteLanguage),0);											
-//					//Dimanche
-//					j++;
-//					tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = new CellLevel(0,GestionWeb.GetWebWord(1560,webSession.SiteLanguage),0);												
-//					break;
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice :
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice :																									
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice:
-//					//libellés tranche horaire
-//					tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX] = new CellLevel(0,GestionWeb.GetWebWord(1401,webSession.SiteLanguage),0);
-//					if(ClassificationCst.DB.Vehicles.names.radio==vehicleType)
-//					{
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+1] = new CellLevel(0,GestionWeb.GetWebWord(1562,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+2] = new CellLevel(0,GestionWeb.GetWebWord(1563,webSession.SiteLanguage),0);						
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+3] = new CellLevel(0,GestionWeb.GetWebWord(1565,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+4] = new CellLevel(0,GestionWeb.GetWebWord(1567,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+5] = new CellLevel(0,GestionWeb.GetWebWord(1571,webSession.SiteLanguage),0);
-//					}
-//					else if(ClassificationCst.DB.Vehicles.names.tv==vehicleType || ClassificationCst.DB.Vehicles.names.others==vehicleType)
-//					{												
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+1] = new CellLevel(0,GestionWeb.GetWebWord(1564,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+2] = new CellLevel(0,GestionWeb.GetWebWord(1566,webSession.SiteLanguage),0);						
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+3] = new CellLevel(0,GestionWeb.GetWebWord(1568,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+4] = new CellLevel(0,GestionWeb.GetWebWord(1569,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+5] = new CellLevel(0,GestionWeb.GetWebWord(1570,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+6] = new CellLevel(0,GestionWeb.GetWebWord(1572,webSession.SiteLanguage),0);
-//						tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+7] = new CellLevel(0,GestionWeb.GetWebWord(1573,webSession.SiteLanguage),0);
-//					}					
-//					break;	
-//				
-//				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector :
-//					//libellés familles en colonne					
-//					tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX] = new CellLevel(0,GestionWeb.GetWebWord(1401,webSession.SiteLanguage),0);
-//					j++;
-//					string strExpr;
-//					string strSort;
-//					
-//					strExpr = "";					
-//					strSort = "sector ASC";
-//				
-//					DataRow[] foundRows = dt.Select( strExpr, strSort, DataViewRowState.OriginalRows );
-//
-//					foreach(DataRow dr in  foundRows)
-//					{
-//
-//						if(!sectorHashTable.Contains(dr["id_sector"].ToString()))
-//						{
-//							tab[0,CstResults.DashBoard.TOTAL_COLUMN_INDEX+j] = new CellLevel(0,dr["sector"].ToString(),0);
-//							sectorHashTable.Add(dr["id_sector"].ToString(),CstResults.DashBoard.TOTAL_COLUMN_INDEX+j);
-//							j++;							
-//						}
-//				
-//					}
-//					
-//					break;
-//				default : 
-//					throw new DashBoardRulesException("SetTabLabel(WebSession webSession,object[,] tab,ClassificationCst.DB.Vehicles.names vehicleType,DataTable dt) : Impossible d'identifier le tableau de bord à traiter.");
-//			}
-//			return tab;
-//
-//		}
-//		/// <summary>
-//		/// Insert identifiant et libellé d'un l'élément
-//		/// déans une cellule du tableau de résultats
-//		/// </summary>
-//		/// <param name="tab"> tableau de résultats</param>
-//		/// <param name="id"> identifiant</param>
-//		/// <param name="name">libellé d'un l'élément</param>
-//		/// <param name="row">index ligne tableau de résultats</param>	
-//		/// <param name="colId">identifiant colonne</param>	
-//		/// <param name="colName">libellé colonne</param>
-//		/// <returns> tableau de résultats</returns>
-//		private static ResultTable SetTabLinesLabelForGenericUI(ResultTable tab,string id,string name,int row,int colId,int colName)
-//		{
-//			tab[row,colId]=new CellLevel(row,id.ToString(),1);
-//			tab[row,colName]=new CellLevel(row,name,1);
-//			return tab;
-//		}
-		#endregion
+		#endregion		
 
 		#region Formattage Période sélectionné
 		/// <summary>

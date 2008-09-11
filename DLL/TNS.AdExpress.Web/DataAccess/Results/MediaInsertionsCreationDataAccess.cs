@@ -38,6 +38,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -188,18 +189,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
             try{
 
                 #region Construction de la requête
-                fields = GetFields((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE);
+				fields = GetFields(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE);
 
                 // Sélection de la nomenclature Support
                 sql.Append("select " + fields);
 
                 // Tables // TODO ADNETTRACK ??
                 sql.Append(" from ");
-                sql.Append(GetTables((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), mediaList, webSession.PreformatedMediaDetail, webSession));
+                sql.Append(GetTables(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), mediaList, webSession.PreformatedMediaDetail, webSession));
 
                 // Conditions de jointure
                 sql.Append(" Where ");
-                GetJoinConditions(webSession, sql, (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), mediaList, DbTables.WEB_PLAN_PREFIXE, false);
+                GetJoinConditions(webSession, sql, VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), mediaList, DbTables.WEB_PLAN_PREFIXE, false);
 
                 // Période
                 sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + ".date_media_num>=" + dateBegin);
@@ -236,13 +237,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
                 #region Droits
                 // On ne tient pas compte des droits vehicle pour les plans media AdNetTrack
-                if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.adnettrack)
+                if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.adnettrack)
                     sql.Append(SQLGenerator.GetAdNetTrackMediaRight(webSession, DbTables.WEB_PLAN_PREFIXE, true));
                 else
                     sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession, DbTables.WEB_PLAN_PREFIXE, true));
                 
                 //Droit detail spot à spot TNT
-                if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
+                if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.tv
                     && !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG))
                     sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + ".id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
 
@@ -261,11 +262,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 							if (de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN) && de.Value.ToString().Equals("0") && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG))
                                 sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + "." + de.Key.ToString() + " is null  "); //accroche ==0
-                            else if (de.Key.ToString().Equals(DBConstantes.Fields.ID_VEHICLE) && de.Value.ToString().Equals(DBClassificationConstantes.Vehicles.names.internet.GetHashCode().ToString())
-                                )
+							else if (de.Key.ToString().Equals(DBConstantes.Fields.ID_VEHICLE) && long.Parse(de.Value.ToString()) == VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.internet))                               
                             {
                                 //Remplace identifiant internet par celui adnettrack
-                                sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + "." + de.Key.ToString() + "=" + DBClassificationConstantes.Vehicles.names.adnettrack.GetHashCode().ToString() + "  ");
+                                sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + "." + de.Key.ToString() + "=" + VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.adnettrack) + "  ");
                             }
                             else {
                                 if (!de.Key.ToString().Equals(DBConstantes.Fields.ID_SLOGAN)
@@ -283,11 +283,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 #endregion
 
                 // Clause marketing Direct
-                if (int.Parse(idVehicle.ToString()) == (int)DBClassificationConstantes.Vehicles.names.directMarketing) {
-                    sql.Insert(0, getMDSpecificField((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE, false, export));
-                    sql.Append(GetMDGroupByFields((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE, true));
-                    sql.Append(GetMDOrderByFields((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE));
-                    sql.Append(getMDSpecificGroupBy((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE, false, export));
+                if (long.Parse(idVehicle.ToString()) == VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.directMarketing)) {
+                    sql.Insert(0, getMDSpecificField(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE, false, export));
+                    sql.Append(GetMDGroupByFields(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE, true));
+                    sql.Append(GetMDOrderByFields(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE));
+                    sql.Append(getMDSpecificGroupBy(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), mediaList, webSession, DbTables.WEB_PLAN_PREFIXE, false, export));
                 }
                 else
                     // Ordre
@@ -339,10 +339,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 				//Select
 				sql.Append(" select ");
-				GetSqlFields((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), sql, webSession, ref hasDetailLevelSelect,detailLevelList);			
+				GetSqlFields(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), sql, webSession, ref hasDetailLevelSelect, detailLevelList);			
 
 				//Tables
-				GetSqlTables((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), webSession, sql, detailLevelList);
+				GetSqlTables(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), webSession, sql, detailLevelList);
 			
 				// Conditions de jointure
 				sql.Append(" Where ");
@@ -393,7 +393,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				#region Droits
 				sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession,DbTables.WEB_PLAN_PREFIXE,true));
 				//Droit detail spot à spot TNT
-				if ((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()) == DBClassificationConstantes.Vehicles.names.tv
+				if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.tv
 					&& !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG))
 					sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + ".id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
                 #endregion
@@ -451,10 +451,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				#endregion
 
 				//Group by
-				GetSqlGroupByFields(webSession, sql, (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), ref hasDetailLevelGroupBy, detailLevelList);
+				GetSqlGroupByFields(webSession, sql, VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), ref hasDetailLevelGroupBy, detailLevelList);
 				
 				//Order by 
-				GetSqlOrderFields(webSession, sql, (DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()), ref hasDetailLevelOrder, detailLevelList);
+				GetSqlOrderFields(webSession, sql, VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())), ref hasDetailLevelOrder, detailLevelList);
 				
 			}
 			catch(System.Exception err){
@@ -609,126 +609,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			// Sélection de Produits
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
 				sql.Append(webSession.PrincipalProductUniverses[0].GetSqlConditions(DbTables.WEB_PLAN_PREFIXE, true));
-
-			#region Ancienne version Sélection
-			//// Sélection en accès
-			//premier=true;
-			//// HoldingCompany
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.holdingCompanyAccess);
-			//if(list.Length>0){
-			//    sql.Append(" and ((wp.id_holding_company in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Advertiser
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.advertiserAccess);
-			//if(list.Length>0){
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_advertiser in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Marque
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.brandAccess);
-			//if(list.Length>0) {
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_brand in ("+list+") ");
-			//    premier=false;
-			//}
-
-			//// Product
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.productAccess);
-			//if(list.Length>0){
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_product in ("+list+") ");
-			//    premier=false;
-			//}
-
-			//// Sector
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.sectorAccess);
-			//if(list.Length>0){
-			//    sql.Append(" and ((wp.id_sector in ("+list+") ");
-			//    premier=false;
-			//}
-			//// SubSector
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.subSectorAccess);
-			//if(list.Length>0){
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_subsector in ("+list+") ");
-			//    premier=false;
-			//}
-			//// group
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.groupAccess);
-			//if(list.Length>0){
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_group_ in ("+list+") ");
-			//    premier=false;
-			//}
-
-			//if(!premier) sql.Append(" )");
 			
-			//// Sélection en Exception
-			//// HoldingCompany
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.holdingCompanyException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_holding_company not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Advertiser
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.advertiserException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_advertiser not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// brand
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.brandException);
-			//if(list.Length>0) {
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_brand not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Product
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.productException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_product not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Sector
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.sectorException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_sector not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// SubSector
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.subSectorException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_subsector not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Group
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.groupException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_group_ not in ("+list+") ");
-			//    premier=false;
-			//}
-			//if(!premier) sql.Append(" )");
-			#endregion
 
 			#endregion
 
@@ -736,7 +617,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#region Droits
 			// On ne tient pas compte des droits vehicle pour les plans media AdNetTrack
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.adnettrack)
+			if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.adnettrack)
 				sql.Append(SQLGenerator.GetAdNetTrackMediaRight(webSession,DbTables.WEB_PLAN_PREFIXE,true));
 			else
 				sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession,DbTables.WEB_PLAN_PREFIXE,true));
@@ -795,10 +676,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				IEnumerator myEnumerator = mediaImpactedList.GetEnumerator();				
 				foreach (DictionaryEntry de in mediaImpactedList ){
 					if(de.Key!=null && de.Value !=null && long.Parse(de.Value.ToString())>-1 && de.Key!=null && de.Key.ToString().Length>0){																
-						if (de.Key.ToString().Equals(DBConstantes.Fields.ID_VEHICLE) && de.Value.ToString().Equals(DBClassificationConstantes.Vehicles.names.internet.GetHashCode().ToString()) 
+						if (de.Key.ToString().Equals(DBConstantes.Fields.ID_VEHICLE) && long.Parse(de.Value.ToString())==VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.internet)
 							){
 							//Remplace identifiant internet par celui adnettrack
-							sql.Append(" and "+DbTables.WEB_PLAN_PREFIXE+"."+de.Key.ToString()+"="+DBClassificationConstantes.Vehicles.names.adnettrack.GetHashCode().ToString()+"  ");
+							sql.Append(" and " + DbTables.WEB_PLAN_PREFIXE + "." + de.Key.ToString() + "=" + VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.adnettrack) + "  ");
 						}
 						else
 							sql.Append(" and "+DbTables.WEB_PLAN_PREFIXE+"."+de.Key.ToString()+"="+de.Value.ToString()+"  ");						
@@ -833,127 +714,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			// Sélection de Produits
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
-				sql.Append(webSession.PrincipalProductUniverses[0].GetSqlConditions(DbTables.WEB_PLAN_PREFIXE, true));
-
-			#region Sélection
-			//// Sélection en accès
-			//premier=true;
-			//// HoldingCompany
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.holdingCompanyAccess);
-			//if(list.Length>0){
-			//    sql.Append(" and ((wp.id_holding_company in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Advertiser
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.advertiserAccess);
-			//if(list.Length>0){
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_advertiser in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Marque
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.brandAccess);
-			//if(list.Length>0) {
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_brand in ("+list+") ");
-			//    premier=false;
-			//}
-
-			//// Product
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.productAccess);
-			//if(list.Length>0){
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_product in ("+list+") ");
-			//    premier=false;
-			//}
-
-			//// Sector
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.sectorAccess);
-			//if(list.Length>0){
-			//    sql.Append(" and ((wp.id_sector in ("+list+") ");
-			//    premier=false;
-			//}
-			//// SubSector
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.subSectorAccess);
-			//if(list.Length>0){
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_subsector in ("+list+") ");
-			//    premier=false;
-			//}
-			//// group
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.groupAccess);
-			//if(list.Length>0){
-			//    if(!premier) sql.Append(" or");
-			//    else sql.Append(" and ((");
-			//    sql.Append(" wp.id_group_ in ("+list+") ");
-			//    premier=false;
-			//}
-
-			//if(!premier) sql.Append(" )");
-			
-			//// Sélection en Exception
-			//// HoldingCompany
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.holdingCompanyException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_holding_company not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Advertiser
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.advertiserException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_advertiser not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// brand
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.brandException);
-			//if(list.Length>0) {
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_brand not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Product
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.productException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_product not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Sector
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.sectorException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_sector not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// SubSector
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.subSectorException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_subsector not in ("+list+") ");
-			//    premier=false;
-			//}
-			//// Group
-			//list=webSession.GetSelection(webSession.CurrentUniversAdvertiser,CustomerRightConstante.type.groupException);
-			//if(list.Length>0){
-			//    if(premier) sql.Append(" and (");
-			//    else sql.Append(" and");
-			//    sql.Append(" wp.id_group_ not in ("+list+") ");
-			//    premier=false;
-			//}
-			//if(!premier) sql.Append(" )");
-			#endregion
+				sql.Append(webSession.PrincipalProductUniverses[0].GetSqlConditions(DbTables.WEB_PLAN_PREFIXE, true));			
 
 			#endregion
 
@@ -961,7 +722,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			#region Droits
 			// On ne tient pas compte des droits vehicle pour les plans media AdNetTrack
-			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.adnettrack)
+			if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.adnettrack)
 				sql.Append(SQLGenerator.GetAdNetTrackMediaRight(webSession,DbTables.WEB_PLAN_PREFIXE,true));
 			else
 			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession,DbTables.WEB_PLAN_PREFIXE,true));

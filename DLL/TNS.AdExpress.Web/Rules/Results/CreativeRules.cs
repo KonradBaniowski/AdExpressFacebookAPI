@@ -30,6 +30,7 @@ using DBCst = TNS.AdExpress.Constantes.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Exceptions;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Rules.Results {
 
@@ -51,9 +52,9 @@ namespace TNS.AdExpress.Web.Rules.Results {
         /// <param name="moduleId">Identifiant du module</param>
         /// <param name="parameters">Chaine de caractère contenant des paramètres à afaire passer dans un lien quelconque.</param>
         /// <returns>List of creatives</returns>
-        public static List<ITableElement> GetCreatives(WebSession session, int IdVehicle, string filters, int fromDate, int toDate, int universId, string zoom, Int64 moduleId, string parameters) {
+        public static List<ITableElement> GetCreatives(WebSession session, long IdVehicle, string filters, int fromDate, int toDate, int universId, string zoom, Int64 moduleId, string parameters) {
 
-            DBClassifCst.Vehicles.names vehicle = (DBClassifCst.Vehicles.names)IdVehicle;
+            DBClassifCst.Vehicles.names vehicle = VehiclesInformation.DatabaseIdToEnum(IdVehicle);
 
 
             DataTable dt = CreativesDataAccess.GetData(session, vehicle, filters, fromDate, toDate, universId, moduleId).Tables[0];
@@ -121,7 +122,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
         /// <param name="idModule">Module identifiant</param>
         /// <param name="universId">Current Univers Identifiant (concurrant environnement, -1 by default)</param>
         /// <returns>List of vehicle Ids</returns>
-        public static List<int> GetVehicles(WebSession session, Int64 idModule, string filters, int universId) {
+        public static List<long> GetVehicles(WebSession session, Int64 idModule, string filters, int universId) {
 
             #region Dates
             int dateBegin = 0;
@@ -132,9 +133,9 @@ namespace TNS.AdExpress.Web.Rules.Results {
             #endregion
 
             string list = string.Empty;
-            List<int> vehicles = new List<int>();
+			List<long> vehicles = new List<long>();
             string[] ids = null;
-            int id = -1;
+            long id = -1;
             TreeNode tree = null;
 
 
@@ -149,7 +150,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
 
                             ds = MediaCreationDataAccess.GetIdsVehicle(session, -1, ((LevelInformation)nd.Tag).ID);
                             foreach (DataRow dr in ds.Tables[0].Rows) {
-                                id = Convert.ToInt32(dr["id_vehicle"]);
+                                id = Convert.ToInt64(dr["id_vehicle"]);
                                 if ( ! vehicles.Contains(id))
                                     vehicles.Add(id);
 
@@ -166,7 +167,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
                     id = -1;
                     if (session.SelectionUniversMedia != null)
                         tree = session.SelectionUniversMedia;
-                    id = (int)((LevelInformation)tree.Nodes[0].Tag).ID;
+                    id = ((LevelInformation)tree.Nodes[0].Tag).ID;
                     vehicles.Add(id);
                     break;
                 case WebCst.Module.Name.ALERTE_PLAN_MEDIA:
@@ -177,31 +178,31 @@ namespace TNS.AdExpress.Web.Rules.Results {
                     GetImpactedVehicleIds(session, ids[0], ids[1], ids[2], ids[3], ref tmp, ref idVehicle, dateBegin, dateEnd);
                     id = -1;
                     foreach (object o in tmp) {
-                        id = Convert.ToInt32(o);
+                        id = Convert.ToInt64(o);
                         vehicles.Add(id);
                     }
                     break;
                 case WebCst.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
                 case WebCst.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE:
                     ids = filters.Split(',');
-                    id = Convert.ToInt32(ids[0]);
+					id = Convert.ToInt64(ids[0]);
                     vehicles.Add(id);
                     break;
                 case WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS:
                 case WebCst.Module.Name.ANALYSE_DES_PROGRAMMES:
-                    vehicles.Add(DBClassifCst.Vehicles.names.tv.GetHashCode());
+                    vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.tv));
                     break;
             }
 
             if (vehicles.Count <= 0) {
-                vehicles.Add(DBClassifCst.Vehicles.names.others.GetHashCode());
-                vehicles.Add(DBClassifCst.Vehicles.names.directMarketing.GetHashCode());
-                vehicles.Add(DBClassifCst.Vehicles.names.internet.GetHashCode());
-                vehicles.Add(DBClassifCst.Vehicles.names.adnettrack.GetHashCode());
-                vehicles.Add(DBClassifCst.Vehicles.names.press.GetHashCode());
-                vehicles.Add(DBClassifCst.Vehicles.names.outdoor.GetHashCode());
-                vehicles.Add(DBClassifCst.Vehicles.names.radio.GetHashCode());
-                vehicles.Add(DBClassifCst.Vehicles.names.tv.GetHashCode());
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.others));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.directMarketing));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.internet));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.adnettrack));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.press));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.outdoor));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radio));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.tv));
 
             }
 

@@ -27,6 +27,7 @@ using TNS.FrameWork.WebResultUI;
 using ControlsExceptions = TNS.AdExpress.Web.Controls.Exceptions;
 using TNS.FrameWork;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 	/// <summary>
@@ -237,7 +238,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 }
                 param[0] = _customerWebSession;
                 param[1] = period;
-                param[2] = (Int64)DBClassificationConstantes.Vehicles.names.adnettrack;
+                param[2] = VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.adnettrack);
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 result = mediaScheduleResult.GetHtml();
 
@@ -280,7 +281,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 			try{
 
                 #region Data
-                tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, (Int64)DBClassificationConstantes.Vehicles.names.adnettrack);
+                tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.adnettrack));
                 #endregion
 
 

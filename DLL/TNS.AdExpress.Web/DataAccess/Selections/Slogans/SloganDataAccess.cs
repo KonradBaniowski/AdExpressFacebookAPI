@@ -55,8 +55,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 			string tempSql="";
 			bool first=true;
 			string[] listVehicles = null;
-			 
-			if(webSession.CurrentModule==Constantes.Web.Module.Name.JUSTIFICATIFS_PRESSE) listVehicles = new string[] {""+DBClassificationConstantes.Vehicles.names.press.GetHashCode().ToString()+""};
+
+			if (webSession.CurrentModule == Constantes.Web.Module.Name.JUSTIFICATIFS_PRESSE) listVehicles = new string[] { "" + VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.press) + "" };
 			else listVehicles = webSession.GetSelection(webSession.SelectionUniversMedia, AccessCst.vehicleAccess).Split(new char[]{','});
 
 			//DataSet ds = new DataSet();

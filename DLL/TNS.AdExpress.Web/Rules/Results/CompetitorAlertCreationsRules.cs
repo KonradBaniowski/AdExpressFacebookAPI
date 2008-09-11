@@ -19,6 +19,7 @@ using CstClassification = TNS.AdExpress.Constantes.Classification;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Rules.Results{
 
@@ -60,7 +61,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				#endregion
 
 				#region Construction du tableau
-				switch((CstClassification.DB.Vehicles.names) int.Parse(idVehicle)){
+				switch(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle))){
 					case CstClassification.DB.Vehicles.names.press:
 						return GetDataPress(ds);
 					case CstClassification.DB.Vehicles.names.internationalPress:
