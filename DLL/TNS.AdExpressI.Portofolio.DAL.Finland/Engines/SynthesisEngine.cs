@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Data;
 
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -147,6 +148,51 @@ namespace TNS.AdExpressI.Portofolio.DAL.Finland.Engines {
             #endregion
 
             return sql.ToString();
+
+        }
+        #endregion
+
+        #region Get Period
+        /// <summary>
+        /// Get date of issue
+        /// </summary>
+        /// <returns>DataSet</returns>
+        protected override DataSet GetPeriod() {
+
+            #region Construction de la requête
+            string table = GetTableData();
+            string product = GetProductData();
+            string productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            //liste des produit hap
+            string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+
+            string sql;
+
+            sql = "select  min(DATE_MEDIA_NUM) first_date, max(DATE_MEDIA_NUM) last_date";
+
+            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + table + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
+            sql += " where id_media = " + _idMedia + "";
+            if (_beginingDate.Length > 0)
+                sql += " and date_media_num>=" + _beginingDate + " ";
+            if (_endDate.Length > 0)
+                sql += " and date_media_num<=" + _endDate + "";
+
+            sql += product;
+            sql += productsRights;
+            sql += GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            sql += mediaRights;
+            sql += listProductHap;
+            #endregion
+
+            #region Execution de la requête
+            try {
+                return _webSession.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception err) {
+                throw (new PortofolioDALException("Impossible to get data for GetPeriod(): " + sql, err));
+            }
+            #endregion
 
         }
         #endregion

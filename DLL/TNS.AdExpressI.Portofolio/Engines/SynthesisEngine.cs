@@ -102,7 +102,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			ResultTable resultTable = null;
 			LineType lineType = LineType.level1;
 			string typeReseauStr = string.Empty;
-			bool isAlertModule = _webSession.CustomerPeriodSelected.Is4M; //(_webSession.CurrentModule == WebCst.Module.Name.ALERTE_PORTEFEUILLE);			
 			#endregion
 			
 			#region Accès aux tables
@@ -119,8 +118,17 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             DataTable dt;
             DataTable dtTypeSale = null;
 
+            #region AlertModule
+            bool isAlertModule = _webSession.CustomerPeriodSelected.Is4M;
+            if (isAlertModule == false) {
+                DateTime DateBegin = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
+                if(DateBegin > DateTime.Now)
+                    isAlertModule = true;
+            }
+            #endregion
+
             #region Media
-				ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.media);
+            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.media);
 				dt = ds.Tables[0];
 				if (dt.Rows.Count > 0)
 					media = dt.Rows[0]["media"].ToString();
@@ -297,6 +305,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             #endregion
 
+            #region No data
+            if ((investment == null || investment.Length < 1 || investment == "0")
+                && (numberProduct == null || numberProduct.Length < 1 || numberProduct == "0")
+                && (numberAdvertiser == null || numberAdvertiser.Length < 1 || numberAdvertiser == "0")) {
+                return resultTable;
+            }
+            #endregion
+
             #region Period
             DateTime dtFirstDate = DateTime.Today;
             DateTime dtLastDate = DateTime.Today;
@@ -381,37 +397,42 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#endregion
 
 			#region Building resultTable
-            // Date begin and date end for outdooor
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
-                lineIndex = resultTable.AddNewLine(lineType);
-                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
+            if (!isAlertModule
+                || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.directMarketing && _webSession.CustomerPeriodSelected.Is4M)
+                || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internet && _webSession.CustomerPeriodSelected.Is4M)
+                || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
+                // Date begin and date end for outdooor
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
+
+                    ChangeLineType(ref lineType);
+
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1608, _webSession.SiteLanguage));
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
+                }
+                // Period selected
+                else {
+                    //if (firstDate.Length > 0 || !isAlertModule) {
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && isAlertModule)
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage));
+                    else resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
+                    if ((firstDate != null && firstDate.Length > 0 && lastDate != null && lastDate.Length > 0 && firstDate.Equals(lastDate) && isAlertModule)
+                        || (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
+                    }
+                    else {
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
+                    }
+                    //}
+                }
 
                 ChangeLineType(ref lineType);
-
-                lineIndex = resultTable.AddNewLine(lineType);
-                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1608, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
             }
-            // Period selected
-            else {
-                //if (firstDate.Length > 0 || !isAlertModule) {
-                lineIndex = resultTable.AddNewLine(lineType);
-                if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && isAlertModule)
-                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage));
-                else resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
-                if ((firstDate != null && firstDate.Length > 0 && lastDate != null && lastDate.Length > 0 && firstDate.Equals(lastDate) && isAlertModule)
-                    || (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
-					resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
-                }
-                else {
-					resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
-                }
-                //}
-            }
-
-            ChangeLineType(ref lineType);
 
             // Periodicity
             if (periodicity.Length>0) {

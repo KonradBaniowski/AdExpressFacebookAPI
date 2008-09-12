@@ -87,7 +87,6 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             ResultTable resultTable = null;
             LineType lineType = LineType.level1;
             string typeReseauStr = string.Empty;
-            bool isAlertModule = _webSession.CustomerPeriodSelected.Is4M; //(_webSession.CurrentModule == WebCst.Module.Name.ALERTE_PORTEFEUILLE);			
             #endregion
 
             #region Accès aux tables
@@ -102,6 +101,15 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
 
             DataSet ds;
             DataTable dt;
+
+            #region AlertModule
+            bool isAlertModule = _webSession.CustomerPeriodSelected.Is4M;
+            if (isAlertModule == false) {
+                DateTime DateBegin = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
+                if (DateBegin > DateTime.Now)
+                    isAlertModule = true;
+            }
+            #endregion
 
             #region Media
 				ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.media);
@@ -185,24 +193,26 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             DateTime dtFirstDate = DateTime.Today;
             DateTime dtLastDate = DateTime.Today;
             if (isAlertModule) {
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
-                    if (firstDate.Length > 0) {
-                        dtFirstDate = Convert.ToDateTime(firstDate);
-                        dtFirstDate = dtFirstDate.Date;
-                    }
-                    if (lastDate.Length > 0) {
-                        dtLastDate = Convert.ToDateTime(lastDate);
-                        dtLastDate = dtLastDate.Date;
-                    }
-                }
-                else {
-                    if (firstDate.Length > 0) {
-                        dtFirstDate = new DateTime(int.Parse(firstDate.Substring(0, 4)), int.Parse(firstDate.Substring(4, 2)), int.Parse(firstDate.Substring(6, 2)));
-                    }
 
-                    if (lastDate.Length > 0) {
-                        dtLastDate = new DateTime(int.Parse(lastDate.Substring(0, 4)), int.Parse(lastDate.Substring(4, 2)), int.Parse(lastDate.Substring(6, 2)));
-                    }
+                #region Outdoor
+                //if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+                //    if (firstDate.Length > 0) {
+                //        dtFirstDate = Convert.ToDateTime(firstDate);
+                //        dtFirstDate = dtFirstDate.Date;
+                //    }
+                //    if (lastDate.Length > 0) {
+                //        dtLastDate = Convert.ToDateTime(lastDate);
+                //        dtLastDate = dtLastDate.Date;
+                //    }
+                //}
+                #endregion
+
+                if (firstDate.Length > 0) {
+                    dtFirstDate = new DateTime(int.Parse(firstDate.Substring(0, 4)), int.Parse(firstDate.Substring(4, 2)), int.Parse(firstDate.Substring(6, 2)));
+                }
+
+                if (lastDate.Length > 0) {
+                    dtLastDate = new DateTime(int.Parse(lastDate.Substring(0, 4)), int.Parse(lastDate.Substring(4, 2)), int.Parse(lastDate.Substring(6, 2)));
                 }
             }
             else {
@@ -248,33 +258,40 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             #endregion
 
             #region Building resultTable
-            // Date begin and date end for outdooor
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
-                lineIndex = resultTable.AddNewLine(lineType);
-                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
+            if (!isAlertModule
+                || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
+
+                #region Outdoor
+                // Date begin and date end for outdooor
+                //if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
+                //    lineIndex = resultTable.AddNewLine(lineType);
+                //    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
+                //    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
+
+                //    ChangeLineType(ref lineType);
+
+                //    lineIndex = resultTable.AddNewLine(lineType);
+                //    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1608, _webSession.SiteLanguage));
+                //    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
+                //}
+                #endregion
+
+                // Period selected
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press && isAlertModule)
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage));
+                    else
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
+                    if ((firstDate != null && firstDate.Length > 0 && lastDate != null && lastDate.Length > 0 && firstDate.Equals(lastDate) && isAlertModule)
+                        || (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
+                    }
+                    else {
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
+                    }
 
                 ChangeLineType(ref lineType);
-
-                lineIndex = resultTable.AddNewLine(lineType);
-                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1608, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
             }
-            // Period selected
-            else {
-                lineIndex = resultTable.AddNewLine(lineType);
-                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
-                if ((firstDate != null && firstDate.Length > 0 && lastDate != null && lastDate.Length > 0 && firstDate.Equals(lastDate) && isAlertModule)
-                    || (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
-                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
-                }
-                else {
-                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
-                }
-                //}
-            }
-
-            ChangeLineType(ref lineType);
 
             // Category
             if (category.Length > 0) {
