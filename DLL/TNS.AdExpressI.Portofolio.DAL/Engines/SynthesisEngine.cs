@@ -29,6 +29,7 @@ using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
@@ -1196,7 +1197,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 }
                 // Encart
                 if (dataType == PortofolioSynthesis.dataType.adNumberIncludingInsets) {
-                    sql.AppendFormat(" and id_inset in ({0}) ",LIST_ENCART);
+                    sql.AppendFormat(" and id_inset in ({0}) ",Lists.GetInsetIdList());
                 }
                 if (_beginingDate.Length > 0)
                     sql.AppendFormat(" and  DATE_MEDIA_NUM>={0} ",_beginingDate);
