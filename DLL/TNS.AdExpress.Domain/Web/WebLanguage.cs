@@ -53,6 +53,12 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         /// <example>France = "utf-8"</example>
         private string _contentEncoding = "utf-8";
+        /// <summary>
+        /// Content Encoding used for excel aspx page
+        /// By default, the content encoding is set to utf-8
+        /// </summary>
+        /// <example>France = "utf-8"</example>
+        private string _excelContentEncoding = "utf-8";
 		/// <summary>
 		/// NLS SORT to use any linguistic sort for an ORDER BY clause
 		/// <example> France ="FRENCH"</example>
@@ -73,8 +79,9 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="localization">Localisation text string id</param>
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
+        /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
         /// <param name="cInfo">Extended culture info</param>
-        public WebLanguage(int id,string imageSourceText,string localization,string charset,string contentEncoding) {
+        public WebLanguage(int id, string imageSourceText, string localization, string charset, string contentEncoding, string excelContentEncoding) {
             if(id<0) throw (new ArgumentException("The language Id cannot be inferior to 0"));
             _id=id;
             if(imageSourceText!=null) _imageSourceText=imageSourceText;
@@ -82,7 +89,8 @@ namespace TNS.AdExpress.Domain.Web {
             if(localization.Length==0) throw (new ArgumentException("Invalid localization parameter"));
             _localization=localization;
             if(charset!=null && charset.Length!=0) _charset=charset;
-            if(contentEncoding!=null && contentEncoding.Length!=0) _contentEncoding=contentEncoding;
+            if (contentEncoding != null && contentEncoding.Length != 0) _contentEncoding = contentEncoding;
+            if (ExcelContentEncoding != null && ExcelContentEncoding.Length != 0) _excelContentEncoding = excelContentEncoding;
             _name="Country name is not defined:"+_id.ToString();
             _classificationLanguageId=_id;
 
@@ -97,8 +105,9 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="classificationLanguageId">Classification language Id</param>
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
-        public WebLanguage(int id,string name,string imageSourceText,string localization,int classificationLanguageId,string charset,string contentEncoding,string nlsSort, AdExpressCultureInfo cInfo)
-            : this(id,imageSourceText,localization,charset,contentEncoding) {
+        /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
+        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string nlsSort, AdExpressCultureInfo cInfo)
+            : this(id,imageSourceText,localization,charset,contentEncoding,excelContentEncoding) {
             if(name!=null&&name.Length>0) _name=name;
 			if (nlsSort != null && nlsSort.Length > 0) _nlsSort = nlsSort;		
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
@@ -150,6 +159,12 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         public string ContentEncoding {
             get { return (_contentEncoding); }
+        }
+        /// <summary>
+        /// Get Content Encoding used for the excel aspx page
+        /// </summary>
+        public string ExcelContentEncoding {
+            get { return (_excelContentEncoding); }
         }
 		/// <summary>
 		/// Get NLS SORT to use any linguistic sort for an ORDER BY clause

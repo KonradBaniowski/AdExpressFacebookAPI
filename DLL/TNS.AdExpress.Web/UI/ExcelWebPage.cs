@@ -2015,7 +2015,9 @@ namespace TNS.AdExpress.Web.UI{
 		/// <param name="sender">Source Object</param>
 		/// <param name="e">Arguments</param>
 		private void ExcelWebPage_Load(object sender, EventArgs e) {
-				
+
+            this.Response.ContentEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelContentEncoding);
+
 //			TNS.AdExpress.Web.UI.HtmlHeader header = new HtmlHeader(_cssKeys);
 //			this.Response.ContentType = "application/vnd.ms-excel";
 //			this.Page.Controls.AddAt(0,header);			

@@ -123,7 +123,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             string localization;
             int classificationLanguageId;
             string charset="";
-            string contentEncoding="";
+            string contentEncoding = "";
+            string excelContentEncoding = "";
 			string nlsSort = "";
 			bool isUTF8 = false;
             AdExpressCultureInfo cInfo = null;
@@ -150,6 +151,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 if(reader.GetAttribute("name")!=null) name=reader.GetAttribute("name");
                                 if(reader.GetAttribute("charset")!=null) charset=reader.GetAttribute("charset");
                                 if (reader.GetAttribute("contentEncoding") != null) contentEncoding = reader.GetAttribute("contentEncoding");
+                                if (reader.GetAttribute("excelContentEncoding") != null) excelContentEncoding = reader.GetAttribute("excelContentEncoding");
                                 if(reader.GetAttribute("imageSourceText")!=null) imageSourceText=reader.GetAttribute("imageSourceText");
                                 if(reader.GetAttribute("classificationLanguageId")!=null && reader.GetAttribute("classificationLanguageId").Length>0)
                                     classificationLanguageId=int.Parse(reader.GetAttribute("classificationLanguageId"));
@@ -158,7 +160,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								if (reader.GetAttribute("nlsSort") != null && reader.GetAttribute("nlsSort").Length > 0)
 									nlsSort = reader.GetAttribute("nlsSort");															
                                 cInfo = new AdExpressCultureInfo(localization);
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,nlsSort, cInfo));
+                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,nlsSort, cInfo));
                                 break;
                             case "unitformat":
                                 if(reader.GetAttribute("name")!=null) formatName=reader.GetAttribute("name");
