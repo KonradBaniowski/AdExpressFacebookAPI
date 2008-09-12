@@ -137,25 +137,56 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
             string sql = string.Empty;
             int positionUnivers = 1;
             string mediaList = string.Empty;
+            string tableName = string.Empty;
 
             #region Construction de la requête
 
+            switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
+                case DBClassificationConstantes.Vehicles.names.internet:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).Sql;
+                    break;
+                case DBClassificationConstantes.Vehicles.names.directMarketing:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).Sql;
+                    break;
+                case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Sql;
+                    break;
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).Sql;
+                    break;
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio).Sql;
+                    break;
+                case DBClassificationConstantes.Vehicles.names.outdoor:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).Sql;
+                    break;
+                case DBClassificationConstantes.Vehicles.names.cinema:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).Sql;
+                    break;
+            }
 
             switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
                 case DBClassificationConstantes.Vehicles.names.internet:
                     sql += " select max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-                    sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).Sql;
+                    sql += " from " + tableName;
                     break;
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     sql += " select max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-					sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).Sql;
+                    sql += " from " + tableName;
                     break;
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.cinema:
                     sql += " select min(last_date) as last_date ";
                     sql += " from (";
                     sql += " select id_media, max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-					sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Sql;
+                    sql += " from " + tableName;
 
 
                     #region Media selection

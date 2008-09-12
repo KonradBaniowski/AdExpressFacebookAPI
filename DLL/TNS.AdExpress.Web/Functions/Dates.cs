@@ -533,22 +533,17 @@ namespace TNS.AdExpress.Web.Functions{
             switch(VehiclesInformation.DatabaseIdToEnum(selectedVehicle)) {
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.cinema:
 					lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle, dataSource);
                     startYear--;
                     if (lastDate.Length == 0) lastDate = startYear + "1231";
                     publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
                     firstDayOfWeek = publicationDate.AddDays(1);
                     return firstDayOfWeek;
-                case DBClassificationConstantes.Vehicles.names.outdoor:
-                    firstDayOfWeek = firstDayOfWeek.AddDays(-7);
-                    return (firstDayOfWeek);
-                case DBClassificationConstantes.Vehicles.names.radio:
-                case DBClassificationConstantes.Vehicles.names.tv:
-                case DBClassificationConstantes.Vehicles.names.others:
-                    if (!((int)DateTime.Now.DayOfWeek >= 5) && !((int)DateTime.Now.DayOfWeek == 0)) {
-                        firstDayOfWeek = firstDayOfWeek.AddDays(-7);
-                    }
-                    return (firstDayOfWeek);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
 					lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle, dataSource);
                     startYear--;
