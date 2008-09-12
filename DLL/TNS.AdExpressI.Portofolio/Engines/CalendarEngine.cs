@@ -140,7 +140,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				for (i = 1; i <= iNbLevels; i++) {
 					//nouveau niveau i
 					dCurLevel = _webSession.GenericProductDetailLevel.GetIdValue(row, i);
-					if (dCurLevel > 0 && (cellLevels[i] == null || dCurLevel != cellLevels[i].Id)) {
+					if (dCurLevel >= 0 && (cellLevels[i] == null || dCurLevel != cellLevels[i].Id)) {
 						for (int j = i + 1; j < cellLevels.Length; j++) {
 							cellLevels[j] = null;
 						}
@@ -206,13 +206,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		protected virtual int GetCalendarSize(DataTable dt, ArrayList parutions) {
 
 			#region Variable
-			Int64 OldL1Id = 0;
+			Int64 OldL1Id = -1;
 			Int64 cL1Id = 0;
 			Int64 nbL1Id = 0;
-			Int64 OldL2Id = 0;
+			Int64 OldL2Id = -1;
 			Int64 cL2Id = 0;
 			Int64 nbL2Id = 0;
-			Int64 OldL3Id = 0;
+			Int64 OldL3Id = -1;
 			Int64 cL3Id = 0;
 			Int64 nbL3Id = 0;
 			Int64 nbLine = 0;
@@ -220,19 +220,19 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			foreach (DataRow dr in dt.Rows) {
 				cL1Id = _webSession.GenericProductDetailLevel.GetIdValue(dr, 1);
-				if (cL1Id > 0 && cL1Id != OldL1Id) {
+				if (cL1Id >= 0 && cL1Id != OldL1Id) {
 					nbL1Id++;
 					OldL1Id = cL1Id;
 					OldL2Id = OldL3Id = -1;
 				}
 				cL2Id = _webSession.GenericProductDetailLevel.GetIdValue(dr, 2);
-				if (cL2Id > 0 && OldL2Id != cL2Id) {
+				if (cL2Id >= 0 && OldL2Id != cL2Id) {
 					nbL2Id++;
 					OldL2Id = cL2Id;
 					OldL3Id = -1;
 				}
 				cL3Id = _webSession.GenericProductDetailLevel.GetIdValue(dr, 3);
-				if (cL3Id > 0 && OldL3Id != cL3Id) {
+				if (cL3Id >= 0 && OldL3Id != cL3Id) {
 					nbL3Id++;
 					OldL3Id = cL3Id;
 				}

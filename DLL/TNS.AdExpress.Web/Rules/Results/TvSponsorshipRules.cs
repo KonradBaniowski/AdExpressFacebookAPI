@@ -880,38 +880,38 @@ namespace TNS.AdExpress.Web.Rules.Results
 			
 			foreach(DataRow currentRow in dt.Rows){
 				
-				if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,1)>0 && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,1)!=oldIdL1)changeLine=true;
-				if(!changeLine && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,2)>0 && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,2)!=oldIdL2)changeLine=true;
-				if(!changeLine && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,3)>0 && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,3)!=oldIdL3)changeLine=true;
-				if(!changeLine && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,4)>0 && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,4)!=oldIdL4)changeLine=true;
+				if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,1)>=0 && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,1)!=oldIdL1)changeLine=true;
+				if(!changeLine && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,2)>=0 && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,2)!=oldIdL2)changeLine=true;
+				if(!changeLine && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,3)>=0 && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,3)!=oldIdL3)changeLine=true;
+				if(!changeLine && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,4)>=0 && webSession.GenericMediaDetailLevel.GetIdValue(currentRow,4)!=oldIdL4)changeLine=true;
 
 				#region On change de ligne
 				if(changeLine){
 					currentLine++;
 
 					// identifiants de L1 
-					if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,1)>0){
+					if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,1)>=0){
 						oldIdL1=webSession.GenericMediaDetailLevel.GetIdValue(currentRow,1);
 						tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.IDL1_INDEX]=oldIdL1;
 						tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.LABELL1_INDEX]=webSession.GenericMediaDetailLevel.GetLabelValue(currentRow,1);
 					}
 
 					// identifiants de L2 
-					if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,2)>0){
+					if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,2)>=0){
 						oldIdL2=webSession.GenericMediaDetailLevel.GetIdValue(currentRow,2);
 						tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.IDL2_INDEX]=oldIdL2;
 						tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.LABELL2_INDEX]=webSession.GenericMediaDetailLevel.GetLabelValue(currentRow,2);
 					}
 
 					// identifiants de L3 
-					if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,3)>0){
+					if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,3)>=0){
 						oldIdL3=webSession.GenericMediaDetailLevel.GetIdValue(currentRow,3);
 						tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.IDL3_INDEX]=oldIdL3;
 						tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.LABELL3_INDEX]=webSession.GenericMediaDetailLevel.GetLabelValue(currentRow,3);
 					}
 
 					// identifiants de L4 
-					if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,4)>0){
+					if(webSession.GenericMediaDetailLevel.GetIdValue(currentRow,4)>=0){
 						oldIdL4=webSession.GenericMediaDetailLevel.GetIdValue(currentRow,4);
 						tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.IDL4_INDEX]=oldIdL4;
 						tabResult[currentLine,FrameWorkResultConstantes.TvSponsorship.LABELL4_INDEX]=webSession.GenericMediaDetailLevel.GetLabelValue(currentRow,4);

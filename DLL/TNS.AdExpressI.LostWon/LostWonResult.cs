@@ -745,9 +745,9 @@ namespace TNS.AdExpressI.LostWon {
 
             foreach (DataRow currentRow in dt.Rows) {
                 idMedia = (Int64)currentRow["id_media"];
-                if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 1) > 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 1) != oldIdL1) changeLine = true;
-                if (!changeLine && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) > 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) != oldIdL2) changeLine = true;
-                if (!changeLine && _session.GenericProductDetailLevel.GetIdValue(currentRow, 3) > 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 3) != oldIdL3) changeLine = true;
+                if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 1) >= 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 1) != oldIdL1) changeLine = true;
+                if (!changeLine && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) >= 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) != oldIdL2) changeLine = true;
+                if (!changeLine && _session.GenericProductDetailLevel.GetIdValue(currentRow, 3) >= 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 3) != oldIdL3) changeLine = true;
 
 
                 #region On change de ligne
@@ -755,19 +755,19 @@ namespace TNS.AdExpressI.LostWon {
 
                     currentLine++;
                     // Ecriture de L1 ?
-                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 1) > 0) {
+                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 1) >= 0) {
                         oldIdL1 = _session.GenericProductDetailLevel.GetIdValue(currentRow, 1);
                         tabResult[IDL1_INDEX, currentLine] = oldIdL1;
                         tabResult[LABELL1_INDEX, currentLine] = _session.GenericProductDetailLevel.GetLabelValue(currentRow, 1);
                     }
                     // Ecriture de L2 ?
-                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 2) > 0) {
+                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 2) >= 0) {
                         oldIdL2 = _session.GenericProductDetailLevel.GetIdValue(currentRow, 2);
                         tabResult[IDL2_INDEX, currentLine] = oldIdL2;
                         tabResult[LABELL2_INDEX, currentLine] = _session.GenericProductDetailLevel.GetLabelValue(currentRow, 2);
                     }
                     // Ecriture de L3 ?
-                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 3) > 0) {
+                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 3) >= 0) {
                         oldIdL3 = _session.GenericProductDetailLevel.GetIdValue(currentRow, 3);
                         tabResult[IDL3_INDEX, currentLine] = oldIdL3;
                         tabResult[LABELL3_INDEX, currentLine] = _session.GenericProductDetailLevel.GetLabelValue(currentRow, 3);
