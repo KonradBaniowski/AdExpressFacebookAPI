@@ -30,7 +30,7 @@ namespace AdExpress.Private.Results.Excel{
 	/// <summary>
 	/// Génère une page Excel donnant le détail des insertions d'un support, d'une catégorie ou d'un média
 	/// </summary>
-	public partial class MediaInsertionsCreations : TNS.AdExpress.Web.UI.PrivateWebPage{
+	public partial class MediaInsertionsCreations : TNS.AdExpress.Web.UI.ExcelWebPage{
 	
 		#region Variables
 		/// <summary>

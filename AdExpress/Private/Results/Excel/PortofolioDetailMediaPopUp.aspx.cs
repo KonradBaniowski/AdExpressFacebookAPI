@@ -27,7 +27,7 @@ namespace AdExpress.Private.Results.Excel{
 	/// Export Excel pour les popup de la planche détail support
 	/// dans le module portefeuille
 	/// </summary>
-    public partial class PortofolioDetailMediaPopUp : TNS.AdExpress.Web.UI.PrivateWebPage {
+    public partial class PortofolioDetailMediaPopUp : TNS.AdExpress.Web.UI.ExcelWebPage {
 
 		#region Variables
 		/// <summary>

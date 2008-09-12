@@ -31,7 +31,7 @@ namespace AdExpress.Private.Results.Excel{
 	/// <summary>
 	/// Description résumée de selectionModule.
 	/// </summary>
-	public partial class ZoomMediaPlanAnalysisResults :  TNS.AdExpress.Web.UI.PrivateWebPage{	
+	public partial class ZoomMediaPlanAnalysisResults :  TNS.AdExpress.Web.UI.ExcelWebPage{	
 		
 		#region Variables
 //		/// <summary>

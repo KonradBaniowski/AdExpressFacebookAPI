@@ -24,7 +24,7 @@ namespace AdExpress.Private.Results.Excel{
 	/// <summary>
 	/// Export Excel pour le module Tendances
 	/// </summary>
-	public partial class TendenciesResults : TNS.AdExpress.Web.UI.PrivateWebPage{		
+	public partial class TendenciesResults : TNS.AdExpress.Web.UI.ExcelWebPage{		
 
 		#region Variables
 		/// <summary>
