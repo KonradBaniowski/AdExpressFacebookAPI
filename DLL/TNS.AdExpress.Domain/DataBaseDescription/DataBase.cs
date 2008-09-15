@@ -285,7 +285,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         dataInternet=44,
         /// <summary>
-        /// AdNetTrack Data
+        /// AdNetTrack Data (Evaliant)
         /// </summary>
         dataAdNetTrack=45,
         /// <summary>
@@ -665,7 +665,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         rightProjectFlagAssignment=139,
         /// <summary>
-        /// AdNretTrack Data on last 4M
+        /// AdNetTrack Data on last 4M (Evaliant 4M)
         /// </summary>
         dataAdNetTrackAlert=140,
 		/// <summary>
