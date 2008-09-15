@@ -396,7 +396,7 @@ namespace TNS.AdExpressI.LostWon {
 
             #endregion
 
-            #region Aucune données
+            #region Aucune données (par rapport aux dates)
             if (PeriodBeginningDate > DateTime.Now) {
                 return null;
             }
@@ -415,6 +415,12 @@ namespace TNS.AdExpressI.LostWon {
             }
             catch (System.Exception err) {
                 throw (new LostWonException("Unable to load data for synthesis report.", err));
+            }
+            #endregion
+
+            #region Aucune données (par rapport aux données)
+            if (dt == null || dt.Rows == null || dt.Rows.Count < 1) {
+                return null;
             }
             #endregion
 
