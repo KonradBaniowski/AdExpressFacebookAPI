@@ -886,8 +886,11 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                     else if (customerWebSession.Unit == SessionCst.Unit.volume)
                         customerWebSession.Unit = SessionCst.Unit.euro;
                 }
-
-				list.Items.FindByValue(customerWebSession.Unit.GetHashCode().ToString()).Selected=true;
+                if (!units.Contains(UnitsInformation.Get(customerWebSession.Unit))) {
+                    customerWebSession.Unit = units[0].Id;
+                }
+                customerWebSession.Save();
+                list.Items.FindByValue(customerWebSession.Unit.GetHashCode().ToString()).Selected = true;
 
 				Controls.Add(list);
 			}
