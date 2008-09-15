@@ -130,7 +130,7 @@
 			}
 		</script>
 	</head>
-	<body onload="javascript:selectedItem(7);" bottomMargin="0" leftMargin="0" topMargin="0" class="bodyStyle">
+	<body onload="javascript:selectedItem(7);javascript:activateActiveX();" bottomMargin="0" leftMargin="0" topMargin="0" class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
 			<table id="Table1" height="600" cellspacing="0" cellpadding="0" width="800" border="0">
 				<tr>

@@ -83,7 +83,7 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta content="no-cache" name="Cache-control"/>
 </head>
-<body bottomMargin="0" leftMargin="0" topMargin="0" onload="javascript:selectedItem(7);">
+<body bottomMargin="0" leftMargin="0" topMargin="0" onload="javascript:selectedItem(7);javascript:activateActiveX();">
     <form id="Form2" method="post" runat="server">
         <table id="Table1" height="600" cellSpacing="0" cellPadding="0" width="800" border="0">
 				<tr>

@@ -81,6 +81,7 @@ namespace TNS.AdExpress.Web.UI {
             if (!Page.ClientScript.IsClientScriptBlockRegistered("CookiesJScript")) {
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "CookiesJScript", TNS.AdExpress.Web.Functions.Script.CookiesJScript());
             }
+            Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "activateActiveX", ResolveClientUrl("~/scripts/activateActiveX.js"));
 
         }
         #endregion

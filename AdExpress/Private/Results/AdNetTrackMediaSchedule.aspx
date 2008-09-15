@@ -17,7 +17,7 @@
 		<meta content="no-cache" name="Cache-control"/>
 	</head>
 	
-	<body style="margin-bottom:0; margin-left:0;margin-top:0;" class="whiteBackGround popupBackGround">
+	<body style="margin-bottom:0; margin-left:0;margin-top:0;" class="whiteBackGround popupBackGround" onload="javascript:activateActiveX();">
 
 		<form id="Form1" method="post" runat="server">
 		    

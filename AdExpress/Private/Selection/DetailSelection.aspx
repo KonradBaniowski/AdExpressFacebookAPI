@@ -16,7 +16,7 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta content="no-cache" name="Cache-control">
 	</HEAD>
-	<body class="imageBackGround">
+	<body class="imageBackGround" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<cc3:menuwebcontrol id="MenuWebControl2" runat="server"></cc3:menuwebcontrol>
 			<TABLE id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">

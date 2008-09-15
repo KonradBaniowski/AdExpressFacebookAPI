@@ -53,7 +53,7 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta content="no-cache" name="Cache-control"/>
 	</head>
-	<body onload="<%=saveScript%>" class="bodyStyle">
+	<body onload="<%=saveScript%>javascript:activateActiveX();" class="bodyStyle">
 		<form id="Form2" action="FormSponsorshipSelection.aspx" method="post" runat="server">
 			<table height="600" cellspacing="0" cellpadding="0" border="0">
 				<tr>

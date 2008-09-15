@@ -10,7 +10,7 @@
 <head runat="server">
     <title>AdExpress</title>
 </head>
-<body class="popUpBackGround">
+<body class="popUpBackGround" onload="javascript:activateActiveX();">
     <form id="form1" runat="server">
     <div>
 <table border="0" align="center" cellpadding="3" cellspacing="0" class="whiteBackGround">

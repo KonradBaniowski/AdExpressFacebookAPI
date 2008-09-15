@@ -20,7 +20,7 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
 	</HEAD>
-	<body onload="javascript:setWindow();" class="whiteBackGround darkBackGround">
+	<body onload="javascript:setWindow();javascript:activateActiveX();" class="whiteBackGround darkBackGround">
 		<form id="Form1" method="post" runat="server">
 			<%=result%>
 			&nbsp;

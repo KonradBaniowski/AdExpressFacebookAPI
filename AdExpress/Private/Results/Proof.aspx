@@ -14,7 +14,7 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
 	</head>
-	<body class="darkBackGround">
+	<body class="darkBackGround" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<table align="center">
 				<tr>

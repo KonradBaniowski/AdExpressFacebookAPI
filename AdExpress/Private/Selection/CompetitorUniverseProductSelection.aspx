@@ -58,7 +58,7 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta content="no-cache" name="Cache-control"/>
 	</head>
-<body onload="initjsDOMenu();<%=saveScript%>" class="bodyStyle">
+<body onload="initjsDOMenu();<%=saveScript%>javascript:activateActiveX();" class="bodyStyle">
 		<form id="Form2" action="CompetitorUniverseProductSelection.aspx" method="post" runat="server">
 			<table cellspacing="0" cellpadding="0" border="0" style="height:600px;">
 				<tr>	

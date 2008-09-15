@@ -10,7 +10,7 @@
     <title>AdExpress</title>
     <script type="text/javascript" src="/scripts/dom-drag.js"></script>
 </head>
-<body class="popUpBackGround">
+<body class="popUpBackGround" onload="javascript:activateActiveX();">
     <form id="form1" runat="server">
     <div>
         <cc1:CreativesWebControl ID="CreativesWebControl1" runat="server" />

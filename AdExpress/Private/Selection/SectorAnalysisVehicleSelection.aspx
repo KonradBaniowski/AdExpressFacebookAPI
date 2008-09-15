@@ -18,7 +18,7 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
 	</HEAD>
-	<body bottomMargin="0" leftMargin="0" topMargin="0" class="bodyStyle">
+	<body bottomMargin="0" leftMargin="0" topMargin="0" class="bodyStyle" onload="javascript:activateActiveX();">
 		<FORM id="Form2" method="post" runat="server">
 			<TABLE id="Table1" height="600" cellSpacing="0" cellPadding="0" width="800" border="0">
 				<TR>

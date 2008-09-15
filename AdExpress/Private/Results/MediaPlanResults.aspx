@@ -21,7 +21,7 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta content="no-cache" name="Cache-control">
 	</HEAD>
-	<body class="bodyStyle">
+	<body class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 		<asp:HiddenField ID="zoomParam" runat="server" EnableViewState="true"/>
 			<table height="600" cellSpacing="0" cellPadding="0" width="800" border="0">

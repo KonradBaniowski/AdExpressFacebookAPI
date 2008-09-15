@@ -14,7 +14,7 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
-	<body class="imageBackGround">
+	<body class="imageBackGround" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<TABLE id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
 				<TR class="violetBackGround" height="14">

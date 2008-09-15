@@ -13,7 +13,7 @@
 		<meta name="Cache-control" content="no-cache"/>
 	</head>
 	
-	<body class="creationDarkBackGround">
+	<body class="creationDarkBackGround" onload="javascript:activateActiveX();">
 	
 		<form id="Form1" method="post" runat="server">
 	

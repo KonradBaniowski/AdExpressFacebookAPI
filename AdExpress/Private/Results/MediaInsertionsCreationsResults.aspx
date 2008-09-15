@@ -20,7 +20,7 @@
 		<script src="/scripts/dom-drag.js" type="text/javascript"></script>
 	</HEAD>
 	<body style="BACKGROUND-ATTACHMENT: fixed; BACKGROUND-REPEAT: repeat"
-		bottomMargin="25" class="whiteBackGround popupBackGround" leftMargin="0" topMargin="25" rightMargin="0">
+		bottomMargin="25" class="whiteBackGround popupBackGround" leftMargin="0" topMargin="25" rightMargin="0" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<asp:HiddenField ID="periodNavigation" runat="server" Value="" />
 			<cc2:menuwebcontrol id="MenuWebControl2" runat="server"></cc2:menuwebcontrol>

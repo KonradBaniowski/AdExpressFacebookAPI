@@ -18,7 +18,7 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta content="no-cache" name="Cache-control">
 	</HEAD>
-	<body bottomMargin="0" class="popupBackGround whiteBackGround" topMargin="0">
+	<body bottomMargin="0" class="popupBackGround whiteBackGround" topMargin="0" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 						<%=streamingCreationsResult%>
 		</form>

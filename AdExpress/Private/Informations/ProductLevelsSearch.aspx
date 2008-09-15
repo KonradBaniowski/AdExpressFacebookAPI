@@ -24,7 +24,7 @@
 			document.onkeydown =bloqueTouche; 
 		</script>
 	</HEAD>
-	<body class="imageBackGround whiteBackGround" style="MARGIN: 0px;">
+	<body class="imageBackGround whiteBackGround" style="MARGIN: 0px;" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<table height="269" cellSpacing="0" cellPadding="0" width="400" border="0">
 				<tr>

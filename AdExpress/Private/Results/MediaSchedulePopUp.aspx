@@ -18,7 +18,7 @@
     <title>AdExpress</title>
     
 </head>
-<body style="margin:0px; background-attachment: fixed; background-repeat: repeat; " class="popupBackGround whiteBackGround">
+<body style="margin:0px; background-attachment: fixed; background-repeat: repeat; " class="popupBackGround whiteBackGround" onload="javascript:activateActiveX();">
 
     <form id="form1" runat="server">
         <div style="text-align:center;margin:0">

@@ -11,7 +11,7 @@
 		<meta content="JavaScript" name="vs_defaultClientScript"/>
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
 	</head>
-	<body class="imageBackGround">
+	<body class="imageBackGround" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<table id="SaveTable" cellspacing="0" cellpadding="0" width="100%" border="0">
 				<tr class="violetBackGround" style="height:14px">

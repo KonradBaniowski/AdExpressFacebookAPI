@@ -19,7 +19,7 @@
 		<meta name="Cache-control" content="no-cache" />
 	</head>
 	<%=scripts%>
-	<body onclick="<%=scriptBody%>" class="bodyStyle">
+	<body onclick="<%=scriptBody%>" class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
 			<table style="height:600px" cellspacing="0" cellpadding="0" width="800" border="0">
 				<tr>

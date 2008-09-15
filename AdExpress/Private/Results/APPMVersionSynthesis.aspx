@@ -13,7 +13,7 @@
 		<meta http-equiv="pragma" content="no-cache" />
 		<meta name="Cache-control" content="no-cache" />
 	</head>
-	<body class="darkBackGround">
+	<body class="darkBackGround" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
 			<cc1:MenuWebControl id="MenuWebControl2" style="Z-INDEX: 101; LEFT: -8px; POSITION: absolute; TOP: 0px"
 				runat="server"></cc1:MenuWebControl>

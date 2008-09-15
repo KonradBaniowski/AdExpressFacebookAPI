@@ -46,7 +46,7 @@
 			//-->
 			
 		</script>
-	<body onload="<%=saveScript%>" class="bodyStyle">
+	<body onload="<%=saveScript%>javascript:activateActiveX();" class="bodyStyle">
 		<form id="Form2" action="AdvertiserSelection.aspx" method="post" runat="server">
 			<table height="600" cellSpacing="0" cellPadding="0" border="0">
 				<tr>

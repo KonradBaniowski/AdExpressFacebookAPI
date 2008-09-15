@@ -60,7 +60,7 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
 	</HEAD>
-	<body bottomMargin="0" leftMargin="0" topMargin="0" onload="javascript:selectedItem(7);" class="bodyStyle">
+	<body bottomMargin="0" leftMargin="0" topMargin="0" onload="javascript:selectedItem(7);javascript:activateActiveX();" class="bodyStyle">
 		<FORM id="Form2" method="post" runat="server">
 			<TABLE id="Table1" height="600" cellSpacing="0" cellPadding="0" width="800" border="0">
 				

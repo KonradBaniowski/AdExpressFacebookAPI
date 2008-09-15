@@ -13,7 +13,7 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
-	<body class="darkBackGround whiteBackGround" bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0">
+	<body class="darkBackGround whiteBackGround" bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<table cellSpacing="0" cellPadding="0" width="98%" align="center" class="whiteBackGround" border="0">
 				<TR>

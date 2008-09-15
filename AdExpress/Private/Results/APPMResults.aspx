@@ -23,7 +23,7 @@
 		<script language="javascript" type="text/javascript" src="/scripts/WebResult.js"></script>
 		<script type="text/javascript" src="/scripts/dom-drag.js"></script>
 	</head>
-	<body class="bodyStyle">
+	<body class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
 		<asp:HiddenField ID="zoomParam" runat="server" EnableViewState="true"/>
 			<table style="height:600px" cellspacing="0" cellpadding="0" width="800" border="0">
