@@ -3100,10 +3100,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
                 Type type = assembly.GetType(GetSelectedUnit().CellType);
                 Cell cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
-                if (cellUnit is CellUnit<double>)
-                    return (new CellUnitFactory((CellUnit<double>)cellUnit));
-                else
-                    return (new CellUnitFactory((CellUnit<HybridList>)cellUnit));
+                return (new CellUnitFactory((CellUnit)cellUnit));
             }
             catch {
                 throw (new UnitException("Unit selection is not managed"));
