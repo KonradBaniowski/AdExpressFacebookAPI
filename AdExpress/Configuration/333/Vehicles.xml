@@ -189,7 +189,7 @@
         <allowedMediaLevelItem>category</allowedMediaLevelItem>       <!-- Categorie -->
         <allowedMediaLevelItem>media</allowedMediaLevelItem>          <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem> <!-- Centre d'interet -->
-        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>    <!-- Régie -->
+        <!--<allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>-->    <!-- Régie -->
         <allowedMediaLevelItem>slogan</allowedMediaLevelItem>         <!-- Version -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem> <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>     <!-- Annonceur -->
@@ -199,8 +199,8 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>      <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>          <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>        <!-- Variété -->
-        <allowedMediaLevelItem>title</allowedMediaLevelItem>          <!-- Titre -->
-        <allowedMediaLevelItem>country</allowedMediaLevelItem>        <!-- Pays -->
+        <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->          <!-- Titre -->
+        <!--<allowedMediaLevelItem>country</allowedMediaLevelItem>-->        <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
