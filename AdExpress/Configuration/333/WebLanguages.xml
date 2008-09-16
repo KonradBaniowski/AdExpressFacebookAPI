@@ -8,7 +8,7 @@
         <unitformat name="max2" format="#,##0.##;-#,##0.##;-"/>
         <unitformat name="max3" format="#,##0.###;-#,##0.###;-"/>
         <unitformat name="percent" format="#,##0.00%;-#,##0.00%;-"/>
-        <unitformat name="duration" format="#0 H 00 M 00 S"/>
+        <unitformat name="duration" format="0 H 00 M 00 S"/>
       </unitformats>
     </language>
     <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" nlsSort="FRENCH">
@@ -18,7 +18,7 @@
         <unitformat name="max2" format="#,##0.##;-#,##0.##;-"/>
         <unitformat name="max3" format="#,##0.###;-#,##0.###;-"/>
         <unitformat name="percent" format="#,##0.00 %;-#,##0.00 %;-"/>
-        <unitformat name="duration" format="#0 H 00 M 00 S"/>
+        <unitformat name="duration" format="0 H 00 M 00 S"/>
       </unitformats>
     </language>
   </languages>

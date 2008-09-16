@@ -61,7 +61,11 @@ namespace TNS.AdExpress.Domain.Units {
             if(id==null || id.Length==0) throw (new ArgumentException("Invalid paramter unit id"));
             if (cellType != null || cellType.Length > 0) _cellType = cellType;
             if(databaseField!=null || databaseField.Length>0) _databaseField=databaseField;
-            if(databaseMultimediaField!=null || databaseMultimediaField.Length>0) _databaseMultimediaField=databaseMultimediaField; 
+            if(databaseMultimediaField!=null || databaseMultimediaField.Length>0) _databaseMultimediaField=databaseMultimediaField;
+            if (format != null && format.Length > 0)
+            {
+                _strFormat = format;
+            }
             _webTextId=webTextId;
             try {
                 _id=(CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit),id,true);

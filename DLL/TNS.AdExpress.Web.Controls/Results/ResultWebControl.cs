@@ -1973,7 +1973,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 
             //CellLabel c = new CellLabel(string.Empty);
             //data.CultureInfo = new CultureInfo("fi-FI");
-            data.CultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[customerWebSession.SiteLanguage].Localization);
+            data.CultureInfo = WebApplicationParameters.AllowedLanguages[customerWebSession.SiteLanguage].CultureInfo;
             return data;
 			
 		}
