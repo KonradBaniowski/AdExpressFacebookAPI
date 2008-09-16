@@ -430,7 +430,8 @@ namespace TNS.AdExpressI.LostWon {
             #endregion
 
             #region Création des headers
-            nbLine = 5;
+            nbLine = 4;
+			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) nbLine++;
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) nbLine++;
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
                 if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
@@ -515,9 +516,11 @@ namespace TNS.AdExpressI.LostWon {
                 brandLineIndex = resultTable.AddNewLine(LineType.level1);
                 resultTable[brandLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1149, _session.SiteLanguage));
             }
-            productLineIndex = resultTable.AddNewLine(LineType.level1);
-            resultTable[productLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1164, _session.SiteLanguage));
-            sectorLineIndex = resultTable.AddNewLine(LineType.level1);
+			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+				productLineIndex = resultTable.AddNewLine(LineType.level1);
+				resultTable[productLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1164, _session.SiteLanguage));
+			}
+			sectorLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[sectorLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1847, _session.SiteLanguage));
             subsectorLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[subsectorLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1848, _session.SiteLanguage));
@@ -594,7 +597,7 @@ namespace TNS.AdExpressI.LostWon {
                 }
 
                 //Activité publicitaire produits
-                if (currentRow["id_product"] != null && currentRow["id_product"] != System.DBNull.Value && !products.Contains(currentRow["id_product"].ToString())) {
+                if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG) && currentRow["id_product"] != null && currentRow["id_product"] != System.DBNull.Value && !products.Contains(currentRow["id_product"].ToString())) {
                     filterN = "id_product=" + currentRow["id_product"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                     filterN1 = "id_product=" + currentRow["id_product"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
                     GetProductActivity(resultTable, dt, productLineIndex, expression, filterN, filterN1);
