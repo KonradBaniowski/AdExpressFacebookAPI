@@ -1640,6 +1640,12 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Right Flag  of digital tv spot's details
         /// </summary>
         public const Int64 ID_DETAIL_DIGITAL_TV_ACCESS_FLAG = 266;
+		/// <summary>
+		/// Right Flag  of  product level
+		/// </summary>
+		/// <remarks>Used for Finland</remarks>
+		public const Int64 ID_PRODUCT_LEVEL_ACCESS_FLAG = 271;
+
     }
 	#endregion
 

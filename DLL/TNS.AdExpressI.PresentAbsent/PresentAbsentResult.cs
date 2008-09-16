@@ -513,6 +513,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             string mediaList = "";
             string expression = "";
             string sort = "id_media asc";
+			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             #endregion
 
             #region Init delegates
@@ -550,9 +551,13 @@ namespace TNS.AdExpressI.PresentAbsent{
             #endregion
 
             #region Création des headers
-            nbLine = 5;
+            nbLine = 4;
+			if (showProduct) nbLine++;
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) nbLine++;
-            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) nbLine += 2;
+			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
+				if(_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))nbLine++;
+				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) nbLine++;
+			}
 
             // Ajout de la colonne Produit
             Headers headers = new Headers();
@@ -604,8 +609,10 @@ namespace TNS.AdExpressI.PresentAbsent{
                 brandLineIndex = resultTable.AddNewLine(LineType.level1);
                 resultTable[brandLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1149, _session.SiteLanguage));
             }
-            productLineIndex = resultTable.AddNewLine(LineType.level1);
-            resultTable[productLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1164, _session.SiteLanguage));
+			if (showProduct) {
+				productLineIndex = resultTable.AddNewLine(LineType.level1);
+				resultTable[productLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1164, _session.SiteLanguage));
+			}
             sectorLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[sectorLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1847, _session.SiteLanguage));
             subsectorLineIndex = resultTable.AddNewLine(LineType.level1);
@@ -615,10 +622,14 @@ namespace TNS.AdExpressI.PresentAbsent{
             // Groupe d'Agence && Agence
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
             {
-                agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
-                resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
-                agencyLineIndex = resultTable.AddNewLine(LineType.level1);
-                resultTable[agencyLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1851, _session.SiteLanguage));
+				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
+					agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
+					resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
+				}
+				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
+					agencyLineIndex = resultTable.AddNewLine(LineType.level1);
+					resultTable[agencyLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1851, _session.SiteLanguage));
+				}
             }
 
             Int64 presentNumberColumnIndex = resultTable.GetHeadersIndexInResultTable(PRESENT_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
@@ -718,7 +729,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                         }
 
                         //Activité publicitaire produits
-                        if (currentRow["id_product"] != null && currentRow["id_product"] != System.DBNull.Value && !products.Contains(currentRow["id_product"].ToString()))
+                        if (showProduct &&  currentRow["id_product"] != null && currentRow["id_product"] != System.DBNull.Value && !products.Contains(currentRow["id_product"].ToString()))
                         {
                             expression = string.Format("id_product={0}", currentRow["id_product"]);
                             GetProductActivity(resultTable, dt, productLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
@@ -751,7 +762,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                         if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
                         {
                             //activité publicitaire Groupes d'agences
-                            if (currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))
+                            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency) && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))
                             {
                                 expression = string.Format("ID_GROUP_ADVERTISING_AGENCY={0}", currentRow["ID_GROUP_ADVERTISING_AGENCY"]);
                                 GetProductActivity(resultTable, dt, agencyGroupLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
@@ -759,7 +770,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                             }
 
                             //activité publicitaire agence
-                            if (currentRow["ID_ADVERTISING_AGENCY"] != null && currentRow["ID_ADVERTISING_AGENCY"] != System.DBNull.Value && !agency.Contains(currentRow["ID_ADVERTISING_AGENCY"].ToString()))
+                            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency) && currentRow["ID_ADVERTISING_AGENCY"] != null && currentRow["ID_ADVERTISING_AGENCY"] != System.DBNull.Value && !agency.Contains(currentRow["ID_ADVERTISING_AGENCY"].ToString()))
                             {
                                 expression = string.Format("ID_ADVERTISING_AGENCY={0}", currentRow["ID_ADVERTISING_AGENCY"]);
                                 GetProductActivity(resultTable, dt, agencyLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
