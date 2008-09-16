@@ -105,7 +105,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <summary>
         /// Univers SUb totals ID
         /// </summary>
-        public const int SUB_TOTAL_HEADER_ID = 5;
+        public const int SUB_TOTAL_HEADER_ID = -5;
         /// <summary>
         /// Group ID Beginning
         /// </summary>
@@ -937,7 +937,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             {
                 for (int i = 0; i < levelNb; i++) {
                     cIds[i] = _session.GenericProductDetailLevel.GetIdValue(row, i + 1);
-                    if (cIds[i] > 0 && cIds[i] != oldIds[i])
+                    if (cIds[i] >= 0 && cIds[i] != oldIds[i])
                     {
                         oldIds[i] = cIds[i];
                         for (int ii = i + 1; ii < levelNb; ii++) { oldIds[ii] = -1; }
@@ -1621,19 +1621,19 @@ namespace TNS.AdExpressI.PresentAbsent{
                 cIdL1 = _session.GenericProductDetailLevel.GetIdValue(row, 1);
                 cIdL2 = _session.GenericProductDetailLevel.GetIdValue(row, 2);
                 cIdL3 = _session.GenericProductDetailLevel.GetIdValue(row, 3);
-                if (cIdL1 > 0 && cIdL1 != oldIdL1)
+                if (cIdL1 >= 0 && cIdL1 != oldIdL1)
                 {
                     oldIdL1 = cIdL1;
                     oldIdL2 = oldIdL3 = -1;
                     nbLine++;
                 }
-                if (cIdL2 > 0 && cIdL2 != oldIdL2)
+                if (cIdL2 >= 0 && cIdL2 != oldIdL2)
                 {
                     oldIdL2 = cIdL2;
                     oldIdL3 = -1;
                     nbLine++;
                 }
-                if (cIdL3 > 0 && cIdL3 != oldIdL3)
+                if (cIdL3 >= 0 && cIdL3 != oldIdL3)
                 {
                     oldIdL3 = cIdL3;
                     nbLine++;
