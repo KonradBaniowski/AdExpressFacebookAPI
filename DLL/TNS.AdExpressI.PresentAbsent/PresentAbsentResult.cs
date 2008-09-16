@@ -13,28 +13,30 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
 
 using DALClassif = TNS.AdExpress.DataAccess.Classification;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using FctWeb = TNS.AdExpress.Web.Functions;
+using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 
 using TNS.AdExpress;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
-using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.FrameWork.WebResultUI;
-using TNS.AdExpressI.PresentAbsent.Exceptions;
-using System.Windows.Forms;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Result;
-using Navigation = TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpress.Domain.Classification;
-
 using TNS.AdExpressI.PresentAbsent.DAL;
+using TNS.AdExpressI.PresentAbsent.Exceptions;
+using TNS.FrameWork.WebResultUI;
+using TNS.FrameWork.Collections;
+
 #endregion
 
 namespace TNS.AdExpressI.PresentAbsent{
@@ -99,7 +101,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <summary>
         /// Univers Total Column ID
         /// </summary>
-        protected const int TOTAL_HEADER_ID = 4;
+        protected const int TOTAL_HEADER_ID = -4;
         /// <summary>
         /// Univers SUb totals ID
         /// </summary>
@@ -155,6 +157,22 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// Current Module
         /// </summary>
         protected Navigation.Module _module;
+        /// <summary>
+        /// Show creative column
+        /// </summary>
+        protected bool _showCreative = false;
+        /// <summary>
+        /// Show insertion column
+        /// </summary>
+        protected bool _showInsertions = false;
+        /// <summary>
+        /// Show Media Schedule Column
+        /// </summary>
+        protected bool _showMediaSchedule = false;
+        /// <summary>
+        /// Show Total Column
+        /// </summary>
+        protected bool _showTotal = false;
         #endregion
 
         #region Accessors
@@ -310,184 +328,155 @@ namespace TNS.AdExpressI.PresentAbsent{
         #region Result Computing Methods
 
         #region Get Data
-        /// <summary>
-        /// Compute result specified in user session
-        /// </summary>
-        /// <param name="session">User session</param>
-        /// <returns>Computed data</returns>
         protected ResultTable GetData()
         {
-
-            #region Variables
-            int positionUnivers = 1;
-            long currentLine;
-            long currentColumn;
-            long currentLineInTabResult;
-            long nbLineInTabResult = -1;
-            bool allSubTotalNotNull = true;
-            bool subTotalNotNull = true;
-            #endregion
-
-            #region Tableaux d'index
-            SelectionGroup[] groupMediaTotalIndex = new SelectionGroup[11];
-            SelectionSubGroup[] subGroupMediaTotalIndex = new SelectionSubGroup[1000];
-            int nbUnivers = 0;
-            Dictionary<Int64, GroupItemForTableResult> mediaIndex = new Dictionary<Int64, GroupItemForTableResult>();
-            string mediaListForLabelSearch = "";
-            int maxIndex = 0;
-            #endregion
-
-            #region Chargement du tableau
-            long nbLineInNewTable = 0;
-            object[,] tabData = GetPreformatedTable(groupMediaTotalIndex, subGroupMediaTotalIndex, mediaIndex, ref maxIndex, ref nbLineInNewTable, ref nbUnivers, ref mediaListForLabelSearch);
-            #endregion
+            Dictionary<Int64, HeaderBase> universesSubTotal = null;
+            Dictionary<string, HeaderBase> elementsHeader = null;
+            Dictionary<string, HeaderBase> elementsSubTotal = null;
+            ResultTable tabData = this.GetGrossTable(out universesSubTotal, out elementsHeader, out elementsSubTotal);
+            ResultTable tabResult = null;
+            Int64 nbLine = 0;
 
             if (tabData == null)
             {
                 return null;
             }
 
-            #region Déclaration du tableau de résultat
-            long nbCol = tabData.GetLength(0);
-            long nbLineInFormatedTable = nbLineInNewTable;
-            object[,] tabResult = new object[nbCol, nbLineInFormatedTable];
-            #endregion
-
             #region Traitement des données
-            currentLineInTabResult = -1;
-
             switch (_session.CurrentTab)
             {
 
-                #region Portefeuille
-                case CompetitorMarketShare.PORTEFEUILLE:
-                    // Pas de traitement
-                    tabResult = tabData;
-                    nbLineInTabResult = nbLineInFormatedTable;
-                    break;
-                #endregion
-
-                #region Absent
-                case CompetitorMarketShare.ABSENT:
-                    for (currentLine = 0; currentLine < nbLineInFormatedTable; currentLine++)
-                    {
-                        positionUnivers = 1;
-                        subTotalNotNull = false;
-                        // On cherche les lignes qui on des unités à 0(null) dans le premier sous total
-                        if ((double)tabData[groupMediaTotalIndex[1].IndexInResultTable, currentLine] == 0.0)
-                        {
-                            positionUnivers++;
-                            while (!subTotalNotNull && positionUnivers < nbUnivers)
-                            {
-                                if ((double)tabData[groupMediaTotalIndex[positionUnivers].IndexInResultTable, currentLine] != 0.0) subTotalNotNull = true;
-                                positionUnivers++;
-                            }
-                            //au moins un sous total de concurrent différent à 0(null)
-                            if (subTotalNotNull)
-                            {
-                                currentLineInTabResult++;
-                                for (currentColumn = 0; currentColumn < nbCol; currentColumn++)
-                                {
-                                    tabResult[currentColumn, currentLineInTabResult] = tabData[currentColumn, currentLine];
-                                }
-                            }
-
-                        }
-                    }
-                    nbLineInTabResult = currentLineInTabResult + 1;
-                    break;
-                #endregion
-
-                #region Exclusif
-                case CompetitorMarketShare.EXCLUSIF:
-                    for (currentLine = 0; currentLine < nbLineInFormatedTable; currentLine++)
-                    {
-                        positionUnivers = 1;
-                        allSubTotalNotNull = true;
-                        // On cherche les lignes qui on des unités différentes de 0(null) dans le premier sous total
-                        if ((double)tabData[groupMediaTotalIndex[1].IndexInResultTable, currentLine] != 0.0)
-                        {
-                            positionUnivers++;
-                            while (allSubTotalNotNull && positionUnivers < nbUnivers)
-                            {
-                                if ((double)tabData[groupMediaTotalIndex[positionUnivers].IndexInResultTable, currentLine] != 0.0) allSubTotalNotNull = false;
-                                positionUnivers++;
-                            }
-                            // et tous les sous totaux de concurrent à 0(null)
-                            if (allSubTotalNotNull)
-                            {
-                                currentLineInTabResult++;
-                                for (currentColumn = 0; currentColumn < nbCol; currentColumn++)
-                                {
-                                    tabResult[currentColumn, currentLineInTabResult] = tabData[currentColumn, currentLine];
-                                }
-                            }
-
-                        }
-                    }
-                    nbLineInTabResult = currentLineInTabResult + 1;
-                    break;
-                #endregion
-
-                #region Commun
-                case CompetitorMarketShare.COMMON:
-                    for (currentLine = 0; currentLine < nbLineInFormatedTable; currentLine++)
-                    {
-                        allSubTotalNotNull = true;
-                        positionUnivers = 1;
-                        while (allSubTotalNotNull && positionUnivers < nbUnivers)
-                        {
-                            if ((double)tabData[groupMediaTotalIndex[positionUnivers].IndexInResultTable, currentLine] == 0.0) allSubTotalNotNull = false;
-                            positionUnivers++;
-                        }
-                        if (allSubTotalNotNull)
-                        {
-                            currentLineInTabResult++;
-                            for (currentColumn = 0; currentColumn < nbCol; currentColumn++)
-                            {
-                                tabResult[currentColumn, currentLineInTabResult] = tabData[currentColumn, currentLine];
-                            }
-                        }
-                    }
-                    nbLineInTabResult = currentLineInTabResult + 1;
-                    break;
-                #endregion
-
-                #region Forces ou Potentiels
+                #region Portefolio, strength, potentials
                 case CompetitorMarketShare.FORCES:
                 case CompetitorMarketShare.POTENTIELS:
-                    tabResult = tabData;
-                    nbLineInTabResult = nbLineInFormatedTable;
+                case CompetitorMarketShare.PORTEFEUILLE:
+                    nbLine = tabData.LinesNumber;
+                    break;
+                #endregion
+
+                #region Absent / Exclusif / Common
+                default:
+                    int nbLevel = _session.GenericProductDetailLevel.GetNbLevels;
+                    Int64 iUnivers = 1;
+                    bool competitor = false;
+
+                    CellLevel[] levels = new CellLevel[nbLevel];
+                    bool[] display = new bool[nbLevel+1];
+                    for (int i = 0; i <= nbLevel; i++) { display[i] = false; }
+                    CellLevel cLevel = null;
+                    for (int i = 0; i < tabData.LinesNumber; i++)
+                    {
+                        cLevel = (CellLevel)tabData[i, 1];
+                        
+                        if (cLevel.Level < nbLevel)
+                        {
+                            if (levels[cLevel.Level] != null)
+                            {
+                                if (!display[cLevel.Level])
+                                {
+                                    tabData.SetLineStart(new LineHide(tabData.GetLineStart(levels[cLevel.Level].LineIndexInResultTable).LineType), levels[cLevel.Level].LineIndexInResultTable);
+                                }
+                                else
+                                {
+                                    nbLine++;
+                                }
+                            }
+                            levels[cLevel.Level] = cLevel;
+                            display[cLevel.Level] = false;
+                            continue;
+                        }
+                        iUnivers = 1;
+
+                        #region Result specific treatment
+                        display[cLevel.Level] = false;
+                        switch(_session.CurrentTab){
+                            case CompetitorMarketShare.ABSENT:
+                                 // We look for lines with first subTotal
+                                if (((ICell)tabData[i, universesSubTotal[iUnivers].IndexInResultTable]).CompareTo(0.0) == 0)
+                                {
+                                    iUnivers++;
+                                    while (!display[cLevel.Level] && universesSubTotal.ContainsKey(iUnivers))
+                                    {
+                                        if (((ICell)tabData[i, universesSubTotal[iUnivers].IndexInResultTable]).CompareTo(0.0) != 0) display[cLevel.Level] = true;
+                                        iUnivers++;
+                                    }
+                                }
+                                break;
+                            case CompetitorMarketShare.EXCLUSIF:
+                                competitor = false;
+                                // We look for subtotals with value in first subtotal and 0 in others
+                                if (((ICell)tabData[i, universesSubTotal[iUnivers].IndexInResultTable]).CompareTo(0.0) != 0)
+                                {
+                                    iUnivers++;
+                                    while (!competitor && universesSubTotal.ContainsKey(iUnivers))
+                                    {
+                                        if (((ICell)tabData[i, universesSubTotal[iUnivers].IndexInResultTable]).CompareTo(0.0) != 0) competitor = true;
+                                        iUnivers++;
+                                    }
+                                    if (!competitor)
+                                    {
+                                        display[cLevel.Level] = true;
+                                    }
+                                }
+                                break;
+                            case CompetitorMarketShare.COMMON:
+                                competitor = true;
+                                // We look for lines with all subtotals > 0
+                                while (competitor && universesSubTotal.ContainsKey(iUnivers))
+                                {
+                                    if (((ICell)tabData[i, universesSubTotal[iUnivers].IndexInResultTable]).CompareTo(0.0) == 0) competitor = false;
+                                    iUnivers++;
+                                }
+                                if (competitor)
+                                {
+                                    display[cLevel.Level] = true;
+                                }
+                                break;
+                        }
+                        #endregion
+                        
+                        if (!display[cLevel.Level])
+                        {
+                            tabData.SetLineStart(new LineHide(tabData.GetLineStart(i).LineType), i);
+                        }
+                        else
+                        {
+                            for (int j = nbLevel - 1; j >= 0; j--) { display[j] = true; }
+                            nbLine++;
+                        }
+                    }
+                    for (int i = 1; i < nbLevel; i++)
+                    {
+                        if (levels[i] != null)
+                        {
+                            if (!display[levels[i].Level])
+                            {
+                                tabData.SetLineStart(new LineHide(tabData.GetLineStart(levels[i].LineIndexInResultTable).LineType), levels[i].LineIndexInResultTable);
+                            }
+                            else
+                            {
+                                nbLine++;
+                            }
+                        }
+                    }
                     break;
                 #endregion
 
             }
             #endregion
 
-            #region Debug: Voir le tableau
-            //						int i,j;
-            //						string HTML="<html><table><tr>";
-            //						for(i=0;i<=currentLineInTabResult;i++){
-            //							for(j=0;j<nbCol;j++){
-            //								if(tabResult[j,i]!=null)HTML+="<td>"+tabResult[j,i].ToString()+"</td>";
-            //								else HTML+="<td>&nbsp;</td>";
-            //							}
-            //							HTML+="</tr><tr>";
-            //						}
-            //						HTML+="</tr></table></html>";
+            #region Build Final Table (only required lines + total and parution numbers)
+            tabResult = GetResultTable(tabData, nbLine, universesSubTotal, elementsHeader, elementsSubTotal);
             #endregion
-
-            ResultTable data = GetResultTable(tabResult, nbLineInTabResult, groupMediaTotalIndex, subGroupMediaTotalIndex, mediaIndex, mediaListForLabelSearch, nbUnivers);
 
             #region Strength and prospects filters
             if (_result == CompetitorMarketShare.FORCES)
-                FilterTable(data, true, subGroupMediaTotalIndex);
+                FilterTable(tabResult, true, universesSubTotal);
             if (_result == CompetitorMarketShare.POTENTIELS)
-                FilterTable(data, false, subGroupMediaTotalIndex);
+                FilterTable(tabResult, false, universesSubTotal);
             #endregion
 
-            return (data);
-
+            return tabResult;
         }
         #endregion
 
@@ -524,14 +513,27 @@ namespace TNS.AdExpressI.PresentAbsent{
             string mediaList = "";
             string expression = "";
             string sort = "id_media asc";
-
             #endregion
 
-            #region Formattage des dates
-            string periodBeginning = GetDateBegin();
-            string periodEnd = GetDateEnd();
-            #endregion
+            #region Init delegates
+            AddValue addValueDelegate;
+            InitValue initValueDelegate;
+            SetSynthesisTable setSynthesisTableDelegate;
 
+            switch (_session.Unit)
+            {
+                case CstWeb.CustomerSessions.Unit.versionNb:
+                    addValueDelegate = new AddValue(AddListValue);
+                    initValueDelegate = new InitValue(InitListValue);
+                    setSynthesisTableDelegate = new SetSynthesisTable(SetListSynthesisTable);
+                    break;
+                default:
+                    addValueDelegate = new AddValue(AddDoubleValue);
+                    initValueDelegate = new InitValue(InitDoubleValue);
+                    setSynthesisTableDelegate = new SetSynthesisTable(SetDoubleSynthesisTable);
+                    break;
+            }
+            #endregion
 
             #region Chargement des données
             if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the present absent result"));
@@ -634,15 +636,15 @@ namespace TNS.AdExpressI.PresentAbsent{
             {
                 for (long j = presentNumberColumnIndex + 1; j < absentNumberColumnIndex; j++)
                 {
-                    resultTable[i, j] = cellUnitFactory.Get(0.0);
+                    resultTable[i, j] = cellUnitFactory.Get(0);
                 }
                 for (long j = absentNumberColumnIndex + 1; j < exclusiveNumberColumnIndex; j++)
                 {
-                    resultTable[i, j] = cellUnitFactory.Get(0.0);
+                    resultTable[i, j] = cellUnitFactory.Get(0);
                 }
                 for (long j = exclusiveNumberColumnIndex + 1; j <= nbCol; j++)
                 {
-                    resultTable[i, j] = cellUnitFactory.Get(0.0);
+                    resultTable[i, j] = cellUnitFactory.Get(0);
                 }
             }
             #endregion
@@ -701,7 +703,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                         if (!advertisers.Contains(currentRow["id_advertiser"].ToString()))
                         {
                             expression = string.Format("id_advertiser={0}", currentRow["id_advertiser"]);
-                            GetProductActivity(resultTable, dt, advertiserLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia);
+                            GetProductActivity(resultTable, dt, advertiserLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
                             advertisers.Add(currentRow["id_advertiser"].ToString());
                         }
                         if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
@@ -710,7 +712,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                             if (currentRow["id_brand"] != null && currentRow["id_brand"] != System.DBNull.Value && !brands.Contains(currentRow["id_brand"].ToString()))
                             {
                                 expression = string.Format("id_brand={0}", currentRow["id_brand"]);
-                                GetProductActivity(resultTable, dt, brandLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia);
+                                GetProductActivity(resultTable, dt, brandLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
                                 brands.Add(currentRow["id_brand"].ToString());
                             }
                         }
@@ -719,7 +721,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                         if (currentRow["id_product"] != null && currentRow["id_product"] != System.DBNull.Value && !products.Contains(currentRow["id_product"].ToString()))
                         {
                             expression = string.Format("id_product={0}", currentRow["id_product"]);
-                            GetProductActivity(resultTable, dt, productLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia);
+                            GetProductActivity(resultTable, dt, productLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
                             products.Add(currentRow["id_product"].ToString());
                         }
 
@@ -727,21 +729,21 @@ namespace TNS.AdExpressI.PresentAbsent{
                         if (currentRow["id_sector"] != null && currentRow["id_sector"] != System.DBNull.Value && !sectors.Contains(currentRow["id_sector"].ToString()))
                         {
                             expression = string.Format("id_sector={0}", currentRow["id_sector"]);
-                            GetProductActivity(resultTable, dt, sectorLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia);
+                            GetProductActivity(resultTable, dt, sectorLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
                             sectors.Add(currentRow["id_sector"].ToString());
                         }
                         //Activité publicitaire Classe
                         if (currentRow["id_subsector"] != null && currentRow["id_subsector"] != System.DBNull.Value && !subsectors.Contains(currentRow["id_subsector"].ToString()))
                         {
                             expression = string.Format("id_subsector={0}", currentRow["id_subsector"]);
-                            GetProductActivity(resultTable, dt, subsectorLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia);
+                            GetProductActivity(resultTable, dt, subsectorLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
                             subsectors.Add(currentRow["id_subsector"].ToString());
                         }
                         //Activité publicitaire Groupes
                         if (currentRow["id_group_"] != null && currentRow["id_group_"] != System.DBNull.Value && !groups.Contains(currentRow["id_group_"].ToString()))
                         {
                             expression = string.Format("id_group_={0}", currentRow["id_group_"]);
-                            GetProductActivity(resultTable, dt, groupLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia);
+                            GetProductActivity(resultTable, dt, groupLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
                             groups.Add(currentRow["id_group_"].ToString());
                         }
 
@@ -752,7 +754,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                             if (currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))
                             {
                                 expression = string.Format("ID_GROUP_ADVERTISING_AGENCY={0}", currentRow["ID_GROUP_ADVERTISING_AGENCY"]);
-                                GetProductActivity(resultTable, dt, agencyGroupLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia);
+                                GetProductActivity(resultTable, dt, agencyGroupLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
                                 agencyGroups.Add(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString());
                             }
 
@@ -760,7 +762,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                             if (currentRow["ID_ADVERTISING_AGENCY"] != null && currentRow["ID_ADVERTISING_AGENCY"] != System.DBNull.Value && !agency.Contains(currentRow["ID_ADVERTISING_AGENCY"].ToString()))
                             {
                                 expression = string.Format("ID_ADVERTISING_AGENCY={0}", currentRow["ID_ADVERTISING_AGENCY"]);
-                                GetProductActivity(resultTable, dt, agencyLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia);
+                                GetProductActivity(resultTable, dt, agencyLineIndex, expression, sort, referenceUniversMedia, competitorUniversMedia, addValueDelegate, setSynthesisTableDelegate, initValueDelegate);
                                 agency.Add(currentRow["ID_ADVERTISING_AGENCY"].ToString());
                             }
                         }
@@ -781,7 +783,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         #endregion
 
         #region Data Filtering
-        protected void FilterTable(ResultTable data, bool computeStrenghs, SelectionSubGroup[] subGroupMediaTotalIndex)
+        protected void FilterTable(ResultTable data, bool computeStrenghs, Dictionary<Int64, HeaderBase> universesSubTotal)
         {
 
             if (data == null)
@@ -794,15 +796,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             #endregion
 
             #region Indexes de comparaison
-            long comparaisonIndexInTabResult;
-            if (data.HeadersIndexInResultTable.ContainsKey((START_ID_GROUP + 1) + "-" + SUB_TOTAL_HEADER_ID))
-            {
-                comparaisonIndexInTabResult = data.GetHeadersIndexInResultTable((START_ID_GROUP + 1) + "-" + SUB_TOTAL_HEADER_ID);
-            }
-            else
-            {
-                comparaisonIndexInTabResult = data.GetHeadersIndexInResultTable((START_ID_GROUP + 1) + "-" + subGroupMediaTotalIndex[2].DataBaseId.ToString());
-            }
+            long comparaisonIndexInTabResult = universesSubTotal[1].IndexInResultTable;
             long levelLabelColIndex = data.GetHeadersIndexInResultTable(LEVEL_HEADER_ID.ToString());
             #endregion
 
@@ -864,39 +858,22 @@ namespace TNS.AdExpressI.PresentAbsent{
 
         #region Tableau Préformaté
         /// <summary>
-		/// Compute data
-		/// </summary>
-		/// <param name="session">User Session</param>
-		/// <param name="groupMediaTotalIndex">List of indexes of groups selection</param>
+        /// Compute data
+        /// </summary>
+        /// <param name="session">User Session</param>
+        /// <param name="groupMediaTotalIndex">List of indexes of groups selection</param>
         /// <param name="subGroupMediaTotalIndex">List of indexes of sub groups selections</param>
-		/// <param name="mediaIndex">Media indexes</param>
-		/// <param name="nbCol">Column number in result table</param>
-		/// <param name="nbLineInNewTable">(out) Line number in table result</param>
+        /// <param name="mediaIndex">Media indexes</param>
+        /// <param name="nbCol">Column number in result table</param>
+        /// <param name="nbLineInNewTable">(out) Line number in table result</param>
         /// <param name="nbUnivers">(out) Univers number</param>
         /// <param name="mediaListForLabelSearch">(out)Media Ids list</param>
-		/// <returns>Data table</returns>
-        protected object[,] GetPreformatedTable(SelectionGroup[] groupMediaTotalIndex, SelectionSubGroup[] subGroupMediaTotalIndex, Dictionary<Int64, GroupItemForTableResult> mediaIndex, ref int nbCol, ref long nbLineInNewTable, ref int nbUnivers, ref string mediaListForLabelSearch)
+        /// <returns>Data table</returns>
+        protected ResultTable GetGrossTable(out Dictionary<Int64, HeaderBase> universesSubTotal, out Dictionary<string, HeaderBase> elementsHeader, out Dictionary<string, HeaderBase> elementsSubTotal)
         {
-			
-			#region Variables
-			double unit;
-            string unitAlias = string.Empty;
-			Int64 idMedia;
-			long oldIdL1=-1;
-			long oldIdL2=-1;
-			long oldIdL3=-1;
-			Int64 currentLine=-1;
-			int k;
-			bool changeLine=false;
-			#endregion
-			
-			#region Formattage des dates 
-			string periodBeginning = GetDateBegin();
-            string periodEnd = GetDateEnd();
-			#endregion
 
-			#region Chargement des données à partir de la base	
-			DataSet ds=null;
+            #region Load data from data layer
+            DataSet ds = null;
             DataSet dsMedia = null;
 
             if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the present absent result"));
@@ -905,330 +882,327 @@ namespace TNS.AdExpressI.PresentAbsent{
             IPresentAbsentResultDAL presentAbsentDAL = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
             ds = presentAbsentDAL.GetData();
             dsMedia = presentAbsentDAL.GetMediaDetails();
-            //ds = CompetitorDataAccess.GetGenericData(session, vehicleName);
-            //dsMedia = CompetitorDataAccess.GetMediaColumnDetailLevelList(session);
-			
-			DataTable dt=ds.Tables[0];
+
+            DataTable dt = ds.Tables[0];
             DataTable dtMedia = dsMedia.Tables[0];
 
-            if (dt.Rows.Count == 0) {
+            if (dt.Rows.Count == 0)
+            {
+                universesSubTotal = null;
+                elementsHeader = null;
+                elementsSubTotal = null;
                 return null;
             }
-
-            #region Tableaux d'index
-            InitIndexAndValues(groupMediaTotalIndex, subGroupMediaTotalIndex, ref nbUnivers, mediaIndex, ref mediaListForLabelSearch, ref nbCol, dtMedia);
             #endregion
 
-			#endregion
-			
-			#region Déclaration du tableau de résultat
-			long nbline=dt.Rows.Count;
-			object[,] tabResult=new object[nbCol,dt.Rows.Count];
-			#endregion
+            #region Get Headers
+            Dictionary<Int64, Int64> mediaToUnivers = null;
+            Headers headers = GetHeaders(dtMedia,out elementsHeader, out elementsSubTotal, out universesSubTotal, out mediaToUnivers);
+            #endregion
 
-			#region Tableau de résultat
-            unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
-			foreach(DataRow currentRow in dt.Rows){
-                if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 1) > 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 1) != oldIdL1) changeLine = true;
-                if (!changeLine && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) > 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) != oldIdL2) changeLine = true;
-                if (!changeLine && _session.GenericProductDetailLevel.GetIdValue(currentRow, 3) > 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 3) != oldIdL3) changeLine = true;
+            #region Init ResultTable
+            Int64 nbline = GetNbLine(dt);
+            ResultTable tabData = new ResultTable(nbline, headers);
+            #endregion
 
-				#region On change de ligne
-				if(changeLine){
-					currentLine++;
-					// Ecriture de L1 ?
-                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 1) > 0)
+            #region Fill result table
+            int levelNb = _session.GenericProductDetailLevel.GetNbLevels;
+            Int64[] oldIds = new Int64[levelNb];
+            Int64[] cIds = new Int64[levelNb];
+            CellLevel[] levels = new CellLevel[nbline];
+            Int64 cLine = 0;
+            for (int i = 0; i < levelNb; i++) { oldIds[i] = cIds[i] = -1; }
+            CellUnitFactory cellFactory = _session.GetCellUnitFactory();
+            SetLineDelegate setLine;
+            switch(_session.Unit){
+                case CstWeb.CustomerSessions.Unit.versionNb:
+                    setLine = new SetLineDelegate(SetListLine);
+                    break;
+                default:
+                    setLine = new SetLineDelegate(SetDoubleLine);
+                    break;
+            }
+            foreach (DataRow row in dt.Rows)
+            {
+                for (int i = 0; i < levelNb; i++) {
+                    cIds[i] = _session.GenericProductDetailLevel.GetIdValue(row, i + 1);
+                    if (cIds[i] > 0 && cIds[i] != oldIds[i])
                     {
-                        oldIdL1 = _session.GenericProductDetailLevel.GetIdValue(currentRow, 1);
-						tabResult[IDL1_INDEX,currentLine]=oldIdL1;
-                        tabResult[LABELL1_INDEX, currentLine] = _session.GenericProductDetailLevel.GetLabelValue(currentRow, 1);
-					}
-					// Ecriture de L2 ?
-                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 2) > 0)
-                    {
-                        oldIdL2 = _session.GenericProductDetailLevel.GetIdValue(currentRow, 2);
-						tabResult[IDL2_INDEX,currentLine]=oldIdL2;
-                        tabResult[LABELL2_INDEX, currentLine] = _session.GenericProductDetailLevel.GetLabelValue(currentRow, 2);
-					}
-					// Ecriture de L3 ?
-                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 3) > 0)
-                    {
-                        oldIdL3 = _session.GenericProductDetailLevel.GetIdValue(currentRow, 3);
-						tabResult[IDL3_INDEX,currentLine]=oldIdL3;
-                        tabResult[LABELL3_INDEX, currentLine] = _session.GenericProductDetailLevel.GetLabelValue(currentRow, 3);
-					}
-					// Totaux, sous Totaux et médias à 0
-					for(k=TOTAL_INDEX;k<nbCol;k++){
-						tabResult[k,currentLine]=(double) 0.0;
-					}
-					
-					try{
-						if(currentRow["id_address"]!=null)tabResult[ADDRESS_COLUMN_INDEX,currentLine]=Int64.Parse(currentRow["id_address"].ToString());
-					}catch(Exception){
-					
-					}
-
-					changeLine=false;
-				}
-				#endregion
-
-
-
-                unit = double.Parse(currentRow[unitAlias].ToString());
-                idMedia = (Int64)currentRow["id_media"];
-				// Ecriture du résultat du média
-                tabResult[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].IndexInResultTable, currentLine] = (double)tabResult[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].IndexInResultTable, currentLine] + unit;
-                
-                // Ecriture du résultat du sous total (somme)
-                if (groupMediaTotalIndex[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].ParentId].Count > 1)
-                {
-                    tabResult[groupMediaTotalIndex[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].ParentId].IndexInResultTable, currentLine] = (double)tabResult[groupMediaTotalIndex[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].ParentId].IndexInResultTable, currentLine] + unit;
+                        oldIds[i] = cIds[i];
+                        for (int ii = i + 1; ii < levelNb; ii++) { oldIds[ii] = -1; }
+                        cLine = InitDoubleLine(tabData, row, cellFactory, i + 1, (i > 0) ? levels[i - 1] : null);
+                        levels[i] = (CellLevel)tabData[cLine, 1];
+                    }
                 }
+                setLine(tabData, elementsHeader, elementsSubTotal, cLine, row, cellFactory, mediaToUnivers);
+            }
+            #endregion
 
-                // Ecriture du résultat du total (somme)
-				tabResult[TOTAL_INDEX,currentLine]=(double)tabResult[TOTAL_INDEX,currentLine]+unit;
-			}
-			#endregion
-			
-			#region Debug: Voir le tableau 
-//			int i,j;
-//			string HTML="<html><table><tr>";
-//			for(i=0;i<=currentLine;i++){
-//				for(j=0;j<nbCol;j++){
-//					if(tabResult[j,i]!=null)HTML+="<td>"+tabResult[j,i].ToString()+"</td>";
-//					else HTML+="<td>&nbsp;</td>";
-//				}
-//				HTML+="</tr><tr>";
-//			}
-//			HTML+="</tr></table></html>";
-			#endregion
+            return tabData;
 
-			nbLineInNewTable=currentLine+1;
-			return(tabResult);
-		}
-		#endregion
+        }
 
-        #region Formatage des dates
-		/// <summary>
-		/// Get Period Beginning
-		/// </summary>
-		/// <returns>Period Beginning</returns>
-		protected string GetDateBegin(){
-            return (_session.PeriodBeginningDate);
-		}
-
-		/// <summary>
-		/// Get Period End
-		/// </summary>
-		/// <returns>Period End</returns>
-		protected string GetDateEnd(){
-            return (_session.PeriodEndDate);
-		}
-		#endregion
-
-        #region Initialisation des indexes
+        #region InitLineDelegate
         /// <summary>
-        /// Initialise indexes tables about groups and media selections
+        /// Delegate to init lines of type double
         /// </summary>
-        /// <param name="groupMediaTotalIndex">(out) Group selection indexes table</param>
-        /// <param name="subGroupMediaTotalIndex">Liste des index des sous groupes de sélection</param>
-        /// <param name="nbUnivers">(out)Nombre d'univers</param>
-        /// <param name="mediaIndex">(out Tableau d'indexes des médias</param>
-        /// <param name="mediaListForLabelSearch">(out)Liste des codes des médias</param>
-        /// <param name="maxIndex">(out)Index des colonnes maximum</param>
-        /// <param name="dtMedia">Liste des média avec le niveau de détail colonne correspondant</param>
-        protected void InitIndexAndValues(SelectionGroup[] groupMediaTotalIndex, SelectionSubGroup[] subGroupMediaTotalIndex, ref int nbUnivers, Dictionary<Int64, GroupItemForTableResult> mediaIndex, ref string mediaListForLabelSearch, ref int maxIndex, DataTable dtMedia)
+        /// <param name="tab">Table to fill</param>
+        /// <param name="row">Data container</param>
+        /// <param name="cellFactory">Cell Factory</param>
+        /// <param name="level">Current level</param>
+        /// <param name="parent">Parent level</param>
+        /// <returns>Index of current line</returns>
+        protected Int64 InitDoubleLine(ResultTable tab, DataRow row, CellUnitFactory cellFactory, int level, CellLevel parent)
         {
 
-            #region Variables
-            string tmp = "";
-            int positionUnivers = 1;
-            int positionSubGroup = 2;
-            int subGroupCount = 0;
-            Int64[] mediaList;
-            Dictionary<Int64, int> mediaSubGroupId = new Dictionary<Int64, int>();
-            List<string> columnDetailLevelList;
-            #endregion
-
-            #region Initialisation des variables
-            maxIndex = FIRST_MEDIA_INDEX;
-            #endregion
-
-            // On suppose que les supports sont triés en order croissant par sous groupe
-            while (_session.CompetitorUniversMedia[positionUnivers] != null)
+            Int64 cLine = InitLine(tab, row, level, parent);
+            for (int i = 2; i <= tab.DataColumnsNumber; i++)
             {
-                // Chargement de la liste de support (média)
-                tmp = _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess);
-                mediaList = Array.ConvertAll<string, Int64>(tmp.Split(','), (Converter<string,long>)delegate (string s) { return Convert.ToInt64(s); });
-
-                columnDetailLevelList = new List<string>();
-
-                // Chargement de la liste du niveau de détail colonne
-                foreach (Int64 media in mediaList)
-                {
-                    foreach (DataRow row in dtMedia.Rows)
-                    {
-                        if (media == Convert.ToInt64(row["id_media"]))
-                        {
-                            if (!columnDetailLevelList.Contains(row["columnDetailLevel"].ToString()))
-                            {
-                                columnDetailLevelList.Add(row["columnDetailLevel"].ToString());
-                                subGroupMediaTotalIndex[positionSubGroup] = new SelectionSubGroup(positionSubGroup);
-                                subGroupMediaTotalIndex[positionSubGroup].DataBaseId = int.Parse(row["columnDetailLevel"].ToString());
-                                subGroupMediaTotalIndex[positionSubGroup].ParentId = positionUnivers;
-                                subGroupMediaTotalIndex[positionSubGroup].SetItemsNumber = 0;
-                                subGroupMediaTotalIndex[positionSubGroup].IndexInResultTable = 0;
-                                mediaSubGroupId[media] = positionSubGroup;
-                                positionSubGroup++;
-                                subGroupCount++;
-                                mediaListForLabelSearch += row["columnDetailLevel"].ToString() + ",";
-                            }
-                            else
-                            {
-                                foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex)
-                                    if (subGroup != null)
-                                    {
-                                        if (subGroup.DataBaseId == int.Parse(row["columnDetailLevel"].ToString()))
-                                        {
-                                            if (subGroup.Count == 0)
-                                                subGroup.SetItemsNumber = 2;
-                                            else
-                                                subGroup.SetItemsNumber = subGroup.Count + 1;
-                                            mediaSubGroupId[media] = subGroup.Id;
-                                        }
-                                    }
-                            }
-                        }
-                    }
-                }
-
-                // Définition du groupe
-                groupMediaTotalIndex[positionUnivers] = new SelectionGroup(positionUnivers);
-
-                // Le groupe contient plus de 1 éléments
-                if (subGroupCount > 1)
-                {
-                    groupMediaTotalIndex[positionUnivers].IndexInResultTable = maxIndex;
-                    groupMediaTotalIndex[positionUnivers].SetItemsNumber = subGroupCount;
-                    maxIndex++;
-                    //nbSubTotal++;
-                }
-                else
-                {
-                    groupMediaTotalIndex[positionUnivers].IndexInResultTable = maxIndex;
-                    groupMediaTotalIndex[positionUnivers].SetItemsNumber = 0;
-                }
-
-                // Pour les sous Groupes
-                foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex)
-                {
-                    if (subGroup != null)
-                    {
-                        if (subGroup.IndexInResultTable == 0)
-                        {
-                            subGroup.IndexInResultTable = maxIndex;
-                            maxIndex++;
-                        }
-                    }
-                }
-
-                // Indexes des média (support)
-                foreach (Int64 currentMedia in mediaList)
-                {
-                    mediaIndex[currentMedia] = new GroupItemForTableResult(currentMedia, mediaSubGroupId[currentMedia], maxIndex);
-                }
-
-                positionUnivers++;
-                subGroupCount = 0;
+                tab[cLine, i] = cellFactory.Get(0.0);
             }
+            return cLine;
 
-            nbUnivers = positionUnivers--;
-            mediaListForLabelSearch = mediaListForLabelSearch.Substring(0, mediaListForLabelSearch.Length - 1);
+        }
+        /// <summary>
+        /// Init default values such as levels, Adresses...
+        /// </summary>
+        /// <param name="tab">Table to fill</param>
+        /// <param name="row">Data container</param>
+        /// <param name="level">Current level</param>
+        /// <param name="parent">Parent level</param>
+        /// <returns>Index of current line</returns>
+        protected Int64 InitLine(ResultTable tab, DataRow row, int level, CellLevel parent)
+        {
+
+            Int64 cLine = -1;
+            CellLevel cell;
+            switch(level){
+                case 1:
+                    cLine = tab.AddNewLine(LineType.level1);
+                    break;
+                case 2:
+                    cLine = tab.AddNewLine(LineType.level2);
+                    break;
+                case 3:
+                    cLine = tab.AddNewLine(LineType.level3);
+                    break;
+                default:
+                    throw new ArgumentException(string.Format("Level {0} is not supported.", level));
+            }
+            tab[cLine, 1] = cell = new CellLevel(
+                _session.GenericProductDetailLevel.GetIdValue(row, level)
+                , _session.GenericProductDetailLevel.GetLabelValue(row, level)
+                , parent
+                , level
+                , cLine);
+            if (_session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == level)
+            {
+                if (row["id_address"] != DBNull.Value)
+                {
+                    cell.AddressId = Convert.ToInt64(row["id_address"]);
+                }
+
+            }
+            return cLine;
+
         }
         #endregion
 
-        #region Formattage d'un tableau de résultat
+        #region SetLineDelegate
         /// <summary>
-        /// Formattage d'un tableau de résultat à partir d'un tableau de données
+        /// Delegate to affect values to the table
         /// </summary>
-        /// <param name="session">Session du client</param>
-        /// <param name="tabData">Table de données</param>
-        /// <param name="nbLineInTabData">Nombre de ligne dans le tableau</param>
-        /// <param name="groupMediaTotalIndex">Liste des groupes de sélection</param>
-        /// <param name="subGroupMediaTotalIndex">Liste des sous groupes de sélection</param>
-        /// <param name="mediaIndex">Liste des Média</param>
-        /// <param name="mediaListForLabelSearch">Liste des médias</param>
-        /// <param name="nbUnivers">Nombre d'univers</param>
-        /// <returns>Tableau de résultat</returns>
-        protected ResultTable GetResultTable(object[,] tabData, long nbLineInTabData, SelectionGroup[] groupMediaTotalIndex, SelectionSubGroup[] subGroupMediaTotalIndex, Dictionary<Int64, GroupItemForTableResult> mediaIndex, string mediaListForLabelSearch, int nbUnivers)
+        /// <param name="tab">Table to fill</param>
+        /// <param name="elementsHeader">Headers by element ids (media, interst centers...)</param>
+        /// <param name="cLine">Current line</param>
+        /// <param name="row">Data container</param>
+        /// <param name="cellFactory">Cell Factory</param>
+        /// <returns>Current line</returns>
+        protected delegate Int64 SetLineDelegate(ResultTable tab, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal, Int64 cLine, DataRow row, CellUnitFactory cellFactory, Dictionary<Int64, Int64> mediaToUnivers);
+        /// <summary>
+        /// Delegate to affect double values to the table
+        /// </summary>
+        /// <param name="tab">Table to fill</param>
+        /// <param name="elementsHeader">Headers by element ids (media, interst centers...)</param>
+        /// <param name="cLine">Current line</param>
+        /// <param name="row">Data container</param>
+        /// <param name="cellFactory">Cell Factory for double cells</param>
+        /// <returns>Current line</returns>
+        protected Int64 SetDoubleLine(ResultTable tab, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal, Int64 cLine, DataRow row, CellUnitFactory cellFactory, Dictionary<Int64, Int64> mediaToUnivers)
         {
 
-            #region Variables
-            long decal = 0;
-            string[] mediaList;
-            Int64 oldIdL1 = -1;
-            Int64 oldIdL2 = -1;
-            Int64 oldIdL3 = -1;
-            long currentLine;
-            long currentLineInTabResult;
-            long k;
-            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
+            Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
+            Int64 idMedia = Convert.ToInt64(row["id_media"]);
+            Double value = Convert.ToDouble(row[_session.GetSelectedUnit().Id.ToString()]);
+            string sIdElement = string.Format("{0}-{1}", mediaToUnivers[idMedia], idElement);
+            tab.AffectValueAndAddToHierarchy(1, cLine, elementsHeader[sIdElement].IndexInResultTable, value);
+            // SubTotal if required (univers contains more than one element)
+            if (elementsHeader[sIdElement] != elementsSubTotal[sIdElement])
+            {
+                tab.AffectValueAndAddToHierarchy(1, cLine, elementsSubTotal[sIdElement].IndexInResultTable, value);
+            }
+            // Total if required
+            if (elementsHeader.ContainsKey(TOTAL_HEADER_ID.ToString()) && elementsSubTotal[sIdElement] != elementsHeader[TOTAL_HEADER_ID.ToString()])
+            {
+                tab.AffectValueAndAddToHierarchy(1, cLine, elementsHeader[TOTAL_HEADER_ID.ToString()].IndexInResultTable, value);
+            }
+            return cLine;
+
+        }
+        /// <summary>
+        /// Delegate to affect list values to the table
+        /// </summary>
+        /// <param name="tab">Table to fill</param>
+        /// <param name="elementsHeader">Headers by element ids (media, interst centers...)</param>
+        /// <param name="cLine">Current line</param>
+        /// <param name="row">Data container</param>
+        /// <param name="cellFactory">Cell Factory for list cells</param>
+        /// <returns>Current line</returns>
+        protected Int64 SetListLine(ResultTable tab, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal, Int64 cLine, DataRow row, CellUnitFactory cellFactory, Dictionary<Int64, Int64> mediaToUnivers)
+        {
+
+            Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
+            Int64 idMedia = Convert.ToInt64(row["id_media"]);
+            string[] value = row[_session.GetSelectedUnit().Id.ToString()].ToString().Split(',');
+            string sIdElement = string.Format("{0}-{1}", mediaToUnivers[idMedia], idElement);
+            bool afectTotal = elementsHeader.ContainsKey(TOTAL_HEADER_ID.ToString()) && elementsSubTotal[sIdElement] != elementsHeader[TOTAL_HEADER_ID.ToString()];
+            bool afectSubTotal = elementsHeader[sIdElement] != elementsSubTotal[sIdElement];
+            Int64 v = 0;
+            foreach (string s in value)
+            {
+                v = Convert.ToInt64(s);
+                tab.AffectValueAndAddToHierarchy(1, cLine, elementsHeader[sIdElement].IndexInResultTable, v);
+                // SubTotal if required (univers contains more than one element)
+                if (afectSubTotal)
+                {
+                    tab.AffectValueAndAddToHierarchy(1, cLine, elementsSubTotal[sIdElement].IndexInResultTable, v);
+                }
+                // Total if required
+                if (afectTotal)
+                {
+                    tab.AffectValueAndAddToHierarchy(1, cLine, elementsHeader[TOTAL_HEADER_ID.ToString()].IndexInResultTable, v);
+                }
+            }
+
+            return cLine;
+
+        }
+        #endregion
+
+        #endregion
+
+        #region Initialisation des indexes
+        /// <summary>
+        /// Init headers
+        /// </summary>
+        /// <param name="elementsHeaders">(ou) Header for each level element</param>
+        /// <param name="dtMedia">List of medias with the detail level matching
+        protected Headers GetHeaders(DataTable dtMedia, out Dictionary<string, HeaderBase> elementsHeader, out Dictionary<string, HeaderBase> elementsSubTotal, out Dictionary<Int64, HeaderBase> universesSubTotal, out Dictionary<Int64, Int64> idMediaToIdUnivers)
+        {
+
+            #region Extract Media lists
+            string tmp = string.Empty;
+            Int64[] tIds = null;
+            int iUnivers = 1;
+            //Elements by univers
+            Dictionary<Int64, List<Int64>> idsByUnivers = new Dictionary<Int64, List<Int64>>();
+            //Media ids ==> id univers mapping
+            idMediaToIdUnivers = new Dictionary<Int64,Int64>();
+            //Init media univers mapping
+            while (_session.CompetitorUniversMedia[iUnivers] != null)
+            {
+                idsByUnivers.Add(iUnivers, new List<Int64>());
+                // Load media ids
+                tmp = _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[iUnivers], CstCustomer.Right.type.mediaAccess);
+                tIds = Array.ConvertAll<string, Int64>(tmp.Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); });
+                //Init Media ids X univers
+                foreach (Int64 l in tIds)
+                {
+                    if (!idMediaToIdUnivers.ContainsKey(l)){
+                        idMediaToIdUnivers.Add(l, iUnivers);
+                    }
+                }
+                iUnivers++;
+            }
+            iUnivers--;
+
+            //Dispatch elements in current univers
+            List<Int64> idElements = new List<Int64>();
+            StringBuilder sIdElments = new StringBuilder();
+            Int64 idElement = -1;
+            Int64 idMedia = -1;
+            foreach (DataRow row in dtMedia.Rows)
+            {
+                idElement = Convert.ToInt64(row["columnDetailLevel"]);
+                idMedia = Convert.ToInt64(row["id_media"]);
+                if (!idElements.Contains(idElement))
+                {
+                    idElements.Add(idElement);
+                    sIdElments.AppendFormat("{0},", idElement);
+                }
+                if (!idsByUnivers[idMediaToIdUnivers[idMedia]].Contains(idElement))
+                {
+                    idsByUnivers[idMediaToIdUnivers[idMedia]].Add(idElement);
+                }
+
+            }
+            if (sIdElments.Length > 0) sIdElments.Length -= 1; 
             #endregion
 
-            #region Aucune données
-            if (nbLineInTabData == 0)
+            #region Load elements labels
+            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
+            DALClassif.ClassificationLevelListDataAccess levels = null;
+
+            switch (columnDetailLevel.Id)
             {
-                return null;
+
+                case DetailLevelItemInformation.Levels.media:
+                    levels = new DALClassif.MediaBranch.PartialMediaListDataAccess(sIdElments.ToString(), _session.DataLanguage, _session.Source);
+                    break;
+                case DetailLevelItemInformation.Levels.category:
+                    levels = new DALClassif.MediaBranch.PartialCategoryListDataAccess(sIdElments.ToString(), _session.DataLanguage, _session.Source);
+                    break;
+                case DetailLevelItemInformation.Levels.mediaSeller:
+                    levels = new DALClassif.MediaBranch.PartialMediaSellerListDataAccess(sIdElments.ToString(), _session.DataLanguage, _session.Source);
+                    break;
+                case DetailLevelItemInformation.Levels.title:
+                    levels = new DALClassif.MediaBranch.PartialTitleListDataAccess(sIdElments.ToString(), _session.DataLanguage, _session.Source);
+                    break;
+                case DetailLevelItemInformation.Levels.interestCenter:
+                    levels = new DALClassif.MediaBranch.PartialInterestCenterListDataAccess(sIdElments.ToString(), _session.DataLanguage, _session.Source);
+                    break;
+
             }
             #endregion
 
-            #region Calcul des PDM ?
-            bool computePDM = (_session.Percentage) ? true : false;
-            #endregion
+            #region Build headers
 
-            #region Obtention du vehicle
-            string vehicleSelection = _session.GetSelection(_session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
-            if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new PresentAbsentException("Media Selection is not valid"));
-            VehicleInformation vehicleInformation=VehiclesInformation.Get(Int64.Parse(vehicleSelection));
-            CstDBClassif.Vehicles.names vehicle =vehicleInformation.Id;
-            #endregion
-
-            #region Headers
-            // Ajout de la colonne Produit
+            #region Current Columns
+            // Product column
             Headers headers = new Headers();
             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1164, _session.SiteLanguage), LEVEL_HEADER_ID));
-            long startDataColIndex = 1;
-            long startDataColIndexInit = 1;
 
 
-            // Ajout Création ?
-            bool showCreative = false;
-            //A vérifier Création où version
-            if (vehicleInformation.ShowCreations &&
-                _session.CustomerLogin.ShowCreatives(vehicleInformation.Id) &&
+            // Add Creative coumn
+            if (_vehicleInformation.ShowCreations &&
+                _session.CustomerLogin.ShowCreatives(_vehicleInformation.Id) &&
                 (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)))
             {
                 headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(1994, _session.SiteLanguage), CREATIVE_HEADER_ID));
-                showCreative = true;
-                startDataColIndex++;
-                startDataColIndexInit++;
+                _showCreative = true;
             }
 
-            // Ajout Insertions ?
-            bool showInsertions = false;
-            if (vehicleInformation.ShowInsertions &&
+            // Add insertion colmun
+            if (_vehicleInformation.ShowInsertions &&
                 (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)))
             {
                 headers.Root.Add(new HeaderInsertions(false, GestionWeb.GetWebWord(2245, _session.SiteLanguage), INSERTION_HEADER_ID));
-                showInsertions = true;
-                startDataColIndex++;
-                startDataColIndexInit++;
+                _showInsertions = true;
             }
 
-            // Ajout plan media ?
-            bool showMediaSchedule = false;
+            // Add Media Schedule column
             if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.brand) ||
@@ -1239,379 +1213,422 @@ namespace TNS.AdExpressI.PresentAbsent{
                 )
             {
                 headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(150, _session.SiteLanguage), MEDIA_SCHEDULE_HEADER_ID));
-                showMediaSchedule = true;
-                startDataColIndex++;
-                startDataColIndexInit++;
+                _showMediaSchedule = true;
             }
-
-
-            //Colonne total s'il ya plusieurs groupes:
-            mediaList = mediaListForLabelSearch.Split(',');
-            bool showTotal = false;
-            if (_session.CompetitorUniversMedia.Count > 1 || mediaList.Length > 1)
+            #endregion
+            
+            #region Total column
+            Header headerTmp = null;
+            Header headerTotal = null;
+            elementsHeader = new Dictionary<string, HeaderBase>();
+            if (_session.CompetitorUniversMedia.Count > 1 || idElements.Count > 1)
             {
-                startDataColIndexInit++;
-                showTotal = true;
-                headers.Root.Add(new Header(true, GestionWeb.GetWebWord(805, _session.SiteLanguage), TOTAL_HEADER_ID));
-            }
-            // Chargement des libellés de colonnes
-            DALClassif.MediaBranch.PartialMediaListDataAccess mediaLabelList = null;
-            DALClassif.MediaBranch.PartialCategoryListDataAccess categoryLabelList = null;
-            DALClassif.MediaBranch.PartialMediaSellerListDataAccess mediaSellerLabelList = null;
-            DALClassif.MediaBranch.PartialTitleListDataAccess titleLabelList = null;
-            DALClassif.MediaBranch.PartialInterestCenterListDataAccess interestCenterLabelList = null;
-
-            switch (columnDetailLevel.Id)
-            {
-
-                case DetailLevelItemInformation.Levels.media:
-                    mediaLabelList = new DALClassif.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
-                    break;
-                case DetailLevelItemInformation.Levels.category:
-                    categoryLabelList = new DALClassif.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
-                    break;
-                case DetailLevelItemInformation.Levels.mediaSeller:
-                    mediaSellerLabelList = new DALClassif.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
-                    break;
-                case DetailLevelItemInformation.Levels.title:
-                    titleLabelList = new DALClassif.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
-                    break;
-                case DetailLevelItemInformation.Levels.interestCenter:
-                    interestCenterLabelList = new DALClassif.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
-                    break;
-
-            }
-
-            HeaderGroup headerGroupTmp = null;
-			Dictionary<long, string> mediaKeyIndexResultTable = new Dictionary<long, string>();
-            for (int m = 1; m < groupMediaTotalIndex.GetLength(0); m++)
-            {
-                if (groupMediaTotalIndex[m] != null)
-                {
-                    //Supports de référence ou concurents 1365
-                    if (m == 1) headerGroupTmp = new HeaderGroup(GestionWeb.GetWebWord(1365, _session.SiteLanguage), true, START_ID_GROUP + m);
-                    else headerGroupTmp = new HeaderGroup(GestionWeb.GetWebWord(1366, _session.SiteLanguage) + " " + (m - 1).ToString(), true, START_ID_GROUP + m);
-                    if (groupMediaTotalIndex[m].Count > 1 && _session.CompetitorUniversMedia.Count > 1) headerGroupTmp.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUB_TOTAL_HEADER_ID);
-
-                    foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex)
-                    {
-                        if (subGroup != null)
-                        {
-                            if (subGroup.ParentId == m)
-                                switch (columnDetailLevel.Id)
-                                {
-
-                                    case DetailLevelItemInformation.Levels.media:
-                                        headerGroupTmp.Add(new Header(true, mediaLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-										mediaKeyIndexResultTable.Add(subGroup.DataBaseId, (START_ID_GROUP + m) + "-" + subGroup.DataBaseId.ToString());
-										break;
-                                    case DetailLevelItemInformation.Levels.category:
-                                        headerGroupTmp.Add(new Header(true, categoryLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                        break;
-                                    case DetailLevelItemInformation.Levels.mediaSeller:
-                                        headerGroupTmp.Add(new Header(true, mediaSellerLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                        break;
-                                    case DetailLevelItemInformation.Levels.title:
-                                        headerGroupTmp.Add(new Header(true, titleLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                        break;
-                                    case DetailLevelItemInformation.Levels.interestCenter:
-                                        headerGroupTmp.Add(new Header(true, interestCenterLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                        break;
-
-                                }
-                        }
-                    }
-
-                    headers.Root.Add(headerGroupTmp);
-                }
+                headerTotal = new Header(true, GestionWeb.GetWebWord(805, _session.SiteLanguage), TOTAL_HEADER_ID);
+                elementsHeader.Add(TOTAL_HEADER_ID.ToString(), headerTotal);
+                headers.Root.Add(headerTotal);
+                _showTotal = true;
             }
             #endregion
 
-            #region Déclaration du tableau de résultat
+            #region Elements groups
+            HeaderGroup headerGroupTmp = null;
+            Header headerGroupSubTotal = null;
+            iUnivers = 1;
+            elementsSubTotal = new Dictionary<string, HeaderBase>();
+            universesSubTotal = new Dictionary<Int64, HeaderBase>();
+            while (_session.CompetitorUniversMedia[iUnivers] != null)
+            {
+                //Group init
+                if (iUnivers != 1)
+                {
+                    headerGroupTmp = new HeaderGroup(string.Format("{0} {1}", GestionWeb.GetWebWord(1366, _session.SiteLanguage), iUnivers-1), true, START_ID_GROUP + iUnivers);
+                }
+                else
+                {
+                    headerGroupTmp = new HeaderGroup(GestionWeb.GetWebWord(1365, _session.SiteLanguage), true, START_ID_GROUP + iUnivers);
+                }
+                if (idsByUnivers[iUnivers].Count > 1 && _session.CompetitorUniversMedia.Count > 1)
+                {
+                    headerGroupSubTotal = headerGroupTmp.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUB_TOTAL_HEADER_ID);
+                    universesSubTotal.Add(iUnivers, headerGroupSubTotal);
+                }
+                foreach (Int64 id in idsByUnivers[iUnivers])
+                {
+                    headerTmp = new Header(true, levels[id], id);
+                    elementsHeader.Add(string.Format("{0}-{1}",iUnivers, id), headerTmp);
+                    headerGroupTmp.Add(headerTmp);
+                    if (!headerGroupTmp.ContainSubTotal)
+                    {
+                        if (!universesSubTotal.ContainsKey(iUnivers))
+                        {
+                            if (iUnivers == 1 && idsByUnivers.Count < 2 && idsByUnivers[1].Count > 1)
+                            {
+                                universesSubTotal.Add(iUnivers, headerTotal);
+                            }
+                            else
+                            {
+                                universesSubTotal.Add(iUnivers, headerTmp);
+                            }
+                        }
+                        elementsSubTotal.Add(string.Format("{0}-{1}", iUnivers, id), headerTmp);
+                    }
+                    else
+                    {
+                        elementsSubTotal.Add(string.Format("{0}-{1}", iUnivers, id), headerGroupSubTotal);
+                    }
+                }
+                headers.Root.Add(headerGroupTmp);
+                iUnivers++;
+            }
+            #endregion
 
-            long nbLine = GetNbLineFromPreformatedTableToResultTable(tabData) + 1;
-			#region Add Line for  Nb parution data
-			Dictionary<string, double> resNbParution = null;
-			if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (CstDBClassif.Vehicles.names.press == vehicle || CstDBClassif.Vehicles.names.internationalPress == vehicle)) {
+            #endregion
+
+            return headers;
+
+        }
+        #endregion
+
+        #region Format ResultTable
+        protected ResultTable GetResultTable(ResultTable grossTable, Int64 nbLine, Dictionary<Int64, HeaderBase> universesSubTotal, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
+        {
+
+            #region Line Number
+            //Total Line
+            nbLine++;
+            //Parution Number
+			Dictionary<Int64, double> resNbParution = null;
+            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
+			if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (_vehicleInformation.Id == CstDBClassif.Vehicles.names.press || _vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress)) {
 				resNbParution = GetNbParutionsByMedia();
 				if (resNbParution != null && resNbParution.Count>0)
-					nbLine = nbLine + 1;
+					nbLine++;
 			}
-			#endregion
-            ResultTable resultTable = new ResultTable(nbLine, headers);
-            long nbCol = resultTable.ColumnsNumber - 2;
-            long totalColIndex = -1;
-            if (showTotal) totalColIndex = resultTable.GetHeadersIndexInResultTable(TOTAL_HEADER_ID.ToString());
-            long levelLabelColIndex = resultTable.GetHeadersIndexInResultTable(LEVEL_HEADER_ID.ToString());
-            long mediaScheduleColIndex = resultTable.GetHeadersIndexInResultTable(MEDIA_SCHEDULE_HEADER_ID.ToString());
-            long creativeColIndex = resultTable.GetHeadersIndexInResultTable(CREATIVE_HEADER_ID.ToString());
-            long insertionsColIndex = resultTable.GetHeadersIndexInResultTable(INSERTION_HEADER_ID.ToString());
             #endregion
 
-            #region Sélection de l'unité
-            CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
+            #region Init indexes and tables
+            ResultTable tab = new ResultTable(nbLine, grossTable.NewHeaders);
+            bool computePDM = (_session.Percentage) ? true : false;
+            Int64 cLine = 0;
+            Int64 creaIndex = tab.GetHeadersIndexInResultTable(CREATIVE_HEADER_ID.ToString());
+            Int64 msIndex = tab.GetHeadersIndexInResultTable(MEDIA_SCHEDULE_HEADER_ID.ToString());
+            Int64 insertIndex = tab.GetHeadersIndexInResultTable(INSERTION_HEADER_ID.ToString());
+            Int64 totalIndex = tab.GetHeadersIndexInResultTable(TOTAL_HEADER_ID.ToString());
+            Int64 iFirstDataIndex = 2;
+            if (_showCreative) iFirstDataIndex++;
+            if (_showInsertions) iFirstDataIndex++;
+            if (_showMediaSchedule) iFirstDataIndex++;
+            Int64 nbLevel = _session.GenericProductDetailLevel.GetNbLevels;
+            CellLevel[] parents = new CellLevel[nbLevel+1];
+            #endregion
+
+            #region Init Units dimensions
+            CellUnitFactory cellFactory = _session.GetCellUnitFactory();
+            InitFinalLineValuesDelegate initLine;
+            SetFinalLineDelegate setLine;
+            switch (_session.Unit)
+            {
+                case CstWeb.CustomerSessions.Unit.versionNb:
+                    initLine = new InitFinalLineValuesDelegate(InitFinalListValuesLine);
+                    setLine = new SetFinalLineDelegate(SetFinalListLine);
+                    break;
+                default:
+                    initLine = new InitFinalLineValuesDelegate(InitFinalDoubleValuesLine);
+                    setLine = new SetFinalLineDelegate(SetFinalDoubleLine);
+                    break;
+            }
             #endregion
 
             #region Total
-            long nbColInTabData = tabData.GetLength(0);
-            Dictionary<Int64, bool> subTotalWithOneMediaIndexes = GetSubTotalWithOneMediaIndexes(nbColInTabData, resultTable, groupMediaTotalIndex);
-            startDataColIndex++;
-            startDataColIndexInit++;
-            currentLineInTabResult = resultTable.AddNewLine(LineType.total);
-            //Libellé du total
-            resultTable[currentLineInTabResult, levelLabelColIndex] = new CellLevel(-1, GestionWeb.GetWebWord(805, _session.SiteLanguage), 0, currentLineInTabResult);
-            CellLevel currentCellLevel0 = (CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-            if (showCreative) resultTable[currentLineInTabResult, creativeColIndex] = new CellOneLevelCreativesLink(currentCellLevel0, _session, _session.GenericProductDetailLevel);
-            if (showInsertions) resultTable[currentLineInTabResult, insertionsColIndex] = new CellOneLevelInsertionsLink(currentCellLevel0, _session, _session.GenericProductDetailLevel);
-            if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevel0, _session);
-            if (showTotal && !computePDM) resultTable[currentLineInTabResult, totalColIndex] = cellUnitFactory.Get(0.0);
-            if (showTotal && computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellPDM(0.0, null);
-            for (k = startDataColIndexInit; k <= nbCol; k++)
-            {
-                if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, totalColIndex]);
-                else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-            }
+            CellLevel cLevelTotal = new CellLevel(-1, GestionWeb.GetWebWord(805, _session.SiteLanguage), 0, cLine);
+            parents[0] = null;
+            parents[1] = cLevelTotal;
+            cLine = tab.AddNewLine(LineType.total);
+            //Total label
+            tab[cLine, 1] = cLevelTotal;          
+            if (_showCreative) tab[cLine, creaIndex] = new CellOneLevelCreativesLink(cLevelTotal, _session, _session.GenericProductDetailLevel);
+            if (_showInsertions) tab[cLine, insertIndex] = new CellOneLevelInsertionsLink(cLevelTotal, _session, _session.GenericProductDetailLevel);
+            if (_showMediaSchedule) tab[cLine, msIndex] = new CellMediaScheduleLink(cLevelTotal, _session);
+            initLine(iFirstDataIndex, tab, cLine, cellFactory, computePDM);
             #endregion
 
-			#region Nombre parutions by media
-			if (resNbParution != null && resNbParution.Count > 0) {				
-				currentLineInTabResult = resultTable.AddNewLine(LineType.nbParution);
-				//Libellé du total
-				resultTable[currentLineInTabResult, levelLabelColIndex] = new CellLevel(-1, GestionWeb.GetWebWord(2460, _session.SiteLanguage), 0, currentLineInTabResult);
-				CellLevel currentCellLevelParution = (CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-				if (showCreative) resultTable[currentLineInTabResult, creativeColIndex] = new CellOneLevelCreativesLink(currentCellLevelParution, _session, _session.GenericProductDetailLevel);
-				if (showInsertions) resultTable[currentLineInTabResult, insertionsColIndex] = new CellOneLevelInsertionsLink(currentCellLevelParution, _session, _session.GenericProductDetailLevel);
-				if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevelParution, _session);
-				if (showTotal && !computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellNumber(0.0);
-				if (showTotal && computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellNumber(0.0);
-				for (k = startDataColIndexInit; k <= nbCol; k++) {
-					resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
-				}
-
-				//Insertion du nombre de parution 		
-				foreach (KeyValuePair<string, double> kpv in resNbParution) {
-					if (mediaKeyIndexResultTable.ContainsKey(long.Parse(kpv.Key)) && resultTable.HeadersIndexInResultTable.ContainsKey(mediaKeyIndexResultTable[long.Parse(kpv.Key)])) {
-						TNS.FrameWork.WebResultUI.Header header = (TNS.FrameWork.WebResultUI.Header)resultTable.HeadersIndexInResultTable[mediaKeyIndexResultTable[long.Parse(kpv.Key)]];
-						resultTable[currentLineInTabResult, header.IndexInResultTable] = new CellNumber(resNbParution[kpv.Key]);
-					}
-				}
-				
-
-			}
-			#endregion
-
-			#region Tableau de résultat
-			oldIdL1 = -1;
-            oldIdL2 = -1;
-            oldIdL3 = -1;
-            AdExpressCellLevel currentCellLevel1 = null;
-            AdExpressCellLevel currentCellLevel2 = null;
-            AdExpressCellLevel currentCellLevel3 = null;
-            long currentL1Index = -1;
-            long currentL2Index = -1;
-            long currentL3Index = -1;
-
-            for (currentLine = 0; currentLine < nbLineInTabData; currentLine++)
+            #region Nombre parutions by media
+            if (resNbParution != null && resNbParution.Count > 0)
             {
-
-                #region On change de niveau L1
-                if (tabData[IDL1_INDEX, currentLine] != null && (Int64)tabData[IDL1_INDEX, currentLine] != oldIdL1)
+                cLine = tab.AddNewLine(LineType.nbParution);
+                CellLevel cLevelParution = new CellLevel(-1, GestionWeb.GetWebWord(2460, _session.SiteLanguage), 0, cLine);
+                tab[cLine, 1] = cLevelParution;
+                if (_showCreative) tab[cLine, creaIndex] = new CellOneLevelCreativesLink(cLevelParution, _session, _session.GenericProductDetailLevel);
+                if (_showInsertions) tab[cLine, insertIndex] = new CellOneLevelInsertionsLink(cLevelParution, _session, _session.GenericProductDetailLevel);
+                if (_showMediaSchedule) tab[cLine, msIndex] = new CellMediaScheduleLink(cLevelParution, _session);
+                if (_showTotal) tab[cLine, totalIndex] = new CellNumber(0.0);
+                for (Int64 i = iFirstDataIndex; i < tab.DataColumnsNumber; i++)
                 {
-                    currentLineInTabResult = resultTable.AddNewLine(LineType.level1);
-
-                    #region Totaux et sous Totaux à 0 et media
-                    if (showTotal && !computePDM) resultTable[currentLineInTabResult, totalColIndex] = cellUnitFactory.Get(0.0);
-                    if (showTotal && computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellPDM(0.0, null);
-                    for (k = startDataColIndexInit; k <= nbCol; k++)
-                    {
-                        if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, totalColIndex]);
-                        else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-                    }
-                    #endregion
-
-                    oldIdL1 = (Int64)tabData[IDL1_INDEX, currentLine];
-                    resultTable[currentLineInTabResult, levelLabelColIndex] = new AdExpressCellLevel(oldIdL1, (string)tabData[LABELL1_INDEX, currentLine], currentCellLevel0, 1, currentLineInTabResult, _session);
-                    currentCellLevel1 = (AdExpressCellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-                    if (showCreative) resultTable[currentLineInTabResult, creativeColIndex] = new CellOneLevelCreativesLink(currentCellLevel1, _session, _session.GenericProductDetailLevel);
-                    if (showInsertions) resultTable[currentLineInTabResult, insertionsColIndex] = new CellOneLevelInsertionsLink(currentCellLevel1, _session, _session.GenericProductDetailLevel);
-                    if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevel1, _session);
-                    currentL1Index = currentLineInTabResult;
-                    oldIdL2 = oldIdL3 = -1;
-
-                    #region GAD
-                    if (_session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == 1)
-                    {
-                        if (tabData[ADDRESS_COLUMN_INDEX, currentLine] != null)
-                        {
-                            ((CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex]).AddressId = (Int64)tabData[ADDRESS_COLUMN_INDEX, currentLine];
-                        }
-                    }
-                    #endregion
+                    tab[cLine, i] = new CellNumber(0.0);
                 }
-                #endregion
 
-                #region On change de niveau L2
-                if (tabData[IDL2_INDEX, currentLine] != null && (Int64)tabData[IDL2_INDEX, currentLine] != oldIdL2)
-                {
-                    currentLineInTabResult = resultTable.AddNewLine(LineType.level2);
-
-                    #region Totaux et sous Totaux à 0 et media
-                    if (showTotal && !computePDM) resultTable[currentLineInTabResult, totalColIndex] = cellUnitFactory.Get(0.0);
-                    if (showTotal && computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellPDM(0.0, null);
-                    for (k = startDataColIndexInit; k <= nbCol; k++)
-                    {
-                        if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, totalColIndex]);
-                        else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
+                //Insert numbers of parutions
+                foreach(HeaderBase h in elementsHeader.Values){
+                    if (resNbParution.ContainsKey(h.Id)){
+                        tab[cLine, h.IndexInResultTable] = new CellNumber(resNbParution[h.Id]);
                     }
-                    #endregion
-
-                    oldIdL2 = (Int64)tabData[IDL2_INDEX, currentLine];
-                    resultTable[currentLineInTabResult, levelLabelColIndex] = new AdExpressCellLevel(oldIdL2, (string)tabData[LABELL2_INDEX, currentLine], currentCellLevel1, 2, currentLineInTabResult, _session);
-                    currentCellLevel2 = (AdExpressCellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-                    if (showCreative) resultTable[currentLineInTabResult, creativeColIndex] = new CellOneLevelCreativesLink(currentCellLevel2, _session, _session.GenericProductDetailLevel);
-                    if (showInsertions) resultTable[currentLineInTabResult, insertionsColIndex] = new CellOneLevelInsertionsLink(currentCellLevel2, _session, _session.GenericProductDetailLevel);
-                    if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevel2, _session);
-                    currentL2Index = currentLineInTabResult;
-                    oldIdL3 = -1;
-
-                    #region GAD
-                    if (_session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == 2)
-                    {
-                        if (tabData[ADDRESS_COLUMN_INDEX, currentLine] != null)
-                        {
-                            ((CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex]).AddressId = (Int64)tabData[ADDRESS_COLUMN_INDEX, currentLine];
-                        }
-                    }
-                    #endregion
-                }
-                #endregion
-
-                #region On change de niveau L3
-                if (tabData[IDL3_INDEX, currentLine] != null && (Int64)tabData[IDL3_INDEX, currentLine] != oldIdL3)
-                {
-                    currentLineInTabResult = resultTable.AddNewLine(LineType.level3);
-
-                    #region Totaux et sous Totaux à 0 et media
-                    if (showTotal && !computePDM) resultTable[currentLineInTabResult, totalColIndex] = cellUnitFactory.Get(0.0);
-                    if (showTotal && computePDM) resultTable[currentLineInTabResult, totalColIndex] = new CellPDM(0.0, null);
-                    for (k = startDataColIndexInit; k <= nbCol; k++)
-                    {
-                        if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, totalColIndex]);
-                        else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-                    }
-                    #endregion
-
-                    oldIdL3 = (Int64)tabData[IDL3_INDEX, currentLine];
-                    resultTable[currentLineInTabResult, levelLabelColIndex] = new AdExpressCellLevel(oldIdL3, (string)tabData[LABELL3_INDEX, currentLine], currentCellLevel2, 3, currentLineInTabResult, _session);
-                    currentCellLevel3 = (AdExpressCellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-                    if (showCreative) resultTable[currentLineInTabResult, creativeColIndex] = new CellOneLevelCreativesLink(currentCellLevel3, _session, _session.GenericProductDetailLevel);
-                    if (showInsertions) resultTable[currentLineInTabResult, insertionsColIndex] = new CellOneLevelInsertionsLink(currentCellLevel3, _session, _session.GenericProductDetailLevel);
-                    if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevel3, _session);
-                    currentL3Index = currentLineInTabResult;
-
-                    #region GAD
-                    if (_session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == 3)
-                    {
-                        if (tabData[ADDRESS_COLUMN_INDEX, currentLine] != null)
-                        {
-                            ((CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex]).AddressId = (Int64)tabData[ADDRESS_COLUMN_INDEX, currentLine];
-                        }
-                    }
-                    #endregion
-                }
-                #endregion
-
-                // On copy la ligne et on l'ajoute aux totaux
-                decal = 0;
-                for (k = TOTAL_INDEX; k < nbColInTabData; k++)
-                {
-                    //On affiche pas la cellule si:
-                    // Dans data c'est un sous total et que le groupe n'a qu'un seul éléments
-                    if (!subTotalWithOneMediaIndexes.ContainsKey(k))
-                        resultTable.AffectValueAndAddToHierarchy(levelLabelColIndex, currentLineInTabResult, startDataColIndex - decal + k - (long.Parse((TOTAL_INDEX).ToString())), (double)tabData[k, currentLine]);
-                    else
-                        decal++;
                 }
 
             }
             #endregion
 
-            return (resultTable);
+            #region Fill final table
+            CellLevel cLevel = null;
+            for (int i = 0; i < grossTable.LinesNumber; i++)
+            {
+
+                if (grossTable.GetLineStart(i) is LineHide)
+                    continue;
+
+                #region Init Line
+                cLine = InitFinalLine(grossTable, tab, i, parents[((CellLevel)grossTable[i, 1]).Level], creaIndex, insertIndex, msIndex);
+                initLine(iFirstDataIndex, tab, cLine, cellFactory, computePDM);
+                cLevel = (CellLevel)tab[cLine, 1];
+                #endregion
+
+                if (cLevel.Level < nbLevel)
+                {
+                    parents[cLevel.Level + 1] = cLevel;
+                }
+                else{
+                    setLine(grossTable, tab, i, cLine, elementsHeader, elementsSubTotal);
+                }
+
+            }
+            #endregion
+
+            return tab;
         }
+
+        #region InitFinalLineValuesDelegate
+        protected delegate Int64 InitFinalLineValuesDelegate(Int64 iFirstDataIndex, ResultTable toTab, Int64 toLine, CellUnitFactory cellFactory, bool isPDM);
+        protected Int64 InitFinalDoubleValuesLine(Int64 iFirstDataIndex, ResultTable toTab, Int64 toLine, CellUnitFactory cellFactory, bool isPDM)
+        {
+
+            Int64 t = toTab.GetHeadersIndexInResultTable(TOTAL_HEADER_ID.ToString());
+            CellUnit cell = null;
+            if (t > -1)
+            {
+                if (!isPDM)
+                {
+                    toTab[toLine, t] = cellFactory.Get(0.0);
+                }
+                else
+                {
+                    toTab[toLine, t] = cell = new CellPDM(0.0, null);
+                }
+                t++;
+            }
+            else
+            {
+                t = iFirstDataIndex;
+            }
+
+            for (Int64 i = t; i <= toTab.DataColumnsNumber; i++)
+            {
+                if (!isPDM)
+                {
+                    toTab[toLine, i] = cellFactory.Get(0.0);
+                }
+                else
+                {
+                    toTab[toLine, i] = new CellPDM(0.0,cell);
+                }
+            }
+            return toLine;
+
+        }
+        protected Int64 InitFinalListValuesLine(Int64 iFirstDataIndex, ResultTable toTab, Int64 toLine, CellUnitFactory cellFactory, bool isPDM)
+        {
+
+            Int64 t = toTab.GetHeadersIndexInResultTable(TOTAL_HEADER_ID.ToString());
+            CellVersionNbPDM cell = null;
+            if (t > -1)
+            {
+                if (!isPDM)
+                {
+                    toTab[toLine, t] = cellFactory.Get(0);
+                }
+                else
+                {
+                    toTab[toLine, t] = cell = new CellVersionNbPDM(null);
+                }
+                t++;
+            }
+            else
+            {
+                t = iFirstDataIndex;
+            }
+
+            for (Int64 i = t; i <= toTab.DataColumnsNumber; i++)
+            {
+                if (!isPDM)
+                {
+                    toTab[toLine, i] = cellFactory.Get(0);
+                }
+                else
+                {
+                    toTab[toLine, i] = new CellVersionNbPDM(cell);
+                }
+            }
+            return toLine;
+
+        }
+        protected Int64 InitFinalLine(ResultTable fromTab, ResultTable toTab, Int64 fromLine, CellLevel parent, Int64 creaIndex, Int64 insertIndex, Int64 msIndex)
+        {
+            CellLevel cFromLevel = (CellLevel)fromTab[fromLine, 1];
+            Int64 cLine = toTab.AddNewLine(fromTab.GetLineStart(fromLine).LineType);
+            AdExpressCellLevel cell = new AdExpressCellLevel(cFromLevel.Id, cFromLevel.Label, parent, cFromLevel.Level, cLine, _session);
+            toTab[cLine, 1] = cell;
+
+            //Links
+            if (_showCreative) toTab[cLine, creaIndex] = new CellOneLevelCreativesLink(cell, _session, _session.GenericProductDetailLevel);
+            if (_showInsertions) toTab[cLine, insertIndex] = new CellOneLevelInsertionsLink(cell, _session, _session.GenericProductDetailLevel);
+            if (_showMediaSchedule) toTab[cLine, msIndex] = new CellMediaScheduleLink(cell, _session);
+
+            //Gad
+            if (_session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == cell.Level)
+            {
+                cell.AddressId = cFromLevel.AddressId;
+            }
+            return cLine;
+
+        }
+        #endregion
+
+        #region SetLineDelegate
+        protected delegate Int64 SetFinalLineDelegate(ResultTable fromTab, ResultTable toTab, Int64 fromLine, Int64 toLine, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal);
+        protected Int64 SetFinalDoubleLine(ResultTable fromTab, ResultTable toTab, Int64 fromLine, Int64 toLine, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
+        {
+
+            CellLevel level = (CellLevel)fromTab[fromLine, 1];
+            HeaderBase hTotal = (elementsHeader.ContainsKey(TOTAL_HEADER_ID.ToString())) ? elementsHeader[TOTAL_HEADER_ID.ToString()] : null;
+
+            //elements
+            HeaderBase cHeader = null;
+            HeaderBase subTotalHeader = null;
+            double value = 0.0;
+            foreach (string s in elementsHeader.Keys)
+            {
+                cHeader = elementsHeader[s];
+                if (cHeader !=hTotal)
+                {
+                    value = ((CellUnit)fromTab[fromLine, cHeader.IndexInResultTable]).Get_value();
+                    toTab.AffectValueAndAddToHierarchy(1, toLine, cHeader.IndexInResultTable, value);
+                    //univers sub total
+                    subTotalHeader = elementsSubTotal[s];
+                    if (subTotalHeader != cHeader && subTotalHeader != hTotal)
+                    {
+                        toTab.AffectValueAndAddToHierarchy(1, toLine, subTotalHeader.IndexInResultTable, value);
+                    }
+                    //line total
+                    if (hTotal != null)
+                    {
+                        toTab.AffectValueAndAddToHierarchy(1, toLine, hTotal.IndexInResultTable, value);
+                    }
+
+                }
+
+            }
+
+            return toLine ;
+
+        }
+        protected Int64 SetFinalListLine(ResultTable fromTab, ResultTable toTab, Int64 fromLine, Int64 toLine, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
+        {
+
+            CellLevel level = (CellLevel)fromTab[fromLine, 1];
+            HeaderBase hTotal = (elementsHeader.ContainsKey(TOTAL_HEADER_ID.ToString())) ? elementsHeader[TOTAL_HEADER_ID.ToString()] : null;
+
+            //elements
+            HeaderBase cHeader = null;
+            HeaderBase subTotalHeader = null;
+            HybridList value = null ;
+            Int64 l = -1;
+            Int64 len = 0;
+            bool affectTotal = hTotal != null;
+            foreach (string s in elementsHeader.Keys)
+            {
+                cHeader = elementsHeader[s];
+                if (cHeader != hTotal)
+                {
+                    value = ((CellIdsNumber)fromTab[fromLine, cHeader.IndexInResultTable]).List;
+                    len = value.length;
+                    for (int i = 0; i < len; i++)
+                    {
+                        l = value.removeHead().UniqueID;
+                        toTab.AffectValueAndAddToHierarchy(1, toLine, cHeader.IndexInResultTable, l);
+                        //univers sub total
+                        subTotalHeader = elementsSubTotal[s];
+                        if (subTotalHeader != cHeader && subTotalHeader != hTotal)
+                        {
+                            toTab.AffectValueAndAddToHierarchy(1, toLine, subTotalHeader.IndexInResultTable, l);
+                        }
+                        //line total
+                        if (affectTotal)
+                        {
+                            toTab.AffectValueAndAddToHierarchy(1, toLine, hTotal.IndexInResultTable, l);
+                        }
+                    }
+
+                }
+
+            }
+
+            return toLine;
+
+        }
+        #endregion
+
+
         #endregion
 
         #region Compute line numbers in result table from preformated data table
         /// <summary>
-        /// Get the number of line in ResultTable from preformated data table
+        /// Get the number of line from the database data
         /// </summary>
-        /// <param name="tabData">Preformated Table</param>
-        /// <returns>Result Table data line number</returns>
-        protected long GetNbLineFromPreformatedTableToResultTable(object[,] tabData)
+        /// <param name="tabData">Data</param>
+        /// <returns>Number of lines</returns>
+        protected long GetNbLine(DataTable dt)
         {
 
-            #region Variables
             long nbLine = 0;
-            long k;
             Int64 oldIdL1 = -1;
             Int64 oldIdL2 = -1;
             Int64 oldIdL3 = -1;
-            #endregion
+            Int64 cIdL1 = -1;
+            Int64 cIdL2 = -1;
+            Int64 cIdL3 = -1;
 
-            for (k = 0; k < tabData.GetLength(1); k++)
+            foreach (DataRow row in dt.Rows)
             {
-                // Somme des L1
-                if (tabData[IDL1_INDEX, k] != null && (Int64)tabData[IDL1_INDEX, k] != oldIdL1)
+                cIdL1 = _session.GenericProductDetailLevel.GetIdValue(row, 1);
+                cIdL2 = _session.GenericProductDetailLevel.GetIdValue(row, 2);
+                cIdL3 = _session.GenericProductDetailLevel.GetIdValue(row, 3);
+                if (cIdL1 > 0 && cIdL1 != oldIdL1)
                 {
-                    oldIdL1 = (Int64)tabData[IDL1_INDEX, k];
-                    oldIdL3 = oldIdL2 = -1;
+                    oldIdL1 = cIdL1;
+                    oldIdL2 = oldIdL3 = -1;
                     nbLine++;
                 }
-
-                // Somme des L2
-                if (tabData[IDL2_INDEX, k] != null && (Int64)tabData[IDL2_INDEX, k] != oldIdL2)
+                if (cIdL2 > 0 && cIdL2 != oldIdL2)
                 {
-                    oldIdL2 = (Int64)tabData[IDL2_INDEX, k];
+                    oldIdL2 = cIdL2;
                     oldIdL3 = -1;
                     nbLine++;
                 }
-
-                // Somme des L3
-                if (tabData[IDL3_INDEX, k] != null && (Int64)tabData[IDL3_INDEX, k] != oldIdL3)
+                if (cIdL3 > 0 && cIdL3 != oldIdL3)
                 {
-                    oldIdL3 = (Int64)tabData[IDL3_INDEX, k];
+                    oldIdL3 = cIdL3;
                     nbLine++;
                 }
-
             }
-            return (nbLine);
-        }
-        #endregion
-
-        #region List of indexes of columns with only one media
-        /// <summary>
-        /// List of indexes of columns with only one media
-        /// </summary>
-        /// <param name="session">User Session</param>
-        /// <param name="nbColInTabData">Columns number in data table</param>
-        /// <param name="resultTable">Result Table</param>
-        /// <param name="groupMediaTotalIndex">List of media groups</param>
-        /// <returns>Indexes of columns with only one media</returns>
-        protected Dictionary<Int64, bool> GetSubTotalWithOneMediaIndexes(long nbColInTabData, ResultTable resultTable, SelectionGroup[] groupMediaTotalIndex)
-        {
-            Dictionary<Int64, bool> subTotalWithOneMediaIndexes = new Dictionary<Int64, bool>();
-            for (long k = TOTAL_INDEX; k < nbColInTabData; k++)
-            {
-                for (int m = 1; m < groupMediaTotalIndex.GetLength(0); m++)
-                {
-                    if (groupMediaTotalIndex[m] != null)
-                    {
-                        if (groupMediaTotalIndex[m].IndexInResultTable == k &&
-                          (groupMediaTotalIndex[m].Count == 1 || _session.CompetitorUniversMedia.Count == 1))
-                            subTotalWithOneMediaIndexes.Add(k, true);
-                    }
-                }
-            }
-            return (subTotalWithOneMediaIndexes);
+            return nbLine;
         }
         #endregion
 
@@ -1626,10 +1643,10 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <param name="sort">sorting</param>
         /// <param name="referenceUniversMedia">Reference Media List</param>
         /// <param name="competitorUniversMedia">Competitor Media List</param>	
-        private void GetProductActivity(ResultTable tabResult, DataTable dt, long indexLineProduct, string filterExpression, string sort, List<string> referenceUniversMedia, List<string> competitorUniversMedia)
+        private void GetProductActivity(ResultTable tabResult, DataTable dt, long indexLineProduct, string filterExpression, string sort, List<string> referenceUniversMedia, List<string> competitorUniversMedia, AddValue addValueDelegate, SetSynthesisTable setSynthesisDataDelegate, InitValue initValueDelegate)
         {
-            double unitReferenceMedia = 0;
-            double unitCompetitorMedia = 0;
+            CellUnit unitReferenceMedia = initValueDelegate();
+            CellUnit unitCompetitorMedia = initValueDelegate();
             string unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
             Int64 presentNumberColumnIndex = tabResult.GetHeadersIndexInResultTable(PRESENT_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
             Int64 absentNumberColumnIndex = tabResult.GetHeadersIndexInResultTable(ABSENT_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
@@ -1653,72 +1670,138 @@ namespace TNS.AdExpressI.PresentAbsent{
                     if (foundRows[i]["id_media"] != null && foundRows[i]["id_media"] != System.DBNull.Value && referenceUniversMedia != null &&
                         foundRows[i][unitAlias] != null && foundRows[i][unitAlias] != System.DBNull.Value && referenceUniversMedia.Contains(foundRows[i]["id_media"].ToString()))
                     {
-                        unitReferenceMedia += double.Parse(foundRows[i][unitAlias].ToString());
+                        addValueDelegate(unitReferenceMedia, foundRows[i][unitAlias]);
+                        //unitReferenceMedia += double.Parse(foundRows[i][unitAlias].ToString());
                     }
                     //Unité supports concurrents
                     if (foundRows[i]["id_media"] != null && foundRows[i]["id_media"] != System.DBNull.Value && competitorUniversMedia != null &&
                         foundRows[i][unitAlias] != null && foundRows[i][unitAlias] != System.DBNull.Value && competitorUniversMedia.Contains(foundRows[i]["id_media"].ToString()))
                     {
-                        unitCompetitorMedia += double.Parse(foundRows[i][unitAlias].ToString());
+                        addValueDelegate(unitCompetitorMedia, foundRows[i][unitAlias]);
+                        //unitCompetitorMedia += double.Parse(foundRows[i][unitAlias].ToString());
                     }
                 }
             }
 
             #region Communs
-            if (unitReferenceMedia > 0 && unitCompetitorMedia > 0)
+            if (unitReferenceMedia.CompareTo(0) > 0 && unitCompetitorMedia.CompareTo(0) > 0)
             {
                 //Nombre 
                 ((CellUnit)tabResult[indexLineProduct, presentNumberColumnIndex]).Value += 1;
 
                 //supports de référence communs
-                ((CellUnit)tabResult[indexLineProduct, presentReferenceColumnIndex]).Value += unitReferenceMedia;
+                setSynthesisDataDelegate(tabResult, indexLineProduct, presentReferenceColumnIndex, unitReferenceMedia);
+                //((CellUnit)tabResult[indexLineProduct, presentReferenceColumnIndex]).Value += unitReferenceMedia;
 
                 //supports concurrents communs
-                ((CellUnit)tabResult[indexLineProduct, presentCompetitorColumnIndex]).Value += unitCompetitorMedia;
+                setSynthesisDataDelegate(tabResult, indexLineProduct, presentCompetitorColumnIndex, unitCompetitorMedia);
+                //((CellUnit)tabResult[indexLineProduct, presentCompetitorColumnIndex]).Value += unitCompetitorMedia;
 
             }
             #endregion
 
             #region Absents
-            if (unitReferenceMedia == 0 && unitCompetitorMedia > 0)
+            if (unitReferenceMedia.CompareTo(0) == 0 && unitCompetitorMedia.CompareTo(0) > 0)
             {
                 //Nombre 
                 ((CellUnit)tabResult[indexLineProduct, absentNumberColumnIndex]).Value += 1;
 
                 //supports concurrents Absents
-                ((CellUnit)tabResult[indexLineProduct, absentCompetitorColumnIndex]).Value += unitCompetitorMedia;
+                setSynthesisDataDelegate(tabResult, indexLineProduct, absentCompetitorColumnIndex, unitCompetitorMedia);
+                //((CellUnit)tabResult[indexLineProduct, absentCompetitorColumnIndex]).Value += unitCompetitorMedia;
 
             }
             #endregion
 
             #region Exclusifs
-            if (unitReferenceMedia > 0 && unitCompetitorMedia == 0)
+            if (unitReferenceMedia.CompareTo(0) > 0 && unitCompetitorMedia.CompareTo(0) == 0)
             {
                 //Nombre 
                 ((CellUnit)tabResult[indexLineProduct, exclusiveNumberColumnIndex]).Value += 1;
 
                 //supports de référence exclusifs
-                ((CellUnit)tabResult[indexLineProduct, exclusiveReferenceColumnIndex]).Value += unitReferenceMedia;
+                setSynthesisDataDelegate(tabResult, indexLineProduct, exclusiveReferenceColumnIndex, unitReferenceMedia);
+                //((CellUnit)tabResult[indexLineProduct, exclusiveReferenceColumnIndex]).Value += unitReferenceMedia;
             }
             #endregion
 
         }
+
+        #region delegates
+        protected delegate CellUnit InitValue();
+        protected delegate void AddValue(CellUnit cell, object value);
+        protected delegate void SetSynthesisTable(ResultTable tab, Int64 line, Int64 column, CellUnit value);
+
+        #region InitValue
+        protected CellUnit InitDoubleValue()
+        {
+
+            return new CellNumber(0.0);
+
+        }
+        protected CellUnit InitListValue()
+        {
+
+            return new CellIdsNumber();
+
+        }
         #endregion
 
-		#region GetNbParutionsByMedia
-		/// <summary>
-		/// Get Number of parution by media
-		/// </summary>
-		/// <param name="webSession"> Client Session</param>
-		/// <returns>Number of parution by media data</returns>
-		protected  Dictionary<string, double> GetNbParutionsByMedia() {
+        #region AddValue(CellUnit cell, object value)
+        protected void AddDoubleValue(CellUnit cell, object value)
+        {
+
+            cell.Add(Convert.ToDouble(value));
+
+        }
+        protected void AddListValue(CellUnit cell, object value)
+        {
+
+            string[] ids = value.ToString().Split(',');
+            for(int i = 0; i < ids.Length; i++){
+                cell.Add(Convert.ToDouble(ids[i]));
+            }
+
+        }
+        #endregion
+
+        #region SetSynthesisTable(ResultTable tab, Int64 line, Int64 column, CellUnit value)
+        protected void SetDoubleSynthesisTable(ResultTable tab, Int64 line, Int64 column, CellUnit value){
+
+            ((CellUnit)tab[line, column]).Add(((CellUnit)value).Value);
+
+        }
+        protected void SetListSynthesisTable(ResultTable tab, Int64 line, Int64 column, CellUnit value){
+            HybridList h = ((CellIdsNumber)value).List;
+            CellIdsNumber c = (CellIdsNumber)tab[line, column];
+            Int64 len = h.length;
+            for (int i = 0; i < len; i++)
+            {
+                c.Add(h.removeHead().UniqueID);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region GetNbParutionsByMedia
+        /// <summary>
+        /// Get Number of parution by media
+        /// </summary>
+        /// <param name="webSession"> Client Session</param>
+        /// <returns>Number of parution by media data</returns>
+        protected Dictionary<Int64, double> GetNbParutionsByMedia()
+        {
 
 			#region Variables
-			Dictionary<string, double> res = new Dictionary<string, double>();
+            Dictionary<Int64, double> res = new Dictionary<Int64, double>();
 			double nbParutionsCounter = 0;
-			Int64 oldColumnDetailLevel = -1;
 			bool start = true;
-			string oldKey = "";
+			Int64 oldKey = -1;
+			Int64 cKey = -1;
 			#endregion		
 
 			#region Chargement des données à partir de la base
@@ -1738,22 +1821,26 @@ namespace TNS.AdExpressI.PresentAbsent{
 			#endregion
 
 			if (dt != null && dt.Rows.Count > 0) {
+
 				foreach (DataRow dr in dt.Rows) {
-					if (!oldKey.Equals(dr["id_media"].ToString()) && !start) {
+
+                    cKey = Convert.ToInt64(dr["id_media"]);
+					if (oldKey != cKey && !start) {
 						res.Add(oldKey, nbParutionsCounter);
 						nbParutionsCounter = 0;
 					}
-					nbParutionsCounter += double.Parse(dr["NbParution"].ToString());
+					nbParutionsCounter += Convert.ToDouble(dr["NbParution"]);
 					start = false;
-					oldKey = dr["id_media"].ToString();
+                    oldKey = cKey;
+
 				}
 				res.Add(oldKey, nbParutionsCounter);
+
 			}
 
 			return res;
 
 		}
-
 		#endregion
 
         #endregion

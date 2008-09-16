@@ -10,5 +10,5 @@
   <unit id="numberBoard" format="max0"      webTextId="1604"  baseId ="insertion"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="number_board"      multimediaField="totalinsert"/>
   <unit id="grp"         format="max1"      webTextId="1679"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellGRP"        field="grp"/>
   <unit id="volume"      format="max0"      webTextId="2216"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellVolume"     field="volume"            multimediaField="totalvolume"/>
-  <unit id="versionNb"   format="max0"      webTextId="2479"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellIdsNumber"  field="hashcode"          multimediaField="list_banners"/>
+  <unit id="versionNb"   format="max0"      webTextId="2479"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellIdsNumber"  field="to_char(hashcode)" multimediaField="mau01.listnum_to_char_test(list_banners)"/>
 </units>

@@ -34,6 +34,7 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 
 #endregion
 
@@ -120,6 +121,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             StringBuilder sql = new StringBuilder(3000);
             string dateField = "";
             CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
+            string groupByOptional = string.Empty;
             #endregion
 
             #region Tables
@@ -147,7 +149,25 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                         throw (new PresentAbsentDALException("Unable to determine type of table to use."));
                 }
                 // Unités
-                unitFieldNameSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
+                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                {
+                    UnitInformation u = _session.GetSelectedUnit();
+                    if (type != CstDB.TableType.Type.webPlan)
+                    {
+                        unitFieldNameSumWithAlias = string.Format("{0} as {1}", u.DatabaseField, u.Id.ToString());
+                        groupByOptional = string.Format(", {0}", u.DatabaseField);
+                    }
+                    else
+                    {
+                        unitFieldNameSumWithAlias = string.Format("{0} as {1}", u.DatabaseMultimediaField, u.Id.ToString());
+                        groupByOptional = string.Format(", {0}", u.DatabaseMultimediaField);
+                    }
+                }
+                else
+                {
+                    unitFieldNameSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
+                }
+
                 productsRights = FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, DATA_TABLE_PREFIXE, true);
                 mediaRights = FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, DATA_TABLE_PREFIXE, true);
                 listExcludeProduct = GetExcludeProducts(DATA_TABLE_PREFIXE);//FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DATA_TABLE_PREFIXE, true, false);
@@ -314,6 +334,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY,{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
                 sql.AppendFormat(",{0}.id_media ", DATA_TABLE_PREFIXE);
             }
+            sql.Append(groupByOptional);
             #endregion
 
             #region Execution de la requête
@@ -445,6 +466,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             string mediaList = "";
             bool premier;
             string dataJointForInsert = "";
+            string groupByOptional = string.Empty;
 
             CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
 
@@ -487,7 +509,24 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 //mediaJoinCondition=GetMediaJoinConditions(webSession,DbTables.WEB_PLAN_PREFIXE,false);
                 productJoinCondition = _session.GenericProductDetailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 // Unités
-                unitFieldNameSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
+                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                {
+                    UnitInformation u = _session.GetSelectedUnit();
+                    if (type != CstDB.TableType.Type.webPlan)
+                    {
+                        unitFieldNameSumWithAlias = string.Format("{0} as {1}", u.DatabaseField, u.Id.ToString());
+                        groupByOptional = string.Format(", {0}", u.DatabaseField);
+                    }
+                    else
+                    {
+                        unitFieldNameSumWithAlias = string.Format("{0} as {1}", u.DatabaseMultimediaField, u.Id.ToString());
+                        groupByOptional = string.Format(", {0}", u.DatabaseMultimediaField);
+                    }
+                }
+                else
+                {
+                    unitFieldNameSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
+                }
                 // Droits produit
                 productsRights = FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
                 // Droits media
@@ -496,7 +535,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				listExcludeProduct = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);//;FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
                 //option encarts (pour la presse)
                 if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
-                    dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,type);
+                    dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
                     try {
                         dataTableNameForGad = ", " + tblGad.SqlWithPrefix;
@@ -531,7 +570,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 }
                 else
                 {
-                    sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2} {3}, {4})"
+                    sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2} {3}, {4}"
                         , WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix
                         , columnDetailLevel
                         , productFieldName
@@ -608,19 +647,21 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 sql.AppendFormat(" {0}", mediaRights);
                 // Group by
                 if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
-                    sql.AppendFormat(" group by {0}.id_media, {1}, {2}{3}, {4}",
+                    sql.AppendFormat(" group by {0}.id_media, {1}, {2}{3}, {4}{5}",
                         WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
                         columnDetailLevel,
                         groupByFieldName,
                         dataFieldsForGad,
-                        dateField
+                        dateField,
+                        groupByOptional
                     );
                 else
-                    sql.AppendFormat(" group by {0}.id_media, {1}, {2}{3}",
+                    sql.AppendFormat(" group by {0}.id_media, {1}, {2}{3}{4}",
                         WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
                         columnDetailLevel,
                         groupByFieldName,
-                        dataFieldsForGad
+                        dataFieldsForGad,
+                        groupByOptional
                     );
 
                 return (sql.ToString());
@@ -692,10 +733,15 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                         if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
                             dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
                         sql = new StringBuilder();
-                        sql.AppendFormat(" select id_media, columnDetailLevel, {0}{1}, {2}",
+                        sql.AppendFormat(" select id_media, columnDetailLevel, {0}{1}",
                             productFieldNameWithoutTablePrefix,
-                            dataFieldsForGadWithoutTablePrefix,
-                            FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
+                            dataFieldsForGadWithoutTablePrefix);
+                        if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb){
+                            sql.AppendFormat(", {2}", FctWeb.SQLGenerator.GetUnitAlias(_session));
+                        }
+                        else{
+                            sql.AppendFormat(", {2}", FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
+                        }
                         sql.Append(" from (");
                         sql.Append(sqlDataVehicle);
                         sql.Append(" UNION ");

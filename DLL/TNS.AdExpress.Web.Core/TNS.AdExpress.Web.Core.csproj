@@ -157,6 +157,7 @@
     <Compile Include="Result\CellAdExpressInsertionsLink.cs" />
     <Compile Include="Result\CellOneLevelCreativesLink.cs" />
     <Compile Include="Result\CellAdExpressCreativesLink.cs" />
+    <Compile Include="Result\CellVersionNbPDM.cs" />
     <Compile Include="Result\OneLevelShowLinkRules.cs" />
     <Compile Include="Result\DefaultShowLinkRules.cs" />
     <Compile Include="Result\ILinkRules.cs" />

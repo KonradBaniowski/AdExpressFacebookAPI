@@ -1,5 +1,6 @@
 
 using System;
+using System.Globalization;
 using System.Text;
 using System.Web;
 using System.Collections;
@@ -1921,9 +1922,11 @@ namespace TNS.AdExpress.Web.Controls.Results{
             //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(customerWebSession.CustomerLogin.OracleConnectionString));
             //    customerWebSession.CustomerLogin.Connection=(OracleConnection)dataSource.GetSource();
             //}
+            ResultTable data = null;
             object[] param = null;
             Domain.Web.Navigation.Module module=customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule);
-			switch(customerWebSession.CurrentModule){
+            switch (customerWebSession.CurrentModule)
+            {
                 //case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
                 //case WebConstantes.Module.Name.ALERTE_POTENTIELS:
                 //    return WebBusinessFacade.Results.MarketShareSystem.GetResultTable(customerWebSession);
@@ -1932,35 +1935,46 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     param = new object[1];
                     param[0] = customerWebSession;
                     LostWon.ILostWonResult lostWonResult = (LostWon.ILostWonResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
-                    return lostWonResult.GetResult();
+                    data = lostWonResult.GetResult();
+                    break;
                 case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
 				case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE :
                     if(module.CountryRulesLayer==null)throw(new NullReferenceException("Rules layer is null for the present/absent result"));
                     param=new object[1];                     
                     param[0]=customerWebSession;
                     PresentAbsent.IPresentAbsentResult presentAbsentResult = (PresentAbsent.IPresentAbsentResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
-                    return presentAbsentResult.GetResult();
+                    data = presentAbsentResult.GetResult();
 					//return WebBusinessFacade.Results.CompetitorSystem.GetHtml(customerWebSession);
-				case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS :
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
 				case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES :
-					return WebBusinessFacade.Results.SponsorshipSystem.GetResultTable(customerWebSession);
-				case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE :
+                    data = WebBusinessFacade.Results.SponsorshipSystem.GetResultTable(customerWebSession);
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
 				case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE :
                     if(module.CountryRulesLayer==null)throw(new NullReferenceException("Rules layer is null for the portofolio result"));
                     object[] parameters=new object[1];                     
                     parameters[0]=customerWebSession;
                     Portofolio.IPortofolioResults portofolioResult=(Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class,false,BindingFlags.CreateInstance|BindingFlags.Instance|BindingFlags.Public,null,parameters,null,null,null);
                     //Portofolio.IResults result=(Portofolio.IResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class);
-                    return (portofolioResult.GetResultTable());
+                    data = (portofolioResult.GetResultTable());
 					//return WebBusinessFacade.Results.PortofolioSystem.GetResultTable(customerWebSession); 
-				case WebConstantes.Module.Name.DONNEES_DE_CADRAGE :
-					return WebBusinessFacade.Results.SectorDataSystem.GetHtml(customerWebSession);
-				case WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE :
-					return WebBusinessFacade.Results.ProofSystem.GetResultTable(customerWebSession);
-				default :
+                    break;
+                case WebConstantes.Module.Name.DONNEES_DE_CADRAGE:
+                    data = WebBusinessFacade.Results.SectorDataSystem.GetHtml(customerWebSession);
+                    break;
+                case WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE:
+                    data = WebBusinessFacade.Results.ProofSystem.GetResultTable(customerWebSession);
+                    break;
+                default:
 
 					return null;
 			}
+
+            //CellLabel c = new CellLabel(string.Empty);
+            //data.CultureInfo = new CultureInfo("fi-FI");
+            data.CultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[customerWebSession.SiteLanguage].Localization);
+            return data;
 			
 		}
 		#endregion
