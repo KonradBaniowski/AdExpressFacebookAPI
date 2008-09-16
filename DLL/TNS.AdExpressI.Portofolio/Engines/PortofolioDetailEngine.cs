@@ -91,14 +91,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			DataTable dt = null;
 			Headers headers = null;
 			CellUnitFactory[] cellFactories = null;
-			AdExpressCellLevel[] cellLevels;
+            AffectLine[] lineDelegates = null;
+            AdExpressCellLevel[] cellLevels;
 			LineType[] lineTypes = new LineType[5] { LineType.total, LineType.level1, LineType.level2, LineType.level3, LineType.level4 };
 			string[] columnsName = null;
 			int iCurLine = 0;
 			int iNbLine = 0;
 			int iNbLevels = 0;
 			int insertions = 0, creatives = 0;
-
 			#endregion
 
 			// Get Data
@@ -112,7 +112,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#region Initialisation du tableau de résultats
 			if (_showInsertions) insertions = 1;
 			if (_showCreatives) creatives = 1;
-			GetPortofolioHeaders(out headers, out cellFactories, out columnsName);
+            GetPortofolioHeaders(out headers, out cellFactories, out lineDelegates, out columnsName);
 			tab = new ResultTable(iNbLine, headers);
 			#endregion
 
@@ -128,7 +128,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			if (_showInsertions) tab[iCurLine, 1 + creatives + insertions] = new CellOneLevelInsertionsLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession, _webSession.GenericProductDetailLevel);
 
 			tab[iCurLine, 2 + creatives + insertions] = new CellMediaScheduleLink(cellLevels[0], _webSession);
-			AffectPortefolioLine(cellFactories, columnsName, null, tab, iCurLine, false);
+			AffectPortefolioLine(cellFactories, lineDelegates, columnsName, null, tab, iCurLine, false);
 			#endregion
 
 			int i = 1;
@@ -152,16 +152,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						if (creatives > 0) tab[iCurLine, 1 + creatives] = new CellOneLevelCreativesLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession, _webSession.GenericProductDetailLevel);
 						if (insertions > 0) tab[iCurLine, 1 + creatives + insertions] = new CellOneLevelInsertionsLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession, _webSession.GenericProductDetailLevel);
 						tab[iCurLine, 2 + creatives + insertions] = new CellMediaScheduleLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession);
-						//feuille ou niveau parent?
-						if (i != iNbLevels) {
-							AffectPortefolioLine(cellFactories, columnsName, null, tab, iCurLine, false);
-						}
-						else {
-							AffectPortefolioLine(cellFactories, columnsName, row, tab, iCurLine, true);
-						}
-					}
+                        //feuille ou niveau parent?
+                        if(i != iNbLevels) {
+                            AffectPortefolioLine(cellFactories, lineDelegates, columnsName, null, tab, iCurLine, false);
+                        }
+                    }
 				}
-			}
+                AffectPortefolioLine(cellFactories, lineDelegates, columnsName, row, tab, iCurLine, true);
+            }
 			#endregion
 
 			return tab;
@@ -189,27 +187,46 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// <param name="oTab">Result table</param>
 		/// <param name="iLineIndex">Line Index</param>
 		/// <param name="isLeaf">Is Leaf</param>
-		protected void AffectPortefolioLine(CellUnitFactory[] tCellFactories, string[] columnsName, DataRow dr, ResultTable oTab, int iLineIndex, bool isLeaf) {
-
+		protected void AffectPortefolioLine(CellUnitFactory[] tCellFactories, AffectLine[] tDelegates, string[] columnsName, DataRow dr, ResultTable oTab, int iLineIndex, bool isLeaf) {
 			for (int i = 0; i < tCellFactories.Length; i++) {
 				if (tCellFactories[i] != null) {
-					oTab[iLineIndex, i + 1] = tCellFactories[i].Get(0.0);
-					if (dr != null) {
-						if (isLeaf) {
-							oTab.AffectValueAndAddToHierarchy(1, iLineIndex, i + 1, Convert.ToDouble(dr[columnsName[i]]));
-						}
-					}
+                    tDelegates[i](oTab, iLineIndex, i + 1, tCellFactories[i], (dr!=null)?dr[columnsName[i]]:null, isLeaf);
 				}
 			}
 		}
-		#endregion
+        protected delegate void AffectLine(ResultTable oTab, int cLine, int cCol, CellUnitFactory cellFactory, object value, bool isLeaf);
+        protected void AffectDoubleLine(ResultTable oTab, int cLine, int cCol, CellUnitFactory cellFactory, object value, bool isLeaf) {
+            if(oTab[cLine, cCol] == null) {
+                oTab[cLine, cCol] = cellFactory.Get(0.0);
+            }
+            if(value != null) {
+                //Affect value
+                if(isLeaf) {
+                    oTab.AffectValueAndAddToHierarchy(1, cLine, cCol, Convert.ToDouble(value));
+                }
+            }
+        }
+        protected void AffectListLine(ResultTable oTab, int cLine, int cCol, CellUnitFactory cellFactory, object value, bool isLeaf) {
+            if(oTab[cLine, cCol] == null) {
+                oTab[cLine, cCol] = cellFactory.Get(0);
+            }
+            if(value != null && isLeaf) {
+                //Get values
+                string[] tIds = value.ToString().Split(',');
+                //Affect value
+                for(int i = 0; i < tIds.Length; i++) {
+                    oTab.AffectValueAndAddToHierarchy(1, cLine, cCol, Convert.ToInt64(tIds[i]));
+                }
+            }
+        }
+        #endregion
 
 		#region Portofolio headers
 		/// <summary>
 		/// Portofolio Headers and Cell factory
 		/// </summary>
 		/// <returns></returns>
-		protected virtual void GetPortofolioHeaders(out Headers headers, out CellUnitFactory[] cellFactories, out string[] columnsName) {
+		protected virtual void GetPortofolioHeaders(out Headers headers, out CellUnitFactory[] cellFactories, out AffectLine[] lineDelegates, out string[] columnsName) {
 			int insertions = 0;
 			int creatives = 0;
 			int iNbCol = 0;
@@ -239,51 +256,38 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				case DBClassificationConstantes.Vehicles.names.press:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					iNbCol = 6 + creatives + insertions;
-					cellFactories = new CellUnitFactory[iNbCol];
-					columnsName = new string[iNbCol];
 					break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
 					if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT)) {
 						iNbCol = 4 + creatives + insertions;
-						cellFactories = new CellUnitFactory[iNbCol];
-						columnsName = new string[iNbCol];
 					}
 					else {
 						iNbCol = 3 + creatives + insertions;
-						cellFactories = new CellUnitFactory[iNbCol];
-						columnsName = new string[iNbCol];
 					}
 					break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
 					iNbCol = 5 + creatives + insertions;
-					columnsName = new string[iNbCol];
-					cellFactories = new CellUnitFactory[iNbCol];
-					break;
+                    break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
 					iNbCol = 4 + creatives + insertions;
-					columnsName = new string[iNbCol];
-					cellFactories = new CellUnitFactory[iNbCol];
-					break;
+                    break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
 					iNbCol = 3 + creatives + insertions;
-					columnsName = new string[iNbCol];
-					cellFactories = new CellUnitFactory[iNbCol];
-					break;
+                    break;
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
                     iNbCol = 3 + creatives + insertions;
-                    columnsName = new string[iNbCol];
-                    cellFactories = new CellUnitFactory[iNbCol];
                     break;
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
                     iNbCol = 4 + creatives + insertions;
-                    columnsName = new string[iNbCol];
-                    cellFactories = new CellUnitFactory[iNbCol];
                     break;
 				default:
 					throw new PortofolioException("Vehicle unknown.");
 			}
+            cellFactories = new CellUnitFactory[iNbCol];
+            lineDelegates = new AffectLine[iNbCol];
+            columnsName = new string[iNbCol];
 			cellFactories[0] = null;
 			cellFactories[1] = null;
 			if (_showCreatives) columnsName[1 + creatives] = null;
@@ -306,10 +310,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         type = assembly.GetType(currentUnit.CellType);
                         cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
                         columnsName[columnIndex + creatives + insertions] = currentUnit.Id.ToString();
-                        if(cellUnit is CellUnit<double>)
-                            cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory((CellUnit<double>)cellUnit);
-                        else
-                            cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory((CellUnit<HybridList>)cellUnit);
+                        cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory((CellUnit)cellUnit);
+                        lineDelegates[columnIndex + creatives + insertions] = new AffectLine(AffectDoubleLine);
 
                         columnIndex++;
                     }

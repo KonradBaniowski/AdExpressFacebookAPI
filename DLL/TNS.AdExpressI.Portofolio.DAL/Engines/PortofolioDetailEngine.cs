@@ -22,6 +22,8 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 
+using TNS.AdExpress.Domain.Units;
+
 using TNS.AdExpress.Web.Exceptions;
 using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
 using CstProject = TNS.AdExpress.Constantes.Project;
@@ -176,8 +178,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				detailProductTablesNames = _webSession.GenericProductDetailLevel.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
 				detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-				unitFields = WebFunctions.SQLGenerator.GetUnitFieldsName(_webSession,type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-				detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
+
+                if(_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack)
+                    unitFields = WebFunctions.SQLGenerator.GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                else
+                    unitFields = GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+				
+                detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
 
 				switch (type) {
 					case DBConstantes.TableType.Type.dataVehicle4M:
@@ -244,6 +251,12 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						sql += " and " + dateField + " <=" + customerPeriod.PeriodMonthEnd[0].ToString().Substring(0, 6);
 						break;
 				}
+                // Autopromo Evaliant
+                if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                    if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
+                        sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".auto_promotion = 0 ";
+                }
+
 				// Joints Products
 				sql += " " + detailProductJoints;
 				sql += " " + dataJointForGad;
@@ -273,6 +286,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql += " group by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + ", " + dateField;
 				else
 					sql += " group by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad;
+                if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                    sql += ", " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".hashcode";
+                }
 			}
 			#endregion
 
@@ -289,6 +305,32 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		#endregion
 
 
-
+        public static string GetUnitFieldsName(WebSession webSession, DBConstantes.TableType.Type type, string dataTablePrefixe) {
+            List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
+            StringBuilder sqlUnit = new StringBuilder();
+            if(dataTablePrefixe != null && dataTablePrefixe.Length > 0)
+                dataTablePrefixe += ".";
+            else
+                dataTablePrefixe = "";
+            for(int i = 0; i < unitsList.Count; i++) {
+                if(i > 0) sqlUnit.Append(",");
+                switch(type) {
+                    case DBConstantes.TableType.Type.dataVehicle:
+                    case DBConstantes.TableType.Type.dataVehicle4M:
+                        if(unitsList[i].Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
+                            sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseField, unitsList[i].Id.ToString());
+                        else
+                            sqlUnit.AppendFormat("{0}{1} as {2}", dataTablePrefixe, unitsList[i].DatabaseField, unitsList[i].Id.ToString());
+                        break;
+                    case DBConstantes.TableType.Type.webPlan:
+                        if(unitsList[i].Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
+                            sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+                        else
+                            sqlUnit.AppendFormat("{0}{1} as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+                        break;
+                }
+            }
+            return sqlUnit.ToString();
+        }
 	}
 }

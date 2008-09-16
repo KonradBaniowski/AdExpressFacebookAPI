@@ -3627,19 +3627,21 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 bool first = true;
 
                 foreach (UnitInformation currentUnit in unitsList) {
-                    switch (type) {
-                        case DBConstantes.TableType.Type.dataVehicle:
-                        case DBConstantes.TableType.Type.dataVehicle4M:
-                            if (!first) sqlUnit += ", ";
-                            else first = false;
-                            sqlUnit += currentUnit.GetSQLDetailledSum(prefixe);
-                            break;
-                        case DBConstantes.TableType.Type.webPlan:
-                            if (!first) sqlUnit += ", ";
-                            else first = false;
-                            sqlUnit += currentUnit.GetSQLSum(prefixe);
-                            break;
-                    }
+                    if(currentUnit.Id != CstCustomerSessions.Unit.versionNb) {
+                        switch(type) {
+                            case DBConstantes.TableType.Type.dataVehicle:
+                            case DBConstantes.TableType.Type.dataVehicle4M:
+                                if(!first) sqlUnit += ", ";
+                                else first = false;
+                                sqlUnit += currentUnit.GetSQLDetailledSum(prefixe);
+                                break;
+                            case DBConstantes.TableType.Type.webPlan:
+                                if(!first) sqlUnit += ", ";
+                                else first = false;
+                                sqlUnit += currentUnit.GetSQLSum(prefixe);
+                                break;
+                        }
+                    }   
                 }
                 return sqlUnit;
             }
