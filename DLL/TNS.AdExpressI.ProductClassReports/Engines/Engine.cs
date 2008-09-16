@@ -206,12 +206,21 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
                 (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(1) && _session.SecondaryProductUniverses[1].Contains(0) && _session.SecondaryProductUniverses[1].GetGroup(0).Contains(TNSClassificationLevels.ADVERTISER))
                 )
             {
+                string cssCompeting=string.Empty;
+                string cssReference = "Green";
+                if (!_excel) 
+                    cssCompeting = "Red";
+                else 
+                    cssCompeting = "palePink";
+
                 str.Append("<table cellPadding=0 cellSpacing=10px border=0 class=\"txtNoir11Bold\"><tr>");
-                str.Append("<td class=Green>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
-                str.Append("<td>" + GestionWeb.GetWebWord(1230, _session.SiteLanguage) + "</td>");
-                str.Append("<td class=Red>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
-                str.Append("<td>" + GestionWeb.GetWebWord(1231, _session.SiteLanguage) + "</td>");
-                str.Append("<td>" + GestionWeb.GetWebWord(1232, _session.SiteLanguage) + "</td>");
+                //str.Append("<td class=Green>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+                str.AppendFormat("<td class=\"{0}\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>",cssReference);
+                str.AppendFormat("<td>{0}</td>", GestionWeb.GetWebWord(1230, _session.SiteLanguage));
+                //str.Append("<td class=Red>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+                str.AppendFormat("<td class=\"{0}\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>", cssCompeting);
+                str.AppendFormat("<td>{0}</td>", GestionWeb.GetWebWord(1231, _session.SiteLanguage));
+                str.AppendFormat("<td>{0}</td>", GestionWeb.GetWebWord(1232, _session.SiteLanguage));
                 str.Append("</tr></table>");
             }
 
