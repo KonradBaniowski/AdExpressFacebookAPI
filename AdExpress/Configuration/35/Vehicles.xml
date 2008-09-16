@@ -101,7 +101,7 @@
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
-        <allowedMediaLevelItem>media</allowedMediaLevelItem>                    <!-- Support -->
+        <!--<allowedMediaLevelItem>media</allowedMediaLevelItem>-->             <!-- Support -->
         <!--<allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>-->    <!-- Centre d'interet -->
         <!--<allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>-->       <!-- Régie -->
         <!--<allowedMediaLevelItem>slogan</allowedMediaLevelItem>-->            <!-- Version -->
@@ -138,7 +138,7 @@
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
-        <allowedMediaLevelItem>media</allowedMediaLevelItem>                    <!-- Support -->
+        <!--<allowedMediaLevelItem>media</allowedMediaLevelItem>-->             <!-- Support -->
         <!--<allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>-->    <!-- Centre d'interet -->
         <!--<allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>-->       <!-- Régie -->
         <!--<allowedMediaLevelItem>slogan</allowedMediaLevelItem>-->            <!-- Version -->
@@ -176,7 +176,7 @@
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
-        <allowedMediaLevelItem>media</allowedMediaLevelItem>                    <!-- Support -->
+        <!--<allowedMediaLevelItem>media</allowedMediaLevelItem>-->             <!-- Support -->
         <!--<allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>-->    <!-- Centre d'interet -->
         <!--<allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>-->       <!-- Régie -->
         <!--<allowedMediaLevelItem>slogan</allowedMediaLevelItem>-->            <!-- Version -->
