@@ -751,7 +751,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <param name="e">arguments</param>
 		private void Custom_PreRender(object sender, System.EventArgs e){	
 			//identification du Média  sélectionné
-			//Vehicle = ((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+			Vehicle = ((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
 			vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			
 			#region Unité
