@@ -185,8 +185,7 @@
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
       <allowedMediaLevelItems>
-        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>
-        <!-- Media -->
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem><!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>
         <!-- Categorie -->
         <allowedMediaLevelItem>media</allowedMediaLevelItem>
@@ -223,7 +222,7 @@
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>
       <!-- Centre d'interet -->
-      <MediaSelectionParent>title</MediaSelectionParent>
+      <!--<MediaSelectionParent>title</MediaSelectionParent>-->
       <!-- Titre -->
     </MediaSelectionParents>
   </vehicle>

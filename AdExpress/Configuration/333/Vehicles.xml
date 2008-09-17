@@ -205,8 +205,8 @@
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <MediaSelectionParent>interestCenter</MediaSelectionParent>      <!-- Centre d'interet -->
-      <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent><!-- Centre d'interet -->
+      <!--<MediaSelectionParent>title</MediaSelectionParent>--><!-- Titre -->
     </MediaSelectionParents>
   </vehicle>
   <!-- INTERNET -->
