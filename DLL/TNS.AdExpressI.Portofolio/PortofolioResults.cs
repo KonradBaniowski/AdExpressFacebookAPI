@@ -196,11 +196,12 @@ namespace TNS.AdExpressI.Portofolio {
 		/// Get view of the vehicle (HTML)
 		/// </summary>
 		/// <param name="excel">True for excel result</param>
+        /// <param name="resultType">Result Type (Synthesis, MediaDetail)</param>
 		/// <returns>HTML code</returns>
-		public virtual string GetVehicleViewHtml(bool excel) {
+        public virtual string GetVehicleViewHtml(bool excel, int resultType) {
 			Engines.SynthesisEngine result = null;
 			result = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
-			return result.GetVehicleViewHtml(excel);
+			return result.GetVehicleViewHtml(excel,resultType);
 		}			
 
 		
@@ -277,7 +278,7 @@ namespace TNS.AdExpressI.Portofolio {
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
 					result.GetAllPeriodInsertions(t, GestionWeb.GetWebWord(1837, _webSession.SiteLanguage));
-					t.Append(result.GetVehicleViewHtml(excel));
+                    t.Append(result.GetVehicleViewHtml(excel, FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA));
 					return t.ToString();
 				case DBClassificationConstantes.Vehicles.names.radio:
 				case DBClassificationConstantes.Vehicles.names.tv:

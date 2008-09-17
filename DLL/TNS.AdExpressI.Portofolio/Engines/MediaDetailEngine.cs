@@ -105,7 +105,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					return GetDetailMediaHtml();					
 				case DBClassificationConstantes.Vehicles.names.press :
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					return GetVehicleViewHtml(_excel);					
+                    return GetVehicleViewHtml(_excel, FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA);					
 				default: throw new PortofolioException("The method to get data is not defined for this vehicle.");
 			}
 		}

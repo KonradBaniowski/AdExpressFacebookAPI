@@ -359,7 +359,7 @@ namespace AdExpress.Private.Results{
 			switch (_webSession.CurrentTab) {
 
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
-					result = (_webSession.CustomerPeriodSelected.Is4M) ? portofolioResult.GetVehicleViewHtml(false) : "";
+                    result = (_webSession.CustomerPeriodSelected.Is4M) ? portofolioResult.GetVehicleViewHtml(false, FrameWorkConstantes.Portofolio.SYNTHESIS) : "";
 					break;
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
 					result = portofolioResult.GetDetailMediaHtml(false);

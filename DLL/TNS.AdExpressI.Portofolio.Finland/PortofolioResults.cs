@@ -88,8 +88,9 @@ namespace TNS.AdExpressI.Portofolio.Finland {
 		/// Get view of the vehicle (HTML)
 		/// </summary>
 		/// <param name="excel">True for excel result</param>
+        /// <param name="resultType">Result Type (Synthesis, MediaDetail)</param>
 		/// <returns>HTML code</returns>
-		public override string GetVehicleViewHtml(bool excel) {
+		public override string GetVehicleViewHtml(bool excel, int resultType) {
 			
 			return "";
 		}			

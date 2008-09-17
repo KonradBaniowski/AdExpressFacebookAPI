@@ -25,6 +25,7 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.FrameWork.Date;
 using TNS.FrameWork.WebResultUI;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using FrameWorkResultsConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using WebFunctions = TNS.AdExpress.Web.Functions;
@@ -115,14 +116,16 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// Get view of the vehicle (HTML)
 		/// </summary>
 		/// <param name="excel">True for excel result</param>
+        /// <param name="resultType">Result Type (Synthesis, MediaDetail)</param>
 		/// <returns>HTML code</returns>
-		public virtual string GetVehicleViewHtml(bool excel) {
+        public virtual string GetVehicleViewHtml(bool excel, int resultType) {
 
 			#region Variables
 			string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 			StringBuilder t = new StringBuilder(5000);
 			DataSet dsVisuel = null;
 			string pathWeb = "";
+            string media = "";
 			#endregion
 
 			#region Accès aux tables
@@ -137,6 +140,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			dsVisuel = portofolioDAL.GetListDate(true, DBCst.TableType.Type.dataVehicle4M);
 			DataTable dtVisuel = dsVisuel.Tables[0];
+            if (dtVisuel.Rows.Count > 0)
+                media = dtVisuel.Rows[0]["media"].ToString();
 			#endregion
 
 			// Vérifie si le client a le droit aux créations
@@ -154,8 +159,16 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						string day = "";
 						t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 align=center class=\"paleVioletBackGroundV2 violetBorder\">");
 						//Vehicle view
-						t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, _webSession.SiteLanguage) + "</td></tr>");
-						CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+                        switch (resultType) { 
+                            case FrameWorkResultsConstantes.Portofolio.SYNTHESIS:
+                                t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, _webSession.SiteLanguage) + "</td></tr>");
+                                break;
+                            case FrameWorkResultsConstantes.Portofolio.DETAIL_MEDIA:
+                                t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc14Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + media + "</td></tr>");
+                                break;
+                        }
+						
+                        CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
 						for (int i = 0; i < dtVisuel.Rows.Count; i++) {
 							//date_media_num
 

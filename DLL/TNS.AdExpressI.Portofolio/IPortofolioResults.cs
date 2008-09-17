@@ -48,8 +48,9 @@ namespace TNS.AdExpressI.Portofolio {
         /// Get view of the vehicle (HTML)
         /// </summary>
         /// <param name="excel">True for excel result</param>
+        /// <param name="resultType">Result Type (Synthesis, MediaDetail)</param>
         /// <returns>HTML Code</returns>
-        string GetVehicleViewHtml(bool excel);
+        string GetVehicleViewHtml(bool excel, int resultType);
         /// <summary>
         /// Get detail media html
         /// </summary>
