@@ -1,0 +1,141 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9422E4B4-765F-4008-B41E-67A9F27D3124}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Anubis</RootNamespace>
+    <AssemblyName>Anubis</AssemblyName>
+    <ApplicationIcon>Anubis.ico</ApplicationIcon>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=9.2.0.700, Culture=neutral, PublicKeyToken=89b483f429c47342" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Error, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Error.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Net, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Anubis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Anubis.Designer.cs">
+      <DependentUpon>Anubis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Exit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Exit.Designer.cs">
+      <DependentUpon>Exit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Anubis.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Anubis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Exit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Exit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="ModelSupport\default.txaPackage" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Anubis.ico" />
+    <Content Include="Config\Anubis.xml" />
+    <Content Include="Config\DataBase.xml" />
+    <Content Include="Config\Network.xml" />
+    <Content Include="Config\Plugins.xml" />
+    <Content Include="Images\AnubisBar.jpg" />
+    <Content Include="Images\Gray.gif" />
+    <Content Include="Images\Purple.gif" />
+    <Content Include="Images\Red.gif" />
+    <Content Include="Images\yellow.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DLL\TNS.ADEXPRESS.ANUBIS.CONSTANTES\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.ADEXPRESS.ANUBIS\TNS.AdExpress.Anubis.csproj">
+      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
+      <Name>TNS.AdExpress.Anubis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.ADEXPRESS\TNS.AdExpress.csproj">
+      <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
+      <Name>TNS.AdExpress</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
