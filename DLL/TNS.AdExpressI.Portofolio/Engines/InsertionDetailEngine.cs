@@ -150,13 +150,15 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				if (_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id) && _vehicleInformation.ShowCreations) showCreative = true;
 				// Show media agency
 				bool showMediaAgency = false;
-				if (_webSession.CustomerLogin.CustormerFlagAccess((long)DBCst.Flags.ID_MEDIA_AGENCY) && dt.Columns.Contains("advertising_agency")) {
+				if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_MEDIA_AGENCY) && dt.Columns.Contains("advertising_agency")) {
 					showMediaAgency = true;
 				}
 				//Show diffusion date
 				bool showDate = true;
 				if (!allPeriod && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress))
 					showDate = false;
+				//Show column product
+				bool showProduct = _webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 				#endregion
 
 				#region Table nb rows
@@ -190,6 +192,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 								break;
 							case GenericColumnItemInformation.Columns.topDiffusion:
 								if (!isDigitalTV)
+									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
+								break;
+							case GenericColumnItemInformation.Columns.product:
+								if (Column.Visible && showProduct)
 									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
 								break;
 							default:
@@ -308,6 +314,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 												tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
 											else
 												tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(0);
+										}
+										break;
+									case GenericColumnItemInformation.Columns.product:
+										if (Column.Visible && showProduct) {
+											type = assembly.GetType(Column.CellType);
+											curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
+											curCell.SetCellValue(row[Column.DataBaseField]);
+											tab[iCurLine, iCurColumn++] = curCell;
 										}
 										break;
 									default:
