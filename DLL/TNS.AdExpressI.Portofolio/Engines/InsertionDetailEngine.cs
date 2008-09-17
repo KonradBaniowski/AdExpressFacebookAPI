@@ -88,6 +88,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			Type type;
 			bool allPeriod = true;
 			bool isDigitalTV = false;
+            VehicleInformation vehicle = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			#endregion
 
 			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
@@ -110,7 +111,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#endregion
 
 			#region Columns levels (Generic)
-			columnItemList = TNS.AdExpress.Web.Core.PortofolioDetailMediaColumnsInformation.GetDefaultMediaDetailColumns(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            columnItemList = GenericColumnsInformation.GetGenericColumnItemInformationList(vehicle.DetailColumnId);
 
 			ArrayList columnIdList = new ArrayList();
 			foreach (GenericColumnItemInformation Column in columnItemList)
@@ -168,7 +169,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				#region Initialisation of result table
 				try {
 					headers = new Headers();
-					columnItemList = TNS.AdExpress.Web.Core.PortofolioDetailMediaColumnsInformation.GetDefaultMediaDetailColumns(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                    columnItemList = GenericColumnsInformation.GetGenericColumnItemInformationList(vehicle.DetailColumnId);
 
 					foreach (GenericColumnItemInformation Column in columnItemList) {
 

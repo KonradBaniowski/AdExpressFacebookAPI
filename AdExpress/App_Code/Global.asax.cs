@@ -68,8 +68,6 @@ namespace AdExpress {
 				TNS.AdExpress.Domain.Level.GenericColumnsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
 				// Initialisation des descriptions des niveaux de détail pour les insertions
                 InsertionDetailInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.MEDIA_PLANS_INSERTION_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
-                //Initialisation des colonnes par defaut pour le détail média du module portefeuille
-                PortofolioDetailMediaColumnsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION_FILENAME));
 				// Chargement des niveaux de détail AdNetTrack
                 AdNetTrackDetailLevelsDescription.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot+ConfigurationFile.ADNETTRACK_DETAIL_LEVEL_CONFIGURATION_FILENAME));
 				

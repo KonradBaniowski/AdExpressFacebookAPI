@@ -20,6 +20,7 @@ using TNS.AdExpress.Domain.Translation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Classification;
 
 namespace AdExpress.Private.Results.Excel{
 
@@ -108,6 +109,7 @@ namespace AdExpress.Private.Results.Excel{
             System.Collections.Specialized.NameValueCollection ret = base.DeterminePostBackMode();
 
             ArrayList columnItemList = new ArrayList();
+            VehicleInformation vehicle = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
             PortofolioDetailMediaResultWebControl1.MediaId = HttpContext.Current.Request.QueryString.Get("idMedia");
             PortofolioDetailMediaResultWebControl1.DayOfWeek = HttpContext.Current.Request.QueryString.Get("dayOfWeek");
@@ -116,7 +118,7 @@ namespace AdExpress.Private.Results.Excel{
             PortofolioDetailMediaResultWebControl1.CustomerWebSession = _webSession;
 
             #region Niveau de colonnes (Generic)
-            columnItemList = PortofolioDetailMediaColumnsInformation.GetDefaultMediaDetailColumns(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            columnItemList = GenericColumnsInformation.GetGenericColumnItemInformationList(vehicle.DetailColumnId);
 
             ArrayList columnIdList = new ArrayList();
             foreach (GenericColumnItemInformation Column in columnItemList)
