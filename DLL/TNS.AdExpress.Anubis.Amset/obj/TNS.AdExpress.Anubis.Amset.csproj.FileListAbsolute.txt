@@ -1,0 +1,5 @@
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Amset.dll
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Amset.pdb
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Amset\obj\Debug\ResolveAssemblyReference.cache
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Amset\obj\Debug\TNS.AdExpress.Anubis.Amset.dll
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Amset\obj\Debug\TNS.AdExpress.Anubis.Amset.pdb

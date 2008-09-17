@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<dataBaseConfiguration>
+	<CustomerMail server="smtp2.secodip.com" port="25" from="hermes@tnsmi.fr" configurationReportFilePath="Config\Hermes\ReportConfig.xml"/>
+	<dataBase description="AdExpress" user="adexpr03_proc_8" password="lnampt8" tns="adexpr03.pige" pooling="false" timeout="120" /> 
+</dataBaseConfiguration>

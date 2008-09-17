@@ -1,0 +1,9 @@
+obj\Debug\ResolveAssemblyReference.cache
+..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Amset.dll
+..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Amset.pdb
+obj\Debug\TNS.AdExpress.Anubis.Amset.dll
+obj\Debug\TNS.AdExpress.Anubis.Amset.pdb
+..\..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Amset.dll
+..\..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Amset.pdb
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Amset.dll
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Amset.pdb

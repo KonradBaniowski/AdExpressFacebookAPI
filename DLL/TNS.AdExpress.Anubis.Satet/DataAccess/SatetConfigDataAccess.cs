@@ -1,0 +1,72 @@
+#region Informations
+///////////////////////////////////////////////////////////
+//  BastetConfigDataAccess.cs
+//  Implementation of the Class BastetDataAccess
+//  Created on:      29-mar.-2006 16:51:11
+//  Original author: D.V. Mussuma
+///////////////////////////////////////////////////////////
+#endregion
+
+using System;
+using System.Collections;
+using System.Data;
+using System.IO;
+using System.Xml;
+
+using TNS.AdExpress.Anubis.Satet.Common;
+using TNS.AdExpress.Anubis.Satet;
+using TNS.FrameWork.DB.Common;
+
+namespace TNS.AdExpress.Anubis.Satet.DataAccess {
+	/// <summary>
+	/// Obtient les données pour la génération des configurations de Satet
+	/// </summary>
+	public class SatetConfigDataAccess {
+							
+		/// <summary>
+		/// Load Satet configuration
+		/// </summary>
+		/// <param name="dataSource">Data Source</param>
+		internal static void Load(IDataSource dataSrc, SatetConfig cfg){
+			XmlTextReader Reader;
+			string Value="";
+			try{
+				Reader=(XmlTextReader)dataSrc.GetSource();
+				// Parse XML file
+				while(Reader.Read()){					
+				
+					
+					if(Reader.NodeType==XmlNodeType.Element){
+						
+						switch(Reader.LocalName){
+							case "CustomerMail":
+								Value=Reader.GetAttribute("server");
+								if (Value!=null) cfg.CustomerMailServer = Value;
+								Value=Reader.GetAttribute("port");
+								if (Value!=null) cfg.CustomerMailPort = int.Parse(Value);
+								Value=Reader.GetAttribute("from");
+								if (Value!=null) cfg.CustomerMailFrom =Value;
+								Value=Reader.GetAttribute("subject");
+								if (Value!=null) cfg.CustomerMailSubject = Value;
+								Value=Reader.GetAttribute("webServer");
+								if (Value!=null) cfg.WebServer = Value;
+								break;
+							case "ExcelPath":
+								Value=Reader.GetAttribute("path");
+								if (Value!=null) cfg.ExcelPath = Value;
+								break;																				
+						}
+					}
+				}
+				Reader.Close();
+			}
+			catch(System.Exception err){
+				throw (new Exceptions.SatetDataAccessException("Impossible de charger Satet configuration",err));
+			}
+		}
+
+			
+
+	}
+
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet>
+  <view uin="4ed3cn33fy50dje_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="design:view:::dbdcvgogf5i91tr_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="10,10,112,113" />
+      <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.UI.InsertionsDetail" />
+    </reference>
+    <reference referencedUin="design:view:::zgd38bihf0i41fl_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="141,1,214,143" />
+      <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.Exceptions.InsertionsDetailException" />
+      <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.Exceptions.SobekTextFileSystemException" />
+      <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.Exceptions.SobekConfigDataAccessException" />
+    </reference>
+    <reference referencedUin="design:view:::0gd1hhohfeb75mp_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="22,142,112,113" />
+      <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.Common.SobekConfig" />
+    </reference>
+    <reference referencedUin="design:view:::ffdyvqxhfyfp5oe_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="620,0,160,128" />
+      <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.DataAccess.SobekConfigDataAccess" />
+      <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.DataAccess.InsertionsDetail" />
+    </reference>
+    <reference referencedUin="design:view:::fddw5x3if2jqjns_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="620,140,143,113" />
+      <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.BusinessFacade.SobekTextFileSystem" />
+    </reference>
+    <reference referencedUin="design:view:::0ddue30iff0mogs_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="620,300,112,113" />
+      <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.Rules.InsertionsDetail" />
+    </reference>
+    <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="180,160,276,295" />
+      <reference referencedUin="csharp:event:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem.OnError" />
+      <reference referencedUin="csharp:event:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem.OnStartWork" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem._dataSource" />
+      <reference referencedUin="csharp:event:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem.OnMessageAlert" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem._myThread" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem._navSessionId" />
+      <reference referencedUin="csharp:event:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem.OnStopWorkerJob" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem._sobekConfig" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem.TreatementSystem()" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem.GetPluginName()" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem.Treatement(System.String,TNS.FrameWork.DB.Common.IDataSource,System.Int64)" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem.AbortTreatement()" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Anubis.Sobek:TNS.AdExpress.Anubis.Sobek.TreatementSystem.ComputeTreatement()" />
+    </reference>
+  </view>
+</nodeSet>

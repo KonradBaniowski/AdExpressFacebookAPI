@@ -1,0 +1,11 @@
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Hotep.dll
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Hotep.pdb
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Hotep\obj\Debug\ResolveAssemblyReference.cache
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Hotep\obj\Debug\TNS.AdExpress.Anubis.Hotep.csproj.ResolveComReference.cache
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Hotep\obj\Debug\TNS.AdExpress.Anubis.Hotep.UI.UIEvolutionGraph.resources
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Hotep\obj\Debug\TNS.AdExpress.Anubis.Hotep.UI.UIMediaStrategyGraph.resources
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Hotep\obj\Debug\TNS.AdExpress.Anubis.Hotep.UI.UIPalmaresGraph.resources
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Hotep\obj\Debug\TNS.AdExpress.Anubis.Hotep.UI.UISeasonalityGraph.resources
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Hotep\obj\Debug\TNS.AdExpress.Anubis.Hotep.csproj.GenerateResource.Cache
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Hotep\obj\Debug\TNS.AdExpress.Anubis.Hotep.dll
+C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Hotep\obj\Debug\TNS.AdExpress.Anubis.Hotep.pdb

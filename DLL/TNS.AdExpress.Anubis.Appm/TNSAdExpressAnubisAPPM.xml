@@ -1,0 +1,988 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TNS.AdExpress.Anubis.Appm</name>
+    </assembly>
+    <members>
+        <member name="T:TNS.AdExpress.Anubis.Appm.Exceptions.AppmConfigDataAccessException">
+            <summary>
+            Exception
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.AppmConfigDataAccessException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.AppmConfigDataAccessException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.AppmConfigDataAccessException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+            <param name="innerException">Exception d'origine</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.UI.UIFamilyGraph">
+            <summary>
+            UIFamilyGraph : Methods to build graphs in the family plan
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIFamilyGraph._webSession">
+            <summary>
+            User Session
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIFamilyGraph._dataSource">
+            <summary>
+            Data Source
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIFamilyGraph._config">
+            <summary>
+            APPM configuration
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIFamilyGraph._dtGraphicsData">
+            <summary>
+            Data reserved to the calcul of PDVs
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIFamilyGraph.BuildGRP(System.String)">
+            <summary>
+            Graphiques Family plan GRP for the base target
+            </summary>
+            <param name="cible">Target to process</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIFamilyGraph.getSeriesDataBase(System.Data.DataTable,System.String[]@,System.Double[]@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible de base à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValues">libellés du graphique</param>
+            <param name="yValues">valeurs pour graphique</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIFamilyGraph.getSeriesDataAdditional(System.Data.DataTable,System.String[]@,System.Double[]@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible sélectionnée à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValues">libellés du graphique</param>
+            <param name="yValues">valeurs pour graphique</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIFamilyGraph.getSeriesDataCgrp(System.Data.DataTable,System.String[]@,System.Double[]@,System.String[]@,System.Double[]@,System.Double@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible sélectionnée à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValuesBase">libellés du graphique</param>
+            <param name="yValuesBase">valeurs pour graphique</param>
+            <param name="xValuesSelected">Liebllés sélectionnée</param>
+            <param name="yValuesSelected">Valeur sélectionnée</param>
+            <param name="maxScale">Echelle de l'axe X du graphe</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.UI.UIPDVPlanGraph">
+            <summary>
+            UIPDVPlanGrtaph : Methods to build graphs in the PDV plan
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIPDVPlanGraph._webSession">
+            <summary>
+            User Session
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIPDVPlanGraph._dataSource">
+            <summary>
+            Data Source
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIPDVPlanGraph._config">
+            <summary>
+            APPM configuration
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIPDVPlanGraph._dtGraphicsData">
+            <summary>
+            Data reserved to the calcul of PDVs
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIPDVPlanGraph._dtTotalData">
+            <summary>
+            Data containing total GRP (for the rest)
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIPDVPlanGraph.BuildGRP">
+            <summary>
+            Graphiques PDV plan GRP
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIPDVPlanGraph.GetSeriesData(System.Data.DataTable,System.Data.DataTable,System.String[],System.Double[],System.String)">
+            <summary>
+            This method populates the xValues and Yvalues arrays which are then used to construct the series
+            </summary>
+            <param name="graphicsTable">Table that contains the data for reference univers</param>
+            <param name="totalTable">Table that contains the data for the total univers</param>
+            <param name="xValues">An array that carries XValues for the series</param>
+            <param name="yValues">An array that carries YValues for the series</param>
+            <param name="colunm">colunm whose value is required for example euros, pages etc</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem">
+            <summary>
+            Generate the PDF document for Appm module.
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem._config">
+            <summary>
+            Appm Configuration (usefull for PDF layout)
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem._rqDetails">
+            <summary>
+            Customer Client request
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem._webSession">
+            <summary>
+            WebSession to process
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.#ctor(TNS.FrameWork.DB.Common.IDataSource,TNS.AdExpress.Anubis.Appm.Common.AppmConfig,System.Data.DataRow,TNS.AdExpress.Web.Core.Sessions.WebSession)">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.GetFileName(System.Data.DataRow,System.String@)">
+            <summary>
+            Generate a valid file name from customer request
+            </summary>
+            <param name="rqDetails">Details of the customer request</param>
+            <param name="shortName">Return value : short name of the File (the method return the complet path)</param>
+            <returns>Complet File Name String (path + short name)</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.GetWorkDirectory">
+            <summary>
+            Provide a work directory. Create it if it doesn't exist or return a path to it
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.MainPageDesign">
+            <summary>
+            Design Main Page
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.SessionParameter">
+            <summary>
+            Session parameter design
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.CampaignSynthesis">
+            <summary>
+            Campaign synthesis design
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.Visuals">
+            <summary>
+            Visuals insertion
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.MediaPlan">
+            <summary>
+            MediaPlan (by month or by week)
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.PlanValoAndPerf">
+            <summary>
+            Plan Valorisation and Perf. design
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.PlanPdvAnalysis">
+            <summary>
+            Plan PDV analysis (graph only) design
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.InterestFamilyAnalysis">
+            <summary>
+            Interest family analysis (graph only, GRP and C/GRP only) design
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.PeriodicityAnalysis">
+            <summary>
+            Periodicity analysis (grpah only, GRP and C/GRP only) design
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.LocationAnalysis">
+            <summary>
+            location analysis (GRP only) design
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.GrpGraph">
+            <summary>
+            Graphiques PDV,Familles d'intérêts,Périodicités analyse en GRP
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.decoupageHTML(System.Collections.ArrayList,System.Boolean)">
+             <summary>
+             Découpage du code HTML pour l'export PDF du Calendrier d'actions par version
+             </summary>
+            <param name="result">La liste des parties HTML à traiter</param>
+            <param name="version">Pour savoir s'il s'agit d'une version</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.DecoupageVersionHTML(System.Collections.ArrayList,System.Boolean)">
+            <summary>
+            Découpage du code HTML pour l'export PDF du plan média (Visuels)
+            </summary>
+            <param name="result">La liste des parties HTML à traiter</param>
+            <param name="version">Pour savoir s'il s'agit d'une version</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.GetHeader">
+            <summary>
+            En tête du code HTML
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.GetEnd">
+            <summary>
+            Fermeture du code HTML
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.SnapShots(System.Text.StringBuilder@,System.Int32,System.Collections.ArrayList,System.Boolean,System.Double@)">
+            <summary>
+            Création et Insertion d'une image dans une nouvelle page du PDF
+            </summary>
+            <param name="html">Le code HTML</param>
+            <param name="i">Index d'une partie de code</param>
+            <param name="partieHTML">Une partie du code HTML</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.HtmlToPDF(System.Text.StringBuilder@,System.Int32,System.Collections.ArrayList,System.Boolean)">
+            <summary>
+            Transformation du code HTML en une nouvelle page PDF
+            </summary>
+            <param name="html">Le code HTML</param>
+            <param name="i">Index d'une partie de code</param>
+            <param name="partieHTML">Une partie du code HTML</param>
+            <param name="version">Pour faire la différence entre les versions et le plan media</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.BuildVersionPDF(System.Collections.ArrayList,System.Int32)">
+            <summary> 
+            Render all versions controls
+            </summary>
+            <returns>Html code</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.InsertImageInPDF(System.Int64,TNS.AdExpress.Web.UI.Results.MediaPlanVersions.VersionDetailUI,System.Double,System.Int32)">
+            <summary>Insertion des images New version</summary>
+            <param name="index">l'index est utilsé pour traiter le cas des verions avec plus de 4 visuels</param>
+            <param name="item">L'objet version</param>
+            <param name="indexPage">le numéro de la page du PDF</param>
+            <param name="startIndex">le numéro de la première page où on insert les versions</param>
+              <author>rkaina</author>
+              <since>vendredi 18 août 2006</since>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.mail_mailKoHandler(System.Object,System.String)">
+            <summary>
+            Rise exception when the customer mail has not been sent
+            </summary>
+            <param name="source">Error source></param>
+            <param name="message">Error message</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.BusinessFacade.AppmPdfSystem.InsertVisuals(System.String[])">
+            <summary>
+            Insertion des visuels
+            </summary>
+            <param name="fileList">liste des liens des visuels</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.Common.AppmConfig">
+            <summary>
+            Static class containing every cofiguration elements for the Appm Plug-in
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._webServer">
+            <summary>
+            Web Server
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._customerMailServer">
+            <summary>
+            Serveur de mail d'envoie des résultats
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._customerMailPort">
+            <summary>
+            Port du serveur de mail d'envoie des résultats
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._customerMailFrom">
+            <summary>
+            Mail d'envoie des résultats
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._customerMailSubject">
+            <summary>
+            Sujet des mails de résultats
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._pdfPath">
+            <summary>
+            Base path for storing PDF documents
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._pdfCreatorPilotLogin">
+            <summary>
+            Login for PDF Creator Pilot
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._pdfCreatorPilotPass">
+            <summary>
+            Pass for PDF Creator Pilot
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._html2PdfLogin">
+            <summary>
+            Login for Html2Pdf
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._html2PdfPass">
+            <summary>
+            Pass for Html2Pdf
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._pdfAuthor">
+            <summary>
+            Pdf Author property
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._pdfSubject">
+            <summary>
+            Pdf Subject property
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._pdfTitle">
+            <summary>
+            Pdf Title property
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._pdfProducer">
+            <summary>
+            Pdf Producer property
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._pdfKeyWords">
+            <summary>
+            Pdf KeyWords property
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._leftMargin">
+            <summary>
+            Pdf left Margin
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._rightMargin">
+            <summary>
+            Pdf left Margin
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._topMargin">
+            <summary>
+            Pdf left Margin
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._bottomMargin">
+            <summary>
+            Pdf left Margin
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._headerHeight">
+            <summary>
+            Size of the headers
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._footerHeight">
+            <summary>
+            Size of the footers
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._headerFont">
+            <summary>
+            Header and footer font size
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._defaultFont">
+            <summary>
+            Default Font of the document
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._defaultFontColor">
+            <summary>
+            Defualt font color of the document
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._mainPageTitleFont">
+            <summary>
+            Size of the title fonty on the main page
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._mainPageDefaultFont">
+            <summary>
+            Size of the default font on the main page
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._mainPageFontColor">
+            <summary>
+            Default font color on the main page
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._headerFontColor">
+            <summary>
+            header font color on the main page
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._titleFontColor">
+            <summary>
+            title font color on the main page
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._mainPageTitleFontColor">
+            <summary>
+            Main page title font color on the main page
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.Common.AppmConfig._titleFont">
+            <summary>
+            Titles font
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.#ctor(TNS.FrameWork.DB.Common.IDataSource)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="dataSource">Source de données</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.SetDefaultFontColor(System.String)">
+            <summary>
+            Set the font color for the document
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.SetMainPageFontColor(System.String)">
+            <summary>
+            Set the font color for the main Page
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.SetMainPageTitleFontColor(System.String)">
+            <summary>
+            Set the title font color for the main Page
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.SetTitleFontColor(System.String)">
+            <summary>
+            Set the titles font color for the document
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.SetHeadersFontColor(System.String)">
+            <summary>
+            Set the headers font color for the document
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.PdfCreatorPilotLogin">
+            <summary>
+            Get / Set Login for PDF Creator libraries (both PDFCreatorPIlot and HTML2PDF Add on
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.PdfCreatorPilotPass">
+            <summary>
+            Get / Set Pass for PDF Creator Pilot
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.Html2PdfPass">
+            <summary>
+            Get / Set Pass for HTML2PDF Add_on library
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.Html2PdfLogin">
+            <summary>
+            Get / Set Login for HTML2PDF Add_on library
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.WebServer">
+            <summary>
+            Obtient le serveur web de résultats
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.CustomerMailServer">
+            <summary>
+            Obtient le serveur des mails de résultats
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.CustomerMailPort">
+            <summary>
+            Obtient le port du serveur des mails des résultats
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.CustomerMailFrom">
+            <summary>
+            Obtient le mail d'envoie des résultats 
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.CustomerMailSubject">
+            <summary>
+            Obtient le sujet des mails de résultat
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.PdfPath">
+            <summary>
+            Get / Set the base path for PDF documents
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.PdfAuthor">
+            <summary>
+            Get / Set the PDF author
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.PdfSubject">
+            <summary>
+            Get / Set the PDF subject
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.PdfTitle">
+            <summary>
+            Get / Set the PDF title
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.PdfProducer">
+            <summary>
+            Get / Set the PDF producer
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.PdfKeyWords">
+            <summary>
+            Get / Set the PDF keywords
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.LeftMargin">
+            <summary>
+            Get the size of the left margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.RightMargin">
+            <summary>
+            Get the size of the right margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.TopMargin">
+            <summary>
+            Get the size of the top margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.BottomMargin">
+            <summary>
+            Get the size of the bottom margin
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.HeaderHeight">
+            <summary>
+            Get the height of the header
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.FooterHeight">
+            <summary>
+            Get the height of the footer
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.HeaderFont">
+            <summary>
+            Get/Set the font of the headers
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.MainPageTitleFont">
+            <summary>
+            Get / Set the title font on the main page
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.MainPageDefaultFont">
+            <summary>
+            Get / Set the default font on the main page
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.DefaultFont">
+            <summary>
+            Get / Set the default font for the document
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.TitleFont">
+            <summary>
+            Get / Set the titles font for the document
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.DefaultFontColor">
+            <summary>
+            Get / Set the font color for the document
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.MainPageFontColor">
+            <summary>
+            Get / Set the font color for the main page
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.TitleFontColor">
+            <summary>
+            Get / Set the title font color for the document
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.MainPageTitleFontColor">
+            <summary>
+            Get / Set the title font color for the main page
+            </summary>
+        </member>
+        <member name="P:TNS.AdExpress.Anubis.Appm.Common.AppmConfig.HeaderFontColor">
+            <summary>
+            Get / Set the font color for the headers
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.DataAccess.AppmConfigDataAccess">
+            <summary>
+            AppmConfigDataAccess provide access to the configuration data
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.DataAccess.AppmConfigDataAccess.Load(TNS.FrameWork.DB.Common.IDataSource,TNS.AdExpress.Anubis.Appm.Common.AppmConfig)">
+            <summary>
+            Load Anubis configuration
+            </summary>
+            <param name="dataSource">Data Source</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph">
+            <summary>
+            UIGRPGraph : Methods to build graphs in the family,PDV,Periodicity plan
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph._webSession">
+            <summary>
+            User Session
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph._dataSource">
+            <summary>
+            Data Source
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph._config">
+            <summary>
+            APPM configuration
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph._dtPdvData">
+            <summary>
+            Data PDV
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph._dtTotalPdvData">
+            <summary>
+            Data total PDV
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph._dtFamilyData">
+            <summary>
+            Data Interest Family
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph._dtPeriodicityData">
+            <summary>
+            Data Periodicity
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph.#ctor(TNS.AdExpress.Web.Core.Sessions.WebSession,TNS.FrameWork.DB.Common.IDataSource,TNS.AdExpress.Anubis.Appm.Common.AppmConfig,System.Data.DataSet)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="webSession">customer session</param>
+            <param name="dataSource">date source</param>
+            <param name="config">config parameters</param>
+            <param name="dsData">tables de données</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph.BuildGRP">
+            <summary>
+            Graphiques PDV,Familles d'intérêts,périodicity plan par GRP
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph.BuildCGRP">
+            <summary>
+            Graphiques PDV,Familles d'intérêts,périodicity plan par CGRP 
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph.GetSeriesDataAdditional(System.Data.DataTable,System.String[]@,System.Double[]@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible sélectionnée à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValues">libellés du graphique</param>
+            <param name="yValues">valeurs pour graphique</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph.GetSeriesDataCgrp(System.Data.DataTable,System.String[]@,System.Double[]@,System.String[]@,System.Double[]@,System.Double@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible sélectionnée à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValuesBase">libellés du graphique</param>
+            <param name="yValuesBase">valeurs pour graphique</param>
+            <param name="xValuesSelected">Liebllés sélectionnée</param>
+            <param name="yValuesSelected">Valeur sélectionnée</param>
+            <param name="maxScale">Echel maximum</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph.GetFamilySeriesDataAdditional(System.Data.DataTable,System.String[]@,System.Double[]@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible sélectionnée à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValues">libellés du graphique</param>
+            <param name="yValues">valeurs pour graphique</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph.GetSeriesDataFamilyCgrp(System.Data.DataTable,System.String[]@,System.Double[]@,System.String[]@,System.Double[]@,System.Double@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible sélectionnée à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValuesBase">libellés du graphique</param>
+            <param name="yValuesBase">valeurs pour graphique</param>
+            <param name="xValuesSelected">Liebllés sélectionnée</param>
+            <param name="yValuesSelected">Valeur sélectionnée</param>
+            <param name="maxScale">Echelle de l'axe X du graphe</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIGRPGraph.GetSeriesData(TNS.AdExpress.Web.Core.Sessions.WebSession,System.Data.DataTable,System.Data.DataTable,System.String[],System.Double[],System.String)">
+            <summary>
+            This method populates the xValues and Yvalues arrays which are then used to construct the series
+            </summary>
+            <param name="webSession">Session du client</param>
+            <param name="graphicsTable">Table that contains the data for reference univers</param>
+            <param name="totalTable">Table that contains the data for the total univers</param>
+            <param name="xValues">An array that carries XValues for the series</param>
+            <param name="yValues">An array that carries YValues for the series</param>
+            <param name="colunm">colunm whose value is required for example euros, pages etc</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.Exceptions.UIPeriodicityChartException">
+            <summary>
+            Exception levée à la génération du graphique APPM pour pdf "Périodicité"
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.UIPeriodicityChartException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.UIPeriodicityChartException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.UIPeriodicityChartException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+            <param name="innerException">Exception d'origine</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.Exceptions.AppmPdfException">
+            <summary>
+            Exception
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.AppmPdfException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.AppmPdfException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.AppmPdfException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+            <param name="innerException">Exception d'origine</param>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.TreatementSystem">
+            <summary>
+            Implementation of TNS.AdExpress.Anubis.BusinessFacade.IPlugin for APPM plug-in
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.TreatementSystem._myThread">
+            <summary>
+            Thread qui traite l'alerte
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.TreatementSystem._navSessionId">
+            <summary>
+            Identifiant du résultat à traiter
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.TreatementSystem._dataSource">
+            <summary>
+            Source de données pour charger la session du résultat
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.TreatementSystem._appmConfig">
+            <summary>
+            Configuration du plug-in
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.TreatementSystem.#ctor">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.TreatementSystem.GetPluginName">
+            <summary>
+            Obtient le nom du plug-in
+            </summary>
+            <returns>Le nom du plug-in</returns>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.TreatementSystem.Treatement(System.String,TNS.FrameWork.DB.Common.IDataSource,System.Int64)">
+            <summary>
+            Lance le traitement du résultat
+            </summary>
+            <param name="confifurationFilePath">Chemin de configuration du plug-in</param>
+            <param name="dataSource">Source de données pour charger la session</param>
+            <param name="navSessionId">Identifiant de la session à traiter</param>
+            <remarks>
+            Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
+            </remarks>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.TreatementSystem.AbortTreatement">
+            <summary>
+            Arrête le traitement du résultat
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.TreatementSystem.ComputeTreatement">
+            <summary>
+            Generate the PDF for APPM plug-in
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.Appm.TreatementSystem.OnStartWork">
+            <summary>
+            Lancement du module
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.Appm.TreatementSystem.OnStopWorkerJob">
+            <summary>
+            Arrêt du module
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.Appm.TreatementSystem.OnMessageAlert">
+            <summary>
+            Message d'une alerte
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.Appm.TreatementSystem.OnError">
+            <summary>
+            Message d'une alerte
+            </summary>
+        </member>
+        <member name="E:TNS.AdExpress.Anubis.Appm.TreatementSystem.OnSendReport">
+            <summary>
+            Envoie des rapports
+            </summary>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph">
+            <summary>
+            UIPeriodicityGraph : Methods to build graphs in the periodicity plan
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph._webSession">
+            <summary>
+            User Session
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph._dataSource">
+            <summary>
+            Data Source
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph._config">
+            <summary>
+            APPM configuration
+            </summary>
+        </member>
+        <member name="F:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph._dtData">
+            <summary>
+            Data
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph.BuildGRP">
+            <summary>
+            Graphiques périodicity plan GRP
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph.GetSeriesDataAdditional(System.Data.DataTable,System.String[]@,System.Double[]@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible sélectionnée à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValues">libellés du graphique</param>
+            <param name="yValues">valeurs pour graphique</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph.GetSeriesDataBase(System.Data.DataTable,System.String[]@,System.Double[]@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible de base à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValues">libellés du graphique</param>
+            <param name="yValues">valeurs pour graphique</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph.GetSeriesDataCgrp(System.Data.DataTable,System.String[]@,System.Double[]@,System.String[]@,System.Double[]@,System.Double@)">
+            <summary>
+            Obtient les séries de valeurs des unités pour la cible sélectionnée à afficher graphiquement
+            </summary>
+            <param name="dt">table de données</param>
+            <param name="xValuesBase">libellés du graphique</param>
+            <param name="yValuesBase">valeurs pour graphique</param>
+            <param name="xValuesSelected">Liebllés sélectionnée</param>
+            <param name="yValuesSelected">Valeur sélectionnée</param>
+            <param name="maxScale">Echel maximum</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.UI.UIPeriodicityGraph.SetSeriesBarPeriodicity(System.Data.DataTable,Dundas.Charting.WinControl.ChartArea,Dundas.Charting.WinControl.Series,System.String[],System.Double[],System.Drawing.Color,System.String,System.Double)">
+             <summary>
+             Crétion du graphique unité Cgrp (histogramme)
+             </summary>
+             <param name="dt">tableau de résultats</param>
+             <param name="chartArea">contenant objet graphique</param>
+             <param name="series">séries de valeurs</param>
+             <param name="xValues">séries de libellés</param>
+             <param name="yValues">séries de valeurs</param>
+            <param name="barColor">couleurs du graphique</param>
+             <param name="chartAreaName">Nom du conteneur de l'image</param>
+             <param name="maxScale">echelle maximum</param>
+             <returns>séries de valeurs</returns>
+        </member>
+        <member name="T:TNS.AdExpress.Anubis.Appm.Exceptions.UIPDVPlanChartException">
+            <summary>
+            Exception levée à la génération du graphique APPM pour pdf "PDV Plan"
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.UIPDVPlanChartException.#ctor">
+            <summary>
+            Constructeur de base
+            </summary>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.UIPDVPlanChartException.#ctor(System.String)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+        </member>
+        <member name="M:TNS.AdExpress.Anubis.Appm.Exceptions.UIPDVPlanChartException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructeur
+            </summary>
+            <param name="message">message d'erreur</param>
+            <param name="err">Exception relative</param>
+            <param name="innerException">Exception d'origine</param>
+        </member>
+    </members>
+</doc>

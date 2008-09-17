@@ -1,0 +1,13 @@
+bin\Debug\TNS.AdExpress.Bastet.dll
+bin\Debug\TNS.AdExpress.Bastet.pdb
+bin\Debug\TNS.AdExpress.Anubis.Constanes.dll
+bin\Debug\TNS.AdExpress.Constantes.dll
+bin\Debug\TNS.FrameWork.Date.dll
+bin\Debug\TNS.FrameWork.DB.dll
+bin\Debug\TNS.FrameWork.dll
+bin\Debug\TNS.Isis.Constantes.dll
+bin\Debug\TNS.AdExpress.Constantes.pdb
+bin\Debug\TNS.AdExpress.Anubis.Constanes.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\TNS.AdExpress.Bastet.dll
+obj\Debug\TNS.AdExpress.Bastet.pdb

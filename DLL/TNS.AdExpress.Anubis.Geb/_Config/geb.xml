@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Configuration>
+	<CustomerMail server="smtp2.secodip.com" port="25" from="tnsadexpress@tnsmi.fr" />
+	<ExcelPath path="GebExcelFiles"/>
+</Configuration>

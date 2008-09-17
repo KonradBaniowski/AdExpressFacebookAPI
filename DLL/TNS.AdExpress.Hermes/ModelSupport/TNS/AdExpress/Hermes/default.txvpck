@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet>
+  <view uin="hidnr7cl676ceds_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Rule">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="110,20,200,270" />
+      <property name="bounds_setted_by_user" value="True" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Rule._id">
+        <property name="bounds" value="95,-3,0,0" />
+      </reference>
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Rule._hourBegin" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Rule._tableName" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Rule._mediaListId" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Rule._endBegin" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Rule.Rule(System.Int64,System.String,System.Int64,System.String,System.String,System.Int64)" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Rule._pluginId" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Rule.Rule()" />
+    </reference>
+    <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.RuleParameters">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="380,20,200,97" />
+      <property name="bounds_setted_by_user" value="True" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.RuleParameters._day" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.RuleParameters.RuleParameters(TNS.AdExpress.Hermes.Rule,System.DateTime)" />
+      <reference referencedUin="csharp:l_gnt:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.RuleParameters:TNS.AdExpress.Hermes.Rule">
+        <property name="sourceAnchor" value="380,68" />
+        <property name="targetAnchor" value="310,68" />
+        <property name="bendpoints" value="" />
+      </reference>
+    </reference>
+    <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Schedule">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="390,340,170,130" />
+      <property name="bounds_setted_by_user" value="True" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Schedule.days" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Schedule.this[System.DayOfWeek]" />
+      <reference referencedUin="design:link:::6rdeq5hco_l">
+        <property name="sourceAnchor" value="390,395" />
+        <property name="targetAnchor" value="270,395" />
+        <property name="bendpoints" value="" />
+        <property name="bounds_setted_by_user" value="True" />
+      </reference>
+    </reference>
+    <reference referencedUin="csharp:e_class:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.ScheduledRule">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="110,340,160,110" />
+      <property name="bounds_setted_by_user" value="True" />
+      <reference referencedUin="csharp:l_gnt:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.ScheduledRule:TNS.AdExpress.Hermes.Rule">
+        <property name="sourceAnchor" value="190,340" />
+        <property name="targetAnchor" value="190,290" />
+        <property name="bendpoints" value="" />
+      </reference>
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.ScheduledRule._daysOfWeek" />
+      <reference referencedUin="csharp:e_field:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.ScheduledRule._launchHour" />
+      <reference referencedUin="csharp:e_method:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.ScheduledRule.ScheduledRule(TNS.AdExpress.Hermes.Rule,System.DateTime,System.Collections.ArrayList)" />
+    </reference>
+    <reference referencedUin="label:stereotype:design:link:::6rdeq5hco_l">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="289,376,82,16" />
+    </reference>
+  </view>
+  <link uin="6rdeq5hco_l">
+    <property name="$metaclass" value="Dependency Link" />
+    <property name="$name" value="Lien Dépendance2" />
+    <property name="@stereotype" value="Contains" />
+    <participant referencedUin="csharp:e_class:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.Schedule" role="Client" />
+    <participant referencedUin="csharp:e_class:src:TNS.AdExpress.Hermes:TNS.AdExpress.Hermes.ScheduledRule" role="Supplier" />
+  </link>
+</nodeSet>

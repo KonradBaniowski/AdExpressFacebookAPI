@@ -1,0 +1,9 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\TNS.AdExpress.Anubis.Satet.dll
+obj\Debug\TNS.AdExpress.Anubis.Satet.pdb
+..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Satet.dll
+..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Satet.pdb
+..\..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Satet.dll
+..\..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Satet.pdb
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Satet.dll
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Satet.pdb

@@ -1,0 +1,306 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{351CB38F-7054-4438-8793-13E264063F17}</ProjectGuid>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>TNS.AdExpress.Anubis.Bastet</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TNS.AdExpress.Anubis.Bastet</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Excel, Version=3.6.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis\Librairies\Aspose.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Date.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Net.dll</HintPath>
+    </Reference>
+    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS\TNS.AdExpress.Anubis.csproj">
+      <Name>TNS.AdExpress.Anubis</Name>
+      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS.CONSTANTES\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
+      <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.ADEXPRESS.BASTET\TNS.AdExpress.Bastet.csproj">
+      <Name>TNS.AdExpress.Bastet</Name>
+      <Project>{D622B998-DC44-438B-BDD3-F27074A1FE75}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.ADEXPRESS.CONSTANTES\TNS.AdExpress.Constantes.csproj">
+      <Name>TNS.AdExpress.Constantes</Name>
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.ADEXPRESS.WEB\TNS.AdExpress.Web.csproj">
+      <Name>TNS.AdExpress.Web</Name>
+      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.ADEXPRESS.WEB.CORE\TNS.AdExpress.Web.Core.csproj">
+      <Name>TNS.AdExpress.Web.Core</Name>
+      <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\BastetExcelSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\BastetConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\BastetConfigDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Client.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Company.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Duration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Export.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\File.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Module.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Period.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Request.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Tab.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Unit.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Vehicle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\BastetDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\BastetExcelException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ClientUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CompanyUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\DurationUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ExportUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FileUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ModuleUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PeriodException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\PeriodUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\RequestUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TabUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\UnitUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\VehicleUIException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\BastetChart.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\Period.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\WorkSheet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Client.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Company.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Vehicle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TreatementSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\BastetExcel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Client.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Company.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Duration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Export.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\File.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Module.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Period.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Request.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Tab.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Unit.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Vehicle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="Images\Bastet.gif" />
+    <Content Include="Images\logoTNSMedia.gif" />
+    <Content Include="_Config\bastet.xml" />
+    <None Include="ModelSupport\default.txaPackage" />
+    <None Include="ModelSupport\default.txvpck" />
+    <None Include="ModelSupport\TNS\default.txaPackage" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

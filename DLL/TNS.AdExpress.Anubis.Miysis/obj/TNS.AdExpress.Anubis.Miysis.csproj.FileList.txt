@@ -1,0 +1,12 @@
+..\..\Anubis\obj\Debug\TNS.AdExpress.Anubis.Miysis.dll
+..\..\Anubis\obj\Debug\TNS.AdExpress.Anubis.Miysis.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\TNS.AdExpress.Anubis.Miysis.csproj.ResolveComReference.cache
+obj\Debug\TNS.AdExpress.Anubis.Miysis.dll
+obj\Debug\TNS.AdExpress.Anubis.Miysis.pdb
+..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Miysis.dll
+..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Miysis.pdb
+..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Miysis.dll
+..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Miysis.pdb
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Miysis.dll
+\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Miysis.pdb

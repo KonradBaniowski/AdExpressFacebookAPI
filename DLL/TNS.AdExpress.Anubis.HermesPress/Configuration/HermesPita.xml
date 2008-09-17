@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<dataBaseConfiguration>
+	<dataBase description="Pitagor" user="pitafr01_proc_17" password="meydhia9" tns="pitatvfr01.pige" pooling="false" timeout="120" /> 
+</dataBaseConfiguration>
