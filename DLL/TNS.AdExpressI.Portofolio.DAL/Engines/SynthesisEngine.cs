@@ -236,23 +236,23 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			StringBuilder sql = new StringBuilder();
 
             sql.AppendFormat("select {0}",WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, type));
-            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
-                if(type == DBConstantes.TableType.Type.webPlan) {
-                    sql.AppendFormat(", count(distinct wp22222.column_value) as {0}", UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());
-                }
-                else {
-                      sql.AppendFormat(", count(distinct hashcode) as {0}", UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());
-              }
-            }
+            //if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+            //    if(type == DBConstantes.TableType.Type.webPlan) {
+            //        sql.AppendFormat(", count(distinct wp22222.column_value) as {0}", UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());
+            //    }
+            //    else {
+            //          sql.AppendFormat(", count(distinct hashcode) as {0}", UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());
+            //  }
+            //}
 			if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
                 sql.AppendFormat(", {0} as date_num ",date);
 			}
-            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack && type == DBConstantes.TableType.Type.webPlan) {
-                sql.AppendFormat(" from {0}, table(list_banners) wp22222 where id_media={1}", table,_idMedia);
-            }
-            else {
+            //if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack && type == DBConstantes.TableType.Type.webPlan) {
+            //    sql.AppendFormat(" from {0}, table(list_banners) wp22222 where id_media={1}", table,_idMedia);
+            //}
+            //else {
                 sql.AppendFormat(" from {0} where id_media={1}", table, _idMedia);
-            }
+            //}
 
             // Autopromo Evaliant
             if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {

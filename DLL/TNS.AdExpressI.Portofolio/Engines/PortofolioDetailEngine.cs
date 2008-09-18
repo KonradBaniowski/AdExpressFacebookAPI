@@ -311,7 +311,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
                         columnsName[columnIndex + creatives + insertions] = currentUnit.Id.ToString();
                         cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory((CellUnit)cellUnit);
-                        lineDelegates[columnIndex + creatives + insertions] = new AffectLine(AffectDoubleLine);
+                        if(cellUnit is CellIdsNumber) {
+                            lineDelegates[columnIndex + creatives + insertions] = new AffectLine(AffectListLine);
+                        }
+                        else {
+                            lineDelegates[columnIndex + creatives + insertions] = new AffectLine(AffectDoubleLine);
+                        }
 
                         columnIndex++;
                     }
