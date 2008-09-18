@@ -18,6 +18,7 @@ using System.Windows.Forms;
 
 using TNS.AdExpress;
 using CstCustom = TNS.AdExpress.Constantes.Customer;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Constantes.FrameWork.Results;
@@ -30,6 +31,7 @@ using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
 using FctWeb = TNS.AdExpress.Web.Functions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.AdExpressI.LostWon.Exceptions;
 using TNS.AdExpressI.LostWon.DAL;
@@ -38,10 +40,15 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Web;
 using System.Globalization;
+using System.Text;
+using TNS.AdExpress.DataAccess.Classification.MediaBranch;
+using TNS.AdExpress.DataAccess.Classification;
+using TNS.FrameWork.Collections;
 
 #endregion
 
 namespace TNS.AdExpressI.LostWon {
+
     /// <summary>
     /// Default Dynamic reports
     /// </summary>
@@ -49,53 +56,17 @@ namespace TNS.AdExpressI.LostWon {
 
         #region Constantes
         /// <summary>
-        /// Match Number of univers + 1 (used in loops)
-        /// </summary>
-        public const int NB_UNIVERSES_TEST = 4;
-        /// <summary>
         /// Id of media univers on year N
         /// </summary>
-        public const int N_UNIVERSE_POSITION = 1;
+        public const int N_UNIVERSE_ID = -1;
         /// <summary>
         /// Id of media univers on year N-1
         /// </summary>
-        public const int N1_UNIVERSE_POSITION = 2;
+        public const int N1_UNIVERSE_ID = -2;
         /// <summary>
         /// Id of media univers about evol
         /// </summary>
-        public const int EVOL_UNIVERSE_POSITION = 3;
-        /// <summary>
-        /// Index of Level 1 Id element
-        /// </summary>
-        public const int IDL1_INDEX = 0;
-        /// <summary>
-        /// Index of Level 1 Label element
-        /// </summary>
-        public const int LABELL1_INDEX = 1;
-        /// <summary>
-        /// Index of Level 1 Id element
-        /// </summary>
-        public const int IDL2_INDEX = 2;
-        /// <summary>
-        /// Index of Level 1 Label element
-        /// </summary>
-        public const int LABELL2_INDEX = 3;
-        /// <summary>
-        /// Index of Level 1 Id element
-        /// </summary>
-        public const int IDL3_INDEX = 4;
-        /// <summary>
-        /// Index of Level 1 Label element
-        /// </summary>
-        public const int LABELL3_INDEX = 5;
-        /// <summary>
-        /// Index of Adresse Id Column
-        /// </summary>
-        public const int ADDRESS_COLUMN_INDEX = 6;
-        /// <summary>
-        /// Index of first Media (*)
-        /// </summary>
-        public const int FIRST_MEDIA_INDEX = 7;
+        public const int EVOL_UNIVERSE_ID = -3;
         /// <summary>
         /// Id of subtotal columns
         /// </summary>
@@ -103,43 +74,39 @@ namespace TNS.AdExpressI.LostWon {
         /// <summary>
         /// Id of label columns
         /// </summary>
-        public const int LEVEL_ID = 6;
+        public const int LEVEL_ID = -6;
         /// <summary>
         /// Id of Media Schedule Column
         /// </summary>
-        public const int MEDIA_SCHEDULE_ID = 7;
+        public const int MEDIA_SCHEDULE_ID = -7;
         /// <summary>
         /// Id of column loyal
         /// </summary>
-        public const int LOYAL_HEADER_ID = 8;
+        public const int LOYAL_HEADER_ID = -8;
         /// <summary>
         /// Id of column loyal sliding
         /// </summary>
-        public const int LOYAL_DECLINE_HEADER_ID = 9;
+        public const int LOYAL_DECLINE_HEADER_ID = -9;
         /// <summary>
         /// Id of column loyal rising
         /// </summary>
-        public const int LOYAL_RISE_HEADER_ID = 10;
+        public const int LOYAL_RISE_HEADER_ID = -10;
         /// <summary>
         /// Id of column Won
         /// </summary>
-        public const int WON_HEADER_ID = 11;
+        public const int WON_HEADER_ID = -11;
         /// <summary>
         /// Id of column Lost
         /// </summary>
-        public const int LOST_HEADER_ID = 12;
+        public const int LOST_HEADER_ID = -12;
         /// <summary>
         /// Id of column Item Number
         /// </summary>
-        public const int ITEM_NUMBER_HEADER_ID = 13;
+        public const int ITEM_NUMBER_HEADER_ID = -13;
         /// <summary>
         /// Id of column Unit
         /// </summary>
-        public const int UNIT_HEADER_ID = 14;
-        /// <summary>
-        /// Index of first line in result table
-        /// </summary>
-        public const int FIRST_LINE_RESULT_INDEX = 4;
+        public const int UNIT_HEADER_ID = -14;
 
         #endregion
 
@@ -160,6 +127,10 @@ namespace TNS.AdExpressI.LostWon {
         /// Current Module
         /// </summary>
         protected Navigation.Module _module;
+        /// <summary>
+        /// Specify if media schedule columns must be shown
+        /// </summary>
+        protected bool _showMediaSchedule = false;
         #endregion
 
         #region Accessors
@@ -291,57 +262,44 @@ namespace TNS.AdExpressI.LostWon {
         /// Compute Result Data
         /// </summary>
         /// <returns>Computed Result Data</returns>
-        protected ResultTable GetData() {
+        protected ResultTable GetData()
+        {
+            ResultTable tabData = GetRawTable();
+            ResultTable tabResult = null;
 
-            #region Variable
-            string beginningPeriod = GetDateBegin();
-            string endPeriod = GetDateEnd();
-            #endregion
-
-            #region Build Indexes Table
-            List<SelectionGroup> groupMediaTotalIndex = new List<SelectionGroup>();
-            List<SelectionSubGroup> subGroupMediaTotalIndex = new List<SelectionSubGroup>();
-            Dictionary<Int64, GroupItemForTableResult> mediaIndex = new Dictionary<Int64, GroupItemForTableResult>();
-            Dictionary<Int64, GroupItemForTableResult> mediaEvolIndex = new Dictionary<Int64, GroupItemForTableResult>();
-            string mediaListForLabelSearch = "";
-            int maxIndex = 0;
-            long nbLineInNewTable = 0;
-            #endregion
-
-            #region Chargement du tableau
-            object[,] tabData = GetPreformatedTable(groupMediaTotalIndex, subGroupMediaTotalIndex, mediaIndex, mediaEvolIndex, ref maxIndex, ref nbLineInNewTable, beginningPeriod, endPeriod, ref mediaListForLabelSearch);
-            #endregion
-
-            #region No Data
-            if (tabData == null) {
+            #region No data
+            if (tabData == null)
+            {
                 return null;
             }
             #endregion
 
             #region Data Filtering
-            object[,] tabResult = null;
-            long nbLineInTabResult = 0; //currentLineInTabResult + 1;
-            long nbCol = tabData.GetLength(0);
-            switch (this._result) {
-                case DynamicAnalysis.PORTEFEUILLE:
-                    nbLineInTabResult = nbLineInNewTable;
-                    tabResult = tabData;
-                    break;
+            switch (this._result)
+            {
                 case DynamicAnalysis.LOST:
+                    Filter(tabData, new PredicateDelegate(PredicateLost));
+                    break;
                 case DynamicAnalysis.WON:
-                    tabResult = FilterWonLost((this._result == DynamicAnalysis.WON), tabData, groupMediaTotalIndex, nbLineInNewTable, ref nbLineInTabResult, nbCol);
+                    Filter(tabData, new PredicateDelegate(PredicateWon));
                     break;
                 case DynamicAnalysis.LOYAL:
+                    Filter(tabData, new PredicateDelegate(PredicateLoyal));
+                    break;
                 case DynamicAnalysis.LOYAL_DECLINE:
+                    Filter(tabData, new PredicateDelegate(PredicateLoyalDecline));
+                    break;
                 case DynamicAnalysis.LOYAL_RISE:
-                    tabResult = FilterLoyal((this._result != DynamicAnalysis.LOYAL), (this._result == DynamicAnalysis.LOYAL_RISE), tabData, groupMediaTotalIndex, nbLineInNewTable, ref nbLineInTabResult, nbCol);
+                    Filter(tabData, new PredicateDelegate(PredicateLoyalRising));
                     break;
                 default:
                     break;
             }
             #endregion
 
-            return GetResultTable(tabResult, nbLineInTabResult, groupMediaTotalIndex, subGroupMediaTotalIndex, mediaIndex, mediaEvolIndex, mediaListForLabelSearch);
+            tabResult = GetFinalTable(tabData);
+
+            return tabResult;
 
         }
         #endregion
@@ -372,12 +330,14 @@ namespace TNS.AdExpressI.LostWon {
             Int64 agencyGroupLineIndex = 0;
             Int64 agencyLineIndex = 0;
 
-            string expression = FctWeb.SQLGenerator.GetUnitAliasSum(_session);
             string filterN = "";
             string filterN1 = "";
             DataTable dt = null;
-            string beginningPeriodDA = GetDateBegin();
-            string endPeriodDA = GetDateEnd();
+            string beginningPeriodDA = _session.PeriodBeginningDate;
+            string endPeriodDA = _session.PeriodEndDate;
+            CellNumber c = new CellNumber(0.0);
+            c.StringFormat = "max0";
+            CellUnitFactory numberFactory = new CellUnitFactory(c); ;
             #endregion
 
             #region Calcul des périodes
@@ -390,9 +350,9 @@ namespace TNS.AdExpressI.LostWon {
 
             DateTime PeriodBeginningDateN1DA = new DateTime(int.Parse(customerPeriod.ComparativeStartDate.Substring(0, 4)), int.Parse(customerPeriod.ComparativeStartDate.Substring(4, 2)), int.Parse(customerPeriod.ComparativeStartDate.Substring(6, 2)));
             DateTime PeriodEndDateN1DA = new DateTime(int.Parse(customerPeriod.ComparativeEndDate.Substring(0, 4)), int.Parse(customerPeriod.ComparativeEndDate.Substring(4, 2)), int.Parse(customerPeriod.ComparativeEndDate.Substring(6, 2))); ;
-
-            string PeriodDateN = DateString.dateTimeToDD_MM_YYYY(PeriodBeginningDate,_session.SiteLanguage) + "-" + DateString.dateTimeToDD_MM_YYYY(PeriodEndDate,_session.SiteLanguage);
-            string PeriodDateN1 = DateString.dateTimeToDD_MM_YYYY(PeriodBeginningDateN1DA, _session.SiteLanguage) + "-" + DateString.dateTimeToDD_MM_YYYY(PeriodEndDateN1DA, _session.SiteLanguage);
+            CultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            string PeriodDateN = string.Format(cInfo, "{0:d}-{1:d}", PeriodBeginningDate, PeriodEndDate);
+            string PeriodDateN1 = string.Format(cInfo, "{0:d}-{1:d}", PeriodBeginningDateN1DA, PeriodEndDateN1DA);
 
             #endregion
 
@@ -427,6 +387,17 @@ namespace TNS.AdExpressI.LostWon {
             #region Identifiant du texte des unités
             Int64 unitId = _session.GetUnitLabelId();
             CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
+            GetProductActivity getProductActivity;
+            string expression = string.Empty;
+            if (cellUnitFactory.Get(0.0) is CellIdsNumber)
+            {
+                expression = _session.GetSelectedUnit().Id.ToString();
+                getProductActivity = new GetProductActivity(GetListProductActivity);
+            }
+            else{
+                expression = FctWeb.SQLGenerator.GetUnitAliasSum(_session);
+                getProductActivity = new GetProductActivity(GetDoubleProductActivity);
+            }
             #endregion
 
             #region Création des headers
@@ -448,8 +419,8 @@ namespace TNS.AdExpressI.LostWon {
             HeaderGroup fidele = new HeaderGroup(GestionWeb.GetWebWord(1241, _session.SiteLanguage), LOYAL_HEADER_ID);
             fidele.Add(new Header(true, GestionWeb.GetWebWord(1852, _session.SiteLanguage), ITEM_NUMBER_HEADER_ID));
             Header unitFidele = new Header(true, GestionWeb.GetWebWord(unitId, _session.SiteLanguage), UNIT_HEADER_ID);
-            unitFidele.Add(new Header(true, PeriodDateN, N_UNIVERSE_POSITION));
-            unitFidele.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_POSITION));
+            unitFidele.Add(new Header(true, PeriodDateN, N_UNIVERSE_ID));
+            unitFidele.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_ID));
             fidele.Add(unitFidele);
             headers.Root.Add(fidele);
             #endregion
@@ -458,8 +429,8 @@ namespace TNS.AdExpressI.LostWon {
             HeaderGroup fideleDecline = new HeaderGroup(GestionWeb.GetWebWord(1242, _session.SiteLanguage), LOYAL_DECLINE_HEADER_ID);
             fideleDecline.Add(new Header(true, GestionWeb.GetWebWord(1852, _session.SiteLanguage), ITEM_NUMBER_HEADER_ID));
             Header unitFideleDecline = new Header(true, GestionWeb.GetWebWord(unitId, _session.SiteLanguage), UNIT_HEADER_ID);
-            unitFideleDecline.Add(new Header(true, PeriodDateN, N_UNIVERSE_POSITION));
-            unitFideleDecline.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_POSITION));
+            unitFideleDecline.Add(new Header(true, PeriodDateN, N_UNIVERSE_ID));
+            unitFideleDecline.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_ID));
             fideleDecline.Add(unitFideleDecline);
             headers.Root.Add(fideleDecline);
             #endregion
@@ -468,8 +439,8 @@ namespace TNS.AdExpressI.LostWon {
             HeaderGroup fideleRise = new HeaderGroup(GestionWeb.GetWebWord(1243, _session.SiteLanguage), LOYAL_RISE_HEADER_ID);
             fideleRise.Add(new Header(true, GestionWeb.GetWebWord(1852, _session.SiteLanguage), ITEM_NUMBER_HEADER_ID));
             Header unitFideleRise = new Header(true, GestionWeb.GetWebWord(unitId, _session.SiteLanguage), UNIT_HEADER_ID);
-            unitFideleRise.Add(new Header(true, PeriodDateN, N_UNIVERSE_POSITION));
-            unitFideleRise.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_POSITION));
+            unitFideleRise.Add(new Header(true, PeriodDateN, N_UNIVERSE_ID));
+            unitFideleRise.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_ID));
             fideleRise.Add(unitFideleRise);
             headers.Root.Add(fideleRise);
             #endregion
@@ -478,8 +449,8 @@ namespace TNS.AdExpressI.LostWon {
             HeaderGroup won = new HeaderGroup(GestionWeb.GetWebWord(1244, _session.SiteLanguage), WON_HEADER_ID);
             won.Add(new Header(true, GestionWeb.GetWebWord(1852, _session.SiteLanguage), ITEM_NUMBER_HEADER_ID));
             Header unitWon = new Header(true, GestionWeb.GetWebWord(unitId, _session.SiteLanguage), UNIT_HEADER_ID);
-            unitWon.Add(new Header(true, PeriodDateN, N_UNIVERSE_POSITION));
-            unitWon.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_POSITION));
+            unitWon.Add(new Header(true, PeriodDateN, N_UNIVERSE_ID));
+            unitWon.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_ID));
             won.Add(unitWon);
             headers.Root.Add(won);
             #endregion
@@ -488,8 +459,8 @@ namespace TNS.AdExpressI.LostWon {
             HeaderGroup lost = new HeaderGroup(GestionWeb.GetWebWord(1245, _session.SiteLanguage), LOST_HEADER_ID);
             lost.Add(new Header(true, GestionWeb.GetWebWord(1852, _session.SiteLanguage), ITEM_NUMBER_HEADER_ID));
             Header unitLost = new Header(true, GestionWeb.GetWebWord(unitId, _session.SiteLanguage), UNIT_HEADER_ID);
-            unitLost.Add(new Header(true, PeriodDateN, N_UNIVERSE_POSITION));
-            unitLost.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_POSITION));
+            unitLost.Add(new Header(true, PeriodDateN, N_UNIVERSE_ID));
+            unitLost.Add(new Header(true, PeriodDateN1, N1_UNIVERSE_ID));
             lost.Add(unitLost);
             headers.Root.Add(lost);
             #endregion
@@ -548,11 +519,11 @@ namespace TNS.AdExpressI.LostWon {
 
             #region Initialisation des Nombres
             for (int i = 0; i < nbLine; i++) {
-                resultTable[i, _loyalNumberColonneIndex] = new CellNumber(0.0);
-                resultTable[i, _loyalDeclineNumberColonneIndex] = new CellNumber(0.0);
-                resultTable[i, _loyalRiseNumberColonneIndex] = new CellNumber(0.0);
-                resultTable[i, _wonNumberColonneIndex] = new CellNumber(0.0);
-                resultTable[i, _lostNumberColonneIndex] = new CellNumber(0.0);
+                resultTable[i, _loyalNumberColonneIndex] = numberFactory.Get(0.0);
+                resultTable[i, _loyalDeclineNumberColonneIndex] = numberFactory.Get(0.0);
+                resultTable[i, _loyalRiseNumberColonneIndex] = numberFactory.Get(0.0);
+                resultTable[i, _wonNumberColonneIndex] = numberFactory.Get(0.0);
+                resultTable[i, _lostNumberColonneIndex] = numberFactory.Get(0.0);
             }
             for (long i = 0; i < nbLine; i++) {
                 for (long j = _loyalNumberColonneIndex + 1; j < _loyalDeclineNumberColonneIndex; j++) {
@@ -582,7 +553,7 @@ namespace TNS.AdExpressI.LostWon {
                 if (currentRow["id_advertiser"] != null && currentRow["id_advertiser"] != System.DBNull.Value && !advertisers.Contains(currentRow["id_advertiser"].ToString())) {
                     filterN = "id_advertiser=" + currentRow["id_advertiser"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                     filterN1 = "id_advertiser=" + currentRow["id_advertiser"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
-                    GetProductActivity(resultTable, dt, advertiserLineIndex, expression, filterN, filterN1);
+                    getProductActivity(resultTable, dt, advertiserLineIndex, expression, filterN, filterN1);
                     advertisers.Add(currentRow["id_advertiser"].ToString());
                 }
 
@@ -591,7 +562,7 @@ namespace TNS.AdExpressI.LostWon {
                     if (currentRow["id_brand"] != null && currentRow["id_brand"] != System.DBNull.Value && !brands.Contains(currentRow["id_brand"].ToString())) {
                         filterN = "id_brand=" + currentRow["id_brand"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                         filterN1 = "id_brand=" + currentRow["id_brand"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
-                        GetProductActivity(resultTable, dt, brandLineIndex, expression, filterN, filterN1);
+                        getProductActivity(resultTable, dt, brandLineIndex, expression, filterN, filterN1);
                         brands.Add(currentRow["id_brand"].ToString());
                     }
                 }
@@ -600,7 +571,7 @@ namespace TNS.AdExpressI.LostWon {
                 if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG) && currentRow["id_product"] != null && currentRow["id_product"] != System.DBNull.Value && !products.Contains(currentRow["id_product"].ToString())) {
                     filterN = "id_product=" + currentRow["id_product"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                     filterN1 = "id_product=" + currentRow["id_product"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
-                    GetProductActivity(resultTable, dt, productLineIndex, expression, filterN, filterN1);
+                    getProductActivity(resultTable, dt, productLineIndex, expression, filterN, filterN1);
                     products.Add(currentRow["id_product"].ToString());
                 }
 
@@ -608,21 +579,21 @@ namespace TNS.AdExpressI.LostWon {
                 if (currentRow["id_sector"] != null && currentRow["id_sector"] != System.DBNull.Value && !sectors.Contains(currentRow["id_sector"].ToString())) {
                     filterN = "id_sector=" + currentRow["id_sector"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                     filterN1 = "id_sector=" + currentRow["id_sector"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
-                    GetProductActivity(resultTable, dt, sectorLineIndex, expression, filterN, filterN1);
+                    getProductActivity(resultTable, dt, sectorLineIndex, expression, filterN, filterN1);
                     sectors.Add(currentRow["id_sector"].ToString());
                 }
                 //Activité publicitaire Classe
                 if (currentRow["id_subsector"] != null && currentRow["id_subsector"] != System.DBNull.Value && !subsectors.Contains(currentRow["id_subsector"].ToString())) {
                     filterN = "id_subsector=" + currentRow["id_subsector"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))"; ;
                     filterN1 = "id_subsector=" + currentRow["id_subsector"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
-                    GetProductActivity(resultTable, dt, subsectorLineIndex, expression, filterN, filterN1);
+                    getProductActivity(resultTable, dt, subsectorLineIndex, expression, filterN, filterN1);
                     subsectors.Add(currentRow["id_subsector"].ToString());
                 }
                 //Activité publicitaire Groupes
                 if (currentRow["id_group_"] != null && currentRow["id_group_"] != System.DBNull.Value && !groups.Contains(currentRow["id_group_"].ToString())) {
                     filterN = "id_group_=" + currentRow["id_group_"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                     filterN1 = "id_group_=" + currentRow["id_group_"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
-                    GetProductActivity(resultTable, dt, groupLineIndex, expression, filterN, filterN1);
+                    getProductActivity(resultTable, dt, groupLineIndex, expression, filterN, filterN1);
                     groups.Add(currentRow["id_group_"].ToString());
                 }
 
@@ -631,7 +602,7 @@ namespace TNS.AdExpressI.LostWon {
                     if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency) && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString())) {
                         filterN = "ID_GROUP_ADVERTISING_AGENCY=" + currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                         filterN1 = "ID_GROUP_ADVERTISING_AGENCY=" + currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
-                        GetProductActivity(resultTable, dt, agencyGroupLineIndex, expression, filterN, filterN1);
+                        getProductActivity(resultTable, dt, agencyGroupLineIndex, expression, filterN, filterN1);
                         agencyGroups.Add(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString());
                     }
 
@@ -639,7 +610,7 @@ namespace TNS.AdExpressI.LostWon {
                     if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency) && currentRow["ID_ADVERTISING_AGENCY"] != null && currentRow["ID_ADVERTISING_AGENCY"] != System.DBNull.Value && !agency.Contains(currentRow["ID_ADVERTISING_AGENCY"].ToString())) {
                         filterN = "ID_ADVERTISING_AGENCY=" + currentRow["ID_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
                         filterN1 = "ID_ADVERTISING_AGENCY=" + currentRow["ID_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
-                        GetProductActivity(resultTable, dt, agencyLineIndex, expression, filterN, filterN1);
+                        getProductActivity(resultTable, dt, agencyLineIndex, expression, filterN, filterN1);
                         agency.Add(currentRow["ID_ADVERTISING_AGENCY"].ToString());
                     }
                 }
@@ -652,70 +623,30 @@ namespace TNS.AdExpressI.LostWon {
 
         #region Internal methods
 
-        #region Formatage des dates
+        #region Raw table
         /// <summary>
-        /// Get Period Beginning
+        /// Get Table with data without any filtering on required result
         /// </summary>
-        /// <returns>Period Beginning</returns>
-        protected string GetDateBegin() {
-            return (_session.PeriodBeginningDate);
-        }
-
-        /// <summary>
-        /// Get Period End
-        /// </summary>
-        /// <returns>Period End</returns>
-        protected string GetDateEnd() {
-            return (_session.PeriodEndDate);
-        }
-        #endregion
-
-        #region Tableau Préformaté
-        /// <summary>
-        /// Get Preformated Table
-        /// </summary>
-        /// <param name="groupMediaTotalIndex">List of indexes about selected groups</param>
-        /// <param name="subGroupMediaTotalIndex">List of indexes about selected subGroups</param>
-        /// <param name="mediaIndex">List of indexes of media</param>
-        /// <param name="nbCol">Number of columns in Result Table</param>
-        /// <param name="nbLineInNewTable">(out) Number of lines in result table</param>
-        /// <param name="beginningPeriod">Beginning of the period</param>
-        /// <param name="endPeriod">End of the period</param>
-        /// <param name="mediaEvolIndex">List of indexes of media evol</param>
-        /// <param name="mediaListForLabelSearch">(out) Media Ids</param>
-        /// <returns>Preformated result table</returns>
-        protected object[,] GetPreformatedTable(List<SelectionGroup> groupMediaTotalIndex, List<SelectionSubGroup> subGroupMediaTotalIndex, Dictionary<Int64, GroupItemForTableResult> mediaIndex, Dictionary<Int64, GroupItemForTableResult> mediaEvolIndex, ref int nbCol, ref long nbLineInNewTable, string beginningPeriod, string endPeriod, ref string mediaListForLabelSearch) {
-
-            #region Variables
-            Int64 idMedia = -1;
-            double unit;
-            long oldIdL1 = -1;
-            long oldIdL2 = -1;
-            long oldIdL3 = -1;
-            Int64 currentLine = -1;
-            int k;
-            bool changeLine = false;
-            #endregion
-
-            #region Formattage des dates
-
-            Int64 beginningDate = Int64.Parse(beginningPeriod);
-            Int64 endPeriodDate = Int64.Parse(endPeriod);
-            DateTime startDate = new DateTime(int.Parse(beginningPeriod.Substring(0, 4)), int.Parse(beginningPeriod.Substring(4, 2)), int.Parse(beginningPeriod.Substring(6, 2)));
-
-            #endregion
-
-            #region Aucune données
-            if (startDate > DateTime.Now) {
+        /// <returns>Data</returns>
+        protected ResultTable GetRawTable()
+        {
+            #region Date
+            int dateBegin = int.Parse(_session.PeriodBeginningDate);
+            int dateEnd = int.Parse(_session.PeriodEndDate);
+            DateTime startDate = new DateTime(dateBegin / 10000, (dateBegin-(10000*(dateBegin/10000))) / 100, (dateBegin-(100*(dateBegin/100))));
+            if (startDate > DateTime.Now)
+            {
                 return null;
             }
             #endregion
 
-            #region Chargement des données à partir de la base
+            #region Load data from data access layer
             DataSet ds = null;
             DataSet dsMedia = null;
             Navigation.Module currentModuleDescription = Navigation.ModulesList.GetModule(_session.CurrentModule);
-            try {
+            try
+            {
+
                 if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
                 object[] parameters = new object[1];
                 parameters[0] = _session;
@@ -723,115 +654,220 @@ namespace TNS.AdExpressI.LostWon {
                 ds = lostwonDAL.GetData();
                 dsMedia = lostwonDAL.GetMediaDetails();
 
-                //ds = DynamicDataAccess.GetGenericData(webSession, vehicleName);
-                //dsMedia = DynamicDataAccess.GetMediaColumnDetailLevelList(webSession);
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new LostWonException("Unable to load dynamic report data.", err));
             }
             DataTable dt = ds.Tables[0];
             DataTable dtMedia = dsMedia.Tables[0];
-            #endregion
 
-            #region Aucune données
-            if (dt.Rows.Count == 0) {
+            if (dt.Rows.Count == 0)
+            {
                 return null;
             }
             #endregion
 
-            #region Tableaux d'index
-            InitIndexAndValues(groupMediaTotalIndex, subGroupMediaTotalIndex, mediaIndex, mediaEvolIndex, ref mediaListForLabelSearch, ref nbCol, dtMedia);
+            #region GetHeaders
+            Headers headers = GetHeaders(dtMedia);
             #endregion
 
-            #region Déclaration du tableau de résultat
-            long nbline = dt.Rows.Count;
-            object[,] tabResult = new object[nbCol, dt.Rows.Count];
+            #region Init Table
+            Int64 nbline = GetNbLine(dt);
+            ResultTable tabData = new ResultTable(nbline, headers);
             #endregion
 
-            #region Tableau de résultat
-
-            string unitAliasName = FctWeb.SQLGenerator.GetUnitAlias(_session);
-
-            foreach (DataRow currentRow in dt.Rows) {
-                idMedia = (Int64)currentRow["id_media"];
-                if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 1) >= 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 1) != oldIdL1) changeLine = true;
-                if (!changeLine && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) >= 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 2) != oldIdL2) changeLine = true;
-                if (!changeLine && _session.GenericProductDetailLevel.GetIdValue(currentRow, 3) >= 0 && _session.GenericProductDetailLevel.GetIdValue(currentRow, 3) != oldIdL3) changeLine = true;
-
-
-                #region On change de ligne
-                if (changeLine) {
-
-                    currentLine++;
-                    // Ecriture de L1 ?
-                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 1) >= 0) {
-                        oldIdL1 = _session.GenericProductDetailLevel.GetIdValue(currentRow, 1);
-                        tabResult[IDL1_INDEX, currentLine] = oldIdL1;
-                        tabResult[LABELL1_INDEX, currentLine] = _session.GenericProductDetailLevel.GetLabelValue(currentRow, 1);
+            #region Fill result table
+            int levelNb = _session.GenericProductDetailLevel.GetNbLevels;
+            Int64[] oldIds = new Int64[levelNb];
+            Int64[] cIds = new Int64[levelNb];
+            CellLevel[] levels = new CellLevel[nbline];
+            Int64 cLine = 0;
+            for (int i = 0; i < levelNb; i++) { oldIds[i] = cIds[i] = -1; }
+            CellUnitFactory cellFactory = _session.GetCellUnitFactory();
+            SetLineDelegate setLine;
+            switch (_session.Unit)
+            {
+                case CstWeb.CustomerSessions.Unit.versionNb:
+                    setLine = new SetLineDelegate(SetListLine);
+                    break;
+                default:
+                    setLine = new SetLineDelegate(SetDoubleLine);
+                    break;
+            }
+            foreach (DataRow row in dt.Rows)
+            {
+                for (int i = 0; i < levelNb; i++)
+                {
+                    cIds[i] = _session.GenericProductDetailLevel.GetIdValue(row, i + 1);
+                    if (cIds[i] >= 0 && cIds[i] != oldIds[i])
+                    {
+                        oldIds[i] = cIds[i];
+                        for (int ii = i + 1; ii < levelNb; ii++) { oldIds[ii] = -1; }
+                        cLine = InitLine(tabData, row, cellFactory, i + 1, (i > 0) ? levels[i - 1] : null);
+                        levels[i] = (CellLevel)tabData[cLine, 1];
                     }
-                    // Ecriture de L2 ?
-                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 2) >= 0) {
-                        oldIdL2 = _session.GenericProductDetailLevel.GetIdValue(currentRow, 2);
-                        tabResult[IDL2_INDEX, currentLine] = oldIdL2;
-                        tabResult[LABELL2_INDEX, currentLine] = _session.GenericProductDetailLevel.GetLabelValue(currentRow, 2);
-                    }
-                    // Ecriture de L3 ?
-                    if (_session.GenericProductDetailLevel.GetIdValue(currentRow, 3) >= 0) {
-                        oldIdL3 = _session.GenericProductDetailLevel.GetIdValue(currentRow, 3);
-                        tabResult[IDL3_INDEX, currentLine] = oldIdL3;
-                        tabResult[LABELL3_INDEX, currentLine] = _session.GenericProductDetailLevel.GetLabelValue(currentRow, 3);
-                    }
-                    // Totaux, sous Totaux et médias à 0
-                    for (k = FIRST_MEDIA_INDEX; k < nbCol; k++) {
-                        tabResult[k, currentLine] = (double)0.0;
-                    }
-
-                    try {
-                        if (currentRow["id_address"] != null) tabResult[ADDRESS_COLUMN_INDEX, currentLine] = Int64.Parse(currentRow["id_address"].ToString());
-                    }
-                    catch (Exception) {
-
-                    }
-                    changeLine = false;
                 }
-                #endregion
+                setLine(tabData, cLine, row, cellFactory, dateBegin, dateEnd);
+            }
+            #endregion
 
-                unit = double.Parse(currentRow[unitAliasName].ToString());
+            return tabData;
+        }
 
+        #region InitLine
+        /// <summary>
+        /// Delegate to init lines
+        /// </summary>
+        /// <param name="tab">Table to fill</param>
+        /// <param name="row">Data container</param>
+        /// <param name="cellFactory">Cell Factory</param>
+        /// <param name="level">Current level</param>
+        /// <param name="parent">Parent level</param>
+        /// <returns>Index of current line</returns>
+        protected Int64 InitLine(ResultTable tab, DataRow row, CellUnitFactory cellFactory, int level, CellLevel parent)
+        {
 
-                if (IsComparativeDateLine(Int64.Parse(currentRow["date_num"].ToString()), beginningDate, endPeriodDate)) {
-                    idMedia = -1 * idMedia;
-                }
-                // Ecriture du résultat du média
-                tabResult[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].IndexInResultTable, currentLine] = (double)tabResult[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].IndexInResultTable, currentLine] + unit;
-
-                // Ecriture du résultat du sous total (somme)
-                if (groupMediaTotalIndex[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].ParentId].Count > 1) {
-                    tabResult[groupMediaTotalIndex[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].ParentId].IndexInResultTable, currentLine] = (double)tabResult[groupMediaTotalIndex[subGroupMediaTotalIndex[mediaIndex[idMedia].GroupNumber].ParentId].IndexInResultTable, currentLine] + unit;
+            Int64 cLine = -1;
+            CellLevel cell;
+            switch (level)
+            {
+                case 1:
+                    cLine = tab.AddNewLine(LineType.level1);
+                    break;
+                case 2:
+                    cLine = tab.AddNewLine(LineType.level2);
+                    break;
+                case 3:
+                    cLine = tab.AddNewLine(LineType.level3);
+                    break;
+                default:
+                    throw new ArgumentException(string.Format("Level {0} is not supported.", level));
+            }
+            tab[cLine, 1] = cell = new CellLevel(
+                _session.GenericProductDetailLevel.GetIdValue(row, level)
+                , _session.GenericProductDetailLevel.GetLabelValue(row, level)
+                , parent
+                , level
+                , cLine);
+            if (_session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == level)
+            {
+                if (row["id_address"] != DBNull.Value)
+                {
+                    cell.AddressId = Convert.ToInt64(row["id_address"]);
                 }
 
             }
 
-            #endregion
+            for (int i = 2; i <= tab.DataColumnsNumber; i++)
+            {
+                tab[cLine, i] = cellFactory.Get(0.0);
+            }
+            return cLine;
 
-            #region Debug: voir le tableau
-#if(DEBUG)
-            //						int i,j;
-            //						string HTML="<html><table><tr>";
-            //						for(i=0;i<=currentLine;i++){
-            //							for(j=0;j<nbCol;j++){
-            //								if(tabResult[j,i]!=null)HTML+="<td>"+tabResult[j,i].ToString()+"</td>";
-            //								else HTML+="<td>&nbsp;</td>";
-            //							}
-            //							HTML+="</tr><tr>";
-            //						}
-            //						HTML+="</tr></table></html>";
-#endif
-            #endregion
-
-            nbLineInNewTable = currentLine + 1;
-            return (tabResult);
         }
+        #endregion
+
+        #region SetLineDelegate
+        /// <summary>
+        /// Delegate to affect values to the table
+        /// </summary>
+        /// <param name="tab">Table to fill</param>
+        /// <param name="cLine">Current line</param>
+        /// <param name="row">Data container</param>
+        /// <param name="cellFactory">Cell Factory</param>
+        /// <param name="periodBegin">Period Begin</param>
+        /// <param name="periodEnd">Period End</param>
+        /// <returns>Current line</returns>
+        protected delegate Int64 SetLineDelegate(ResultTable tab, Int64 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd);
+        /// <summary>
+        /// Delegate to affect double values to the table
+        /// </summary>
+        /// <param name="tab">Table to fill</param>
+        /// <param name="cLine">Current line</param>
+        /// <param name="row">Data container</param>
+        /// <param name="cellFactory">Cell Factory for double cells</param>
+        /// <param name="periodBegin">Period Begin</param>
+        /// <param name="periodEnd">Period End</param>
+        /// <returns>Current line</returns>
+        protected Int64 SetDoubleLine(ResultTable tab, Int64 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
+        {
+
+            Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
+            string idCol = string.Empty;
+            string idSubTotal = string.Empty;
+            if (IsComparativeDateLine(Int64.Parse(row["date_num"].ToString()), periodBegin, periodEnd))
+            {
+                idCol = string.Format("{0}-{1}", N1_UNIVERSE_ID, idElement);
+                idSubTotal = string.Format("{0}-{1}", N1_UNIVERSE_ID, SUBTOTAL_ID);
+            }
+            else
+            {
+                idCol = string.Format("{0}-{1}", N_UNIVERSE_ID, idElement);
+                idSubTotal = string.Format("{0}-{1}", N_UNIVERSE_ID, SUBTOTAL_ID);
+            }
+
+            Double value = Convert.ToDouble(row[_session.GetSelectedUnit().Id.ToString()]);
+            tab.AffectValueAndAddToHierarchy(1, cLine, tab.GetHeadersIndexInResultTable(idCol), value);
+            if (tab.HeadersIndexInResultTable.ContainsKey(idSubTotal))
+            {
+                tab.AffectValueAndAddToHierarchy(1, cLine, tab.GetHeadersIndexInResultTable(idSubTotal), value);
+            }
+            return cLine;
+
+        }
+        /// <summary>
+        /// Delegate to affect list values to the table
+        /// </summary>
+        /// <param name="tab">Table to fill</param>
+        /// <param name="cLine">Current line</param>
+        /// <param name="row">Data container</param>
+        /// <param name="cellFactory">Cell Factory for list cells</param>
+        /// <param name="periodBegin">Period Begin</param>
+        /// <param name="periodEnd">Period End</param>
+        /// <returns>Current line</returns>
+        protected Int64 SetListLine(ResultTable tab, Int64 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
+        {
+
+            Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
+            string idCol = string.Empty;
+            string idSubTotal = string.Empty;
+            if (IsComparativeDateLine(Int64.Parse(row["date_num"].ToString()), periodBegin, periodEnd))
+            {
+                idCol = string.Format("{0}-{1}", N1_UNIVERSE_ID, idElement);
+                idSubTotal = string.Format("{0}-{1}", N1_UNIVERSE_ID, SUBTOTAL_ID);
+            }
+            else
+            {
+                idCol = string.Format("{0}-{1}", N_UNIVERSE_ID, idElement);
+                idSubTotal = string.Format("{0}-{1}", N_UNIVERSE_ID, SUBTOTAL_ID);
+            }
+
+            Int64 iSubTotal = -1;
+            Int64 iCol = tab.GetHeadersIndexInResultTable(idCol);
+            if (tab.HeadersIndexInResultTable.ContainsKey(idSubTotal))
+            {
+                iSubTotal = tab.GetHeadersIndexInResultTable(idSubTotal);
+            }
+           
+            string[] value = row[_session.GetSelectedUnit().Id.ToString()].ToString().Split(',');
+            Int64 v = 0;
+            foreach (string s in value)
+            {
+                v = Convert.ToInt64(s);
+                tab.AffectValueAndAddToHierarchy(1, cLine, iCol, v);
+                // SubTotal if required (univers contains more than one element)
+                if (iSubTotal > -1)
+                {
+                    tab.AffectValueAndAddToHierarchy(1, cLine, iSubTotal, v);
+                }
+            }
+
+            return cLine;
+
+        }
+        #endregion
+
         #endregion
 
         #region IsComparativeDateLine
@@ -854,294 +890,76 @@ namespace TNS.AdExpressI.LostWon {
         }
         #endregion
 
-        #region Initialisation des indexes
+        #region Init Indexes
         /// <summary>
-        /// Init indexes tables
+        /// Build headers
         /// </summary>
-        /// <param name="groupMediaTotalIndex">(out) List of indexes of selection groups</param>
-        /// <param name="subGroupMediaTotalIndex">List of indexes of selection subgroups</param>
-        /// <param name="mediaIndex">(out) Media indexes</param>
-        /// <param name="mediaListForLabelSearch">(out) Media Ids</param>
-        /// <param name="maxIndex">(out) Index of last column</param>
-        /// <param name="mediaEvolIndex">Indexes list for evol</param>
-        /// <param name="dtMedia">List of media with the matching level of detail</param>
-        protected void InitIndexAndValues(List<SelectionGroup> groupMediaTotalIndex, List<SelectionSubGroup> subGroupMediaTotalIndex, Dictionary<Int64, GroupItemForTableResult> mediaIndex, Dictionary<Int64, GroupItemForTableResult> mediaEvolIndex, ref string mediaListForLabelSearch, ref int maxIndex, DataTable dtMedia) {
+        /// <param name="dtMedia">List of column levels</param>
+        /// <returns>Headers of the final table</returns>
+        protected Headers GetHeaders(DataTable dtMedia)
+        {
 
-            #region Variables
-            string tmp = "";
-            Int64[] mediaList;
-            int positionSubGroup = 2;
-            int subGroupCount = 0;
-            Dictionary<Int64, int> mediaSubGroupNId = new Dictionary<Int64, int>();
-            Dictionary<Int64, int> mediaSubGroupN1Id = new Dictionary<Int64, int>();
-            Dictionary<Int64, int> mediaSubGroupEvolId = new Dictionary<Int64, int>();
-            List<int> columnDetailLevelList;
-            Int64 currentMedia;
-            int currentColumnDetail;
+            #region Dates
+            DateTime periodBeginN = new DateTime(int.Parse(_session.CustomerPeriodSelected.StartDate.Substring(0, 4)), int.Parse(_session.CustomerPeriodSelected.StartDate.Substring(4, 2)), int.Parse(_session.CustomerPeriodSelected.StartDate.Substring(6, 2)));
+            DateTime periodEndN = new DateTime(int.Parse(_session.CustomerPeriodSelected.EndDate.Substring(0, 4)), int.Parse(_session.CustomerPeriodSelected.EndDate.Substring(4, 2)), int.Parse(_session.CustomerPeriodSelected.EndDate.Substring(6, 2))); ;
+
+            DateTime periodBeginN1 = new DateTime(int.Parse(_session.CustomerPeriodSelected.ComparativeStartDate.Substring(0, 4)), int.Parse(_session.CustomerPeriodSelected.ComparativeStartDate.Substring(4, 2)), int.Parse(_session.CustomerPeriodSelected.ComparativeStartDate.Substring(6, 2)));
+            DateTime periodEndN1 = new DateTime(int.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(0, 4)), int.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(4, 2)), int.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(6, 2))); ;
+
+            AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            string periodLabelN = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN), string.Format(cInfo, "{0:d}", periodEndN));
+            string periodLabelN1 = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN1), string.Format(cInfo, "{0:d}", periodEndN1));
             #endregion
 
-            #region Initialisation des variables
-            maxIndex = FIRST_MEDIA_INDEX;
-            #endregion
-
-            tmp = _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[N_UNIVERSE_POSITION], CstCustom.Right.type.mediaAccess);
-            mediaList = Array.ConvertAll<string, Int64>(tmp.Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); });
-
-            groupMediaTotalIndex.Add(null);
-            subGroupMediaTotalIndex.Add(null);
-            subGroupMediaTotalIndex.Add(null);
-
-            // Chargement de la liste du niveau de détail colonne
-            for (int i = 1; i <= 3; i++) {
-
-                subGroupCount = 0;
-                mediaListForLabelSearch = "";
-                columnDetailLevelList = new List<int>();
-
-                foreach (Int64 idMedia in mediaList) {
-                    foreach (DataRow row in dtMedia.Rows) {
-                        currentMedia = Convert.ToInt64(row["id_media"]);
-                        if (idMedia == currentMedia) {
-                            currentColumnDetail = Convert.ToInt32(row["columnDetailLevel"]);
-                            if (!columnDetailLevelList.Contains(currentColumnDetail)) {
-                                columnDetailLevelList.Add(currentColumnDetail);
-                                subGroupMediaTotalIndex.Add(new SelectionSubGroup(positionSubGroup));
-                                subGroupMediaTotalIndex[positionSubGroup].DataBaseId = currentColumnDetail;
-                                switch (i) {
-                                    case 1:
-                                        subGroupMediaTotalIndex[positionSubGroup].ParentId = N_UNIVERSE_POSITION;
-                                        mediaSubGroupNId.Add(idMedia, positionSubGroup);
-                                        break;
-                                    case 2:
-                                        subGroupMediaTotalIndex[positionSubGroup].ParentId = N1_UNIVERSE_POSITION;
-                                        mediaSubGroupN1Id.Add(idMedia, positionSubGroup);
-                                        break;
-                                    case 3:
-                                        subGroupMediaTotalIndex[positionSubGroup].ParentId = EVOL_UNIVERSE_POSITION;
-                                        mediaSubGroupEvolId.Add(idMedia, positionSubGroup);
-                                        break;
-                                }
-                                subGroupMediaTotalIndex[positionSubGroup].SetItemsNumber = 0;
-                                subGroupMediaTotalIndex[positionSubGroup].IndexInResultTable = 0;
-                                positionSubGroup++;
-                                subGroupCount++;
-                                mediaListForLabelSearch += currentColumnDetail + ",";
-                            }
-                            else {
-                                foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex)
-                                    if (subGroup != null) {
-                                        if (subGroup.DataBaseId == currentColumnDetail) {
-                                            if (subGroup.Count == 0)
-                                                subGroup.SetItemsNumber = 2;
-                                            else
-                                                subGroup.SetItemsNumber = subGroup.Count + 1;
-                                            switch (i) {
-                                                case 1:
-                                                    mediaSubGroupNId[idMedia] = subGroup.Id;
-                                                    break;
-                                                case 2:
-                                                    mediaSubGroupN1Id[idMedia] = subGroup.Id;
-                                                    break;
-                                                case 3:
-                                                    mediaSubGroupEvolId[idMedia] = subGroup.Id;
-                                                    break;
-                                            }
-                                        }
-                                    }
-                            }
-                        }
-                    }
+            #region Extract Columns Elements
+            List<Int64> lIds = new List<Int64>();
+            Int64 id = -1;
+            StringBuilder sIds = new StringBuilder();
+            foreach (DataRow row in dtMedia.Rows)
+            {
+                id = Convert.ToInt64(row["columnDetailLevel"]);
+                if (!lIds.Contains(id))
+                {
+                    lIds.Add(id);
+                    sIds.AppendFormat("{0},", id);
                 }
             }
-
-            #region Année N
-            // Définition du groupe
-            groupMediaTotalIndex.Add(new SelectionGroup(N_UNIVERSE_POSITION));
-            // Le groupe contient plus de 1 éléments
-            if (subGroupCount > 1) {
-                groupMediaTotalIndex[N_UNIVERSE_POSITION].IndexInResultTable = maxIndex;
-                groupMediaTotalIndex[N_UNIVERSE_POSITION].SetItemsNumber = subGroupCount;
-                // Changement pourcentage
-                maxIndex++;
-                //nbSubTotal++;
-            }
-            else {
-                groupMediaTotalIndex[N_UNIVERSE_POSITION].IndexInResultTable = maxIndex;
-                groupMediaTotalIndex[N_UNIVERSE_POSITION].SetItemsNumber = 0;
-            }
-            // Indexes des média (support)
-            foreach (Int64 media in mediaList) {
-                mediaIndex.Add(media, new GroupItemForTableResult(media, mediaSubGroupNId[media], maxIndex));
-            }
-            // Pour les sous Groupes
-            foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex) {
-                if (subGroup != null) {
-                    if (subGroup.IndexInResultTable == 0 && subGroup.ParentId == N_UNIVERSE_POSITION) {
-                        subGroup.IndexInResultTable = maxIndex;
-                        maxIndex++;
-                    }
-                }
-            }
+            if (sIds.Length > 0) sIds.Length -= 1;
             #endregion
 
-            #region Année N -1
-            // Définition du groupe
-            groupMediaTotalIndex.Add(new SelectionGroup(N1_UNIVERSE_POSITION));
-            // Le groupe contient plus de 1 éléments
-            if (subGroupCount > 1) {
-                groupMediaTotalIndex[N1_UNIVERSE_POSITION].IndexInResultTable = maxIndex;
-                groupMediaTotalIndex[N1_UNIVERSE_POSITION].SetItemsNumber = subGroupCount;
-                maxIndex++;
-                //nbSubTotal++;
-            }
-            else {
-                groupMediaTotalIndex[N1_UNIVERSE_POSITION].IndexInResultTable = maxIndex;
-                groupMediaTotalIndex[N1_UNIVERSE_POSITION].SetItemsNumber = 0;
-            }
-            // Indexes des média (support)
-            foreach (Int64 media in mediaList) {
-                mediaIndex.Add(-1 * media, new GroupItemForTableResult(-1 * media, mediaSubGroupN1Id[media], maxIndex));
-            }
-            // Pour les sous Groupes
-            foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex) {
-                if (subGroup != null) {
-                    if (subGroup.IndexInResultTable == 0 && subGroup.ParentId == N1_UNIVERSE_POSITION) {
-                        subGroup.IndexInResultTable = maxIndex;
-                        maxIndex++;
-                    }
-                }
-            }
-            #endregion
-
-            #region Evol
-            // Définition du groupe
-            groupMediaTotalIndex.Add(new SelectionGroup(EVOL_UNIVERSE_POSITION));
-            // Le groupe contient plus de 1 éléments
-            if (subGroupCount > 1) {
-                groupMediaTotalIndex[EVOL_UNIVERSE_POSITION].IndexInResultTable = maxIndex;
-                groupMediaTotalIndex[EVOL_UNIVERSE_POSITION].SetItemsNumber = subGroupCount;
-                maxIndex++;
-                //nbSubTotal++;
-            }
-            else {
-                groupMediaTotalIndex[EVOL_UNIVERSE_POSITION].IndexInResultTable = maxIndex;
-                groupMediaTotalIndex[EVOL_UNIVERSE_POSITION].SetItemsNumber = 0;
-            }
-            // Indexes des média (support)
-            foreach (Int64 media in mediaList) {
-                mediaEvolIndex[media] = new GroupItemForTableResult(media, mediaSubGroupEvolId[media], maxIndex);
-            }
-            // Pour les sous Groupes
-            foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex) {
-                if (subGroup != null) {
-                    if (subGroup.IndexInResultTable == 0 && subGroup.ParentId == EVOL_UNIVERSE_POSITION) {
-                        subGroup.IndexInResultTable = maxIndex;
-                        maxIndex++;
-                    }
-                }
-            }
-            #endregion
-
-            mediaListForLabelSearch = mediaListForLabelSearch.Substring(0, mediaListForLabelSearch.Length - 1);
-        }
-
-        #endregion
-
-        #region Formattage d'un tableau de résultat
-        /// <summary>
-        /// Create ResultTable
-        /// </summary>
-        /// <param name="tabData">Data table</param>
-        /// <param name="nbLineInTabData">Numùber of lines in table</param>
-        /// <param name="groupMediaTotalIndex">Media Group</param>
-        /// <param name="subGroupMediaTotalIndex">List of subgroups selection</param>
-        /// <param name="mediaIndex">Index of medias</param>
-        /// <param name="mediaEvolIndex">Index of media evols</param>
-        /// <param name="mediaListForLabelSearch">List of media Ids</param>
-        /// <returns>Result</returns>
-        protected ResultTable GetResultTable(object[,] tabData, long nbLineInTabData, List<SelectionGroup> groupMediaTotalIndex, List<SelectionSubGroup> subGroupMediaTotalIndex, Dictionary<Int64, GroupItemForTableResult> mediaIndex, Dictionary<Int64, GroupItemForTableResult> mediaEvolIndex, string mediaListForLabelSearch) {
-
-            #region Variables
-            Int64[] mediaList;
-            Int64 oldIdL1 = -1;
-            Int64 oldIdL2 = -1;
-            Int64 oldIdL3 = -1;
-            long currentLine;
-            long currentLineInTabResult;
-            long k;
+            #region Load elements labels
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
-            #endregion
+            ClassificationLevelListDataAccess levels = null;
 
-            #region Aucune données
-            if (nbLineInTabData == 0) {
-                return null;
-            }
-            #endregion
-
-            #region Calcul des PDM ?
-            bool computePDM = false;
-            if (_session.Percentage) computePDM = true;
-            #endregion
-
-            #region Affiche le Gad ?
-            bool showGad = false;
-            int advertiserColumnIndex = _session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser);
-            if (advertiserColumnIndex > 0) {
-                showGad = true;
-            }
-            #endregion
-
-            // Chargement des libellés de colonnes
-            DBClassif.MediaBranch.PartialMediaListDataAccess mediaLabelList = null;
-            DBClassif.MediaBranch.PartialCategoryListDataAccess categoryLabelList = null;
-            DBClassif.MediaBranch.PartialMediaSellerListDataAccess mediaSellerLabelList = null;
-            DBClassif.MediaBranch.PartialTitleListDataAccess titleLabelList = null;
-            DBClassif.MediaBranch.PartialInterestCenterListDataAccess interestCenterLabelList = null;
-
-            switch (columnDetailLevel.Id) {
+            switch (columnDetailLevel.Id)
+            {
 
                 case DetailLevelItemInformation.Levels.media:
-                    mediaLabelList = new DBClassif.MediaBranch.PartialMediaListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
+                    levels = new PartialMediaListDataAccess(sIds.ToString(), _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.category:
-                    categoryLabelList = new DBClassif.MediaBranch.PartialCategoryListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
+                    levels = new PartialCategoryListDataAccess(sIds.ToString(), _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.mediaSeller:
-                    mediaSellerLabelList = new DBClassif.MediaBranch.PartialMediaSellerListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
+                    levels = new PartialMediaSellerListDataAccess(sIds.ToString(), _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.title:
-                    titleLabelList = new DBClassif.MediaBranch.PartialTitleListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
+                    levels = new PartialTitleListDataAccess(sIds.ToString(), _session.DataLanguage, _session.Source);
                     break;
                 case DetailLevelItemInformation.Levels.interestCenter:
-                    interestCenterLabelList = new DBClassif.MediaBranch.PartialInterestCenterListDataAccess(mediaListForLabelSearch, _session.DataLanguage, _session.Source);
+                    levels = new PartialInterestCenterListDataAccess(sIds.ToString(), _session.DataLanguage, _session.Source);
                     break;
 
             }
-
-            // Nombre d'éléments dans un groupe
-            mediaList = Array.ConvertAll<string, Int64>(mediaListForLabelSearch.Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); });
-
-            #region Calcul des périodes
-            CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
-
-            DateTime PeriodBeginningDate = new DateTime(int.Parse(customerPeriod.StartDate.Substring(0, 4)), int.Parse(customerPeriod.StartDate.Substring(4, 2)), int.Parse(customerPeriod.StartDate.Substring(6, 2)));
-            DateTime PeriodEndDate = new DateTime(int.Parse(customerPeriod.EndDate.Substring(0, 4)), int.Parse(customerPeriod.EndDate.Substring(4, 2)), int.Parse(customerPeriod.EndDate.Substring(6, 2))); ;
-
-            DateTime PeriodBeginningDateN1DA = new DateTime(int.Parse(customerPeriod.ComparativeStartDate.Substring(0, 4)), int.Parse(customerPeriod.ComparativeStartDate.Substring(4, 2)), int.Parse(customerPeriod.ComparativeStartDate.Substring(6, 2)));
-            DateTime PeriodEndDateN1DA = new DateTime(int.Parse(customerPeriod.ComparativeEndDate.Substring(0, 4)), int.Parse(customerPeriod.ComparativeEndDate.Substring(4, 2)), int.Parse(customerPeriod.ComparativeEndDate.Substring(6, 2))); ;
-
-            string PeriodDateN = DateString.dateTimeToDD_MM_YYYY(PeriodBeginningDate,_session.SiteLanguage) + "-" + DateString.dateTimeToDD_MM_YYYY(PeriodEndDate,_session.SiteLanguage);
-
-            string PeriodDateN1 = DateString.dateTimeToDD_MM_YYYY(PeriodBeginningDateN1DA,_session.SiteLanguage) + "-" + DateString.dateTimeToDD_MM_YYYY(PeriodEndDateN1DA,_session.SiteLanguage);
-
             #endregion
 
-            #region Headers
-            // Ajout de la colonne Produit
+            #region Build headers
+
+            #region Current Columns
+            // Product column
             Headers headers = new Headers();
             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1164, _session.SiteLanguage), LEVEL_ID));
-            // Ajout plan media ?
-            bool showMediaSchedule = false;
+            // Add Media Schedule column
             if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.brand) ||
@@ -1149,500 +967,631 @@ namespace TNS.AdExpressI.LostWon {
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.sector) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subSector) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.group)
-                ) {
+                )
+            {
                 headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(150, _session.SiteLanguage), MEDIA_SCHEDULE_ID));
-                showMediaSchedule = true;
-            }
-
-            bool addSubTotal = false;
-            if (mediaList.Length > 1) addSubTotal = true;
-
-            #region Ajout Année N
-            HeaderGroup yearN = new HeaderGroup(PeriodDateN, true, N_UNIVERSE_POSITION);
-            // Ajout sous total
-            if (addSubTotal) yearN.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUBTOTAL_ID);
-            // Media
-            foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex) {
-                if (subGroup != null) {
-                    if (subGroup.ParentId == N_UNIVERSE_POSITION)
-                        switch (columnDetailLevel.Id) {
-
-                            case DetailLevelItemInformation.Levels.media:
-                                yearN.Add(new Header(true, mediaLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.category:
-                                yearN.Add(new Header(true, categoryLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.mediaSeller:
-                                yearN.Add(new Header(true, mediaSellerLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.title:
-                                yearN.Add(new Header(true, titleLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.interestCenter:
-                                yearN.Add(new Header(true, interestCenterLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-
-                        }
-                }
-            }
-            headers.Root.Add(yearN);
-            #endregion
-
-            #region  Ajout Année N-1
-            HeaderGroup yearN1 = new HeaderGroup(PeriodDateN1, true, N1_UNIVERSE_POSITION);
-            // Ajout sous total
-            if (addSubTotal) yearN1.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUBTOTAL_ID);
-            // Media
-            foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex) {
-                if (subGroup != null) {
-                    if (subGroup.ParentId == N1_UNIVERSE_POSITION)
-                        switch (columnDetailLevel.Id) {
-
-                            case DetailLevelItemInformation.Levels.media:
-                                yearN1.Add(new Header(true, mediaLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.category:
-                                yearN1.Add(new Header(true, categoryLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.mediaSeller:
-                                yearN1.Add(new Header(true, mediaSellerLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.title:
-                                yearN1.Add(new Header(true, titleLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.interestCenter:
-                                yearN1.Add(new Header(true, interestCenterLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-
-                        }
-                }
-            }
-            headers.Root.Add(yearN1);
-            #endregion
-
-            #region  Ajout Année Evol
-            HeaderGroup evol = new HeaderGroup(GestionWeb.GetWebWord(1212, _session.SiteLanguage), true, EVOL_UNIVERSE_POSITION);
-            // Ajout sous total
-            if (addSubTotal) evol.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUBTOTAL_ID);
-            // Media
-            foreach (SelectionSubGroup subGroup in subGroupMediaTotalIndex) {
-                if (subGroup != null) {
-                    if (subGroup.ParentId == EVOL_UNIVERSE_POSITION)
-                        switch (columnDetailLevel.Id) {
-
-                            case DetailLevelItemInformation.Levels.media:
-                                evol.Add(new Header(true, mediaLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.category:
-                                evol.Add(new Header(true, categoryLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.mediaSeller:
-                                evol.Add(new Header(true, mediaSellerLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.title:
-                                evol.Add(new Header(true, titleLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-                            case DetailLevelItemInformation.Levels.interestCenter:
-                                evol.Add(new Header(true, interestCenterLabelList[subGroup.DataBaseId], subGroup.DataBaseId));
-                                break;
-
-                        }
-                }
-            }
-            headers.Root.Add(evol);
-            #endregion
-
-            #endregion
-
-            #region Déclaration du tableau de résultat
-            long nbLine = GetNbLineFromPreformatedTableToResultTable(tabData) + 1;
-            #region Add Line for  Nb parution data
-            Dictionary<string, double> resNbParution = null;
-            if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)) {
-                resNbParution = GetNbParutionsByMedia();
-                if (resNbParution != null && resNbParution.Count > 0)
-                    nbLine = nbLine + 1;
+                _showMediaSchedule = true;
             }
             #endregion
-            ResultTable resultTable = new ResultTable(nbLine, headers);
-            long nbCol = resultTable.ColumnsNumber - 2;
-            long NStartColIndex = -1;
-            if (addSubTotal) NStartColIndex = resultTable.GetHeadersIndexInResultTable(N_UNIVERSE_POSITION + "-" + SUBTOTAL_ID);
-            else NStartColIndex = resultTable.GetHeadersIndexInResultTable(N_UNIVERSE_POSITION + "-" + mediaList[0]);
-            long N1StartColIndex = -1;
-            if (addSubTotal) N1StartColIndex = resultTable.GetHeadersIndexInResultTable(N1_UNIVERSE_POSITION + "-" + SUBTOTAL_ID);
-            else N1StartColIndex = resultTable.GetHeadersIndexInResultTable(N1_UNIVERSE_POSITION + "-" + mediaList[0]);
-            long levelLabelColIndex = resultTable.GetHeadersIndexInResultTable(LEVEL_ID.ToString());
-            long mediaScheduleColIndex = resultTable.GetHeadersIndexInResultTable(MEDIA_SCHEDULE_ID.ToString());
-            long EvolStartColIndex;
-            if (mediaList.Length > 1)
-                EvolStartColIndex = resultTable.GetHeadersIndexInResultTable(EVOL_UNIVERSE_POSITION + "-" + SUBTOTAL_ID);
-            else
-                EvolStartColIndex = resultTable.GetHeadersIndexInResultTable(EVOL_UNIVERSE_POSITION.ToString()) + 1;
-            long startDataColIndex = levelLabelColIndex + 1;
-            if (showMediaSchedule) startDataColIndex = mediaScheduleColIndex + 1;
-            #endregion
 
+            #region Years and evol
+            Int64 eltNb = lIds.Count;
+            HeaderGroup hGpYearN = new HeaderGroup(periodLabelN, true, N_UNIVERSE_ID);
+            HeaderGroup hGpYearN1 = new HeaderGroup(periodLabelN1, true, N1_UNIVERSE_ID);
+            HeaderGroup hGpEvol = new HeaderGroup(GestionWeb.GetWebWord(1212, _session.SiteLanguage), true, EVOL_UNIVERSE_ID);
+            headers.Root.Add(hGpYearN);
+            headers.Root.Add(hGpYearN1);
+            headers.Root.Add(hGpEvol);
 
-            #region Sélection de l'unité
-            CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
-            #endregion
-
-            #region Ligne du Total
-            currentLineInTabResult = resultTable.AddNewLine(LineType.total);
-            //Libellé du total
-            resultTable[currentLineInTabResult, levelLabelColIndex] = new CellLevel(-1, GestionWeb.GetWebWord(805, _session.SiteLanguage), 0, currentLineInTabResult);
-            CellLevel currentCellLevel0 = (CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-            if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevel0, _session);
-            // Unité
-            if (computePDM) resultTable[currentLineInTabResult, NStartColIndex] = new CellPDM(0.0, null);
-            else resultTable[currentLineInTabResult, NStartColIndex] = cellUnitFactory.Get(0.0);
-            for (k = NStartColIndex + 1; k < N1StartColIndex; k++) {
-                if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, NStartColIndex]);
-                else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
+            if (eltNb > 1)
+            {
+                hGpYearN.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUBTOTAL_ID);
+                hGpYearN1.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUBTOTAL_ID);
+                hGpEvol.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUBTOTAL_ID);
             }
-            if (computePDM) resultTable[currentLineInTabResult, N1StartColIndex] = new CellPDM(0.0, null);
-            else resultTable[currentLineInTabResult, N1StartColIndex] = cellUnitFactory.Get(0.0);
-            for (k = N1StartColIndex + 1; k < EvolStartColIndex; k++) {
-                if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, N1StartColIndex]);
-                else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-            }
-            #region Evol Total
-            if (mediaList.Length > 1) resultTable[currentLineInTabResult, EvolStartColIndex] = new CellEvol(resultTable[currentLineInTabResult, NStartColIndex], resultTable[currentLineInTabResult, N1StartColIndex]);
-            foreach (Int64 currentMedia in mediaList) {
-                resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", EVOL_UNIVERSE_POSITION, currentMedia))] = new CellEvol(resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N_UNIVERSE_POSITION, currentMedia))], resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N1_UNIVERSE_POSITION, currentMedia))]);
+
+            foreach (Int64 i in levels.IdListOrderByClassificationItem)
+            {
+                hGpYearN.Add(new Header(true,levels[i], i));
+                hGpYearN1.Add(new Header(true, levels[i], i));
+                hGpEvol.Add(new Header(true, levels[i], i));
             }
             #endregion
 
             #endregion
 
-            #region Nombre parutions by media
-            if (resNbParution != null && resNbParution.Count > 0) {
-                currentLineInTabResult = resultTable.AddNewLine(TNS.FrameWork.WebResultUI.LineType.nbParution);
-                //Libellé du Nombre parutions
-                resultTable[currentLineInTabResult, levelLabelColIndex] = new CellLevel(-1, GestionWeb.GetWebWord(2460, _session.SiteLanguage), 0, currentLineInTabResult);
-                CellLevel currentCellParution = (CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-                if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellParution, _session);
-                resultTable[currentLineInTabResult, NStartColIndex] = new CellNumber(0.0);
-                for (k = NStartColIndex + 1; k < N1StartColIndex; k++) {
-                    resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
-                }
-                resultTable[currentLineInTabResult, N1StartColIndex] = new CellNumber(0.0);
-                for (k = N1StartColIndex + 1; k < EvolStartColIndex; k++) {
-                    resultTable[currentLineInTabResult, k] = new CellNumber(0.0);
-                }
-                #region Evol Nb parutions
-                if (mediaList.Length > 1) resultTable[currentLineInTabResult, EvolStartColIndex] = new CellEvol(resultTable[currentLineInTabResult, NStartColIndex], resultTable[currentLineInTabResult, N1StartColIndex]);
-                foreach (Int64 currentMedia in mediaList) {
-                    resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", EVOL_UNIVERSE_POSITION, currentMedia))] = new CellEvol(resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N_UNIVERSE_POSITION, currentMedia))], resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N1_UNIVERSE_POSITION, currentMedia))]);
-                }
-                #endregion
+            return headers;
 
-                //Insertion du nombre de parution pour period N et N-1			
-                foreach (KeyValuePair<string, double> kpv in resNbParution) {
-                    if (resultTable.HeadersIndexInResultTable.ContainsKey(kpv.Key)) {
-                        TNS.FrameWork.WebResultUI.Header header = (TNS.FrameWork.WebResultUI.Header)resultTable.HeadersIndexInResultTable[kpv.Key];
-                        resultTable[currentLineInTabResult, header.IndexInResultTable] = new CellNumber(resNbParution[kpv.Key]);
-                    }
-                }
-            }
-            #endregion
-
-            #region Tableau de résultat
-            oldIdL1 = -1;
-            oldIdL2 = -1;
-            oldIdL3 = -1;
-            AdExpressCellLevel currentCellLevel1 = null;
-            AdExpressCellLevel currentCellLevel2 = null;
-            AdExpressCellLevel currentCellLevel3 = null;
-            long currentL1Index = -1;
-            long currentL2Index = -1;
-            long currentL3Index = -1;
-            long nbColInTabData = tabData.GetLength(0);
-            currentLineInTabResult = FIRST_LINE_RESULT_INDEX - 1;
-            for (currentLine = 0; currentLine < nbLineInTabData; currentLine++) {
-
-                #region On change de niveau L1
-                if (tabData[IDL1_INDEX, currentLine] != null && (Int64)tabData[IDL1_INDEX, currentLine] != oldIdL1) {
-                    currentLineInTabResult = resultTable.AddNewLine(LineType.level1);
-
-
-                    #region Totaux et sous Totaux à 0 et media
-                    // Unité
-                    // Unité
-                    if (computePDM) resultTable[currentLineInTabResult, NStartColIndex] = new CellPDM(0.0, null);
-                    else resultTable[currentLineInTabResult, NStartColIndex] = cellUnitFactory.Get(0.0);
-                    for (k = NStartColIndex + 1; k < N1StartColIndex; k++) {
-                        if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, NStartColIndex]);
-                        else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-                    }
-                    if (computePDM) resultTable[currentLineInTabResult, N1StartColIndex] = new CellPDM(0.0, null);
-                    else resultTable[currentLineInTabResult, N1StartColIndex] = cellUnitFactory.Get(0.0);
-                    for (k = N1StartColIndex + 1; k < EvolStartColIndex; k++) {
-                        if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, N1StartColIndex]);
-                        else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-                    }
-                    #endregion
-
-
-                    #region Evol L1
-                    if (mediaList.Length > 1) resultTable[currentLineInTabResult, EvolStartColIndex] = new CellEvol(resultTable[currentLineInTabResult, NStartColIndex], resultTable[currentLineInTabResult, N1StartColIndex]);
-                    foreach (Int64 currentMedia in mediaList) {
-                        resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", EVOL_UNIVERSE_POSITION, currentMedia))] = new CellEvol(resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N_UNIVERSE_POSITION, currentMedia))], resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N1_UNIVERSE_POSITION, currentMedia))]);
-                    }
-                    #endregion
-
-                    oldIdL1 = (Int64)tabData[IDL1_INDEX, currentLine];
-                    resultTable[currentLineInTabResult, levelLabelColIndex] = new AdExpressCellLevel((Int64)tabData[IDL1_INDEX, currentLine], (string)tabData[LABELL1_INDEX, currentLine], currentCellLevel0, 1, currentLineInTabResult, _session);
-                    currentCellLevel1 = (AdExpressCellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-                    if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevel1, _session);
-                    currentL1Index = currentLineInTabResult;
-                    oldIdL2 = oldIdL3 = -1;
-
-                    #region GAD
-                    if (showGad && _session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == 1) {
-                        if (tabData[ADDRESS_COLUMN_INDEX, currentLine] != null) {
-                            ((CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex]).AddressId = (Int64)tabData[ADDRESS_COLUMN_INDEX, currentLine];
-                        }
-                    }
-                    #endregion
-                }
-                #endregion
-
-                #region On change de niveau L2
-                if (tabData[IDL2_INDEX, currentLine] != null && (Int64)tabData[IDL2_INDEX, currentLine] != oldIdL2) {
-                    currentLineInTabResult = resultTable.AddNewLine(LineType.level2);
-
-                    #region Totaux et sous Totaux à 0 et media
-                    // Unité
-                    if (computePDM) resultTable[currentLineInTabResult, NStartColIndex] = new CellPDM(0.0, null);
-                    else resultTable[currentLineInTabResult, NStartColIndex] = cellUnitFactory.Get(0.0);
-                    for (k = NStartColIndex + 1; k < N1StartColIndex; k++) {
-                        if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, NStartColIndex]);
-                        else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-                    }
-                    if (computePDM) resultTable[currentLineInTabResult, N1StartColIndex] = new CellPDM(0.0, null);
-                    else resultTable[currentLineInTabResult, N1StartColIndex] = cellUnitFactory.Get(0.0);
-                    for (k = N1StartColIndex + 1; k < EvolStartColIndex; k++) {
-                        if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, N1StartColIndex]);
-                        else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-                    }
-                    #endregion
-
-                    #region Evol L2
-                    if (mediaList.Length > 1) resultTable[currentLineInTabResult, EvolStartColIndex] = new CellEvol(resultTable[currentLineInTabResult, NStartColIndex], resultTable[currentLineInTabResult, N1StartColIndex]);
-                    foreach (Int64 currentMedia in mediaList) {
-                        resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", EVOL_UNIVERSE_POSITION, currentMedia))] = new CellEvol(resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N_UNIVERSE_POSITION, currentMedia))], resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N1_UNIVERSE_POSITION, currentMedia))]);
-                    }
-                    #endregion
-
-                    oldIdL2 = (Int64)tabData[IDL2_INDEX, currentLine];
-                    resultTable[currentLineInTabResult, levelLabelColIndex] = new AdExpressCellLevel((Int64)tabData[IDL2_INDEX, currentLine], (string)tabData[LABELL2_INDEX, currentLine], currentCellLevel1, 2, currentLineInTabResult, _session);
-                    currentCellLevel2 = (AdExpressCellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-                    if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevel2, _session);
-                    currentL2Index = currentLineInTabResult;
-                    oldIdL3 = -1;
-
-                    #region GAD
-                    if (showGad && _session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == 2) {
-                        if (tabData[ADDRESS_COLUMN_INDEX, currentLine] != null) {
-                            ((CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex]).AddressId = (Int64)tabData[ADDRESS_COLUMN_INDEX, currentLine];
-                        }
-                    }
-                    #endregion
-                }
-                #endregion
-
-                #region On change de niveau L3
-                if (tabData[IDL3_INDEX, currentLine] != null && (Int64)tabData[IDL3_INDEX, currentLine] != oldIdL3) {
-                    currentLineInTabResult = resultTable.AddNewLine(LineType.level3);
-
-                    #region Totaux et sous Totaux à 0 et media
-                    // Unité
-                    if (computePDM) resultTable[currentLineInTabResult, NStartColIndex] = new CellPDM(0.0, null);
-                    else resultTable[currentLineInTabResult, NStartColIndex] = cellUnitFactory.Get(0.0);
-                    for (k = NStartColIndex + 1; k < N1StartColIndex; k++) {
-                        if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, NStartColIndex]);
-                        else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-                    }
-                    if (computePDM) resultTable[currentLineInTabResult, N1StartColIndex] = new CellPDM(0.0, null);
-                    else resultTable[currentLineInTabResult, N1StartColIndex] = cellUnitFactory.Get(0.0);
-                    for (k = N1StartColIndex + 1; k < EvolStartColIndex; k++) {
-                        if (computePDM) resultTable[currentLineInTabResult, k] = new CellPDM(0.0, (CellUnit)resultTable[currentLineInTabResult, N1StartColIndex]);
-                        else resultTable[currentLineInTabResult, k] = cellUnitFactory.Get(0.0);
-                    }
-                    #endregion
-
-                    #region Evol L3
-                    if (mediaList.Length > 1) resultTable[currentLineInTabResult, EvolStartColIndex] = new CellEvol(resultTable[currentLineInTabResult, NStartColIndex], resultTable[currentLineInTabResult, N1StartColIndex]);
-                    foreach (Int64 currentMedia in mediaList) {
-                        resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", EVOL_UNIVERSE_POSITION, currentMedia))] = new CellEvol(resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N_UNIVERSE_POSITION, currentMedia))], resultTable[currentLineInTabResult, resultTable.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N1_UNIVERSE_POSITION, currentMedia))]);
-                    }
-                    #endregion
-
-                    oldIdL3 = (Int64)tabData[IDL3_INDEX, currentLine];
-                    resultTable[currentLineInTabResult, levelLabelColIndex] = new AdExpressCellLevel((Int64)tabData[IDL3_INDEX, currentLine], (string)tabData[LABELL3_INDEX, currentLine], currentCellLevel2, 3, currentLineInTabResult, _session);
-                    currentCellLevel3 = (AdExpressCellLevel)resultTable[currentLineInTabResult, levelLabelColIndex];
-                    if (showMediaSchedule) resultTable[currentLineInTabResult, mediaScheduleColIndex] = new CellMediaScheduleLink(currentCellLevel3, _session);
-                    currentL3Index = currentLineInTabResult;
-
-                    #region GAD
-                    if (showGad && _session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == 3) {
-                        if (tabData[ADDRESS_COLUMN_INDEX, currentLine] != null) {
-                            ((CellLevel)resultTable[currentLineInTabResult, levelLabelColIndex]).AddressId = (Int64)tabData[ADDRESS_COLUMN_INDEX, currentLine];
-                        }
-                    }
-                    #endregion
-                }
-                #endregion
-
-                // On copy la ligne et on l'ajoute aux totaux
-                for (k = FIRST_MEDIA_INDEX; k < nbColInTabData; k++) {
-                    resultTable.AffectValueAndAddToHierarchy(levelLabelColIndex, currentLineInTabResult, startDataColIndex + k - (long.Parse((FIRST_MEDIA_INDEX).ToString())), (double)tabData[k, currentLine]);
-
-                }
-
-            }
-            #endregion
-
-            return (resultTable);
         }
         #endregion
 
-        #region Calcul du nombre de ligne d'un tableau préformaté
+        #region Formattage d'un tableau de résultat
         /// <summary>
-        /// Get the number of line in the final result table from the perfromatted table
+        /// Create ResultTable
         /// </summary>
-        /// <param name="tabData">Preformated Table</param>
-        /// <returns>Number of lines in final result table</returns>
-        private long GetNbLineFromPreformatedTableToResultTable(object[,] tabData) {
+        /// <param name="tabData">Raw Data table</param>
+        /// <returns>Final Data</returns>
+        protected ResultTable GetFinalTable(ResultTable tabData)
+        {
 
-            #region Variables
-            long nbLine = 0;
-            long k;
-            Int64 oldIdL1 = -1;
-            Int64 oldIdL2 = -1;
-            Int64 oldIdL3 = -1;
-            #endregion
-
-            for (k = 0; k < tabData.GetLength(1); k++) {
-                // Somme des L1
-                if (tabData[IDL1_INDEX, k] != null && (Int64)tabData[IDL1_INDEX, k] != oldIdL1) {
-                    oldIdL1 = (Int64)tabData[IDL1_INDEX, k];
-                    nbLine++;
-                    oldIdL3 = oldIdL2 = -1;
-                }
-                // Somme des L2
-                if (tabData[IDL2_INDEX, k] != null && (Int64)tabData[IDL2_INDEX, k] != oldIdL2) {
-                    oldIdL2 = (Int64)tabData[IDL2_INDEX, k];
-                    nbLine++;
-                    oldIdL3 = -1;
-                }
-                // Somme des L3
-                if (tabData[IDL3_INDEX, k] != null && (Int64)tabData[IDL3_INDEX, k] != oldIdL3) {
-                    oldIdL3 = (Int64)tabData[IDL3_INDEX, k];
+            #region Lines number
+            int nbLine = 0;
+            for (int i = 0; i < tabData.LinesNumber; i++)
+            {
+                if (!(tabData.GetLineStart(i) is LineHide))
+                {
                     nbLine++;
                 }
             }
-            return (nbLine);
+            #endregion
+
+            #region No data
+            if (nbLine == 0)
+            {
+                return null;
+            }
+            #endregion
+
+            bool computePDM = _session.Percentage;
+
+            #region Parutions
+            Dictionary<string, double> resNbParution = null;
+            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
+
+            if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id))
+            {
+                resNbParution = GetNbParutionsByMedia();
+                if (resNbParution != null && resNbParution.Count > 0)
+                    nbLine++;
+            }
+            #endregion
+
+            #region Table init
+            //Total line
+            nbLine++;
+            ResultTable tabResult = new ResultTable(nbLine, tabData.NewHeaders);
+            Int64 cLine = 0;
+            Int64 NIndex = tabResult.GetHeadersIndexInResultTable(N_UNIVERSE_ID.ToString());
+            Int64 N1Index = tabResult.GetHeadersIndexInResultTable(N1_UNIVERSE_ID.ToString());
+            Int64 levelIndex = tabResult.GetHeadersIndexInResultTable(LEVEL_ID.ToString());
+            Int64 msIndex = tabResult.GetHeadersIndexInResultTable(MEDIA_SCHEDULE_ID.ToString());
+            Int64 EvolIndex = tabResult.GetHeadersIndexInResultTable(EVOL_UNIVERSE_ID.ToString());
+            Int64 dataIndex = (_showMediaSchedule) ? msIndex + 1 : levelIndex + 1;
+            Int64 nbLevel = _session.GenericProductDetailLevel.GetNbLevels;
+            CellLevel[] levels = new CellLevel[nbLevel + 1];
+            #endregion
+
+            #region Unit selection
+            CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
+            InitFinalLineValuesDelegate initValues = null;
+            SetFinalLineDelegate setValues = null;
+            switch (_session.Unit)
+            {
+                case CstWeb.CustomerSessions.Unit.versionNb:
+                    initValues = new InitFinalLineValuesDelegate(InitFinalListValuesLine);
+                    setValues = new SetFinalLineDelegate(SetFinalListLine);
+                    break;
+                default:
+                    initValues = new InitFinalLineValuesDelegate(InitFinalDoubleValuesLine);
+                    setValues = new SetFinalLineDelegate(SetFinalDoubleLine);
+                    break;
+            }
+            #endregion
+
+            #region Ligne du Total
+            cLine = tabResult.AddNewLine(LineType.total);
+            //Total label
+            levels[0] = new CellLevel(-1, GestionWeb.GetWebWord(805, _session.SiteLanguage), 0, cLine);
+            tabResult[cLine, levelIndex] = levels[0];
+            if (_showMediaSchedule) tabResult[cLine, msIndex] = new CellMediaScheduleLink(levels[0], _session);
+            initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
+            #endregion
+
+            #region Nombre parutions by media
+            CellNumber cNb = new CellNumber(0.0);
+            cNb.StringFormat = "max0";
+            CellUnitFactory nbFactory = new CellUnitFactory(cNb);
+            CellEvol cEvol;
+            if (resNbParution != null && resNbParution.Count > 0)
+            {
+                cLine = tabResult.AddNewLine(TNS.FrameWork.WebResultUI.LineType.nbParution);
+                //Label
+                CellLevel cellParution = new CellLevel(-1, GestionWeb.GetWebWord(2460, _session.SiteLanguage), 0, cLine);
+                tabResult[cLine, levelIndex] = cellParution;
+                if (_showMediaSchedule) tabResult[cLine, msIndex] = new CellMediaScheduleLink(cellParution, _session);
+                //Year N
+                tabResult[cLine, NIndex] = nbFactory.Get(0.0);
+                for (Int64 k = NIndex + 1; k < N1Index; k++)
+                {
+                    tabResult[cLine, k] = nbFactory.Get(0.0);
+                }
+                //Year N1
+                tabResult[cLine, N1Index] = nbFactory.Get(0.0);
+                for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+                {
+                    tabResult[cLine, k] = nbFactory.Get(0.0);
+                }
+                //Evol
+                cEvol = new CellEvol(tabResult[cLine, NIndex], tabResult[cLine, N1Index]);
+                cEvol.StringFormat = "percentage";
+                tabResult[cLine, EvolIndex] = cEvol;
+                for (Int64 k = EvolIndex + 1; k <= tabResult.DataColumnsNumber; k++)
+                {
+                    cEvol = new CellEvol(tabResult[cLine, NIndex + (k - EvolIndex)], tabResult[cLine, N1Index + (k - EvolIndex)]);
+                    cEvol.StringFormat = "percentage";
+                    tabResult[cLine, k] = cEvol;
+                }
+
+                //Parution numbers for N and N1
+                Int64 z;
+                foreach (KeyValuePair<string, double> kpv in resNbParution)
+                {
+                    z = tabResult.GetHeadersIndexInResultTable(kpv.Key);
+                    if (z > -1)
+                    {
+                        tabResult[cLine, z] = nbFactory.Get(kpv.Value);
+                    }
+                }
+            }
+            #endregion
+
+            #region Fill final table
+            CellLevel cLevel = null;
+            Int64 NTotalIndex = tabResult.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N_UNIVERSE_ID, SUBTOTAL_ID));
+            Int64 N1TotalIndex = tabResult.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N1_UNIVERSE_ID, SUBTOTAL_ID));
+            for (int i = 0; i < tabData.LinesNumber; i++)
+            {
+
+                if (tabData.GetLineStart(i) is LineHide)
+                    continue;
+
+                #region Init Line
+                cLine = InitFinalLine(tabData, tabResult, i, levels[((CellLevel)tabData[i, 1]).Level-1], msIndex);
+                initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
+                cLevel = (CellLevel)tabResult[cLine, 1];
+                #endregion
+
+                if (cLevel.Level < nbLevel)
+                {
+                    levels[cLevel.Level] = cLevel;
+                }
+                else{
+                    setValues(tabData, tabResult, i, cLine, NIndex, N1Index, EvolIndex, NTotalIndex, N1TotalIndex);
+                }
+
+            }
+            #endregion
+
+            return (tabResult);
+        }
+
+        #region InitFinalLineValuesDelegate
+        protected delegate Int64 InitFinalLineValuesDelegate(ResultTable toTab, Int64 toLine, CellUnitFactory cellFactory, bool isPDM, Int64 NIndex, Int64 N1Index, Int64 EvolIndex);
+        protected Int64 InitFinalDoubleValuesLine(ResultTable toTab, Int64 toLine, CellUnitFactory cellFactory, bool isPDM, Int64 NIndex, Int64 N1Index, Int64 EvolIndex)
+        {
+
+            // Units
+            if (isPDM)
+            {
+                toTab[toLine, NIndex] = new CellPDM(0.0, null);
+            }
+            else
+            {
+                toTab[toLine, NIndex] = cellFactory.Get(0.0);
+            }
+            //year N
+            for (Int64 k = NIndex + 1; k < N1Index; k++)
+            {
+                if (isPDM)
+                {
+                    toTab[toLine, k] = new CellPDM(0.0, (CellUnit)toTab[toLine, NIndex]);
+                }
+                else
+                {
+                    toTab[toLine, k] = cellFactory.Get(0.0);
+                }
+            }
+            //year N1
+            if (isPDM)
+            {
+                toTab[toLine, N1Index] = new CellPDM(0.0, null);
+            }
+            else
+            {
+                toTab[toLine, N1Index] = cellFactory.Get(0.0);
+            }
+            for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+            {
+                if (isPDM)
+                {
+                    toTab[toLine, k] = new CellPDM(0.0, (CellUnit)toTab[toLine, N1Index]);
+                }
+                else
+                {
+                    toTab[toLine, k] = cellFactory.Get(0.0);
+                }
+            }
+            //Evol
+            CellEvol cEvol = new CellEvol(toTab[toLine, NIndex], toTab[toLine, N1Index]);
+            cEvol.StringFormat = "percentage";
+            toTab[toLine, EvolIndex] = cEvol;
+            for (Int64 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
+            {
+                cEvol = new CellEvol(toTab[toLine, NIndex + (k - EvolIndex)], toTab[toLine, N1Index + (k - EvolIndex)]);
+                cEvol.StringFormat = "percentage";
+                toTab[toLine, k] = cEvol;
+            }
+
+            return toLine;
+
+        }
+        protected Int64 InitFinalListValuesLine(ResultTable toTab, Int64 toLine, CellUnitFactory cellFactory, bool isPDM, Int64 NIndex, Int64 N1Index, Int64 EvolIndex)
+        {
+
+            // Units
+            if (isPDM)
+            {
+                toTab[toLine, NIndex] = new CellVersionNbPDM(null);
+            }
+            else
+            {
+                toTab[toLine, NIndex] = cellFactory.Get(0.0);
+            }
+            //year N
+            for (Int64 k = NIndex + 1; k < N1Index; k++)
+            {
+                if (isPDM)
+                {
+                    toTab[toLine, k] = new CellVersionNbPDM((CellVersionNbPDM)toTab[toLine, NIndex]);
+                }
+                else
+                {
+                    toTab[toLine, k] = cellFactory.Get(0.0);
+                }
+            }
+            //year N1
+            if (isPDM)
+            {
+                toTab[toLine, N1Index] = new CellVersionNbPDM(null);
+            }
+            else
+            {
+                toTab[toLine, N1Index] = cellFactory.Get(0.0);
+            }
+            for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+            {
+                if (isPDM)
+                {
+                    toTab[toLine, k] = new CellVersionNbPDM((CellVersionNbPDM)toTab[toLine, N1Index]);
+                }
+                else
+                {
+                    toTab[toLine, k] = cellFactory.Get(0.0);
+                }
+            }
+            //Evol
+            CellEvol cEvol = new CellEvol(toTab[toLine, NIndex], toTab[toLine, N1Index]);
+            cEvol.StringFormat = "percentage";
+            toTab[toLine, EvolIndex] = cEvol;
+            for (Int64 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
+            {
+                cEvol = new CellEvol(toTab[toLine, NIndex + (k - EvolIndex)], toTab[toLine, N1Index + (k - EvolIndex)]);
+                cEvol.StringFormat = "percentage";
+                toTab[toLine, k] = cEvol;
+            }
+
+            return toLine;
+
+        }
+        protected Int64 InitFinalLine(ResultTable fromTab, ResultTable toTab, Int64 fromLine, CellLevel parent, Int64 msIndex)
+        {
+            CellLevel cFromLevel = (CellLevel)fromTab[fromLine, 1];
+            Int64 cLine = toTab.AddNewLine(fromTab.GetLineStart(fromLine).LineType);
+            AdExpressCellLevel cell = new AdExpressCellLevel(cFromLevel.Id, cFromLevel.Label, parent, cFromLevel.Level, cLine, _session);
+            toTab[cLine, 1] = cell;
+
+            //Links
+            if (_showMediaSchedule) toTab[cLine, msIndex] = new CellMediaScheduleLink(cell, _session);
+
+            //Gad
+            if (_session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == cell.Level)
+            {
+                cell.AddressId = cFromLevel.AddressId;
+            }
+            return cLine;
+
+        }
+        #endregion
+
+        #region SetLineDelegate
+        protected delegate Int64 SetFinalLineDelegate(ResultTable fromTab, ResultTable toTab, Int64 fromLine, Int64 toLine, Int64 NIndex, Int64 N1Index, Int64 EvolIndex, Int64 NTotalIndex, Int64 N1TotalIndex);
+        protected Int64 SetFinalDoubleLine(ResultTable fromTab, ResultTable toTab, Int64 fromLine, Int64 toLine, Int64 NIndex, Int64 N1Index, Int64 EvolIndex, Int64 NTotalIndex, Int64 N1TotalIndex)
+        {
+            Double v = 0;
+            //year N
+            if (NTotalIndex < 0)
+            {
+                toTab.AffectValueAndAddToHierarchy(1, toLine, NIndex, ((CellUnit)fromTab[fromLine, NIndex]).Get_value());
+            }
+            for (Int64 k = NIndex + 1; k < N1Index; k++)
+            {
+                v = ((CellUnit)fromTab[fromLine, k]).Get_value();
+                toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
+                if (NTotalIndex > -1)
+                {
+                    toTab.AffectValueAndAddToHierarchy(1, toLine, NTotalIndex, v);
+                }
+            }
+            //year N1
+            if (N1TotalIndex < 0)
+            {
+                toTab.AffectValueAndAddToHierarchy(1, toLine, N1Index, ((CellUnit)fromTab[fromLine, N1Index]).Get_value());
+            }
+            for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+            {
+                v = ((CellUnit)fromTab[fromLine, k]).Get_value();
+                toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
+                if (N1TotalIndex > -1)
+                {
+                    toTab.AffectValueAndAddToHierarchy(1, toLine, N1TotalIndex, v);
+                }
+            }
+
+            return toLine;
+
+        }
+        protected Int64 SetFinalListLine(ResultTable fromTab, ResultTable toTab, Int64 fromLine, Int64 toLine, Int64 NIndex, Int64 N1Index, Int64 EvolIndex, Int64 NTotalIndex, Int64 N1TotalIndex)
+        {
+
+            HybridList value = null;
+            Int64 l = 0;
+            Int64 v = 0;
+            //year N
+            if (NTotalIndex < 0)
+            {
+                value = ((CellIdsNumber)fromTab[fromLine, NIndex]).List;
+                l = value.length;
+                for (int i = 0; i < l; i++)
+                {
+                    v = value.removeHead().UniqueID;
+                    toTab.AffectValueAndAddToHierarchy(1, toLine, NIndex, v);
+                }
+            }
+            for (Int64 k = NIndex + 1; k < N1Index; k++)
+            {
+                value = ((CellIdsNumber)fromTab[fromLine, k]).List;
+                l = value.length;
+                for (int i = 0; i < l; i++)
+                {
+                    v = value.removeHead().UniqueID;
+                    toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
+                    if (NTotalIndex > -1)
+                    {
+                        toTab.AffectValueAndAddToHierarchy(1, toLine, NTotalIndex, v);
+                    }
+                }
+            }
+            //year N1
+            if (N1TotalIndex < 0)
+            {
+                value = ((CellIdsNumber)fromTab[fromLine, N1Index]).List;
+                l = value.length;
+                for (int i = 0; i < l; i++)
+                {
+                    v = value.removeHead().UniqueID;
+                    toTab.AffectValueAndAddToHierarchy(1, toLine, N1Index, v);
+                }
+            }
+            for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+            {
+                value = ((CellIdsNumber)fromTab[fromLine, k]).List;
+                l = value.length;
+                for (int i = 0; i < l; i++)
+                {
+                    v = value.removeHead().UniqueID;
+                    toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
+                    if (N1TotalIndex > -1)
+                    {
+                        toTab.AffectValueAndAddToHierarchy(1, toLine, N1TotalIndex, v);
+                    }
+                }
+            }
+
+            return toLine;
+
+        }
+        #endregion
+
+
+        #endregion
+
+        #region Compute line numbers in result table from preformated data table
+        /// <summary>
+        /// Get the number of line from the database data
+        /// </summary>
+        /// <param name="tabData">Data</param>
+        /// <returns>Number of lines</returns>
+        protected long GetNbLine(DataTable dt)
+        {
+
+            long nbLine = 0;
+            Int64 oldIdL1 = -1;
+            Int64 oldIdL2 = -1;
+            Int64 oldIdL3 = -1;
+            Int64 cIdL1 = -1;
+            Int64 cIdL2 = -1;
+            Int64 cIdL3 = -1;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                cIdL1 = _session.GenericProductDetailLevel.GetIdValue(row, 1);
+                cIdL2 = _session.GenericProductDetailLevel.GetIdValue(row, 2);
+                cIdL3 = _session.GenericProductDetailLevel.GetIdValue(row, 3);
+                if (cIdL1 >= 0 && cIdL1 != oldIdL1)
+                {
+                    oldIdL1 = cIdL1;
+                    oldIdL2 = oldIdL3 = -1;
+                    nbLine++;
+                }
+                if (cIdL2 >= 0 && cIdL2 != oldIdL2)
+                {
+                    oldIdL2 = cIdL2;
+                    oldIdL3 = -1;
+                    nbLine++;
+                }
+                if (cIdL3 >= 0 && cIdL3 != oldIdL3)
+                {
+                    oldIdL3 = cIdL3;
+                    nbLine++;
+                }
+            }
+            return nbLine;
         }
         #endregion
 
         #region Data Filtering
-
-        #region WON / LOST
         /// <summary>
         /// Filter data to keep a result with only won data or lost data.
         /// </summary>
         /// <param name="getWon">Specify if the result must be in Won mode or in lost mode</param>
         /// <param name="tabData">Data Table</param>
-        /// <param name="groupMediaTotalIndex">Indexes of media groups</param>
-        /// <param name="nbLineInFormatedTable">Number of data in Preformated table</param>
         /// <param name="nbLineInTabResult">(out) Number of lines in final result</param>
         /// <param name="nbCol">Nb of column in Preformatted table</param>
         /// <returns>Table with either won data or lost data</returns>
-        protected object[,] FilterWonLost(bool getWon, object[,] tabData, List<SelectionGroup> groupMediaTotalIndex, long nbLineInFormatedTable, ref long nbLineInTabResult, long nbCol) {
-            bool subTotalNotNull = true;
-            int currentLineInTabResult = -1;
-            int positionUnivers = 0;
-            object[,] tabResult = new object[nbCol, nbLineInFormatedTable];
+        protected void Filter(ResultTable tabData, PredicateDelegate predicate)
+        {
 
-            for (int currentLine = 0; currentLine < nbLineInFormatedTable; currentLine++) {
-                positionUnivers = 1;
-                subTotalNotNull = getWon;
-                // On cherche les lignes qui on des unités à 0(null) dans le premier sous total
-                if ((!getWon && (double)tabData[groupMediaTotalIndex[1].IndexInResultTable, currentLine] == 0.0)
-                    || (getWon && (double)tabData[groupMediaTotalIndex[1].IndexInResultTable, currentLine] != 0.0)) {
-                    positionUnivers++;
-                    while (((getWon && subTotalNotNull) || (!getWon && !subTotalNotNull)) && positionUnivers < NB_UNIVERSES_TEST - 1) {
-                        if ((double)tabData[groupMediaTotalIndex[positionUnivers].IndexInResultTable, currentLine] != 0.0)
-                            subTotalNotNull = (getWon) ? false : true;
-                        positionUnivers++;
-                    }
-                    //au moins un sous total de concurrent différent à 0(null)
-                    if (subTotalNotNull) {
-                        currentLineInTabResult++;
-                        for (int currentColumn = 0; currentColumn < nbCol; currentColumn++) {
-                            tabResult[currentColumn, currentLineInTabResult] = tabData[currentColumn, currentLine];
+            int nbLevel = _session.GenericProductDetailLevel.GetNbLevels;
+
+            CellLevel[] levels = new CellLevel[nbLevel];
+            bool[] display = new bool[nbLevel + 1];
+            for (int i = 0; i <= nbLevel; i++) { display[i] = false; }
+            CellLevel cLevel = null;
+            Int64 yearNIndex = tabData.GetHeadersIndexInResultTable(N_UNIVERSE_ID.ToString());
+            Int64 yearN1Index = tabData.GetHeadersIndexInResultTable(N1_UNIVERSE_ID.ToString());
+            for (int i = 0; i < tabData.LinesNumber; i++)
+            {
+                cLevel = (CellLevel)tabData[i, 1];
+                //Init parents
+                if (cLevel.Level < nbLevel)
+                {
+                    //Check previous parents
+                    if (levels[cLevel.Level] != null)
+                    {
+                        if (!display[cLevel.Level])
+                        {
+                            tabData.SetLineStart(new LineHide(tabData.GetLineStart(levels[cLevel.Level].LineIndexInResultTable).LineType), levels[cLevel.Level].LineIndexInResultTable);
                         }
                     }
+                    //Init current parents
+                    levels[cLevel.Level] = cLevel;
+                    display[cLevel.Level] = false;
+                    continue;
+                }
 
+                //filter data
+                display[cLevel.Level] = predicate(tabData, i, yearNIndex, yearN1Index);
+
+                //Check result
+                if (!display[cLevel.Level])
+                {
+                    tabData.SetLineStart(new LineHide(tabData.GetLineStart(i).LineType), i);
+                }
+                else
+                {
+                    for (int j = nbLevel - 1; j >= 0; j--) { display[j] = true; }
                 }
             }
-            nbLineInTabResult = currentLineInTabResult + 1;
-
-            return tabResult;
-        }
-        #endregion
-
-        #endregion
-
-        #region LOYAL (SIMPLE, RISING, SLIDING)
-        /// <summary>
-        /// Filter data to keep a result with only won data or lost data.
-        /// </summary>
-        /// <param name="getEvol">Specify if the result must filter loyal data with an evolution or not</param>
-        /// <param name="getRising">without any effect if getEvol==false, else if getRising=true keep rising datafilter, else keep sliding data</param>
-        /// <param name="tabData">Data Table</param>
-        /// <param name="groupMediaTotalIndex">Indexes of media groups</param>
-        /// <param name="nbLineInFormatedTable">Number of data in Preformated table</param>
-        /// <param name="nbLineInTabResult">(out) Number of lines in final result</param>
-        /// <param name="nbCol">Nb of column in Preformatted table</param>
-        /// <returns>Table with loyal, loyal rising or loyal sliding data</returns>
-        protected object[,] FilterLoyal(bool getEvol, bool getRising, object[,] tabData, List<SelectionGroup> groupMediaTotalIndex, long nbLineInFormatedTable, ref long nbLineInTabResult, long nbCol) {
-            int currentLineInTabResult = -1;
-            int positionUnivers = 0;
-            object[,] tabResult = new object[nbCol, nbLineInFormatedTable];
-            bool allSubTotalNotNull = true;
-
-            for (int currentLine = 0; currentLine < nbLineInFormatedTable; currentLine++) {
-                allSubTotalNotNull = true;
-                positionUnivers = 1;
-                while (allSubTotalNotNull && positionUnivers < NB_UNIVERSES_TEST - 1) {
-                    if ((double)tabData[groupMediaTotalIndex[positionUnivers].IndexInResultTable, currentLine] == 0.0)
-                        allSubTotalNotNull = false;
-                    positionUnivers++;
-                }
-                if (allSubTotalNotNull && (
-                    !getEvol
-                    || (getEvol && getRising && (double)tabData[groupMediaTotalIndex[N_UNIVERSE_POSITION].IndexInResultTable, currentLine] > (double)tabData[groupMediaTotalIndex[N1_UNIVERSE_POSITION].IndexInResultTable, currentLine])
-                    || (getEvol && !getRising && (double)tabData[groupMediaTotalIndex[N_UNIVERSE_POSITION].IndexInResultTable, currentLine] < (double)tabData[groupMediaTotalIndex[N1_UNIVERSE_POSITION].IndexInResultTable, currentLine])
-                    )) {
-                    currentLineInTabResult++;
-                    for (int currentColumn = 0; currentColumn < nbCol; currentColumn++) {
-                        tabResult[currentColumn, currentLineInTabResult] = tabData[currentColumn, currentLine];
+            for (int i = 1; i < nbLevel; i++)
+            {
+                if (levels[i] != null)
+                {
+                    if (!display[levels[i].Level])
+                    {
+                        tabData.SetLineStart(new LineHide(tabData.GetLineStart(levels[i].LineIndexInResultTable).LineType), levels[i].LineIndexInResultTable);
                     }
                 }
             }
 
-            nbLineInTabResult = currentLineInTabResult + 1;
+        }
 
-            return tabResult;
+        #region Predicates
+        /// <summary>
+        /// Define contract for predicates chackings (most, won, loayls, risings, declines)
+        /// </summary>
+        /// <param name="tabData">Data container</param>
+        /// <param name="cLine">Current Line</param>
+        /// <param name="yearN1Index">N1 year column index</param>
+        /// <param name="yearNIndex">N year column index</param>
+        /// <returns>True if predicate is respected, false either</returns>
+        protected delegate bool PredicateDelegate(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index);
+        /// <summary>
+        /// Check line match "won" predicate
+        /// </summary>
+        /// <param name="tabData">Data container</param>
+        /// <param name="cLine">Current Line</param>
+        /// <param name="yearN1Index">N1 year column index</param>
+        /// <param name="yearNIndex">N year column index</param>
+        /// <returns>True line is there is data in year N but not in year N1, false neither</returns>
+        protected bool PredicateWon(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        {
+            return ((CellUnit)tabData[cLine, yearNIndex]).Value != 0.0 && ((CellUnit)tabData[cLine, yearN1Index]).Value == 0.0;
+        }
+        /// <summary>
+        /// Check line match "lost" predicate
+        /// </summary>
+        /// <param name="tabData">Data container</param>
+        /// <param name="cLine">Current Line</param>
+        /// <param name="yearN1Index">N1 year column index</param>
+        /// <param name="yearNIndex">N year column index</param>
+        /// <returns>True line is there is no data in year N but some in year N1, false neither</returns>
+        protected bool PredicateLost(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        {
+            return ((CellUnit)tabData[cLine, yearNIndex]).Value == 0.0 && ((CellUnit)tabData[cLine, yearN1Index]).Value != 0.0;
+        }
+        /// <summary>
+        /// Check line match "loyal" predicate
+        /// </summary>
+        /// <param name="tabData">Data container</param>
+        /// <param name="cLine">Current Line</param>
+        /// <param name="yearN1Index">N1 year column index</param>
+        /// <param name="yearNIndex">N year column index</param>
+        /// <returns>True line is there is data both in N and N1, false neither</returns>
+        protected bool PredicateLoyal(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        {
+            return ((CellUnit)tabData[cLine, yearNIndex]).Value != 0.0 && ((CellUnit)tabData[cLine, yearN1Index]).Value != 0.0;
+        }
+        /// <summary>
+        /// Check line match "loyal rising" predicate
+        /// </summary>
+        /// <param name="tabData">Data container</param>
+        /// <param name="cLine">Current Line</param>
+        /// <param name="yearN1Index">N1 year column index</param>
+        /// <param name="yearNIndex">N year column index</param>
+        /// <returns>True line is there is data both in N and N1 and N > N1, false neither</returns>
+        protected bool PredicateLoyalRising(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        {
+            double v = ((CellUnit)tabData[cLine, yearN1Index]).Value;
+            return ((CellUnit)tabData[cLine, yearNIndex]).Value > v && v > 0;
+        }
+        /// <summary>
+        /// Check line match "loyal decline" predicate
+        /// </summary>
+        /// <param name="tabData">Data container</param>
+        /// <param name="cLine">Current Line</param>
+        /// <param name="yearN1Index">N1 year column index</param>
+        /// <param name="yearNIndex">N year column index</param>
+        /// <returns>True line is there is data both in N and N1 and N lower than N1, false neither</returns>
+        protected bool PredicateLoyalDecline(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        {
+            double v = ((CellUnit)tabData[cLine, yearNIndex]).Value;
+            return ((CellUnit)tabData[cLine, yearN1Index]).Value > v && v > 0;
         }
         #endregion
 
-        #region Obtient l'activité publicitaire d'un produit
+        #endregion
+
+        #region Get Product activity
         /// <summary>
         /// Get Advertising activity of a product
         /// </summary>
@@ -1652,74 +1601,218 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="expression">Calcul expression</param>
         /// <param name="filterN">Year N Filter</param>
         /// <param name="filterN1">Year N-1 filter</param>
-        protected void GetProductActivity(ResultTable tabResult, DataTable dt, long indexLineProduct, string expression, string filterN, string filterN1) {
-            object unitValueN = System.DBNull.Value;
-            object unitValueN1 = System.DBNull.Value;
+        protected delegate void GetProductActivity(ResultTable tabResult, DataTable dt, long indexLineProduct, string expression, string filterN, string filterN1);
+        /// <summary>
+        /// Get Advertising activity of a product
+        /// </summary>
+        /// <param name="tabResult">Result Table</param>
+        /// <param name="dt">Data Table</param>
+        /// <param name="indexLineProduct">Index of product line</param>
+        /// <param name="expression">Calcul expression</param>
+        /// <param name="filterN">Year N Filter</param>
+        /// <param name="filterN1">Year N-1 filter</param>
+        protected void GetDoubleProductActivity(ResultTable tabResult, DataTable dt, long indexLineProduct, string expression, string filterN, string filterN1)
+        {
+            Double unitValueN = 0;
+            Double unitValueN1 = 0;
             Int64 loyalNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
             Int64 loyalDeclineNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_DECLINE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
             Int64 loyalRiseNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_RISE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
             Int64 wonNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(WON_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
             Int64 lostNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOST_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
 
-            unitValueN = dt.Compute(expression, filterN);
-            unitValueN1 = dt.Compute(expression, filterN1);
+            object o = dt.Compute(expression, filterN);
+            unitValueN = (o != DBNull.Value) ? Convert.ToDouble(o) : 0;
+            o = dt.Compute(expression, filterN1);
+            unitValueN1 = (o != DBNull.Value) ? Convert.ToDouble(o) : 0;
 
-            #region Fidèles
-
-            if (unitValueN != System.DBNull.Value && !unitValueN.ToString().Equals("") && unitValueN1 != System.DBNull.Value && !unitValueN1.ToString().Equals("")) {
+            #region Loyal
+            if (unitValueN != 0 && unitValueN1 != 0)
+            {
                 //Nombre 
                 ((CellUnit)tabResult[indexLineProduct, loyalNumberColonneIndex]).Value += 1;
                 //Unité N
-                ((CellUnit)tabResult[indexLineProduct, loyalNumberColonneIndex + 1]).Value += double.Parse(unitValueN.ToString());
+                ((CellUnit)tabResult[indexLineProduct, loyalNumberColonneIndex + 1]).Value += unitValueN;
                 //Unité N-1
-                ((CellUnit)tabResult[indexLineProduct, loyalNumberColonneIndex + 2]).Value += double.Parse(unitValueN1.ToString());
+                ((CellUnit)tabResult[indexLineProduct, loyalNumberColonneIndex + 2]).Value += unitValueN1;
 
             }
             #endregion
 
             #region Fidèle en baisse
-
-            if (unitValueN != System.DBNull.Value && !unitValueN.ToString().Equals("") && unitValueN1 != System.DBNull.Value && !unitValueN1.ToString().Equals("") && double.Parse(unitValueN.ToString()) < double.Parse(unitValueN1.ToString())) {
+            if (unitValueN > 0 && unitValueN1 > unitValueN)
+            {
                 //Nombre 
                 ((CellUnit)tabResult[indexLineProduct, loyalDeclineNumberColonneIndex]).Value += 1;
                 //Unité N
-                ((CellUnit)tabResult[indexLineProduct, loyalDeclineNumberColonneIndex + 1]).Value += double.Parse(unitValueN.ToString());
+                ((CellUnit)tabResult[indexLineProduct, loyalDeclineNumberColonneIndex + 1]).Value += unitValueN;
                 //Unité N-1
-                ((CellUnit)tabResult[indexLineProduct, loyalDeclineNumberColonneIndex + 2]).Value += double.Parse(unitValueN1.ToString());
+                ((CellUnit)tabResult[indexLineProduct, loyalDeclineNumberColonneIndex + 2]).Value += unitValueN1;
 
             }
             #endregion
 
             #region Fidèle en  développement
-            if (unitValueN != System.DBNull.Value && !unitValueN.ToString().Equals("") && unitValueN1 != System.DBNull.Value && !unitValueN1.ToString().Equals("") && double.Parse(unitValueN.ToString()) > double.Parse(unitValueN1.ToString())) {
+            if (unitValueN1 > 0 && unitValueN > unitValueN1)
+            {
                 //Nombre 
                 ((CellUnit)tabResult[indexLineProduct, loyalRiseNumberColonneIndex]).Value += 1;
                 //Unité N
-                ((CellUnit)tabResult[indexLineProduct, loyalRiseNumberColonneIndex + 1]).Value += double.Parse(unitValueN.ToString());
+                ((CellUnit)tabResult[indexLineProduct, loyalRiseNumberColonneIndex + 1]).Value += unitValueN;
                 //Unité N-1
-                ((CellUnit)tabResult[indexLineProduct, loyalRiseNumberColonneIndex + 2]).Value += double.Parse(unitValueN1.ToString());
+                ((CellUnit)tabResult[indexLineProduct, loyalRiseNumberColonneIndex + 2]).Value += unitValueN1;
 
             }
             #endregion
 
             #region Gagnés
-            if (unitValueN != System.DBNull.Value && !unitValueN.ToString().Equals("") && (unitValueN1 == System.DBNull.Value || unitValueN1.ToString().Equals(""))) {
+            if (unitValueN > 0 && unitValueN1 <= 0)
+            {
                 //Nombre 
                 ((CellUnit)tabResult[indexLineProduct, wonNumberColonneIndex]).Value += 1;
                 //Unité N
-                ((CellUnit)tabResult[indexLineProduct, wonNumberColonneIndex + 1]).Value += double.Parse(unitValueN.ToString());
+                ((CellUnit)tabResult[indexLineProduct, wonNumberColonneIndex + 1]).Value += unitValueN;
             }
             #endregion
 
             #region Perdus
-            if (unitValueN1 != System.DBNull.Value && !unitValueN1.ToString().Equals("") && (unitValueN == System.DBNull.Value || unitValueN.ToString().Equals(""))) {
+            if (unitValueN1 > 0 && unitValueN <= 0)
+            {
                 //Nombre 
                 ((CellUnit)tabResult[indexLineProduct, lostNumberColonneIndex]).Value += 1;
                 //Unité N-1
-                ((CellUnit)tabResult[indexLineProduct, lostNumberColonneIndex + 2]).Value += double.Parse(unitValueN1.ToString());
+                ((CellUnit)tabResult[indexLineProduct, lostNumberColonneIndex + 2]).Value += unitValueN1;
             }
             #endregion
 
+        }
+        /// <summary>
+        /// Get Advertising activity of a product
+        /// </summary>
+        /// <param name="tabResult">Result Table</param>
+        /// <param name="dt">Data Table</param>
+        /// <param name="indexLineProduct">Index of product line</param>
+        /// <param name="expression">Column name of the field to treat</param>
+        /// <param name="filterN">Year N Filter</param>
+        /// <param name="filterN1">Year N-1 filter</param>
+        protected void GetListProductActivity(ResultTable tabResult, DataTable dt, long indexLineProduct, string expression, string filterN, string filterN1)
+        {
+            CellIdsNumber unitValueN = (CellIdsNumber)_session.GetCellUnitFactory().Get(0.0);
+            CellIdsNumber unitValueN1 = (CellIdsNumber)_session.GetCellUnitFactory().Get(0.0);
+            Int64 loyalNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int64 loyalDeclineNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_DECLINE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int64 loyalRiseNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_RISE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int64 wonNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(WON_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int64 lostNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOST_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+
+            #region Extract data
+            //Year N
+            DataRow[] rows = dt.Select(filterN);
+            string[] ids;            
+            foreach (DataRow row in rows)
+            {
+                ids = row[expression].ToString().Split(',');
+                for (int i = 0; i < ids.Length; i++)
+                {
+                    unitValueN.Add(Convert.ToDouble(ids[i]));
+                }
+            }
+            //Year N1
+            rows = dt.Select(filterN1);
+            foreach (DataRow row in rows)
+            {
+                ids = row[expression].ToString().Split(',');
+                for (int i = 0; i < ids.Length; i++)
+                {
+                    unitValueN1.Add(Convert.ToDouble(ids[i]));
+                }
+            }
+            #endregion
+
+            #region data dispatch
+            Double NValue = unitValueN.Value;
+            Double N1Value = unitValueN1.Value;
+            bool loyal = NValue > 0 && N1Value > 0;
+            bool loyalDecline = NValue > 0  && N1Value > NValue;
+            bool loyalRising = NValue > N1Value && NValue > 0;
+            bool won = NValue > 0 && N1Value <= 0;
+            bool lost = NValue <= 0 && N1Value > 0;
+
+            #region Get List of Ids
+            List<Int64> NIds = new List<Int64>();
+            List<Int64> N1Ids = new List<Int64>();
+            Int64 l = unitValueN.List.length;
+            for (int i = 0; i < l; i++)
+            {
+                NIds.Add(unitValueN.List.removeHead().UniqueID);
+            }
+            l = unitValueN1.List.length;
+            for (int i = 0; i < l; i++)
+            {
+                N1Ids.Add(unitValueN1.List.removeHead().UniqueID);
+            }
+            #endregion
+
+            #region Loyal
+            if (loyal)
+            {
+                //Nombre 
+                ((CellUnit)tabResult[indexLineProduct, loyalNumberColonneIndex]).Value += 1;
+                //Unité N
+                ((CellIdsNumber)tabResult[indexLineProduct, loyalNumberColonneIndex + 1]).Add(NIds);
+                //Unité N-1
+                ((CellIdsNumber)tabResult[indexLineProduct, loyalNumberColonneIndex + 2]).Add(N1Ids);
+
+            }
+            #endregion
+
+            #region Loyals Decline
+            if (loyalDecline)
+            {
+                //Nombre 
+                ((CellUnit)tabResult[indexLineProduct, loyalDeclineNumberColonneIndex]).Value += 1;
+                //Unité N
+                ((CellIdsNumber)tabResult[indexLineProduct, loyalDeclineNumberColonneIndex + 1]).Add(NIds);
+                //Unité N-1
+                ((CellIdsNumber)tabResult[indexLineProduct, loyalDeclineNumberColonneIndex + 2]).Add(N1Ids);
+
+            }
+            #endregion
+
+            #region Loyals rising
+            if (loyalRising)
+            {
+                //Nombre 
+                ((CellUnit)tabResult[indexLineProduct, loyalRiseNumberColonneIndex]).Value += 1;
+                //Unité N
+                ((CellIdsNumber)tabResult[indexLineProduct, loyalRiseNumberColonneIndex + 1]).Add(NIds);
+                //Unité N-1
+                ((CellIdsNumber)tabResult[indexLineProduct, loyalRiseNumberColonneIndex + 2]).Add(N1Ids);
+
+            }
+            #endregion
+
+            #region Won
+            if (won)
+            {
+                //Nombre 
+                ((CellUnit)tabResult[indexLineProduct, wonNumberColonneIndex]).Value += 1;
+                //Unité N
+                ((CellIdsNumber)tabResult[indexLineProduct, wonNumberColonneIndex + 1]).Add(NIds);
+            }
+            #endregion
+
+            #region Lost
+            if (lost)
+            {
+                //Nombre 
+                ((CellUnit)tabResult[indexLineProduct, lostNumberColonneIndex]).Value += 1;
+                //Unité N-1
+                ((CellIdsNumber)tabResult[indexLineProduct, lostNumberColonneIndex + 2]).Add(N1Ids);
+            }
+            #endregion
+
+            #endregion
         }
         #endregion
 
@@ -1738,7 +1831,6 @@ namespace TNS.AdExpressI.LostWon {
             DataTable dt = null;
             #endregion
 
-
             #region Chargement des données à partir de la base
             DataSet ds;
             try {
@@ -1754,18 +1846,21 @@ namespace TNS.AdExpressI.LostWon {
             }
             #endregion
 
-
+            string cKey;
             if (dt != null && dt.Rows.Count > 0) {
+
                 foreach (DataRow dr in dt.Rows) {
-                    if (!oldKey.Equals(dr["yearParution"].ToString() + "-" + dr["id_media"].ToString()) && !start) {
+                    cKey = string.Format("-{0}-{1}", dr["yearParution"], dr["id_media"]);
+                    if (!oldKey.Equals(cKey) && !start) {
                         res.Add(oldKey, nbParutionsCounter);
                         nbParutionsCounter = 0;
                     }
                     nbParutionsCounter += double.Parse(dr["NbParution"].ToString());
                     start = false;
-                    oldKey = dr["yearParution"].ToString() + "-" + dr["id_media"].ToString();
+                    oldKey = cKey;
                 }
                 res.Add(oldKey, nbParutionsCounter);
+
             }
 
             return res;
@@ -1775,5 +1870,7 @@ namespace TNS.AdExpressI.LostWon {
         #endregion
 
         #endregion
+
     }
+
 }
