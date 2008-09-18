@@ -49,6 +49,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			#region variables
 			StringBuilder sql = new StringBuilder(1000);
 			string sectorPrefixe=DBTables.WEB_PLAN_PREFIXE, subsectorPrefixe=DBTables.WEB_PLAN_PREFIXE, groupPrefixe=DBTables.WEB_PLAN_PREFIXE;
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			#endregion
 
 			#region Table and field names
@@ -57,7 +59,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			#endregion
 	
 			#region select
-			sql.Append("select id_media, id_advertiser, id_brand, id_product, "+ DBTables.TARGET_PREFIXE+".id_target,target, ");
+			sql.Append("select id_media, id_advertiser, id_brand");
+			if(showProduct)sql.Append(" , id_product ");
+			sql.Append(", "+ DBTables.TARGET_PREFIXE+".id_target,target, ");
             sql.AppendFormat("sum({0}) as {1},sum({2}) as {3},sum({4}) as {5}, sum({2})*{6} as totalgrp "
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
@@ -109,7 +113,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			#endregion
 
 			#region group by
-            sql.Append(" group by " + DBTables.TARGET_PREFIXE + ".id_target, target, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_advertiser, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_brand, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_product, " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
+            sql.Append(" group by " + DBTables.TARGET_PREFIXE + ".id_target, target, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_advertiser, " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_brand");
+			if(showProduct)sql.Append(" , " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_product");
+			sql.Append(" , " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
 			#endregion
 
 			#endregion

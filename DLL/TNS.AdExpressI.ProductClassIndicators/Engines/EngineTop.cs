@@ -19,7 +19,7 @@ using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using CstComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
-
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
@@ -458,18 +458,19 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             t.Append("<tr><td></td></tr>");
 
             #region Produit
-            t.Append("<tr>");
-            t.Append("<td valign=\"top\"  >");
-            t.Append(this.BuildTop(CstResult.PalmaresRecap.typeYearSelected.currentYear, CstResult.MotherRecap.ElementType.product));
-            t.Append("</td>");
-            if (_session.ComparativeStudy)
-            {
-                t.Append("<td>&nbsp;</td>");
-                t.Append("<td valign=\"top\" >");
-                t.Append(this.BuildTop(CstResult.PalmaresRecap.typeYearSelected.previousYear, CstResult.MotherRecap.ElementType.product));
-                t.Append("</td>");
-            }
-            t.Append("</tr>");
+			if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+				t.Append("<tr>");
+				t.Append("<td valign=\"top\"  >");
+				t.Append(this.BuildTop(CstResult.PalmaresRecap.typeYearSelected.currentYear, CstResult.MotherRecap.ElementType.product));
+				t.Append("</td>");
+				if (_session.ComparativeStudy) {
+					t.Append("<td>&nbsp;</td>");
+					t.Append("<td valign=\"top\" >");
+					t.Append(this.BuildTop(CstResult.PalmaresRecap.typeYearSelected.previousYear, CstResult.MotherRecap.ElementType.product));
+					t.Append("</td>");
+				}
+				t.Append("</tr>");
+			}
             #endregion
 
             t.Append("</table>");

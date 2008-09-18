@@ -21,6 +21,7 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using CstUnit = TNS.AdExpress.Constantes.Web.CustomerSessions.Unit;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 
 using TNS.AdExpress.Classification;
@@ -143,7 +144,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 DataTable dtMarketTotal = _dalLayer.GetSummaryInvestments(CstComparaisonCriterion.marketTotal).Tables[0];
 
                 //Number of active product
-                DataTable dtNbRef = _dalLayer.GetSummaryVolumes(CstComparaisonCriterion.universTotal, CstResult.MotherRecap.ElementType.product).Tables[0];
+				DataTable dtNbRef = (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) ? _dalLayer.GetSummaryVolumes(CstComparaisonCriterion.universTotal, CstResult.MotherRecap.ElementType.product).Tables[0] : null;
 
                 //Number of active advertiser
                 DataTable dtNbAdvert = _dalLayer.GetSummaryVolumes(CstComparaisonCriterion.universTotal, CstResult.MotherRecap.ElementType.advertiser).Tables[0];
@@ -218,27 +219,26 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         ComputeEvolAndEcart(tab, AVERAGE_INVEST_BY_ADVERTISER_LINE_INDEX, TOTAL_N_COLUMN_INDEX, TOTAL_N1_COLUMN_INDEX, EVOLUTION_COLUMN_INDEX, ECART_COLUMN_INDEX);
                     }
 
-                    //Nb of active products
-                    if (!dtNbRef.Equals(System.DBNull.Value) && dtNbRef.Rows.Count > 0)
-                    {
-                        tab[NB_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX] = dtNbRef.Rows[0]["nbElt"];//Année N
-                        if (_session.ComparativeStudy)
-                        {
-                            tab[NB_PRODUCT_LINE_INDEX, TOTAL_N1_COLUMN_INDEX] = dtNbRef.Rows[1]["nbElt"];//Année N-1
-                            //Evolution and difference of N / N-1
-                            ComputeEvolAndEcart(tab, NB_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX, TOTAL_N1_COLUMN_INDEX, EVOLUTION_COLUMN_INDEX, ECART_COLUMN_INDEX);
-                        }
-                    }
+					if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+						//Nb of active products
+						if (!dtNbRef.Equals(System.DBNull.Value) && dtNbRef.Rows.Count > 0) {
+							tab[NB_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX] = dtNbRef.Rows[0]["nbElt"];//Année N
+							if (_session.ComparativeStudy) {
+								tab[NB_PRODUCT_LINE_INDEX, TOTAL_N1_COLUMN_INDEX] = dtNbRef.Rows[1]["nbElt"];//Année N-1
+								//Evolution and difference of N / N-1
+								ComputeEvolAndEcart(tab, NB_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX, TOTAL_N1_COLUMN_INDEX, EVOLUTION_COLUMN_INDEX, ECART_COLUMN_INDEX);
+							}
+						}
 
-                    //Investments average by product
-                    ComputeAverageBudget(tab, TOTAL_UNIV_INVEST_LINE_INDEX, NB_PRODUCT_LINE_INDEX, AVERAGE_INVEST_BY_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX);//Année N
+						//Investments average by product
+						ComputeAverageBudget(tab, TOTAL_UNIV_INVEST_LINE_INDEX, NB_PRODUCT_LINE_INDEX, AVERAGE_INVEST_BY_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX);//Année N
 
-                    if (_session.ComparativeStudy)
-                    {
-                        ComputeAverageBudget(tab, TOTAL_UNIV_INVEST_LINE_INDEX, NB_PRODUCT_LINE_INDEX, AVERAGE_INVEST_BY_PRODUCT_LINE_INDEX, TOTAL_N1_COLUMN_INDEX);//Année N-1
-                        //Evolution and difference of N / N-1
-                        ComputeEvolAndEcart(tab, AVERAGE_INVEST_BY_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX, TOTAL_N1_COLUMN_INDEX, EVOLUTION_COLUMN_INDEX, ECART_COLUMN_INDEX);
-                    }
+						if (_session.ComparativeStudy) {
+							ComputeAverageBudget(tab, TOTAL_UNIV_INVEST_LINE_INDEX, NB_PRODUCT_LINE_INDEX, AVERAGE_INVEST_BY_PRODUCT_LINE_INDEX, TOTAL_N1_COLUMN_INDEX);//Année N-1
+							//Evolution and difference of N / N-1
+							ComputeEvolAndEcart(tab, AVERAGE_INVEST_BY_PRODUCT_LINE_INDEX, TOTAL_N_COLUMN_INDEX, TOTAL_N1_COLUMN_INDEX, EVOLUTION_COLUMN_INDEX, ECART_COLUMN_INDEX);
+						}
+					}
 
 
                     #endregion
@@ -306,6 +306,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #region Line
             for (int i = 1; i < tab.GetLength(0); i++)
             {
+				//Rights level products (For Finland)
+				if ((NB_PRODUCT_LINE_INDEX == i && !_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+					|| (AVERAGE_INVEST_BY_PRODUCT_LINE_INDEX == i && !_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))) continue;
+
                 t.Append("\r\n\t<tr align=\"right\"  class=\"violetBackGroundV3\" height=\"20px\" >");
                 //Label
                 t.AppendFormat("\r\n\t\t<td align=\"left\" class=\"{0}\" nowrap>{1}</td>", cssLabel, tab[i, 0]);
@@ -329,6 +333,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         break;
                     case NB_ADVERTISER_LINE_INDEX:
                     case NB_PRODUCT_LINE_INDEX:
+						
                         //N
                         t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N_COLUMN_INDEX], CstUnit.euro));
                         //N-1

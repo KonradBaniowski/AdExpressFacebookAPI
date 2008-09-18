@@ -139,15 +139,15 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					if(idVehicle!=null && idVehicle.Length>0 && long.Parse(idVehicle.ToString())>-1){
 						//Pas de droit publicité extérieure
 						if(!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
-							&& (CstClassification.DB.Vehicles.names)int.Parse(idVehicle.ToString())==CstClassification.DB.Vehicles.names.outdoor ){
+							&& VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==CstClassification.DB.Vehicles.names.outdoor ){
 							ds = null;
 						}
 						else{
-                                if((CstClassification.DB.Vehicles.names)int.Parse(idVehicle.ToString())==CstClassification.DB.Vehicles.names.directMarketing)
+							if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == CstClassification.DB.Vehicles.names.directMarketing)
                                     ds = MediaCreationDataAccess.GetMDData(webSession, mediaImpactedList, dateBegin, dateEnd, long.Parse(idVehicle),false);
                                 else{
 								ds = MediaCreationDataAccess.GetData(webSession,mediaImpactedList,dateBegin,dateEnd,long.Parse(idVehicle));
-								GetFieldsList(webSession, ds.Tables[0], fieldsList, (CstClassification.DB.Vehicles.names)int.Parse(idVehicle.ToString()));
+								GetFieldsList(webSession, ds.Tables[0], fieldsList, VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())));
                                 }
 							
 						}
@@ -448,6 +448,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 			int i = -1;
 			object[,] tab = null;
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			if(IsRequiredGenericColmuns(webSession)){
 
 					
@@ -481,6 +483,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 							int.Parse(currentRow["date_media_num"].ToString().Substring(4,2)),
 							int.Parse(currentRow["date_media_num"].ToString().Substring(6,2)))).ToString("dd/MM/yyyy");
 						tab[i,CstWeb.TVInsertionsColumnIndex.ADVERTISER_INDEX]=currentRow["advertiser"].ToString();
+						if(showProduct)
 						tab[i,CstWeb.TVInsertionsColumnIndex.PRODUCT_INDEX]=currentRow["product"].ToString();
 						tab[i,CstWeb.TVInsertionsColumnIndex.GROUP_INDEX]=currentRow["group_"].ToString();
 						#region Old version
@@ -558,7 +561,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 		/// <returns>Tableau d'objets contenant les données issues de la BD traitées</returns>
 		private static object[,] GetDataRadio(DataSet ds, WebSession webSession,ArrayList fieldsList){
 			object[,] tab = null;
-			
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			int i = -1;
 
 			if(IsRequiredGenericColmuns(webSession)){
@@ -600,6 +603,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 							int.Parse(currentRow["date_media_num"].ToString().Substring(4,2)),
 							int.Parse(currentRow["date_media_num"].ToString().Substring(6,2)))).ToString("dd/MM/yyyy");
 						tab[i,CstWeb.RadioInsertionsColumnIndex.ADVERTISER_INDEX]=currentRow["advertiser"].ToString();
+						if(showProduct)
 						tab[i,CstWeb.RadioInsertionsColumnIndex.PRODUCT_INDEX]=currentRow["product"].ToString();
 						tab[i,CstWeb.RadioInsertionsColumnIndex.GROUP_INDEX]=currentRow["group_"].ToString();
 						#region Old version
@@ -674,6 +678,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			
 			object[,] tab =null;
 			bool first = true;
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
 			if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) {
 				return tab;
@@ -703,14 +708,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 								#region Construction chemin d'accès aux visuels
 								
-#if Debug
-									//if (isColumnsContainsVisual){ // && ds.Tables[0].Rows[i][ASSOCIATED_FILE] != System.DBNull.Value) {
 
-									////visuels disponible
-									//string[] files = "25380719001.jpg".Split(',');
-									//string pathWeb = string.Empty;
-									//string idAssociatedFile = "25380719001.jpg";
-#endif
 								if (isColumnsContainsVisual && ds.Tables[0].Rows[i][ASSOCIATED_FILE] != System.DBNull.Value) {
 
 									//visuels disponible
@@ -762,6 +760,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 							int.Parse(currentRow["date_media_num"].ToString().Substring(4,2)),
 							int.Parse(currentRow["date_media_num"].ToString().Substring(6,2)))).ToString("dd/MM/yyyy");
 						tab[i,CstWeb.OutDoorInsertionsColumnIndex.ADVERTISER_INDEX] =(currentRow["advertiser"] != System.DBNull.Value)? currentRow["advertiser"].ToString() : "";
+						if(showProduct)
 						tab[i, CstWeb.OutDoorInsertionsColumnIndex.PRODUCT_INDEX] = (currentRow["product"] != System.DBNull.Value) ? currentRow["product"].ToString() : "";
 						tab[i, CstWeb.OutDoorInsertionsColumnIndex.GROUP_INDEX] = (currentRow["group_"] != System.DBNull.Value) ? currentRow["group_"].ToString() : "";
                         tab[i, CstWeb.OutDoorInsertionsColumnIndex.NUMBER_BOARD_INDEX] = (currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.numberBoard].Id.ToString()] != System.DBNull.Value) ? currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString() : "";
@@ -844,6 +843,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
             bool first = true;
             int i = -1;     
             int j = 0;
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
             tab = new object[ds.Tables[0].Rows.Count + 1, ds.Tables[0].Columns.Count];
 
@@ -858,7 +858,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
                     //nouvel insertion
                     oldMedia = current["id_media"].ToString();
                     oldAdvertisement = current["id_advertiser"].ToString();
-                    oldProduct = current["id_product"].ToString();
+                   if(showProduct) oldProduct = current["id_product"].ToString();
                     oldDate = current["date_media_num"].ToString();
                     first = true;
                     i++;
@@ -870,6 +870,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
                         int.Parse(current["date_media_num"].ToString().Substring(6, 2)))).ToString("dd/MM/yyyy");
                     tab[i, CstWeb.MDVersionsColumnIndex.GROUP_INDEX] = current["group_"].ToString();
                     tab[i, CstWeb.MDVersionsColumnIndex.ADVERTISER_INDEX] = current["advertiser"].ToString();
+					if(showProduct)
                     tab[i, CstWeb.MDVersionsColumnIndex.PRODUCT_INDEX] = current["product"].ToString();
                     tab[i, CstWeb.MDVersionsColumnIndex.EXPENDITURE_INDEX] = current[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()].ToString();
                     tab[i, CstWeb.MDVersionsColumnIndex.CATEGORY_INDEX] = current["category"].ToString();
@@ -1319,11 +1320,13 @@ namespace TNS.AdExpress.Web.Rules.Results{
 		/// <returns>champs en base de données des éléments à détailler</returns>
 		public static void GetFieldsList(WebSession webSession,DataTable dt,ArrayList fieldsList,CstClassification.DB.Vehicles.names idVehicle){
 			
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			if(webSession!=null){
 				//Libellés des champs en base de données des éléments à regrouper
 				if( webSession.DetailLevel!=null &&  webSession.DetailLevel.GetNbLevels>0){					
-					foreach(DetailLevelItemInformation detailLevelItemInformation in webSession.DetailLevel.Levels){				
-						
+					foreach(DetailLevelItemInformation detailLevelItemInformation in webSession.DetailLevel.Levels){
+						if (detailLevelItemInformation.Id == DetailLevelItemInformation.Levels.product && !showProduct) continue;
 						//Identifiant en base de données
 						if(detailLevelItemInformation.DataBaseAliasIdField!=null && detailLevelItemInformation.DataBaseAliasIdField.Length>0){
 							if(dt.Columns.Contains(detailLevelItemInformation.DataBaseAliasIdField.ToUpper())  && !fieldsList.Contains(detailLevelItemInformation.DataBaseAliasIdField.ToUpper()))
@@ -1346,8 +1349,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 
 				//libellés des champs en base de données des éléments en colonnes
 				if( webSession.GenericInsertionColumns!=null &&  webSession.GenericInsertionColumns.GetNbColumns>0){					
-					foreach(GenericColumnItemInformation genericColumnItemInformation in webSession.GenericInsertionColumns.Columns){				
-						
+					foreach(GenericColumnItemInformation genericColumnItemInformation in webSession.GenericInsertionColumns.Columns){
+						if (genericColumnItemInformation.Id == GenericColumnItemInformation.Columns.product && !showProduct) continue;						
 						//Identifiant en base de données
 						if(genericColumnItemInformation.DataBaseAliasIdField!=null && genericColumnItemInformation.DataBaseAliasIdField.Length>0){
 							if(dt.Columns.Contains(genericColumnItemInformation.DataBaseAliasIdField.ToUpper()) && !fieldsList.Contains(genericColumnItemInformation.DataBaseAliasIdField.ToUpper()))

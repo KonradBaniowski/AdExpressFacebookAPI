@@ -196,11 +196,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			string fieldProduct="";
 			string tableProduct="";
 			string joinProduct="";
-			string groupByProduct="";			
+			string groupByProduct="";
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			#endregion
 
 			#region fields,tables and joins for single Version
-			if(idVersion!=null && idVersion.Length>0) {
+			if (showProduct && idVersion != null && idVersion.Length > 0) {
 				fieldProduct=GetFiedls(mediaAgencyAccess,webSession,DBTables.DATA_PRESS_APPM_PREFIXE);
 				tableProduct=GetTables(webSession,mediaAgencyAccess);
 				joinProduct=GetJoin(webSession.DataLanguage,false,mediaAgencyAccess,webSession,DBTables.DATA_PRESS_APPM_PREFIXE);
@@ -327,6 +329,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			string versionCondition="";
 			int nbVersion=0;
 			bool first=true;
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			#endregion
 
 			string ids = string.Empty;			
@@ -363,12 +367,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			#endregion
 
 			#region fields,tables and joins for single Version
-			//if(idVersion!=null && idVersion.Length>0) {
+			if(showProduct) {
 				fieldProduct=GetFiedls(mediaAgencyAccess,webSession,DBTables.DATA_PRESS_APPM_PREFIXE);
 				tableProduct=GetTables(webSession,mediaAgencyAccess);
 				joinProduct=GetJoin(webSession.DataLanguage,false,mediaAgencyAccess,webSession,DBTables.DATA_PRESS_APPM_PREFIXE);
 				groupByProduct=GetGroupBy(mediaAgencyAccess,webSession,DBTables.DATA_PRESS_APPM_PREFIXE);				
-			//}
+			}
 			#endregion
 
 			#region Table and field names
@@ -423,7 +427,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
 			sql.Append(" and " + DBTables.TARGET_PREFIXE+ ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 
-			//sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and " + DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+ ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 
 
@@ -522,16 +525,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			//get joins and other conditions for synthesis
 			sql.Append(DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_media_secodip="+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_media");
 			//target
-			//sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_target="+DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target");
 			sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target in("+baseTarget.ToString()+")");		
 			sql.Append(" and " + DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+ ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
-			//sql.Append(" and "+ DBTables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
-			//sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
-			//with respect to comptetitor univers
-			//if(webSession.CompetitorUniversAdvertiser.Count>1){
-			//    webSession.CurrentUniversAdvertiser=(TreeNode)((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[2]).TreeCompetitorAdvertiser;
-			//    sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.GetAnalyseCustomerProductSelection(webSession,DBTables.WEB_PLAN_PREFIXE,DBTables.WEB_PLAN_PREFIXE,DBTables.WEB_PLAN_PREFIXE,true));			
-			//}
+			
 			// Sélection product of comptetitor universe
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 1)
 				sql.Append(webSession.PrincipalProductUniverses[1].GetSqlConditions(DBTables.WEB_PLAN_PREFIXE, true));						
@@ -617,7 +613,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql.Append(" from ");
 			sql.Append(DBSchema.APPM_SCHEMA+"."+dataTableName+" "+DBTables.DATA_PRESS_APPM_PREFIXE+", ");
 			sql.Append(DBSchema.APPM_SCHEMA+".TARGET_MEDIA_ASSIGNMENT "+DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+"  ");
-			//sql.Append(DBSchema.APPM_SCHEMA+".TARGET "+ DBTables.TARGET_PREFIXE+" ");
 
 			#endregion
 
@@ -736,7 +731,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE))
 			sql+=DBSchema.ADEXPRESS_SCHEMA+"."+DBTables.BRAND+" "+DBTables.BRAND_PREFIXE+", ";
 			if(mediaAgencyAccess){
-				//sql+=DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+webSession.MediaAgencyFileYear+" "+DBConstantes.Views.PRODUCT_GROUP_ADVER_AGENCY_PREFIXE+", ";
 				sql += DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBTables.ADVERTISING_AGENCY + " " + DBTables.ADVERTISING_AGENCY_PREFIXE + ", ";
 
 			}			

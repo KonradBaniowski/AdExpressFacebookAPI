@@ -84,8 +84,10 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         public override CreativeItem GetInstance(DataRow row, WebSession session) {
 
             long id = Convert.ToInt64(row["version"]);
+
             CreativeTV item = new CreativeTV(id);
             item.Session = session;
+			item.ShowProduct = session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
             FieldInstance(row, item);
 
@@ -115,6 +117,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         /// </summary>
         /// <param name="output">Output</param>
         public override void Render(System.Text.StringBuilder output) {
+			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
             output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\" class=\"violetBackGroundV3\">");
 
@@ -153,11 +156,13 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
                 , this._group
                 , GestionWeb.GetWebWord(2253, _session.SiteLanguage)
                 , this._insertNb.ToString("### ### ### ### ##0"));
-            output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3}</td></tr>"
-                , GestionWeb.GetWebWord(858, _session.SiteLanguage)
-                , this._product
-                , GestionWeb.GetWebWord(1933, _session.SiteLanguage)
-                , string.Format("{0} h {1} m {2}", this._duration.Hours.ToString("00"), this._duration.Minutes.ToString("00"), this._duration.Seconds.ToString("00")));
+			if (_showProduct) {
+				output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3}</td></tr>"
+					, GestionWeb.GetWebWord(858, _session.SiteLanguage)
+					, this._product
+					, GestionWeb.GetWebWord(1933, _session.SiteLanguage)
+					, string.Format("{0} h {1} m {2}", this._duration.Hours.ToString("00"), this._duration.Minutes.ToString("00"), this._duration.Seconds.ToString("00")));
+			}
             output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3}</td></tr>"
                 , GestionWeb.GetWebWord(1987, _session.SiteLanguage)
                 , this._id

@@ -18,6 +18,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Units;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM
 {
@@ -59,7 +60,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 			double compGroupGRPBaseTarget=0;
 			double refGRPBaseTarget=0;
 			string nameRefUnivers=string.Empty;
-			
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			#endregion
 
 			try{
@@ -71,8 +73,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 				//getting the reference univers data
 				refUnivData=TNS.AdExpress.Web.DataAccess.Results.APPM.PDVPlanDataAccess.GetData(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,false).Tables[0];
 				
-				
-				
+								
 				if(	refUnivData!=null && refUnivData.Rows.Count>0)
 				{
 					//Getting data from the reference univers
@@ -94,7 +95,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 
 					#region Get Data for Competitor Univers or Groups
 					//if competitor univers is selected
-					if(webSession.PrincipalProductUniverses.Count>1){
+					if(webSession.PrincipalProductUniverses.Count>1 && showProduct){
 						//charging the competitor univers
 						//webSession.CurrentUniversAdvertiser=(TreeNode)((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[2]).TreeCompetitorAdvertiser;
 						conUniversData=TNS.AdExpress.Web.DataAccess.Results.APPM.PDVPlanDataAccess.GetData(webSession,dataSource,dateBegin,dateEnd,baseTarget,additionalTarget,true).Tables[0];
@@ -222,7 +223,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 					//by processing two lines from the "conUniversData".
 					if(!graphics){
 						bool newRow=true;
-						if(webSession.PrincipalProductUniverses.Count>1 && conUniversData.Rows.Count>1){
+						if(webSession.PrincipalProductUniverses.Count>1 && showProduct && conUniversData != null && conUniversData.Rows.Count>1){
 							foreach(DataRow dr in conUniversData.Rows){						
 								if(newRow){
 									resultRow=resultPDVPlan.NewRow();
@@ -288,12 +289,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 			double grp=0;
 			bool dataExists=false;
 			List<long> oldIdItems = null;
-			#endregion
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
-			#region setting current Univers
-			//setting current univers to reference univers
-			//webSession.CurrentUniversAdvertiser=(TreeNode)((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[1]).TreeCompetitorAdvertiser;
-			#endregion
+			#endregion		
 
 			#region get Data
 			graphicsData=TNS.AdExpress.Web.DataAccess.Results.APPM.PDVPlanDataAccess.GetGraphicsData(webSession,dataSource,dateBegin,dateEnd,additionalTarget).Tables[0];

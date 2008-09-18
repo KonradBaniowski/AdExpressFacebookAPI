@@ -69,6 +69,17 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			get{return autoPostBackOption;}
 			set{autoPostBackOption=value;}
 		}
+		/// <summary>
+		/// True if show product level
+		/// </summary>
+		[Bindable(true),
+		Description("autoPostBack")]
+		protected bool _showProduct = false;
+		/// <summary></summary>
+		public bool ShowProduct {
+			get { return _showProduct; }
+			set { _showProduct = value; }
+		}
 
 		/// <summary>
 		/// CssClass générale 
@@ -120,7 +131,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				productDetail.Width = new System.Web.UI.WebControls.Unit("100%");
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1106, customerWebSession.SiteLanguage),"AdvertiserBrandProduct_"+SessionCst.PreformatedDetails.PreformatedProductDetails.advertiser.GetHashCode().ToString()));
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1889, customerWebSession.SiteLanguage),"AdvertiserBrandProduct_"+SessionCst.PreformatedDetails.PreformatedProductDetails.brand.GetHashCode().ToString()));
-				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(858, customerWebSession.SiteLanguage),"AdvertiserBrandProduct_"+SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString()));
+				if(_showProduct)productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(858, customerWebSession.SiteLanguage),"AdvertiserBrandProduct_"+SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString()));
 				productDetail.ID = "productDetail_"+this.ID;
 				productDetail.AutoPostBack=AutoPostBackOption;
 				productDetail.CssClass=CommonCssClass;

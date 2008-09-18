@@ -1914,7 +1914,8 @@ namespace TNS.AdExpressI.MediaSchedule
             foreach (VehicleInformation v in Vehicles)
             {
                 allow = allow || (v.ShowCreations && _session.CustomerLogin.ShowCreatives(v.Id));
-            }
+            }						
+
             return (
                 allow
                 && !_isCreativeDivisionMS
@@ -1922,6 +1923,7 @@ namespace TNS.AdExpressI.MediaSchedule
                 && !_isPDFReport
                 && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack))
                 && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE
+				&&  _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
                 );
         }
         /// <summary>
@@ -1943,6 +1945,7 @@ namespace TNS.AdExpressI.MediaSchedule
                 && !_isPDFReport
                 && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack))
                 && (_module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE || _session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
+				&& _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
                 ;
         }
         #endregion

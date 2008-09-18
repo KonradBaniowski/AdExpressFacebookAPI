@@ -12,6 +12,7 @@ using System.ComponentModel;
 
 using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
@@ -131,19 +132,23 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 						break;
                     case MotherRecap.PALMARES:
                         _withAdvertiser = true;
-                        _withReference = true;
+						//_withReference = true;
                         _advertiserChart = productClassIndicator.GetTopsChart(MotherRecap.ElementType.advertiser);
-                        _withReference = true;
-                        _referenceChart = productClassIndicator.GetTopsChart(MotherRecap.ElementType.product);
+						if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+							_withReference = true;
+							_referenceChart = productClassIndicator.GetTopsChart(MotherRecap.ElementType.product);
+						}
                         break;
 					case MotherRecap.SEASONALITY:
                         _advertiserChart = productClassIndicator.GetSeasonalityChart(_bigSize);
                         break;
                     case EvolutionRecap.EVOLUTION:
-                        _withAdvertiser = true;
-                        _withReference = true;
+                        _withAdvertiser = true;                        
                         _advertiserChart = productClassIndicator.GetEvolutionChart(MotherRecap.ElementType.advertiser);
-                        _referenceChart = productClassIndicator.GetEvolutionChart(MotherRecap.ElementType.product);
+						if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+							_referenceChart = productClassIndicator.GetEvolutionChart(MotherRecap.ElementType.product);
+							_withReference = true;
+						}
                         break;
                     default:
                         break;

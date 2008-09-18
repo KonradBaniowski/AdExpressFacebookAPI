@@ -56,7 +56,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             StringBuilder sql = new StringBuilder();
             string table = string.Empty;
             string dataTable = string.Empty;
-
+			bool showProduct = session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			int posUnivers = 0;
             #endregion
 
@@ -68,7 +68,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 					|| session.CurrentModule == WebCst.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE) {
 										
 					sql.Append("select ");
-					GetFields(sql, vehicle,true);
+					GetFields(sql, vehicle, true, showProduct);
 					sql.Append(" from ( ");
                     int nbUnivers = 0;
 					while (session.PrincipalProductUniverses.ContainsKey(posUnivers) && session.PrincipalProductUniverses[posUnivers] != null) {
@@ -116,6 +116,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 			StringBuilder sql = new StringBuilder();
 			string table = string.Empty;
 			string dataTable = string.Empty;
+			bool showProduct = session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			#endregion
 
             try {
@@ -128,20 +129,20 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     dataTable = GetInternetTable(module.ModuleType);
                 }
                 sql.Append("select ");
-                GetFields(sql, vehicle);
+                GetFields(sql, vehicle,showProduct);
                 sql.Append(" from ");
-                GetTables(sql, vehicle, session, dataTable);
+				GetTables(sql, vehicle, session, dataTable, showProduct);
                 sql.Append(" where ");
-                GetJoins(sql, vehicle, session);
+				GetJoins(sql, vehicle, session, showProduct);
                 sql.Append(" and ");
                 GetUniversFilters(sql, session, fromDate, toDate, vehicle.GetHashCode(), universId, moduleId, filters, module);
 
                 //group by
                 sql.Append(" group by ");
-                GetGroupBy(sql, vehicle);
+				GetGroupBy(sql, vehicle, showProduct);
 
                 if(vehicle == DBClassifCst.Vehicles.names.directMarketing) {
-                    SetMDRequest(sql);
+					SetMDRequest(sql, showProduct);
                 }
 
                 return sql.ToString();
@@ -219,7 +220,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                         else
                             first = false;
                         sql.Append(" select id_vehicle from ");
-                        sql.AppendFormat(" {0}.{1} wp ", dataTable);
+						sql.AppendFormat(" {0}.{1} wp ", DBCst.Schema.ADEXPRESS_SCHEMA, dataTable);
                         sql.Append(" where ");
                         GetUniversFilters(sql, session, fromDate, toDate, i, universId, moduleId, filters, module);
                         sql.AppendFormat(" and rownum < 2 ");
@@ -264,8 +265,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="sql">Output</param>
         /// <param name="vehicle">Vehicle considered</param>
-		private static void GetFields(StringBuilder sql, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicle) {
-			 GetFields( sql,vehicle,false) ;
+		/// /// <param name="showProduct">True if show product</param>
+		private static void GetFields(StringBuilder sql, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicle, bool showProduct) {
+			 GetFields( sql,vehicle,false,showProduct) ;
 		}
 
         /// <summary>
@@ -274,14 +276,19 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="sql">Output</param>
 		/// <param name="withOutPrefix">With out prefixe</param>
         /// <param name="vehicle">Vehicle considered</param>
-        private static void GetFields(StringBuilder sql, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicle, bool withOutPrefix)
+		/// <param name="showProduct">True if show product</param>
+		private static void GetFields(StringBuilder sql, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicle, bool withOutPrefix, bool showProduct)
         {
             string prefix = (withOutPrefix) ? "" : "wp.";
 
-            if (withOutPrefix)
-                sql.Append(" idadvertiser ,advertiser,id_address, idgroup  , groupe, idproduct, product");
-            else
-                sql.AppendFormat(" {0}id_advertiser as idadvertiser, advertiser as advertiser, gd.id_address, {0}id_group_ as idgroup, group_ as groupe, {0}id_product as idproduct, product as product", prefix);
+			if (withOutPrefix) {
+				sql.Append(" idadvertiser ,advertiser,id_address, idgroup  , groupe, idproduct");
+				if(showProduct)sql.Append(" , product");
+			}
+			else
+				sql.AppendFormat(" {0}id_advertiser as idadvertiser, advertiser as advertiser, gd.id_address, {0}id_group_ as idgroup, group_ as groupe", prefix);
+			if (showProduct) sql.AppendFormat(", {0}id_product as idproduct, product as product", prefix);
+
 
             if (vehicle != DBClassifCst.Vehicles.names.adnettrack)
             {
@@ -336,10 +343,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     break;
 
                 case DBClassifCst.Vehicles.names.adnettrack:
-                    if (withOutPrefix)
-                        sql.Append(", dProduct, idAdvertiser,  version,  dimension,  format,  url, visuel ");
-                    else 
-                        sql.AppendFormat(", {0}id_product as idProduct, {0}id_advertiser as idAdvertiser, {0}hashcode as version, {0}dimension as dimension, {0}format as format, {0}url as url, max({0}associated_file) as visuel ", prefix);
+					if (withOutPrefix) {
+						if (showProduct) sql.Append(", idProduct ");
+						sql.Append(", idAdvertiser,  version,  dimension,  format,  url, visuel ");
+					}
+					else {
+						if (showProduct) sql.AppendFormat(", {0}id_product as idProduct ", prefix);
+						sql.AppendFormat(", {0}id_advertiser as idAdvertiser, {0}hashcode as version, {0}dimension as dimension, {0}format as format, {0}url as url, max({0}associated_file) as visuel ", prefix);
+					}
                     break;
 
                 case DBClassifCst.Vehicles.names.directMarketing:
@@ -370,15 +381,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="vehicle">Vehicle</param>
         /// <param name="session">Web Session</param>
         /// <param name="dataTable">Table utilisée</param>
-        private static void GetTables(StringBuilder sql, DBClassifCst.Vehicles.names vehicle, WebSession session, string dataTable) {
+        private static void GetTables(StringBuilder sql, DBClassifCst.Vehicles.names vehicle, WebSession session, string dataTable,bool showProduct) {
             
             sql.AppendFormat(" {0}.{1} wp", DBCst.Schema.ADEXPRESS_SCHEMA, dataTable);
-            sql.AppendFormat(", {0}.{1} ad, {0}.{2} gp, {0}.{3} pr, {0}.{4} gd"
+            sql.AppendFormat(", {0}.{1} ad, {0}.{2} gp, {0}.{3} gd"
                 , DBCst.Schema.ADEXPRESS_SCHEMA
                 , DBCst.Tables.ADVERTISER
-                , DBCst.Tables.GROUP_
-                , DBCst.Tables.PRODUCT
+                , DBCst.Tables.GROUP_               
                 , DBCst.Tables.GAD);
+			if(showProduct)sql.AppendFormat(", {0}.{1} pr"
+			   , DBCst.Schema.ADEXPRESS_SCHEMA			   
+			   , DBCst.Tables.PRODUCT
+			  );
 
             switch (vehicle) {
                 case DBClassifCst.Vehicles.names.directMarketing:
@@ -405,15 +419,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="sql">Output</param>
         /// <param name="vehicle">Vehicle considered</param>
         /// <param name="session">Web Sessions</param>
-        private static void GetJoins(StringBuilder sql, DBClassifCst.Vehicles.names vehicle, WebSession session) {
+		/// <param name="showProduct">True if show product</param>
+        private static void GetJoins(StringBuilder sql, DBClassifCst.Vehicles.names vehicle, WebSession session,bool showProduct) {
 
             //produit
-            sql.Append(" pr.id_product=wp.id_product ");
-			sql.AppendFormat(" and pr.id_language={0}", session.DataLanguage);
-            sql.AppendFormat(" and pr.activation < {0}", DBCst.ActivationValues.UNACTIVATED);
-
+			if (showProduct) {
+				sql.Append(" pr.id_product=wp.id_product ");
+				sql.AppendFormat(" and pr.id_language={0}", session.DataLanguage);
+				sql.AppendFormat(" and pr.activation < {0}", DBCst.ActivationValues.UNACTIVATED);
+			}
             // Annonceur
-            sql.Append(" and ad.id_advertiser=wp.id_advertiser ");
+			if (showProduct) sql.Append(" and  ");
+            sql.Append("  ad.id_advertiser=wp.id_advertiser ");
 			sql.AppendFormat(" and ad.id_language={0}", session.DataLanguage);
             sql.AppendFormat(" and ad.activation < {0}", DBCst.ActivationValues.UNACTIVATED);
 
@@ -645,21 +662,21 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="sql">Output</param>
         /// <param name="vehicle">Vehicle considered</param>
-		private static void GetGroupBy(StringBuilder sql, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicle) {
-			 GetGroupBy(sql,  vehicle, false);
+		private static void GetGroupBy(StringBuilder sql, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicle, bool showProduct) {
+			 GetGroupBy(sql,  vehicle, false,showProduct);
 		}
         /// <summary>
         /// Build group by clause
         /// </summary>
         /// <param name="sql">Output</param>
         /// <param name="vehicle">Vehicle considered</param>
-        private static void GetGroupBy(StringBuilder sql, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicle, bool withOutPrefix)
+        private static void GetGroupBy(StringBuilder sql, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicle, bool withOutPrefix,bool showProduct)
         {
 
             string prefix = (withOutPrefix) ? "" : "wp.";
 
-            sql.AppendFormat(" {0}id_advertiser, advertiser, gd.id_address, {0}id_group_ , group_ , {0}id_product , product ", prefix);
-
+            sql.AppendFormat(" {0}id_advertiser, advertiser, gd.id_address, {0}id_group_ , group_  ", prefix);
+			if (showProduct) sql.AppendFormat("  , {0}id_product , product ", prefix);
             switch (vehicle)
             {
                 case DBClassifCst.Vehicles.names.press:
@@ -680,7 +697,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     break;
 
                 case DBClassifCst.Vehicles.names.adnettrack:
-                    sql.AppendFormat(", {0}id_product, {0}id_advertiser, {0}hashcode, {0}dimension, {0}format, {0}url ", prefix);
+					if (showProduct) sql.AppendFormat(", {0}id_product ", prefix);
+                    sql.AppendFormat(", {0}id_advertiser, {0}hashcode, {0}dimension, {0}format, {0}url ", prefix);
                     break;
 
                 case DBClassifCst.Vehicles.names.directMarketing:
@@ -844,10 +862,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// Set MD specific request parameters
         /// </summary>
         /// <param name="sql">Output</param>
-        private static void SetMDRequest(StringBuilder sql) {
+        private static void SetMDRequest(StringBuilder sql,bool showProduct) {
             StringBuilder md = new StringBuilder();
-            md.Append("select idadvertiser, advertiser, id_address, idgroup, groupe, idproduct, product");
-            md.AppendFormat(", {0}", UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
+            md.Append("select idadvertiser, advertiser, id_address, idgroup, groupe");
+			if (showProduct) md.Append(", idproduct, product");
+			md.AppendFormat(", {0}", UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
             md.Append(", version, media, weight, volume, nbobjet, visuel ");
             md.Append(", format, mail_format, mail_type, standard, rapidity"); 
             md.AppendFormat(",max(decode(id_mail_content,{0},MAIL_CONTENT || ', ')) || ", DBCst.MailContent.ID_LETTRE_ACCOMP_PERSONALIS);
@@ -865,7 +884,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
             sql.Insert(0, md.ToString());
 
-            sql.Append(") group by idadvertiser, advertiser, id_address, idgroup, groupe, idproduct, product");
+            sql.Append(") group by idadvertiser, advertiser, id_address, idgroup, groupe ");
+			if (showProduct) md.Append(", idproduct, product");
             sql.AppendFormat(", {0}", UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
             sql.Append(", version, media, weight, volume, nbobjet, visuel ");
             sql.Append(", format, mail_format, mail_type, standard, rapidity");

@@ -55,6 +55,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
         /// Outdoor Version to display
         /// </summary>
         protected ExportOutdoorVersionItem _exportOutdoorVersion;
+		/// <summary>
+		/// Determine if show product level
+		/// </summary>
+		protected bool _showProduct = true;
+
 		#endregion
 
 		#region Accessors
@@ -131,6 +136,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 		public VersionDetailUI(WebSession webSession, VersionItem version){
 			this._webSession = webSession;
 			this._version = version;
+			_showProduct = _webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
+
 		}
 		/// <summary>
 		/// Constructor with exportVersion
@@ -140,6 +148,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 		public VersionDetailUI(WebSession webSession, ExportVersionItem exportVersion){
 			this._webSession = webSession;
 			this._exportVersion = exportVersion;
+			_showProduct = _webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 		}
 		/// <summary>
 		/// Constructor with exportVersion for APPM
@@ -149,6 +159,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 		public VersionDetailUI(WebSession webSession, ExportAPPMVersionItem exportAPPMVersion){
 			this._webSession = webSession;
 			this._exportAPPMVersion = exportAPPMVersion;
+			_showProduct = _webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 		}
         /// <summary>
         /// Constructor with exportVersion for MD
@@ -158,6 +170,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
         public VersionDetailUI(WebSession webSession, ExportMDVersionItem exportMDVersion){
             this._webSession = webSession;
             this._exportMDVersion = exportMDVersion;
+			_showProduct = _webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
         }
         /// <summary>
         /// Constructor with exportVersion for MD
@@ -167,6 +181,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
         public VersionDetailUI(WebSession webSession, ExportOutdoorVersionItem exportOutdoorVersion) {
             this._webSession = webSession;
             this._exportOutdoorVersion = exportOutdoorVersion;
+			_showProduct = _webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
         }
 		#endregion
 
@@ -197,9 +213,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			}
 			output.Append("<div align=\"left\"><font align=\"left\"  size=1>");
 			output.Append(" "+this._version.Id);
-			output.Append("</font></div>");
-			//output.Append("</td><td align=\"right\""+((this._version.CssClass.Length>0)?"class=\"" + this._version.CssClass + "\">":"\">"));
-			//output.Append("<img src=\"/Images/Common/button/result2_up.gif\">");
+			output.Append("</font></div>");			
 			output.Append("</td></tr>");
 			
 			//Render version synthesis
@@ -220,7 +234,6 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			//Table
 			output.Append("<table cellpadding=0 cellspacing=0 width=100% border=\"0\" bgcolor=\"#ffffff\">");
 			//Render Verion visual
-			//output.Append("<tr><td align=\"left\" bgcolor=\"#E0D7EC\">");
 			output.Append("<tr>");//output.Append("<td align=\"left\" bgcolor=\"#FFFFFF\">");
 			output.Append("<TD>");
 			output.Append("<table cellpadding=0 cellspacing=0 border=\"0\" bgcolor=\"#ffffff\">");
@@ -233,8 +246,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 				output.Append("<td valign=\"top\"><TABLE width=\"300\" cellSpacing=\"0\" border=\"0\" class=\"txtViolet11Bold\" valign=\"top\">");
 				output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(176,_webSession.SiteLanguage) + "</td><td width=\"550\">: "+ Convertion.ToHtmlString(this._exportVersion.Advertiser) + "</td></tr>");
 				output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(174,_webSession.SiteLanguage) + "</td><td>: "+ Convertion.ToHtmlString(this._exportVersion.Group) +"</td></tr>");
-				output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(468,_webSession.SiteLanguage) + "</td><td>: "+ Convertion.ToHtmlString(this._exportVersion.Product) +"</td></tr>");
-				//output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(1881,_webSession.SiteLanguage) + "</td><td>: rrr</td></tr>");
+				if(_showProduct)output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(468,_webSession.SiteLanguage) + "</td><td>: "+ Convertion.ToHtmlString(this._exportVersion.Product) +"</td></tr>");
 				output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(496,_webSession.SiteLanguage) + "</td><td>: "+ this._exportVersion.FirstInsertionDate.Substring(6,2) +"/"+ this._exportVersion.FirstInsertionDate.Substring(4,2) +"/"+ this._exportVersion.FirstInsertionDate.Substring(0,4) +"</td></tr>");
 				output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(144,_webSession.SiteLanguage) + "</td><td>: "+ this._exportVersion.NbInsertion +"</td></tr>");
 				output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1999,_webSession.SiteLanguage) + "</td><td>: "+ this._exportVersion.NbMedia +"</td></tr>");
@@ -286,9 +298,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			//this is the id of the product selected from the products dropdownlist. 0 id refers to the whole univers i.e. if no prodcut is
 			//selected its by default the whole univers and is represeted by product id 0.
 			Int64 idProduct=0;
-			string idProductString = _webSession.GetSelection(_webSession.CurrentUniversProduct,CustomerRightConstante.type.productAccess);
-			if(TNS.AdExpress.Web.Functions.CheckedText.IsStringEmpty(idProductString)) {
-				idProduct=Int64.Parse(idProductString);
+			if (_showProduct) {
+				string idProductString = _webSession.GetSelection(_webSession.CurrentUniversProduct, CustomerRightConstante.type.productAccess);
+				if (TNS.AdExpress.Web.Functions.CheckedText.IsStringEmpty(idProductString)) {
+					idProduct = Int64.Parse(idProductString);
+				}
 			}
 			#endregion
 
@@ -310,7 +324,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
  
 				
 				//Nom du Produit
-				output.Append("<tr valign=\"top\"><td nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1418,_webSession.SiteLanguage)) + "</td><td nowrap> : &nbsp;&nbsp;&nbsp;"+ Convertion.ToHtmlString(this._exportAPPMVersion.Product) + "</td></tr>");
+				if (_showProduct) output.Append("<tr valign=\"top\"><td nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1418, _webSession.SiteLanguage)) + "</td><td nowrap> : &nbsp;&nbsp;&nbsp;" + Convertion.ToHtmlString(this._exportAPPMVersion.Product) + "</td></tr>");
 				//Nom de la marque
 				if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) {
 					output.Append("<tr valign=\"top\"><td nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(2001,_webSession.SiteLanguage)) + "</td><td nowrap> : &nbsp;&nbsp;&nbsp;"+ Convertion.ToHtmlString(this._exportAPPMVersion.Brand) + "</td></tr>");
@@ -376,7 +390,6 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 								
 				output.Append("</TABLE></td>");
 
-				//output.Append("<td bgcolor=\"#ffffff\" style=\"WIDTH: 30px; BORDER-RIGHT: white 0px solid;BORDER-LEFT: white 1px solid\"><font color=#ffffff>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></td>");
 			} 
 			output.Append("</tr>");
 
@@ -385,9 +398,6 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			output.Append("<font size=1>");
 			output.Append("&nbsp;"+this._exportAPPMVersion.Id);
 			output.Append("</font>");
-			//			output.Append("</td></tr>");
-			//
-			//			output.Append("</TABLE>");
 			output.Append("</tr>");
 			output.Append("<tr><td bgcolor=\"#ffffff\" style=\"HEIGHT: 15px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\"></td></tr>");
 
@@ -427,8 +437,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 				output.Append("</font>");
 				output.Append("</td></tr>");
 				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \">&nbsp;" + GestionWeb.GetWebWord(176,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.Advertiser  + "</td></tr>");
-				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \" >&nbsp;" + GestionWeb.GetWebWord(174,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.Group  +"</td></tr>"); 
-				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \" >&nbsp;" + GestionWeb.GetWebWord(468,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.Product  +"</td></tr>"); 
+				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \" >&nbsp;" + GestionWeb.GetWebWord(174,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.Group  +"</td></tr>");
+				if (_showProduct) output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \" >&nbsp;" + GestionWeb.GetWebWord(468, _webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; " + this._exportVersion.Product + "</td></tr>"); 
 				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \"  nowrap>&nbsp;" + GestionWeb.GetWebWord(496,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.FirstInsertionDate.Substring(6,2) +"/"+ this._exportVersion.FirstInsertionDate.Substring(4,2) +"/"+ this._exportVersion.FirstInsertionDate.Substring(0,4) +"</td></tr>");
 				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \"  nowrap>&nbsp;" + GestionWeb.GetWebWord(144,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.NbInsertion  +"</td></tr>"); 
 				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \"  nowrap>&nbsp;" + GestionWeb.GetWebWord(1999,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.NbMedia  +"</td></tr>"); 
@@ -480,8 +490,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 				output.Append("</font>");
 				output.Append("</td></tr>");
 				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \">&nbsp;" + GestionWeb.GetWebWord(176,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.Advertiser  + "</td></tr>");
-				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \" >&nbsp;" + GestionWeb.GetWebWord(174,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.Group  +"</td></tr>"); 
-				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \" >&nbsp;" + GestionWeb.GetWebWord(468,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.Product  +"</td></tr>"); 
+				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \" >&nbsp;" + GestionWeb.GetWebWord(174,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.Group  +"</td></tr>");
+				if (_showProduct) output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \" >&nbsp;" + GestionWeb.GetWebWord(468, _webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; " + this._exportVersion.Product + "</td></tr>"); 
 				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \"  nowrap>&nbsp;" + GestionWeb.GetWebWord(496,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.FirstInsertionDate.Substring(6,2) +"/"+ this._exportVersion.FirstInsertionDate.Substring(4,2) +"/"+ this._exportVersion.FirstInsertionDate.Substring(0,4) +"</td></tr>");
 				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \"  nowrap>&nbsp;" + GestionWeb.GetWebWord(144,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.NbInsertion  +"</td></tr>"); 
 				output.Append("<tr valign=\"top\"><td width=\"150\" bgcolor=\"#ffffff\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: " + color + " 1px solid \"  nowrap>&nbsp;" + GestionWeb.GetWebWord(1999,_webSession.SiteLanguage) + "</td><td bgcolor=\"#ffffff\"  style=\"BORDER-TOP: #644883 1px solid; BORDER-RIGHT: " + color + " 1px solid\">&nbsp; "+ this._exportVersion.NbMedia  +"</td></tr>"); 
@@ -523,7 +533,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
                 output.Append("<td valign=\"top\"><TABLE width=\"300\" cellSpacing=\"0\" border=\"0\" class=\"txtViolet11Bold\" valign=\"top\">");
                 output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(176, _webSession.SiteLanguage) + "</td><td width=\"550\">: " + Convertion.ToHtmlString(this._exportMDVersion.Advertiser) + "</td></tr>");
                 output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(174, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportMDVersion.Group) + "</td></tr>");
-                output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(468, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportMDVersion.Product) + "</td></tr>");
+				if (_showProduct) output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(468, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportMDVersion.Product) + "</td></tr>");
                 if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_POIDS_MARKETING_DIRECT))
                     output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(2220, _webSession.SiteLanguage) + "</td><td>: " + this._exportMDVersion.Weight + "</td></tr>");
                 output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1423, _webSession.SiteLanguage) + "</td><td>: " + this._exportMDVersion.ExpenditureEuro + "</td></tr>");
@@ -603,7 +613,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
                 output.Append("<td valign=\"top\"><TABLE width=\"300\" cellSpacing=\"0\" border=\"0\" class=\"txtViolet11Bold\" valign=\"top\">");
                 output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(176, _webSession.SiteLanguage) + "</td><td width=\"550\">: " + Convertion.ToHtmlString(this._exportOutdoorVersion.Advertiser) + "</td></tr>");
                 output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(174, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportOutdoorVersion.Group) + "</td></tr>");
-                output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(468, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportOutdoorVersion.Product) + "</td></tr>");
+				if (_showProduct) output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(468, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportOutdoorVersion.Product) + "</td></tr>");
                 output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1888, _webSession.SiteLanguage) + "</td><td>: " + this._exportOutdoorVersion.Id + "</td></tr>");
                 output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1712, _webSession.SiteLanguage) + "</td><td>: " + this._exportOutdoorVersion.ExpenditureEuro + "</td></tr>");
                 output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1604, _webSession.SiteLanguage) + "</td><td>: " + this._exportOutdoorVersion.NbBoards + "</td></tr>");

@@ -20,6 +20,7 @@ using CstComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.Co
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstUnit = TNS.AdExpress.Constantes.Web.CustomerSessions.Unit;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 
 using TNS.AdExpress.Classification;
@@ -177,7 +178,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         public override StringBuilder GetResult()
         {
             StringBuilder str = new StringBuilder(50000);
-	
+			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
             #region CSS Styles
             string cssTotalLabel = "pmtotal";
             string cssTotalNb = "pmtotalnb";
@@ -275,13 +277,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			//First advertiser (optionnels)		
 			str.AppendFormat("<td nowrap class=\"p2\" colSpan=\"2\">{0}</td>", GestionWeb.GetWebWord(1154,_session.SiteLanguage));
 			str.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(437,_session.SiteLanguage));
-			//Separator
-			if(!_excel){
-                str.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
+
+			if (showProduct) {
+				//Separator
+				if (!_excel) {
+					str.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
+				}
+				//1er références (optionnels)		
+				str.AppendFormat("<td nowrap class=\"p2\" colSpan=\"2\">{0}</td>", GestionWeb.GetWebWord(1155, _session.SiteLanguage));
+				str.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(437, _session.SiteLanguage));
 			}
-			//1er références (optionnels)		
-            str.AppendFormat("<td nowrap class=\"p2\" colSpan=\"2\">{0}</td>", GestionWeb.GetWebWord(1155, _session.SiteLanguage));
-			str.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(437,_session.SiteLanguage));
 			str.Append("</tr>");
 			#endregion
 
@@ -294,9 +299,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             object advLabel;
             object advInvest;
             object advSOV;
-            object refLabel;
-            object refInvest;
-            object refSOV;
+            object refLabel=null;
+            object refInvest=null;
+            object refSOV=null;
             DataRow[] foundRows;
             string cssLabel = cssTotalLabel;
             string cssNb = cssTotalNb;
@@ -318,10 +323,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     advLabel = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_ADVERTISER_COLUMN_INDEX];
                     advInvest = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_ADVERTISER_INVEST_COLUMN_INDEX];
                     advSOV = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_ADVERTISER_SOV_COLUMN_INDEX];
-                    refLabel = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_COLUMN_INDEX];
-                    refInvest = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_INVEST_COLUMN_INDEX];
-                    refSOV = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_SOV_COLUMN_INDEX];
-
+					if (showProduct) {
+						refLabel = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_COLUMN_INDEX];
+						refInvest = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_INVEST_COLUMN_INDEX];
+						refSOV = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_SOV_COLUMN_INDEX];
+					}
                     AppendLine(str, GestionWeb.GetWebWord(1189, _session.SiteLanguage), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
 
                     str.Append("</tr>");
@@ -350,9 +356,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             advLabel = foundRows[0]["ADVERTISER"];
                             advInvest = foundRows[0]["INVESTMENT_ADVERTISER"];
                             advSOV = foundRows[0]["SOV_FIRST_ADVERTISER"];
-                            refLabel = foundRows[0]["PRODUCT"];
-                            refInvest = foundRows[0]["INVESTMENT_PRODUCT"];
-                            refSOV = foundRows[0]["SOV_FIRST_PRODUCT"];
+							if (showProduct) {
+								refLabel = foundRows[0]["PRODUCT"];
+								refInvest = foundRows[0]["INVESTMENT_PRODUCT"];
+								refSOV = foundRows[0]["SOV_FIRST_PRODUCT"];
+							}
 
                             AppendLine(str, GestionWeb.GetWebWord(1190, _session.SiteLanguage), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
 
@@ -376,10 +384,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     advLabel = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_ADVERTISER_COLUMN_INDEX];
                     advInvest = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_ADVERTISER_INVEST_COLUMN_INDEX];
                     advSOV = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_ADVERTISER_SOV_COLUMN_INDEX];
-                    refLabel = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_COLUMN_INDEX];
-                    refInvest = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_INVEST_COLUMN_INDEX];
-                    refSOV = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_SOV_COLUMN_INDEX];
-
+					if (showProduct) {
+						refLabel = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_COLUMN_INDEX];
+						refInvest = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_INVEST_COLUMN_INDEX];
+						refSOV = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_SOV_COLUMN_INDEX];
+					}
                     AppendLine(str, GestionWeb.GetWebWord(1188, _session.SiteLanguage), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
 
                     str.Append("</tr>");
@@ -468,6 +477,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
 
             object[] tabResult = new object[4];
+			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
             #region Calculs pour le total support(univers,marché ou famille) et , les annonceurs et des références
 
@@ -487,7 +497,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 if (dt.Rows.Count > 0)
                 {
-                    oTotalAdvert = GetGlobalParams(dt, true);
+                    oTotalAdvert = GetGlobalParams(dt, true,showProduct);
                     //initialisation du tableau de résultats pour annonceurs de références ou concurrents
                     tab = (object[,])oTotalAdvert[2];
                 }
@@ -508,7 +518,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //insertion des données dans le tableau
             if (dsTotalUniverse != null && dsTotalUniverse.Tables[0] != null && dsTotalUniverse.Tables[0].Rows.Count > 0)
             {
-                oTotalUniv = GetGlobalParams(dsTotalUniverse.Tables[0], false);
+                oTotalUniv = GetGlobalParams(dsTotalUniverse.Tables[0], false,showProduct);
                 tabTotalUniv = (object[,])oTotalUniv[2];
             }
             #endregion
@@ -543,7 +553,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 if (dsTotal != null && dsTotal.Tables[0] != null && (dsTotal.Tables[0].Rows.Count > 0))
                 {
-                    oTotal = GetGlobalParams(dsTotal.Tables[0], false);
+                    oTotal = GetGlobalParams(dsTotal.Tables[0], false,showProduct);
                     if (oTotal != null)
                     {
                         tabTotal = (object[,])oTotal[2];
@@ -597,9 +607,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 tab[0, FIRST_ADVERTISER_COLUMN_INDEX] = GestionWeb.GetWebWord(1154, _session.SiteLanguage);
                 tab[0, FIRST_ADVERTISER_INVEST_COLUMN_INDEX] = "FirstAdInvest";
                 tab[0, FIRST_ADVERTISER_SOV_COLUMN_INDEX] = GestionWeb.GetWebWord(437, _session.SiteLanguage);
-                tab[0, FIRST_PRODUCT_COLUMN_INDEX] = GestionWeb.GetWebWord(1155, _session.SiteLanguage);
-                tab[0, FIRST_PRODUCT_INVEST_COLUMN_INDEX] = "FirstRefInvest";
-                tab[0, FIRST_PRODUCT_SOV_COLUMN_INDEX] = GestionWeb.GetWebWord(437, _session.SiteLanguage);
+				if (showProduct) {
+					tab[0, FIRST_PRODUCT_COLUMN_INDEX] = GestionWeb.GetWebWord(1155, _session.SiteLanguage);
+					tab[0, FIRST_PRODUCT_INVEST_COLUMN_INDEX] = "FirstRefInvest";
+					tab[0, FIRST_PRODUCT_SOV_COLUMN_INDEX] = GestionWeb.GetWebWord(437, _session.SiteLanguage);
+				}
                 #endregion
 
                 #region calcul avec droits produits
@@ -836,9 +848,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Retourne le nombre d'annonceurs ou références , le 1er annonceur ou référence et son investissement
         /// </summary>
         /// <param name="dt">DataTable</param>
-        /// <param name="isAdvertCalculation">Est ce que le calcule concerne les annonceurs</param>	
+        /// <param name="isAdvertCalculation">Est ce que le calcule concerne les annonceurs</param>
+		/// <param name="showProduct">True if show product</param>
         /// <returns> object[] avec nombre d'annonceurs , le 1er annonceur et son investissement</returns>
-        protected object[] GetGlobalParams(DataTable dt, bool isAdvertCalculation)
+        protected object[] GetGlobalParams(DataTable dt, bool isAdvertCalculation,bool showProduct)
         {
 
             #region Variables annonceurs
@@ -920,7 +933,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     #endregion
 
                     #region produit
-                    if (oldIdProduct != (Int64)currentRow["id_product"] && !IdProductComputedList.Contains(Int64.Parse(currentRow["id_product"].ToString())) && start == 1)
+                    if ( showProduct && oldIdProduct != (Int64)currentRow["id_product"] && !IdProductComputedList.Contains(Int64.Parse(currentRow["id_product"].ToString())) && start == 1)
                     {
                         //nombre de produits
                         nbProduct++;
@@ -1015,7 +1028,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 (TempForAdSov != null && Decimal.Parse(tab[TotStartIndex, INVESTMENT_COLUMN_INDEX].ToString()) > (Decimal)0.0) ? (Decimal.Parse(AdValues[indexLine, 1].ToString()) * (Decimal)100.0) / Decimal.Parse(tab[TotStartIndex, INVESTMENT_COLUMN_INDEX].ToString()) : (Decimal)0.0;
                         }
                     }
-                    if (RefValues != null && RefValues.Length > 0)
+                    if (showProduct && RefValues != null && RefValues.Length > 0)
                     {
                         //1ere référence
                         if (RefValues[indexLine, 2] != null) tab[TotStartIndex, FIRST_PRODUCT_COLUMN_INDEX] = RefValues[indexLine, 2].ToString();
@@ -1187,7 +1200,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <param name="refSOV">First Product Share of voice</param>
         protected void AppendLine(StringBuilder str, string lineLabel, string cssLabel, string cssNb, object invest, object evol, object refNb, object avgInvest, object advLabel, object advInvest, object advSOV, object refLabel, object refInvest, object refSOV)
         {
-
+			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             string img = "/I/p.gif";
             str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", lineLabel, cssLabel);
             if (invest != null)
@@ -1267,24 +1280,22 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 {
                     str.AppendFormat("<td class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(advSOV, _session.Unit, true), cssNb);
                 }
-                //Separator
-                if (!_excel)
-                {
-                    str.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
-                }
-                //1st refrrence (optionnels)	
-                if (refLabel != null)
-                {
-                    str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", refLabel, cssLabel);
-                }
-                if (refInvest != null)
-                {
-                    str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refInvest, _session.Unit), cssNb);
-                }
-                if (refSOV != null)
-                {
-                    str.AppendFormat("<td class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(refSOV, _session.Unit, true), cssNb);
-                }
+				if (showProduct) {
+					//Separator
+					if (!_excel) {
+						str.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
+					}
+					//1st refrrence (optionnels)	
+					if (refLabel != null) {
+						str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", refLabel, cssLabel);
+					}
+					if (refInvest != null) {
+						str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refInvest, _session.Unit), cssNb);
+					}
+					if (refSOV != null) {
+						str.AppendFormat("<td class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(refSOV, _session.Unit, true), cssNb);
+					}
+				}
             }
             else
             {

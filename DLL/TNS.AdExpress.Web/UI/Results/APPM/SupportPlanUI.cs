@@ -20,6 +20,7 @@ using TxtFct = TNS.AdExpress.Web.Functions.Text;
 using TNS.FrameWork;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 
 namespace TNS.AdExpress.Web.UI.Results.APPM
@@ -53,14 +54,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 
 			StringBuilder html = new StringBuilder();
 
-//			html.Append("<table border=\"1\">");
-//			foreach(DataRow row in dtResult.Rows){
-//				html.Append("<tr>");
-//				foreach(object obj in row.ItemArray){
-//					html.Append("<td>" + obj.ToString() +"</td>");
-//				}
-//				html.Append("</tr>");
-//			}
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 
 			#region css styles
 			string header_css = (!excel)?"astd0":"astd0x";
@@ -106,7 +101,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 				}
 				html.Append("<tr class=\"" + css +"\">");
 				html.Append("<td nowrap align=\"left\">");
-				if (css == md_css && !excel){
+				if (css == md_css && !excel && showProduct){
 					html.Append("<a class=\"acl1\" href=\"javascript:PopUpInsertion('"+webSession.IdSession + "','"
 						+ row["idMedia"] + "');\">> ");
 				}

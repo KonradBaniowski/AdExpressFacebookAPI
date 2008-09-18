@@ -168,9 +168,11 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             #endregion
 
             #region Number of product
-            ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberProduct);
-            dt = ds.Tables[0];
-            numberProduct = dt.Rows[0]["nbLines"].ToString();
+			if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+				ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberProduct);
+				dt = ds.Tables[0];
+				numberProduct = dt.Rows[0]["nbLines"].ToString();
+			}
             #endregion
 
             #region Number of advertiser
@@ -192,20 +194,7 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             #region Period
             DateTime dtFirstDate = DateTime.Today;
             DateTime dtLastDate = DateTime.Today;
-            if (isAlertModule) {
-
-                #region Outdoor
-                //if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
-                //    if (firstDate.Length > 0) {
-                //        dtFirstDate = Convert.ToDateTime(firstDate);
-                //        dtFirstDate = dtFirstDate.Date;
-                //    }
-                //    if (lastDate.Length > 0) {
-                //        dtLastDate = Convert.ToDateTime(lastDate);
-                //        dtLastDate = dtLastDate.Date;
-                //    }
-                //}
-                #endregion
+            if (isAlertModule) {              
 
                 if (firstDate.Length > 0) {
                     dtFirstDate = new DateTime(int.Parse(firstDate.Substring(0, 4)), int.Parse(firstDate.Substring(4, 2)), int.Parse(firstDate.Substring(6, 2)));
@@ -260,22 +249,7 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             #region Building resultTable
             if (!isAlertModule
                 || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
-
-                #region Outdoor
-                // Date begin and date end for outdooor
-                //if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
-                //    lineIndex = resultTable.AddNewLine(lineType);
-                //    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
-                //    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
-
-                //    ChangeLineType(ref lineType);
-
-                //    lineIndex = resultTable.AddNewLine(lineType);
-                //    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1608, _webSession.SiteLanguage));
-                //    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
-                //}
-                #endregion
-
+               
                 // Period selected
                     lineIndex = resultTable.AddNewLine(lineType);
                     if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press && isAlertModule)
@@ -338,13 +312,13 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellEuro(double.Parse(investment));
                 ChangeLineType(ref lineType);
             }
-
-            //Nombre de produits
-            lineIndex = resultTable.AddNewLine(lineType);
-            resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage));
-            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberProduct.ToString()));
-            ChangeLineType(ref lineType);
-
+			if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+				//Nombre de produits
+				lineIndex = resultTable.AddNewLine(lineType);
+				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage));
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberProduct.ToString()));
+				ChangeLineType(ref lineType);
+			}
             //Nombre d'annonceurs
             lineIndex = resultTable.AddNewLine(lineType);
             resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));

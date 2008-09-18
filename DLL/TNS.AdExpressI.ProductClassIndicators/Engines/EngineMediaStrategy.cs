@@ -22,11 +22,11 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstMediaStrategy = TNS.AdExpress.Constantes.FrameWork.Results.MediaStrategy;
 using CstUnit = TNS.AdExpress.Constantes.Web.CustomerSessions.Unit;
 using CstDbClassif = TNS.AdExpress.Constantes.Classification.DB;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstInvestmentType = TNS.AdExpress.Constantes.FrameWork.Results.MediaStrategy.InvestmentType;
 using CstRight = TNS.AdExpress.Constantes.Customer.Right;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
-
 
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
@@ -288,15 +288,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             t.AppendFormat("<td nowrap class=\"{0}\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1154, _session.SiteLanguage));
             //Investments
             t.AppendFormat("<td nowrap class=\"{0}\">{1} {2}</td>", cssHeader, GestionWeb.GetWebWord(1246, _session.SiteLanguage), _periodEnd.Year);
-            //Separator
-            if (!_excel)
-            {
-                t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
-            }
-            //First product
-            t.AppendFormat("<td nowrap class=\"{0}\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1155, _session.SiteLanguage));
-            //Investments
-            t.AppendFormat("<td nowrap class=\"{0}\">{1} {2}</td>", cssHeader, GestionWeb.GetWebWord(1246, _session.SiteLanguage), _periodEnd.Year);
+			if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+				//Separator
+				if (!_excel) {
+					t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
+				}
+				//First product
+				t.AppendFormat("<td nowrap class=\"{0}\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1155, _session.SiteLanguage));
+				//Investments
+				t.AppendFormat("<td nowrap class=\"{0}\">{1} {2}</td>", cssHeader, GestionWeb.GetWebWord(1246, _session.SiteLanguage), _periodEnd.Year);
+			}
             t.Append("</tr>");
             #endregion
 
@@ -649,28 +650,25 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
             }
-            //Separator
-            if (!_excel)
-            {
-                t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
-            }
-            //First Advertiser
-            if (oRefLabel != null)
-            {
-                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, oRefLabel);
-            }
-            else
-            {
-                t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssLabel);
-            }
-            if (oRefInvest != null)
-            {
-                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(oRefInvest, _session.Unit));
-            }
-            else
-            {
-                t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
-            }
+			if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+				//Separator
+				if (!_excel) {
+					t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
+				}
+				//First Product
+				if (oRefLabel != null) {
+					t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, oRefLabel);
+				}
+				else {
+					t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssLabel);
+				}
+				if (oRefInvest != null) {
+					t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(oRefInvest, _session.Unit));
+				}
+				else {
+					t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
+				}
+			}
             t.Append("</tr>");
         }
         #endregion
@@ -2805,9 +2803,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             //Données pour première référence par média (vehicle)
-            dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.vehicleLevel, false);
-            if (dsTotalFirstProduct != null && dsTotalFirstProduct.Tables[0] != null && dsTotalFirstProduct.Tables[0].Rows.Count > 0)
-                dt1stProductByVeh = dsTotalFirstProduct.Tables[0];
+			if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+				dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.vehicleLevel, false);
+				if (dsTotalFirstProduct != null && dsTotalFirstProduct.Tables[0] != null && dsTotalFirstProduct.Tables[0].Rows.Count > 0)
+					dt1stProductByVeh = dsTotalFirstProduct.Tables[0];
+			}
 
             //Données pour premier annonceur par média (vehicle)
             dsTotalFirstAdvertiser = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.advertiser, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.vehicleLevel, false);
@@ -2816,9 +2816,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             if ((CstResult.MediaStrategy.MediaLevel.categoryLevel == mediaLevel) || (CstResult.MediaStrategy.MediaLevel.mediaLevel == mediaLevel))
             {
                 //Données pour première référence par média (catégorie)
-                dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.categoryLevel, false);
-                if (dsTotalFirstProduct != null && dsTotalFirstProduct.Tables[0] != null && dsTotalFirstProduct.Tables[0].Rows.Count > 0)
-                    dt1stProductByCat = dsTotalFirstProduct.Tables[0];
+				if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+					dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.categoryLevel, false);
+					if (dsTotalFirstProduct != null && dsTotalFirstProduct.Tables[0] != null && dsTotalFirstProduct.Tables[0].Rows.Count > 0)
+						dt1stProductByCat = dsTotalFirstProduct.Tables[0];
+				}
 
                 //Données pour premier annonceur par média (catégorie)
                 dsTotalFirstAdvertiser = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.advertiser, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.categoryLevel, false);
@@ -2828,9 +2830,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             if (CstResult.MediaStrategy.MediaLevel.mediaLevel == mediaLevel)
             {
                 //Données pour première référence par support
-                dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.mediaLevel, false);
-                if (dsTotalFirstProduct != null && dsTotalFirstProduct.Tables[0] != null && dsTotalFirstProduct.Tables[0].Rows.Count > 0)
-                    dt1stProductByMed = dsTotalFirstProduct.Tables[0];
+				if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+					dsTotalFirstProduct = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.product, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.mediaLevel, false);
+					if (dsTotalFirstProduct != null && dsTotalFirstProduct.Tables[0] != null && dsTotalFirstProduct.Tables[0].Rows.Count > 0)
+						dt1stProductByMed = dsTotalFirstProduct.Tables[0];
+				}
 
                 //Données pour premier annonceur par support
                 dsTotalFirstAdvertiser = _dalLayer.GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType.advertiser, comparisonCriterion, CstResult.MediaStrategy.MediaLevel.mediaLevel, false);

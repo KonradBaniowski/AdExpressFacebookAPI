@@ -290,12 +290,22 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				case DetailLevelItemInformation.Levels.subSector:
 				case DetailLevelItemInformation.Levels.group:
 				case DetailLevelItemInformation.Levels.segment:
-				case DetailLevelItemInformation.Levels.product:
 				case DetailLevelItemInformation.Levels.advertiser:
 					if(// Droit sur les niveaux de détail produit
 						CheckProductDetailLevelAccess())return(true);
 					return(false);
 					#endregion
+
+					#region Products
+				case DetailLevelItemInformation.Levels.product:
+					if (// Droit sur les niveaux de détail produit
+						CheckProductDetailLevelAccess() &&
+						// Products level rights
+						_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
+						) return (true);
+					return (false);
+				#endregion
+
 					#region Marques
 				case DetailLevelItemInformation.Levels.brand:
 					if(// Droit sur les niveaux de détail produit

@@ -48,6 +48,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			string styleValue="portofolio22";
 			bool mediaAgencyAccess=false;
 			string idProductString = "";
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			#endregion
 
 			#region Media Agency rights
@@ -63,11 +65,13 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			//this is the id of the product selected from the products dropdownlist. 0 id refers to the whole univers i.e. if no prodcut is
 			//selected its by default the whole univers and is represeted by product id 0.
 			Int64 idProduct=0;
-			//string idProductString = webSession.GetSelection(webSession.CurrentUniversProduct,CustomerRightConstante.type.productAccess);
-			if(webSession.SecondaryProductUniverses.Count>0 && webSession.SecondaryProductUniverses.ContainsKey(0) && webSession.SecondaryProductUniverses[0].Contains(0))
-			idProductString = webSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.PRODUCT);
-			if(WebFunctions.CheckedText.IsStringEmpty(idProductString)){
-				idProduct=Int64.Parse(idProductString);
+			if (showProduct) {
+				//string idProductString = webSession.GetSelection(webSession.CurrentUniversProduct,CustomerRightConstante.type.productAccess);
+				if (webSession.SecondaryProductUniverses.Count > 0 && webSession.SecondaryProductUniverses.ContainsKey(0) && webSession.SecondaryProductUniverses[0].Contains(0))
+					idProductString = webSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.PRODUCT);
+				if (WebFunctions.CheckedText.IsStringEmpty(idProductString)) {
+					idProduct = Int64.Parse(idProductString);
+				}
 			}
 			#endregion
 
@@ -83,8 +87,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					t.Append("<table  border=0 cellpadding=0 cellspacing=0 width=600 >");
 					//titre
 					//t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;font-size: 16px\">"+GestionWeb.GetWebWord(1666,webSession.SiteLanguage)+"</td></tr>");
-                    t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"portofolioSynthesisBorderHeader\" align=\"center\">" + GestionWeb.GetWebWord(1666, webSession.SiteLanguage) + "</td></tr>");	
-					if(idProduct!=0){
+                    t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"portofolioSynthesisBorderHeader\" align=\"center\">" + GestionWeb.GetWebWord(1666, webSession.SiteLanguage) + "</td></tr>");
+					if (idProduct != 0 && showProduct) {
 						//Nom du Produit
 						t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1418,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["product"]+"</td></tr>");	
 						//Nom de l'announceur
@@ -209,6 +213,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			string styleValue="portofolio22";
 			bool mediaAgencyAccess=false;
 			string idProductString = "";
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			#endregion
 
 			#region Media Agency rights
@@ -224,12 +229,14 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			//this is the id of the product selected from the products dropdownlist. 0 id refers to the whole univers i.e. if no prodcut is
 			//selected its by default the whole univers and is represeted by product id 0.
 			Int64 idProduct=0;
-			//string idProductString = webSession.GetSelection(webSession.CurrentUniversProduct,CustomerRightConstante.type.productAccess);
-			if (webSession.SecondaryProductUniverses.Count > 0 && webSession.SecondaryProductUniverses.ContainsKey(0) && webSession.SecondaryProductUniverses[0].Contains(0))
-				idProductString = webSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.PRODUCT);
+			if (showProduct) {
+				//string idProductString = webSession.GetSelection(webSession.CurrentUniversProduct,CustomerRightConstante.type.productAccess);
+				if (webSession.SecondaryProductUniverses.Count > 0 && webSession.SecondaryProductUniverses.ContainsKey(0) && webSession.SecondaryProductUniverses[0].Contains(0))
+					idProductString = webSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.PRODUCT);
 
-			if(WebFunctions.CheckedText.IsStringEmpty(idProductString)){
-				idProduct=Int64.Parse(idProductString);
+				if (WebFunctions.CheckedText.IsStringEmpty(idProductString)) {
+					idProduct = Int64.Parse(idProductString);
+				}
 			}
 			#endregion
 
@@ -274,13 +281,14 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
                     t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" class=\"synthesisUiTitle\">" + GestionWeb.GetWebWord(2003, webSession.SiteLanguage) + "</td></tr>");	
 						
 						//Numéro de version
-						t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(2005,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["version"]+"</td></tr>");	
+						t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(2005,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["version"]+"</td></tr>");
 
-						//Nom du Produit
-						styleTitle=InvertStyle(styleTitle);
-						styleValue=InvertStyle(styleValue);
-						t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1418,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["product"]+"</td></tr>");	
-						
+						if (showProduct) {
+							//Nom du Produit
+							styleTitle = InvertStyle(styleTitle);
+							styleValue = InvertStyle(styleValue);
+							t.Append("\r\n\t<tr ><td class=\"" + styleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1418, webSession.SiteLanguage) + " : " + "</td><td class=\"" + styleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + synthesisData["product"] + "</td></tr>");
+						}
 						//Nom de la marque
 						if(webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE)){
 							styleTitle=InvertStyle(styleTitle);

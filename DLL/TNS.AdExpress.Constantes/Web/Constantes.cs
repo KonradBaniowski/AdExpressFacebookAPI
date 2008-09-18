@@ -1720,10 +1720,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Index de la colonne annonceur
         /// </summary>
         public const int ADVERTISER_INDEX = 4;
-        /// <summary>
-        /// Index de la colonne produit
-        /// </summary>
-        public const int PRODUCT_INDEX = 5;
+		/// <summary>
+		/// Index de la colonne mail content
+		/// </summary>
+		public const int MAIL_CONTENT_INDEX = 5;
         /// <summary>
         /// Index de la colonne groupe
         /// </summary>
@@ -1771,11 +1771,11 @@ namespace TNS.AdExpress.Constantes.Web{
         /// <summary>
         /// Index de la colonne mailing rapidity
         /// </summary>
-        public const int MAILING_RAPIDITY_INDEX = 17;
-        /// <summary>
-        /// Index de la colonne mail content
-        /// </summary>
-        public const int MAIL_CONTENT_INDEX = 18;
+        public const int MAILING_RAPIDITY_INDEX = 17;       
+		/// <summary>
+		/// Index de la colonne produit
+		/// </summary>
+		public const int PRODUCT_INDEX = 18;
                
     }
     

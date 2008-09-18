@@ -76,8 +76,10 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         public override CreativeItem GetInstance(DataRow row, WebSession session) {
 
             long id = Convert.ToInt64(row["version"]);
+
             CreativePresse item = new CreativePresse(id);
             item.Session = session;
+			item.ShowProduct = session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
             FieldInstance(row, item);
 
@@ -162,11 +164,13 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
                 , this._group
                 , GestionWeb.GetWebWord(144, _session.SiteLanguage)
                 , this._insertNb.ToString("### ### ### ### ##0"));
-            output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td class=\"tdsepar\">:</td><td>{3}</td></tr>"
-                , GestionWeb.GetWebWord(858, _session.SiteLanguage)
-                , this._product
-                , GestionWeb.GetWebWord(2251, _session.SiteLanguage)
-                , this._pageNumber.ToString("### ### ### ### ##0.###"));
+			if (_showProduct) {
+				output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td class=\"tdsepar\">:</td><td>{3}</td></tr>"
+					, GestionWeb.GetWebWord(858, _session.SiteLanguage)
+					, this._product
+					, GestionWeb.GetWebWord(2251, _session.SiteLanguage)
+					, this._pageNumber.ToString("### ### ### ### ##0.###"));
+			}
             output.AppendFormat("<tr valign=\"top\"><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td class=\"tdsepar\">:</td><td>{3}</td></tr>"
                 , GestionWeb.GetWebWord(1987, _session.SiteLanguage)
                 , this._id

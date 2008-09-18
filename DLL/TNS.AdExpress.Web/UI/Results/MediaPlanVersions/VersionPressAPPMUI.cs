@@ -64,7 +64,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions {
 			//Render version synthesis
 			output.Append("<br>");
 			//Link and javascript call to open synthesis
-			output.Append("<a class=\"roll02\" href=\"javascript:popupOpen('/Private/Results/APPMVersionSynthesis.aspx?idSession="+ _webSession.IdSession +"&idVersion=" + this._version.Id+"&firstInsertionDate=" +this._version.Parution+"','800','600');\">&nbsp;" + GestionWeb.GetWebWord(1664, _webSession.SiteLanguage) + "</a>");			
+			if(_showProduct) output.Append("<a class=\"roll02\" href=\"javascript:popupOpen('/Private/Results/APPMVersionSynthesis.aspx?idSession="+ _webSession.IdSession +"&idVersion=" + this._version.Id+"&firstInsertionDate=" +this._version.Parution+"','800','600');\">&nbsp;" + GestionWeb.GetWebWord(1664, _webSession.SiteLanguage) + "</a>");			
 			output.Append("</p></td></tr>");
 			output.Append("</table>");
 			output.Append("</td></tr>");

@@ -222,14 +222,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
                 // Niveau de produit
                 sql.Append(SQLGenerator.getLevelProduct(webSession, DbTables.WEB_PLAN_PREFIXE, true));
                 // Produit à exclure en radio
-                sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DbTables.WEB_PLAN_PREFIXE, true, false));
-
-                #region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection)
+				//sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DbTables.WEB_PLAN_PREFIXE, true, false));
+				sql.Append(SQLGenerator.GetExcludeProducts(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DbTables.WEB_PLAN_PREFIXE));
+              
+				#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection)
 
 				// Sélection de Produits
 				if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
 					sql.Append(webSession.PrincipalProductUniverses[0].GetSqlConditions(DbTables.WEB_PLAN_PREFIXE, true));
-
 
                 #endregion
 
@@ -374,11 +374,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			
 				// Niveau de produit
 				sql.Append(SQLGenerator.getLevelProduct(webSession,DbTables.WEB_PLAN_PREFIXE,true));
-				// Produit à exclure en radio
+				
 				if(WebFunctions.Modules.IsSponsorShipTVModule(webSession))
-					sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,true));
+					//Media Universe
+					sql.Append(SQLGenerator.GetResultMediaUniverse(webSession, DbTables.WEB_PLAN_PREFIXE));
 				else
-				sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false));
+					sql.Append(SQLGenerator.GetExcludeProducts(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE));
 
 
 				#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
@@ -597,12 +598,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 			
 			//Catégorie exclusive du parrainage TV
-			if(WebFunctions.Modules.IsSponsorShipTVModule(webSession))
-				sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,true));			
-			else{
-				// Produit à exclure en radio
-				sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false));
-			}
+			if (WebFunctions.Modules.IsSponsorShipTVModule(webSession))
+				//Media Universe
+				sql.Append(SQLGenerator.GetResultMediaUniverse(webSession, DbTables.WEB_PLAN_PREFIXE));
+			else
+				sql.Append(SQLGenerator.GetExcludeProducts(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DbTables.WEB_PLAN_PREFIXE));
+
 
 			#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
 
@@ -703,12 +704,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql.Append(SQLGenerator.getLevelProduct(webSession,DbTables.WEB_PLAN_PREFIXE,true));
 			
 			//Catégorie exclusive du parrainage TV
-			if(WebFunctions.Modules.IsSponsorShipTVModule(webSession))
-				sql.Append(WebFunctions.SQLGenerator.getAdExpressUniverseCondition(WebConstantes.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,DbTables.WEB_PLAN_PREFIXE,true));
-			else{
-				// Produit à exclure en radio
-				sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false));
-			}
+			if (WebFunctions.Modules.IsSponsorShipTVModule(webSession))
+				//Media Universe
+				sql.Append(SQLGenerator.GetResultMediaUniverse(webSession, DbTables.WEB_PLAN_PREFIXE));
+			else
+				sql.Append(SQLGenerator.GetExcludeProducts(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, DbTables.WEB_PLAN_PREFIXE));
+
 
 			#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
 
@@ -827,19 +828,20 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <returns>Chaine contenant les champs à traiter</returns>
         private static string GetFields(DBClassificationConstantes.Vehicles.names idVehicle, ListDictionary mediaList, WebSession webSesssion, string prefixeMediaPlanTable){
 			string sql="";
-					
+			bool showProduct = webSesssion.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+	
 			
 			switch(idVehicle){
 				case DBClassificationConstantes.Vehicles.names.press:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					
-					
-					sql="  "+prefixeMediaPlanTable+".date_media_Num"
-						+", "+prefixeMediaPlanTable+".media_paging"
-						+", group_"
-						+", advertiser"
-						+", product"
-						+", format"
+
+
+					sql = "  " + prefixeMediaPlanTable + ".date_media_Num"
+						+ ", " + prefixeMediaPlanTable + ".media_paging"
+						+ ", group_"
+						+ ", advertiser";
+					sql += (showProduct) ? ", product" : "";
+					sql += ", format"
                         + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
 						+", color"
                         + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
@@ -854,14 +856,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					return sql;
 
 				case DBClassificationConstantes.Vehicles.names.radio:
-					
-					
-						sql=" "+prefixeMediaPlanTable+".date_media_num"
-						+", "+prefixeMediaPlanTable+".id_top_diffusion"
-						+", "+prefixeMediaPlanTable+".associated_file"
-						+", advertiser"
-						+", product"
-						+", group_"
+
+
+					sql = " " + prefixeMediaPlanTable + ".date_media_num"
+					+ ", " + prefixeMediaPlanTable + ".id_top_diffusion"
+					+ ", " + prefixeMediaPlanTable + ".associated_file"
+					+ ", advertiser";
+					sql += (showProduct) ? ", product" : "";
+					sql += ", group_"
                         + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", "+prefixeMediaPlanTable+".rank"
 						+", "+prefixeMediaPlanTable+".duration_commercial_break"
@@ -876,14 +878,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
-					
-					
-						sql=" "+prefixeMediaPlanTable+".date_media_num"
-						+", "+prefixeMediaPlanTable+".top_diffusion"
-						+", "+prefixeMediaPlanTable+".associated_file"
-						+", advertiser"
-						+", product"
-						+", group_"
+
+
+					sql = " " + prefixeMediaPlanTable + ".date_media_num"
+					+ ", " + prefixeMediaPlanTable + ".top_diffusion"
+					+ ", " + prefixeMediaPlanTable + ".associated_file"
+					+ ", advertiser";
+					sql += (showProduct) ? ", product" : "";
+					sql += ", group_"
 						+", "+prefixeMediaPlanTable+"."+UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString()
 						+", "+prefixeMediaPlanTable+".id_rank"
 						+", "+prefixeMediaPlanTable+".duration_commercial_break"
@@ -893,12 +895,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql+=" ,"+GetMediaFields(webSesssion,webSesssion.PreformatedMediaDetail,prefixeMediaPlanTable);
 					return sql;
 
-				case DBClassificationConstantes.Vehicles.names.outdoor:					
-					
-						sql=" "+prefixeMediaPlanTable+".date_media_num"						
-						+", advertiser"
-						+", product"
-						+", group_"
+				case DBClassificationConstantes.Vehicles.names.outdoor:
+
+					sql = " " + prefixeMediaPlanTable + ".date_media_num"
+					+ ", advertiser";
+					sql += (showProduct) ? ", product" : "";
+					sql += ", group_"
                         + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].Id.ToString()
 						+", "+prefixeMediaPlanTable+".type_board"
 						+", "+prefixeMediaPlanTable+".type_sale"
@@ -908,22 +910,24 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql+=" ,"+GetMediaFields(webSesssion,webSesssion.PreformatedMediaDetail,prefixeMediaPlanTable);
 					return sql;
 				case DBClassificationConstantes.Vehicles.names.adnettrack:
-					sql=" distinct "+prefixeMediaPlanTable+".hashcode,"
-					  +" "+prefixeMediaPlanTable+".ASSOCIATED_FILE,"
-					+" "+prefixeMediaPlanTable+".dimension,"
-					+" "+prefixeMediaPlanTable+".format,"					
-					+" "+prefixeMediaPlanTable+".url,product,"+prefixeMediaPlanTable+".id_product,advertiser,"+prefixeMediaPlanTable+".id_advertiser";
+					sql = " distinct " + prefixeMediaPlanTable + ".hashcode,"
+					  + " " + prefixeMediaPlanTable + ".ASSOCIATED_FILE,"
+					+ " " + prefixeMediaPlanTable + ".dimension,"
+					+ " " + prefixeMediaPlanTable + ".format,"
+					+ " " + prefixeMediaPlanTable + ".url";
+					sql += (showProduct) ? ", product" : "";
+					sql +=","+prefixeMediaPlanTable+".id_product,advertiser,"+prefixeMediaPlanTable+".id_advertiser";
 				
 				
 					return sql;
 
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    sql = "  " + DbTables.CATEGORY_PREFIXE + ".id_category, category"
-                       + ", " + DbTables.MEDIA_PREFIXE + ".id_media, media"
-                       + ", " + prefixeMediaPlanTable + ".date_media_num"
-                       + ", " + DbTables.ADVERTISER_PREFIXE + ".id_advertiser, advertiser"
-                       + ", " + DbTables.PRODUCT_PREFIXE + ".id_product, product"
-                       + ", " + DbTables.GROUP_PREFIXE + ".id_group_, group_"
+					sql = "  " + DbTables.CATEGORY_PREFIXE + ".id_category, category"
+					   + ", " + DbTables.MEDIA_PREFIXE + ".id_media, media"
+					   + ", " + prefixeMediaPlanTable + ".date_media_num"
+					   + ", " + DbTables.ADVERTISER_PREFIXE + ".id_advertiser, advertiser";
+					sql += (showProduct) ? ", " + DbTables.PRODUCT_PREFIXE + ".id_product, product" : "";
+                       sql += ", " + DbTables.GROUP_PREFIXE + ".id_group_, group_"
                        + ", " + prefixeMediaPlanTable + ".weight"
                        + ", " + prefixeMediaPlanTable + ".associated_file"
                        + ", sum(" + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + ") as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
@@ -1126,10 +1130,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string tableName="";
 			Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
 			tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle,currentModuleDescription.ModuleType);
-			
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			
 			sql+=DBConstantes.Schema.ADEXPRESS_SCHEMA+".advertiser   "+DbTables.ADVERTISER_PREFIXE;
-			sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".product   "+DbTables.PRODUCT_PREFIXE;		
+			if(showProduct)sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".product   "+DbTables.PRODUCT_PREFIXE;		
 
 			sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+tableName+" "+DbTables.WEB_PLAN_PREFIXE;
 			
@@ -1297,16 +1302,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <param name="dataTablePrefixe">prefixe table média</param>
 		/// <param name="beginByAnd">Vrai si la condition doit commencée par And</param>
 		/// <returns>requete sql</returns>
-        private static void GetJoinConditions(WebSession webSession, StringBuilder sql, DBClassificationConstantes.Vehicles.names idVehicle, ListDictionary mediaList, string dataTablePrefixe, bool beginByAnd){			
-
+        private static void GetJoinConditions(WebSession webSession, StringBuilder sql, DBClassificationConstantes.Vehicles.names idVehicle, ListDictionary mediaList, string dataTablePrefixe, bool beginByAnd){
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			if(beginByAnd) sql.Append(" and ");
 			//produit
-			sql.Append(" "+DbTables.PRODUCT_PREFIXE+".id_product="+dataTablePrefixe+".id_product ");
-			sql.Append(" and "+DbTables.PRODUCT_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append(" and "+DbTables.PRODUCT_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);							
-
+			if (showProduct) {
+				sql.Append(" " + DbTables.PRODUCT_PREFIXE + ".id_product=" + dataTablePrefixe + ".id_product ");
+				sql.Append(" and " + DbTables.PRODUCT_PREFIXE + ".id_language=" + webSession.DataLanguage.ToString());
+				sql.Append(" and " + DbTables.PRODUCT_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
+			}
 			// Annonceur
-			sql.Append(" and "+DbTables.ADVERTISER_PREFIXE+".id_advertiser="+dataTablePrefixe+".id_advertiser ");
+			if (showProduct) sql.Append(" and ");
+			sql.Append("  "+DbTables.ADVERTISER_PREFIXE+".id_advertiser="+dataTablePrefixe+".id_advertiser ");
 			sql.Append(" and "+DbTables.ADVERTISER_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 			sql.Append(" and "+DbTables.ADVERTISER_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);
 
@@ -1602,19 +1609,20 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
             string sql = string.Empty;
             string cond = string.Empty;
+			bool showProduct = webSesssion.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
-            sql = "  select id_category, category"
-                + ", id_media, media"
-                + (!export ? ", date_media_num" : ", min(date_media_num) as date_media_num")
-                + ", id_advertiser, advertiser"
-                + ", id_product, product"
-                + ", id_group_, group_"
+			sql = "  select id_category, category"
+				+ ", id_media, media"
+				+ (!export ? ", date_media_num" : ", min(date_media_num) as date_media_num")
+				+ ", id_advertiser, advertiser";
+			if (showProduct) sql += ", id_product, product";
+			sql += ", id_group_, group_"
                 + ", weight"
                 + ", associated_file"
-                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField : ", sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + ")")
-                + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
-                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].DatabaseField : ", sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].DatabaseField + ")")
-                + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].Id.ToString()
+                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString() : ", sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + ")"
+				+ " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString())
+                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].DatabaseField : ", sum(" + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].DatabaseField + ")"
+                + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].Id.ToString())
                 + ", id_slogan";
             sql += GetMDFields(idVehicle, mediaList, webSesssion, prefixeMediaPlanTable, withPrefix);
 
@@ -1655,18 +1663,20 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
         private static string getMDSpecificGroupBy(DBClassificationConstantes.Vehicles.names idVehicle, ListDictionary mediaList, WebSession webSesssion, string prefixeMediaPlanTable, bool withPrefix, bool export){
 
             string sql = string.Empty;
+			bool showProduct = webSesssion.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
-            sql = " ) Group by id_category, category"
-                + ", id_media, media"
-                + (!export ? ", date_media_num" : "")
-                + ", id_advertiser, advertiser"
-                + ", id_product, product"
-                + ", id_group_, group_"
+			sql = " ) Group by id_category, category"
+				+ ", id_media, media"
+				+ (!export ? ", date_media_num" : "")
+				+ ", id_advertiser, advertiser";
+
+			if (showProduct) sql += ", id_product, product";
+			sql += ", id_group_, group_"
                 + ", weight"
                 + ", associated_file"
-                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString() : "")
+                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()  : "")
 
-                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].DatabaseField : "")
+                + (!export ? ", " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.volume].Id.ToString() : "")
                 + ", id_slogan";
             sql += GetMDGroupByFields(idVehicle, mediaList, webSesssion, prefixeMediaPlanTable, withPrefix);
             return sql;
@@ -1723,8 +1733,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
         /// <param name="prefixeMediaPlanTable">prfixe table média (vehicle)</param>
         /// <returns>Chaine contenant les champs à traiter</returns>
         private static string GetMDGroupByFields(DBClassificationConstantes.Vehicles.names idVehicle, ListDictionary mediaList, WebSession webSesssion, string prefixeMediaPlanTable, bool withPrefix){
-
-            string sql = (withPrefix ? "group by " + DbTables.CATEGORY_PREFIXE + ".id_category, category, " + DbTables.MEDIA_PREFIXE + ".id_media, media, " + prefixeMediaPlanTable + ".date_media_num, " + DbTables.ADVERTISER_PREFIXE + ".id_advertiser, advertiser, " + DbTables.PRODUCT_PREFIXE + ".id_product, product, " + DbTables.GROUP_PREFIXE + ".id_group_, group_, " + prefixeMediaPlanTable + ".weight, " + prefixeMediaPlanTable + ".associated_file," + prefixeMediaPlanTable + ".id_slogan" : "");
+			bool showProduct = webSesssion.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+			
+            string sql = (withPrefix ? "group by " + DbTables.CATEGORY_PREFIXE + ".id_category, category, " + DbTables.MEDIA_PREFIXE + ".id_media, media, " + prefixeMediaPlanTable + ".date_media_num, " + DbTables.ADVERTISER_PREFIXE + ".id_advertiser, advertiser" : "");
+			sql += ( (withPrefix && showProduct) ? " , " + DbTables.PRODUCT_PREFIXE + ".id_product, product " : "");
+			sql += (withPrefix ? " , " + DbTables.GROUP_PREFIXE + ".id_group_, group_, " + prefixeMediaPlanTable + ".weight, " + prefixeMediaPlanTable + ".associated_file," + prefixeMediaPlanTable + ".id_slogan" : "");
 
             if (mediaList["id_media"] != null && mediaList["id_media"].ToString() != "-1"){
 
@@ -1839,8 +1852,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
         /// <param name="prefixeMediaPlanTable">prfixe table média (vehicle)</param>
         /// <returns>Chaine contenant les champs à traiter</returns>
         private static string GetMDOrderByFields(DBClassificationConstantes.Vehicles.names idVehicle, ListDictionary mediaList, WebSession webSesssion, string prefixeMediaPlanTable){
+			bool showProduct = webSesssion.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
-            string sql = " Order by " + DbTables.CATEGORY_PREFIXE + ".id_category, category, " + DbTables.MEDIA_PREFIXE + ".id_media, media, " + prefixeMediaPlanTable + ".date_media_num, " + DbTables.ADVERTISER_PREFIXE + ".id_advertiser, advertiser, " + DbTables.PRODUCT_PREFIXE + ".id_product, product, " + DbTables.GROUP_PREFIXE + ".id_group_, group_," + prefixeMediaPlanTable + ".associated_file," + prefixeMediaPlanTable + ".id_slogan";
+            string sql = " Order by " + DbTables.CATEGORY_PREFIXE + ".id_category, category, " + DbTables.MEDIA_PREFIXE + ".id_media, media, " + prefixeMediaPlanTable + ".date_media_num, " + DbTables.ADVERTISER_PREFIXE + ".id_advertiser, advertiser";
+			if(showProduct) sql += ", " + DbTables.PRODUCT_PREFIXE + ".id_product, product";
+			sql += ", " + DbTables.GROUP_PREFIXE + ".id_group_, group_," + prefixeMediaPlanTable + ".associated_file," + prefixeMediaPlanTable + ".id_slogan";
 
             if (mediaList["id_media"] != null && mediaList["id_media"].ToString() != "-1"){
 

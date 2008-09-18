@@ -74,6 +74,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			double additionalTargetCost=0;
 			double pages=0;
 			ResultTable resultTable=null;
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			#endregion	
 
 			try{
@@ -136,9 +137,11 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					#endregion
 
 					#region getting number of product
-					DataTable productTable=SQLFunctions.Functions.SelectDistinct("product",synthesisTable,"id_product");
-					if(productTable!=null)
-						numberOfProduct=productTable.Rows.Count;
+					if (showProduct) {
+						DataTable productTable = SQLFunctions.Functions.SelectDistinct("product", synthesisTable, "id_product");
+						if (productTable != null)
+							numberOfProduct = productTable.Rows.Count;
+					}
 					#endregion
 
 					#region getting number of media
@@ -184,10 +187,11 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellNumber(numberOfBrand);
 					
 					//nombre de produits
-					lineIndex = resultTable.AddNewLine(LineType.level2);
-					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1393,webSession.SiteLanguage)+" : ");
-					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellNumber(numberOfProduct);
-					
+					if (showProduct) {
+						lineIndex = resultTable.AddNewLine(LineType.level2);
+						resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, webSession.SiteLanguage) + " : ");
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(numberOfProduct);
+					}
 					//nombre de GRP(cible selectionnée)
 					additionalTargetGRP=Math.Round(additionalTargetGRP,3);
 					lineIndex = resultTable.AddNewLine(LineType.level1);

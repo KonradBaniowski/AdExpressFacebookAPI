@@ -1757,6 +1757,20 @@ namespace TNS.AdExpress.Web.Core.Utilities
         #endregion
 
         #region Univers Support AdExpress
+		/// <summary>
+		/// Get excluded products
+		/// </summary>
+		/// <param name="prefix">prefix</param>
+		/// <param name="idList">Baal Id list</param>
+		/// <returns></returns>
+		public static string GetExcludeProducts(int idList,string prefix) {
+			// Exclude product 
+			string sql = "";
+			ProductItemsList prList = Product.GetItemsList(idList);
+			if (prList != null)
+				sql = prList.GetExcludeItemsSql(true, prefix);
+			return sql;
+		}
 
 		/// <summary>
 		/// Get media Universe

@@ -15,6 +15,7 @@ using System.Data;
 using TNS.AdExpress.Web.Common.Results.Creatives.Comparers;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI.TableControl;
+using DBCst = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpress.Web.Common.Results.Creatives {
 
@@ -74,6 +75,10 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         /// Web Session
         /// </summary>
         protected WebSession _session = null;
+		/// <summary>
+		/// Determine if show product level
+		/// </summary>
+		protected bool _showProduct = true;
         #endregion
 
 		#region Accessors
@@ -183,7 +188,17 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
                 _session = value;
             }
         }
-
+		/// <summary>
+		/// Get / Set if show product level
+		/// </summary>
+		protected bool ShowProduct {
+			get {
+				return _showProduct;
+			}
+			set {
+				_showProduct = value;
+			}
+		}
 		#endregion
 		
 		#region Constructors
@@ -195,6 +210,9 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             this.AddComparer(new AdvertiserComparer(857));
             this.AddComparer(new GroupComparer(1110));
             this.AddComparer(new ProductComparer(858));
+			if(_session !=null) _showProduct = _session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
+
 		}
 		#endregion
 
@@ -206,11 +224,13 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         /// <author>Guillaume.Ragneau</author>
         /// <since>mardi 14 août 2007</since>
         public override void Render(System.Text.StringBuilder output) {
-            output.AppendFormat("<table><td with=50%><tr><td>Advertiser</td><td>: {0}</td></tr><tr><td>Group</td><td>: {1}</td></tr><tr><td>Product</td><td>: {2}</td></tr></td><td with=50%><tr><td>Budget</td><td>: {3} €</td></tr></td>",
+            output.AppendFormat("<table><td with=50%><tr><td>Advertiser</td><td>: {0}</td></tr><tr><td>Group</td><td>: {1}</td></tr>",
                 _advertiser,
-                _group,
-                _product,
-                _Budget);
+                _group);
+			if(_showProduct) output.AppendFormat("<tr><td>Product</td><td>: {0}</td></tr>",			  
+			   _product);
+			output.AppendFormat("</td><td with=50%><tr><td>Budget</td><td>: {0} €</td></tr></td>",			   
+			   _Budget);
         }
         /// <summary>
         /// Render Table Element
@@ -220,12 +240,14 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         /// <author>Guillaume.Ragneau</author>
         /// <since>mardi 14 août 2007</since>
         public override void Render(System.Text.StringBuilder output, string cssStyle) {
-            output.AppendFormat("<table class=\"{4}\"><td with=50%><tr><td>Advertiser</td><td>: {0}</td></tr><tr><td>Group</td><td>: {1}</td></tr><tr><td>Product</td><td>: {2}</td></tr></td><td with=50%><tr><td>Budget</td><td>: {3} €</td></tr></td>",
+            output.AppendFormat("<table class=\"{2}\"><td with=50%><tr><td>Advertiser</td><td>: {0}</td></tr><tr><td>Group</td><td>: {1}</td></tr>",
                 _advertiser,
-                _group,
-                _product,
-                _Budget,
+                _group,               
                 cssStyle);
+			if (_showProduct) output.AppendFormat("<tr><td>Product</td><td>: {0}</td></tr>",			  
+			   _product);
+			output.AppendFormat("</td><td with=50%><tr><td>Budget</td><td>: {0} €</td></tr></td>",			  
+			   _Budget);
         }
         #endregion
 
@@ -241,6 +263,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             long id = Convert.ToInt64(row["version"]);
             CreativeRadio item = new CreativeRadio(id);
             item.Session = session;
+			item.ShowProduct = session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             FieldInstance(row, item);
 
             return item;
@@ -252,10 +275,11 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         /// <param name="row">Data Container</param>
         /// <param name="item">item to fill</param>
         protected virtual void FieldInstance(DataRow row, CreativeItem item) {
+
             item._advertiser = row["advertiser"].ToString();
             item._group = row["groupe"].ToString();
             item._path = row["visuel"].ToString();
-            item._product = row["product"].ToString();
+			if (item._showProduct) item._product = row["product"].ToString();
             if (row["id_address"].ToString().Length>0) item._adressId = Convert.ToInt64(row["id_address"]);
         }
         #endregion

@@ -745,12 +745,15 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			AdExpressUniverse adExpressUniverse = null;
 			NomenclatureElementsGroup nomenclatureElementsGroup = null;
 			Dictionary<int, AdExpressUniverse> adExpressUniverseDictionary = null;
-
+			bool showProduct = customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG) ;
+			
 			#region products APPM
-			products = new DropDownList();
-			products.EnableViewState=true;
-			products.ID = "_products";
-			Controls.Add(products);
+			if ( showProduct) {
+				products = new DropDownList();
+				products.EnableViewState = true;
+				products.ID = "_products";
+				Controls.Add(products);
+			}
 			#endregion
 						
 			#endregion
@@ -759,7 +762,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			#region loading controls for the first time
 
 			//Création de la liste des produits appm
-			if(productsOption){
+			if (productsOption && showProduct) {
 				if(!Page.IsPostBack||products.Items.Count<=0){
 					
 					products.CssClass =  cssClass;
@@ -814,7 +817,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			
 			if (Page.IsPostBack) {
 				//saving the selected products in the current univers product when the page is posted back.
-				if (productsOption){
+				if (productsOption && showProduct) {
 					try{
 						int productID=Convert.ToInt32(Page.Request.Form.GetValues("_products")[0]);
 						if (productID != 0) {
@@ -1109,10 +1112,12 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				{
 					productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1111, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupBrand.GetHashCode().ToString()));
 				}
+				if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) 
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1112, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupProduct.GetHashCode().ToString()));
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1145, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupAdvertiser.GetHashCode().ToString()));
 				//modifications for segmentAdvertiser,segmentProduct,SegmentBrand(3 new items added in the dropdownlist)
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1577, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString()));
+				if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) 
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1578, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString()));
 				if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
 				{
@@ -1123,11 +1128,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				{
 					productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1147, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserBrand.GetHashCode().ToString()));
 				}
+				if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) 
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1148, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserProduct.GetHashCode().ToString()));
 				if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
 				{
 					productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1149, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.brand.GetHashCode().ToString()));
 				}
+				if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) 
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(858, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString()));
 				try{
 					productDetail.Items.FindByValue(customerWebSession.PreformatedProductDetail.GetHashCode().ToString()).Selected = true;
@@ -1229,6 +1236,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		protected override void Render(HtmlTextWriter output) {
 
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
+			bool showProduct = customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
             output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
 			output.Write("\n<tr>");
@@ -1459,7 +1467,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n</TR>");
 			}
 			//option products for APPM
-			if (productsOption)
+			if (productsOption && showProduct)
 			{
 				if(products.Items.Count>0)
 				{

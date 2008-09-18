@@ -57,6 +57,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			double additionalTargetGRP=0;
 			double additionalTargetCost=0;
 			double pages=0;
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			#endregion			
 
 			try{
@@ -85,7 +87,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					synthesisData = new Hashtable();
 					//idProduct 0 refers to the whole univers so if idProduct is not 0 so we will show the following lines
 					//for a specific product
-					if(idProduct!=0){
+					if (idProduct != 0 && showProduct) {
 						//Nom du produit
 						synthesisData.Add("product", synthesisTable.Rows[0]["product"]);
 						//Nom de l'annonceur
@@ -215,12 +217,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			}
 			catch(System.Exception err){
 				throw(new WebExceptions.SynthesisRulesException("Error while formatting the data for APPM Synthesis ",err));
-			}
-
-			#region Recharging the univers
-			//charging the reference univers
-			//webSession.CurrentUniversAdvertiser=(TreeNode)((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[1]).TreeCompetitorAdvertiser;				
-			#endregion
+			}			
 
 			return synthesisData;
 		}
@@ -264,6 +261,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			double additionalTargetGRP=0;
 			double additionalTargetCost=0;
 			double pages=0;
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			#endregion			
 
 			if(webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)){//Droits versions
@@ -294,10 +293,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 						//Version selectionné
 						synthesisData.Add("version",synthesisTable.Rows[0]["id_slogan"]);
 
-						//idProduct 0 refers to the whole univers so if idProduct is not 0 so we will show the following lines
-						//for a specific product
-						//					if(idProduct!=0){
-
+						
+						if(showProduct)
 						//Product Label
 						synthesisData.Add("product", synthesisTable.Rows[0]["product"]);
 
@@ -521,6 +518,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			double additionalTargetGRP=0;
 			double additionalTargetCost=0;
 			double pages=0;
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			#endregion			
 
 			if(webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)) {
@@ -595,10 +593,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 							//Version selectionné
 							synthesisData[k].Add("version",synthesisTableTmp.Rows[0]["id_slogan"]);
 
-							//idProduct 0 refers to the whole univers so if idProduct is not 0 so we will show the following lines
-							//for a specific product
-							//					if(idProduct!=0){
-
+							
+							if(showProduct)
 							//Product Label
 							synthesisData[k].Add("product", synthesisTableTmp.Rows[0]["product"]);
 

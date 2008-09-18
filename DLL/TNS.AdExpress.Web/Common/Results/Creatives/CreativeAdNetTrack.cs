@@ -262,6 +262,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             long id = Convert.ToInt64(row["version"]);
             CreativeAdNetTrack item = new CreativeAdNetTrack(id);
             item.Session = session;
+			item.ShowProduct = session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
             FieldInstance(row, item);
 
@@ -281,7 +282,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             itemAdNet.Dimension = row["dimension"].ToString();
             itemAdNet._advertiserId = Convert.ToInt32(row["idAdvertiser"]);
             itemAdNet._urlParameters = this._urlParameters;
-            itemAdNet._productId = Convert.ToInt32(row["idProduct"]);
+            if(itemAdNet.ShowProduct)itemAdNet._productId = Convert.ToInt32(row["idProduct"]);
             itemAdNet._zoomDate = this._zoomDate;
             itemAdNet._universId = this._universId;
             itemAdNet._moduleId = this._moduleId;
@@ -407,7 +408,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td class=\"tdsepar\">:</td><td>{1}</td></tr>"
                 , GestionWeb.GetWebWord(1110, _session.SiteLanguage)
                 , this._group);
-            if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG)) {
+			if (_showProduct && _session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.MEDIA_SCHEDULE_ADNETTRACK_ACCESS_FLAG)) {
                 output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td class=\"tdsepar\">:</td><td>{1}</td></tr>"
                     , GestionWeb.GetWebWord(2154, _session.SiteLanguage)
                     , _product);
@@ -431,24 +432,44 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
                 output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td class=\"tdsepar\">:</td>",
                     GestionWeb.GetWebWord(2156, _session.SiteLanguage));
 
-                output.AppendFormat("<td><a href=\"#\" onclick=\"javascript:window.location='{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&urlParameters={5}&universId={13}&moduleId={14}&' + {15};\" class=\"roll06\">{6}</a> | <a href=\"#\" onclick=\"javascript:window.location='{0}?idSession={1}&idLevel={7}&id={8}&zoomDate={4}&urlParameters={5}&universId={13}&moduleId={14}&' + {15};\" class=\"roll06\">{9}</a> | <a href=\"#\" onclick=\"javascript:window.location='{0}?idSession={1}&idLevel={10}&id={11}&zoomDate={4}&urlParameters={5}&universId={13}&moduleId={14}&' + {15};\" class=\"roll06\">{12}</a></td>",
+                output.AppendFormat("<td><a href=\"#\" onclick=\"javascript:window.location='{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&urlParameters={5}&universId={7}&moduleId={8}&' + {9};\" class=\"roll06\">{6}</a>",
                     MEDIA_SCHEDULE_PATH,
-                    _session.IdSession,
-                    FmkCst.Results.AdNetTrackMediaSchedule.Type.advertiser.GetHashCode(),
-                    _advertiserId,
-                    _zoomDate,
-                    _urlParameters,
-                    GestionWeb.GetWebWord(857, _session.SiteLanguage),
-                    FmkCst.Results.AdNetTrackMediaSchedule.Type.product.GetHashCode(),
-                    _productId,
-                    GestionWeb.GetWebWord(858, _session.SiteLanguage),
-                    FmkCst.Results.AdNetTrackMediaSchedule.Type.visual.GetHashCode(),
-                    _id,
-                    GestionWeb.GetWebWord(1909, _session.SiteLanguage),
-                    _universId,
-                    _moduleId,
-                    _parameters
+					_session.IdSession,
+					FmkCst.Results.AdNetTrackMediaSchedule.Type.advertiser.GetHashCode(),
+					_advertiserId,
+					_zoomDate,
+					_urlParameters,
+					GestionWeb.GetWebWord(857, _session.SiteLanguage),					
+					_universId,
+					_moduleId,
+					_parameters
                 );
+				if (_showProduct) {
+					output.AppendFormat(" | <a href=\"#\" onclick=\"javascript:window.location='{0}?idSession={1}&idLevel={4}&id={5}&zoomDate={2}&urlParameters={3}&universId={7}&moduleId={8}&' + {9};\" class=\"roll06\">{6}</a> ",
+					 MEDIA_SCHEDULE_PATH,
+					_session.IdSession,					
+					_zoomDate,
+					_urlParameters,
+					FmkCst.Results.AdNetTrackMediaSchedule.Type.product.GetHashCode(),
+					_productId,
+					GestionWeb.GetWebWord(858, _session.SiteLanguage),
+					_universId,
+					_moduleId,
+					_parameters
+				   );
+				}
+				output.AppendFormat(" | <a href=\"#\" onclick=\"javascript:window.location='{0}?idSession={1}&idLevel={4}&id={5}&zoomDate={2}&urlParameters={3}&universId={7}&moduleId={8}&' + {9};\" class=\"roll06\">{6}</a></td>",
+					 MEDIA_SCHEDULE_PATH,
+					_session.IdSession,					
+					_zoomDate,
+					_urlParameters,					
+					FmkCst.Results.AdNetTrackMediaSchedule.Type.visual.GetHashCode(),
+					_id,
+					GestionWeb.GetWebWord(1909, _session.SiteLanguage),
+					_universId,
+					_moduleId,
+					_parameters
+				);
                 output.Append("</tr>");
             }
 

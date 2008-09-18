@@ -67,6 +67,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		/// Object genberating html code
 		/// </summary>
 		private	ArrayList _versionsUIs;
+
+		private bool _showProduct = true;
 		#endregion
 
 		#region Accessors
@@ -118,6 +120,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			this._webSession = webSession;
 			this._versions = versions;
 			this._vehicle = vehicle;
+			_showProduct = _webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 		}			
 		#endregion
 
@@ -244,6 +248,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
 						item.Advertiser=row["annonceur"].ToString();
 						item.Group=row["groupe"].ToString();
+						if(_showProduct)
 						item.Product=row["produit"].ToString();
 					
 						foreach(DataRow rowdetail in dtSetDetails.Tables[0].Rows) {
@@ -350,9 +355,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			//this is the id of the product selected from the products dropdownlist. 0 id refers to the whole univers i.e. if no prodcut is
 			//selected its by default the whole univers and is represeted by product id 0.
 			Int64 idProduct=0;
-			string idProductString = _webSession.GetSelection(_webSession.CurrentUniversProduct,CustomerRightConstante.type.productAccess);
-			if(WebFunctions.CheckedText.IsStringEmpty(idProductString)) {
-				idProduct=Int64.Parse(idProductString);
+			if (_showProduct) {
+				string idProductString = _webSession.GetSelection(_webSession.CurrentUniversProduct, CustomerRightConstante.type.productAccess);
+				if (WebFunctions.CheckedText.IsStringEmpty(idProductString)) {
+					idProduct = Int64.Parse(idProductString);
+				}
 			}
 			#endregion
 
@@ -394,6 +401,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 							if(hTable["version"].ToString()==row["id"].ToString()){
 							
 								//Nom du Produit
+								if (_showProduct) 
 								item.Product = hTable["product"].ToString();
 								//Nom de l'announceur
 								item.Advertiser = hTable["advertiser"].ToString();
@@ -533,6 +541,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 	
 						item.Advertiser=row["annonceur"].ToString();
 						item.Group=row["groupe"].ToString();
+						if(_showProduct)
 						item.Product=row["produit"].ToString();
 
 						foreach(DataRow rowdetail in dtSetDetails.Tables[0].Rows) {
@@ -606,6 +615,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 	
 						item.Advertiser=row["annonceur"].ToString();
 						item.Group=row["groupe"].ToString();
+						if (_showProduct)
 						item.Product=row["produit"].ToString();
 
 						foreach(DataRow rowdetail in dtSetDetails.Tables[0].Rows) {
@@ -710,6 +720,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
                         item.Advertiser = row["advertiser"].ToString();
                         item.Group = row["group_"].ToString();
+						if (_showProduct)
                         item.Product = row["product"].ToString();
                         item.Weight = long.Parse(row["weight"].ToString());
                         item.ExpenditureEuro = long.Parse(row[UnitsInformation.List[WeBCst.CustomerSessions.Unit.euro].Id.ToString()].ToString());
@@ -822,6 +833,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
                         item.Advertiser = row["annonceur"].ToString();
                         item.Group = row["groupe"].ToString();
+						if (_showProduct)
                         item.Product = row["produit"].ToString();
 
                         foreach (DataRow rowdetail in dtSetDetails.Tables[0].Rows) {

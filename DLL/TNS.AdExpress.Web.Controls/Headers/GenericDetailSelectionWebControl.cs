@@ -762,6 +762,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				case DetailLevelItemInformation.Levels.brand:
 					return ((CheckProductDetailLevelAccess()) && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE));
 				case DetailLevelItemInformation.Levels.product:
+					return ((CheckProductDetailLevelAccess()) && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG));
 				case DetailLevelItemInformation.Levels.advertiser:
 					return(CheckProductDetailLevelAccess());
 				case DetailLevelItemInformation.Levels.sector:
@@ -807,13 +808,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				case GenericColumnItemInformation.Columns.mediaSeller:
 					return(!_customerWebSession.isCompetitorAdvertiserSelected());
 				case GenericColumnItemInformation.Columns.visual:
-				case GenericColumnItemInformation.Columns.associatedFile:
-					//if(_customerWebSession.CustomerLogin.GetFlag(TNS.AdExpress.Constantes.DB.Flags.ID_CREATION_ACCESS_FLAG)==null)
-					//    return (false);
-					//else
-					//    return (true);
+				case GenericColumnItemInformation.Columns.associatedFile:			
 					return _customerWebSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab));
-				
+				case GenericColumnItemInformation.Columns.product:
+					return _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 				default:
 					return(true);
 			}

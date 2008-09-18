@@ -202,7 +202,7 @@ namespace AdExpress.Private.Results
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 			DetailWebControl1.CustomerWebSession = _webSession;
-
+			DetailWebControl1.ShowProduct = _webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			#region chargement de l'univers
 						
 			//_webSession.CurrentUniversAdvertiser=(System.Windows.Forms.TreeNode)((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)_webSession.CompetitorUniversAdvertiser[1]).TreeCompetitorAdvertiser;			

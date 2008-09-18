@@ -198,7 +198,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             long id = Convert.ToInt64(row["version"]);
             CreativeMailing item = new CreativeMailing(id);
             item.Session = session;
-
+			item.ShowProduct = session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             FieldInstance(row, item);
 
             return item;
@@ -319,20 +319,22 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
                     , GestionWeb.GetWebWord(2247, _session.SiteLanguage)
                     , "-");
             }
-            if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_POIDS_MARKETING_DIRECT)) {
-                output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3} g</td></tr>"
-                    , GestionWeb.GetWebWord(858, _session.SiteLanguage)
-                    , this._product
-                    , GestionWeb.GetWebWord(2248, _session.SiteLanguage)
-                    , this._weight);
-            }
-            else {
-                output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3} g</td></tr>"
-                    , GestionWeb.GetWebWord(858, _session.SiteLanguage)
-                    , this._product
-                    , GestionWeb.GetWebWord(2248, _session.SiteLanguage)
-                    , "-");
-            }
+			if (_showProduct) {
+				if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_POIDS_MARKETING_DIRECT)) {
+					output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3} g</td></tr>"
+						, GestionWeb.GetWebWord(858, _session.SiteLanguage)
+						, this._product
+						, GestionWeb.GetWebWord(2248, _session.SiteLanguage)
+						, this._weight);
+				}
+				else {
+					output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3} g</td></tr>"
+						, GestionWeb.GetWebWord(858, _session.SiteLanguage)
+						, this._product
+						, GestionWeb.GetWebWord(2248, _session.SiteLanguage)
+						, "-");
+				}
+			}
             output.AppendFormat("<tr><td class=\"creativeCaption\">{0}</td><td>:</td><td>{1}</td><td></td><td class=\"creativeCaption\">{2}</td><td>:</td><td>{3}</td></tr>"
                 , GestionWeb.GetWebWord(971, _session.SiteLanguage)
                 , this._media

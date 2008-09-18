@@ -15,6 +15,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
+using CstDB = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM{
 	/// <summary>
@@ -41,6 +42,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 			StringBuilder t=null;
 			string styleTitle="portofolio2";
 			string styleValue="portofolio22";
+			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
 			#endregion
 
 			#region get Data
@@ -73,9 +76,11 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					styleValue=InvertStyle(styleValue);
 					t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(2074,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+Convert.ToDouble(synthesisData["marques"]).ToString("# ### ##0.##")+"</td></tr>");	
 					//Nombre de produits
-					styleTitle=InvertStyle(styleTitle);
-					styleValue=InvertStyle(styleValue);
-					t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1393,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+Convert.ToDouble(synthesisData["produits"]).ToString("# ### ##0.##")+"</td></tr>");	
+					if (showProduct) {
+						styleTitle = InvertStyle(styleTitle);
+						styleValue = InvertStyle(styleValue);
+						t.Append("\r\n\t<tr ><td class=\"" + styleTitle + "\" width=50%>" + GestionWeb.GetWebWord(1393, webSession.SiteLanguage) + " : " + "</td><td class=\"" + styleValue + "\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;" + Convert.ToDouble(synthesisData["produits"]).ToString("# ### ##0.##") + "</td></tr>");
+					}
 					//Nombre d'insertions
 					styleTitle=InvertStyle(styleTitle);
 					styleValue=InvertStyle(styleValue);
@@ -83,24 +88,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					//Nombre de pages
 					styleTitle=InvertStyle(styleTitle);
 					styleValue=InvertStyle(styleValue);
-					t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1385,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+Convert.ToDouble(synthesisData["pages"]).ToString("# ### ##0.##")+"</td></tr>");	
-					//Secteur de référence
-					//if the competitor univers is not selected we print the groups of the products selected
-//					if(webSession.CompetitorUniversAdvertiser.Count<2){
-//						styleTitle=InvertStyle(styleTitle);
-//						styleValue=InvertStyle(styleValue);
-//						string[] groups=synthesisData["group"].ToString().Split(',');
-//						t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50% valign=top>"+GestionWeb.GetWebWord(1668,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>");
-//						Array.Sort(groups);
-//						foreach(string gr in groups){
-//							t.Append("&nbsp;&nbsp;&nbsp;&nbsp;"+gr+"<br>");	
-//						}
-//						t.Append("</td></tr>");
-//					}
-					//cible selectionnée
-//					styleTitle=InvertStyle(styleTitle);
-//					styleValue=InvertStyle(styleValue);
-//					t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1672,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["targetSelected"]+"</td></tr>");	
+					t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(1385,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+Convert.ToDouble(synthesisData["pages"]).ToString("# ### ##0.##")+"</td></tr>");					
 					// nombre de GRP
 					styleTitle=InvertStyle(styleTitle);
 					styleValue=InvertStyle(styleValue);

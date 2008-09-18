@@ -58,6 +58,7 @@ namespace TNS.AdExpress.Web.Core.Selection {
 					for(int i=0; i<_universeLevels.Count; i++){
 						if ((_universeLevels[i].ID == TNS.Classification.Universe.TNSClassificationLevels.BRAND && !_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE))//No brand rights
 							|| (_universeLevels[i].ID == TNS.Classification.Universe.TNSClassificationLevels.HOLDING_COMPANY && !_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY))//No holding group rights
+							|| (_universeLevels[i].ID == TNS.Classification.Universe.TNSClassificationLevels.PRODUCT && !_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))//No Product level rights (For Finland)
 							) continue;
 						tempList.Add(_universeLevels[i]);
 					}

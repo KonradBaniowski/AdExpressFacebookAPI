@@ -19,6 +19,7 @@ using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using CstComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 
 using TNS.AdExpress.Classification;
@@ -259,26 +260,24 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 str.Append("</td></tr></table>");
             }
             str.Append("</center><br>");
-            this._classifLevel = CstResult.MotherRecap.ElementType.product;
-            try
-            {
-                tmp = this.BuildTable();
-            }
-            catch (NoDataException e1) { }
-            str.Append("<center>");
-            if (tmp != null && tmp.Length > 0)
-            {
-                str.Append(tmp.ToString());
-            }
-            else
-            {
-                str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
-                str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
-                str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
-                str.Append("</td></tr></table>");
-            }
-            str.Append("</center>");
-
+			if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+				this._classifLevel = CstResult.MotherRecap.ElementType.product;
+				try {
+					tmp = this.BuildTable();
+				}
+				catch (NoDataException e1) { }
+				str.Append("<center>");
+				if (tmp != null && tmp.Length > 0) {
+					str.Append(tmp.ToString());
+				}
+				else {
+					str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+					str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+					str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
+					str.Append("</td></tr></table>");
+				}
+				str.Append("</center>");
+			}
             return str;
 
         }
@@ -646,25 +645,24 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     str.Append("</td></tr></table>");
                 }
                 str.Append("</center><br>");
-                this._classifLevel = CstResult.MotherRecap.ElementType.product;
-                try
-                {
-                    tmp = this.BuildGraph();
-                }
-                catch (NoDataException) { }
-                str.Append("<center>");
-                if (tmp != null && tmp.Length > 0)
-                {
-                    str.Append(tmp.ToString());
-                }
-                else
-                {
-                    str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
-                    str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
-                    str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
-                    str.Append("</td></tr></table>");
-                }
-                str.Append("</center>");
+				if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+					this._classifLevel = CstResult.MotherRecap.ElementType.product;
+					try {
+						tmp = this.BuildGraph();
+					}
+					catch (NoDataException) { }
+					str.Append("<center>");
+					if (tmp != null && tmp.Length > 0) {
+						str.Append(tmp.ToString());
+					}
+					else {
+						str.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+						str.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+						str.AppendFormat("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
+						str.Append("</td></tr></table>");
+					}
+					str.Append("</center>");
+				}
             }
             else
             {
