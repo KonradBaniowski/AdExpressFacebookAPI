@@ -32,7 +32,7 @@ namespace TNS.AdExpress.Anubis.Constantes.Application{
 		/// <summary>
 		/// Non du répertoire contenant les configurations
 		/// </summary>
-		public const string CONFIGURATION_DIRECTORY="Config";
+		public const string CONFIGURATION_DIRECTORY="Configuration";
 
 	}
 }

@@ -20,7 +20,6 @@ using TNSAnubisCommon = TNS.AdExpress.Anubis.Common;
 using TNSAnubisExceptions = TNS.AdExpress.Anubis.Exceptions;
 using TNSAnubisConstantes = TNS.AdExpress.Anubis.Constantes;
 using TNS.AdExpress.Anubis.BusinessFacade.Configuration;
-using TNS.AdExpress.Common;
 using TNS.AdExpress.Anubis.Common.Configuration;
 
 using TNS.FrameWork;

@@ -30,6 +30,11 @@ using TNS.AdExpress.Domain.Web.Navigation;
 
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Constantes.Web;
 
 
 namespace TNS.AdExpress.Anubis.BusinessFacade.Core{
@@ -222,6 +227,21 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Core{
 
             //Charge la hierachie de niveau d'univers
             UniverseBranches.getInstance(new TNS.FrameWork.DB.Common.XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory +@"Configuration\"+ TNS.AdExpress.Constantes.Web.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
+
+            // Initialisation des listes de texte
+            TNS.AdExpress.AdExpressWordListLoader.LoadLists();
+
+            Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+            Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+
+            //Units
+            UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
+
+            //Vehicles
+            VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
+
+            //Load flag list
+            TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
             #endregion
   
 			while(_myThread.IsAlive && !(_stop && this.RunningJobCount<=0))
