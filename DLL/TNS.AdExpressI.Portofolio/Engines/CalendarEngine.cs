@@ -74,15 +74,17 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			ResultTable tab = null;
 			DataSet ds = null;
 			DataTable dt = null;
-			CellUnitFactory[] cellFactories = null;
 			CellUnitFactory cellFactory = null;
 			AdExpressCellLevel[] cellLevels;
 			LineType[] lineTypes = new LineType[5] { LineType.total, LineType.level1, LineType.level2, LineType.level3, LineType.level4 };
 			Headers headers = null;
-			int iCurLine = 0;
+			Int64 iCurLine = 0;
 			int iNbLine = 0;
 			int iNbLevels = 0;
 			ArrayList parutions = new ArrayList();
+
+            InitLine initLine = null;
+            SetLine setLine = null;
 			#endregion
 
 			#region Chargement des données
@@ -112,8 +114,19 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			tab = new ResultTable(iNbLine, headers);
 			#endregion
 
-			#region Traitement du tableau de résultats
-			int i = 1;
+            #region Initialisation du type de ligne
+            if(_webSession.GetSelectedUnit().Id == WebCst.CustomerSessions.Unit.versionNb) {
+                initLine = new InitLine(InitListLine);
+                setLine = new SetLine(SetListLine);
+            }
+            else {
+                initLine = new InitLine(InitDoubleLine);
+                setLine = new SetLine(SetDoubleLine);
+            } 
+            #endregion
+
+            #region Traitement du tableau de résultats
+            int i = 1;
 
 			#region Intialisation des totaux
 			iNbLevels = _webSession.GenericProductDetailLevel.GetNbLevels;
@@ -121,20 +134,25 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			tab.AddNewLine(LineType.total);
 			tab[iCurLine, 1] = cellLevels[0] = new AdExpressCellLevel(0, GestionWeb.GetWebWord(805, _webSession.SiteLanguage), 0, iCurLine, _webSession);
 			tab[iCurLine, 2] = new CellMediaScheduleLink(cellLevels[0], _webSession);
-			if (!_webSession.Percentage) tab[iCurLine, 3] = cellFactory.Get(0.0);
-			else tab[iCurLine, 3] = new CellPDM(0.0, null);
-			tab[iCurLine, 4] = new CellPercent(0.0, null);
-			for (i = 5; i < 5 + parutions.Count; i++) {
-				if (!_webSession.Percentage) tab[iCurLine, i] = cellFactory.Get(0.0);
-				else tab[iCurLine, i] = new CellPDM(0.0, (CellUnit)tab[iCurLine, 3]);
-			}
+            
+            //// totaux
+            //if(!_webSession.Percentage) tab[iCurLine, 3] = cellFactory.Get(0.0);
+            //else tab[iCurLine, 3] = new CellPDM(0.0, null);
+            //// pourcentage
+            //tab[iCurLine, 4] = new CellPercent(0.0, null);
+            //// initialisation des colonnes
+            //for(i = 5; i < 5 + parutions.Count; i++) {
+            //    if(!_webSession.Percentage) tab[iCurLine, i] = cellFactory.Get(0.0);
+            //    else tab[iCurLine, i] = new CellPDM(0.0, (CellUnit)tab[iCurLine, 3]);
+            //}
+
+            initLine(tab, iCurLine, cellFactory, cellLevels[0]);
+
 			#endregion
 
 			i = 1;
 			long dCurLevel = 0;
 			DetailLevelItemInformation.Levels level;
-			long lCol = -1;
-			double valu = 0.0;
 			foreach (DataRow row in dt.Rows) {
 				//pour chaque niveau
 				for (i = 1; i <= iNbLevels; i++) {
@@ -144,8 +162,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						for (int j = i + 1; j < cellLevels.Length; j++) {
 							cellLevels[j] = null;
 						}
-						iCurLine++;
-						tab.AddNewLine(lineTypes[i]);
+						iCurLine = tab.AddNewLine(lineTypes[i]);
 						tab[iCurLine, 1] = cellLevels[i] = new AdExpressCellLevel(dCurLevel, _webSession.GenericProductDetailLevel.GetLabelValue(row, i), cellLevels[i - 1], i, iCurLine, _webSession);
 						if (row.Table.Columns.Contains("id_address") && row["id_address"] != System.DBNull.Value) {
 							cellLevels[i].AddressId = Convert.ToInt64(row["id_address"]);
@@ -158,35 +175,99 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						else {
 							tab[iCurLine, 2] = new CellEmpty();
 						}
-						//total
-						if (!_webSession.Percentage) tab[iCurLine, 3] = cellFactory.Get(0.0);
-						else tab[iCurLine, 3] = new CellPDM(0.0, null); ;
-						//pourcentage
-						tab[iCurLine, 4] = new CellPercent(0.0, (CellUnit)tab[cellLevels[i - 1].LineIndexInResultTable, 4]);
-						//initialisation des autres colonnes
-						for (int j = 5; j < 5 + parutions.Count; j++) {
-							if (!_webSession.Percentage) tab[iCurLine, j] = cellFactory.Get(0.0);
-							else tab[iCurLine, j] = new CellPDM(0.0, (CellUnit)tab[iCurLine, 3]);
-						}
-					}
-					//feuille ou niveau parent?
-					if (i == iNbLevels) {
-						lCol = tab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
-						valu = Convert.ToDouble(row[_webSession.GetSelectedUnit().Id.ToString()]);
-						tab.AffectValueAndAddToHierarchy(1, iCurLine, lCol, valu);
-						tab.AffectValueAndAddToHierarchy(1, iCurLine, 4, valu);
-						tab.AffectValueAndAddToHierarchy(1, iCurLine, 3, valu);
-					}
-				}
-			}
 
+                        ////total
+                        //if (!_webSession.Percentage) tab[iCurLine, 3] = cellFactory.Get(0.0);
+                        //else tab[iCurLine, 3] = new CellPDM(0.0, null);
+                        ////pourcentage
+                        //tab[iCurLine, 4] = new CellPercent(0.0, (CellUnit)tab[cellLevels[i - 1].LineIndexInResultTable, 4]);
+                        ////initialisation des autres colonnes
+                        //for (int j = 5; j < 5 + parutions.Count; j++) {
+                        //    if (!_webSession.Percentage) tab[iCurLine, j] = cellFactory.Get(0.0);
+                        //    else tab[iCurLine, j] = new CellPDM(0.0, (CellUnit)tab[iCurLine, 3]);
+                        //}
+
+                        initLine(tab, iCurLine, cellFactory, cellLevels[i-1]);
+					}
+
+				}
+                ////feuille ou niveau parent?
+                //lCol = tab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
+                //valu = Convert.ToDouble(row[_webSession.GetSelectedUnit().Id.ToString()]);
+                //tab.AffectValueAndAddToHierarchy(1, iCurLine, lCol, valu);
+                //tab.AffectValueAndAddToHierarchy(1, iCurLine, 4, valu);
+                //tab.AffectValueAndAddToHierarchy(1, iCurLine, 3, valu);
+
+                setLine(tab, iCurLine, row);
+			}
 			#endregion
 
 			return tab;
 		}
-		#endregion 
+		#endregion
 
-		/// <summary>
+        #region InitLine
+        protected delegate void InitLine(ResultTable oTab, Int64 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent);
+        protected void InitDoubleLine(ResultTable oTab, Int64 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent) {
+            //total
+            if(!_webSession.Percentage) oTab[cLine, 3] = cellFactory.Get(0.0);
+            else oTab[cLine, 3] = new CellPDM(0.0, null);
+
+            //pourcentage
+            if(parent == null) oTab[cLine, 4] = new CellPercent(0.0, null);
+            else oTab[cLine, 4] = new CellPercent(0.0, (CellUnit)oTab[parent.LineIndexInResultTable, 4]);
+
+            //initialisation des autres colonnes
+            for(int j = 5; j < oTab.DataColumnsNumber + 1; j++) {
+                if(!_webSession.Percentage) oTab[cLine, j] = cellFactory.Get(0.0);
+                else oTab[cLine, j] = new CellPDM(0.0, (CellUnit)oTab[cLine, 3]);
+            }
+        }
+        protected void InitListLine(ResultTable oTab, Int64 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent) {
+            //total
+            if(!_webSession.Percentage) oTab[cLine, 3] = cellFactory.Get(0.0);
+            else oTab[cLine, 3] = new CellVersionNbPDM(null);
+
+            //pourcentage
+            if(parent == null) oTab[cLine, 4] = new CellVersionNbPDM(null);
+            else oTab[cLine, 4] = new CellVersionNbPDM((CellIdsNumber)oTab[parent.LineIndexInResultTable, 3]);
+
+            //initialisation des autres colonnes
+            for(int j = 5; j < oTab.DataColumnsNumber + 1; j++) {
+                if(!_webSession.Percentage) oTab[cLine, j] = cellFactory.Get(0.0);
+                else oTab[cLine, j] = new CellVersionNbPDM((CellIdsNumber)oTab[cLine, 3]);
+            }
+        }
+        #endregion
+
+        #region SetLine
+        protected delegate void SetLine(ResultTable oTab, Int64 iLineIndex, DataRow dr);
+        protected void SetDoubleLine(ResultTable oTab, Int64 cLine, DataRow row) {
+            if(row != null) {
+                long lCol = oTab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
+                double valu = Convert.ToDouble(row[_webSession.GetSelectedUnit().Id.ToString()]);
+                //Affect value
+                oTab.AffectValueAndAddToHierarchy(1, cLine, lCol, valu);
+                oTab.AffectValueAndAddToHierarchy(1, cLine, 4, valu);
+                oTab.AffectValueAndAddToHierarchy(1, cLine, 3, valu);
+            }
+        }
+        protected void SetListLine(ResultTable oTab, Int64 cLine, DataRow row) {
+            if(row != null) {
+                long lCol = oTab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
+                //Get values
+                string[] tIds = row[_webSession.GetSelectedUnit().Id.ToString()].ToString().Split(',');
+                //Affect value
+                for(int i = 0; i < tIds.Length; i++) {
+                    oTab.AffectValueAndAddToHierarchy(1, cLine, lCol, Convert.ToInt64(tIds[i]));
+                    oTab.AffectValueAndAddToHierarchy(1, cLine, 4, Convert.ToInt64(tIds[i]));
+                    oTab.AffectValueAndAddToHierarchy(1, cLine, 3, Convert.ToInt64(tIds[i]));
+                }
+            }
+        }
+        #endregion
+
+        /// <summary>
 		/// Build Html result
 		/// </summary>
 		/// <returns></returns>
@@ -254,7 +335,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual void GetCalendarHeaders(out Headers headers, out CellUnitFactory cellFactory, ArrayList parutions) {
-
 			headers = new Headers();
 			headers.Root.Add(new Header(true, GestionWeb.GetWebWord(PROD_COL, _webSession.SiteLanguage), PROD_COL));
 			headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(PM_COL, _webSession.SiteLanguage), PM_COL));

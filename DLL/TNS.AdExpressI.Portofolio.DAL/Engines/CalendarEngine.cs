@@ -22,6 +22,8 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 
+using TNS.AdExpress.Domain.Units;
+
 using TNS.AdExpress.Web.Exceptions;
 using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
 using CstProject = TNS.AdExpress.Constantes.Project;
@@ -78,6 +80,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			string mediaRights = "";
 			string mediaAgencyTable = string.Empty;
 			string mediaAgencyJoins = string.Empty;
+
+            string dataGroupby = "";
 			#endregion
             
 			#region Construction de la requête
@@ -86,8 +90,15 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				detailProductTablesNames = _webSession.GenericProductDetailLevel.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
 				detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-				unitFieldNameSumWithAlias = WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(_webSession, DBConstantes.TableType.Type.dataVehicle4M); //WebFunctions.SQLGenerator.GetUnitFieldName(_webSession);
-				mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+
+                if(_webSession.GetSelectedUnit().Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
+                    unitFieldNameSumWithAlias = WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(_webSession, DBConstantes.TableType.Type.dataVehicle4M); //WebFunctions.SQLGenerator.GetUnitFieldName(_webSession);
+                else {
+                    unitFieldNameSumWithAlias = GetUnitFieldName(_webSession, DBConstantes.TableType.Type.dataVehicle4M);
+                    dataGroupby = ","+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".hashcode";
+                }
+
+                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
 				//option encarts (pour la presse)
@@ -118,6 +129,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			// Période
 			sql += " where " + DBConstantes.Fields.DATE_MEDIA_NUM +" >=" + _beginingDate;
 			sql += " and " + DBConstantes.Fields.DATE_MEDIA_NUM + " <=" + _endDate;
+
+            // Autopromo Evaliant
+            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
+                    sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".auto_promotion = 0 ";
+            }
+
 			// Jointures Produits
 			sql += " " + detailProductJoints;
 			sql += " " + dataJointForGad;
@@ -146,6 +164,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			// Group by
 			sql += " group by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad;
 			sql += "," + DBConstantes.Fields.DATE_MEDIA_NUM + "";
+            
+            sql += dataGroupby; // hashcode pour Evaliant
+            
 			// Order by
 			sql += " order by " + detailProductOrderBy + "," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media";
 			sql += "," + DBConstantes.Fields.DATE_MEDIA_NUM + "";
@@ -162,6 +183,38 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 		}
 
+        protected string GetUnitFieldName(WebSession webSession, DBConstantes.TableType.Type type) {
+            StringBuilder sql = new StringBuilder();
+            switch(type) {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                case DBConstantes.TableType.Type.dataVehicle:
+                    try {
+                        UnitInformation unitInformation = _webSession.GetSelectedUnit();
+                        if(unitInformation.Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
+                            sql.AppendFormat("sum({0}) as {1}", unitInformation.DatabaseField, unitInformation.Id.ToString());
+                        else
+                            sql.AppendFormat("{0} as {1}", unitInformation.DatabaseField, unitInformation.Id.ToString());
+                        return sql.ToString();
+                    }
+                    catch {
+                        throw new SQLGeneratorException("Not managed unit (Alert Module)");
+                    }
+                case DBConstantes.TableType.Type.webPlan:
+                    try {
+                        UnitInformation unitInformation = _webSession.GetSelectedUnit();
+                        if(unitInformation.Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
+                            sql.AppendFormat("sum({0}) as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                        else
+                            sql.AppendFormat("{0} as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                        return sql.ToString();
+                    }
+                    catch {
+                        throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
+                    }
+                default:
+                    throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
+            }
+        }
 		#endregion        
 	}
 }
