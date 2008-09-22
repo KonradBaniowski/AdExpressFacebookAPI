@@ -80,7 +80,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Grp
 		/// <param name="targets">identetifiants cibles (séparés par une virgule)</param>
 		/// <param name="connectionString">Chaîne de connection</param>
 		/// <returns>Libellé des cibles AEPM</returns>
-		public static DataSet GetAEPMTargetListFromIDSDataAccess(string idWave,string targets,string connectionString){
+		public static DataSet GetAEPMTargetListFromIDSDataAccess(string idWave,string targets,IDataSource source){
 
 			string sql="";
 
@@ -94,7 +94,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Grp
 			sql+=" order by "+DBCst.Tables.TARGET_PREFIXE+".id_target asc";
 
 			try{
-				return WebDataAccess.Functions.ExecuteQuery(sql,connectionString);
+				return source.Fill(sql);
 			}
 			catch(System.Exception e){
 				throw(e);
