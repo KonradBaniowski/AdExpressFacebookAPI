@@ -8,11 +8,13 @@
 #endregion
 
 using System;
+using System.Globalization;
 using System.Collections;
 using System.Text;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Exceptions;
 
@@ -136,22 +138,7 @@ namespace TNS.AdExpress.Web.Functions{
 		}
 		#endregion
 
-		#region DateTime => dd/MM/YYYY ou MM/dd/YYYY suivant la langue
-		/// <summary>
-		/// Fonction qui formate une date en chaine de caractère en fonction d'un langage
-		/// </summary>
-		/// <param name="date">Date à formater</param>
-		/// <param name="language">Langage de traduction</param>
-		/// <returns>dd/MM/YYYY ou MM/dd/YYYY suivant la langue</returns>
-		public static string dateToString(DateTime date, int language){
-			switch(language){
-				case Cst.DB.Language.ENGLISH:
-					return date.ToString("MM/dd/yyyy");
-				default:
-					return date.ToString("dd/MM/yyyy");
-			}
-		}
-		#endregion
+		
 
 		#region Date de fin d'une période en fonction d'un type de période
 		/// <summary>
