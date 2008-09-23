@@ -11,6 +11,8 @@
 #endregion
 
 using System;
+using System.Drawing;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -26,7 +28,9 @@ using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
+using TNS.FrameWork.Date;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -262,13 +266,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             object[,] tab = this.GetData(typeYear, classifLevel);
-            if (typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear)
-            {
-                periodDate = string.Format("{0}-{1}", _periodBegin.Date.ToString("dd/MM/yyyy"), _periodEnd.Date.ToString("dd/MM/yyyy"));
+
+			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+			DateTimeFormatInfo myDTFI = cInfo.DateTimeFormat;
+
+            if (typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear) {				
+				periodDate = string.Format("{0}-{1}", FctUtilities.Dates.DateToString(_periodBegin.Date,_session.SiteLanguage), FctUtilities.Dates.DateToString(_periodEnd.Date,_session.SiteLanguage));
             }
             else
             {
-                periodDate = string.Format("{0}-{1}", _periodBegin.Date.AddYears(-1).ToString("dd/MM/yyyy"), _periodEnd.Date.AddYears(-1).ToString("dd/MM/yyyy"));
+				periodDate = string.Format("{0}-{1}", FctUtilities.Dates.DateToString(_periodBegin.Date.AddYears(-1),_session.SiteLanguage),FctUtilities.Dates.DateToString(_periodEnd.Date.AddYears(-1),_session.SiteLanguage));
             }
 
             if (tab.GetLongLength(0) == 1 || Convert.ToDouble(tab[0, TOTAL_N]) == 0)

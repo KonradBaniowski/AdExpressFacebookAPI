@@ -258,10 +258,10 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                         resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
                     if ((firstDate != null && firstDate.Length > 0 && lastDate != null && lastDate.Length > 0 && firstDate.Equals(lastDate) && isAlertModule)
                         || (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
-                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(Dates.DateToString(dtFirstDate, _webSession.SiteLanguage));
                     }
                     else {
-                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + Dates.DateToString(dtFirstDate, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + Dates.DateToString(dtLastDate, _webSession.SiteLanguage));
                     }
 
                 ChangeLineType(ref lineType);
@@ -301,7 +301,9 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 // total durée
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1413, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(double.Parse(totalDuration));
+				CellDuration c = new CellDuration(double.Parse(totalDuration));
+				c.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).Format;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = c;
                 ChangeLineType(ref lineType);
             }
 
@@ -309,20 +311,26 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             if (investment != null && investment.Length > 0) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellEuro(double.Parse(investment));
+				CellEuro cE = new CellEuro(double.Parse(investment));
+				cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cE;
                 ChangeLineType(ref lineType);
             }
 			if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
 				//Nombre de produits
 				lineIndex = resultTable.AddNewLine(lineType);
 				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage));
-				resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberProduct.ToString()));
+				CellNumber cN = new CellNumber(double.Parse(numberProduct.ToString()));
+				cN.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN;
 				ChangeLineType(ref lineType);
 			}
             //Nombre d'annonceurs
             lineIndex = resultTable.AddNewLine(lineType);
             resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));
-            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberAdvertiser.ToString()));
+			CellNumber cN1 = new CellNumber(double.Parse(numberAdvertiser.ToString()));
+			cN1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+			resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN1;
             ChangeLineType(ref lineType);
             #endregion
 

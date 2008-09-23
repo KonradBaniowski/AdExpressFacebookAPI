@@ -123,7 +123,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			this.Items.Add(new ListItem("-------------------------------------------","0"));			
 			for(int i=1;i<=53;i++){							
 				ItemValue=startPeriod.Week.ToString().Length==1?startPeriod.Year.ToString()+"0"+startPeriod.Week.ToString() : startPeriod.Year.ToString()+startPeriod.Week.ToString();
-				this.Items.Add(new ListItem(GestionWeb.GetWebWord(124,webSession.SiteLanguage)+"  "+ WebFunctions.Dates.dateToString(startPeriod.FirstDay,webSession.SiteLanguage)+"  "+GestionWeb.GetWebWord(125,webSession.SiteLanguage)+"  "+WebFunctions.Dates.dateToString(startPeriod.LastDay,webSession.SiteLanguage),ItemValue));						
+				this.Items.Add(new ListItem(GestionWeb.GetWebWord(124,webSession.SiteLanguage)+"  "+ WebFunctions.Dates.DateToString(startPeriod.FirstDay,webSession.SiteLanguage)+"  "+GestionWeb.GetWebWord(125,webSession.SiteLanguage)+"  "+WebFunctions.Dates.DateToString(startPeriod.LastDay,webSession.SiteLanguage),ItemValue));						
 				startPeriod.SubWeek(1);
 			}
 		}

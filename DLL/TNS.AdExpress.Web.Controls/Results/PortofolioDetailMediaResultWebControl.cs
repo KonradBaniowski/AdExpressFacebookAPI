@@ -169,7 +169,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
                         zoomDetailSelectionWebControl.ShowZoom = true;
                         if (vehicle == DBClassificationConstantes.Vehicles.names.press || vehicle == DBClassificationConstantes.Vehicles.names.internationalPress) {
                             dayOfWeek = new DateTime(int.Parse(_dayOfWeek.ToString().Substring(0, 4)), int.Parse(_dayOfWeek.Substring(4, 2)), int.Parse(_dayOfWeek.ToString().Substring(6, 2)));
-                            zoomDetailSelectionWebControl.ZoomDate = WebFunctions.Dates.dateToString(dayOfWeek.Date, _customerWebSession.SiteLanguage);
+                            zoomDetailSelectionWebControl.ZoomDate = WebFunctions.Dates.DateToString(dayOfWeek.Date, _customerWebSession.SiteLanguage);
                         }
                         else {
                             zoomDetailSelectionWebControl.ZoomDate = string.Empty;
@@ -286,7 +286,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
                     zoomDetailSelectionWebControl.ShowZoom = true;
                     if (vehicle == DBClassificationConstantes.Vehicles.names.press || vehicle == DBClassificationConstantes.Vehicles.names.internationalPress) {
                         dayOfWeek = new DateTime(int.Parse(_dayOfWeek.ToString().Substring(0, 4)), int.Parse(_dayOfWeek.Substring(4, 2)), int.Parse(_dayOfWeek.ToString().Substring(6, 2)));
-                        zoomDetailSelectionWebControl.ZoomDate = WebFunctions.Dates.dateToString(dayOfWeek.Date, _customerWebSession.SiteLanguage);
+                        zoomDetailSelectionWebControl.ZoomDate = WebFunctions.Dates.DateToString(dayOfWeek.Date, _customerWebSession.SiteLanguage);
                     }
                     else {
                         zoomDetailSelectionWebControl.ZoomDate = string.Empty;

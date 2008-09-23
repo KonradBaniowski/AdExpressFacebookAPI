@@ -78,6 +78,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			/// Second column index
 			/// </summary>
 			const int SECOND_COLUMN_INDEX = 2;
+
 			#endregion
 
 			#region Variables
@@ -102,6 +103,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			ResultTable resultTable = null;
 			LineType lineType = LineType.level1;
 			string typeReseauStr = string.Empty;
+			string unitFormat = "max0";
 			#endregion
 			
 			#region Accès aux tables
@@ -405,13 +407,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
                     lineIndex = resultTable.AddNewLine(lineType);
                     resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
-                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(Dates.DateToString(dtFirstDate, _webSession.SiteLanguage));
 
                     ChangeLineType(ref lineType);
 
                     lineIndex = resultTable.AddNewLine(lineType);
                     resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1608, _webSession.SiteLanguage));
-                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(Dates.DateToString(dtLastDate, _webSession.SiteLanguage));
                 }
                 // Period selected
                 else {
@@ -423,10 +425,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     else resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
                     if ((firstDate != null && firstDate.Length > 0 && lastDate != null && lastDate.Length > 0 && firstDate.Equals(lastDate) && isAlertModule)
                         || (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
-                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage));
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(Dates.DateToString(dtFirstDate, _webSession.SiteLanguage));
                     }
                     else {
-                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtFirstDate, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + DateString.dateTimeToDD_MM_YYYY(dtLastDate, _webSession.SiteLanguage));
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + Dates.DateToString(dtFirstDate, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + Dates.DateToString(dtLastDate, _webSession.SiteLanguage));
                     }
                     //}
                 }
@@ -462,7 +464,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 _webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT)) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(2216, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellVolume(double.Parse(volume));
+				CellVolume cV = new CellVolume(double.Parse(volume));
+				cV.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.volume).Format;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cV;
                 ChangeLineType(ref lineType);
             }
 
@@ -478,7 +482,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack && numberBanner.Length > 0) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(2479, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberBanner.ToString()));
+				CellNumber cN = new CellNumber(double.Parse(numberBanner.ToString()));
+				cN.StringFormat = unitFormat;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN;
                 ChangeLineType(ref lineType);
             }
 
@@ -488,7 +494,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				if (numberBoard != null && numberBoard.Length > 0) {
 					lineIndex = resultTable.AddNewLine(lineType);
 					resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1604, _webSession.SiteLanguage));
-					resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberBoard));
+					CellNumber cN1 = new CellNumber(double.Parse(numberBoard.ToString()));
+					cN1.StringFormat = unitFormat;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN1;
 					ChangeLineType(ref lineType);
 				}
 
@@ -519,7 +527,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					// Nombre de page
 					lineIndex = resultTable.AddNewLine(lineType);
 					resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage));
-					resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(pageNumber));
+					CellNumber cN2 = new CellNumber(double.Parse(pageNumber));
+					cN2.StringFormat = unitFormat;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN2;
 					ChangeLineType(ref lineType);
 				}
 
@@ -527,15 +537,16 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     // Nb de page pub		
                     lineIndex = resultTable.AddNewLine(lineType);
                     resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1386, _webSession.SiteLanguage));
-                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(adNumber));
+					CellPage cP = new CellPage(double.Parse(adNumber));
+					cP.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).Format;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cP;
                     ChangeLineType(ref lineType);
 
                     // Ratio
                     if (pageNumber != null && pageNumber.Length > 0) {
                         lineIndex = resultTable.AddNewLine(lineType);
                         resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage));
-                        //resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(((decimal.Parse(adNumber) / decimal.Parse(pageNumber) * 100)/1000).ToString("0.###")+" %");
-                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPercent(((double.Parse(adNumber) / double.Parse(pageNumber) * 100) / (double)1000));
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPercent(((double.Parse(adNumber) / double.Parse(pageNumber) * 100) / (double)1000));
                     }
                     else {
                         lineIndex = resultTable.AddNewLine(lineType);
@@ -551,7 +562,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                             adNumberExcludingInsets = "0";
                         lineIndex = resultTable.AddNewLine(lineType);
                         resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1388, _webSession.SiteLanguage));
-                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(adNumberExcludingInsets));
+						CellPage cP1 = new CellPage(double.Parse(adNumberExcludingInsets));
+						cP1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).Format;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cP1;
                         ChangeLineType(ref lineType);
                     }
 					if (adNumberIncludingInsets != null && adNumberIncludingInsets.Length > 0) {
@@ -561,7 +574,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         }
                         lineIndex = resultTable.AddNewLine(lineType);
                         resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1389, _webSession.SiteLanguage));
-                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPage(double.Parse(adNumberIncludingInsets));
+						CellPage cP2 = new CellPage(double.Parse(adNumberIncludingInsets));
+						cP2.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).Format;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cP2;
                         ChangeLineType(ref lineType);
                     }
                 }
@@ -578,7 +593,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 }
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1404, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrSpot));
+				CellNumber cN3 = new CellNumber(double.Parse(nbrSpot));
+				cN3.StringFormat = unitFormat;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN3;
                 ChangeLineType(ref lineType);
 
                 if (isAlertModule) {
@@ -588,7 +605,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     }
                     lineIndex = resultTable.AddNewLine(lineType);
                     resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1412, _webSession.SiteLanguage));
-                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrEcran));
+					CellNumber cN4 = new CellNumber(double.Parse(nbrEcran));
+					cN4.StringFormat = unitFormat;
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN4;
                     ChangeLineType(ref lineType);
                 }
                 if (totalDuration.Length == 0) {
@@ -597,7 +616,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 // total durée
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1413, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(double.Parse(totalDuration));
+				CellDuration cD = new CellDuration(double.Parse(totalDuration));
+				cD.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).Format;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cD;
                 ChangeLineType(ref lineType);
             }
             else if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
@@ -607,7 +628,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 }
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1398, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(nbrSpot));
+				CellNumber cN5 = new CellNumber(double.Parse(nbrSpot));
+				cN5.StringFormat = unitFormat;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN5;
                 ChangeLineType(ref lineType);
             }
 
@@ -615,14 +638,18 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if(investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellEuro(double.Parse(investment));
+				CellEuro cE = new CellEuro(double.Parse(investment));
+				cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cE;
                 ChangeLineType(ref lineType);
             }
 
             //Nombre de produits
             lineIndex = resultTable.AddNewLine(lineType);
             resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage));
-            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberProduct.ToString()));
+			CellNumber cN6 = new CellNumber(double.Parse(numberProduct));
+			cN6.StringFormat = unitFormat;
+			resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN6;
             ChangeLineType(ref lineType);
 
             if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor 
@@ -632,19 +659,25 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 //Nombre de nouveaux produits dans la pige
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberNewProductInTracking.ToString()));
+				CellNumber cN7 = new CellNumber(double.Parse(numberNewProductInTracking));
+				cN7.StringFormat = unitFormat;
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN7;
                 ChangeLineType(ref lineType);
 
                 //Nombre de nouveaux produits dans le support
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1395, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberNewProductInVehicle.ToString()));
+				CellNumber cN8 = new CellNumber(double.Parse(numberNewProductInVehicle));
+				cN8.StringFormat = unitFormat;
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN8;
                 ChangeLineType(ref lineType);
             }
             //Nombre d'annonceurs
             lineIndex = resultTable.AddNewLine(lineType);
             resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));
-            resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(double.Parse(numberAdvertiser.ToString()));
+			CellNumber cN9 = new CellNumber(double.Parse(numberAdvertiser));
+			cN9.StringFormat = unitFormat;
+            resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN9;
             ChangeLineType(ref lineType);
 
             // Cas tv, radio, others
@@ -656,7 +689,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 // Durée moyenne d'un écran
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1414, _webSession.SiteLanguage));
-                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
+				CellDuration cD1 = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
+				cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cD1;
                 ChangeLineType(ref lineType);
 
                 // Nombre moyen de spots par écran

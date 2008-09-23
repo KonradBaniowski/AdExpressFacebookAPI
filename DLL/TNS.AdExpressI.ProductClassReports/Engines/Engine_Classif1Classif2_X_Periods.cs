@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
@@ -13,6 +14,8 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Translation;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
+using TNS.FrameWork.Date;
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
 {
@@ -978,7 +981,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			{
 				for( int j = 0; j <= (int.Parse(absolutePeriodEnd.Substring(4,2)) - int.Parse(_session.PeriodBeginningDate.Substring(4,2))); j++)
 				{
-                    str.AppendFormat("<td>{0}</td>", FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType).AddMonths(j).ToString("MMMM"));
+					CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+					str.AppendFormat("<td>{0}</td>", MonthString.GetCharacters(FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType).AddMonths(j).Month, cInfo, 0));
+					//str.AppendFormat("<td>{0}</td>", FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType).AddMonths(j).ToString("MMMM"));
 				}
 			}
 			str.Append("</tr>");

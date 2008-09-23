@@ -270,9 +270,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         , this.ID
                         , i + 1
                         , GestionWeb.GetWebWord(896, _webSession.SiteLanguage)
-                        , Dates.dateToString(Dates.getPeriodBeginningDate(realPeriodBegin, _webSession.PeriodType), _webSession.SiteLanguage)
+                        , Dates.DateToString(Dates.getPeriodBeginningDate(realPeriodBegin, _webSession.PeriodType), _webSession.SiteLanguage)
                         , GestionWeb.GetWebWord(897, _webSession.SiteLanguage)
-                        , Dates.dateToString(Dates.getPeriodEndDate(realPeriodEnd, _webSession.PeriodType), _webSession.SiteLanguage)
+                        , Dates.DateToString(Dates.getPeriodEndDate(realPeriodEnd, _webSession.PeriodType), _webSession.SiteLanguage)
                     );
                     sb.AppendFormat("\r\ntab_periodImage_{0}[{1}] = '/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
                     sb.AppendFormat("\r\ntab_periodImage_selected_{0}[{1}] = '/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
@@ -283,15 +283,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     if (_isAllPeriodAllowed)
                     {
                         periodIndex = i + 1;
-                        labBegin = Dates.dateToString(Dates.getPeriodBeginningDate(realPeriodBegin, _webSession.PeriodType), _webSession.SiteLanguage);
-                        labEnd = Dates.dateToString(Dates.getPeriodEndDate(realPeriodEnd, _webSession.PeriodType), _webSession.SiteLanguage);
+                        labBegin = Dates.DateToString(Dates.getPeriodBeginningDate(realPeriodBegin, _webSession.PeriodType), _webSession.SiteLanguage);
+                        labEnd = Dates.DateToString(Dates.getPeriodEndDate(realPeriodEnd, _webSession.PeriodType), _webSession.SiteLanguage);
 
                     }
                     else
                     {
                         periodIndex = 0;
-                        labBegin = Dates.dateToString(Dates.Max(Dates.getZoomBeginningDate(periodBegin, periodType), Dates.getPeriodBeginningDate(realPeriodBegin, WebCst.CustomerSessions.Period.Type.dateToDate)), _webSession.SiteLanguage);
-                        labEnd = Dates.dateToString(Dates.Max(Dates.getZoomEndDate(periodBegin, periodType), Dates.getPeriodEndDate(realPeriodEnd, WebCst.CustomerSessions.Period.Type.dateToDate)), _webSession.SiteLanguage);
+                        labBegin = Dates.DateToString(Dates.Max(Dates.getZoomBeginningDate(periodBegin, periodType), Dates.getPeriodBeginningDate(realPeriodBegin, WebCst.CustomerSessions.Period.Type.dateToDate)), _webSession.SiteLanguage);
+                        labEnd = Dates.DateToString(Dates.Max(Dates.getZoomEndDate(periodBegin, periodType), Dates.getPeriodEndDate(realPeriodEnd, WebCst.CustomerSessions.Period.Type.dateToDate)), _webSession.SiteLanguage);
                     }
                 }
                 //End all periods
@@ -541,12 +541,12 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 sb.AppendFormat("<table border=0 cellspacing=0 cellpadding=0 class=\"{0}\" width=\"100%\">", WHITE_BACK_GROUND);
 
                 if (_webSession.PeriodType == WebCst.CustomerSessions.Period.Type.dateToDate) {
-                    labBegin = Dates.dateToString(Dates.getPeriodBeginningDate(realPeriodBegin, WebCst.CustomerSessions.Period.Type.dateToDate), _webSession.SiteLanguage);
-                    labEnd = Dates.dateToString(Dates.getPeriodEndDate(realPeriodEnd, WebCst.CustomerSessions.Period.Type.dateToDate), _webSession.SiteLanguage);
+                    labBegin = Dates.DateToString(Dates.getPeriodBeginningDate(realPeriodBegin, WebCst.CustomerSessions.Period.Type.dateToDate), _webSession.SiteLanguage);
+                    labEnd = Dates.DateToString(Dates.getPeriodEndDate(realPeriodEnd, WebCst.CustomerSessions.Period.Type.dateToDate), _webSession.SiteLanguage);
                 }
                 else {
-                    labBegin = Dates.dateToString(Dates.getPeriodBeginningDate(periodBegin, periodType), _webSession.SiteLanguage);
-                    labEnd = Dates.dateToString(Dates.getPeriodEndDate(periodEnd, periodType), _webSession.SiteLanguage);
+                    labBegin = Dates.DateToString(Dates.getPeriodBeginningDate(periodBegin, periodType), _webSession.SiteLanguage);
+                    labEnd = Dates.DateToString(Dates.getPeriodEndDate(periodEnd, periodType), _webSession.SiteLanguage);
                 }
                 if (labBegin != labEnd)
                 {
@@ -581,25 +581,25 @@ namespace TNS.AdExpress.Web.Controls.Headers
             sb.AppendFormat("\r\ntab_zooms_{0}[{1}] = '{2}';", this.ID, i, currentPeriod);
             if (globalDateBegin.Length > 0)
             {
-                tmpBegin = Dates.dateToString(
+                tmpBegin = Dates.DateToString(
                     Dates.Max(Dates.getZoomBeginningDate(currentPeriod, periodType),
                     Dates.getPeriodBeginningDate(globalDateBegin, WebCst.CustomerSessions.Period.Type.dateToDate))
                     , _webSession.SiteLanguage);
             }
             else
             {
-                tmpBegin = Dates.dateToString(Dates.getZoomBeginningDate(currentPeriod, periodType), _webSession.SiteLanguage);
+                tmpBegin = Dates.DateToString(Dates.getZoomBeginningDate(currentPeriod, periodType), _webSession.SiteLanguage);
             }
             if (globalDateEnd.Length > 0)
             {
-                tmpEnd = Dates.dateToString(
+                tmpEnd = Dates.DateToString(
                     Dates.Min(Dates.getZoomEndDate(currentPeriod, periodType),
                     Dates.getPeriodEndDate(globalDateEnd, WebCst.CustomerSessions.Period.Type.dateToDate))
                     , _webSession.SiteLanguage);
             }
             else
             {
-                tmpEnd = Dates.dateToString(Dates.getZoomEndDate(currentPeriod, periodType), _webSession.SiteLanguage);
+                tmpEnd = Dates.DateToString(Dates.getZoomEndDate(currentPeriod, periodType), _webSession.SiteLanguage);
             }
             if (tmpEnd != tmpBegin)
             {

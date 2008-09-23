@@ -10,6 +10,7 @@
 #endregion
 
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
@@ -21,9 +22,10 @@ using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Classification;
-
+using TNS.FrameWork.Date;
 namespace TNS.AdExpressI.ProductClassReports.Engines
 {
     /// <summary>
@@ -621,7 +623,8 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 				j++;
 			}
 			for(i=j; i < data.GetLength(1)-_isPersonalized; i++){
-				str.AppendFormat("<td>{0}</td>",  FctUtilities.Dates.getPeriodBeginningDate((int.Parse(_session.PeriodBeginningDate)+i-j).ToString() ,_session.PeriodType).ToString("MMMM"));
+				CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+				str.AppendFormat("<td>{0}</td>", MonthString.GetCharacters(FctUtilities.Dates.getPeriodBeginningDate((int.Parse(_session.PeriodBeginningDate) + i - j).ToString(), _session.PeriodType).Month, cInfo, 0));
 			}
 			str.Append("</tr>");
 

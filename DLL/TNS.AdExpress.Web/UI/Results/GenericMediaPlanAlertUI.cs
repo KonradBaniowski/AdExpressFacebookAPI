@@ -373,8 +373,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 
                 t.Append("<td class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, webSession.SiteLanguage));
                 if (zoomDate != null && zoomDate.Length > 0){
-                    t.Append("&nbsp;" + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(zoomDate, webSession.PeriodType), webSession.SiteLanguage)
-                        + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(zoomDate, webSession.PeriodType), webSession.SiteLanguage) + "&nbsp;");
+                    t.Append("&nbsp;" + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(zoomDate, webSession.PeriodType), webSession.SiteLanguage)
+                        + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(zoomDate, webSession.PeriodType), webSession.SiteLanguage) + "&nbsp;");
                 }
 
                 t.Append("</td>");

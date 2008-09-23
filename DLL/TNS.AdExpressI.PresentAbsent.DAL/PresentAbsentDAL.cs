@@ -788,10 +788,10 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                             productFieldNameWithoutTablePrefix,
                             dataFieldsForGadWithoutTablePrefix);
                         if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb){
-                            sql.AppendFormat(", {2}", FctWeb.SQLGenerator.GetUnitAlias(_session));
+                            sql.AppendFormat(", {0}", FctWeb.SQLGenerator.GetUnitAlias(_session));
                         }
                         else{
-                            sql.AppendFormat(", {2}", FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
+                            sql.AppendFormat(", {0}", FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
                         }
                         sql.Append(" from (");
                         sql.Append(sqlDataVehicle);

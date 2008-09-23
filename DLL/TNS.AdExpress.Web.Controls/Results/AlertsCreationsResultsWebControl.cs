@@ -334,11 +334,11 @@ namespace TNS.AdExpress.Web.Controls.Results
             HtmlTxt.Append("<TR>");
             HtmlTxt.Append("<TD colSpan=\"" + ColSpan + "\" valign=\"center\" class=\"txtViolet14Bold\" >");
             HtmlTxt.Append(data[0, CstWeb.RadioInsertionsColumnIndex.VEHICLE_INDEX].ToString());
-            if (dateBegin.Equals(dateEnd)) HtmlTxt.Append(" " + Dates.dateToString(Dates.getPeriodBeginningDate(dateBegin, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage));
+            if (dateBegin.Equals(dateEnd)) HtmlTxt.Append(" " + Dates.DateToString(Dates.getPeriodBeginningDate(dateBegin, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage));
             else
             {
-                HtmlTxt.Append(" " + GestionWeb.GetWebWord(896, siteLanguage) + Dates.dateToString(Dates.getPeriodBeginningDate(dateBegin, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage)
-                    + GestionWeb.GetWebWord(897, siteLanguage) + Dates.dateToString(Dates.getPeriodEndDate(dateEnd, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage) + "<br>");
+                HtmlTxt.Append(" " + GestionWeb.GetWebWord(896, siteLanguage) + Dates.DateToString(Dates.getPeriodBeginningDate(dateBegin, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage)
+                    + GestionWeb.GetWebWord(897, siteLanguage) + Dates.DateToString(Dates.getPeriodEndDate(dateEnd, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage) + "<br>");
             }
             HtmlTxt.Append("</TD>");
             HtmlTxt.Append("</TR>");
@@ -549,11 +549,11 @@ namespace TNS.AdExpress.Web.Controls.Results
             HtmlTxt.Append("<TR>");
             HtmlTxt.Append("<TD colSpan=\"" + ColSpan + "\" valign=\"center\" class=\"txtViolet14Bold\" >");
             HtmlTxt.Append(data[0, CstWeb.TVInsertionsColumnIndex.VEHICLE_INDEX].ToString());
-            if (dateBegin.Equals(dateEnd)) HtmlTxt.Append(" " + Dates.dateToString(Dates.getPeriodBeginningDate(dateBegin, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage));
+            if (dateBegin.Equals(dateEnd)) HtmlTxt.Append(" " + Dates.DateToString(Dates.getPeriodBeginningDate(dateBegin, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage));
             else
             {
-                HtmlTxt.Append(" " + GestionWeb.GetWebWord(896, siteLanguage) + Dates.dateToString(Dates.getPeriodBeginningDate(dateBegin, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage)
-                    + GestionWeb.GetWebWord(897, siteLanguage) + Dates.dateToString(Dates.getPeriodEndDate(dateEnd, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage) + "<br>");
+                HtmlTxt.Append(" " + GestionWeb.GetWebWord(896, siteLanguage) + Dates.DateToString(Dates.getPeriodBeginningDate(dateBegin, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage)
+                    + GestionWeb.GetWebWord(897, siteLanguage) + Dates.DateToString(Dates.getPeriodEndDate(dateEnd, Constantes.Web.CustomerSessions.Period.Type.dateToDate), siteLanguage) + "<br>");
             }
             HtmlTxt.Append("</TD>");
             HtmlTxt.Append("</TR>");

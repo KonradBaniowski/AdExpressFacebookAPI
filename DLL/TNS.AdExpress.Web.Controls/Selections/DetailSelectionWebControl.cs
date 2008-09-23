@@ -735,8 +735,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				}
 				else{
 					if(periodBeginning.Length==0||periodEnd.Length==0){
-						startDate=WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage);
-						endDate=WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage);
+						startDate=WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage);
+						endDate=WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage);
 					
 						html.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+GestionWeb.GetWebWord(1541,webSession.SiteLanguage)+" :</font> "+startDate);
 						if(!startDate.Equals(endDate))
@@ -745,8 +745,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					}
 					else{
 						// Predefined date
-						startDate=WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(periodBeginning,webSession.PeriodType),webSession.SiteLanguage);
-						endDate=WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(periodEnd,webSession.PeriodType),webSession.SiteLanguage);
+						startDate=WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(periodBeginning,webSession.PeriodType),webSession.SiteLanguage);
+						endDate=WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(periodEnd,webSession.PeriodType),webSession.SiteLanguage);
 					
 						html.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+GestionWeb.GetWebWord(1541,webSession.SiteLanguage)+" :</font> "+startDate);
 						if(!startDate.Equals(endDate))
@@ -771,8 +771,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 string startDate;
                 string endDate;
 
-                startDate = DateString.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.StartDate.ToString(), webSession.SiteLanguage);
-                endDate = DateString.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.EndDate.ToString(), webSession.SiteLanguage);
+				startDate = WebFunctions.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.StartDate.ToString(), webSession.SiteLanguage);
+				endDate = WebFunctions.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.EndDate.ToString(), webSession.SiteLanguage);
 
                 html.Append("<tr><td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2291, webSession.SiteLanguage) + " </font> " + startDate);
                 if (!startDate.Equals(endDate))
@@ -796,8 +796,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 string startDate;
                 string endDate;
 
-                startDate = DateString.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeStartDate.ToString(), webSession.SiteLanguage);
-                endDate = DateString.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeEndDate.ToString(), webSession.SiteLanguage);
+				startDate = WebFunctions.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeStartDate.ToString(), webSession.SiteLanguage);
+				endDate = WebFunctions.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeEndDate.ToString(), webSession.SiteLanguage);
 
                 html.Append("<tr><td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2292, webSession.SiteLanguage) + " </font> " + startDate);
                 if (!startDate.Equals(endDate))

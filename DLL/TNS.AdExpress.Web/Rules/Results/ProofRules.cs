@@ -170,12 +170,12 @@ namespace TNS.AdExpress.Web.Rules.Results
 							if (dr["date_media_num"]!= DBNull.Value){
                                 date = dr["date_media_num"].ToString();
 								DateTime dTime = new DateTime(int.Parse(date.Substring(0,4)), int.Parse(date.Substring(4,2)), int.Parse(date.Substring(6,2)));
-								date = WebFunctions.Dates.dateToString(dTime,webSession.SiteLanguage);
+								date = WebFunctions.Dates.DateToString(dTime,webSession.SiteLanguage);
 							}
 							else if (dr["date_cover_num"]!= DBNull.Value){
                                 date = dr["date_cover_num"].ToString();
 								DateTime dTime = new DateTime(int.Parse(date.Substring(0,4)), int.Parse(date.Substring(4,2)), int.Parse(date.Substring(6,2)));
-								date = WebFunctions.Dates.dateToString(dTime,webSession.SiteLanguage);
+								date = WebFunctions.Dates.DateToString(dTime,webSession.SiteLanguage);
 							}
 
 							//Première colonne date

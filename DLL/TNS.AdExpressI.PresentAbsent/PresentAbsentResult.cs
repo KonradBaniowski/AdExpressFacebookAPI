@@ -513,6 +513,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             string mediaList = "";
             string expression = "";
             string sort = "id_media asc";
+			string unitFormat = "max0";
 			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             #endregion
 
@@ -637,11 +638,16 @@ namespace TNS.AdExpressI.PresentAbsent{
             Int64 exclusiveNumberColumnIndex = resultTable.GetHeadersIndexInResultTable(EXCLUSIVE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
 
             #region Initialisation des Nombres
-            for (int i = 0; i < nbLine; i++)
-            {
-                resultTable[i, presentNumberColumnIndex] = new CellNumber(0.0);
-                resultTable[i, absentNumberColumnIndex] = new CellNumber(0.0);
-                resultTable[i, exclusiveNumberColumnIndex] = new CellNumber(0.0);
+            for (int i = 0; i < nbLine; i++) {
+				CellNumber cN = new CellNumber(0.0);
+				cN.StringFormat = unitFormat;
+				resultTable[i, presentNumberColumnIndex] = cN;
+				CellNumber cN1 = new CellNumber(0.0);
+				cN1.StringFormat = unitFormat;
+                resultTable[i, absentNumberColumnIndex] = cN1;
+				CellNumber cN2 = new CellNumber(0.0);
+				cN2.StringFormat = unitFormat;
+                resultTable[i, exclusiveNumberColumnIndex] = cN2;
             }
             for (long i = 0; i < nbLine; i++)
             {

@@ -11,6 +11,7 @@
 #endregion
 
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -24,6 +25,7 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
@@ -104,6 +106,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #region Result table init
             long nbline = dt.Rows.Count;
             object[,] tabResult = new object[nbline, COMPETITOR + 1];
+			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
             #endregion
 
             #region Build Table
@@ -183,7 +186,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
 
             object[,] tab = this.GetData(classifLevel);
-            string periodLabel = string.Format("{0}-{1}", _periodBegin.Date.ToString("dd/MM/yyyy"), _periodEnd.Date.ToString("dd/MM/yyyy"));
+            string periodLabel = string.Format("{0}-{1}",FctUtilities.Dates.DateToString( _periodBegin.Date ,_session.SiteLanguage), FctUtilities.Dates.DateToString(_periodEnd.Date,_session.SiteLanguage));
             long last = tab.GetLongLength(0) - 1;
 
             #region No Data

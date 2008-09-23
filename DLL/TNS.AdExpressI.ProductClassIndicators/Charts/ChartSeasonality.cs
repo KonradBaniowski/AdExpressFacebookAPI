@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -12,6 +13,7 @@ using Dundas.Charting.WebControl;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork.Date;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
 using System.Drawing;
@@ -57,6 +59,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
+			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
 
             #region Get Data
             EngineSeasonality engine = new EngineSeasonality(this._session, this._dalLayer);
@@ -198,7 +201,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     }
                     idElement = Convert.ToInt64(tab[i, EngineSeasonality.ID_ELEMENT_COLUMN_INDEX]);
                     invest = Convert.ToDouble(tab[i, EngineSeasonality.INVEST_COLUMN_INDEX]);
-                    month = MonthString.Get(periodBegin.AddMonths(compteur).Month, _session.SiteLanguage, 0);
+					month = MonthString.GetCharacters(periodBegin.AddMonths(compteur).Month, cInfo,0);
                     if (idElement != 0)
                     {
                         if (idElement == EngineSeasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX)

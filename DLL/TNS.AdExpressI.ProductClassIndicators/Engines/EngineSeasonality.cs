@@ -11,6 +11,7 @@
 #endregion
 
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -28,6 +29,7 @@ using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpressI.ProductClassIndicators.Exceptions;
 using System.Collections;
@@ -179,6 +181,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
             StringBuilder str = new StringBuilder(50000);
 			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
 
             #region CSS Styles
             string cssTotalLabel = "pmtotal";
@@ -311,8 +314,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
                 cssLabel = cssTotalLabel;
                 cssNb = cssTotalNb;
-                str.AppendFormat("<tr><td class=\"p2\" nowrap rowspan={0}>{1}</td>", rowspan, MonthString.GetHTMLCharacters(currentmonth, _session.SiteLanguage, 0));
-
+				//str.AppendFormat("<tr><td class=\"p2\" nowrap rowspan={0}>{1}</td>", rowspan, MonthString.GetHTMLCharacters(currentmonth, _session.SiteLanguage, 0));
+				str.AppendFormat("<tr><td class=\"p2\" nowrap rowspan={0}>{1}</td>", rowspan, MonthString.GetCharacters(currentmonth, cInfo, 0));
+				
                 #region Total sector
                 if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && tabTotal != null && !(tabTotal.GetLength(0) == 0))
                 {
