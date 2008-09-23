@@ -538,6 +538,33 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
         #endregion
 
+		#region DateTime => dd/MM/YYYY ou MM/dd/YYYY suivant la langue
+		/// <summary>
+		/// Get date string dd MM YYYY  acording to culture information
+		/// </summary>
+		/// <param name="date">Date to fromat</param>
+		/// <param name="language">Site langage </param>
+		/// <returns>dd/MM/YYYY ou MM/dd/YYYY or MM.dd.YYYY etc</returns>
+		public static string DateToString(DateTime date, int language) {
+
+			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[language].Localization,false);
+			DateTimeFormatInfo myDTFI = cInfo.DateTimeFormat;
+			return date.ToString("d", myDTFI);
+		}
+		#endregion
+
+		#region YYYYMMDDToDD_MM_YYYY
+		/// <summary>
+		/// Transforme une date sous la forme YYYYMMDD en DD/MM/YYYY ou MM/DD/YYYY suivant la langue
+		/// </summary>
+		/// <param name="date">Date à convertir</param>
+		/// <param name="language">Identifiant de la langue</param>
+		/// <returns>Date convertie</returns>
+		public static string YYYYMMDDToDD_MM_YYYY(string date, int language) {
+			if (date.Length != 8) throw (new ArgumentException("La date en entrée n'est pas valide"));
+			return DateToString(new DateTime(int.Parse(date.Substring(0, 4)), int.Parse(date.Substring(4, 2)), int.Parse(date.Substring(6, 2))), language);
+		}
+		#endregion
 
     }
 }

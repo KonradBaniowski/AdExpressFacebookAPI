@@ -76,11 +76,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					int dateEnding = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 					//Formatting the date in the format e.g 12/12/2005
 					if(dateBeginning.ToString().Length>0)
-						startDate = WebFnc.Dates.dateToString(new DateTime(int.Parse(dateBeginning.ToString().Substring(0,4)),int.Parse(dateBeginning.ToString().Substring(4,2)),int.Parse(dateBeginning.ToString().Substring(6,2))),webSession.SiteLanguage);						
-//						startDate=dateBeginning.ToString().Substring(6,2)+"/"+dateBeginning.ToString().Substring(4,2)+"/"+dateBeginning.ToString().Substring(0,4);
+						startDate = WebFnc.Dates.DateToString(new DateTime(int.Parse(dateBeginning.ToString().Substring(0,4)),int.Parse(dateBeginning.ToString().Substring(4,2)),int.Parse(dateBeginning.ToString().Substring(6,2))),webSession.SiteLanguage);						
 					if(dateEnding.ToString().Length>0)
-						endDate = WebFnc.Dates.dateToString(new DateTime(int.Parse(dateEnding.ToString().Substring(0,4)),int.Parse(dateEnding.ToString().Substring(4,2)),int.Parse(dateEnding.ToString().Substring(6,2))),webSession.SiteLanguage);												
-//						endDate=dateEnding.ToString().Substring(6,2)+"/"+dateEnding.ToString().Substring(4,2)+"/"+dateEnding.ToString().Substring(0,4);
+						endDate = WebFnc.Dates.DateToString(new DateTime(int.Parse(dateEnding.ToString().Substring(0,4)),int.Parse(dateEnding.ToString().Substring(4,2)),int.Parse(dateEnding.ToString().Substring(6,2))),webSession.SiteLanguage);												
 					#endregion															
 									
 					#region construction of synthesis hashtable
@@ -274,9 +272,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					int dateEnding = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 					//Formatting the date in the format e.g 12/12/2005
 					if(dateBeginning.ToString().Length>0)
-						startDate = WebFnc.Dates.dateToString(new DateTime(int.Parse(dateBeginning.ToString().Substring(0,4)),int.Parse(dateBeginning.ToString().Substring(4,2)),int.Parse(dateBeginning.ToString().Substring(6,2))),webSession.SiteLanguage);						
+						startDate = WebFnc.Dates.DateToString(new DateTime(int.Parse(dateBeginning.ToString().Substring(0,4)),int.Parse(dateBeginning.ToString().Substring(4,2)),int.Parse(dateBeginning.ToString().Substring(6,2))),webSession.SiteLanguage);						
 					if(dateEnding.ToString().Length>0)
-						endDate = WebFnc.Dates.dateToString(new DateTime(int.Parse(dateEnding.ToString().Substring(0,4)),int.Parse(dateEnding.ToString().Substring(4,2)),int.Parse(dateEnding.ToString().Substring(6,2))),webSession.SiteLanguage);												
+						endDate = WebFnc.Dates.DateToString(new DateTime(int.Parse(dateEnding.ToString().Substring(0,4)),int.Parse(dateEnding.ToString().Substring(4,2)),int.Parse(dateEnding.ToString().Substring(6,2))),webSession.SiteLanguage);												
 					#endregion	
 
 					#region get Data
@@ -531,9 +529,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					int dateEnding = int.Parse(WebFnc.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
 					//Formatting the date in the format e.g 12/12/2005
 					if(dateBeginning.ToString().Length>0)
-						startDate = WebFnc.Dates.dateToString(new DateTime(int.Parse(dateBeginning.ToString().Substring(0,4)),int.Parse(dateBeginning.ToString().Substring(4,2)),int.Parse(dateBeginning.ToString().Substring(6,2))),webSession.SiteLanguage);						
+						startDate = WebFnc.Dates.DateToString(new DateTime(int.Parse(dateBeginning.ToString().Substring(0,4)),int.Parse(dateBeginning.ToString().Substring(4,2)),int.Parse(dateBeginning.ToString().Substring(6,2))),webSession.SiteLanguage);						
 					if(dateEnding.ToString().Length>0)
-						endDate = WebFnc.Dates.dateToString(new DateTime(int.Parse(dateEnding.ToString().Substring(0,4)),int.Parse(dateEnding.ToString().Substring(4,2)),int.Parse(dateEnding.ToString().Substring(6,2))),webSession.SiteLanguage);												
+						endDate = WebFnc.Dates.DateToString(new DateTime(int.Parse(dateEnding.ToString().Substring(0,4)),int.Parse(dateEnding.ToString().Substring(4,2)),int.Parse(dateEnding.ToString().Substring(6,2))),webSession.SiteLanguage);												
 					#endregion	
 
 					#region get Data
