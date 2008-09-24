@@ -15,7 +15,8 @@ namespace TNS.AdExpress.Anubis.Constantes{
 		/// <summary>
 		/// Lien pour récupérer les css
 		/// </summary>
-		public const string CSS_LINK="www.tnsadexpress.com";
+        //public const string CSS_LINK="www.tnsadexpress.com";
+        public const string CSS_LINK = "http://localhost:3525/App_Themes";
 		/// <summary>
 		/// indique le type de résultat à traiter
 		/// </summary>
