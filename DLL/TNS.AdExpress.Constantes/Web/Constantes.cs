@@ -2150,7 +2150,10 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// Identifiant de la liste des média pour le module Tendances d'un support
 		/// </summary>
 		public const int TRENDS_LIST_ID = 345;
-
+        /// <summary>
+        /// Identifiant de la liste des média pour lesquels on utilise la date de kiosque pour accéder aux visuels
+        /// </summary>
+        public const int CREATIVES_KIOSQUE_LIST_ID = 365;
 	}
 	#endregion
 
