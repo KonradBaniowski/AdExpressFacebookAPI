@@ -2637,3 +2637,68 @@ td.acl2Bg{
 	padding-right:4px;
 	text-decoration : none;
 }
+/*justif*/
+.jusT
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color : #6B598B;
+	font-weight:bold;
+	background-color : #FFFFFF;
+	white-space:nowrap;
+	text-decoration : none;		
+	padding-top: 0px;
+    padding-right: 4px;
+    padding-bottom: 0px;
+    padding-left: 4px;
+}
+.jusV
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color : #6B598B;
+	font-weight:normal;
+	background-color : #FFFFFF;
+	white-space:nowrap;
+	padding-top: 0px;
+    padding-right: 4px;
+    padding-bottom: 0px;
+    padding-left: 4px;
+	text-decoration : none;
+}
+table.jus
+{
+	background-color : #FFFFFF;
+	white-space:nowrap;
+	padding :0px;
+	border-spacing: 0px;
+	height : 340px;
+	width : 100%;
+	border-bottom : #644883 1px solid;
+	border-right: #644883 1px solid;
+	border-top: #644883 0px solid;
+	border-left:#644883 1px solid;
+}
+td.jus
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color : #FFFFFF;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #644883;
+	padding-left:5px;
+	padding-right:5px;
+	border-left-width:1px;
+	border-left-color:#644883;
+	border-left-style:solid;
+	border-top-width:0px;
+	border-top-color:#644883;
+	border-top-style:solid;
+	border-bottom-color:#644883;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#644883;
+	border-right-width: 1px; 
+	border-right-style:solid;
+}
