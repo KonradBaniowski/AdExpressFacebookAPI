@@ -52,7 +52,7 @@ namespace TNS.AdExpress.Domain.Translation
 		/// <param name="name">Name of the pattern</param>	
 		/// <returns>Short date format</returns>
 		public string GetFormatPattern(string name) {
-			if (!_patterns.ContainsKey(name))
+			if (!_patterns.ContainsKey(name.ToLower()))
 				throw new ArgumentException(string.Format("The short date pattern {0} is not defined ", name));
 			return _patterns[name.ToLower()];
 		}

@@ -547,9 +547,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
 		/// <returns>dd/MM/YYYY ou MM/dd/YYYY or MM.dd.YYYY etc</returns>
 		public static string DateToString(DateTime date, int language) {
 
-			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[language].Localization,false);
-			DateTimeFormatInfo myDTFI = cInfo.DateTimeFormat;
-			return date.ToString("d", myDTFI);
+			AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[language].CultureInfo;
+			return date.ToString(cInfo.GetFormatPattern(TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern.ToString()));
 		}
 		#endregion
 

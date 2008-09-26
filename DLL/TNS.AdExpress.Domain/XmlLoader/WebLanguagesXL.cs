@@ -167,6 +167,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 if(reader.GetAttribute("format")!=null) format=reader.GetAttribute("format");
                                 cInfo.AddPattern(formatName, format);
                                 break;
+							case "dateFormat":
+								if (reader.GetAttribute("name") != null) formatName = reader.GetAttribute("name");
+								if (reader.GetAttribute("format") != null) format = reader.GetAttribute("format");
+								cInfo.AddPattern(formatName, format);
+								break;
                         }
                     }
                 }

@@ -3,13 +3,16 @@
   <languages default="33" defaultDataLanguage="33">
     <language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" nlsSort="FRENCH">
       <unitformats>
-        <unitformat name="max0" format="#,##0;-#,##0;-"/>
+        <unitformat name="max0" format="# ##0;-# ##0;-"/>
         <unitformat name="max1" format="#,##0.#;-#,##0.#;-"/>
         <unitformat name="max2" format="#,##0.##;-#,##0.##;-"/>
         <unitformat name="max3" format="#,##0.###;-#,##0.###;-"/>
         <unitformat name="percentage" format="#,##0.00\%;-#,##0.00\%;-"/>
         <unitformat name="duration" format="#0 H 00 M 00 S"/>
       </unitformats>
+      <dateFormats>
+        <dateFormat name="shortdatepattern" format="d/M/yyyy"/>
+      </dateFormats>
     </language>
     <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" nlsSort="FRENCH">
       <unitformats>
@@ -20,6 +23,9 @@
         <unitformat name="percentage" format="#,##0.00 \%;-#,##0.00 \%;-"/>
         <unitformat name="duration" format="#0 H 00 M 00 S"/>
       </unitformats>
+      <dateFormats>
+      <dateFormat name="shortdatepattern" format="M/d/yyyy"/>
+      </dateFormats>
     </language>
   </languages>
 </configuration>

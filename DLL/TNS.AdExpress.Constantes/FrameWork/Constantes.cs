@@ -94,6 +94,15 @@ namespace TNS.AdExpress.Constantes.FrameWork{
 			/// </summary>
 			SIXTH=12,
 		}
+		/// <summary>
+		/// Dates du dernier mois des bimestriels
+		/// </summary>
+		public enum Pattern {
+			/// <summary>
+			/// short date pattern
+			/// </summary>
+			shortDatePattern			
+		}
 
 	}
 }
