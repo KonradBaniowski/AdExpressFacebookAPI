@@ -46,6 +46,16 @@ namespace TNS.AdExpress.Domain.Translation
                 throw new ArgumentException(string.Format("Duplicated key {0}", name));
             _patterns.Add(name.ToLower(), format);
         }
+		/// <summary>
+		/// Get a specific short date format
+		/// </summary>
+		/// <param name="name">Name of the pattern</param>	
+		/// <returns>Short date format</returns>
+		public string GetFormatPattern(string name) {
+			if (!_patterns.ContainsKey(name))
+				throw new ArgumentException(string.Format("The short date pattern {0} is not defined ", name));
+			return _patterns[name.ToLower()];
+		}
         #endregion
 
         #region Constructor
@@ -66,7 +76,7 @@ namespace TNS.AdExpress.Domain.Translation
         /// <returns>Format Provider</returns>
         public override object GetFormat(Type formatType)
         {
-
+			
             // Return ourselves or null.
             if (typeof(ICustomFormatter).Equals(formatType)) return this;
             if (typeof(NumberFormatInfo).Equals(formatType)) return this.NumberFormat;
@@ -104,6 +114,8 @@ namespace TNS.AdExpress.Domain.Translation
             else return arg.ToString();
         }
         #endregion
+
+		
 
     }
 }
