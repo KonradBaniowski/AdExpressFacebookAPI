@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Windows.Forms;
+using System.Reflection;
 
 using TNS.AdExpress.Anubis.Miysis.Common;
 using TNS.AdExpress.Anubis.Miysis.Exceptions;
@@ -21,8 +22,6 @@ using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 
 using TNS.AdExpress.Web.UI.Results;
 
-using TNS.AdExpress.Common;
-
 using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
@@ -31,10 +30,10 @@ using TNS.FrameWork.Date;
 
 using TNS.AdExpress.Web.BusinessFacade.Results;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
-using TNS.AdExpress.Web.Core.ClassificationList;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Rules.Results.APPM;
@@ -60,7 +59,11 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using System.Globalization;
 using Oracle.DataAccess.Client;
-
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpressI.MediaSchedule;
+using TNS.AdExpress.Domain.Web.Navigation;
+using DomainLevel = TNS.AdExpress.Domain.Level;
+using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 
 namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 {
@@ -371,7 +374,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
 		string workFile = GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-		sw = TNS.AdExpress.Anubis.Common.Functions.GetHtmlFile(workFile);
+		sw = TNS.AdExpress.Anubis.Common.Functions.GetHtmlFile(workFile,_webSession);
 
 		#region Title
 					
@@ -457,7 +460,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
 			sw.WriteLine("<TR align=\"center\">");
 			sw.WriteLine("<TD>");
-			sw.WriteLine(Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.CustomerLogin.Connection, 600, true, nbLineByPage, ref currentLine)));
+            sw.WriteLine(Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine)));
 			sw.WriteLine("</TD>");
 			sw.WriteLine("</TR>");
 
@@ -480,28 +483,28 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 int code = -1;
                 switch (((LevelInformation)_webSession.ProductDetailLevel.ListElement.Tag).Type)
                 {
-                    case Right.type.sectorAccess:
+                    case CstRights.type.sectorAccess:
                         code = 175;
                         break;
-                    case Right.type.subSectorAccess:
+                    case CstRights.type.subSectorAccess:
                         code = 1931;
                         break;
-                    case Right.type.groupAccess:
+                    case CstRights.type.groupAccess:
                         code = 859;
                         break;
-                    case Right.type.advertiserAccess:
+                    case CstRights.type.advertiserAccess:
                         code = 857;
                         break;
-                    case Right.type.productAccess:
+                    case CstRights.type.productAccess:
                         code = 858;
                         break;
-                    case Right.type.brandAccess:
+                    case CstRights.type.brandAccess:
                         code = 1889;
                         break;
-                    case Right.type.holdingCompanyAccess:
+                    case CstRights.type.holdingCompanyAccess:
                         code = 1589;
                         break;
-                    case Right.type.segmentAccess:
+                    case CstRights.type.segmentAccess:
                         code = 592;
                         break;
 
@@ -559,34 +562,34 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 			#region GETHTML
 			StringBuilder html=new StringBuilder(10000);
 			StringBuilder htmlHeader=new StringBuilder(10000);
-			MediaPlanResultData result=null;
-			Int64 module = _webSession.CurrentModule;
 			ArrayList versionsUIs = new ArrayList();
 			int startIndexVisual=0;
 			Int64 nbWeek=0;
 			int nbLines=0;
+            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+            MediaScheduleData result = null;
+            MediaSchedulePeriod period = null;
+            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
+            DateTime begin;
+            DateTime end;
+            object[] param = null;
 
-            #region Perido Detail
-            DateTime begin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
-            DateTime end = WebFunctions.Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
-            MediaSchedulePeriod period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
-            #endregion
-
-
-            string[] vehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess).Split(',');
+            string[] vehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstRights.type.vehicleAccess).Split(',');
 			try{
-				//_webSession.CurrentModule = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
 
-				html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
+                html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
 				html.Append("<HTML>");
 				html.Append("<HEAD>");
-				html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">");
+				html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset="+charSet+"\">");
+                html.Append("<META http-equiv=\"content-encoding\" content=\"utf-8\">");
 				html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
 				html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 				html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 				html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-				html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-				html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 				html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
@@ -596,65 +599,80 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
 				htmlHeader.Append(html.ToString());
 
-				#region Obtention du résultat du calendrier d'action
+                #region result
                 int idVehicle = int.Parse(vehicles[0]);
-                result = GenericMediaScheduleUI.GetPdf(
-                    GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1), _webSession, period, htmlHeader, ref nbWeek, idVehicle);
+                //result = GenericMediaScheduleUI.GetPdf(
+                //    GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1), _webSession, period, htmlHeader, ref nbWeek, idVehicle);
+
+                begin = Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+                end = Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
+                if (_webSession.DetailPeriod == ConstantePeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)) {
+                    _webSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
+                }
+                period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
+
+                param = new object[2];
+                param[0] = _webSession;
+                param[1] = period;
+
+                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                mediaScheduleResult.Module = module;
+                result = mediaScheduleResult.GetHtml();
+
 				#endregion
 
 				#region Construction du tableaux global
 				html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
 				#endregion
 
-				//VersionsVehicleUI versionsVehicleUI=new VersionsVehicleUI(webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press);
-				if(vehicles.Length==1 && _webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.dayly) {
-                    switch ((DBCst.Vehicles.names)idVehicle) {
-						case DBCst.Vehicles.names.press:{
-							ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press);
-							VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
-							html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-							startIndexVisual = decoupageVersionHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,int.Parse(vehicles[0]));
-							BuildVersionPDF(versionsUIs,startIndexVisual);
-							//decoupageHTML(html,versionsUI.GetHtmlExport(),true);
-							break;
-						} 
-						case DBCst.Vehicles.names.radio:{
-							ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio);
-							VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
-							html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-							//decoupageHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,);
-							decoupageVersionHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,int.Parse(vehicles[0]));
-							break;
-						}
-						case DBCst.Vehicles.names.tv:{
-							ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv);
-							VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
-							html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-							//decoupageHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true);
-							decoupageVersionHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,int.Parse(vehicles[0]));
-							break;
-						}
-                    case DBCst.Vehicles.names.directMarketing:{
-                            ExportVersionsVehicleUI exportVersionsVehicleUI = new ExportVersionsVehicleUI(_webSession, result.VersionsDetail, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing);
-                            VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, result.VersionsDetail);
-                            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-                            startIndexVisual = decoupageVersionHTML(html, versionsUI.GetHtmlExport(ref versionsUIs), true, int.Parse(vehicles[0]));
-                            BuildVersionPDF(versionsUIs, startIndexVisual);
-                            //decoupageHTML(html,versionsUI.GetHtmlExport(),true);
-                            break;
-                        }
-                    case DBCst.Vehicles.names.outdoor: {
-                            ExportVersionsVehicleUI exportVersionsVehicleUI = new ExportVersionsVehicleUI(_webSession, result.VersionsDetail, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor);
-                            VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, result.VersionsDetail);
-                            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-                            startIndexVisual = decoupageVersionHTML(html, versionsUI.GetHtmlExport(ref versionsUIs), true, int.Parse(vehicles[0]));
-                            BuildVersionPDF(versionsUIs, startIndexVisual);
-                            //decoupageHTML(html,versionsUI.GetHtmlExport(),true);
-                            break;
-                        } 
+                //if(vehicles.Length==1 && _webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.dayly) {
+                //    switch ((DBCst.Vehicles.names)idVehicle) {
+                //        case DBCst.Vehicles.names.press:{
+                //            ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press);
+                //            VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
+                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
+                //            startIndexVisual = decoupageVersionHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,int.Parse(vehicles[0]));
+                //            BuildVersionPDF(versionsUIs,startIndexVisual);
+                //            //decoupageHTML(html,versionsUI.GetHtmlExport(),true);
+                //            break;
+                //        } 
+                //        case DBCst.Vehicles.names.radio:{
+                //            ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio);
+                //            VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
+                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
+                //            //decoupageHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,);
+                //            decoupageVersionHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,int.Parse(vehicles[0]));
+                //            break;
+                //        }
+                //        case DBCst.Vehicles.names.tv:{
+                //            ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv);
+                //            VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
+                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
+                //            //decoupageHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true);
+                //            decoupageVersionHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,int.Parse(vehicles[0]));
+                //            break;
+                //        }
+                //    case DBCst.Vehicles.names.directMarketing:{
+                //            ExportVersionsVehicleUI exportVersionsVehicleUI = new ExportVersionsVehicleUI(_webSession, result.VersionsDetail, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing);
+                //            VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, result.VersionsDetail);
+                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
+                //            startIndexVisual = decoupageVersionHTML(html, versionsUI.GetHtmlExport(ref versionsUIs), true, int.Parse(vehicles[0]));
+                //            BuildVersionPDF(versionsUIs, startIndexVisual);
+                //            //decoupageHTML(html,versionsUI.GetHtmlExport(),true);
+                //            break;
+                //        }
+                //    case DBCst.Vehicles.names.outdoor: {
+                //            ExportVersionsVehicleUI exportVersionsVehicleUI = new ExportVersionsVehicleUI(_webSession, result.VersionsDetail, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor);
+                //            VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, result.VersionsDetail);
+                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
+                //            startIndexVisual = decoupageVersionHTML(html, versionsUI.GetHtmlExport(ref versionsUIs), true, int.Parse(vehicles[0]));
+                //            BuildVersionPDF(versionsUIs, startIndexVisual);
+                //            //decoupageHTML(html,versionsUI.GetHtmlExport(),true);
+                //            break;
+                //        } 
 
-					}
-				}
+                //    }
+                //}
 
 				html.Append("\r\n\t<tr>\r\n\t\t<td>");
 				
@@ -681,7 +699,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 				throw(new MiysisPdfException("Unable to process Media Schedule Alert export result for request " + _rqDetails["id_static_nav_session"].ToString() + ".",err)); 
 			}
 			finally{
-				_webSession.CurrentModule = module;
+				_webSession.CurrentModule = module.Id;
 			}
 			#endregion
 
@@ -700,6 +718,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
 			int startIndex=0,oldStartIndex=0,tmp;
 			ArrayList partieHTML = new ArrayList();
+            string resultTableHeader = GetResultTableHeader(strHtml);
 			double coef=0;
 
 			int start=0;
@@ -729,7 +748,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 			
 			for(int i=0; i<partieHTML.Count; i++){
 				if(i>0)
-					html.Append(GetHeader(htmlHeader));
+                    html.Append(GetHeader(htmlHeader, resultTableHeader));
 				html.Append(partieHTML[i].ToString());
 				html.Append(GetEnd());
 				if(version)
@@ -737,90 +756,6 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 				else
 					SnapShots(ref html,i,partieHTML,false, ref coef);
 			}
-		}
-		/// <summary>
-		/// Découpage du code HTML pour l'export PDF du plan média (Visuels)
-		/// </summary>
-		/// <param name="html">Le code HTML à générer</param>
-		/// <param name="strHtml">Le code HTML à découper</param>
-		private void decoupageHTML(StringBuilder html,string strHtml,bool version){
-
-			int startIndex=0,oldStartIndex=0,tmp;
-			ArrayList partieHTML = new ArrayList();
-			double coef=0;
-			StringBuilder htmltmp=new StringBuilder(1000);
-			htmltmp.Append(html.ToString());
-
-			while((startIndex < strHtml.Length)&&(startIndex!=-1)){
-				tmp=0;
-				
-				while((tmp<1)&&(startIndex<strHtml.Length)&&(startIndex!=-1)){
-					startIndex=strHtml.IndexOf("<br>",startIndex+1);
-					tmp++;
-				}
-
-				if(startIndex==-1)
-					partieHTML.Add(strHtml.Substring(oldStartIndex,strHtml.Length-oldStartIndex));
-				else
-					partieHTML.Add(strHtml.Substring(oldStartIndex,startIndex-oldStartIndex));
-				oldStartIndex=startIndex;
-			}
-			
-			for(int i=0; i<partieHTML.Count-1; i++){
-				if(i>0)
-					htmltmp.Append(GetHeader());
-				htmltmp.Append(partieHTML[i].ToString());
-				htmltmp.Append(GetEnd());
-				if(version)
-					SnapShots(ref htmltmp,i,partieHTML,true, ref coef);
-				else
-					SnapShots(ref htmltmp,i,partieHTML,false, ref coef);
-			}
-		}
-		/// <summary>
-		/// Découpage du code HTML pour l'export PDF du plan média (Visuels)
-		/// </summary>
-		/// <param name="html">Le code HTML à générer</param>
-		/// <param name="strHtml">Le code HTML à découper</param>
-		private int decoupageVersionHTML(StringBuilder html,string strHtml,bool version,int vehicle) {
-
-			int startIndex=0,oldStartIndex=0,tmp,startIndexVisual=0;
-			ArrayList partieHTML = new ArrayList();
-			double coef=0;
-			StringBuilder htmltmp=new StringBuilder(1000);
-			htmltmp.Append(html.ToString());
-
-			while((startIndex < strHtml.Length)&&(startIndex!=-1)) {
-				tmp=0;
-				
-				while((tmp<1)&&(startIndex<strHtml.Length)&&(startIndex!=-1)) {
-					startIndex=strHtml.IndexOf("<br>",startIndex+1);
-					tmp++;
-				}
-
-				if(startIndex==-1)
-					partieHTML.Add(strHtml.Substring(oldStartIndex,strHtml.Length-oldStartIndex));
-				else
-					partieHTML.Add(strHtml.Substring(oldStartIndex,startIndex-oldStartIndex));
-				oldStartIndex=startIndex;
-			}
-			
-			for(int i=0; i<partieHTML.Count-1; i++) {
-				if(i>0)
-					htmltmp.Append(GetHeader());
-				if(((DBCst.Vehicles.names)vehicle==DBCst.Vehicles.names.radio)||((DBCst.Vehicles.names)vehicle==DBCst.Vehicles.names.tv))
-					htmltmp.Append("<tr><td bgcolor=\"#ffffff\" style=\"HEIGHT: 50px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\"></td></tr>");
-				htmltmp.Append(partieHTML[i].ToString());
-				htmltmp.Append(GetEnd());
-				if(version)
-					if(i==0)
-						startIndexVisual = HtmlToPDF(ref htmltmp,i,partieHTML,true);
-					else
-						HtmlToPDF(ref htmltmp,i,partieHTML,true);
-				else
-					HtmlToPDF(ref htmltmp,i,partieHTML,false);
-			}
-			return startIndexVisual;
 		}
 		#endregion
 
@@ -839,18 +774,47 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 		#endregion
 
 		#region En tête du code HTML
+        /// <summary>
+        /// En tête du code HTML
+        /// </summary>
+        /// <param name="htmlHeader">L'en tête du tableau (Media Plan)</param>
+        /// <returns></returns>
+        private string GetHeader(StringBuilder htmlHeader) {
+            StringBuilder html = new StringBuilder(10000);
+
+            html.Append(htmlHeader.ToString());
+            html.Append("\r\n\t<tr>\r\n\t\t<td>");
+            return (html.ToString());
+        }
 		/// <summary>
 		/// En tête du code HTML
 		/// </summary>
 		/// <param name="htmlHeader">L'en tête du tableau (Media Plan)</param>
-		/// <returns></returns>
-		private string GetHeader(StringBuilder htmlHeader){
+        /// <param name="resultTableHeader">Result Table Header</param>
+        /// <returns>En tête du code HTML</returns>
+        private string GetHeader(StringBuilder htmlHeader, string resultTableHeader) {
 			StringBuilder html = new StringBuilder(10000);
 			
 			html.Append(htmlHeader.ToString());
+            html.Append(resultTableHeader);
 			html.Append("\r\n\t<tr>\r\n\t\t<td>");
 			return(html.ToString());
 		}
+        /// <summary>
+        /// Result Table Header
+        /// </summary>
+        /// <param name="htmlHeader">Table Result HTML</param>
+        /// <returns>Table Result Header HTML</returns>
+        private string GetResultTableHeader(string htmlHeader) {
+            
+            int startIndex = 0;
+            
+            for(int i=0; i<3; i++)
+                startIndex = htmlHeader.IndexOf("</tr>", startIndex+1);
+
+            return (htmlHeader.Substring(0,startIndex));
+        
+        }
 		#endregion
 
 		#region En tête du code HTML (Visuel)
@@ -861,26 +825,29 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 		private string GetHeader(){
 
 			StringBuilder html = new StringBuilder(10000);
+            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 
 			html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
 			html.Append("<HTML>");
 			html.Append("<HEAD>");
-			html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">");
+			html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset="+charSet+"\">");
 			html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-			html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-			html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
-			html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
 			html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
 			html.Append("</HEAD>");
 			html.Append("<body>");
 			html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
-			html.Append("\r\n\t<tr>\r\n\t\t<td>");
-			html.Append("\r\n\t<tr>\r\n\t\t<td>");
+            html.Append("\r\n\t<tr>\r\n\t\t<td>");
+
 			return(html.ToString());
 		}
 		#endregion
@@ -1314,8 +1281,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 		/// </summary>
 		/// <param name="source">Error source></param>
 		/// <param name="message">Error message</param>
-		private void mail_mailKoHandler(object source, string message)
-		{
+		private void mail_mailKoHandler(object source, string message){
 			throw new Exceptions.MiysisPdfException("Echec lors de l'envoi mail client pour la session " + _webSession.IdSession + " : " + message);
 		}
 		#endregion

@@ -7,8 +7,6 @@ using System;
 using System.Data;
 using System.Threading;
 
-using TNS.AdExpress.Common;
-
 using TNS.AdExpress.Anubis.BusinessFacade;
 using TNS.AdExpress.Anubis.BusinessFacade.Result;
 using TNS.AdExpress.Anubis.Common;
@@ -18,7 +16,6 @@ using TNS.AdExpress.Anubis.Miysis.BusinessFacade;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Navigation;
 
 using TNS.FrameWork.DB.Common;
 
@@ -176,7 +173,7 @@ namespace TNS.AdExpress.Anubis.Miysis
 
 				#region Request Details
                 WebSession webSession = (WebSession)ParameterSystem.Load(_navSessionId);
-                webSession.CustomerLogin.Connection = new Oracle.DataAccess.Client.OracleConnection(webSession.CustomerLogin.OracleConnectionString);
+                //webSession.CustomerLogin.Connection = new Oracle.DataAccess.Client.OracleConnection(webSession.CustomerLogin.OracleConnectionString);
 				DataRow rqDetails = ParameterSystem.GetRequestDetails(_dataSource,_navSessionId).Tables[0].Rows[0];
 				#endregion
 

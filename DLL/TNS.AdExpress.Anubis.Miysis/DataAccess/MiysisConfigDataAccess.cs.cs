@@ -12,7 +12,6 @@ using System.Xml;
 
 using TNS.AdExpress.Anubis.Miysis.Common;
 using TNS.AdExpress.Anubis.Miysis.Exceptions;
-using TNS.AdExpress.Common;
 using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Anubis.Miysis.DataAccess{
