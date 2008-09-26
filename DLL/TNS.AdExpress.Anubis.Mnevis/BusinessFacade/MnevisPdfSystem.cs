@@ -21,8 +21,6 @@ using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 
 using TNS.AdExpress.Web.UI.Results;
 
-using TNS.AdExpress.Common;
-
 using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
@@ -31,8 +29,8 @@ using TNS.FrameWork.Date;
 
 using TNS.AdExpress.Web.BusinessFacade.Results;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
-using TNS.AdExpress.Web.Core.ClassificationList;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using TNS.AdExpress.Web.Functions;
@@ -55,6 +53,7 @@ using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 {
@@ -327,20 +326,23 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 			Int64 module = _webSession.CurrentModule;
 			int startIndex=0;
 			ArrayList partieHTMLVersion = new ArrayList();
+            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+
 			try {
-				//_webSession.CurrentModule = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
 
 				html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
 				html.Append("<HTML>");
 				html.Append("<HEAD>");
-				html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">");
+				html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset="+charSet+"\">");
 				html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
 				html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 				html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 				html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-				html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-				html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
-				html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 				html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
 				html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
@@ -357,19 +359,18 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 
 				#region targets
 				//base target
-				Int64 idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+				Int64 idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmBaseTargetAccess));
 				//additional target
-				Int64 idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+				Int64 idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess));									
 				#endregion
 
 				#region Wave
-				Int64 idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+				Int64 idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,CstRights.type.aepmWaveAccess));									
 				#endregion
 
 				#region Obtention du résultat du calendrier d'action
 				result=TNS.AdExpress.Web.UI.Results.APPM.MediaPlanUI.GetWithVersionExportHTML(_webSession,_dataSource,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget,false,ref htmlHeader, ref partieHTML);				
 				#endregion
-
 
 				ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press);
 				VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
@@ -576,18 +577,21 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 		{
 
 			StringBuilder html = new StringBuilder(10000);
+            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 
 			html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
 			html.Append("<HTML>");
 			html.Append("<HEAD>");
-			html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">");
+			html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset="+charSet+"\">");
 			html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-			html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-			html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
-			html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
 			html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
@@ -597,6 +601,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 			html.Append("\r\n\t<tr>\r\n\t\t<td>");
 			html.Append("\r\n\t<tr>\r\n\t\t<td>");
 			return(html.ToString());
+           
 		}
 		#endregion
 
@@ -928,7 +933,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile);
+				sw = Functions.GetHtmlFile(workFile, _webSession);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -986,10 +991,10 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1757, _webSession.SiteLanguage)) + " :</TD>");
 				sw.WriteLine("</TR>");
 				//Base target
-				string targets = "'" + _webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess) + "'";
+				string targets = "'" + _webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess) + "'";
 				//Wave
 				string idWave = ((LevelInformation)_webSession.SelectionUniversAEPMWave.Nodes[0].Tag).ID.ToString();
-				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.CustomerLogin.OracleConnectionString);
+				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.Source);
 				foreach(DataRow r in ds.Tables[0].Rows) {
 					sw.WriteLine("<TR height=\"20\">");
 					sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;");
@@ -1022,9 +1027,8 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR align=\"center\">");
 				sw.WriteLine("<TD><br>");
-				//sw.WriteLine(DisplayTreeNode.ToHtml(((CompetitorAdvertiser)_webSession.CompetitorUniversAdvertiser[1]).TreeCompetitorAdvertiser,false,true,true,600,true,false,_webSession.SiteLanguage,3,1,false));
 				if (_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
-					sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, new OracleConnection(_webSession.CustomerLogin.OracleConnectionString), 600, true, nbLineByPage, ref currentLine));
+                    sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
 
 				sw.WriteLine("</TD>");
 				sw.WriteLine("</TR>");
@@ -1043,9 +1047,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 				sw.WriteLine("<TR align=\"center\">");
 				sw.WriteLine("<TD><br>");
 				if (_webSession.PrincipalProductUniverses.Count > 1) {
-					//sw.WriteLine(DisplayTreeNode.ToHtml(((CompetitorAdvertiser)_webSession.CompetitorUniversAdvertiser[2]).TreeCompetitorAdvertiser,false,true,true,600,true,false,_webSession.SiteLanguage,3,1,false));
-					sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[1], _webSession.SiteLanguage, new OracleConnection(_webSession.CustomerLogin.OracleConnectionString), 600, true, nbLineByPage, ref currentLine));
-
+                    sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[1], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
 				}
 				else {
 					ds = GroupSystem.ListFromSelection(_dataSource, _webSession);

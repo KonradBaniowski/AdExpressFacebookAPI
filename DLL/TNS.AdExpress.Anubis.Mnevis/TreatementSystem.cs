@@ -7,8 +7,6 @@ using System;
 using System.Data;
 using System.Threading;
 
-using TNS.AdExpress.Common;
-
 using TNS.AdExpress.Anubis.BusinessFacade;
 using TNS.AdExpress.Anubis.BusinessFacade.Result;
 using TNS.AdExpress.Anubis.Common;
@@ -18,7 +16,7 @@ using TNS.AdExpress.Anubis.Mnevis.BusinessFacade;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Navigation;
+//using TNS.AdExpress.Web.Core.Navigation;
 
 using TNS.FrameWork.DB.Common;
 

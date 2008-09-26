@@ -12,7 +12,6 @@ using System.Xml;
 
 using TNS.AdExpress.Anubis.Mnevis.Common;
 using TNS.AdExpress.Anubis.Mnevis.Exceptions;
-using TNS.AdExpress.Common;
 using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Anubis.Mnevis.DataAccess {
