@@ -49,6 +49,10 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// </summary>
         protected bool _excel = false;
         /// <summary>
+        /// PDF format?
+        /// </summary>
+        protected bool _pdf = false;
+        /// <summary>
         /// Chart Type
         /// </summary>
         protected ChartImageType _chartType = ChartImageType.Flash;
@@ -70,6 +74,13 @@ namespace TNS.AdExpressI.ProductClassIndicators
         {
             get { return _excel; }
             set { _excel = value; }
+        }
+        /// <summary>
+        /// Get / Set PDF format ?
+        /// </summary>
+        public bool Pdf {
+            get { return _pdf; }
+            set { _pdf = value; }
         }
         /// <summary>
         /// Get / Set Chart Type
@@ -192,6 +203,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         {
             Engine engine = new EngineSummary(this._session, this._dalLayer);
             engine.Excel = _excel;
+            engine.Pdf = _pdf;
             return engine.GetResult().ToString();
         }        
         #endregion

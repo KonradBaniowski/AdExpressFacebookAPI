@@ -25,6 +25,7 @@ using TNS.FrameWork.Date;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
+using FrameWorkCsts = TNS.AdExpress.Constantes.FrameWork;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -548,9 +549,24 @@ namespace TNS.AdExpress.Web.Core.Utilities
 		public static string DateToString(DateTime date, int language) {
 
 			AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[language].CultureInfo;
-			return date.ToString(cInfo.GetFormatPattern(TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern.ToString()));
+			return date.ToString(cInfo.GetFormatPattern(FrameWorkCsts.Dates.Pattern.shortDatePattern.ToString()));
 		}
 		#endregion
+
+        #region DateTime to string acording to culture information and date format
+        /// <summary>
+        /// Get date string acording to culture information
+        /// </summary>
+        /// <param name="date">Date to fromat</param>
+        /// <param name="language">Site langage </param>
+        /// <param name="dateFormat">Date format</param>
+        /// <returns>dd/MM/YYYY ou MM/dd/YYYY or MM.dd.YYYY etc</returns>
+        public static string DateToString(DateTime date, int language, FrameWorkCsts.Dates.Pattern dateFormat) {
+
+            AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[language].CultureInfo;
+            return date.ToString(cInfo.GetFormatPattern(dateFormat.ToString()), cInfo);
+        }
+        #endregion
 
 		#region YYYYMMDDToDD_MM_YYYY
 		/// <summary>

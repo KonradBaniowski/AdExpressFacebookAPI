@@ -33,6 +33,13 @@ namespace TNS.AdExpressI.ProductClassIndicators
             set;
         }
         /// <summary>
+        /// Get / Set Pdf format?
+        /// </summary>
+        bool Pdf {
+            get;
+            set;
+        }
+        /// <summary>
         /// Get / Set Chart Type
         /// </summary>
         ChartImageType ChartType

@@ -46,6 +46,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         protected bool _excel = false;
         /// <summary>
+        /// Type of output
+        /// </summary>
+        protected bool _pdf = false;
+        /// <summary>
         /// Data Access Layer
         /// </summary>
         protected IProductClassIndicatorsDAL _dalLayer = null;
@@ -99,6 +103,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
             get { return _excel; }
             set { _excel = value; }
+        }
+        /// <summary>
+        /// Get / Set PDF format ?
+        /// </summary>
+        public bool Pdf {
+            get { return _pdf; }
+            set { _pdf = value; }
         }
         #endregion
 

@@ -250,8 +250,8 @@ namespace TNS.AdExpress.Web.Functions {
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
 							//Level label
-                            if (displayBorder) html.Append("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
-                            else html.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0  width=" + witdhTable + ">");
+                            if (displayBorder) html.Append("<table class=\"UniverseHeaderStyle\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
+                            else html.Append("<table class=\"UniverseHeaderStyleWithoutTop\"  cellpadding=0 cellspacing=0  width=" + witdhTable + ">");
 							html.Append("<tr class=\"txtViolet11Bold\" ><td colspan=" + baseColSpan + "  >&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language)) + " </td></tr>");
 							html.Append("</table>");
 							displayBorder = false;
@@ -263,7 +263,7 @@ namespace TNS.AdExpress.Web.Functions {
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
-                                    html.Append("<table class=\violetBorderWithoutTop paleVioletBackGround\" width=" + witdhTable + ">");
+                                    html.Append("<table class=\"UniverseItemsStyle\" width=" + witdhTable + ">");
 
 									for (int k = 0; k < itemIdList.Count; k++) {
 

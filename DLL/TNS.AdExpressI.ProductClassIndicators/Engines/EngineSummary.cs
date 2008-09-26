@@ -280,7 +280,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #region Styles
             string cssHeader = "p2";
             string cssLabel = (_excel) ? "acl11" : "acl1";
-            string cssNb = (_excel) ? "acl21" : "violetBackGroundV2 acl2";
+            string cssNb = (_excel) ? "acl21" : "acl2Bg";
             #endregion
 
             t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 align=center>");
@@ -389,17 +389,23 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             double value = Convert.ToDouble(tab[line, EVOLUTION_COLUMN_INDEX]);
             if (!_excel)
             {
-                if (value > 0)
-                {
-                    img = " <img src=/I/g.gif>";
+                if (value > 0){
+                    if(_pdf)
+                        img = " <img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/g.jpg\">";
+                    else
+                        img = " <img src=/I/g.gif>";
                 }
-                else if (value < 0)
-                {
-                    img = " <img src=/I/r.gif>";
+                else if (value < 0){
+                    if (_pdf)
+                        img = " <img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/r.jpg\">";
+                    else
+                        img = " <img src=/I/r.gif>";
                 }
-                else
-                {
-                    img = " <img src=/I/o.gif>";
+                else{
+                    if (_pdf)
+                        img = " <img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/o.jpg\">";
+                    else
+                        img = " <img src=/I/o.gif>";
                 }
             }
             if (!Double.IsNaN(value))

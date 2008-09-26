@@ -101,7 +101,11 @@ namespace TNS.AdExpress.Constantes.FrameWork{
 			/// <summary>
 			/// short date pattern
 			/// </summary>
-			shortDatePattern			
+			shortDatePattern,
+            /// <summary>
+            /// custom date pattern
+            /// </summary>
+            customDatePattern
 		}
 
 	}

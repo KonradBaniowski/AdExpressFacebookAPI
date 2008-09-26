@@ -442,20 +442,20 @@ namespace TNS.AdExpress.Web.Functions{
 			foreach(TreeNode currentNode in root.Nodes){
 				if(start==0){
 					if(displayBorderTable){
-                        t.Append("<table class=\"txtViolet11Bold violetBorder\"  cellpadding=0 cellspacing=0 width=" + witdhTable + percentageSymbol + "  >");
+                        t.Append("<table class=\"TreeHeaderVioletBorder\"  cellpadding=0 cellspacing=0 width=" + witdhTable + percentageSymbol + "  >");
 						start=1;
 					}
 					else{
-                        t.Append("<table class=\"txtViolet11Bold BlancBorder\"  cellpadding=0 cellspacing=0 width=" + witdhTable + percentageSymbol + ">");
+                        t.Append("<table class=\"TreeHeaderBlancBorder\"  cellpadding=0 cellspacing=0 width=" + witdhTable + percentageSymbol + ">");
 					}
 
 				}
 				else{
 					if(displayBorderTable){
-                        t.Append("<table class=\"txtViolet11Bold violetBorderWithoutTop\"  cellpadding=0 cellspacing=0 width=" + witdhTable + percentageSymbol + ">");
+                        t.Append("<table class=\"TreeHeaderVioletBorderWithoutTop\"  cellpadding=0 cellspacing=0 width=" + witdhTable + percentageSymbol + ">");
 					}
 					else{
-                        t.Append("<table class=\"txtViolet11Bold BlancBorder\"  cellpadding=0 cellspacing=0 width=" + witdhTable + percentageSymbol + ">");
+                        t.Append("<table class=\"TreeHeaderBlancBorder\"  cellpadding=0 cellspacing=0 width=" + witdhTable + percentageSymbol + ">");
 					}
 				}
 				t.Append("<tr>");
@@ -558,13 +558,13 @@ namespace TNS.AdExpress.Web.Functions{
 						if(div){
                             t.Append("<div id=\"" + ((LevelInformation)currentNode.Tag).ID + "Content" + showHideContent + "\" class=\"BlancBorderColorWithoutTop\"  style=\"DISPLAY: none; WIDTH: 100%\">");
 						}
-                        t.Append("<table class=\"violetBorderWithoutTop lightPurple\" width=" + witdhTable + percentageSymbol + ">");
+                        t.Append("<table class=\"TreeTableVioletBorder\" width=" + witdhTable + percentageSymbol + ">");
 					}
 					else{
 						if(div){
                             t.Append("<div class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: none; WIDTH: 100%\">");
 						}
-                        t.Append("<table class=\"BlancBorder lightPurple\" width=" + witdhTable + percentageSymbol + ">");
+                        t.Append("<table class=\"TreeTableBlancBorder\" width=" + witdhTable + percentageSymbol + ">");
 					}
 				}
 				//Cas où l'on veut mettre le lien tout sélectionner
