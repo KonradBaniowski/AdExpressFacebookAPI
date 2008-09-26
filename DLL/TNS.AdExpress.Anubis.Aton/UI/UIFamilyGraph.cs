@@ -9,13 +9,11 @@ using System.Data;
 using System.Drawing;
 using System.Web.UI.WebControls;
 
-using TNS.AdExpress.Common;
-
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using CstUI = TNS.AdExpress.Constantes.Web.UI;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 
 using TNS.AdExpress.Anubis.Aton.Common;

@@ -7,7 +7,6 @@
 using System;
 using System.Drawing;
 
-using TNS.AdExpress.Common;
 using TNS.AdExpress.Anubis.Aton.DataAccess;
 using TNS.FrameWork.DB.Common;
 

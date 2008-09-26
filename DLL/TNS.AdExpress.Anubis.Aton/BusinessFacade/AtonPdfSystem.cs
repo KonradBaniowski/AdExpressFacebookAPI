@@ -21,8 +21,6 @@ using TNS.AdExpress.Anubis.Aton.UI;
 using AtonFunctions=TNS.AdExpress.Anubis.Aton.Functions;
 using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 
-using TNS.AdExpress.Common;
-
 using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
@@ -30,8 +28,8 @@ using TNS.AdExpress.Constantes.Web;
 
 using TNS.AdExpress.Web.BusinessFacade.Results;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
-using TNS.AdExpress.Web.Core.ClassificationList;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using WebFunctions = TNS.AdExpress.Web.Functions;
@@ -334,7 +332,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = AtonFunctions.Functions.GetHtmlFile(workFile);
+				sw = AtonFunctions.Functions.GetHtmlFile(workFile,_webSession);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -392,10 +390,10 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1757, _webSession.SiteLanguage)) + " :</TD>");
 				sw.WriteLine("</TR>");
 				//Base target
-				string targets = "'" + _webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess) + "'";
+				string targets = "'" + _webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess) + "'";
 				//Wave
 				string idWave = ((LevelInformation)_webSession.SelectionUniversAEPMWave.Nodes[0].Tag).ID.ToString();
-				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.CustomerLogin.OracleConnectionString);
+				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.Source);
 				foreach(DataRow r in ds.Tables[0].Rows){
 					sw.WriteLine("<TR height=\"20\">");
 					sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;");
@@ -430,7 +428,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				sw.WriteLine("<TD><br>");
 				//sw.WriteLine(WebFunctions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversAdvertiser,false,true,true,600,true,false,_webSession.SiteLanguage,3,1,false));								
 				if(_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count>0)
-					sw.WriteLine(WebFunctions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, new OracleConnection(_webSession.CustomerLogin.OracleConnectionString), 600, true, nbLineByPage, ref currentLine));
+                    sw.WriteLine(WebFunctions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
 				sw.WriteLine("</TD>");
 				sw.WriteLine("</TR>");
 				//competitor
@@ -505,13 +503,13 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				#region targets
 				//base target
-				_idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+				_idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmBaseTargetAccess));
 				//additional target
-				_idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+				_idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess));									
 				#endregion
 
 				#region Wave
-				_idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+				_idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,CstRights.type.aepmWaveAccess));									
 				#endregion
 
 				this.NewPage();
@@ -520,7 +518,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\Synthesis_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = AtonFunctions.Functions.GetHtmlFile(workFile);
+				sw = AtonFunctions.Functions.GetHtmlFile(workFile,_webSession);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -600,7 +598,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\Average_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = AtonFunctions.Functions.GetHtmlFile(workFile);
+				sw = AtonFunctions.Functions.GetHtmlFile(workFile,_webSession);
 
 				#region Title
 
@@ -692,7 +690,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\Affinities_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = AtonFunctions.Functions.GetHtmlFile(workFile);
+				sw = AtonFunctions.Functions.GetHtmlFile(workFile,_webSession);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");

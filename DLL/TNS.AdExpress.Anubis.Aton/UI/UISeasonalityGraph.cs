@@ -9,9 +9,8 @@ using System.Data;
 using System.Drawing;
 using System.Web.UI.WebControls;
 
-using TNS.AdExpress.Common;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Rules.Results.APPM;
 using TNS.AdExpress.Anubis.Aton.Common;
 using TNS.AdExpress.Anubis.Aton.Exceptions;
