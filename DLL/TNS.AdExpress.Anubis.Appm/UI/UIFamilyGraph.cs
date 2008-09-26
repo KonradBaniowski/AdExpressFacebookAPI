@@ -12,13 +12,13 @@ using System.Data;
 using System.Drawing;
 using System.Web.UI.WebControls;
 
-using TNS.AdExpress.Common;
+//using TNS.AdExpress.Common;
 
 using TNS.AdExpress.Constantes.Web;
 using CstUI = TNS.AdExpress.Constantes.Web.UI;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using TNS.AdExpress.Anubis.Appm.Common;
 using TNS.AdExpress.Anubis.Appm.Exceptions;

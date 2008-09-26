@@ -6,7 +6,6 @@
  * */
 #endregion
 
-
 using System;
 using System.Collections;
 using System.Data;
@@ -16,9 +15,7 @@ using System.Xml;
 
 using TNS.AdExpress.Anubis.Appm.Common;
 using TNS.AdExpress.Anubis.Appm.Exceptions;
-using TNS.AdExpress.Common;
 using TNS.FrameWork.DB.Common;
-
 
 namespace TNS.AdExpress.Anubis.Appm.DataAccess{
 	/// <summary>
@@ -29,7 +26,8 @@ namespace TNS.AdExpress.Anubis.Appm.DataAccess{
 		/// <summary>
 		/// Load Anubis configuration
 		/// </summary>
-		/// <param name="dataSource">Data Source</param>
+        /// <param name="dataSrc">Data Source</param>
+        /// <param name="cfg">Appm Configuration</param>
 		internal static void Load(IDataSource dataSrc, AppmConfig cfg){
 			XmlTextReader Reader;
 			string Value="60";

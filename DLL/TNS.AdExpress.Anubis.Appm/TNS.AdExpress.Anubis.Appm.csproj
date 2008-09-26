@@ -32,7 +32,7 @@
     </UpgradeBackupLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\</OutputPath>
+    <OutputPath>..\..\Anubis\bin\Debug\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -78,23 +78,23 @@
   <ItemGroup>
     <Reference Include="DundasWinChart, Version=5.5.1.1711, Culture=neutral, PublicKeyToken=a4c03dce5db22406, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Anubis\Librairies\DundasWinChart.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\DundasWinChart.dll</HintPath>
     </Reference>
     <Reference Include="Interop.HTML2PDFAddOn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Anubis\Librairies\Interop.HTML2PDFAddOn.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Interop.HTML2PDFAddOn.dll</HintPath>
     </Reference>
     <Reference Include="Interop.HtmlSnap2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Anubis\Librairies\Interop.HtmlSnap2.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Interop.HtmlSnap2.dll</HintPath>
     </Reference>
     <Reference Include="Interop.PDFCreatorPilot2, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Anubis\Librairies\Interop.PDFCreatorPilot2.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Interop.PDFCreatorPilot2.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.DataAccess, Version=9.2.0.700, Culture=neutral, PublicKeyToken=89b483f429c47342">
+    <Reference Include="Oracle.DataAccess, Version=2.102.2.20, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\Oracle.DataAccess.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -116,19 +116,19 @@
     </Reference>
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.Classification.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.Net, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Net.dll</HintPath>
+      <HintPath>\\HERA\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
     <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS\TNS.AdExpress.Anubis.csproj">
       <Name>TNS.AdExpress.Anubis</Name>
@@ -149,6 +149,10 @@
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.WEB\TNS.AdExpress.Web.csproj">
       <Name>TNS.AdExpress.Web</Name>
       <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
@@ -158,6 +162,10 @@
       <Name>TNS.AdExpress.Web.Core</Name>
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
+      <Project>{23E7E071-0FB0-43D4-B19D-B964EC3082F6}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>

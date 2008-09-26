@@ -12,13 +12,13 @@ using System.Data;
 using System.Drawing;
 using System.Web.UI.WebControls;
 
-using TNS.AdExpress.Common;
+//using TNS.AdExpress.Common;
 
 using TNS.AdExpress.Constantes.Web;
 using CstUI = TNS.AdExpress.Constantes.Web.UI;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using TNS.AdExpress.Anubis.Appm.Common;
 using TNS.AdExpress.Anubis.Appm.Exceptions;
@@ -109,11 +109,11 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 			double maxScale=0;
 			#endregion
 
-			//Base target
+            //Base target
 			string targets = "'" + _webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess) + "'";
 			//Wave
 			string idWave = ((LevelInformation)_webSession.SelectionUniversAEPMWave.Nodes[0].Tag).ID.ToString();
-			DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.CustomerLogin.OracleConnectionString);			
+			DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.Source);			
 
 			try {
 

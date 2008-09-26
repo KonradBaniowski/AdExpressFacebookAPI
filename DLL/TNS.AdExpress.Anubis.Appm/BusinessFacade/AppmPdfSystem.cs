@@ -7,6 +7,7 @@
  * */
 #endregion
 
+#region Using
 using System;
 using System.Collections;
 using System.Data;
@@ -16,6 +17,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Windows.Forms;
+using System.Reflection;
 
 using TNS.AdExpress.Anubis.Appm.Common;
 using TNS.AdExpress.Anubis.Appm.Exceptions;
@@ -24,17 +26,15 @@ using TNS.AdExpress.Anubis.Common;
 using TNS.AdExpress.Anubis.Appm.UI;
 using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 
-using TNS.AdExpress.Common;
-
 using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Constantes.Web;
+using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 
 using TNS.AdExpress.Web.BusinessFacade.Results;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
-using TNS.AdExpress.Web.Core.ClassificationList;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using TNS.AdExpress.Web.Functions;
@@ -52,16 +52,23 @@ using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
 using HtmlSnap2;
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpressI.MediaSchedule;
+using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Domain.Web.Navigation;
+using DomainLevel = TNS.AdExpress.Domain.Level;
+#endregion
 
-
-namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
-{
+namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 	/// <summary>
 	/// Generate the PDF document for Appm module.
 	/// </summary>
 	public class AppmPdfSystem : Pdf {
 
 		#region Variables
+        /// <summary>
+        /// Data Source
+        /// </summary>
 		private IDataSource _dataSource = null;
 		/// <summary>
 		/// Appm Configuration (usefull for PDF layout)
@@ -88,7 +95,6 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 			this._config = config;
 			this._rqDetails = rqDetails;
 			this._webSession = webSession;
-
 		}
 		#endregion
 
@@ -136,29 +142,12 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				Visuals();
 				#endregion
 
-
 				#region MediaPlan (by month or by week)
 				MediaPlan();
 				#endregion
 			
 				#region Plan Valorisation and Perf.
 				PlanValoAndPerf();
-				#endregion
-
-				#region Plan PDV analysis (graph only)
-//				PlanPdvAnalysis();
-				#endregion
-
-				#region Interest family analysis (graph only, GRP and C/GRP only)
-//				InterestFamilyAnalysis();
-				#endregion
-
-				#region Periodicity analysis (grpah only, GRP and C/GRP only)
-//				PeriodicityAnalysis();
-				#endregion
-
-				#region location analysis (GRP only)
-				//LocationAnalysis();
 				#endregion
 
 				#region GRP Graphics (Added by D.V. Mussuma)
@@ -309,7 +298,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(_config.PdfTitle))/2, 
 				(this.PDFPAGE_Height)/4,0,_config.PdfTitle);			
 
-			string str = "Créé le " + DateTime.Now.ToString("ddd dd MMM yyyy");
+            string str = "Créé le " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
 				_config.MainPageDefaultFont.Bold,
 				_config.MainPageDefaultFont.Italic,
@@ -338,7 +327,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile);
+				sw = Functions.GetHtmlFile(workFile,_webSession);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -396,10 +385,10 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1757, _webSession.SiteLanguage)) + " :</TD>");
 				sw.WriteLine("</TR>");
 				//Base target
-				string targets = "'" + _webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess) + "'";
+                string targets = "'" + _webSession.GetSelection(_webSession.SelectionUniversAEPMTarget, CstRights.type.aepmTargetAccess) + "'";
 				//Wave
 				string idWave = ((LevelInformation)_webSession.SelectionUniversAEPMWave.Nodes[0].Tag).ID.ToString();
-				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.CustomerLogin.OracleConnectionString);
+				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.Source);
 				foreach(DataRow r in ds.Tables[0].Rows){
 					sw.WriteLine("<TR height=\"20\">");
 					sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;");
@@ -432,9 +421,8 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR align=\"center\">");
 				sw.WriteLine("<TD><br>");
-				//sw.WriteLine(DisplayTreeNode.ToHtml(((CompetitorAdvertiser)_webSession.CompetitorUniversAdvertiser[1]).TreeCompetitorAdvertiser,false,true,true,600,true,false,_webSession.SiteLanguage,3,1,false));
 				if (_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
-					sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, new OracleConnection(_webSession.CustomerLogin.OracleConnectionString), 600, true, nbLineByPage, ref currentLine));
+                    sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
 
 				sw.WriteLine("</TD>");
 				sw.WriteLine("</TR>");
@@ -453,8 +441,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				sw.WriteLine("<TR align=\"center\">");
 				sw.WriteLine("<TD><br>");
 				if (_webSession.PrincipalProductUniverses.Count > 1) {
-					//sw.WriteLine(DisplayTreeNode.ToHtml(((CompetitorAdvertiser)_webSession.CompetitorUniversAdvertiser[2]).TreeCompetitorAdvertiser,false,true,true,600,true,false,_webSession.SiteLanguage,3,1,false));
-					sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[1], _webSession.SiteLanguage, new OracleConnection(_webSession.CustomerLogin.OracleConnectionString), 600, true, nbLineByPage, ref currentLine));
+					sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[1], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
 				}
 				else{
 					ds = GroupSystem.ListFromSelection(_dataSource, _webSession);
@@ -524,7 +511,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 
 				string workFile = GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile);
+				sw = Functions.GetHtmlFile(workFile, _webSession);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -561,7 +548,6 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				html.ClearCache();
 				html.ConvertAll();
 				html.DisconnectFromPDFLibrary ();
-				
 				#endregion
 
 				#region Clean File
@@ -579,7 +565,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 		}
 		#endregion
 
-		#region Visuals 
+		#region Visuals
 		/// <summary>
 		/// Visuals insertion
 		/// </summary>
@@ -595,9 +581,8 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 
 					string workFile = GetWorkDirectory() + @"\Visuals_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-					sw = Functions.GetHtmlFile(workFile);
+					sw = Functions.GetHtmlFile(workFile, _webSession);
 			
-
 					#region Title
 					sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 					sw.WriteLine("<TR height=\"25\">");
@@ -606,11 +591,8 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 					sw.WriteLine("<TR height=\"14\">");
 					sw.WriteLine("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1786,_webSession.SiteLanguage)) + "</TD>");
 					sw.WriteLine("</TR>");
-
-
 					#endregion
 				
-
 					#region Html file loading
 					sw.WriteLine("</table>");
 					Functions.CloseHtmlFile(sw);
@@ -632,7 +614,6 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 					//Insertion des visuels
 					string[] fileList = _webSession.Visuals[0].ToString().Split('-');
 					InsertVisuals(fileList);					
-			
 
 					#endregion
 
@@ -668,7 +649,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 
 				string workFile = GetWorkDirectory() + @"\MediaPlan_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile);
+				sw = Functions.GetHtmlFile(workFile, _webSession);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -681,13 +662,41 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				#endregion
 				
 				#region result
+                MediaScheduleData result = null;
+                MediaSchedulePeriod period = null;
+                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
+                DateTime begin;
+                DateTime end;
+                object[] param = null;
+
+                //Media detail level
+                ArrayList levels = new ArrayList();
+                levels.Add(2);
+                levels.Add(3);
+                _webSession.GenericMediaDetailLevel = new DomainLevel.GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+
+                begin = Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+                end = Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
+                if (_webSession.DetailPeriod == ConstantePeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)) {
+                    _webSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
+                }
+                period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
+
+                param = new object[2];
+                param[0] = _webSession;
+                param[1] = period;
+
+                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                mediaScheduleResult.Module = module;
+                result = mediaScheduleResult.GetHtml();
+
 				sw.WriteLine("<TR height=\"25\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR align=\"center\"><td>");
-				_webSession.CurrentTab = CstResult.APPM.mediaPlan;
-				sw.WriteLine(Convertion.ToHtmlString(APPMSystem.GetHtml(null,null,_webSession,_dataSource)));
-				sw.WriteLine("</td></tr>");
+                sw.WriteLine(Convertion.ToHtmlString(result.HTMLCode));
+
+                sw.WriteLine("</td></tr>");
 				#endregion
 
 				#region Html file loading
@@ -736,7 +745,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 
 				string workFile = GetWorkDirectory() + @"\PlanPerf_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile);
+				sw = Functions.GetHtmlFile(workFile, _webSession);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -789,392 +798,6 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 		}
 		#endregion
 
-		#region Plan PDV analysis (graph only)
-		/// <summary>
-		/// Plan PDV analysis (graph only) design
-		/// </summary>
-		private void PlanPdvAnalysis(){
-			StreamWriter sw = null;
-			Image img = null;
-
-			try{
-				this.NewPage();
-
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				string workFile = GetWorkDirectory() + @"\PDVPlan_" + _rqDetails["id_static_nav_session"]+ ".bmp";
-
-				#region Title
-				this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-					_config.TitleFont.Underline, _config.TitleFont.Strikeout, _config.TitleFont.SizeInPoints, 0);
-				this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-					,((double)_config.TitleFontColor.G)/256.0
-					,((double)_config.TitleFontColor.B)/256.0);
-				this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1728 ,_webSession.SiteLanguage));
-				#endregion
-								
-				#region GetData
-				
-				#region targets
-				//base target
-				Int64 idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmBaseTargetAccess));
-				//additional target
-				Int64 idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess));									
-				#endregion
-
-				#region Wave
-				Int64 idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,CstRights.type.aepmWaveAccess));									
-				#endregion
-
-				#region Données
-				_webSession.Unit = CustomerSessions.Unit.grp;
-				DataTable dtPDVPlanData = PDVPlanRules.GetData(_webSession,_dataSource,int.Parse(_webSession.PeriodBeginningDate), int.Parse(_webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget,true);
-				DataTable dtPDVGraphicsData = PDVPlanRules.GetGraphicsData(_webSession,_dataSource,int.Parse(_webSession.PeriodBeginningDate), int.Parse(_webSession.PeriodEndDate),idAdditionalTarget);
-				#endregion
-					
-				#endregion
-				
-				#region GRP graph
-				UIPDVPlanGraph graph = new UIPDVPlanGraph(_webSession, _dataSource, _config,dtPDVGraphicsData,dtPDVPlanData);
-				graph.BuildGRP();
-				graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
-				img = Image.FromFile(workFile);
-				double coef = Math.Min(1.0, ((double)this.PDFPAGE_Width/((double)img.Width)));
-				coef = Math.Min(coef, ((double)(this.WorkZoneBottom - this.WorkZoneTop - 40)/((double)img.Height)));
-				int i = this.AddImageFromFilename(workFile, TxImageCompressionType.itcFlate);
-				this.PDFPAGE_ShowImage(i, 
-					(this.PDFPAGE_Width / 2) - (coef * img.Width /2),
-					this.PDFPAGE_Height/2 - (coef * img.Height / 2),
-					coef * img.Width,
-					coef * img.Height,
-					0);
-				img.Dispose();
-				img = null;
-				graph.Dispose();
-				graph = null;
-			
-				#region Clean File
-#if(DEBUG)
-				File.Copy(workFile ,@"C:\Documents and Settings\gragneau\Bureau\Nouveau dossier\Periodicity_" + _rqDetails["id_static_nav_session"]+ ".bmp", true);
-#endif
-				File.Delete(workFile);
-				#endregion
-				
-				#endregion
-
-			}
-			catch(System.Exception e){
-				try{
-					sw.Close();
-					img.Dispose();
-					img = null;
-				}
-				catch(System.Exception e2){}
-				throw(new AppmPdfException("Unable to process the PDV analysis result for request " + _rqDetails["id_static_nav_session"] + ".",e)); 
-			}						
-		}
-		#endregion
-
-		#region Interest family analysis (graph only, GRP and C/GRP only)
-		/// <summary>
-		/// Interest family analysis (graph only, GRP and C/GRP only) design
-		/// </summary>
-		private void InterestFamilyAnalysis(){
-
-			Image img = null;
-			UIFamilyGraph graph = null;
-			string workFile = string.Empty;
-
-			try{
-
-				this.NewPage();
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				#region Title
-				this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-					_config.TitleFont.Underline, _config.TitleFont.Strikeout, _config.TitleFont.SizeInPoints, 0);
-				this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-					,((double)_config.TitleFontColor.G)/256.0
-					,((double)_config.TitleFontColor.B)/256.0);
-				this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1740 ,_webSession.SiteLanguage));
-				#endregion
-								
-				#region GetData
-				
-				#region targets
-				//base target
-				Int64 idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmBaseTargetAccess));
-				//additional target
-				Int64 idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess));									
-				#endregion
-
-				#region Wave
-				Int64 idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,CstRights.type.aepmWaveAccess));									
-				#endregion
-
-				#region Données
-				_webSession.Unit = CustomerSessions.Unit.grp;
-				DataTable dtData = AnalyseFamilyInterestPlanRules.InterestFamilyPlan(_webSession,_dataSource,idWave,int.Parse(_webSession.PeriodBeginningDate), int.Parse(_webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget);
-				#endregion
-					
-				#endregion
-		
-				#region graph
-				for (int j = 0; j < 3; j++){
-
-					if (j != 0){
-						this.NewPage();
-
-						this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-					}
-
-					workFile = GetWorkDirectory() + @"\FamilyPlan_" + _rqDetails["id_static_nav_session"]+ j + ".bmp";
-		
-					graph = new UIFamilyGraph(_webSession, _dataSource, _config,dtData);
-					switch(j){
-						case 0:
-							graph.BuildGRP("baseTarget");
-							break;
-						case 1:
-							graph.BuildGRP("additionalTarget");
-							break;
-						case 2:
-							graph.BuildBars();
-							break;
-						default:
-							break;
-					}
-					graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
-					img = Image.FromFile(workFile);
-					double coef = Math.Min(1.0, ((double)this.PDFPAGE_Width/((double)img.Width)));
-					coef = Math.Min(coef, ((double)(this.WorkZoneBottom - this.WorkZoneTop - 40)/((double)img.Height)));
-					int i = this.AddImageFromFilename(workFile, TxImageCompressionType.itcFlate);
-					this.PDFPAGE_ShowImage(i, 
-						(this.PDFPAGE_Width / 2) - (coef * img.Width /2),
-						this.PDFPAGE_Height/2 - (coef * img.Height / 2),
-						coef * img.Width,
-						coef * img.Height,
-						0);
-					img.Dispose();
-					img = null;
-					graph.Dispose();
-					graph = null;
-			
-					#region Clean File
-#if(DEBUG)
-					File.Copy(workFile ,@"C:\Documents and Settings\gragneau\Bureau\Nouveau dossier\FamilyPlan_" + _rqDetails["id_static_nav_session"]+ j + ".bmp", true);
-#endif
-					File.Delete(workFile);
-					#endregion
-				
-					#endregion
-
-				}
-
-
-			}
-			catch(System.Exception e){
-				try{
-					img.Dispose();
-					img = null;
-				}
-				catch(System.Exception e2){}
-				throw(new AppmPdfException("Unable to process the Family interest analysis result for request " + _rqDetails["id_static_nav_session"] + ".",e)); 
-			}															
-		}
-		#endregion
-
-		#region Periodicity analysis (grpah only, GRP and C/GRP only)
-		/// <summary>
-		/// Periodicity analysis (grpah only, GRP and C/GRP only) design
-		/// </summary>
-		private void PeriodicityAnalysis(){
-
-			StreamWriter sw = null;
-			Image img = null;
-
-			try{
-				this.NewPage();
-
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				string workFile = GetWorkDirectory() + @"\Periodicity_" + _rqDetails["id_static_nav_session"]+ ".bmp";
-
-				#region Title
-				this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-					_config.TitleFont.Underline, _config.TitleFont.Strikeout, _config.TitleFont.SizeInPoints, 0);
-				this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-					,((double)_config.TitleFontColor.G)/256.0
-					,((double)_config.TitleFontColor.B)/256.0);
-				this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1754 ,_webSession.SiteLanguage));
-				#endregion
-								
-				#region GetData
-				
-				#region targets
-				//base target
-				Int64 idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmBaseTargetAccess));
-				//additional target
-				Int64 idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess));									
-				#endregion
-
-				#region Wave
-				Int64 idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,CstRights.type.aepmWaveAccess));									
-				#endregion
-
-				#region Données
-				_webSession.Unit = CustomerSessions.Unit.grp;
-				DataTable dtData = PeriodicityPlanRules.PeriodicityPlan(_webSession,_dataSource,idWave,int.Parse(_webSession.PeriodBeginningDate), int.Parse(_webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget);
-				#endregion
-					
-				#endregion
-
-				#region result
-				
-				#region GRP graph
-				UIPeriodicityGraph graph = new UIPeriodicityGraph(_webSession, _dataSource, _config, dtData);
-				graph.BuildGRP();
-				graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
-				img = Image.FromFile(workFile);
-				double coef = Math.Min(1.0, ((double)this.PDFPAGE_Width/((double)img.Width)));
-				coef = Math.Min(coef, ((double)(this.WorkZoneBottom - this.WorkZoneTop - 40)/((double)img.Height)));
-				int i = this.AddImageFromFilename(workFile, TxImageCompressionType.itcFlate);
-				this.PDFPAGE_ShowImage(i, 
-					(this.PDFPAGE_Width / 2) - (coef * img.Width /2),
-					this.PDFPAGE_Height/2 - (coef * img.Height / 2),
-					coef * img.Width,
-					coef * img.Height,
-					0);
-				img.Dispose();
-				img = null;
-				graph.Dispose();
-				graph = null;
-			
-				#region Clean File
-#if(DEBUG)
-				File.Copy(workFile ,@"C:\Documents and Settings\gragneau\Bureau\Nouveau dossier\Periodicity_" + _rqDetails["id_static_nav_session"]+ ".bmp", true);
-#endif
-				File.Delete(workFile);
-				#endregion
-				
-				#endregion
-
-				#region Bar graph
-
-				workFile = GetWorkDirectory() + @"\Periodicity_" + _rqDetails["id_static_nav_session"]+ "2.bmp";
-				this.NewPage();
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-				graph = new UIPeriodicityGraph(_webSession, _dataSource, _config, dtData);
-				graph.BuildBars();
-				graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
-				img = Image.FromFile(workFile);
-				coef = Math.Min(1.0, ((double)this.PDFPAGE_Width/((double)img.Width)));
-				coef = Math.Min(coef, ((double)(this.WorkZoneBottom - this.WorkZoneTop - 40)/((double)img.Height)));
-				i = this.AddImageFromFilename(workFile, TxImageCompressionType.itcFlate);
-				this.PDFPAGE_ShowImage(i, 
-					(this.PDFPAGE_Width / 2) - (coef * img.Width /2),
-					this.PDFPAGE_Height/2 - (coef * img.Height / 2),
-					coef * img.Width,
-					coef * img.Height,
-					0);
-				img.Dispose();
-				img = null;
-				graph.Dispose();
-				graph = null;
-			
-				#region Clean File
-#if(DEBUG)
-//				File.Copy(workFile ,@"C:\Documents and Settings\gragneau\Bureau\Nouveau dossier\Periodicity_" + _rqDetails["id_static_nav_session"]+ ".bmp", true);
-#endif
-				File.Delete(workFile);
-				#endregion
-
-				#endregion
-
-				#endregion
-
-			}
-			catch(System.Exception e){
-				try{
-					sw.Close();
-					img.Dispose();
-					img = null;
-				}
-				catch(System.Exception e2){}
-				throw(new AppmPdfException("Unable to process the periodicity analysis result for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e)); 
-			}					
-		}
-		#endregion
-
-		#region location analysis (GRP only)
-		/// <summary>
-		/// location analysis (GRP only) design
-		/// </summary>
-		private void LocationAnalysis(){
-
-//			StreamWriter sw = null;
-//
-//			try{
-//				this.NewPage();
-//
-//				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-//
-//				string workFile = GetWorkDirectory() + @"\location_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-//
-//				sw = Functions.GetHtmlFile(workFile);
-//
-//				#region Title
-//				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-//				sw.WriteLine("<TR height=\"25\">");
-//				sw.WriteLine("<TD></TD>");
-//				sw.WriteLine("</TR>");
-//				sw.WriteLine("<TR height=\"14\">");
-//				sw.WriteLine("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1741,_webSession.SiteLanguage)) + "</TD>");
-//				sw.WriteLine("</TR>");
-//				#endregion
-//				
-//				#region result
-//				sw.WriteLine("<TR height=\"25\">");
-//				sw.WriteLine("<TD></TD>");
-//				sw.WriteLine("</TR>");
-//				sw.WriteLine("<TR align=\"center\"><td>");
-//				_webSession.CurrentTab = CstResult.APPM.locationPlanType; 
-//				_webSession.Unit = CustomerSessions.Unit.grp;
-//				sw.WriteLine(Convertion.ToHtmlString(APPMSystem.GetHtml(null,null,_webSession,_dataSource)));
-//				sw.WriteLine("</td></tr>");
-//				#endregion
-//
-//				#region Html file loading
-//				sw.WriteLine("</table>");
-//				Functions.CloseHtmlFile(sw);
-//				HTML2PDFClass html = new HTML2PDFClass();
-//				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
-//				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-//				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-//				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-//				html.ConnectToPDFLibrary (this);
-//				html.LoadFromFile(workFile);
-//				html.ConvertAll();
-//				html.ClearCache();
-//				html.ConvertAll();
-//				html.DisconnectFromPDFLibrary ();
-//				#endregion
-//
-//				#region Clean File
-//				File.Delete(workFile);
-//				#endregion
-//			
-//			}
-//			catch(System.Exception e){
-//				try{
-//					sw.Close();
-//				}
-//				catch(System.Exception e2){}
-//				throw(new AppmPdfException("Unable to process the location analysis result for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e)); 
-//			}		
-		}
-		#endregion
-
 		#region Graphiques GRP (Added by D. V. Mussuma)
 		/// <summary>
 		/// Graphiques PDV,Familles d'intérêts,Périodicités analyse en GRP
@@ -1197,7 +820,6 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
 					,((double)_config.TitleFontColor.G)/256.0
 					,((double)_config.TitleFontColor.B)/256.0);
-//				this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1754 ,_webSession.SiteLanguage));
 				#endregion
 
 				#region GetData
@@ -1244,7 +866,6 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				#endregion
 
 				#region GRP graph
-
 			
 				UIGRPGraph graph = new UIGRPGraph(_webSession, _dataSource, _config, dsData);
 				graph.BuildGRP();
@@ -1264,19 +885,13 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				graph.Dispose();
 				graph = null;
 			
-			
 				#region Clean File
-#if(DEBUG)
-				//File.Copy(workFile ,@"C:\Documents and Settings\gragneau\Bureau\Nouveau dossier\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp", true);
-
-#endif
 				File.Delete(workFile);
 				#endregion
 				
 				#endregion
 
 				#region CGRP graph (bar)
-			
 
 				workFile = GetWorkDirectory() + @"\CGRP_" + _rqDetails["id_static_nav_session"]+ ".bmp";
 				this.NewPage();
@@ -1306,9 +921,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				File.Delete(workFile);
 				#endregion
 
-				
 				#endregion
-
 							
 			}
 			catch(System.Exception ex){
@@ -1325,6 +938,9 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 		#endregion
 
 		#region MediaPlanIpression (Calendrier d'actions par version)
+        /// <summary>
+        /// MediaPlanImpression
+        /// </summary>
 		private void MediaPlanImpression() {
 	
 			#region GETHTML
@@ -1335,6 +951,8 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 			ArrayList partieHTML = new ArrayList();
 			ArrayList versionsUIs = new ArrayList();
 			int startIndex=0;
+            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 			
 			Int64 module = _webSession.CurrentModule;
 			ArrayList partieHTMLVersion = new ArrayList();
@@ -1342,13 +960,14 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
 				html.Append("<HTML>");
 				html.Append("<HEAD>");
-				html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">");
+                html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=" + charSet + "\">");
 				html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
 				html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 				html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 				html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-				html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-				html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 				html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
@@ -1366,17 +985,18 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 
 				#region targets
 				//base target
-				Int64 idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+				Int64 idBaseTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmBaseTargetAccess));
 				//additional target
-				Int64 idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+				Int64 idAdditionalTarget=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess));									
 				#endregion
 
 				#region Wave
-				Int64 idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+				Int64 idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,CstRights.type.aepmWaveAccess));									
 				#endregion
 
 				#region Initialisation
 				_webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMediaSlogan;
+
 				#region Niveau de détail media (Generic) pour le calendriers d'action par version
 				// Initialisation à media\catégorie\Support\Version
 				ArrayList levels=new ArrayList();
@@ -1384,8 +1004,9 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				levels.Add(2);
 				levels.Add(3);
 				levels.Add(6);
-				_webSession.GenericMediaDetailLevel=new TNS.AdExpress.Web.Core.Sessions.GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+				_webSession.GenericMediaDetailLevel=new TNS.AdExpress.Domain.Level.GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 				#endregion
+
 				#endregion
 
 				#region Obtention du résultat du calendrier d'action
@@ -1397,11 +1018,9 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
 				title=GestionWeb.GetWebWord(1998, this._webSession.SiteLanguage);
 				partieHTMLVersion=versionsUI.GetAPPMHtmlExport(_dataSource,title,ref versionsUIs);
-				//decoupageHTML(partieHTMLVersion,true);
 				startIndex = DecoupageVersionHTML(partieHTMLVersion,true);
 				BuildVersionPDF(versionsUIs,startIndex);
 				
-				//html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
 				decoupageHTML(partieHTML,false);
 			}
 			catch(System.Exception err) {
@@ -1478,17 +1097,20 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 		private string GetHeader() {
 
 			StringBuilder html = new StringBuilder(10000);
+            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 
 			html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
 			html.Append("<HTML>");
 			html.Append("<HEAD>");
-			html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">");
+            html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=" + charSet + "\">");
 			html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-			html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-			html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
@@ -1574,25 +1196,6 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 				coef = Math.Min((double)coef, w);
 			}
 
-	
-//			if (i==0){
-//				this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R)/256.0
-//					,((double)_config.MainPageFontColor.G)/256.0
-//					,((double)_config.MainPageFontColor.B)/256.0);
-//				this.PDFPAGE_SetActiveFont(_config.MainPageTitleFont.Name,
-//					_config.MainPageTitleFont.Bold,
-//					_config.MainPageTitleFont.Italic,
-//					_config.MainPageTitleFont.Underline,
-//					_config.MainPageTitleFont.Strikeout,
-//					12,TxFontCharset.charsetANSI_CHARSET);
-//				this.PDFPAGE_ShowImage(imgI,
-//					X1, this.PDFPAGE_Height/2 - (coef * imgG.Height / 2),
-//					coef * imgG.Width,
-//					coef * imgG.Height,
-//					0);
-//				this.PDFPAGE_TextOut(X1+5,45,0,GestionWeb.GetWebWord(1998, _webSession.SiteLanguage));	
-//			}
-//			else 
 			if(version) {
 				if(i==(partieHTML.Count-1)) {
 					this.PDFPAGE_ShowImage(imgI,
@@ -1700,7 +1303,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 
 		#endregion
 
-		#region BuildVersionPDF(String title) 
+		#region BuildVersionPDF(String title)
 		/// <summary> 
 		/// Render all versions controls
 		/// </summary>
@@ -1855,8 +1458,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade
 		/// </summary>
 		/// <param name="source">Error source></param>
 		/// <param name="message">Error message</param>
-		private void mail_mailKoHandler(object source, string message) 
-		{
+		private void mail_mailKoHandler(object source, string message){
 			throw new Exceptions.AppmPdfException("Echec lors de l'envoi mail client pour la session " + _webSession.IdSession + " : " + message);
 		}
 		#endregion

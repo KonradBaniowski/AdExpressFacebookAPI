@@ -191,11 +191,8 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 						this.PDFPAGE_Watermark = this.GetWaterMark("", image, title, fontColor, font);
 					//Page number
 					string str = "";
-					//str = "Page " + (i+1) + " sur " + this.PageCount; 
-					if(_webSession.SiteLanguage==33)
-						str = GestionWeb.GetWebWord(894,_webSession.SiteLanguage)+ " " + (i+1) + " " + GestionWeb.GetWebWord(2042,_webSession.SiteLanguage) + " " + this.PageCount; 
-					else
-						str = GestionWeb.GetWebWord(894,_webSession.SiteLanguage)+ " " + (i+1) + " " + GestionWeb.GetWebWord(2042,_webSession.SiteLanguage) + " " + this.PageCount; 
+					str = GestionWeb.GetWebWord(894,_webSession.SiteLanguage)+ " " + (i+1) + " " + GestionWeb.GetWebWord(2042,_webSession.SiteLanguage) + " " + this.PageCount; 
+						
 					this.PDFPAGE_SetActiveFont(font.Name, font.Bold, font.Italic, font.Underline, font.Strikeout, Convert.ToDouble(font.SizeInPoints), 0);
 					this.PDFPAGE_SetRGBColor(((double)fontColor.R)/256.0
 						,((double)fontColor.G)/256.0
