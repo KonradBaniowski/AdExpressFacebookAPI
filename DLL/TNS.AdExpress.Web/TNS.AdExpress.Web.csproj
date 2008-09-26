@@ -874,6 +874,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Functions\CreativeErrorTreatment.cs" />
+    <Compile Include="Functions\Creatives.cs" />
     <Compile Include="Functions\Dates.cs">
       <SubType>Code</SubType>
     </Compile>

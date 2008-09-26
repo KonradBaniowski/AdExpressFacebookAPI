@@ -217,10 +217,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 							case DBCst.Vehicles.names.internationalPress:
 								pathes = row["visual"].ToString().Split(',');
 								path = string.Empty;
-                                dirPath = this.BuildVersionPath(row["idMedia"].ToString(), row["datenum"].ToString(), WeBCst.CreationServerPathes.IMAGES);
-								foreach(string str in pathes){
-									path += dirPath + "/" + str + ",";
-								}
+                                foreach (string str in pathes) {
+                                    path += Functions.Creatives.GetCreativePath(Int64.Parse(row["idMedia"].ToString()), Int64.Parse(row["dateKiosque"].ToString()), Int64.Parse(row["dateCover"].ToString()), str, true, true) + ",";
+                                }
 								break;
 
                             case DBCst.Vehicles.names.directMarketing:
@@ -264,7 +263,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 									item.Path = path.Substring(0, path.Length - 1);
 								}
 								if (_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE){
-									if(row["dateParution"]!=System.DBNull.Value)item.Parution=row["dateParution"].ToString();
+                                    if (row["dateKiosque"] != System.DBNull.Value) item.Parution = row["dateKiosque"].ToString();
 									else item.Parution=""; 
 									versionUi = new VersionPressAPPMUI(this._webSession, item);
 								}

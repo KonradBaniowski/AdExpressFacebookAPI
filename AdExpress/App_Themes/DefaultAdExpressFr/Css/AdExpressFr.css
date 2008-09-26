@@ -2739,6 +2739,43 @@ td.acl2Bg{
 	padding-right:4px;
 	text-decoration : none;
 }
+.TreeHeaderVioletBorder{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	border-color : #644883;
+	border-top :#644883 1px solid; 
+	border-left :#644883 1px solid; 
+	border-right :#644883 1px solid; 
+	border-bottom :#644883 1px solid;
+}
+.TreeHeaderVioletBorderWithoutTop{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	border-left :#644883 1px solid; 
+	border-right :#644883 1px solid; 
+	border-bottom :#644883 1px solid;
+}
+.TreeHeaderBlancBorder{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	border-color : #FFFFFF;
+}
+.TreeTableVioletBorder{
+	border-left :#644883 1px solid; 
+	border-right :#644883 1px solid; 
+	border-bottom :#644883 1px solid;
+	background-color:#DED8E5;
+}
+.TreeTableBlancBorder{
+	border-color : #FFFFFF;
+	background-color:#DED8E5;
+}
 /*justif*/
 .jusT
 {

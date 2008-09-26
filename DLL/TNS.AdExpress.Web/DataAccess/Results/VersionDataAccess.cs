@@ -358,9 +358,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			}
 			#endregion
 
-            query = "SELECT id_slogan as id, visual as visual, date_cover_num as datenum, id_media as idmedia, advertiser as annonceur, product as produit, sector as famille, subsector as classe, group_ as groupe, segment as variete"
+            query = "SELECT id_slogan as id, visual as visual, date_cover_num as dateCover, date_media_num as dateKiosque, id_media as idmedia, advertiser as annonceur, product as produit, sector as famille, subsector as classe, group_ as groupe, segment as variete"
                + " FROM ("
-               + " SELECT id_slogan , visual, date_cover_num , id_media, dp4.id_advertiser, dp4.id_product, pr.product, ad.advertiser, sc.sector, sb.subsector, gr.group_, sg.segment, ROW_NUMBER()"
+               + " SELECT id_slogan , visual, date_cover_num, date_media_num , id_media, dp4.id_advertiser, dp4.id_product, pr.product, ad.advertiser, sc.sector, sb.subsector, gr.group_, sg.segment, ROW_NUMBER()"
                + " OVER ("
                + " PARTITION BY id_slogan ORDER BY id_slogan DESC"
                + " ) Oneligne "
@@ -566,7 +566,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//additional target
             Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,CustomerCst.Right.type.aepmTargetAccess));
 
-			query = "SELECT id_slogan as id, visual as visual,date_media_num as dateParution,date_cover_num as datenum, id_media as idmedia"
+            query = "SELECT id_slogan as id, visual as visual,date_media_num as dateKiosque,date_cover_num as dateCover, id_media as idmedia"
 				+ " FROM ("
 				+ " SELECT id_slogan , visual, date_media_num ,date_cover_num, id_media, ROW_NUMBER()"
 				+ " OVER ("
