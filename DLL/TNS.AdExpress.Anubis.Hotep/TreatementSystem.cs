@@ -7,7 +7,6 @@ using System;
 using System.Data;
 using System.Threading;
 
-using TNS.AdExpress.Common;
 using TNS.AdExpress.Anubis.BusinessFacade;
 using TNS.AdExpress.Anubis.BusinessFacade.Result;
 using TNS.AdExpress.Anubis.Common;
@@ -146,7 +145,7 @@ namespace TNS.AdExpress.Anubis.Hotep{
 
 				#region PDF management
 				
-				pdf = new HotepPdfSystem(_dataSource, _hotepConfig,rqDetails,(WebSession)ParameterSystem.Load(_navSessionId));
+				pdf = new HotepPdfSystem(_dataSource, _hotepConfig, rqDetails, (WebSession)ParameterSystem.Load(_navSessionId));
 				string fileName = pdf.Init();
 				pdf.AutoLaunch = false;
 				//TODO update Database for physical file name

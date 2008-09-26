@@ -6,12 +6,10 @@
 using System;
 using System.Drawing;
 
-using TNS.AdExpress.Common;
 using TNS.AdExpress.Anubis.Hotep.DataAccess;
 using TNS.FrameWork.DB.Common;
 
-namespace TNS.AdExpress.Anubis.Hotep.Common
-{
+namespace TNS.AdExpress.Anubis.Hotep.Common{
 	/// <summary>
 	/// Static class containing every cofiguration elements for the Hotep Plug-in
 	/// </summary>

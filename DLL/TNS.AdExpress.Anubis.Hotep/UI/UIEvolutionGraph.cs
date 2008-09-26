@@ -9,13 +9,13 @@ using System.Drawing;
 using System.Web.UI.WebControls;
 using System.Collections;
 
-using TNS.AdExpress.Common;
+//using TNS.AdExpress.Common;
 
 using TNS.AdExpress.Constantes.Web;
 using CstUI = TNS.AdExpress.Constantes.Web.UI;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using TNS.AdExpress.Anubis.Hotep.Common;
 using TNS.AdExpress.Anubis.Hotep.Exceptions;
@@ -25,6 +25,8 @@ using TNS.FrameWork.DB.Common;
 using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork;
+using TNS.AdExpressI.ProductClassIndicators.Engines;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Anubis.Hotep.UI
 {
@@ -66,24 +68,20 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// <summary>
 		/// Graphiques Evolution
 		/// </summary>
-		internal void BuildEvolution(FrameWorkConstantes.Results.EvolutionRecap.ElementType tableType){
+		internal void BuildEvolution(FrameWorkConstantes.Results.EvolutionRecap.ElementType tableType) {
 
-			#region Variables
-			Series series = new Series("Evolution");
+            #region Series Init
+            Series series = new Series("Evolution");
+            this.Series.Add(series);
 			ChartArea chartArea=new ChartArea();
-			bool referenceElement=false;
-			bool competitorElement=false;
-			long last;
-			int compteur=0;
+            this.ChartAreas.Add(chartArea);
+            string strChartArea = this.Series["Evolution"].ChartArea;
 			#endregion
 
-			this.Series.Add(series);
-			this.ChartAreas.Add(chartArea);
-			string strChartArea = this.Series["Evolution"].ChartArea;
-			last=_tab.GetLongLength(0)-1;
-			
-			#region Chart
-			this.Size = new Size(800,500);
+            long last = _tab.GetLongLength(0) - 1;
+
+            #region Chart Design
+            this.Size = new Size(800,500);
 			this.BackGradientType = GradientType.TopBottom;
 			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
 			this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);			
@@ -115,59 +113,65 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			series.FontAngle=90;
 			series["LabelStyle"] = "TOP";
 			#endregion			
-	
-			#region Parcours de tab
-			for(int i=0;i<_tab.GetLongLength(0) && i<10 ;i++){
-			
-				if(WebFunctions.CheckedText.IsStringEmpty(WebFunctions.Units.ConvertUnitValueToString(_tab[0,FrameWorkConstantes.Results.EvolutionRecap.ECART].ToString(),_webSession.Unit)) 
-					&& double.Parse(_tab[i,FrameWorkConstantes.Results.EvolutionRecap.ECART].ToString())>0){	
-				
-					//					series.Points.AddXY(tab[i,FrameWorkConstantes.Results.EvolutionRecap.PRODUCT].ToString(),(int)(double)tab[i,FrameWorkConstantes.Results.EvolutionRecap.ECART]);
-					series.Points.AddXY(_tab[i,FrameWorkConstantes.Results.EvolutionRecap.PRODUCT].ToString(),(int)double.Parse(WebFunctions.Units.ConvertUnitValueToString(_tab[i,FrameWorkConstantes.Results.EvolutionRecap.ECART].ToString(),_webSession.Unit)));
-					series.Points[compteur].ShowInLegend=true;
-					// Coloration des concurrents en rouge
-					if(_tab[i,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]!=null && (int)_tab[i,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]==2){
-						series.Points[compteur].Color=Color.FromArgb(255,223,222);
-						competitorElement=true;
-					}
-						// Coloration des références en vert
-					else if(_tab[i,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]!=null && (int)_tab[i,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]==1){
-						series.Points[compteur].Color=Color.FromArgb(222,255,222);	
-						referenceElement=true;
-					}	
-					
-					compteur++;
-				}
 
-				if( WebFunctions.CheckedText.IsStringEmpty(WebFunctions.Units.ConvertUnitValueToString(_tab[0,FrameWorkConstantes.Results.EvolutionRecap.ECART].ToString(),_webSession.Unit)) 
-					&& double.Parse(_tab[last,FrameWorkConstantes.Results.EvolutionRecap.ECART].ToString())<0){					
-					series.Points.AddXY(_tab[last,FrameWorkConstantes.Results.EvolutionRecap.PRODUCT].ToString(),(int)double.Parse(WebFunctions.Units.ConvertUnitValueToString(_tab[last,FrameWorkConstantes.Results.EvolutionRecap.ECART].ToString(),_webSession.Unit).Replace(" ","").Trim()));
-					
-					series.Points[compteur].ShowInLegend=true;
-					series.Points[compteur].CustomAttributes="LabelStyle=top";
-					
+            #region Series building
+            double ecart = 0;
+            int typeElt = 0;
+            int compteur = 0;
+            bool hasComp = false;
+            bool hasRef = false;
+            for (int i = 0; i < _tab.GetLongLength(0) && i < 10; i++) {
+                ecart = Convert.ToDouble(_tab[i, EngineEvolution.ECART]);
+                if (ecart > 0) {
+                    series.Points.AddXY(_tab[i, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _webSession.Unit)));
+                    series.Points[compteur].ShowInLegend = true;
 
-					// Coloration des concurrents en rouge
-					if(_tab[last,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]!=null && (int)_tab[last,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]==2){
-						series.Points[compteur].Color=Color.FromArgb(255,223,222);
-						competitorElement=true;
-					}
-						// Coloration des références en vert
-					else if(_tab[last,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]!=null && (int)_tab[last,FrameWorkConstantes.Results.EvolutionRecap.COMPETITOR]==1){
-						series.Points[compteur].Color=Color.FromArgb(222,255,222);	
-						referenceElement=true;
-					}
-	
-					compteur++;
-				}
-				
-				last--;
+                    #region Reference or competitor ?
+                    if (_tab[i, EngineEvolution.COMPETITOR] != null) {
+                        typeElt = Convert.ToInt32(_tab[i, EngineEvolution.COMPETITOR]);
+                        if (typeElt == 2) {
+                            series.Points[compteur].Color = Color.FromArgb(255, 223, 222);
+                            hasComp = true;
+                        }
+                        else if (typeElt == 1) {
+                            series.Points[compteur].Color = Color.FromArgb(222, 255, 222);
+                            hasRef = true;
+                        }
+                    }
+                    #endregion
 
-			}
-			#endregion
-			
-			#region Légendes
-			if(tableType==FrameWorkConstantes.Results.EvolutionRecap.ElementType.advertiser){
+                    compteur++;
+                }
+                ecart = Convert.ToDouble(_tab[last, EngineEvolution.ECART]);
+                if (ecart < 0) {
+                    series.Points.AddXY(_tab[last, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _webSession.Unit).Replace(" ", string.Empty)));
+                    series.Points[compteur].ShowInLegend = true;
+                    series.Points[compteur].CustomAttributes = "LabelStyle=top";
+
+                    #region Reference or competitor ?
+                    if (_tab[last, EngineEvolution.COMPETITOR] != null) {
+                        typeElt = Convert.ToInt32(_tab[last, EngineEvolution.COMPETITOR]);
+                        if (typeElt == 2) {
+                            series.Points[compteur].Color = Color.FromArgb(255, 223, 222);
+                            hasComp = true;
+                        }
+                        else if (typeElt == 1) {
+                            series.Points[compteur].Color = Color.FromArgb(222, 255, 222);
+                            hasRef = true;
+                        }
+                    }
+                    #endregion
+
+                    compteur++;
+                }
+
+                last--;
+
+            }
+            #endregion
+
+            #region Legends
+            if (tableType==FrameWorkConstantes.Results.EvolutionRecap.ElementType.advertiser){
 				series.LegendText=""+GestionWeb.GetWebWord(1106,_webSession.SiteLanguage)+"";
 			}
 			else{
@@ -176,7 +180,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			LegendItem legendItemReference = new LegendItem();			
 			legendItemReference.BorderWidth=0;
 			legendItemReference.Color=Color.FromArgb(222,255,222);
-			if(referenceElement){
+            if (hasRef) {
 				if(tableType==FrameWorkConstantes.Results.EvolutionRecap.ElementType.advertiser){
 					legendItemReference.Name=GestionWeb.GetWebWord(1201,_webSession.SiteLanguage);
 					this.Legends["Default"].CustomItems.Add(legendItemReference);
@@ -191,7 +195,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			legendItemCompetitor.BorderWidth=0;			
 			legendItemCompetitor.Color=Color.FromArgb(255,223,222);
 
-			if(competitorElement){
+            if (hasComp) {
 				if(tableType==FrameWorkConstantes.Results.EvolutionRecap.ElementType.advertiser){
 					legendItemCompetitor.Name=GestionWeb.GetWebWord(1202,_webSession.SiteLanguage);
 					this.Legends["Default"].CustomItems.Add(legendItemCompetitor);
@@ -212,36 +216,25 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			this.ChartAreas[strChartArea].AxisX.MajorGrid.LineWidth=0;
 			this.ChartAreas[strChartArea].AxisX.Interval=1;				
 			this.ChartAreas[strChartArea].AxisX.LabelStyle.FontAngle = 35;			
-
 			#endregion
 
 			#region Axe des Y
-
 			this.ChartAreas[strChartArea].AxisY.Enabled=AxisEnabled.True;
 			this.ChartAreas[strChartArea].AxisY.LabelStyle.Enabled=true;
 			this.ChartAreas[strChartArea].AxisY.LabelsAutoFit=false;			
-
 			this.ChartAreas[strChartArea].AxisY.LabelStyle.Font=new Font("Arial", (float)10);
-			//	this.ChartAreas[strChartArea].AxisY.Title=""+GestionWeb.GetWebWord(1217,webSession.SiteLanguage)+"";
 			this.ChartAreas[strChartArea].AxisY.TitleFont=new Font("Arial", (float)10);
-			//	this.ChartAreas[strChartArea].AxisY.Maximum=double.Parse(tab[0,FrameWorkConstantes.Results.EvolutionRecap.TOTAL_N].ToString());
 			this.ChartAreas[strChartArea].AxisY.MajorGrid.LineWidth=0;
-			
 			#endregion
 
 			#region Axe des Y2
-
 			this.ChartAreas[strChartArea].AxisY2.Enabled=AxisEnabled.True;
 			this.ChartAreas[strChartArea].AxisY2.LabelStyle.Enabled=true;
 			this.ChartAreas[strChartArea].AxisY2.LabelsAutoFit=false;
-			
 			this.ChartAreas[strChartArea].AxisY2.LabelStyle.Font=new Font("Arial", (float)10);
 			this.ChartAreas[strChartArea].AxisY2.TitleFont=new Font("Arial", (float)10);
-			//this.ChartAreas[strChartArea].AxisY2.Maximum=100;
 			this.ChartAreas[strChartArea].AxisY2.Title=""+GestionWeb.GetWebWord(1217,_webSession.SiteLanguage)+"";
-
 			#endregion					
-			
 
 		}
 		#endregion

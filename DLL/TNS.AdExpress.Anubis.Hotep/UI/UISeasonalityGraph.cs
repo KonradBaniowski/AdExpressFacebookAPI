@@ -8,14 +8,16 @@ using System.Data;
 using System.Drawing;
 using System.Web.UI.WebControls;
 using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
 
-using TNS.AdExpress.Common;
+//using TNS.AdExpress.Common;
 
 using TNS.AdExpress.Constantes.Web;
 using CstUI = TNS.AdExpress.Constantes.Web.UI;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using TNS.AdExpress.Anubis.Hotep.Common;
 using TNS.AdExpress.Anubis.Hotep.Exceptions;
@@ -25,6 +27,10 @@ using TNS.FrameWork.DB.Common;
 using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork;
+using TNS.FrameWork.Date;
+using TNS.AdExpressI.ProductClassIndicators.Engines;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Anubis.Hotep.UI
@@ -71,68 +77,59 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		internal void BuildSeasonality(){
 
 			#region Variables
-			Series serieUnivers = new Series("Seasonality");
-			Series serieSectorMarket = new Series();
-			Series serieMediumMonth = new Series();
-
-			ChartArea chartArea=new ChartArea();
-
 			bool referenceElement=false;
 			bool competitorElement=false;
-			
-			int compteur=1;
-			// Nombre de mois
-			int nbMonth=0;
-			int i=0;
-		
-			double number=0;
-			int oldMonth=-1;
-			
-
-
-			double mediumMonth=0;
-
-			Hashtable advertiserTotal = new Hashtable();
-			Hashtable advertiserSerie=new Hashtable();
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization); 
 			#endregion
 
-			this.Series.Add(serieUnivers);
-			this.Series.Add(serieSectorMarket);
-			this.Series.Add(serieMediumMonth);
+            #region Series Init
+            Series serieUnivers = new Series("Seasonality");
+            this.Series.Add(serieUnivers);
+            Series serieSectorMarket = new Series();
+            this.Series.Add(serieSectorMarket);
+            Series serieMediumMonth = new Series();
+            this.Series.Add(serieMediumMonth);
 
-			this.ChartAreas.Add(chartArea);
-			string strChartArea = this.Series["Seasonality"].ChartArea;
+            ChartArea chartArea = new ChartArea();
+            this.ChartAreas.Add(chartArea);
+            string strChartArea = this.Series["Seasonality"].ChartArea;
+            #endregion
 
-			compteur=0;
-		
-			long valueAdvertiser=0;
-			if(_tab!=null){
-				//advertiserNumber=tabAdvertiser.GetLength(0)/(tabUniverse.GetLength(0)-1);
-				for(i=0;i<_tab.GetLength(0);i++){
-					if(advertiserTotal[long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())]==null){
-						advertiserTotal.Add(long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString()),long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.INVEST_COLUMN_INDEX].ToString()));
-						if(long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())!=FrameWorkConstantes.Results.Seasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX
-							&& long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())!=FrameWorkConstantes.Results.Seasonality.ID_TOTAL_MARKET_COLUMN_INDEX
-							&& long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())!=FrameWorkConstantes.Results.Seasonality.ID_TOTAL_SECTOR_COLUMN_INDEX
-							){
-							advertiserSerie.Add(long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString()),new Series());
-							this.Series.Add(((Series)advertiserSerie[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())]));
-						}
-					}
-					else{
-						valueAdvertiser=(long)advertiserTotal[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())];
-						advertiserTotal[long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())]=valueAdvertiser+long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.INVEST_COLUMN_INDEX].ToString());
-					}
-					if(oldMonth!=int.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_MONTH_COLUMN_INDEX].ToString())){
-						nbMonth++;
-						oldMonth=int.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_MONTH_COLUMN_INDEX].ToString());
-					}
+            #region Advertiser totals
+            Dictionary<long, double> advertiserTotal = new Dictionary<long, double>();
+            Dictionary<long, Series> advertiserSerie = new Dictionary<long, Series>();
+            Int64 idElement = 0;
+            int cMonth = 0;
+            int oldMonth = -1;
+            int nbMonth = 0;
 
-				}
-			}
+            if (_tab != null) {
+                for (int i = 0; i < _tab.GetLength(0); i++) {
+                    idElement = Convert.ToInt64(_tab[i, EngineSeasonality.ID_ELEMENT_COLUMN_INDEX]);
+                    if (idElement != 0) {
+                        if (!advertiserTotal.ContainsKey(idElement)) {
+                            advertiserTotal.Add(idElement, Convert.ToDouble(_tab[i, EngineSeasonality.INVEST_COLUMN_INDEX]));
+                            if (idElement != EngineSeasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX && idElement != EngineSeasonality.ID_TOTAL_MARKET_COLUMN_INDEX && idElement != EngineSeasonality.ID_TOTAL_SECTOR_COLUMN_INDEX) {
+                                advertiserSerie.Add(idElement, new Series());
+                                this.Series.Add(advertiserSerie[idElement]);
+                            }
+                        }
+                        else {
+                            advertiserTotal[idElement] = advertiserTotal[idElement] + Convert.ToDouble(_tab[i, EngineSeasonality.INVEST_COLUMN_INDEX]);
+                        }
+                    }
+                    cMonth = Convert.ToInt32(_tab[i, EngineSeasonality.ID_MONTH_COLUMN_INDEX]);
+                    if (cMonth != 0 && oldMonth != cMonth) {
+                        nbMonth++;
+                        oldMonth = cMonth;
+                    }
 
-			#region Chart
-			this.Size = new Size(800,500);
+                }
+            }
+            #endregion
+
+            #region Chart
+            this.Size = new Size(800,500);
 			this.BackGradientType = GradientType.TopBottom;
 			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
 			this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);			
@@ -142,21 +139,19 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			#endregion
 
 			#region Titre
-			Title title;
-			title = new Title(GestionWeb.GetWebWord(1139,_webSession.SiteLanguage));
+			Title title = new Title(GestionWeb.GetWebWord(1139,_webSession.SiteLanguage));
 			title.Font = new Font("Arial", (float)14);
 			this.Titles.Add(title);
 			#endregion	
 
-			#region Series
-			serieUnivers.Type = SeriesChartType.Line;
+            #region Series Design
+            serieUnivers.Type = SeriesChartType.Line;
 			serieUnivers.ShowLabelAsValue=true;
 			serieUnivers.XValueType=ChartValueTypes.String;
 			serieUnivers.YValueType=ChartValueTypes.Double;
 			serieUnivers.Enabled=true;
 			serieUnivers.Font=new Font("Arial", (float)8);
 			serieUnivers["LabelStyle"] = "Top";
-			
 			
 			serieSectorMarket.Type = SeriesChartType.Line;
 			serieSectorMarket.ShowLabelAsValue=true;
@@ -173,79 +168,74 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			serieMediumMonth.Enabled=true;
 			serieMediumMonth.Font=new Font("Arial", (float)8);
 			serieMediumMonth.LabelToolTip= GestionWeb.GetWebWord(1233,_webSession.SiteLanguage);
-
-			//serieUnivers.FontAngle=90;
-			
 			#endregion			
 
-			
-			DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
-			
-			compteur=-1;
-			oldMonth=-1;
+            #region Series Data
+            DateTime periodBegin = FctUtilities.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
 
-			if(_tab!=null){
-				// Calcul des totaux pour les annonceurs
-				for(i=0;i<_tab.GetLength(0);i++){
+            int compteur = -1;
+            oldMonth = -1;
+            cMonth = -1;
+            double invest = 0;
+            string month = string.Empty;
+            double mediumMonth = 0;
 
-					if(oldMonth!=int.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_MONTH_COLUMN_INDEX].ToString())){
-						compteur++;
-						oldMonth=int.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_MONTH_COLUMN_INDEX].ToString());
-					}
-					
-				
-					if(long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())==FrameWorkConstantes.Results.Seasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX){
-						if(double.Parse(advertiserTotal[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString())>0){
-							number= double.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.INVEST_COLUMN_INDEX].ToString())/double.Parse(advertiserTotal[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString()) *100;
-							serieUnivers.Points.AddXY(TNS.FrameWork.Date.MonthString.Get(PeriodBeginningDate.AddMonths(compteur).Month,_webSession.SiteLanguage,0),double.Parse(number.ToString("0.00")));
-						}
-					}
-					else if(long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())==FrameWorkConstantes.Results.Seasonality.ID_TOTAL_SECTOR_COLUMN_INDEX
-						|| long.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())==FrameWorkConstantes.Results.Seasonality.ID_TOTAL_MARKET_COLUMN_INDEX
-						
-						){
-						if(double.Parse(advertiserTotal[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString())>0){
-							number= double.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.INVEST_COLUMN_INDEX].ToString())/double.Parse(advertiserTotal[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString()) *100;
-							serieSectorMarket.Points.AddXY(TNS.FrameWork.Date.MonthString.Get(PeriodBeginningDate.AddMonths(compteur).Month,_webSession.SiteLanguage,0),double.Parse(number.ToString("0.00")));
-						
-							number=(double)100/nbMonth;
-							serieMediumMonth.Points.AddXY(TNS.FrameWork.Date.MonthString.Get(PeriodBeginningDate.AddMonths(compteur).Month,_webSession.SiteLanguage,0),double.Parse(number.ToString("0.00")));
-							mediumMonth=double.Parse(number.ToString("0.00"));
-						}							
-					}
-					else{
-						Series s = (Series)advertiserSerie[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())];
-						s.Type = SeriesChartType.Line;
-						s.ShowLabelAsValue=true;
-						s.XValueType=ChartValueTypes.String;
-						s.YValueType=ChartValueTypes.Double;					
-						s.Enabled=true;
-						s.Font=new Font("Arial", (float)8);
-						s.LegendText=_tab[i,FrameWorkConstantes.Results.Seasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
-						s.LabelToolTip = _tab[i,FrameWorkConstantes.Results.Seasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
+            if (_tab != null) {
+                // Calcul des totaux pour les annonceurs
+                for (int i = 0; i < _tab.GetLength(0); i++) {
+                    cMonth = Convert.ToInt32(_tab[i, EngineSeasonality.ID_MONTH_COLUMN_INDEX]);
+                    if (oldMonth != cMonth) {
+                        compteur++;
+                        oldMonth = cMonth;
+                    }
+                    idElement = Convert.ToInt64(_tab[i, EngineSeasonality.ID_ELEMENT_COLUMN_INDEX]);
+                    invest = Convert.ToDouble(_tab[i, EngineSeasonality.INVEST_COLUMN_INDEX]);
+                    month = MonthString.GetCharacters(periodBegin.AddMonths(compteur).Month,cultureInfo, 0);
+                    if (idElement != 0) {
+                        if (idElement == EngineSeasonality.ID_TOTAL_UNIVERSE_COLUMN_INDEX) {
+                            if (advertiserTotal[idElement] > 0) {
+                                serieUnivers.Points.AddXY(month, Math.Round(invest / advertiserTotal[idElement] * 100, 2));
+                            }
+                        }
+                        else if (idElement == EngineSeasonality.ID_TOTAL_SECTOR_COLUMN_INDEX || idElement == EngineSeasonality.ID_TOTAL_MARKET_COLUMN_INDEX) {
+                            if (advertiserTotal[idElement] > 0) {
+                                serieSectorMarket.Points.AddXY(month, Math.Round(invest / advertiserTotal[idElement] * 100, 2));
+                                serieMediumMonth.Points.AddXY(month, mediumMonth = Math.Round((double)100 / nbMonth, 2));
+                            }
+                        }
+                        else {
+                            Series s = advertiserSerie[idElement];
+                            s.Type = SeriesChartType.Line;
+                            s.ShowLabelAsValue = true;
+                            s.XValueType = ChartValueTypes.String;
+                            s.YValueType = ChartValueTypes.Double;
+                            s.Enabled = true;
+                            s.Font = new Font("Arial", (float)8);
+                            s.LegendText = _tab[i, EngineSeasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
+                            s.Enabled = true;
+                            s.Font = new Font("Arial", (float)8);
+                            s.LabelToolTip = _tab[i, EngineSeasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
 
+                            if (advertiserTotal[idElement] > 0) {
+                                advertiserSerie[idElement].Points.AddXY(month, Math.Round(invest / advertiserTotal[idElement] * 100, 2));
 
-						if(double.Parse(advertiserTotal[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString())>0){
-							number= double.Parse(_tab[i,FrameWorkConstantes.Results.Seasonality.INVEST_COLUMN_INDEX].ToString())/double.Parse(advertiserTotal[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())].ToString()) *100;
-							((Series)advertiserSerie[long.Parse( _tab[i,FrameWorkConstantes.Results.Seasonality.ID_ELEMENT_COLUMN_INDEX].ToString())]).Points.AddXY(TNS.FrameWork.Date.MonthString.Get(PeriodBeginningDate.AddMonths(compteur).Month,_webSession.SiteLanguage,0),double.Parse(number.ToString("0.00")));
-							
-						}					
-					}
-				}
-			}
-
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
 
 			#region Légendes
 			//univers
 			serieUnivers.LegendText=GestionWeb.GetWebWord(1188,_webSession.SiteLanguage);
 			serieUnivers.LabelToolTip = WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(1188,_webSession.SiteLanguage));
-			// Marché
+            // Market
 			if(_webSession.ComparaisonCriterion==TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.marketTotal){
 				serieSectorMarket.LegendText=GestionWeb.GetWebWord(1316,_webSession.SiteLanguage);
 				serieSectorMarket.LabelToolTip = WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(1316,_webSession.SiteLanguage));
-
 			}
-				// Famille
+			// Famille
 			else{
 				serieSectorMarket.LegendText=GestionWeb.GetWebWord(1189,_webSession.SiteLanguage);
 				serieSectorMarket.LabelToolTip = WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(1189,_webSession.SiteLanguage));
@@ -269,12 +259,10 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 				legendItemCompetitor.Name=GestionWeb.GetWebWord(1202,_webSession.SiteLanguage);
 				this.Legends["Default"].CustomItems.Add(legendItemCompetitor);				
 			}
-
-
 			#endregion
 
-			#region Axe des X
-			this.ChartAreas[strChartArea].AxisX.LabelStyle.Enabled = true;
+            #region X axe
+            this.ChartAreas[strChartArea].AxisX.LabelStyle.Enabled = true;
 			this.ChartAreas[strChartArea].AxisX.LabelsAutoFit = false;
 			this.ChartAreas[strChartArea].AxisX.LabelStyle.Font=new Font("Arial", (float)8);
 			this.ChartAreas[strChartArea].AxisX.MajorGrid.LineWidth=0;
@@ -282,31 +270,22 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			this.ChartAreas[strChartArea].AxisX.LabelStyle.FontAngle = 35;
 			#endregion
 
-			#region Axe des Y
-
-			this.ChartAreas[strChartArea].AxisY.Enabled=AxisEnabled.True;
+            #region Y axe
+            this.ChartAreas[strChartArea].AxisY.Enabled=AxisEnabled.True;
 			this.ChartAreas[strChartArea].AxisY.LabelStyle.Enabled=true;
 			this.ChartAreas[strChartArea].AxisY.LabelsAutoFit=false;			
-
 			this.ChartAreas[strChartArea].AxisY.LabelStyle.Font=new Font("Arial", (float)10);
-			//	this.ChartAreas[strChartArea].AxisY.Title=""+GestionWeb.GetWebWord(1217,webSession.SiteLanguage)+"";
 			this.ChartAreas[strChartArea].AxisY.TitleFont=new Font("Arial", (float)10);
-			//	this.ChartAreas[strChartArea].AxisY.Maximum=100;
 			this.ChartAreas[strChartArea].AxisY.MajorGrid.LineWidth=0;
-			
 			#endregion
 
-			#region Axe des Y2
-
-			this.ChartAreas[strChartArea].AxisY2.Enabled=AxisEnabled.True;
+            #region Y2 axe
+            this.ChartAreas[strChartArea].AxisY2.Enabled=AxisEnabled.True;
 			this.ChartAreas[strChartArea].AxisY2.LabelStyle.Enabled=true;
 			this.ChartAreas[strChartArea].AxisY2.LabelsAutoFit=false;
-			
 			this.ChartAreas[strChartArea].AxisY2.LabelStyle.Font=new Font("Arial", (float)10);
 			this.ChartAreas[strChartArea].AxisY2.TitleFont=new Font("Arial", (float)10);
-			//	this.ChartAreas[strChartArea].AxisY2.Maximum=100;
 			this.ChartAreas[strChartArea].AxisY2.Title=""+GestionWeb.GetWebWord(1236,_webSession.SiteLanguage)+"";
-
 			#endregion							
 
 		}

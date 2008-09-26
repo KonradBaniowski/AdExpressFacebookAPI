@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Configuration>
 	<CustomerMail server="smtp2.secodip.com" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.tnsadexpress.com" subject="AdExpress"/>
-	<PdfPath path="\\testarossa2\adexdatas\AdExCustomerFiles"/>
-	<!--<PdfPath path="AdExCustomerFiles"/>-->
+  <!--<PdfPath path="\\testarossa2\adexdatas\AdExCustomerFiles"/>-->
+  <PdfPath path="AdExCustomerFiles"/>
 	<PdfCreatorPilot login="and@tns-global.com" pass="2SN7J-6TWNG-VCQKV-7XCCT-45YEH"/>
 	<Html2Pdf login="An DangDuy" pass="3GKL5-4UFS4-F4HZ4-EK6WY"/>	
 	<PdfLayout>

@@ -3,6 +3,7 @@
 //Creation : 11/07/2006
 #endregion
 
+#region Using
 using System;
 using System.Collections;
 using System.Data;
@@ -11,6 +12,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Reflection;
 using System.Windows.Forms;
 
 using TNS.AdExpress.Anubis.Hotep.Common;
@@ -20,17 +22,14 @@ using TNS.AdExpress.Anubis.Common;
 using TNS.AdExpress.Anubis.Hotep.UI;
 using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 
-using TNS.AdExpress.Common;
-
 using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
-using TNS.AdExpress.Constantes.Web;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 
 using TNS.AdExpress.Web.BusinessFacade.Results;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
-using TNS.AdExpress.Web.Core.ClassificationList;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using TNS.AdExpress.Web.Functions;
@@ -51,9 +50,12 @@ using System.Globalization;
 using Oracle.DataAccess.Client;
 
 using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork;
-
-
-
+using TNS.AdExpressI.ProductClassIndicators;
+using TNS.AdExpressI.ProductClassIndicators.DAL;
+using TNS.AdExpressI.ProductClassIndicators.Engines;
+using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
+#endregion
 
 namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 	/// <summary>
@@ -79,9 +81,24 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		/// Liste des indicateurs (présents dans le PDF)
 		/// </summary>
 		private ArrayList _titleList = null;
+        /// <summary>
+        /// Product Class Indicator
+        /// </summary>
+        private IProductClassIndicators _productClassIndicator;
+        /// <summary>
+        /// Product Class Indicator DAL
+        /// </summary>
+        private IProductClassIndicatorsDAL _productClassIndicatorDAL;
 		#endregion
 
 		#region Constructeur
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataSource">DataSource</param>
+        /// <param name="config">Config</param>
+        /// <param name="rqDetails">Request details</param>
+        /// <param name="webSession">Web session</param>
 		public HotepPdfSystem(IDataSource dataSource, HotepConfig config, DataRow rqDetails, WebSession webSession):
 			base(config.LeftMargin, config.RightMargin, config.TopMargin, config.BottomMargin,
 			config.HeaderHeight,config.FooterHeight){
@@ -89,20 +106,27 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			this._config = config;
 			this._rqDetails = rqDetails;
 			this._webSession = webSession;
-			this._titleList = new ArrayList();
+            this._titleList = new ArrayList();
+            WebNavigation.Module module = WebNavigation.ModulesList.GetModule(CstWeb.Module.Name.INDICATEUR);
+            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Indicator result"));
+            object[] param = new object[1] { webSession };
+            _productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            _productClassIndicator.Pdf = true;
+            _productClassIndicatorDAL = (IProductClassIndicatorsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 		}
 		#endregion
 
 		#region Init
+        /// <summary>
+        /// Init
+        /// </summary>
+        /// <returns>File name</returns>
 		internal string Init(){
 			try{
 				string shortFName = "";
 				string fName =  GetFileName(_rqDetails, ref shortFName);
-				bool display = false;
-#if(DEBUG)
-				display = true;
-#endif
-				base.Init(true,fName,_config.PdfCreatorPilotLogin,_config.PdfCreatorPilotPass);
+				
+                base.Init(true,fName,_config.PdfCreatorPilotLogin,_config.PdfCreatorPilotPass);
 				this.DocumentInfo_Creator = this.DocumentInfo_Author = _config.PdfAuthor;
 				this.DocumentInfo_Subject = _config.PdfSubject;
 				this.DocumentInfo_Title = _config.PdfTitle;
@@ -117,6 +141,9 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		#endregion
 
 		#region Fill
+        /// <summary>
+        /// Fill
+        /// </summary>
 		internal void Fill(){
 
 			try{
@@ -162,22 +189,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				#endregion
 
 				#region Header and Footer
-				CultureInfo cIn = new CultureInfo("en-GB",false);
-				string dFormat = "ddd\\, MMM dd\\, yyyy";
-				if(_webSession.SiteLanguage==33) {
-					this.AddHeadersAndFooters(
-					@"Images\Common\logo_Tns.bmp",
-					imagePosition.leftImage,
-					_config.PdfTitle + " - " + DateTime.Now.ToString("ddd dd MMM yyyy"),
-					0,-1,_config.HeaderFontColor,_config.HeaderFont,true,_webSession); 
-				}
-				else {
-					this.AddHeadersAndFooters(
-					@"Images\Common\logo_Tns.bmp",
-					imagePosition.leftImage,
-					GestionWeb.GetWebWord(1053,_webSession.SiteLanguage) + " - " + DateTime.Now.ToString(dFormat,cIn),
-					0,-1,_config.HeaderFontColor,_config.HeaderFont,true,_webSession); 
-				}
+                string dateString = Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
+
+				this.AddHeadersAndFooters(
+				@"Images\Common\logo_Tns.bmp",
+				imagePosition.leftImage,
+                GestionWeb.GetWebWord(1053, _webSession.SiteLanguage) + " - " + dateString,
+				0,-1,_config.HeaderFontColor,_config.HeaderFont,true,_webSession); 
 				#endregion
 				
 			}
@@ -188,6 +206,10 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		#endregion
 
 		#region Send
+        /// <summary>
+        /// Send mail
+        /// </summary>
+        /// <param name="fileName">File name</param>
 		internal void Send(string fileName){
 			ArrayList to = new ArrayList();
 			foreach(string s in _webSession.EmailRecipient){
@@ -281,11 +303,14 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		/// </summary>
 		/// <returns></returns>
 		private void MainPageDesign(){
-		
+
+            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+
 			this.SetCurrentPage(0);
 
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-//	
+	
 			string imgPath = @"Images\" + _webSession.SiteLanguage + @"\LogoAdExpress220.jpg";
 			Image imgG = Image.FromFile(imgPath);
 			
@@ -296,54 +321,25 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			
 			int imgI = this.AddImageFromFilename(imgPath,TxImageCompressionType.itcFlate);
 
-			#region Old version
-//			this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R)/256.0
-//				,((double)_config.MainPageFontColor.G)/256.0
-//				,((double)_config.MainPageFontColor.B)/256.0);
-//			this.PDFPAGE_SetActiveFont(_config.MainPageTitleFont.Name,
-//				_config.MainPageTitleFont.Bold,
-//				_config.MainPageTitleFont.Italic,
-//				_config.MainPageTitleFont.Underline,
-//				_config.MainPageTitleFont.Strikeout,
-//				_config.MainPageTitleFont.SizeInPoints,TxFontCharset.charsetANSI_CHARSET);
-//			
-//			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(_config.PdfTitle))/2, 
-//				(this.PDFPAGE_Height)/4,0,_config.PdfTitle);			
-//
-//			string str = "Créé le " + DateTime.Now.ToString("ddd dd MMM yyyy");
-//			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
-//				_config.MainPageDefaultFont.Bold,
-//				_config.MainPageDefaultFont.Italic,
-//				_config.MainPageDefaultFont.Underline,
-//				_config.MainPageDefaultFont.Strikeout,
-//				_config.MainPageDefaultFont.SizeInPoints,
-//				TxFontCharset.charsetANSI_CHARSET);
-//			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(str))/2, 
-//				1*this.PDFPAGE_Height/3,0,str);
-			#endregion
-		
 			StreamWriter sw = null;
 			string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 			string str = "";
-			string dFormat = "ddd\\, MMM dd\\, yyyy";
-			CultureInfo cIn = new CultureInfo("en-GB",false);
 
-			if(_webSession.SiteLanguage==33) 
-				str = GestionWeb.GetWebWord(1922,_webSession.SiteLanguage) + " " + DateTime.Now.ToString("ddd dd MMM yyyy");
-			else
-				str = GestionWeb.GetWebWord(1922,_webSession.SiteLanguage) + " " + DateTime.Now.ToString(dFormat,cIn);
+            str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 
 			#region headers
 			sw = File.CreateText(workFile);
 			sw.WriteLine("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
 			sw.WriteLine("<HTML>");
 			sw.WriteLine("<HEAD>");
-			sw.WriteLine("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">");
+            sw.WriteLine("<META http-equiv=\"Content-Type\" content=\"text/html; charset=" + charSet + "\">");
 			sw.WriteLine("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
 			sw.WriteLine("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			sw.WriteLine("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			sw.WriteLine("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-			sw.WriteLine("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+            sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+            sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 			sw.WriteLine("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 			sw.WriteLine("<meta http-equiv=\"expires\" content=\"0\">");
 			sw.WriteLine("<meta http-equiv=\"pragma\" content=\"no-cache\">");
@@ -359,10 +355,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			sw.WriteLine("<P>&nbsp;</P>");
 			sw.WriteLine("<P>&nbsp;</P>");
 			sw.WriteLine("<TD style=\"HEIGHT: 43px\">");
-			if(_webSession.SiteLanguage==33)
-				sw.WriteLine("<P class=\"MsoNormal\" style=\"mso-layout-grid-align: none\" align=\"center\"><B><SPAN style=\"FONT-SIZE: 40pt; COLOR: #644883; FONT-FAMILY: 'Arial Bold'; mso-bidi-font-family: 'Arial Bold'\">"+ _config.PdfTitle +"</SPAN></B><SPAN style=\"FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: 'Arial Bold'; mso-bidi-font-family: 'Arial Bold'\">");
-			else
-				sw.WriteLine("<P class=\"MsoNormal\" style=\"mso-layout-grid-align: none\" align=\"center\"><B><SPAN style=\"FONT-SIZE: 40pt; COLOR: #644883; FONT-FAMILY: 'Arial Bold'; mso-bidi-font-family: 'Arial Bold'\">"+ GestionWeb.GetWebWord(1053,_webSession.SiteLanguage) +"</SPAN></B><SPAN style=\"FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: 'Arial Bold'; mso-bidi-font-family: 'Arial Bold'\">");
+            sw.WriteLine("<P class=\"MsoNormal\" style=\"mso-layout-grid-align: none\" align=\"center\"><B><SPAN style=\"FONT-SIZE: 40pt; COLOR: #644883; FONT-FAMILY: 'Arial Bold'; mso-bidi-font-family: 'Arial Bold'\">" + GestionWeb.GetWebWord(1053, _webSession.SiteLanguage) + "</SPAN></B><SPAN style=\"FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: 'Arial Bold'; mso-bidi-font-family: 'Arial Bold'\">");
 			sw.WriteLine("<o:p></o:p></SPAN></P>");
 			sw.WriteLine("</TD>");
 			sw.WriteLine("</TR>");
@@ -431,73 +424,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 			#endregion
 
-			#region Synthèse de marché (Old version)
-//			CHtmlSnapClass snap;
-//			IntPtr  hBitmap;
-//			StringBuilder htmlTMP=new StringBuilder();
-//			string filePath="";
-//			StreamWriter sw = null;
-//			string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-//			#region headers
-//
-//			sw = File.CreateText(workFile);
-//			sw.WriteLine("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
-//			sw.WriteLine("<HTML>");
-//			sw.WriteLine("<HEAD>");
-//			sw.WriteLine("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">");
-//			sw.WriteLine("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
-//			sw.WriteLine("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
-//			sw.WriteLine("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
-//			sw.WriteLine("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-//			sw.WriteLine("<LINK href=\"http://www.tnsadexpress.com/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-//			sw.WriteLine("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
-//			sw.WriteLine("<meta http-equiv=\"expires\" content=\"0\">");
-//			sw.WriteLine("<meta http-equiv=\"pragma\" content=\"no-cache\">");
-//			sw.WriteLine("<meta name=\"Cache-control\" content=\"no-cache\">");
-//			sw.WriteLine("</HEAD>");
-//			sw.WriteLine("<body>");
-//			sw.WriteLine("<form style=\"WIDTH: 300px; HEIGHT: 75px\">");
-//			#endregion
-//
-//			#region result
-//			sw.WriteLine("<FIELDSET>");
-//			sw.WriteLine("<LEGEND align=top> Informations personnelles </LEGEND>");
-//			sw.WriteLine("<TABLE id=\"Table1\" style=\"WIDTH: 496px; HEIGHT: 75px\" cellSpacing=\"1\" cellPadding=\"1\" width=\"496\" border=\"0\">");
-//			sw.WriteLine("<TR>");
-//			sw.WriteLine("<TD><li style=\"LIST-STYLE-TYPE: square\">Paramètre d'études</li></TD>");
-//			sw.WriteLine("<TD><li style=\"LIST-STYLE-TYPE: square\">Synthèse</li></TD>");
-//			sw.WriteLine("</TR>");
-//			sw.WriteLine("<TR>");
-//			sw.WriteLine("<TD><li style=\"LIST-STYLE-TYPE: square\">Paramètre d'études</li></TD>");
-//			sw.WriteLine("<TD><li style=\"LIST-STYLE-TYPE: square\">Synthèse</li></TD>");
-//			sw.WriteLine("</TR>");
-//			sw.WriteLine("</TABLE>");
-//			sw.WriteLine("</FIELDSET>");
-//			sw.WriteLine("</form>");
-//			sw.WriteLine("</body>");
-//
-//			#region Html file loading
-//			Functions.CloseHtmlFile(sw);
-//			HTML2PDFClass html = new HTML2PDFClass();
-//			html.MarginLeft = Convert.ToInt32(this.LeftMargin);
-//			html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-//			html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-//			html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-//			html.ConnectToPDFLibrary (this);
-//			html.LoadFromFile(workFile);
-//			html.ConvertAll();
-//			html.ClearCache();
-//			html.ConvertAll();
-//			html.DisconnectFromPDFLibrary ();
-//			#endregion
-//
-//			#region Clean File
-//			File.Delete(workFile);
-//			#endregion
-//			#endregion
-//
-			#endregion
-
 		}
 		#endregion
 
@@ -508,9 +434,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		private void SessionParameter(){
 
 			StreamWriter sw = null;
-			HTML2PDFClass html ;
 			int nbLinesEnd=0;
-			int i=1;
 			int j=0;
 			bool showProductSelection = false;
 			IList nbLinesSelectionMedia=new ArrayList(), nbLinesSelectionDetailMedia=new ArrayList(), nbLinesSelectionProduct=new ArrayList();
@@ -522,7 +446,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile);
+				sw = Functions.GetHtmlFile(workFile,_webSession);
 
 				IList SelectionMedia = ToHtml(_webSession.SelectionUniversMedia,false,false,600,false,_webSession.SiteLanguage,2,1,true,20,ref nbLinesEnd,ref nbLinesSelectionMedia);
 				nbLinesEnd=27;
@@ -538,8 +462,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				else
 					nbLinesEnd=27-(int)nbLinesSelectionDetailMedia[nbLinesSelectionDetailMedia.Count-1];
 
-				//IList SelectionProduct = ToHtml(_webSession.SelectionUniversProduct,true,true,600,true,_webSession.SiteLanguage,3,1,false,nbLinesEnd,ref nbLinesEnd,ref nbLinesSelectionProduct);
-
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 				sw.WriteLine("<TR height=\"25\">");
@@ -551,8 +473,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				#endregion
 
 				#region Etude comparative
-				if(_webSession.ComparativeStudy)
-				{
+				if(_webSession.ComparativeStudy){
 					sw.WriteLine("<TR height=\"7\">");
 					sw.WriteLine("<TD></TD>");
 					sw.WriteLine("</TR>");
@@ -563,7 +484,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1118, _webSession.SiteLanguage)) + " </TD>");
 					sw.WriteLine("</TR>");
 				}
-				
 				#endregion
 
 				#region Period
@@ -602,7 +522,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 				if (SelectionDetailMedia !=null && SelectionDetailMedia.Count > 0) {
 
-					#region Détail Média				
+					#region Détail Média
 				    mediaDetail(ref sw,SelectionDetailMedia,true,0);
 					for(j=1; j<SelectionDetailMedia.Count; j++){
 
@@ -614,8 +534,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 						this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
-						sw = Functions.GetHtmlFile(workFile);
-						//sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
+						sw = Functions.GetHtmlFile(workFile,_webSession);
 
 						#region Détail Média
 						mediaDetail(ref sw,SelectionDetailMedia,false,j);
@@ -625,7 +544,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 				}
 
-				#region Unité	
+				#region Unité
 				if (SelectionDetailMedia == null || SelectionDetailMedia.Count == 0) {
 					sw.WriteLine("<TR height=\"7\">");
 					sw.WriteLine("<TD></TD>");
@@ -662,7 +581,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 						this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
-						sw = Functions.GetHtmlFile(workFile);
+						sw = Functions.GetHtmlFile(workFile,_webSession);
 						sw.WriteLine("<TABLE id=\"Table1\" align=\"center\" cellSpacing=\"1\" cellPadding=\"1\" width=\"1100\" border=\"0\" style=\"WIDTH: 1100px; HEIGHT: 2px\">");
 
 					}
@@ -679,11 +598,10 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					sw.WriteLine("<TR>");
 					sw.WriteLine("<TD align=\"center\">");
 
-					sw.WriteLine(Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, new OracleConnection(_webSession.CustomerLogin.OracleConnectionString), 600, true, nbLineByPage, ref currentLine)));
-					//sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, new OracleConnection(_webSession.CustomerLogin.OracleConnectionString), 600));
+                    sw.WriteLine(Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine)));
 					showProductSelection = true;
 
-					if (showProductSelection) { //nbLinesSelectionProduct.Count == 1) {
+					if (showProductSelection) {
 						sw.WriteLine("<br>");
 						sw.WriteLine("<div class=\"txtViolet11Bold\" align=\"left\" >" + "&nbsp;&nbsp;" + GestionWeb.GetWebWord(1601, _webSession.SiteLanguage) + "</div>");
 						sw.WriteLine(TNS.AdExpress.Web.BusinessFacade.Selections.Products.SectorsSelectedBusinessFacade.GetSectorsSelected(_webSession, false));
@@ -746,8 +664,8 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
 				string workFile = GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-
-				sw = Functions.GetHtmlFile(workFile);
+                
+				sw = Functions.GetHtmlFile(workFile,_webSession);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -764,9 +682,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR align=\"center\"><td>");
-//				_webSession.CurrentTab = CstResult.APPM.synthesis;
-//				_webSession.CurrentUniversProduct = new TreeNode();
-				sw.WriteLine(Convertion.ToHtmlString(TNS.AdExpress.Web.UI.Results.IndicatorSynthesisUI.GetIndicatorSynthesisHtmlUI(_webSession,false,true)));
+                sw.WriteLine(_productClassIndicator.GetSummary());
 				sw.WriteLine("</td></tr>");
 				#endregion
 
@@ -788,7 +704,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 				#region Clean File
 				File.Delete(workFile);
-
 				#endregion
 
 				_titleList.Add(Convertion.ToHtmlString(GestionWeb.GetWebWord(1664,_webSession.SiteLanguage)));
@@ -804,7 +719,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		}
 		#endregion
 
-		#region Indicator Seasonality 
+		#region Indicator Seasonality
 		/// <summary>
 		/// Graphiques Indicator Seasonality
 		/// </summary>
@@ -813,16 +728,16 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			StreamWriter sw = null;
 			Image img = null;
 			object[,] tab=null;
+            EngineSeasonality engine = new EngineSeasonality(_webSession, _productClassIndicatorDAL);
 		
 			#region Load Data
 			if(_webSession.ComparaisonCriterion == TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal){
 				_webSession.ComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal;
-				tab=TNS.AdExpress.Web.Rules.Results.IndicatorSeasonalityRules.GetChartFormattedTable(_webSession);
+                tab = engine.GetChartData();
 				_webSession.ComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal;}
 			else{
-				tab=TNS.AdExpress.Web.Rules.Results.IndicatorSeasonalityRules.GetChartFormattedTable(_webSession);
+                tab = engine.GetChartData();
 			}
-
 			#endregion
 
 			try{
@@ -863,12 +778,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					graph.Dispose();
 					graph = null;
 			
-			
 					#region Clean File
-#if(DEBUG)
-					//File.Copy(workFile ,@"C:\Documents and Settings\gragneau\Bureau\Nouveau dossier\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp", true);
-
-#endif
 					File.Delete(workFile);
 					#endregion
 				
@@ -892,7 +802,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		}
 		#endregion
 
-		#region Indicator Palmares 
+		#region Indicator Palmares
 		/// <summary>
 		/// Graphiques Indicator Palmares
 		/// </summary>
@@ -903,7 +813,9 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			bool isPresent=false;
 		
 			#region Load Data
-			object[,] tab=TNS.AdExpress.Web.Rules.Results.IndicatorPalmaresRules.GetFormattedTable(_webSession,CstResult.PalmaresRecap.typeYearSelected.currentYear,tableType);
+            object[,] tab = null;
+            EngineTop engine = new EngineTop(_webSession, _productClassIndicatorDAL);
+            tab = engine.GetData(CstResult.PalmaresRecap.typeYearSelected.currentYear, tableType);
 			#endregion
 
 			try{
@@ -946,12 +858,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			
 			
 					#region Clean File
-#if(DEBUG)
-					//File.Copy(workFile ,@"C:\Documents and Settings\gragneau\Bureau\Nouveau dossier\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp", true);
-
-#endif
 					File.Delete(workFile);
-
 					#endregion
 				
 					#endregion
@@ -982,7 +889,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		/// Indicator Novelty design
 		/// </summary>
 		private void IndicatorNovelty(){
-
 			
 			int verifResult=0;					
 
@@ -992,27 +898,14 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				IList resultAdvertiser = new ArrayList(); 
 
 				#region result
-				result = GetIndicatorNoveltyGraphicHtmlUI(IndicatorNoveltyRules.GetFormattedTable(_webSession,CstResult.Novelty.ElementType.product),_webSession,CstResult.Novelty.ElementType.product);		
-//				if((((string)result[0]).Length<30) || result[0].Equals("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(1224,_webSession.SiteLanguage)+"</div>")){
-//					//result[0]="<center>"+noResult((string)result[0]);
-//					result=null;
-//					verifResult++;
-//				}
-				//resultAdvertiser[0]+="<br>"+GetIndicatorNoveltyGraphicHtmlUI(IndicatorNoveltyRules.GetFormattedTable(_webSession,CstResult.Novelty.ElementType.advertiser),_webSession,CstResult.Novelty.ElementType.advertiser);		
-				resultAdvertiser=GetIndicatorNoveltyGraphicHtmlUI(IndicatorNoveltyRules.GetFormattedTable(_webSession,CstResult.Novelty.ElementType.advertiser),_webSession,CstResult.Novelty.ElementType.advertiser);		
-//				if(((string)resultAdvertiser[0]).Length<50 || resultAdvertiser[0].Equals("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(1224,_webSession.SiteLanguage)+"</div>")){
-//					//resultAdvertiser[0]=noResult((string)resultAdvertiser[0])+"</center>";
-//					resultAdvertiser=null;
-//					verifResult++;
-//				}
-//				else{
-//					result+=resultAdvertiser;
-//				}
+                EngineNovelty engine = new EngineNovelty(_webSession, _productClassIndicatorDAL);
+                engine.ClassifLevel = CstResult.Novelty.ElementType.product;
+                result = GetIndicatorNoveltyGraphicHtmlUI(engine.GetData(), _webSession, CstResult.Novelty.ElementType.product);
+                engine.ClassifLevel = CstResult.Novelty.ElementType.advertiser;
+                resultAdvertiser = GetIndicatorNoveltyGraphicHtmlUI(engine.GetData(), _webSession, CstResult.Novelty.ElementType.advertiser);
 				#endregion
 
 				#region Html file loading
-			
-			//	if(verifResult < 2){
 				if(!((((string)result[0]).Length<30) || result[0].Equals("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(1224,_webSession.SiteLanguage)+"</div>"))){
 					for(int i=0;i<result.Count;i++){
 						if(i==0)
@@ -1056,26 +949,18 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			bool isPresent=false;
 		
 			#region Load Data
-			object[,] tab=TNS.AdExpress.Web.Rules.Results.IndicatorEvolutionRules.GetFormattedTable(_webSession,tableType);
+            object[,] tab = null;
+            EngineEvolution engine = new EngineEvolution(_webSession, _productClassIndicatorDAL);
+            tab = engine.GetData(tableType);
 			#endregion
 
 			#region Cas année N-2
 			DateTime PeriodBeginningDate = TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
-//			if((PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-2) && DateTime.Now.Year<=_webSession.DownLoadDate)
-//				|| (PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-3) && DateTime.Now.Year>_webSession.DownLoadDate)
-//				) 
-//			{
-//				result=TNS.AdExpress.Web.UI.Results.IndicatorEvolutionUI.GetAllEvolutionIndicatorUI(_webSession,false);
-//				advertiserChart.Visible=false;
-//				referenceChart.Visible=false;
-//			}
 			#endregion
 
-			try
-			{
+			try{
 				if((tab.GetLongLength(0)!=0)&&(!((PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-2) && DateTime.Now.Year<=_webSession.DownLoadDate)
-					|| (PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-3) && DateTime.Now.Year>_webSession.DownLoadDate))))
-				{
+					|| (PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year-3) && DateTime.Now.Year>_webSession.DownLoadDate)))){
 
 					this.NewPage();
 
@@ -1114,10 +999,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			
 			
 					#region Clean File
-#if(DEBUG)
-					//File.Copy(workFile ,@"C:\Documents and Settings\gragneau\Bureau\Nouveau dossier\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp", true);
-
-#endif
 					File.Delete(workFile);
 					#endregion
 				
@@ -1152,14 +1033,15 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			StreamWriter sw = null;
 			Image img = null;
 			object [,] tab=null;
+            EngineMediaStrategy engine = new EngineMediaStrategy(_webSession, _productClassIndicatorDAL);
 		
 			#region Load Data
 			if(_webSession.ComparaisonCriterion == TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal){
 				_webSession.ComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal;
-				tab=TNS.AdExpress.Web.Rules.Results.IndicatorMediaStrategyRules.GetChartFormattedTable(_webSession,_webSession.ComparaisonCriterion);
+                tab = engine.GetChartData();
 				_webSession.ComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal;}
 			else{
-				tab=TNS.AdExpress.Web.Rules.Results.IndicatorMediaStrategyRules.GetChartFormattedTable(_webSession,_webSession.ComparaisonCriterion);
+                tab = engine.GetChartData();
 			}
 			#endregion
 
@@ -1203,10 +1085,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			
 			
 					#region Clean File
-#if(DEBUG)
-					//File.Copy(workFile ,@"C:\Documents and Settings\gragneau\Bureau\Nouveau dossier\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp", true);
-
-#endif
 					File.Delete(workFile);
 					#endregion
 				
@@ -1267,7 +1145,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			string disabled="";
 			string tmp="";
 			int j=0;
-			//int nbLinesHeight=0;
 			int nbLines=0;
 			IList htmlTableList = new ArrayList();
 			int debut=0;
@@ -1275,7 +1152,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			foreach(TreeNode currentNode in root.Nodes){
 				if(start==0){
 					if(displayBorderTable){
-						//t.Append("<table align=\"center\"  style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+witdhTable+"  >");
 						t.Append("<table align=\"center\"  style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  width="+witdhTable+"  >");
 						start=1;
 					}
@@ -1286,7 +1162,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				}
 				else{
 					if(displayBorderTable){
-						//t.Append("<table align=\"center\"  style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+witdhTable+">");
 						t.Append("<table align=\"center\"  style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\" width="+witdhTable+">");
 					} 
 					else{
@@ -1340,23 +1215,19 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				nbLines++;
 
 				#region découpage au niveau du père
-				//if ((nbLinesHeight >= (nbLinesStart*10))&&(debut==0)){
 				if ((nbLines >= nbLinesStart)&&(debut==0))
 				{
 					htmlTableList.Add(t.ToString());
 					nbLinesSelection.Add(nbLines);
 					debut=1;
-					//nbLinesHeight=0;
 					nbLines=0;
 					start=0;
 					t = new System.Text.StringBuilder(1000);
 				}
-					//else if(nbLinesHeight >= 380){
 				else if(nbLines == 30)
 				{
 					htmlTableList.Add(t.ToString());
 					nbLinesSelection.Add(nbLines);
-					//nbLinesHeight=0;
 					nbLines=0;
 					start=0;
 					t = new System.Text.StringBuilder(1000);
@@ -1434,15 +1305,12 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						t.Append(tmp);
 						t.Append("</td>");								
 						colonne=2;
-						//nbLinesHeight+=12;
 						nbLines++;
 					}
 
-					//	t.Append(((LevelInformation)currentNode.Nodes[i].Tag).Text);
 					i++;
 
 					#region découpage du code HTML au niveau des fils
-					//if (((nbLinesHeight >= (nbLinesStart*10))&&(debut==0)&&(colonne==0))||((nbLinesHeight >= (nbLinesStart*10))&&(debut==0)&&(i>=currentNode.Nodes.Count))){
 					if (((nbLines >= nbLinesStart)&&(debut==0)&&(colonne==0))||((nbLines >= nbLinesStart)&&(debut==0)&&(i>=currentNode.Nodes.Count))){
 						
 						t.Append("</table>");
@@ -1450,19 +1318,11 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						htmlTableList.Add(t.ToString());
 						nbLinesSelection.Add(nbLines);
 						debut=1;
-						//nbLinesHeight=0;
 						nbLines=0;
 						start=0;
 						t = new System.Text.StringBuilder(1000);
 
-						//								if(displayBorderTable){
-						//									t.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+witdhTable+"  >");
-						//									start=1;
-						//								}
-						//								else{
-						//t.Append("<table align=\"center\" bordercolor=#ffffff class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 style=\"WIDTH: 100%\">");
 						t.Append("<table align=\"center\" bordercolor=#ffffff class=\"txtViolet11Bold\" style=\"WIDTH: 100%\">");
-						//								}
 
 						if(currentNode.Nodes.Count>0)
 						{
@@ -1484,26 +1344,17 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 							}
 						}
 					}
-					//else if(((nbLinesHeight >= 30)&&(colonne==0))||((nbLinesHeight >= 30)&&(i>=currentNode.Nodes.Count)))
 					else if(((nbLines == 30)&&(colonne==0))||((nbLines == 30)&&(i>=currentNode.Nodes.Count)))
 					{
 						t.Append("</table>");
 							
 						htmlTableList.Add(t.ToString());
 						nbLinesSelection.Add(nbLines);
-						//nbLinesHeight=0;
 						nbLines=0;
 						start=0;
 						t = new System.Text.StringBuilder(1000);
 							
-						//							if(displayBorderTable){
-						//									t.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+witdhTable+"  >");
-						//									start=1;
-						//								}
-						//								else{
-						//t.Append("<table align=\"center\" bordercolor=#ffffff class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 style=\"WIDTH: 100%\">");
 						t.Append("<table align=\"center\" bordercolor=#ffffff class=\"txtViolet11Bold\"  style=\"WIDTH: 100%\">");
-						//								}
 
 						if(currentNode.Nodes.Count>0)
 						{
@@ -1534,20 +1385,14 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						t.Append("</div>");				
 					}
 				}
-				//nbLinesHeight+=10;
-//				if(start!=0)
-//					nbLines++;
-
 				
 			}
 
-			//if((nbLinesHeight>0)&&(nbLinesHeight<380)){
 			if((nbLines>0)&&(nbLines<30)){
 				htmlTableList.Add(t.ToString());
 				nbLinesSelection.Add(nbLines);
 			}
 
-			//treeNode=t.ToString();
 			return htmlTableList;
 		}
 		#endregion
@@ -1572,7 +1417,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				}
 				sw.WriteLine("<TR>");
 				sw.WriteLine("<TD align=\"center\">");
-				//sw.WriteLine(ToHtml((TreeNode)_webSession.ReferenceUniversMedia,true,true,600,true,_webSession.SiteLanguage,3,1,false,nbLinesEnd,ref nbLinesEnd));
 				sw.WriteLine(SelectionDetailMedia[j].ToString());
 				sw.WriteLine("</TD>");
 				sw.WriteLine("</TR>");
@@ -1596,7 +1440,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				}
 				sw.WriteLine("<TR>");
 				sw.WriteLine("<TD align=\"center\">");
-				//sw.WriteLine(ToHtml((TreeNode)_webSession.SelectionUniversMedia.FirstNode,true,true,600,true,_webSession.SiteLanguage,3,1,false,nbLinesEnd,ref nbLinesEnd));
 				sw.WriteLine(SelectionDetailMedia[j].ToString());
 				sw.WriteLine("</TD>");
 				sw.WriteLine("</TR>");
@@ -1686,7 +1529,8 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				if(webSession.CompetitorUniversAdvertiser[0]!=null){
 					CompetitorAdvertiserAccessList = webSession.GetSelection((TreeNode)webSession.CompetitorUniversAdvertiser[0],CstRights.type.advertiserAccess);		
 				}
-				#region recuperation éléments références et concurrents			
+
+				#region recuperation éléments références et concurrents
 				if(TNS.AdExpress.Web.Functions.CheckedText.IsStringEmpty(AdvertiserAccessList)){				
 					AdvertiserAccessListArr = new ArrayList(AdvertiserAccessList.Split(','));
 				}
@@ -1757,6 +1601,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				#region lignes produits ou annonceurs
 				
 				for(int i=0;i<tab.GetLength(0);i++){
+
 					#region personnalisation des éléments de références et concurrents
 					if(tab[i,CstResult.Novelty.PERSONNALISATION_ELEMENT_COLUMN_INDEX]!=null){
 						IdElementToPersonnalize = tab[i,CstResult.Novelty.PERSONNALISATION_ELEMENT_COLUMN_INDEX].ToString();
@@ -1774,6 +1619,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						}
 					}
 					#endregion
+
 					t.Append("<tr>");
 					//Colonne libéllé produit ou annonceur 
 					if(tab[i,CstResult.Novelty.ELEMENT_COLUMN_INDEX]!=null)t.Append("<td nowrap  class="+classe2+">"+tab[i,CstResult.Novelty.ELEMENT_COLUMN_INDEX].ToString()+"</td>");
@@ -1872,23 +1718,22 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						else pluszero="";
 						t.Append("<td  nowrap align=center class=\"p2\">"+GestionWeb.GetWebWord(1221,webSession.SiteLanguage)+"<br>"+pluszero+currentMonthDate.Month+"-"+currentMonthDate.Year+"</td>");
 						t.Append("\n</tr>");
-			
 						#endregion
 						
 					}
-
 				}
 				#endregion
 
-				
-			
 				//Fin tableau
 				t.Append("\n</TD></TR></TABLE>");
+
 				#region tableau légende
 				t.Append("<table><tr><td nowrap class=pmcategorynb width=25>&nbsp;&nbsp;</td><td class=txtNoir11>"+GestionWeb.GetWebWord(1225,webSession.SiteLanguage)+"</td></tr>");
 				t.Append("<tr><td nowrap class="+classe3+" width=25>&nbsp;&nbsp;</td><td class=txtNoir11>"+GestionWeb.GetWebWord(1226,webSession.SiteLanguage)+"</td></tr></table>");
 				#endregion
+
 				#endregion
+
 				htmlTableList.Add(t.ToString());
 				return(htmlTableList);
 			}
@@ -1904,16 +1749,21 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		#region Get HTML Header
 		private void GetHtmlHeader(System.Text.StringBuilder html){
 
+            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+
 			#region headers
 			html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
 			html.Append("<HTML>");
 			html.Append("<HEAD>");
-			html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">");
+			html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset="+charSet+"\">");
 			html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-			html.Append("<LINK href=\"http://" + TNSAnubisConstantes.Result.CSS_LINK + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
@@ -1931,7 +1781,12 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		#endregion
 
 		#region Ajout de l'image qui correspond au tableau de nouveautés 
-
+        /// <summary>
+        /// addNoveltyPicture
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="i"></param>
+        /// <param name="withTitle"></param>
 		private void addNoveltyPicture(IList result,int i,bool withTitle){
 		
 			CHtmlSnapClass snap;
@@ -2018,8 +1873,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		/// </summary>
 		/// <param name="source">Error source></param>
 		/// <param name="message">Error message</param>
-		private void mail_mailKoHandler(object source, string message)
-		{
+		private void mail_mailKoHandler(object source, string message){
 			throw new Exceptions.HotepPdfException("Echec lors de l'envoi mail client pour la session " + _webSession.IdSession + " : " + message);
 		}
 		#endregion
