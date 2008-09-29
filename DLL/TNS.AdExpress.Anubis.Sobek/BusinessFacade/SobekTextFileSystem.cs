@@ -8,7 +8,7 @@ using TNS.FrameWork;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.Net.Mail;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Anubis.Sobek.UI;
 using TNS.AdExpress.Anubis.Sobek.Common;

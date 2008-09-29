@@ -3,10 +3,10 @@ using System.Text;
 using System.IO;
 using System.Data;
 
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebFunctions=TNS.AdExpress.Web.Functions; 
-using TNS.AdExpress.Constantes.Customer;
+using CsteCustomer = TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Anubis.Sobek.Common;
 
@@ -34,13 +34,13 @@ namespace TNS.AdExpress.Anubis.Sobek.UI
 
 			#region targets
 			//base target
-			Int64 idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+            Int64 idBaseTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CsteCustomer.Right.type.aepmBaseTargetAccess));
 			//additional target
-			Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+            Int64 idAdditionalTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CsteCustomer.Right.type.aepmTargetAccess));									
 			#endregion
 
 			#region Wave
-			Int64 idWave=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+            Int64 idWave = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave, CsteCustomer.Right.type.aepmWaveAccess));									
 			#endregion
 
 			//Obtetention du tableau de résultals des insertions
@@ -59,8 +59,8 @@ namespace TNS.AdExpress.Anubis.Sobek.UI
 					StringBuilder builder = new StringBuilder();
 
 					//Date de l'univers interrogé
-					startDate=WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage);
-					endDate=WebFunctions.Dates.dateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage);
+					startDate=WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate,webSession.PeriodType),webSession.SiteLanguage);
+					endDate=WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate,webSession.PeriodType),webSession.SiteLanguage);
 					universeDate = GestionWeb.GetWebWord(1541,webSession.SiteLanguage)+" : " +startDate;
 					if(!startDate.Equals(endDate)){
 						universeDate +=" - "+ endDate; 

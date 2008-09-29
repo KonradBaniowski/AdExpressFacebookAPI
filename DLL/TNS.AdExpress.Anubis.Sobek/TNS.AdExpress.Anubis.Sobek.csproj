@@ -92,33 +92,32 @@
     </Reference>
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.Classification.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Date.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.Date.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.Net, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Net.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS\TNS.AdExpress.Anubis.csproj">
-      <Name>TNS.AdExpress.Anubis</Name>
-      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS.CONSTANTES\TNS.AdExpress.Anubis.Constantes.csproj">
       <Name>TNS.AdExpress.Anubis.Constantes</Name>
       <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Anubis\TNS.AdExpress.Anubis.csproj">
+      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
+      <Name>TNS.AdExpress.Anubis</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Classification\TNS.AdExpress.Classification.csproj">
       <Project>{85908D78-32C1-4C1B-9E17-0D957B849DFA}</Project>
@@ -128,6 +127,10 @@
       <Name>TNS.AdExpress.Constantes</Name>
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.WEB\TNS.AdExpress.Web.csproj">
       <Name>TNS.AdExpress.Web</Name>

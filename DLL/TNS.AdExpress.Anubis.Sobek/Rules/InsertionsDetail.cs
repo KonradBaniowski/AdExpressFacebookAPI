@@ -15,7 +15,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Anubis.Sobek.Rules
 {
