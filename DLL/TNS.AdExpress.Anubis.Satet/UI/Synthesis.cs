@@ -13,17 +13,20 @@ using System.Data;
 using System.Collections;
 
 using TNS.AdExpress.Anubis.Satet;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.DB;
 using SatetExceptions=TNS.AdExpress.Anubis.Satet.Exceptions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using SatetFunctions=TNS.AdExpress.Anubis.Satet.Functions;
 using RulesResultsAPPM=TNS.AdExpress.Web.Rules.Results.APPM;
-using TNS.AdExpress.Constantes.Customer;
+using CsteCustomer=TNS.AdExpress.Constantes.Customer;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.FrameWork.DB.Common;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -41,35 +44,45 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 
 			#region variables
 			bool mediaAgencyAccess=false;
+            bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+            string idProductString = "";
+            string excelPatternNameMax0 = "max0";
+            string excelPatternNameMax3 = "max3";
+            string excelPatternNamePercentage = "percentage";
 			#endregion
 
 			#region Media Agency rights
 			//To check if the user has a right to view the media agency or not
 			//mediaAgencyAccess flag is used in the rest of the classes which indicates whethere the user has access 
 			//to media agency or not
-			if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null)
+			//if(webSession.CustomerLogin.FlagsList[(long)TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY]!=null)
+            if (webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_MEDIA_AGENCY))
 				mediaAgencyAccess=true;
 			#endregion
 
 			#region IdProduct
 			//this is the id of the product selected from the products dropdownlist. 0 id refers to the whole univers i.e. if no prodcut is
 			//selected its by default the whole univers and is represeted by product id 0.
-			Int64 idProduct=0;
-			string idProductString = webSession.GetSelection(webSession.CurrentUniversProduct,CustomerRightConstante.type.productAccess);
-			if(WebFunctions.CheckedText.IsStringEmpty(idProductString)){
-				idProduct=Int64.Parse(idProductString);
-			}
+            Int64 idProduct = 0;
+            if (showProduct) {
+                //string idProductString = webSession.GetSelection(webSession.CurrentUniversProduct,CustomerRightConstante.type.productAccess);
+                if (webSession.SecondaryProductUniverses.Count > 0 && webSession.SecondaryProductUniverses.ContainsKey(0) && webSession.SecondaryProductUniverses[0].Contains(0))
+                    idProductString = webSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.PRODUCT);
+                if (WebFunctions.CheckedText.IsStringEmpty(idProductString)) {
+                    idProduct = Int64.Parse(idProductString);
+                }
+            }
 			#endregion
 
 			#region targets
 			//base target
-			Int64 idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+            Int64 idBaseTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CsteCustomer.Right.type.aepmBaseTargetAccess));
 			//additional target
-			Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+            Int64 idAdditionalTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CsteCustomer.Right.type.aepmTargetAccess));									
 			#endregion
 
 			#region Wave
-			Int64 idWave=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+            Int64 idWave = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave, CsteCustomer.Right.type.aepmWaveAccess));									
 			#endregion
 
 			#region get Data
@@ -130,7 +143,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1669,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToInt64(synthesisData["budget"]),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].Format);// "# ### ##0";
 			cells[cellRow-1,2].Style.HorizontalAlignment = TextAlignmentType.Left;
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
@@ -138,21 +151,21 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1398,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToInt32(synthesisData["insertions"]),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Format); //"# ### ##0";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
 			//Nombre des pages
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1385,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(synthesisData["pages"]),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0.0##";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages].Format); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
 			//Nombre de supports utilisés
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1670,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToInt32(synthesisData["supports"]),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
 
@@ -177,7 +190,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(synthesisData["PDV"])/100,cellRow-1,2,false,Color.White,8,2);
 				SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
 				cells[cellRow-1,2].Style.IndentLevel = 2;
-				cells[cellRow-1,2].Style.Number = 10;
+                cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNamePercentage);
 				cellRow++;
 			}
 
@@ -191,42 +204,42 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1673,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Math.Round(Convert.ToDouble(synthesisData["GRPNumber"]),2),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0.0##";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
 			// nombre de GRP 15 et +
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1673,webSession.SiteLanguage)+" "+synthesisData["baseTarget"]+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Math.Round(Convert.ToDouble(synthesisData["GRPNumberBase"]),2),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0.0##";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
 			//Indice GRP vs cible 15 ans à +																				   
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1674,webSession.SiteLanguage)+" vs "+synthesisData["baseTarget"]+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Math.Round(Convert.ToDouble(synthesisData["IndiceGRP"]),2),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0.0##";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
 			// Coût GRP(cible selectionnée)					
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1675,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(synthesisData["GRPCost"]),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
 			// Coût GRP(cible 15 ans et +)					
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1675,webSession.SiteLanguage)+ " " +  synthesisData["baseTarget"]+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(synthesisData["GRPCostBase"]),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
 			//Indice coût GRP vs cible 15 ans à +
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1676,webSession.SiteLanguage)+" vs "+synthesisData["baseTarget"]+" :",cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Math.Round(Convert.ToDouble(synthesisData["IndiceGRPCost"]),2),cellRow-1,2,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
-			cells[cellRow-1,2].Style.Custom = "# ### ##0.0##";
+            cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
 			cellRow++;
 

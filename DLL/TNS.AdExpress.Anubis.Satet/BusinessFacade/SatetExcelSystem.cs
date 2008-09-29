@@ -19,14 +19,13 @@ using System.Windows.Forms;
 
 using TNS.AdExpress.Anubis.Satet.Common;
 using TNS.AdExpress.Anubis.Satet.UI;
-using TNS.AdExpress.Anubis.Common;
 
 using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;
 using TNS.FrameWork.DB.Common;
 
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 

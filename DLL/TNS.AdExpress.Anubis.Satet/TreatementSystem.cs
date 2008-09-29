@@ -8,8 +8,6 @@ using System;
 using System.Data;
 using System.Threading;
 
-using TNS.AdExpress.Common;
-
 using TNS.AdExpress.Anubis.BusinessFacade;
 using TNS.AdExpress.Anubis.BusinessFacade.Result;
 using TNS.AdExpress.Anubis.Common;

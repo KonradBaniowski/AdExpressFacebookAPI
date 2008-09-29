@@ -11,16 +11,17 @@ using System.Drawing;
 using System.Data;
 
 using TNS.AdExpress.Anubis.Satet;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.DB;
 using SatetExceptions=TNS.AdExpress.Anubis.Satet.Exceptions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using SatetFunctions=TNS.AdExpress.Anubis.Satet.Functions;
 using RulesResultsAPPM=TNS.AdExpress.Web.Rules.Results.APPM;
-using TNS.AdExpress.Constantes.Customer;
+using CsteCustomer=TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -38,13 +39,13 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			
 			#region targets
 			//base target
-			Int64 idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+            Int64 idBaseTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CsteCustomer.Right.type.aepmBaseTargetAccess));
 			//additional target
-			Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+            Int64 idAdditionalTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CsteCustomer.Right.type.aepmTargetAccess));									
 			#endregion
 
 			#region Wave
-			Int64 idWave=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+            Int64 idWave = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave, CsteCustomer.Right.type.aepmWaveAccess));									
 			#endregion
 
 			// Données resultats
@@ -65,6 +66,9 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				string vPageBreaks="";
 				double columnWidth=0,indexLogo=0,index;
 				bool verif=true;
+                string excelPatternNameMax0 = "max0";
+                string excelPatternNameMax3 = "max3";
+                string excelPatternNamePercentage = "percentage";
 	
 				#region insertion des résultats dans feuille excel
 
@@ -92,7 +96,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 						oArray[5]=Convert.ToDouble(row["GRPBaseTarget"])/100;
 						SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,6,true,Color.Black,Color.FromArgb(208,200,218),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
 						for(int i=2;i<=6;i++)
-							cells[cellRow-1,i].Style.Number=10;
+                            cells[cellRow - 1, i].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNamePercentage); // Number = 10;
 					}
 					else{
 						oArray[0]=row["products"];
@@ -107,9 +111,9 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 							SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,6,true,Color.Black,Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
 						for(int i=2;i<=6;i++)
 							if((i!=2)&&(i!=4))
-								cells[cellRow-1,i].Style.Custom = "# ### ##0.0##";
+								cells[cellRow-1,i].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3);// "# ### ##0.0##";
 							else
-								cells[cellRow-1,i].Style.Custom = "# ### ##0";
+                                cells[cellRow - 1, i].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
 					}
 					range = cells.CreateRange("B"+cellRow,"G"+cellRow);
 					cells.ImportObjectArray(oArray,range.FirstRow,range.FirstColumn,false);									

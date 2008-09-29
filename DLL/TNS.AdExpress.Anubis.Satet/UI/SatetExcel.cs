@@ -13,7 +13,7 @@ using System.Drawing;
 using System.Data;
 
 using TNS.AdExpress.Anubis.Satet;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.DB;
 using SatetExceptions=TNS.AdExpress.Anubis.Satet.Exceptions;
@@ -103,7 +103,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			cellRow++;
 
 			//Date de création
-			cells["H"+cellRow].PutValue(GestionWeb.GetWebWord(1922,webSession.SiteLanguage)+"  "+WebFunctions.Dates.dateToString(DateTime.Now,webSession.SiteLanguage));
+			cells["H"+cellRow].PutValue(GestionWeb.GetWebWord(1922,webSession.SiteLanguage)+"  "+WebFunctions.Dates.DateToString(DateTime.Now,webSession.SiteLanguage));
 			cells["H"+cellRow].Style.Font.Size =12;
 			cells["H"+cellRow].Style.Font.Color =  Color.FromArgb(100,72,131);
 			cells["H"+cellRow].Style.Font.IsBold = true;

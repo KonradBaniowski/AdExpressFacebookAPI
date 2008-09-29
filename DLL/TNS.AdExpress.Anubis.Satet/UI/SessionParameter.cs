@@ -15,14 +15,14 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using TNS.AdExpress.Anubis.Satet;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.DB;
 using SatetExceptions=TNS.AdExpress.Anubis.Satet.Exceptions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using SatetFunctions=TNS.AdExpress.Anubis.Satet.Functions;
 using RulesResultsAPPM=TNS.AdExpress.Web.Rules.Results.APPM;
-using TNS.AdExpress.Constantes.Customer;
+using CsteCustomer=TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.UI;
@@ -30,8 +30,8 @@ using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
-using Oracle.DataAccess.Client;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -92,10 +92,10 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			cellRow++;
 
 			//Base target
-			string targets = "'" + webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess) + "'";
+            string targets = "'" + webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CsteCustomer.Right.type.aepmTargetAccess) + "'";
 			//Wave
 			string idWave = ((LevelInformation)webSession.SelectionUniversAEPMWave.Nodes[0].Tag).ID.ToString();
-			DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, webSession.CustomerLogin.OracleConnectionString);
+			DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, webSession.Source);
 
 			foreach(DataRow r in ds.Tables[0].Rows){
 				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,r["target"].ToString(),cellRow-1,1,false,Color.White,8,2);
@@ -116,7 +116,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
 			cellRow+=2;
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
-				TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[0], excel, webSession, sheet, ref cellRow, cells, new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+                TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[0], excel, webSession, sheet, ref cellRow, cells, webSession.Source);
 			//TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(((CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[1]).TreeCompetitorAdvertiser,excel,webSession,sheet,ref cellRow,cells);
 
 			cellRow++;
@@ -137,7 +137,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 
 
 			if (webSession.PrincipalProductUniverses.Count > 1) {
-				TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[1], excel, webSession, sheet, ref cellRow, cells, new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+                TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[1], excel, webSession, sheet, ref cellRow, cells, webSession.Source);
 				//TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(((CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[2]).TreeCompetitorAdvertiser,excel,webSession,sheet,ref cellRow,cells);
 			}
 			else{
@@ -332,21 +332,21 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <param name="cellRow">cell row</param>
 		/// <param name="cells">cells</param>
 		/// <param name="connection">connection</param>
-		public static void ToExcel(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, Excel excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, OracleConnection connection) {
+		public static void ToExcel(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, Excel excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source) {
 			List<NomenclatureElementsGroup> groups = null;
 
 			if (adExpressUniverse != null && adExpressUniverse.Count() > 0) {
 				//Groups of items excludes
 				groups = adExpressUniverse.GetExludes();
 				if (groups != null && groups.Count > 0) {
-					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, connection, AccessType.excludes, webSession.SiteLanguage);
+					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, source, AccessType.excludes, webSession.SiteLanguage);
 					cellRow++;
 				}
 
 				//Groups of items includes
 				groups = adExpressUniverse.GetIncludes();
 				if (groups != null && groups.Count > 0) {
-					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, connection, AccessType.includes, webSession.SiteLanguage);
+					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, source, AccessType.includes, webSession.SiteLanguage);
 					cellRow++;
 				}
 			}
@@ -363,10 +363,12 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <param name="connection">DB connection</param>
 		/// <param name="accessType">access type (includes, excludes)</param>
 		/// <param name="language">language</param>
-		private static void SetUniverseGroups(List<NomenclatureElementsGroup> groups, Excel excel, Worksheet sheet, ref int cellRow, Cells cells, OracleConnection connection, AccessType accessType, int language) {
+		private static void SetUniverseGroups(List<NomenclatureElementsGroup> groups, Excel excel, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source, AccessType accessType, int language) {
 
 			int nbTD = 1;
-			TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess universeItems = null;
+            TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
+            
+
 			int code = (accessType == AccessType.includes) ? 2281 : 2282;
 			int level = 1;
 			Pictures pics = sheet.Pictures;
@@ -392,7 +394,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 							
 
 							//Show all level items											
-							universeItems = new TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, connection);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, source);
 							if (universeItems != null) {
 								
 								itemIdList = universeItems.IdListOrderByClassificationItem;

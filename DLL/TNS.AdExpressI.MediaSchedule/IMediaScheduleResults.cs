@@ -12,6 +12,7 @@
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.MediaSchedule;
+using Aspose.Excel;
 
 namespace TNS.AdExpressI.MediaSchedule{
     
@@ -60,6 +61,10 @@ namespace TNS.AdExpressI.MediaSchedule{
         /// <param name="withValues">Specify if each values of the calendar must be shown in Media Schedule</param>
 		/// <returns>HTML Code</returns>
         MediaScheduleData GetExcelHtmlCreativeDivision(bool withValues);
+        /// <summary>
+        /// Get Raw data for an excel export by Anubis of the media schedule
+        /// </summary>
+        void GetRawData(Excel excel);
         #endregion
     }
 }

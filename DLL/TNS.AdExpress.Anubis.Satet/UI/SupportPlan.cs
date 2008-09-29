@@ -11,16 +11,18 @@ using System.Drawing;
 using System.Data;
 
 using TNS.AdExpress.Anubis.Satet;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.DB;
 using SatetExceptions=TNS.AdExpress.Anubis.Satet.Exceptions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using SatetFunctions=TNS.AdExpress.Anubis.Satet.Functions;
 using RulesResultsAPPM=TNS.AdExpress.Web.Rules.Results.APPM;
-using TNS.AdExpress.Constantes.Customer;
+using CsteCustomer=TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -38,13 +40,13 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			
 			#region targets
 			//base target
-			Int64 idBaseTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmBaseTargetAccess));
+            Int64 idBaseTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CsteCustomer.Right.type.aepmBaseTargetAccess));
 			//additional target
-			Int64 idAdditionalTarget=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess));									
+            Int64 idAdditionalTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CsteCustomer.Right.type.aepmTargetAccess));									
 			#endregion
 
 			#region Wave
-			Int64 idWave=Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave,Right.type.aepmWaveAccess));									
+            Int64 idWave = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave, CsteCustomer.Right.type.aepmWaveAccess));									
 			#endregion
 		
 			#region Données resultats
@@ -66,6 +68,8 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				double columnWidth=0,indexLogo=0,index;
 				bool verif=true;
 				string PDM="";
+                string excelPatternNameMax0 = "max0";
+                string excelPatternNamePercentage = "percentage";
 
 				#region En-tête du tableau  	
 				cells.Merge(cellRow-1,1,2,0);
@@ -104,8 +108,8 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				#region Insertion des résultats
 				foreach(DataRow row in supportPlanData.Rows){
 					SatetFunctions.WorkSheet.PutCellValue(sheet,cells,row["label"],cellRow-1,0,false,Color.White,8,1);
-				
-					if (row[0].ToString()== Right.type.categoryAccess.ToString()){
+
+                    if (row[0].ToString() == CsteCustomer.Right.type.categoryAccess.ToString()) {
 						SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,0,8,true,Color.Black,Color.FromArgb(177,163,193),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
 					}
 					else if(row["label"].Equals("Total")){					
@@ -120,23 +124,23 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 						if(row.ItemArray[i]!=DBNull.Value){
 							if (row.Table.Columns[i].ColumnName.IndexOf("budget")>-1){
 								SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2).ToString(),WebConstantes.CustomerSessions.Unit.euro,false)),cellRow-1,i-2,false,Color.White,8,1);
-								cells[cellRow-1,i-2].Style.Custom = "# ### ##0";
+                                cells[cellRow - 1, i - 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].Format); //"# ### ##0";
 							}
 							else if(row.Table.Columns[i].ColumnName.IndexOf("GRP")>-1 && !(row.Table.Columns[i].ColumnName.IndexOf("C/GRP")>-1)){
 								if(row.ItemArray[i].ToString().Equals("0"))
 									SatetFunctions.WorkSheet.PutCellValue(sheet,cells,0,cellRow-1,i-2,false,Color.White,8,1);
 								else
 									SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2).ToString(),WebConstantes.CustomerSessions.Unit.grp,false)),cellRow-1,i-2,false,Color.White,8,1);
-								cells[cellRow-1,i-2].Style.Custom = "# ### ##0.0##";
+                                cells[cellRow - 1, i - 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.grp].Format); //"# ### ##0.0##";
 							}
 							else if(row.Table.Columns[i].ColumnName.IndexOf("PDM")>-1){
 								PDM=WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2).ToString(),WebConstantes.CustomerSessions.Unit.euro,true);
 								SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Math.Round(Decimal.Parse(PDM),2)/100,cellRow-1,i-2,false,Color.White,8,1);
-								cells[cellRow-1,i-2].Style.Number = 10;
+                                cells[cellRow - 1, i - 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNamePercentage); //10;
 							}
 							else{
 								SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),0),cellRow-1,i-2,false,Color.White,8,1);
-								cells[cellRow-1,i-2].Style.Custom = "# ### ##0";
+                                cells[cellRow - 1, i - 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
 							}
 						}
 					}

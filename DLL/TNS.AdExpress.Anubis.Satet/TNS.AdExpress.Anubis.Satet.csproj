@@ -82,10 +82,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\Anubis\Librairies\Aspose.Excel.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.DataAccess, Version=9.2.0.700, Culture=neutral, PublicKeyToken=89b483f429c47342">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\Oracle.DataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -121,15 +117,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress 2007\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS\TNS.AdExpress.Anubis.csproj">
-      <Name>TNS.AdExpress.Anubis</Name>
-      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS.CONSTANTES\TNS.AdExpress.Anubis.Constantes.csproj">
       <Name>TNS.AdExpress.Anubis.Constantes</Name>
       <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Anubis\TNS.AdExpress.Anubis.csproj">
+      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
+      <Name>TNS.AdExpress.Anubis</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Classification\TNS.AdExpress.Classification.csproj">
       <Project>{85908D78-32C1-4C1B-9E17-0D957B849DFA}</Project>
@@ -140,6 +135,14 @@
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
+      <Project>{A4DEDE88-C99E-495F-98F2-E2762520F4BE}</Project>
+      <Name>TNS.AdExpress.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.WEB\TNS.AdExpress.Web.csproj">
       <Name>TNS.AdExpress.Web</Name>
       <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
@@ -149,6 +152,10 @@
       <Name>TNS.AdExpress.Web.Core</Name>
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
+      <Project>{23E7E071-0FB0-43D4-B19D-B964EC3082F6}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>

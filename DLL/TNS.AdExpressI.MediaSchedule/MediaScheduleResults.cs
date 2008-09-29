@@ -12,6 +12,7 @@ using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
+using CstFrameWorkResult = TNS.AdExpress.Constantes.FrameWork.Results;
 
 using FctWeb = TNS.AdExpress.Web.Functions;
 using FctExcel = TNS.AdExpress.Web.UI.ExcelWebPage;
@@ -37,6 +38,9 @@ using TNS.AdExpress.Domain.Results;
 using TNS.AdExpressI.MediaSchedule.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+
+using Aspose.Excel;
+using TNS.AdExpressI.MediaSchedule.Functions;
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule
@@ -104,13 +108,17 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <summary>
         /// Index of the first column containing periods
         /// </summary>
-        protected const int FIRST_PERIOD_INDEX = 11;
+        public const int FIRST_PERIOD_INDEX = 11;
         #endregion
 
         /// <summary>
 		/// Total line label
 		/// </summary>
 		public const string TOTAL_STRING="TOTAL MEDIA";
+        /// <summary>
+        /// name of EXCEL PATTERN PERCENTAGE
+        /// </summary>
+        public const string EXCEL_PATTERN_NAME_PERCENTAGE = "percentage";
         
         #endregion
 
@@ -343,6 +351,25 @@ namespace TNS.AdExpressI.MediaSchedule
             get { return _style; }
             set { _style = value; }
         }
+
+        
+        #endregion
+
+        #region Media Schedule Sheet Style
+        /// <summary>
+        /// MediaSchedule Sheet Style
+        /// </summary>
+        protected MediaScheduleSheetStyle _styleSheet = null;
+        /// <summary>
+        /// Get / Set flag to specify if Media Schedule output is PDF
+        /// </summary>
+        public MediaScheduleSheetStyle MediaScheduleSheetStyle
+        {
+            get { return _styleSheet; }
+            set { _styleSheet = value; }
+        }
+
+        
         #endregion
 
         #endregion
@@ -480,6 +507,18 @@ namespace TNS.AdExpressI.MediaSchedule
             _allowTotal = _allowPdm = (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack));
             _style = new ExcelMediaScheduleStyle();
             return ComputeDesign(ComputeData());
+        }
+
+        /// <summary>
+        /// Get Excel for an excel export by Anubis of the media schedule
+        /// </summary>
+        public virtual void GetRawData(Excel excel) {
+            _isCreativeDivisionMS = false;
+            _showValues = false;
+            _allowTotal = false; 
+            _allowPdm = false;
+            _styleSheet = new ExcelSheetMediaScheduleStyle(excel);
+            ComputeDesignExcel(ComputeData(), excel);
         }
 
         #endregion
@@ -1241,7 +1280,6 @@ namespace TNS.AdExpressI.MediaSchedule
             }
             #endregion
 
-
             #region Colonnes
 
             #region basic columns (product, total, PDM, version, insertion, years totals)
@@ -1901,6 +1939,591 @@ namespace TNS.AdExpressI.MediaSchedule
         }
         #endregion
 
+        #endregion
+
+        #region Excel design Table
+        /// <summary>
+        /// Provide Excel page to present Media Schedule for ANUBIS
+        /// </summary>
+        /// <param name="data">Preformated Data</param>
+        /// <param name="excel">Object Excel for compute a page lan media</param>
+        protected virtual void ComputeDesignExcel(object[,] data, Excel excel) {
+
+            if (data.GetLength(0) != 0) {
+
+                #region Init Variables
+                CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+                MediaScheduleData oMediaScheduleData = new MediaScheduleData();
+                UnitInformation unitInformation = _session.GetSelectedUnit();
+
+                #region Excel
+                Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
+                Cells cells = sheet.Cells;
+                string formatTotal = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo.GetExcelFormatPattern(unitInformation.Format);
+                string formatPdm = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo.GetExcelFormatPattern(EXCEL_PATTERN_NAME_PERCENTAGE);
+
+                bool premier = true;
+                int header = 1;
+                string prevYearString = string.Empty;
+                int nbMaxRowByPage = 42;
+                int s = 1;
+                int cellRow = 5;
+                int startIndex = cellRow;
+                int upperLeftColumn = 10;
+                string vPageBreaks = "";
+                double columnWidth = 0, indexLogo = 0, index;
+                bool verif = true;
+                int colSupport = 1;
+                int colTotal = 2;
+                int colPdm = 2;
+                int colTotalYears = 2;
+                int colVersion = 2;
+                int colInsertion = 2;
+                int colFirstMediaPlan = 2;
+
+                int colorItemIndex = 1;
+                int colorNumberToUse = 0;
+                int sloganIndex = GetSloganIdIndex();
+                Int64 sloganId = -1;
+                string stringItem = "";
+                Aspose.Excel.Style presentstyle = null;
+                Aspose.Excel.Style extendedStyle = null;
+                Aspose.Excel.Style style = null;
+                Aspose.Excel.Style styleNb = null;
+                Aspose.Excel.Style stylePdmNb = null;
+                #endregion
+
+                int yearBegin = _period.Begin.Year;
+                int yearEnd = _period.End.Year;
+                if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.weekly) {
+                    yearBegin = new AtomicPeriodWeek(_period.Begin).Year;
+                    yearEnd = new AtomicPeriodWeek(_period.End).Year;
+                }
+                int nbColYear = yearEnd - yearBegin;
+                if (nbColYear > 0) nbColYear++;
+                int firstPeriodIndex = FIRST_PERIOD_INDEX + nbColYear;
+
+                int nbColTab = data.GetLength(1);
+                int nbPeriod = nbColTab - firstPeriodIndex - 1;
+                int nbPeriodTotal = 0;
+                int nbline = data.GetLength(0);
+                int nbColTabFirst = 0;
+                int nbColTabCell = 0;
+
+                try { _session.SloganColors.Add((Int64)0, _style.VersionCell0); }catch (System.Exception) { }
+                oMediaScheduleData.PeriodNb = (Int64)Math.Round((double)(nbColTab - firstPeriodIndex) / 7);
+
+                int labColSpan = 1;
+                #endregion
+
+                #region Rappel de sélection
+                /*if (_isExcelReport) {
+                    if (_isCreativeDivisionMS) {
+                        t.Append(FctExcel.GetExcelHeaderForCreativeMediaPlan(_session));
+                    }
+                    else {
+                        if (_module.Id != CstWeb.Module.Name.BILAN_CAMPAGNE) {
+                            t.Append(FctExcel.GetLogo(_session));
+                            if (_session.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA) {
+                                t.Append(FctExcel.GetExcelHeader(_session, true, false, Zoom, (int)_session.DetailPeriod));
+                            }
+                            else {
+                                t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
+                            }
+                        }
+                        else {
+                            t.Append(FctExcel.GetAppmLogo(_session));
+                            t.Append(FctExcel.GetExcelHeader(_session, GestionWeb.GetWebWord(1474, _session.SiteLanguage)));
+                        }
+                    }
+                }*/
+                #endregion
+
+                #region basic columns (product, total, PDM, years totals)
+                int rowSpanNb = 3;
+                if (_period.PeriodDetailLEvel != CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
+                    rowSpanNb = 2;
+                }
+
+                #region Title first column (Product Column)
+                cells.Merge(cellRow - 1, colSupport, rowSpanNb, labColSpan);
+                WorkSheet.PutCellValue(cells, GestionWeb.GetWebWord(804, _session.SiteLanguage), cellRow - 1, colSupport, colFirstMediaPlan, _styleSheet.CellTitle, null);
+                cells[cellRow-1, colSupport].Style.HorizontalAlignment = TextAlignmentType.Left;
+                cells[cellRow - 1, colSupport].Style.VerticalAlignment = TextAlignmentType.Top;
+                cells[cellRow, colSupport].Style = _styleSheet.CellTitle;
+                if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
+                    cells[cellRow+1, colSupport].Style = _styleSheet.CellTitle;
+                }
+                nbColTabFirst++;
+                #endregion
+
+                #region Total Column
+                if (_allowTotal) {
+                    colTotal = 2;
+                    colPdm ++;
+                    colVersion++;
+                    colInsertion++;
+                    colTotalYears++;
+                    colFirstMediaPlan++;
+                    cells.Merge(cellRow - 1, colTotal, rowSpanNb, labColSpan);
+                    WorkSheet.PutCellValue(cells, GestionWeb.GetWebWord(805, _session.SiteLanguage), cellRow - 1, colTotal, colFirstMediaPlan, _styleSheet.CellTitle,null);
+                    cells[cellRow, colTotal].Style = _styleSheet.CellTitle;
+                    if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
+                        cells[cellRow + 1, colTotal].Style = _styleSheet.CellTitle;
+                    }
+                    int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
+                    int nbSpace = (nbtot - 1) / 3;
+                    int nbCharTotal = nbtot + nbSpace - 5;
+                    nbColTabFirst++;
+                }
+                else {
+                    colTotal = 0;
+                    colPdm = 2;
+                    colVersion = 2;
+                    colInsertion = 2;
+                    colFirstMediaPlan = 2;
+                    colTotalYears = 2;
+                }
+                #endregion
+
+                #region PDM Column
+                if (_allowPdm) {
+                    colVersion++;
+                    colInsertion++;
+                    colFirstMediaPlan++;
+                    colTotalYears++;
+                    cells.Merge(cellRow - 1, colPdm, rowSpanNb, labColSpan);
+                    WorkSheet.PutCellValue(cells, GestionWeb.GetWebWord(806, _session.SiteLanguage), cellRow - 1, colPdm, colFirstMediaPlan, _styleSheet.CellTitle,null);
+                    cells[cellRow, colPdm].Style = _styleSheet.CellTitle;
+                    if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
+                        cells[cellRow + 1, colPdm].Style = _styleSheet.CellTitle;
+                    }
+                    nbColTabFirst++;
+                }
+                else {
+                    colPdm = 0;
+                }
+                #endregion
+
+                #region Total Years
+                if (FIRST_PERIOD_INDEX != firstPeriodIndex && _allowTotal) {
+                    int nbAddCol = 1;
+                    if (nbColYear != 0)
+                        nbAddCol = nbColYear;
+                    colFirstMediaPlan += nbAddCol;
+                    // Years necessary if the period consists of several years
+                    for (int k = FIRST_PERIOD_INDEX, l = 0; k < firstPeriodIndex; k++, l++) {
+                        cells.Merge(cellRow - 1, colTotalYears + l, rowSpanNb, labColSpan);
+                        cells[cellRow, colTotalYears + l].Style = _styleSheet.CellTitle;
+                        if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
+                            cells[cellRow + 1, colTotalYears + l].Style = _styleSheet.CellTitle;
+                        }
+                        WorkSheet.PutCellValue(cells, data[0, k], cellRow-1, colTotalYears + l, colFirstMediaPlan, _styleSheet.CellTitle,null);
+                        nbColTabFirst++;
+                    }
+                    
+                }
+                else {
+                    colTotalYears = 0;
+                }
+                #endregion
+
+                #region Period
+                nbPeriod = 0;
+                int prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
+                int lastPeriod = prevPeriod;
+                bool first = true;
+                Aspose.Excel.Style periodStyle = null;
+                switch (_period.PeriodDetailLEvel) {
+                    case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
+                    case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
+                        prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
+                        for (int j = firstPeriodIndex, currentColMediaPlan = colFirstMediaPlan; j < nbColTab; j++, currentColMediaPlan++) {
+                            if (prevPeriod != int.Parse(data[0, j].ToString().Substring(0, 4))) {
+                                cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
+                                if (nbPeriod < 3)
+                                    WorkSheet.PutCellValue(cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear1, null);
+                                else
+                                    WorkSheet.PutCellValue(cells, prevPeriod, startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear1, null);
+                                
+                                cells[startIndex - 1, nbColTabFirst + nbPeriod].Style = _styleSheet.CellYear1;
+                                nbColTabFirst += nbPeriod;
+                                nbPeriod = 0;
+                                prevPeriod = int.Parse(data[0, j].ToString().Substring(0, 4));
+
+                            }
+
+                            switch (_period.PeriodDetailLEvel) {
+                                case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
+
+                                    #region Period Color Management
+                                    // First Period or last period is incomplete
+                                    periodStyle = _styleSheet.CellPeriod;
+                                    if ((j == firstPeriodIndex && _period.Begin.Day != 1)
+                                       || (j == (nbColTab - 1) && _period.End.Day != _period.End.AddDays(1 - _period.End.Day).AddMonths(1).AddDays(-1).Day)) {
+                                        periodStyle = _styleSheet.CellPeriodIncomplete;
+                                    }
+                                    #endregion
+
+                                    WorkSheet.PutCellValue(cells, MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1), startIndex, currentColMediaPlan, colFirstMediaPlan, periodStyle, null);
+                                    break;
+                                case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
+
+                                    #region Period Color Management
+                                    periodStyle = _styleSheet.CellPeriod;
+                                    if ((j == firstPeriodIndex && _period.Begin.DayOfWeek != DayOfWeek.Monday)
+                                       || (j == (nbColTab - 1) && _period.End.DayOfWeek != DayOfWeek.Sunday)) {
+                                        periodStyle = _styleSheet.CellPeriodIncomplete;
+                                    }
+                                    #endregion
+
+                                    WorkSheet.PutCellValue(cells, int.Parse(data[0, j].ToString().Substring(4, 2)), startIndex, currentColMediaPlan, colFirstMediaPlan, periodStyle, null);
+                                    break;
+
+                            }
+                            nbPeriod++;
+                            nbPeriodTotal++;
+                        }
+                        // Compute last date
+                        cells.Merge(startIndex - 1, nbColTabFirst+1, 1, nbPeriod);
+                        if (nbPeriod < 3)
+                            WorkSheet.PutCellValue(cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear, null);
+                        else
+                            WorkSheet.PutCellValue(cells, prevPeriod, startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear, null);
+
+                        for (int k = colFirstMediaPlan; k < (nbPeriodTotal + colFirstMediaPlan); k++) {
+                            cells[startIndex-1, k].Style.Number = 1;
+                            if(_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.weekly)
+                                cells[startIndex, k].Style.Number = 1;
+                        }
+
+                        break;
+                    case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
+                        DateTime currentDay = DateString.YYYYMMDDToDateTime((string)data[0, firstPeriodIndex]);
+                        prevPeriod = currentDay.Month;
+                        currentDay = currentDay.AddDays(-1);
+                        for (int j = firstPeriodIndex, currentColMediaPlan = colFirstMediaPlan; j < nbColTab; j++, currentColMediaPlan++) {
+                            currentDay = currentDay.AddDays(1);
+                            if (currentDay.Month != prevPeriod) {
+                                cells.Merge(startIndex - 1, nbColTabFirst+1, 1, nbPeriod);
+                                if (nbPeriod >= 8)
+                                    WorkSheet.PutCellValue(cells, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear1, null);
+                                else
+                                    WorkSheet.PutCellValue(cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear1, null);
+                                cells[startIndex - 1, nbColTabFirst + nbPeriod].Style = _styleSheet.CellYear1;
+                                nbColTabFirst += nbPeriod;
+                                nbPeriod = 0;
+                                prevPeriod = currentDay.Month;
+                            }
+                            nbPeriod++;
+                            nbPeriodTotal++;
+                            //Period Number
+                            WorkSheet.PutCellValue(cells, currentDay.ToString("dd"), startIndex, currentColMediaPlan, colFirstMediaPlan, _styleSheet.CellPeriod, null);
+                            //Period day
+                            if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
+                                WorkSheet.PutCellValue(cells, DayString.GetCharacters(currentDay, cultureInfo, 1), startIndex + 1, currentColMediaPlan, colFirstMediaPlan, _styleSheet.CellDayWE, null);
+                            else
+                                WorkSheet.PutCellValue(cells, DayString.GetCharacters(currentDay, cultureInfo, 1), startIndex + 1, currentColMediaPlan, colFirstMediaPlan, _styleSheet.CellDay, null);
+                        }
+
+
+                        cells.Merge(startIndex - 1, nbColTabFirst+1, 1, nbPeriod);
+                        if (nbPeriod >= 8)
+                            WorkSheet.PutCellValue(cells, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear, null);
+                        else
+                            WorkSheet.PutCellValue(cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear, null);
+
+
+                        for (int k = colFirstMediaPlan; k < (nbPeriodTotal + colFirstMediaPlan); k++) {
+                            cells[startIndex, k].Style.Number = 1;
+                        }
+
+
+                        break;
+
+                }
+                #endregion
+
+                #endregion
+
+                #region init Row Media Shedule
+                cellRow++;
+
+                if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
+                    cellRow++;
+                #endregion
+
+                #region Media Schedule
+                int i = -1;
+                try {
+                    first = true;
+                    nbColTabCell = colFirstMediaPlan;
+                    int currentColMediaPlan = 0;
+                    for (i = 1; i < nbline; i++) {
+
+                        #region Color Management
+                        if (sloganIndex != -1 && data[i, sloganIndex] != null &&
+                            ((_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) == _session.GenericMediaDetailLevel.GetNbLevels) ||
+                            (_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) < _session.GenericMediaDetailLevel.GetNbLevels && data[i, sloganIndex + 1] == null))) {
+                            sloganId = Convert.ToInt64(data[i, sloganIndex]);
+                            if (!_session.SloganColors.ContainsKey(sloganId)) {
+                                colorNumberToUse = (colorItemIndex % _style.CellVersions.Count) + 1;
+                                _session.SloganColors.Add(sloganId, _styleSheet.CellVersions[colorNumberToUse]);
+                                switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
+                                    case CstDBClassif.Vehicles.names.directMarketing:
+                                        //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, style));
+                                        break;
+                                    case CstDBClassif.Vehicles.names.outdoor:
+                                        //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, style));
+                                        break;
+                                    default:
+                                        //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportVersionItem(sloganId, style));
+                                        break;
+                                }
+                                colorItemIndex++;
+                            }
+                            if (sloganId != 0 && !oMediaScheduleData.VersionsDetail.ContainsKey(sloganId)) {
+                                    switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
+                                        case CstDBClassif.Vehicles.names.directMarketing:
+                                            //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
+                                            break;
+                                        case CstDBClassif.Vehicles.names.outdoor:
+                                            //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
+                                            break;
+                                        default:
+                                            //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
+                                            break;
+                                    }
+
+                            }
+                            presentstyle = (Aspose.Excel.Style)_session.SloganColors[sloganId];
+                            extendedStyle = (Aspose.Excel.Style)_session.SloganColors[sloganId];
+                            stringItem = "x";
+                        }
+                        else {
+                            presentstyle = _styleSheet.CellPresent;
+                            extendedStyle = _styleSheet.CellExtended;
+                            stringItem = "";
+                        }
+                        #endregion
+
+                        #region Line Treatement
+                        currentColMediaPlan = colFirstMediaPlan;
+                        for (int j = 0; j < nbColTab; j++) {
+                            switch (j) {
+                                #region Level 1
+                                case L1_COLUMN_INDEX:
+                                    if (data[i, j] != null) {
+
+                                        if (data[i, j].GetType() == typeof(MemoryArrayEnd)) {
+                                            i = int.MaxValue - 2;
+                                            j = int.MaxValue - 2;
+                                            break;
+                                        }
+
+                                        #region Style define
+                                        if (i == TOTAL_LINE_INDEX) {
+                                            style = _styleSheet.CellLevelTotal;
+                                            styleNb = _styleSheet.CellLevelTotalNb;
+                                            stylePdmNb = _styleSheet.CellLevelTotalPdmNb;
+                                        }
+                                        else {
+                                            style = _styleSheet.CellLevelL1;
+                                            styleNb = _styleSheet.CellLevelL1Nb;
+                                            stylePdmNb = _styleSheet.CellLevelL1PdmNb;
+                                        }
+                                        #endregion
+
+                                        #region Label
+                                        WorkSheet.PutCellValue(cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, style, null);
+                                        #endregion
+
+                                        #region Total
+                                        if (_allowTotal)
+                                            WorkSheet.PutCellValue(cells, ((double)data[i, TOTAL_COLUMN_INDEX]), cellRow, colTotal, colFirstMediaPlan, styleNb, formatTotal);
+                                        #endregion
+
+                                        #region PDM
+                                        if (_allowPdm)
+                                            WorkSheet.PutCellValue(cells, ((double)data[i, PDM_COLUMN_INDEX]), cellRow, colPdm, colFirstMediaPlan, stylePdmNb, formatPdm);
+                                        #endregion
+
+                                        #region Totals years
+                                        for (int k = 1; k <= nbColYear && _allowTotal; k++) {
+                                            WorkSheet.PutCellValue(cells, ((double)data[i, j + 10 + k]), cellRow, colTotalYears + (k - 1), colFirstMediaPlan, styleNb, formatTotal);
+                                        }
+                                        #endregion
+
+                                        j = j + 10 + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 2
+                                case L2_COLUMN_INDEX:
+                                    if (data[i, j] != null) {
+
+                                        #region Style define
+                                        if (premier) {
+                                            style = _styleSheet.CellLevelL2_1;
+                                            styleNb = _styleSheet.CellLevelL2_1Nb;
+                                            stylePdmNb = _styleSheet.CellLevelL2_1PdmNb;
+                                        }
+                                        else {
+                                            style = _styleSheet.CellLevelL2_2;
+                                            styleNb = _styleSheet.CellLevelL2_2Nb;
+                                            stylePdmNb = _styleSheet.CellLevelL2_2PdmNb;
+                                        }
+                                        #endregion
+
+                                        #region Label
+                                        WorkSheet.PutCellValue(cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, style, null);
+                                        #endregion
+
+                                        #region Total
+                                        if (_allowTotal)
+                                            WorkSheet.PutCellValue(cells, ((double)data[i, TOTAL_COLUMN_INDEX]), cellRow, colTotal, colFirstMediaPlan, styleNb, formatTotal);
+                                        #endregion
+
+                                        #region PDM
+                                        if (_allowPdm)
+                                            WorkSheet.PutCellValue(cells, ((double)data[i, PDM_COLUMN_INDEX]), cellRow, colPdm, colFirstMediaPlan, stylePdmNb, formatPdm);
+                                        #endregion
+
+                                        #region Totals years
+                                        for (int k = 1; k <= nbColYear && _allowTotal; k++) {
+                                            WorkSheet.PutCellValue(cells, ((double)data[i, j + 9 + k]), cellRow, colTotalYears + (k - 1), colFirstMediaPlan, styleNb, formatTotal);
+                                        }
+                                        #endregion
+
+                                        premier = !premier;
+                                        
+                                        j = j + 9 + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 3
+                                case L3_COLUMN_INDEX:
+                                    if (data[i, j] != null) {
+                                        WorkSheet.PutCellValue(cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, _styleSheet.CellLevelL3, null);
+                                        /*
+                                        AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan);
+                                        */
+                                        for (int k = 1; k <= nbColYear; k++) {
+                                            //AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + 8 + k);
+                                        }
+                                        j = j + 8 + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 4
+                                case L4_COLUMN_INDEX:
+                                    WorkSheet.PutCellValue(cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, _styleSheet.CellLevelL4, null);
+                                    //AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan);
+
+                                    for (int k = 1; k <= nbColYear; k++) {
+                                        //AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + 7 + k);
+                                    }
+                                    j = j + 7 + nbColYear;
+                                    break;
+                                #endregion
+
+                                #region Other
+                                default:
+                                    if (data[i, j] == null) {
+                                        WorkSheet.PutCellValue(cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, _styleSheet.CellNotPresent, null);
+                                        currentColMediaPlan++;
+                                        break;
+                                    }
+                                    if (data[i, j].GetType() == typeof(MediaPlanItem)) {
+                                        switch (((MediaPlanItem)data[i, j]).GraphicItemType) {
+                                            case DetailledMediaPlan.graphicItemType.present:
+                                                if (_showValues) {
+                                                    WorkSheet.PutCellValue(cells, ((MediaPlanItem)data[i, j]).Unit, cellRow, currentColMediaPlan, colFirstMediaPlan, _styleSheet.CellPresent, formatTotal);
+                                                }
+                                                else {
+                                                    WorkSheet.PutCellValue(cells, stringItem, cellRow, currentColMediaPlan, colFirstMediaPlan, _styleSheet.CellPresent, null);
+                                                }
+                                                break;
+                                            case DetailledMediaPlan.graphicItemType.extended:
+                                                WorkSheet.PutCellValue(cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, _styleSheet.CellExtended, null);
+                                                break;
+                                            default:
+                                                WorkSheet.PutCellValue(cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, _styleSheet.CellNotPresent, null);
+                                                break;
+                                        }
+                                        currentColMediaPlan++;
+                                    }
+                                    break;
+                                #endregion
+                            }
+                        }
+                        if (first) {
+                            first = !first;
+                            nbColTabCell += currentColMediaPlan-1;
+                        }
+                        cellRow++;
+                        #endregion
+
+                    }
+                }
+                catch (System.Exception err) {
+                    throw (new MediaScheduleException("Error i=" + i));
+                }               
+                #endregion
+
+                #region Mise en forme de la page
+
+                #region Ajustement de la taile des cellules en fonction du contenu
+                sheet.AutoFitColumn(colSupport);
+
+                for (int c = colFirstMediaPlan; c <= (nbColTabCell+1 - colFirstMediaPlan); c++) {
+                    if (_showValues) {
+                        sheet.AutoFitColumn(c);
+                    }
+                    else {
+                        cells.SetColumnWidth((byte)c, 2);
+                    }
+                }
+                
+                #endregion
+                
+                if (_session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.monthly) {
+                    for (index = 0; index < 30; index++) {
+                        columnWidth += cells.GetColumnWidth((byte)index);
+                        if ((columnWidth < 124) && verif)
+                            indexLogo++;
+                        else
+                            verif = false;
+                    }
+                    upperLeftColumn = (int)indexLogo - 1;
+                    vPageBreaks = cells[cellRow, (int)indexLogo].Name;
+                    WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1773, _session.SiteLanguage), data.GetLength(0) + 3, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, header.ToString());
+                }
+                else {
+                    if (nbColTabCell > 44) {
+                        upperLeftColumn = nbColTabCell - 4;
+                        vPageBreaks = cells[cellRow, nbColTabCell - 4].Name;
+                    }
+                    else {
+                        for (index = 0; index < 30; index++) {
+                            columnWidth += cells.GetColumnWidth((byte)index);
+                            if ((columnWidth < 124) && verif)
+                                indexLogo++;
+                            else
+                                verif = false;
+                        }
+                        upperLeftColumn = (int)indexLogo - 1;
+                        vPageBreaks = cells[cellRow, (int)indexLogo].Name;
+                    }
+
+                    WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1773, _session.SiteLanguage), ref s, upperLeftColumn, header.ToString());
+                }
+                #endregion
+            }
+        }
         #endregion
 
         #region Creatives and insertions rights

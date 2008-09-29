@@ -32,8 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Excel, Version=3.6.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis\Librairies\Aspose.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -48,11 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\MediaScheduleException.cs" />
+    <Compile Include="Functions\WorkSheet.cs" />
     <Compile Include="IMediaScheduleResults.cs" />
     <Compile Include="MediaPlanItem.cs" />
     <Compile Include="MediaScheduleData.cs" />
     <Compile Include="MediaScheduleResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Style\MediaScheduleSheetStyle.cs" />
     <Compile Include="Style\MediaScheduleStyle.cs" />
   </ItemGroup>
   <ItemGroup>
