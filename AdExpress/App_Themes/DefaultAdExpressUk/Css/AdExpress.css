@@ -1,6 +1,6 @@
 ﻿/* Back ground style*/
 .imageBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_fond.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_fond3.gif);
 }
 .gSepBackGround{
 	background:url(/I/gsep.gif);
@@ -8,32 +8,32 @@
 	height:100%;
 }
 .checkboxBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/checkbox.GIF);
+	background:url(/App_Themes/DefaultAdExpressUk/Images/Common/checkbox.GIF);
 }
 .blockBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/block_dupli.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/block_dupli.gif);
 }
 .imageBackGround3bis{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_3bis.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_3bis.gif);
 }
 .bandeauTitreBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/bandeau_titre.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/bandeau_titre.gif);
 }
 .blockdupliBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/block_dupli.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/block_dupli.gif);
 }
 .popupBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/backgroundPopUp.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/backgroundPopUp.gif);
 }
 .arrowBackGround{
-	background-image:url(/App_Themes/FinlandAdExpressUk/images/Common/button/bt_arrow_down.gif);
-	background-repeat:no-repeat;
-	background-position:right;
-	width:15px;
-	height:15px;
-}
+background:url(/App_Themes/DefaultAdExpressUk/images/Common/button/bt_arrow_down.gif);
+background-repeat:no-repeat;
+background-position:right;
+width:15px;
+height:15px;
+} 
 .logoCoteDroitBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/logo_cote_droit.gif);
+	background:url(/App_Themes/DefaultAdExpressUk/Images/Common/logo_cote_droit.gif);
 }
 .greenBackGround{
 	background-color:#CAFFCA;
@@ -42,13 +42,13 @@
 	background-color:#FFD7D7;
 }
 .audioFileBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/audioFile.gif);
+	background:url(/App_Themes/DefaultAdExpressUk/Images/Common/audioFile.gif);
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
 }
 .videoFileBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/videoFile.gif);
+	background:url(/App_Themes/DefaultAdExpressUk/Images/Common/videoFile.gif);
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
@@ -63,7 +63,7 @@
 background-color:#D6CBDE
 }
 .mediumPurple1{
-	background-color:#D0C8DA;
+	background-color:#D1FFC9;
 }
 .DarkGrey{
 	background-color:#9D9885;
@@ -97,70 +97,70 @@ background-color:#D6CBDE
 	background-color:#FF99CC;
 }
 .violetBackGround{
-	background-color : #644883;
+	background-color : #FF0000;
 }
 .violetBackGroundV2{
-	background-color : #D0C8DA;
+	background-color : #FFFF33;
 }
 .violetBackGroundV3{
-	background-color : #B1A3C1;
+	background-color : #C8E6C3;/*#DCE6C3*/
 }
 .violetBackGroundV4{
-	background-color : #A794BE;
+	background-color : #C3E6DB;
 }
 .violetCalendarBackGround{
-	background-color : #9378B3;
+	background-color : #000000;
 }
 .sloganVioletBackGround{
-	background-color : #E0D7EC;
+	background-color : #C3E6DB;
 }
 .paleVioletBackGround{
-	background-color : #DED8E5;
+	background-color : #D1FFC9;
 }
 .paleVioletBackGroundV2{
-	background-color : #E9E6EF;
+	background-color : #D1FFC9;
 }
 .pinkBackGround{
-	background-color : #FF0099;
+	background-color : #000000;
 }
 .greyBackGround{
-	background-color : #E1E0DA;
+	background-color : #EEFFEC;
 }
 .dupli3BackGround{
-background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_3.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_3.gif);
 }
 .dupli1BackGround{
-background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_1.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_1.gif);
 }
 .headerBackGround{
-background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_2.gif);
+background:url(/App_Themes/DefaultAdExpressUk/Images/Common/dupli_2.gif);
 }
 .darkBackGround{
 	BACKGROUND-ATTACHMENT: fixed; 
-	BACKGROUND-IMAGE: url(/App_Themes/FinlandAdExpressUk/Images/Common/dark_back.bmp); 
+	BACKGROUND-IMAGE: url(/App_Themes/DefaultAdExpressUk/Images/Common/dark_back.bmp); 
 	BACKGROUND-REPEAT: repeat-x
 }
 .creationDarkBackGround{
 	background-attachment: fixed; 
-	background-image: url(/App_Themes/FinlandAdExpressUk/Images/Common/dark_back.bmp); 
+	background-image: url(/App_Themes/DefaultAdExpressUk/Images/Common/dark_back.bmp); 
 	background-repeat: repeat-x; 
 	background-color:#FFFFFF; 
 	margin:25 0 25 0; 
 	text-align:center;
 }
 .popUpBackGround{
-	background:url(/App_Themes/FinlandAdExpressUk/Images/Common/backgroundPopUp.gif);
+	background:url(/App_Themes/DefaultAdExpressUk/Images/Common/backgroundPopUp.gif);
 }
 .creationpopUpBackGround{
 	background-position: right; 
-	background-image: url(/App_Themes/FinlandAdExpressUk/Images/Common/bandeau_titre.gif);
+	background-image: url(/App_Themes/DefaultAdExpressUk/Images/Common/bandeau_titre.gif);
 	background-repeat: repeat-y
 }
 /* Body Style*/
 .bodyStyle{
 	background-image: none; 
 	margin: 0px; 
-	background-color: #ffffff;
+	background-color: #ffffff
 }
 /*image drop down list*/
 .ddlOut{
@@ -171,7 +171,7 @@ background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_2.gif);
 	color: #000000;
 }
 .ddlOver{
-	background-color: #DED8E5;
+	background-color: #D1FFC9;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	font-weight: bold;
@@ -199,49 +199,41 @@ background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_2.gif);
 /* Generic Media Level Detail Selection Header */
 .GenericMediaLevelDetailSelectionHeader{
 	background-color:#FFFFFF;
-	border-right: #644883 1px solid; 
-	border-top: #644883 1px solid; 
-	border-left: #644883 1px solid; 
-	border-bottom: #644883 1px solid;
+	border-right: #487583 1px solid; 
+	border-top: #487583 1px solid; 
+	border-left: #487583 1px solid; 
+	border-bottom: #487583 1px solid;
 }
 .GenericMediaLevelDetailSelectionSection{
-	border-right : #644883 1px solid;
-	border-left : #644883 1px solid; 
-	border-bottom : #644883 1px solid;
-	background-color:#D0C8DA;
+	border-right : #487583 1px solid;
+	border-left : #487583 1px solid; 
+	border-bottom : #487583 1px solid;
+	background-color:#D1FFC9;
 	padding-left:2px;
 	vertical-align:top;
 }
-/* Portofolio Header */
+/* Border style */
 .portofolioSynthesisBorderHeader{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #FFFFFF;
 	font-weight: bold;
 	text-decoration : none;
-	background-color: #644883;
+	background-color: #525A3E;
 	padding-left:5px;
 	padding-right:5px;
-	border-right-style:solid;
-	border-right: #644883 1px solid; 
-	border-top: #644883 1px solid; 
-	border-left: #644883 1px solid; 
-	border-bottom: #644883 1px solid;
+	border-right: #FF0000 1px solid; 
+	border-top: #FF0000 1px solid; 
+	border-left: #FF0000 1px solid; 
+	border-bottom: #FF0000 1px solid;
 	font-size: 16px;
 }
-/* Border style */
 .portofolioSynthesisBorder{
-	border-right: #644883 1px solid; 
-	border-top: #644883 1px solid; 
-	border-left: #644883 1px solid; 
-	border-bottom: #644883 1px solid;
+	border-right: #FF0000 1px solid; 
+	border-top: #FF0000 1px solid; 
+	border-left: #FF0000 1px solid; 
+	border-bottom: #FF0000 1px solid;
 	font-size: 12px
-}
-.portofolioSynthesisBorderNone{
-	border-top-style: none; 
-	border-right-style: none; 
-	border-left-style: none; 
-	border-bottom-style: none;
 }
 .listMediaHeaderBorder{
 	border-bottom :#644883 1px solid; 
@@ -279,68 +271,68 @@ background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_2.gif);
 	border-top : #FFFFFF 1px solid;
 }
 .violetBorder{
-	border-color : #644883;
-	border-top :#644883 1px solid; 
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid; 
-	border-bottom :#644883 1px solid;
+	border-color : #FF0000;
+	border-top :#FF0000 1px solid; 
+	border-left :#FF0000 1px solid; 
+	border-right :#FF0000 1px solid; 
+	border-bottom :#FF0000 1px solid;
 }
 .violetBorderColor{
-	border-color : #644883;
-	border-top :#644883 2px solid; 
-	border-left :#644883 2px solid; 
-	border-right :#644883 2px solid; 
-	border-bottom :#644883 2px solid;
+	border-color : #FF0000;
+	border-top :#FF0000 2px solid; 
+	border-left :#FF0000 2px solid; 
+	border-right :#FF0000 2px solid; 
+	border-bottom :#FF0000 2px solid;
 }
 .violetBorderWithoutTop{
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid; 
-	border-bottom :#644883 1px solid;
+	border-left :#FF0000 1px solid; 
+	border-right :#FF0000 1px solid; 
+	border-bottom :#FF0000 1px solid;
 }
 .violetBorderWithoutBottom{
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid; 
-	border-top :#644883 1px solid;
-}
-.violetBorderTop{
-	border-top :#644883 1px solid; 
-}
-.violetBorderBottom{
-	border-bottom :#644883 1px solid; 
+	border-left :#FF0000 1px solid; 
+	border-right :#FF0000 1px solid; 
+	border-top :#FF0000 1px solid;
 }
 .violetRightBorder{
-	border-right:solid 1px #B1A3C1; 
+	border-right:solid 1px #FF0000; 
 	width:10px;
 }
 .violetRightLeftBorder{
-	border-right:solid 1px #B1A3C1;
-	border-left:solid 1px #B1A3C1;
+	border-right:solid 1px #FF0000;
+	border-left:solid 1px#FF0000;
 }
 .MSVioletRightLeftBorder{
-	border-right:solid 1px #644883;
-	border-left:solid 1px #644883;
+	border-right:solid 1px #C8E6C3;
+	border-left:solid 1px #C8E6C3;
 }
 .violetRightBottomBorder{
-	border-bottom:solid 1px #B1A3C1;
-	border-right:solid 1px #B1A3C1;
+	border-bottom:solid 1px #FF0000;
+	border-right:solid 1px #FF0000;
 	height:5px;
 	font-size:5px;
 }
+.violetBorderTop{
+	border-top :#FF0000 1px solid; 
+}
+.violetBorderBottom{
+	border-bottom :#FF0000 1px solid; 
+}
 .RecapProductSelectionWhiteTopBorder{
-	background-color:#D0C8DA; 
+	background-color:#8EBF86; 
 	border-top :#ffffff 1px solid;
 }
 .RecapProductSelectionVioletTopBorder{
-	background-color:#B1A3C1; 
+	background-color:#8EBF86; 
 	border-top :#644883 1px solid;
 }
 .greyRightBorder{
-	border-right:solid 1px #808080; 
+	border-right:solid 1px #FF0000; 
 	width:10px;
 }
 .greyRightBottomBorder{
-	border-bottom:solid 1px #808080;
-	border-right:solid 1px #808080;
+	border-bottom:solid 1px #FF0000;
+	border-right:solid 1px #FF0000;
 	height:5px;
 	font-size:5px;
 }
@@ -382,7 +374,7 @@ background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_2.gif);
 	border:SOLID 5px #ffffff;
 }
 .creationVioletTopBorder{
-	border-top : #9966cc 1px solid;
+	border-top : #8EBF86 1px solid;
 }
 table.greyBorder{
 	border : solid 1px #808080;
@@ -391,11 +383,18 @@ table.creationWhiteBorder{
 	border:solid 10px #ffffff;
 	background-color:#ffffff;
 }
+
+.selectionErrorBorder{
+	BORDER-RIGHT: #ff0000 thin solid; 
+	BORDER-TOP: #ff0000 thin solid; 
+	BORDER-LEFT: #ff0000 thin solid; 
+	BORDER-BOTTOM: #ff0000 thin solid
+}
 .detailledLevelCss{
-	border-right: #644883 1px solid;
-	border-left: #644883 1px solid;
-	border-bottom: #644883 1px solid;
-	background-color:#D0C8DA;
+	border-right: #3E5A51 1px solid;
+	border-left: #3E5A51 1px solid;
+	border-bottom: #3E5A51 1px solid;
+	background-color:#C3E6DB;
 }
 /* Separator */
 .columnSeparator{
@@ -416,64 +415,66 @@ table.creationWhiteBorder{
 /*Text style*/
 .txtMediumPurple
 {
-	color : #D0C8DA;
+	color : #D6CBDE;
 }
+
 .txtViolet{
-	color : #644883;
+	color : #7D3200;
 }
 .txtViolet11Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #644883;
+	color: #7D3200;
 	font-weight: bold;
 }
 .txtViolet12Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color: #644883;
+	color: #7D3200;
 	font-weight: bold;
 }
 .txtViolet12{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color: #644883;
+	color: #7D3200;
 	font-weight: normal;
 }	   
 .txtViolet14Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
-	color: #644883;
+	color: #7D3200;
 	font-weight: bold;
 }
+
 .txtViolet11{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #644883;
+	color: #7D3200;
 	font-weight: normal;
 }
 .txtViolet10{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	color: #644883;
+	color: #7D3200;
 	font-weight: normal;
 }
 .txtViolet11Underline{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #644883;
+	color: #7D3200;
 	font-weight: normal;
 	text-decoration :underline;
 }
 .txtNoir11Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #000000;
+	color: #999FFF;
 	font-weight: bold;
 }
 .txtNoir11{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #000000;
+	color: #999FFF;
 	font-weight: normal;
 }
 .txtRed{
@@ -500,7 +501,7 @@ table.creationWhiteBorder{
 .txtGris11Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #999999;
+	color: #660000;
 	font-weight: bold;
 }
 .txtBlanc14Bold{
@@ -509,8 +510,14 @@ table.creationWhiteBorder{
 	color: #ffffff;
 	font-weight: bold;
 }
+.txtOrange10{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #FF6319;
+	font-weight: normal;
+}
 .pinkTextColor{
-	color:#FF0099;
+	color:#7D3200;
 }
 .txtNowrap{
 	white-space:nowrap;
@@ -533,26 +540,26 @@ table.creationWhiteBorder{
 .paragraphePaddingHeader{
 	padding-left: 10px; 
 	padding-bottom: 40px; 
-	padding-top: 4px;
+	padding-top: 4px
 }
 
 /*Commun header (flash, menu)*/
 table.header{
-	background-color:#644883;
+	background-color:#33CC00;
 	COLOR: #FFFFFF;
 	font-weight:bold;
 	border:0;
 	margin:0;
 }
 td.headerLeft{
-	background-color:#644883;
+	background-color:#33CC00;
 }
 /*Site links*/
 a.roll01, a.roll01:active, a.roll01:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
  font-weight: bold;
- color : #ffffff;
+ color : #000000;
  text-decoration : none;
 }
 a.roll01:hover {
@@ -580,7 +587,7 @@ a.roll03, a.roll03:active, a.roll03:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
  font-weight: bold;
- color : #999999;
+ color : #B0BF86;
  text-decoration : none;
 }
 a.roll03:hover {
@@ -593,7 +600,7 @@ a.roll03:hover {
 a.roll04{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	color: #FF05B6;
+	color: #8EBF86;
 	font-weight: normal;
 	text-decoration : none;
 }
@@ -601,7 +608,7 @@ a.roll04{
 a.roll04:hover{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	color: #9378B3;
+	color: #B34700;
 	font-weight: normal;
 }
 
@@ -622,28 +629,28 @@ a.roll05:hover {
 a.roll06, a.roll06:active, a.roll06:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
- color : #FF05B6;
+ color : #3E5A51;
  text-decoration : none;
 }
 
 a.roll06:hover {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
- color : #644883;
+ color : #E6A173;
  text-decoration : none;
 }
 
 a.txtGroupViolet11Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #644883;
+	color: #7D3200;
 	font-weight: bold;
 	text-decoration : none;	
 }
 a.txtGroupViolet11Bold:hover{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #FF05B6;
+	color: #FF0000;
 	font-weight: bold;
 	text-decoration : none;	
 }
@@ -661,7 +668,6 @@ a.txtLinkBlack11:hover{
 	font-weight: normal;
 	text-decoration : none;
 }
-
 /* Portofolio Data */
 tr.portofolioSynthesisL1 td{
 	font-family: Arial, Helvetica, sans-serif;
@@ -686,19 +692,19 @@ tr.portofolioSynthesisL1 td{
 td.portofolio1{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color : #6B598B;
+	color : #C8E6C3;
 	font-weight:bold;
 	text-decoration : none;
-	background-color: #E9E6EF;	
+	background-color: #D1FFC9;	
 	padding:0px,0px,0px,2px;
 	border-left-width:1px;
-	border-left-color:#644883;
+	border-left-color:#FF0000;
 	border-left-style:solid;
 	border-top-width:0px;
-	border-bottom-color:#644883;
+	border-bottom-color:#FF0000;
 	border-bottom-width:1px;
 	border-bottom-style:solid;
-	border-right-color:#644883;
+	border-right-color:#FF0000;
 	border-right-width: 1px; 
 	border-right-style:solid;
 	padding-left:4px;
@@ -707,39 +713,18 @@ td.portofolio1{
 td.portofolio11{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color : #6B598B;
+	color : #C8E6C3;
 	font-weight:normal;
 	text-decoration : none;
-	background-color: #E9E6EF;	
+	background-color: #D1FFC9;	
 	padding:0px,0px,0px,2px;
 	border-left-width:1px;
-	border-left-color:#644883;
+	border-left-color:#FF0000;
 	border-top-width:0px;
-	border-bottom-color:#644883;
+	border-bottom-color:#FF0000;
 	border-bottom-width:1px;
 	border-bottom-style:solid;
-	border-right-color:#644883;
-	border-right-width: 1px; 
-	border-right-style:solid;
-	padding-left:4px;
-	padding-right:4px;
-}
-td.portofolioSynthesisExcel1{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color : #644883;
-	text-align:left;
-	font-weight:bold;
-	text-decoration : none;
-	background-color: #CCCCFF;	
-	padding:0px,0px,0px,2px;
-	border-left-width:1px;
-	border-left-color:#FFFFFF;
-	border-top-width:0px;
-	border-bottom-color:#FFFFFF;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
-	border-right-color:#FFFFFF;
+	border-right-color:#FF0000;
 	border-right-width: 1px; 
 	border-right-style:solid;
 	padding-left:4px;
@@ -748,10 +733,10 @@ td.portofolioSynthesisExcel1{
 td.portofolioSynthesis{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color : #6B598B;
+	color : #C8E6C3;
 	font-weight:normal;
 	text-decoration : none;
-	background-color: #E9E6EF;
+	background-color: #D1FFC9;
 	padding:0px,0px,0px,2px;
 	border-top-style: none; 
 	border-right-style: none; 
@@ -785,19 +770,19 @@ tr.portofolioSynthesisL2 td{
 td.portofolio2{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color : #6B598B;
+	color : #C8E6C3;
 	font-weight:bold;
 	text-decoration : none;
 	background-color:White;	
 	padding:0px,0px,0px,2px;
 	border-left-width:1px;
-	border-left-color:#644883;
+	border-left-color:#FF0000;
 	border-left-style:solid;
 	border-top-width:0px;
-	border-bottom-color:#644883;
+	border-bottom-color:#FF0000;
 	border-bottom-width:1px;
 	border-bottom-style:solid;
-	border-right-color:#644883;
+	border-right-color:#FF0000;
 	border-right-width: 1px; 
 	border-right-style:solid;
 	padding-left:4px;
@@ -806,39 +791,18 @@ td.portofolio2{
 td.portofolio22{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color : #6B598B;
+	color : #C8E6C3;
 	font-weight:normal;
 	text-decoration : none;
 	background-color:White;	
 	padding:0px,0px,0px,2px;
 	border-left-width:1px;
-	border-left-color:#644883;
+	border-left-color:#FF0000;
 	border-top-width:0px;
-	border-bottom-color:#644883;
+	border-bottom-color:#FF0000;
 	border-bottom-width:1px;
 	border-bottom-style:solid;
-	border-right-color:#644883;
-	border-right-width: 1px; 
-	border-right-style:solid;
-	padding-left:4px;
-	padding-right:4px;
-}
-td.portofolioSynthesisExcel2{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color : #644883;
-	font-weight:bold;
-	text-decoration : none;
-	text-align:left;
-	background-color:#CCCCFF;	
-	padding:0px,0px,0px,2px;
-	border-left-width:1px;
-	border-left-color:#FFFFFF;
-	border-top-width:0px;
-	border-bottom-color:#FFFFFF;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
-	border-right-color:#FFFFFF;
+	border-right-color:#FF0000;
 	border-right-width: 1px; 
 	border-right-style:solid;
 	padding-left:4px;
@@ -851,7 +815,7 @@ td.p2{
 	color : #FFFFFF;
 	font-weight: bold;
 	text-decoration : none;
-	background-color: #644883;
+	background-color: #425A3E;
 	padding-left:5px;
 	padding-right:5px;
 	border-left-width:0px;
@@ -869,7 +833,7 @@ td.p6{
 	color : #000000;
 	font-weight:normal;
 	text-decoration : none;
-	background-color: #E1E0DA;
+	background-color: #EEFFEC;
 	padding:0px,0px,0px,2px;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -888,7 +852,7 @@ td.p7{
 	color : #000000;
 	font-weight:normal;
 	text-decoration : none;
-	background-color: #D0C8DA;	
+	background-color: #DCE6C3;	
 	padding:0px,0px,0px,2px;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -905,7 +869,7 @@ td.p7{
 td.excelData{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color : #000000;
+	color : #FF0000;
 	font-weight:bold;
 	text-decoration : none;
 	background-color: #FFFFFF;	
@@ -915,13 +879,13 @@ td.excelData{
 .txtBoldGrisExcel{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color : #808080;
+	color : #008000;
 	font-weight:bold;
 }
 td.excelDataItalic{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color : #808080;
+	color : #008000;
 	font-style:italic;
 	font-weight:bold;
 	text-decoration : none;
@@ -934,7 +898,7 @@ td.pmmediaxls1{
 	color : #000000;
 	font-weight:normal;
 	text-decoration : none;
-	background-color: #9999FF;
+	background-color: #CCFFFF;
 	padding:0px,0px,0px,2px;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -951,7 +915,7 @@ td.pmmediaxls2{
 	color : #000000;
 	font-weight:normal;
 	text-decoration : none;
-	background-color: #CCCCFF;	
+	background-color: #FFFF99;	
 	padding:0px,0px,0px,2px;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -963,21 +927,21 @@ td.pmmediaxls2{
 	border-right-style:solid;
 }
 /* Styles used to display tree levels in Excel export */
-tr.BorderLevel{
-	border:solid 1px #808080;
-}
 table.BorderLevel{
 	border:solid 1px #808080;
 }
+tr.BorderLevel{
+	border:solid 1px #808080;
+}
 td.Level1{
-	background-color:#808080;
+	background-color:#CCFFCC;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
 	font-weight: bold;
 }
 td.LevelRightBorder1{
-	background-color:#808080;
+	background-color:#CCFFCC;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
@@ -986,7 +950,7 @@ td.LevelRightBorder1{
 	width:10px;
 }
 td.LevelRightBottomBorder1{
-	background-color:#808080;
+	background-color:#CCFFCC;
 	font-family: Arial, Helvetica, sans-serif;
 	color : #000000;
 	font-weight: bold;
@@ -1008,7 +972,7 @@ td.LevelRightBorder2{
 	font-size: 11px;
 	color : #000000;
 	font-weight: bold;
-	border-right:solid 1px #808080;
+	border-right:solid 1px #808080; 
 	width:10px;
 }
 td.LevelRightBottomBorder2{
@@ -1076,6 +1040,25 @@ a.acl1,a.acl1:active,a.acl1:visited{
 a.acl1:hover{
 	text-decoration :underline;		
 }
+td.acl11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #C0C0C0;
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+}
 td.sc1{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -1095,26 +1078,7 @@ td.sc1{
 	padding-right:4px;
 	text-decoration : none;
 	cursor: hand;
-	text-align :right;	
-}
-td.acl11{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color : #000000;
-	font-weight: bold;
-	text-decoration : none;
-	background-color: #C0C0C0;
-	padding:0px,0px,0px,2px;
-	border-left-width:0px;
-	border-top-width:0px;
-	border-bottom-color:#FFFFFF;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
-	border-right-color:#FFFFFF;
-	border-right-width: 1px; 
-	border-right-style:solid;
-	padding-left:4px;
-	padding-right:4px;
+	text-align :right;
 }
 td.acl2{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1140,7 +1104,7 @@ td.acl21{
 	font-size: 11px;
 	color : #000000;
 	font-weight:normal;
-	background-color:#9999FF;
+	background-color:#FF99CC;
 	text-decoration : none;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -1195,7 +1159,7 @@ td.acl31{
 	width:100%;
 }
 .creativeVisualCell{
-	background-color:#D0C8DA;
+	background-color:#D1FFC9;
 	text-align:center;
 	padding-bottom:10px;
 	padding-top:10px;
@@ -1203,15 +1167,15 @@ td.acl31{
 	width:100%;
 }
 .creativeVisualCellLeft{
-	background-color:#D0C8DA;
+	background-color:#D1FFC9;
 	text-align:left;
 	padding-bottom:10px;
 	padding-top:10px;
-	border-color:#B1A3C1;
+	border-color:#C8E6C3;
 	width:100%;
 }
 .creativeDescCell{
-	background-color:#B1A3C1;
+	background-color:#8EBF86;
 	padding-bottom:10;
 	padding-top:10;
 	border:0px;
@@ -1231,10 +1195,10 @@ td.nav{
 	padding-left:5px;
 }
 .navBarTop{
-	background: white url(/App_Themes/FinlandAdExpressUk/Images/Common/Result/header.gif) top left repeat-x;
+	background: white url(/App_Themes/DefaultAdExpressUk/Images/Common/Result/header.gif) top left repeat-x;
 }
 .navBarBottom{
-	background: white url(/App_Themes/FinlandAdExpressUk/Images/Common/Result/footer.gif) bottom left repeat-x;	
+	background: white url(/App_Themes/DefaultAdExpressUk/Images/Common/Result/footer.gif) bottom left repeat-x;	
 }
 /*Images link with violet border */
 input.image, input.image:active, input.image:visited{
@@ -1256,26 +1220,26 @@ a.image:hover{
 /* Images link with violet border */
 input.imageMD, input.imageMD:active, input.imageMD:visited{
  text-decoration: none;
- border-bottom: solid thin #644883;
- border-left: solid thin #644883;
+ border-bottom: solid thin #C8E6C3;
+ border-left: solid thin #C8E6C3;
 }
 input.imageMD:hover{
  text-decoration: none;
- border-bottom: solid thin #D0C8DA;
- border-left: solid thin #D0C8DA;
+ border-bottom: solid thin #FFCC80;
+ border-left: solid thin #FFCC80;
 }
 a.imageMD, a.imageMD:active, a.imageMD:visited{
  text-decoration: none;
- border-bottom: solid thin #644883;
- border-left: solid thin #644883;
+ border-bottom: solid thin #C8E6C3;
+ border-left: solid thin #C8E6C3;
 }
 a.imageMD:hover{
  text-decoration: none;
- border-bottom: solid thin #D0C8DA;
- border-left: solid thin #D0C8DA;
+ border-bottom: solid thin #FFCC80;
+ border-left: solid thin #FFCC80;
 }
 .shadetabs{
-border-bottom: 1px solid #644883;
+border-bottom: 1px solid #C8E6C3;
 /* width: 90%; width of menu. Uncomment to change to a specific width */
 margin-bottom: 1em;
 }
@@ -1296,25 +1260,25 @@ margin: 0;
 text-decoration: none;
 padding: 3px 7px;
 margin-right: 3px;
-border: 1px solid #644883;
+border: 1px solid #C8E6C3;
 color: #644883;
-background: white url(/App_Themes/FinlandAdExpressUk/Images/Common/Result/footer.gif) bottom left repeat-x;
+background: white url(/App_Themes/DefaultAdExpressUk/Images/Common/Result/footer.gif) bottom left repeat-x;
 }
 .shadetabs li a:hover{
-color: #FF05B6;
+color: #395573;
 }
 .shadetabs li.selected{
 position: relative;
-color:#FF05B6;
+color:#395573;
 }
 .shadetabs li.selected a{ /*selected main tab style */
-background: white url(/App_Themes/FinlandAdExpressUk/Images/Common/Result/header.gif) top left repeat-x;
-color:#FF05B6;
+background: white url(/App_Themes/DefaultAdExpressUk/Images/Common/Result/header.gif) top left repeat-x;
+color:#395573;
 }
 .shadetabs li.selected a:hover{ /*selected main tab style */
-background: white url(/App_Themes/FinlandAdExpressUk/Images/Common/Result/header.gif) top left repeat-x;
+background: white url(/App_Themes/DefaultAdExpressUk/Images/Common/Result/header.gif) top left repeat-x;
 text-decoration: none;
-color:#FF05B6;
+color:#395573;
 }
 /* scrolling bar periodes Css */
 .tdsepar{
@@ -1340,15 +1304,15 @@ color:#FF05B6;
 	height:5px;
 	font-size:5px;
 	width: 250px;
-	background-color:#E8E4ED;
-	border-top:solid 2px #D0C8DA;
+	background-color:#C3E6DB;
+	border-top:solid 2px #7DB3A2;
 }
 .scroll_track_css{
 	height: 5px;
 	font-size:5px;
 	position:relative;
 	width:50px;
-	background-color:#644883;
+	background-color:#3E5A51;
 }
 /* PopUp Css */
 td.popuptitle1{
@@ -1358,7 +1322,7 @@ td.popuptitle1{
 	font-weight: bold;
 	text-decoration : none;
 	padding-left:4px;
-	background-color: #644883;
+	background-color: #8EBF86;
 }
 
 td.popuptitle2{
@@ -1368,7 +1332,7 @@ td.popuptitle2{
 	font-weight: bold;
 	text-decoration : none;
 	padding-left:4px;
-	background-color: #644883;
+	background-color: #8EBF86;
 }
 td.popuptitle3{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1376,7 +1340,7 @@ td.popuptitle3{
 	color : #000000;
 	font-weight:bold;
 	text-decoration : none;
-	background-color: #D0C8DA;	
+	background-color: #D1FFC9;	
 	padding-left:4px;
 }
 tr.popupinsertionligne{
@@ -1390,7 +1354,7 @@ td.insertionCategory{
 	font-weight: bold;
 	text-decoration : none;
 	padding-left:4px;
-	background-color: #644883;
+	background-color: #8EBF86;
 	border-top-color:#FFFFFF;
 	border-top-width:4px;
 	border-top-style:solid;
@@ -1405,7 +1369,7 @@ td.insertionMedia{
 	font-weight: bold;
 	text-decoration : none;
 	padding-left:4px;
-	background-color: #644883;
+	background-color:#8EBF86;
 	border-top-color:#FFFFFF;
 	border-top-width:2px;
 	border-top-style:solid;
@@ -1419,7 +1383,7 @@ td.insertionHeader{
 	color : #000000;
 	font-weight: bold;
 	text-decoration : none;
-	background-color: #B1A3C1;
+	background-color: #C8E6C3;
 	padding-left:5px;
 	padding-right:5px;
 	border-left-width:0px;
@@ -1537,7 +1501,7 @@ td.p9{
 	color : #000000;
 	font-weight:normal;
 	text-decoration : none;
-	background-color: #D0C8DA;	
+	background-color: #C3D3E6;	
 	padding:0px,0px,0px,2px;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -1734,6 +1698,7 @@ td.asl5nb{
 	text-align:right;
 	padding-left:4px;
 	padding-right:4px;
+
 	border-left-width:0px;
 	border-top-width:1px;
 	border-top-color:#FFFFFF;
@@ -1741,8 +1706,10 @@ td.asl5nb{
 	border-bottom-width:0px;
 	border-right-width: 1px; 
 	border-right-color:#FFFFFF;
+
 	border-right-style:solid;	
 	height:18px;
+
 }
 tr.asl5b{
 	background-color:#F1F1F1;
@@ -1822,14 +1789,14 @@ tr.asl5bx{
 	border-right-style:solid;	
 	height:18px;
 }
-td.asl5bxls{
+td.asl5bxls
+{
 	background-color:#F1F1F1;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
 	font-weight:normal;
 	text-decoration : none;
-	background-color: #C0C0C0;
 	padding:0px,0px,0px,2px;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -1864,7 +1831,7 @@ tr.asl5r{
 /*Dynamiques tables*/
 /*Header*/
 tr.astd0{
-	background-color:#644883;
+	background-color:#FF0000;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #FFFFFF;
@@ -2019,7 +1986,7 @@ tr.asl2x{
 }
 /*Hierarchical level line 3*/
 tr.asl3{
-	background-color:#B1A3C1;
+	background-color:#C8E6C3;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
@@ -2229,7 +2196,7 @@ tr.asl3brx{
 }
 /*Hierarchical level line 4*/
 tr.asl4{
-	background-color:#D0C8DA;
+	background-color:#D1FFC9;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
@@ -2476,21 +2443,21 @@ tr.asl5brx{
 /*Advertiser table*/
 caption.divTable{
 	background-color:#ffffff;
-	border:solid 1px #644883;
+	border:solid 1px #C8E6C3;
 	text-align:left;
 }
 table.divTable{
-	background-color:#DED8E5;
+	background-color:#D1FFC9;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #644883;
+	color: #C8E6C3;
 	font-weight: bold;
-	border:solid 1px #644883;
+	border:solid 1px #C8E6C3;
 }
 
 td.affinitiesBorderImg
 {
-	background-color:#644883;
+	background-color:#FF0000;
 	border-right-width: 1px; 
 	border-right-color:#FFFFFF;
 	border-right-style:solid;	
@@ -2515,7 +2482,7 @@ td.pmcategoryb
 	color : #000000;
 	font-weight: bold;
 	text-decoration : none;
-	background-color: #D0C8DA;
+	background-color: #D1FFC9;
 	padding:0px,0px,0px,2px;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -2527,6 +2494,51 @@ td.pmcategoryb
 	border-right-style:solid;
 	padding-left:4px;
 	padding-right:4px;
+}
+/*
+Indicators
+*/
+td.p9ind
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:normal;
+	text-decoration : none;
+	background-color: #D0C8DA;	
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#D0C8DA;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	text-align:right
+}
+td.pmcategorynb
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #B1A3C1;
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	text-align:right
 }
 /*
 Indicators
@@ -2590,6 +2602,102 @@ td.pmcategorynb
 	border-left :#644883 1px solid; 
 	border-right :#644883 1px solid;
 }
+
+/* Style des bordures des cellules du tableau de la page Dates de Mises à jour */
+.RowHourTop {
+	border-top: 1px solid #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px solid #644883;
+}
+.RowHour {
+	border-top: 1px none #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px solid #644883;
+}
+.RowHourBottom {
+	border-top: 1px none #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px solid #644883;
+}
+.ColumnHeaderLeft {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px solid #644883;
+	
+}
+.ColumnHeader {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.ColumnHeaderRight {
+	border-top: 1px solid #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.CellTopLeft {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px solid #644883;
+}
+.CellMiddleLeft {
+	border-top: 1px none #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px solid #644883;
+}
+.CellBottomLeft {
+	border-top: 1px none #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px solid #644883;
+}
+.CellTopCenter {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px none #644883;
+}
+.CellSpecial01 {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.CellSpecial02 {
+	border-top: 1px solid #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.CellMiddleCenter {
+	border-top: 1px none #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px none #644883;
+}
+.CellBottomCenter {
+	border-top: 1px none #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.CellSpecial03 {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px solid #644883;
+}
+.CellSolid {
+	border: 1px solid #644883;
+}
 /* Styles utilisés pour AdExpress et Anubis */
 .UniverseItemsStyle{
 	border-left :#644883 1px solid; 
@@ -2636,6 +2744,43 @@ td.acl2Bg{
 	padding-left:4px;
 	padding-right:4px;
 	text-decoration : none;
+}
+.TreeHeaderVioletBorder{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	border-color : #644883;
+	border-top :#644883 1px solid; 
+	border-left :#644883 1px solid; 
+	border-right :#644883 1px solid; 
+	border-bottom :#644883 1px solid;
+}
+.TreeHeaderVioletBorderWithoutTop{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	border-left :#644883 1px solid; 
+	border-right :#644883 1px solid; 
+	border-bottom :#644883 1px solid;
+}
+.TreeHeaderBlancBorder{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	border-color : #FFFFFF;
+}
+.TreeTableVioletBorder{
+	border-left :#644883 1px solid; 
+	border-right :#644883 1px solid; 
+	border-bottom :#644883 1px solid;
+	background-color:#DED8E5;
+}
+.TreeTableBlancBorder{
+	border-color : #FFFFFF;
+	background-color:#DED8E5;
 }
 /*justif*/
 .jusT
@@ -2702,3 +2847,4 @@ td.jus
 	border-right-width: 1px; 
 	border-right-style:solid;
 }
+
