@@ -53,7 +53,7 @@ namespace TNS.AdExpress.Domain.Translation
 		/// <returns>Short date format</returns>
 		public string GetFormatPattern(string name) {
 			if (!_patterns.ContainsKey(name.ToLower()))
-				throw new ArgumentException(string.Format("The short date pattern {0} is not defined ", name));
+				throw new ArgumentException(string.Format("The pattern {0} is not defined ", name));
 			return _patterns[name.ToLower()];
 		}
         #endregion
@@ -115,7 +115,19 @@ namespace TNS.AdExpress.Domain.Translation
         }
         #endregion
 
-		
+		#region Methods
+		/// <summary>
+		/// Get format pattern from string Format like "{0:Format}"
+		/// </summary>
+		/// <param name="stringFormat">string Format like "{0:Format}"</param>
+		/// <returns>Format pattern like "# ##0"</returns>
+		public string GetFormatPatternFromStringFormat(string stringFormat) {
+			if (stringFormat == null || stringFormat.Length == 0 || stringFormat.Length<5 ) throw new ArgumentNullException(" StringFormat is null");
+			string formatKey = stringFormat.Substring(3, stringFormat.Length - 4);
+			if (!_patterns.ContainsKey(formatKey.ToLower()))throw new ArgumentException(string.Format("The pattern {0} is not defined ", formatKey));
+			return _patterns[formatKey.ToLower()];
+		}
+		#endregion
 
-    }
+	}
 }
