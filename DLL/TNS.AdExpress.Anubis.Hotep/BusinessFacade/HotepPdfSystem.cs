@@ -337,7 +337,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			sw.WriteLine("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			sw.WriteLine("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			sw.WriteLine("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+            sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
             sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
             sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 			sw.WriteLine("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
@@ -1761,7 +1761,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");

@@ -3,6 +3,7 @@
 //Creation : 10/08/2006
 #endregion
 
+#region Using
 using System;
 using System.Collections;
 using System.Data;
@@ -64,9 +65,9 @@ using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
 using DomainLevel = TNS.AdExpress.Domain.Level;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+#endregion
 
-namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
-{
+namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 	/// <summary>
 	/// Generate the PDF document for MiysisPdfSystem module.
 	/// </summary>
@@ -130,17 +131,17 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public MiysisPdfSystem(IDataSource dataSource, MiysisConfig config, DataRow rqDetails, WebSession webSession):
-		base(config.LeftMargin, config.RightMargin, config.TopMargin, config.BottomMargin,
-		config.HeaderHeight,config.FooterHeight)
-							{
-		this._dataSource = dataSource;
-		this._config = config;
-		this._rqDetails = rqDetails;
-		this._webSession = webSession;
+        public MiysisPdfSystem(IDataSource dataSource, MiysisConfig config, DataRow rqDetails, WebSession webSession)
+            :
+        base(config.LeftMargin, config.RightMargin, config.TopMargin, config.BottomMargin,
+        config.HeaderHeight, config.FooterHeight) {
+            this._dataSource = dataSource;
+            this._config = config;
+            this._rqDetails = rqDetails;
+            this._webSession = webSession;
 
-	}
-	#endregion
+        }
+	    #endregion
 
 		#region Init
 		internal string Init(){
@@ -332,19 +333,17 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 				_config.MainPageTitleFont.SizeInPoints,TxFontCharset.charsetANSI_CHARSET);
 			
 			string str = "";
-			string dFormat = "ddd\\, MMM dd\\, yyyy";
-			CultureInfo cIn = new CultureInfo("en-GB",false);
 			
 			if(_webSession.SiteLanguage==33) {
 				this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GestionWeb.GetWebWord(751, _webSession.SiteLanguage))) / 2,
 					(this.PDFPAGE_Height) / 4, 0, GestionWeb.GetWebWord(751, _webSession.SiteLanguage));			
-				str = GestionWeb.GetWebWord(1922,_webSession.SiteLanguage) + " " + DateTime.Now.ToString("ddd dd MMM yyyy");
 			}
 			else {
 				this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GestionWeb.GetWebWord(751, _webSession.SiteLanguage))) / 2, 
 					(this.PDFPAGE_Height)/4,0,GestionWeb.GetWebWord(751,_webSession.SiteLanguage));	
-				str = GestionWeb.GetWebWord(1922,_webSession.SiteLanguage) + " " + DateTime.Now.ToString(dFormat,cIn);
 			}
+
+            str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 				
 			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
 				_config.MainPageDefaultFont.Bold,
@@ -377,7 +376,6 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 		sw = TNS.AdExpress.Anubis.Common.Functions.GetHtmlFile(workFile,_webSession);
 
 		#region Title
-					
 		sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 		sw.WriteLine("<TR height=\"25\">");
 		sw.WriteLine("<TD></TD>");
@@ -386,7 +384,6 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 		sw.WriteLine("<TD style=\"font-family: Arial, Helvetica, sans-serif; font-size: 20px; color: #644883; font-weight: bold;\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752,_webSession.SiteLanguage)) + "</TD>");
 		sw.WriteLine("</TR>");
 		#endregion
-
 		
 		#region Period
 		sw.WriteLine("<TR height=\"7\">");
@@ -419,7 +416,6 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 		sw.WriteLine("<TR>");
 		sw.WriteLine("<TD align=\"left\">");
 		sw.WriteLine(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia,false,false,false,600,false,false,_webSession.SiteLanguage,2,1,true));
-		//sw.WriteLine(SelectionMedia[0].ToString());
 		sw.WriteLine("</TD>");
 		sw.WriteLine("</TR>");
 		#endregion
@@ -587,7 +583,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 				html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 				html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 				html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
                 html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
                 html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
@@ -836,7 +832,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");

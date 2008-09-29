@@ -3,6 +3,7 @@
 // Creation : 25/08/2006
 #endregion
 
+#region Using
 using System;
 using System.Collections;
 using System.Data;
@@ -54,9 +55,9 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Web;
+#endregion
 
-namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
-{
+namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 	/// <summary>
 	/// Generate the PDF document for Appm module (Media Plan).
 	/// </summary>
@@ -255,8 +256,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 		/// Design Main Page
 		/// </summary>
 		/// <returns></returns>
-		private void MainPageDesign()
-		{
+		private void MainPageDesign(){
 		
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 	
@@ -296,10 +296,12 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 				_config.MainPageTitleFont.Strikeout,
 				32,TxFontCharset.charsetANSI_CHARSET);
 			
-			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(_config.PdfTitle))/2, 
-				(this.PDFPAGE_Height)/4,0,"("+_config.PdfTitle+")");			
+			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(_config.PdfTitle))/2,
+                (this.PDFPAGE_Height) / 4, 0, "(" + GestionWeb.GetWebWord(2535, _webSession.SiteLanguage) + ")");			
 
-			string str = "Créé le " + DateTime.Now.ToString("ddd dd MMM yyyy");
+			string str = string.Empty;
+            str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
+
 			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
 				_config.MainPageDefaultFont.Bold,
 				_config.MainPageDefaultFont.Italic,
@@ -314,6 +316,9 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 		#endregion
 
 		#region MediaPlanIpression
+        /// <summary>
+        /// MediaPlanImpression
+        /// </summary>
 		private void MediaPlanImpression() {
 	
 			#region GETHTML
@@ -339,7 +344,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 				html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 				html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 				html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
                 html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
                 html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
                 html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
@@ -573,8 +578,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 		/// En tête du code HTML
 		/// </summary>
 		/// <returns></returns>
-		private string GetHeader()
-		{
+		private string GetHeader(){
 
 			StringBuilder html = new StringBuilder(10000);
             string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
@@ -588,7 +592,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
