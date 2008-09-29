@@ -127,7 +127,7 @@ namespace AdExpress.Private.Selection {
                     GlobalCalendarWebControl1.StartYear = DateTime.Now.AddYears(-2).Year;
                 }
 
-                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
+                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || _webSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES)
                     GlobalCalendarWebControl1.IsRestricted = false;
                 else{
                     GlobalCalendarWebControl1.IsRestricted = true;

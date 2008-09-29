@@ -1370,12 +1370,14 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// Données de cadrage
 			/// </summary>
 			public const int DONNEES_DE_CADRAGE = 1920;
-
 			/// <summary>
 			/// Justificatifs Presse
 			/// </summary>
 			public const int JUSTIFICATIFS_PRESSE = 1950;
-
+            /// <summary>
+            /// Les nouvelles créations (Evaliant)
+            /// </summary>
+            public const int NEW_CREATIVES = 4369;
 		}
 		#endregion
 
