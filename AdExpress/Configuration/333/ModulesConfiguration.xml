@@ -1300,6 +1300,39 @@
           </page>
         </results>
       </module>
+      <!-- **************************************** Modules Tableaux de bord Evaliant******************************************-->
+      <module name="Tableaux de bord Evaliant" privilegecode="4370" traductioncode="2536" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2537" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <selections>
+          <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="5" name="sector"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="4" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/DashBoardMediaSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DashBoardMediaSelectionHelp.aspx" validationMethod="isMediaSelected">
+            <loadableUnivers>
+              <type id="12" name="vehicle_interestcenter_media"/>
+            </loadableUnivers>
+          </selection>
+          <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <results>
+          <page id="0" resultid="66" name="Résultats" traductioncode="2538" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
     </moduleGroup>
 
     <!-- ***************************************************************************************************************************-->
