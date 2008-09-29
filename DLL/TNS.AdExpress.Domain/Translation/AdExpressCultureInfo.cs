@@ -30,6 +30,10 @@ namespace TNS.AdExpress.Domain.Translation
         /// Supported patterns
         /// </summary>
         Dictionary<string, string> _patterns = new Dictionary<string, string>();
+        /// <summary>
+        /// Supported Excel patterns
+        /// </summary>
+        Dictionary<string, string> _excelPatterns = new Dictionary<string, string>();
         #endregion
 
         #region Properties
@@ -46,16 +50,41 @@ namespace TNS.AdExpress.Domain.Translation
                 throw new ArgumentException(string.Format("Duplicated key {0}", name));
             _patterns.Add(name.ToLower(), format);
         }
+
+        /// <summary>
+        /// Add a specific Excel pattern
+        /// </summary>
+        /// <param name="name">Name of the pattern</param>
+        /// <param name="excelFormat">Excel Pattern</param>
+        /// <exception cref=""
+        /// <returns></returns>
+        public void AddExcelPattern(string name, string excelFormat) {
+            if (_excelPatterns.ContainsKey(name))
+                throw new ArgumentException(string.Format("Duplicated key {0}", name));
+            _excelPatterns.Add(name.ToLower(), excelFormat);
+        }
+
 		/// <summary>
-		/// Get a specific short date format
+        /// Get a specific Pattern
 		/// </summary>
 		/// <param name="name">Name of the pattern</param>	
-		/// <returns>Short date format</returns>
+        /// <returns>Pattern</returns>
 		public string GetFormatPattern(string name) {
 			if (!_patterns.ContainsKey(name.ToLower()))
 				throw new ArgumentException(string.Format("The pattern {0} is not defined ", name));
 			return _patterns[name.ToLower()];
 		}
+
+        /// <summary>
+        /// Get a specific Excel Pattern
+        /// </summary>
+        /// <param name="name">Name of the pattern</param>	
+        /// <returns>Excel Pattern</returns>
+        public string GetExcelFormatPattern(string name) {
+            if (!_excelPatterns.ContainsKey(name.ToLower()))
+                throw new ArgumentException(string.Format("The pattern {0} is not defined ", name));
+            return _excelPatterns[name.ToLower()];
+        }
         #endregion
 
         #region Constructor
@@ -127,6 +156,18 @@ namespace TNS.AdExpress.Domain.Translation
 			if (!_patterns.ContainsKey(formatKey.ToLower()))throw new ArgumentException(string.Format("The pattern {0} is not defined ", formatKey));
 			return _patterns[formatKey.ToLower()];
 		}
+
+        /// <summary>
+        /// Get Excel format pattern from string Format like "{0:Format}" 
+        /// </summary>
+        /// <param name="stringFormat">string Format like "{0:Format}"</param>
+        /// <returns>Excel Format pattern like "# ##0"</returns>
+        public string GetExcelFormatPatternFromStringFormat(string stringFormat) {
+            if (stringFormat == null || stringFormat.Length == 0 || stringFormat.Length < 5) throw new ArgumentNullException(" StringFormat is null");
+            string formatKey = stringFormat.Substring(3, stringFormat.Length - 4);
+            if (!_excelPatterns.ContainsKey(formatKey.ToLower())) throw new ArgumentException(string.Format("The pattern {0} is not defined ", formatKey));
+            return _excelPatterns[formatKey.ToLower()];
+        }
 		#endregion
 
 	}

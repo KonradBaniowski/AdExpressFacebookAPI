@@ -130,6 +130,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             AdExpressCultureInfo cInfo = null;
             string formatName = string.Empty;
             string format = string.Empty;
+            string excelFormat = string.Empty;
             #endregion
 
             try {
@@ -165,12 +166,18 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                             case "unitformat":
                                 if(reader.GetAttribute("name")!=null) formatName=reader.GetAttribute("name");
                                 if(reader.GetAttribute("format")!=null) format=reader.GetAttribute("format");
+                                if (reader.GetAttribute("excelFormat") != null && reader.GetAttribute("excelFormat").Length > 0) excelFormat = reader.GetAttribute("excelFormat");
+                                else excelFormat = format;
                                 cInfo.AddPattern(formatName, format);
+                                cInfo.AddExcelPattern(formatName, excelFormat);
                                 break;
 							case "dateFormat":
 								if (reader.GetAttribute("name") != null) formatName = reader.GetAttribute("name");
 								if (reader.GetAttribute("format") != null) format = reader.GetAttribute("format");
+                                if (reader.GetAttribute("excelFormat") != null && reader.GetAttribute("excelFormat").Length > 0) excelFormat = reader.GetAttribute("excelFormat");
+                                else excelFormat = format;
 								cInfo.AddPattern(formatName, format);
+                                cInfo.AddExcelPattern(formatName, excelFormat);
 								break;
                         }
                     }
