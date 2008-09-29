@@ -1690,5 +1690,49 @@
       </module>
     </moduleGroup>
 
+
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- **													Evaliant					                                                                            **-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+    
+    <moduleGroup name="Evaliant" type="0" privilegecode="150" traductioncode="2533" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2187">
+      <!-- ***************************************** Alerte portefeuille d'un support *****************************************-->
+      <module name="Les nouvelles créations" privilegecode="4369" traductioncode="2164" moduleCategoryId="0" urlNextPage="/Private/Selection/GlobalDateSelection.aspx" descriptionWebTextId="2193" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
+        <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
+        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
+        <ProductDetailLevel>
+          <allowedProductLevelItems>
+            <allowedProductLevelItem id="11" name="Famille"/>
+            <allowedProductLevelItem id="12" name="Classe"/>
+            <allowedProductLevelItem id="13" name="Groupe"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="10" name="Produit"/>
+            <allowedProductLevelItem id="9" name="Marque"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
+            <allowedProductLevelItem id="8" name="Annonceur"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <allowedProductLevelItem id="16" name="Agence"/>
+          </allowedProductLevelItems>
+        </ProductDetailLevel>
+        <results>
+          <page id="0" resultid="13" name="Les nouvelles créations" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+    </moduleGroup>
+
   </moduleGroups>
 </configuration>
