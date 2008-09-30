@@ -898,7 +898,7 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// <summary>
 		/// préfixes Table des TOP périodes utilisées
 		/// </summary>
-		public const string TOP_PERIODE_PREFIXE="txls";
+		public const string TOP_PERIODE_PREFIXE="tpd";
 
 		/// <summary>
 		/// Table UNITES utilisées
