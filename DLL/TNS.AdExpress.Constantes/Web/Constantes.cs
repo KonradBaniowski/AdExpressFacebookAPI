@@ -1354,6 +1354,10 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// Identifiant tableau de bord Pan Euro
 			/// </summary>
 			public const int TABLEAU_DE_BORD_PAN_EURO=1036;
+            /// <summary>
+            /// Evaliant report Id
+            /// </summary>
+            public const int TABLEAU_DE_BORD_EVALIANT = 4370;
 			/// <summary>
 			/// Bilan de Campagne
 			/// </summary>
