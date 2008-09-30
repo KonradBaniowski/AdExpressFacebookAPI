@@ -189,6 +189,7 @@ namespace AdExpress{
 						|| _webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_RADIO
 						|| _webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_TELEVISION
 						|| _webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_PAN_EURO
+                        || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_EVALIANT
 					)
 						_webSession.PreformatedTable =CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units;
 					
