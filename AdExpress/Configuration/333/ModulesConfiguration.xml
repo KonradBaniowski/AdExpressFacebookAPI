@@ -1152,6 +1152,9 @@
       </module>
       <!-- **************************************** Modules Tableaux de bord Presse******************************************-->
       <module name="Tableaux de bord Presse" privilegecode="475" traductioncode="2175" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2204" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1"/>
+        </ModuleAllowedMediaUniverse>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
             <!--<loadableUnivers>
@@ -1188,6 +1191,9 @@
       </module>
       <!-- **************************************** Modules Tableaux de bord Radio******************************************-->
       <module name="Tableaux de bord Radio" privilegecode="601" traductioncode="2177" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2206" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="2"/>
+        </ModuleAllowedMediaUniverse>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
             <!--<loadableUnivers>
@@ -1226,6 +1232,9 @@
       </module>
       <!-- **************************************** Modules Tableaux de bord télévision******************************************-->
       <module name="Tableaux de bord télévision" privilegecode="602" traductioncode="2176" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2205" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="3"/>
+        </ModuleAllowedMediaUniverse>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
             <!--<loadableUnivers>
@@ -1264,6 +1273,8 @@
       </module>
       <!-- **************************************** Modules Tableaux de bord Pan Euro******************************************-->
       <module name="Tableaux de bord Pan Euro" privilegecode="1036" traductioncode="2214" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2215" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="340">
+        </ModuleAllowedMediaUniverse>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
            <!--<loadableUnivers>
@@ -1302,6 +1313,9 @@
       </module>
       <!-- **************************************** Modules Tableaux de bord Evaliant******************************************-->
       <module name="Tableaux de bord Evaliant" privilegecode="4370" traductioncode="2536" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2537" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="6"/>
+        </ModuleAllowedMediaUniverse>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
             <allowedUniverseLevels>
