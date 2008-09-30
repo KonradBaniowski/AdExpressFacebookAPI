@@ -351,8 +351,11 @@ namespace TNS.AdExpressI.LostWon {
             DateTime PeriodBeginningDateN1DA = new DateTime(int.Parse(customerPeriod.ComparativeStartDate.Substring(0, 4)), int.Parse(customerPeriod.ComparativeStartDate.Substring(4, 2)), int.Parse(customerPeriod.ComparativeStartDate.Substring(6, 2)));
             DateTime PeriodEndDateN1DA = new DateTime(int.Parse(customerPeriod.ComparativeEndDate.Substring(0, 4)), int.Parse(customerPeriod.ComparativeEndDate.Substring(4, 2)), int.Parse(customerPeriod.ComparativeEndDate.Substring(6, 2))); ;
             CultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            string PeriodDateN = string.Format(cInfo, "{0:d}-{1:d}", PeriodBeginningDate, PeriodEndDate);
-            string PeriodDateN1 = string.Format(cInfo, "{0:d}-{1:d}", PeriodBeginningDateN1DA, PeriodEndDateN1DA);
+            
+			//string PeriodDateN = string.Format(cInfo, "{0:d}-{1:d}", PeriodBeginningDate, PeriodEndDate);
+			//string PeriodDateN1 = string.Format(cInfo, "{0:d}-{1:d}", PeriodBeginningDateN1DA, PeriodEndDateN1DA);
+			string PeriodDateN = FctUtilities.Dates.DateToString(PeriodBeginningDate,_session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(PeriodEndDate,_session.SiteLanguage);
+			string PeriodDateN1 = FctUtilities.Dates.DateToString(PeriodBeginningDateN1DA, _session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(PeriodEndDateN1DA, _session.SiteLanguage);
 
             #endregion
 
@@ -907,8 +910,11 @@ namespace TNS.AdExpressI.LostWon {
             DateTime periodEndN1 = new DateTime(int.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(0, 4)), int.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(4, 2)), int.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(6, 2))); ;
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            string periodLabelN = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN), string.Format(cInfo, "{0:d}", periodEndN));
-            string periodLabelN1 = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN1), string.Format(cInfo, "{0:d}", periodEndN1));
+			//string periodLabelN = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN), string.Format(cInfo, "{0:d}", periodEndN));
+			//string periodLabelN1 = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN1), string.Format(cInfo, "{0:d}", periodEndN1));
+			string periodLabelN = FctUtilities.Dates.DateToString(periodBeginN, _session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(periodEndN, _session.SiteLanguage);
+			string periodLabelN1 = FctUtilities.Dates.DateToString(periodBeginN1, _session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(periodEndN1, _session.SiteLanguage);
+
             #endregion
 
             #region Extract Columns Elements
