@@ -6,7 +6,7 @@
 
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 
@@ -37,7 +37,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <summary>
 		/// Analyse par périodicité
 		/// </summary>
-		internal static void SetExcelSheet(Excel excel,WebSession webSession,IDataSource dataSource){
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource) {
 			
 			#region targets
 			//base target
@@ -74,7 +74,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// </summary>
 		/// <param name="excel">excel</param>
 		/// <param name="periodicityPlanData">source de données</param>
-		private static void GRPTreatment(Excel excel, WebSession webSession, DataTable periodicityPlanData){
+        private static void GRPTreatment(Workbook excel, WebSession webSession, DataTable periodicityPlanData) {
 			int s=1;
 			int nbMaxRowByPage=42;		
 			int upperLeftColumn=9;
@@ -109,12 +109,12 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 					break;
 				default : break;
 			}
-            cells.Merge(cellRow-1,1,2,0);
+            cells.Merge(cellRow-1,1,2,1);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1774,webSession.SiteLanguage),cellRow-1,1,false,Color.White,8,2);
-			cells.Merge(cellRow-1,2,0,2);
+			cells.Merge(cellRow-1,2,1,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ " (" +periodicityPlanData.Rows[0]["baseTarget"]+")",cellRow-1,2,false,Color.White,8,2);
 			GRP1Length = GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ " (" +periodicityPlanData.Rows[0]["baseTarget"]+")";
-			cells.Merge(cellRow-1,4,0,2);
+			cells.Merge(cellRow-1,4,1,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ " (" +periodicityPlanData.Rows[0]["additionalTarget"]+")",cellRow-1,4,false,Color.White,8,2);
 			GRP2Length = GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ " (" +periodicityPlanData.Rows[0]["additionalTarget"]+")";
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,startIndex-1,1,5,true,Color.White,Color.FromArgb(100,72,131),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
@@ -126,6 +126,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,unitName,cellRow-1,4,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(264,webSession.SiteLanguage),cellRow-1,5,false,Color.White,8,2);
 			cells[cellRow-1,1].Style.ForegroundColor =  Color.FromArgb(100,72,131);
+            cells[cellRow - 1, 1].Style.Pattern = BackgroundType.Solid;
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,2,5,true,Color.White,Color.FromArgb(100,72,131),Color.White,CellBorderType.Thin,CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,8,false);
 		
 			#endregion
@@ -214,7 +215,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// </summary>
 		/// <param name="excel">excel</param>
 		/// <param name="periodicityPlanData">source de données</param>
-		private static void SimpleTreatment(Excel excel, WebSession webSession, DataTable periodicityPlanData){
+        private static void SimpleTreatment(Workbook excel, WebSession webSession, DataTable periodicityPlanData) {
 			int s=1;
 			int nbMaxRowByPage=42;		
 			int upperLeftColumn=9;

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-using Aspose.Excel;
+using Aspose.Cells;
 
 namespace TNS.AdExpressI.MediaSchedule.Style {
     #region Base Class
@@ -14,34 +14,34 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
         #region Properties
 
         #region styles
-        public Aspose.Excel.Style VersionCell0;
-        public Aspose.Excel.Style CellPresent;
-        public Aspose.Excel.Style CellNotPresent;
-        public Aspose.Excel.Style CellExtended;
-        public Aspose.Excel.Style CellTitle;
-        public Aspose.Excel.Style CellYear;
-        public Aspose.Excel.Style CellYear1;
-        public Aspose.Excel.Style CellPeriod;
-        public Aspose.Excel.Style CellPeriodIncomplete;
-        public Aspose.Excel.Style CellDay;
-        public Aspose.Excel.Style CellDayWE;
-        public Aspose.Excel.Style CellLevelTotal;
-        public Aspose.Excel.Style CellLevelL1;
-        public Aspose.Excel.Style CellLevelL2_1;
-        public Aspose.Excel.Style CellLevelL2_2;
-        public Aspose.Excel.Style CellLevelL3;
-        public Aspose.Excel.Style CellLevelL4;
-        public Aspose.Excel.Style CellLevelTotalNb;
-        public Aspose.Excel.Style CellLevelTotalPdmNb;
-        public Aspose.Excel.Style CellLevelL1Nb;
-        public Aspose.Excel.Style CellLevelL1PdmNb;
-        public Aspose.Excel.Style CellLevelL2_1Nb;
-        public Aspose.Excel.Style CellLevelL2_1PdmNb;
-        public Aspose.Excel.Style CellLevelL2_2Nb;
-        public Aspose.Excel.Style CellLevelL2_2PdmNb;
-        public Aspose.Excel.Style CellLevelL3Nb;
-        public Aspose.Excel.Style CellLevelL4Nb;
-        public Dictionary<int, Aspose.Excel.Style> CellVersions = new Dictionary<int, Aspose.Excel.Style>();
+        public Aspose.Cells.Style VersionCell0;
+        public Aspose.Cells.Style CellPresent;
+        public Aspose.Cells.Style CellNotPresent;
+        public Aspose.Cells.Style CellExtended;
+        public Aspose.Cells.Style CellTitle;
+        public Aspose.Cells.Style CellYear;
+        public Aspose.Cells.Style CellYear1;
+        public Aspose.Cells.Style CellPeriod;
+        public Aspose.Cells.Style CellPeriodIncomplete;
+        public Aspose.Cells.Style CellDay;
+        public Aspose.Cells.Style CellDayWE;
+        public Aspose.Cells.Style CellLevelTotal;
+        public Aspose.Cells.Style CellLevelL1;
+        public Aspose.Cells.Style CellLevelL2_1;
+        public Aspose.Cells.Style CellLevelL2_2;
+        public Aspose.Cells.Style CellLevelL3;
+        public Aspose.Cells.Style CellLevelL4;
+        public Aspose.Cells.Style CellLevelTotalNb;
+        public Aspose.Cells.Style CellLevelTotalPdmNb;
+        public Aspose.Cells.Style CellLevelL1Nb;
+        public Aspose.Cells.Style CellLevelL1PdmNb;
+        public Aspose.Cells.Style CellLevelL2_1Nb;
+        public Aspose.Cells.Style CellLevelL2_1PdmNb;
+        public Aspose.Cells.Style CellLevelL2_2Nb;
+        public Aspose.Cells.Style CellLevelL2_2PdmNb;
+        public Aspose.Cells.Style CellLevelL3Nb;
+        public Aspose.Cells.Style CellLevelL4Nb;
+        public Dictionary<int, Aspose.Cells.Style> CellVersions = new Dictionary<int, Aspose.Cells.Style>();
         #endregion
 
         #endregion
@@ -50,14 +50,15 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public MediaScheduleSheetStyle(Excel excel) {
+        public MediaScheduleSheetStyle(Workbook excel) {
 
-            int i = 0;
+            int indexColor = 0;
 
             #region VersionCell0
-            excel.Styles.Add();
-            VersionCell0 = excel.Styles[i];
+            indexColor = excel.Styles.Add();
+            VersionCell0 = excel.Styles[indexColor];
             VersionCell0.ForegroundColor = Color.FromArgb(100, 72, 131);
+            VersionCell0.Pattern = BackgroundType.Solid;
             VersionCell0.Font.Color = Color.White;
             VersionCell0.Font.Size = 8;
             VersionCell0.Font.IsBold = false;
@@ -68,10 +69,10 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellNotPresent
-            i++;
-            excel.Styles.Add();
-            CellNotPresent = excel.Styles[i];
+            indexColor = excel.Styles.Add();
+            CellNotPresent = excel.Styles[indexColor];
             CellNotPresent.ForegroundColor = Color.FromArgb(177, 163, 193);
+            CellNotPresent.Pattern = BackgroundType.Solid;
             CellNotPresent.Font.Color = Color.White;
             CellNotPresent.Font.Size = 8;
             CellNotPresent.Font.IsBold = false;
@@ -82,10 +83,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellPresent
-            i++;
-            excel.Styles.Add();
-            CellPresent = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellPresent = excel.Styles[indexColor];
             CellPresent.ForegroundColor = Color.FromArgb(100, 72, 131);
+            CellPresent.Pattern = BackgroundType.Solid;
             CellPresent.Font.Color = Color.White;
             CellPresent.Font.Size = 8;
             CellPresent.Font.IsBold = false;
@@ -96,10 +98,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellExtended
-            i++;
-            excel.Styles.Add();
-            CellExtended = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellExtended = excel.Styles[indexColor];
             CellExtended.ForegroundColor = Color.FromArgb(162, 125, 203);
+            CellExtended.Pattern = BackgroundType.Solid;
             CellExtended.Font.Color = Color.FromArgb(162, 125, 203);
             CellExtended.Font.Size = 8;
             CellExtended.Font.IsBold = false;
@@ -110,10 +113,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellTitle
-            i++;
-            excel.Styles.Add();
-            CellTitle = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellTitle = excel.Styles[indexColor];
             CellTitle.ForegroundColor = Color.FromArgb(100, 72, 131);
+            CellTitle.Pattern = BackgroundType.Solid;
             CellTitle.Font.Color = Color.White;
             CellTitle.Font.Size = 9;
             CellTitle.Font.IsBold = true;
@@ -124,20 +128,22 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellYear
-            i++;
-            excel.Styles.Add();
-            CellYear = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellYear = excel.Styles[indexColor];
             CellYear.ForegroundColor = Color.FromArgb(100, 72, 131);
+            CellYear.Pattern = BackgroundType.Solid;
             CellYear.Font.Color = Color.White;
             CellYear.Font.Size = 9;
             CellYear.Font.IsBold = true;
             #endregion
 
             #region CellYear1
-            i++;
-            excel.Styles.Add();
-            CellYear1 = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellYear1 = excel.Styles[indexColor];
             CellYear1.ForegroundColor = Color.FromArgb(100, 72, 131) ;
+            CellYear1.Pattern = BackgroundType.Solid;
             CellYear1.Font.Color = Color.White;
             CellYear1.Font.Size = 9;
             CellYear1.Font.IsBold = true;
@@ -146,10 +152,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellPeriod
-            i++;
-            excel.Styles.Add();
-            CellPeriod = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellPeriod = excel.Styles[indexColor];
             CellPeriod.ForegroundColor = Color.FromArgb(177, 163, 193);
+            CellPeriod.Pattern = BackgroundType.Solid;
             CellPeriod.Font.Color = Color.Black;
             CellPeriod.Font.Size = 8;
             CellPeriod.Font.IsBold = false;
@@ -160,10 +167,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellPeriodIncomplete
-            i++;
-            excel.Styles.Add();
-            CellPeriodIncomplete = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellPeriodIncomplete = excel.Styles[indexColor];
             CellPeriodIncomplete.ForegroundColor = Color.FromArgb(177, 163, 193);
+            CellPeriodIncomplete.Pattern = BackgroundType.Solid;
             CellPeriodIncomplete.Font.Color = Color.Black;
             CellPeriodIncomplete.Font.Size = 8;
             CellPeriodIncomplete.Font.IsBold = false;
@@ -174,10 +182,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellDay
-            i++;
-            excel.Styles.Add();
-            CellDay = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellDay = excel.Styles[indexColor];
             CellDay.ForegroundColor = Color.FromArgb(177, 163, 193);
+            CellDay.Pattern = BackgroundType.Solid;
             CellDay.Font.Color = Color.Black;
             CellDay.Font.Size = 8;
             CellDay.Font.IsBold = false;
@@ -188,10 +197,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellDayWE
-            i++;
-            excel.Styles.Add();
-            CellDayWE = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellDayWE = excel.Styles[indexColor];
             CellDayWE.ForegroundColor = Color.FromArgb(177, 163, 193);
+            CellDayWE.Pattern = BackgroundType.Solid;
             CellDayWE.Font.Color = Color.Black;
             CellDayWE.Font.Size = 8;
             CellDayWE.Font.IsBold = false;
@@ -202,10 +212,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelTotal
-            i++;
-            excel.Styles.Add();
-            CellLevelTotal = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelTotal = excel.Styles[indexColor];
             CellLevelTotal.ForegroundColor = Color.White ;
+            CellLevelTotal.Pattern = BackgroundType.Solid;
             CellLevelTotal.Font.Color = Color.Black;
             CellLevelTotal.Font.Size = 8;
             CellLevelTotal.Font.IsBold = true;
@@ -216,10 +227,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL1
-            i++;
-            excel.Styles.Add();
-            CellLevelL1 = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL1 = excel.Styles[indexColor];
             CellLevelL1.ForegroundColor = Color.FromArgb(177, 163, 193);//Color.FromArgb(100,72,131)
+            CellLevelL1.Pattern = BackgroundType.Solid;
             CellLevelL1.Font.Color = Color.Black;
             CellLevelL1.Font.Size = 8;
             CellLevelL1.Font.IsBold = true;
@@ -230,10 +242,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL2_1
-            i++;
-            excel.Styles.Add();
-            CellLevelL2_1 = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL2_1 = excel.Styles[indexColor];
             CellLevelL2_1.ForegroundColor = Color.FromArgb(225, 224, 218);
+            CellLevelL2_1.Pattern = BackgroundType.Solid;
             CellLevelL2_1.Font.Color = Color.Black;
             CellLevelL2_1.Font.Size = 8;
             CellLevelL2_1.Font.IsBold = false;
@@ -244,10 +257,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL2_2
-            i++;
-            excel.Styles.Add();
-            CellLevelL2_2 = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL2_2 = excel.Styles[indexColor];
             CellLevelL2_2.ForegroundColor = Color.FromArgb(208, 200, 218);
+            CellLevelL2_2.Pattern = BackgroundType.Solid;
             CellLevelL2_2.Font.Color = Color.Black;
             CellLevelL2_2.Font.Size = 8;
             CellLevelL2_2.Font.IsBold = false;
@@ -258,10 +272,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL3
-            i++;
-            excel.Styles.Add();
-            CellLevelL3 = excel.Styles[i];
-            CellLevelL3.ForegroundColor = Color.FromArgb(100, 72, 131); ;
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL3 = excel.Styles[indexColor];
+            CellLevelL3.ForegroundColor = Color.FromArgb(100, 72, 131);
+            CellLevelL3.Pattern = BackgroundType.Solid;
             CellLevelL3.Font.Color = Color.White;
             CellLevelL3.Font.Size = 9;
             CellLevelL3.Font.IsBold = true;
@@ -272,10 +287,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL4
-            i++;
-            excel.Styles.Add();
-            CellLevelL4 = excel.Styles[i];
-            CellLevelL4.ForegroundColor = Color.FromArgb(100, 72, 131); ;
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL4 = excel.Styles[indexColor];
+            CellLevelL4.ForegroundColor = Color.FromArgb(100, 72, 131);
+            CellLevelL4.Pattern = BackgroundType.Solid;
             CellLevelL4.Font.Color = Color.White;
             CellLevelL4.Font.Size = 9;
             CellLevelL4.Font.IsBold = true;
@@ -286,10 +302,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelTotalNb
-            i++;
-            excel.Styles.Add();
-            CellLevelTotalNb = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelTotalNb = excel.Styles[indexColor];
             CellLevelTotalNb.ForegroundColor = Color.White;
+            CellLevelTotalNb.Pattern = BackgroundType.Solid;
             CellLevelTotalNb.Font.Color = Color.Black;
             CellLevelTotalNb.Font.Size = 8;
             CellLevelTotalNb.Font.IsBold = true;
@@ -300,10 +317,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelTotalPdmNb
-            i++;
-            excel.Styles.Add();
-            CellLevelTotalPdmNb = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelTotalPdmNb = excel.Styles[indexColor];
             CellLevelTotalPdmNb.ForegroundColor = Color.White;
+            CellLevelTotalPdmNb.Pattern = BackgroundType.Solid;
             CellLevelTotalPdmNb.Font.Color = Color.Black;
             CellLevelTotalPdmNb.Font.Size = 8;
             CellLevelTotalPdmNb.Font.IsBold = true;
@@ -314,10 +332,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL1Nb
-            i++;
-            excel.Styles.Add();
-            CellLevelL1Nb = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL1Nb = excel.Styles[indexColor];
             CellLevelL1Nb.ForegroundColor = Color.FromArgb(177, 163, 193);//Color.FromArgb(100,72,131)
+            CellLevelL1Nb.Pattern = BackgroundType.Solid;
             CellLevelL1Nb.Font.Color = Color.Black;
             CellLevelL1Nb.Font.Size = 8;
             CellLevelL1Nb.Font.IsBold = true;
@@ -328,10 +347,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL1PdmNb
-            i++;
-            excel.Styles.Add();
-            CellLevelL1PdmNb = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL1PdmNb = excel.Styles[indexColor];
             CellLevelL1PdmNb.ForegroundColor = Color.FromArgb(177, 163, 193);//Color.FromArgb(100,72,131)
+            CellLevelL1PdmNb.Pattern = BackgroundType.Solid;
             CellLevelL1PdmNb.Font.Color = Color.Black;
             CellLevelL1PdmNb.Font.Size = 8;
             CellLevelL1PdmNb.Font.IsBold = true;
@@ -342,10 +362,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL2_1Nb
-            i++;
-            excel.Styles.Add();
-            CellLevelL2_1Nb = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL2_1Nb = excel.Styles[indexColor];
             CellLevelL2_1Nb.ForegroundColor = Color.FromArgb(225, 224, 218);
+            CellLevelL2_1Nb.Pattern = BackgroundType.Solid;
             CellLevelL2_1Nb.Font.Color = Color.Black;
             CellLevelL2_1Nb.Font.Size = 8;
             CellLevelL2_1Nb.Font.IsBold = false;
@@ -356,10 +377,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL2_1PdmNb
-            i++;
-            excel.Styles.Add();
-            CellLevelL2_1PdmNb = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL2_1PdmNb = excel.Styles[indexColor];
             CellLevelL2_1PdmNb.ForegroundColor = Color.FromArgb(225, 224, 218);
+            CellLevelL2_1PdmNb.Pattern = BackgroundType.Solid;
             CellLevelL2_1PdmNb.Font.Color = Color.Black;
             CellLevelL2_1PdmNb.Font.Size = 8;
             CellLevelL2_1PdmNb.Font.IsBold = false;
@@ -370,10 +392,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL2_2Nb
-            i++;
-            excel.Styles.Add();
-            CellLevelL2_2Nb = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL2_2Nb = excel.Styles[indexColor];
             CellLevelL2_2Nb.ForegroundColor = Color.FromArgb(208, 200, 218);
+            CellLevelL2_2Nb.Pattern = BackgroundType.Solid;
             CellLevelL2_2Nb.Font.Color = Color.Black;
             CellLevelL2_2Nb.Font.Size = 8;
             CellLevelL2_2Nb.Font.IsBold = false;
@@ -384,10 +407,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL2_2PdmNb
-            i++;
-            excel.Styles.Add();
-            CellLevelL2_2PdmNb = excel.Styles[i];
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL2_2PdmNb = excel.Styles[indexColor];
             CellLevelL2_2PdmNb.ForegroundColor = Color.FromArgb(208, 200, 218);
+            CellLevelL2_2PdmNb.Pattern = BackgroundType.Solid;
             CellLevelL2_2PdmNb.Font.Color = Color.Black;
             CellLevelL2_2PdmNb.Font.Size = 8;
             CellLevelL2_2PdmNb.Font.IsBold = false;
@@ -398,10 +422,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL3Nb
-            i++;
-            excel.Styles.Add();
-            CellLevelL3Nb = excel.Styles[i];
-            CellLevelL3Nb.ForegroundColor = Color.FromArgb(100, 72, 131); ;
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL3Nb = excel.Styles[indexColor];
+            CellLevelL3Nb.ForegroundColor = Color.FromArgb(100, 72, 131);
+            CellLevelL3Nb.Pattern = BackgroundType.Solid;
             CellLevelL3Nb.Font.Color = Color.White;
             CellLevelL3Nb.Font.Size = 9;
             CellLevelL3Nb.Font.IsBold = true;
@@ -412,10 +437,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellLevelL4Nb
-            i++;
-            excel.Styles.Add();
-            CellLevelL4Nb = excel.Styles[i];
-            CellLevelL4Nb.ForegroundColor = Color.FromArgb(100, 72, 131); ;
+            
+            indexColor = excel.Styles.Add();
+            CellLevelL4Nb = excel.Styles[indexColor];
+            CellLevelL4Nb.ForegroundColor = Color.FromArgb(100, 72, 131);
+            CellLevelL4Nb.Pattern = BackgroundType.Solid;
             CellLevelL4Nb.Font.Color = Color.White;
             CellLevelL4Nb.Font.Size = 9;
             CellLevelL4Nb.Font.IsBold = true;
@@ -426,10 +452,11 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
             #endregion
 
             #region CellVersions
-            i++;
-            excel.Styles.Add();
-            Aspose.Excel.Style cellTemp = excel.Styles[i];
-            cellTemp.ForegroundColor = Color.FromArgb(100, 72, 131); ;
+            
+            indexColor = excel.Styles.Add();
+            Aspose.Cells.Style cellTemp = excel.Styles[indexColor];
+            cellTemp.ForegroundColor = Color.FromArgb(100, 72, 131);
+            cellTemp.Pattern = BackgroundType.Solid;
             cellTemp.Font.Color = Color.White;
             cellTemp.Font.Size = 9;
             cellTemp.Font.IsBold = true;
@@ -481,7 +508,7 @@ namespace TNS.AdExpressI.MediaSchedule.Style {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public ExcelSheetMediaScheduleStyle(Excel excel)
+        public ExcelSheetMediaScheduleStyle(Workbook excel)
             : base(excel) {
 
             

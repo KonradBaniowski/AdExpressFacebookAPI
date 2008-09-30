@@ -8,7 +8,7 @@
 
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 
@@ -37,7 +37,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <summary>
 		/// Affinités
 		/// </summary>
-		internal static void SetExcelSheet(Excel excel,WebSession webSession,IDataSource dataSource){
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource) {
 			
 			#region targets
 			//base target

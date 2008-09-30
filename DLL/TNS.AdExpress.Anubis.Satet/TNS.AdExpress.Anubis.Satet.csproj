@@ -78,9 +78,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Excel, Version=3.6.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56">
+    <Reference Include="Aspose.Cells, Version=4.5.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Anubis\Librairies\Aspose.Excel.dll</HintPath>
+      <HintPath>obj\Debug\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

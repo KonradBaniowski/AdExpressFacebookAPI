@@ -6,7 +6,7 @@
 
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 
@@ -36,7 +36,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <summary>
 		/// Affinités
 		/// </summary>
-		internal static void SetExcelSheet(Excel excel,WebSession webSession,IDataSource dataSource){
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource) {
 			
 			#region targets
 			//base target
@@ -72,14 +72,14 @@ namespace TNS.AdExpress.Anubis.Satet.UI
                 string excelPatternNamePercentage = "percentage";
 
 				#region En-tête du tableau  	
-				cells.Merge(cellRow-1,1,2,0);
+				cells.Merge(cellRow-1,0,2,1);
 				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1141,webSession.SiteLanguage),cellRow-1,0,false,Color.White,8,1);
-				cells.Merge(cellRow-1,1,0,2);
+				cells.Merge(cellRow-1,1,1,2);
 				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1682,webSession.SiteLanguage),cellRow-1,1,false,Color.White,8,1);
-				cells.Merge(cellRow-1,3,0,3);
+				cells.Merge(cellRow-1,3,1,3);
 				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1713,webSession.SiteLanguage)+" "+supportPlanData.Columns["GRP1"].Caption,cellRow-1,3,false,Color.White,8,1);
 				GRP1Length = GestionWeb.GetWebWord(1713,webSession.SiteLanguage)+" "+supportPlanData.Columns["GRP1"].Caption;
-				cells.Merge(cellRow-1,6,0,3);
+				cells.Merge(cellRow-1,6,1,3);
 				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1713,webSession.SiteLanguage)+" "+supportPlanData.Columns["GRP2"].Caption ,cellRow-1,6,false,Color.White,8,1);
 				GRP2Length = GestionWeb.GetWebWord(1713,webSession.SiteLanguage)+" "+supportPlanData.Columns["GRP2"].Caption;
 
@@ -135,7 +135,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 							}
 							else if(row.Table.Columns[i].ColumnName.IndexOf("PDM")>-1){
 								PDM=WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2).ToString(),WebConstantes.CustomerSessions.Unit.euro,true);
-								SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Math.Round(Decimal.Parse(PDM),2)/100,cellRow-1,i-2,false,Color.White,8,1);
+								SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Math.Round(Decimal.Parse(PDM),2),cellRow-1,i-2,false,Color.White,8,1);
                                 cells[cellRow - 1, i - 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNamePercentage); //10;
 							}
 							else{

@@ -7,7 +7,7 @@
 
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 using System.Collections;
@@ -40,8 +40,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <summary>
 		/// Synthèse
 		/// </summary>
-		internal static void SetExcelSheet(Excel excel,WebSession webSession,IDataSource dataSource){
-
+		internal static void SetExcelSheet(Workbook excel,WebSession webSession,IDataSource dataSource){
 			#region variables
 			bool mediaAgencyAccess=false;
             bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
@@ -106,7 +105,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			#region Tableau
 			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1666,webSession.SiteLanguage),cellRow-1,1,false,Color.White,8,2);
 			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.White,Color.FromArgb(100,72,131),Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,12,true);
-			cells.Merge(cellRow-1,1,0,2);
+			cells.Merge(cellRow-1,1,1,2);
 			cellRow++;
 
 			if(idProduct!=0){
@@ -261,7 +260,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 
 			upperLeftColumn=(int)indexLogo;
 			vPageBreaks = cells[cellRow,(int)indexLogo+1].Name;
-			cells.Merge(startIndex-1,1,0,2);
+			cells.Merge(startIndex-1,1,1,2);
 				SatetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(1664,webSession.SiteLanguage),cellRow-7,nbMaxRowByPage,ref s,upperLeftColumn,vPageBreaks,header.ToString());
 			}
 		}

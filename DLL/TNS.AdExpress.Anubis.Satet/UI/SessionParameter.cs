@@ -6,7 +6,7 @@
 
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 using System.Collections;
@@ -45,7 +45,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <summary>
 		/// Session parameter design
 		/// </summary>
-		internal static void SetExcelSheet(Excel excel,WebSession webSession,IDataSource dataSource){
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource) {
 
 			int nbMaxRowByPage=42;
 			int s=1;
@@ -179,7 +179,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// Affichage d'un arbre pour l'export Excel
 		/// </summary>
 		/// <param name="root">Arbre</param>
-		public static void ToExcel(TreeNode root, Excel excel, WebSession webSession,Worksheet sheet,ref int cellRow,Cells cells){
+        public static void ToExcel(TreeNode root, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells) {
 			int maxLevel=0;
 			GetNbLevels(root,1,ref maxLevel);
 			int nbTD=1;
@@ -202,7 +202,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// Met le style d'une cellule selon le niveau de l'arbre
 		/// </summary>
 		/// <param name="level">Niveau de l'arbre</param>
-		private static void SetLevelStyle(int level, Excel excel, Worksheet sheet,int cellRow,Cells cells,int nbTD){
+        private static void SetLevelStyle(int level, Workbook excel, Worksheet sheet, int cellRow, Cells cells, int nbTD) {
 			switch(level){
 				case 1:{
 					//cells.Merge(cellRow-1,1,1,3);
@@ -245,12 +245,13 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// dans la méthode ci-après et ajouter les niveaux dans la méthode GetLevelCss(int level)
 		/// - Affichage sur 3 colonnes dans le dernier niveau
 		/// </remarks>
-		private static bool ToExcel(TreeNode root, int level, int maxLevel, ref int nbTD, Excel excel, WebSession webSession, Worksheet sheet,ref int cellRow,Cells cells){
+        private static bool ToExcel(TreeNode root, int level, int maxLevel, ref int nbTD, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells) {
 
 			#region Variables
 			string img="";
 			string imgPath="";
 			Pictures pics = sheet.Pictures;
+            int indexImage = 0;
 			#endregion
 
 			#region Checkbox
@@ -269,7 +270,8 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			// Si on est dans le dernier niveau de l'arbre
 			if(level==maxLevel){ 
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
-				pics.Add(cellRow-1,nbTD,imgPath);
+                indexImage = pics.Add(cellRow - 1, nbTD, imgPath, 100, 100);
+                sheet.Pictures[indexImage].Placement = PlacementType.Move;
 				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,((LevelInformation)root.Tag).Text,cellRow-1,nbTD,false,Color.White,8,2);
 				SetLevelStyle(level,excel,sheet,cellRow,cells,nbTD);
 				cells[cellRow-1,nbTD].Style.IndentLevel = 2;
@@ -277,7 +279,8 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			else{
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
 				if(level!=0){
-					pics.Add(cellRow-1, 1,imgPath);
+                    pics.Add(cellRow - 1, 1, imgPath, 100, 100);
+                    sheet.Pictures[indexImage].Placement = PlacementType.Move;
 					SatetFunctions.WorkSheet.PutCellValue(sheet,cells,((LevelInformation)root.Tag).Text,cellRow-1,1,false,Color.White,8,2);
 					SetLevelStyle(level,excel,sheet,cellRow,cells,nbTD);
 					cells[cellRow-1,1].Style.IndentLevel = 2;
@@ -332,7 +335,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <param name="cellRow">cell row</param>
 		/// <param name="cells">cells</param>
 		/// <param name="connection">connection</param>
-		public static void ToExcel(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, Excel excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source) {
+        public static void ToExcel(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source) {
 			List<NomenclatureElementsGroup> groups = null;
 
 			if (adExpressUniverse != null && adExpressUniverse.Count() > 0) {
@@ -363,7 +366,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <param name="connection">DB connection</param>
 		/// <param name="accessType">access type (includes, excludes)</param>
 		/// <param name="language">language</param>
-		private static void SetUniverseGroups(List<NomenclatureElementsGroup> groups, Excel excel, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source, AccessType accessType, int language) {
+        private static void SetUniverseGroups(List<NomenclatureElementsGroup> groups, Workbook excel, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source, AccessType accessType, int language) {
 
 			int nbTD = 1;
             TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
@@ -375,6 +378,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			string img = @"Images\checkbox.GIF";
 			string imgPath = System.IO.Path.GetFullPath(img);
 			ArrayList itemIdList = null;
+            int indexImage = 0;
 
 			if (groups != null && groups.Count > 0) {
 				for (int i = 0; i < groups.Count; i++) {
@@ -411,7 +415,8 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 									level = 2;
 									for (int k = 0; k < itemIdList.Count; k++) {
 										//Add item label										
-										pics.Add(cellRow, nbTD, imgPath);//cellRow - 1
+                                        indexImage = pics.Add(cellRow, nbTD, imgPath, 100, 100);//cellRow - 1
+                                        sheet.Pictures[indexImage].Placement = PlacementType.Move;
 										SatetFunctions.WorkSheet.PutCellValue(sheet, cells, universeItems[Int64.Parse(itemIdList[k].ToString())], cellRow, nbTD, false, Color.White, 8, 2);
 										SetLevelStyle(level, excel, sheet, cellRow + 1, cells, nbTD);
 										cells[cellRow, nbTD].Style.IndentLevel = 2;	//cellRow - 1									

@@ -8,7 +8,7 @@
 
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 
@@ -33,7 +33,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <summary>
 		/// Composant excel
 		/// </summary>
-		protected Excel _excel;
+        protected Workbook _excel;
 		/// <summary>
 		/// Licence Aspose Excel
 		/// </summary>
@@ -44,9 +44,9 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// Constructeur
 		/// </summary>
 		public SatetExcel(){
-			_excel = new Excel();
+            _excel = new Workbook();
 			_license = new License();
-			_license.SetLicense("Aspose.Excel.lic");
+			_license.SetLicense("Aspose.Cells.lic");
 			
 			//Ajout de couleurs			
 			AddColor(Color.FromArgb(128,128,192));

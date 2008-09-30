@@ -39,7 +39,7 @@ using TNS.AdExpressI.MediaSchedule.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
 
-using Aspose.Excel;
+using Aspose.Cells;
 using TNS.AdExpressI.MediaSchedule.Functions;
 #endregion
 
@@ -512,7 +512,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// <summary>
         /// Get Excel for an excel export by Anubis of the media schedule
         /// </summary>
-        public virtual void GetRawData(Excel excel) {
+        public virtual void GetRawData(Workbook excel) {
             _isCreativeDivisionMS = false;
             _showValues = false;
             _allowTotal = false; 
@@ -1947,7 +1947,7 @@ namespace TNS.AdExpressI.MediaSchedule
         /// </summary>
         /// <param name="data">Preformated Data</param>
         /// <param name="excel">Object Excel for compute a page lan media</param>
-        protected virtual void ComputeDesignExcel(object[,] data, Excel excel) {
+        protected virtual void ComputeDesignExcel(object[,] data, Workbook excel) {
 
             if (data.GetLength(0) != 0) {
 
@@ -1986,11 +1986,11 @@ namespace TNS.AdExpressI.MediaSchedule
                 int sloganIndex = GetSloganIdIndex();
                 Int64 sloganId = -1;
                 string stringItem = "";
-                Aspose.Excel.Style presentstyle = null;
-                Aspose.Excel.Style extendedStyle = null;
-                Aspose.Excel.Style style = null;
-                Aspose.Excel.Style styleNb = null;
-                Aspose.Excel.Style stylePdmNb = null;
+                Aspose.Cells.Style presentstyle = null;
+                Aspose.Cells.Style extendedStyle = null;
+                Aspose.Cells.Style style = null;
+                Aspose.Cells.Style styleNb = null;
+                Aspose.Cells.Style stylePdmNb = null;
                 #endregion
 
                 int yearBegin = _period.Begin.Year;
@@ -2050,9 +2050,9 @@ namespace TNS.AdExpressI.MediaSchedule
                 WorkSheet.PutCellValue(cells, GestionWeb.GetWebWord(804, _session.SiteLanguage), cellRow - 1, colSupport, colFirstMediaPlan, _styleSheet.CellTitle, null);
                 cells[cellRow-1, colSupport].Style.HorizontalAlignment = TextAlignmentType.Left;
                 cells[cellRow - 1, colSupport].Style.VerticalAlignment = TextAlignmentType.Top;
-                cells[cellRow, colSupport].Style = _styleSheet.CellTitle;
+                cells[cellRow, colSupport].SetStyle(_styleSheet.CellTitle);
                 if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
-                    cells[cellRow+1, colSupport].Style = _styleSheet.CellTitle;
+                    cells[cellRow + 1, colSupport].SetStyle(_styleSheet.CellTitle);
                 }
                 nbColTabFirst++;
                 #endregion
@@ -2067,9 +2067,9 @@ namespace TNS.AdExpressI.MediaSchedule
                     colFirstMediaPlan++;
                     cells.Merge(cellRow - 1, colTotal, rowSpanNb, labColSpan);
                     WorkSheet.PutCellValue(cells, GestionWeb.GetWebWord(805, _session.SiteLanguage), cellRow - 1, colTotal, colFirstMediaPlan, _styleSheet.CellTitle,null);
-                    cells[cellRow, colTotal].Style = _styleSheet.CellTitle;
+                    cells[cellRow, colTotal].SetStyle(_styleSheet.CellTitle);
                     if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
-                        cells[cellRow + 1, colTotal].Style = _styleSheet.CellTitle;
+                        cells[cellRow + 1, colTotal].SetStyle(_styleSheet.CellTitle);
                     }
                     int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
                     int nbSpace = (nbtot - 1) / 3;
@@ -2094,9 +2094,9 @@ namespace TNS.AdExpressI.MediaSchedule
                     colTotalYears++;
                     cells.Merge(cellRow - 1, colPdm, rowSpanNb, labColSpan);
                     WorkSheet.PutCellValue(cells, GestionWeb.GetWebWord(806, _session.SiteLanguage), cellRow - 1, colPdm, colFirstMediaPlan, _styleSheet.CellTitle,null);
-                    cells[cellRow, colPdm].Style = _styleSheet.CellTitle;
+                    cells[cellRow, colPdm].SetStyle(_styleSheet.CellTitle);
                     if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
-                        cells[cellRow + 1, colPdm].Style = _styleSheet.CellTitle;
+                        cells[cellRow + 1, colPdm].SetStyle(_styleSheet.CellTitle);
                     }
                     nbColTabFirst++;
                 }
@@ -2114,9 +2114,9 @@ namespace TNS.AdExpressI.MediaSchedule
                     // Years necessary if the period consists of several years
                     for (int k = FIRST_PERIOD_INDEX, l = 0; k < firstPeriodIndex; k++, l++) {
                         cells.Merge(cellRow - 1, colTotalYears + l, rowSpanNb, labColSpan);
-                        cells[cellRow, colTotalYears + l].Style = _styleSheet.CellTitle;
+                        cells[cellRow, colTotalYears + l].SetStyle(_styleSheet.CellTitle);
                         if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
-                            cells[cellRow + 1, colTotalYears + l].Style = _styleSheet.CellTitle;
+                            cells[cellRow + 1, colTotalYears + l].SetStyle(_styleSheet.CellTitle);
                         }
                         WorkSheet.PutCellValue(cells, data[0, k], cellRow-1, colTotalYears + l, colFirstMediaPlan, _styleSheet.CellTitle,null);
                         nbColTabFirst++;
@@ -2133,7 +2133,7 @@ namespace TNS.AdExpressI.MediaSchedule
                 int prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
                 int lastPeriod = prevPeriod;
                 bool first = true;
-                Aspose.Excel.Style periodStyle = null;
+                Aspose.Cells.Style periodStyle = null;
                 switch (_period.PeriodDetailLEvel) {
                     case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
                     case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
@@ -2146,7 +2146,7 @@ namespace TNS.AdExpressI.MediaSchedule
                                 else
                                     WorkSheet.PutCellValue(cells, prevPeriod, startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear1, null);
                                 
-                                cells[startIndex - 1, nbColTabFirst + nbPeriod].Style = _styleSheet.CellYear1;
+                                cells[startIndex - 1, nbColTabFirst + nbPeriod].SetStyle(_styleSheet.CellYear1);
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
                                 prevPeriod = int.Parse(data[0, j].ToString().Substring(0, 4));
@@ -2210,7 +2210,7 @@ namespace TNS.AdExpressI.MediaSchedule
                                     WorkSheet.PutCellValue(cells, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear1, null);
                                 else
                                     WorkSheet.PutCellValue(cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, _styleSheet.CellYear1, null);
-                                cells[startIndex - 1, nbColTabFirst + nbPeriod].Style = _styleSheet.CellYear1;
+                                cells[startIndex - 1, nbColTabFirst + nbPeriod].SetStyle(_styleSheet.CellYear1);
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
                                 prevPeriod = currentDay.Month;
@@ -2296,8 +2296,8 @@ namespace TNS.AdExpressI.MediaSchedule
                                     }
 
                             }
-                            presentstyle = (Aspose.Excel.Style)_session.SloganColors[sloganId];
-                            extendedStyle = (Aspose.Excel.Style)_session.SloganColors[sloganId];
+                            presentstyle = (Aspose.Cells.Style)_session.SloganColors[sloganId];
+                            extendedStyle = (Aspose.Cells.Style)_session.SloganColors[sloganId];
                             stringItem = "x";
                         }
                         else {
