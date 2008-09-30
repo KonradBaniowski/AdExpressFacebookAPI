@@ -1740,7 +1740,7 @@ namespace TNS.AdExpressI.LostWon {
             Double N1Value = unitValueN1.Value;
             bool loyal = NValue > 0 && N1Value > 0;
             bool loyalDecline = NValue > 0  && N1Value > NValue;
-            bool loyalRising = NValue > N1Value && NValue > 0;
+            bool loyalRising = NValue > N1Value && N1Value > 0;
             bool won = NValue > 0 && N1Value <= 0;
             bool lost = NValue <= 0 && N1Value > 0;
 
