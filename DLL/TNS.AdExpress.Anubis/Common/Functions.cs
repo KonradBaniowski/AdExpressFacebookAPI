@@ -88,7 +88,7 @@ namespace TNS.AdExpress.Anubis.Common
 			try{
                 string charSet = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Charset;
                 string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
-                themeName = "FinlandAdExpressUk";
+                //themeName = "FinlandAdExpressUk";
 
 				if (!File.Exists(path)){
 					StreamWriter sw = File.CreateText(path);
