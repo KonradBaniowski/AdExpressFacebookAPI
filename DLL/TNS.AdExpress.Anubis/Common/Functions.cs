@@ -84,7 +84,7 @@ namespace TNS.AdExpress.Anubis.Common
 		/// <param name="path">File path</param>
         /// <param name="webSession">Web Session</param>
 		/// <returns>link so as to write text in the file</returns>
-        public static StreamWriter GetHtmlFile(string path, WebSession webSession) {
+        public static StreamWriter GetHtmlFile(string path, WebSession webSession, string serverName) {
 			try{
                 string charSet = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Charset;
                 string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
@@ -99,9 +99,9 @@ namespace TNS.AdExpress.Anubis.Common
 					sw.WriteLine("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 					sw.WriteLine("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 					sw.WriteLine("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-                    sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
-                    sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-                    sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+                    sw.WriteLine("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+                    sw.WriteLine("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+                    sw.WriteLine("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 					sw.WriteLine("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 					sw.WriteLine("<meta http-equiv=\"expires\" content=\"0\">");
 					sw.WriteLine("<meta http-equiv=\"pragma\" content=\"no-cache\">");

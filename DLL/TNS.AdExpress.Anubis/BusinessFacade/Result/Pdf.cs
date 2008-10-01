@@ -11,13 +11,13 @@ using TNS.AdExpress.Anubis.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 
-using PDFCreatorPilot2;
+using PDFCreatorPilotLib;
 
 namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 	/// <summary>
 	/// Classe de base pour générer un résultat de type PDF
 	/// </summary>
-	public class Pdf:piPDFDocumentClass{
+	public class Pdf:PDFDocument3Class/* piPDFDocumentClass*/{
 
 		#region Variables
  
