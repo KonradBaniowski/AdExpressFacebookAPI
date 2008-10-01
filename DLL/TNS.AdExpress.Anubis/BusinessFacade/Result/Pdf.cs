@@ -176,7 +176,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 		/// <param name="font">Police</param>
 		/// <param name="withCopyright">Indication du CopyRight</param>
 		/// <param name="_webSession">La WebSession</param>
-		public void AddHeadersAndFooters(string image ,imagePosition  position,string title,int fromPage, int toPage, Color fontColor,Font font,bool withCopyright, WebSession _webSession){
+        public void AddHeadersAndFooters(WebSession webSession, string image, imagePosition position, string title, int fromPage, int toPage, Color fontColor, Font font, bool withCopyright, WebSession _webSession) {
 			try{
 				if (fromPage < 0)
 					fromPage = 0;
@@ -201,7 +201,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 						this.PDFPAGE_Width/2 - (this.PDFPAGE_GetTextWidth(str)/2)
 						, this.WorkZoneBottom + this._footerHeight/2, 0, str);
 					if(withCopyright){
-						string strCopyright = "Copyright TNS 2006";
+                        string strCopyright = GestionWeb.GetWebWord(2266, webSession.SiteLanguage);
 						this.PDFPAGE_SetActiveFont(font.Name, font.Bold, font.Italic, font.Underline, font.Strikeout, Convert.ToDouble(8), 0);
 						this.PDFPAGE_TextOut(
 							this.PDFPAGE_Width-80 - (this.PDFPAGE_GetTextWidth(str)/2)
@@ -225,7 +225,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 		/// <param name="fontColor">Font Color</param>
 		/// <param name="toPage">End page</param>
 		/// <param name="font">Police</param>
-		public void AddHeadersAndFooters(string leftImage , string rightImage,	string title,int fromPage, int toPage, Color fontColor,Font font){
+		public void AddHeadersAndFooters(WebSession webSession,string leftImage , string rightImage,	string title,int fromPage, int toPage, Color fontColor,Font font){
 			try{
 				if (fromPage < 0)
 					fromPage = 0;
@@ -236,7 +236,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 					this.SetCurrentPage(i);
 					this.PDFPAGE_Watermark = this.GetWaterMark(leftImage, rightImage, title, fontColor, font);
 					//Page number
-					string str = "Page " + (i+1) + " sur " + this.PageCount;
+                    string str = GestionWeb.GetWebWord(894, webSession.SiteLanguage) + " " + (i + 1) + " " + GestionWeb.GetWebWord(2042, webSession.SiteLanguage) + " " + this.PageCount;
 					this.PDFPAGE_SetActiveFont(font.Name, font.Bold, font.Italic, font.Underline, font.Strikeout, Convert.ToDouble(font.SizeInPoints), 0);
 					this.PDFPAGE_SetRGBColor(((double)fontColor.R)/256.0
 						,((double)fontColor.G)/256.0
