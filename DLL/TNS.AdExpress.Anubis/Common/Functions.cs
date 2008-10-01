@@ -99,7 +99,7 @@ namespace TNS.AdExpress.Anubis.Common
 					sw.WriteLine("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 					sw.WriteLine("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 					sw.WriteLine("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-                    sw.WriteLine("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/AdExpressFr.css\" type=\"text/css\" rel=\"stylesheet\">");
+                    sw.WriteLine("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
                     sw.WriteLine("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
                     sw.WriteLine("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 					sw.WriteLine("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
