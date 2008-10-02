@@ -1849,6 +1849,13 @@ namespace TNS.AdExpressI.MediaSchedule
         {
             if (data[line, level] != null)
             {
+                //t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertion('{1}','{2}','{3}','-1','{4}');\"><img border=0 src=\"/App_Themes/{5}/Images/Common/picto_plus.gif\"></a></td>"
+                //    , cssClasse
+                //    , _session.IdSession
+                //    , GetLevelFilter(data, line, level)
+                //    , _zoom
+                //    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
+                //    , themeName);
                 t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertions('{1}','{2}','{3}');\"><img border=0 src=\"/App_Themes/{4}/Images/Common/picto_plus.gif\"></a></td>"
                     , cssClasse
                     , _session.IdSession
