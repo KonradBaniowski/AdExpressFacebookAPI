@@ -43,7 +43,7 @@ using TNS.FrameWork.Net.Mail;
 
 using Dundas.Charting.WinControl;
 using HTML2PDFAddOn;
-using PDFCreatorPilot2;
+using PDFCreatorPilotLib;
 using TNS.FrameWork.DB.Common;
 using HtmlSnap2;
 using System.Globalization;
@@ -192,6 +192,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
                 string dateString = Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 
 				this.AddHeadersAndFooters(
+                _webSession,
 				@"Images\Common\logo_Tns.bmp",
 				imagePosition.leftImage,
                 GestionWeb.GetWebWord(1053, _webSession.SiteLanguage) + " - " + dateString,
@@ -337,9 +338,9 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			sw.WriteLine("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			sw.WriteLine("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			sw.WriteLine("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-            sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-            sw.WriteLine("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+            sw.WriteLine("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+            sw.WriteLine("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            sw.WriteLine("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 			sw.WriteLine("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 			sw.WriteLine("<meta http-equiv=\"expires\" content=\"0\">");
 			sw.WriteLine("<meta http-equiv=\"pragma\" content=\"no-cache\">");
@@ -446,7 +447,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile,_webSession);
+                sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				IList SelectionMedia = ToHtml(_webSession.SelectionUniversMedia,false,false,600,false,_webSession.SiteLanguage,2,1,true,20,ref nbLinesEnd,ref nbLinesSelectionMedia);
 				nbLinesEnd=27;
@@ -534,7 +535,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 						this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
-						sw = Functions.GetHtmlFile(workFile,_webSession);
+                        sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 						#region Détail Média
 						mediaDetail(ref sw,SelectionDetailMedia,false,j);
@@ -581,7 +582,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 						this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
-						sw = Functions.GetHtmlFile(workFile,_webSession);
+                        sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 						sw.WriteLine("<TABLE id=\"Table1\" align=\"center\" cellSpacing=\"1\" cellPadding=\"1\" width=\"1100\" border=\"0\" style=\"WIDTH: 1100px; HEIGHT: 2px\">");
 
 					}
@@ -664,8 +665,8 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
 				string workFile = GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-                
-				sw = Functions.GetHtmlFile(workFile,_webSession);
+
+                sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -1761,9 +1762,9 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");

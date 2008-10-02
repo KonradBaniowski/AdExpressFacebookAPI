@@ -42,12 +42,13 @@ using TNS.FrameWork.Net.Mail;
 
 using Dundas.Charting.WinControl;
 using HTML2PDFAddOn;
-using PDFCreatorPilot2;
+using PDFCreatorPilotLib;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
 using TNS.FrameWork.WebResultUI;
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Web.Functions;
 
 namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 	/// <summary>
@@ -167,9 +168,10 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				#region Header and Footer
 				this.AddHeadersAndFooters(
+                    _webSession,
 					@"Images\Common\logo_Tns.bmp",
 					@"Images\Common\APPM.bmp",
-					_config.PdfTitle + " - " + DateTime.Now.ToString("ddd dd MMM yyyy"),
+                    GestionWeb.GetWebWord(2182, _webSession.SiteLanguage) + " - " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern),
 					0,-1,_config.HeaderFontColor,_config.HeaderFont);
 				#endregion
 
@@ -279,6 +281,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 	
 			string imgPath = @"Images\" + _webSession.SiteLanguage + @"\LogoAdExpress.jpg";
 			System.Drawing.Image imgG = System.Drawing.Image.FromFile(imgPath);
+            string pdfTitle = GestionWeb.GetWebWord(2182, _webSession.SiteLanguage);
 			
 			double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
 			double coef = Math.Min((double)1.0,w);
@@ -299,11 +302,11 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				_config.MainPageTitleFont.Underline,
 				_config.MainPageTitleFont.Strikeout,
 				_config.MainPageTitleFont.SizeInPoints,TxFontCharset.charsetANSI_CHARSET);
-			
-			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(_config.PdfTitle))/2, 
-				(this.PDFPAGE_Height)/4,0,_config.PdfTitle);			
 
-			string str = "Créé le " + DateTime.Now.ToString("ddd dd MMM yyyy");
+            this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(pdfTitle)) / 2,
+                (this.PDFPAGE_Height) / 4, 0, pdfTitle);
+
+            string str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
 				_config.MainPageDefaultFont.Bold,
 				_config.MainPageDefaultFont.Italic,
@@ -332,7 +335,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = AtonFunctions.Functions.GetHtmlFile(workFile,_webSession);
+                sw = AtonFunctions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -518,7 +521,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\Synthesis_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = AtonFunctions.Functions.GetHtmlFile(workFile,_webSession);
+                sw = AtonFunctions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -598,7 +601,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\Average_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = AtonFunctions.Functions.GetHtmlFile(workFile,_webSession);
+                sw = AtonFunctions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 
@@ -690,7 +693,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\Affinities_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = AtonFunctions.Functions.GetHtmlFile(workFile,_webSession);
+                sw = AtonFunctions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");

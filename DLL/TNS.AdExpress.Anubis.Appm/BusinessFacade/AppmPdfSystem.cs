@@ -29,6 +29,7 @@ using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
+using CstFrameworkDates = TNS.AdExpress.Constantes.FrameWork.Dates;
 using TNS.AdExpress.Constantes.Web;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 
@@ -46,7 +47,7 @@ using TNS.FrameWork.Net.Mail;
 
 using Dundas.Charting.WinControl;
 using HTML2PDFAddOn;
-using PDFCreatorPilot2;
+using PDFCreatorPilotLib;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
@@ -160,9 +161,11 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 
 				#region Header and Footer
 				this.AddHeadersAndFooters(
+                    _webSession,
 					@"Images\Common\logo_Tns.bmp",
 					@"Images\Common\APPM.bmp",
-					_config.PdfTitle + " - " + DateTime.Now.ToString("ddd dd MMM yyyy"),
+                    GestionWeb.GetWebWord(2181,_webSession.SiteLanguage) + " - " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern),
+                                                
 					0,-1,_config.HeaderFontColor,_config.HeaderFont);
 				#endregion
 
@@ -298,7 +301,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(_config.PdfTitle))/2, 
 				(this.PDFPAGE_Height)/4,0,_config.PdfTitle);			
 
-            string str = "Créé le " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
+            string str = GestionWeb.GetWebWord(1922,_webSession.SiteLanguage) + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
 				_config.MainPageDefaultFont.Bold,
 				_config.MainPageDefaultFont.Italic,
@@ -327,7 +330,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile,_webSession);
+                sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -511,7 +514,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile, _webSession);
+                sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -537,16 +540,16 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				#region Html file loading
 				sw.WriteLine("</table>");
 				Functions.CloseHtmlFile(sw);
-				HTML2PDFClass html = new HTML2PDFClass();
+				HTML2PDF2Class html = new HTML2PDF2Class();
 				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 				html.ConnectToPDFLibrary (this);
-				html.LoadFromFile(workFile);
+				html.LoadHTMLFile(workFile);
 				html.ConvertAll();
-				html.ClearCache();
-				html.ConvertAll();
+				//html.ClearCache();
+				//html.ConvertAll();
 				html.DisconnectFromPDFLibrary ();
 				#endregion
 
@@ -581,7 +584,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 
 					string workFile = GetWorkDirectory() + @"\Visuals_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-					sw = Functions.GetHtmlFile(workFile, _webSession);
+                    sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 			
 					#region Title
 					sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -649,7 +652,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\MediaPlan_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile, _webSession);
+                sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -702,15 +705,14 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				#region Html file loading
 				sw.WriteLine("</table>");
 				Functions.CloseHtmlFile(sw);
-				HTML2PDFClass html = new HTML2PDFClass();
+                HTML2PDF2Class html = new HTML2PDF2Class();
+                html.AutoAdjustContentWidth = true;
 				html.MarginLeft = 0;
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 				html.ConnectToPDFLibrary (this);
-				html.LoadFromFile(workFile);
-				html.ConvertAll();
-				html.ClearCache();
+				html.LoadHTMLFile(workFile);
 				html.ConvertAll();
 				html.DisconnectFromPDFLibrary ();
 				#endregion
@@ -745,7 +747,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\PlanPerf_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile, _webSession);
+                sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -965,9 +967,9 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 				html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 				html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+                html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 				html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
@@ -1108,9 +1110,9 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
