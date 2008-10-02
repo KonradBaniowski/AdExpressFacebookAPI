@@ -26,7 +26,9 @@ using TNS.AdExpress.Domain.Web;
 
 using LostWon = TNS.AdExpressI.LostWon;
 using PresentAbsent = TNS.AdExpressI.PresentAbsent;
-using Portofolio=TNS.AdExpressI.Portofolio;
+using Portofolio = TNS.AdExpressI.Portofolio;
+using NewCreatives = TNS.AdExpressI.NewCreatives;
+
 using Domain=TNS.AdExpress.Domain.Web.Navigation;
 using System.Reflection;
 
@@ -1966,8 +1968,16 @@ namespace TNS.AdExpress.Web.Controls.Results{
                 case WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE:
                     data = WebBusinessFacade.Results.ProofSystem.GetResultTable(customerWebSession);
                     break;
-                default:
+                case WebConstantes.Module.Name.NEW_CREATIVES:
 
+                    if(module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Lost/Won result"));
+                    param = new object[1];
+                    param[0] = customerWebSession;
+                    NewCreatives.INewCreativesResult newCreativesResult = (NewCreatives.INewCreativesResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    data = newCreativesResult.GetData();
+
+                    break;
+                default:
 					return null;
 			}
 

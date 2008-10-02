@@ -289,6 +289,7 @@
     <Compile Include="Headers\SearchSaveWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Headers\SectorWebControl.cs" />
     <Compile Include="Headers\SubPeriodSelectionWebControl.cs" />
     <Compile Include="Headers\VehicleHeaderWebControl.cs">
       <SubType>Code</SubType>
@@ -530,6 +531,10 @@
     <ProjectReference Include="..\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
       <Project>{23E7E071-0FB0-43D4-B19D-B964EC3082F6}</Project>
       <Name>TNS.AdExpressI.MediaSchedule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.NewCreatives\TNS.AdExpressI.NewCreatives.csproj">
+      <Project>{BBABD681-7FA1-473D-B9DA-B1B3173491B8}</Project>
+      <Name>TNS.AdExpressI.NewCreatives</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Portofolio.Default\TNS.AdExpressI.Portofolio.Default.csproj">
       <Project>{638BEFDD-6370-4AEA-8943-DD6961FE3FDE}</Project>
