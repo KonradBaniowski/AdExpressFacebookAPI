@@ -36,6 +36,10 @@ namespace TNS.AdExpress.DataAccess.Classification {
 		/// Liste des identifiants triés par libellés
 		/// </summary>
 		protected ArrayList idListOrderByClassificationItem=new ArrayList();
+        /// <summary>
+        /// Data Table
+        /// </summary>
+        protected DataTable _dataTable;
 		/// <summary>
 		/// Langue des élément
 		/// </summary>
@@ -68,6 +72,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
             try {
                 dt=source.Fill(sql).Tables[0];
                 dt.TableName=table.ToString();
+                _dataTable = dt;
 			}
 			catch(System.Exception ex){
 		        throw(new ClassificationDALException ("Impossible de charger les éléments de la nomenclature",ex));
@@ -118,6 +123,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
             try {
                 dt=source.Fill(sql).Tables[0];
                 dt.TableName=table.ToString();
+                _dataTable = dt;
             }
             catch(System.Exception ex) {
                 throw (new ClassificationDALException("Impossible de charger les éléments de la nomenclature",ex));
@@ -165,6 +171,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
             try {
                 dt=source.Fill(sql).Tables[0];
                 dt.TableName=table.ToString();
+                _dataTable = dt;
             }
             catch(System.Exception ex) {
                 throw (new ClassificationDALException("Impossible de charger les éléments de la nomenclature",ex));
@@ -210,6 +217,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
             try {
                 dt=source.Fill(sql).Tables[0];
                 dt.TableName=table.ToString();
+                _dataTable = dt;
             }
             catch(System.Exception ex) {
                 throw (new ClassificationDALException("Impossible de charger les éléments de la nomenclature",ex));
@@ -252,6 +260,13 @@ namespace TNS.AdExpress.DataAccess.Classification {
 		public ArrayList IdListOrderByClassificationItem{
 			get{return(this.idListOrderByClassificationItem);}
 		}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DataTable GetDataTable {
+            get { return (_dataTable); }
+        }
 		#endregion
 
 	}

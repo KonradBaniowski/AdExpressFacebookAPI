@@ -739,6 +739,15 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="PeriodDetailWebControl"
 />
 
+<%-- Sector Selection WebControl : designed for new creatives --%>
+<ctrHeader:SectorWebControl 
+                           runat="server"
+                           BackgroundColor="#ffffff"
+                           LabelCssClass="txtGris11Bold"  
+                           ListCssClass="txtNoir11Bold"
+                           SkinID="SectorWebControl"
+/>
+
 <%-- Generic detail selection web control : used to display columns detail --%>
 <ctrHeader:genericdetailselectionwebcontrol 
                            runat="server"

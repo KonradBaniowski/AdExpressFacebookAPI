@@ -125,6 +125,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Default Constructor
         /// </summary>
         public SectorWebControl(){
+            _dropDownList = new DropDownList();
         }
         #endregion
 
@@ -134,7 +135,6 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <param name="e">Event params</param>
         protected override void OnInit(EventArgs e) {
-            _dropDownList = new DropDownList();
             _dropDownList.EnableViewState = true;
             this.Controls.Add(_dropDownList);
 

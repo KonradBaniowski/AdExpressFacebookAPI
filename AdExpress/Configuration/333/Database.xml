@@ -25,7 +25,7 @@
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
     <table enumId="1" description="List detail table" schemaEnumId="5" label="list_detail" prefix="lstd"/>
     <table enumId="2" description="tracking table" schemaEnumId="5" label="tracking" prefix="tr"/>
-    <table enumId="3" description="Result table" schemaEnumId="5" label="result" prefix="rs"/>
+    <table enumId="3" description="Right: Result table" schemaEnumId="2" label="result" prefix="rs"/>
 
     <table enumId="4" description="Classif: Sector" schemaEnumId="0" label="sector" prefix="sc"/>
     <table enumId="5" description="Classif: SubSector" schemaEnumId="0" label="sub_sector" prefix="ss"/>
@@ -107,7 +107,7 @@
     <table enumId="89" description="Classif: Target Media Assignment" schemaEnumId="1" label="target_media_assignment" prefix="tma"/>
     <table enumId="91" description="Right: Login" schemaEnumId="2" label="login" prefix="lo"/>
     <table enumId="92" description="Right: Contact" schemaEnumId="2" label="contact" prefix="ctt"/>
-    <table enumId="93" description="Right: Contact group" schemaEnumId="2" label="contact_group" prefix="gct"/>
+    <table enumId="93" description="Right: Contact group" schemaEnumId="2" label="group_contact" prefix="gct"/>
     <table enumId="94" description="Right: Address" schemaEnumId="2" label="address" prefix="adr"/>
     <table enumId="95" description="Right: Company" schemaEnumId="2" label="company" prefix="cpn"/>
     <table enumId="96" description="Right: Connection by login" schemaEnumId="5" label="connection_by_login" prefix="cnxlog"/>
@@ -165,6 +165,7 @@
     <table enumId="153" description="Data: Cinema" schemaEnumId="0" label="data_cinema" prefix="wp"/>
     <table enumId="154" description="Data: Cinema" schemaEnumId="0" label="data_cinema_4M" prefix="wp"/>
     <table enumId="155" description="Custormer directory: directory" schemaEnumId="5" label="directory" prefix="drt"/>
+    <table enumId="156" description="Data: banners" schemaEnumId="0" label="banners" prefix="wp"/>
 
   </tables>
   <views>

@@ -161,6 +161,10 @@ namespace AdExpress{
 							    levels.Add(2);
                                 levels.Add(3);
                                 break;
+                            case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
+                                // Famille
+                                levels.Add(11);
+                                break;
                             default:
                                 // Media/catégorie
                                 levels.Add(1);
@@ -174,7 +178,15 @@ namespace AdExpress{
 						#region Niveau de détail produit (Generic)
 						// Initialisation à annonceur
 						levels.Clear();
-						levels.Add(8);
+                        switch(_webSession.CurrentModule) {
+                            case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
+                                // Famille
+                                levels.Add(11);
+                                break;
+                            default:
+                                levels.Add(8);
+                                break;
+                        }
 						_webSession.GenericProductDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 						#endregion
 
@@ -217,6 +229,16 @@ namespace AdExpress{
 						_webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
 					}
 					#endregion
+
+                    #region paramètres rajoutés pour Nouvelles créations (Evaliant)
+                    //Setting vehicle as adnettrack for new ceratives
+                    if(_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES) {
+                        System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode();
+                        tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, DBConstantes.Vehicles.names.adnettrack.GetHashCode(), GestionWeb.GetWebWord(2533, _webSession.SiteLanguage));
+                        tmpNode.Checked = true;
+                        _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+                    }
+                    #endregion
 
 					#region paramètres rajoutés pour tableaux de bord
 					_webSession.DetailPeriodBeginningDate="";

@@ -723,8 +723,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 		/// <summary>
 		/// Customer directory
 		/// </summary>
-		customerDirectory = 155
-
+		customerDirectory = 155,
+        /// <summary>
+        /// Banners
+        /// </summary>
+        banners = 156
     } 
     #endregion
 

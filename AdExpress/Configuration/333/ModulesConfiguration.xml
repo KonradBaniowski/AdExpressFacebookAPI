@@ -1747,13 +1747,21 @@
     <moduleGroup name="Evaliant" type="1" privilegecode="150" traductioncode="2533" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2187">
       <!-- ***************************************** Alerte portefeuille d'un support *****************************************-->
       <module name="Les nouvelles créations" privilegecode="4369" traductioncode="2534" moduleCategoryId="0" urlNextPage="/Private/Selection/GlobalDateSelection.aspx" descriptionWebTextId="2193" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
-        <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
-        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
+        <RulesLayer name="Default New Creatives rules layers" assemblyName="TNS.AdExpressI.NewCreatives.Default.dll" class="TNS.AdExpressI.NewCreatives.Default.NewCreativesResult"/>
+        <DataAccessLayer name="Default New Creatives data access layers" assemblyName="TNS.AdExpressI.NewCreatives.DAL.Default.dll" class="TNS.AdExpressI.NewCreatives.DAL.Default.NewCreativesDAL"/>
         <ProductDetailLevel>
+          <defaultProductDetailLevels>
+            <defaultProductDetailLevel id="11" name="famille" />
+            <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
+            <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
+            <defaultProductDetailLevel id="19" name="groupe" />
+            <defaultProductDetailLevel id="20" name="groupe\annonceur" />
+            <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="21" name="produit" />
+          </defaultProductDetailLevels>
           <allowedProductLevelItems>
-            <allowedProductLevelItem id="1" name="Media"/>
-            <allowedProductLevelItem id="2" name="Categorie"/>
-            <allowedProductLevelItem id="3" name="Support"/>
             <allowedProductLevelItem id="11" name="Famille"/>
             <allowedProductLevelItem id="12" name="Classe"/>
             <allowedProductLevelItem id="13" name="Groupe"/>
@@ -1768,7 +1776,7 @@
           <selection id="4" name="Date" showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"  functionName="PostBack"/>
         </selections>
         <results>
-          <page id="0" resultid="65" name="Les nouvelles créations" traductioncode="2534" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+          <page id="0" resultid="65" name="Les nouvelles créations" traductioncode="2534" url="/Private/Results/NewCreativesResults.aspx" rawExcelUrl="/Private/Results/RawExcel/NewCreativesResults.aspx" printExcelUrl="/Private/Results/Excel/NewCreativesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/Default.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
