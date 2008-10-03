@@ -471,7 +471,7 @@ namespace TNS.AdExpressI.MediaSchedule
             _allowVersion = AllowVersions();
             _allowTotal = _allowPdm = (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack));
             _style = new PDFMediaScheduleStyle();
-            throw new Exception("The method or operation is not implemented.");
+			return ComputeDesign(ComputeData());
         }
 
         /// <summary>
@@ -1482,7 +1482,7 @@ namespace TNS.AdExpressI.MediaSchedule
                             days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDayWE, DayString.GetCharacters(currentDay,cultureInfo,1));
                         else
                             days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDay, DayString.GetCharacters(currentDay, cultureInfo, 1));
-
+						
                     }
                     if (nbPeriod >= 8)
                         headers.AppendFormat("<td colspan=\"{0}\" class=\"{1}\" align=center>{2}</td>", nbPeriod, _style.CellTitle, FctWeb.Dates.getPeriodTxt(_session, currentDay.ToString("yyyyMM")));
