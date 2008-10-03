@@ -28,7 +28,8 @@ namespace TNS.AdExpress.Web.Functions{
 	/// <summary>
 	/// Fonctions des niveaux de détail média
 	/// </summary>
-	public class MediaDetailLevel{
+	public class MediaDetailLevel : TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel
+    {
 
 		/// <summary>
 		/// Obtient le texte du niveau de détail support
@@ -181,57 +182,6 @@ namespace TNS.AdExpress.Web.Functions{
 
             }
             return mediaCol;
-        }
-
-		/// <summary>
-		/// Obtient la liste des filtres dans les niveaux de détails génériques.
-        /// Similaire à GetImpactedMedia mais utilise le collections génériques typées
-		/// </summary>
-		/// <param name="webSession">Session du client</param>	
-		/// <param name="idLevel1">Identifiant du niveau 1</param>
-		/// <param name="idLevel2">Identifiant du niveau 2</param>
-		/// <param name="idLevel3">Identifiant du niveau 3</param>
-		/// <param name="idLevel4">Identifiant du niveau 4</param>
-		/// <returns>liste des niveaux de détails uimpliqués dans les filtres </returns>
-        public static Dictionary<DetailLevelItemInformation, long> GetFilters(WebSession webSession, Int64 idLevel1, Int64 idLevel2, Int64 idLevel3, Int64 idLevel4) {
-            string temp = "";
-            Dictionary<DetailLevelItemInformation, long> mediaCol = null;
-            //			object[,] tempMediaList = null;
-            int indexLevel = 0;
-            if (webSession.PreformatedMediaDetail.ToString().Length > 0) {
-                temp = webSession.PreformatedMediaDetail.ToString().ToUpper();
-                mediaCol = new Dictionary<DetailLevelItemInformation, long>();
-
-                if (webSession.GenericMediaDetailLevel != null && webSession.GenericMediaDetailLevel.Levels != null && webSession.GenericMediaDetailLevel.Levels.Count > 0) {
-                    for (int i = 0; i < webSession.GenericMediaDetailLevel.Levels.Count; i++) {
-                        if (webSession.GenericMediaDetailLevel.Levels[i] != null
-                            && ((DetailLevelItemInformation)webSession.GenericMediaDetailLevel.Levels[i]).DataBaseIdField != null
-                            && ((DetailLevelItemInformation)webSession.GenericMediaDetailLevel.Levels[i]).DataBaseIdField.Length > 0
-                            ) {
-                            indexLevel++;
-                            switch (indexLevel) {
-                                case 1:
-                                    mediaCol.Add((DetailLevelItemInformation)webSession.GenericMediaDetailLevel.Levels[i], idLevel1); //identifiant du média est la clé
-                                    break;
-                                case 2:
-                                    mediaCol.Add((DetailLevelItemInformation)webSession.GenericMediaDetailLevel.Levels[i], idLevel2);
-                                    break;
-                                case 3:
-                                    mediaCol.Add((DetailLevelItemInformation)webSession.GenericMediaDetailLevel.Levels[i], idLevel3);
-                                    break;
-                                case 4:
-                                    mediaCol.Add((DetailLevelItemInformation)webSession.GenericMediaDetailLevel.Levels[i], idLevel4);
-                                    break;
-                                default: mediaCol.Add((DetailLevelItemInformation)webSession.GenericMediaDetailLevel.Levels[i], -1);
-                                    break;
-                            }
-                        }
-                    }
-                }
-
-            }
-            return mediaCol;
-
         }
 		
 		/// <summary>

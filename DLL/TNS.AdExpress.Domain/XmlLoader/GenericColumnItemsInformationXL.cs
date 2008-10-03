@@ -11,6 +11,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Level;
 using ConstantesDB = TNS.AdExpress.Constantes.DB;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Domain.XmlLoader{
 
@@ -65,10 +66,10 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 		/// <returns>Hashtable contains Columns description</returns>
 		/// <exception cref="XmlException">Thrown when the XmlTextReader read an invalid attribute for column</exception>
 		/// <exception cref="System.Exception">Thrown when is impossible to load the GenericColumn XML file</exception>
-		public static Hashtable Load(IDataSource source){
+		public static Dictionary<Int64, GenericColumnItemInformation> Load(IDataSource source){
 			
 			#region variables
-			Hashtable list=new Hashtable();
+			Dictionary<Int64, GenericColumnItemInformation> list = new Dictionary<Int64, GenericColumnItemInformation>();
 			XmlTextReader reader=null;
 			Int64 id=0;
 			Int64 oldId=0;
@@ -81,6 +82,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 			string dbTable=null;
 			string dbTablePrefixe=null;
             string cellType = null;
+            string strFormat = null;
 			string dbRelatedTablePrefixe=null;
 			bool convertNullDbId=false;
 			bool convertNullDbLabel=false;
@@ -116,6 +118,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								dbTable=null;
 								dbTablePrefixe=null;
                                 cellType=null;
+                                strFormat = null;
 								convertNullDbId=false;
 								convertNullDbLabel=false;
 								
@@ -135,6 +138,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 									dbTablePrefixe=reader.GetAttribute("dbTablePrefixe");
 
                                     if (reader.GetAttribute("CellType") != null && reader.GetAttribute("CellType").Length > 0) cellType = reader.GetAttribute("CellType");
+                                    if (reader.GetAttribute("format") != null && reader.GetAttribute("format").Length > 0) strFormat = reader.GetAttribute("format");
 									if(reader.GetAttribute("convertNullDbId")!=null && reader.GetAttribute("convertNullDbId").Length>0)convertNullDbId=bool.Parse(reader.GetAttribute("convertNullDbId"));
 									if(reader.GetAttribute("convertNullDbLabel")!=null && reader.GetAttribute("convertNullDbLabel").Length>0)convertNullDbLabel=bool.Parse(reader.GetAttribute("convertNullDbLabel"));									
 									if(reader.GetAttribute("sqlOperation")!=null && reader.GetAttribute("sqlOperation").Length>0) {										
@@ -161,9 +165,9 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 									}
 
 									if((sqlOperation!=null && sqlOperation.Length>0) && (dbRelatedTablePrefixe!=null && dbRelatedTablePrefixe.Length>0))
-										genericColumnItemInformation = new GenericColumnItemInformation(id,name,webTextId,dbId,dbIdAlias,convertNullDbId,dbLabel,dbLabelAlias,convertNullDbLabel,dbTable,dbTablePrefixe,cellType,dbRelatedTablePrefixe,sqlOperation);
+                                        genericColumnItemInformation = new GenericColumnItemInformation(id, name, webTextId, dbId, dbIdAlias, convertNullDbId, dbLabel, dbLabelAlias, convertNullDbLabel, dbTable, dbTablePrefixe, cellType, strFormat, dbRelatedTablePrefixe, sqlOperation);
 									else
-									genericColumnItemInformation = new GenericColumnItemInformation(id,name,webTextId,dbId,dbIdAlias,convertNullDbId,dbLabel,dbLabelAlias,convertNullDbLabel,dbTable,dbTablePrefixe,cellType);
+                                        genericColumnItemInformation = new GenericColumnItemInformation(id, name, webTextId, dbId, dbIdAlias, convertNullDbId, dbLabel, dbLabelAlias, convertNullDbLabel, dbTable, dbTablePrefixe, cellType, strFormat);
 									
 									list.Add(id,genericColumnItemInformation);
 

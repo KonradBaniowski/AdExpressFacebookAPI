@@ -1970,11 +1970,11 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		public GenericColumns GenericInsertionColumns {
 			get {
-				ArrayList columnsIds = null;
+                List<Int64> columnsIds = null;
 				WebConstantes.GenericColumn.SelectedFrom selectedFrom;
 				if (_genericColumns == null) {
 					if (userParameters.ContainsKey(CoreConstantes.SessionParamters.genericColumns)) {
-						columnsIds = (ArrayList)userParameters[CoreConstantes.SessionParamters.genericColumns];
+						columnsIds = (List<Int64>)userParameters[CoreConstantes.SessionParamters.genericColumns];
 					}
 					else {
 						throw (new NotImplementedException("Undefine default GenericInsertionColumns"));

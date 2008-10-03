@@ -99,12 +99,20 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 							dataFieldsForGadWithoutTablePrefix = ", " + WebFunctions.SQLGenerator.GetFieldsAddressForGad("");
 						sql = "";
                         sql += " select id_media, " + productFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix + ", " + WebFunctions.SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
+                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack)
+                        {
+                            sql += string.Format(", {0}", UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());
+                        }
 						sql += " from (";
 						sql += sqlDataVehicle;
 						sql += " UNION ";
 						sql += sqlWebPlan;
 						sql += " ) ";
 						sql += " group by id_media, " + groupByFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix;
+                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack)
+                        {
+                            sql += string.Format(", {0}",UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());
+                        }
 					}
 
 					//sql += " order by " + orderFieldNameWithoutTablePrefix + ", id_media ";

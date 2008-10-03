@@ -628,7 +628,22 @@ namespace TNS.AdExpress.Web.Functions{
             t.Append("\n</script>");
             return t.ToString();
         }
-
+        /// <summary>
+        /// Script d'ouverture de la popUp de détail des insertions (nouvelle page)
+        /// </summary>
+        /// <remarks>
+        /// Script à enregistrer sous le nom OpenInsertion
+        /// </remarks>
+        /// <returns>Code du scriptopenCreation</returns>
+        public static string OpenInsertion() {
+            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+            t.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+            t.Append("\n\tfunction OpenInsertion(idSession,ids,zoomDate,universId,moduleId){");
+            t.Append("\n\t\twindow.open('/Private/Results/Insertions.aspx?idSession='+idSession+'&ids='+ids+'&zoomDate='+zoomDate+'&idUnivers='+universId+'&moduleId='+moduleId+'&param='+" + GenerateNumber() + ", '', \"top=\"+(screen.height-600)/2+\", left=\"+(screen.width-1024)/2+\", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=540, scrollbars=1, location=0, resizable=1\");");
+            t.Append("\n\t}");
+            t.Append("\n</script>");
+            return t.ToString();
+        }
 
 		#endregion
 

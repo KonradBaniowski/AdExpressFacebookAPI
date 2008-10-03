@@ -46,3 +46,7 @@ function openDownload(file,idSession, idVehicle){
 function OpenCreatives(idSession,ids,zoomDate, idUnivers,moduleId){
 	window.open('/Private/Results/Creatives.aspx?idSession='+idSession+'&ids='+ids+'&zoomDate='+zoomDate+'&idUnivers='+idUnivers+'&moduleId='+moduleId+'&param='+Math.random(), '', "top="+(screen.height-600)/2+", left="+(screen.width-1024)/2+", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1");
 }
+
+function OpenInsertion(idSession,ids,zoomDate, idUnivers,moduleId){
+	window.open('/Private/Results/Insertions.aspx?idSession='+idSession+'&ids='+ids+'&zoomDate='+zoomDate+'&idUnivers='+idUnivers+'&moduleId='+moduleId+'&param='+Math.random(), '', "top="+(screen.height-600)/2+", left="+(screen.width-1024)/2+", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1");
+}

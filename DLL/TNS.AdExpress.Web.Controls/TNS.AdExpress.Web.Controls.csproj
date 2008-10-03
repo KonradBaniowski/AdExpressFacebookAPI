@@ -348,6 +348,7 @@
     <Compile Include="Results\CountItemsInClassificationWebControlDesigner.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Results\Creatives\InsertionsWebControl.cs" />
     <Compile Include="Results\Creatives\CreativesHeaderWebControl.cs" />
     <Compile Include="Results\Creatives\CreativesWebControl.cs" />
     <Compile Include="Results\DetailProductLevelWebControl.cs">
@@ -523,6 +524,10 @@
     <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
       <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
       <Name>TNS.AdExpress.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
+      <Project>{E1A418FC-6512-46D5-99CF-374682F0C792}</Project>
+      <Name>TNS.AdExpressI.Insertions</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.LostWon\TNS.AdExpressI.LostWon.csproj">
       <Project>{EAD29F53-3152-4356-B965-F34299402360}</Project>

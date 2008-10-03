@@ -1591,7 +1591,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
         /// <param name="sortParameters">Tableaux de paramètres pour le tri</param>
 		/// <returns>Tableau d'objet contenant ls différentes lignes (html) du tableau de résultat</returns>
 		[AjaxPro.AjaxMethod]
-        public object[] GetData(string idSession, AjaxPro.JavaScriptObject resultParameters,AjaxPro.JavaScriptObject styleParameters, AjaxPro.JavaScriptObject sortParameters){
+        public virtual object[] GetData(string idSession, AjaxPro.JavaScriptObject resultParameters,AjaxPro.JavaScriptObject styleParameters, AjaxPro.JavaScriptObject sortParameters){
 			int j=0;
 			object[] tab=null,  globalTable=null;
 			int[] tabIndex=null;
@@ -1640,7 +1640,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
         /// <param name="sortParameters">Tableaux de paramètres pour le tri</param>
 		/// <returns>object</returns>
 		[AjaxPro.AjaxMethod]
-        public string GetDataWithoutPagination(string idSession, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters, AjaxPro.JavaScriptObject sortParameters) {
+        public virtual string GetDataWithoutPagination(string idSession, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters, AjaxPro.JavaScriptObject sortParameters) {
 			
 			try {
                 this.LoadResultParameters(resultParameters);
@@ -1674,7 +1674,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
         /// <param name="sortParameters">Tableaux de paramètres pour le tri</param>
 		/// <returns>Détail des sélections</returns>
 		[AjaxPro.AjaxMethod]
-        public string GetDetailSelection(string idSession, string webCtrlId, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters, AjaxPro.JavaScriptObject sortParameters) {
+        public virtual string GetDetailSelection(string idSession, string webCtrlId, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters, AjaxPro.JavaScriptObject sortParameters) {
 
 			#region Variables
 			//string htmlTab = "code html du rappel de sélection";

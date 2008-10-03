@@ -81,7 +81,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			DataSet ds;
 			DataTable dt = null;
 			Headers headers;
-			ArrayList columnItemList;
+			List<GenericColumnItemInformation> columnItemList;
 			int iCurLine = 0;
 			int iNbLine = 0;
 			Assembly assembly;
@@ -111,9 +111,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#endregion
 
 			#region Columns levels (Generic)
-            columnItemList = GenericColumnsInformation.GetGenericColumnItemInformationList(vehicle.DetailColumnId);
+            columnItemList = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(vehicle.DetailColumnId);
 
-			ArrayList columnIdList = new ArrayList();
+            List<Int64> columnIdList = new List<Int64>();
 			foreach (GenericColumnItemInformation Column in columnItemList)
 				columnIdList.Add((int)Column.Id);
 
@@ -169,7 +169,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				#region Initialisation of result table
 				try {
 					headers = new Headers();
-                    columnItemList = GenericColumnsInformation.GetGenericColumnItemInformationList(vehicle.DetailColumnId);
+                    columnItemList = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(vehicle.DetailColumnId);
 
 					foreach (GenericColumnItemInformation Column in columnItemList) {
 

@@ -81,11 +81,24 @@ namespace TNS.AdExpress.Web.Core.Result{
 		public override double Value{
 			get{
 				if(_isTotal)return(100);
-				if(_reference!=null && _reference.Value!=0)return ((base.Value/_reference.Value)*100.0);
-				return(Double.PositiveInfinity);
+                if (_reference != null && _reference.List.length != 0) return ((base.Value / _reference.List.length) * 100.0);
+                if (base.Value != 0)
+                    return (Double.PositiveInfinity);
+                else
+                    return 0;
 			}
 		}
 		#endregion
+
+        #region ToString()
+        public override string ToString(string format, IFormatProvider fp)
+        {
+            if (format != null && format != string.Empty)
+                return string.Format(fp, format, this.Value);
+            else
+                return this.ToString("{0:N}", fp);
+        }
+        #endregion
 
         #region GetInstance
         /// <summary>
@@ -113,7 +126,56 @@ namespace TNS.AdExpress.Web.Core.Result{
             return c;
 		}
 		#endregion
-		
-	}
+
+
+        #region Render
+        /// <summary>
+        /// Rendu de code HTML
+        /// </summary>
+        /// <returns>Code HTML</returns>
+        public override string Render()
+        {
+            return Render(_cssClass);
+        }
+        /// <summary>
+        /// Rendu de code HTML avec un style css spécifique
+        /// </summary>
+        /// <returns>Code HTML</returns>
+        public override string Render(string cssClass)
+        {
+            string str = "";
+            if (_newGroup)
+                str += RenderSeparator();
+            double value = this.Value;
+            return str + ((value != 0)
+                ? "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">" + this.ToString() + "</td>"
+                : "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">&nbsp;</td>");
+        }
+        /// <summary>
+        /// Rendu de code HTML pour Excel
+        /// </summary>
+        /// <returns>Code HTML pour Excel</returns>
+        public override string RenderExcel(string cssClass)
+        {
+            double value = this.Value;
+            return ((value != 0)
+                ? "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">" + this.ToString() + "</td>"
+                : "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">&nbsp;</td>");
+        }
+
+        /// <summary>
+        /// Rendu de code HTML pour Excel brut
+        /// </summary>
+        /// <returns>Code HTML pour Excel brut</returns>
+        public override string RenderRowExcel()
+        {
+            double value = this.Value;
+            return ((value != 0)
+                ? "<td>" + this.ToString() + "</td>"
+                : "<td>&nbsp;</td>");
+        }
+        #endregion
+
+    }
 	
 }

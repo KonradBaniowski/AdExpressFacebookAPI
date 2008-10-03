@@ -84,7 +84,7 @@
     <detailColumn id="7"/>
   </vehicle>
   <!-- TV -->
-  <vehicle id="tv" databaseId="3" showInsertions="false" showCreations="false">
+  <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>

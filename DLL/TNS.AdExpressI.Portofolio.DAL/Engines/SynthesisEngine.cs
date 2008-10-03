@@ -1279,7 +1279,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         sql += sqlDataVehicle;
                         sql += " UNION ";
                         sql += sqlWebPlan;
-                        sql += " ) ";
+                        sql += " ) group by hashcode";
                     }
                 }
                 sqlGlobal = "select count(hashcode) as nbLines from (";
@@ -1403,9 +1403,19 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             sql.Append(mediaRights);
             sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             sql.Append(listProductHap);
+            sql.Append(" group by ");
             if(customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
-                sql.AppendFormat(" group by {0}", date);
+                sql.AppendFormat(" {0},", date);
             }
+            if (type == DBConstantes.TableType.Type.webPlan)
+            {
+                sql.Append("wp22222.column_value");
+            }
+            else
+            {
+                sql.Append("hashcode");
+            }
+
             #endregion
 
             return sql.ToString();

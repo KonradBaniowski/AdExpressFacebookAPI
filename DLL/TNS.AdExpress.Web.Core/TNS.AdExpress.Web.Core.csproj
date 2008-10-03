@@ -181,10 +181,6 @@
     <Compile Include="DataAccess\GenericClassificationSearchDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\InsertionDetailInformationDataAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataAccess\PortofolioDetailMediaColumnsInformationDataAccess.cs" />
     <Compile Include="DataAccess\Session\TrackingDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -231,10 +227,6 @@
     <Compile Include="Exceptions\WebSessionException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="InsertionDetailInformation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PortofolioDetailMediaColumnsInformation.cs" />
     <Compile Include="Result\AdExpressCellLevel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -294,6 +286,7 @@
     <Compile Include="Utilities\CheckedText.cs" />
     <Compile Include="Utilities\Dates.cs" />
     <Compile Include="Utilities\ExtendedHashTable.cs" />
+    <Compile Include="Utilities\MediaDetailLevel.cs" />
     <Compile Include="Utilities\SqlGenerator.cs" />
     <Compile Include="Utilities\Text.cs" />
     <Compile Include="Utilities\Units.cs" />

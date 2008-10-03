@@ -205,12 +205,15 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// </summary>
         /// <param name="e"></param>
         protected override void OnInit(EventArgs e) {
-            base.OnInit(e);
             this._header.ID = string.Format("{0}_header", this.ID);
             this._header.JavascriptRefresh = string.Format("get_{0}", this.ID);
             this._header.PeriodContainerName = string.Format("o_{0}.Zoom", this.ID);
             this._header.VehicleContainerName = string.Format("o_{0}.IdVehicle", this.ID);
             this.Vehicles = CreativeRules.GetVehicles(_webSession, _idModule, _idsFilter, this._idUnivers);
+            if (this.IdVehicle <= 0){
+                this.IdVehicle = this.Vehicles[0];
+            }
+            base.OnInit(e);
         }
         #endregion
 

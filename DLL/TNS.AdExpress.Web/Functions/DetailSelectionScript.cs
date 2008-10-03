@@ -6,6 +6,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using System.Collections;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Level;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Web.Functions
 {
@@ -402,7 +403,7 @@ namespace TNS.AdExpress.Web.Functions
 		/// </summary>
 		/// <param name="columnItemList">Liste des colonnes</param>
 		/// <returns></returns>
-		public static string DragAndDropScript(ArrayList columnItemList)
+        public static string DragAndDropScript(List<GenericColumnItemInformation> columnItemList)
 		{
 		
 			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
@@ -428,7 +429,7 @@ namespace TNS.AdExpress.Web.Functions
 		/// Permet de generer le script qui instancie les objets Draggable après un postback
 		/// </summary>
 		/// <returns></returns>
-		public static string DragAndDropPostBackScript(ArrayList columnItemSelectedList, ArrayList columnItemTrashdList, int nbColumnItemList)
+        public static string DragAndDropPostBackScript(List<GenericColumnItemInformation> columnItemSelectedList, List<GenericColumnItemInformation> columnItemTrashdList, int nbColumnItemList)
 		{
 		
 			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);

@@ -10,6 +10,9 @@ using System.Data;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.DB;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
+using System.Collections.Generic;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Domain.Level
 {
@@ -23,7 +26,7 @@ namespace TNS.AdExpress.Domain.Level
 		/// Liste des colonnes
 		/// </summary>
 		/// <remarks>Contient des GenericColumnItemInformation</remarks>
-		protected ArrayList _columns;
+		protected List<GenericColumnItemInformation> _columns;
 		/// <summary>
 		/// Définit le type d'emplacement d'où c'est la sélection des colonnes
 		/// </summary>
@@ -37,12 +40,12 @@ namespace TNS.AdExpress.Domain.Level
 		/// <param name="columnIds">Liste des identifiant des colonnes</param>
 		/// <remarks>columnIds doit contenir des int</remarks>
 		/// <exception cref="System.ArgumentNullException">Si la liste des colonnes est null</exception>
-		public GenericColumns(ArrayList columnIds){
+		public GenericColumns(List<Int64> columnIds){
 			_selectedFrom=WebConstantes.GenericColumn.SelectedFrom.unknown;
 			if(columnIds==null)throw(new ArgumentNullException("columnIds list is null"));
-			_columns=new ArrayList();
+            _columns = new List<GenericColumnItemInformation>();
 			foreach(int currentId in columnIds){
-				_columns.Add(GenericColumnItemsInformation.Get(currentId));
+				_columns.Add(WebApplicationParameters.GenericColumnItemsInformation.Get(currentId));
 			}
 		}
 
@@ -53,7 +56,9 @@ namespace TNS.AdExpress.Domain.Level
 		/// <param name="selectedFrom">Niveau Sélectionné à partir de</param>
 		/// <remarks>columnIds doit contenir des int</remarks>
 		/// <exception cref="System.ArgumentNullException">Si la liste des colonnes est null</exception>
-		public GenericColumns(ArrayList columnIds,WebConstantes.GenericColumn.SelectedFrom selectedFrom):this(columnIds){
+        public GenericColumns(List<Int64> columnIds, WebConstantes.GenericColumn.SelectedFrom selectedFrom)
+            : this(columnIds)
+        {
 		_selectedFrom=selectedFrom;
 	}
 
@@ -71,17 +76,19 @@ namespace TNS.AdExpress.Domain.Level
 		/// <summary>
 		/// Obtient la liste contenant les colonnes
 		/// </summary>
-		public ArrayList Columns{
+        public List<GenericColumnItemInformation> Columns
+        {
 			get{return(_columns);}
 		}
 		/// <summary>
 		/// Obtient la liste des identifiants des colonnes
 		/// </summary>
-		public ArrayList ColumnIds{
+        public List<Int64> ColumnIds
+        {
 			get{
-				ArrayList columnIds=new ArrayList();
+                List<Int64> columnIds = new List<Int64>();
 				foreach(GenericColumnItemInformation currentColumn in _columns){
-					columnIds.Add(currentColumn.Id);
+					columnIds.Add((int)currentColumn.Id);
 				}
 				return(columnIds);}
 		}
@@ -102,18 +109,23 @@ namespace TNS.AdExpress.Domain.Level
 		/// </summary>
 		/// <remarks>Ne termine pas par une virgule</remarks>
 		/// <returns>Code SQL</returns>
-		public string GetSqlFields(){
-			string sql="";
-			foreach(GenericColumnItemInformation currentColumn in _columns){
-				if(currentColumn.GetSqlFieldId()!=null && currentColumn.GetSqlFieldId().Length>0)
-				sql+=currentColumn.GetSqlFieldId()+",";
-				if(currentColumn.GetSqlField()!=null && currentColumn.GetSqlField().Length>0)
-				sql+=currentColumn.GetSqlField()+",";
-			}
-			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
-			return(sql);
-		}
-
+        public string GetSqlFields() {
+            string sql = "";
+            foreach (GenericColumnItemInformation currentColumn in _columns) {
+                if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0) {
+                    if (currentColumn.GetSqlFieldId() != null && currentColumn.GetSqlFieldId().Length > 0)
+                        sql += currentColumn.GetSqlFieldId() + ",";
+                    if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
+                        sql += currentColumn.GetSqlField() + ",";
+                }
+                else {
+                    if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
+                        sql += string.Format("{0}.stragg({1}) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03), currentColumn.DataBaseField, currentColumn.DataBaseAliasField);
+                }
+            }
+            if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
+            return (sql);
+        }
 		/// <summary>
 		/// Obtient le code SQL des champs correspondant aux colonnes exceptées celles qui ont une équivalence
 		/// avec le niveau de détail présenté en ligne.  
@@ -125,10 +137,16 @@ namespace TNS.AdExpress.Domain.Level
 			string sql="";
 			foreach(GenericColumnItemInformation currentColumn in _columns){
 				if(detailLevelList==null ||  detailLevelList.Count==0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching)){
-					if(currentColumn.GetSqlFieldId()!=null && currentColumn.GetSqlFieldId().Length>0)
-						sql+=currentColumn.GetSqlFieldId()+",";
-					if(currentColumn.GetSqlField()!=null && currentColumn.GetSqlField().Length>0)
-						sql+=currentColumn.GetSqlField()+",";
+                    if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0) {
+                        if (currentColumn.GetSqlFieldId() != null && currentColumn.GetSqlFieldId().Length > 0)
+                            sql += currentColumn.GetSqlFieldId() + ",";
+                        if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
+                            sql += currentColumn.GetSqlField() + ",";
+                    }
+                    else {
+                        if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
+                            sql += string.Format("{0}.stragg({1}) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03), currentColumn.DataBaseField, currentColumn.DataBaseAliasField);
+                    }
 				}
 			}
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
@@ -180,17 +198,20 @@ namespace TNS.AdExpress.Domain.Level
 		/// </summary>
 		/// <remarks>Ne termine pas par une virgule</remarks>
 		/// <returns>Code SQL</returns>
-		public string GetSqlOrderFields(){
-			string sql="";
-			foreach(GenericColumnItemInformation currentColumn in _columns){
-				if(currentColumn.GetSqlFieldForOrder()!=null && currentColumn.GetSqlFieldForOrder().Length>0)
-				sql+=currentColumn.GetSqlFieldForOrder()+",";
-				if(currentColumn.GetSqlIdFieldForOrder()!=null && currentColumn.GetSqlIdFieldForOrder().Length>0)
-				sql+=currentColumn.GetSqlIdFieldForOrder()+",";
-			}
-			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
-			return(sql);
-		}
+        public string GetSqlOrderFields() {
+            string sql = "";
+            foreach (GenericColumnItemInformation currentColumn in _columns) {
+                if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0) {
+                    if (currentColumn.GetSqlFieldForOrder() != null && currentColumn.GetSqlFieldForOrder().Length > 0)
+                        sql += currentColumn.GetSqlFieldForOrder() + ",";
+
+                    if (currentColumn.GetSqlIdFieldForOrder() != null && currentColumn.GetSqlIdFieldForOrder().Length > 0)
+                        sql += currentColumn.GetSqlIdFieldForOrder() + ",";
+                }
+            }
+            if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
+            return (sql);
+        }
 
 		/// <summary>
 		/// Obtient le code SQL de la clause order correspondant aux colonnes exceptées celles qui ont une équivalence
@@ -202,12 +223,14 @@ namespace TNS.AdExpress.Domain.Level
 		public string GetSqlOrderFields(ArrayList detailLevelList){
 			string sql="";
 			foreach(GenericColumnItemInformation currentColumn in _columns){
-				if(detailLevelList==null ||  detailLevelList.Count==0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching)){
-					if(currentColumn.GetSqlFieldForOrder()!=null && currentColumn.GetSqlFieldForOrder().Length>0)
-						sql+=currentColumn.GetSqlFieldForOrder()+",";
-					if(currentColumn.GetSqlIdFieldForOrder()!=null && currentColumn.GetSqlIdFieldForOrder().Length>0)
-						sql+=currentColumn.GetSqlIdFieldForOrder()+",";
-				}
+                if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching)) {
+                    if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0) {
+                        if (currentColumn.GetSqlFieldForOrder() != null && currentColumn.GetSqlFieldForOrder().Length > 0)
+                            sql += currentColumn.GetSqlFieldForOrder() + ",";
+                        if (currentColumn.GetSqlIdFieldForOrder() != null && currentColumn.GetSqlIdFieldForOrder().Length > 0)
+                            sql += currentColumn.GetSqlIdFieldForOrder() + ",";
+                    }
+                }
 			}
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);

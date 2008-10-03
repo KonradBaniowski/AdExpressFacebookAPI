@@ -2,6 +2,16 @@
 // Auteur: Y. Rkaina
 // Création: 20/08/2007
 // Modification:
+/*
+ *      27/09/2008 - G Ragneau - Moved from TNS.AdExpress.Web.Core
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * */
 #endregion
 
 using System;
@@ -10,36 +20,29 @@ using System.Collections;
 using System.Text;
 
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Level;
 
-namespace TNS.AdExpress.Web.Core {
+namespace TNS.AdExpress.Domain.Results {
 
-    public class PortofolioDetailMediaColumnsInformation {
+    public class PortofolioDetailMediaColumns {
 
         #region Variables
         /// <summary>
         /// Liste des détails de colonnes a charger
         /// </summary>
-        protected static Hashtable _defaultMediaDetailColumns;
+        protected Dictionary<Int64, List<GenericColumnItemInformation>> _defaultMediaDetailColumns;
         #endregion
 
         #region Constructeur
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-        static PortofolioDetailMediaColumnsInformation() {
-            _defaultMediaDetailColumns = new Hashtable();
+        public PortofolioDetailMediaColumns(IDataSource source)
+        {
+            _defaultMediaDetailColumns = new Dictionary<Int64, List<GenericColumnItemInformation>>();
+            XmlLoader.PortofolioDetailMediaColumnsXL.Load(source, _defaultMediaDetailColumns);
 		}
 		#endregion
-
-        #region Initialisation de la classe
-        /// <summary>
-        /// Initialise la classe
-        /// </summary>
-        /// <param name="source">source de données</param>
-        public static void Init(IDataSource source) {
-            DataAccess.PortofolioDetailMediaColumnsInformationDataAccess.Load(source, _defaultMediaDetailColumns);
-        }
-        #endregion
 
         #region GetDefaultMediaDetailColumns
         /// <summary>
@@ -47,9 +50,10 @@ namespace TNS.AdExpress.Web.Core {
         /// </summary>
         /// <param name="idVehicle">Identifiant du média</param>
         /// <returns>Liste des colonnes</returns>
-        public static ArrayList GetDefaultMediaDetailColumns(Int64 idVehicle) {
+        public List<GenericColumnItemInformation> GetDefaultMediaDetailColumns(Int64 idVehicle)
+        {
             try {
-                return (ArrayList)_defaultMediaDetailColumns[idVehicle];
+                return _defaultMediaDetailColumns[idVehicle];
             }
             catch (System.Exception) {
                 return (null);

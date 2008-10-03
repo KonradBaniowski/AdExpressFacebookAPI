@@ -656,7 +656,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         #endregion
 
         #region GetGroupby
-
 		 /// <summary>
         /// Build group by clause
         /// </summary>

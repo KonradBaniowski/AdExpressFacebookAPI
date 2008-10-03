@@ -2802,6 +2802,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
 
 
+
         /// <summary>
         /// Détermine la table à traiter pour un Zoom en fonction du vehicle
         /// </summary>
@@ -3509,6 +3510,67 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
         #endregion
 
+        #region Get DataBase Table
+        /// <summary>
+        /// Get Table to treat detailed data
+        /// </summary>
+        /// <param name="vehicleName">Vehicle</param>
+        /// <param name="moduleType">Type de module</param>
+        /// <returns>Nom de la table</returns>
+        public static Table GetDataTable(VehicleInformation v, WebConstantes.Module.Type moduleType)
+        {
+            try
+            {
+                switch (moduleType)
+                {
+                    case WebConstantes.Module.Type.analysis:
+                        return GetAlertTable(v);
+                    case WebConstantes.Module.Type.tvSponsorship:
+                        return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataSponsorship);
+
+                    default:
+                        throw (new SQLGeneratorException("Unvalid module type."));
+                }
+            }
+            catch (SQLGeneratorException fe)
+            {
+                throw (fe);
+            }
+        }
+        /// <summary>
+        /// Get Alert Table
+        /// </summary>
+        /// <param name="v">Vehicle</param>
+        /// <returns>Object Table</returns>
+        internal static Table GetAlertTable(VehicleInformation v)
+        {
+            switch (v.Id)
+            {
+                case DBClassificationConstantes.Vehicles.names.press:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress);
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter);
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio);
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv);
+                case DBClassificationConstantes.Vehicles.names.outdoor:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor);
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack);
+                case DBClassificationConstantes.Vehicles.names.internet:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet);
+                case DBClassificationConstantes.Vehicles.names.directMarketing:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect);
+                case DBClassificationConstantes.Vehicles.names.cinema:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema);
+                default:
+                    throw new SQLGeneratorException("Unknown vehicle.");
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Unité
@@ -3670,20 +3732,27 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="webSession">Web Session</param>
         /// <returns>NOms des champs coorespondant aux unités sélectionnées</returns>
-        public static string GetUnitFieldsNameUnionForPortofolio(WebSession webSession) {
-            try {
+        public static string GetUnitFieldsNameUnionForPortofolio(WebSession webSession)
+        {
+            try
+            {
                 List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
                 string sqlUnit = "";
                 bool first = true;
 
-                foreach (UnitInformation currentUnit in unitsList) {
-                    if (!first) sqlUnit += ", ";
-                    else first = false;
-                    sqlUnit += currentUnit.GetSQLUnionSum();
+                foreach (UnitInformation currentUnit in unitsList)
+                {
+                    if (currentUnit.Id != CstCustomerSessions.Unit.versionNb)
+                    {
+                        if (!first) sqlUnit += ", ";
+                        else first = false;
+                        sqlUnit += currentUnit.GetSQLUnionSum();
+                    }
                 }
                 return sqlUnit;
             }
-            catch {
+            catch
+            {
                 throw new SQLGeneratorException("GetUnitFieldsNameUnionForPortofolio(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type)-->The type of module is not managed for the selection of unit.");
             }
         }

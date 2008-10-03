@@ -233,7 +233,24 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Plan Media
             /// </summary>
-            planMedia
+            planMedia,
+            /// <summary>
+            /// Id pub presse
+            /// </summary>
+            idPressAdvertisment,
+            /// <summary>
+            /// Id Cobranding
+            /// </summary>
+            idCobranding,
+            /// <summary>
+            /// Id Outdoor
+            /// </summary>            
+            idDataOutDoor,
+            /// <summary>
+            /// Cover date
+            /// </summary>
+            dateCoverNum
+
 		}
 		#endregion
 
@@ -314,6 +331,11 @@ namespace TNS.AdExpress.Domain.Level
         /// Le type de la cellule
         /// </summary>
         private string _cellType = string.Empty;
+
+        /// <summary>
+        /// String output format
+        /// </summary>
+        private string _strFormat = string.Empty;
 		#endregion
 
 		#region Constructeur
@@ -331,7 +353,7 @@ namespace TNS.AdExpress.Domain.Level
 		/// <param name="convertNullDbId">Doit convertir la valeur null d'un identifiant en 0</param>
 		/// <param name="convertNullDbField">Doit convertir la valeur null d'un champ en 0</param>
 		/// <param name="dataBaseAliasIdField">Champ libellé logique pour l'identifiant de la colonne de la base de données AdExpress 3</param>
-		public GenericColumnItemInformation(Int64 id,string name,Int64 webTextId,string dataBaseIdField,string dataBaseAliasIdField,bool convertNullDbId,string dataBaseField,string dataBaseAliasField,bool convertNullDbField,string dataBaseTableName,string dataBaseTableNamePrefix,string cellType)
+        public GenericColumnItemInformation(Int64 id, string name, Int64 webTextId, string dataBaseIdField, string dataBaseAliasIdField, bool convertNullDbId, string dataBaseField, string dataBaseAliasField, bool convertNullDbField, string dataBaseTableName, string dataBaseTableNamePrefix, string cellType, string strFormat)
 		{
 			if(id<0)throw(new ArgumentException("Invalid argument id"));
 			if(name==null ||name.Length<1)throw(new ArgumentException("Invalid argument name"));
@@ -375,7 +397,9 @@ namespace TNS.AdExpress.Domain.Level
 		/// <param name="dataBaseAliasIdField">Champ libellé logique pour l'identifiant de la colonne de la base de données AdExpress 3</param>		
 		/// <param name="dbRelatedTablePrefixeForJoin">Préfixe de la table pour la colonne de la base de données AdExpress 3 pour jointure</param>
 		/// <param name="sqlOperation">Opertation sql</param>
-		public GenericColumnItemInformation(Int64 id,string name,Int64 webTextId,string dataBaseIdField,string dataBaseAliasIdField,bool convertNullDbId,string dataBaseField,string dataBaseAliasField,bool convertNullDbField,string dataBaseTableName,string dataBaseTableNamePrefix,string cellType,string dbRelatedTablePrefixeForJoin,string sqlOperation):this(id,name,webTextId,dataBaseIdField,dataBaseAliasIdField,convertNullDbId,dataBaseField,dataBaseAliasField,convertNullDbField,dataBaseTableName,dataBaseTableNamePrefix,cellType) {			
+        public GenericColumnItemInformation(Int64 id, string name, Int64 webTextId, string dataBaseIdField, string dataBaseAliasIdField, bool convertNullDbId, string dataBaseField, string dataBaseAliasField, bool convertNullDbField, string dataBaseTableName, string dataBaseTableNamePrefix, string cellType, string strFormat, string dbRelatedTablePrefixeForJoin, string sqlOperation)
+            : this(id, name, webTextId, dataBaseIdField, dataBaseAliasIdField, convertNullDbId, dataBaseField, dataBaseAliasField, convertNullDbField, dataBaseTableName, dataBaseTableNamePrefix, cellType, strFormat)
+        {			
 			
 			if(dbRelatedTablePrefixeForJoin!=null && dbRelatedTablePrefixeForJoin.Length>0)_dbRelatedTablePrefixeForJoin = dbRelatedTablePrefixeForJoin;
 			if(sqlOperation!=null && sqlOperation.Length>0)_sqlOperation = sqlOperation;
@@ -461,6 +485,7 @@ namespace TNS.AdExpress.Domain.Level
         /// <summary>
         /// Indique si la colonne s'affiche dans la page web
         /// </summary>
+        [Obsolete("Obsolete because it applys the property to all sets of columns IDs which false because an information could be displayed in one set but not in an other")]
         public bool Visible {
             get { return (_visible); }
             set { _visible = value; }
@@ -505,6 +530,14 @@ namespace TNS.AdExpress.Domain.Level
         public string CellType {
             get { return _cellType; }
             set { _cellType = value; }
+        }
+
+        /// <summary>
+        /// Get / Set Output string format
+        /// </summary>
+        public string StringFormat {
+            get { return _strFormat; }
+            set { _strFormat = value; }
         }
 		#endregion
 

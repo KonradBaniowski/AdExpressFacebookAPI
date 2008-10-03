@@ -21,6 +21,8 @@ using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
+using System.Collections.Generic;
 
 namespace AdExpress.Private.Results.Excel{
 
@@ -108,7 +110,7 @@ namespace AdExpress.Private.Results.Excel{
         protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
             System.Collections.Specialized.NameValueCollection ret = base.DeterminePostBackMode();
 
-            ArrayList columnItemList = new ArrayList();
+            List<GenericColumnItemInformation> columnItemList = new List<GenericColumnItemInformation>();
             VehicleInformation vehicle = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
             PortofolioDetailMediaResultWebControl1.MediaId = HttpContext.Current.Request.QueryString.Get("idMedia");
@@ -118,9 +120,9 @@ namespace AdExpress.Private.Results.Excel{
             PortofolioDetailMediaResultWebControl1.CustomerWebSession = _webSession;
 
             #region Niveau de colonnes (Generic)
-            columnItemList = GenericColumnsInformation.GetGenericColumnItemInformationList(vehicle.DetailColumnId);
+            columnItemList = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(vehicle.DetailColumnId);
 
-            ArrayList columnIdList = new ArrayList();
+            List<Int64> columnIdList = new List<Int64>();
             foreach (GenericColumnItemInformation Column in columnItemList)
                 columnIdList.Add((int)Column.Id);
 

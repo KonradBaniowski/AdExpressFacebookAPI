@@ -11,18 +11,19 @@ using System.Xml;
 using System.Collections;
 
 using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Web;
 
-namespace TNS.AdExpress.Web.Core.DataAccess {
+namespace TNS.AdExpress.Domain.XmlLoader {
 
     /// <summary>
     /// Cette classe est utilisée pour associer à chaque média un détail colonnes spécifique (utilisé pour la création du détail media dans le module portefeuille) 
     /// </summary>
-    class PortofolioDetailMediaColumnsInformationDataAccess {
+    class PortofolioDetailMediaColumnsXL
+    {
 
         #region Parcours du fichier XML
-        public static void Load(IDataSource source, Hashtable defaultMediaDetailColumns) {
+        public static void Load(IDataSource source, Dictionary<Int64, List<GenericColumnItemInformation>> defaultMediaDetailColumns) {
             XmlTextReader Reader;
             Int64 vehicleId = 0;
             Int64 idDetailColumn = 0;
@@ -41,7 +42,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
                             case "detailColumn":
                                 if (Reader.GetAttribute("id") != null) {
                                     idDetailColumn = Int64.Parse(Reader.GetAttribute("id"));
-                                    defaultMediaDetailColumns.Add(vehicleId, GenericColumnsInformation.GetGenericColumnItemInformationList(idDetailColumn));
+                                    defaultMediaDetailColumns.Add(vehicleId, WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(idDetailColumn));
                                 }
                                 break;
                         }

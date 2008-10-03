@@ -2,6 +2,13 @@
 // Author:
 // Creation date:
 // Modification date:
+/*
+ *      24/09/2008 - G Ragneau - moved from TNS.AdExpress.Web.Core
+ * 
+ * 
+ * 
+ * 
+ * */
 #endregion
 
 using System;
@@ -9,21 +16,22 @@ using System.Data;
 using System.Xml;
 using System.Collections;
 using System.IO;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
+
 using TNS.AdExpress.Constantes;
-using TNS.AdExpress.Web.Core.Exceptions;
-using TNS.AdExpress.Web.Core;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
+using System.Collections.Generic;
 
-namespace TNS.AdExpress.Web.Core.DataAccess{
+namespace TNS.AdExpress.Domain.XmlLoader{
 
 	///<summary>
 	/// This class is used to initialize 4 hash tables, the first for allowed module by detail column, the second for column list, 
 	/// the third for default media detail level and the fourth for allowed media detail level
 	/// </summary>
 	///  <stereotype>utility</stereotype>
-	public class InsertionDetailInformationDataAccess {
+	public class InsertionDetailsXL {
 
 		#region Parcours du fichier XML
 		/// <summary>
@@ -80,12 +88,14 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
 		///		</vehicle>
 		/// </example>
  		/// <exception cref="System.Exception">Thrown when is impossible to load the MediaPlanInsertionConfiguration XML file</exception>
-		public static void Load(IDataSource source,Hashtable allowedModuleByDetailColums,Hashtable detailColumnsList,Hashtable defaultMediaDetailLevels,Hashtable allowedMediaLevelItems){
+        public static void Load(IDataSource source, Dictionary<Int64, Dictionary<Int64, Int64>> allowedModuleByDetailColums, Dictionary<Int64, List<GenericColumnItemInformation>> detailColumnsList, Dictionary<Int64, List<GenericDetailLevel>> defaultMediaDetailLevels, Dictionary<Int64, List<DetailLevelItemInformation>> allowedMediaLevelItems)
+        {
 			XmlTextReader Reader;
-			ArrayList defaultMediaDetailLevelList=null, allowedMediaLevelItemList=null;
+            List <GenericDetailLevel> defaultMediaDetailLevelList = null;
+            List<DetailLevelItemInformation> allowedMediaLevelItemList = null;
 			Int64 id=0;
 			Int64 idDetailColumn=0;
-			Hashtable idModuleIdDetailColumnTable=null;
+			Dictionary<Int64, Int64> idModuleIdDetailColumnTable=null;
 					
 			try{
 					Reader=(XmlTextReader)source.GetSource();								
@@ -102,9 +112,9 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
 								id=0;
 									
 								if(Reader.GetAttribute("id")!=null ) {
-									defaultMediaDetailLevelList = new ArrayList();
-									allowedMediaLevelItemList = new ArrayList();
-									idModuleIdDetailColumnTable = new Hashtable();
+                                    defaultMediaDetailLevelList = new List<GenericDetailLevel>();
+                                    allowedMediaLevelItemList = new List<DetailLevelItemInformation>();
+                                    idModuleIdDetailColumnTable = new Dictionary<Int64, Int64>();
 									id=Int64.Parse(Reader.GetAttribute("id"));
 									allowedModuleByDetailColums.Add(Int64.Parse(Reader.GetAttribute("id")),idModuleIdDetailColumnTable);										
 								}
@@ -112,7 +122,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
 							case "detailColumn":
 								if(Reader.GetAttribute("id")!=null){
 									idDetailColumn = Int64.Parse(Reader.GetAttribute("id"));
-									if(!detailColumnsList.Contains(idDetailColumn))detailColumnsList.Add(idDetailColumn,GenericColumnsInformation.GetGenericColumnItemInformationList(idDetailColumn));										
+									if(!detailColumnsList.ContainsKey(idDetailColumn))detailColumnsList.Add(idDetailColumn, WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(idDetailColumn));										
 								}
 								break;
 							case "allowedModule":

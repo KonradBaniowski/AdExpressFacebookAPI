@@ -616,14 +616,11 @@ namespace TNS.AdExpressI.LostWon.DAL
                 if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb) {
                     UnitInformation u = _session.GetSelectedUnit();
                     if (type != CstDB.TableType.Type.webPlan) {
-                        unitFieldSumWithAlias = string.Format("{0} as {1}", u.DatabaseField, u.Id.ToString());
-                        groupOptional = string.Format(", {0}", u.DatabaseField);
+                        unitFieldSumWithAlias = string.Format("{0}.stragg({2}) as {1}", schAdExpr03.Label, u.Id.ToString(), u.DatabaseField);
                     }
                     else {
-                        unitFieldSumWithAlias = string.Format("{0} as {0}", u.Id.ToString());
-                        fromOptional = string.Format(", {0} versions", GetEvaliantVersions(dataTableName, dateField, universFilter, u.Id.ToString()));
-                        groupOptional = string.Format(", {0}", u.Id.ToString());
-                        joinOptional = string.Format(" and {0}.id_media = versions.id_media and {0}.id_product=versions.id_product and {1}=versions.{2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, dateField, CstDB.Fields.WEB_PLAN_MEDIA_MONTH_DATE_FIELD);
+                        unitFieldSumWithAlias = string.Format("{0}.stragg(t2.COLUMN_VALUE) as {1}", schAdExpr03.Label, u.Id.ToString());
+                        fromOptional = string.Format(", table({0}.{1}) t2", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
                     }
                 }
                 else {
@@ -765,20 +762,6 @@ namespace TNS.AdExpressI.LostWon.DAL
 
             return sql.ToString();
         }
-        protected string GetEvaliantVersions(string dataTableName, string dateField, string universFilter, string versionAlias) {
-            StringBuilder sql = new StringBuilder();
-
-            sql.AppendFormat("( select distinct wp.id_media, wp.id_product, {0}, to_char(t2.COLUMN_VALUE) as {3} from {2}, table(wp.list_banners) t2 "
-                , dateField
-                , WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mau01).Label
-                , dataTableName
-                , versionAlias);
-            sql.Append(universFilter);
-            sql.Append(") ");
-
-            return sql.ToString();
-
-        }
         #endregion
 
         #region Get Synthesis Request
@@ -843,14 +826,11 @@ namespace TNS.AdExpressI.LostWon.DAL
             if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb) {
                 UnitInformation u = _session.GetSelectedUnit();
                 if (type != CstDB.TableType.Type.webPlan) {
-                    unitFieldSumWithAlias = string.Format("{0} as {1}", u.DatabaseField, u.Id.ToString());
-                    groupOptional = string.Format(", {0}", u.DatabaseField);
+                    unitFieldSumWithAlias = string.Format("{0}.stragg({2}) as {1}", schAdExpr03.Label, u.Id.ToString(), u.DatabaseField);
                 }
                 else {
-                    unitFieldSumWithAlias = string.Format("{0} as {0}", u.Id.ToString());
-                    fromOptional = string.Format(", {0} versions", GetEvaliantVersions(dataTableName, dateField, universFilter, u.Id.ToString()));
-                    groupOptional = string.Format(", {0}", u.Id.ToString());
-                    joinOptional = string.Format(" and {0}.id_media = versions.id_media and {0}.id_product=versions.id_product and {1}=versions.{2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, dateField, CstDB.Fields.WEB_PLAN_MEDIA_MONTH_DATE_FIELD);
+                    unitFieldSumWithAlias = string.Format("{0}.stragg(t2.COLUMN_VALUE) as {1}", schAdExpr03.Label, u.Id.ToString());
+                    fromOptional = string.Format(", table({0}.{1}) t2", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
                 }
             }
             else {

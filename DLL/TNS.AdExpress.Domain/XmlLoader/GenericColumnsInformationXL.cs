@@ -11,6 +11,8 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Exceptions;
 using ConstantesWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Level;
+using System.Collections.Generic;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Domain.XmlLoader{
@@ -44,12 +46,14 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 		///	</example>
 		/// <exception cref="XmlException">Thrown when the XmlTextReader read an invalid attribute for column</exception>
 		/// <exception cref="System.Exception">Thrown when is impossible to load the GenericColumn XML file</exception>
-		public static Hashtable Load(IDataSource source){
-			Hashtable list=new Hashtable();			
-			ArrayList columnIds=null;		
-			XmlTextReader reader=null;
+        public static void Load(IDataSource source, Dictionary<Int64, List<GenericColumnItemInformation>> columnsSets, Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>> columnsVisibility, Dictionary<Int64, List<GenericColumnItemInformation>> columnsSetKeys) {
+			List<GenericColumnItemInformation> columnIds = null;
+            List<GenericColumnItemInformation> keys = null;
+            Dictionary<GenericColumnItemInformation.Columns, bool> visibility = null;
+            XmlTextReader reader=null;
 			GenericColumnItemInformation genericColumnItemInformation =null;
 			Int64 id=0;
+            bool bVisible = true;
 			try{
 				reader=(XmlTextReader)source.GetSource();
 				while(reader.Read()){
@@ -57,12 +61,16 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 						switch(reader.LocalName){
 							case "detailColumn" :
 								if(id!=0){
-									list.Add(id,columnIds);
-								}
+                                    columnsSets.Add(id, columnIds);
+                                    columnsVisibility.Add(id, visibility);
+                                    columnsSetKeys.Add(id, keys);
+                                }
 								id=0;
 								if ((reader.GetAttribute("id")!=null && reader.GetAttribute("id").Length>0)){
 									id=Int64.Parse(reader.GetAttribute("id"));
-									columnIds=new ArrayList();
+									columnIds = new List<GenericColumnItemInformation>();
+                                    visibility = new Dictionary<GenericColumnItemInformation.Columns, bool>();
+                                    keys = new List<GenericColumnItemInformation>();
 								}
 								else{
 									throw(new XmlException("Invalide Attribute for vehicle"));
@@ -70,14 +78,24 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								break;							
 							case "columnItem":
 								if ((reader.GetAttribute("id")!=null && reader.GetAttribute("id").Length>0)){
-									genericColumnItemInformation = GenericColumnItemsInformation.Get(Int64.Parse(reader.GetAttribute("id")));
+									genericColumnItemInformation = WebApplicationParameters.GenericColumnItemsInformation.Get(Int64.Parse(reader.GetAttribute("id")));
 									if ((reader.GetAttribute("notInExcelExport")!=null && reader.GetAttribute("notInExcelExport").Length>0))
 										genericColumnItemInformation.NotInExcelExport = bool.Parse(reader.GetAttribute("notInExcelExport"));//For excel export
-                                    if ((reader.GetAttribute("visible") != null && reader.GetAttribute("visible").Length > 0))
-                                        genericColumnItemInformation.Visible = bool.Parse(reader.GetAttribute("visible"));
+                                    if ((reader.GetAttribute("visible") != null && reader.GetAttribute("visible").Length > 0)) {
+                                        genericColumnItemInformation.Visible = bVisible = bool.Parse(reader.GetAttribute("visible"));
+                                    }
+                                    else {
+                                        bVisible = true;
+                                    }
 									if ((reader.GetAttribute("idDetailLevelMatching")!=null && reader.GetAttribute("idDetailLevelMatching").Length>0))
 										genericColumnItemInformation.IdDetailLevelMatching = int.Parse(reader.GetAttribute("idDetailLevelMatching"));
+                                    if ((reader.GetAttribute("isKey") != null && reader.GetAttribute("isKey").Length > 0)) {
+                                        if (bool.Parse(reader.GetAttribute("isKey"))) {
+                                            keys.Add(genericColumnItemInformation);
+                                        }
+                                    }
 									columnIds.Add(genericColumnItemInformation);
+                                    visibility.Add(genericColumnItemInformation.Id, bVisible);
 								}
 								else{
 									throw(new XmlException("Invalide Attribute for defaultColumn"));
@@ -87,9 +105,12 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 						}
 					}
 				}
-				if(id!=0 && columnIds!=null && columnIds.Count>0)list.Add(id,columnIds);
+                if (id != 0 && columnIds != null && columnIds.Count > 0) {
+                    columnsSets.Add(id, columnIds);
+                    columnsVisibility.Add(id, visibility);
+                    columnsSetKeys.Add(id, keys);
+                }
 				source.Close();
-				return(list);
 			}
 			catch(System.Exception err){
 				source.Close();

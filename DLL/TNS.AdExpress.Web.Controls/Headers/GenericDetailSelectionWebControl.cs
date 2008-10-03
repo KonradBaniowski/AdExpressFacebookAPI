@@ -23,6 +23,8 @@ using TNS.AdExpress.Web.Core;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
+using System.Collections.Generic;
 
 
 namespace TNS.AdExpress.Web.Controls.Headers
@@ -71,15 +73,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <summary>
 		/// Liste des colonnes personnalisées
 		/// </summary>
-		private ArrayList _columnItemList=null;
+		private List<GenericColumnItemInformation> _columnItemList=null;
 		/// <summary>
 		/// Liste des colonnes sélectionnées
 		/// </summary>
-		private ArrayList _columnItemSelectedList=null;
+        private List<GenericColumnItemInformation> _columnItemSelectedList = null;
 		/// <summary>
 		/// Liste des colonnes de la corbeille
 		/// </summary>
-		private ArrayList _columnItemTrashList=null;
+        private List<GenericColumnItemInformation> _columnItemTrashList = null;
 		/// <summary>
 		/// Session du client
 		/// </summary>
@@ -126,11 +128,11 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <summary>
 		/// Liste des éléments de détail par défaut
 		/// </summary>
-		private ArrayList _defaultDetailItemList=null;
+		private List<GenericDetailLevel> _defaultDetailItemList=null;
 		/// <summary>
 		/// Liste des éléments de détail par personnalisées
 		/// </summary>
-		private ArrayList _allowedDetailItemList=null;
+		private List<DetailLevelItemInformation> _allowedDetailItemList=null;
 		#endregion
 
 		#region Help
@@ -330,21 +332,30 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			#region initialisation de la liste des colonnes
 
 			string[] columnItemSelectedList=null;
-			ArrayList  genericColumnList=null; 
+			List<Int64>  genericColumnList=null; 
 			ArrayList levels=new ArrayList();
  
 			if ( (!_idVehicleFromTab.Equals(null)) && (_idVehicleFromTab>0)){
+                
+                Int64 columnSetId = WebApplicationParameters.InsertionsDetail.GetDetailColumnsId(_idVehicleFromTab, _customerWebSession.CurrentModule);
 
 				#region Initialisation de la liste des colonnes pour un type de Vehicle
-//				_columnItemList=InsertionDetailInformation.GetDetailColumns(_idVehicleFromTab);
-				_columnItemList=InsertionDetailInformation.GetDetailColumns(_idVehicleFromTab,_customerWebSession.CurrentModule);
+				List<GenericColumnItemInformation> tmp = WebApplicationParameters.InsertionsDetail.GetDetailColumns(_idVehicleFromTab,_customerWebSession.CurrentModule);
+                _columnItemList = new List<GenericColumnItemInformation>();
+                foreach(GenericColumnItemInformation column in tmp){
+                    if (WebApplicationParameters.GenericColumnsInformation.IsVisible(columnSetId, column.Id))
+                    {
+                        _columnItemList.Add(column);
+                    }
+                }
+
 				_columnItemList=ColumnRight(_columnItemList);
 				_nbColumnItemList=_columnItemList.Count;
 				#endregion
 
 				#region Initialisation de la liste des niveaux de détail
-				_allowedDetailItemList = InsertionDetailInformation.GetAllowedMediaDetailLevelItems(_idVehicleFromTab);
-				_defaultDetailItemList = InsertionDetailInformation.GetDefaultMediaDetailLevels(_idVehicleFromTab);
+				_allowedDetailItemList = WebApplicationParameters.InsertionsDetail.GetAllowedMediaDetailLevelItems(_idVehicleFromTab);
+                _defaultDetailItemList = WebApplicationParameters.InsertionsDetail.GetDefaultMediaDetailLevels(_idVehicleFromTab);
 				#endregion
 
 				if (Page.IsPostBack){
@@ -353,9 +364,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					//récupération de la liste des id des colonnes sélectionnées
 					if(this.Page.Request.Form.GetValues("columnItemSelectedList")!=null){
 						columnItemSelectedList = this.Page.Request.Form.GetValues("columnItemSelectedList");
-                    
-						_columnItemSelectedList=new ArrayList();
-						_columnItemTrashList=new ArrayList();
+
+                        _columnItemSelectedList = new List<GenericColumnItemInformation>();
+                        _columnItemTrashList = new List<GenericColumnItemInformation>();
 					
 						columnItemSelectedList = columnItemSelectedList[0].Split(',');
 
@@ -364,7 +375,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 								_columnItemTrashList=_columnItemList;
 							else{
 								for ( int i=0; i<columnItemSelectedList.Length; i++){
-									_genericColumnItemInformation = GenericColumnItemsInformation.Get(Int64.Parse(columnItemSelectedList[i]));
+									_genericColumnItemInformation = WebApplicationParameters.GenericColumnItemsInformation.Get(Int64.Parse(columnItemSelectedList[i]));
 									_columnItemSelectedList.Add(_genericColumnItemInformation);
 								}
 
@@ -387,7 +398,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 							_columnItemSelectedList=_columnItemList;
 						}
 
-						genericColumnList=new ArrayList(); 
+						genericColumnList = new List<Int64>(); 
 						foreach(GenericColumnItemInformation Column in _columnItemSelectedList)
 							genericColumnList.Add((int)Column.Id);
 						_customerWebSession.GenericInsertionColumns= new GenericColumns(genericColumnList);
@@ -396,9 +407,11 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
 				}
 				else{
-					genericColumnList=new ArrayList(); 
-					foreach(GenericColumnItemInformation Column in _columnItemList)
-						genericColumnList.Add((int)Column.Id);
+					genericColumnList=new List<Int64>();
+                    foreach (GenericColumnItemInformation Column in _columnItemList)
+                    {
+                        genericColumnList.Add((int)Column.Id);
+                    }
 					_customerWebSession.GenericInsertionColumns= new GenericColumns(genericColumnList);
 
 					foreach(GenericDetailLevel detailItem in _defaultDetailItemList)
@@ -785,8 +798,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// </summary>
 		/// <param name="columnItemList">Liste des colonnes par média</param>
 		/// <returns></returns>
-		private ArrayList ColumnRight(ArrayList columnItemList){
-			ArrayList columnList=new ArrayList();
+        private List<GenericColumnItemInformation> ColumnRight(List<GenericColumnItemInformation> columnItemList)
+        {
+            List<GenericColumnItemInformation> columnList = new List<GenericColumnItemInformation>();
 
 			foreach(GenericColumnItemInformation column in columnItemList)
 				if(CanAddColumnItem(column))
