@@ -107,7 +107,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						sql += " group by id_media, " + groupByFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix;
 					}
 
-					sql += " order by " + orderFieldNameWithoutTablePrefix + ", id_media ";
+					//sql += " order by " + orderFieldNameWithoutTablePrefix + ", id_media ";
 				}
 			}
 			catch (System.Exception err) {
@@ -156,7 +156,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			string listProductHap = "";
 			string mediaAgencyTable = string.Empty;
 			string mediaAgencyJoins = string.Empty;
-			CustomerPeriod customerPeriod = _webSession.CustomerPeriodSelected;
+            string groupByOptional = string.Empty;
+            string fromOptional = string.Empty;
+            CustomerPeriod customerPeriod = _webSession.CustomerPeriodSelected;
 			#endregion
 
 			#region Construction de la requête
@@ -179,10 +181,18 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
-                if(_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack)
+                if(_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
                     unitFields = WebFunctions.SQLGenerator.GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-                else
+                }
+                else {
                     unitFields = GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    if(type != DBConstantes.TableType.Type.webPlan) {
+                        groupByOptional = "," + UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).DatabaseField;
+                    }
+                    else {
+                        fromOptional = string.Format(", table({0}.{1}) t2 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).DatabaseMultimediaField);
+                    }
+                }
 				
                 detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
 
@@ -219,7 +229,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql += " select " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + ", " + dateField + " as date_num, " + unitFields;
 				else
 					sql += " select " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + "," + unitFields;
-				sql += " from " + mediaAgencyTable + dataTableName;
+                sql += " from " + mediaAgencyTable + dataTableName + fromOptional;
 				if (detailProductTablesNames.Length > 0)
 					sql += ", " + detailProductTablesNames;
 				sql += " " + dataTableNameForGad;
@@ -282,13 +292,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				sql += mediaRights;
 
 				// Group by
-				if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
-					sql += " group by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + ", " + dateField;
-				else
-					sql += " group by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad;
-                if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
-                    sql += ", " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".hashcode";
+                if(customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
+                    sql += " group by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + ", " + dateField;
                 }
+                else {
+                    sql += " group by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad;
+                }
+                sql += groupByOptional;
 			}
 			#endregion
 
@@ -326,11 +336,12 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         if(unitsList[i].Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
                             sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
                         else
-                            sqlUnit.AppendFormat("{1} as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+                            sqlUnit.AppendFormat("to_char(" + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + ".stragg2(t2.column_value)) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
                         break;
                 }
             }
             return sqlUnit.ToString();
         }
+
 	}
 }
