@@ -471,15 +471,13 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 
 				#region Html file loading
 				Functions.CloseHtmlFile(sw);
-				HTML2PDFClass html = new HTML2PDFClass();
+				HTML2PDF2Class html = new HTML2PDF2Class();
 				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 				html.ConnectToPDFLibrary (this);
-				html.LoadFromFile(workFile);
-				html.ConvertAll();
-				html.ClearCache();
+				html.LoadHTMLFile(workFile);
 				html.ConvertAll();
 				html.DisconnectFromPDFLibrary ();
 				#endregion
@@ -599,15 +597,13 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 					#region Html file loading
 					sw.WriteLine("</table>");
 					Functions.CloseHtmlFile(sw);
-					HTML2PDFClass html = new HTML2PDFClass();
+					HTML2PDF2Class html = new HTML2PDF2Class();
 					html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 					html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 					html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 					html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 					html.ConnectToPDFLibrary (this);
-					html.LoadFromFile(workFile);
-					html.ConvertAll();
-					html.ClearCache();
+					html.LoadHTMLFile(workFile);
 					html.ConvertAll();
 					html.DisconnectFromPDFLibrary ();
 					#endregion
@@ -772,15 +768,13 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				#region Html file loading
 				sw.WriteLine("</table>");
 				Functions.CloseHtmlFile(sw);
-				HTML2PDFClass html = new HTML2PDFClass();
+				HTML2PDF2Class html = new HTML2PDF2Class();
 				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 				html.ConnectToPDFLibrary (this);
-				html.LoadFromFile(workFile);
-				html.ConvertAll();
-				html.ClearCache();
+				html.LoadHTMLFile(workFile);
 				html.ConvertAll();
 				html.DisconnectFromPDFLibrary ();
 				#endregion
@@ -1273,15 +1267,13 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 							
 				#region Html file loading
 				Functions.CloseHtmlFile(sw);
-				HTML2PDFClass htmlTmp = new HTML2PDFClass();
+				HTML2PDF2Class htmlTmp = new HTML2PDF2Class();
 				htmlTmp.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				htmlTmp.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				htmlTmp.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 				htmlTmp.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 				htmlTmp.ConnectToPDFLibrary (this);
-				htmlTmp.LoadFromFile(workFile);
-				htmlTmp.ConvertAll();
-				htmlTmp.ClearCache();
+				htmlTmp.LoadHTMLFile(workFile);
 				htmlTmp.ConvertAll();
 				htmlTmp.DisconnectFromPDFLibrary ();
 				#endregion
