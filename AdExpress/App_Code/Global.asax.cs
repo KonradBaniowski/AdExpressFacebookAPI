@@ -105,10 +105,10 @@ namespace AdExpress {
 				//AnubisCommon.Network.Configuration networkConfig=AnubisBF.Network.ConfigurationSystem.Load(AppDomain.CurrentDomain.BaseDirectory+@"config\"+AnubisConstantes.Application.Configuration.NETWORK_FILE);
 				//AnubisCommon.Network.WebClientConfiguration.Init(networkConfig.Name,networkConfig.IP,networkConfig.Port);
 				//Initializing the hashtable containing publication dates for press media
-                if(ModulesList.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE)!=null ||  
+                /*if(ModulesList.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE)!=null ||  
                   ModulesList.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.DONNEES_DE_CADRAGE)!=null) {
                     MediaPublicationDatesSystem.Init();
-                }
+                }*/
 
 
 			//Initialisation des listes CSS

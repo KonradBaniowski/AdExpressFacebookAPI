@@ -19,7 +19,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Medias
 	/// This class provides the façade to manipulate the hashtable containing the media along with their publication dates.
 	/// The method GetNextPublicationDate returns the next publication date if present else returns 0.
 	/// </summary>
-	public class MediaPublicationDatesSystem
+	public static class MediaPublicationDatesSystem
 	{
 		
 		#region variables
@@ -34,11 +34,17 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Medias
 
 		#endregion
 
-		#region init
-		/// <summary>
+        #region Constructor
+        static MediaPublicationDatesSystem() {
+            Init();
+        }
+        #endregion
+
+        #region init
+        /// <summary>
         /// This method is used to initialize the hashtable containing media with their publication dates
         /// </summary>			
-		public static void Init()
+		private static void Init()
 		{
 			try{
 				if (_publications == null || _nextUpdate.CompareTo(DateTime.Now) < 0)

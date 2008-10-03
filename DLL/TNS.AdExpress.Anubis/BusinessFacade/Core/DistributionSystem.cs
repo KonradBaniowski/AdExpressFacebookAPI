@@ -210,7 +210,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Core{
 			Int64 navSessionId=0;
 			IPlugin plugin;
 
-			MediaPublicationDatesSystem.Init();
+			//MediaPublicationDatesSystem.Init();
  
 			#region Initialisations des Listes 
 			// Initialisation des descriptions des éléments de niveaux de détail
