@@ -149,10 +149,18 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <param name="e">Event params</param>
         protected override void OnLoad(EventArgs e) {
             if(!Page.IsPostBack) {
+                DataRow row = null;
+                row = _dt.NewRow();
+                row["id_sector"] = -1;
+                row["sector"] = "-------------------";
+                _dt.Rows.Add(row);
+
                 _dropDownList.DataSource = _dt;
                 _dropDownList.DataTextField = "sector";
                 _dropDownList.DataValueField = "id_sector";
                 _dropDownList.DataBind();
+
+                _dropDownList.Items.FindByValue("-1").Selected = true;	
             }
             if(Page.IsPostBack) {
                 // Save SectorID in websession
