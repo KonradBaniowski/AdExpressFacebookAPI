@@ -402,15 +402,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 			#region Html file loading
 			Functions.CloseHtmlFile(sw);
-			HTML2PDFClass html = new HTML2PDFClass();
+			HTML2PDF2Class html = new HTML2PDF2Class();
 			html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 			html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 			html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 			html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 			html.ConnectToPDFLibrary (this);
-			html.LoadFromFile(workFile);
-			html.ConvertAll();
-			html.ClearCache();
+			html.LoadHTMLFile(workFile);
 			html.ConvertAll();
 			html.DisconnectFromPDFLibrary ();
 			#endregion
@@ -690,15 +688,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				#region Html file loading
 				sw.WriteLine("</table>");
 				Functions.CloseHtmlFile(sw);
-				HTML2PDFClass html = new HTML2PDFClass();
+				HTML2PDF2Class html = new HTML2PDF2Class();
 				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 				html.ConnectToPDFLibrary (this);
-				html.LoadFromFile(workFile);
-				html.ConvertAll();
-				html.ClearCache();
+				html.LoadHTMLFile(workFile);
 				html.ConvertAll();
 				html.DisconnectFromPDFLibrary ();
 				#endregion
@@ -1454,15 +1450,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		
 			#region Html file loading
 			Functions.CloseHtmlFile(sw);
-			HTML2PDFClass html = new HTML2PDFClass();
+			HTML2PDF2Class html = new HTML2PDF2Class();
 			html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 			html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 			html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 			html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 			html.ConnectToPDFLibrary (this);
-			html.LoadFromFile(workFile);
-			html.ConvertAll();
-			html.ClearCache();
+			html.LoadHTMLFile(workFile);
 			html.ConvertAll();
 			html.DisconnectFromPDFLibrary ();
 			#endregion

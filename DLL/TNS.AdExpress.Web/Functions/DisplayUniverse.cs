@@ -82,11 +82,11 @@ namespace TNS.AdExpress.Web.Functions {
 				html.Append("<table style=\" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
 				//Groups of items excludes
 				groups = adExpressUniverse.GetExludes();
-				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, dataLanguage,source, AccessType.excludes, witdhTable, paginate, nbLineByPage, ref currentLine));
+				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language, dataLanguage,source, AccessType.excludes, paginate, nbLineByPage, ref currentLine));
 
 				//Groups of items includes
 				groups = adExpressUniverse.GetIncludes();
-				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language,dataLanguage, source, AccessType.includes, witdhTable, paginate, nbLineByPage, ref currentLine));
+				html.Append(GetUniverseGroupForHtml(groups, baseColSpan, language,dataLanguage, source, AccessType.includes, paginate, nbLineByPage, ref currentLine));
 
 				html.Append("</table>");
 			}
@@ -210,7 +210,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="source">Data Source</param>
 		/// <param name="accessType">items access type</param>
 		/// <returns>Html render to show universe selection</returns>
-		private static string GetUniverseGroupForHtml(List<NomenclatureElementsGroup> groups, int baseColSpan, int language,int dataLanguage, IDataSource source, AccessType accessType, int witdhTable, bool paginate, int nbLineByPage, ref int currentLine) {
+		private static string GetUniverseGroupForHtml(List<NomenclatureElementsGroup> groups, int baseColSpan, int language,int dataLanguage, IDataSource source, AccessType accessType, bool paginate, int nbLineByPage, ref int currentLine) {
 
 			
 			#region Variables
@@ -250,8 +250,8 @@ namespace TNS.AdExpress.Web.Functions {
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
 							//Level label
-                            if (displayBorder) html.Append("<table class=\"UniverseHeaderStyle\"  cellpadding=0 cellspacing=0 width=" + witdhTable + "  >");
-                            else html.Append("<table class=\"UniverseHeaderStyleWithoutTop\"  cellpadding=0 cellspacing=0  width=" + witdhTable + ">");
+                            if (displayBorder) html.Append("<table class=\"UniverseHeaderStyle\"  cellpadding=0 cellspacing=0 width=\"100%\"  >");
+                            else html.Append("<table class=\"UniverseHeaderStyleWithoutTop\"  cellpadding=0 cellspacing=0  width=\"100%\">");
 							html.Append("<tr class=\"txtViolet11Bold\" ><td colspan=" + baseColSpan + "  >&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language)) + " </td></tr>");
 							html.Append("</table>");
 							displayBorder = false;
@@ -263,7 +263,7 @@ namespace TNS.AdExpress.Web.Functions {
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
-                                    html.Append("<table class=\"UniverseItemsStyle\" width=" + witdhTable + ">");
+                                    html.Append("<table class=\"UniverseItemsStyle\" width=\"100%\">");
 
 									for (int k = 0; k < itemIdList.Count; k++) {
 
@@ -287,7 +287,7 @@ namespace TNS.AdExpress.Web.Functions {
 											//Pagination
 											if (paginate && nbLineByPage > 0 && currentLine > 0 && (currentLine % nbLineByPage) == 0 && k<itemIdList.Count-1) {
 												html.Append("</table>");
-                                                html.Append("<table class=\"violetRightLeftBorder paleVioletBackGround\" width=" + witdhTable + ">");
+                                                html.Append("<table class=\"violetRightLeftBorder paleVioletBackGround\" width=\"100%\">");
 												currentLine = 0;
 											}
 											
