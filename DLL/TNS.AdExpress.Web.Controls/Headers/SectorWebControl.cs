@@ -149,13 +149,19 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <param name="e">Event params</param>
         protected override void OnLoad(EventArgs e) {
             if(!Page.IsPostBack) {
+
+                DataTable dtLine = new DataTable();
+                dtLine.Columns.Add("id_sector");
+                dtLine.Columns.Add("sector");
+
                 DataRow row = null;
-                row = _dt.NewRow();
+                row = dtLine.NewRow();
                 row["id_sector"] = -1;
                 row["sector"] = "-------------------";
-                _dt.Rows.Add(row);
+                dtLine.Rows.Add(row);
+                dtLine.Merge(_dt);
 
-                _dropDownList.DataSource = _dt;
+                _dropDownList.DataSource = dtLine;
                 _dropDownList.DataTextField = "sector";
                 _dropDownList.DataValueField = "id_sector";
                 _dropDownList.DataBind();

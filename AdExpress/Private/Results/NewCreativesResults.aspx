@@ -82,7 +82,9 @@
 							RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" GenericDetailLevelType="dynamicCompetitorPotential"
 							GenericDetailLevelComponentProfile="product" Width="200px" NbDetailLevelItemList="3"></cc2:genericmedialeveldetailselectionwebcontrol></td>
 				</tr>
-
+                <tr class="whiteBackGround" height="5">
+					<td class="txtGris11Bold" style="HEIGHT: 14px"></td>
+				</tr>
 				<tr vAlign="top" class="whiteBackGround">
 					<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
 				</tr>

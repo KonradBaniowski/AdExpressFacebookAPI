@@ -145,16 +145,16 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 // from
                 sql.Append("from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).SqlWithPrefix + " , ");
                 sql.Append(detailProductTablesNames);
-                
+
                 // where
                 sql.Append(" where " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).Prefix + ".date_creation >= to_date('" + _beginingDate + "','yyyymmdd') ");
                 sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).Prefix + ".date_creation <= to_date('" + _endDate + "','yyyymmdd') ");
                 sql.Append(detailProductJoints);
                 sql.Append(productsRights);
-                
+
                 // Sector ID
                 if(_idSector != -1)
-                    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.sector).Prefix + ".id_sector in (" + _idSector + ") ");
+                    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).Prefix + ".id_sector in (" + _idSector + ") ");
 
                 // group by
                 sql.Append(" group by " + detailProductFields + ", hashcode ");
