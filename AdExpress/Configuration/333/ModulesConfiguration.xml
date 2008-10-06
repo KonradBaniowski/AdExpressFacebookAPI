@@ -1773,7 +1773,7 @@
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <selections>
-          <selection id="4" name="Date" showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"  functionName="PostBack"/>
+          <selection id="4" name="Date" showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
         </selections>
         <results>
           <page id="0" resultid="65" name="Les nouvelles créations" traductioncode="2534" url="/Private/Results/NewCreativesResults.aspx" rawExcelUrl="/Private/Results/RawExcel/NewCreativesResults.aspx" printExcelUrl="/Private/Results/Excel/NewCreativesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/Default.aspx">

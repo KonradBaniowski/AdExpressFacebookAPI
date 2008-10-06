@@ -126,10 +126,25 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 
                 // select
-                sql.Append("select distinct " + detailProductFields + ", hashcode as versionNb, min(wp.date_creation) as date_creation ");
+                sql.Append("select distinct " + detailProductFields + ", hashcode as versionNb ");
+
+                switch(_session.DetailPeriod) {
+                    case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
+                        sql.Append(", to_char( min(wp.date_creation) , 'YYYYMM' ) as date_creation ");
+                        break;
+                    case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
+                        sql.Append(", to_char( min(wp.date_creation) , 'YYYYIW' ) as date_creation ");
+                        break;
+                    case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
+                        sql.Append(", to_char( min(wp.date_creation) , 'YYYYMMDD' ) as date_creation ");
+                        break;
+                    default:
+                        break;
+                }
                 
                 // from
-                sql.Append("from "+WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).SqlWithPrefix + "," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.sector).SqlWithPrefix);
+                sql.Append("from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).SqlWithPrefix + " , ");
+                sql.Append(detailProductTablesNames);
                 
                 // where
                 sql.Append(" where " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).Prefix + ".date_creation >= to_date('" + _beginingDate + "','yyyymmdd') ");
@@ -140,10 +155,6 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 // Sector ID
                 if(_idSector != -1)
                     sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.sector).Prefix + ".id_sector in (" + _idSector + ") ");
-
-                // Autopromo Evaliant > Hors autopromo (checkbox = checked)
-                //if(_session.AutopromoEvaliant) 
-                //    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".auto_promotion = 0 ");
 
                 // group by
                 sql.Append(" group by " + detailProductFields + ", hashcode ");

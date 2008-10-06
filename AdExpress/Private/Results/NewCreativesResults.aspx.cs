@@ -153,16 +153,9 @@ namespace AdExpress.Private.Results{
 				#endregion              
                 
                 #region Sector list
-                //DataTable dt = new TNS.AdExpress.DataAccess.Classification.ProductBranch.AllSectorLevelListDataAccess(_webSession.DataLanguage, _webSession.Source).GetDataTable;
-                //_sectorDropDownList.DataSource = dt;
-                //_sectorDropDownList.DataTextField = "sector";
-                //_sectorDropDownList.DataValueField = "id_sector";
-                //_sectorDropDownList.DataBind();
-                
                 DataTable dt = new TNS.AdExpress.DataAccess.Classification.ProductBranch.AllSectorLevelListDataAccess(_webSession.DataLanguage, _webSession.Source).GetDataTable;
                 SectorWebControl1.Session = _webSession;
                 SectorWebControl1.DataTable = dt;
-                //SectorWebControl1.ListCssClass = "txtNoir11Bold";
                 #endregion
 
             }			
