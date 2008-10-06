@@ -2005,7 +2005,8 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// <summary>
 		/// Répertoire contenant les visuels de la presse
 		/// </summary>
-		public const string LOCAL_PATH_IMAGE = @"\\hera\AdexDatas\images\";
+		//public const string LOCAL_PATH_IMAGE = @"\\hera\AdexDatas\images\";
+        public const string LOCAL_PATH_IMAGE = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\";
         /// <summary>
         /// Répertoire contenant les visuels du Marketing Direct
         /// </summary>
