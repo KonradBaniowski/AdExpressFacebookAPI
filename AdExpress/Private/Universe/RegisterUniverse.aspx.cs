@@ -18,6 +18,8 @@ using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.Classification.Universe;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+
 /// <summary>
 /// Class to register or upadte client's universes 
 /// </summary>
@@ -321,7 +323,10 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 				universes = _webSession.PrincipalProductUniverses;
 				break;
 			case TNS.AdExpress.Constantes.Classification.Branch.type.media:
-				//TODO : universe media
+                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
+                    universes = _webSession.SecondaryMediaUniverses;
+                else
+                    universes = _webSession.PrincipalMediaUniverses;
 				break;			
 			default: break;
 		}

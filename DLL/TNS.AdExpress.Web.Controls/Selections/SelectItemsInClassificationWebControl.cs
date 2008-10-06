@@ -37,6 +37,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using CoreSelection=TNS.AdExpress.Web.Core.Selection;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using Oracle.DataAccess.Client;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -509,6 +510,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 							case TNS.Classification.Universe.Dimension.product:
 								universes = _webSession.PrincipalProductUniverses;
 								break;
+                            case TNS.Classification.Universe.Dimension.media:
+                                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
+                                    universes = _webSession.SecondaryMediaUniverses;
+                                else
+                                    universes = _webSession.PrincipalMediaUniverses;
+                                break;
 							default: break;
 						}
 
@@ -738,7 +745,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						//Child node
 						hiddenFieldIds = "";
 						if (selectedIds != null && selectedIds.Length > 0 && selectedIds.Split(',').Length<_nbMaxItemByLevel) {
-							ds = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetOneLevelItems(currentLevel.TableName, selectedIds, _webSession,_dBSchema);
+                            ds = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetOneLevelItems(currentLevel.TableName, selectedIds, _webSession, _dBSchema, _dimension);
 							if (ds != null && ds.Tables[0].Rows.Count > 0) {								
 								foreach (DataRow dr in ds.Tables[0].Rows) {
 									childId = treeViewId + "_" + currentLevel.ID + "_" + dr[0].ToString();
@@ -853,7 +860,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						//Add saved childs
 						hiddenFieldIds = "";
 						if (groups != null && groups.Contains(currentLevel.ID)) {
-							ds = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetOneLevelItems(currentLevel.TableName, groups.GetAsString(currentLevel.ID), _webSession,_dBSchema);
+                            ds = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetOneLevelItems(currentLevel.TableName, groups.GetAsString(currentLevel.ID), _webSession, _dBSchema, _dimension);
 							if (ds != null && ds.Tables[0].Rows.Count > 0) {								
 								foreach (DataRow dr in ds.Tables[0].Rows) {
 									childId = treeViewId + "_" + currentLevel.ID + "_" + dr[0].ToString();
@@ -1003,7 +1010,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		protected override DataTable GetData(int universeLevelId, string selectedItemIds, int universeLevelOfSelectedItem) {
 			try {
 				_webSession = (WebSession)WebSession.Load(_idSession);
-				return TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetItems(UniverseLevels.Get(universeLevelId).TableName, selectedItemIds, UniverseLevels.Get(universeLevelOfSelectedItem).TableName, _webSession, _dBSchema).Tables[0];
+				return TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetItems(UniverseLevels.Get(universeLevelId).TableName, selectedItemIds, UniverseLevels.Get(universeLevelOfSelectedItem).TableName, _webSession, _dBSchema, _dimension).Tables[0];
 			}
 			catch (Exception err) {
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible d'obtenir les données.", err);
@@ -1019,7 +1026,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		protected override DataTable GetData(int universeLevelId, string wordToSearch) {
 			try {
 				_webSession = (WebSession)WebSession.Load(_idSession);
-				return TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetItems(UniverseLevels.Get(universeLevelId).TableName, wordToSearch, _webSession, _dBSchema).Tables[0];
+				return TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetItems(UniverseLevels.Get(universeLevelId).TableName, wordToSearch, _webSession, _dBSchema, _dimension).Tables[0];
 			}
 			catch (Exception err) {
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible d'obtenir les données.", err);
