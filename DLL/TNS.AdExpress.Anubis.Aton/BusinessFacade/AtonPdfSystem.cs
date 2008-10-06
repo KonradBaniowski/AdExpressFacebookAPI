@@ -327,6 +327,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 		private void SessionParameter(){
 
 			StreamWriter sw = null;
+            string classCss = string.Empty;
 
 			try{
 				this.NewPage();
@@ -351,7 +352,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				sw.WriteLine("<TR height=\"7\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR>");
@@ -369,7 +370,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				sw.WriteLine("<TR height=\"7\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR>");
@@ -386,7 +387,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				sw.WriteLine("<TR height=\"7\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR>");
@@ -414,7 +415,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				sw.WriteLine("<TR height=\"7\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR>");
@@ -448,12 +449,12 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				for(int i =0; i < ds.Tables[0].Rows.Count; i++){
 					sw.WriteLine("<tr>");
 					if((i+1) < ds.Tables[0].Rows.Count){
-						sw.WriteLine("<td style=\"");
+                        classCss = "violetBorderWithoutBottom";
 					}
 					else{
-						sw.WriteLine("<td style=\"border-bottom :#644883 1px solid; ");
+                        classCss = "violetBorder";
 					}
-					sw.WriteLine("border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \">&nbsp;&nbsp;");
+                    sw.WriteLine("<td class=\"" + classCss + "\">&nbsp;&nbsp;");
 					sw.WriteLine(ds.Tables[0].Rows[i][0].ToString());
 					sw.WriteLine("</td>");
 					sw.WriteLine("</tr>");

@@ -356,12 +356,12 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			sw.WriteLine("<P>&nbsp;</P>");
 			sw.WriteLine("<P>&nbsp;</P>");
 			sw.WriteLine("<TD style=\"HEIGHT: 43px\">");
-            sw.WriteLine("<P class=\"MsoNormal\" style=\"mso-layout-grid-align: none\" align=\"center\"><B><SPAN style=\"FONT-SIZE: 40pt; COLOR: #644883; FONT-FAMILY: 'Arial Bold'; mso-bidi-font-family: 'Arial Bold'\">" + GestionWeb.GetWebWord(1053, _webSession.SiteLanguage) + "</SPAN></B><SPAN style=\"FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: 'Arial Bold'; mso-bidi-font-family: 'Arial Bold'\">");
+            sw.WriteLine("<P align=\"center\"><B><SPAN class=\"TreeTitleViolet40pt\">" + GestionWeb.GetWebWord(1053, _webSession.SiteLanguage) + "</SPAN></B><SPAN class=\"TreeTitleBlack10pt\">");
 			sw.WriteLine("<o:p></o:p></SPAN></P>");
 			sw.WriteLine("</TD>");
 			sw.WriteLine("</TR>");
 			sw.WriteLine("<TR>");
-			sw.WriteLine("<TD><P class=\"MsoNormal\" style=\"mso-layout-grid-align: none\" align=\"center\"><SPAN style=\"COLOR: #644883; FONT-FAMILY: Arial\">"+ Convertion.ToHtmlString(str) +"</SPAN></P></TD>");
+            sw.WriteLine("<TD><P align=\"center\"><SPAN class=\"TreeTitleViolet\">" + Convertion.ToHtmlString(str) + "</SPAN></P></TD>");
 			sw.WriteLine("</TR>");
 			sw.WriteLine("<P>&nbsp;</P>");
 			sw.WriteLine("<P>&nbsp;</P>");
@@ -373,9 +373,9 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			sw.WriteLine("</TR>");
 			sw.WriteLine("<TR>");
 			sw.WriteLine("<TD align=\"center\">");
-			sw.WriteLine("<TABLE  class=\"txtViolet11Bold\" id=\"Table1\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 1px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid\" cellSpacing=\"0\" cellPadding=\"0\" width=\"600\" align=\"center\">");
+            sw.WriteLine("<TABLE  class=\"TreeHeaderVioletBorder\" id=\"Table1\" cellSpacing=\"0\" cellPadding=\"0\" width=\"600\" align=\"center\">");
 			sw.WriteLine("<TR>");
-			sw.WriteLine("<TD colSpan=\"2\" style=\"BORDER-BOTTOM: #644883 1px solid;\">"+ Convertion.ToHtmlString(GestionWeb.GetWebWord(1979,_webSession.SiteLanguage)) +"</TD>");
+            sw.WriteLine("<TD colSpan=\"2\" class=\"violetBorderBottom\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1979, _webSession.SiteLanguage)) + "</TD>");
 			sw.WriteLine("</TR>");
 			sw.WriteLine("<TR>");
 			sw.WriteLine("<TD>&nbsp;</TD>");
@@ -392,7 +392,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			}
 			sw.WriteLine("</TR>");
 			sw.WriteLine("</TABLE>");
-			sw.WriteLine("</FIELDSET>");
 
 			sw.WriteLine("</TD>");
 			sw.WriteLine("</TR>");
@@ -467,7 +466,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD style=\"font-family: Arial, Helvetica, sans-serif; font-size: 20px; color: #644883; font-weight: bold;\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752,_webSession.SiteLanguage)) + "</TD>");
+                sw.WriteLine("<TD class=\"TreeTitleViolet20px\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752, _webSession.SiteLanguage)) + "</TD>");
 				sw.WriteLine("</TR>");
 				#endregion
 
@@ -476,7 +475,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					sw.WriteLine("<TR height=\"7\">");
 					sw.WriteLine("<TD></TD>");
 					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+					sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 					sw.WriteLine("<TD></TD>");
 					sw.WriteLine("</TR>");
 					sw.WriteLine("<TR>");
@@ -489,7 +488,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				sw.WriteLine("<TR height=\"7\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR>");
@@ -506,13 +505,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				sw.WriteLine("<TR height=\"7\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR>");
 				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1292, _webSession.SiteLanguage)) + " :</TD>");
 				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD align=\"left\">");
+                sw.WriteLine("<TD align=\"left\">");
 				sw.WriteLine(SelectionMedia[0].ToString());
 				sw.WriteLine("</TD>");
 				sw.WriteLine("</TR>");
@@ -548,7 +547,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					sw.WriteLine("<TR height=\"7\">");
 					sw.WriteLine("<TD></TD>");
 					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+					sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 					sw.WriteLine("<TD></TD>");
 					sw.WriteLine("</TR>");
 					sw.WriteLine("<TR>");
@@ -587,7 +586,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					sw.WriteLine("<TR height=\"7\">");
 					sw.WriteLine("<TD></TD>");
 					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+					sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 					sw.WriteLine("<TD></TD>");
 					sw.WriteLine("</TR>");
 					sw.WriteLine("<TR>");
@@ -617,7 +616,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					sw.WriteLine("<TR height=\"7\">");
 					sw.WriteLine("<TD></TD>");
 					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+					sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 					sw.WriteLine("<TD></TD>");
 					sw.WriteLine("</TR>");
 					sw.WriteLine("<TR>");
@@ -672,7 +671,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD style=\"font-family: Arial, Helvetica, sans-serif; font-size: 20px; color: #644883; font-weight: bold;\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1664,_webSession.SiteLanguage)) + "</TD>");
+                sw.WriteLine("<TD class=\"TreeTitleViolet20px\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1664, _webSession.SiteLanguage)) + "</TD>");
 				sw.WriteLine("</TR>");
 				#endregion
 				
@@ -1109,7 +1108,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		/// <returns></returns>
 		private string noResult(string message){
 			System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
-			t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+            t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 			t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
 			t.Append("</td></tr></table>");
 			return t.ToString();
@@ -1149,20 +1148,20 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			foreach(TreeNode currentNode in root.Nodes){
 				if(start==0){
 					if(displayBorderTable){
-						t.Append("<table align=\"center\"  style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  width="+witdhTable+"  >");
+                        t.Append("<table align=\"center\" class=\"TreeHeaderVioletBorder\"  width=" + witdhTable + "  >");
 						start=1;
 					}
 					else{
-						t.Append("<table bordercolor=#ffffff class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+witdhTable+">");
+                        t.Append("<table class=\"TreeHeaderBlancBorder\"  cellpadding=0 cellspacing=0 width=" + witdhTable + ">");
 					}
 
 				}
 				else{
 					if(displayBorderTable){
-						t.Append("<table align=\"center\"  style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\" width="+witdhTable+">");
+                        t.Append("<table align=\"center\"  class=\"TreeHeaderVioletBorderWithoutTop\" width=" + witdhTable + ">");
 					} 
 					else{
-						t.Append("<table align=\"center\"  bordercolor=#ffffff class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+witdhTable+">");
+                        t.Append("<table align=\"center\" class=\"TreeHeaderBlancBorder\"  cellpadding=0 cellspacing=0 width=" + witdhTable + ">");
 					}
 				}
 				t.Append("<tr>");
@@ -1235,15 +1234,15 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				{
 					if(displayBorderTable){
 						if(div){
-							t.Append("<div id=\""+((LevelInformation)currentNode.Tag).ID+"Content"+showHideContent+"\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
+                            t.Append("<div id=\"" + ((LevelInformation)currentNode.Tag).ID + "Content" + showHideContent + "\" class=\"BlancBorderColorWithoutTop\"  style=\"DISPLAY: none; WIDTH: 100%\">");
 						}
-						t.Append("<table align=\"center\"  style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width="+witdhTable+">");
+                        t.Append("<table align=\"center\"  class=\"TreeTableVioletBorder\" width=" + witdhTable + ">");
 					}
 					else{
 						if(div){
-							t.Append("<div style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
+                            t.Append("<div calss=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: none; WIDTH: 100%\">");
 						}
-						t.Append("<table align=\"center\"  bordercolor=#ffffff bgcolor=#DED8E5 width="+witdhTable+">");
+                        t.Append("<table align=\"center\"  class=\"TreeTableBlancBorder\" width=" + witdhTable + ">");
 					}
 				}
 
@@ -1319,7 +1318,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						start=0;
 						t = new System.Text.StringBuilder(1000);
 
-						t.Append("<table align=\"center\" bordercolor=#ffffff class=\"txtViolet11Bold\" style=\"WIDTH: 100%\">");
+                        t.Append("<table align=\"center\" class=\"TreeHeaderBlancBorder\" style=\"WIDTH: 100%\">");
 
 						if(currentNode.Nodes.Count>0)
 						{
@@ -1327,17 +1326,17 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 							{
 								if(div)
 								{
-									t.Append("<div  id=\""+((LevelInformation)currentNode.Tag).ID+"Content"+showHideContent+"\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
+                                    t.Append("<div  id=\"" + ((LevelInformation)currentNode.Tag).ID + "Content" + showHideContent + "\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: none; WIDTH: 100%\">");
 								}
-								t.Append("<table align=\"center\" style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width="+witdhTable+">");
+                                t.Append("<table align=\"center\" class=\"TreeTableVioletBorder\"  width=" + witdhTable + ">");
 							}
 							else
 							{
 								if(div)
 								{
-									t.Append("<div style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
+                                    t.Append("<div class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: none; WIDTH: 100%\">");
 								}
-								t.Append("<table align=\"center\" bordercolor=#ffffff bgcolor=#DED8E5 width="+witdhTable+">");
+                                t.Append("<table align=\"center\" class=\"TreeTableBlancBorder\" width=" + witdhTable + ">");
 							}
 						}
 					}
@@ -1350,8 +1349,8 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						nbLines=0;
 						start=0;
 						t = new System.Text.StringBuilder(1000);
-							
-						t.Append("<table align=\"center\" bordercolor=#ffffff class=\"txtViolet11Bold\"  style=\"WIDTH: 100%\">");
+
+                        t.Append("<table align=\"center\" class=\"TreeTableBlancBorder\"  style=\"WIDTH: 100%\">");
 
 						if(currentNode.Nodes.Count>0)
 						{
@@ -1359,17 +1358,17 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 							{
 								if(div)
 								{
-									t.Append("<div  id=\""+((LevelInformation)currentNode.Tag).ID+"Content"+showHideContent+"\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
+                                    t.Append("<div  id=\"" + ((LevelInformation)currentNode.Tag).ID + "Content" + showHideContent + "\" class=\"BlancBorderColorWithoutTop\"  style=\"DISPLAY: none; WIDTH: 100%\">");
 								}
-								t.Append("<table align=\"center\" style=\"border-bottom :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" bgcolor=#DED8E5 width="+witdhTable+">");
+                                t.Append("<table align=\"center\" class=\"TreeTableVioletBorder\" width=" + witdhTable + ">");
 							}
 							else
 							{
 								if(div)
 								{
-									t.Append("<div  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
+                                    t.Append("<div class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: none; WIDTH: 100%\">");
 								}
-								t.Append("<table align=\"center\" bordercolor=#ffffff bgcolor=#DED8E5 width="+witdhTable+">");
+                                t.Append("<table align=\"center\" class=\"TreeTableBlancBorder\" width=" + witdhTable + ">");
 							}
 						}
 					}
@@ -1403,7 +1402,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				sw.WriteLine("<TR height=\"7\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				if(first){
@@ -1426,7 +1425,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				sw.WriteLine("<TR height=\"7\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
 				sw.WriteLine("<TD></TD>");
 				sw.WriteLine("</TR>");
 				if(first){
@@ -1566,7 +1565,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				//Période d'inactivité
 				t.Append("<td  nowrap  class=\"p2\">"+GestionWeb.GetWebWord(1220,webSession.SiteLanguage)+"</td>");			
 				//Colonne separation nbre de mois d'inactivité/ graphique dernier mois actif sur N-1
-				t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
 
 				//Cellules mois  de l'année N-1
 				for (int j=1;j<=12;j++){
@@ -1575,7 +1574,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					t.Append("<td nowrap  class=\"p2\">&nbsp;"+pluszero+j+"-"+PeriodEndDate.AddYears(-1).Year+"</td>");
 				}
 				//Colonne separation année N/N-1
-				t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
 
 				//cellules mois de la période N
 				for(int m=1;m<currentMonthDate.Month;m++){
@@ -1584,7 +1583,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					t.Append("<td nowrap  class=\"p2\">&nbsp;"+pluszero+m+"-"+PeriodEndDate.Year+"</td>");
 				}
 				//Colonne separation miis actif année N / et mois inactif année N
-				t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
 				//Colonne mois en cours (KE)
 				if(currentMonthDate.Month<10)pluszero="0";
 				else pluszero="";
@@ -1623,7 +1622,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					if(tab[i,CstResult.Novelty.INACTIVITY_PERIOD_COLUMN_INDEX]!=null)t.Append("<td nowrap  class="+classe+">"+tab[i,CstResult.Novelty.INACTIVITY_PERIOD_COLUMN_INDEX].ToString()+"</td>");
 					else t.Append("<td nowrap  class="+classe+">&nbsp;</td>");
 					//Colonne separation nbre de mois d'inactivité/ graphique dernier mois actif sur N-1
-					t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
 
 					//Cellules mois  de l'année N-1
 					for (int k=1;k<=12;k++){
@@ -1641,7 +1640,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						else t.Append("<td nowrap >&nbsp;</td>");
 					}
 					//Colonne separation année N/N-1
-					t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
 					//cellules mois de la période N
 					for(int l=1;l<currentMonthDate.Month;l++){
 						if(PreviousYearActiveMonth)t.Append("<td nowrap class="+classe3+">&nbsp;</td>");
@@ -1649,7 +1648,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					}
 					PreviousYearActiveMonth=false;
 					//Colonne separation mois actif année N / et mois inactif année N
-					t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
 
 					//Colonne mois en cours (KE)
 					if(tab[i,CstResult.Novelty.CURRENT_MONTH_INVEST_COLUMN_INDEX]!=null && !tab[i,CstResult.Novelty.CURRENT_MONTH_INVEST_COLUMN_INDEX].ToString().Equals("-"))
@@ -1689,7 +1688,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						//Période d'inactivité
 						t.Append("<td  nowrap  class=\"p2\">"+GestionWeb.GetWebWord(1220,webSession.SiteLanguage)+"</td>");			
 						//Colonne separation nbre de mois d'inactivité/ graphique dernier mois actif sur N-1
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                        t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
 
 						//Cellules mois  de l'année N-1
 						for (int j=1;j<=12;j++){
@@ -1698,7 +1697,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 							t.Append("<td nowrap  class=\"p2\">&nbsp;"+pluszero+j+"-"+PeriodEndDate.AddYears(-1).Year+"</td>");
 						}
 						//Colonne separation année N/N-1
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                        t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
 
 						//cellules mois de la période N
 						for(int m=1;m<currentMonthDate.Month;m++){
@@ -1707,7 +1706,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 							t.Append("<td nowrap  class=\"p2\">&nbsp;"+pluszero+m+"-"+PeriodEndDate.Year+"</td>");
 						}
 						//Colonne separation miis actif année N / et mois inactif année N
-						t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                        t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
 						//Colonne mois en cours (KE)
 						if(currentMonthDate.Month<10)pluszero="0";
 						else pluszero="";

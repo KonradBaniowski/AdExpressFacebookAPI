@@ -403,6 +403,12 @@ table.creationWhiteBorder{
 	border-left: white 1px solid
 }
 
+.columnSeparatorWithVioletBackGround{
+	border-right: white 2px solid;
+	border-left: white 1px solid;
+	background-color: #644883;
+}
+
 .selectionErrorBorder{
 	BORDER-RIGHT: #8872a0 thin solid; 
 	BORDER-TOP: #8872a0 thin solid; 
@@ -2674,6 +2680,31 @@ td.acl2Bg{
 	border-color : #FFFFFF;
 	background-color:#DED8E5;
 }
+
+
+.TreeTitleViolet{
+	COLOR: #644883; 
+	FONT-FAMILY: Arial;
+}
+
+.TreeTitleViolet20px{
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 20px; 
+	color: #644883; 
+	font-weight: bold;
+}
+
+.TreeTitleViolet40pt{
+	FONT-SIZE: 40pt; 
+	COLOR: #644883; 
+	FONT-FAMILY: 'Arial Bold';
+}
+.TreeTitleBlack10pt{
+	FONT-SIZE: 10pt; 
+	COLOR: black; 
+	FONT-FAMILY: 'Arial Bold';
+}
+
 /*justif*/
 .jusT
 {
