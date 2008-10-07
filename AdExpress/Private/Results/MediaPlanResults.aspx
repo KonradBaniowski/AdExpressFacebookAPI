@@ -76,6 +76,9 @@
 									<td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" runat="server" AutoPostBackOption="False" InitializeSlogans="True"
 											InitializeProduct="False"></cc2:initializeproductwebcontrol></td>
 								</tr>
+								<tr class="whiteBackGround" height="5">
+					                <td><cc2:InitializeMediaWebControl id="InitializeMediaWebcontrol1" runat="server" AutoPostBackOption="False" InitializeMedia="True"></cc2:InitializeMediaWebControl></td>
+				                </tr>
                                 <tr valign="top" class="whiteBackGround">
 									<td><asp:Image runat="server" height="5" width="1" SkinID="pixel" /></td>
 								</tr>

@@ -4,6 +4,7 @@
 // Date de modification:
 #endregion
 
+#region Namespaces
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -38,13 +39,15 @@ using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Controls.Results.MediaPlan;
 using AjaxPro;
 
-namespace AdExpress.Private.Results
-{
+using TNS.AdExpress.Domain.Classification;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+#endregion
+
+namespace AdExpress.Private.Results{
     /// <summary>
     /// Page de calendrier d'action d'un plan media
     /// </summary>
-    public partial class MediaPlanResults : TNS.AdExpress.Web.UI.ResultWebPage
-    {
+    public partial class MediaPlanResults : TNS.AdExpress.Web.UI.ResultWebPage{
 
         #region Variables
         /// <summary>
@@ -148,11 +151,10 @@ namespace AdExpress.Private.Results
         /// </summary>
         /// <param name="sender">Objet qui lance l'évènement</param>
         /// <param name="e">Arguments</param>
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
-            try
-            {
+        protected void Page_Load(object sender, System.EventArgs e){
+            try{
 				bool withZoomDateEventArguments = false;
+
                 #region Flash d'attente
                 if (Page.Request.Form.GetValues("__EVENTTARGET") != null)
                 {
@@ -230,7 +232,6 @@ namespace AdExpress.Private.Results
 					_webSession.SloganIdZoom = -1;
 					//_webSession.Save();
 				}
-
             }
             catch (System.Exception exc)
             {
@@ -239,7 +240,6 @@ namespace AdExpress.Private.Results
                     this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
                 }
             }
-
         }
         #endregion
 
@@ -284,8 +284,7 @@ namespace AdExpress.Private.Results
         /// Initialise la propriété CustomerSession des composants "options de résultats" et gestion de la navigation"
         /// </summary>
         /// <returns>DeterminePostBackMode</returns>
-        protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode()
-        {
+        protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode(){
             System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
             GenericMediaLevelDetailSelectionWebControl1.CustomerWebSession = _webSession;
             ResultsOptionsWebControl1.CustomerWebSession = _webSession;
@@ -362,7 +361,18 @@ namespace AdExpress.Private.Results
             #endregion
 			
 			InitializeProductWebControl1.CustomerWebSession = _webSession;
+            InitializeMediaWebcontrol1.CustomerWebSession = _webSession;
 			SetSloganUniverseOptions();
+
+            #region Option autopromo (Evaliant)
+            string vehicleListId = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
+            string[] vehicles = vehicleListId.Split(',');
+            foreach(string cVehicle in vehicles) {
+                if(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack) {
+                    ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
+                }
+            }
+            #endregion
 
             return (tmp);
         }

@@ -365,6 +365,12 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                 sql.Append(")) ");
             }
 
+            // Autopromo Evaliant
+            if(VehiclesInformation.Contains(vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack) {
+                if(_session.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
+                    sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            }
+
             // Additional conditions
             if (additionalConditions.Length > 0)
             {
@@ -402,13 +408,17 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             sql.Append(FctWeb.SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
-            #region Advertiser classification rights
 
-            #region Sélection
+            #region Sélection produit
+            // product
             sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             #endregion
 
+            #region Sélection support
+            // media
+            sql.Append(GetMediaSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             #endregion
+
 
             #region Media classification
 
@@ -461,8 +471,6 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// <returns>Field matching period type</returns>
         protected virtual string GetPeriodicity(CstPeriod.PeriodBreakdownType detailPeriod, Int64 vehicleId, CstPeriod.DisplayLevel displayPeriod)
         {
-
-
             switch (detailPeriod)
             {
                 case CstPeriod.PeriodBreakdownType.month:
@@ -519,6 +527,24 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             return sql;
         }
         #endregion
+
+        #region GetMediatSelection
+        /// <summary>
+        /// Get media selection
+        /// </summary>
+        /// <remarks>
+        /// Must beginning by AND
+        /// </remarks>
+        /// <param name="dataTablePrefixe">data table prefixe</param>
+        /// <returns>media selection to add as condition into a sql query</returns>
+        protected virtual string GetMediaSelection(string dataTablePrefixe) {
+            string sql = "";
+            if(_session.SecondaryMediaUniverses != null && _session.SecondaryMediaUniverses.Count > 0)
+                sql = _session.SecondaryMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true);
+            return sql;
+        }
+        #endregion
+
 		/// <summary>
 		/// Get excluded products
 		/// </summary>

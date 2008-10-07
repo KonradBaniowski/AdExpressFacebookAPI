@@ -60,24 +60,27 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 			else listVehicles = webSession.GetSelection(webSession.SelectionUniversMedia, AccessCst.vehicleAccess).Split(new char[]{','});
 
 			//DataSet ds = new DataSet();
-			for(int i=0; i< listVehicles.Length; i++){
-				try{
-					if(webSession.CurrentModule==Constantes.Web.Module.Name.BILAN_CAMPAGNE)
-					tempSql=GetSQLQueryForAPPM(webSession,listVehicles[i],beginningDate,endDate);
-					else tempSql=GetSQLQuery(webSession,listVehicles[i],beginningDate,endDate);
-					
-						if(tempSql.Length>0){
-							if(!first)sql+="  union  ";
-							sql+=tempSql;	
-							first=false;
-						}	
-										
-				}
-				catch(System.Exception err){
-					throw new Exceptions.SloganDataAccessException(" Imossible de charger la liste des versions en fonction de l'univers client.",err);
-				}
-				
-			}
+            for(int i = 0; i < listVehicles.Length; i++) {
+                try {
+                    if(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(listVehicles[i])) != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack) {
+
+                        if(webSession.CurrentModule == Constantes.Web.Module.Name.BILAN_CAMPAGNE)
+                            tempSql = GetSQLQueryForAPPM(webSession, listVehicles[i], beginningDate, endDate);
+                        else
+                            tempSql = GetSQLQuery(webSession, listVehicles[i], beginningDate, endDate);
+
+                        if(tempSql.Length > 0) {
+                            if(!first) sql += "  union  ";
+                            sql += tempSql;
+                            first = false;
+                        }
+                    }
+                }
+                catch(System.Exception err) {
+                    throw new Exceptions.SloganDataAccessException(" Impssible de charger la liste des versions en fonction de l'univers client.", err);
+                }
+
+            }
 			if(sql.Length>0){
 				tempSql=sql;
 				// Ordre
