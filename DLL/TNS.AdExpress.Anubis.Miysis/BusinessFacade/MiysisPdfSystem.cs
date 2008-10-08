@@ -47,7 +47,7 @@ using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;
 
-using PDFCreatorPilot2;
+using PDFCreatorPilotLib;
 using HtmlSnap2;
 using TNS.FrameWork.DB.Common;
 
@@ -181,28 +181,20 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 				
 				#region Impression
 				MediaPlanImpression();
-				#endregion
+				#endregion				
 
 				#region Header and Footer
-				CultureInfo cIn = new CultureInfo("en-GB",false);
-				string dFormat = "ddd\\, MMM dd\\, yyyy";
+				string dateString = Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 
-				if(_webSession.SiteLanguage==33) {
-					this.AddHeadersAndFooters(
-					@"Images\Common\logo_Tns.bmp",
-					imagePosition.leftImage,
-					GestionWeb.GetWebWord(751, _webSession.SiteLanguage) + " - " + DateTime.Now.ToString("ddd dd MMM yyyy"),
-					0,-1,_config.HeaderFontColor,_config.HeaderFont,true,_webSession);
-				}
-				else {
-					this.AddHeadersAndFooters(
-					@"Images\Common\logo_Tns.bmp",
-					imagePosition.leftImage,
-					GestionWeb.GetWebWord(751,_webSession.SiteLanguage) + " - " + DateTime.Now.ToString(dFormat,cIn),
-					0,-1,_config.HeaderFontColor,_config.HeaderFont,true,_webSession);
-				}
+				this.AddHeadersAndFooters(
+				_webSession,
+				@"Images\Common\logo_Tns.bmp",
+				imagePosition.leftImage,
+				GestionWeb.GetWebWord(751, _webSession.SiteLanguage) + " - " + dateString,
+				0, -1, _config.HeaderFontColor, _config.HeaderFont, true, _webSession);
 				#endregion
-
+				
+				
 			}
 			catch(System.Exception e){
 				throw(e);
@@ -334,15 +326,9 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 			
 			string str = "";
 			
-			if(_webSession.SiteLanguage==33) {
-				this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GestionWeb.GetWebWord(751, _webSession.SiteLanguage))) / 2,
+			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GestionWeb.GetWebWord(751, _webSession.SiteLanguage))) / 2,
 					(this.PDFPAGE_Height) / 4, 0, GestionWeb.GetWebWord(751, _webSession.SiteLanguage));			
-			}
-			else {
-				this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GestionWeb.GetWebWord(751, _webSession.SiteLanguage))) / 2, 
-					(this.PDFPAGE_Height)/4,0,GestionWeb.GetWebWord(751,_webSession.SiteLanguage));	
-			}
-
+			
             str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 				
 			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
@@ -373,7 +359,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
 		string workFile = GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-		sw = TNS.AdExpress.Anubis.Common.Functions.GetHtmlFile(workFile,_webSession);
+		sw = TNS.AdExpress.Anubis.Common.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 		#region Title
 		sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -381,7 +367,8 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		sw.WriteLine("<TD></TD>");
 		sw.WriteLine("</TR>");
 		sw.WriteLine("<TR height=\"14\">");
-		sw.WriteLine("<TD style=\"font-family: Arial, Helvetica, sans-serif; font-size: 20px; color: #644883; font-weight: bold;\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752,_webSession.SiteLanguage)) + "</TD>");
+		//sw.WriteLine("<TD style=\"font-family: Arial, Helvetica, sans-serif; font-size: 20px; color: #644883; font-weight: bold;\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752,_webSession.SiteLanguage)) + "</TD>");
+		sw.WriteLine("<TD class=\"mi\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752, _webSession.SiteLanguage)) + "</TD>");
 		sw.WriteLine("</TR>");
 		#endregion
 		
@@ -389,7 +376,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		sw.WriteLine("<TR height=\"7\">");
 		sw.WriteLine("<TD></TD>");
 		sw.WriteLine("</TR>");
-		sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+		sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");//bgColor=\"#DED8E5\"
 		sw.WriteLine("<TD></TD>");
 		sw.WriteLine("</TR>");
 		sw.WriteLine("<TR>");
@@ -407,7 +394,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		sw.WriteLine("<TR height=\"7\">");
 		sw.WriteLine("<TD></TD>");
 		sw.WriteLine("</TR>");
-		sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+		sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");//bgColor=\"#DED8E5\"
 		sw.WriteLine("<TD></TD>");
 		sw.WriteLine("</TR>");
 		sw.WriteLine("<TR>");
@@ -425,7 +412,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		sw.WriteLine("<TR height=\"7\">");
 		sw.WriteLine("<TD></TD>");
 		sw.WriteLine("</TR>");
-		sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+		sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");//bgColor=\"#DED8E5\"
 		sw.WriteLine("<TD></TD>");
 		sw.WriteLine("</TR>");
 		sw.WriteLine("<TR>");
@@ -447,7 +434,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 			sw.WriteLine("<TR height=\"7\">");
 			sw.WriteLine("<TD></TD>");
 			sw.WriteLine("</TR>");
-			sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+			sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");//bgColor=\"#DED8E5\"
 			sw.WriteLine("<TD></TD>");
 			sw.WriteLine("</TR>");
 			sw.WriteLine("<TR>");
@@ -465,7 +452,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
             sw.WriteLine("<TR height=\"7\">");
             sw.WriteLine("<TD></TD>");
             sw.WriteLine("</TR>");
-            sw.WriteLine("<TR height=\"1\" bgColor=\"#DED8E5\">");
+			sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");//bgColor=\"#DED8E5\"
             sw.WriteLine("<TD></TD>");
             sw.WriteLine("</TR>");
             sw.WriteLine("<TR>");
@@ -583,9 +570,9 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 				html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 				html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 				html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-                html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+				html.Append("<LINK href=\"" + _config.WebServer +"/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+				html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+				html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 				html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 				html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
@@ -613,62 +600,13 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 mediaScheduleResult.Module = module;
-                result = mediaScheduleResult.GetHtml();
+                result = mediaScheduleResult.GetPDFHtml();
 
 				#endregion
 
 				#region Construction du tableaux global
 				html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
 				#endregion
-
-                //if(vehicles.Length==1 && _webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.dayly) {
-                //    switch ((DBCst.Vehicles.names)idVehicle) {
-                //        case DBCst.Vehicles.names.press:{
-                //            ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press);
-                //            VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
-                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-                //            startIndexVisual = decoupageVersionHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,int.Parse(vehicles[0]));
-                //            BuildVersionPDF(versionsUIs,startIndexVisual);
-                //            //decoupageHTML(html,versionsUI.GetHtmlExport(),true);
-                //            break;
-                //        } 
-                //        case DBCst.Vehicles.names.radio:{
-                //            ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio);
-                //            VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
-                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-                //            //decoupageHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,);
-                //            decoupageVersionHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,int.Parse(vehicles[0]));
-                //            break;
-                //        }
-                //        case DBCst.Vehicles.names.tv:{
-                //            ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv);
-                //            VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
-                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-                //            //decoupageHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true);
-                //            decoupageVersionHTML(html,versionsUI.GetHtmlExport(ref versionsUIs),true,int.Parse(vehicles[0]));
-                //            break;
-                //        }
-                //    case DBCst.Vehicles.names.directMarketing:{
-                //            ExportVersionsVehicleUI exportVersionsVehicleUI = new ExportVersionsVehicleUI(_webSession, result.VersionsDetail, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing);
-                //            VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, result.VersionsDetail);
-                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-                //            startIndexVisual = decoupageVersionHTML(html, versionsUI.GetHtmlExport(ref versionsUIs), true, int.Parse(vehicles[0]));
-                //            BuildVersionPDF(versionsUIs, startIndexVisual);
-                //            //decoupageHTML(html,versionsUI.GetHtmlExport(),true);
-                //            break;
-                //        }
-                //    case DBCst.Vehicles.names.outdoor: {
-                //            ExportVersionsVehicleUI exportVersionsVehicleUI = new ExportVersionsVehicleUI(_webSession, result.VersionsDetail, TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor);
-                //            VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, result.VersionsDetail);
-                //            html.Append("\r\n\t<tr bgcolor=\"#FFFFFF\">\r\n\t\t<td>");
-                //            startIndexVisual = decoupageVersionHTML(html, versionsUI.GetHtmlExport(ref versionsUIs), true, int.Parse(vehicles[0]));
-                //            BuildVersionPDF(versionsUIs, startIndexVisual);
-                //            //decoupageHTML(html,versionsUI.GetHtmlExport(),true);
-                //            break;
-                //        } 
-
-                //    }
-                //}
 
 				html.Append("\r\n\t<tr>\r\n\t\t<td>");
 				
@@ -685,7 +623,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 					nbLines=(int)Math.Round(w*(width/20))-4;
 				}
 
-				decoupageHTML(html,result.HTMLCode,nbLines,htmlHeader,false);
+				decoupageHTML(html,Convertion.ToHtmlString(result.HTMLCode),nbLines,htmlHeader,false);
 				html.Append("\r\n\t\t</td>\r\n\t</tr>");
 				html.Append("</table>");
 				html.Append("</BODY>");
@@ -832,9 +770,9 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
 			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
 			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + TNSAnubisConstantes.Result.CSS_LINK + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+			html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+			html.Append("<LINK href=\"" + _config.WebServer  + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+			html.Append("<LINK href=\"" + _config.WebServer  + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
 			html.Append("<meta http-equiv=\"expires\" content=\"0\">");
 			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
