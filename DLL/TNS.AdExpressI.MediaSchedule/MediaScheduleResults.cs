@@ -1080,19 +1080,19 @@ namespace TNS.AdExpressI.MediaSchedule
 
             #region Debug: Voir le tableau
 #if(DEBUG)
-            System.Text.StringBuilder HTML = new System.Text.StringBuilder(2000);
-            HTML.Append("<html><table><tr>");
-            for (int z = 0; z <= currentLineIndex; z++)
-            {
-                for (int r = 0; r < nbCol; r++)
-                {
-                    if (oTab[z, r] != null) HTML.Append("<td>" + oTab[z, r].ToString() + "</td>");
-                    else HTML.Append("<td>&nbsp;</td>");
-                }
-                HTML.Append("</tr><tr>");
-            }
-            HTML.Append("</tr></table></html>");
-            Console.WriteLine(HTML.ToString());
+			//System.Text.StringBuilder HTML = new System.Text.StringBuilder(2000);
+			//HTML.Append("<html><table><tr>");
+			//for (int z = 0; z <= currentLineIndex; z++)
+			//{
+			//    for (int r = 0; r < nbCol; r++)
+			//    {
+			//        if (oTab[z, r] != null) HTML.Append("<td>" + oTab[z, r].ToString() + "</td>");
+			//        else HTML.Append("<td>&nbsp;</td>");
+			//    }
+			//    HTML.Append("</tr><tr>");
+			//}
+			//HTML.Append("</tr></table></html>");
+			//Console.WriteLine(HTML.ToString());
 #endif
             #endregion
 
