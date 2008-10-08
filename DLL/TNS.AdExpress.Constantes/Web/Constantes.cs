@@ -1012,7 +1012,31 @@ namespace TNS.AdExpress.Constantes.Web{
 				///		en lignes : Autres dimensions 
 				///		en colonnes :  cumul unités + unités   
 				/// </summary>
-				othersDimensions_X_Units
+				othersDimensions_X_Units,
+                /// <summary>
+                /// Tableau avec :
+                ///     en lignes : Formats
+                ///     en colonnes : Nb de bannières, Nb d'occurrences
+                /// </summary>
+                format_X_Units,
+                /// <summary>
+                /// Tableau avec :
+                ///     en lignes : Dimensions
+                ///     en colonnes : Nb de bannières, Nb d'occurrences
+                /// </summary>
+                dimension_X_Units,
+                /// <summary>
+                /// Tableau avec :
+                ///     en lignes : Dimensions top 20
+                ///     en colonnes : Nb de bannières, Nb d'occurrences
+                /// </summary>
+                dimension_Top20_X_Units,
+                /// <summary>
+                /// Tableau avec :
+                ///     en lignes : Dimensions
+                ///     en colonnes : Format
+                /// </summary>
+                dimension_Format
 			}
 
 		}
