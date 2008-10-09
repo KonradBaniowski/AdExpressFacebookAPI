@@ -1946,115 +1946,114 @@ namespace TNS.AdExpress.Constantes.Web{
 	}
 	#endregion
 
-	#region chemins d'acces aux creations (presse, radio, tv)
-	/// <summary>
-	/// Classe des serveurs d'accès aux créations
-	/// </summary>
-	public class CreationServerPathes
-	{
-		/// <summary>
-		/// Répertoire virtuel des créations presse
-		/// </summary>
-		public const string IMAGES = "/ImagesPresse";
+    #region chemins d'acces aux creations (presse, radio, tv)
+    /// <summary>
+    /// Classe des serveurs d'accès aux créations
+    /// </summary>
+    public class CreationServerPathes
+    {
+        /// <summary>
+        /// Répertoire virtuel des créations presse
+        /// </summary>
+        public static string IMAGES = string.Empty;
         /// <summary>
         /// Répertoire virtuel des créations marketing direct
         /// </summary>
-        public const string IMAGES_MD = "/ImagesMD";
-		/// <summary>
-		/// Répertoire virtuel des créations de la publicité extérieure
-		/// </summary>
-		public const string IMAGES_OUTDOOR = "/ImagesOutDoor";
-		/// <summary>
-		/// Serveur Real en streaming en radio
-		/// </summary>
-		public const string READ_REAL_RADIO_SERVER="rtsp://streamrl.secodip.com/radio";
-		/// <summary>
-		/// Serveur Real en streaming en radio (nouveau chemin)
-		/// </summary>
-		public const string READ_REAL_CREATIVES_RADIO_SERVER = "rtsp://streamrl.secodip.com/stream/fr/ra";
-		/// <summary>
-		/// Serveur WMA en streaming en radio
-		/// </summary>
-		public const string READ_WM_RADIO_SERVER="mms://streamwm.secodip.com/radio";
-		/// <summary>
-		/// Serveur WMA en streaming en radio (nouveau chemin)
-		/// </summary>
-		public const string READ_WM_CREATIVES_RADIO_SERVER = "mms://streamwm.secodip.com/stream/fr/wma";
-		/// <summary>
-		/// Répertoire des spots radio
-		/// </summary>
-		public const string DOWNLOAD_RADIO_SERVER="/SpotRadio";
-		/// <summary>
-		/// Répertoire des spots radio
-		/// </summary>
-		public const string DOWNLOAD_CREATIVES_RADIO_SERVER = "/radioCreatives";
-		/// <summary>
-		/// Serveur WMV en streaming en TV
-		/// </summary>
-		public const string READ_WM_TV_SERVER="mms://streamwm.secodip.com/stream/fr/wmv";
-		/// <summary>
-		/// Serveur WMV en streaming en Pan euro
-		/// </summary>
-		public const string READ_WM_PAN_EURO_SERVER="mms://streamwm.secodip.com/paneuro";
-		/// <summary>
-		/// Serveur Real en streaming en TV
-		/// </summary>
-		public const string READ_REAL_TV_SERVER="rtsp://streamrl.secodip.com/stream/fr/rm";
-		/// <summary>
-		/// Répertoire des spots tv
-		/// </summary>
-		public const string DOWNLOAD_TV_SERVER="/SpotTv";
-		/// <summary>
-		/// Répertoire des PanEuro
-		/// </summary>
-		public const string DOWNLOAD_PAN_EURO="/PanEuro";
-		/// <summary>
-		/// Répertoire pour télécharger les spots radio
-		/// </summary>
-		//public const string LOCAL_PATH_RADIO=@"\\wallis\radio\Spot_Quanti\";
-		public const string LOCAL_PATH_RADIO=@"\\hera\AdexDatas\radio\Spot_Quanti\";
-		/// <summary>
-		/// Nouveau Répertoire pour télécharger les spots radio
-		/// </summary>		
-		public const string LOCAL_PATH_CREATIVES_RADIO = @"\\hera\streaming\fr";
-		/// <summary>
-		/// Répertoire pour télécharger les spots tv
-		/// </summary>
-		//public const string LOCAL_PATH_VIDEO = @"\\stream_rescue\stream\fr";
-		public const string LOCAL_PATH_VIDEO = @"\\hera\streaming\fr";
-		/// <summary>
-		/// Répertoire pour télécharger les paneuro
-		/// </summary>
-		public const string LOCAL_PATH_PAN_EURO=@"\\hera\AdexDatas\PanEuro";
-		/// <summary>
-		/// Répertoire contenant les visuels de la presse
-		/// </summary>
-		//public const string LOCAL_PATH_IMAGE = @"\\hera\AdexDatas\images\";
-        public const string LOCAL_PATH_IMAGE = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\";
+        public static string IMAGES_MD = string.Empty;
+        /// <summary>
+        /// Répertoire virtuel des créations de la publicité extérieure
+        /// </summary>
+        public static string IMAGES_OUTDOOR = string.Empty;
+        /// <summary>
+        /// Serveur Real en streaming en radio
+        /// </summary>
+        public static string READ_REAL_RADIO_SERVER = string.Empty;
+        /// <summary>
+        /// Serveur Real en streaming en radio (nouveau chemin)
+        /// </summary>
+        public static string READ_REAL_CREATIVES_RADIO_SERVER = string.Empty;
+        /// <summary>
+        /// Serveur WMA en streaming en radio
+        /// </summary>
+        public static string READ_WM_RADIO_SERVER = string.Empty;
+        /// <summary>
+        /// Serveur WMA en streaming en radio (nouveau chemin)
+        /// </summary>
+        public static string READ_WM_CREATIVES_RADIO_SERVER = string.Empty;
+        /// <summary>
+        /// Répertoire des spots radio
+        /// </summary>
+        public static string DOWNLOAD_RADIO_SERVER = string.Empty;
+        /// <summary>
+        /// Répertoire des spots radio
+        /// </summary>
+        public static string DOWNLOAD_CREATIVES_RADIO_SERVER = string.Empty;
+        /// <summary>
+        /// Serveur WMV en streaming en TV
+        /// </summary>
+        public static string READ_WM_TV_SERVER = string.Empty;
+        /// <summary>
+        /// Serveur WMV en streaming en Pan euro
+        /// </summary>
+        public static string READ_WM_PAN_EURO_SERVER = string.Empty;
+        /// <summary>
+        /// Serveur Real en streaming en TV
+        /// </summary>
+        public static string READ_REAL_TV_SERVER = string.Empty;
+        /// <summary>
+        /// Répertoire des spots tv
+        /// </summary>
+        public static string DOWNLOAD_TV_SERVER = string.Empty;
+        /// <summary>
+        /// Répertoire des PanEuro
+        /// </summary>
+        public static string DOWNLOAD_PAN_EURO = string.Empty;
+        /// <summary>
+        /// Répertoire pour télécharger les spots radio
+        /// </summary>
+        //public static string LOCAL_PATH_RADIO=@"\\wallis\radio\Spot_Quanti\";
+        public static string LOCAL_PATH_RADIO = string.Empty;
+        /// <summary>
+        /// Nouveau Répertoire pour télécharger les spots radio
+        /// </summary>		
+        public static string LOCAL_PATH_CREATIVES_RADIO = string.Empty;
+        /// <summary>
+        /// Répertoire pour télécharger les spots tv
+        /// </summary>
+        //public static string LOCAL_PATH_VIDEO = @"\\stream_rescue\stream\fr";
+        public static string LOCAL_PATH_VIDEO = string.Empty;
+        /// <summary>
+        /// Répertoire pour télécharger les paneuro
+        /// </summary>
+        public static string LOCAL_PATH_PAN_EURO = string.Empty;
+        /// <summary>
+        /// Répertoire contenant les visuels de la presse
+        /// </summary>
+        public static string LOCAL_PATH_IMAGE = string.Empty;
         /// <summary>
         /// Répertoire contenant les visuels du Marketing Direct
         /// </summary>
-        public const string LOCAL_PATH_MD_IMAGE = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\MarketingDirect\";
+        public static string LOCAL_PATH_MD_IMAGE = string.Empty;
         /// <summary>
         /// Répertoire contenant les logos de la publicité extérieur
         /// </summary>
-        public const string LOCAL_PATH_OUTDOOR = @"\\hera\AdexDatas\Outdoor\";
-		/// <summary>
-		/// Première page
-		/// </summary>	
-		public const string COUVERTURE="COE001.JPG";
-		/// <summary>
-		/// Répertoire contenant les logos de la presse
-		/// </summary>
-		public const string LOCAL_PATH_LOGO_PRESS= @"\\hera\AdexDatas\LogosPresse\";
-		/// <summary>
-		/// Répertoire contenant les logos de la presse
-		/// </summary>
-		public const string LOGO_PRESS= @"/LogosPresse";
+        public static string LOCAL_PATH_OUTDOOR = string.Empty;
+        /// <summary>
+        /// Première page
+        /// </summary>	
+        public static string COUVERTURE = "COE001.JPG";
+        /// <summary>
+        /// Répertoire contenant les logos de la presse
+        /// </summary>
+        public static string LOCAL_PATH_LOGO_PRESS = string.Empty;
+        /// <summary>
+        /// Répertoire contenant les logos de la presse
+        /// </summary>
+        public static string LOGO_PRESS = string.Empty;
 
 
-	}
-	#endregion
+    }
+    #endregion
 
 	#region Universe
 	/// <summary>
@@ -2378,19 +2377,23 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// <summary>
 		/// Répertoire des fichiers ADEXNEWS
 		/// </summary>
-		public const string LOCAL_PATH_ADEXNEWS = @"\\hera\AdexDatas\adexnews\";
+		public static string LOCAL_PATH_ADEXNEWS = string.Empty;
 		/// <summary>
 		/// Répertoire des fichiers ADEXREPORT
 		/// </summary>
-		public const string LOCAL_PATH_ADEXREPORT = @"\\hera\AdexDatas\adexreport\";
+        public static string LOCAL_PATH_ADEXREPORT = string.Empty;
 		/// <summary>
 		/// Répertoire des fichiers ADEXREVIEW
 		/// </summary>
-		public const string LOCAL_PATH_ADEXREVIEW = @"\\hera\AdexDatas\adexreview\";
+        public static string LOCAL_PATH_ADEXREVIEW = string.Empty;
 		/// <summary>
 		/// Répertoire des fichiers NOUVEAUTES
 		/// </summary>
-		public const string LOCAL_PATH_NOUVEAUTES = @"\\hera\AdexDatas\nouveautes\";
+        public static string LOCAL_PATH_NOUVEAUTES = string.Empty;
+		/// <summary>
+		/// Répertoire des fichiers NOUVEAUTES
+		/// </summary>
+        public static string LOCAL_PATH_MEDIA_UPDATE = string.Empty;
 		
 		/// <summary>
 		/// Nom du répertoire virtuel IIS pour ADEXNEWS

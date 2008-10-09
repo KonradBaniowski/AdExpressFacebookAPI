@@ -66,6 +66,7 @@
     <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
     <Compile Include="Classification\VehiclesInformation.cs" />
+    <Compile Include="XmlLoader\CreativeConfigDataAccess.cs" />
     <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="DataBaseDescription\DataBase.cs" />
     <Compile Include="DataBaseDescription\DefaultConnection.cs" />

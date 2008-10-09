@@ -367,6 +367,7 @@ namespace TNS.AdExpress.Domain.Level
 				throw(new ArgumentException("Incorrect column Id","id",err));
 			}
 			_name=name;
+            _strFormat = strFormat;
 			_webTextId=webTextId;
 			_dataBaseIdField=dataBaseIdField;
 			_dataBaseField=dataBaseField;

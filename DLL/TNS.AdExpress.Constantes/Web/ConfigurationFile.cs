@@ -102,6 +102,10 @@ namespace TNS.AdExpress.Constantes.Web {
 		/// Lists configuration file
 		/// </summary>
 		public const string LISTS_CONFIGURATION_FILENAME = @"Lists.xml";
+        /// <summary>
+        /// Fichier de configuration des chemins d'accès aux visuels
+        /// </summary>
+        public const string CREATIVES_PATH_CONFIGURATION = @"CreativesAccess.xml";
 
     }
 }

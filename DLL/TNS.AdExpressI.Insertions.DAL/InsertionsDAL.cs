@@ -19,6 +19,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using System.Windows.Forms;
 using System.Collections;
 
+
 namespace TNS.AdExpressI.Insertions.DAL
 {
     public abstract class InsertionsDAL:IInsertionsDAL
@@ -32,7 +33,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <summary>
         /// Current module
         /// </summary>
-        protected Module _module;
+        protected TNS.AdExpress.Domain.Web.Navigation.Module _module;
         #endregion
 
         #region Constructor
@@ -41,9 +42,9 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// </summary>
         /// <param name="session">User session</param>
         /// <param name="module">Current Module</param>
-        public InsertionsDAL(WebSession session, Module module){
+        public InsertionsDAL(WebSession session, Int64 moduleId){
             _session = session;
-            _module = module;
+            _module = ModulesList.GetModule(moduleId);
         }
         #endregion
 
@@ -55,10 +56,25 @@ namespace TNS.AdExpressI.Insertions.DAL
             Table tVehicle = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.vehicle);
             TNS.AdExpress.Domain.DataBaseDescription.View vMedia = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
 
-            sql.AppendFormat("select distinct {0}.id_vehicle from {1} where {0}.id_language={2}", vMedia.Prefix, vMedia.SqlWithPrefix, _session.DataLanguage);
+            sql.AppendFormat("select distinct {0}.id_vehicle from {1}{2} {0} where 1=1 ", vMedia.Prefix, vMedia.Sql, _session.DataLanguage);
             foreach (DetailLevelItemInformation d in filters.Keys)
             {
-                sql.AppendFormat(" and {0}.{1} = {2}", vMedia.Prefix, d.DataBaseIdField, filters[d]);
+                if (filters[d] >= 0)
+                {
+                    switch (d.Id)
+                    {
+                        case DetailLevelItemInformation.Levels.vehicle:
+                        case DetailLevelItemInformation.Levels.category:
+                        case DetailLevelItemInformation.Levels.media:
+                        case DetailLevelItemInformation.Levels.interestCenter:
+                        case DetailLevelItemInformation.Levels.title:
+                            sql.AppendFormat(" and {0}.{1} = {2}", vMedia.Prefix, d.DataBaseIdField, filters[d]);
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
             }
 
             try
@@ -96,7 +112,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="moduleId">User Current Module</param>
         /// <param name="vehicles">Vehicles to check</param>
         /// <returns>List of vehicles present</returns>
-        public virtual List<VehicleInformation> GetPresentVehicles(List<VehicleInformation> vehicles, string filters, int fromDate, int toDate, int universId, Module module)
+        public virtual List<VehicleInformation> GetPresentVehicles(List<VehicleInformation> vehicles, string filters, int fromDate, int toDate, int universId, TNS.AdExpress.Domain.Web.Navigation.Module module)
         {
             StringBuilder sql = new StringBuilder();
             List<VehicleInformation> found = new List<VehicleInformation>();
@@ -202,7 +218,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         #endregion
 
         #region GetUniversFilters
-        protected void AppendUniversFilters(StringBuilder sql, Table table, int fromDate, int toDate, VehicleInformation vehicle, int universId, string filters, Module module)
+        protected void AppendUniversFilters(StringBuilder sql, Table table, int fromDate, int toDate, VehicleInformation vehicle, int universId, string filters, TNS.AdExpress.Domain.Web.Navigation.Module module)
         {
 
             #region Period
@@ -388,7 +404,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="filters">Filters Ids</param>
         /// <param name="vehicle">Vehicle</param>
         /// <returns>Filters clause</returns>
-        protected virtual string GetFiltersClause(Table table, GenericDetailLevel detailLevels, string filters, VehicleInformation vehicle)
+        protected virtual string GetFiltersClause(Table table, TNS.AdExpress.Domain.Level.GenericDetailLevel detailLevels, string filters, VehicleInformation vehicle)
         {
 
             StringBuilder str = new StringBuilder();
@@ -426,7 +442,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="detailLevels">Detail Levels Selected<</param>
         /// <param name="vehicle">Vehicle</param>
         /// <returns>SQL</returns>
-        private static string CheckZeroVersion(Table table, GenericDetailLevel detailLevels, VehicleInformation vehicle, string filters)
+        private static string CheckZeroVersion(Table table, TNS.AdExpress.Domain.Level.GenericDetailLevel detailLevels, VehicleInformation vehicle, string filters)
         {
             int id = 0;
             string[] ids = filters.Split(',');
@@ -457,22 +473,25 @@ namespace TNS.AdExpressI.Insertions.DAL
             Table tData = SQLGenerator.GetDataTable(vehicle, _module.ModuleType);
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
             string tmp = string.Empty;
-
+            Int64 idColumnSet = WebApplicationParameters.InsertionsDetail.GetDetailColumnsId(vehicle.DatabaseId, _module.Id);
+            List<GenericColumnItemInformation> columns = WebApplicationParameters.InsertionsDetail.GetDetailColumns(vehicle.DatabaseId, _module.Id);
             try
             {
 
                 //Select
                 sql.Append(" select ");
-                AppendInsertionsSqlFields(tData, vehicle, sql, detailLevelsIds);
+                AppendInsertionsSqlFields(tData, vehicle, sql, detailLevelsIds, columns);
                 sql.Length -= 1;
 
                 //Tables
-                AppendSqlTables(sAdExpr03, tData, sql, detailLevelsIds);
+                AppendSqlTables(sAdExpr03, tData, sql, columns, detailLevelsIds);
 
                 // Joins
                 sql.Append(" Where ");
 
-                tmp = _session.GenericInsertionColumns.GetSqlJoins(_session.DataLanguage, tData.Prefix, detailLevelsIds);
+                AppendUniversFilters(sql, tData, fromDate, toDate, vehicle, universId, filters);
+
+                tmp = GenericColumns.GetSqlJoins(_session.DataLanguage, tData.Prefix, columns, detailLevelsIds);
                 if (tmp.Length > 0)
                 {
                     sql.AppendFormat(" {0} ", tmp);
@@ -481,15 +500,14 @@ namespace TNS.AdExpressI.Insertions.DAL
                 {
                     sql.AppendFormat(" {0} ", _session.DetailLevel.GetSqlJoins(_session.DataLanguage, tData.Prefix));
                 }
-                sql.AppendFormat(" {0} ", _session.GenericInsertionColumns.GetSqlContraintJoins());
+                sql.AppendFormat(" {0} ", GenericColumns.GetSqlContraintJoins(columns));
 
-                AppendUniversFilters(sql, tData, fromDate, toDate, vehicle, universId, filters);
 
                 //Group by
-                AppendSqlGroupByFields(sql, tData, vehicle, detailLevelsIds);
+                AppendSqlGroupByFields(sql, tData, vehicle, detailLevelsIds, columns);
 
                 //Order by 
-                AppendSqlOrderFields(tData, sql, vehicle, detailLevelsIds);
+                AppendSqlOrderFields(tData, sql, vehicle, detailLevelsIds, columns);
 
             }
             catch (System.Exception err)
@@ -519,44 +537,50 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="sql">Sql request container</param>
         /// <param name="detailLevels">Lis of level details Id</param>
 		/// <returns>True if there is detail levels are selected</returns>
-        protected bool AppendInsertionsSqlFields(Table tData, VehicleInformation vehicle, StringBuilder sql, ArrayList detailLevelsIds)
+        protected bool AppendInsertionsSqlFields(Table tData, VehicleInformation vehicle, StringBuilder sql, ArrayList detailLevelsIds, List<GenericColumnItemInformation> columns)
         {
 			
             bool detailLevelSelected = false;
+            bool hasCategory = false;
             bool hasInsertionFields = false;
             string tmp = string.Empty;
 
             //Detail levels
 			if (_session.DetailLevel != null && _session.DetailLevel.Levels != null && _session.DetailLevel.Levels.Count > 0) {
 				foreach (DetailLevelItemInformation detailLevelItemInformation in _session.DetailLevel.Levels) {
+                    if (detailLevelItemInformation.Id == DetailLevelItemInformation.Levels.category)
+                    {
+                        hasCategory = true;
+                    }
 					detailLevelsIds.Add(detailLevelItemInformation.Id.GetHashCode());
 				}
                 tmp = _session.DetailLevel.GetSqlFields();
 				if (tmp.Length > 0) {
-					sql.AppendFormat(" {0},", tmp);
+					sql.AppendFormat(" {0}", tmp);
 					detailLevelSelected = true;
 				}
 
 			}
 
             //Insertions fields
-            tmp = _session.GenericInsertionColumns.GetSqlFields(detailLevelsIds);
-			if (tmp.Length > 0) {
-                hasInsertionFields = true;
-				sql.AppendFormat(" {0},", tmp);
-			}
+            tmp = GenericColumns.GetSqlFields(columns, detailLevelsIds);
+            if (tmp.Length > 0)
+            {
+                if (detailLevelSelected) sql.Append(",");
+                sql.AppendFormat(" {0},", tmp);
+            }
 
             //Constraints fields
-            tmp = _session.GenericInsertionColumns.GetSqlConstraintFields();
+            tmp = GenericColumns.GetSqlConstraintFields(columns);
 			if (tmp.Length > 0){
 				sql.AppendFormat(" {0},", tmp);//Rules constraints management
             }
 
             //Slogan fields
-			AppendSloganField(sql, tData, vehicle);
+			AppendSloganField(sql, tData, vehicle, columns);
 
             //Category
-            if (hasInsertionFields && vehicle.Id == CstDBClassif.Vehicles.names.tv && !_session.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.category) && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category))
+            if (vehicle.Id == CstDBClassif.Vehicles.names.tv && !hasCategory)
             {
                 sql.AppendFormat(" {0}.id_category,", tData.Prefix);
             }
@@ -569,12 +593,12 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// </summary>
         /// <param name="sql">Sql request container</param>
         /// <param name="vehicle">Vehicle Information</param>
-        protected void AppendSloganField(StringBuilder sql, Table tData, VehicleInformation vehicle)
+        protected void AppendSloganField(StringBuilder sql, Table tData, VehicleInformation vehicle, List<GenericColumnItemInformation> columns)
         {
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)
                 && vehicle.Id == CstDBClassif.Vehicles.names.radio
                 && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.slogan)
-                && !_session.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.slogan)
+                && sql.ToString().IndexOf("id_slogan") < 0
                 )
             {
                 sql.AppendFormat(" {0}.id_slogan,", tData.Prefix);
@@ -587,7 +611,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="tData">Data table</param>
         /// <param name="sql">Sql request container</param>
         /// <param name="detailLevels">Level details</param>
-        protected void AppendSqlTables(Schema sAdExpr03, Table tData, StringBuilder sql, ArrayList detailLevelsIds)
+        protected void AppendSqlTables(Schema sAdExpr03, Table tData, StringBuilder sql, List<GenericColumnItemInformation> columns, ArrayList detailLevelsIds)
         {
 
             string tmp = string.Empty;
@@ -601,12 +625,12 @@ namespace TNS.AdExpressI.Insertions.DAL
                     sql.AppendFormat(", {0} ", tmp);
                 }
             }
-            tmp = _session.GenericInsertionColumns.GetSqlTables(sAdExpr03.Label, detailLevelsIds);
+            tmp = GenericColumns.GetSqlTables(sAdExpr03.Label, columns, detailLevelsIds);
             if (tmp.Length > 0)
             {
                 sql.AppendFormat(", {0} ", tmp);
             }
-            tmp = _session.GenericInsertionColumns.GetSqlConstraintTables(sAdExpr03.Label);
+            tmp = GenericColumns.GetSqlConstraintTables(sAdExpr03.Label, columns);
             if (tmp.Length > 0)
             {
                 sql.AppendFormat(", {0} ", tmp);//Rules constraints management
@@ -803,7 +827,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             }
             #endregion
 
-            sql.AppendFormat(" and {1}.id_vehicle={0}", vehicle, tData.Prefix);
+            sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
 
         }
 
@@ -814,7 +838,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="sql">Sql request container</param>
         /// <param name="vehicle">Vehicle Information</param>
         /// <param name="detailLevelIds">List of levels detail</param>
-        protected void AppendSqlGroupByFields(StringBuilder sql, Table tData, VehicleInformation vehicle, ArrayList detailLevelIds)
+        protected void AppendSqlGroupByFields(StringBuilder sql, Table tData, VehicleInformation vehicle, ArrayList detailLevelIds, List<GenericColumnItemInformation> columns)
         {
 
             string tmp = string.Empty;
@@ -830,7 +854,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 }
             }
 
-            tmp = _session.GenericInsertionColumns.GetSqlGroupByFields(detailLevelIds);
+            tmp = GenericColumns.GetSqlGroupByFields(columns, detailLevelIds);
             if (tmp.Length > 0)
             {
                 if (!first) sql.Append(",");
@@ -838,9 +862,9 @@ namespace TNS.AdExpressI.Insertions.DAL
                 first = false;
             }
 
-            if (_session.GenericInsertionColumns != null)
+            if (columns != null)
             {
-                tmp = _session.GenericInsertionColumns.GetSqlConstraintGroupByFields();
+                tmp = GenericColumns.GetSqlConstraintGroupByFields(columns);
                 if (tmp != null && tmp.Length > 0)
                 {
                     if (!first) sql.Append(",");
@@ -849,10 +873,9 @@ namespace TNS.AdExpressI.Insertions.DAL
                 }
             }
 
-            AppendSloganField(sql, tData, vehicle);
+            AppendSloganField(sql, tData, vehicle, columns);
 
-            tmp = _session.GenericInsertionColumns.GetSqlFields(detailLevelIds);
-            if (tmp.Length > 0 && vehicle.Id == CstDBClassif.Vehicles.names.tv && !_session.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.category) && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category))
+            if (tmp.Length > 0 && vehicle.Id == CstDBClassif.Vehicles.names.tv && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category))
             {
                 sql.AppendFormat(" , {0}.id_category", tData.Prefix);
             }
@@ -865,7 +888,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="sql">Sql request container</param>
         /// <param name="vehicle">Vehicle Information</param>
         /// <param name="detailLevelList">List of detail levels</param>
-        protected void AppendSqlOrderFields(Table tData, StringBuilder sql, VehicleInformation vehicle, ArrayList detailLevelIds)
+        protected void AppendSqlOrderFields(Table tData, StringBuilder sql, VehicleInformation vehicle, ArrayList detailLevelIds, List<GenericColumnItemInformation> columns)
         {
             string tmp = string.Empty;
             bool first = true;
@@ -881,7 +904,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 }
             }
 
-            tmp = _session.GenericInsertionColumns.GetSqlOrderFields(detailLevelIds);
+            tmp = GenericColumns.GetSqlOrderFields(columns, detailLevelIds);
             if (tmp.Length > 0)
             {
                 if (!first) sql.Append(",");
@@ -889,9 +912,9 @@ namespace TNS.AdExpressI.Insertions.DAL
                 first = false;
             }
 
-            if (_session.GenericInsertionColumns != null)
+            if (columns != null)
             {
-                tmp = _session.GenericInsertionColumns.GetSqlConstraintOrderFields();
+                tmp = GenericColumns.GetSqlConstraintOrderFields(columns);
                 if (tmp != null && tmp.Length > 0){
                     if (!first)sql.Append(",");
                     first = false;
@@ -899,7 +922,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 }
             }
 
-            AppendSloganField(sql, tData, vehicle);
+            AppendSloganField(sql, tData, vehicle,columns);
 
         }
         #endregion

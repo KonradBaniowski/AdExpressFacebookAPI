@@ -164,6 +164,22 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
         }
         /// <summary>
+        /// Specify if the control must call the javascript refreshing at the control initiation
+        /// </summary>
+        protected bool _autoInitRefresh = true;
+        /// <summary>
+        /// Specify if the control must call the javascript refreshing at the control initiation
+        /// </summary>
+        public bool AutoInitRefresh
+        {
+            get {
+                return _autoInitRefresh;
+            }
+            set {
+                _autoInitRefresh = value;
+            }
+        }
+        /// <summary>
         /// SubPeriodSelection Component
         /// </summary>
         SubPeriodSelectionWebControl _subPeriodSelectionWebControl = null;
@@ -195,6 +211,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             //vehicles
             sb.Append("<script language=javascript>");
             sb.AppendFormat("\r\n {0} = -1;", this._vehicleContainerName);
+            sb.AppendFormat("\r\nvar call_count_{0} = {1};", this.ID, ((_autoInitRefresh)?1:0));
             sb.AppendFormat("\r\nvar current_vehicle_{0}_caption = null;", this.ID);
             sb.AppendFormat("\r\nfunction setVehicle_{0}(id, captionid)", this.ID);
             sb.Append("\r\n{");
@@ -205,8 +222,12 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             sb.AppendFormat("\r\n\tcurrent_vehicle_{0}_caption.className = '';", this.ID);
             sb.AppendFormat("\r\ncurrent_vehicle_{0}_caption = document.getElementById(captionid);", this.ID);
             sb.AppendFormat("\r\ncurrent_vehicle_{0}_caption.className = 'selected';", this.ID);
+            sb.AppendFormat("\r\nif (call_count_{0} > 0)", this.ID);
+            sb.Append("\r\n{");
             sb.AppendFormat("\r\n{0}();", this._javascriptRefresh);
             sb.Append("\r\n}");
+            sb.Append("\r\n}");
+            sb.AppendFormat("\r\n call_count_{0} = 1;", this.ID);
             sb.Append("\r\n}");
             sb.Append("</script><div class=\"shadetabs\"><ul>");
 
@@ -275,10 +296,6 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
             output.Write(sb.ToString());
         }
-        #endregion
-
-        #region Ajax Management
-
         #endregion
 
     }

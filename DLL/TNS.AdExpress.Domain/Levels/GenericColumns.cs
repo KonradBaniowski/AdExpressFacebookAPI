@@ -152,6 +152,43 @@ namespace TNS.AdExpress.Domain.Level
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
 		}
+
+        /// <summary>
+        /// Obtient le code SQL des champs correspondant aux colonnes exceptées celles qui ont une équivalence
+        /// avec le niveau de détail présenté en ligne.  
+        /// </summary>
+        /// <param name="columns">List of columns to include</param>
+        /// <param name="detailLevelList">Identifiants de niveau de détail</param>
+        /// <remarks>Ne termine pas par une virgule</remarks>
+        /// <returns>Code SQL</returns>
+        public static string GetSqlFields(List<GenericColumnItemInformation> columns, ArrayList detailLevelList)
+        {
+            string sql = "";
+            foreach (GenericColumnItemInformation currentColumn in columns)
+            {
+                if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))
+                {
+                    if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0)
+                    {
+                        if (currentColumn.GetSqlFieldId() != null && currentColumn.GetSqlFieldId().Length > 0)
+                            sql += currentColumn.GetSqlFieldId() + ",";
+                        if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
+                            sql += currentColumn.GetSqlField() + ",";
+                    }
+                    else
+                    {
+                        if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
+                            sql += string.Format("{0}.stragg(distinct {1}) as {2},"
+                                , WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label
+                                , currentColumn.DataBaseField
+                                , ((currentColumn.DataBaseAliasField != null && currentColumn.DataBaseAliasField.Length > 0) ? currentColumn.DataBaseAliasField : currentColumn.DataBaseField)
+                                );
+                    }
+                }
+            }
+            if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
+            return (sql);
+        }
 		
 		/// <summary>
 		/// Obtient le code SQL des champs correspondant aux colonnes suivant les règles de contraintes
@@ -174,6 +211,27 @@ namespace TNS.AdExpress.Domain.Level
 			return(sql);
 		}
 
+		/// <summary>
+		/// Obtient le code SQL des champs correspondant aux colonnes suivant les règles de contraintes
+		/// </summary>
+        /// <param name="columns">Liust of columns to treat</param>
+		/// <remarks>Ne termine pas par une virgule</remarks>
+		/// <returns>Code SQL</returns>
+		public static string GetSqlConstraintFields(List<GenericColumnItemInformation> columns){
+			string sql="";
+			ArrayList constraintList=null;
+			foreach(GenericColumnItemInformation currentColumn in columns){
+				if(currentColumn.Constraints!=null && currentColumn.Constraints.Count>0)
+					if(currentColumn.Constraints.ContainsKey(Constraints.DB_FIELD_CONTRAINT_TYPE)){
+						constraintList = (ArrayList)currentColumn.Constraints[Constraints.DB_FIELD_CONTRAINT_TYPE];
+						for(int i=0; i<constraintList.Count; i++){
+							sql+=constraintList[i].ToString()+",";
+						}
+					}					
+			}
+			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
+			return(sql);
+		}
 		/// <summary>
 		/// Obtient le code SQL des champs correspondant aux colonnes pour les requêtes plurimedia.
 		/// Cette fonction est utilisée pour obtenir les champs logique pour une requête avec union 
@@ -235,6 +293,34 @@ namespace TNS.AdExpress.Domain.Level
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
 		}
+
+        /// <summary>
+        /// Obtient le code SQL de la clause order correspondant aux colonnes exceptées celles qui ont une équivalence
+        /// avec le niveau de détail présenté en ligne.  
+        /// </summary>
+        /// <param name="columns">Columns to include in the clause</param>
+        /// <param name="detailLevelList">Identifiants de niveau de détail</param>
+        /// <remarks>Ne termine pas par une virgule</remarks>
+        /// <returns>Code SQL</returns>
+        public static string GetSqlOrderFields(List<GenericColumnItemInformation> columns, ArrayList detailLevelList)
+        {
+            string sql = "";
+            foreach (GenericColumnItemInformation currentColumn in columns)
+            {
+                if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))
+                {
+                    if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0)
+                    {
+                        if (currentColumn.GetSqlFieldForOrder() != null && currentColumn.GetSqlFieldForOrder().Length > 0)
+                            sql += currentColumn.GetSqlFieldForOrder() + ",";
+                        if (currentColumn.GetSqlIdFieldForOrder() != null && currentColumn.GetSqlIdFieldForOrder().Length > 0)
+                            sql += currentColumn.GetSqlIdFieldForOrder() + ",";
+                    }
+                }
+            }
+            if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
+            return (sql);
+        }
 		
 		/// <summary>
 		/// Obtient le code SQL de la clause order correspondant aux  colonnes contraigantes
@@ -257,6 +343,27 @@ namespace TNS.AdExpress.Domain.Level
 			return(sql);
 		}
 
+		/// <summary>
+		/// Obtient le code SQL de la clause order correspondant aux  colonnes contraigantes
+		/// </summary>
+		/// <remarks>Ne termine pas par une virgule</remarks>
+        /// <param name="columns">List columns to include</param>
+		/// <returns>Code SQL</returns>
+		public static string GetSqlConstraintOrderFields(List<GenericColumnItemInformation> columns){
+			string sql="";
+			ArrayList constraintList=null;
+			foreach(GenericColumnItemInformation currentColumn in columns){
+				if(currentColumn.Constraints!=null && currentColumn.Constraints.Count>0)
+					if(currentColumn.Constraints.ContainsKey(Constraints.DB_ORDER_CONTRAINT_TYPE)){
+						constraintList = (ArrayList)currentColumn.Constraints[Constraints.DB_ORDER_CONTRAINT_TYPE];
+						for(int i=0; i<constraintList.Count; i++){
+							sql+=constraintList[i].ToString()+",";
+						}
+					}					
+			}
+			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
+			return(sql);
+		}
 		/// <summary>
 		/// Obtient le code SQL de la clause order correspondant aux colonnes
 		/// </summary>
@@ -311,6 +418,32 @@ namespace TNS.AdExpress.Domain.Level
 			return(sql);
 		}
 
+        /// <summary>
+        /// Get SQL group by clause matching columns in parameters excepted ones included in detail levels
+        /// </summary>
+        /// <param name="columns">List of columns to join</param>
+        /// <param name="detailLevelList">Identifiants de niveau de détail</param>
+        /// <remarks>Ne termine pas par une virgule</remarks>
+        /// <returns>Code SQL</returns>
+        public static string GetSqlGroupByFields(List<GenericColumnItemInformation> columns, ArrayList detailLevelList)
+        {
+            string sql = "";
+            foreach (GenericColumnItemInformation currentColumn in columns)
+            {
+                if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0)
+                {
+                    if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))
+                    {
+                        if (currentColumn.GetSqlIdFieldForGroupBy() != null && currentColumn.GetSqlIdFieldForGroupBy().Length > 0)
+                            sql += currentColumn.GetSqlIdFieldForGroupBy() + ",";
+                        if (currentColumn.GetSqlFieldForGroupBy() != null && currentColumn.GetSqlFieldForGroupBy().Length > 0)
+                            sql += currentColumn.GetSqlFieldForGroupBy() + ",";
+                    }
+                }
+            }
+            if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
+            return (sql);
+        }
 		
 		/// <summary>
 		/// Obtient le code SQL de la clause group by correspondant aux  colonnes contraignantes
@@ -333,6 +466,26 @@ namespace TNS.AdExpress.Domain.Level
 			return(sql);
 		}
 
+		/// <summary>
+		/// Obtient le code SQL de la clause group by correspondant aux  colonnes contraignantes
+		/// </summary>
+		/// <remarks>Ne termine pas par une virgule</remarks>
+		/// <returns>Code SQL</returns>
+		public static string GetSqlConstraintGroupByFields(List<GenericColumnItemInformation> columns){
+			string sql="";
+			ArrayList constraintList=null;
+			foreach(GenericColumnItemInformation currentColumn in columns){
+				if(currentColumn.Constraints!=null && currentColumn.Constraints.Count>0)
+					if(currentColumn.Constraints.ContainsKey(Constraints.GROUP_BY_CONTRAINT_TYPE)){
+						constraintList = (ArrayList)currentColumn.Constraints[Constraints.GROUP_BY_CONTRAINT_TYPE];
+						for(int i=0; i<constraintList.Count; i++){
+							sql+=constraintList[i].ToString()+",";
+						}
+					}					
+			}
+			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
+			return(sql);
+		}
 
 		/// <summary>
 		/// Obtient le code SQL de la clause group by correspondant aux colonnes
@@ -386,6 +539,27 @@ namespace TNS.AdExpress.Domain.Level
 			return(sql);
 		}
 
+        /// <summary>
+        /// Get SQL for "from" clause
+        /// </summary>
+        /// <param name="dbSchemaName">Data Base schema to use</param>
+        /// <param name="detailLevelList">Id of included detail levels</param>
+        /// <param name="columns">Columns to include</param>
+        /// <remarks>Don't stop with a coma</remarks>
+        /// <returns>SQL Code</returns>
+        public static string GetSqlTables(string dbSchemaName, List<GenericColumnItemInformation> columns, ArrayList detailLevelList)
+        {
+            if (dbSchemaName == null || dbSchemaName.Length == 0) throw (new ArgumentNullException("Parameter dbSchemaName is invalid"));
+            string sql = "";
+            foreach (GenericColumnItemInformation currentColumn in columns)
+            {
+                if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))
+                    if (currentColumn.DataBaseTableName != null) sql += dbSchemaName + "." + currentColumn.DataBaseTableName + " " + currentColumn.DataBaseTableNamePrefix + ",";
+            }
+            if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
+            return (sql);
+        }
+
 		/// <summary>
 		/// Obtient le code SQL des tables correspondant aux colonnes
 		/// </summary>
@@ -410,6 +584,37 @@ namespace TNS.AdExpress.Domain.Level
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
 		}
+
+        /// <summary>
+        /// Obtient le code SQL des tables correspondant aux colonnes
+        /// </summary>
+        /// <param name="dbSchemaName">Schema de la base de données à utiliser</param>
+        /// <param name="columns">List of columns to include</param>
+        /// <remarks>Ne termine pas par une virgule</remarks>
+        /// <returns>Code SQL</returns>
+        public static string GetSqlConstraintTables(string dbSchemaName, List<GenericColumnItemInformation> columns)
+        {
+            if (dbSchemaName == null || dbSchemaName.Length == 0) throw (new ArgumentNullException("Parameter dbSchemaName is invalid"));
+            string sql = "";
+
+            ArrayList constraintList = null;
+            foreach (GenericColumnItemInformation currentColumn in columns)
+            {
+                if (currentColumn.Constraints != null && currentColumn.Constraints.Count > 0)
+                {
+                    if (currentColumn.Constraints.ContainsKey(Constraints.DB_TABLE_CONTRAINT_TYPE))
+                    {
+                        constraintList = (ArrayList)currentColumn.Constraints[Constraints.DB_TABLE_CONTRAINT_TYPE];
+                        for (int i = 0; i < constraintList.Count; i++)
+                        {
+                            sql += constraintList[i].ToString() + ",";
+                        }
+                    }
+                }
+            }
+            if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
+            return (sql);
+        }
 
 		/// <summary>
 		/// Obtient le code SQL des jointures correspondant aux colonnes
@@ -475,6 +680,38 @@ namespace TNS.AdExpress.Domain.Level
 		}
 
 		/// <summary>
+		/// Obtient le code SQL des jointures correspondant aux colonnes exceptés celles qui ont une équivalence
+		/// avec le niveau de détail présenté en ligne.  
+		/// </summary>
+		/// <remarks>Début par And</remarks>
+		/// <param name="languageId">Langue à afficher</param>
+        /// <param name="columns">Columns to include</param>
+		/// <param name="dataTablePrefix">Préfixe de la table de données sur laquelle on fait la jointure</param>
+		/// <param name="detailLevelList">Identifiants de niveau de détail</param>
+		/// <returns>Code SQL</returns>
+        public static string GetSqlJoins(int languageId, string dataTablePrefix, List<GenericColumnItemInformation> columns, ArrayList detailLevelList)
+        {
+			if(dataTablePrefix==null || dataTablePrefix.Length==0)throw(new ArgumentNullException("Parameter dataTablePrefix is invalid"));
+			string sql="";
+			string sqlOperation="";
+			foreach(GenericColumnItemInformation currentColumn in columns){
+				if(currentColumn.DataBaseTableName!=null && (detailLevelList==null ||  detailLevelList.Count==0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))){
+					if(currentColumn.SqlOperation.Equals("leftOuterJoin"))sqlOperation = "(+)=";
+					else if (currentColumn.SqlOperation.Equals("rightOuterJoin"))sqlOperation = "=(+)";
+					else sqlOperation = "=";
+					if(currentColumn.DbRelatedTablePrefixeForJoin!=null && currentColumn.DbRelatedTablePrefixeForJoin.Length>0)
+						sql+=" and "+currentColumn.DataBaseTableNamePrefix+"."+currentColumn.DataBaseIdField+sqlOperation+currentColumn.DbRelatedTablePrefixeForJoin+"."+currentColumn.DataBaseIdField;
+					else sql+=" and "+currentColumn.DataBaseTableNamePrefix+"."+currentColumn.DataBaseIdField+sqlOperation+dataTablePrefix+"."+currentColumn.DataBaseIdField;
+					sql+=" and "+currentColumn.DataBaseTableNamePrefix+".id_language"+sqlOperation+languageId.ToString();
+					if(currentColumn.SqlOperation.Equals("leftOuterJoin"))
+						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation(+)<"+ActivationValues.UNACTIVATED;					
+					else
+						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation<"+ActivationValues.UNACTIVATED;
+				}
+			}
+			return(sql);
+		}
+		/// <summary>
 		/// Obtient le code SQL des jointures correspondant aux colonnes suivant les contraintes métiers
 		/// </summary>
 		/// <remarks>Début par And</remarks>	
@@ -496,7 +733,30 @@ namespace TNS.AdExpress.Domain.Level
 			
 			return(sql);
 		}
-		#endregion			
+		/// <summary>
+		/// Obtient le code SQL des jointures correspondant aux colonnes suivant les contraintes métiers
+		/// </summary>
+        /// <param name="columns">List of columns to treat</param>
+		/// <remarks>Début par And</remarks>	
+		/// <returns>Code SQL</returns>
+		public static string GetSqlContraintJoins(List<GenericColumnItemInformation> columns){
+			
+			string sql="";
+			ArrayList constraintList=null;
+			foreach(GenericColumnItemInformation currentColumn in columns){
+				if(currentColumn.Constraints!=null && currentColumn.Constraints.Count>0){
+					if(currentColumn.Constraints.ContainsKey(Constraints.DB_JOIN_CONTRAINT_TYPE)){
+						constraintList = (ArrayList)currentColumn.Constraints[Constraints.DB_JOIN_CONTRAINT_TYPE];
+						for(int i=0; i<constraintList.Count; i++){
+							sql+=" and "+constraintList[i].ToString();
+						}
+					}	
+				}
+			}
+			
+			return(sql);
+		}		
+        #endregion			
 
 		#region UI
 		/// <summary>

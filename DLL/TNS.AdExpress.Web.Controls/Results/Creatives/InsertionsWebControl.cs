@@ -20,6 +20,7 @@ using System.Web.UI.WebControls;
 using AjaxPro;
 
 using WebCst = TNS.AdExpress.Constantes.Web;
+using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -86,11 +87,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// <summary>
         /// Vehicle List
         /// </summary>
-        protected IList<long> _vehicles = new List<long>();
+        protected IList<VehicleInformation> _vehicles = new List<VehicleInformation>();
         /// <summary>
         /// Get / Set list of vehicles
         /// </summary>
-        public IList<long> Vehicles
+        public IList<VehicleInformation> Vehicles
         {
             get
             {
@@ -99,10 +100,15 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             set
             {
                 _vehicles = value;
-                this._header.Vehicles = value;
+                List<long> ids = new List<long>();
+                foreach (VehicleInformation v in value)
+                {
+                    ids.Add(v.DatabaseId);
+                }
+                this._header.Vehicles = ids;
                 if (this.IdVehicle <= 0)
                 {
-                    this.IdVehicle = this.Vehicles[0];
+                    this.IdVehicle = this.Vehicles[0].DatabaseId;
                 }
 
             }
@@ -216,6 +222,25 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
         }
         /// <summary>
+        /// Javascript refresh
+        /// </summary>
+        protected string _javaScriptRefresh = string.Empty;
+        /// <summary>
+        /// Get / Set Javascript method to call to refresh the page
+        /// </summary>
+        public string JavaScriptRefresh
+        {
+            get
+            {
+                return _javaScriptRefresh;
+            }
+            set
+            {
+                _javaScriptRefresh = value;
+                this._header.JavascriptRefresh = value;
+            }
+        }
+        /// <summary>
         /// Curent Module Id
         /// </summary>
         protected Int64 _idModule = -1;
@@ -233,6 +258,28 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 _idModule = value;
             }
         }
+        /// <summary>
+        /// Couche d'accès aux règles métiers
+        /// </summary>
+        IInsertionsResult _rulesLayer = null;
+        /// <summary>
+        /// Get / Set Style of Information cells
+        /// </summary>
+        public string CssCellInfo
+        {
+            get
+            {
+                return _cssCellInfo;
+            }
+            set
+            {
+                _cssCellInfo = value;
+            }
+        }
+        /// <summary>
+        /// Style of Information cells
+        /// </summary>
+        protected string _cssCellInfo = string.Empty;
         #endregion
 
         #region Constructor
@@ -248,11 +295,21 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// <param name="e"></param>
         protected override void OnInit(EventArgs e)
         {
+            if (this._javaScriptRefresh.Length <= 0)
+            {
+                this._javaScriptRefresh = string.Format("get_{0}", this.ID);
+            }
+            object[] param = new object[2];
+            param[0] = _customerWebSession;
+            param[1] = _idModule;
+            _rulesLayer = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.Default.dll", "TNS.AdExpressI.Insertions.Default.InsertionsResult", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
+
+            this._header.JavascriptRefresh = this.JavaScriptRefresh;
             this._header.ID = string.Format("{0}_header", this.ID);
-            this._header.JavascriptRefresh = string.Format("get_{0}", this.ID);
             this._header.PeriodContainerName = "resultParameters.Zoom";
             this._header.VehicleContainerName = "resultParameters.IdVehicle";
-            this.Vehicles = CreativeRules.GetVehicles(_customerWebSession, _idModule, _idsFilter, this._idUnivers);
+            this._header.AutoInitRefresh = false;
+            this.Vehicles = _rulesLayer.GetPresentVehicles(_idsFilter, this._idUnivers);
             this.Controls.Add(_columns);
             base.OnInit(e);
         }
@@ -287,6 +344,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             //    AjaxScripts(output);
             //}
 
+            output.WriteLine(this.AjaxEventScript());
+
             output.WriteLine("<table align=\"center\" class=\"whiteBackGround\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
 
             //header
@@ -295,30 +354,15 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
                 _header.RenderControl(output);
                 output.WriteLine("</td></tr>");
-                output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
+                output.WriteLine("<tr width=\"100%\" align=\"left\"><td width=\"100%\">");
                 _columns.RenderControl(output);
                 output.WriteLine("</td></tr>");
             }
-            output.WriteLine("</table>");
-
+            output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
             base.Render(output);
+            output.WriteLine("</td></tr>");
 
-            ////result
-            //output.WriteLine("<tr width=\"100%\"><td class=\"datacreativetable\" width=\"100%\" id=\"div_{0}\"></td></tr>", this.ID);
-            //output.WriteLine("</table>");
-            //output.WriteLine("<script language=javascript>");
-            //if (Vehicles.Count > 0)
-            //{
-            //    //Refresh data
-            //    //output.WriteLine("\t get_{0}()", this.ID);
-            //}
-            //else
-            //{
-            //    //no data
-            //    output.WriteLine("\t output_{0}=document.getElementById('div_{0}');", this.ID);
-            //    output.WriteLine("\t output_{0}.innerHTML = '<br/><br/>{1}';", this.ID, GetUIEmpty(_customerWebSession.SiteLanguage, 2106));
-            //}
-            //output.WriteLine("</script>");
+            output.WriteLine("</table>");
 
 
         }
@@ -335,7 +379,6 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             Domain.Web.Navigation.Module module = session.CustomerLogin.GetModule(session.CurrentModule);
             VehicleInformation vehicle = VehiclesInformation.Get(_idVehicle);
             string filters = string.Empty;
-            int universId = 0;
 
              //date
             int fromDate = 0;
@@ -369,11 +412,25 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 toDate = Convert.ToInt32(WebFct.Dates.getZoomEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
             }
 
-            object[] param = new object[1];
+            object[] param = new object[2];
             param[0] = session;
             param[1] = module.Id;
-            IInsertionsResult result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.Default", "TNS.AdExpressI.Insertions.Default.InsertionsResult", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
+            IInsertionsResult result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.Default.dll", "TNS.AdExpressI.Insertions.Default.InsertionsResult", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
             ResultTable data = result.GetInsertions(vehicle, fromDate, toDate, _idsFilter, _idUnivers);
+
+            if (_cssCellInfo != null && _cssCellInfo.Length > 0){
+                switch (vehicle.Id)
+                {
+                    case CstDBClassif.Vehicles.names.press:
+                    case CstDBClassif.Vehicles.names.internationalPress:
+                    case CstDBClassif.Vehicles.names.outdoor:
+                        this._cssL4 = _cssCellInfo;
+                        this._highlightBackgroundColorL4 = string.Empty;
+                        break;
+                    default:
+                        break;
+                }
+            }
 
 			if(data != null)
                 data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
@@ -397,6 +454,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             js.Append("\r\n\t obj.Zoom = '" + this._zoom + "';");
             js.Append("\r\n\t obj.Filters = '" + this._idsFilter + "';");
             js.Append("\r\n\t obj.IdModule = '" + this._idModule + "';");
+            js.Append("\r\n\t obj.CssInfo = '" + this._cssCellInfo + "';");
             js.Append("\r\n\t}");
             return (js.ToString());
         }
@@ -427,6 +485,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 if (o.Contains("Filters"))
                 {
                     this._idsFilter = o["Filters"].Value.Replace("\"", "");
+                }
+                if (o.Contains("CssInfo"))
+                {
+                    this._cssCellInfo = o["CssInfo"].Value.Replace("\"", "");
                 }
                 if (o.Contains("IdModule"))
                 {

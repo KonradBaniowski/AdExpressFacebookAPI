@@ -250,7 +250,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 							case "dbOrderConstraint" :								
 								if(genericColumnItemInformation!=null){	
 									if ((reader.GetAttribute("dbTablePrefixe")!=null && reader.GetAttribute("dbTablePrefixe").Length>0))
-										dbTableConstraint=reader.GetAttribute("dbTablePrefixe")+".";										
+                                        dbOrderConstraint=dbTableConstraint = reader.GetAttribute("dbTablePrefixe") + ".";										
 									if ((reader.GetAttribute("dbField")!=null && reader.GetAttribute("dbField").Length>0)) {
 										if(dbOrderConstraintList==null) dbOrderConstraintList = new ArrayList();
 										dbOrderConstraint+=reader.GetAttribute("dbField");										

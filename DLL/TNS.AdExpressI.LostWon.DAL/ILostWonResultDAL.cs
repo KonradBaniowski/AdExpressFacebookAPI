@@ -22,7 +22,7 @@ namespace TNS.AdExpressI.LostWon.DAL
     /// </summary>
     public interface ILostWonResultDAL
     {
-        DataSet GetData();
+        DataTable GetData();
         DataTable GetSynthesisData();
         DataSet GetMediaDetails();
 		DataSet GetNbParutionData();

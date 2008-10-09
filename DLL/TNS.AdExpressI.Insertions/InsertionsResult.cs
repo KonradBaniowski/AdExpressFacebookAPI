@@ -5,9 +5,11 @@ using System.Text;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
+using CstDB = TNS.AdExpress.Constantes.DB;
 
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
 using System.Windows.Forms;
@@ -20,6 +22,7 @@ using System.Collections;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.Insertions.Cells;
+using TNS.AdExpress.Web.Core.Utilities;
 
 
 namespace TNS.AdExpressI.Insertions
@@ -52,10 +55,10 @@ namespace TNS.AdExpressI.Insertions
         {
             _session = session;
             _module = ModulesList.GetModule(moduleId);
-            object[] param = new object[1];
+            object[] param = new object[2];
             param[0] = session;
             param[1] = moduleId;
-            _dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.DAL.Default", "TNS.AdExpressI.Insertions.Default.DAL.InsertionsDAL", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
+            _dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.DAL.Default.dll", "TNS.AdExpressI.Insertions.DAL.Default.InsertionsDAL", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
         }
         #endregion
 
@@ -105,7 +108,13 @@ namespace TNS.AdExpressI.Insertions
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
 
             }
-
+            for (int i = vehicles.Count-1; i >= 0; i-- )
+            {
+                if (!_module.AllowedMediaUniverse.GetVehicles().Contains(vehicles[i].DatabaseId))
+                {
+                    vehicles.Remove(vehicles[i]);
+                }
+            }
             return _dalLayer.GetPresentVehicles(vehicles, filters, iDateBegin, iDateEnd, universId, _module);
 
         }
@@ -134,7 +143,10 @@ namespace TNS.AdExpressI.Insertions
                 vIds = _dalLayer.GetVehiclesIds(filters);
                 foreach (Int64 id in vIds)
                 {
-                    vehicles.Add(VehiclesInformation.Get(id));
+                    if (VehiclesInformation.Contains(id))
+                    {
+                        vehicles.Add(VehiclesInformation.Get(id));
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -205,14 +217,15 @@ namespace TNS.AdExpressI.Insertions
             Int64[] cKeyIds = new Int64[keys.Count];
 
             string label = string.Empty;
-            bool isNewInsertion = true;
             Int64 cLine = 0;
+            bool isNewInsertion = false;
 
             foreach (DataRow row in dt.Rows) {
 
+                isNewInsertion = false;
                 //Detail levels
                 for (int i = 0; i < oldIds.Length; i++) {
-                    cIds[i] = Convert.ToInt64(row[levels[i].DataBaseAliasIdField]);
+                    cIds[i] = Convert.ToInt64(row[levels[i].DataBaseIdField]);
                     if (cIds[i] != oldIds[i]) {
                         oldIds[i] = cIds[i];                        
                         if (i < oldIds.Length - 1) {
@@ -222,7 +235,20 @@ namespace TNS.AdExpressI.Insertions
 
                         //Set current level
                         cLine = data.AddNewLine(lineTypes[i]);
-                        data[cLine, 1] = new AdExpressCellLevel(cIds[i], row[keyLabelName[i]].ToString(), null, i + 1, cLine, _session, _session.DetailLevel);
+                        switch (levels[i].Id)
+                        {
+                            case DetailLevelItemInformation.Levels.date:
+                                data[cLine, 1] = new CellDate(Dates.getPeriodBeginningDate(row[levels[i].DataBaseField].ToString(), CstWeb.CustomerSessions.Period.Type.dateToDate), "{0:d}");
+                                break;
+                            case DetailLevelItemInformation.Levels.duration:
+                                data[cLine, 1] = new CellDuration(Convert.ToDouble(row[levels[i].DataBaseField]));
+                                ((CellUnit)data[cLine, 1]).StringFormat = string.Format("{{0:{0}}}", WebApplicationParameters.GenericColumnItemsInformation.Get(GenericColumnItemInformation.Columns.duration.GetHashCode()).StringFormat);
+                                break;
+                            default:
+                                data[cLine, 1] = new CellLabel(row[levels[i].DataBaseField].ToString());
+                                break;
+
+                        }
 
                         for (int j = 2; j <= data.DataColumnsNumber; j++) {
                             data[cLine, j] = new CellEmpty();
@@ -239,12 +265,17 @@ namespace TNS.AdExpressI.Insertions
                         if (i < oldKeyIds.Length - 1) {
                             oldKeyIds[i + 1] = -1;
                         }
-                        cLine = data.AddNewLine(lineTypes[levels.Count]);
+                        isNewInsertion = true;
                     }
                 }
 
+                if (isNewInsertion)
+                {
+                    cLine = data.AddNewLine(lineTypes[3]);
+                }
 
-                setLine(data, row, cLine, columns, columnsName, cells);
+
+                setLine(vehicle, data, row, cLine, columns, columnsName, cells);
 
             }
 
@@ -253,8 +284,8 @@ namespace TNS.AdExpressI.Insertions
             return data;
         }
 
-        protected delegate void SetLine(ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells);
-        protected void SetRawLine(ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells)
+        protected delegate void SetLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells);
+        protected void SetRawLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells)
         {
             int i = -1;
             int j = 0;
@@ -271,28 +302,55 @@ namespace TNS.AdExpressI.Insertions
                     }
                 }
                 else {
-                    if (tab[cLine, j] == null) {
-                        tab[cLine, j] = new CellLabel(row[columnsName[i]].ToString());
-                    }
-                    else {
-                        ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}",((CellLabel)tab[cLine, j]).Label, row[columnsName[i]].ToString());
+                    switch (columns[i].Id)
+                    {
+                        case GenericColumnItemInformation.Columns.associatedFile:
+                            switch (vehicle.Id)
+                            {
+                                case CstDBClassif.Vehicles.names.others:
+                                case CstDBClassif.Vehicles.names.tv:
+                                    tab[cLine, j] = new CellTvCreativeLink(Convert.ToInt64(row[columnsName[i]]), _session, (int)vehicle.DatabaseId);
+                                    break;
+                                case CstDBClassif.Vehicles.names.radio:
+                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(), _session);
+                                    break;
+                            }
+                            break;
+                        default:
+                            if (tab[cLine, j] == null)
+                            {
+                                tab[cLine, j] = new CellLabel(row[columnsName[i]].ToString());
+                            }
+                            else
+                            {
+                                ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, j]).Label, row[columnsName[i]].ToString());
+                            }
+                            break;
                     }
                 }
 
             }
         }
-        protected void SetAggregLine(ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells) {
+        protected void SetAggregLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells) {
+
             CellInsertionInformation c;
+            List<string> visuals = new List<string>();
             if (tab[cLine, 1] == null) {
-                tab[cLine, 1] = c = new CellInsertionInformation(columns, columnsName, cells);
+                tab[cLine, 1] = c = new CellInsertionInformation(_session, columns, columnsName, cells);
             }
             else {
                 c = (CellInsertionInformation)tab[cLine, 1];
             }
-            c.Add(row);
+            foreach (GenericColumnItemInformation g in columns)
+            {
+                if (g.Id == GenericColumnItemInformation.Columns.visual)
+                {
+                    visuals = GetPath(vehicle, row, columns, columnsName);
+                }
+            }
+            c.Add(row, visuals);
 
         }
-        #endregion
 
         #region GetLineNumber
         /// <summary>
@@ -313,12 +371,12 @@ namespace TNS.AdExpressI.Insertions
             Int64[] oldKeyIds = new Int64[keys.Count];
             for (int i = 0; i < oldKeyIds.Length; i++) { oldKeyIds[i] = -1; }
             Int64[] cKeyIds = new Int64[keys.Count];
-
+            bool isNewInsertion = false;
             foreach (DataRow row in dt.Rows) {
-
+                isNewInsertion = false;
                 //Detail levels
                 for (int i = 0; i < oldIds.Length; i++) {
-                    cIds[i] = Convert.ToInt64(row[levels[i].DataBaseAliasIdField]);
+                    cIds[i] = Convert.ToInt64(row[levels[i].DataBaseIdField]);
                     if (cIds[i] != oldIds[i]) {
                         oldIds[i] = cIds[i];
                         nbLine++;
@@ -334,11 +392,16 @@ namespace TNS.AdExpressI.Insertions
                     cKeyIds[i] = Convert.ToInt64(row[keys[i]]);
                     if (cKeyIds[i] != oldKeyIds[i]) {
                         oldKeyIds[i] = cKeyIds[i];
-                        nbLine++;
+                        isNewInsertion = true;
                         if (i < oldKeyIds.Length - 1) {
                             oldKeyIds[i + 1] = -1;
                         }
                     }
+                }
+
+                if (isNewInsertion)
+                {
+                    nbLine++;
                 }
 
 
@@ -374,6 +437,7 @@ namespace TNS.AdExpressI.Insertions
                     names.Add(name);
 
                 switch (g.CellType) {
+                    case "":
                     case "TNS.FrameWork.WebResultUI.CellLabel":
                         cells.Add(new CellLabel(string.Empty));
                         break;
@@ -381,7 +445,7 @@ namespace TNS.AdExpressI.Insertions
                         
                         Type type = assembly.GetType(g.CellType);
                         Cell cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
-                        cellUnit.StringFormat = g.StringFormat;
+                        cellUnit.StringFormat = string.Format("{{0:{0}}}",g.StringFormat);
                         cells.Add(cellUnit);
                         break;
                 }
@@ -491,6 +555,73 @@ namespace TNS.AdExpressI.Insertions
             }
 
             return cells;
+        }
+        #endregion
+
+        #endregion
+
+        #region Creatives Rules
+        protected List<string> GetPath(VehicleInformation vehicle, DataRow row, List<GenericColumnItemInformation> columns, List<string> columnNames)
+        {
+            string path = string.Empty;
+            List<string> visuals = new List<string>();
+
+            switch (vehicle.Id)
+            {
+                case CstDBClassif.Vehicles.names.press:
+                case CstDBClassif.Vehicles.names.internationalPress:
+
+                    if ((vehicle.Id==CstDBClassif.Vehicles.names.internationalPress && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG))
+                        || (vehicle.Id==CstDBClassif.Vehicles.names.press && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
+                        )
+                    {
+                        break;
+                    }
+
+                    Int64 disponibility = -1;
+                    Int64 activation = -1;
+                    Int64 idMedia = -1;
+                    Int64 dateCoverNum = -1;
+
+                    if (row.Table.Columns.Contains("disponibility_visual") && row["disponibility_visual"] != System.DBNull.Value){
+                        disponibility = Convert.ToInt64(row["disponibility_visual"]);
+                    }
+                    if (row.Table.Columns.Contains("activation") && row["activation"] != System.DBNull.Value){
+                        activation = Convert.ToInt64(row["activation"]);
+                    }
+                    if (row.Table.Columns.Contains("id_media") && row["id_media"] != System.DBNull.Value){
+                        idMedia = Convert.ToInt64(row["id_media"]);
+                    }
+                    if (row.Table.Columns.Contains("date_cover_num") && row["date_cover_num"] != System.DBNull.Value){
+                        dateCoverNum = Convert.ToInt64(row["date_cover_num"]);
+                    }
+                    if (disponibility <= 10 && activation <= 100 && idMedia > 0 && dateCoverNum > 0)
+                    {
+                        //visuel(s) disponible(s)
+                        string[] files = row["visual"].ToString().Split(',');
+                        for (int fileIndex = 0; fileIndex < files.Length; fileIndex++)
+                        {
+                            if (files[fileIndex].Length > 0)
+                            {
+                                visuals.Add(this.GetCreativePathPress(files[fileIndex], idMedia, dateCoverNum, false));
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return visuals;
+
+        }
+
+        protected string GetCreativePathPress(string file, Int64 idMedia, Int64 dateCoverNum, bool bigSize)
+        {
+            string imagette = (bigSize)?string.Empty:"/Imagette";
+
+            return string.Format("{0}/{1}/{2}{3}/{4}", CstWeb.CreationServerPathes.IMAGES, idMedia, dateCoverNum, imagette, file);
+
         }
         #endregion
     }

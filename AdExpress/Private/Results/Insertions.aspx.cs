@@ -15,6 +15,7 @@ using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using DBClassifCst = TNS.AdExpress.Constantes.Classification;
+using System.Text;
 
 namespace Private.Results {
 
@@ -83,6 +84,7 @@ namespace Private.Results {
         protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 
             System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+            string setParameters = string.Empty;
 
             try {
                 //Paramètres postés
@@ -94,9 +96,35 @@ namespace Private.Results {
                 idVehicle = Page.Request.QueryString.Get("vehicleId");
                 string page = Page.Request.QueryString.Get("page");
 
+                #region Parameters
+                if (Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0)
+                {
+                    zoomDate = Page.Request.Form.GetValues("zoomParam")[0];
+                }
+                zoomParam.Value = zoomDate;
+                if (Page.Request.Form.GetValues("vehicleParam") != null && Page.Request.Form.GetValues("vehicleParam")[0].Length > 0)
+                {
+                    idVehicle = Page.Request.Form.GetValues("vehicleParam")[0];
+                }
+                vehicleParam.Value = idVehicle;
+
+                StringBuilder js = new StringBuilder();
+                js.Append("\r\n<script type=\"text/javascript\">");
+                js.Append("\r\nfunction SetParameters(){");
+                js.Append("\r\n\t\tdocument.getElementById(\"zoomParam\").value = resultParameters.Zoom;");
+                js.Append("\r\n\t\tdocument.getElementById(\"vehicleParam\").value = resultParameters.IdVehicle;");
+                js.Append("\r\n\t\t__doPostBack('', '');");
+                js.Append("\r\n}");
+                js.Append("\r\n</script>");
+                setParameters = js.ToString();
+                if (!this.ClientScript.IsClientScriptBlockRegistered("SetParameters")) this.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetParameters", setParameters);
+                #endregion
+
+
+
                 //session
                 this.InsertionsWebControl1.WebSession = _webSession;
-
+                this.InsertionsWebControl1.JavaScriptRefresh = "SetParameters";
                 //Period
                 this.InsertionsWebControl1.ZoomDate = (zoomDate != null) ? zoomDate : string.Empty;
                 //Selection Ids

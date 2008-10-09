@@ -52,6 +52,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// Rappel de la sélection
 		/// </summary>
 		TNS.AdExpress.Web.Controls.Selections.DetailSelectionWebControl detailSelectionWebControl=null;
+        /// <summary>
+        /// Specify if the ajax scripts have been rendered;
+        /// </summary>
+        protected bool _ajaxRendered = false;
 		#endregion
 			
 		#region Propriétés
@@ -624,6 +628,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// </summary>
 		/// <returns>Code Javascript</returns>
 		protected  string AjaxEventScript(){
+            if (_ajaxRendered)
+            {
+                return string.Empty;
+            }
 			StringBuilder js=new StringBuilder(3000);
             string themeName = WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
             //Enregistrement des styles
@@ -1056,45 +1064,6 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			
 			#endregion
 
-			#region fonction Styles CSS
-            //js.Append("\r\n\nfunction SetCssStyles(obj){");
-            //js.Append("\r\n\t obj.CssDetailSelectionL1 = '"+CssDetailSelectionL1+"';");
-            //js.Append("\r\n\t obj.CssDetailSelectionL2 = '"+CssDetailSelectionL2+"';");
-            //js.Append("\r\n\t obj.CssDetailSelectionL3 = '"+CssDetailSelectionL3+"';");
-            //js.Append("\r\n\t obj.CssDetailSelectionTitleGlobal = '"+CssDetailSelectionTitleGlobal+"';");
-            //js.Append("\r\n\t obj.CssDetailSelectionTitle = '"+CssDetailSelectionTitle+"';");
-            //js.Append("\r\n\t obj.CssDetailSelectionTitleData = '"+CssDetailSelectionTitleData+"';");
-            //js.Append("\r\n\t obj.CssDetailSelectionBordelLevel = '"+CssDetailSelectionBordelLevel+"';");
-            //js.Append("\r\n\t obj.CssLHeader = '"+CssLHeader+"';");
-            //js.Append("\r\n\t obj.CssL1 = '"+CssL1+"';");
-            //js.Append("\r\n\t obj.BackgroudColorL1 = '"+BackgroudColorL1+"';");		
-            //js.Append("\r\n\t obj.HighlightBackgroundColorL1 = '"+HighlightBackgroundColorL1+"';");
-            //js.Append("\r\n\t obj.HtmlCodeL1 = '"+_htmlCodeL1+"';");
-            //js.Append("\r\n\t obj.CssL2 = '"+CssL2+"';");
-            //js.Append("\r\n\t obj.BackgroudColorL2 = '"+BackgroudColorL2+"';");
-            //js.Append("\r\n\t obj.HighlightBackgroundColorL2 = '"+HighlightBackgroundColorL2+"';");
-            //js.Append("\r\n\t obj.HtmlCodeL2 = '"+_htmlCodeL2+"';");
-            //js.Append("\r\n\t obj.CssL3 = '"+CssL3+"';");
-            //js.Append("\r\n\t obj.BackgroudColorL3 = '"+BackgroudColorL3+"';");
-            //js.Append("\r\n\t obj.HighlightBackgroundColorL3 = '"+HighlightBackgroundColorL3+"';");
-            //js.Append("\r\n\t obj.HtmlCodeL3 = '"+_htmlCodeL3+"';");
-            //js.Append("\r\n\t obj.CssL4 = '"+CssL4+"';");
-            //js.Append("\r\n\t obj.BackgroudColorL4 = '"+BackgroudColorL4+"';");
-            //js.Append("\r\n\t obj.HighlightBackgroundColorL4 = '"+HighlightBackgroundColorL4+"';");
-            //js.Append("\r\n\t obj.HtmlCodeL4 = '"+_htmlCodeL4+"';");
-            //js.Append("\r\n\t obj.CssLTotal = '"+CssLTotal+"';");
-            //js.Append("\r\n\t obj.ImgBtnCroiOverPath = '"+this.ImgBtnCroiOverPath+"';");
-            //js.Append("\r\n\t obj.ImgBtnCroiPath = '"+this.ImgBtnCroiPath+"';");
-            //js.Append("\r\n\t obj.ImgBtnDeCroiOverPath = '"+this.ImgBtnDeCroiOverPath+"';");
-            //js.Append("\r\n\t obj.ImgBtnDeCroiPath = '"+this.ImgBtnDeCroiPath+"';");
-            //js.Append("\r\n\t obj.Id = '"+this.ID+"';");
-            //js.Append("\r\n\t obj.Sort = '"+this._sortOrder.GetHashCode()+"';");
-            //js.Append("\r\n\t obj.Key = '"+this._sSortKey+"';");
-            //js.Append("\r\n\t obj.CssTitle = '"+this._cssTitle+"';");
-            //js.Append("\r\n\t obj.IdTitleText = '"+this._idTitleText+"';");
-            //js.Append("\r\n }");
-			#endregion
-
 			#region Sorting
 			js.Append("\r\n function sort_"+this.ID+"(id,params){");
 			js.Append("\r\n var tab1 = params.split(\",\");");
@@ -1154,6 +1123,9 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			#endregion
 
 			js.Append("\r\n-->\r\n</SCRIPT>");
+
+            _ajaxRendered = true;
+
 			return(js.ToString());
 		}
 		#endregion
@@ -1598,11 +1570,11 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				
 			try {
                 this.LoadResultParameters(resultParameters);
+                this.LoadStyleParameters(styleParameters);
 				_customerWebSession=(WebSession)WebSession.Load(idSession);
 				_data = GetResultTable(_customerWebSession);
 				if (_data != null){
 					StringBuilder output=new StringBuilder(10000);
-                    this.LoadStyleParameters(styleParameters);
                     this.LoadSortParameters(sortParameters);
 					this.InitCss();
 					long nbLineToSchow = 0;
@@ -2040,7 +2012,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 						for (j = 1; j < _data.ColumnsNumber-1; j++) {
 					
 							if(j==_data.LevelColumn) {
-								try {	                            
+								try {	    
 									temp+=_data[i,j].Render();
 								}
 								catch(System.Exception) {
@@ -2131,7 +2103,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		protected string GetLoadingHTML(){
             string themeName = WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
 
-            return ("<div align=\"center\" id=\"res_" + this.ID + "\"><img src=\"/App_Themes/" + themeName + "/Images/Common/waitAjax.gif\"></div>");
+            return ("<div width=\"100%\" align=\"center\" id=\"res_" + this.ID + "\"><img src=\"/App_Themes/" + themeName + "/Images/Common/waitAjax.gif\"></div>");
 			
 		}
 
@@ -2171,7 +2143,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// <param name="code">Code message</param>
 		/// <returns>Message d'erreur</returns>
 		protected string GetMessageError(WebSession customerSession, int code){
-			string errorMessage="<div align=\"center\" class=\"txtViolet11Bold\">";
+            string errorMessage = "<div align=\"center\" class=\"txtViolet11Bold\" style=\"WIDTH: 400px; POSITION: relative;\">";
 			if(customerSession!=null)
 				errorMessage += GestionWeb.GetWebWord(code,customerSession.SiteLanguage)+". "+GestionWeb.GetWebWord(2099,customerSession.SiteLanguage);			
 			else

@@ -459,16 +459,10 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 //Univers filter
                 universFilter = GetUniversFilter(type, dateField, customerPeriod);
                 // Unités
-                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb && type == CstDB.TableType.Type.webPlan)
                 {
-                    UnitInformation u = _session.GetSelectedUnit();
-                    if (type != CstDB.TableType.Type.webPlan) {
-                        unitFieldNameSumWithAlias = string.Format("{0}.stragg({2}) as {1}", schAdEx.Label, u.Id.ToString(), u.DatabaseField);
-                    }
-                    else {
-                        unitFieldNameSumWithAlias = string.Format("{0}.stragg(t2.COLUMN_VALUE) as {1}", schAdEx.Label, u.Id.ToString());
-                        fromOptional = string.Format(", table({0}.{1}) t2", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, u.DatabaseMultimediaField);
-                    }
+                    unitFieldNameSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type,"t2");
+                    fromOptional = string.Format(", table({0}.{1}) t2", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField);
                 }
                 else
                 {
@@ -500,12 +494,11 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             try {
                 if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
                 {
-                    sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2} {3}, {4} as date_num, {5}"
+                    sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2} {3}, {5}"
                         , WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix
                         , columnDetailLevel
                         , productFieldName
                         , dataFieldsForGad
-                        , dateField
                         , unitFieldNameSumWithAlias
                     );
                 }
@@ -540,12 +533,11 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
                 // Group by
                 if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
-                    sql.AppendFormat(" group by {0}.id_media, {1}, {2}{3}, {4}{5}",
+                    sql.AppendFormat(" group by {0}.id_media, {1}, {2}{3}, {5}",
                         WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
                         columnDetailLevel,
                         groupByFieldName,
                         dataFieldsForGad,
-                        dateField,
                         groupByOptional
                     );
                 else
@@ -636,7 +628,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
         /// </summary>
         /// 
         /// <returns>Present/Absent report data</returns>
-        public DataSet GetData() {
+        public DataTable GetData() {
 
             #region Constantes
             string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
@@ -650,6 +642,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             string groupByFieldNameWithoutTablePrefix = string.Empty;
             string groupByOptional = string.Empty;
             string orderFieldName = string.Empty, orderFieldNameWithoutTablePrefix = string.Empty;
+            string orderClause = string.Empty;
             string productFieldNameWithoutTablePrefix = string.Empty, unitField = string.Empty, dataFieldsForGadWithoutTablePrefix = string.Empty;
             CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
@@ -662,16 +655,20 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 groupByFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
                 if (customerPeriod.Is4M) {
                     sql4M.Append(GetRequest(CstDB.TableType.Type.dataVehicle4M));
-                    sql4M.AppendFormat(" order by {0}, {1}.id_media",
-                        orderFieldName,
-                        DATA_TABLE_PREFIXE);
+                    orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
+                    if (_vehicleInformation.Id != CstDBClassif.Vehicles.names.adnettrack || _session.Unit != CstWeb.CustomerSessions.Unit.versionNb)
+                    {
+                        sql4M.Append(orderClause);
+                    }
                     sql = sql4M;
                 }
                 else if (!customerPeriod.IsDataVehicle && !customerPeriod.IsWebPlan) {
                     sql.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
-                    sql.AppendFormat(" order by {0}, {1}.id_media",
-                        orderFieldName,
-                        DATA_TABLE_PREFIXE);
+                    orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
+                    if (_vehicleInformation.Id != CstDBClassif.Vehicles.names.adnettrack || _session.Unit != CstWeb.CustomerSessions.Unit.versionNb)
+                    {
+                        sql.Append(orderClause);
+                    }
                 }
                 else {
 
@@ -693,16 +690,10 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                         sql.AppendFormat(" select id_media, columnDetailLevel, {0}{1}",
                             productFieldNameWithoutTablePrefix,
                             dataFieldsForGadWithoutTablePrefix);
-                        if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb){
-                            sql.AppendFormat(", {0}", FctWeb.SQLGenerator.GetUnitAlias(_session));
-                            groupByOptional = string.Format(", {0}", FctWeb.SQLGenerator.GetUnitAlias(_session));
-                        }
-                        else{
-                            sql.AppendFormat(", {0}", FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
-                        }
+                        sql.AppendFormat(", {0}", FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
                         sql.Append(" from (");
                         sql.Append(sqlDataVehicle);
-                        sql.Append(" UNION ");
+                        sql.Append(" UNION ALL");
                         sql.Append(sqlWebPlan);
                         sql.Append(" ) ");
                         sql.AppendFormat(" group by id_media, columnDetailLevel, {0}{1} {2}",
@@ -710,8 +701,11 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                             dataFieldsForGadWithoutTablePrefix,
                             groupByOptional);
                     }
-
-                    sql.AppendFormat(" order by {0}, id_media ", orderFieldNameWithoutTablePrefix);
+                    orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
+                    if (_vehicleInformation.Id != CstDBClassif.Vehicles.names.adnettrack || _session.Unit != CstWeb.CustomerSessions.Unit.versionNb)
+                    {
+                        sql.Append(orderClause);
+                    }
                 }
             }
             catch (System.Exception err) {
@@ -721,10 +715,23 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 
             #region Execution de la requête
             try {
-                return _session.Source.Fill(sql.ToString());
+                DataSet ds = _session.Source.Fill(sql.ToString());
+                if (ds == null || ds.Tables[0] == null || ds.Tables[0].Rows.Count <= 0)
+                    return null;
+                DataTable dt = ds.Tables[0];
+                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                {
+
+                    dt.Locale = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+                    DataView v = dt.DefaultView;
+                    v.Sort = string.Format("{0} ASC", orderClause.Replace(" order by ", string.Empty).Replace("wp.", string.Empty).Replace(",", " ASC ,"));
+                    dt = v.ToTable();
+                }
+                return dt;
+
             }
             catch (System.Exception err) {
-                throw (new PresentAbsentDALException("Unable to lad data for present/absent report : " + sql, err));
+                throw (new PresentAbsentDALException("Unable to load data for present/absent report : " + sql, err));
             }
 
             #endregion

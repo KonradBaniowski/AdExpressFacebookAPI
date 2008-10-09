@@ -22,7 +22,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
     /// </summary>
     public interface IPresentAbsentResultDAL
     {
-        DataSet GetData();
+        DataTable GetData();
         DataTable GetSynthesisData();
         DataSet GetColumnDetails();
         DataSet GetMediaDetails();

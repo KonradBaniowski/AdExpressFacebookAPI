@@ -38,7 +38,7 @@ namespace TNS.AdExpressI.LostWon.DAL
     /// <summary>
     /// Dynamic Report DAL
     /// </summary>
-    public abstract class LostWonResultDAL:ILostWonResultDAL
+    public abstract class LostWonResultDAL : ILostWonResultDAL
     {
 
         #region Variables
@@ -95,7 +95,7 @@ namespace TNS.AdExpressI.LostWon.DAL
         /// Get Data to build dynamic report (except summary)
         /// </summary>
         /// <returns>Dynamic Report Data</returns>
-        public DataSet GetData()
+        public DataTable GetData()
         {
             #region Constantes
             string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
@@ -119,35 +119,42 @@ namespace TNS.AdExpressI.LostWon.DAL
             #endregion
 
             #region Construction de la requête
-            try {
+            try
+            {
                 orderFieldName = _session.GenericProductDetailLevel.GetSqlOrderFields();
                 orderFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlOrderFieldsWithoutTablePrefix();
                 groupByFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
 
-                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb) {
+                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                {
                     unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
                     groupByOptional = string.Format(", {0}", FctWeb.SQLGenerator.GetUnitAlias(_session));
                 }
-                else {
+                else
+                {
                     unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session);
                 }
 
-                if (customerPeriod.Is4M) {
+                if (customerPeriod.Is4M)
+                {
                     sql4M.Append(GetRequest(CstDB.TableType.Type.dataVehicle4M));
 
-                    if (customerPeriod.IsDataVehicle) {
+                    if (customerPeriod.IsDataVehicle)
+                    {
                         sqlDataVehicle.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
                         sqlTemp = sqlDataVehicle;
                     }
 
-                    if (customerPeriod.IsWebPlan) {
+                    if (customerPeriod.IsWebPlan)
+                    {
                         sqlWebPlan.Append(GetRequest(CstDB.TableType.Type.webPlan));
                         sqlTemp = sqlWebPlan;
                     }
 
-                    if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
+                    if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
+                    {
                         sqlTemp = new StringBuilder();
-                        sqlTemp.AppendFormat("{0} UNION {1}",sqlDataVehicle, sqlWebPlan);
+                        sqlTemp.AppendFormat("{0} UNION {1}", sqlDataVehicle, sqlWebPlan);
                     }
 
                     productFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
@@ -169,27 +176,32 @@ namespace TNS.AdExpressI.LostWon.DAL
                         , dataFieldsForGadWithoutTablePrefix
                         , groupByOptional);
                     sql.AppendFormat(" order by {0}, id_media, date_num ", orderFieldNameWithoutTablePrefix);
- 
+
                 }
-                else if (!customerPeriod.IsDataVehicle && !customerPeriod.IsWebPlan) {
+                else if (!customerPeriod.IsDataVehicle && !customerPeriod.IsWebPlan)
+                {
                     sql.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
                     sql.AppendFormat(" order by {0}, {1}.id_media, date_num  "
                         , orderFieldName
-                        ,DATA_TABLE_PREFIXE);
+                        , DATA_TABLE_PREFIXE);
                 }
-                else {
+                else
+                {
 
-                    if (customerPeriod.IsDataVehicle) {
+                    if (customerPeriod.IsDataVehicle)
+                    {
                         sqlDataVehicle.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
                         sql = sqlDataVehicle;
                     }
 
-                    if (customerPeriod.IsWebPlan) {
+                    if (customerPeriod.IsWebPlan)
+                    {
                         sqlWebPlan.Append(GetRequest(CstDB.TableType.Type.webPlan));
                         sql = sqlWebPlan;
                     }
 
-                    if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
+                    if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
+                    {
                         productFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
                         if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
                             dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
@@ -211,20 +223,26 @@ namespace TNS.AdExpressI.LostWon.DAL
 
                     sql.AppendFormat(" order by {0}, id_media, date_num "
                         , orderFieldNameWithoutTablePrefix);
-                
+
                 }
 
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new DynamicDALException("Error while building request for dynamic report : " + sql, err));
             }
             #endregion
 
             #region Execution de la requête
-            try {
-                return _session.Source.Fill(sql.ToString());
+            try
+            {
+                DataSet ds = _session.Source.Fill(sql.ToString());
+                if (ds == null || ds.Tables[0] == null || ds.Tables[0].Rows.Count <= 0)
+                    return null;
+                return ds.Tables[0];
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new DynamicDALException("Unable to load data for dynamic report : " + sql, err));
             }
 
@@ -265,11 +283,13 @@ namespace TNS.AdExpressI.LostWon.DAL
                 orderFieldName = _session.GenericProductDetailLevel.GetSqlOrderFields();
                 orderFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlOrderFieldsWithoutTablePrefix();
                 groupByFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
-                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb) {
+                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                {
                     unitFieldSumUnionWithAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
                     groupByOptional = string.Format(", {0}", FctWeb.SQLGenerator.GetUnitAlias(_session));
                 }
-                else {
+                else
+                {
                     unitFieldSumUnionWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session);
                 }
 
@@ -299,12 +319,12 @@ namespace TNS.AdExpressI.LostWon.DAL
 
                     sql = new StringBuilder();
                     sql.Append("  select id_sector, id_subsector, id_group_, id_advertiser, id_brand");
-					if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
-                   if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
-					   sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
-				   if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
-					   sql.Append(", ID_ADVERTISING_AGENCY");
-					sql.AppendFormat(", date_num, {0}", unitFieldSumUnionWithAlias);
+                    if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                        sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                        sql.Append(", ID_ADVERTISING_AGENCY");
+                    sql.AppendFormat(", date_num, {0}", unitFieldSumUnionWithAlias);
                     sql.Append(" from (");
                     sql.Append(sql4M);
                     sql.Append(" UNION ");
@@ -312,32 +332,32 @@ namespace TNS.AdExpressI.LostWon.DAL
                     sql.Append(" ) ");
 
                     sql.Append("  group by id_sector, id_subsector, id_group_, id_advertiser, id_brand ");
-					if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
-					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
-					sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
-					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
-					sql.Append(", ID_ADVERTISING_AGENCY");
-					sql.Append(", date_num");
-					sql.Append(groupByOptional);
+                    if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                        sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                        sql.Append(", ID_ADVERTISING_AGENCY");
+                    sql.Append(", date_num");
+                    sql.Append(groupByOptional);
                     sql.Append("  order by  id_sector, id_subsector,  id_group_, id_advertiser, id_brand ");
-					if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
-					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
-						sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
-					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
-						sql.Append(", ID_ADVERTISING_AGENCY");
-					sql.Append(", date_num");
+                    if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                        sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                        sql.Append(", ID_ADVERTISING_AGENCY");
+                    sql.Append(", date_num");
                 }
                 else if (!customerPeriod.IsDataVehicle && !customerPeriod.IsWebPlan)
                 {
                     sql.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
                     sql.AppendFormat("  order by {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
                     sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand ", DATA_TABLE_PREFIXE);
-					if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
-						sql.AppendFormat(", {0}.id_product", DATA_TABLE_PREFIXE);
-					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
-					sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
-					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
-						sql.AppendFormat(",{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+                    if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        sql.AppendFormat(", {0}.id_product", DATA_TABLE_PREFIXE);
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                        sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                        sql.AppendFormat(",{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
                     sql.Append(", date_num");
                 }
                 else
@@ -359,36 +379,36 @@ namespace TNS.AdExpressI.LostWon.DAL
                     {
                         sql = new StringBuilder();
                         sql.Append("  select id_sector, id_subsector, id_group_, id_advertiser, id_brand ");
-						if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
-						if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
-							sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
-						if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
-							sql.Append(", ID_ADVERTISING_AGENCY");
-						sql.AppendFormat(", date_num, {0}", unitFieldSumUnionWithAlias);
-						sql.Append(" from (");
+                        if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
+                        if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                            sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+                        if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                            sql.Append(", ID_ADVERTISING_AGENCY");
+                        sql.AppendFormat(", date_num, {0}", unitFieldSumUnionWithAlias);
+                        sql.Append(" from (");
                         sql.Append(sqlDataVehicle);
                         sql.Append(" UNION ");
                         sql.Append(sqlWebPlan);
                         sql.Append(" ) ");
                         sql.Append("  group by id_sector, id_subsector, id_group_, id_advertiser, id_brand ");
-						if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
+                        if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
 
-						if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
-							sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
-						if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
-							sql.Append(", ID_ADVERTISING_AGENCY");
-						sql.Append(", date_num");
+                        if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                            sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+                        if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                            sql.Append(", ID_ADVERTISING_AGENCY");
+                        sql.Append(", date_num");
                         sql.Append(groupByOptional);
 
                     }
 
                     sql.Append("  order by  id_sector, id_subsector,  id_group_, id_advertiser, id_brand ");
-					if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
-					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
-						sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
-					if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
-						sql.Append(", ID_ADVERTISING_AGENCY");
-					sql.Append(", date_num");
+                    if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) sql.Append(", id_product");
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                        sql.Append(", ID_GROUP_ADVERTISING_AGENCY");
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                        sql.Append(", ID_ADVERTISING_AGENCY");
+                    sql.Append(", date_num");
 
                 }
 
@@ -440,12 +460,14 @@ namespace TNS.AdExpressI.LostWon.DAL
             if (isCategoryRequired) sql.AppendFormat("{0}.", tblCategory.Prefix);
             sql.AppendFormat("{0} as columnDetailLevel", columnDetailLevel.GetSqlFieldIdWithoutTablePrefix());
             sql.AppendFormat(" from {0}", tblMedia.SqlWithPrefix);
-            if (isCategoryRequired) {
+            if (isCategoryRequired)
+            {
                 sql.AppendFormat(", {0}, {1}", tblBasicMedia.SqlWithPrefix, tblCategory.SqlWithPrefix);
             }
 
             #region Sélection de Médias
-            while (_session.CompetitorUniversMedia[positionUnivers] != null) {
+            while (_session.CompetitorUniversMedia[positionUnivers] != null)
+            {
                 mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
                 positionUnivers++;
             }
@@ -464,10 +486,12 @@ namespace TNS.AdExpressI.LostWon.DAL
             #endregion
 
             #region Execution de la requête
-            try {
+            try
+            {
                 return _session.Source.Fill(sql.ToString());
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new DynamicDALException("Unable to load the list of media for the column details : " + sql.ToString(), err));
             }
             #endregion
@@ -475,58 +499,63 @@ namespace TNS.AdExpressI.LostWon.DAL
         }
         #endregion
 
-		#region GetNbParutionData
-		/// <summary>
-		/// Get Number of parution data
-		/// </summary>
-		/// <returns> Number of parution data</returns>
-		public DataSet GetNbParutionData() {
+        #region GetNbParutionData
+        /// <summary>
+        /// Get Number of parution data
+        /// </summary>
+        /// <returns> Number of parution data</returns>
+        public DataSet GetNbParutionData()
+        {
 
-			StringBuilder sql = new StringBuilder();
-			CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
+            StringBuilder sql = new StringBuilder();
+            CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
 
 
-			#region Construction de la requete
+            #region Construction de la requete
 
-			try {
+            try
+            {
 
-				sql.Append("  select id_media, count(distinct date_num ) as NbParution, yearParution ");
-				sql.Append("  from ( ");
+                sql.Append("  select id_media, count(distinct date_num ) as NbParution, yearParution ");
+                sql.Append("  from ( ");
 
-				//Get sub query for principal period
-				sql.Append( GetNbParutionRequest(customerPeriod.StartDate, customerPeriod.EndDate, 1));
+                //Get sub query for principal period
+                sql.Append(GetNbParutionRequest(customerPeriod.StartDate, customerPeriod.EndDate, 1));
 
-				sql.Append( " union all");
+                sql.Append(" union all");
 
-				//Get sub query for compative period
-				sql.Append( GetNbParutionRequest(customerPeriod.ComparativeStartDate, customerPeriod.ComparativeEndDate, 2));
+                //Get sub query for compative period
+                sql.Append(GetNbParutionRequest(customerPeriod.ComparativeStartDate, customerPeriod.ComparativeEndDate, 2));
 
-				sql.Append("   )  group by id_media, yearParution ");
-				sql.Append("   order by id_media, yearParution");
+                sql.Append("   )  group by id_media, yearParution ");
+                sql.Append("   order by id_media, yearParution");
 
-			}
-			catch (System.Exception err) {
-				throw (new DynamicDALException("Error while building request for dynamic report " + sql, err));
-			}
-			#endregion
+            }
+            catch (System.Exception err)
+            {
+                throw (new DynamicDALException("Error while building request for dynamic report " + sql, err));
+            }
+            #endregion
 
-			#region Execution de la requête
-			try {
-				return _session.Source.Fill(sql.ToString());
-			}
-			catch (System.Exception err) {
-				throw (new DynamicDALException("Error while executing request for dynamic report ", err));
-			}
-			#endregion
-		}
-		#endregion
+            #region Execution de la requête
+            try
+            {
+                return _session.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception err)
+            {
+                throw (new DynamicDALException("Error while executing request for dynamic report ", err));
+            }
+            #endregion
+        }
+        #endregion
 
-		#endregion
+        #endregion
 
-		#region Internal methods
+        #region Internal methods
 
-		#region Get Request
-		/// <summary>
+        #region Get Request
+        /// <summary>
         /// Build requets to load data for dynamic report.
         /// </summary>
         /// <param name="type">Type of table to use</param>
@@ -578,7 +607,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                         dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.alert);
                         break;
                     case CstDB.TableType.Type.dataVehicle:
-                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.analysis);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis);
                         break;
                     case CstDB.TableType.Type.webPlan:
                         //dataTableName = string.Format("{0}.{1} {2}", schAdExpr03.Label, CstDB.Tables.WEB_PLAN_MEDIA_MONTH, DATA_TABLE_PREFIXE);
@@ -613,34 +642,38 @@ namespace TNS.AdExpressI.LostWon.DAL
                 //Univers filter
                 universFilter = GetUniversFilter(type, dateField, customerPeriod);
                 // Unités
-                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb) {
+                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                {
                     UnitInformation u = _session.GetSelectedUnit();
-                    if (type != CstDB.TableType.Type.webPlan) {
+                    if (type != CstDB.TableType.Type.webPlan)
+                    {
                         unitFieldSumWithAlias = string.Format("{0}.stragg({2}) as {1}", schAdExpr03.Label, u.Id.ToString(), u.DatabaseField);
                     }
-                    else {
+                    else
+                    {
                         unitFieldSumWithAlias = string.Format("{0}.stragg(t2.COLUMN_VALUE) as {1}", schAdExpr03.Label, u.Id.ToString());
                         fromOptional = string.Format(", table({0}.{1}) t2", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
                     }
                 }
-                else {
+                else
+                {
                     unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
                 }
 
 
                 //option encarts (pour la presse)
-                if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+                if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                     dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, DATA_TABLE_PREFIXE);
                 if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
                 {
                     try
                     {
-                        dataTableNameForGad = ", " +schAdExpr03.Sql  + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
+                        dataTableNameForGad = ", " + schAdExpr03.Sql + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
                         dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad();
                         dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
                     }
                     catch (SQLGeneratorException) { ;}
-                }				
+                }
             }
             catch (Exception e)
             {
@@ -671,7 +704,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             sql.AppendFormat(" {0}", joinOptional);
 
             //Jointures encart
-            if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+            if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                 sql.AppendFormat(" {0}", dataJointForInsert);
 
 
@@ -699,11 +732,13 @@ namespace TNS.AdExpressI.LostWon.DAL
             #endregion
 
         }
-        protected string GetUniversFilter(CstDB.TableType.Type type, string dateField, CustomerPeriod customerPeriod) {
+        protected string GetUniversFilter(CstDB.TableType.Type type, string dateField, CustomerPeriod customerPeriod)
+        {
             StringBuilder sql = new StringBuilder();
 
             // Period
-            switch (type) {
+            switch (type)
+            {
                 case CstDB.TableType.Type.dataVehicle4M:
                     sql.AppendFormat(" where ({0} >= {1} and {0} <= {2})"
                         , dateField
@@ -712,7 +747,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                     break;
                 case CstDB.TableType.Type.dataVehicle:
                     if ((_session.CustomerPeriodSelected.PeriodDayBegin.Count == 0)
-                        && (_session.CustomerPeriodSelected.ComparativePeriodDayBegin.Count == 0)) {
+                        && (_session.CustomerPeriodSelected.ComparativePeriodDayBegin.Count == 0))
+                    {
                         sql.AppendFormat(" where (({0} >= {1} and {0} <= {2}) or ({0} >= {3} and {0} <= {4}))"
                             , dateField
                             , customerPeriod.StartDate
@@ -720,7 +756,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                             , customerPeriod.ComparativeStartDate
                             , customerPeriod.ComparativeEndDate);
                     }
-                    else {
+                    else
+                    {
                         sql.AppendFormat(" where {0}", GetDayPeriod(dateField, customerPeriod));
                     }
                     break;
@@ -733,7 +770,8 @@ namespace TNS.AdExpressI.LostWon.DAL
             //Medias selection
             int positionUnivers = 1;
             string mediaList = "";
-            while (_session.CompetitorUniversMedia[positionUnivers] != null) {
+            while (_session.CompetitorUniversMedia[positionUnivers] != null)
+            {
                 mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
                 positionUnivers++;
             }
@@ -770,7 +808,8 @@ namespace TNS.AdExpressI.LostWon.DAL
         /// </summary>
         /// <param name="type">Type of table to use</param>
         /// <returns>Code SQL</returns>
-        protected string GetSynthesisRequest(CstDB.TableType.Type type) {
+        protected string GetSynthesisRequest(CstDB.TableType.Type type)
+        {
 
             #region Constantes
             string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
@@ -792,17 +831,18 @@ namespace TNS.AdExpressI.LostWon.DAL
             Table tblWepPlan = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData);
             Schema schAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
 
-			Table tblAdvertisingAgengy = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.advertisingAgency);
-			Table tblGroupAdvertisingAgengy = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupAdvertisingAgency);
+            Table tblAdvertisingAgengy = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.advertisingAgency);
+            Table tblGroupAdvertisingAgengy = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupAdvertisingAgency);
             #endregion
 
             // Table de données
-            switch (type) {
+            switch (type)
+            {
                 case CstDB.TableType.Type.dataVehicle4M:
-                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.alert);
+                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.alert);
                     break;
                 case CstDB.TableType.Type.dataVehicle:
-                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.analysis);
+                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis);
                     break;
                 case CstDB.TableType.Type.webPlan:
                     dataTableName = tblWepPlan.SqlWithPrefix;
@@ -811,7 +851,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                     throw (new DynamicDALException("Unable to determine the type of table to use."));
             }
             // Dates
-            switch (type) {
+            switch (type)
+            {
                 case CstDB.TableType.Type.dataVehicle4M:
                 case CstDB.TableType.Type.dataVehicle:
                     dateField = DATA_TABLE_PREFIXE + "." + CstDB.Fields.DATE_MEDIA_NUM;
@@ -823,73 +864,85 @@ namespace TNS.AdExpressI.LostWon.DAL
             //Univers filter
             universFilter = GetUniversFilter(type, dateField, customerPeriod);
             // Unités
-            if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb) {
+            if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+            {
                 UnitInformation u = _session.GetSelectedUnit();
-                if (type != CstDB.TableType.Type.webPlan) {
+                if (type != CstDB.TableType.Type.webPlan)
+                {
                     unitFieldSumWithAlias = string.Format("{0}.stragg({2}) as {1}", schAdExpr03.Label, u.Id.ToString(), u.DatabaseField);
                 }
-                else {
+                else
+                {
                     unitFieldSumWithAlias = string.Format("{0}.stragg(t2.COLUMN_VALUE) as {1}", schAdExpr03.Label, u.Id.ToString());
                     fromOptional = string.Format(", table({0}.{1}) t2", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
                 }
             }
-            else {
+            else
+            {
                 unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
             }
 
             //option encarts (pour la presse)
-            if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+            if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                 dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, DATA_TABLE_PREFIXE);
 
             sql.AppendFormat("  select {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
             sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
-			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
-				sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
-			}
-			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
-				sql.AppendFormat(",{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
-			}
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+            {
+                sql.AppendFormat(",{0}.ID_GROUP_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+            }
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+            {
+                sql.AppendFormat(",{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+            }
             sql.AppendFormat(",{0} as date_num, {1}", dateField, unitFieldSumWithAlias);
 
             sql.AppendFormat(" from {0}", dataTableName);
-			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) 
-			sql.AppendFormat(",{0}.{1} {2}", schAdExpr03.Label, tblAdvertisingAgengy.Label, tblAdvertisingAgengy.Prefix);
-			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) 
-			sql.AppendFormat(",{0}.{1} {2}", schAdExpr03.Label, tblGroupAdvertisingAgengy.Label, tblGroupAdvertisingAgengy.Prefix);
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                sql.AppendFormat(",{0}.{1} {2}", schAdExpr03.Label, tblAdvertisingAgengy.Label, tblAdvertisingAgengy.Prefix);
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                sql.AppendFormat(",{0}.{1} {2}", schAdExpr03.Label, tblGroupAdvertisingAgengy.Label, tblGroupAdvertisingAgengy.Prefix);
             sql.Append(fromOptional);
             //Where
             sql.AppendFormat(" {0} ", universFilter);
             //Jointures 
-            if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+            if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
                 sql.AppendFormat(" {0}", dataJointForInsert);
 
             //Jointures groupe agences/agences	
-			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
-			sql.AppendFormat(" and {0}.ID_ADVERTISING_AGENCY(+)={1}.ID_ADVERTISING_AGENCY ", tblAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
-			sql.AppendFormat(" and {0}.id_language(+)={1}", tblAdvertisingAgengy.Prefix, _session.DataLanguage);
-			}
-			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
-				sql.AppendFormat(" and {0}.ID_GROUP_ADVERTISING_AGENCY(+)={1}.ID_GROUP_ADVERTISING_AGENCY ", tblGroupAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
-				sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.DataLanguage);
-			}
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+            {
+                sql.AppendFormat(" and {0}.ID_ADVERTISING_AGENCY(+)={1}.ID_ADVERTISING_AGENCY ", tblAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
+                sql.AppendFormat(" and {0}.id_language(+)={1}", tblAdvertisingAgengy.Prefix, _session.DataLanguage);
+            }
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+            {
+                sql.AppendFormat(" and {0}.ID_GROUP_ADVERTISING_AGENCY(+)={1}.ID_GROUP_ADVERTISING_AGENCY ", tblGroupAdvertisingAgengy.Prefix, DATA_TABLE_PREFIXE);
+                sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.DataLanguage);
+            }
             sql.Append(joinOptional);
             // Group by			
             sql.AppendFormat("  group by {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
             sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
-			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
-				sql.AppendFormat(", {0}.ID_GROUP_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
-			}
-			if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
-				sql.AppendFormat(",{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
-			}
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+            {
+                sql.AppendFormat(", {0}.ID_GROUP_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+            }
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+            {
+                sql.AppendFormat(",{0}.ID_ADVERTISING_AGENCY", DATA_TABLE_PREFIXE);
+            }
             sql.AppendFormat(", {0}", dateField);
             sql.Append(groupOptional);
 
             #region Execution de la requête
-            try {
+            try
+            {
                 return sql.ToString();
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new DynamicDALException("Unable to build request to load data about synthesis report : ", err));
             }
             #endregion
@@ -901,12 +954,14 @@ namespace TNS.AdExpressI.LostWon.DAL
         /// Get SQL code for period filter
         /// </summary>
         /// <returns>SQL code</returns>
-        protected string GetDayPeriod(string dateField, CustomerPeriod customerPeriod) {
+        protected string GetDayPeriod(string dateField, CustomerPeriod customerPeriod)
+        {
 
             string sql = string.Empty;
             string comparativeSql = string.Empty;
 
-            if (customerPeriod.PeriodDayBegin.Count == 2) {
+            if (customerPeriod.PeriodDayBegin.Count == 2)
+            {
                 sql = string.Format(" (({0} >= {1} and {0} <= {2}) or ({0} >= {3} and {0} <= {4}))"
                     , dateField
                     , customerPeriod.PeriodDayBegin[0]
@@ -914,7 +969,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                     , customerPeriod.PeriodDayBegin[1]
                     , customerPeriod.PeriodDayEnd[1]);
             }
-            else if (customerPeriod.PeriodDayBegin.Count == 1) {
+            else if (customerPeriod.PeriodDayBegin.Count == 1)
+            {
                 sql = string.Format(" ({0} >= {1} and {0} <= {2})"
                     , dateField
                     , customerPeriod.PeriodDayBegin[0]
@@ -922,7 +978,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                 );
             }
 
-            if (customerPeriod.ComparativePeriodDayBegin.Count == 2) {
+            if (customerPeriod.ComparativePeriodDayBegin.Count == 2)
+            {
                 comparativeSql = string.Format(" (({0} >= {1} and {0} <= {2}) or ({0} >= {3} and {0} <= {4}))"
                                     , dateField
                                     , customerPeriod.ComparativePeriodDayBegin[0]
@@ -931,7 +988,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                                     , customerPeriod.ComparativePeriodDayEnd[1]
                                  );
             }
-            else if (customerPeriod.ComparativePeriodDayBegin.Count == 1) {
+            else if (customerPeriod.ComparativePeriodDayBegin.Count == 1)
+            {
                 comparativeSql = string.Format(" ({0} >= {1} and {0} <= {2})"
                     , dateField
                     , customerPeriod.ComparativePeriodDayBegin[0]
@@ -951,7 +1009,8 @@ namespace TNS.AdExpressI.LostWon.DAL
         /// Get SQL code for period filter
         /// </summary>
         /// <returns>Code SQL</returns>
-        protected string GetMonthPeriod(string dateField, CustomerPeriod customerPeriod) {
+        protected string GetMonthPeriod(string dateField, CustomerPeriod customerPeriod)
+        {
 
             string sql = string.Empty;
             string comparativeSql = string.Empty;
@@ -983,69 +1042,74 @@ namespace TNS.AdExpressI.LostWon.DAL
         }
         #endregion
 
-		#region Get Nb Parution Request
-		/// <summary>
-		/// Get Nb parution for period
-		/// </summary>
-		/// <param name="yearParutionIndex">Index of corresponding year (current or comparative)</param>
-		/// <returns>Code sql</returns>
-		protected string GetNbParutionRequest(string startDate,string endDate,int yearParutionIndex) {
+        #region Get Nb Parution Request
+        /// <summary>
+        /// Get Nb parution for period
+        /// </summary>
+        /// <param name="yearParutionIndex">Index of corresponding year (current or comparative)</param>
+        /// <returns>Code sql</returns>
+        protected string GetNbParutionRequest(string startDate, string endDate, int yearParutionIndex)
+        {
 
-			#region Constantes
-			string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-			#endregion
+            #region Constantes
+            string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+            #endregion
 
-			#region Variables
-			string dataTableName = "";			
-			string dateField = "";
-			string mediaList = "";
-			StringBuilder sql = new StringBuilder();
-			CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
-			int positionUnivers = 1;
-			#endregion
-			try {
-                dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.analysis);
-				dateField = DATA_TABLE_PREFIXE + "." + CstDB.Fields.DATE_MEDIA_NUM;
+            #region Variables
+            string dataTableName = "";
+            string dateField = "";
+            string mediaList = "";
+            StringBuilder sql = new StringBuilder();
+            CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
+            int positionUnivers = 1;
+            #endregion
+            try
+            {
+                dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis);
+                dateField = DATA_TABLE_PREFIXE + "." + CstDB.Fields.DATE_MEDIA_NUM;
 
-				sql.Append(" select " + DATA_TABLE_PREFIXE + ".id_media, date_media_num as date_num, " + yearParutionIndex + " as yearParution");
-				sql.Append(" from  "+dataTableName );
-				sql.Append(" where " + dateField +">=" + startDate + " and " + dateField + " <= " + endDate);
+                sql.Append(" select " + DATA_TABLE_PREFIXE + ".id_media, date_media_num as date_num, " + yearParutionIndex + " as yearParution");
+                sql.Append(" from  " + dataTableName);
+                sql.Append(" where " + dateField + ">=" + startDate + " and " + dateField + " <= " + endDate);
 
-				#region Sélection de Médias
-				while (_session.CompetitorUniversMedia[positionUnivers] != null) {
-					mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
-					positionUnivers++;
-				}
-				if (mediaList.Length > 0)sql.Append(" and id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")");
-				#endregion
+                #region Sélection de Médias
+                while (_session.CompetitorUniversMedia[positionUnivers] != null)
+                {
+                    mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustom.Right.type.mediaAccess) + ",";
+                    positionUnivers++;
+                }
+                if (mediaList.Length > 0) sql.Append(" and id_media in (" + mediaList.Substring(0, mediaList.Length - 1) + ")");
+                #endregion
 
-				// Group by
-				sql.Append(" group by id_media, "+dateField);
+                // Group by
+                sql.Append(" group by id_media, " + dateField);
 
-			}
-			catch (Exception e) {
-				throw (new DynamicDALException("Unable to build Number of parution request for lost won : " + e.Message));
-			}
+            }
+            catch (Exception e)
+            {
+                throw (new DynamicDALException("Unable to build Number of parution request for lost won : " + e.Message));
+            }
 
-			return sql.ToString();
-		}
-		#endregion
+            return sql.ToString();
+        }
+        #endregion
 
-		/// <summary>
-		/// Get excluded products
-		/// </summary>
-		/// <param name="sql">String builder</param>
-		/// <returns></returns>
-		protected virtual string GetExcludeProducts(string prefix) {
-			// Exclude product 
-			string sql = "";
-			ProductItemsList prList = Product.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
-			if (prList != null)
-				sql = prList.GetExcludeItemsSql(true, prefix);
-			return sql;
-		}
-		#endregion
+        /// <summary>
+        /// Get excluded products
+        /// </summary>
+        /// <param name="sql">String builder</param>
+        /// <returns></returns>
+        protected virtual string GetExcludeProducts(string prefix)
+        {
+            // Exclude product 
+            string sql = "";
+            ProductItemsList prList = Product.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
+            if (prList != null)
+                sql = prList.GetExcludeItemsSql(true, prefix);
+            return sql;
+        }
+        #endregion
 
-	}
+    }
 
 }

@@ -3100,7 +3100,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
                 Type type = assembly.GetType(GetSelectedUnit().CellType);
                 Cell cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
-                cellUnit.StringFormat = GetSelectedUnit().Format;
+                cellUnit.StringFormat = GetSelectedUnit().StringFormat;
                 return (new CellUnitFactory((CellUnit)cellUnit));
             }
             catch {

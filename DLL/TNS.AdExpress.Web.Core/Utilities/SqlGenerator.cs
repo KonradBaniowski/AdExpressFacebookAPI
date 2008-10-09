@@ -2031,30 +2031,50 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="type">Type de la table</param>
         /// <param name="prefixe">Prefixe of field</param>
         /// <returns>Nom du champ à utiliser pour la sélection de dates</returns>
-        public static string GetUnitFieldNameSumWithAlias(WebSession webSession, DBConstantes.TableType.Type type, string prefixe) {
+        public static string GetUnitFieldNameSumWithAlias(WebSession webSession, DBConstantes.TableType.Type type, string prefixe)
+        {
             StringBuilder sql = new StringBuilder();
             if (prefixe != null && prefixe.Length > 0)
                 prefixe += ".";
             else
                 prefixe = "";
-            switch (type) {
+            switch (type)
+            {
                 case DBConstantes.TableType.Type.dataVehicle4M:
                 case DBConstantes.TableType.Type.dataVehicle:
-                    try {
+                    try
+                    {
                         UnitInformation unitInformation = webSession.GetSelectedUnit();
-                        sql.AppendFormat("sum({0}{1}) as {2}", prefixe,unitInformation.DatabaseField, unitInformation.Id.ToString());
+                        if (unitInformation.Id != WebConstantes.CustomerSessions.Unit.versionNb)
+                        {
+                            sql.AppendFormat("sum({0}{1}) as {2}", prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
+                        }
+                        else
+                        {
+                            sql.AppendFormat("{0}.stragg2(distinct {1}{2}) as {3}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
+                        }
                         return sql.ToString();
                     }
-                    catch {
+                    catch
+                    {
                         throw new SQLGeneratorException("Not managed unit (Alert Module)");
                     }
                 case DBConstantes.TableType.Type.webPlan:
-                    try {
+                    try
+                    {
                         UnitInformation unitInformation = webSession.GetSelectedUnit();
-                        sql.AppendFormat("sum({0}{1}) as {2}", prefixe,unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                        if (unitInformation.Id != WebConstantes.CustomerSessions.Unit.versionNb)
+                        {
+                            sql.AppendFormat("sum({0}{1}) as {2}", prefixe, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                        }
+                        else
+                        {
+                            sql.AppendFormat("{0}.stragg2(distinct {1}column_value) as {3}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, prefixe, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                        }
                         return sql.ToString();
                     }
-                    catch {
+                    catch
+                    {
                         throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
                     }
                 default:
@@ -2076,7 +2096,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
         public static string GetUnitFieldNameSumUnionWithAlias(WebSession webSession) {
             try {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendFormat("sum({0}) as {0}", webSession.GetSelectedUnit().Id.ToString());
+                UnitInformation u = webSession.GetSelectedUnit();
+                if (u.Id != WebConstantes.CustomerSessions.Unit.versionNb)
+                {
+                    sql.AppendFormat("sum({0}) as {0}", u.Id.ToString());
+                }
+                else
+                {
+                    sql.AppendFormat("{0}.stragg2(distinct {1}) as {1}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, u.Id.ToString());
+                }
                 return sql.ToString();
             }
             catch {

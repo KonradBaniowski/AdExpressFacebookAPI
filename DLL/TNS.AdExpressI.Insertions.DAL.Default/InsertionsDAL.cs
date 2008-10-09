@@ -17,7 +17,7 @@ namespace TNS.AdExpressI.Insertions.DAL.Default
         /// </summary>
         /// <param name="session">User session</param>
         /// <param name="module">Current Module</param>
-        public InsertionsDAL(WebSession session, Module module):base(session, module) {
+        public InsertionsDAL(WebSession session, Int64 moduleId):base(session, moduleId) {
         }
         #endregion
 

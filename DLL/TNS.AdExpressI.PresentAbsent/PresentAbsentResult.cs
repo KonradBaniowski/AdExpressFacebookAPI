@@ -890,20 +890,19 @@ namespace TNS.AdExpressI.PresentAbsent{
         {
 
             #region Load data from data layer
-            DataSet ds = null;
+            DataTable dt = null;
             DataSet dsMedia = null;
 
             if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the present absent result"));
             object[] parameters = new object[1];
             parameters[0] = _session;
             IPresentAbsentResultDAL presentAbsentDAL = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-            ds = presentAbsentDAL.GetData();
+            dt = presentAbsentDAL.GetData();
             dsMedia = presentAbsentDAL.GetMediaDetails();
 
-            DataTable dt = ds.Tables[0];
             DataTable dtMedia = dsMedia.Tables[0];
 
-            if (dt.Rows.Count == 0)
+            if (dt == null || dt.Rows.Count == 0)
             {
                 universesSubTotal = null;
                 elementsHeader = null;

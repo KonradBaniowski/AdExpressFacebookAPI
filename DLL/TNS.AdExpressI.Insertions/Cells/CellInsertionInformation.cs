@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using TNS.FrameWork.WebResultUI;
 using System.Data;
 using System.Text;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Web.Core.Sessions;
 
 namespace TNS.AdExpressI.Insertions.Cells
 {
@@ -49,6 +51,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// List of creations pathes
         /// </summary>
         protected List<string> _visuals = new List<string>();
+        /// <summary>
+        /// User session
+        /// </summary>
+        protected WebSession _session = null;
         #endregion
 
         #region Constructeur
@@ -56,16 +62,28 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellInsertionInformation(List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells)
+        public CellInsertionInformation(WebSession session, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells)
         {
+            _session = session;
             _columns = columns;
             _columnsName = columnNames;
             for (int i = 0; i < columnNames.Count; i++) {
-                _previousValues.Add(string.Empty);
+                _previousValues.Add(string.Empty);            
             }
-            _values = cells;
+            foreach (Cell c in cells)
+            {
+                if (c is CellLabel)
+                {
+                    _values.Add(new CellLabel(string.Empty));
+                }
+                else
+                {
+                    _values.Add(((CellUnit)c).Clone(0.0));
+                }
+                
+            }
             for(int i = 0; i < _values.Count; i++) {
-                _values[i].StringFormat = _columns[i].StringFormat;
+                _values[i].StringFormat = string.Format("{{0:{0}}}",_columns[i].StringFormat);
             }
         }
         #endregion
@@ -135,14 +153,74 @@ namespace TNS.AdExpressI.Insertions.Cells
             string value;
             string[] values;
             int i = -1;
-            str.Append("<table>");
+            str.AppendFormat("<td class=\"{0}\"><table><tr>", cssClass);
+
+            //visuals
+            bool hasVisual = false;
+            str.Append("<td>");
+            foreach (string s in _visuals)
+            {
+                string[] tmp = s.Split(',');
+                foreach (string st in tmp)
+                {
+                    str.AppendFormat("<img src=\"{0}\"/>", st);
+                    hasVisual = true;
+                }
+            }
+            if (!hasVisual)
+            {
+                str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
+            }
+            
+            str.Append("</td>");
+
+
+            //Informations
+            str.Append("<td><table>");
+            bool hasData = false;
 
             foreach (GenericColumnItemInformation g in _columns) {
                 i++;
-                value = _values[i].ToString();
-                values = value.Split('¤');
+                if (g.Id != GenericColumnItemInformation.Columns.visual)
+                {
+                    hasData = false;
+                    str.Append("<tr>");
+                    str.AppendFormat("<td><span>{0}<span></td><td><span>:<span></td>", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
+                    str.Append("<td>");
+                    _values[i].Parent = this.Parent;
+                    if (_values[i] != null)
+                    {
+                        value = _values[i].ToString();
+                        if (!(_values[i] is CellUnit))
+                        {
+                            values = value.Split(',');
+                            foreach (string s in values)
+                            {
+                                if (hasData)
+                                {
+                                    str.Append("<br/>");
+                                }
+                                hasData = true;
+                                str.AppendFormat("{0}", s);
+                            }
+                        }
+                        else
+                        {
+                            str.AppendFormat("{0}", value);
+                        }
+                    }
+                    str.Append("</td>");
+                    str.Append("</tr>");
+                }
             }
-            str.Append("</table>");
+            str.Append("</table></td>");
+            //end information
+
+
+
+            str.Append("</tr></table></td>");
+
+
             //if (_newGroup)
             //    str += RenderSeparator();
             //str += "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + " align=\"left\">" + Convertion.ToHtmlString(this.ToString()) + "</td>";
@@ -172,12 +250,18 @@ namespace TNS.AdExpressI.Insertions.Cells
         #endregion
 
         #region Add Values
-        public void Add(DataRow row) {
+        public void Add(DataRow row, List<string> visuals) {
 
             int i = -1;
             string cValue;
             Cell cCell;
-
+            foreach (string s in visuals)
+            {
+                if (!_visuals.Contains(s))
+                {
+                    _visuals.Add(s);
+                }
+            }
             foreach (GenericColumnItemInformation g in _columns) {
 
                 i++;
@@ -188,8 +272,13 @@ namespace TNS.AdExpressI.Insertions.Cells
                         ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
                     }
                     else {
-                        ((CellLabel)cCell).Label = string.Format("{0}¤{1}",((CellLabel)cCell).Label, cValue);
+                        if (cValue.Length > 0)
+                        {
+                            CellLabel c = ((CellLabel)cCell);
+                            c.Label = string.Format("{0}{2}{1}", c.Label, cValue, ((c.Label.Length>0)?",":""));
+                        }
                     }
+                    _previousValues[i] = cValue;
                 }
 
             }

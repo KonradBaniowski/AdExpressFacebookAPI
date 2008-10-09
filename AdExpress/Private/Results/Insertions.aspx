@@ -13,6 +13,9 @@
 </head>
 <body class="popUpBackGround" onload="javascript:activateActiveX();">
     <form id="Form1" runat="server">
+    <asp:HiddenField ID="zoomParam" runat="server" EnableViewState="true"/>
+    <asp:HiddenField ID="vehicleParam" runat="server" EnableViewState="true"/>
+
     <div>
         <cc1:InsertionsWebControl ID="InsertionsWebControl1" runat="server" />
         &nbsp;</div>
