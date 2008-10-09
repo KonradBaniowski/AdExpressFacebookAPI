@@ -276,6 +276,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 	
 			string imgPath = @"Images\" + _webSession.SiteLanguage + @"\LogoAdExpress.jpg";
 			Image imgG = Image.FromFile(imgPath);
+            string PdfTitle = GestionWeb.GetWebWord(1587, _webSession.SiteLanguage);
 			
 			double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
 			double coef = Math.Min((double)1.0,w);
@@ -297,9 +298,9 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				_config.MainPageTitleFont.Underline,
 				_config.MainPageTitleFont.Strikeout,
 				_config.MainPageTitleFont.SizeInPoints,TxFontCharset.charsetANSI_CHARSET);
-			
-			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(_config.PdfTitle))/2, 
-				(this.PDFPAGE_Height)/4,0,_config.PdfTitle);			
+
+            this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(PdfTitle)) / 2,
+                (this.PDFPAGE_Height) / 4, 0, PdfTitle);			
 
             string str = GestionWeb.GetWebWord(1922,_webSession.SiteLanguage) + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
