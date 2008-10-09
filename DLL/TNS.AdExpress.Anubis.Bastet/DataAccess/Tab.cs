@@ -12,6 +12,8 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
@@ -29,29 +31,32 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
+				Table moduleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModule);
+				Table resultTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightResult);
+				Table topOption = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopOption);
 
 				//select
 				sql.Append(" select ");
-				sql.Append(" sum("+DBTables.TOP_OPTION_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
-				sql.Append(" ,"+DBTables.RESULT_PREFIXE+".id_result,"+DBTables.RESULT_PREFIXE+".result ");
-				sql.Append(" ,"+DBTables.RESULT_PREFIXE+".ID_MODULE,"+DBTables.MODULE_PREFIXE+".MODULE");
+				sql.Append(" sum("+topOption.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
+				sql.Append(" ,"+resultTable.Prefix+".id_result,"+resultTable.Prefix+".result ");
+				sql.Append(" ,"+resultTable.Prefix+".ID_MODULE,"+moduleTable.Prefix+".MODULE");
 
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".TOP_OPTION "+DBTables.TOP_OPTION_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".RESULT "+DBTables.RESULT_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".MODULE "+DBTables.MODULE_PREFIXE);
+				sql.Append(" from "+topOption.SqlWithPrefix);
+				sql.Append(" ,"+resultTable.SqlWithPrefix);
+				sql.Append(" ,"+moduleTable.SqlWithPrefix);
 			
 				//Where
-				sql.Append(" where "+DBTables.TOP_OPTION_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+topOption.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.TOP_OPTION_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.TOP_OPTION_PREFIXE+".id_option = "+DBTables.RESULT_PREFIXE+".id_result ");
-				sql.Append(" and "+DBTables.MODULE_PREFIXE+".id_module="+DBTables.RESULT_PREFIXE+".id_module ");		
+					sql.Append(" and "+topOption.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+topOption.Prefix+".id_option = "+resultTable.Prefix+".id_result ");
+				sql.Append(" and "+moduleTable.Prefix+".id_module="+resultTable.Prefix+".id_module ");		
 			
 				//Gourp by
 				sql.Append(" group by  ");		
-				sql.Append("  "+DBTables.RESULT_PREFIXE+".id_result,"+DBTables.RESULT_PREFIXE+".result");
-				sql.Append("  ,"+DBTables.RESULT_PREFIXE+".ID_MODULE,"+DBTables.MODULE_PREFIXE+".MODULE");
+				sql.Append("  "+resultTable.Prefix+".id_result,"+resultTable.Prefix+".result");
+				sql.Append("  ,"+resultTable.Prefix+".ID_MODULE,"+moduleTable.Prefix+".MODULE");
 				//Order by
 				sql.Append(" order by  CONNECTION_NUMBER  desc");
 				#endregion
@@ -62,7 +67,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopUsed : Impossible d'obtenir la liste des options (onglets) les plus utilisés ", err));
+				throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopUsed : Impossible get most used tab result ", err));
 				
 			}
 			

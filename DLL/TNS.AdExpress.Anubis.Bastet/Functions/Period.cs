@@ -1,5 +1,7 @@
 using System;
 using TNS.AdExpress.Anubis.Bastet.Exceptions;
+using TNS.AdExpress.Domain.Translation;
+
 namespace TNS.AdExpress.Anubis.Bastet.Functions
 {
 	/// <summary>
@@ -16,61 +18,34 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		public static string GetNamedDay(int dayNumber,int language) {
 			
 			string day="";
-			switch(language){
-				case 33:
+			
 				switch(dayNumber){
 					case 1:
-						day="Lundi";
+						day = GestionWeb.GetWebWord(1554, language);// "Lundi";
 						break;
 					case 2:
-						day="Mardi";
+						day = GestionWeb.GetWebWord(1555, language);// "Mardi";
 						break;
 					case 3:
-						day="Mercredi";
+						day = GestionWeb.GetWebWord(1556, language);// "Mercredi";
 						break;
 					case 4:
-						day="Jeudi";
+						day = GestionWeb.GetWebWord(1557, language);// "Jeudi";
 						break;
 					case 5:
-						day="Vendredi";
+						day = GestionWeb.GetWebWord(1558, language);// "Vendredi";
 						break;
 					case 6:
-						day="Samedi";
+						day = GestionWeb.GetWebWord(1559, language);// "Samedi";
 						break;
 					case 7:
-						day="Dimanche";
-						break;										
+						day = GestionWeb.GetWebWord(1560, language);// "Dimanche";
+						break;
+					default:
+						throw (new PeriodException("Day Id unknown. "));		
 				}
-					break;
-				case 44:
-				switch(dayNumber){
-					case 1:
-						day="Monday";
-						break;
-					case 2:
-						day="Tuesday";
-						break;
-					case 3:
-						day="Wednesday";
-						break;
-					case 4:
-						day="Thursday";
-						break;
-					case 5:
-						day="Friday";
-						break;
-					case 6:
-						day="Saturday";
-						break;
-					case 7:
-						day="Sunday";
-						break;										
-				}
-					break;
-				default:
-					throw(new PeriodException("La langue sélectionnée n'est pas correcte: "));
-			}
 
+			
 			return day;
 		}
 	}

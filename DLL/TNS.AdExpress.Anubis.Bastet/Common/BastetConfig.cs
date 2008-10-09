@@ -39,6 +39,10 @@ namespace TNS.AdExpress.Anubis.Bastet.Common {
 		/// Serveur web de stats
 		/// </summary>
 		private string _webServer;
+		/// <summary>
+		/// Language code
+		/// </summary>
+		protected int _language = 33;
 		#endregion
 
 		#region Propriétés
@@ -84,6 +88,13 @@ namespace TNS.AdExpress.Anubis.Bastet.Common {
 		public string WebServer{
 			get{return _webServer;}
 			set{_webServer = value;}
+		}
+		/// <summary>
+		/// Get/Set language code
+		/// </summary>
+		public int Language {
+			get { return _language; }
+			set { _language = value; }
 		}
 		#endregion
 

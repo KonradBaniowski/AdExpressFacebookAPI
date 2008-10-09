@@ -5,7 +5,7 @@
 #endregion
 
 using System;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 using TNS.AdExpress.Anubis.Bastet;
@@ -14,6 +14,7 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using TNS.AdExpress.Constantes.DB;
 //using TNS.AdExpress.Anubis.Bastet.Rules;
 using BastetExceptions=TNS.AdExpress.Anubis.Bastet.Exceptions;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
 {
@@ -28,7 +29,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>				
 		/// <returns>objet excel</returns>
-		internal static Excel TopUsers(Excel excel,BastetCommon.Parameters parameters) {
+		internal static Workbook TopUsers(Workbook excel, BastetCommon.Parameters parameters, int language) {
 			try{
 				//Chargement des données du top utilisation fichier GAD
 				DataTable dtGAD = DataAccess.File.TopGAD(parameters);
@@ -41,7 +42,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					int cellRow =5;
 					bool isGadExist=false;			
 					Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
-					sheet.Name="Top fichier GAD et AGM"; // A mettre dans web word	
+					sheet.Name=GestionWeb.GetWebWord(2513, language);
 					sheet.PageSetup.Orientation = PageOrientationType.Landscape;
 				
 					//Saut de page horizontal
@@ -61,7 +62,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 				
 					sheet.IsGridlinesVisible = false;
 					sheet.PageSetup.Orientation = PageOrientationType.Landscape;
-					Aspose.Excel.PageSetup pageSetup =sheet.PageSetup;
+					Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
 				
 					//Set margins, in unit of inches 					
 					pageSetup.TopMarginInch = 0.3; 
@@ -71,18 +72,20 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 
 					//Ajout du logo TNS
 					Pictures pics = sheet.Pictures;
-					string tnsLogoPath=@"Images\logoTNSMedia.gif";	
+					string tnsLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;	
 					string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
-					pics.Add(0, 0,logoPath);
-					string bastetLogoPath=@"Images\Bastet.gif";
+					int picIndex = pics.Add(0, 0,logoPath);
+					pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+					string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;
 					string bastetImagePath = System.IO.Path.GetFullPath(bastetLogoPath);
-					pics.Add(0, 5,bastetImagePath);
+					picIndex = pics.Add(0, 5, bastetImagePath);
+					pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 
 					//Set current date and current time at the center section of header and change the font of the header
 					pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
 					
 					//Set current page number at the center section of footer
-					pageSetup.SetFooter(1, "&A"+" - Page "+"&P"+" sur "+"&N");
+					pageSetup.SetFooter(1, "&A" + " - " + GestionWeb.GetWebWord(894, language) + " " + "&P" + " " + GestionWeb.GetWebWord(2042, language) + " " + "&N");
 
 					int startIndex=cellRow;
 
@@ -91,7 +94,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 						#region Top utilisateurs du fichier GAD
 						if(dtGAD!=null && dtGAD.Rows.Count>0){
 							//Top utilisateurs du fichier GAD				
-							cells["B"+cellRow].PutValue("Top utilisateurs du fichier GAD ");// A mettre dans web word
+							cells["B"+cellRow].PutValue(GestionWeb.GetWebWord(2514, language)+" ");
 							cells["B"+cellRow].Style.Font.IsBold = true;
 							cells["B"+cellRow].Style.Font.Color = Color.White;
 							cells["B"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
@@ -99,23 +102,26 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 							cells["B"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["B"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 							cells["B"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
-						
-							cells["C"+cellRow].PutValue(" Logins ");// A mettre dans web word
+							cells["B" + cellRow].Style.Pattern = BackgroundType.Solid;
+
+							cells["C" + cellRow].PutValue(" "+GestionWeb.GetWebWord(2484, language)+" ");
 							cells["C"+cellRow].Style.Font.IsBold = true;
 							cells["C"+cellRow].Style.Font.Color = Color.White;
 							cells["C"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 							cells["C"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["C"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 							cells["C"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
+							cells["C" + cellRow].Style.Pattern = BackgroundType.Solid;
 
-							cells["D"+cellRow].PutValue(" Nombre d'utilisation ");// A mettre dans web word
+							cells["D"+cellRow].PutValue(" "+GestionWeb.GetWebWord(2515, language)+" ");
 							cells["D"+cellRow].Style.Font.IsBold = true;
 							cells["D"+cellRow].Style.Font.Color = Color.White;
 							cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 							cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["D"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 							cells["D"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
-						
+							cells["D" + cellRow].Style.Pattern = BackgroundType.Solid;
+
 							cellRow++;
 
 							for(int i=0; i<dtGAD.Rows.Count;i++){	
@@ -143,7 +149,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 							}
 
 							//Total
-							cells["B"+cellRow].PutValue(" Total ");// A metre dans web word
+							cells["B" + cellRow].PutValue(" "+GestionWeb.GetWebWord(1401, language)+" ");
 							cells["B"+cellRow].Style.Font.Color = Color.Red;
 							cells["B"+cellRow].Style.Font.IsBold = true;
 							cells["B"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
@@ -172,7 +178,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 						if(dtAGM!=null && dtAGM.Rows.Count>0){
 							if(isGadExist)cellRow=cellRow+5;
 							//Top module utilisé				
-							cells["B"+cellRow].PutValue("Top utilisateurs du fichier Agences média ");// A metre dans web word
+							cells["B" + cellRow].PutValue("" + GestionWeb.GetWebWord(2518, language) + " ");
 							cells["B"+cellRow].Style.Font.IsBold = true;
 							cells["B"+cellRow].Style.Font.Color = Color.White;
 							cells["B"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
@@ -180,22 +186,25 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 							cells["B"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["B"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 							cells["B"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
+							cells["B" + cellRow].Style.Pattern = BackgroundType.Solid;
 
-							cells["C"+cellRow].PutValue(" Logins ");// A mettre dans web word
+							cells["C" + cellRow].PutValue(" " + GestionWeb.GetWebWord(2484, language) + " ");
 							cells["C"+cellRow].Style.Font.IsBold = true;
 							cells["C"+cellRow].Style.Font.Color = Color.White;
 							cells["C"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 							cells["C"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["C"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 							cells["C"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
-					
-							cells["D"+cellRow].PutValue(" Nombre d'utilisation ");// A mettre dans web word
+							cells["C" + cellRow].Style.Pattern = BackgroundType.Solid;
+
+							cells["D" + cellRow].PutValue(" " + GestionWeb.GetWebWord(2515, language) + " ");
 							cells["D"+cellRow].Style.Font.IsBold = true;
 							cells["D"+cellRow].Style.Font.Color = Color.White;
 							cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 							cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["D"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 							cells["D"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
+							cells["D" + cellRow].Style.Pattern = BackgroundType.Solid;
 
 							cellRow++;	
 							int startRowAGM=cellRow;
@@ -221,7 +230,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 							}
 
 							//Total
-							cells["B"+cellRow].PutValue(" Total ");// A metre dans web word
+							cells["B" + cellRow].PutValue( GestionWeb.GetWebWord(1401, language));
 							cells["B"+cellRow].Style.Font.Color = Color.Red;
 							cells["B"+cellRow].Style.Font.IsBold = true;
 							cells["B"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
@@ -247,7 +256,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 
 						//Top utilisateurs du fichier GAD
 						if(dtGAD!=null && dtGAD.Rows.Count>0){
-							cells["B"+cellRow].PutValue("Nombre d'utilisation du fichier GAD");// A mettre dans web word
+							cells["B" + cellRow].PutValue(GestionWeb.GetWebWord(2516, language));
 							cells["B"+cellRow].Style.Font.IsBold = true;
 							cells["B"+cellRow].Style.Font.Color = Color.White;
 							cells["B"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;	
@@ -255,6 +264,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 							cells["B"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["B"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;	
 							cells["B"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
+							cells["B" + cellRow].Style.Pattern = BackgroundType.Solid;
 
 							cells["C"+cellRow].PutValue(Int64.Parse(dtGAD.Compute("sum(CONNECTION_NUMBER)","").ToString()));
 							cells["C"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
@@ -267,7 +277,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 						if(dtAGM!=null && dtAGM.Rows.Count>0){
 							cellRow=cellRow+2;
 
-							cells["B"+cellRow].PutValue("Nombre d'utilisation du fichier Agences Médias");// A mettre dans web word
+							cells["B" + cellRow].PutValue(GestionWeb.GetWebWord(2517, language));
 							cells["B"+cellRow].Style.Font.IsBold = true;
 							cells["B"+cellRow].Style.Font.Color = Color.White;
 							cells["B"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;	
@@ -275,6 +285,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 							cells["B"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 							cells["B"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;	
 							cells["B"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
+							cells["B" + cellRow].Style.Pattern = BackgroundType.Solid;
 
 							cells["C"+cellRow].PutValue(Int64.Parse(dtAGM.Compute("sum(CONNECTION_NUMBER)","").ToString()));
 							cells["C"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	

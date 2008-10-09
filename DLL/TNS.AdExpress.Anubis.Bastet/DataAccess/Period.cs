@@ -12,6 +12,8 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
@@ -29,27 +31,29 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
+				Table periodTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingPeriod);
+				Table topPeriod = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopPeriod);
 
 				//select
 				sql.Append(" select ");
 		
-				sql.Append(" "+DBTables.TOP_PERIODE_PREFIXE+".id_periode,"+DBTables.PERIODE_PREFIXE+".periode");
-				sql.Append(",sum("+DBTables.TOP_PERIODE_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
+				sql.Append(" "+topPeriod.Prefix+".id_periode,"+periodTable.Prefix+".periode");
+				sql.Append(",sum("+topPeriod.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
 
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".TOP_PERIODE "+DBTables.TOP_PERIODE_PREFIXE);
-				sql.Append(" ,"+DBSchema.UNIVERS_SCHEMA+".PERIODE "+DBTables.PERIODE_PREFIXE);
+				sql.Append(" from "+topPeriod.SqlWithPrefix);
+				sql.Append(" ,"+periodTable.SqlWithPrefix);
 			
 				//Where
-				sql.Append(" where "+DBTables.TOP_PERIODE_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+topPeriod.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0){
-					sql.Append(" and "+DBTables.TOP_PERIODE_PREFIXE+".id_login in ("+parameters.Logins+") ");				
+					sql.Append(" and "+topPeriod.Prefix+".id_login in ("+parameters.Logins+") ");				
 				}
-				sql.Append(" and "+DBTables.PERIODE_PREFIXE+".id_periode="+DBTables.TOP_PERIODE_PREFIXE+".id_periode");
+				sql.Append(" and "+periodTable.Prefix+".id_periode="+topPeriod.Prefix+".id_periode");
 			
 				//Gourp by
 				sql.Append(" group by  ");
-				sql.Append("  "+DBTables.TOP_PERIODE_PREFIXE+".ID_PERIODE ,"+DBTables.PERIODE_PREFIXE+".periode");
+				sql.Append("  "+topPeriod.Prefix+".ID_PERIODE ,"+periodTable.Prefix+".periode");
 				//Order by
 				sql.Append(" order by  CONNECTION_NUMBER  desc");
 				#endregion
@@ -60,7 +64,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopUsed : Impossible d'obtenir la liste des périodes les plus utilisés ", err));
+				throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopUsed : Impossible get most used period list ", err));
 				
 			}
 		

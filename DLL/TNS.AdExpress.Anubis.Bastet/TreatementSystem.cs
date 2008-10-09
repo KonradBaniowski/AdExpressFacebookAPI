@@ -24,7 +24,7 @@ using TNS.AdExpress.Anubis.Bastet.BusinessFacade;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Bastet.Common;
 
-using Aspose.Excel;
+using Aspose.Cells;
 
 namespace TNS.AdExpress.Anubis.Bastet {
 	/// <summary>
@@ -129,18 +129,18 @@ namespace TNS.AdExpress.Anubis.Bastet {
 	
 			#region Chargement du fichier de configuration
 			if(confifurationFilePath==null){
-				OnError(_navSessionId,"Impossible de lancer le traitement d'un job", new ArgumentNullException("Le nom du fichier de configuration est null."));
+				OnError(_navSessionId,"Impossible to launch job treatment", new ArgumentNullException("Configuration file name is null."));
 				return;
 			}
 			if(confifurationFilePath.Length==0){
-				OnError(_navSessionId,"Impossible de lancer le traitement d'un job", new ArgumentException("Le nom du fichier de configuration est vide."));
+				OnError(_navSessionId, "Impossible to launch job treatment", new ArgumentException("Configuration file name is null."));
 				return;
 			}
 			try{
 				_bastetConfig=new BastetConfig(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+confifurationFilePath));
 			}
 			catch(System.Exception err){
-				OnError(_navSessionId,"Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration",err);
+				OnError(_navSessionId, "Impossible to launch job treatment <== impossible to load configuration file", err);
 				return;
 			}
 			#endregion
@@ -191,12 +191,12 @@ namespace TNS.AdExpress.Anubis.Bastet {
 			}
 			catch(System.Exception err){
 				ParameterSystem.ChangeStatus(_dataSource,_navSessionId,TNS.AdExpress.Anubis.Constantes.Result.status.error);
-				OnError(_navSessionId,"Erreur lors du traitement du résultat.", err);
+				OnError(_navSessionId,"Error during result execution.", err);
 				return;
 			}
 			finally{
 				try{
-					if(File.Exists(_excel.ExcelFilePath)){
+					if (File.Exists(_excel.ExcelFilePath)) {
 						File.Delete(_excel.ExcelFilePath);
 					}
 				}

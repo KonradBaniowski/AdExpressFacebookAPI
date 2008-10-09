@@ -14,6 +14,8 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
@@ -32,26 +34,31 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 		{
 			#region Requête
 			StringBuilder sql = new StringBuilder(3000);
+			Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+			Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+			Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+			Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+			Table topGadTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopGad);
 
 			//select
-			sql.Append(" select sum("+DBTables.TOP_GAD_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER ");			
-			sql.Append(","+DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.TOP_GAD_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ");
+			sql.Append(" select sum("+topGadTable.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER ");			
+			sql.Append(","+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+topGadTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
 			//From
-			sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".TOP_GAD "+DBTables.TOP_GAD_PREFIXE);
-			sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-				+","+DBSchema.LOGIN_SCHEMA+".ADDRESS "+DBTables.ADDRESS_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".COMPANY "+DBTables.COMPANY_PREFIXE);
+			sql.Append(" from " + topGadTable.SqlWithPrefix);
+			sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
+				+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 			//Where
-			sql.Append(" where "+DBTables.TOP_GAD_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+			sql.Append(" where "+topGadTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 			if(parameters!=null && parameters.Logins.Length>0)
-				sql.Append(" and "+DBTables.TOP_GAD_PREFIXE+".id_login in ("+parameters.Logins+") ");
-			sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.TOP_GAD_PREFIXE+".id_login ");
-			sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-			sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_address = "+DBTables.ADDRESS_PREFIXE+".id_address ");
-			sql.Append(" and "+DBTables.ADDRESS_PREFIXE+".id_company="+DBTables.COMPANY_PREFIXE+".id_company ");
+				sql.Append(" and "+topGadTable.Prefix+".id_login in ("+parameters.Logins+") ");
+			sql.Append(" and "+loginTable.Prefix+".id_login="+topGadTable.Prefix+".id_login ");
+			sql.Append(" and " + loginTable.Prefix + ".id_contact=" + contactTable.Prefix + ".id_contact ");
+			sql.Append(" and " + contactTable.Prefix + ".id_address = " + addressTable.Prefix + ".id_address ");
+			sql.Append(" and " + addressTable.Prefix + ".id_company=" + companyTable.Prefix + ".id_company ");
 			//Gourp by
-			sql.Append(" group by  "+DBTables.COMPANY_PREFIXE+".id_company,cpn.company,"+DBTables.TOP_GAD_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ");
+			sql.Append(" group by  "+companyTable.Prefix+".id_company,cpn.company,"+topGadTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
 			//Order by
-			sql.Append(" order by  CONNECTION_NUMBER  desc,"+DBTables.LOGIN_PREFIXE+".login ");
+			sql.Append(" order by  CONNECTION_NUMBER  desc,"+loginTable.Prefix+".login ");
 			#endregion
 
 			#region Execution
@@ -59,7 +66,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
 			}
 			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopGAD : Impossible d'obtenir la liste des clients utilisant le plus le fichier GAD ", err));
+				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopGAD : Impossible to get clients most using GAD file ", err));
 			}
 			#endregion
 		}
@@ -75,26 +82,31 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
+				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table topMediaAgencyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopMediaAgency);
 
 				//select
-				sql.Append(" select sum("+DBTables.TOP_MEDIA_AGENCY_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER ");			
-				sql.Append(","+DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.TOP_MEDIA_AGENCY_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ");
+				sql.Append(" select sum("+topMediaAgencyTable.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER ");			
+				sql.Append(","+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+topMediaAgencyTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".TOP_MEDIA_AGENCY "+DBTables.TOP_MEDIA_AGENCY_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-					+","+DBSchema.LOGIN_SCHEMA+".ADDRESS "+DBTables.ADDRESS_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".COMPANY "+DBTables.COMPANY_PREFIXE);
+				sql.Append(" from " + topMediaAgencyTable.SqlWithPrefix);
+				sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
+					+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+DBTables.TOP_MEDIA_AGENCY_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+topMediaAgencyTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.TOP_MEDIA_AGENCY_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.TOP_MEDIA_AGENCY_PREFIXE+".id_login ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_address = "+DBTables.ADDRESS_PREFIXE+".id_address ");
-				sql.Append(" and "+DBTables.ADDRESS_PREFIXE+".id_company="+DBTables.COMPANY_PREFIXE+".id_company ");
+					sql.Append(" and "+topMediaAgencyTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+loginTable.Prefix+".id_login="+topMediaAgencyTable.Prefix+".id_login ");
+				sql.Append(" and " + loginTable.Prefix + ".id_contact=" + contactTable.Prefix + ".id_contact ");
+				sql.Append(" and " + contactTable.Prefix + ".id_address = " + addressTable.Prefix + ".id_address ");
+				sql.Append(" and " + addressTable.Prefix + ".id_company=" + companyTable.Prefix + ".id_company ");
 				//Gourp by
-				sql.Append(" group by  "+DBTables.COMPANY_PREFIXE+".id_company,cpn.company,"+DBTables.TOP_MEDIA_AGENCY_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ");
+				sql.Append(" group by  "+companyTable.Prefix+".id_company,cpn.company,"+topMediaAgencyTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
 				//Order by
-				sql.Append(" order by  CONNECTION_NUMBER  desc,"+DBTables.LOGIN_PREFIXE+".login ");
+				sql.Append(" order by  CONNECTION_NUMBER  desc,"+loginTable.Prefix+".login ");
 			
 				#endregion
 
@@ -104,7 +116,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopAGM : Impossible d'obtenir la liste des clients utilisant le plus le fichier des agences média ", err));
+				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopAGM : Impossible to get cutomser using most media agency file ", err));
 			}
 			
 		}

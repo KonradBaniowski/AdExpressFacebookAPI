@@ -5,7 +5,7 @@
 #endregion
 
 using System;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 using TNS.AdExpress.Anubis.Bastet;
@@ -17,6 +17,7 @@ using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
 using BastetFunctions=TNS.AdExpress.Anubis.Bastet.Functions;
 using BastetRules=TNS.AdExpress.Anubis.Bastet.Rules;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
 {
@@ -32,17 +33,17 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>				
 		/// <returns>objet excel</returns>
-		internal static Excel TopUsed(Excel excel,BastetCommon.Parameters parameters) {
+		internal static Workbook TopUsed(Workbook excel,BastetCommon.Parameters parameters,int language) {
 			try{
 				//Chargement des données des résultats
-				DataTable dt = DataAccess.Vehicle.TopUsed(parameters);
+				DataTable dt = DataAccess.Vehicle.TopUsed(parameters,language);
 		
 				if(dt!=null && dt.Rows.Count>0){
 
 					//Variables				
 					int cellRow =5;			
 					Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
-					sheet.Name="Top médias utilisés"; // A mettre dans web word	
+					sheet.Name =  GestionWeb.GetWebWord(2529, language) ; // A mettre dans web word	
 			
 					//Saut de page horizontal
 					int nbPages=0;
@@ -55,7 +56,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 
 					sheet.IsGridlinesVisible = false;
 					sheet.PageSetup.Orientation = PageOrientationType.Landscape;
-					Aspose.Excel.PageSetup pageSetup =sheet.PageSetup;
+					Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
 				
 					//Set margins, in unit of inches 					
 					pageSetup.TopMarginInch = 0.3; 
@@ -65,23 +66,26 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 				
 					//Ajout du logo TNS
 					Pictures pics = sheet.Pictures;
-					string tnsLogoPath=@"Images\logoTNSMedia.gif";	
+					string tnsLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;
 					string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
-					pics.Add(0, 0,logoPath);
-					string bastetLogoPath=@"Images\Bastet.gif";
+					int picIndex = pics.Add(0, 0,logoPath);
+					pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+
+					string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;
 					string bastetImagePath = System.IO.Path.GetFullPath(bastetLogoPath);
-					pics.Add(0, 6,bastetImagePath);
+					picIndex = pics.Add(0, 6, bastetImagePath);
+					pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 
 					//Set current date and current time at the center section of header and change the font of the header
 					pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
 					
 					//Set current page number at the center section of footer
-					pageSetup.SetFooter(1, "&A"+" - Page "+"&P"+" sur "+"&N");
+					pageSetup.SetFooter(1, "&A" + " - " + GestionWeb.GetWebWord(894, language) + " " + "&P" + " " + GestionWeb.GetWebWord(2042, language) + " " + "&N");
 
 
 					#region Top périodes utilisé	
 					//Top Groupe de module utilisé				
-					cells["B"+cellRow].PutValue(" Top médias utilisés ");// A mettre dans web word
+					cells["B" + cellRow].PutValue(" " + GestionWeb.GetWebWord(2529, language) + " ");
 					cells["B"+cellRow].Style.Font.IsBold = true;
 					cells["B"+cellRow].Style.Font.Color = Color.White;
 					cells["B"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
@@ -89,8 +93,9 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					cells["B"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 					cells["B"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 					cells["B"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
+					cells["B" + cellRow].Style.Pattern = BackgroundType.Solid;
 
-					cells["C"+cellRow].PutValue(" Nombre d'utilisation ");// A mettre dans web word
+					cells["C" + cellRow].PutValue(" " + GestionWeb.GetWebWord(2515, language) + " ");
 					cells["C"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 					cells["C"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
 					cells["C"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
@@ -98,6 +103,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					cells["C"+cellRow].Style.Font.IsBold = true;
 					cells["C"+cellRow].Style.Font.Color = Color.White;
 					cells["C"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
+					cells["C" + cellRow].Style.Pattern = BackgroundType.Solid;
 
 					sheet.AutoFitColumn(1);
 					cellRow++;
@@ -137,12 +143,12 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Excel TopByModule(Excel excel,BastetCommon.Parameters parameters){
+		internal static Workbook TopByModule(Workbook excel,BastetCommon.Parameters parameters,int language){
 			try{
 								
 				//Chargement des données
 				DataTable dt=null;				
-				dt = BastetRules.Vehicle.TopByModule(parameters);
+				dt = BastetRules.Vehicle.TopByModule(parameters,language);
 													
 				#region Intégration  données client
 						
@@ -163,7 +169,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
 					Cells cells = sheet.Cells;	
 									
-					BastetFunctions.WorkSheet.SetTopMediaByModule(dt,sheet,cells,ref cellRow,ref i,ref j,ref category,ref serial);
+					BastetFunctions.WorkSheet.SetTopMediaByModule(dt,sheet,cells,ref cellRow,ref i,ref j,ref category,ref serial,language);
 					#region Graphique
 
 					int lastRow=cellRow;
@@ -178,12 +184,12 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					Chart chart=sheet.Charts[chartIndex];
 					
 					//Construit le graphique
-					BastetFunctions.BastetChart.Build(chart,serial,category,"Connections","Connections par média","Média","Nombre de Connections");
+					BastetFunctions.BastetChart.Build(chart, serial, category, GestionWeb.GetWebWord(2486, language), GestionWeb.GetWebWord(2531, language), GestionWeb.GetWebWord(1292, language), GestionWeb.GetWebWord(2489, language));
 					#endregion
 					
 					if(i>=minimunVPageBreaks)vPageBreaks=cells[(cellRow-1+30),(i)].Name;
 					else vPageBreaks=cells[(cellRow-1+30),(minimunVPageBreaks)].Name;
-					BastetFunctions.WorkSheet.PageSettings(sheet,"Top médias par module",dt,nbMaxRowByPage,ref s,upperLeftColumn,vPageBreaks);
+					BastetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2530, language), dt, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks,language);
 					#endregion								
 				}
 				

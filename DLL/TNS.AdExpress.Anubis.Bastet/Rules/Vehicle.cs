@@ -28,13 +28,13 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 		/// </summary>
 		/// <param name="parameters">paramètres client.</param>
 		/// <returns>données top connections médias par module.</returns>
-		public static DataTable  TopByModule(BastetCommon.Parameters parameters){
+		public static DataTable TopByModule(BastetCommon.Parameters parameters, int language) {
 			
 			DataTable dt=null, dtResult=null;
 			ArrayList idModuleArr=null;
 			ArrayList idVehicleArr = null;
 			DataRow resultRow=null;
-			dt = BastetDataAccess.Vehicle.TopByModule(parameters);
+			dt = BastetDataAccess.Vehicle.TopByModule(parameters,language);
 			object tempValue=null;
 			string columnName="";
 			if(dt!=null && dt.Rows.Count>0){				

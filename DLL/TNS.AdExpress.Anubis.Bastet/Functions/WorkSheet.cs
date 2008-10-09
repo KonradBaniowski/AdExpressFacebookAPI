@@ -6,13 +6,15 @@
 
 using System;
 using System.Data;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Constantes.DB;
 using ConstantesTracking=TNS.AdExpress.Constantes.Tracking;
 using BastetFunctions=TNS.AdExpress.Anubis.Bastet.Functions;
-
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Translation;
 namespace TNS.AdExpress.Anubis.Bastet.Functions
 {
 	/// <summary>
@@ -31,7 +33,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		/// <param name="dt">table de données</param>
 		/// <param name="isBold">vrai si police en  gras</param>
 		/// <param name="color">couleur de la police</param>
-		internal static void SetConnectionByTimeSliceToCells(Aspose.Excel.Cells cells,int row,int column,DataTable dt,bool isBold,System.Drawing.Color color){			
+		internal static void SetConnectionByTimeSliceToCells(Aspose.Cells.Cells cells,int row,int column,DataTable dt,bool isBold,System.Drawing.Color color){			
 	
 			PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_24_8)","").ToString()),row,column,isBold,color);
 			
@@ -67,7 +69,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		/// <param name="serial">série de valeurs</param>
 		/// <param name="sheetName">Nom de la feuille excel</param>
 		/// <param name="clientParameter">paramètre cleint</param>
-		internal static void SetConnectionByDate(DataTable dt, Worksheet sheet,Aspose.Excel.Cells cells,ref int cellRow,ref int i,ref int j,ref string category,ref string serial,string sheetName,string clientParameter,ConstantesTracking.Period.Type periodType){
+		internal static void SetConnectionByDate(DataTable dt, Worksheet sheet, Aspose.Cells.Cells cells, ref int cellRow, ref int i, ref int j, ref string category, ref string serial, string sheetName, string clientParameter, ConstantesTracking.Period.Type periodType, int language) {
 			
 			string expression="";
 			string date="";
@@ -75,7 +77,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			
 			
 			//Libellés des mois
-			PutCellValue(cells," Société ",cellRow-1,0,true,Color.Black);
+			PutCellValue(cells," "+GestionWeb.GetWebWord(1132,language)+" ",cellRow-1,0,true,Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,0,0,true,Color.White);	
 			PutCellValue(cells,sheetName,cellRow-1,1,true,Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,1,1,true,Color.White);	
@@ -83,18 +85,18 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			for(i=3;i<dt.Columns.Count;i++){	
 				switch(periodType){
 					case ConstantesTracking.Period.Type.monthly :
-					date = MonthString.GetCharacters(int.Parse(dt.Columns[i].ColumnName.Substring(10,2)),Language.FRENCH.GetHashCode(),3)
+						date = MonthString.GetCharacters(int.Parse(dt.Columns[i].ColumnName.Substring(10, 2)), WebApplicationParameters.AllowedLanguages[language].CultureInfo, 3)
 						+". "+dt.Columns[i].ColumnName.Substring(8,2);
 						break;
 					case ConstantesTracking.Period.Type.dayly :						
-						date = BastetFunctions.Period.GetNamedDay(int.Parse(dt.Columns[i].ColumnName.Substring(4,1)),Language.FRENCH.GetHashCode());
+						date = BastetFunctions.Period.GetNamedDay(int.Parse(dt.Columns[i].ColumnName.Substring(4,1)),language);
 						break;
 				}
 				PutCellValue(cells,date,cellRow-1,i-1,true,Color.Black);
 				CellsHeaderStyle(cells,null,cellRow-1,i-1,i-1,true,Color.White);						
 			}
 					
-			PutCellValue(cells," Total ",cellRow-1,i-1,true,Color.Black);
+			PutCellValue(cells," " + GestionWeb.GetWebWord(1401,language) +" ",cellRow-1,i-1,true,Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,i-1,i-1,true,Color.White);
 			category="C4:"+cells[(cellRow-1),(i-2)].Name;
 
@@ -115,7 +117,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			}
 						
 			//Total lignes
-			PutCellValue(cells,"Total",cellRow-1,0,true,Color.Red);
+			PutCellValue(cells, GestionWeb.GetWebWord(1401,language), cellRow - 1, 0, true, Color.Red);
 			PutCellValue(cells,"",cellRow-1,1,true,Color.Black);
 					
 					
@@ -154,7 +156,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		/// <param name="serial">série de valeurs</param>
 		/// <param name="sheetName">Nom de la feuille excel</param>
 		/// <param name="clientParameter">paramètre cleint</param>
-		internal static void SetConnectionByClientByDate(DataTable dt, Worksheet sheet,Aspose.Excel.Cells cells,ref int cellRow,ref int i,ref int j,ref string category,ref string serial,string sheetName,string clientParameter,ConstantesTracking.Period.Type periodType){
+		internal static void SetConnectionByClientByDate(DataTable dt, Worksheet sheet,Aspose.Cells.Cells cells,ref int cellRow,ref int i,ref int j,ref string category,ref string serial,string sheetName,string clientParameter,ConstantesTracking.Period.Type periodType,int language){
 			
 			string expression="";
 			string date="";
@@ -167,18 +169,18 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			for(i=3;i<dt.Columns.Count;i++){	
 				switch(periodType){
 					case ConstantesTracking.Period.Type.monthly :
-						date = MonthString.GetCharacters(int.Parse(dt.Columns[i].ColumnName.Substring(10,2)),Language.FRENCH.GetHashCode(),3)
+						date = MonthString.GetCharacters(int.Parse(dt.Columns[i].ColumnName.Substring(10, 2)),WebApplicationParameters.AllowedLanguages[language].CultureInfo, 3)
 							+". "+dt.Columns[i].ColumnName.Substring(8,2);
 						break;
-					case ConstantesTracking.Period.Type.dayly :						
-						date = BastetFunctions.Period.GetNamedDay(int.Parse(dt.Columns[i].ColumnName.Substring(4,1)),Language.FRENCH.GetHashCode());
+					case ConstantesTracking.Period.Type.dayly :
+						date = BastetFunctions.Period.GetNamedDay(int.Parse(dt.Columns[i].ColumnName.Substring(4, 1)), language);
 						break;
 				}				
 				WorkSheet.PutCellValue(cells,date,cellRow-1,i-2,true,Color.Black);
 				WorkSheet.CellsHeaderStyle(cells,null,cellRow-1,i-2,i-2,true,Color.White);						
 			}
-					
-			PutCellValue(cells," Total ",cellRow-1,i-2,true,Color.Black);
+
+			PutCellValue(cells, " " + GestionWeb.GetWebWord(1401,language)+" ", cellRow - 1, i - 2, true, Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,i-2,i-2,true,Color.White);
 			category="B4:"+cells[(cellRow-1),(i-3)].Name;
 
@@ -186,7 +188,6 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 						
 			foreach(DataRow dr in  dt.Rows){
 				//Connexions par login et par mois (ou jour)
-//				PutCellValue(cells,dr["company"].ToString(),cellRow-1,0,true,Color.Black);	
 				PutCellValue(cells,dr[clientParameter].ToString(),cellRow-1,0,false,Color.Black);						
 				for(j=3;j<dt.Columns.Count;j++){
 					PutCellValue(cells,dr[j],cellRow-1,j-2,false,Color.Black);							
@@ -199,7 +200,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			}
 						
 			//Total lignes
-			PutCellValue(cells,"Total",cellRow-1,0,true,Color.Red);			
+			PutCellValue(cells, GestionWeb.GetWebWord(1401,language), cellRow - 1, 0, true, Color.Red);			
 					
 			for(j=3;j<dt.Columns.Count;j++){
 				expression = "sum("+dt.Columns[j].ColumnName+")";
@@ -232,7 +233,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		/// <param name="column">colonne</param>
 		/// <param name="isBold">vrai si police en gras</param>
 		/// <param name="color">couleur de la police</param>
-		internal static void PutCellValue(Aspose.Excel.Cells cells,object data,int row,int column,bool isBold,System.Drawing.Color color){
+		internal static void PutCellValue(Aspose.Cells.Cells cells,object data,int row,int column,bool isBold,System.Drawing.Color color){
 			cells[row,column].PutValue(data);
 			cells[row,column].Style.Font.Color = color;
 			cells[row,column].Style.Font.IsBold = isBold;
@@ -254,11 +255,12 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		/// <param name="lastColumn">dernière colonne de la collection</param>
 		/// <param name="isBold">vrai si police en gras</param>
 		/// <param name="color">Couleur de la police</param>
-		internal static void CellsHeaderStyle(Aspose.Excel.Cells cells,object data,int row,int firstColumn,int lastColumn,bool isBold,System.Drawing.Color color){
+		internal static void CellsHeaderStyle(Aspose.Cells.Cells cells,object data,int row,int firstColumn,int lastColumn,bool isBold,System.Drawing.Color color){
 			for(int i=firstColumn;i<=lastColumn;i++){
 				if(data!=null)cells[row,i].PutValue(data);
 				cells[row,i].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
-				cells[row,i].Style.ForegroundColor =  Color.FromArgb(128,128,192);					
+				cells[row,i].Style.ForegroundColor =  Color.FromArgb(128,128,192);
+				cells[row, i].Style.Pattern = BackgroundType.Solid;
 				cells[row,i].Style.Font.Color = color;
 				cells[row,i].Style.Font.IsBold = isBold;				
 			}			
@@ -279,11 +281,11 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		/// <param name="serial">série de valeurs</param>
 		/// <param name="sheetName">Nom de la feuille excel</param>
 		/// <param name="clientParameter">paramètre cleint</param>
-		internal static void SetTopMediaByModule(DataTable dt, Worksheet sheet,Aspose.Excel.Cells cells,ref int cellRow,ref int i,ref int j,ref string category,ref string serial){
+		internal static void SetTopMediaByModule(DataTable dt, Worksheet sheet,Aspose.Cells.Cells cells,ref int cellRow,ref int i,ref int j,ref string category,ref string serial,int language){
 			
 			double totalConnectionByModule=0;						
 			//Libellés des mois
-			PutCellValue(cells," Top Média par module ",cellRow-1,0,true,Color.Black);
+			PutCellValue(cells, " "+GestionWeb.GetWebWord(2530,language)+" ", cellRow - 1, 0, true, Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,0,0,true,Color.White);					
 			
 			//libellés médias
@@ -293,7 +295,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			}
 			category="B4:"+cells[(cellRow-1),(i)].Name;
 			//libellé total ligne		
-			PutCellValue(cells," Total ",cellRow-1,i+1,true,Color.Black);
+			PutCellValue(cells,  GestionWeb.GetWebWord(1401,language) , cellRow - 1, i + 1, true, Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,i+1,i+1,true,Color.White);
 			cellRow++;
 			
@@ -324,7 +326,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			}
 					
 			//Total colonne média
-			PutCellValue(cells,"Total",cellRow-1,0,true,Color.Red);		
+			PutCellValue(cells, GestionWeb.GetWebWord(1401, language), cellRow - 1, 0, true, Color.Red);		
 			i=0;
 			foreach(DataRow dr in dt.Rows){
 				if(dr["connection_number"]!=System.DBNull.Value){
@@ -365,17 +367,17 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		/// <param name="serial">série de valeurs</param>
 		/// <param name="sheetName">Nom de la feuille excel</param>
 		/// <param name="clientParameter">paramètre client</param>
-		internal static void SetIPAdressByClient(DataTable dt, Worksheet sheet,Aspose.Excel.Cells cells,ref int cellRow,string sheetName){
+		internal static void SetIPAdressByClient(DataTable dt, Worksheet sheet, Aspose.Cells.Cells cells, ref int cellRow, string sheetName, int language) {
 											
 			Int64 oldIdLogin=0;
 			Int64 oldIdCompany=0;
 
 			//Libellés des clients
-			PutCellValue(cells," Société ",cellRow-1,0,true,Color.Black);
+			PutCellValue(cells,GestionWeb.GetWebWord(1132,language),cellRow-1,0,true,Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,0,0,true,Color.White);	
 			PutCellValue(cells,sheetName,cellRow-1,1,true,Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,1,1,true,Color.White);
-			PutCellValue(cells,"Adresse IP",cellRow-1,2,true,Color.Black);
+			PutCellValue(cells,GestionWeb.GetWebWord(2532,language),cellRow-1,2,true,Color.Black);
 			CellsHeaderStyle(cells,null,cellRow-1,2,2,true,Color.White);
 															
 
@@ -413,8 +415,8 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		/// <param name="nbMaxRowByPage">nombre de ligne maximu par page</param>
 		/// <param name="s">compteur de page</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
-		internal static void PageSettings(Aspose.Excel.Worksheet sheet, string name,DataTable dt,int nbMaxRowByPage,ref int s,int upperLeftColumn){
-			PageSettings(sheet,name,dt,nbMaxRowByPage,ref s,upperLeftColumn,"");
+		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,DataTable dt,int nbMaxRowByPage,ref int s,int upperLeftColumn,int language){
+			PageSettings(sheet,name,dt,nbMaxRowByPage,ref s,upperLeftColumn,"",language);
 		}
 
 	
@@ -429,7 +431,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		/// <param name="printArea">Zone d'impression</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="vPageBreaks">saut de page vertical</param>
-		internal static void PageSettings(Aspose.Excel.Worksheet sheet, string name,DataTable dt,int nbMaxRowByPage,ref int s,int upperLeftColumn,string vPageBreaks){
+		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, DataTable dt, int nbMaxRowByPage, ref int s, int upperLeftColumn, string vPageBreaks, int language) {
 			
 			int nbPages=0;
 			nbPages=(int)Math.Ceiling(dt.Rows.Count*1.0/nbMaxRowByPage);	
@@ -443,7 +445,7 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 
 			sheet.IsGridlinesVisible = false;
 			sheet.PageSetup.Orientation = PageOrientationType.Landscape;
-			Aspose.Excel.PageSetup pageSetup =sheet.PageSetup;
+			Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
 
 			//Set margins, in unit of inches 					
 			pageSetup.TopMarginInch = 0.3; 
@@ -453,22 +455,25 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			pageSetup.RightMargin=0.3;
 			pageSetup.LeftMargin=0.3;
 			pageSetup.CenterHorizontally=true;
-//			if(printArea!=null && printArea.Length>0)
-//			pageSetup.PrintArea=printArea;
+
 			//Ajout des logos TNS et Bastet
 			Pictures pics = sheet.Pictures;
-			string tnsLogoPath=@"Images\logoTNSMedia.gif";	
+			string tnsLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;
 			string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
-			pics.Add(0, 0,logoPath);
-			string bastetLogoPath=@"Images\Bastet.gif";
+			int picIndex = pics.Add(0, 0,logoPath);
+			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+
+			string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;
 			string bastetImagePath = System.IO.Path.GetFullPath(bastetLogoPath);
-			pics.Add(0,upperLeftColumn,bastetImagePath);
+			picIndex = pics.Add(0,upperLeftColumn,bastetImagePath);
+			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 
 			//Set current date and current time at the center section of header and change the font of the header
 			pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
 					
 			//Set current page number at the center section of footer
-			pageSetup.SetFooter(1, "&A"+" - Page "+"&P"+" sur "+"&N");			
+			pageSetup.SetFooter(1, "&A" + " - " + GestionWeb.GetWebWord(894, language) + " " + "&P" + " " + GestionWeb.GetWebWord(2042, language) + " " + "&N");
+		
 		}
 		#endregion
 		

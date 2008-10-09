@@ -23,7 +23,7 @@ using TNS.FrameWork.Net.Mail;
 using TNS.FrameWork.DB.Common;
 
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
@@ -70,7 +70,7 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 			this._config = config;
 			this._rqDetails = rqDetails;
 			this._parameters = parameters;
-
+			_language = config.Language;
 		}
 		#endregion
 			

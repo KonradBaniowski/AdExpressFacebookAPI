@@ -5,7 +5,7 @@
 #endregion
 
 using System;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 using TNS.AdExpress.Anubis.Bastet;
@@ -17,6 +17,7 @@ using BastetFunctions=TNS.AdExpress.Anubis.Bastet.Functions;
 using BastetRules=TNS.AdExpress.Anubis.Bastet.Rules;
 using TNS.FrameWork.Date;
 using ConstantesTracking=TNS.AdExpress.Constantes.Tracking;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
 {
@@ -31,7 +32,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Excel TopConnected(Excel excel,BastetCommon.Parameters parameters){
+		internal static Workbook TopConnected(Workbook excel, BastetCommon.Parameters parameters, int language) {
 			try{
 								
 				//Chargement des données
@@ -58,8 +59,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					Cells cells = sheet.Cells;
 							
 					//libellés tranches horaires
-					strArray = new string[] {"Société"," Type de clients ","00h00-8h00","8H00-12H00","12H00-16h00","16H00-20h00","20h00-24h00"," Total "}; //A mettre en constante
-					
+					strArray = new string[] { GestionWeb.GetWebWord(1132, language), " " + GestionWeb.GetWebWord(2493, language), "00h00-8h00", "8H00-12H00", "12H00-16h00", "16H00-20h00", "20h00-24h00", " "+GestionWeb.GetWebWord(1401, language) }; 					
 					range = cells.CreateRange("A"+startIndex,"H"+startIndex);
 					cells.ImportObjectArray(strArray,range.FirstRow,range.FirstColumn,false);									
 					range.SetOutlineBorder(BorderType.RightBorder,CellBorderType.Thin,Color.Black);
@@ -109,7 +109,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					}										
 						
 					//Total
-					BastetFunctions.WorkSheet.PutCellValue(cells,"Total",cellRow-1,0,true,Color.Red);
+					BastetFunctions.WorkSheet.PutCellValue(cells, GestionWeb.GetWebWord(1401, language), cellRow - 1, 0, true, Color.Red);
 					BastetFunctions.WorkSheet.PutCellValue(cells,"",cellRow-1,1,true,Color.Red);
 					BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_24_8)","").ToString()),cellRow-1,2,true,Color.Red);						
 					BastetFunctions.WorkSheet.PutCellValue(cells,int.Parse(dt.Compute("sum(CONNECTION_NUMBER_8_12)","").ToString()),cellRow-1,3,true,Color.Red);
@@ -138,17 +138,17 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					
 					//Construit le graphique
 					BastetFunctions.BastetChart.Build(chart,"C"+lastRow+":G"+lastRow,"C"+startIndex+":G"+startIndex
-						,"Connections","Connections par tranche horaire","Tranches horaires","Nombre de Connections");
+						, GestionWeb.GetWebWord(2486, language), GestionWeb.GetWebWord(2487, language), GestionWeb.GetWebWord(2488, language), GestionWeb.GetWebWord(2489, language));
 
 					#endregion
 					
 					 vPageBreaks=cells[(cellRow-1+30),(minimunVPageBreaks)].Name;
-					BastetFunctions.WorkSheet.PageSettings(sheet,"Top sociétés tranche horaire",dt,nbMaxRowByPage,ref s,upperLeftColumn,vPageBreaks);
+					 BastetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2505, language), dt, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, language);
 					#endregion								
 				}
 				
 			}catch(System.Exception e){
-				throw new BastetExceptions.CompanyUIException(" Impossible d'insérer des données dans le fichier excel.",e);
+				throw new BastetExceptions.CompanyUIException(" Impossible to insert data into excel file.", e);
 			}
 			return excel;
 
@@ -161,7 +161,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Excel TopConnectedByMonth(Excel excel,BastetCommon.Parameters parameters){
+		internal static Workbook TopConnectedByMonth(Workbook excel, BastetCommon.Parameters parameters, int language) {
 			try{
 								
 				//Chargement des données
@@ -187,7 +187,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
 					Cells cells = sheet.Cells;	
 							
-					BastetFunctions.WorkSheet.SetConnectionByDate(dt,sheet,cells,ref cellRow,ref i,ref j,ref category,ref serial," Type de client ","group_contact",ConstantesTracking.Period.Type.monthly);			
+					BastetFunctions.WorkSheet.SetConnectionByDate(dt,sheet,cells,ref cellRow,ref i,ref j,ref category,ref serial," "+GestionWeb.GetWebWord(2506, language)+" ","group_contact",ConstantesTracking.Period.Type.monthly,language);			
 					
 					#region Graphique
 
@@ -203,18 +203,18 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					Chart chart=sheet.Charts[chartIndex];
 					
 					//Construit le graphique
-					BastetFunctions.BastetChart.Build(chart,serial,category,"Connections","Connections par mois","Mois","Nombre de Connections");
+					BastetFunctions.BastetChart.Build(chart, serial, category, GestionWeb.GetWebWord(2486, language), GestionWeb.GetWebWord(2496, language), GestionWeb.GetWebWord(2290, language), GestionWeb.GetWebWord(2489, language));
 					#endregion
 					
 					if(i>=minimunVPageBreaks)vPageBreaks=cells[(cellRow-1+30),(i)].Name;
 					else vPageBreaks=cells[(cellRow-1+30),(minimunVPageBreaks)].Name;
-					BastetFunctions.WorkSheet.PageSettings(sheet,"Top sociétés par mois",dt,nbMaxRowByPage,ref s,upperLeftColumn,vPageBreaks);
+					BastetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2507, language), dt, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, language);
 												
 				}
 				#endregion	
 				
 			}catch(System.Exception e){
-				throw new BastetExceptions.CompanyUIException(" Impossible d'insérer des données dans le fichier excel.",e);
+				throw new BastetExceptions.CompanyUIException(" Impossible to insert data into excel file.", e);
 			}
 			return excel;
 
@@ -227,7 +227,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Excel TopConnectedByDay(Excel excel,BastetCommon.Parameters parameters){
+		internal static Workbook TopConnectedByDay(Workbook excel, BastetCommon.Parameters parameters, int language) {
 			try{
 								
 				//Chargement des données
@@ -251,9 +251,9 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					int minimunVPageBreaks=9;
 					string vPageBreaks="";
 					Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
-					Cells cells = sheet.Cells;	
-							
-					BastetFunctions.WorkSheet.SetConnectionByDate(dt,sheet,cells,ref cellRow,ref i,ref j,ref category,ref serial," Type de client ","group_contact",ConstantesTracking.Period.Type.dayly);			
+					Cells cells = sheet.Cells;
+
+					BastetFunctions.WorkSheet.SetConnectionByDate(dt, sheet, cells, ref cellRow, ref i, ref j, ref category, ref serial, " "+GestionWeb.GetWebWord(2506, language)+" ", "group_contact", ConstantesTracking.Period.Type.dayly, language);			
 					
 					#region Graphique
 
@@ -269,18 +269,18 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					Chart chart=sheet.Charts[chartIndex];
 					
 					//Construit le graphique
-					BastetFunctions.BastetChart.Build(chart,serial,category,"Connections","Connections par jour nommé","Jour","Nombre de Connections");
+					BastetFunctions.BastetChart.Build(chart, serial, category, GestionWeb.GetWebWord(2486, language), GestionWeb.GetWebWord(2503, language), GestionWeb.GetWebWord(2289, language), GestionWeb.GetWebWord(2489, language));
 					#endregion
 					
 					if(i>=minimunVPageBreaks)vPageBreaks=cells[(cellRow-1+30),(i)].Name;
 					else vPageBreaks=cells[(cellRow-1+30),(minimunVPageBreaks)].Name;
-					BastetFunctions.WorkSheet.PageSettings(sheet,"Top sociétés jour nommé",dt,nbMaxRowByPage,ref s,upperLeftColumn,vPageBreaks);
+					BastetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2508, language), dt, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, language);
 												
 				}
 				#endregion	
 				
 			}catch(System.Exception e){
-				throw new BastetExceptions.CompanyUIException(" Impossible d'insérer des données dans le fichier excel.",e);
+				throw new BastetExceptions.CompanyUIException(" Impossible to insert data into excel file.", e);
 			}
 			return excel;
 

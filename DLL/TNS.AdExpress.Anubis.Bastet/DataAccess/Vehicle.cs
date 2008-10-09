@@ -14,7 +14,8 @@ using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
 using TNS.AdExpress.Constantes.DB;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
-
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
 	/// <summary>
@@ -27,31 +28,33 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 		/// </summary>
 		/// <param name="parameters">parametres des statistiques</param>
 		/// <returns>données des médias les plus utilisés</returns>
-		public static DataTable TopUsed(BastetCommon.Parameters parameters) {
+		public static DataTable TopUsed(BastetCommon.Parameters parameters, int language) {
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
+				Table vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.vehicle);
+				Table topVehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopVehicle);
 
 				//select
 				sql.Append(" select ");
 		
-				sql.Append(" "+DBTables.TOP_VEHICLE_PREFIXE+".id_vehicle,"+DBTables.VEHICLE_PREFIXE+".vehicle");
-				sql.Append(",sum("+DBTables.TOP_VEHICLE_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
+				sql.Append(" "+topVehicleTable.Prefix+".id_vehicle,"+vehicleTable.Prefix+".vehicle");
+				sql.Append(",sum("+topVehicleTable.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
 
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".TOP_VEHICLE "+DBTables.TOP_VEHICLE_PREFIXE);
-				sql.Append(" ,"+DBSchema.ADEXPRESS_SCHEMA+".VEHICLE "+DBTables.VEHICLE_PREFIXE);
+				sql.Append(" from " + topVehicleTable.SqlWithPrefix);
+				sql.Append(" ," + vehicleTable.SqlWithPrefix);
 			
 				//Where
-				sql.Append(" where "+DBTables.TOP_VEHICLE_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+topVehicleTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0){
-					sql.Append(" and "+DBTables.TOP_VEHICLE_PREFIXE+".id_login in ("+parameters.Logins+") ");				
+					sql.Append(" and "+topVehicleTable.Prefix+".id_login in ("+parameters.Logins+") ");				
 				}
-				sql.Append(" and "+DBTables.TOP_VEHICLE_PREFIXE+".id_vehicle="+DBTables.VEHICLE_PREFIXE+".id_vehicle");
-				sql.Append(" and "+DBTables.VEHICLE_PREFIXE+".id_language="+Language.FRENCH.GetHashCode());
+				sql.Append(" and "+topVehicleTable.Prefix+".id_vehicle="+vehicleTable.Prefix+".id_vehicle");
+				sql.Append(" and "+vehicleTable.Prefix+".id_language="+language);
 				//Gourp by
 				sql.Append(" group by  ");
-				sql.Append("  "+DBTables.TOP_VEHICLE_PREFIXE+".ID_vehicle ,"+DBTables.VEHICLE_PREFIXE+".vehicle");
+				sql.Append("  "+topVehicleTable.Prefix+".ID_vehicle ,"+vehicleTable.Prefix+".vehicle");
 				//Order by
 				sql.Append(" order by  CONNECTION_NUMBER  desc");
 				#endregion
@@ -62,7 +65,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopUsed : Impossible d'obtenir la liste des médias les plus utilisés ", err));
+				throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopUsed : Impossible to get most used media list ", err));
 				
 			}
 			
@@ -73,36 +76,39 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 			/// </summary>
 			/// <param name="parameters">parametres des statistiques</param>
 			/// <returns>données des médias les plus utilisés par module</returns>
-			public static DataTable TopByModule(BastetCommon.Parameters parameters) {
+			public static DataTable TopByModule(BastetCommon.Parameters parameters,int language) {
 				try{
 					#region Requête
 					StringBuilder sql = new StringBuilder(3000);
+					Table vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.vehicle);
+					Table topVehicleByModuleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopVehicleByModule);
+					Table moduleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModule);
 
 					//select
 					sql.Append(" select ");	
-					sql.Append(" "+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".id_vehicle,vehicle");
-					sql.Append(", "+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".id_module,module");
-					sql.Append(",sum("+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
+					sql.Append(" "+topVehicleByModuleTable.Prefix+".id_vehicle,vehicle");
+					sql.Append(", "+topVehicleByModuleTable.Prefix+".id_module,module");
+					sql.Append(",sum("+topVehicleByModuleTable.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
 
 					//From
-					sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".TOP_VEHICLE_BY_MODULE "+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE);
-					sql.Append(" ,"+DBSchema.ADEXPRESS_SCHEMA+".VEHICLE "+DBTables.VEHICLE_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".MODULE "+DBTables.MODULE_PREFIXE);
+					sql.Append(" from " + topVehicleByModuleTable.SqlWithPrefix);
+					sql.Append(" ,"+vehicleTable.SqlWithPrefix+","+moduleTable.SqlWithPrefix);
 			
 					//Where
-					sql.Append(" where "+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+					sql.Append(" where "+topVehicleByModuleTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 					if(parameters!=null && parameters.Logins.Length>0){
-						sql.Append(" and "+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".id_login in ("+parameters.Logins+") ");				
+						sql.Append(" and "+topVehicleByModuleTable.Prefix+".id_login in ("+parameters.Logins+") ");				
 					}
-					sql.Append(" and "+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".id_vehicle="+DBTables.VEHICLE_PREFIXE+".id_vehicle");
-					sql.Append(" and "+DBTables.VEHICLE_PREFIXE+".id_language="+Language.FRENCH.GetHashCode());
-					sql.Append(" and "+DBTables.VEHICLE_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
-					sql.Append(" and "+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".id_module="+DBTables.MODULE_PREFIXE+".id_module");					
-					sql.Append(" and "+DBTables.MODULE_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
+					sql.Append(" and "+topVehicleByModuleTable.Prefix+".id_vehicle="+vehicleTable.Prefix+".id_vehicle");
+					sql.Append(" and "+vehicleTable.Prefix+".id_language="+ language);
+					sql.Append(" and "+vehicleTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
+					sql.Append(" and "+topVehicleByModuleTable.Prefix+".id_module="+moduleTable.Prefix+".id_module");					
+					sql.Append(" and "+moduleTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
 					//Gourp by
 					sql.Append(" group by  ");
-					sql.Append("  "+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".id_module,module,"+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".id_vehicle ,vehicle ");
+					sql.Append("  "+topVehicleByModuleTable.Prefix+".id_module,module,"+topVehicleByModuleTable.Prefix+".id_vehicle ,vehicle ");
 					//Order by
-					sql.Append(" order by  module asc,"+DBTables.TOP_VEHICLE_BY_MODULE_PREFIXE+".id_vehicle ,vehicle");
+					sql.Append(" order by  module asc,"+topVehicleByModuleTable.Prefix+".id_vehicle ,vehicle");
 					#endregion
 				
 					#region Execution
@@ -111,7 +117,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 					#endregion
 				}
 				catch(System.Exception err){
-					throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopByModule : Impossible d'obtenir la liste des médias les plus utilisés par module", err));
+					throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopByModule : Impossible t oget most used media by module", err));
 				
 				}
 			

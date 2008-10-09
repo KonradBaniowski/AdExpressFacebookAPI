@@ -16,7 +16,8 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
-
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
 	/// <summary>
@@ -35,41 +36,43 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
+				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
+				Table connectionTimeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionTime);
+
 				//select
 				sql.Append(" select ");
 				if(parameters!=null && parameters.Logins.Length==0){
-					sql.Append(" "+DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.CONNECTION_TIME_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ,");					
+					sql.Append(" "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionTimeTable.Prefix+".id_login,"+loginTable.Prefix+".login ,");					
 				}
-				 sql.Append(" DECODE(sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER),0,0,Round(sum("+DBTables.CONNECTION_TIME_PREFIXE+".CONNECTION_TIME)/sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER),0) ) as CONNEXION_AVERAGE ");			
-				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".CONNECTION_TIME "+DBTables.CONNECTION_TIME_PREFIXE);
-				sql.Append(" , "+DBSchema.UNIVERS_SCHEMA+".CONNECTION_BY_LOGIN "+DBTables.CONNECTION_BY_LOGIN_PREFIXE);
-				if(parameters!=null && parameters.Logins.Length==0){
-					sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-						+","+DBSchema.LOGIN_SCHEMA+".ADDRESS "+DBTables.ADDRESS_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".COMPANY "+DBTables.COMPANY_PREFIXE);
+				 sql.Append(" DECODE(sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER),0,0,Round(sum("+connectionTimeTable.Prefix+".CONNECTION_TIME)/sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER),0) ) as CONNEXION_AVERAGE ");			
+				//From				
+				sql.Append(" from " + connectionTimeTable.SqlWithPrefix +"," + connectionByLoginTable.SqlWithPrefix);
+				if (parameters != null && parameters.Logins.Length == 0) {
+					sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
+						+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				}
 				//Where
-				sql.Append(" where "+DBTables.CONNECTION_TIME_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+connectionTimeTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.CONNECTION_TIME_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login="+DBTables.CONNECTION_TIME_PREFIXE+".id_login ");
+					sql.Append(" and "+connectionTimeTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+connectionByLoginTable.Prefix+".id_login="+connectionTimeTable.Prefix+".id_login ");
 				if(parameters!=null && parameters.Logins.Length==0){
-					sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.CONNECTION_TIME_PREFIXE+".id_login ");
-					sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-					sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_address = "+DBTables.ADDRESS_PREFIXE+".id_address ");
-					sql.Append(" and "+DBTables.ADDRESS_PREFIXE+".id_company="+DBTables.COMPANY_PREFIXE+".id_company ");
+					sql.Append(" and "+loginTable.Prefix+".id_login="+connectionTimeTable.Prefix+".id_login ");
+					sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
+					sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
+					sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 				}
 				
 				if(parameters!=null && parameters.Logins.Length==0){
 					//Gourp by
-					sql.Append(" group by  "+DBTables.COMPANY_PREFIXE+".id_company,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.CONNECTION_TIME_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ");
+					sql.Append(" group by  "+companyTable.Prefix+".id_company,"+companyTable.Prefix+".company,"+connectionTimeTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
 					//Order by
-					sql.Append(" order by  CONNEXION_AVERAGE  desc,"+DBTables.LOGIN_PREFIXE+".login ");
+					sql.Append(" order by  CONNEXION_AVERAGE  desc,"+loginTable.Prefix+".login ");
 				}
-//						else {
-				//				//Order by
-				//				sql.Append(" order by  CONNEXION_AVERAGE  desc  ");
-				//			}
 			
 				#endregion
 				
@@ -79,7 +82,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" ConnexionAverage : Impossible d'obtenir Durée moyenne des connections par clients ", err));
+				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" ConnexionAverage : Impossible to get average connection duration by client ", err));
 			}
 			
 	

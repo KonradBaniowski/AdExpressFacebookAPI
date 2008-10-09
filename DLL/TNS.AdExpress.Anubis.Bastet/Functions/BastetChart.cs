@@ -5,7 +5,7 @@
 #endregion
 
 using System;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 
 namespace TNS.AdExpress.Anubis.Bastet.Functions

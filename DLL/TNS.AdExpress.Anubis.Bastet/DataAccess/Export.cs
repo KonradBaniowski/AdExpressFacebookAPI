@@ -14,6 +14,8 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
@@ -32,26 +34,31 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
+				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table topExcelTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopExcelExport);
 
 				//select
-				sql.Append(" select sum("+DBTables.TOP_EXPORT_EXCEL_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER ");			
-				sql.Append(","+DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.TOP_EXPORT_EXCEL_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ");
-				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".TOP_EXPORT_EXCEL "+DBTables.TOP_EXPORT_EXCEL_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-					+","+DBSchema.LOGIN_SCHEMA+".ADDRESS "+DBTables.ADDRESS_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".COMPANY "+DBTables.COMPANY_PREFIXE);
+				sql.Append(" select sum("+topExcelTable.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER ");			
+				sql.Append(","+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+topExcelTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
+				//From				
+				sql.Append(" from " + topExcelTable.SqlWithPrefix);
+					sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
+						+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+DBTables.TOP_EXPORT_EXCEL_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+topExcelTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.TOP_EXPORT_EXCEL_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.TOP_EXPORT_EXCEL_PREFIXE+".id_login ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_address = "+DBTables.ADDRESS_PREFIXE+".id_address ");
-				sql.Append(" and "+DBTables.ADDRESS_PREFIXE+".id_company="+DBTables.COMPANY_PREFIXE+".id_company ");
+					sql.Append(" and "+topExcelTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+loginTable.Prefix+".id_login="+topExcelTable.Prefix+".id_login ");
+				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
+				sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
+				sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 				//Gourp by
-				sql.Append(" group by  "+DBTables.COMPANY_PREFIXE+".id_company,cpn.company,"+DBTables.TOP_EXPORT_EXCEL_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ");
+				sql.Append(" group by  "+companyTable.Prefix+".id_company,cpn.company,"+topExcelTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
 				//Order by
-				sql.Append(" order by  CONNECTION_NUMBER  desc,"+DBTables.LOGIN_PREFIXE+".login ");
+				sql.Append(" order by  CONNECTION_NUMBER  desc,"+loginTable.Prefix+".login ");
 				#endregion
 
 				#region Execution
@@ -60,7 +67,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" Top : Impossible d'obtenir des clients effectuant le plus d'export excel ", err));
+				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" Top : Impossible to export clients with most excel exports ", err));
 			}
 			
 		}

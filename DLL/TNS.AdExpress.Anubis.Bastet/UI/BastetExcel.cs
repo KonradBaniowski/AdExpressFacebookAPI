@@ -9,12 +9,12 @@
 
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 using TNS.AdExpress.Anubis.Bastet;
 using BastetCommon=TNS.AdExpress.Bastet.Common;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.DB;
 using BastetExceptions=TNS.AdExpress.Anubis.Bastet.Exceptions;
 
@@ -28,20 +28,24 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// <summary>
 		/// Composant excel
 		/// </summary>
-		protected Excel _excel;
+		protected Workbook _excel;
 		/// <summary>
 		/// Licence Aspose Excel
 		/// </summary>
 		License _license;
+		/// <summary>
+		/// Langue code
+		/// </summary>
+		protected int _language = 33;
 				
 		#region Constructeur
 		/// <summary>
 		/// Constructeur
 		/// </summary>
 		public BastetExcel(){
-			_excel = new Excel();
+			_excel = new Workbook();
 			_license = new License();
-			_license.SetLicense("Aspose.Excel.lic");
+			_license.SetLicense("Aspose.Cells.lic");
 			//Ajout de couleur			
 			AddColor(Color.FromArgb(128,128,192));
 		}
@@ -68,7 +72,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// </summary>
 		/// <param name="parameters">paramètres des statistiques</param>
 		protected void ConnexionDurationAverage(BastetCommon.Parameters parameters){
-			UI.Duration.ConnexionAverage(_excel,parameters);
+			UI.Duration.ConnexionAverage(_excel,parameters,_language);
 		}
 		#endregion
 
@@ -78,7 +82,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 //		/// </summary>
 //		/// <param name="excel"></param>
 //		private void AddStyles(Excel excel) {
-//			Aspose.Excel.Style style = null;
+//			Aspose.Cells.Style style = null;
 //			for (int i = 0;i < 28;i++) {
 //				int index = excel.Styles.Add();
 //				style = excel.Styles[index];
@@ -271,7 +275,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		protected void CustomerSelelection(BastetCommon.Parameters parameters,string idLogins){
 			try{
 				Worksheet sheet = this._excel.Worksheets[0];
-				sheet.Name=" Rappel des sélections";
+				sheet.Name = GestionWeb.GetWebWord(1989, _language); //" Rappel des sélections";
 				string[] loginsArray =null;
 				Cells cells = sheet.Cells;
 				if(parameters.Logins!=null && parameters.Logins.Length>0)
@@ -295,16 +299,17 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 			
 				//Ajout du logo TNS
 				Pictures pics = sheet.Pictures;
-				string tnsLogoPath=@"Images\logoTNSMedia.gif";	
+				string tnsLogoPath= TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;	
 				string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
-				pics.Add(0, 0,logoPath);
-				string bastetLogoPath=@"Images\Bastet.gif";
+				int picIndex = pics.Add(0, 0,logoPath);
+				pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+				string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;	
 				string bastetImagePath = System.IO.Path.GetFullPath(bastetLogoPath);
-				pics.Add(0, 5,bastetImagePath);
-
+				picIndex = pics.Add(0, 5, bastetImagePath);
+				pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 				sheet.IsGridlinesVisible = false;
 				sheet.PageSetup.Orientation = PageOrientationType.Landscape;
-				Aspose.Excel.PageSetup pageSetup =sheet.PageSetup;
+				Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
 			
 				//Set margins, in unit of inches 					
 				pageSetup.TopMarginInch = 0.3; 
@@ -316,10 +321,10 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
 					
 				//Set current page number at the center section of footer
-				pageSetup.SetFooter(1, "&A"+" - Page "+"&P"+" sur "+"&N");
+				pageSetup.SetFooter(1, "&A" + " - " + GestionWeb.GetWebWord(894, _language) + " " + "&P" + " " + GestionWeb.GetWebWord(2042, _language) + " " + "&N");
 
 				//intitulé du fichier excel			
-				cells["D"+cellRow].PutValue("Statistiques AdExpress ");
+				cells["D"+cellRow].PutValue(GestionWeb.GetWebWord(2481, _language) +" ");
 				cells["D"+cellRow].Style.Font.Size =15;
 				cells["D"+cellRow].Style.Font.Color = Color.DarkViolet;
 				cells["D"+cellRow].Style.Font.IsBold = true;
@@ -330,7 +335,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				cellRow++;
 
 				//Date de création
-				cells["D"+cellRow].PutValue(" Créé le "+DateTime.Now.ToString("ddd dd MMM yyyy"));
+				cells["D" + cellRow].PutValue(" " + GestionWeb.GetWebWord(1922, _language) + " " + DateTime.Now.ToString("ddd dd MMM yyyy"));
 				cells["D"+cellRow].Style.Font.Size =10;
 				cells["D"+cellRow].Style.Font.Color = Color.Black;
 				cells["D"+cellRow].Style.Font.IsBold = true;
@@ -340,21 +345,24 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 			
 				//E10 to J10
 				cellRow=cellRow+2;
-				cells["D"+cellRow].PutValue(GestionWeb.GetWebWord(1752,Language.FRENCH.GetHashCode()));
+				cells["D"+cellRow].PutValue(GestionWeb.GetWebWord(1752,_language));
 				cells["D"+cellRow].Style.Font.IsBold = true;
 				cells["D"+cellRow].Style.Font.Color = Color.White;
 				cells["D"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
 				cells["D"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;			
 				cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 				cells["D"+cellRow].Style.ForegroundColor = Color.FromArgb(128,128,192);
+				cells["D" + cellRow].Style.Pattern = BackgroundType.Solid;
+
 				cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 				cells["E"+cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;					
 				cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 				cells["E"+cellRow].Style.ForegroundColor =  Color.FromArgb(128,128,192);
+				cells["E" + cellRow].Style.Pattern = BackgroundType.Solid;
 				cellRow++;		
 
 				//Expéditeur						
-				cells["D"+cellRow].PutValue(" Expéditeur  ");// A mettre dans web word
+				cells["D" + cellRow].PutValue(" " + GestionWeb.GetWebWord(2482,_language)+"  ");
 				cells["D"+cellRow].Style.Font.IsBold = true;
 				cells["D"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;	
 				cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
@@ -366,7 +374,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 
 				//Emails destinataires
 				for(int i=0; i<parameters.EmailsRecipient.Count;i++){
-					if(i==0)cells["D"+cellRow].PutValue(" Destinataire(s) ");// A mettre dans web word
+					if (i == 0) cells["D" + cellRow].PutValue(" " + GestionWeb.GetWebWord(2483, _language) + " ");
 					cells["D"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
 					cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
 					cells["D"+cellRow].Style.Font.IsBold = true;
@@ -378,7 +386,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				
 
 				//Période étudiée
-				cells["D"+cellRow].PutValue(" Période  ");// A mettre dans web word
+				cells["D" + cellRow].PutValue(" " + GestionWeb.GetWebWord(1755, _language) + "  ");
 				cells["D"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
 				cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 				cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
@@ -387,8 +395,8 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 			
 				string period ="";
 				if(!parameters.PeriodBeginningDate.Equals(parameters.PeriodEndDate))
-					period = " Du "+parameters.PeriodBeginningDate.Substring(6,2)+"/"+parameters.PeriodBeginningDate.Substring(4,2)+"/"+parameters.PeriodBeginningDate.Substring(0,4)
-						+" au "+parameters.PeriodEndDate.Substring(6,2)+"/"+parameters.PeriodEndDate.Substring(4,2)+"/"+parameters.PeriodEndDate.Substring(0,4); 
+					period = " " + GestionWeb.GetWebWord(124, _language) + " " + parameters.PeriodBeginningDate.Substring(6, 2) + "/" + parameters.PeriodBeginningDate.Substring(4, 2) + "/" + parameters.PeriodBeginningDate.Substring(0, 4)
+						+ " " + GestionWeb.GetWebWord(1730, _language) + " " + parameters.PeriodEndDate.Substring(6, 2) + "/" + parameters.PeriodEndDate.Substring(4, 2) + "/" + parameters.PeriodEndDate.Substring(0, 4); 
 				else period = parameters.PeriodBeginningDate.Substring(6,2)+"/"+parameters.PeriodBeginningDate.Substring(4,2)+"/"+parameters.PeriodBeginningDate.Substring(0,4);
 											 
 				cells["E"+cellRow].PutValue(period);
@@ -398,7 +406,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				cellRow++;	
 
 				//Logins clients
-				cells["D"+cellRow].PutValue(" Logins  ");// A mettre dans web word
+				cells["D" + cellRow].PutValue(" " + GestionWeb.GetWebWord(2484, _language) + "  ");
 				cells["D"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
 				cells["D"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;	
 				cells["D"+cellRow].Style.Font.IsBold = true;
@@ -422,7 +430,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 					cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 					cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 				}else{
-					cells["E"+cellRow].PutValue(" Tous ");
+					cells["E" + cellRow].PutValue(" " + GestionWeb.GetWebWord(201, _language) + " ");
 				
 					cells["D"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 					cells["E"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
@@ -434,7 +442,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				sheet.AutoFitColumn(4);
 				sheet.AutoFitColumn(7);
 			}catch(Exception err){
-				throw (new  BastetExceptions.BastetExcelException(" CustomerSelelection : Impossible d'obtenir le rappel des sélections. ", err));
+				throw (new  BastetExceptions.BastetExcelException(" CustomerSelelection : Impossible to get selection recall. ", err));
 			}
 		}
 		#endregion
@@ -447,7 +455,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopConnectedCustomer(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopConnected(_excel,parameters);
+			_excel=UI.Client.TopConnected(_excel,parameters,_language);
 
 		}
 		#endregion
@@ -460,7 +468,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopTypeConnectedCustomer(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopTypeConnected(_excel,parameters);
+			_excel=UI.Client.TopTypeConnected(_excel,parameters,_language);
 
 		}
 		#endregion
@@ -473,7 +481,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopConnectedCustomerByMonth(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopConnectedByMonth(_excel,parameters);
+			_excel=UI.Client.TopConnectedByMonth(_excel,parameters,_language);
 
 		}
 		#endregion
@@ -486,7 +494,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopTypeConnectedCustomerByMonth(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopTypeConnectedByMonth(_excel,parameters);
+			_excel=UI.Client.TopTypeConnectedByMonth(_excel,parameters,_language);
 
 		}
 		#endregion
@@ -499,7 +507,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopConnectedCustomerByDay(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopConnectedByDay(_excel,parameters);
+			_excel=UI.Client.TopConnectedByDay(_excel,parameters,_language);
 
 		}
 		#endregion
@@ -512,7 +520,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopTypeConnectedCustomerByDay(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopTypeConnectedByDay(_excel,parameters);
+			_excel=UI.Client.TopTypeConnectedByDay(_excel,parameters,_language);
 
 		}
 		#endregion
@@ -525,7 +533,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 			///<param name="parameters">paramètres des statistiques</param>
 			protected void IPAdresseByClient(string excelpath,BastetCommon.Parameters parameters){
 
-				_excel=UI.Client.IPAddress(_excel,parameters);
+				_excel=UI.Client.IPAddress(_excel,parameters,_language);
 
 			}
 		#endregion
@@ -538,7 +546,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopConnectedCompany(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Company.TopConnected(_excel,parameters);
+			_excel=UI.Company.TopConnected(_excel,parameters,_language);
 
 		}
 		#endregion
@@ -551,7 +559,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopConnectedCompanyByMonth(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Company.TopConnectedByMonth(_excel,parameters);
+			_excel=UI.Company.TopConnectedByMonth(_excel,parameters,_language);
 
 		}
 		#endregion				
@@ -564,7 +572,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopConnectedCompanyByDay(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Company.TopConnectedByDay(_excel,parameters);
+			_excel=UI.Company.TopConnectedByDay(_excel,parameters,_language);
 
 		}
 		#endregion				
@@ -574,7 +582,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// Top utilisation du fichier AGM et GAD
 		/// </summary>
 		protected void TopFileUsing(BastetCommon.Parameters parameters){
-			UI.File.TopUsers(_excel,parameters);
+			UI.File.TopUsers(_excel,parameters,_language);
 		}
 		#endregion
 
@@ -584,7 +592,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// </summary>
 		/// <param name="parameters">paramètres des statistiques</param>
 		protected void TopUsedModules(BastetCommon.Parameters parameters){
-			UI.Module.TopUsed(_excel,parameters);
+			UI.Module.TopUsed(_excel,parameters,_language);
 		}
 		#endregion
 
@@ -594,7 +602,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// </summary>
 		///<param name="parameters">paramètres</param>
 		protected void TopExport(BastetCommon.Parameters parameters){
-			UI.Export.Top(_excel,parameters);
+			UI.Export.Top(_excel,parameters,_language);
 		}	
 		#endregion
 
@@ -604,7 +612,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// </summary>
 		/// <param name="parameters">paramètres</param>
 		protected void TopUsedTab(BastetCommon.Parameters parameters){
-			UI.Tab.TopUsed(_excel,parameters);
+			UI.Tab.TopUsed(_excel,parameters,_language);
 		}	
 		#endregion
 
@@ -614,7 +622,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// </summary>
 		/// <param name="parameters">paramètres</param>
 		protected void TopUsingSavedSession(BastetCommon.Parameters parameters){
-			UI.Request.TopClient(_excel,parameters);
+			UI.Request.TopClient(_excel,parameters,_language);
 		}
 		#endregion
 		
@@ -624,7 +632,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// </summary>
 		/// <param name="parameters">paramètres</param>
 		protected void TopUsedUnits(BastetCommon.Parameters parameters){
-			UI.Unit.TopUsed(_excel,parameters);
+			UI.Unit.TopUsed(_excel,parameters,_language);
 		}
 		#endregion
 
@@ -634,7 +642,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// </summary>
 		///  <param name="parameters">paramètres</param>
 		protected void  TopUsedPeriod(BastetCommon.Parameters parameters){
-			UI.Period.TopUsed(_excel,parameters);
+			UI.Period.TopUsed(_excel,parameters,_language);
 		}
 		#endregion
 
@@ -644,7 +652,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// </summary>
 		/// <param name="parameters">paramètres</param>
 		protected void TopVehicle(BastetCommon.Parameters parameters){
-			UI.Vehicle.TopUsed(_excel,parameters);
+			UI.Vehicle.TopUsed(_excel,parameters,_language);
 		}
 		#endregion
 
@@ -654,7 +662,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// </summary>
 		/// <param name="parameters">paramètres</param>
 		protected void TopVehicleByModule(BastetCommon.Parameters parameters){
-			UI.Vehicle.TopByModule(_excel,parameters);
+			UI.Vehicle.TopByModule(_excel,parameters,_language);
 		}
 		#endregion
 		

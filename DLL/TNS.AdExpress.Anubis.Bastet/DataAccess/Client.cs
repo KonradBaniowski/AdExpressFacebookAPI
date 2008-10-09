@@ -17,6 +17,8 @@ using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 	/// <summary>
@@ -36,28 +38,33 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
-				//select
-				sql.Append(" select sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER,sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_8_12) as CONNECTION_NUMBER_8_12");
-				sql.Append(",sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_12_16) as CONNECTION_NUMBER_12_16,sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_16_20) as CONNECTION_NUMBER_16_20");
-				sql.Append(",sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_20_24) as CONNECTION_NUMBER_20_24,sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_24_8) as CONNECTION_NUMBER_24_8");
-				sql.Append(","+DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ");
+				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
+				
+				//select				
+				sql.Append(" select sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER,sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_8_12) as CONNECTION_NUMBER_8_12");
+				sql.Append(",sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_12_16) as CONNECTION_NUMBER_12_16,sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_16_20) as CONNECTION_NUMBER_16_20");
+				sql.Append(",sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_20_24) as CONNECTION_NUMBER_20_24,sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_24_8) as CONNECTION_NUMBER_24_8");
+				sql.Append(","+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".CONNECTION_BY_LOGIN "+DBTables.CONNECTION_BY_LOGIN_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-					+","+DBSchema.LOGIN_SCHEMA+".ADDRESS "+DBTables.ADDRESS_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".COMPANY "+DBTables.COMPANY_PREFIXE);
+				sql.Append(" from " + connectionByLoginTable.SqlWithPrefix);
+				sql.Append(" ," + companyTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
+					+","+addressTable.SqlWithPrefix+","+loginTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
-				//			sql.Append(" where "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".date_connection  between 20051118 and 20051118 ");//test
+				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_address = "+DBTables.ADDRESS_PREFIXE+".id_address ");
-				sql.Append(" and "+DBTables.ADDRESS_PREFIXE+".id_company="+DBTables.COMPANY_PREFIXE+".id_company ");
+					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
+				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
+				sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
+				sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 				//Gourp by
-				sql.Append(" group by  "+DBTables.COMPANY_PREFIXE+".id_company,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login ");
+				sql.Append(" group by  "+companyTable.Prefix+".id_company,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,"+loginTable.Prefix+".login ");
 				//Order by
-				sql.Append(" order by  CONNECTION_NUMBER  desc,"+DBTables.LOGIN_PREFIXE+".login ");
+				sql.Append(" order by  CONNECTION_NUMBER  desc,"+loginTable.Prefix+".login ");
 				#endregion
 				
 				#region Execution
@@ -66,7 +73,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnected : Impossible d'obtenir la liste des clients les plus connectés ", err));
+				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnected : Impossible to get the list of most connected clients ", err));
 			}
 			
 	
@@ -84,25 +91,30 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
+				Table groupContactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContactGroup);
+
 				//select
-				sql.Append(" select sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER,sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_8_12) as CONNECTION_NUMBER_8_12");
-				sql.Append(",sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_12_16) as CONNECTION_NUMBER_12_16,sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_16_20) as CONNECTION_NUMBER_16_20");
-				sql.Append(",sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_20_24) as CONNECTION_NUMBER_20_24,sum("+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".CONNECTION_NUMBER_24_8) as CONNECTION_NUMBER_24_8");
+				sql.Append(" select sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER,sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_8_12) as CONNECTION_NUMBER_8_12");
+				sql.Append(",sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_12_16) as CONNECTION_NUMBER_12_16,sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_16_20) as CONNECTION_NUMBER_16_20");
+				sql.Append(",sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_20_24) as CONNECTION_NUMBER_20_24,sum("+connectionByLoginTable.Prefix+".CONNECTION_NUMBER_24_8) as CONNECTION_NUMBER_24_8");
 				sql.Append(",group_contact ");
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".CONNECTION_BY_LOGIN "+DBTables.CONNECTION_BY_LOGIN_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-					+","+DBSchema.LOGIN_SCHEMA+".GROUP_CONTACT "+DBTables.GROUP_CONTACT_PREFIXE);
+				sql.Append(" from " + connectionByLoginTable.SqlWithPrefix);
+				sql.Append(" ,"+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix
+					+ "," + groupContactTable.SqlWithPrefix);
 					
 				//Where
-				sql.Append(" where "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_group_contact(+)="+DBTables.GROUP_CONTACT_PREFIXE+".id_group_contact ");
-				sql.Append(" and "+DBTables.GROUP_CONTACT_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);			
+					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
+				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
+				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
+				sql.Append(" and "+contactTable.Prefix+".id_group_contact(+)="+groupContactTable.Prefix+".id_group_contact ");
+				sql.Append(" and "+groupContactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);			
 				//Gourp by
 				sql.Append(" group by group_contact");
 				//Order by
@@ -115,7 +127,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnected : Impossible d'obtenir la liste des sociétés les plus connectés ", err));
+				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnected : Impossible to get most connected clients list ", err));
 			}
 			
 	
@@ -134,31 +146,36 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#region Requête
 
 				StringBuilder sql = new StringBuilder(3000);
-
+				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
+				
 				//select	
 				sql.Append(" select id_company,company,id_login ,login,DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER from ( ");
 
-				sql.Append(" select "+DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login ,"+DBTables.LOGIN_PREFIXE+".login");
+				sql.Append(" select "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login ,"+loginTable.Prefix+".login");
 				sql.Append(",TO_NUMBER(SUBSTR(TO_CHAR(DATE_CONNECTION),1,6)) AS DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER");
 				
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".CONNECTION_BY_LOGIN "+DBTables.CONNECTION_BY_LOGIN_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-				+","+DBSchema.LOGIN_SCHEMA+".ADDRESS "+DBTables.ADDRESS_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".COMPANY "+DBTables.COMPANY_PREFIXE);
+				sql.Append(" from "+connectionByLoginTable.SqlWithPrefix);
+				sql.Append(" ,"+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix
+				+","+addressTable.SqlWithPrefix+","+companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_address = "+DBTables.ADDRESS_PREFIXE+".id_address ");
-				sql.Append(" and "+DBTables.ADDRESS_PREFIXE+".id_company="+DBTables.COMPANY_PREFIXE+".id_company ");
+					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
+				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
+				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
+				sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
+				sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 							
 				//Gourp by
-				sql.Append(" group by "+DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login,login,date_connection,connection_number");
+				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,login,date_connection,connection_number");
 				//Order by
-				sql.Append(" order by  "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login,login,date_connection");
+				sql.Append(" order by  "+connectionByLoginTable.Prefix+".id_login,login,date_connection");
 
 				sql.Append(" ) group by date_connection,id_company,company,id_login,login ");
 				#endregion
@@ -169,7 +186,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnectedByMonth : Impossible d'obtenir la liste des Top connections clients par mois ", err));
+				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnectedByMonth : Impossible to get top connected client by month list ", err));
 			}
 			
 	
@@ -188,32 +205,38 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#region Requête
 
 				StringBuilder sql = new StringBuilder(3000);
+				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
+				Table groupContactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContactGroup);
 
 				//select	
 				sql.Append(" select id_group_contact,group_contact,DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER from ( ");
 
-				sql.Append(" select "+DBTables.CONTACT_PREFIXE+".id_group_contact,group_contact");
+				sql.Append(" select "+contactTable.Prefix+".id_group_contact,group_contact");
 				sql.Append(",TO_NUMBER(SUBSTR(TO_CHAR(DATE_CONNECTION),1,6)) AS DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER");
 				
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".CONNECTION_BY_LOGIN "+DBTables.CONNECTION_BY_LOGIN_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-					+","+DBSchema.LOGIN_SCHEMA+".GROUP_CONTACT "+DBTables.GROUP_CONTACT_PREFIXE);
+				sql.Append(" from "+connectionByLoginTable.SqlWithPrefix);
+				sql.Append(" ,"+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix
+					+","+groupContactTable.SqlWithPrefix);
 					
 				//Where
-				sql.Append(" where "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_group_contact(+)="+DBTables.GROUP_CONTACT_PREFIXE+".id_group_contact ");
-				sql.Append(" and "+DBTables.GROUP_CONTACT_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
+					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
+				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
+				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
+				sql.Append(" and "+contactTable.Prefix+".id_group_contact(+)="+groupContactTable.Prefix+".id_group_contact ");
+				sql.Append(" and "+groupContactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
 							
 				//Gourp by
-				sql.Append(" group by "+DBTables.CONTACT_PREFIXE+".id_group_contact,group_contact,date_connection,connection_number");
+				sql.Append(" group by "+contactTable.Prefix+".id_group_contact,group_contact,date_connection,connection_number");
 				//Order by
-				sql.Append(" order by  "+DBTables.CONTACT_PREFIXE+".id_group_contact,group_contact,date_connection");
+				sql.Append(" order by  "+contactTable.Prefix+".id_group_contact,group_contact,date_connection");
 
 				sql.Append(" ) group by date_connection,id_group_contact,group_contact ");
 				#endregion
@@ -243,31 +266,37 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#region Requête
 
 				StringBuilder sql = new StringBuilder(3000);
-
+				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
+				
 				//select	
 				sql.Append(" select id_company,company,id_login ,login,DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER from ( ");
 
-				sql.Append(" select "+DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login ,"+DBTables.LOGIN_PREFIXE+".login");
+				sql.Append(" select "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login ,"+loginTable.Prefix+".login");
 				sql.Append(",TO_NUMBER(TO_CHAR(TO_DATE(DATE_CONNECTION,'YYYY-MM-DD'),'D')) AS DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER");
 				
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".CONNECTION_BY_LOGIN "+DBTables.CONNECTION_BY_LOGIN_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-					+","+DBSchema.LOGIN_SCHEMA+".ADDRESS "+DBTables.ADDRESS_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".COMPANY "+DBTables.COMPANY_PREFIXE);
+				//From
+				sql.Append(" from " + connectionByLoginTable.SqlWithPrefix);
+				sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
+				+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_address = "+DBTables.ADDRESS_PREFIXE+".id_address ");
-				sql.Append(" and "+DBTables.ADDRESS_PREFIXE+".id_company="+DBTables.COMPANY_PREFIXE+".id_company ");
+					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
+				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
+				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
+				sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
+				sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 							
 				//Gourp by
-				sql.Append(" group by "+DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login,login,date_connection,connection_number");
+				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,login,date_connection,connection_number");
 				//Order by
-				sql.Append(" order by  "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login,login,date_connection");
+				sql.Append(" order by  "+connectionByLoginTable.Prefix+".id_login,login,date_connection");
 
 				sql.Append(" ) group by date_connection,id_company,company,id_login,login ");
 				#endregion
@@ -297,32 +326,37 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#region Requête
 
 				StringBuilder sql = new StringBuilder(3000);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
+				Table groupContactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContactGroup);
 
 				//select	
 				sql.Append(" select id_group_contact,group_contact,DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER from ( ");
 
-				sql.Append(" select "+DBTables.CONTACT_PREFIXE+".id_group_contact,group_contact");
+				sql.Append(" select "+contactTable.Prefix+".id_group_contact,group_contact");
 				sql.Append(",TO_NUMBER(TO_CHAR(TO_DATE(DATE_CONNECTION,'YYYY-MM-DD'),'D')) AS DATE_CONNECTION,sum(CONNECTION_NUMBER) as CONNECTION_NUMBER");
 				
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".CONNECTION_BY_LOGIN "+DBTables.CONNECTION_BY_LOGIN_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-					+","+DBSchema.LOGIN_SCHEMA+".GROUP_CONTACT "+DBTables.GROUP_CONTACT_PREFIXE);
-					
+				//From
+				sql.Append(" from " + connectionByLoginTable.SqlWithPrefix);
+				sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
+				+ "," + groupContactTable.SqlWithPrefix );
+				
 				//Where
-				sql.Append(" where "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.CONNECTION_BY_LOGIN_PREFIXE+".id_login ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_group_contact(+)="+DBTables.GROUP_CONTACT_PREFIXE+".id_group_contact ");
-				sql.Append(" and "+DBTables.GROUP_CONTACT_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
+					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
+				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
+				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
+				sql.Append(" and "+contactTable.Prefix+".id_group_contact(+)="+groupContactTable.Prefix+".id_group_contact ");
+				sql.Append(" and "+groupContactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
 							
 				//Gourp by
-				sql.Append(" group by "+DBTables.CONTACT_PREFIXE+".id_group_contact,group_contact,date_connection,connection_number");
+				sql.Append(" group by "+contactTable.Prefix+".id_group_contact,group_contact,date_connection,connection_number");
 				//Order by
-				sql.Append(" order by  "+DBTables.CONTACT_PREFIXE+".id_group_contact,group_contact,date_connection");
+				sql.Append(" order by  "+contactTable.Prefix+".id_group_contact,group_contact,date_connection");
 
 				sql.Append(" ) group by date_connection,id_group_contact,group_contact ");
 				#endregion
@@ -333,7 +367,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopTypeConnectedByDay : Impossible d'obtenir la liste des Top connections type clients par jour nommé. ", err));
+				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopTypeConnectedByDay : Impossible to get the list of Top connected clients type  named day. ", err));
 			}
 			
 	
@@ -351,25 +385,31 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
+				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				Table ipLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingLoginIp);
+				
 				//select
 				sql.Append(" select ");				
-				sql.Append(DBTables.COMPANY_PREFIXE+".id_company ,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.IP_BY_LOGIN_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login,IP_ADDRESS ");
+				sql.Append(companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+ipLoginTable.Prefix+".id_login,"+loginTable.Prefix+".login,IP_ADDRESS ");
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".IP_BY_LOGIN "+DBTables.IP_BY_LOGIN_PREFIXE);
-				sql.Append(" ,"+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE
-					+","+DBSchema.LOGIN_SCHEMA+".ADDRESS "+DBTables.ADDRESS_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".COMPANY "+DBTables.COMPANY_PREFIXE);
+				sql.Append(" from " + ipLoginTable.SqlWithPrefix);
+				sql.Append(" ,"+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix
+					+","+addressTable.SqlWithPrefix+","+companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+DBTables.IP_BY_LOGIN_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+ipLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+DBTables.IP_BY_LOGIN_PREFIXE+".id_login in ("+parameters.Logins+") ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_login="+DBTables.IP_BY_LOGIN_PREFIXE+".id_login ");
-				sql.Append(" and "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");
-				sql.Append(" and "+DBTables.CONTACT_PREFIXE+".id_address = "+DBTables.ADDRESS_PREFIXE+".id_address ");
-				sql.Append(" and "+DBTables.ADDRESS_PREFIXE+".id_company="+DBTables.COMPANY_PREFIXE+".id_company ");
+					sql.Append(" and "+ipLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+				sql.Append(" and "+loginTable.Prefix+".id_login="+ipLoginTable.Prefix+".id_login ");
+				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
+				sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
+				sql.Append(" and "+addressTable.Prefix+".id_company="+companyTable.Prefix+".id_company ");
 				//Gourp by
-				sql.Append(" group by  "+DBTables.COMPANY_PREFIXE+".id_company,"+DBTables.COMPANY_PREFIXE+".company,"+DBTables.IP_BY_LOGIN_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login,IP_ADDRESS");
+				sql.Append(" group by  "+companyTable.Prefix+".id_company,"+companyTable.Prefix+".company,"+ipLoginTable.Prefix+".id_login,"+loginTable.Prefix+".login,IP_ADDRESS");
 				//Order by
-				sql.Append(" order by  "+DBTables.COMPANY_PREFIXE+".company,"+DBTables.LOGIN_PREFIXE+".login ");
+				sql.Append(" order by  "+companyTable.Prefix+".company,"+loginTable.Prefix+".login ");
 				#endregion
 				
 				#region Execution
@@ -378,7 +418,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" IPAddress : Impossible d'obtenir la liste IP par clients. ", err));
+				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" IPAddress : Impossible to get clients IP list. ", err));
 			}
 			
 	
@@ -396,21 +436,25 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 
 			#region Requête
 			StringBuilder sql = new StringBuilder(3000);
+			Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+			Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+				
 			//select
-			sql.Append(" select "+DBTables.LOGIN_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login,"+DBTables.CONTACT_PREFIXE+".FIRST_NAME ,"+DBTables.CONTACT_PREFIXE+".NAME ");			
+			sql.Append(" select "+loginTable.Prefix+".id_login,"+loginTable.Prefix+".login,"+contactTable.Prefix+".FIRST_NAME ,"+contactTable.Prefix+".NAME ");			
 			//From
 			sql.Append(" from ");
-			sql.Append(" "+DBSchema.LOGIN_SCHEMA+".LOGIN "+DBTables.LOGIN_PREFIXE+","+DBSchema.LOGIN_SCHEMA+".CONTACT "+DBTables.CONTACT_PREFIXE);
+			sql.Append(" "+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix);
 			//Where
 			sql.Append(" where ");
 			if(idlogins.Length>0){
-				sql.Append("  "+DBTables.LOGIN_PREFIXE+".id_login in ("+idlogins+") ");
+				sql.Append("  "+loginTable.Prefix+".id_login in ("+idlogins+") ");
 				sql.Append("  and ");
 			}
-			sql.Append("  "+DBTables.LOGIN_PREFIXE+".id_contact="+DBTables.CONTACT_PREFIXE+".id_contact ");			
+			sql.Append("  "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");			
 			//Gourp by
-			sql.Append(" group by  "+DBTables.LOGIN_PREFIXE+".id_login,"+DBTables.LOGIN_PREFIXE+".login,"+DBTables.CONTACT_PREFIXE+".FIRST_NAME,"+DBTables.CONTACT_PREFIXE+".NAME");
+			sql.Append(" group by  "+loginTable.Prefix+".id_login,"+loginTable.Prefix+".login,"+contactTable.Prefix+".FIRST_NAME,"+contactTable.Prefix+".NAME");
 			
+
 			#endregion
 				
 			#region Execution
@@ -418,8 +462,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
 			}
 			catch(System.Exception err){
-				//throw (new  AnubisBastet.Exceptions.BastetDataAccessExceptions(" TopConnectedCustomer : Impossible d'obtenir la liste des clients les plus connectés "+label, err));
-				throw (new Exception(" TopConnected : Impossible d'obtenir le nom des clients les plus connectés "+ err));
+				throw (new Exception(" TopConnected : Impossible to get names of most connected clients "+ err));
 			}
 			#endregion
 	

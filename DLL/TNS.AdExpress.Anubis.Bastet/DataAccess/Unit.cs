@@ -12,6 +12,8 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
@@ -29,27 +31,29 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 			try{
 				#region Requête
 				StringBuilder sql = new StringBuilder(3000);
+				Table unitTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingUnit);				
+				Table topUnit = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopUnit);
 
 				//select
 				sql.Append(" select ");
 		
-				sql.Append(" "+DBTables.TOP_UNIT_PREFIXE+".id_unit,"+DBTables.UNIT_PREFIXE+".unit");
-				sql.Append(",sum("+DBTables.TOP_UNIT_PREFIXE+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
+				sql.Append(" "+topUnit.Prefix+".id_unit,"+unitTable.Prefix+".unit");
+				sql.Append(",sum("+topUnit.Prefix+".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
 
 				//From
-				sql.Append(" from "+DBSchema.UNIVERS_SCHEMA+".TOP_UNIT "+DBTables.TOP_UNIT_PREFIXE);
-				sql.Append(" ,"+DBSchema.UNIVERS_SCHEMA+".UNIT "+DBTables.UNIT_PREFIXE);
+				sql.Append(" from "+topUnit.SqlWithPrefix);
+				sql.Append(" ," + unitTable.SqlWithPrefix);
 			
 				//Where
-				sql.Append(" where "+DBTables.TOP_UNIT_PREFIXE+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+				sql.Append(" where "+topUnit.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
 				if(parameters!=null && parameters.Logins.Length>0){
-					sql.Append(" and "+DBTables.TOP_UNIT_PREFIXE+".id_login in ("+parameters.Logins+") ");				
+					sql.Append(" and "+topUnit.Prefix+".id_login in ("+parameters.Logins+") ");				
 				}
-				sql.Append(" and "+DBTables.UNIT_PREFIXE+".id_unit="+DBTables.TOP_UNIT_PREFIXE+".id_unit");
+				sql.Append(" and "+unitTable.Prefix+".id_unit="+topUnit.Prefix+".id_unit");
 			
 				//Gourp by
 				sql.Append(" group by  ");
-				sql.Append("  "+DBTables.TOP_UNIT_PREFIXE+".id_unit ,"+DBTables.UNIT_PREFIXE+".unit");
+				sql.Append("  "+topUnit.Prefix+".id_unit ,"+unitTable.Prefix+".unit");
 				//Order by
 				sql.Append(" order by  CONNECTION_NUMBER  desc");
 				#endregion
@@ -60,7 +64,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				#endregion
 			}
 			catch(System.Exception err){
-				throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopUsed : Impossible d'obtenir la liste des unités les plus utilisés ", err));
+				throw (new  AnubisBastet.Exceptions.BastetDataAccessException(" TopUsed : Impossible to get most used units list ", err));
 				
 			}
 			
