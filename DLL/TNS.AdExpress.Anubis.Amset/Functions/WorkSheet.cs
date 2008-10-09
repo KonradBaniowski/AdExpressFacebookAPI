@@ -6,19 +6,20 @@
 
 using System;
 using System.Data;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Collections;
 using System.Drawing;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Anubis.Amset.Functions{
 	/// <summary>
 	/// Description résumée de WorkSheet.
 	/// </summary>
 	public class WorkSheet{
-	
+		
 		#region Mise en page
 		/// <summary>
 		/// Mise en page de la feuille excel.
@@ -28,14 +29,14 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 		/// <param name="nbMaxRowByPage">nombre de ligne maximu par page</param>		
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="vPageBreaks">saut de page vertical</param>
-		internal static void PageSettings(Aspose.Excel.Worksheet sheet, string name,int upperLeftColumn){
+		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int upperLeftColumn,int language){
 		
 			// Nom de la feuille
 			sheet.Name=name; 														
 			
 			sheet.IsGridlinesVisible = false;
 			sheet.PageSetup.Orientation = PageOrientationType.Landscape;
-			Aspose.Excel.PageSetup pageSetup =sheet.PageSetup;
+			Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
 
 			//Set margins, in unit of inches 					
 			pageSetup.TopMarginInch = 0.3; 
@@ -48,18 +49,19 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 			
 			//Ajout des logos TNS et Appm
 			Pictures pics = sheet.Pictures;
-			string tnsLogoPath=@"Images\logoTNSMedia.gif";	
+			string tnsLogoPath = TNS.AdExpress.Anubis.Amset.Constantes.Images.LOGO_TNS;	
 			string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
-			pics.Add(0, 0,logoPath,75,75);
-			string appmLogoPath=@"Images\Common\APPM.bmp";
+			int picIndex = pics.Add(0, 0,logoPath,75,75);
+			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+			string appmLogoPath = TNS.AdExpress.Anubis.Amset.Constantes.Images.LOGO_APPM; ;
 			string bastetImagePath = System.IO.Path.GetFullPath(appmLogoPath);
-			pics.Add(0,upperLeftColumn,bastetImagePath,55,45);
-		
+			picIndex = pics.Add(0, upperLeftColumn, bastetImagePath, 55, 45);
+			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 			//Set current date and current time at the center section of header and change the font of the header
 			pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
 					
 			//Set current page number at the center section of footer
-			pageSetup.SetFooter(1, "&A"+" - Page "+"&P"+" sur "+"&N");			
+			pageSetup.SetFooter(1, "&A" + " - " + GestionWeb.GetWebWord(894, language) + " " + "&P" + " " + GestionWeb.GetWebWord(2042, language) + " " + "&N");			
 			
 		}
 	
@@ -74,7 +76,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 		/// <param name="printArea">Zone d'impression</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="vPageBreaks">saut de page vertical</param>
-		internal static void PageSettings(Aspose.Excel.Worksheet sheet, string name,int nbRows,int nbMaxRowByPage,int upperLeftColumn,string vPageBreaks,string headerRowIndex){
+		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, int nbRows, int nbMaxRowByPage, int upperLeftColumn, string vPageBreaks, string headerRowIndex, int language) {
 			int nbPages=0;
 			int currentNbRowByPage=nbMaxRowByPage;
 			int first=0;
@@ -96,7 +98,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 
 			sheet.IsGridlinesVisible = false;
 			sheet.PageSetup.Orientation = PageOrientationType.Landscape;
-			Aspose.Excel.PageSetup pageSetup =sheet.PageSetup;
+			Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
 
 			//Set margins, in unit of inches 					
 			pageSetup.TopMarginInch = 0.3; 
@@ -112,18 +114,20 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 
 			//Ajout des logos TNS et Appm
 			Pictures pics = sheet.Pictures;
-			string tnsLogoPath=@"Images\logoTNSMedia.gif";	
+			string tnsLogoPath = TNS.AdExpress.Anubis.Amset.Constantes.Images.LOGO_TNS;  	
 			string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
-			pics.Add(0, 0,logoPath,75,75);
-			string appmLogoPath=@"Images\Common\APPM.bmp";
+			int picIndex = pics.Add(0, 0,logoPath,75,75);
+			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+			string appmLogoPath = TNS.AdExpress.Anubis.Amset.Constantes.Images.LOGO_APPM; ;
 			string bastetImagePath = System.IO.Path.GetFullPath(appmLogoPath);
-			pics.Add(0,upperLeftColumn,bastetImagePath,55,45);
+			picIndex = pics.Add(0, upperLeftColumn, bastetImagePath, 55, 45);
+			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 
 			//Set current date and current time at the center section of header and change the font of the header
 			pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
 					
 			//Set current page number at the center section of footer
-			pageSetup.SetFooter(1, "&A"+" - Page "+"&P"+" sur "+"&N");			
+			pageSetup.SetFooter(1, "&A" + " - " + GestionWeb.GetWebWord(894, language) + " " + "&P" + " " + GestionWeb.GetWebWord(2042, language) + " " + "&N");			
 		}
 
 		#endregion
@@ -147,7 +151,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 		///<param name="bottomBorderType">Type de la bordure en bas</param>
 		/// <param name="size">Taille du texte</param>
 		/// <param name="textAlignmentTypeCenter">Alignement du texte</param>
-		internal static void CellsStyle(Aspose.Excel.Cells cells,object data,int row,int firstColumn,int lastColumn,bool isBold,System.Drawing.Color fontColor,System.Drawing.Color foregroundColor,System.Drawing.Color borderColor,CellBorderType rightBorderType,CellBorderType leftBorderType,CellBorderType topBorderType,CellBorderType bottomBorderType,short size,bool textAlignmentTypeCenter){
+		internal static void CellsStyle(Aspose.Cells.Cells cells,object data,int row,int firstColumn,int lastColumn,bool isBold,System.Drawing.Color fontColor,System.Drawing.Color foregroundColor,System.Drawing.Color borderColor,CellBorderType rightBorderType,CellBorderType leftBorderType,CellBorderType topBorderType,CellBorderType bottomBorderType,short size,bool textAlignmentTypeCenter){
 			for(int i=firstColumn;i<=lastColumn;i++){
 				if(data!=null)cells[row,i].PutValue(data);
 				
@@ -160,7 +164,8 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 				cells[row,i].Style.Borders[BorderType.BottomBorder].LineStyle = bottomBorderType;
 				cells[row,i].Style.Borders[BorderType.BottomBorder].Color = borderColor;
 
-				cells[row,i].Style.ForegroundColor =  foregroundColor;					
+				cells[row,i].Style.ForegroundColor =  foregroundColor;
+				cells[row, i].Style.Pattern = BackgroundType.Solid;
 				cells[row,i].Style.Font.Color = fontColor;
 				cells[row,i].Style.Font.IsBold = isBold;
 				cells[row,i].Style.Font.Size = size;
@@ -187,7 +192,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 		///<param name="bottomBorderType">Type de la bordure en bas</param>
 		/// <param name="size">Taille du texte</param>
 		/// <param name="textAlignmentTypeCenter">Alignement du texte</param>
-		internal static void CellsStyle(Aspose.Excel.Cells cells,object data,int firstRow,int lastRow,int firstColumn,int lastColumn,bool isBold,System.Drawing.Color fontColor,System.Drawing.Color foregroundColor,System.Drawing.Color borderColor,CellBorderType rightBorderType,CellBorderType leftBorderType,CellBorderType topBorderType,CellBorderType bottomBorderType,short size,bool textAlignmentTypeCenter){
+		internal static void CellsStyle(Aspose.Cells.Cells cells,object data,int firstRow,int lastRow,int firstColumn,int lastColumn,bool isBold,System.Drawing.Color fontColor,System.Drawing.Color foregroundColor,System.Drawing.Color borderColor,CellBorderType rightBorderType,CellBorderType leftBorderType,CellBorderType topBorderType,CellBorderType bottomBorderType,short size,bool textAlignmentTypeCenter){
 			for(int j=firstRow;j<=lastRow;j++){
 				for(int i=firstColumn;i<=lastColumn;i++){
 					if(data!=null)cells[j,i].PutValue(data);
@@ -201,7 +206,8 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 					cells[j,i].Style.Borders[BorderType.BottomBorder].LineStyle = bottomBorderType;
 					cells[j,i].Style.Borders[BorderType.BottomBorder].Color = borderColor;
 
-					cells[j,i].Style.ForegroundColor =  foregroundColor;					
+					cells[j,i].Style.ForegroundColor =  foregroundColor;
+					cells[j, i].Style.Pattern = BackgroundType.Solid;
 					cells[j,i].Style.Font.Color = fontColor;
 					cells[j,i].Style.Font.IsBold = isBold;
 					cells[j,i].Style.Font.Size = size;
@@ -224,7 +230,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 		/// <param name="isBold">vrai si police en gras</param>
 		/// <param name="color">couleur de la police</param>
 		/// <param name="size">Taille du texte</param>
-		internal static void PutCellValue(Worksheet sheet,Aspose.Excel.Cells cells,object data,int row,int column,bool isBold,short size,int startColumn){
+		internal static void PutCellValue(Worksheet sheet,Aspose.Cells.Cells cells,object data,int row,int column,bool isBold,short size,int startColumn){
 			cells[row,column].PutValue(data);
 			cells[row,column].Style.Font.Size = size;
 			if(column>startColumn)

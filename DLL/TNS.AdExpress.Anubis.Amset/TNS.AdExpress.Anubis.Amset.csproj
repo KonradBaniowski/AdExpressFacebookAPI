@@ -78,9 +78,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Excel, Version=3.6.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56">
+    <Reference Include="Aspose.Cells, Version=4.5.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\Anubis\Librairies\Aspose.Excel.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.DataAccess, Version=9.2.0.700, Culture=neutral, PublicKeyToken=89b483f429c47342">
       <SpecificVersion>False</SpecificVersion>
@@ -141,6 +141,14 @@
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
+      <Project>{A4DEDE88-C99E-495F-98F2-E2762520F4BE}</Project>
+      <Name>TNS.AdExpress.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.WEB.CORE\TNS.AdExpress.Web.Core.csproj">
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
@@ -164,6 +172,7 @@
     <Compile Include="Common\AmsetConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constantes\Constantes.cs" />
     <Compile Include="DataAccess\AmsetConfigDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>

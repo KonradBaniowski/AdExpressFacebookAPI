@@ -24,7 +24,7 @@ using TNS.FrameWork.Net.Mail;
 using TNS.FrameWork.DB.Common;
 
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;

@@ -6,7 +6,7 @@
 
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 using System.Collections;
@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using TNS.AdExpress.Anubis.Amset;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.DB;
 using AmsetExceptions=TNS.AdExpress.Anubis.Amset.Exceptions;
@@ -22,6 +22,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using AmsetFunctions=TNS.AdExpress.Anubis.Amset.Functions;
 using RulesResultsAPPM=TNS.AdExpress.Web.Rules.Results.APPM;
 using TNS.AdExpress.Constantes.Customer;
+using CustomerConstantes = TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.UI;
@@ -42,7 +43,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// <summary>
 		/// Session parameter design
 		/// </summary>
-		internal static void SetExcelSheet(Excel excel,WebSession webSession,IDataSource dataSource){
+		internal static void SetExcelSheet(Workbook excel,WebSession webSession,IDataSource dataSource){
 
 			int nbMaxRowByPage=42;
 			int s=1;
@@ -91,10 +92,10 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 				cellRow++;
 
 				//Base target
-				string targets = "'" + webSession.GetSelection(webSession.SelectionUniversAEPMTarget,Right.type.aepmTargetAccess) + "'";
+				string targets = "'" + webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CustomerConstantes.Right.type.aepmTargetAccess) + "'";
 				//Wave
 				string idWave = ((LevelInformation)webSession.SelectionUniversAEPMWave.Nodes[0].Tag).ID.ToString();
-				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, webSession.CustomerLogin.OracleConnectionString);
+				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, webSession.CustomerLogin.Source);//.OracleConnectionString
 
 				foreach(DataRow r in ds.Tables[0].Rows){
 					AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,r["target"].ToString(),cellRow-1,1,false,8,2);
@@ -114,14 +115,10 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 				//reference
 				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1677,webSession.SiteLanguage)+" :",cellRow-1,1,false,8,2);
 				AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
-				cellRow+=2;
-				
-				#region Ancienne version
-				//TNS.AdExpress.Anubis.Amset.UI.SessionParameter.ToExcel(webSession.CurrentUniversAdvertiser,excel,webSession,sheet,ref cellRow,cells);
-				#endregion
+				cellRow+=2;			
 
 				if(webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count>0)
-					TNS.AdExpress.Anubis.Amset.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[0], excel, webSession, sheet, ref cellRow, cells, new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
+					TNS.AdExpress.Anubis.Amset.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[0], excel, webSession, sheet, ref cellRow, cells, webSession.CustomerLogin.Source);//.OracleConnectionString
 
 				cellRow++;
 			
@@ -157,7 +154,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 				upperLeftColumn=(int)indexLogo-1;
 
 				vPageBreaks = cells[cellRow,(int)indexLogo].Name;
-				AmsetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(1752,webSession.SiteLanguage),cellRow+17,nbMaxRowByPage,upperLeftColumn,vPageBreaks,header.ToString());
+				AmsetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1752, webSession.SiteLanguage), cellRow + 17, nbMaxRowByPage, upperLeftColumn, vPageBreaks, header.ToString(), webSession.SiteLanguage);
 			}
 			catch(Exception e){
 				throw(new AmsetExceptions.AmsetExcelSystemException("Unable to build the session parameter page.",e));
@@ -170,7 +167,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// Affichage d'un arbre pour l'export Excel
 		/// </summary>
 		/// <param name="root">Arbre</param>
-		public static void ToExcel(TreeNode root, Excel excel, WebSession webSession,Worksheet sheet,ref int cellRow,Cells cells){
+		public static void ToExcel(TreeNode root, Workbook excel, WebSession webSession,Worksheet sheet,ref int cellRow,Cells cells){
 			int maxLevel=0;
 			GetNbLevels(root,1,ref maxLevel);
 			int nbTD=1;
@@ -193,7 +190,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// Met le style d'une cellule selon le niveau de l'arbre
 		/// </summary>
 		/// <param name="level">Niveau de l'arbre</param>
-		private static void SetLevelStyle(int level, Excel excel, Worksheet sheet,int cellRow,Cells cells,int nbTD){
+		private static void SetLevelStyle(int level, Workbook excel, Worksheet sheet,int cellRow,Cells cells,int nbTD){
 			switch(level){
 				case 1:
 					if(nbTD==1){
@@ -223,12 +220,13 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// dans la méthode ci-après et ajouter les niveaux dans la méthode GetLevelCss(int level)
 		/// - Affichage sur 3 colonnes dans le dernier niveau
 		/// </remarks>
-		private static bool ToExcel(TreeNode root, int level, int maxLevel, ref int nbTD, Excel excel, WebSession webSession, Worksheet sheet,ref int cellRow,Cells cells){
+		private static bool ToExcel(TreeNode root, int level, int maxLevel, ref int nbTD, Workbook excel, WebSession webSession, Worksheet sheet,ref int cellRow,Cells cells){
 
 			#region Variables
 			string img="";
 			string imgPath="";
 			Pictures pics = sheet.Pictures;
+			int picIndex = 0;
 			#endregion
 
 			#region Checkbox
@@ -247,7 +245,8 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 			// Si on est dans le dernier niveau de l'arbre
 			if(level==maxLevel){ 
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
-				pics.Add(cellRow-1,nbTD,imgPath);
+				 picIndex = pics.Add(cellRow-1,nbTD,imgPath);
+				pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((LevelInformation)root.Tag).Text,cellRow-1,nbTD,false,8,2);
 				SetLevelStyle(level,excel,sheet,cellRow,cells,nbTD);
 				cells[cellRow-1,nbTD].Style.IndentLevel = 2;
@@ -255,7 +254,8 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 			else{
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
 				if(level!=0){
-					pics.Add(cellRow-1, 1,imgPath);
+					picIndex = pics.Add(cellRow - 1, 1, imgPath);
+					pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 					AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((LevelInformation)root.Tag).Text,cellRow-1,1,false,8,2);
 					SetLevelStyle(level,excel,sheet,cellRow,cells,nbTD);
 					cells[cellRow-1,1].Style.IndentLevel = 2;
@@ -309,21 +309,21 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// <param name="cellRow">cell row</param>
 		/// <param name="cells">cells</param>
 		/// <param name="connection">connection</param>
-		public static void ToExcel(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, Excel excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, OracleConnection connection) {
+		public static void ToExcel(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, IDataSource dataSource) {//OracleConnection connection
 			List<NomenclatureElementsGroup> groups = null;
 		
 			if (adExpressUniverse != null && adExpressUniverse.Count() > 0) {
 				//Groups of items excludes
 				groups = adExpressUniverse.GetExludes();
 				if (groups != null && groups.Count > 0) {
-					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, connection, AccessType.excludes, webSession.SiteLanguage);
+					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, dataSource, AccessType.excludes, webSession.SiteLanguage);
 					cellRow++;
 				}
 
 				//Groups of items includes
 				groups = adExpressUniverse.GetIncludes();
 				if (groups != null && groups.Count > 0) {
-					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, connection, AccessType.includes, webSession.SiteLanguage);
+					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, dataSource, AccessType.includes, webSession.SiteLanguage);
 					cellRow++;
 				}
 			}
@@ -340,14 +340,14 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// <param name="connection">DB connection</param>
 		/// <param name="accessType">access type (includes, excludes)</param>
 		/// <param name="language">language</param>
-		private static void SetUniverseGroups(List<NomenclatureElementsGroup> groups, Excel excel, Worksheet sheet, ref int cellRow, Cells cells,OracleConnection connection, AccessType accessType, int language) {
+		private static void SetUniverseGroups(List<NomenclatureElementsGroup> groups, Workbook excel, Worksheet sheet, ref int cellRow, Cells cells,IDataSource dataSource, AccessType accessType, int language) {
 			
 			int nbTD = 1;
-			TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess universeItems = null;
+			TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
 			int code = (accessType == AccessType.includes) ? 2281 : 2282;
 			int level = 1;
 			Pictures pics = sheet.Pictures;
-			string img = @"Images\checkbox.GIF";
+			string img = TNS.AdExpress.Anubis.Amset.Constantes.Images.CHECK_BOX;
 			string imgPath = System.IO.Path.GetFullPath(img);
 			ArrayList itemIdList = null;
 
@@ -368,7 +368,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 							
 
 							//Show all level items											
-							universeItems = new TNS.AdExpress.Classification.DataAccess.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, connection);
+							universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, dataSource);
 							if (universeItems != null) {
 								
 								itemIdList = universeItems.IdListOrderByClassificationItem;
@@ -384,7 +384,8 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 									level = 2;
 									for (int k = 0; k < itemIdList.Count; k++) {
 										//Add item label										
-										pics.Add(cellRow, nbTD, imgPath);//cellRow - 1	
+										int picIndex = pics.Add(cellRow, nbTD, imgPath);//cellRow - 1	
+										pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 										AmsetFunctions.WorkSheet.PutCellValue(sheet, cells, universeItems[Int64.Parse(itemIdList[k].ToString())], cellRow, nbTD, false, 8, 2);
 										SetLevelStyle(level, excel, sheet, cellRow + 1, cells, nbTD);
 										cells[cellRow, nbTD].Style.IndentLevel = 2;	//cellRow - 1									

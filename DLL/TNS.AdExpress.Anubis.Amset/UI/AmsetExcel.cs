@@ -6,12 +6,12 @@
 
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 
 using TNS.AdExpress.Anubis.Amset;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Constantes.DB;
 using AmsetExceptions=TNS.AdExpress.Anubis.Amset.Exceptions;
@@ -31,7 +31,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// <summary>
 		/// Composant excel
 		/// </summary>
-		protected Excel _excel;
+		protected Workbook _excel;
 		/// <summary>
 		/// Licence Aspose Excel
 		/// </summary>
@@ -44,9 +44,9 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// </summary>
 		public AmsetExcel(){
 
-			_excel = new Excel();
+			_excel = new Workbook();
 			_license = new License();
-			_license.SetLicense("Aspose.Excel.lic");
+			_license.SetLicense("Aspose.Cells.lic");
 			
 			//Ajout de couleurs			
 			AddColor(Color.FromArgb(128,128,192));
@@ -88,8 +88,8 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 				//Obtaining the reference of the newly added worksheet by passing its sheet index
 				Worksheet sheet = this._excel.Worksheets[0];
 
-				Cells cells = sheet.Cells;	
-				AmsetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(2071,webSession.SiteLanguage),15);
+				Cells cells = sheet.Cells;
+				AmsetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2071, webSession.SiteLanguage), 15, webSession.SiteLanguage);
 
 				//intitulé du fichier excel			
 				cells["E"+cellRow].PutValue(GestionWeb.GetWebWord(2071,webSession.SiteLanguage));
@@ -101,7 +101,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 				cellRow++;
 
 				//Date de création
-				cells["H"+cellRow].PutValue(GestionWeb.GetWebWord(1922,webSession.SiteLanguage)+"  "+WebFunctions.Dates.dateToString(DateTime.Now,webSession.SiteLanguage));
+				cells["H"+cellRow].PutValue(GestionWeb.GetWebWord(1922,webSession.SiteLanguage)+"  "+WebFunctions.Dates.DateToString(DateTime.Now,webSession.SiteLanguage));
 				cells["H"+cellRow].Style.Font.Size =12;
 				cells["H"+cellRow].Style.Font.Color =  Color.FromArgb(100,72,131);
 				cells["H"+cellRow].Style.Font.IsBold = true;
@@ -114,6 +114,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 				string adexpressLogoPath=@"Images\" + webSession.SiteLanguage + @"\LogoAdExpress.jpg";
 				int pos = sheet.Pictures.Add(cellRow,2,adexpressLogoPath,70,80);
 				Picture pic = sheet.Pictures[pos];
+				pic.Placement = Aspose.Cells.PlacementType.Move;
 			}
 			catch(Exception e){
 				throw(new  AmsetExceptions.AmsetExcelSystemException("Unable to build the main page",e));
