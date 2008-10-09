@@ -6,6 +6,7 @@
 
 using System;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.FrameWork.WebResultUI;
 
 namespace TNS.AdExpressI.MediaSchedule{
 	/// <summary>
@@ -81,4 +82,36 @@ namespace TNS.AdExpressI.MediaSchedule{
 
 		#endregion
 	}
+
+    public class MediaPlanItemIds : MediaPlanItem {
+
+        #region Properties
+        /// <summary>
+        /// Specific unit for distinct ids counting
+        /// </summary>
+        protected CellIdsNumber _idsNumber = new CellIdsNumber();
+        /// <summary>
+        /// Get Specific unit for distinct ids counting
+        /// </summary>
+        public CellIdsNumber IdsNumber {
+            get {return _idsNumber;}
+        }
+        #endregion
+
+        #region Constructor
+        /// <summary>
+		/// Constructor
+		/// </summary>
+		public MediaPlanItemIds():base(){
+		}
+		/// <summary>
+        /// Constructor
+		/// </summary>
+		/// <param name="periodicityId">Cell periodicity</param>
+        public MediaPlanItemIds(Int64 periodicityId): base(periodicityId) {
+			_periodicityId=periodicityId;
+		}
+		#endregion
+
+    }
 }
