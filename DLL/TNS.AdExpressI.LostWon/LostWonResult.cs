@@ -644,7 +644,7 @@ namespace TNS.AdExpressI.LostWon {
             #endregion
 
             #region Load data from data access layer
-            DataSet ds = null;
+            DataTable dt = null;
             DataSet dsMedia = null;
             Navigation.Module currentModuleDescription = Navigation.ModulesList.GetModule(_session.CurrentModule);
             try
@@ -654,7 +654,7 @@ namespace TNS.AdExpressI.LostWon {
                 object[] parameters = new object[1];
                 parameters[0] = _session;
                 ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-                ds = lostwonDAL.GetData();
+                dt = lostwonDAL.GetData();
                 dsMedia = lostwonDAL.GetMediaDetails();
 
             }
@@ -662,10 +662,9 @@ namespace TNS.AdExpressI.LostWon {
             {
                 throw (new LostWonException("Unable to load dynamic report data.", err));
             }
-            DataTable dt = ds.Tables[0];
             DataTable dtMedia = dsMedia.Tables[0];
 
-            if (dt.Rows.Count == 0)
+            if (dt != null && dt.Rows.Count == 0)
             {
                 return null;
             }
