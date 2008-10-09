@@ -22,8 +22,8 @@ using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 using TNS.AdExpress.Web.UI;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.ClassificationList;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.FrameWork.Date;
@@ -31,9 +31,11 @@ using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;
 using TNS.FrameWork.DB.Common;
 
-using PDFCreatorPilot2;
+using PDFCreatorPilotLib;
 
 using HTML2PDFAddOn;
+
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 {
@@ -91,12 +93,13 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				#if(DEBUG)
 				display = true;
 				#endif
-				base.Init(true,fName,_config.PdfCreatorPilotLogin,_config.PdfCreatorPilotPass);
+				base.Init(display, fName, _config.PdfCreatorPilotLogin, _config.PdfCreatorPilotPass);
 				this.DocumentInfo_Creator = this.DocumentInfo_Author = _config.PdfAuthor;
 				this.DocumentInfo_Subject = _config.PdfSubject;
 				this.DocumentInfo_Title = _config.PdfTitle;
 				this.DocumentInfo_Producer = _config.PdfProducer;
-				this.DocumentInfo_Keywords = _config.PdfKeyWords;
+				this.DocumentInfo_Keywords = _config.PdfKeyWords;				
+
 				return shortFName;
 			}
 			catch(System.Exception e) {
@@ -124,7 +127,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				#endregion
 				
 				#region Header and Footer
-				this.AddHeadersAndFooters(
+				this.AddHeadersAndFooters(_webSession,
 					@"Images\Common\logo_Tns.bmp",
 					"",
 					Convertion.ToHtmlString(GestionWeb.GetWebWord(1766, _webSession.SiteLanguage)) + " - " + DateTime.Now.ToString("ddd dd MMM yyyy"),
@@ -240,83 +243,61 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 		/// <param name="fileList">liste des liens des visuels</param>
 		/// <param name="indexPage">Index Nouvelle page</param>
 		private void Visuals(string fileList,int indexPage){
-			
+
 			#region variables
 			string[] visualList = null;
-			int nbVisuals = 0;  
+			int nbVisuals = 0;
 			int currentPageLineIndex = 1;
 			string[] allMediaFiles = null;
-			ArrayList prevEnvironmentPages = null,nextEnvironmentPages = null;			
-			bool  hasRedactionalEnvironment = false;
+			ArrayList prevEnvironmentPages = null, nextEnvironmentPages = null;
+			bool hasRedactionalEnvironment = false;
 			string str = null;
 			#endregion
 
-			if(fileList!=null && fileList.Length>0 && _proofDetail != null){
-			
-				#region Tests
-			#if DEBUG
-				//Test 4 visuels
-				//fileList = "COR174.JPG,COR175.JPG,COR176.JPG,COR177.JPG";
-
-				//Test 5 visuels
-//				fileList = "COR167.JPG,COR168.JPG,COR170.JPG,COR171.JPG,COR173.JPG";
-
-				//Test 6 visuels
-//				fileList = "COR018.JPG,COR019.JPG,COR020.JPG,COR021.JPG,COR022.JPG,COR023.JPG";
-				
-				//Test 14 visuels
-//				fileList ="COR074.JPG,COR075.JPG,COR076.JPG,COR077.JPG,COR078.JPG,COR079.JPG,COR080.JPG,COR081.JPG,COR082.JPG,COR083.JPG,COR084.JPG,COR085.JPG,COR086.JPG,COR087.JPG";
-
-				//Test 18 visuels
-//				fileList = "COR110.JPG,COR111.JPG,COR112.JPG,COR113.JPG,COR114.JPG,COR115.JPG,COR116.JPG,COR117.JPG,COR118.JPG,COR119.JPG,COR120.JPG,COR121.JPG,COR122.JPG,COR123.JPG,COR124.JPG,COR125.JPG,COR126.JPG,COR127.JPG";
-				
-			
-			#endif
-
-				#endregion
+			if (fileList != null && fileList.Length > 0 && _proofDetail != null) {
 
 				visualList = fileList.ToString().Split(',');
 
-				if(visualList!=null && visualList.Length>0 && _proofDetail != null){
-					
+				if (visualList != null && visualList.Length > 0 && _proofDetail != null) {
+
 					//Nombre de visuels
 					nbVisuals = visualList.Length;
-					
+
 					//Nouvelle page
-					this.SetCurrentPage((int)indexPage);					
-				
+					this.SetCurrentPage((int)indexPage);	
+
 
 					//Environnement rédactionnel 										
-					allMediaFiles = Directory.GetFiles(CreationServerPathes.LOCAL_PATH_IMAGE + _proofDetail.IdMedia + @"\"+ _proofDetail.DateCover + @"\"+"imagette","*.jpg");
+					allMediaFiles = Directory.GetFiles(CreationServerPathes.LOCAL_PATH_IMAGE + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette", "*.jpg");
 
 					#region Insertion uniquement des visuels
 					//Insertion uniquement des visuels				
-					InsertVisuals(visualList, nbVisuals,ref currentPageLineIndex,false,true,1.0);
-					
+					InsertVisuals(visualList, nbVisuals, ref currentPageLineIndex, false, true, 1.0);
+
 					#endregion
-				
+
 					#region Environnement rédactionnel
 
 					//Obtention des pages d'environnement rédéctionnel
-					prevEnvironmentPages = GetEnvironmentPages(_proofDetail, visualList[0].ToString(),allMediaFiles,true);
-					nextEnvironmentPages = GetEnvironmentPages(_proofDetail, visualList[visualList.Length-1].ToString(),allMediaFiles,false);
+					prevEnvironmentPages = GetEnvironmentPages(_proofDetail, visualList[0].ToString(), allMediaFiles, true);
+					nextEnvironmentPages = GetEnvironmentPages(_proofDetail, visualList[visualList.Length - 1].ToString(), allMediaFiles, false);
 
-					if( (prevEnvironmentPages != null && prevEnvironmentPages.Count>0) || (nextEnvironmentPages != null && nextEnvironmentPages.Count>0))
-					hasRedactionalEnvironment = true ;
+					if ((prevEnvironmentPages != null && prevEnvironmentPages.Count > 0) || (nextEnvironmentPages != null && nextEnvironmentPages.Count > 0))
+						hasRedactionalEnvironment = true;
 
 					//Titre Environnement rédactionnel
-					if(hasRedactionalEnvironment){
+					if (hasRedactionalEnvironment) {
 
 						//Environnement rédactionnel
 						currentPageLineIndex = 0;
-						this.NewPage();								
+						this.NewPage();
 						this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
 
-						str = GestionWeb.GetWebWord(2113,_webSession.SiteLanguage);
-						this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R)/256.0
-							,((double)_config.MainPageFontColor.G)/256.0
-							,((double)_config.MainPageFontColor.B)/256.0);
+						str = GestionWeb.GetWebWord(2113, _webSession.SiteLanguage);
+						this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R) / 256.0
+							, ((double)_config.MainPageFontColor.G) / 256.0
+							, ((double)_config.MainPageFontColor.B) / 256.0);
 						this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
 							true,
 							_config.MainPageDefaultFont.Italic,
@@ -324,27 +305,27 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 							_config.MainPageDefaultFont.Strikeout,
 							_config.MainPageDefaultFont.SizeInPoints,
 							TxFontCharset.charsetANSI_CHARSET);
-						this.PDFPAGE_TextOut(_config.LeftMargin + 10, 
-							_config.TopMargin + 35,0,str);
-						
+						this.PDFPAGE_TextOut(_config.LeftMargin + 10,
+							_config.TopMargin + 35, 0, str);
+
 					}
 
 					//Récupère les 3 pages avant l'insertion					
 
-					if(prevEnvironmentPages!=null && prevEnvironmentPages.Count>0){												
-						
-						InsertVisuals(prevEnvironmentPages, prevEnvironmentPages.Count,ref currentPageLineIndex,true,false,0.7);
+					if (prevEnvironmentPages != null && prevEnvironmentPages.Count > 0) {
+
+						InsertVisuals(prevEnvironmentPages, prevEnvironmentPages.Count, ref currentPageLineIndex, true, false, 0.7);
 					}
 
 					//Insertion des visuels
-					if(hasRedactionalEnvironment)InsertVisuals(visualList, nbVisuals,ref currentPageLineIndex,false,false,0.7);
+					if (hasRedactionalEnvironment) InsertVisuals(visualList, nbVisuals, ref currentPageLineIndex, false, false, 0.7);
 
 					//Récupère les 3 pages après l'insertion					
-					if(nextEnvironmentPages!=null && nextEnvironmentPages.Count>0) {
-						
-						InsertVisuals(nextEnvironmentPages, nextEnvironmentPages.Count,ref currentPageLineIndex,true,false,0.7);
+					if (nextEnvironmentPages != null && nextEnvironmentPages.Count > 0) {
+
+						InsertVisuals(nextEnvironmentPages, nextEnvironmentPages.Count, ref currentPageLineIndex, true, false, 0.7);
 					}
-					#endregion									
+					#endregion
 
 				}
 			}			
@@ -414,89 +395,89 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 			int nbMaxLinesByPage = 0;
 			int nbPagesBylines = 0;
 			#endregion
-			
-			
-			nbMaxLinesByPage = (onlyAdverts)? 2 : 3;
-			nbPagesBylines = (onlyAdverts || (nbVisuals==4))? 4 : 5;
+
+
+			nbMaxLinesByPage = (onlyAdverts) ? 2 : 3;
+			nbPagesBylines = (onlyAdverts || (nbVisuals == 4)) ? 4 : 5;
 
 			//Nouvelle ligne			
-			if(currentPageLineIndex<nbMaxLinesByPage) currentPageLineIndex++;
-			else{
-				currentPageLineIndex = currentPageLineIndex-(nbMaxLinesByPage-1);
-				this.NewPage();								
+			if (currentPageLineIndex < nbMaxLinesByPage) currentPageLineIndex++;
+			else {
+				currentPageLineIndex = currentPageLineIndex - (nbMaxLinesByPage - 1);
+				this.NewPage();
 				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-			}						
+			}
 
 			#region Insertion de chaque visuel
 
 			//Insertion de chaque visuel
-			for(int i = 0; i<nbVisuals; i++){
+			for (int i = 0; i < nbVisuals; i++) {
 
 				//Nouvelle ligne
-				if(i%nbPagesBylines ==0 && i>0){
+				if (i % nbPagesBylines == 0 && i > 0) {
 					xPos = 0;
-					if(currentPageLineIndex<nbMaxLinesByPage) currentPageLineIndex++;
-					else{
-						currentPageLineIndex = currentPageLineIndex-(nbMaxLinesByPage-1);
-						this.NewPage();								
+					if (currentPageLineIndex < nbMaxLinesByPage) currentPageLineIndex++;
+					else {
+						currentPageLineIndex = currentPageLineIndex - (nbMaxLinesByPage - 1);
+						this.NewPage();
 						this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 					}
 				}
 
 
 
-				if(environmentPages)imgPath = visualList[i].ToString();
-				else imgPath = CreationServerPathes.LOCAL_PATH_IMAGE + _proofDetail.IdMedia + @"\"+ _proofDetail.DateCover + @"\"+"imagette"+ @"\"+ visualList[i].ToString();
+				if (environmentPages) imgPath = visualList[i].ToString();
+				else imgPath = CreationServerPathes.LOCAL_PATH_IMAGE + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + visualList[i].ToString();
 
-				
+
 
 				imgG = Image.FromFile(imgPath);
-				imgI = this.AddImageFromFilename(imgPath,TxImageCompressionType.itcFlate);
-				double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
-				double coef = Math.Min((double)zoomValue,w);
-				w = (double)(this.WorkZoneBottom - this.WorkZoneTop)/(double)imgG.Height;
+				imgI = this.AddImageFromFilename(imgPath, TxImageCompressionType.itcFlate);
+				double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin) / (double)imgG.Width;
+				double coef = Math.Min((double)zoomValue, w);
+				w = (double)(this.WorkZoneBottom - this.WorkZoneTop) / (double)imgG.Height;
 				coef = Math.Min((double)coef, w);
 
-				switch(xPos){
-					case 0 :
+				switch (xPos) {
+					case 0:
 						//position X 1ere visuel
-						if(nbVisuals==1)
-							X1 = (double)(this.PDFPAGE_Width /2- (imgG.Width*zoomValue)/2);
-						else if(nbVisuals==2)
-							X1 = (double)(this.PDFPAGE_Width /2- imgG.Width*zoomValue);
-						else if(nbVisuals==3)
-							X1 = (double)((this.PDFPAGE_Width - imgG.Width*zoomValue*3 + 4)/2);						
-						else if(nbVisuals>=4 || environmentPages)
-							X1 = (double)((this.PDFPAGE_Width - imgG.Width*zoomValue*nbPagesBylines + 6)/2);
+						if (nbVisuals == 1)
+							X1 = (double)(this.PDFPAGE_Width / 2 - (imgG.Width * zoomValue) / 2);
+						else if (nbVisuals == 2)
+							X1 = (double)(this.PDFPAGE_Width / 2 - imgG.Width * zoomValue);
+						else if (nbVisuals == 3)
+							X1 = (double)((this.PDFPAGE_Width - imgG.Width * zoomValue * 3 + 4) / 2);
+						else if (nbVisuals >= 4 || environmentPages)
+							X1 = (double)((this.PDFPAGE_Width - imgG.Width * zoomValue * nbPagesBylines + 6) / 2);
 						break;
-					case 1 :
+					case 1:
 						//position X 2eme visuel
-						if(nbVisuals==2)
-							X1 =(double)(this.PDFPAGE_Width /2 + 2);
-						else if(nbVisuals>=3)
-							X1 = X1+imgG.Width*zoomValue+2;
+						if (nbVisuals == 2)
+							X1 = (double)(this.PDFPAGE_Width / 2 + 2);
+						else if (nbVisuals >= 3)
+							X1 = X1 + imgG.Width * zoomValue + 2;
 						break;
-					case 2 :
-					case 3 :
-					case 4 :
+					case 2:
+					case 3:
+					case 4:
 						//position X 3eme ou 4eme visuel
-						X1 = X1+imgG.Width*zoomValue+2;
-						break;													
+						X1 = X1 + imgG.Width * zoomValue + 2;
+						break;
 				}
-						
+
 				//Position Y des visuels
-				switch(currentPageLineIndex){
-					case 1 : Y1 =  70; break;
-					case 2 : Y1 = (onlyAdverts)? 410 : 290; break;
-					case 3 : Y1 =  510; break;
-					default : break;
+				switch (currentPageLineIndex) {
+					case 1: Y1 = 70; break;
+					case 2: Y1 = (onlyAdverts) ? 410 : 290; break;
+					case 3: Y1 = 510; break;
+					default: break;
 				}
 
 
 				//Intègre visuel(s) dans pdf
 				this.PDFPAGE_ShowImage(imgI,
 					X1, Y1,
-					(double)(coef*imgG.Width),(double)(coef*imgG.Height),0);
+					(double)(coef * imgG.Width), (double)(coef * imgG.Height), 0);
 
 				xPos++;
 
@@ -512,18 +493,9 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 		private void ProofParameters() {
 
 			StreamWriter sw = null;
-
-			#region Constantes					
-			// constante pour le style, utiliséé pour les libellés, fond blanc			
-			const string styleTitle = " style=\" font-family: Arial, Helvetica, sans-serif; font-size: 13px; color : #6B598B;"
-					  +" font-weight:bold; text-decoration : none; background-color:White; padding:0px,0px,0px,2px; "
-					  +" padding-left:4px; padding-right:4px; \"";
-		
-			// constante pour le style, utiliséé pour les valeurs, fond blanc			
-			const string styleValue = " style=\" font-family: Arial, Helvetica, sans-serif; font-size: 13px; color : #6B598B;"
-						 +" font-weight: normal; text-decoration : none; background-color:White; padding:0px,0px,0px,2px; "	
-					     +" padding-left:4px; padding-right:4px; \"";
-			#endregion		
+			string styleTitle = "class=\"jusT\"";
+			string styleValue = "class=\"jusV\"";
+			string tableCss = "class=\"jus\"";
 
 			#region GetData
 			DataTable dtResult = TNS.AdExpress.Web.Rules.Results.ProofRules.GetProofFileData(_webSession, _proofDetail.IdMedia, _proofDetail.IdProduct, _proofDetail.DateCover, _proofDetail.MediaPaging, _proofDetail.DateParution);
@@ -531,25 +503,25 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 			try {
 
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;				
+				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile);
+				sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 				sw.WriteLine("<TABLE align=center WIDTH=100%><tr align=center>");
 
 				#region Debut Tableau général
-				sw.WriteLine("<table cellpadding=0 cellspacing=0  height=\"340\" width=100% border=\"0\" align=\"center\"  style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 0px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;\" bgcolor=\"#ffffff\">");
-				
+				sw.WriteLine("<table  " + tableCss + " align=\"center\">");
+
 				//Titre
-				sw.WriteLine("<TR  align=\"center\" height=\"10\" ><TD class=\"p2\" align=\"center\" style=\"BORDER-RIGHT: #644883 1px solid; BORDER-TOP: #644883 0px solid; BORDER-LEFT: #644883 1px solid; BORDER-BOTTOM: #644883 1px solid;font-size: 16px\" colspan=2>"+Convertion.ToHtmlString(GestionWeb.GetWebWord(1766, _webSession.SiteLanguage))+"</TD></TR>");				
+				sw.WriteLine("<TR  align=\"center\" height=\"10\" ><TD class=\"jus\" align=\"center\"  colspan=2>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1766, _webSession.SiteLanguage)) + "</TD></TR>");
 				sw.WriteLine("<tr  align=\"center\" >");
 				#endregion
-				
+
 				#region Couverture
-				
-				
-				
+
+
+
 				sw.WriteLine("<TD width=\"50%\" valign=\"top\" bgcolor=\"#E9E6EF\" ><TABLE align=\"center\" width=\"100%\" cellpadding=\"0\" cellSpacing=\"0\" border=\"0\">");
 				sw.WriteLine("<tr><td >");//Debut cellule image couverture
 				sw.WriteLine("&nbsp;</td><tr>");//fin cellule image couverture				
@@ -559,96 +531,96 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 				sw.WriteLine("<td width=\"50%\" valign=\"top\" >");//Debut cellule détail fiche
 				#region Détail fiche justificative
-				sw.WriteLine("<TABLE align=\"center\" width=\"100%\" valign=\"top\" cellpadding=\"0\" cellSpacing=\"0\" border=\"0\">");																	
-				
+				sw.WriteLine("<TABLE align=\"center\" width=\"100%\" valign=\"top\" cellpadding=\"0\" cellSpacing=\"0\" border=\"0\">");
+
 				//Numero de page
-				if(dtResult.Rows[0]["media_paging"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["media_paging"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(894, _webSession.SiteLanguage)) + " </TD><TD  "+styleValue+"  nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["media_paging"].ToString()+"</TD>");
+					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(894, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + "  nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["media_paging"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Annonceur
-				if(dtResult.Rows[0]["advertiser"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["advertiser"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(857, _webSession.SiteLanguage)) + " </TD><TD  "+styleValue+"  nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["advertiser"].ToString()+"</TD>");
+					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(857, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + "  nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["advertiser"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Produit
-				if(dtResult.Rows[0]["product"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["product"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(858, _webSession.SiteLanguage)) + " </TD><TD  "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["product"].ToString()+"</TD>");
+					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(858, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["product"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Groupe
-				if(dtResult.Rows[0]["group_"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["group_"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(859, _webSession.SiteLanguage)) + " </TD><TD   "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["group_"].ToString()+"</TD>");
+					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(859, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["group_"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Surface en page
-				if(dtResult.Rows[0]["area_page"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["area_page"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1767, _webSession.SiteLanguage)) + " </TD><TD  "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["area_page"].ToString()+"</TD>");
+					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1767, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["area_page"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
-				
+
 				//Surface en mmc
-				if(dtResult.Rows[0]["area_mmc"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["area_mmc"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1768, _webSession.SiteLanguage)) + " </TD><TD  "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["area_mmc"].ToString()+"</TD>");
+					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1768, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["area_mmc"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Descriptif
-				if(dtResult.Rows[0]["location"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["location"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1769, _webSession.SiteLanguage)) + " </TD><TD  "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["location"].ToString()+"</TD>");
+					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1769, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["location"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Format
-				if(dtResult.Rows[0]["format"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["format"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1420, _webSession.SiteLanguage)) + " </TD><TD  "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["format"].ToString()+"</TD>");
+					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1420, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["format"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Couleur
-				if(dtResult.Rows[0]["color"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["color"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1438, _webSession.SiteLanguage)) + " </TD><TD   "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["color"].ToString()+"</TD>");
+					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1438, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["color"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Rang famille
-				if(dtResult.Rows[0]["rank_sector"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["rank_sector"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1426, _webSession.SiteLanguage)) + " </TD><TD   "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["rank_sector"].ToString()+"</TD>");
+					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1426, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["rank_sector"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Rang groupe
-				if(dtResult.Rows[0]["rank_group_"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["rank_group_"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1427, _webSession.SiteLanguage)) + " </TD><TD   "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["rank_group_"].ToString()+"</TD>");
+					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1427, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["rank_group_"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Rang support
-				if(dtResult.Rows[0]["rank_media"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["rank_media"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1428, _webSession.SiteLanguage)) + " </TD><TD  "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["rank_media"].ToString()+"</TD>");
+					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1428, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["rank_media"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
 				//Investissement
-				if(dtResult.Rows[0]["expenditure_euro"] !=System.DBNull.Value){
+				if (dtResult.Rows[0]["expenditure_euro"] != System.DBNull.Value) {
 					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   "+styleTitle+" nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1770, _webSession.SiteLanguage)) + "  ("+Convertion.ToHtmlString(GestionWeb.GetWebWord(1423, _webSession.SiteLanguage))+") </TD><TD  "+styleValue+" nowrap>  &nbsp;&nbsp;&nbsp;"+dtResult.Rows[0]["expenditure_euro"].ToString()+"</TD>");
+					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1770, _webSession.SiteLanguage)) + "  (" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1423, _webSession.SiteLanguage)) + ") </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["expenditure_euro"].ToString() + "</TD>");
 					sw.WriteLine("</TR>");
 				}
 
@@ -663,21 +635,22 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				#endregion
 
 				sw.WriteLine("</TR></TABLE >");
-				
+
 				#region Html file loading
 				Functions.CloseHtmlFile(sw);
-				HTML2PDFClass html = new HTML2PDFClass();					
+				HTML2PDFClass html = new HTML2PDFClass();
 				html.MarginLeft = 170;	//Convert.ToInt32(this.LeftMargin);		
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);				
+				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1); ;//Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
 				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);				
-				html.ConnectToPDFLibrary (this);
-				html.LoadFromFile(workFile);				
+				html.ConnectToPDFLibrary(this);
+				//html.SetLogFile("LodsHtmlToPdf.txt");
+				html.LoadFromFile(workFile);
 				html.ConvertPage(0);
 				
 				html.ClearCache();
-				html.DisconnectFromPDFLibrary ();
-				
+				html.DisconnectFromPDFLibrary();
+
 				#endregion
 
 				#region Clean File
@@ -685,38 +658,35 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				#endregion
 
 				#region Insertion Couverture
-			
-				string imgPath = @"\\hera\AdexDatas\images\"+_proofDetail.IdMedia+@"\"+_proofDetail.DateCover+@"\"+"imagette"+@"\"+TNS.AdExpress.Constantes.Web.CreationServerPathes.COUVERTURE;
-				if(File.Exists(imgPath)){
+
+				string imgPath = @"\\hera\AdexDatas\images\" + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + TNS.AdExpress.Constantes.Web.CreationServerPathes.COUVERTURE;
+				if (File.Exists(imgPath)) {
 					Image imgG = Image.FromFile(imgPath);
 					double zoomValue = 0.6;
-					int imgI = this.AddImageFromFilename(imgPath,TxImageCompressionType.itcFlate);
-					double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
-					double coef = Math.Min((double)zoomValue,w);
-					w = (double)(this.WorkZoneBottom - this.WorkZoneTop)/(double)imgG.Height;
+					int imgI = this.AddImageFromFilename(imgPath, TxImageCompressionType.itcFlate);
+					double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin) / (double)imgG.Width;
+					double coef = Math.Min((double)zoomValue, w);
+					w = (double)(this.WorkZoneBottom - this.WorkZoneTop) / (double)imgG.Height;
 					coef = Math.Min((double)coef, w);
 
-					this.PDFPAGE_ShowImage(imgI,
-						250, 85,
-						(double)(coef*imgG.Width),(double)(coef*imgG.Height),0);
+					this.PDFPAGE_ShowImage(imgI,250, 85,(double)(coef * imgG.Width), (double)(coef * imgG.Height), 0);
 				}
 				string str = null;
-				this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R)/256.0
-					,((double)_config.MainPageFontColor.G)/256.0
-					,((double)_config.MainPageFontColor.B)/256.0);
-				this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
-					true,
+				this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R) / 256.0, ((double)_config.MainPageFontColor.G) / 256.0, ((double)_config.MainPageFontColor.B) / 256.0);
+				this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name, true,
 					_config.MainPageDefaultFont.Italic,
 					_config.MainPageDefaultFont.Underline,
 					_config.MainPageDefaultFont.Strikeout,
 					_config.MainPageDefaultFont.SizeInPoints,
 					TxFontCharset.charsetANSI_CHARSET);
 				
+
 				//Support
-				if(dtResult.Rows[0]["Media"] !=System.DBNull.Value){
-					 str = Convertion.ToHtmlString(GestionWeb.GetWebWord(971, _webSession.SiteLanguage))+ " : "+dtResult.Rows[0]["Media"].ToString();					
-					this.PDFPAGE_TextOut(250, 
-						300,0,str);
+				if (dtResult.Rows[0]["Media"] != System.DBNull.Value) {
+					str = Convertion.ToHtmlString(GestionWeb.GetWebWord(971, _webSession.SiteLanguage)) + " : " + dtResult.Rows[0]["Media"].ToString();
+					this.PDFPAGE_TextOut(250,
+						300, 0, str);
+					
 				}
 				this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
 					false,
@@ -724,31 +694,31 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 					_config.MainPageDefaultFont.Underline,
 					_config.MainPageDefaultFont.Strikeout,
 					_config.MainPageDefaultFont.SizeInPoints,
-					TxFontCharset.charsetANSI_CHARSET);
+					TxFontCharset.charsetANSI_CHARSET);				
 
 				//Date de parution
-				if (dtResult.Rows[0]["dateKiosque"] != System.DBNull.Value) {
-					str = Convertion.ToHtmlString(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage)) + " : " + DateString.dateTimeToDD_MM_YYYY((DateTime)dtResult.Rows[0]["dateKiosque"], _webSession.SiteLanguage);
-					this.PDFPAGE_TextOut(250, 
-						315,0,str);						
-				}			
-				
+				if (dtResult.Rows[0]["datePublication"] != System.DBNull.Value) {
+					str = Convertion.ToHtmlString(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage)) + " : " + Dates.DateToString((DateTime)dtResult.Rows[0]["datePublication"], _webSession.SiteLanguage);
+					this.PDFPAGE_TextOut(250,
+						315, 0, str);					
+				}
+
 				//Nombre de pages
-				if(dtResult.Rows[0]["number_page_media"] !=System.DBNull.Value){
-					str = Convertion.ToHtmlString(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage))+ " : "+dtResult.Rows[0]["number_page_media"].ToString();
-					this.PDFPAGE_TextOut(250, 
-						330,0,str);					
-				}	
-								
+				if (dtResult.Rows[0]["number_page_media"] != System.DBNull.Value) {
+					str = Convertion.ToHtmlString(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage)) + " : " + dtResult.Rows[0]["number_page_media"].ToString();
+					this.PDFPAGE_TextOut(250,
+						330, 0, str);					
+				}
+
 				#endregion
-			
+
 			}
-			catch(System.Exception e) {
+			catch (System.Exception e) {
 				try {
 					sw.Close();
 				}
-				catch(System.Exception){}
-				throw(new Exceptions.ShouPdfException("Unable to build the session parameter page for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e));
+				catch (System.Exception) { }
+				throw (new Exceptions.ShouPdfException("Unable to build the session parameter page for request " + _rqDetails["id_static_nav_session"].ToString() + ".", e));
 			}
 		}
 		#endregion

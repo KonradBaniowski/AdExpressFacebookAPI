@@ -3,9 +3,11 @@
 	<CustomerMail server="smtp2.secodip.com" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.tnsadexpress.com" subject="AdExpress"/>
 	<PdfPath path="\\testarossa2\adexdatas\AdExCustomerFiles"/>
 	<!--<PdfPath path="AdExCustomerFiles"/>-->
-	<PdfCreatorPilot login="and@tns-global.com" pass="2SN7J-6TWNG-VCQKV-7XCCT-45YEH"/>
-	<Html2Pdf login="An DangDuy" pass="3GKL5-4UFS4-F4HZ4-EK6WY"/>	
-	<PdfLayout>
+  <!--<PdfCreatorPilot login="and@tns-global.com" pass="2SN7J-6TWNG-VCQKV-7XCCT-45YEH"/>-->
+  <PdfCreatorPilot login="laurent.roucaute@tnsmi.fr" pass="WHBRS-AAQWR-7QC3S-9H28E"/>
+	<!--<Html2Pdf login="An DangDuy" pass="3GKL5-4UFS4-F4HZ4-EK6WY"/>-->
+  <Html2Pdf login="laurent.roucaute@tnsmi.fr" pass="FBZ9Q-CQHV9-VTC8P-DFD9V"/>
+  <PdfLayout>
 		<Margins top="15" bottom="15" left="15" right="15"/>
 		<Header size="30"/>
 		<Footer size="20"/>

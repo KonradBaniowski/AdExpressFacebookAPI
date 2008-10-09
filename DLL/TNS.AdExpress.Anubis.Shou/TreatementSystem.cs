@@ -7,7 +7,6 @@ using System;
 using System.Data;
 using System.Threading;
 
-using TNS.AdExpress.Common;
 
 using TNS.AdExpress.Anubis.BusinessFacade;
 using TNS.AdExpress.Anubis.BusinessFacade.Result;
@@ -19,7 +18,7 @@ using TNS.AdExpress.Anubis.Shou.BusinessFacade;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Result;
-using TNS.AdExpress.Web.Core.Navigation;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 using TNS.FrameWork.DB.Common;
 
@@ -155,9 +154,8 @@ namespace TNS.AdExpress.Anubis.Shou
 				
 				pdf = new ShouPdfSystem(_dataSource, _shouConfig,rqDetails,(ProofDetail)ParameterSystem.LoadProofDetail(_navSessionId));
 				string fileName = pdf.Init();
-				pdf.AutoLaunch = false;
-				//TODO update Database for physical file name
 				pdf.Fill();
+		
 				pdf.EndDoc();
 				ParameterSystem.RegisterFile(_dataSource,_navSessionId,fileName);
 				pdf.Send(fileName);

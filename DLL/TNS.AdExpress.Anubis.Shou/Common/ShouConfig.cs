@@ -6,7 +6,6 @@
 using System;
 using System.Drawing;
 
-using TNS.AdExpress.Common;
 using TNS.AdExpress.Anubis.Shou.DataAccess;
 using TNS.FrameWork.DB.Common;
 
