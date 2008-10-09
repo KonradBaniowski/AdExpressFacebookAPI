@@ -17,6 +17,7 @@ using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using TNS.AdExpress.Bastet.Exceptions;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Bastet.Common{
@@ -235,9 +236,12 @@ namespace TNS.AdExpress.Bastet.Common{
 		public static Object Load(Int64 idStaticNavSession){
 			
 			#region Ouverture de la base de données
-			OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING_TEST);
+			IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.webAdministration);
+			//OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING_TEST);
+			OracleConnection cnx = (OracleConnection)dataSource.GetSource();
 			try{
 				cnx.Open();
+				
 			}
 			catch(System.Exception e){
 				throw(new ParametersException("Impossible d'ouvrir la base de données",e));
