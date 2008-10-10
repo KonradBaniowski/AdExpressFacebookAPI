@@ -583,7 +583,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 				htmlHeader.Append(html.ToString());
 
                 #region result
-                int idVehicle = int.Parse(vehicles[0]);
+                Int64 idVehicle = Int64.Parse(vehicles[0]);
                 //result = GenericMediaScheduleUI.GetPdf(
                 //    GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1), _webSession, period, htmlHeader, ref nbWeek, idVehicle);
 
@@ -593,10 +593,16 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
                     _webSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
                 }
                 period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
+                
+                if (vehicles.Length == 1)
+                    param = new object[3];
+                else
+                    param = new object[2];
 
-                param = new object[2];
                 param[0] = _webSession;
                 param[1] = period;
+                if(vehicles.Length==1)
+                    param[2] = idVehicle;
 
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 mediaScheduleResult.Module = module;
