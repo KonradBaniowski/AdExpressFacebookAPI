@@ -376,6 +376,30 @@
 					<TD></TD>
 				</TR>
 				<%}%>
+				
+				<!-- Personnalisation des supports (affiner dans les résultats) -->
+				<%if(displayMediaPersonnalized){%>
+				<TR>
+					<td width="5"></td>
+					<TD class="txtViolet11Bold" bgColor="#ffffff">&nbsp;
+						<%=mediaPersonnalizedWebText%>
+					</TD>
+				</TR>
+				<TR height="20">
+					<td width="5"></td>
+					<TD vAlign="top" align="center" bgColor="#ffffff"><%=mediaPersonnalizedText%></TD>
+				</TR>
+				<TR height="5">
+					<td width="5"></td>
+					<TD bgColor="#ffffff"></TD>
+				</TR>
+				<TR height="7">
+					<td width="5"></td>
+					<TD></TD>
+				</TR>
+				<%}%>
+				
+				
 				<!-- Référence produits -->
 				<%if(displayReferenceAdvertiser){%>
 				<TR>

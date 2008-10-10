@@ -244,6 +244,7 @@
               <detailSelection id="4" name="Unit"/>
               <detailSelection id="18" name="Generic Media Level Detail"/>
               <detailSelection id="19" name="Slogan Selected"/>
+              <detailSelection id="29" name="Media Mersonnalized"/>
             </detailSelections>
           </page>
         </results>

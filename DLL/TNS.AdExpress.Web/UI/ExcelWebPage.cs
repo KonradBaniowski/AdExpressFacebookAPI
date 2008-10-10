@@ -214,6 +214,9 @@ namespace TNS.AdExpress.Web.UI{
 						case WebConstantes.DetailSelection.Type.productLevelDetail:
 							t.Append(GetProductLevelDetail(webSession));
 							break;
+                        case WebConstantes.DetailSelection.Type.mediaPersonnalizedSelected:
+                            t.Append(GetMediaPersonnalizedSelected(webSession));
+                            break;
 						case WebConstantes.DetailSelection.Type.competitorMediaSelected:
 							t.Append(GetCompetitorMediaSelected(webSession));
 							break;
@@ -510,6 +513,7 @@ namespace TNS.AdExpress.Web.UI{
 			string productSelection = "";
 
 			AdExpressUniverse adExpressUniverse = null;
+
 			#region selection produit principale
 			if (webSession.PrincipalProductUniverses.Count ==1) {
 				productSelection += GetBlankLine();
@@ -612,8 +616,35 @@ namespace TNS.AdExpress.Web.UI{
 		}
 		#endregion
 
-		#region Niveau de détail support
-		/// <summary>
+        #region Personnalisation des supports (affiner dans les résultats)
+        /// <summary>
+        /// Supports sélectionnés
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <returns>HTML</returns>
+        public static string GetMediaPersonnalizedSelected(WebSession webSession) {
+
+            #region Variables
+            StringBuilder t = new StringBuilder();
+            int universeCodeTitle = 2540; // Univers support
+            string mediaSelection = "";
+            #endregion
+
+            #region Sélection support secondaire
+            if(webSession.SecondaryMediaUniverses != null && webSession.SecondaryMediaUniverses.Count > 0) {
+                mediaSelection += GetBlankLine();
+                mediaSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+                mediaSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(webSession.SecondaryMediaUniverses[0], webSession.SiteLanguage, webSession.DataLanguage, webSession.Source);
+            }
+            t.Append(mediaSelection);
+            #endregion
+
+            return (t.ToString());
+        }
+        #endregion
+
+        #region Niveau de détail support
+        /// <summary>
 		/// Niveau de détail support (Média détaillé par)
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
@@ -1994,7 +2025,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="cssKeys"> liste des clés des styles Css</param>
 		protected void AddCssStyles(ArrayList cssKeys){
-				_cssKeys = cssKeys;
+		    _cssKeys = cssKeys;
 		}
 		#endregion
 

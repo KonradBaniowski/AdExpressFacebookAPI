@@ -345,6 +345,28 @@
 					<TD colSpan="2"></TD>
 				</TR>
 				<%}%>
+				
+				<!-- Personnalisation des supports (affiner dans les résultats) -->
+				<%if(displayMediaPersonnalized){%>
+				<TR>
+					<TD></TD>
+					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+						<cc1:adexpresstext language="33" id="mediaPersonnalizedWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
+				</TR>
+				<TR height="20">
+					<TD></TD>
+					<TD vAlign="top" align="center" class="whiteBackGround"><%=mediaPersonnalizedText%></TD>
+				</TR>
+				<TR height="5">
+					<TD></TD>
+					<TD class="whiteBackGround"></TD>
+				</TR>
+				<TR height="7">
+					<TD colSpan="2"></TD>
+				</TR>
+				<%}%>
+				
+				
 				<!-- Référence produits -->
 				<%if(displayReferenceAdvertiser){%>
 				<TR>

@@ -1581,7 +1581,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Niveau de détail colonne générique
             /// </summary>
-            genericColumnLevelDetail = 28
+            genericColumnLevelDetail = 28,
+            /// <summary>
+            /// Personnaliser les supports (affiner dans les résultats)
+            /// </summary>
+            mediaPersonnalizedSelected = 29
 		}
 	}
 

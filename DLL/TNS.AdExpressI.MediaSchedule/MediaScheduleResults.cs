@@ -1602,7 +1602,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             if(_allowVersion) {
                                 oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, cssClasse));
                             }
-                            else if(isExport) {
+                            else if(_isPDFReport) {
                                 switch(VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
                                     case CstDBClassif.Vehicles.names.directMarketing:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, cssClasse));
@@ -1622,7 +1622,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             if(_allowVersion) {
                                 oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                             }
-                            else if(isExport) {
+                            else if(_isPDFReport) {
                                 switch(VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
                                     case CstDBClassif.Vehicles.names.directMarketing:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
@@ -1755,7 +1755,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     t.AppendFormat("<td class=\"{0}\">&nbsp;</td>", _style.CellNotPresent);
                                     break;
                                 }
-                                if(data[i, j].GetType() == typeof(MediaPlanItem) || data[i, j].GetType() == typeof(MediaPlanItemIds)) {
+                                if(data[i, j] is MediaPlanItem){
+                                //if(data[i, j].GetType() == typeof(MediaPlanItem) || data[i, j].GetType() == typeof(MediaPlanItemIds)) {
                                     switch(((MediaPlanItem)data[i, j]).GraphicItemType) {
                                         case DetailledMediaPlan.graphicItemType.present:
                                             if(_showValues) {

@@ -34,12 +34,6 @@ namespace AdExpress.Private.Selection{
 		/// </summary>
 		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText AdExpressText2;
 		/// <summary>
-		/// Période
-		/// </summary>
-		/// <summary>
-		/// Média
-		/// </summary>
-		/// <summary>
 		/// Unité
 		/// </summary>
 		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText AdExpressText5;
@@ -52,18 +46,6 @@ namespace AdExpress.Private.Selection{
 		/// </summary>
 		protected TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl closeImageButtonRollOverWebControl;
 		/// <summary>
-		///  Choix de l'étude
-		/// </summary>
-		/// <summary>
-		/// Date
-		/// </summary>
-		/// <summary>
-		/// Unité
-		/// </summary>
-		/// <summary>
-		/// Détail de votre sélection
-		/// </summary>
-		/// <summary>
 		/// Label 
 		/// </summary>
 		protected System.Web.UI.WebControls.Label univers1Text;
@@ -75,7 +57,6 @@ namespace AdExpress.Private.Selection{
 		/// Texte
 		/// </summary>
 		public string productAdExpressText;
-
 		#endregion
 
 		#region Variables
@@ -120,7 +101,7 @@ namespace AdExpress.Private.Selection{
 		/// </summary>
 		public bool displayAdvertiser=false;
 		/// <summary>
-		/// 		/// Si vrai affiche les produits dans la page aspx
+		/// Si vrai affiche les produits dans la page aspx
 		/// </summary>
 		public bool displayProduct=false;
 		/// <summary>
@@ -228,27 +209,9 @@ namespace AdExpress.Private.Selection{
 		/// </summary>
 		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText Adexpresstext9;
 		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
 		///Affiche les cibles 
 		/// </summary>
 		public string targetsText="";
-		/// <summary>
-		/// Libellé type de pourcentage
-		/// </summary>
-
-		/// <summary>
-		/// Libellé niveaux de détil génériques
-		/// </summary>
-
-		
 		/// <summary>
 		/// Indique si on affiche nioveaux de détail génériques
 		/// </summary>
@@ -257,17 +220,14 @@ namespace AdExpress.Private.Selection{
         /// Indique si on affiche les niveaux de détail colonne génériques
         /// </summary>
         public bool displayGenericlevelDetailColumnLabel = false;
-
 		/// <summary>
 		/// Texte titre Noveaux de détail
 		/// </summary>
 		public string genericlevelDetailLabelTitle = "";
-
         /// <summary>
         /// Texte titre Niveaux de détail colonne
         /// </summary>
         public string genericlevelDetailColumnLabelTitle = "";
-
 		/// <summary>
 		/// logo
 		/// </summary>
@@ -280,6 +240,18 @@ namespace AdExpress.Private.Selection{
         /// Zoom Period
         /// </summary>
         protected string _zoomDate = "";
+        /// <summary>
+        /// Personnalisation des supports
+        /// </summary>
+        public string mediaPersonnalizedText = "";
+        /// <summary>
+        /// Titre pour la personnalisation des supports
+        /// </summary>
+        public string mediaPersonnalizedWebText = "";
+        /// <summary>
+        /// Indique si on affiche la personnalisation des supports
+        /// </summary>
+        protected bool displayMediaPersonnalized = false;
 		#endregion
 
 		#region Constructeur
@@ -306,39 +278,44 @@ namespace AdExpress.Private.Selection{
 				int idMedia=1;
 				int idAdvertiser=1;						
 				#endregion
-				
-				// logo
+
+                #region Logo
                 logo = TNS.AdExpress.Web.UI.ExcelWebPage.GetLogo(_webSession);
+                #endregion
 
-				// Intitulé de l'étude
-				typeEtude=Convertion.ToHtmlString(GestionWeb.GetWebWord(842,_webSession.SiteLanguage));
+                #region Intitulé de l'étude
+                typeEtude =Convertion.ToHtmlString(GestionWeb.GetWebWord(842,_webSession.SiteLanguage));
+                #endregion
 
-                // Zoom Date
+                #region Zoom Date
                 _zoomDate = Page.Request.QueryString.Get("zoomDate");
-
                 if (_zoomDate == null) _zoomDate = "";
-
-				//Modification de la langue pour les Textes AdExpress
-				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls,_webSession.SiteLanguage);
+                #endregion
 
 				#region Affichage des paramètres sélectionnés
-				
-                detailSelection=Convertion.ToHtmlString(GestionWeb.GetWebWord(1539,_webSession.SiteLanguage))+" "+DateTime.Now.ToString("dd/MM/yyyy")+"";
-				// Module
-				moduleLabel.Text=Convertion.ToHtmlString(GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_webSession.CurrentModule),_webSession.SiteLanguage));
 
-				// Unité
-				unitTitle=Convertion.ToHtmlString(GestionWeb.GetWebWord(849,_webSession.SiteLanguage));
-				unitLabel.Text=Convertion.ToHtmlString(GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId,_webSession.SiteLanguage));	
+                #region Choix de l'étude
+                detailSelection = Convertion.ToHtmlString(GestionWeb.GetWebWord(1539, _webSession.SiteLanguage)) + " " + DateTime.Now.ToString("dd/MM/yyyy") + "";
+                #endregion
 
-				// Media
-				if (_webSession.isMediaSelected()){
+                #region Module
+                moduleLabel.Text=Convertion.ToHtmlString(GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_webSession.CurrentModule),_webSession.SiteLanguage));
+                #endregion
+
+                #region Unité
+                unitTitle =Convertion.ToHtmlString(GestionWeb.GetWebWord(849,_webSession.SiteLanguage));
+				unitLabel.Text=Convertion.ToHtmlString(GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId,_webSession.SiteLanguage));
+                #endregion
+
+                #region Media
+                if (_webSession.isMediaSelected()){
 					displayMedia=true;
 					mediaText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversMedia,_webSession.SiteLanguage,false);
-				}
+                }
+                #endregion
 
-				#region Media concurrents
-				if(_webSession.isCompetitorMediaSelected()){
+                #region Media concurrents
+                if(_webSession.isCompetitorMediaSelected()){
 					displayDetailMedia=true;
 					System.Text.StringBuilder mediaSB=new System.Text.StringBuilder(1000);
 				
@@ -423,25 +400,30 @@ namespace AdExpress.Private.Selection{
 					mediaDetailText=detailMedia.ToString();			
 				}
 				#endregion
-			
-				// Etude comparative
-				if(_webSession.ComparativeStudy){
+
+                #region Etude comparative
+                if(_webSession.ComparativeStudy){
 					comparativeStudy=true;
 					comparativeStudyText=GestionWeb.GetWebWord(1118,_webSession.SiteLanguage);
-				}
-				// Vague
-				if (_webSession.IsWaveSelected()){
+                }
+                #endregion
+
+                #region Vague
+                if (_webSession.IsWaveSelected()){
 					displayWave=true;
 					waveText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMWave,_webSession.SiteLanguage,false);
-				}
-				//Cibles				
-				if (_webSession.IsTargetSelected()){
+                }
+                #endregion
+
+                #region Cibles
+                if (_webSession.IsTargetSelected()){
 					displayTargets=true;
 					targetsText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMTarget,_webSession.SiteLanguage,false);
-				}				
+                }
+                #endregion
 
-				//Selection univers produit
-				//productAdExpressText = Convertion.ToHtmlString(GestionWeb.GetWebWord(1759, _webSession.SiteLanguage));
+                #region Sélection univers produit
+                //productAdExpressText = Convertion.ToHtmlString(GestionWeb.GetWebWord(1759, _webSession.SiteLanguage));
 				productText = Convertion.ToHtmlString(TNS.AdExpress.Web.UI.ExcelWebPage.GetProductSelected(_webSession));
 				if (productText != null && productText.Length > 0) {
 					productText = "<table>" + productText + "</table>";
@@ -454,11 +436,19 @@ namespace AdExpress.Private.Selection{
 					|| _webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE 
 					){
 					idAdvertiser=0;
-				}
-	
+                }
+                #endregion
 
-				#region Périodes
-				// Période
+                #region Personnalisation des supports (affiner dans les résultats)
+                mediaPersonnalizedText = Convertion.ToHtmlString(TNS.AdExpress.Web.UI.ExcelWebPage.GetMediaPersonnalizedSelected(_webSession));
+                if(mediaPersonnalizedText != null && mediaPersonnalizedText.Length > 0) {
+                    mediaPersonnalizedText = "<table>" + mediaPersonnalizedText + "</table>";
+                    displayMediaPersonnalized = true;
+                }
+                #endregion
+
+                #region Périodes
+                // Période
                 if (_zoomDate == null) _zoomDate = "";
                 if (_zoomDate.Length > 0) {
                     displayPeriod = true;
@@ -515,20 +505,23 @@ namespace AdExpress.Private.Selection{
 
                 }
 
-                //Program Type
-				if (_webSession.IsCurrentUniversProgramTypeSelected()){
+                #region Program Type
+                if (_webSession.IsCurrentUniversProgramTypeSelected()){
 					displayProgramType=true;
 					programTypeLabel = Convertion.ToHtmlString(GestionWeb.GetWebWord(2066,_webSession.SiteLanguage));
 					programTypeText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.CurrentUniversProgramType,_webSession.SiteLanguage,false);
-				}
-				//Sponsorship Form
-				if (_webSession.IsCurrentUniversSponsorshipFormSelected()){
+                }
+                #endregion
+
+                #region Sponsorship Form
+                if (_webSession.IsCurrentUniversSponsorshipFormSelected()){
 					displaySponsorshipForm=true;
 					sponsorshipFormText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.CurrentUniversSponsorshipForm,_webSession.SiteLanguage,false);
-				}
+                }
+                #endregion
 
-				//Type de pourcentage
-				switch(_webSession.PercentageAlignment){
+                #region Type de pourcentage
+                switch(_webSession.PercentageAlignment){
 					case CstWeb.Percentage.Alignment.vertical :
 						percentageAlignmentTitle = Convertion.ToHtmlString(GestionWeb.GetWebWord(2153,_webSession.SiteLanguage));
 						displayPercentageAlignment = true;
@@ -539,21 +532,27 @@ namespace AdExpress.Private.Selection{
 						displayPercentageAlignment = true;
 						percentageAlignmentLabel.Text = Convertion.ToHtmlString(GestionWeb.GetWebWord(2064,_webSession.SiteLanguage));						
 						break;
-					default : break;						
-				}		
-				
-				//Niveaux de détail générique	
-				MediaDetailLevel.GetGenericLevelDetail(_webSession,ref displayGenericlevelDetailLabel,genericlevelDetailLabel,true);
-				if(displayGenericlevelDetailLabel)genericlevelDetailLabelTitle =  Convertion.ToHtmlString(GestionWeb.GetWebWord(1886,_webSession.SiteLanguage));
+					default : break;
+                }
+                #endregion
 
-                //Niveaux de détail colonne générique	
+                #region Niveaux de détail générique
+                MediaDetailLevel.GetGenericLevelDetail(_webSession,ref displayGenericlevelDetailLabel,genericlevelDetailLabel,true);
+				if(displayGenericlevelDetailLabel)genericlevelDetailLabelTitle =  Convertion.ToHtmlString(GestionWeb.GetWebWord(1886,_webSession.SiteLanguage));
+                #endregion
+
+                #region Niveaux de détail colonne générique
                 MediaDetailLevel.GetGenericLevelDetailColumn(_webSession, ref displayGenericlevelDetailColumnLabel, genericlevelDetailColumnLabel, true);
                 if (displayGenericlevelDetailColumnLabel) genericlevelDetailColumnLabelTitle = Convertion.ToHtmlString(GestionWeb.GetWebWord(2300, _webSession.SiteLanguage));
-				#endregion
+                #endregion
 
-				// copyright
-				copyRight = TNS.AdExpress.Web.UI.ExcelWebPage.GetFooter(_webSession);
-			}
+                #endregion
+
+                #region copyright
+                copyRight = TNS.AdExpress.Web.UI.ExcelWebPage.GetFooter(_webSession);
+                #endregion
+
+            }
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
 					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));

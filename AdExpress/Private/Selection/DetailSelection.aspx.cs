@@ -9,6 +9,7 @@
  * */
 #endregion
 
+#region Namespaces
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -33,6 +34,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.Date;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Web;
+#endregion
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -42,39 +44,9 @@ namespace AdExpress.Private.Selection{
 
 		#region Variables MMI
 		/// <summary>
-		/// Choix de l'étude
-		/// </summary>
-		/// <summary>
-		/// Période
-		/// </summary>
-		/// <summary>
-		/// Média
-		/// </summary>
-		/// <summary>
-		/// Unité
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
 		/// Texte
 		/// </summary>	
 		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText advertiserCompetitorText;
-		/// <summary>
-		/// Bouton Fermer
-		/// </summary>
-		/// <summary>
-		///  Choix de l'étude
-		/// </summary>
-		/// <summary>
-		/// Date
-		/// </summary>
-		/// <summary>
-		/// Unité
-		/// </summary>
-		/// <summary>
-		/// Détail de votre sélection
-		/// </summary>
 		/// <summary>
 		/// Label 
 		/// </summary>
@@ -83,22 +55,6 @@ namespace AdExpress.Private.Selection{
 		/// Texte
 		/// </summary>
 		protected System.Web.UI.WebControls.Label univers2Text;
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Contextual Menu
-		/// </summary>
-
-		/// <summary>
-		/// Libellé type de pourcentage
-		/// </summary>
-		/// <summary>
-		/// Libellé niveaux de détil génériques
-		/// </summary>
 		#endregion
 
 		#region Variables
@@ -230,25 +186,7 @@ namespace AdExpress.Private.Selection{
 		/// Lien pour l'export Excel
 		/// </summary>
 		public string excelUrl="";
-		/// <summary>
-		/// texte
-		/// </summary>
-		/// <summary>
-		/// Agence
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
+        /// <summary>
 		/// Commentaire Excel
 		/// </summary>
 		public string excelComment="";
@@ -256,7 +194,6 @@ namespace AdExpress.Private.Selection{
 		/// Indique si on affiche type de pourcentage
 		/// </summary>
 		public bool displayPercentageAlignment = false;
-		
 		/// <summary>
 		/// Indique si on affiche les niveaux de détail génériques
 		/// </summary>
@@ -269,6 +206,14 @@ namespace AdExpress.Private.Selection{
         /// Zoom Period
         /// </summary>
         protected string _zoomDate = "";
+        /// <summary>
+        /// Personnalisation des supports
+        /// </summary>
+        public string mediaPersonnalizedText = "";
+        /// <summary>
+        /// Indique si on affiche la personnalisation des supports
+        /// </summary>
+        protected bool displayMediaPersonnalized = false;
 		#endregion
 
 		#region Constructeur
@@ -300,27 +245,16 @@ namespace AdExpress.Private.Selection{
 				
 				#endregion
 			
-//				excelUrl="/Private/Selection/DetailSelectionExcel.aspx?idSession="+_webSession.IdSession;
-//				excelComment=GestionWeb.GetWebWord(791,_webSession.SiteLanguage);
-
-                // Zoom Date
+                #region Zoom Date
                 _zoomDate = Page.Request.QueryString.Get("zoomDate");
-
                 if (_zoomDate == null) _zoomDate = "";
+                #endregion
 
-				// Rollover
-				//closeImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_up.gif";
-				//closeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_down.gif";
-
-				// Chargement du javascript des System.Windows.Forms.TreeNode
-				//script= TNS.AdExpress.Web.Functions.DisplayTreeNode.AddScript();
-
-				//Modification de la langue pour les Textes AdExpress
-				//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_webSession.SiteLanguage);
-				
-				MenuWebControl2.ForcePrint = "/Private/Selection/DetailSelectionExcel.aspx?idSession="
+                #region Export Ms Excel
+                MenuWebControl2.ForcePrint = "/Private/Selection/DetailSelectionExcel.aspx?idSession="
 					+ this._webSession.IdSession + ((_zoomDate.Length > 0)?"&zoomDate="+_zoomDate:"");
 				MenuWebControl2.ForcePrintTraductionCode = 791;
+                #endregion
 
                 #region Script
                 // script
@@ -329,16 +263,18 @@ namespace AdExpress.Private.Selection{
                 }
                 #endregion
 
-
                 #region Affichage des paramètres sélectionnés
-                // Module
-				moduleLabel.Text=GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_webSession.CurrentModule),_webSession.SiteLanguage);
 
-				// Unité
-				unitLabel.Text=GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId,_webSession.SiteLanguage);	
+                #region Module
+                moduleLabel.Text=GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_webSession.CurrentModule),_webSession.SiteLanguage);
+                #endregion
 
-				// Media
-				if (_webSession.isMediaSelected()){
+                #region Unité
+                unitLabel.Text=GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId,_webSession.SiteLanguage);
+                #endregion
+
+                #region Media
+                if (_webSession.isMediaSelected()){
 					displayMedia=true;
 					mediaText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia,false,false,false,"100",false,false,_webSession.SiteLanguage,2,1,true);
 				}
@@ -353,7 +289,6 @@ namespace AdExpress.Private.Selection{
 					mediaSB.Append("</TR>");
 
 					while((System.Windows.Forms.TreeNode)_webSession.CompetitorUniversMedia[idMedia]!=null){
-					
 						System.Windows.Forms.TreeNode tree=(System.Windows.Forms.TreeNode)_webSession.CompetitorUniversMedia[idMedia];				
 						mediaSB.Append("<TR height=\"20\">");
 						mediaSB.Append("<TD>&nbsp;</TD>");
@@ -373,12 +308,11 @@ namespace AdExpress.Private.Selection{
 						idMedia++;
 					}
 					mediaDetailText=mediaSB.ToString();
-				}
-			
-				// Détail référence média
-			
-				if(_webSession.isReferenceMediaSelected()){
-			
+                }
+                #endregion
+
+                #region Détail référence média
+                if(_webSession.isReferenceMediaSelected()){
 					displayReferenceDetailMedia=true;
 					System.Text.StringBuilder referenceDetailMedia=new System.Text.StringBuilder(1000);
 				
@@ -386,8 +320,7 @@ namespace AdExpress.Private.Selection{
                     referenceDetailMedia.Append("<TD class=\"txtViolet11Bold whiteBackGround\" >&nbsp;");
 					referenceDetailMedia.Append("<label>"+GestionWeb.GetWebWord(1194,_webSession.SiteLanguage)+"</label></TD>");
 					referenceDetailMedia.Append("</TR>");				
-					
-									
+							
 					referenceDetailMedia.Append("<TR height=\"20\">");
 					referenceDetailMedia.Append("<TD>&nbsp;</TD>");
                     referenceDetailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.ReferenceUniversMedia, false, true, true, "100", true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
@@ -403,13 +336,12 @@ namespace AdExpress.Private.Selection{
 						Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"showHideContent"+i+"",TNS.AdExpress.Web.Functions.Script.ShowHideContent1(i));
 					}
 					i++;				
-					referenceMediaDetailText=referenceDetailMedia.ToString();			
-			
-				}
+					referenceMediaDetailText=referenceDetailMedia.ToString();
+                }
+                #endregion
 
-				// Détail Média
-				if(_webSession.SelectionUniversMedia.FirstNode!=null && _webSession.SelectionUniversMedia.FirstNode.Nodes.Count>0){
-			
+                #region Détail Média
+                if(_webSession.SelectionUniversMedia.FirstNode!=null && _webSession.SelectionUniversMedia.FirstNode.Nodes.Count>0){
 					displayDetailMedia=true;
 					System.Text.StringBuilder detailMedia=new System.Text.StringBuilder(1000);
 				
@@ -417,8 +349,7 @@ namespace AdExpress.Private.Selection{
                     detailMedia.Append("<TD class=\"txtViolet11Bold whiteBackGround\" >&nbsp;");
 					detailMedia.Append("<label>"+GestionWeb.GetWebWord(1194,_webSession.SiteLanguage)+"</label></TD>");
 					detailMedia.Append("</TR>");				
-					
-									
+							
 					detailMedia.Append("<TR height=\"20\">");
 					detailMedia.Append("<TD>&nbsp;</TD>");
                     detailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.SelectionUniversMedia.FirstNode, false, true, true, "100", true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
@@ -434,41 +365,43 @@ namespace AdExpress.Private.Selection{
 						Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"showHideContent"+i+"",TNS.AdExpress.Web.Functions.Script.ShowHideContent1(i));
 					}
 					i++;				
-					mediaDetailText=detailMedia.ToString();			
-				}
-			
-				// Etude comparative
+					mediaDetailText=detailMedia.ToString();
+                }
+                #endregion
 
-				if(_webSession.ComparativeStudy){
+                #region Etude comparative
+                if(_webSession.ComparativeStudy){
 					comparativeStudy=true;
 					comparativeStudyText=GestionWeb.GetWebWord(1118,_webSession.SiteLanguage);
+                }
+                #endregion
 
-				}
-
-				// Agence média
-				if(_webSession.PreformatedProductDetail==CstCustomerSession.PreformatedDetails.PreformatedProductDetails.agencyProduct
+                #region Agence média
+                if(_webSession.PreformatedProductDetail==CstCustomerSession.PreformatedDetails.PreformatedProductDetails.agencyProduct
 					|| _webSession.PreformatedProductDetail==CstCustomerSession.PreformatedDetails.PreformatedProductDetails.agencyAdvertiser
 					|| _webSession.PreformatedProductDetail==CstCustomerSession.PreformatedDetails.PreformatedProductDetails.group_agencyAgency
 					){
 					displayMediaAgency=true;
 					MediaAgency.Text=_webSession.MediaAgencyFileYear.Substring(_webSession.MediaAgencyFileYear.Length-4,4);;
-				
-				}
-				
-				// Vague
-				if (_webSession.IsWaveSelected()){
+                }
+                #endregion
+
+                #region Vague
+                if (_webSession.IsWaveSelected()){
 					displayWave=true;
 					waveText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMWave,false,false,false,"100",false,false,_webSession.SiteLanguage,2,1,true);
-				}
+                }
+                #endregion
 
-				//Cibles				
+                #region Cibles
 				if (_webSession.IsTargetSelected()){
 					displayTargets=true;
 					targetsText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMTarget,false,false,false,"100",false,false,_webSession.SiteLanguage,2,1,true);
-				}
+                }
+                #endregion
 
-				#region ancienne version
-				//// Annonceur/Référence
+                #region Ancienne version (Annonceur / référence / produits ...)
+                //// Annonceur/Référence
 				//if (_webSession.isAdvertisersSelected() && !_webSession.isCompetitorAdvertiserSelected()){
 				//    displayAdvertiser=true;
 				//    // Affichage type d'advertiser
@@ -624,97 +557,88 @@ namespace AdExpress.Private.Selection{
 				//}
 
 				#endregion
-				Oracle.DataAccess.Client.OracleConnection oConnection = null;
-				//Univers produit principal sélectionné
-				if (_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0) {
 
-					
-					//if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
-					//        || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
-					//)
-					//oConnection = new Oracle.DataAccess.Client.OracleConnection(DBCst.Connection.RECAP_CONNECTION_STRING);
-					//else
-						//oConnection = _webSession.CustomerLogin.Connection;
+                #region Univers produit principal sélectionné
+                if(_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0) {
+                    System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+                    string nameProduct = "";
 
-					System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
-					string nameProduct = "";
+                    if(_webSession.PrincipalProductUniverses.Count > 1) {
+                        displayCompetitorAdvertiser = true;
+                        productAdExpressText.Code = 2302;
+                    }
+                    else {
+                        displayProduct = true;
+                        productAdExpressText.Code = 1759;
+                    }
 
-					if (_webSession.PrincipalProductUniverses.Count > 1) {
-						displayCompetitorAdvertiser = true;						
-						productAdExpressText.Code = 2302;
-					}
-					else {
-						displayProduct = true;
-						productAdExpressText.Code = 1759;
-					}					
-
-					TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
+                    TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
                     selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + themeName + "/Styles/TreeView/Icons";
                     selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + themeName + "/Styles/TreeView/Scripts";
                     selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + themeName + "/Styles/TreeView/Css";
-					selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
-					selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
-					selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
-					selectItemsInClassificationWebControl.ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss";
-					selectItemsInClassificationWebControl.TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss";
-					selectItemsInClassificationWebControl.TreeExcludeFrameCss = "treeExcludeFrameCss";
-					selectItemsInClassificationWebControl.TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss";
-					selectItemsInClassificationWebControl.TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss";
-					selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
-					selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
-					selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
-					selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
-					for(int k =0; k<_webSession.PrincipalProductUniverses.Count;k++){
-						if (_webSession.PrincipalProductUniverses.Count > 1) {
-							if (_webSession.PrincipalProductUniverses.ContainsKey(k)) {
-								if (k > 0) {
-									nameProduct = GestionWeb.GetWebWord(2301, _webSession.SiteLanguage);
-								}
-								else {
-									nameProduct = GestionWeb.GetWebWord(2302, _webSession.SiteLanguage);
-								}
+                    selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
+                    selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameCss = "treeExcludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+                    for(int k = 0; k < _webSession.PrincipalProductUniverses.Count; k++) {
+                        if(_webSession.PrincipalProductUniverses.Count > 1) {
+                            if(_webSession.PrincipalProductUniverses.ContainsKey(k)) {
+                                if(k > 0) {
+                                    nameProduct = GestionWeb.GetWebWord(2301, _webSession.SiteLanguage);
+                                }
+                                else {
+                                    nameProduct = GestionWeb.GetWebWord(2302, _webSession.SiteLanguage);
+                                }
 
-								t.Append("<TR><TD></TD>");
+                                t.Append("<TR><TD></TD>");
                                 t.Append("<TD class=\"txtViolet11Bold whiteBackGround\" >&nbsp;");
-								t.Append("<label>" + nameProduct + "</label></TD>");
-								t.Append("</TR>");
+                                t.Append("<label>" + nameProduct + "</label></TD>");
+                                t.Append("</TR>");
 
-								//Universe Label
-								if (_webSession.PrincipalProductUniverses[k].Label != null && _webSession.PrincipalProductUniverses[k].Label.Length > 0) {
-									t.Append("<TR>");
-									t.Append("<TD></TD>");
+                                // Universe Label
+                                if(_webSession.PrincipalProductUniverses[k].Label != null && _webSession.PrincipalProductUniverses[k].Label.Length > 0) {
+                                    t.Append("<TR>");
+                                    t.Append("<TD></TD>");
                                     t.Append("<TD class=\"txtViolet11Bold whiteBackGround\" >&nbsp;");
-									t.Append("<Label>" + _webSession.PrincipalProductUniverses[k].Label + "</Label>");
-									t.Append("</TD></TR>");
-								}
+                                    t.Append("<Label>" + _webSession.PrincipalProductUniverses[k].Label + "</Label>");
+                                    t.Append("</TD></TR>");
+                                }
 
-								//Render universe html code
-								t.Append("<TR height=\"20\">");
-								t.Append("<TD>&nbsp;</TD>");
-                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source) + "</TD>");								
-								t.Append("</TR>");
-								t.Append("<TR height=\"5\">");
-								t.Append("<TD></TD>");
+                                // Render universe html code
+                                t.Append("<TR height=\"20\">");
+                                t.Append("<TD>&nbsp;</TD>");
+                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"whiteBackGround\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source) + "</TD>");
+                                t.Append("</TR>");
+                                t.Append("<TR height=\"5\">");
+                                t.Append("<TD></TD>");
                                 t.Append("<TD class=\"whiteBackGround\"></TD>");
-								t.Append("</TR>");
-								t.Append("<TR height=\"7\">");
-								t.Append("<TD colSpan=\"2\"></TD>");
-								t.Append("</TR>");
+                                t.Append("</TR>");
+                                t.Append("<TR height=\"7\">");
+                                t.Append("<TD colSpan=\"2\"></TD>");
+                                t.Append("</TR>");
+                            }
+                        }
+                        else {
+                            if(_webSession.PrincipalProductUniverses.ContainsKey(k)) {
+                                productText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source);
+                            }
+                        }
+                    }
+                    if(_webSession.PrincipalProductUniverses.Count > 1)
+                        competitorAdvertiserText = t.ToString();
+                }
+                #endregion
 
-							}
-						}
-						else {
-							if (_webSession.PrincipalProductUniverses.ContainsKey(k)) {
-								productText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source);
-							}
-						}						
-					}
-					if (_webSession.PrincipalProductUniverses.Count > 1) 
-					competitorAdvertiserText=t.ToString();
-				}
-
-				//Univers produit secondaire selectionné
-				if (_webSession.SecondaryProductUniverses != null && _webSession.SecondaryProductUniverses.Count > 0) {					
+                #region Univers produit secondaire sélectionné
+                if (_webSession.SecondaryProductUniverses != null && _webSession.SecondaryProductUniverses.Count > 0) {					
 
 					if (WebFunctions.Modules.IsDashBoardModule(_webSession)) {
 						displayProduct = true;
@@ -790,20 +714,46 @@ namespace AdExpress.Private.Selection{
 							}
 						}
 					}
-				}
-				if (_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR 
+                }
+                if (_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR 
 					|| _webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE 
 					){
 					idAdvertiser=0;
 			
 				}
-				//changes for sector display
+				// Changes for sector display
 				if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR) {
 					productText += TNS.AdExpress.Web.BusinessFacade.Selections.Products.SectorsSelectedBusinessFacade.GetSectorsSelected(_webSession);
-				}
-				
+                }
+                #endregion
 
-				// Période
+                #region Univers support secondaire sélectionné
+                if(_webSession.SecondaryMediaUniverses != null && _webSession.SecondaryMediaUniverses.Count > 0) {
+                    displayMediaPersonnalized = true;
+                    mediaPersonnalizedWebText.Code = 2540; // Univers support
+
+                    TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
+                    selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + themeName + "/Styles/TreeView/Icons";
+                    selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + themeName + "/Styles/TreeView/Scripts";
+                    selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + themeName + "/Styles/TreeView/Css";
+                    selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
+                    selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameCss = "treeExcludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+
+                    mediaPersonnalizedText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryMediaUniverses[0], _webSession.DataLanguage, _webSession.Source);
+                }
+                #endregion
+
+                #region Période
                 if (_zoomDate == null) _zoomDate = "";
                 if (_zoomDate.Length > 0) {
                     displayPeriod = true;
@@ -818,7 +768,6 @@ namespace AdExpress.Private.Selection{
                     || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
                     || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
                     ) {
-
                     // Période de l'étude
                     if (_webSession.isStudyPeriodSelected()) {
                         displayStudyPeriod = true;
@@ -849,45 +798,52 @@ namespace AdExpress.Private.Selection{
                         }
                     }
                 }
+                #endregion
 
-				//Program Type
+                #region Program Type
 				if (_webSession.IsCurrentUniversProgramTypeSelected()){
 					displayProgramType=true;
 					programTypeText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversProgramType,false,true,true,"100",true,false,_webSession.SiteLanguage,2,1,true);
-				}
-				//Sponsorship Form
+                }
+                #endregion
+
+                #region Sponsorship Form
 				if (_webSession.IsCurrentUniversSponsorshipFormSelected()){
 					displaySponsorshipForm=true;
 					sponsorshipFormText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversSponsorshipForm,false,true,true,"100",true,false,_webSession.SiteLanguage,2,1,true);
-				}
+                }
+                #endregion
 
-				//Type de pourcentage
-				switch(_webSession.PercentageAlignment){
-					case CstWeb.Percentage.Alignment.vertical :
-						displayPercentageAlignment = true;
-						percentageAlignmentLabel.Text = GestionWeb.GetWebWord(2065,_webSession.SiteLanguage);	
-						break;
-					case CstWeb.Percentage.Alignment.horizontal :
-						displayPercentageAlignment = true;
-						percentageAlignmentLabel.Text = GestionWeb.GetWebWord(2064,_webSession.SiteLanguage);						
-						break;
-					default : break;						
-				}	
-					
-				//Niveaux de détail générique	
-				WebFunctions.MediaDetailLevel.GetGenericLevelDetail(_webSession,ref displayGenericlevelDetailLabel,genericlevelDetailLabel,false);
+                #region Type de pourcentage
+                switch(_webSession.PercentageAlignment) {
+                    case CstWeb.Percentage.Alignment.vertical:
+                        displayPercentageAlignment = true;
+                        percentageAlignmentLabel.Text = GestionWeb.GetWebWord(2065, _webSession.SiteLanguage);
+                        break;
+                    case CstWeb.Percentage.Alignment.horizontal:
+                        displayPercentageAlignment = true;
+                        percentageAlignmentLabel.Text = GestionWeb.GetWebWord(2064, _webSession.SiteLanguage);
+                        break;
+                    default: break;
+                }
+                #endregion
 
-                //Niveaux de détail colonne générique	
+                #region Niveaux de détail générique
+                WebFunctions.MediaDetailLevel.GetGenericLevelDetail(_webSession,ref displayGenericlevelDetailLabel,genericlevelDetailLabel,false);
+                #endregion
+
+                #region Niveaux de détail colonne générique
                 WebFunctions.MediaDetailLevel.GetGenericLevelDetailColumn(_webSession, ref displayGenericlevelDetailColumnLabel, genericlevelDetailColumnLabel, false);
-				#endregion
-				
-			}
+                #endregion
+
+                #endregion
+
+            }
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
 					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
 				}
 			}
-
 		}
 		#endregion
 
@@ -940,19 +896,6 @@ namespace AdExpress.Private.Selection{
 		protected void Page_UnLoad(object sender, System.EventArgs e){			
 		}
 		#endregion
-
-        //#region Bouton Fermer
-        ///// <summary>
-        ///// Gestion du bouton fermer
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //protected void closeImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
-        //    Response.Write("<script language=javascript>");
-        //    Response.Write("	window.close();");
-        //    Response.Write("</script>");
-        //}
-        //#endregion
 
 		#region Méthodes internes
 		/// <summary>
@@ -1009,9 +952,6 @@ namespace AdExpress.Private.Selection{
 		}
 		#endregion
 
-
-
-	
 		#endregion
 
 	}
