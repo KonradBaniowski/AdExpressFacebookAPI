@@ -372,6 +372,9 @@ namespace AdExpress.Private.Universe{
 			else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv.ToString()) {
 				return TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv;
 			}
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaAdnettrack.ToString()) {
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaAdnettrack;
+            }
 			else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorship.ToString()) {
 				return TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorship;
 			}
@@ -429,6 +432,7 @@ namespace AdExpress.Private.Universe{
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternationalPress:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaAdnettrack:
 					alTreeNodeUniverse.Add(_webSession.CurrentUniversMedia);
 					break;
 				case TNS.AdExpress.Constantes.Classification.Branch.type.programType:

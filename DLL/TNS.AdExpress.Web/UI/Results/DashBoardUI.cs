@@ -20,7 +20,6 @@ using TNS.AdExpress.Web.DataAccess.Selections.Periods;
 using TNS.AdExpress.Domain.Translation;
 using CustomerConstantes=TNS.AdExpress.Constantes.Customer;
 using ClassificationCst=TNS.AdExpress.Constantes.Classification;
-using TNS.AdExpress.Domain.Translation;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using WebFunctions=TNS.AdExpress.Web.Functions;
@@ -191,7 +190,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 				
 					//Nombre de Colonnes resultat
 			
-					if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
+					if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                        && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                        && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                        && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
 						nbCol=tab.GetLength(1)-ResultConstantes.TOTAL_COLUMN_INDEX;
 					}else
 						nbCol=tab.GetLength(1)-(ResultConstantes.TOTAL_COLUMN_INDEX+1);
@@ -301,8 +303,11 @@ namespace TNS.AdExpress.Web.UI.Results {
 						
 							#region Niveau2
 						else if(tab[i,ResultConstantes.ID_ELMT_L1_COLUMN_INDEX]==null && tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX]!=null && tab[i,ResultConstantes.ID_ELMT_L3_COLUMN_INDEX]==null){
-							
-							if(webSession.PreformatedMediaDetail==CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia){		
+
+                            if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia 
+                                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {		
 								classCss="acl31";
 							}else
 								classCss="acl21";
@@ -403,7 +408,6 @@ namespace TNS.AdExpress.Web.UI.Results {
 			//string colorClasses="";
 			string colorClasses2="";
 			string colorClasses3="";
-		
 			#endregion
 		
 			#region UI
@@ -446,6 +450,16 @@ namespace TNS.AdExpress.Web.UI.Results {
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice :
 					html.Append("<td align=\"center\" class=\""+P2+"\" nowrap>"+GestionWeb.GetWebWord(1164,webSession.SiteLanguage)+"</td>");
 					break;
+                
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
+                    html.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(2155, webSession.SiteLanguage) + "</td>");
+                    break;
+
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
+                    html.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(627, webSession.SiteLanguage) + "</td>");
+                    break;
 			}
 			#endregion
 					
@@ -457,14 +471,18 @@ namespace TNS.AdExpress.Web.UI.Results {
 			html.Append("</tr>");
 			#endregion
 
-			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
+			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
 				nbCol=tab.GetLength(1)-ResultConstantes.TOTAL_COLUMN_INDEX;
 			}else
 				nbCol=tab.GetLength(1)-(ResultConstantes.TOTAL_COLUMN_INDEX+1);
 						
 			#region Parcour du Tableau
 			//tableau			
-			for (int i=1;i<tab.GetLength(0);i++){
+
+            for (int i = 1; i < tab.GetLength(0); i++) {
 	
 				#region niveau1
 				if(tab[i,ResultConstantes.ID_ELMT_L1_COLUMN_INDEX]!=null && tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX]==null && tab[i,ResultConstantes.ID_ELMT_L3_COLUMN_INDEX]==null){
@@ -483,7 +501,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 
 				#region niveau2
 				if(tab[i,ResultConstantes.ID_ELMT_L1_COLUMN_INDEX]==null && tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX]!=null && tab[i,ResultConstantes.ID_ELMT_L3_COLUMN_INDEX]==null){
-					if(webSession.PreformatedMediaDetail==CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia){		
+                    if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia 
+                        && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                        && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                        && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {		
 						if (!excel){
 							classCss="asl5b";
 							classCss2="asl5";
@@ -601,7 +622,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
 			
 			#region  colonne Totale
-			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
+			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
 				if(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX]!=null){					
 					if(tab[i,ResultConstantes.REPARTITION_PERCENT]!=null)
 						html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()).ToString("### ### ### ##0.##")+" %</td>");
@@ -622,85 +646,131 @@ namespace TNS.AdExpress.Web.UI.Results {
 			}			
 			#endregion
 
-			for(int j=ResultConstantes.TOTAL_COLUMN_INDEX+1;j<tab.GetLength(1);j++){
-				
-				#region TV et RADIO
-				//si les medias sélectionnés sont different de TV ou RADIO
-				if(vehicleType!=ClassificationCst.DB.Vehicles.names.press){
-					
-					#region tableau n°1 
-					//cas de tableau n°1:media/unite
-					if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
-						if(tab[i,j]!= null){
-							//afficher la durée en h/m/s pour le tableau n°1:media/unite
-							if (j==ResultConstantes.TOTAL_COLUMN_INDEX+2){
-								if(tab[i,ResultConstantes.REPARTITION_PERCENT]!=null){
-									html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,j].ToString()).ToString("### ### ### ##0.##")+" %</td>");
-								}
-								else	html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueToString(tab[i,j].ToString(),CstWeb.CustomerSessions.Unit.duration)+"</td>");
-							}
-							else 
-								html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueToString(tab[i,j].ToString(),webSession.Unit)+"</td>");							
-						}	else
-							html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");						
-					}
-						#endregion
+			for(int j=ResultConstantes.TOTAL_COLUMN_INDEX+1;j<tab.GetLength(1);j++) {
 
-						#region tableaux de 2 à 11
-					else 
-						if(tab[i,j]!= null){						
-						if(tab[i,ResultConstantes.REPARTITION_PERCENT]!=null)
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,j].ToString()).ToString("### ### ### ##0.##")+" %</td>");
-						else 
-							//unité duration
-							if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format|| 
-							webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay|| 
-							webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice){
-							if(tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX]!=null && tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX].ToString()=="2"){
-//								html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+GetDurationFormatHH_MM_SS(int.Parse(tab[i,j].ToString()))+"</td>");
-								html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i,j].ToString(),CstWeb.CustomerSessions.Unit.duration,false)+"</td>");
-							}else 
-								html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueToString(tab[i,j].ToString(),webSession.Unit)+"</td>");
-						}else 
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueToString(tab[i,j].ToString(),webSession.Unit)+"</td>");
-					}else
-						html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");
-					#endregion
-					#endregion									
+                #region Adnettrack
+                if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack) {
 
-					#region Presse
-					// si le media sélectionné est PRESSE
-				}else if(vehicleType==ClassificationCst.DB.Vehicles.names.press){
+                    #region tableau n°1
+                    if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                        || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                        || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                        || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
+                        if (tab[i, j] != null) {
+                            if (j == ResultConstantes.TOTAL_COLUMN_INDEX + 2) {
+                                if (tab[i, ResultConstantes.REPARTITION_PERCENT] != null) {
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + double.Parse(tab[i, j].ToString()).ToString("### ### ### ##0.##") + " %</td>");
+                                }
+                                else html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), CstWeb.CustomerSessions.Unit.versionNb) + "</td>");
+                            }
+                            else
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), CstWeb.CustomerSessions.Unit.insertion) + "</td>");
+                        }
+                        else
+                            html.Append("<td align=\"center\" class=\"" + classCss + "\" nowrap>  </td>");
+                    }
+                    #endregion
 
-					#region tableau n°1
-					if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
-						if(tab[i,j]!= null){
+                #region tableau 2-11
+                else
+                    if (tab[i, j] != null) {
+                        if (tab[i, ResultConstantes.REPARTITION_PERCENT] != null)
+                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + double.Parse(tab[i, j].ToString()).ToString("### ### ### ##0.##") + " %</td>");
+                        else
+                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), webSession.Unit) + "</td>");
+                    }
+                    else
+                        html.Append("<td align=\"center\" class=\"" + classCss + "\" nowrap>  </td>");
+				#endregion
 
-							#region Colonne Page
-							if (j==ResultConstantes.TOTAL_COLUMN_INDEX+3){
-								if(tab[i,ResultConstantes.REPARTITION_PERCENT]!=null){
-									html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,j].ToString()).ToString("### ### ### ##0.##")+" %</td>");
-								}
-								else	html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueToString(tab[i,j].ToString(),CstWeb.CustomerSessions.Unit.pages)+"</td>");
-							}
-							else 
-								html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueToString(tab[i,j].ToString(),webSession.Unit)+"</td>");							
-						}else
-							html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");
-					}
-						#endregion
-						#endregion
+                }
+                #endregion
 
-						#region tableau 2-11
-					else 
-						if(tab[i,j]!= null){						
-						if(tab[i,ResultConstantes.REPARTITION_PERCENT]!=null)
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,j].ToString()).ToString("### ### ### ##0.##")+" %</td>");
-						else 
-							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueToString(tab[i,j].ToString(),webSession.Unit)+"</td>");
-					}else
-						html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");
-				}
+                #region TV et RADIO
+                //si les medias sélectionnés sont different de TV ou RADIO
+                else if (vehicleType != ClassificationCst.DB.Vehicles.names.press) {
+
+                    #region tableau n°1
+                    //cas de tableau n°1:media/unite
+                    if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units) {
+                        if (tab[i, j] != null) {
+                            //afficher la durée en h/m/s pour le tableau n°1:media/unite
+                            if (j == ResultConstantes.TOTAL_COLUMN_INDEX + 2) {
+                                if (tab[i, ResultConstantes.REPARTITION_PERCENT] != null) {
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + double.Parse(tab[i, j].ToString()).ToString("### ### ### ##0.##") + " %</td>");
+                                }
+                                else html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), CstWeb.CustomerSessions.Unit.duration) + "</td>");
+                            }
+                            else
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), webSession.Unit) + "</td>");
+                        }
+                        else
+                            html.Append("<td align=\"center\" class=\"" + classCss + "\" nowrap>  </td>");
+                    }
+                    #endregion
+
+                    #region tableaux de 2 à 11
+                    else
+                        if (tab[i, j] != null) {
+                            if (tab[i, ResultConstantes.REPARTITION_PERCENT] != null)
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + double.Parse(tab[i, j].ToString()).ToString("### ### ### ##0.##") + " %</td>");
+                            else
+                                //unité duration
+                                if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format ||
+                                webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay ||
+                                webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice) {
+                                    if (tab[i, ResultConstantes.ID_ELMT_L2_COLUMN_INDEX] != null && tab[i, ResultConstantes.ID_ELMT_L2_COLUMN_INDEX].ToString() == "2") {
+                                        //								html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+GetDurationFormatHH_MM_SS(int.Parse(tab[i,j].ToString()))+"</td>");
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, j].ToString(), CstWeb.CustomerSessions.Unit.duration, false) + "</td>");
+                                    }
+                                    else
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), webSession.Unit) + "</td>");
+                                }
+                                else
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), webSession.Unit) + "</td>");
+                        }
+                        else
+                            html.Append("<td align=\"center\" class=\"" + classCss + "\" nowrap>  </td>");
+                    #endregion
+
+                #endregion
+
+                #region Presse
+                    // si le media sélectionné est PRESSE
+                }
+                else if (vehicleType == ClassificationCst.DB.Vehicles.names.press) {
+
+                    #region tableau n°1
+                    if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units) {
+                        if (tab[i, j] != null) {
+
+                            #region Colonne Page
+                            if (j == ResultConstantes.TOTAL_COLUMN_INDEX + 3) {
+                                if (tab[i, ResultConstantes.REPARTITION_PERCENT] != null) {
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + double.Parse(tab[i, j].ToString()).ToString("### ### ### ##0.##") + " %</td>");
+                                }
+                                else html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), CstWeb.CustomerSessions.Unit.pages) + "</td>");
+                            }
+                            else
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), webSession.Unit) + "</td>");
+                        }
+                        else
+                            html.Append("<td align=\"center\" class=\"" + classCss + "\" nowrap>  </td>");
+                    }
+                            #endregion
+                    #endregion
+
+                    #region tableau 2-11
+                    else
+                        if (tab[i, j] != null) {
+                            if (tab[i, ResultConstantes.REPARTITION_PERCENT] != null)
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + double.Parse(tab[i, j].ToString()).ToString("### ### ### ##0.##") + " %</td>");
+                            else
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), webSession.Unit) + "</td>");
+                        }
+                        else
+                            html.Append("<td align=\"center\" class=\"" + classCss + "\" nowrap>  </td>");
+                }
 				#endregion
 
 				#endregion
@@ -725,7 +795,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
 			
 			#region  colonne Totale
-			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
+			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
 				if(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX]!=null){					
 					if(tab[i,ResultConstantes.REPARTITION_PERCENT]!=null)
 						html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()).ToString("### ### ### ##0.##")+" %</td>");
@@ -747,11 +820,51 @@ namespace TNS.AdExpress.Web.UI.Results {
 			}			
 			#endregion
 
-			for(int j=ResultConstantes.TOTAL_COLUMN_INDEX+1;j<tab.GetLength(1);j++){
-				
-				#region TV et RADIO
-				//si les medias sélectionnés sont different de TV ou RADIO
-				if(vehicleType!=ClassificationCst.DB.Vehicles.names.press){
+			for(int j=ResultConstantes.TOTAL_COLUMN_INDEX+1;j<tab.GetLength(1);j++) {
+
+                #region Adnettrack
+                if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack) {
+
+                    #region tableau n°1
+                    if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                        || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                        || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                        || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
+                        if (tab[i, j] != null) {
+
+                            #region Colonne Page
+                            if (j == ResultConstantes.TOTAL_COLUMN_INDEX + 2) {
+                                if (tab[i, ResultConstantes.REPARTITION_PERCENT] != null) {
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + double.Parse(tab[i, j].ToString()).ToString("### ### ### ##0.##") + " %</td>");
+                                }
+                                else html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), CstWeb.CustomerSessions.Unit.versionNb) + "</td>");
+                            }
+                            else
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j].ToString(), CstWeb.CustomerSessions.Unit.insertion) + "</td>");
+                        }
+                        else
+                            html.Append("<td align=\"center\" class=\"" + classCss + "\" nowrap>  </td>");
+                    }
+                            #endregion
+                    #endregion
+
+                    #region tableau 2-11
+					else 
+						if(tab[i,j]!= null){						
+						if(tab[i,ResultConstantes.REPARTITION_PERCENT]!=null)
+							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,j].ToString()).ToString("### ### ### ##0.##")+" %</td>");
+						else 
+							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueToString(tab[i,j].ToString(),webSession.Unit)+"</td>");
+					}else
+						html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");
+				    #endregion
+
+                }
+                #endregion
+
+                #region TV et RADIO
+                //si les medias sélectionnés sont different de TV ou RADIO
+				else if(vehicleType!=ClassificationCst.DB.Vehicles.names.press){
 					
 					#region tableau n°1 
 					//cas de tableau n°1:media/unite
@@ -851,7 +964,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 			// affichage de la colonne total pour tous les types de tableaux sauf Media/Unité
 			#region Evolution pour Html
 			if(!excel){
-				if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
+				if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                    && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                    && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                    && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
 					if(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX]!=null){
 
 						if (double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString())>0) //hausse
@@ -881,7 +997,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 
 			#region Evolution pour Excel
 			else if(excel){
-				if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
+				if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                    && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                    && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                    && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
 					if(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX]!=null){
 						
 						if (double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString())>0) //hausse
@@ -926,7 +1045,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 		private static string PDM(object[,] tab,WebSession webSession, StringBuilder html , int i,string classCss){	
 
 			// affichage de la colonne total pour tous les types de tableaux sauf Media/Unité
-			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
+			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
 				if(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX]!=null){
 				//	html.Append("<td align=\"right\" class=\""+classCss+"\" bgcolor=#ffffff nowrap>"+double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()).ToString("### ### ### ##0.##")+"%</td>");
 						html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+WebFunctions.Units.ConvertUnitValueAndPdmToString((tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()),webSession.Unit,true)+" %</td>");	
@@ -959,7 +1081,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 		private static string PDV(object[,] tab,WebSession webSession, StringBuilder html , int i,string classCss){
 			
 			// affichage de la colonne total pour tous les types de tableaux sauf Media/Unité
-			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
+			if (webSession.PreformatedTable!=CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units) {
 				if(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX]!=null){
 					html.Append("<td align=\"right\" class=\""+classCss+"\" bgcolor=#ffffff nowrap>"+double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()).ToString("### ### ### ##0.##")+"%</td>");
 				}else

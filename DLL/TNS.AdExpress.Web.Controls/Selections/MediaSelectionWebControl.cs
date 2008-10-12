@@ -321,7 +321,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 								
 							}
 								//Exceptions si le centre d'intérêt n'est pas trouver dans l'arbre
-							catch(System.NullReferenceException){
+                            catch (System.NullReferenceException){
 								interestCenters  = null;
 								//Gestion éléments sauvegardés
 								if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
@@ -329,6 +329,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 										checkVh = checkBox = " Checked ";
 								}
 							}
+                            catch (System.Collections.Generic.KeyNotFoundException) {
+                                interestCenters = null;
+                                //Gestion éléments sauvegardés
+                                if (eventButton == constEvent.eventSelection.LOAD_EVENT || eventButton == constEvent.eventSelection.SAVE_EVENT) {
+                                    if (savedVehicle != null && savedVehicle.Contains(idVehicle))
+                                        checkVh = checkBox = " Checked ";
+                                }
+                            }
 							#endregion						
 							idVehicleOld=idVehicle;
 							startVehicle=0;
@@ -412,6 +420,22 @@ namespace TNS.AdExpress.Web.Controls.Selections
 									disabled="disabled";
 								}
 							}
+                            catch (System.Collections.Generic.KeyNotFoundException) {
+                                if (eventButton == constEvent.eventSelection.LOAD_EVENT || eventButton == constEvent.eventSelection.SAVE_EVENT) {
+                                    if (savedInterestCenter != null && savedInterestCenter.Contains(Int64.Parse(currentRow["id_interest_center"].ToString()))) {
+                                        checkBox = checkIc = " Checked ";
+                                        //ouverture du calque
+                                        if (checkIc.Equals(" Checked ")) displayIc = "";
+                                    }
+                                    if (checkVh.Length > 0) disabled = "disabled";
+
+                                }
+                                if (checkVh.Length > 0) {
+                                    checkBox = " Checked ";
+                                    disabled = "disabled";
+                                }
+                                medias = null;
+                            }
 							catch(System.NullReferenceException){
 								if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
 									if(savedInterestCenter!=null && savedInterestCenter.Contains(Int64.Parse(currentRow["id_interest_center"].ToString()))){
@@ -479,6 +503,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							}
 							if (checkVh.Length>0 || checkIc.Length>0)checkBox=" Checked ";
 						}
+                        catch (System.Collections.Generic.KeyNotFoundException) {
+                            if (eventButton == constEvent.eventSelection.LOAD_EVENT || eventButton == constEvent.eventSelection.SAVE_EVENT) {
+                                if (savedMedia != null && savedMedia.Contains(Int64.Parse(currentRow["id_media"].ToString())))
+                                    checkBox = " Checked ";
+                                if (checkVh.Length > 0 || checkIc.Length > 0) disabled = "disabled";
+                            }
+                            if (checkVh.Length > 0 || checkIc.Length > 0) checkBox = " Checked ";
+                        }
 						catch(System.NullReferenceException){
 							if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT){
 								if(savedMedia!=null && savedMedia.Contains(Int64.Parse(currentRow["id_media"].ToString())))
@@ -568,7 +600,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				case DBConstantesClassification.Vehicles.names.press:
 				case DBConstantesClassification.Vehicles.names.internationalPress:
 				case DBConstantesClassification.Vehicles.names.tv:	
-				case DBConstantesClassification.Vehicles.names.others:	
+				case DBConstantesClassification.Vehicles.names.others:
+                case DBConstantesClassification.Vehicles.names.adnettrack:
 					return(true);
 				default:
 					return(false);

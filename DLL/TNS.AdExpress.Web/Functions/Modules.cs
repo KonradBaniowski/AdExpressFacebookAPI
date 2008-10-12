@@ -41,6 +41,7 @@ namespace TNS.AdExpress.Web.Functions
 				case WebModule.Name.TABLEAU_DE_BORD_RADIO :
 				case WebModule.Name.TABLEAU_DE_BORD_TELEVISION :
 				case WebModule.Name.TABLEAU_DE_BORD_PAN_EURO :
+                case WebModule.Name.TABLEAU_DE_BORD_EVALIANT:
 					return true;
 				default : return false;
 			}

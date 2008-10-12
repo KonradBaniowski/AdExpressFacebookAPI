@@ -483,6 +483,8 @@ namespace AdExpress.Private.Selection {
                     return TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv;
                 case WebConstantes.Module.Name.TABLEAU_DE_BORD_PAN_EURO:
                     return TNS.AdExpress.Constantes.Classification.Branch.type.mediaOthers;
+                case WebConstantes.Module.Name.TABLEAU_DE_BORD_EVALIANT:
+                    return TNS.AdExpress.Constantes.Classification.Branch.type.mediaAdnettrack;
                 default:
                     throw (new WebExceptions.DashBoardMediaSelectionException(" BranchType(WebSession _webSession) :Impossible d'identifier lea branche média."));
             }

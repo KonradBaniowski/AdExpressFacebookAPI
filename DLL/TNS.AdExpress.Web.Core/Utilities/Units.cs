@@ -57,6 +57,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstWeb.CustomerSessions.Unit.mmPerCol:
                 case CstWeb.CustomerSessions.Unit.spot:
                 case CstWeb.CustomerSessions.Unit.insertion:
+                case CstWeb.CustomerSessions.Unit.versionNb:
                 case CstWeb.CustomerSessions.Unit.volume:
                 default:
                     return ConvertUnitValueToString(value, unit, 0);
@@ -100,6 +101,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstWeb.CustomerSessions.Unit.grp:
                 case CstWeb.CustomerSessions.Unit.spot:
                 case CstWeb.CustomerSessions.Unit.insertion:
+                case CstWeb.CustomerSessions.Unit.versionNb:
                 case CstWeb.CustomerSessions.Unit.mmPerCol:
                 default:
                     return Convert.ToDouble(value).ToString(_formats[decimals]);

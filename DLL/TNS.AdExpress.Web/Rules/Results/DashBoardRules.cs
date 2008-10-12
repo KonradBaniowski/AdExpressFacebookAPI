@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -24,9 +25,11 @@ using TNS.FrameWork.Date;
 using WebModule=TNS.AdExpress.Constantes.Web.Module;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Units;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Classification;
+using ResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results.DashBoard;
 
 
 namespace TNS.AdExpress.Web.Rules.Results
@@ -148,8 +151,9 @@ namespace TNS.AdExpress.Web.Rules.Results
 //			ArrayList sectorIdList =null;
 //			if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector )
 //			sectorIdList = new ArrayList();
-			Hashtable sectorHashtable =null;
-			if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector )
+            Hashtable sectorHashtable = null;
+			if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector
+                || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format)
 				sectorHashtable = new Hashtable();
 			#endregion
 
@@ -163,10 +167,10 @@ namespace TNS.AdExpress.Web.Rules.Results
 				if(tab!=null){
 					//Tableau formatté
 //					tab = GetFormattedTable(webSession,dsData,tab,vehicleType,sectorIdList);
-					tab = GetFormattedTable(webSession,dsData,tab,vehicleType,sectorHashtable);																																																													
+					tab = GetFormattedTable(webSession,dsData,tab,vehicleType,sectorHashtable);
 				}				
 			}
-			#endregion
+            #endregion
 
 			return tab;
 		}
@@ -235,7 +239,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 		private static object[,] GetFormattedTable(WebSession webSession,DataSet dsData,object[,] tab,ClassificationCst.DB.Vehicles.names vehicleType,Hashtable sectorHashtable)
 		{	
 			#region variables
-			int[] coordCellTab=new int[1];;
+			int[] coordCellTab=new int[1];
 			int col=0;
 			int row=0;
 			int oldRowL1=0;
@@ -266,7 +270,11 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 			//Choix du type de tableau de résultats
 			switch(webSession.PreformatedTable){
-				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :					
+				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
+
 					#region Total unités
 					//Total investissement en euro période N,N-1
 					coordCellTab[0] = oldRowL1 = row = 1;
@@ -336,6 +344,11 @@ namespace TNS.AdExpress.Web.Rules.Results
 					//Calcul du PDM ou PDV
 					if(webSession.PDM || webSession.PDV)
 						tab=ComputeTabPDMOrPDV(webSession,ref tab,1,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS);
+
+                    if(webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units)
+                        tab = SortTable(tab,true);
+                    else 
+                        tab = SortTable(tab, false);
 					break;
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual :
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual :											
@@ -427,6 +440,17 @@ namespace TNS.AdExpress.Web.Rules.Results
 							tab=ComputePercentage(webSession,ref tab,1,CstResults.DashBoard.TOTAL_COLUMN_INDEX);
 					}
 					break;
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
+                    if (sectorHashtable != null && sectorHashtable.Count > 0) {
+                        tab = BuildDataTableType_Dimension_X_Format(webSession, dsData.Tables[0], ref tab, ref row, ref col, coordCellTab, sectorHashtable, year);
+                        //Calcul du PDM 
+                        if (webSession.PDM)
+                            tab = ComputeTabPDMOrPDV(webSession, ref tab, 1, CstResults.DashBoard.TOTAL_COLUMN_INDEX);
+                        //répartition en Pourcentage
+                        if (webSession.Percentage)
+                            tab = ComputePercentage(webSession, ref tab, 1, CstResults.DashBoard.TOTAL_COLUMN_INDEX);
+                    }
+                    break;
 				default : 
 					throw new DashBoardRulesException("GetFormattedTable(WebSession webSession,DataSet dsData,object[,] tab,ClassificationCst.DB.Vehicles.names vehicleType)--> Impossible d'identifier le tableau de bord à traiter.");
 			}
@@ -786,35 +810,24 @@ namespace TNS.AdExpress.Web.Rules.Results
 			int oldRowL1=0;
 			int oldRowL2=0;
 			int oldRowL3=0;		
-//			ArrayList oldIdL2= new ArrayList();
-//			ArrayList oldIdL3= new ArrayList();
 			Int64 oldIdL3= -1,oldIdL2= -1;
+            int level2 = 2, level3 = 3;
 			
 			bool firstL2=true,firstL3=true;
 			bool incrementRow=false;
-//			string PeriodBeginningDate = "";
-//			string PeriodEndDate ="";
-//			string PeriodBeginningDateN1 = "";
-//			string PeriodEndDateN1 ="";
 			string criteriaPeriodN =" ";	
 			string criteriaPeriodN1 =" ";
 			string criteriaN="", criteriaN1="";
 			coordCellTab[0] = oldRowL1 = row = 1;
 			int yearN1=0;
 			bool ContainsL2=false,ContainsL3=false;
-		
+            Dictionary<int, List<string>> dicIndex = new Dictionary<int, List<string>>();
 			#endregion
 				
 			//Unité traitée
 			sumUnit= WebFunctions.SQLGenerator.GetUnitAliasSum(webSession);
 			
 			//Critères de type période
-//			CriteriaPeriod(webSession,ref PeriodBeginningDate,ref PeriodEndDate,year,false);
-//			criteriaPeriodN = "period>="+PeriodBeginningDate+" AND period<="+PeriodEndDate;						
-//			if(webSession.ComparativeStudy){
-//				CriteriaPeriod(webSession,ref PeriodBeginningDateN1,ref PeriodEndDateN1,year,true);
-//				criteriaPeriodN1 ="period>="+PeriodBeginningDateN1+" AND period<="+PeriodEndDateN1;			 											
-//			}
 			criteriaPeriodN=" period="+year.ToString();
 			if(webSession.ComparativeStudy){
 				yearN1=year-1;
@@ -824,6 +837,10 @@ namespace TNS.AdExpress.Web.Rules.Results
 			//Idenbtifiant et nom du média sélectionné
 			string vehicleId = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
 			string vehicleName = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).Text.ToString();
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+
+            if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                sumUnit = "";
 			
 			#region Insertion de valeurs dans ligne(s) total familles et total média
 			//Total unité sélectionnée sur période N,N-1	
@@ -832,7 +849,6 @@ namespace TNS.AdExpress.Web.Rules.Results
 				SetTabLinesLabel(tab,vehicleId,vehicleName,row+1,CstResults.DashBoard.ID_ELMT_L1_COLUMN_INDEX,CstResults.DashBoard.LABEL_ELMT_L1_COLUMN_INDEX);
 			criteriaN = criteriaPeriodN;
 			criteriaN1 = criteriaPeriodN1;
-//			tab = FillLineTableType_Media_X_Sector(webSession,dt,ref tab,ref row,ref col,sumUnit,criteriaN,criteriaN1,coordCellTab,true,sectorIdList);
 			tab = FillLineTableType_Media_X_Sector(webSession,dt,ref tab,ref row,ref col,sumUnit,criteriaN,criteriaN1,coordCellTab,true,sectorHashtable);
 			#endregion 
 
@@ -840,26 +856,8 @@ namespace TNS.AdExpress.Web.Rules.Results
 			ContainsL2 = dt.Columns.Contains(GetL2Id(webSession));
 			ContainsL3 = dt.Columns.Contains(GetL3Id(webSession));
 			foreach(DataRow dr in  dt.Rows){
-						
+
 				#region Traitement sélection nomenclature niveau 2 (centres d'intérêt ou support)
-				#region ancienne version
-				//				//Traitement des centres d'intérêts et/ou supports 
-				//				if(oldIdL2!=null  && (GetL2Id(webSession).Length>0) && !oldIdL2.Contains(dr[GetL2Id(webSession)].ToString()) 
-				//					&& dt.Columns.Contains(GetL2Id(webSession))){							
-				//					oldRowL2 = row = row+1;
-				//					tab = SetTabLinesLabel(tab,dr[GetL2Id(webSession)].ToString(),dr[GetL2Label(webSession)].ToString(),row,CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX,CstResults.DashBoard.LABEL_ELMT_L2_COLUMN_INDEX);
-				//					if(webSession.ComparativeStudy)tab = SetTabLinesLabel(tab,dr[GetL2Id(webSession)].ToString(),dr[GetL2Label(webSession)].ToString(),row+1,CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX,CstResults.DashBoard.LABEL_ELMT_L2_COLUMN_INDEX);
-				//					
-				//					//Critères de calcul
-				//					criteriaN ="  "+GetL2Id(webSession)+"="+ dr[GetL2Id(webSession)].ToString()+" AND "+criteriaPeriodN;
-				//					if(webSession.ComparativeStudy)criteriaN1 ="  "+GetL2Id(webSession)+"="+ dr[GetL2Id(webSession)].ToString()+" AND "+criteriaPeriodN1;						
-				//					
-				//					//Traitement unités							
-				////					tab = FillLineTableType_Media_X_Sector(webSession,dt,ref tab,ref row,ref col,sumUnit,criteriaN,criteriaN1,coordCellTab,false,sectorIdList);
-				//					tab = FillLineTableType_Media_X_Sector(webSession,dt,ref tab,ref row,ref col,sumUnit,criteriaN,criteriaN1,coordCellTab,false,sectorHashtable);
-				//					oldIdL2.Add(dr[GetL2Id(webSession)].ToString());
-				//				}
-				#endregion
 
 				//Traitement des centres d'intérêts ou supports 
 				if((GetL2Id(webSession).Length>0) && dr[GetL2Id(webSession)]!=null  && ContainsL2 ){	
@@ -867,7 +865,14 @@ namespace TNS.AdExpress.Web.Rules.Results
 					if(oldIdL2!=Int64.Parse(dr[GetL2Id(webSession)].ToString())){
 						if(!firstL2) {
 
+                            if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                                SetVersionNumberCell(tab, dicIndex, level2);
+                            
 							if(ContainsL3){
+
+                                if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                                    SetVersionNumberCell(tab, dicIndex, level3);
+
 								//Calcul éventuel des PDM, Evol,Pourcentage pour élément niveau 3
 								for(int k = CstResults.DashBoard.TOTAL_COLUMN_INDEX;k<= CstResults.DashBoard.TOTAL_COLUMN_INDEX+sectorHashtable.Count;k++){													
 									if(k==CstResults.DashBoard.TOTAL_COLUMN_INDEX+sectorHashtable.Count)incrementRow=true;
@@ -894,11 +899,11 @@ namespace TNS.AdExpress.Web.Rules.Results
 					}
 										
 					//Calcul investissment année N et par famille
-					FillCellTableType_Media_X_Sector(tab,oldRowL2,dr,year,sectorHashtable,WebFunctions.SQLGenerator.GetUnitAlias(webSession));					
+                    FillCellTableType_Media_X_Sector(tab, oldRowL2, dr, year, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession), vehicleType, ref dicIndex, false, level2);
 
 					//Calcul investissment année N-1 et par famille
 					if(webSession.ComparativeStudy)
-                        FillCellTableType_Media_X_Sector(tab, oldRowL2 + 1, dr, yearN1, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession));	
+                        FillCellTableType_Media_X_Sector(tab, oldRowL2 + 1, dr, yearN1, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession), vehicleType, ref dicIndex, false, level2);
 				
 					
 					oldIdL2=Int64.Parse(dr[GetL2Id(webSession)].ToString());
@@ -910,29 +915,14 @@ namespace TNS.AdExpress.Web.Rules.Results
 						
 				#region Traitement sélection nomenclature niveau 3
 				//Traitement des supports	
-				#region ancienne version
-				//				if(oldIdL3!=null  && (GetL3Id(webSession).Length>0) && !oldIdL3.Contains(dr[GetL3Id(webSession)].ToString()) 
-				//					&& dt.Columns.Contains(GetL3Id(webSession))){
-				//					coordCellTab[0] = oldRowL2;
-				//					oldRowL3 = row = row+1;
-				//					tab = SetTabLinesLabel(tab,dr[GetL3Id(webSession)].ToString(),dr[GetL3Label(webSession)].ToString(),row,CstResults.DashBoard.ID_ELMT_L3_COLUMN_INDEX,CstResults.DashBoard.LABEL_ELMT_L3_COLUMN_INDEX);
-				//					if(webSession.ComparativeStudy)
-				//						tab = SetTabLinesLabel(tab,dr[GetL3Id(webSession)].ToString(),dr[GetL3Label(webSession)].ToString(),row+1,CstResults.DashBoard.ID_ELMT_L3_COLUMN_INDEX,CstResults.DashBoard.LABEL_ELMT_L3_COLUMN_INDEX);
-				//					//Critères de calcul
-				//					criteriaN = "  "+GetL2Id(webSession)+"="+ dr[GetL2Id(webSession)].ToString()+" AND "+GetL3Id(webSession)+"="+dr[GetL3Id(webSession)].ToString()+" AND "+criteriaPeriodN;
-				//					if(webSession.ComparativeStudy)criteriaN1 = "  "+GetL2Id(webSession)+"="+ dr[GetL2Id(webSession)].ToString()+" AND "+GetL3Id(webSession)+"="+dr[GetL3Id(webSession)].ToString()+" AND "+criteriaPeriodN1;
-				//						
-				//					//Traitement unités							
-				////					tab = FillLineTableType_Media_X_Sector(webSession,dt,ref tab,ref row,ref col,sumUnit,criteriaN,criteriaN1,coordCellTab,false,sectorIdList);
-				//					tab = FillLineTableType_Media_X_Sector(webSession,dt,ref tab,ref row,ref col,sumUnit,criteriaN,criteriaN1,coordCellTab,false,sectorHashtable);
-				//					oldIdL3.Add(dr[GetL3Id(webSession)].ToString());
-				//				}
-				#endregion
+				
 				if( (GetL3Id(webSession).Length>0) &&  dr[GetL3Id(webSession)]!=null &&  ContainsL3 ){
 
 					if(oldIdL3!=Int64.Parse(dr[GetL3Id(webSession)].ToString())){
-						
 						if(!firstL3) {
+                            if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                                SetVersionNumberCell(tab, dicIndex, level3);
+
 							//Calcul éventuel des PDM, Evol,Pourcentage
 							for(int k = CstResults.DashBoard.TOTAL_COLUMN_INDEX;k<= CstResults.DashBoard.TOTAL_COLUMN_INDEX+sectorHashtable.Count;k++){														
 								if(k==CstResults.DashBoard.TOTAL_COLUMN_INDEX+sectorHashtable.Count)incrementRow=true;
@@ -955,11 +945,11 @@ namespace TNS.AdExpress.Web.Rules.Results
 					}
 
 					//Calcul investissment année N et par famille
-                    FillCellTableType_Media_X_Sector(tab, oldRowL3, dr, year, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession));					
+                    FillCellTableType_Media_X_Sector(tab, oldRowL3, dr, year, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession), vehicleType, ref dicIndex, true, level3);					
 
 					//Calcul investissment année N-1 et par famille
 					if(webSession.ComparativeStudy)
-                        FillCellTableType_Media_X_Sector(tab, oldRowL3 + 1, dr, yearN1, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession));	
+                        FillCellTableType_Media_X_Sector(tab, oldRowL3 + 1, dr, yearN1, sectorHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession), vehicleType, ref dicIndex, true, level3);	
 					
 					oldIdL3=Int64.Parse(dr[GetL3Id(webSession)].ToString());
 					firstL3=false;
@@ -968,10 +958,15 @@ namespace TNS.AdExpress.Web.Rules.Results
 				#endregion
 			}
 
+            if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb) {
+                SetVersionNumberCell(tab, dicIndex, level2);
+                SetVersionNumberCell(tab, dicIndex, level3);
+            }
+
 			//Dernière ligne niveau 2
 			//Calcul éventuel des PDM, Evol,Pourcentage
 			if(oldIdL2!=-1){
-				for(int k = CstResults.DashBoard.TOTAL_COLUMN_INDEX;k<= CstResults.DashBoard.TOTAL_COLUMN_INDEX+sectorHashtable.Count;k++){										
+				for(int k = CstResults.DashBoard.TOTAL_COLUMN_INDEX;k<= CstResults.DashBoard.TOTAL_COLUMN_INDEX+sectorHashtable.Count;k++){
 					if(k==CstResults.DashBoard.TOTAL_COLUMN_INDEX+sectorHashtable.Count)incrementRow=true;
 					coordCellTab = InsertValue(webSession,ref tab,ref oldRowL2,ref k,coordCellTab,false,incrementRow);
 				}
@@ -1058,31 +1053,359 @@ namespace TNS.AdExpress.Web.Rules.Results
 		/// <param name="year">année</param>
 		/// <param name="sectorHashtable">liste des identifiants de familles associés à leur indexcolonne dans le tableau de résulats</param>
 		/// <param name="unitLabel">libellé unité courant</param>
-		private static void FillCellTableType_Media_X_Sector(object[,] tab, int row, DataRow dr,int year, Hashtable sectorHashtable,string unitLabel){
+        /// <param name="vehicleType">Vehicle type</param>
+        /// <param name="dicIndex">Table index</param>
+        private static void FillCellTableType_Media_X_Sector(object[,] tab, int row, DataRow dr, int year, Hashtable sectorHashtable, string unitLabel, ClassificationCst.DB.Vehicles.names vehicleType, ref Dictionary<int,List<string>> dicIndex, bool isL3, int level) {
 			int col= -1;
+            string unitField = string.Empty;
+            bool versionNbVerif = false;
+            CellIdsNumber unitCellN;
+            List<string> tabIndex = new List<string>();
+
+            if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && unitLabel == CstWeb.CustomerSessions.Unit.versionNb.ToString())
+                versionNbVerif = true;
+
 			if(sectorHashtable!=null && dr!=null && dr["id_sector"]!=System.DBNull.Value){
 				col = int.Parse(sectorHashtable[dr["id_sector"].ToString()].ToString());
 
 				if(dr["period"]!=System.DBNull.Value && dr["period"].ToString().Equals(year.ToString())){
 
-					//Remplit les investissments d'une famille sur une période donnée et pour un média
-					if( tab[row,col]==null && dr[unitLabel]!=System.DBNull.Value)
-						tab[row,col]= double.Parse(dr[unitLabel].ToString());
-					else if(dr[unitLabel]!=System.DBNull.Value)tab[row,col] = double.Parse(tab[row,col].ToString())+ double.Parse(dr[unitLabel].ToString());
+                    if (dr[unitLabel] != System.DBNull.Value) {
 
-					//Remplit les investissments pour total familles sur une période donnée et pour un média
-					if( tab[row,CstResults.DashBoard.TOTAL_COLUMN_INDEX]==null && dr[unitLabel]!=System.DBNull.Value)
-						tab[row,CstResults.DashBoard.TOTAL_COLUMN_INDEX]= double.Parse(dr[unitLabel].ToString());
-					else if(dr[unitLabel]!=System.DBNull.Value)tab[row,CstResults.DashBoard.TOTAL_COLUMN_INDEX] = double.Parse(tab[row,CstResults.DashBoard.TOTAL_COLUMN_INDEX].ToString())+ double.Parse(dr[unitLabel].ToString());
+                        unitField = dr[unitLabel].ToString();
+
+                        //Remplit les investissments d'une famille sur une période donnée et pour un média
+                        if (versionNbVerif) {
+                            if (tab[row, col] == null)
+                                tab[row, col] = unitField;
+                            else
+                                tab[row, col] = tab[row, col].ToString() + "," + unitField;
+
+                            if (isL3) {
+                                unitCellN = new CellIdsNumber(tab[row, col].ToString().Split(','));
+                                tab[row, col] = unitCellN.Value;
+                            }
+                            else if (dicIndex.ContainsKey(level)) {
+                                if (!dicIndex[level].Contains(row + "," + col))
+                                    dicIndex[level].Add(row + "," + col);
+                            }
+                            else {
+                                tabIndex.Clear();
+                                tabIndex.Add(row + "," + col);
+                                dicIndex.Add(level, tabIndex);
+                            }
+                        }
+                        else {
+                            if (tab[row, col] == null)
+                                tab[row, col] = double.Parse(unitField);
+                            else tab[row, col] = double.Parse(tab[row, col].ToString()) + double.Parse(unitField);
+                        }
+
+                        //Remplit les investissments pour total familles sur une période donnée et pour un média
+                        if (versionNbVerif) {
+                            if (tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] == null)
+                                tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] = unitField;
+                            else tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] = tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX].ToString() + "," + unitField;
+
+                            if (!tabIndex.Contains(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX))
+                                tabIndex.Add(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX);
+
+                            if (dicIndex.ContainsKey(level)) {
+                                if (!dicIndex[level].Contains(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX))
+                                    dicIndex[level].Add(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX);
+                            }
+                            else {
+                                tabIndex.Clear();
+                                tabIndex.Add(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX);
+                                dicIndex.Add(level, tabIndex);
+                            }
+
+                        }
+                        else {
+                            if (tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] == null)
+                                tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] = double.Parse(unitField);
+                            else tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] = double.Parse(tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX].ToString()) + double.Parse(unitField);
+                        }
+
+
+                    }
 				}
 			}			
 
 		}
 
 		#endregion 
-		
-		#region tableaux 4,5,6
-		/// <summary>
+
+        #region Dimension X Format
+        /// <summary>
+        /// Build Dimension X Format Table
+        /// </summary>				
+        /// <param name="webSession">Customer session</param>
+        /// <param name="dt">Data table</param>
+        /// <param name="tab">result table</param>
+        /// <param name="row">Row number</param>
+        /// <param name="col">Column number</param>
+        /// <param name="coordCellTab">Cell table coord</param>		
+        /// <param name="formatHashtable">Format hashtable</param>
+        /// <param name="year">Year N</param>
+        /// <returns>result table</returns>
+        private static object[,] BuildDataTableType_Dimension_X_Format(WebSession webSession, DataTable dt, ref object[,] tab, ref int row, ref int col, int[] coordCellTab, Hashtable formatHashtable, int year) {
+
+            #region variables
+            string sumUnit = "";
+            int oldRowL1 = 0;
+            int oldRowL2 = 0;
+            int oldRowL3 = 0;
+            Int64 oldIdL3 = -1, oldIdL2 = -1;
+            int level2 = 2, level3 = 3;
+            bool firstL2 = true, firstL3 = true;
+            bool incrementRow = false;
+            string criteriaPeriodN = " ";
+            string criteriaPeriodN1 = " ";
+            string criteriaN = "", criteriaN1 = "";
+            coordCellTab[0] = oldRowL1 = row = 1;
+            int yearN1 = 0;
+            bool ContainsL2 = false, ContainsL3 = false;
+            Dictionary<int, List<string>> dicIndex = new Dictionary<int, List<string>>();
+            #endregion
+
+            //Unité traitée
+            sumUnit = WebFunctions.SQLGenerator.GetUnitAliasSum(webSession);
+
+            //Critères de type période
+            criteriaPeriodN = " period=" + year.ToString();
+            if (webSession.ComparativeStudy) {
+                yearN1 = year - 1;
+                criteriaPeriodN1 = " period=" + yearN1.ToString();
+            }
+
+            //Idenbtifiant et nom du média sélectionné
+            string vehicleId = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+            string vehicleName = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).Text.ToString();
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+
+            if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                sumUnit = "";
+
+            #region Insertion de valeurs dans ligne(s) total familles et total média
+            //Total unité sélectionnée sur période N,N-1	
+            tab = SetTabLinesLabel(tab, vehicleId, vehicleName, row, CstResults.DashBoard.ID_ELMT_L1_COLUMN_INDEX, CstResults.DashBoard.LABEL_ELMT_L1_COLUMN_INDEX);
+            if (webSession.ComparativeStudy)
+                SetTabLinesLabel(tab, vehicleId, vehicleName, row + 1, CstResults.DashBoard.ID_ELMT_L1_COLUMN_INDEX, CstResults.DashBoard.LABEL_ELMT_L1_COLUMN_INDEX);
+            criteriaN = criteriaPeriodN;
+            criteriaN1 = criteriaPeriodN1;
+            tab = FillLineTableType_Dimension_X_Format(webSession, dt, ref tab, ref row, ref col, sumUnit, criteriaN, criteriaN1, coordCellTab, true, formatHashtable);
+            #endregion
+
+            //Insertions des valeurs dans chaque de chauqe niveau de la nomenclature support sélectionnée sur période N,N-1
+            ContainsL2 = dt.Columns.Contains(GetL2Id(webSession));
+            foreach (DataRow dr in dt.Rows) {
+
+                #region Traitement sélection nomenclature niveau 2 (centres d'intérêt ou support)
+
+                //Traitement des centres d'intérêts ou supports 
+                if ((GetL2Id(webSession).Length > 0) && dr[GetL2Id(webSession)] != null && ContainsL2) {
+
+                    if (oldIdL2 != Int64.Parse(dr[GetL2Id(webSession)].ToString())) {
+                        if (!firstL2) {
+
+                            SetVersionNumberCell(tab, dicIndex, level2);
+
+                            //Calcul éventuel des PDM, Evol,Pourcentage pour élément niveau 2
+                            for (int k = CstResults.DashBoard.TOTAL_COLUMN_INDEX; k <= CstResults.DashBoard.TOTAL_COLUMN_INDEX + formatHashtable.Count; k++) {
+                                if (k == CstResults.DashBoard.TOTAL_COLUMN_INDEX + formatHashtable.Count) incrementRow = true;
+                                coordCellTab = InsertValue(webSession, ref tab, ref oldRowL2, ref k, coordCellTab, false, incrementRow);
+                            }
+                            incrementRow = false;
+                        }
+
+                        if (firstL2) oldRowL2 = row = row + 1;
+                        else oldRowL2 = row = GetCurrentRow(webSession, row);//	on change de ligne
+                        tab = SetTabLinesLabel(tab, dr[GetL2Id(webSession)].ToString(), dr[GetL2Label(webSession)].ToString(), row, CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX, CstResults.DashBoard.LABEL_ELMT_L2_COLUMN_INDEX);
+                        if (webSession.ComparativeStudy) tab = SetTabLinesLabel(tab, dr[GetL2Id(webSession)].ToString(), dr[GetL2Label(webSession)].ToString(), row + 1, CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX, CstResults.DashBoard.LABEL_ELMT_L2_COLUMN_INDEX);
+                        firstL2 = false;
+                    }
+
+                    //Calcul investissment année N et par famille
+                    FillCellTableType_Dimension_X_Format(tab, oldRowL2, dr, year, formatHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession), vehicleType, ref dicIndex, false, level2);
+
+                    //Calcul investissment année N-1 et par famille
+                    if (webSession.ComparativeStudy)
+                        FillCellTableType_Dimension_X_Format(tab, oldRowL2 + 1, dr, yearN1, formatHashtable, WebFunctions.SQLGenerator.GetUnitAlias(webSession), vehicleType, ref dicIndex, false, level2);
+
+
+                    oldIdL2 = Int64.Parse(dr[GetL2Id(webSession)].ToString());
+                    firstL2 = false;
+                }
+
+                #endregion
+
+            }
+
+            SetVersionNumberCell(tab, dicIndex, level2);
+            SetVersionNumberCell(tab, dicIndex, level3);
+
+            //Dernière ligne niveau 2
+            //Calcul éventuel des PDM, Evol,Pourcentage
+            if (oldIdL2 != -1) {
+                for (int k = CstResults.DashBoard.TOTAL_COLUMN_INDEX; k <= CstResults.DashBoard.TOTAL_COLUMN_INDEX + formatHashtable.Count; k++) {
+                    if (k == CstResults.DashBoard.TOTAL_COLUMN_INDEX + formatHashtable.Count) incrementRow = true;
+                    coordCellTab = InsertValue(webSession, ref tab, ref oldRowL2, ref k, coordCellTab, false, incrementRow);
+                }
+                incrementRow = false;
+            }
+
+            //Dernière ligne niveau 3
+            //Calcul éventuel des PDM, Evol,Pourcentage
+            if (oldIdL3 != -1) {
+                for (int k = CstResults.DashBoard.TOTAL_COLUMN_INDEX; k <= CstResults.DashBoard.TOTAL_COLUMN_INDEX + formatHashtable.Count; k++) {
+                    if (k == CstResults.DashBoard.TOTAL_COLUMN_INDEX + formatHashtable.Count) incrementRow = true;
+                    coordCellTab = InsertValue(webSession, ref tab, ref oldRowL3, ref k, coordCellTab, false, incrementRow);
+                }
+                incrementRow = false;
+            }
+
+            return tab;
+        }
+
+        #region FillLineTableType_Dimension_X_Format
+        /// <summary>
+        /// Fill line Table for Dimension X format Result
+        /// </summary>	
+        /// <param name="webSession">Customer session</param>
+        /// <param name="dt">Data table</param>
+        /// <param name="tab">Result table</param>
+        /// <param name="row">Row number</param>
+        /// <param name="col">Column number</param>
+        ///<param name="operation">Sql Operation</param>
+        /// <param name="criteriaN">Period N criterion</param>
+        /// <param name="criteriaN1">Period N-1 criterion</param>
+        /// <param name="coordCellTab">Cell table coord</param>
+        /// <param name="isTotalLine">True if is total line</param>	
+        /// <param name="formatHashtable">format hashtable</param>
+        /// <returns>tableau de résultats</returns>
+        private static object[,] FillLineTableType_Dimension_X_Format(WebSession webSession, DataTable dt, ref object[,] tab, ref int row, ref int col, string operation, string criteriaN, string criteriaN1, int[] coordCellTab, bool isTotalLine, Hashtable formatHashtable) {
+
+            int i = 0;
+            bool incrementRow = false;
+            string tempCriteriaN = "", tempCriteriaN1 = "";
+            //Total famille
+            col = CstResults.DashBoard.TOTAL_COLUMN_INDEX;
+            coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, operation, criteriaN, criteriaN1, coordCellTab, isTotalLine, false);
+
+            //Pour chaque famille
+            IEnumerator myEnumerator = formatHashtable.GetEnumerator();
+            foreach (DictionaryEntry de in formatHashtable) {
+                i++;
+                if (de.Value != null && de.Key != null) {
+                    col = int.Parse(de.Value.ToString());
+                    tempCriteriaN = criteriaN + " AND id_format_banners = " + de.Key.ToString();
+                    tempCriteriaN1 = criteriaN1 + "  AND  id_format_banners = " + de.Key.ToString();
+                    if (i == formatHashtable.Count) incrementRow = true;
+                    coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, operation, tempCriteriaN, tempCriteriaN1, coordCellTab, isTotalLine, incrementRow);
+                }
+
+            }
+
+            return tab;
+        }
+        #endregion
+
+        #region FillCellTableType_Dimension_X_Format
+        /// <summary>
+        /// Fill cell table for Dimension X Format result
+        /// </summary>
+        /// <param name="tab">Result table</param>
+        /// <param name="row">Row number</param>
+        /// <param name="dr">Data row</param>
+        /// <param name="year">Year</param>
+        /// <param name="formatHashtable">Format hashtable</param>
+        /// <param name="unitLabel">Unit label</param>
+        /// <param name="vehicleType">Vehicle type</param>
+        /// <param name="dicIndex">Table index</param>
+        private static void FillCellTableType_Dimension_X_Format(object[,] tab, int row, DataRow dr, int year, Hashtable formatHashtable, string unitLabel, ClassificationCst.DB.Vehicles.names vehicleType, ref Dictionary<int, List<string>> dicIndex, bool isL3, int level) {
+            int col = -1;
+            string unitField = string.Empty;
+            CellIdsNumber unitCellN;
+            List<string> tabIndex = new List<string>();
+            bool versionNbVerif = false;
+
+            if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && unitLabel == CstWeb.CustomerSessions.Unit.versionNb.ToString())
+                versionNbVerif = true;
+
+
+            if (formatHashtable != null && dr != null && dr["id_format_banners"] != System.DBNull.Value) {
+                col = int.Parse(formatHashtable[dr["id_format_banners"].ToString()].ToString());
+
+                if (dr["period"] != System.DBNull.Value && dr["period"].ToString().Equals(year.ToString())) {
+
+                    if (dr[unitLabel] != System.DBNull.Value) {
+
+                        unitField = dr[unitLabel].ToString();
+
+                        //Remplit les investissments d'une famille sur une période donnée et pour un média
+                        if (versionNbVerif) {
+                            if (tab[row, col] == null)
+                                tab[row, col] = unitField;
+                            else
+                                tab[row, col] = tab[row, col].ToString() + "," + unitField;
+
+                            if (isL3) {
+                                unitCellN = new CellIdsNumber(tab[row, col].ToString().Split(','));
+                                tab[row, col] = unitCellN.Value;
+                            }
+                            else if (dicIndex.ContainsKey(level)) {
+                                if (!dicIndex[level].Contains(row + "," + col))
+                                    dicIndex[level].Add(row + "," + col);
+                            }
+                            else {
+                                tabIndex.Clear();
+                                tabIndex.Add(row + "," + col);
+                                dicIndex.Add(level, tabIndex);
+                            }
+                        }
+                        else {
+                            if (tab[row, col] == null)
+                                tab[row, col] = double.Parse(unitField);
+                            else tab[row, col] = double.Parse(tab[row, col].ToString()) + double.Parse(unitField);
+                        }
+
+                        //Remplit les investissments pour total familles sur une période donnée et pour un média
+                        if (versionNbVerif) {
+                            if (tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] == null)
+                                tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] = unitField;
+                            else tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] = tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX].ToString() + "," + unitField;
+
+                            if (!tabIndex.Contains(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX))
+                                tabIndex.Add(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX);
+
+                            if (dicIndex.ContainsKey(level)) {
+                                if (!dicIndex[level].Contains(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX))
+                                    dicIndex[level].Add(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX);
+                            }
+                            else {
+                                tabIndex.Clear();
+                                tabIndex.Add(row + "," + CstResults.DashBoard.TOTAL_COLUMN_INDEX);
+                                dicIndex.Add(level, tabIndex);
+                            }
+
+                        }
+                        else {
+                            if (tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] == null)
+                                tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] = double.Parse(unitField);
+                            else tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX] = double.Parse(tab[row, CstResults.DashBoard.TOTAL_COLUMN_INDEX].ToString()) + double.Parse(unitField);
+                        }
+                    }
+                }
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region tableaux 4,5,6
+        /// <summary>
 		/// Remplit des valeurs dans les cellules du tableau de résultats
 		/// pour le type répartition format : tableaux 4 , 5 et 6
 		/// </summary>
@@ -1525,6 +1848,7 @@ namespace TNS.AdExpress.Web.Rules.Results
             string opPages = string.Empty;
             string opInsertion = string.Empty;
             string opDuration = string.Empty;
+            string opversionNb = string.Empty;
             #endregion
 
             #region Init Variables Opération Unité
@@ -1540,34 +1864,50 @@ namespace TNS.AdExpress.Web.Rules.Results
                 opInsertion = "Sum(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.spot].Id.ToString() + ")";
             else if(dt.Columns.Contains(UnitsInformation.List[CstWeb.CustomerSessions.Unit.numberBoard].Id.ToString()))
                 opInsertion = "Sum(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.numberBoard].Id.ToString() + ")";
+            
+            //if (dt.Columns.Contains(UnitsInformation.List[CstWeb.CustomerSessions.Unit.versionNb].Id.ToString()))
+            //    opversionNb = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql
+            //                        + "stragg(" + UnitsInformation.List[CstWeb.CustomerSessions.Unit.versionNb].Id.ToString() + ")";
 
             #endregion
 
             //Total euro
 			col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS;
-            coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opEuro, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);					
 
-			if(ClassificationCst.DB.Vehicles.names.press==vehicleType){
-				//Total Mm/Col sur période N,N-1
-				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+1;
-                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opMmPerCol, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);				
+            if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack) {
+                //Total insertion
+                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opInsertion, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);
+                col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1;
+                //Version number
+                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, "", criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, true);
+            }
+            else {
 
-				//Total  pages période N,N-1
-				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2;
-                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opPages, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);
-				//Total  insertion période N,N-1
-				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+3;
-                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opInsertion, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, true);
-				//Vérifie la présence de données pour les lignes traitées
-							
-			}else{							
-				//Total  durée période N,N-1	
-				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+1;
-                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opDuration, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);
-				col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2;
-				//Total insertion/spot période N-1
-                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opInsertion, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, true);
-			}		
+                coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opEuro, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);
+
+                if (ClassificationCst.DB.Vehicles.names.press == vehicleType) {
+                    //Total Mm/Col sur période N,N-1
+                    col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1;
+                    coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opMmPerCol, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);
+
+                    //Total  pages période N,N-1
+                    col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 2;
+                    coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opPages, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);
+                    //Total  insertion période N,N-1
+                    col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 3;
+                    coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opInsertion, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, true);
+                    //Vérifie la présence de données pour les lignes traitées
+
+                }
+                else {
+                    //Total  durée période N,N-1	
+                    col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1;
+                    coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opDuration, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, false);
+                    col = CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 2;
+                    //Total insertion/spot période N-1
+                    coordCellTab = InsertValue(webSession, dt, ref tab, ref row, ref col, opInsertion, criteriaPeriodN, criteriaPeriodN1, coordCellTab, isTotalLine, true);
+                }
+            }
 
 			return tab;
 		}
@@ -1653,6 +1993,8 @@ namespace TNS.AdExpress.Web.Rules.Results
 			AtomicPeriodWeek week;
 			AtomicPeriodWeek weekN1;
 			string sumUnit = WebFunctions.SQLGenerator.GetUnitAliasSum(webSession);
+            if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                sumUnit = "";
 			string criteriaPeriodN = "";
 			string criteriaPeriodN1 = "";
 			string PeriodBeginningDate = "";
@@ -1790,13 +2132,26 @@ namespace TNS.AdExpress.Web.Rules.Results
 			int indexRow=0;
 			int evolIndexRow=0;
 			int yearN1=int.Parse(webSession.PeriodBeginningDate.Substring(0,4))-1;
+            //identification du Média  sélectionné
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            string unitValue = string.Empty;
+            CellIdsNumber unitCellN, unitCellN1; 
 			//int colTotal=0;			
 
 			#region Calcul unité période N et/ou période N -1
 			if(dt!=null){
 				// unité période N
 				try{
-					tab[row,col]=double.Parse(dt.Compute(operation,criteriaPeriodN).ToString());				
+
+                    if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && operation.Length == 0) {
+                        unitValue = GetVersionHashCodeList(dt, criteriaPeriodN);
+                        unitCellN = new CellIdsNumber(unitValue.Split(','));
+                        tab[row, col] = unitCellN.Value;
+                    }
+                    else {
+                        unitValue = dt.Compute(operation, criteriaPeriodN).ToString();
+                        tab[row, col] = double.Parse(unitValue);
+                    }
 				
 				}catch(Exception){
 					tab[row,col]=null;
@@ -1809,8 +2164,16 @@ namespace TNS.AdExpress.Web.Rules.Results
 			// unité période N-1
 			if(webSession.ComparativeStudy){
 				if(dt!=null){
-					try{					
-						tab[row+1,col]=double.Parse(dt.Compute(operation,criteriaPeriodN1).ToString());	
+					try{
+                        if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack && operation.Length == 0) {
+                            unitValue = GetVersionHashCodeList(dt, criteriaPeriodN1);
+                            unitCellN1 = new CellIdsNumber(unitValue.Split(','));
+                            tab[row + 1, col] = unitCellN1.Value;
+                        }
+                        else {
+                            unitValue = dt.Compute(operation, criteriaPeriodN1).ToString();
+                            tab[row + 1, col] = double.Parse(unitValue);
+                        }
 					
 					}catch(Exception){					
 						tab[row+1,col]=null;
@@ -2285,8 +2648,9 @@ namespace TNS.AdExpress.Web.Rules.Results
 									oldIdL1 = Int64.Parse(tab[j,CstResults.DashBoard.ID_ELMT_L1_COLUMN_INDEX].ToString());
 									valueL1 = (double)0;
 									oldL1Row = j;
-									if(tab[j,CstResults.DashBoard.PERIOD_N_COLUMN_INDEX]!=null && tab[j,i]!=null)
-										valueL1 = double.Parse(tab[j,i].ToString());																		
+                                    if (tab[j, CstResults.DashBoard.PERIOD_N_COLUMN_INDEX] != null && tab[j, i] != null) {
+                                            valueL1 = double.Parse(tab[j, i].ToString());
+                                    }	
 									if(tab[j,CstResults.DashBoard.PERIOD_N_COLUMN_INDEX]!=null && tab[j,i]!=null)	{				
 										if(webSession.ComparativeStudy)tab[j+2,i] = (double)100;
 										else tab[j+1,i] = (double)100;
@@ -2297,12 +2661,13 @@ namespace TNS.AdExpress.Web.Rules.Results
 									oldIdL1N1 = Int64.Parse(tab[j,CstResults.DashBoard.ID_ELMT_L1_COLUMN_INDEX].ToString());
 									valueL1N1 = (double)0;
 									oldL1RowN1 = j;
-									if(tab[j,CstResults.DashBoard.PERIOD_N1_COLUMN_INDEX]!=null && tab[j,i]!=null)
-										valueL1N1 = double.Parse(tab[j,i].ToString());																																		
-										//PDM ou PDV période N-1
-										if(tab[j,CstResults.DashBoard.PERIOD_N1_COLUMN_INDEX]!=null && tab[j,i]!=null && valueL1N1>0)					
-											tab[j+2,i] = (double)100;
-									
+                                    if (tab[j, CstResults.DashBoard.PERIOD_N1_COLUMN_INDEX] != null && tab[j, i] != null) {
+                                            valueL1N1 = double.Parse(tab[j, i].ToString());
+                                    }																	
+									//PDM ou PDV période N-1
+									if(tab[j,CstResults.DashBoard.PERIOD_N1_COLUMN_INDEX]!=null && tab[j,i]!=null && valueL1N1>0)					
+										tab[j+2,i] = (double)100;
+								
 								}
 								
 							}catch(Exception ex){
@@ -2315,13 +2680,13 @@ namespace TNS.AdExpress.Web.Rules.Results
 								//PDM ou PDV période N
 								if(tab[j,CstResults.DashBoard.PERIOD_N_COLUMN_INDEX]!=null && tab[j,i]!=null && valueL1>0 )	{				
 									if(webSession.ComparativeStudy)tab[j+2,i] = (double.Parse(tab[j,i].ToString())*(double)100)/valueL1;
-									else tab[j+1,i] = (double.Parse(tab[j,i].ToString())*(double)100)/valueL1;										
-									valueL2 = double.Parse(tab[j,i].ToString());
+									else tab[j+1,i] = (double.Parse(tab[j,i].ToString())*(double)100)/valueL1;
+									    valueL2 = double.Parse(tab[j,i].ToString());
 								}									
 								//PDM ou PDV période N-1									
 								if(webSession.ComparativeStudy && tab[j,CstResults.DashBoard.PERIOD_N1_COLUMN_INDEX]!=null && tab[j,i]!=null && valueL1N1>0){																	
-									tab[j+2,i] = (double.Parse(tab[j,i].ToString())*(double)100)/valueL1N1;									
-									valueL2N1 = double.Parse(tab[j,i].ToString());
+									tab[j+2,i] = (double.Parse(tab[j,i].ToString())*(double)100)/valueL1N1;
+									    valueL2N1 = double.Parse(tab[j,i].ToString());
 								}
 							}catch(Exception ex1){
 								throw new DashBoardRulesException("ComputeTabPDMOrPDV(WebSession webSession,ref object[,] tab,int row,int col) :  Impossible de calculer le PDM ou PDV "+ex1.Message);
@@ -2412,6 +2777,15 @@ namespace TNS.AdExpress.Web.Rules.Results
 						
 					elementLabel="id_sector";
 					break;
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
+                    elementLabel = "id_format_banners";
+                    break;
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
+                    elementLabel = "id_dimension_banners";
+                    break;
+
 			}
 			return  elementLabel;
 		}
@@ -2442,6 +2816,14 @@ namespace TNS.AdExpress.Web.Rules.Results
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice :						
 					elementLabel="sector";
 					break;
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
+                    elementLabel = "format_banners";
+                    break;
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
+                    elementLabel = "dimension_banners";
+                    break;
 			}
 			return  elementLabel;
 		}
@@ -2551,6 +2933,9 @@ namespace TNS.AdExpress.Web.Rules.Results
 				rowsCount = RowsCount(webSession,dsData,vehicleType);
 				switch(webSession.PreformatedTable){
 					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :
+                    case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
+                    case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
+                    case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
 						columnsCount=UnitsCount(webSession,vehicleType)+CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS;	
 						break;
 					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual :
@@ -2562,7 +2947,11 @@ namespace TNS.AdExpress.Web.Rules.Results
 					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format :
 						columnsCount = CountRepartition(CstWeb.Repartition.repartitionCode.Format,vehicleType)+CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS;
 						break;
-				
+
+                    case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
+                        columnsCount = CountFormat(webSession, dsData) + CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS; 
+                        break;
+
 					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_NamedDay :
 					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay :
 					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_NamedDay :
@@ -2601,6 +2990,8 @@ namespace TNS.AdExpress.Web.Rules.Results
 					return 3;
 				case ClassificationCst.DB.Vehicles.names.press:
 					return 4;
+                case ClassificationCst.DB.Vehicles.names.adnettrack:
+                    return 2;
 				default:
 					throw(new DashBoardDataAccessException("CountUnits(WebSession webSession,ClassificationCst.DB.Vehicles.names vehicleType) : Impossible de déterminer le type de média à traiter."));
 			}
@@ -2623,7 +3014,11 @@ namespace TNS.AdExpress.Web.Rules.Results
 			int rowsCount=0;
 			if(dsData!=null && dsData.Tables[0].Rows.Count>0){
 				switch(webSession.PreformatedTable){
-					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :																	
+					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :
+                    case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
+                    case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
+                    case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
+                    case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
 						//Nombre de média
 						CountMedia(webSession,dsData,ref countInterestCenter,ref countMedia);						
 						#region Nombre de lignes dans le tableau 
@@ -2722,44 +3117,65 @@ namespace TNS.AdExpress.Web.Rules.Results
 		private static void CountMedia(WebSession webSession, DataSet dsData ,ref int countInterestCenter,ref int countMedia){			
 			Int64 oldIdInterestCenter=0;
 			Int64 oldIdMedia=0;
+            Int64 oldIdFormatBanners = 0;
+            Int64 oldIdDimensionBanners = 0;
 			foreach(DataRow dr in dsData.Tables[0].Rows){
-				
-				switch(webSession.PreformatedMediaDetail){
-						// selection du niveau media/support
-					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia:
-						if(dsData.Tables[0].Columns.Contains("id_media")){							
-							//Nombre de média
-							if(Int64.Parse(dr["id_media"].ToString())!=oldIdMedia)
-								countMedia++;
-							oldIdMedia = Int64.Parse(dr["id_media"].ToString());
-						}
-						break;
-						// selection du niveau media/centre d'interet
-					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter:
-						if(dsData.Tables[0].Columns.Contains("id_interest_center")){							
-							//Nombre de centres d'intérêts
-							if(Int64.Parse(dr["id_interest_center"].ToString())!=oldIdInterestCenter)
-								countInterestCenter++;
-							oldIdInterestCenter = Int64.Parse(dr["id_interest_center"].ToString());
-						}
-						break;
-						// selection du niveau media/centre d'interet/support
-					case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia:
-						if(dsData.Tables[0].Columns.Contains("id_interest_center")){							
-							//Nombre de centres d'intérêts
-							if(Int64.Parse(dr["id_interest_center"].ToString())!=oldIdInterestCenter)
-								countInterestCenter++;
-							oldIdInterestCenter = Int64.Parse(dr["id_interest_center"].ToString());
-						}
-						if(dsData.Tables[0].Columns.Contains("id_media")){							
-							//Nombre de média
-							if(Int64.Parse(dr["id_media"].ToString())!=oldIdMedia)
-								countMedia++;
-							oldIdMedia = Int64.Parse(dr["id_media"].ToString());
-						}
-						break;
-					
-				}
+
+                if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units) {
+                    if (dsData.Tables[0].Columns.Contains("id_format_banners")) {
+                        if (Int64.Parse(dr["id_format_banners"].ToString()) != oldIdFormatBanners)
+                            countMedia++;
+                        oldIdFormatBanners = Int64.Parse(dr["id_format_banners"].ToString());
+                    }
+                }
+                else if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units
+                    ||webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units
+                    || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format) {
+                    if (dsData.Tables[0].Columns.Contains("id_dimension_banners")) {
+                        if (Int64.Parse(dr["id_dimension_banners"].ToString()) != oldIdDimensionBanners)
+                            countMedia++;
+                        oldIdDimensionBanners = Int64.Parse(dr["id_dimension_banners"].ToString());
+                    }
+                }
+                else {
+
+                    switch (webSession.PreformatedMediaDetail) {
+                        // selection du niveau media/support
+                        case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia:
+                            if (dsData.Tables[0].Columns.Contains("id_media")) {
+                                //Nombre de média
+                                if (Int64.Parse(dr["id_media"].ToString()) != oldIdMedia)
+                                    countMedia++;
+                                oldIdMedia = Int64.Parse(dr["id_media"].ToString());
+                            }
+                            break;
+                        // selection du niveau media/centre d'interet
+                        case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter:
+                            if (dsData.Tables[0].Columns.Contains("id_interest_center")) {
+                                //Nombre de centres d'intérêts
+                                if (Int64.Parse(dr["id_interest_center"].ToString()) != oldIdInterestCenter)
+                                    countInterestCenter++;
+                                oldIdInterestCenter = Int64.Parse(dr["id_interest_center"].ToString());
+                            }
+                            break;
+                        // selection du niveau media/centre d'interet/support
+                        case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia:
+                            if (dsData.Tables[0].Columns.Contains("id_interest_center")) {
+                                //Nombre de centres d'intérêts
+                                if (Int64.Parse(dr["id_interest_center"].ToString()) != oldIdInterestCenter)
+                                    countInterestCenter++;
+                                oldIdInterestCenter = Int64.Parse(dr["id_interest_center"].ToString());
+                            }
+                            if (dsData.Tables[0].Columns.Contains("id_media")) {
+                                //Nombre de média
+                                if (Int64.Parse(dr["id_media"].ToString()) != oldIdMedia)
+                                    countMedia++;
+                                oldIdMedia = Int64.Parse(dr["id_media"].ToString());
+                            }
+                            break;
+
+                    }
+                }
 			}			
 		}
 
@@ -2793,6 +3209,28 @@ namespace TNS.AdExpress.Web.Rules.Results
 			}
 			return countSector;
 		}
+
+        /// <summary>
+        /// Count Format
+        /// </summary>
+        /// <param name="webSession">Customer session</param>	
+        /// <param name="dsData">Data set</param>
+        /// <returns>Format number</returns>
+        private static int CountFormat(WebSession webSession, DataSet dsData) {
+            int countFormat = 0;
+            ArrayList oldIdFormatArr = new ArrayList();
+
+            foreach (DataRow dr in dsData.Tables[0].Rows) {
+                if (dsData.Tables[0].Columns.Contains("id_format_banners")) {
+                    if (!oldIdFormatArr.Contains(Int64.Parse(dr["id_format_banners"].ToString()))) {
+                        countFormat++;
+                        oldIdFormatArr.Add(Int64.Parse(dr["id_format_banners"].ToString()));
+                    }
+                }
+            }
+            
+            return countFormat;
+        }
 
 		/// <summary>
 		/// Compte le nombre de mois ou de semaine à afficher
@@ -2941,12 +3379,17 @@ namespace TNS.AdExpress.Web.Rules.Results
 			//DateTime dateBegin;
 			//DateTime dateEnd;
 			string dateString;
+            DataRow[] foundRows;
+
 			int j=0;
             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
 			#endregion
 
 			switch(webSession.PreformatedTable){
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
 					#region Unités
 					if(ClassificationCst.DB.Vehicles.names.press==vehicleType){
 						//libellés unités : Euros,Mm/Col,pages,Isertions
@@ -2954,12 +3397,19 @@ namespace TNS.AdExpress.Web.Rules.Results
                         tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.mmPerCol].WebTextId, webSession.SiteLanguage));
 						tab[0,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS+2] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.pages].WebTextId,webSession.SiteLanguage));
                         tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 3] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage));
-					}else{
-						//libellés unités : Euros,Durée,Spots
+					}
+                    else if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack) {
+                        //libellés unités : Insertions
+                        tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage));
+                        // Versions number
+                        tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.versionNb].WebTextId, webSession.SiteLanguage));
+                    }
+                    else {
+                        //libellés unités : Euros,Durée,Spots
                         tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].WebTextId, webSession.SiteLanguage));
                         tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.duration].WebTextId, webSession.SiteLanguage));
                         tab[0, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 2] = Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.spot].WebTextId, webSession.SiteLanguage));
-					}
+                    }
 					#endregion
 					break;
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual :
@@ -3063,7 +3513,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 					strExpr = "";					
 					strSort = "sector ASC";
 				
-					DataRow[] foundRows = dt.Select( strExpr, strSort, DataViewRowState.OriginalRows );
+					foundRows = dt.Select( strExpr, strSort, DataViewRowState.OriginalRows );
 
 					foreach(DataRow dr in  foundRows){
 
@@ -3076,6 +3526,27 @@ namespace TNS.AdExpress.Web.Rules.Results
 					}
 					
 					break;
+                case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
+                    //libellés familles en colonne					
+                    tab[0, CstResults.DashBoard.TOTAL_COLUMN_INDEX] = GestionWeb.GetWebWord(1401, webSession.SiteLanguage);
+                    j++;
+                    strExpr = "";
+                    strSort = "format_banners ASC";
+
+                    foundRows = dt.Select(strExpr, strSort);
+
+                    foreach (DataRow dr in foundRows) {
+
+                        if (!sectorHashTable.Contains(dr["id_format_banners"].ToString())) {
+                            tab[0, CstResults.DashBoard.TOTAL_COLUMN_INDEX + j] = dr["format_banners"].ToString();
+                            sectorHashTable.Add(dr["id_format_banners"].ToString(), CstResults.DashBoard.TOTAL_COLUMN_INDEX + j);
+                            j++;
+                        }
+
+                    }
+
+                    break;
+
 				default : 
 					throw new DashBoardRulesException("SetTabLabel(WebSession webSession,object[,] tab,ClassificationCst.DB.Vehicles.names vehicleType,DataTable dt) : Impossible d'identifier le tableau de bord à traiter.");
 			}
@@ -3167,8 +3638,59 @@ namespace TNS.AdExpress.Web.Rules.Results
 				}
 		}
 		#endregion
-		
-		private static int GetCurrentRow(WebSession webSession, int row){
+
+        #region Get Version Number
+        /// <summary>
+        /// Get version HashCode List
+        /// </summary>
+        /// <param name="dt">Data table</param>
+        /// <param name="criteriaPeriodN">Criterion</param>
+        /// <returns></returns>
+        private static string GetVersionHashCodeList(DataTable dt, string criteriaPeriodN) {
+
+            DataRow[] dRows = dt.Select(criteriaPeriodN);
+            string versionList = string.Empty;
+
+            foreach(DataRow currentRow in dRows){
+                versionList += currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.versionNb].Id.ToString()].ToString();
+                versionList += ",";
+            }
+
+            return versionList.Substring(0,versionList.Length-1);
+
+        }
+        #endregion
+
+        #region Set Version Number Cell
+        /// <summary>
+        /// Set version number cell
+        /// </summary>
+        /// <param name="tab">Data table</param>
+        /// <param name="dicIndex">Table index</param>
+        /// <param name="level">Level</param>
+        /// <returns></returns>
+        private static void SetVersionNumberCell(object[,] tab, Dictionary<int, List<string>> dicIndex, int level) {
+
+            string[] coord;
+            int row = 0, col = 0;
+            CellIdsNumber unitCellN;
+
+            if (dicIndex.ContainsKey(level)) {
+                foreach (string currentIndex in dicIndex[level]) {
+                    coord = currentIndex.Split(',');
+                    row = int.Parse(coord[0]);
+                    col = int.Parse(coord[1]);
+                    unitCellN = new CellIdsNumber(tab[row, col].ToString().Split(','));
+                    tab[row, col] = unitCellN.Value;
+                }
+
+                dicIndex[level].Clear();
+            }
+
+        }
+        #endregion
+
+        private static int GetCurrentRow(WebSession webSession, int row){
 			
 			//Incrément période
 			row=row+1;
@@ -3191,8 +3713,92 @@ namespace TNS.AdExpress.Web.Rules.Results
 			}
 			
 			return row;
-		}
-		#endregion		
-	
-	}
+        }
+
+        #region Sort Methods
+        /// <summary>
+        /// Sort table
+        /// </summary>
+        /// <param name="tab">Table</param>
+        /// <param name="isTop20">Is Top 20</param>
+        /// <returns>Table sorted</returns>
+        private static object[,] SortTable(object[,] tab, bool isTop20) {
+
+            int row = tab.GetLength(0);
+            int column = tab.GetLength(1);
+            object[,] tabTemp = new object[row, column];
+            Dictionary<int, double> tableIndex = new Dictionary<int, double>();
+            List<double> valueIndex = new List<double>();
+            List<int> keyIndex = new List<int>();
+            List<int> sortedList = new List<int>();
+            List<string> classif = new List<string>();
+            int k = 0;
+            int top20 = 21;
+            int index = 0;
+            double value;
+
+            for (int i = 0; i < row; i++) {
+                if (tab[i, CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX] != null && !classif.Contains((string)tab[i, CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX])) {
+                    classif.Add((string)tab[i, CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX]);
+                    if (tab[i, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1] == null)
+                        value = 0;
+                    else
+                        value = (double)tab[i, CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS + 1];
+                    tableIndex.Add(i, value);
+                    keyIndex.Add(i);
+                    valueIndex.Add(value);
+                }
+            }
+
+            sortedList = sortList(tableIndex, valueIndex);
+            keyIndex.Add(row);
+
+            for (int i = 0; i < row; i++) {
+
+                if(i==keyIndex[index]){
+                    k=sortedList[index];
+                    index++;
+                    if (isTop20 && index == top20)
+                        break;
+                }
+
+                for (int j = 0; j < column; j++) { 
+                    tabTemp[i,j] = tab[k,j];
+                }
+                k++;
+            }
+
+            return tabTemp;
+        }
+
+        /// <summary>
+        /// Sort list
+        /// </summary>
+        /// <param name="tableIndex">Table index</param>
+        /// <param name="list">List index</param>
+        /// <returns>Sorted list</returns>
+        private static List<int> sortList(Dictionary<int, double> tableIndex,List<double> list) {
+
+            List<int> sortedList = new List<int>();
+            list.Sort();
+            list.Reverse();
+
+            foreach (double element in list) {
+                foreach (KeyValuePair<int, double> current in tableIndex) {
+                    if (current.Value == element) {
+                        sortedList.Add(current.Key);
+                        tableIndex.Remove(current.Key);
+                        break;
+                    }
+                }
+            }
+
+            return sortedList;
+
+        }
+        #endregion
+
+        #endregion
+
+    }
 }

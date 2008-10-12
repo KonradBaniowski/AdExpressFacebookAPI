@@ -153,7 +153,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		///Type de Média sélectionné
 		/// </summary>
 		private DBClassificationConstantes.Vehicles.names vehicleType;
-		
+        /// <summary>
+        /// Checkbox dédiée à l'auto-promo Evaliant
+        /// </summary>
+        protected System.Web.UI.WebControls.CheckBox AutopromoEvaliantCheckBox;
 		#endregion
 
 		#region Propriétés
@@ -426,6 +429,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			set{tblChoiceOption=value;}
 		}
 
+        /// <summary>
+        /// Option Auto-promo Evaliant
+        /// </summary>
+        [Bindable(true),
+        Description("Option Auto-promo Evaliant")]
+        protected bool autopromoEvaliantOption = false;
+        /// <summary></summary>
+        public bool AutopromoEvaliantOption {
+            get { return autopromoEvaliantOption; }
+            set { autopromoEvaliantOption = value; }
+        }
+
 		#region Propriétés de TblChoice
 		/// <summary>
 		/// hauteur de l'image
@@ -575,7 +590,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				if (unitOption){
 					try{
 						if(Page.Request.Form.GetValues("_units")!=null && Page.Request.Form.GetValues("_units")[0]!= customerWebSession.Unit.ToString())
-						customerWebSession.Unit = (SessionCst.Unit) Int64.Parse(Page.Request.Form.GetValues("_units")[0]);
+                            //customerWebSession.Unit = (SessionCst.Unit) Int64.Parse(Page.Request.Form.GetValues("_units")[0]);
+                            customerWebSession.Unit = (SessionCst.Unit)Enum.Parse(typeof(SessionCst.Unit), Page.Request.Form.GetValues("_units")[0]);
 					}
 					catch(SystemException){
 					}
@@ -658,6 +674,16 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					}
 					catch(System.Exception){}
 				}
+
+                if (autopromoEvaliantOption) {
+                    try {
+                        if (Page.Request.Form.GetValues(this.ID + "_autopromoEvaliant")[0] != null) customerWebSession.AutopromoEvaliant = true;
+                    }
+                    catch (System.Exception) {
+                        customerWebSession.AutopromoEvaliant = false;
+                    }
+                }
+
 				//Option choix d'une famille
 				if(sectorListOption){
 					try{	
@@ -899,14 +925,27 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 tblChoice.ImageButtonArrow = this._imageButtonArrow;
 				if (this.List!="") tblChoice.List = this.List;
 				else{
-					if (vehicleType!= DBClassificationConstantes.Vehicles.names.press){  
+                    if (vehicleType == DBClassificationConstantes.Vehicles.names.adnettrack)
+                        tblChoice.List = "&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;";
+					else if (vehicleType!= DBClassificationConstantes.Vehicles.names.press){  
 						tblChoice.List = "&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;";	
-					}else tblChoice.List = "&nbsp;|&nbsp;|&nbsp;|&nbsp;";
+					}
+                    else tblChoice.List = "&nbsp;|&nbsp;|&nbsp;|&nbsp;";
 				}
 				if (this.images!="") tblChoice.Images = this.images;
 				else{
                     string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
-					if (vehicleType!= DBClassificationConstantes.Vehicles.names.press){
+					if (vehicleType == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                        tblChoice.Images = "/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype1.gif" +
+                                "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype2.gif" +
+                                "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype3.gif" +
+                                "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype13.gif" +
+                                "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype14.gif" +
+                                "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype15.gif" +
+                                "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype16.gif" +
+                                "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype17.gif";
+                    }
+                    else if (vehicleType!= DBClassificationConstantes.Vehicles.names.press){
                         tblChoice.Images = "/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype1.gif" +
                             "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype2.gif" +
                             "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype3.gif" +
@@ -920,20 +959,24 @@ namespace TNS.AdExpress.Web.Controls.Headers
 							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype11.gif" +
 							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype12.gif" +
 							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype13.gif" ; 
-					}else {
-						tblChoice.Images= "/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype1.gif" +
-							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype2.gif" +
-							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype3.gif" +
-							"|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype13.gif" ; 
 					}
+                    else {
+                        tblChoice.Images = "/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype1.gif" +
+                            "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype2.gif" +
+                            "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype3.gif" +
+                            "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype13.gif";
+                    }
 				}
 				int numberImagesForPress=4;
 				int numberImagesForOthersMedia=13;
-				if(vehicleType== DBClassificationConstantes.Vehicles.names.press && customerWebSession.PreformatedTable== CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector){
-					//index du tableau Media\Famille pour le média presse
-					tblChoice.ListIndex = customerWebSession.PreformatedTable.GetHashCode()-DashBoardEnumIndex-(numberImagesForOthersMedia-numberImagesForPress);
-				}
-				else tblChoice.ListIndex = customerWebSession.PreformatedTable.GetHashCode()-DashBoardEnumIndex;
+                int numberImagesForAdnettrack = 23;
+                if ((vehicleType == DBClassificationConstantes.Vehicles.names.press || vehicleType == DBClassificationConstantes.Vehicles.names.adnettrack) && customerWebSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector) {
+                    //index du tableau Media\Famille pour le média presse
+                    tblChoice.ListIndex = customerWebSession.PreformatedTable.GetHashCode() - DashBoardEnumIndex - (numberImagesForOthersMedia - numberImagesForPress);
+                }
+                else if (vehicleType == DBClassificationConstantes.Vehicles.names.adnettrack && customerWebSession.PreformatedTable.GetHashCode() > 23)
+                    tblChoice.ListIndex = customerWebSession.PreformatedTable.GetHashCode() - numberImagesForAdnettrack;
+                else tblChoice.ListIndex = customerWebSession.PreformatedTable.GetHashCode() - DashBoardEnumIndex;
 				tblChoice.ImageHeight = this.imageHeight;
 				tblChoice.ImageWidth = this.imageWidth;
 				tblChoice.ID = "DDL"+this.ID;
@@ -945,9 +988,22 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			}
 			#endregion
 
-			#region choix d'une famille
+            #region Auto promo evaliant
+            if (autopromoEvaliantOption) {
+                AutopromoEvaliantCheckBox = new System.Web.UI.WebControls.CheckBox();
+                AutopromoEvaliantCheckBox.ID = this.ID + "_autopromoEvaliant";
+                AutopromoEvaliantCheckBox.ToolTip = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
+                AutopromoEvaliantCheckBox.CssClass = cssClass;
+                AutopromoEvaliantCheckBox.AutoPostBack = autoPostBackOption;
+                AutopromoEvaliantCheckBox.Text = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
+                AutopromoEvaliantCheckBox.Checked = customerWebSession.AutopromoEvaliant;
+                Controls.Add(AutopromoEvaliantCheckBox);
+            }
+            #endregion
 
-			//Option choix d'une famille
+            #region choix d'une famille
+
+            //Option choix d'une famille
 			if(sectorListOption){
 				sectorList = new DropDownList();				
 				FillSectorList();
@@ -1185,6 +1241,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				output.Write("\n<TD height=\"5\"></TD>");
 				output.Write("\n</TR>");
 			}
+
+            // Option auto-promo Evaliant
+            if (autopromoEvaliantOption) {
+                output.Write("\n<tr>");
+                output.Write("\n<td>");
+                AutopromoEvaliantCheckBox.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
 
 			//option choix d'une famille
 			if (sectorListOption){

@@ -727,7 +727,15 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Banners
         /// </summary>
-        banners = 156
+        banners = 156,
+        /// <summary>
+        /// Format banners
+        /// </summary>
+        formatBanners = 157,
+        /// <summary>
+        /// Dimension banners
+        /// </summary>
+        dimensionBanners = 158
     } 
     #endregion
 

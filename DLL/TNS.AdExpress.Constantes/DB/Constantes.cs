@@ -1803,6 +1803,14 @@ namespace TNS.AdExpress.Constantes.DB{
 			/// Constante tableau de bord répartition radio par semaine
 			/// </summary>
 			public const string TABLEAU_BORD_RADIO_R_WEEK ="TABLEAU_BORD_RADIO_R_WEEK";
+            /// <summary>
+            /// Month Dashbord Table Constante
+            /// </summary>
+            public const string TABLEAU_BORD_EVALIANT_MONTH = "TABLEAU_BORD_EVAL_R_MTH";
+            /// <summary>
+            /// Week Dashbord Table Constante
+            /// </summary>
+            public const string TABLEAU_BORD_EVALIANT_WEEK = "TABLEAU_BORD_EVAL_R_WEEK";
 		}
 		/// <summary>
 		/// Champs des tableaux de bord
