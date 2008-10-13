@@ -205,19 +205,26 @@ namespace AdExpress.Private.Selection{
 						}
 					}
 					//verification que l unite deja sélectionnée convient pour tous les medias
-					if(WebFunctions.Units.getUnitsFromVehicleSelection(
-						_webSession.GetSelection(_webSession.SelectionUniversMedia,CstWebCustomer.Right.type.vehicleAccess))
-						.IndexOf(_webSession.Unit)==-1){
-						// On met euro par défaut
-						_webSession.Unit=TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro;
-					}
-					// On sauvegarde la session
-					_webSession.Save();
-					//Redirection vers la page suivante
-					if(_nextUrl.Length>0){
-						_webSession.Source.Close();
-						HttpContext.Current.Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
-					}
+                    if(WebFunctions.Units.getUnitsFromVehicleSelection(
+                        _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess))
+                        .IndexOf(_webSession.Unit) == -1) {
+                        // On met euro par défaut
+                        //_webSession.Unit=TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro;
+
+                        // Message d'erreur pour indiquer qu'il n'y a pas d'unité commune dans la sélection de l'utilisateur
+                        Response.Write("<script language=javascript>");
+                        Response.Write("	alert(\"" + GestionWeb.GetWebWord(2541, this._siteLanguage) + "\");");
+                        Response.Write("</script>");
+                    }
+                    else {
+                        // On sauvegarde la session
+                        _webSession.Save();
+                        //Redirection vers la page suivante
+                        if(_nextUrl.Length > 0) {
+                            _webSession.Source.Close();
+                            HttpContext.Current.Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
+                        }
+                    }
 				}
 			}
 			catch(System.Exception exc){
