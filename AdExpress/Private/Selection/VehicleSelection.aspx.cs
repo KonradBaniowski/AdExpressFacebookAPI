@@ -183,34 +183,32 @@ namespace AdExpress.Private.Selection{
 				foreach(ListItem currentItem in VehicleSelectionWebControl2.Items){
 					if(currentItem.Selected)vehiclesSelection+=currentItem.Value+",";
 				}
-				if(vehiclesSelection.Length<1){
-					//_webSession.Source.Close();
-					Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052,_webSession.SiteLanguage)));
-				}
-				else{
-					vehiclesSelection.Substring(0,vehiclesSelection.Length-1);
-					// Sauvegarde de la sélection dans la session
-					//Si la sélection comporte des éléments, on la vide
-					_webSession.SelectionUniversMedia.Nodes.Clear();
-					System.Windows.Forms.TreeNode tmpNode;
-					foreach(ListItem currentItem in VehicleSelectionWebControl2.Items){
-						if(currentItem.Selected){
-							tmpNode=new System.Windows.Forms.TreeNode(currentItem.Text);
-							tmpNode.Tag=new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,long.Parse(currentItem.Value),currentItem.Text);
-							tmpNode.Checked=true;
-							//_webSession.CurrentUnivers. .Nodes.Add(tmpNode);
-							_webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
-							// Tracking
-							_webSession.OnSetVehicle(long.Parse(currentItem.Value));
-						}
-					}
-					//verification que l unite deja sélectionnée convient pour tous les medias
-                    if(WebFunctions.Units.getUnitsFromVehicleSelection(
-                        _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess))
-                        .IndexOf(_webSession.Unit) == -1) {
-                        // On met euro par défaut
-                        //_webSession.Unit=TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro;
+                if(vehiclesSelection.Length < 1) {
+                    //_webSession.Source.Close();
+                    Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)));
+                }
+                else {
+                    vehiclesSelection.Substring(0, vehiclesSelection.Length - 1);
+                    // Sauvegarde de la sélection dans la session
+                    //Si la sélection comporte des éléments, on la vide
+                    _webSession.SelectionUniversMedia.Nodes.Clear();
+                    System.Windows.Forms.TreeNode tmpNode;
+                    foreach(ListItem currentItem in VehicleSelectionWebControl2.Items) {
+                        if(currentItem.Selected) {
+                            tmpNode = new System.Windows.Forms.TreeNode(currentItem.Text);
+                            tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, long.Parse(currentItem.Value), currentItem.Text);
+                            tmpNode.Checked = true;
+                            //_webSession.CurrentUnivers. .Nodes.Add(tmpNode);
+                            _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+                            // Tracking
+                            _webSession.OnSetVehicle(long.Parse(currentItem.Value));
+                        }
+                    }
+                    
+                    //verification que l unite deja sélectionnée convient pour tous les medias
+                    ArrayList unitList = WebFunctions.Units.getUnitsFromVehicleSelection(_webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess));
 
+                    if(unitList.Count == 0) {
                         // Message d'erreur pour indiquer qu'il n'y a pas d'unité commune dans la sélection de l'utilisateur
                         Response.Write("<script language=javascript>");
                         Response.Write("	alert(\"" + GestionWeb.GetWebWord(2541, this._siteLanguage) + "\");");
@@ -225,7 +223,24 @@ namespace AdExpress.Private.Selection{
                             HttpContext.Current.Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
                         }
                     }
-				}
+
+                    #region Ancienne vérification sur l'unité
+                    //if(WebFunctions.Units.getUnitsFromVehicleSelection(
+                    //    _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess))
+                    //    .IndexOf(_webSession.Unit) == -1) {
+                    //    // On met euro par défaut
+                    //    _webSession.Unit = TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro;
+                    //}
+                    //// On sauvegarde la session
+                    //_webSession.Save();
+                    ////Redirection vers la page suivante
+                    //if(_nextUrl.Length > 0) {
+                    //    _webSession.Source.Close();
+                    //    HttpContext.Current.Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
+                    //}
+                    #endregion
+
+                }
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
