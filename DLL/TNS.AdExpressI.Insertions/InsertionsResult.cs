@@ -23,6 +23,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.Insertions.Cells;
 using TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Constantes.Web;
 
 
 namespace TNS.AdExpressI.Insertions
@@ -38,11 +39,23 @@ namespace TNS.AdExpressI.Insertions
         /// <summary>
         /// Current Module Id
         /// </summary>
-        protected Module _module;
+        protected TNS.AdExpress.Domain.Web.Navigation.Module _module;
         /// <summary>
         /// Data Access Layer
         /// </summary>
         protected IInsertionsDAL _dalLayer;
+        /// <summary>
+        /// Get Creatives or insertions?
+        /// </summary>
+        protected bool _getCreatives = false;
+        /// <summary>
+        /// Mutex
+        /// </summary>
+        protected object _mutex = new object();
+        /// <summary>
+        /// List of media to test for creative acces (press specific)
+        /// </summary>
+        protected string[] _mediaList = null;
         #endregion
 
         #region Constructor
@@ -68,7 +81,7 @@ namespace TNS.AdExpressI.Insertions
         /// </summary>
         /// <param name="filters">Filters to apply (id1,id2,id3,id4</param>
         /// <returns>List of vehicles with data</returns>
-        public List<VehicleInformation> GetPresentVehicles(string filters, int universId)
+        public List<VehicleInformation> GetPresentVehicles(string filters, int universId, bool sloganNotNull)
         {
             List<VehicleInformation> vehicles = new List<VehicleInformation>();
 
@@ -76,6 +89,7 @@ namespace TNS.AdExpressI.Insertions
             DateTime dateEnd = FctUtilities.Dates.getPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
             int iDateBegin = Convert.ToInt32(dateBegin.ToString("yyyyMMdd"));
             int iDateEnd = Convert.ToInt32(dateEnd.ToString("yyyyMMdd"));
+            _getCreatives = sloganNotNull;
 
             switch (_module.Id)
             {
@@ -115,7 +129,7 @@ namespace TNS.AdExpressI.Insertions
                     vehicles.Remove(vehicles[i]);
                 }
             }
-            return _dalLayer.GetPresentVehicles(vehicles, filters, iDateBegin, iDateEnd, universId, _module);
+            return _dalLayer.GetPresentVehicles(vehicles, filters, iDateBegin, iDateEnd, universId, _module, _getCreatives);
 
         }
         #endregion
@@ -160,12 +174,37 @@ namespace TNS.AdExpressI.Insertions
         #region GetInsertions
         public virtual ResultTable GetInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId)
         {
+            this._getCreatives = false;
+            return GetData(vehicle, fromDate, toDate, filters, universId);
+        }
+        #endregion
+
+        #region GetCreatives
+        public virtual ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId)
+        {
+            this._getCreatives = true;
+            return GetData(vehicle, fromDate, toDate, filters, universId);
+        }
+        #endregion
+
+        #region GetData
+        protected virtual ResultTable GetData(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId)
+        {
             ResultTable data = null;
 
             #region Data Access
             if (vehicle == null)
                 return null;
-            DataSet ds = _dalLayer.GetInsertionsData(vehicle, fromDate, toDate, universId, filters);
+
+            DataSet ds = null;
+            if (_getCreatives)
+            {
+                ds = _dalLayer.GetCreativesData(vehicle, fromDate, toDate, universId, filters);
+            }
+            else
+            {
+                ds = _dalLayer.GetInsertionsData(vehicle, fromDate, toDate, universId, filters);
+            }
 
             if (ds == null || ds.Equals(DBNull.Value) || ds.Tables[0] == null || ds.Tables[0].Rows.Count ==0)
                 return null;
@@ -178,7 +217,16 @@ namespace TNS.AdExpressI.Insertions
             foreach (DetailLevelItemInformation d in _session.DetailLevel.Levels) {
                 levels.Add((DetailLevelItemInformation)d);
             }
-            Int64 idColumnsSet = WebApplicationParameters.InsertionsDetail.GetDetailColumnsId(vehicle.DatabaseId, _module.Id);
+            List<GenericColumnItemInformation> columns = _session.GenericInsertionColumns.Columns;
+            Int64 idColumnsSet = -1;
+            if (this._getCreatives)
+            {
+                idColumnsSet = WebApplicationParameters.CreativesDetail.GetDetailColumnsId(vehicle.DatabaseId, _module.Id);
+            }
+            else
+            {
+                idColumnsSet = WebApplicationParameters.InsertionsDetail.GetDetailColumnsId(vehicle.DatabaseId, _module.Id);
+            }            
             //Data Keys
             List<GenericColumnItemInformation> keys = WebApplicationParameters.GenericColumnsInformation.GetKeys(idColumnsSet);
             List<string> keyIdName = new List<string>();
@@ -187,27 +235,36 @@ namespace TNS.AdExpressI.Insertions
             //Line Number
             Int64 nbLine = GetLineNumber(dt, levels, keyIdName);
             //Data Columns
-            List<GenericColumnItemInformation> columns = _session.GenericInsertionColumns.Columns;
             List<Cell> cells = new List<Cell>();
             List<string> columnsName = GetColumnsName(dt, columns, cells);
             //Result Table init
             data = new ResultTable(nbLine, GetHeaders(vehicle, columns));
             SetLine setLine = null;
-            switch (vehicle.Id) {
-                case CstDBClassif.Vehicles.names.directMarketing:
-                case CstDBClassif.Vehicles.names.internationalPress:
-                case CstDBClassif.Vehicles.names.press:
-                case CstDBClassif.Vehicles.names.outdoor:
-                    setLine = new SetLine(SetAggregLine);
-                    break;
-                default:
-                    setLine = new SetLine(SetRawLine);
-                    break;
+            if (_getCreatives)
+            {
+                setLine = new SetLine(SetCreativeLine);
+            }
+            else
+            {
+                switch (vehicle.Id)
+                {
+                    case CstDBClassif.Vehicles.names.directMarketing:
+                    case CstDBClassif.Vehicles.names.internationalPress:
+                    case CstDBClassif.Vehicles.names.press:
+                    case CstDBClassif.Vehicles.names.outdoor:
+                        setLine = new SetLine(SetAggregLine);
+                        break;
+                    default:
+                        setLine = new SetLine(SetRawLine);
+                        break;
+                }
             }
             #endregion
 
             #region Table fill
             LineType[] lineTypes = new LineType[4]{LineType.level1, LineType.level2, LineType.level3, LineType.level4};
+            Dictionary<string, Int64> levelKeyValues = null;
+
             Int64[] oldIds = new Int64[levels.Count];
             for (int i = 0; i < oldIds.Length; i++) { oldIds[i] = -1; }
             Int64[] cIds = new Int64[levels.Count];
@@ -219,6 +276,7 @@ namespace TNS.AdExpressI.Insertions
             string label = string.Empty;
             Int64 cLine = 0;
             bool isNewInsertion = false;
+            string key = string.Empty;
 
             foreach (DataRow row in dt.Rows) {
 
@@ -258,8 +316,9 @@ namespace TNS.AdExpressI.Insertions
                 }
 
                 //Insertion Keys
+                key = string.Empty;
                 for (int i = 0; i < oldKeyIds.Length; i++) {
-                    cKeyIds[i] = Convert.ToInt64(row[keyIdName[i]]);
+                    cKeyIds[i] = Convert.ToInt64(row[keyIdName[i]]);                    
                     if (cKeyIds[i] != oldKeyIds[i]) {
                         oldKeyIds[i] = cKeyIds[i];
                         if (i < oldKeyIds.Length - 1) {
@@ -336,14 +395,53 @@ namespace TNS.AdExpressI.Insertions
             CellInsertionInformation c;
             List<string> visuals = new List<string>();
             if (tab[cLine, 1] == null) {
-                tab[cLine, 1] = c = new CellInsertionInformation(_session, columns, columnsName, cells);
+                switch (vehicle.Id)
+                {
+                    case CstDBClassif.Vehicles.names.directMarketing:
+                        tab[cLine, 1] = c = new CellVMCInsertionInformation(_session, columns, columnsName, cells);
+                        break;
+                    default:
+                        tab[cLine, 1] = c = new CellInsertionInformation(_session, columns, columnsName, cells);
+                        break;
+                }
             }
             else {
                 c = (CellInsertionInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
             {
-                if (g.Id == GenericColumnItemInformation.Columns.visual)
+                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.poster)
+                {
+                    visuals = GetPath(vehicle, row, columns, columnsName);
+                }
+            }
+            c.Add(row, visuals);
+
+        }
+        protected void SetCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells)
+        {
+
+            CellCreativesInformation c;
+            List<string> visuals = new List<string>();
+            if (tab[cLine, 1] == null)
+            {
+                switch (vehicle.Id)
+                {
+                    case CstDBClassif.Vehicles.names.directMarketing:
+                        tab[cLine, 1] = c = new CellVMCCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        break;
+                    default:
+                        tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        break;
+                }
+            }
+            else
+            {
+                c = (CellCreativesInformation)tab[cLine, 1];
+            }
+            foreach (GenericColumnItemInformation g in columns)
+            {
+                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.associatedFileMax)
                 {
                     visuals = GetPath(vehicle, row, columns, columnsName);
                 }
@@ -509,22 +607,30 @@ namespace TNS.AdExpressI.Insertions
         protected Headers GetHeaders(VehicleInformation vehicle, List<GenericColumnItemInformation> columns) {
 
             Headers root = new Headers();
-
-            switch (vehicle.Id) {
-                case CstDBClassif.Vehicles.names.directMarketing:
-                case CstDBClassif.Vehicles.names.adnettrack:
-                case CstDBClassif.Vehicles.names.internationalPress:
-                case CstDBClassif.Vehicles.names.outdoor:
-                case CstDBClassif.Vehicles.names.press:
-                    root.Root.Add(new Header(string.Empty));
-                    break;
-                case CstDBClassif.Vehicles.names.others:
-                case CstDBClassif.Vehicles.names.radio:
-                case CstDBClassif.Vehicles.names.tv:
-                    for (int i = 0; i < columns.Count; i++) {
-                        root.Root.Add(new Header(GestionWeb.GetWebWord(columns[i].WebTextId, _session.SiteLanguage), columns[i].Id.GetHashCode()));
-                    }
-                    break;
+            if (_getCreatives)
+            {
+                root.Root.Add(new Header(string.Empty));
+            }
+            else
+            {
+                switch (vehicle.Id)
+                {
+                    case CstDBClassif.Vehicles.names.directMarketing:
+                    case CstDBClassif.Vehicles.names.adnettrack:
+                    case CstDBClassif.Vehicles.names.internationalPress:
+                    case CstDBClassif.Vehicles.names.outdoor:
+                    case CstDBClassif.Vehicles.names.press:
+                        root.Root.Add(new Header(string.Empty));
+                        break;
+                    case CstDBClassif.Vehicles.names.others:
+                    case CstDBClassif.Vehicles.names.radio:
+                    case CstDBClassif.Vehicles.names.tv:
+                        for (int i = 0; i < columns.Count; i++)
+                        {
+                            root.Root.Add(new Header(GestionWeb.GetWebWord(columns[i].WebTextId, _session.SiteLanguage), columns[i].Id.GetHashCode()));
+                        }
+                        break;
+                }
             }
 
             return root;
@@ -582,6 +688,7 @@ namespace TNS.AdExpressI.Insertions
                     Int64 activation = -1;
                     Int64 idMedia = -1;
                     Int64 dateCoverNum = -1;
+                    Int64 dateMediaNum = -1;
 
                     if (row.Table.Columns.Contains("disponibility_visual") && row["disponibility_visual"] != System.DBNull.Value){
                         disponibility = Convert.ToInt64(row["disponibility_visual"]);
@@ -595,6 +702,13 @@ namespace TNS.AdExpressI.Insertions
                     if (row.Table.Columns.Contains("date_cover_num") && row["date_cover_num"] != System.DBNull.Value){
                         dateCoverNum = Convert.ToInt64(row["date_cover_num"]);
                     }
+                    if (row.Table.Columns.Contains("date_media_num") && row["date_media_num"] != System.DBNull.Value){
+                        dateMediaNum = Convert.ToInt64(row["date_media_num"]);
+                    }
+                    if (row.Table.Columns.Contains("dateKiosque") && row["dateKiosque"] != System.DBNull.Value)
+                    {
+                        dateMediaNum = Convert.ToInt64(row["dateKiosque"]);
+                    }
                     if (disponibility <= 10 && activation <= 100 && idMedia > 0 && dateCoverNum > 0)
                     {
                         //visuel(s) disponible(s)
@@ -603,9 +717,74 @@ namespace TNS.AdExpressI.Insertions
                         {
                             if (files[fileIndex].Length > 0)
                             {
-                                visuals.Add(this.GetCreativePathPress(files[fileIndex], idMedia, dateCoverNum, false));
+                                visuals.Add(this.GetCreativePathPress(files[fileIndex], idMedia, dateCoverNum, false, dateMediaNum));
                             }
                         }
+                    }
+                    break;
+                case CstDBClassif.Vehicles.names.outdoor:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG))
+                    {
+                        break;
+                    }
+
+                    if (row["associated_file"] != System.DBNull.Value)
+                    {
+                        string[] files = row["associated_file"].ToString().Split(',');
+                        foreach (string s in files)
+                        {
+                            visuals.Add(this.GetCreativePathOutDoor(s, false));
+                        }
+
+                    }
+                    break;
+                case CstDBClassif.Vehicles.names.directMarketing:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG))
+                    {
+                        break;
+                    }
+
+                    if (row["associated_file"] != System.DBNull.Value)
+                    {
+                        string[] files = row["associated_file"].ToString().Split(',');
+                        foreach (string s in files)
+                        {
+                            visuals.Add(this.GetCreativePathVMC(s, false));
+                        }
+
+                    }
+                    break;
+                case CstDBClassif.Vehicles.names.radio:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG))
+                    {
+                        break;
+                    }
+
+                    if (row["associated_file"] != System.DBNull.Value)
+                    {
+                        string[] files = row["associated_file"].ToString().Split(',');
+                        foreach (string s in files)
+                        {
+                            visuals.Add(this.GetCreativePathRadio(s));
+                        }
+
+                    }
+                    break;
+                case CstDBClassif.Vehicles.names.tv:
+                case CstDBClassif.Vehicles.names.others:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG))
+                    {
+                        break;
+                    }
+
+                    if (row["associated_file"] != System.DBNull.Value)
+                    {
+                        string[] files = row["associated_file"].ToString().Split(',');
+                        foreach (string s in files)
+                        {
+                            visuals.Add(this.GetCreativePathTv(s));
+                        }
+
                     }
                     break;
                 default:
@@ -616,12 +795,65 @@ namespace TNS.AdExpressI.Insertions
 
         }
 
-        protected string GetCreativePathPress(string file, Int64 idMedia, Int64 dateCoverNum, bool bigSize)
+        protected string GetCreativePathPress(string file, Int64 idMedia, Int64 dateCoverNum, bool bigSize, Int64 dateMediaNum)
         {
             string imagette = (bigSize)?string.Empty:"/Imagette";
 
-            return string.Format("{0}/{1}/{2}{3}/{4}", CstWeb.CreationServerPathes.IMAGES, idMedia, dateCoverNum, imagette, file);
+            lock (_mutex)
+            {
+                if (_mediaList == null)
+                {
+                    try
+                    {
+                        _mediaList = Media.GetItemsList(AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
+                    }
+                    catch { }
+                }
+            }
+            if (Array.IndexOf(_mediaList, idMedia.ToString()) > -1)
+            {
+                return string.Format("{0}/{1}/{2}{3}/{4}", CstWeb.CreationServerPathes.IMAGES, idMedia, dateMediaNum, imagette, file);
+            }
+            else
+            {
+                return string.Format("{0}/{1}/{2}{3}/{4}", CstWeb.CreationServerPathes.IMAGES, idMedia, dateCoverNum, imagette, file);
+            }
 
+
+
+        }
+        protected string GetCreativePathOutDoor(string file, bool bigSize)
+        {
+            string imagette = (bigSize)?string.Empty:"/Imagette";
+
+            return string.Format("{0}/{1}/{2}/{3}{4}/{5}"
+                , CstWeb.CreationServerPathes.IMAGES_OUTDOOR
+                , file.Substring(file.Length - 8, 1)
+                , file.Substring(file.Length - 9, 1)
+                , file.Substring(file.Length - 10, 1)
+                , imagette
+                , file);
+
+        }
+        protected string GetCreativePathVMC(string file, bool bigSize)
+        {
+            string imagette = (bigSize)?string.Empty:"/Imagette";
+
+            return string.Format("{0}/{1}/{2}/{3}{4}/{5}"
+                , CstWeb.CreationServerPathes.IMAGES_MD
+                , file.Substring(file.Length - 8, 1)
+                , file.Substring(file.Length - 9, 1)
+                , file.Substring(file.Length - 10, 1)
+                , imagette
+                , file);
+        }
+        protected string GetCreativePathRadio(string file)
+        {
+            return file;
+        }
+        protected string GetCreativePathTv(string file)
+        {
+            return file;
         }
         #endregion
     }

@@ -9,6 +9,8 @@
  * */
 #endregion
 
+using CstFlags = TNS.AdExpress.Constantes.DB.Flags;
+
 using System;
 using System.Globalization;
 using System.Threading;
@@ -67,23 +69,31 @@ namespace TNS.AdExpressI.Insertions.Cells
             _session = session;
             _columns = columns;
             _columnsName = columnNames;
-            for (int i = 0; i < columnNames.Count; i++) {
-                _previousValues.Add(string.Empty);            
+            for (int i = 0; i < columnNames.Count; i++)
+            {
+                _previousValues.Add(string.Empty);
             }
             foreach (Cell c in cells)
             {
-                if (c is CellLabel)
-                {
-                    _values.Add(new CellLabel(string.Empty));
-                }
-                else
+                if (c is CellUnit)
                 {
                     _values.Add(((CellUnit)c).Clone(0.0));
                 }
-                
+                else if(c is CellDate)
+                {
+                    CellDate d = (CellDate)CellDate.GetInstance();
+                    d.StringFormat = c.StringFormat;
+                    _values.Add(d);
+                }
+                else
+                {
+                    _values.Add(new CellLabel(string.Empty));
+                }
+
             }
-            for(int i = 0; i < _values.Count; i++) {
-                _values[i].StringFormat = string.Format("{{0:{0}}}",_columns[i].StringFormat);
+            for (int i = 0; i < _values.Count; i++)
+            {
+                _values[i].StringFormat = string.Format("{{0:{0}}}", _columns[i].StringFormat);
             }
         }
         #endregion
@@ -117,7 +127,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// <returns>Label</returns>
         public override string ToString(string format, IFormatProvider fp)
         {
-            return string.Empty ;
+            return string.Empty;
         }
         /// <summary>
         /// Teste l'égalité de deux cellules.
@@ -150,6 +160,9 @@ namespace TNS.AdExpressI.Insertions.Cells
         {
             StringBuilder str = new StringBuilder();
 
+            if (_newGroup)
+                str.Append(RenderSeparator());
+
             string value;
             string[] values;
             int i = -1;
@@ -157,13 +170,14 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             //visuals
             bool hasVisual = false;
-            str.Append("<td>");
+            str.Append("<td valign=\"top\">");
+            string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette",string.Empty);
             foreach (string s in _visuals)
             {
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp)
                 {
-                    str.AppendFormat("<img src=\"{0}\"/>", st);
+                    str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img src=\"{0}\"/></a>", st, pathes);
                     hasVisual = true;
                 }
             }
@@ -171,7 +185,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             {
                 str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
             }
-            
+
             str.Append("</td>");
 
 
@@ -179,18 +193,19 @@ namespace TNS.AdExpressI.Insertions.Cells
             str.Append("<td><table>");
             bool hasData = false;
 
-            foreach (GenericColumnItemInformation g in _columns) {
+            foreach (GenericColumnItemInformation g in _columns)
+            {
                 i++;
-                if (g.Id != GenericColumnItemInformation.Columns.visual)
+                if (canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster)
                 {
-                    hasData = false;
                     str.Append("<tr>");
                     str.AppendFormat("<td><span>{0}<span></td><td><span>:<span></td>", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
                     str.Append("<td>");
                     _values[i].Parent = this.Parent;
+                    value = _values[i].ToString();
+                    hasData = false;
                     if (_values[i] != null)
                     {
-                        value = _values[i].ToString();
                         if (!(_values[i] is CellUnit))
                         {
                             values = value.Split(',');
@@ -220,10 +235,6 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             str.Append("</tr></table></td>");
 
-
-            //if (_newGroup)
-            //    str += RenderSeparator();
-            //str += "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + " align=\"left\">" + Convertion.ToHtmlString(this.ToString()) + "</td>";
             return str.ToString();
         }
         /// <summary>
@@ -250,41 +261,72 @@ namespace TNS.AdExpressI.Insertions.Cells
         #endregion
 
         #region Add Values
-        public void Add(DataRow row, List<string> visuals) {
+        public virtual void Add(DataRow row, List<string> visuals)
+        {
 
             int i = -1;
             string cValue;
             Cell cCell;
-            foreach (string s in visuals)
+            if (_visuals.Count <= 0)
             {
-                if (!_visuals.Contains(s))
+                foreach (string s in visuals)
                 {
-                    _visuals.Add(s);
+                    if (!_visuals.Contains(s))
+                    {
+                        _visuals.Add(s);
+                    }
                 }
             }
-            foreach (GenericColumnItemInformation g in _columns) {
+            foreach (GenericColumnItemInformation g in _columns)
+            {
 
                 i++;
                 cValue = row[_columnsName[i]].ToString();
-                if (cValue != _previousValues[i]) {
-                    cCell = _values[i];
-                    if (cCell is CellUnit) {
-                        ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
-                    }
-                    else {
-                        if (cValue.Length > 0)
-                        {
-                            CellLabel c = ((CellLabel)cCell);
-                            c.Label = string.Format("{0}{2}{1}", c.Label, cValue, ((c.Label.Length>0)?",":""));
-                        }
-                    }
-                    _previousValues[i] = cValue;
+                cCell = _values[i];
+                if (cCell is CellUnit)
+                {
+                    ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
                 }
+                else
+                {
+                    if (cValue != _previousValues[i] && cValue.Length > 0)
+                    {
+                        CellLabel c = ((CellLabel)cCell);
+                        c.Label = string.Format("{0}{2}{1}", c.Label, cValue, ((c.Label.Length > 0) ? "," : ""));
+                    }
+                }
+                _previousValues[i] = cValue;
 
             }
 
         }
         #endregion
+
+        #region Data rules
+        /// <summary>
+        /// Apply rules to data to display
+        /// </summary>
+        /// <returns>True if the data can be displayed, false neither</returns>
+        protected virtual bool canBeDisplayed(GenericColumnItemInformation column)
+        {
+
+            switch (column.Id)
+            {
+                case GenericColumnItemInformation.Columns.product:
+                    return _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+                case GenericColumnItemInformation.Columns.weight:
+                    return _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_POIDS_MARKETING_DIRECT);
+                case GenericColumnItemInformation.Columns.slogan:
+                    return _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_SLOGAN_ACCESS_FLAG);
+                case GenericColumnItemInformation.Columns.volume:
+                    return _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_VOLUME_MARKETING_DIRECT);
+                default:
+                    return true;
+            }
+
+        }
+        #endregion
+
     }
 
 }

@@ -9,7 +9,8 @@
     <MediaUniverse baalId="340" levels="category"/>        <!-- DASHBOARD_PANEURO_MEDIA_LIST_ID -->
     <MediaUniverse baalId="339" levels="category"/>        <!-- TV_SPONSORINGSHIP_MEDIA_LIST_ID -->
     <MediaUniverse baalId="341" levels="category"/>        <!-- RECAP_MEDIA_LIST_ID-->
-    <MediaUniverse baalId="336" levels="vehicle"/>        <!-- TREND_REPORTS_LIST_ID -->
+    <MediaUniverse baalId="336" levels="vehicle"/>         <!-- TREND_REPORTS_LIST_ID -->
+    <MediaUniverse baalId="365" levels="media"/>           <!-- CREATIVES_KIOSQUE_LIST_ID -->
   </MediaUniverses>
   <ProductUniverses>
     <ProductUniverse baalId="385" levels="product"/>                  <!-- EXCLUDE_PRODUCT_LIST_ID-->

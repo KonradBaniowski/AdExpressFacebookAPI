@@ -249,9 +249,85 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Cover date
             /// </summary>
-            dateCoverNum
+            dateCoverNum,
+            /// <summary>
+            /// ID VMC data
+            /// </summary>
+            idVMC,
+            /// <summary>
+            /// Mailing rapidity
+            /// </summary>
+            rapidity,
+            /// <summary>
+            /// Type of document
+            /// </summary>
+            typeDoc,
+            /// <summary>
+            /// Volume
+            /// </summary>
+            volume,
+            /// <summary>
+            /// Weight
+            /// </summary>
+            weight,
+            /// <summary>
+            /// Item number
+            /// </summary>
+            itemNb,
+            /// <summary>
+            /// Mail format (standard or specific)
+            /// </summary>
+            mailFormat,
+            /// <summary>
+            /// Mail Content
+            /// </summary>
+            content,
+            /// <summary>
+            /// Type of mail (blister...)
+            /// </summary>
+            mailType,
+            /// <summary>
+            /// Expenditure as a sum
+            /// </summary>
+            sumExpenditure,
+            /// <summary>
+            /// Somme Surface page
+            /// </summary>
+            sumSurface,
+            /// <summary>
+            /// Somme Durée
+            /// </summary>
+            sumDuration,
+            /// <summary>
+            /// Nombre de supports
+            /// </summary>
+            countMedia,
+            /// <summary>
+            /// Nombre de supports press
+            /// </summary>
+            countMediaPress,
+            /// <summary>
+            /// Insertions
+            /// </summary>
+            sumInsert,
+            /// <summary>
+            /// Date kiosque (press)
+            /// </summary>
+            dateKiosque,
+            /// <summary>
+            /// Nb spots
+            /// </summary>
+            sumSpot,
+            /// <summary>
+            /// Max path (for unicity purpose)
+            /// </summary>
+            associatedFileMax,
+            /// <summary>
+            /// Max path (for unicity purpose)
+            /// </summary>
+            numberBoardSum
 
-		}
+}
 		#endregion
 
 		#region Variables
@@ -336,7 +412,19 @@ namespace TNS.AdExpress.Domain.Level
         /// String output format
         /// </summary>
         private string _strFormat = string.Empty;
-		#endregion
+        /// <summary>
+        /// Specify if column is a sum of units
+        /// </summary>
+        private bool _isSum = false;
+        /// <summary>
+        /// Specify if column is a count of units
+        /// </summary>
+        private bool _isCountDistinct = false;
+        /// <summary>
+        /// Specify if column is a max of units
+        /// </summary>
+        private bool _isMax = false;
+        #endregion
 
 		#region Constructeur
 		/// <summary>
@@ -408,6 +496,30 @@ namespace TNS.AdExpress.Domain.Level
 		#endregion
 
 		#region Accesseurs
+        /// <summary>
+        /// Specify if column is a sum of units
+        /// </summary>
+        public bool IsSum
+        {
+            get { return _isSum; }
+            set { _isSum = value; }
+        }
+        /// <summary>
+        /// Specify if column is a max of units
+        /// </summary>
+        public bool IsMax
+        {
+            get { return _isMax; }
+            set { _isMax = value; }
+        }
+        /// <summary>
+        /// Specify if column is a cout of units
+        /// </summary>
+        public bool IsCountDistinct
+        {
+            get { return _isCountDistinct; }
+            set { _isCountDistinct = value; }
+        }
 		/// <summary>
 		/// Obtient l'identitifant de la colonne
 		/// </summary>
@@ -545,6 +657,8 @@ namespace TNS.AdExpress.Domain.Level
 		#region Méthode publiques
 
 		#region SQL
+
+        #region select
 		/// <summary>
 		/// Obtient le code SQL pour le champ
 		/// </summary>
@@ -556,7 +670,10 @@ namespace TNS.AdExpress.Domain.Level
 			if(_dataBaseTableNamePrefix!=null && _dataBaseTableNamePrefix.Length>0 && _dataBaseField!=null && _dataBaseField.Length>0)prefix=_dataBaseTableNamePrefix+".";
 			if(_convertNullDbField)sql+="nvl("+prefix+_dataBaseField+",0)";
 			else sql+=prefix+_dataBaseField;
-			if(_dataBaseAliasField!=null)sql+=" as "+_dataBaseAliasField;
+            if (sql.Length > 0 && _isSum) sql = string.Format("sum({0})", sql);
+            if (sql.Length > 0 && _isCountDistinct) sql = string.Format("count(distinct {0})", sql);
+            if (sql.Length > 0 && _isMax) sql = string.Format("max({0})", sql);
+            if (_dataBaseAliasField != null) sql += " as " + _dataBaseAliasField;
 			return(sql);
 		}
 		/// <summary>
@@ -568,7 +685,10 @@ namespace TNS.AdExpress.Domain.Level
 			string sql="";
 			if(_convertNullDbField)sql+="nvl("+_dataBaseField+",0)";
 			else sql+=_dataBaseField;
-			if(_dataBaseAliasField!=null)sql+=" as "+_dataBaseAliasField;
+            if (sql.Length > 0 && _isSum) sql = string.Format("sum({0})", sql);
+            if (sql.Length > 0 && _isCountDistinct) sql = string.Format("count(distinct {0})", sql);
+            if (sql.Length > 0 && _isMax) sql = string.Format("max({0})", sql);
+            if (_dataBaseAliasField != null) sql += " as " + _dataBaseAliasField;
 			return(sql);
 		}
 		/// <summary>
@@ -583,7 +703,10 @@ namespace TNS.AdExpress.Domain.Level
 				prefix=_dataBaseTableNamePrefix+".";
 			if(_convertNullDbId)sql+="nvl("+prefix+_dataBaseIdField+",0)";
 			else sql+=prefix+_dataBaseIdField;
-			if(_dataBaseAliasIdField!=null)sql+=" as "+_dataBaseAliasIdField;
+            if (sql.Length>0 && _isSum) sql = string.Format("sum({0})", sql);
+            if (sql.Length > 0 && _isCountDistinct) sql = string.Format("count(distinct {0})", sql);
+            if (sql.Length > 0 && _isMax) sql = string.Format("max({0})", sql);
+            if (_dataBaseAliasIdField != null) sql += " as " + _dataBaseAliasIdField;
 			return(sql);
 		}
 		/// <summary>
@@ -595,11 +718,16 @@ namespace TNS.AdExpress.Domain.Level
 			string sql="";
 			if(_convertNullDbField)sql+="nvl("+_dataBaseIdField+",0)";
 			else sql+=_dataBaseIdField;
-			if(_dataBaseAliasIdField!=null)sql+=" as "+_dataBaseAliasIdField;
+            if (sql.Length > 0 && _isSum) sql = string.Format("sum({0})", sql);
+            if (sql.Length > 0 && _isCountDistinct) sql = string.Format("count(distinct {0})", sql);
+            if (sql.Length > 0 && _isMax) sql = string.Format("max({0})", sql);
+            if (_dataBaseAliasIdField != null) sql += " as " + _dataBaseAliasIdField;
 			return(sql);
-		}
+        }
+        #endregion
 
-		/// <summary>
+        #region Order by
+        /// <summary>
 		/// Obtient le code SQL du le champ pour la commande order
 		/// </summary>
 		/// <remarks>La virgule n'est pas ajoutée</remarks>
@@ -645,8 +773,11 @@ namespace TNS.AdExpress.Domain.Level
 		public string GetSqlIdFieldForOrderWithoutTablePrefix(){
 			if(_dataBaseAliasIdField!=null)return(_dataBaseAliasIdField);
 			return(_dataBaseIdField);
-		}
-		/// <summary>
+        }
+        #endregion
+
+        #region Group by
+        /// <summary>
 		/// Obtient le code SQL du le champ pour la commande Group By sans le préfixe de la table
 		/// </summary>
 		/// <remarks>La virgule n'est pas ajoutée</remarks>
@@ -666,7 +797,7 @@ namespace TNS.AdExpress.Domain.Level
 		/// <remarks>La virgule n'est pas ajoutée</remarks>
 		/// <returns>Code SQL</returns>
 		public string GetSqlFieldForGroupByWithoutTablePrefix(){
-			return(_dataBaseField);
+            return string.Empty;
 		}
 		/// <summary>
 		/// Obtient le code SQL de l'identifiant de champ pour la commande Group By
@@ -674,8 +805,7 @@ namespace TNS.AdExpress.Domain.Level
 		/// <remarks>La virgule n'est pas ajoutée</remarks>
 		/// <returns>Code SQL</returns>
 		public string GetSqlIdFieldForGroupBy(){
-						
-			
+
 			if(_dataBaseAliasIdField!=null)return(_dataBaseAliasIdField);
 			if(_dataBaseIdField!=null){
 				if(_dataBaseTableNamePrefix!=null)
@@ -690,12 +820,13 @@ namespace TNS.AdExpress.Domain.Level
 		/// <returns>Code SQL</returns>
 		public string GetSqlIdFieldForGroupByWithoutTablePrefix(){
 			return(_dataBaseIdField);
-		}
+        }
+        #endregion
 
-		#endregion
+        #endregion
 
-		#region Rules
-		/// <summary>
+        #region Rules
+        /// <summary>
 		/// Obtient le libélle du le champ pour la commande order
 		/// </summary>
 		/// <remarks>La virgule n'est pas ajoutée</remarks>

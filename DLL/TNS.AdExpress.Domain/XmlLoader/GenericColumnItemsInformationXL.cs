@@ -97,6 +97,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 			string dbOrderConstraint=null;
 			string dbGroupbyConstraint=null;
 			string sqlOperation=null;
+            bool isSum = false;
+            bool isCountDistinct = false;
 			#endregion
 
 			try{
@@ -121,6 +123,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 strFormat = null;
 								convertNullDbId=false;
 								convertNullDbLabel=false;
+                                isSum = false;
+                                isCountDistinct = false;
 								
 								if ((reader.GetAttribute("id")!=null && reader.GetAttribute("id").Length>0) && 
 									(reader.GetAttribute("name")!=null && reader.GetAttribute("name").Length>0) &&
@@ -140,7 +144,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     if (reader.GetAttribute("CellType") != null && reader.GetAttribute("CellType").Length > 0) cellType = reader.GetAttribute("CellType");
                                     if (reader.GetAttribute("format") != null && reader.GetAttribute("format").Length > 0) strFormat = reader.GetAttribute("format");
 									if(reader.GetAttribute("convertNullDbId")!=null && reader.GetAttribute("convertNullDbId").Length>0)convertNullDbId=bool.Parse(reader.GetAttribute("convertNullDbId"));
-									if(reader.GetAttribute("convertNullDbLabel")!=null && reader.GetAttribute("convertNullDbLabel").Length>0)convertNullDbLabel=bool.Parse(reader.GetAttribute("convertNullDbLabel"));									
+									if(reader.GetAttribute("convertNullDbLabel")!=null && reader.GetAttribute("convertNullDbLabel").Length>0)convertNullDbLabel=bool.Parse(reader.GetAttribute("convertNullDbLabel"));
 									if(reader.GetAttribute("sqlOperation")!=null && reader.GetAttribute("sqlOperation").Length>0) {										
 										sqlOperation = reader.GetAttribute("sqlOperation");
 									}
@@ -168,7 +172,9 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                         genericColumnItemInformation = new GenericColumnItemInformation(id, name, webTextId, dbId, dbIdAlias, convertNullDbId, dbLabel, dbLabelAlias, convertNullDbLabel, dbTable, dbTablePrefixe, cellType, strFormat, dbRelatedTablePrefixe, sqlOperation);
 									else
                                         genericColumnItemInformation = new GenericColumnItemInformation(id, name, webTextId, dbId, dbIdAlias, convertNullDbId, dbLabel, dbLabelAlias, convertNullDbLabel, dbTable, dbTablePrefixe, cellType, strFormat);
-									
+                                    if (reader.GetAttribute("isSum") != null && reader.GetAttribute("isSum").Length > 0) genericColumnItemInformation.IsSum = bool.Parse(reader.GetAttribute("isSum"));
+                                    if (reader.GetAttribute("isCountDistinct") != null && reader.GetAttribute("isCountDistinct").Length > 0) genericColumnItemInformation.IsCountDistinct = bool.Parse(reader.GetAttribute("isCountDistinct"));
+                                    if (reader.GetAttribute("isMax") != null && reader.GetAttribute("isMax").Length > 0) genericColumnItemInformation.IsMax = bool.Parse(reader.GetAttribute("isMax"));
 									list.Add(id,genericColumnItemInformation);
 
 									

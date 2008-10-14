@@ -104,7 +104,9 @@ namespace TNS.AdExpress.Domain.Level
 		#region Méthode publiques
 
 		#region SQLGenerator
-		/// <summary>
+
+        #region select
+        /// <summary>
 		/// Obtient le code SQL des champs correspondant aux colonnes
 		/// </summary>
 		/// <remarks>Ne termine pas par une virgule</remarks>
@@ -249,9 +251,11 @@ namespace TNS.AdExpress.Domain.Level
 			}
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
-		}
-		
-		/// <summary>
+        }
+        #endregion
+
+        #region Order by
+        /// <summary>
 		/// Obtient le code SQL de la clause order correspondant aux colonnes
 		/// </summary>
 		/// <remarks>Ne termine pas par une virgule</remarks>
@@ -379,8 +383,11 @@ namespace TNS.AdExpress.Domain.Level
 			}
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
-		}
-		/// <summary>
+        }
+        #endregion
+
+        #region Group by
+        /// <summary>
 		/// Obtient le code SQL de la clause group by correspondant aux colonnes
 		/// </summary>
 		/// <remarks>Ne termine pas par une virgule</remarks>
@@ -388,10 +395,13 @@ namespace TNS.AdExpress.Domain.Level
 		public string GetSqlGroupByFields(){
 			string sql="";
 			foreach(GenericColumnItemInformation currentColumn in _columns){
-				if(currentColumn.GetSqlIdFieldForGroupBy()!=null && currentColumn.GetSqlIdFieldForGroupBy().Length>0)
-				sql+=currentColumn.GetSqlIdFieldForGroupBy()+",";
-				if(currentColumn.GetSqlFieldForGroupBy()!=null && currentColumn.GetSqlFieldForGroupBy().Length>0)
-				sql+=currentColumn.GetSqlFieldForGroupBy()+",";
+                if (!currentColumn.IsSum && !currentColumn.IsCountDistinct && !currentColumn.IsMax)
+                {
+                    if (currentColumn.GetSqlIdFieldForGroupBy() != null && currentColumn.GetSqlIdFieldForGroupBy().Length > 0)
+                        sql += currentColumn.GetSqlIdFieldForGroupBy() + ",";
+                    if (currentColumn.GetSqlFieldForGroupBy() != null && currentColumn.GetSqlFieldForGroupBy().Length > 0)
+                        sql += currentColumn.GetSqlFieldForGroupBy() + ",";
+                }
 			}
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
@@ -407,12 +417,16 @@ namespace TNS.AdExpress.Domain.Level
 		public string GetSqlGroupByFields(ArrayList detailLevelList){
 			string sql="";
 			foreach(GenericColumnItemInformation currentColumn in _columns){
-				if(detailLevelList==null ||  detailLevelList.Count==0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching)){
-					if(currentColumn.GetSqlIdFieldForGroupBy()!=null && currentColumn.GetSqlIdFieldForGroupBy().Length>0)
-						sql+=currentColumn.GetSqlIdFieldForGroupBy()+",";
-					if(currentColumn.GetSqlFieldForGroupBy()!=null && currentColumn.GetSqlFieldForGroupBy().Length>0)
-						sql+=currentColumn.GetSqlFieldForGroupBy()+",";
-				}
+                if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))
+                {
+                    if (!currentColumn.IsSum && !currentColumn.IsCountDistinct && !currentColumn.IsMax)
+                    {
+                        if (currentColumn.GetSqlIdFieldForGroupBy() != null && currentColumn.GetSqlIdFieldForGroupBy().Length > 0)
+                            sql += currentColumn.GetSqlIdFieldForGroupBy() + ",";
+                        if (currentColumn.GetSqlFieldForGroupBy() != null && currentColumn.GetSqlFieldForGroupBy().Length > 0)
+                            sql += currentColumn.GetSqlFieldForGroupBy() + ",";
+                    }
+                }
 			}
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
@@ -430,14 +444,18 @@ namespace TNS.AdExpress.Domain.Level
             string sql = "";
             foreach (GenericColumnItemInformation currentColumn in columns)
             {
-                if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0)
+                if (!currentColumn.IsSum && !currentColumn.IsCountDistinct && !currentColumn.IsMax)
                 {
-                    if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))
+
+                    if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0)
                     {
-                        if (currentColumn.GetSqlIdFieldForGroupBy() != null && currentColumn.GetSqlIdFieldForGroupBy().Length > 0)
-                            sql += currentColumn.GetSqlIdFieldForGroupBy() + ",";
-                        if (currentColumn.GetSqlFieldForGroupBy() != null && currentColumn.GetSqlFieldForGroupBy().Length > 0)
-                            sql += currentColumn.GetSqlFieldForGroupBy() + ",";
+                        if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))
+                        {
+                            if (currentColumn.GetSqlIdFieldForGroupBy() != null && currentColumn.GetSqlIdFieldForGroupBy().Length > 0)
+                                sql += currentColumn.GetSqlIdFieldForGroupBy() + ",";
+                            if (currentColumn.GetSqlFieldForGroupBy() != null && currentColumn.GetSqlFieldForGroupBy().Length > 0)
+                                sql += currentColumn.GetSqlFieldForGroupBy() + ",";
+                        }
                     }
                 }
             }
@@ -454,13 +472,18 @@ namespace TNS.AdExpress.Domain.Level
 			string sql="";
 			ArrayList constraintList=null;
 			foreach(GenericColumnItemInformation currentColumn in _columns){
-				if(currentColumn.Constraints!=null && currentColumn.Constraints.Count>0)
-					if(currentColumn.Constraints.ContainsKey(Constraints.GROUP_BY_CONTRAINT_TYPE)){
-						constraintList = (ArrayList)currentColumn.Constraints[Constraints.GROUP_BY_CONTRAINT_TYPE];
-						for(int i=0; i<constraintList.Count; i++){
-							sql+=constraintList[i].ToString()+",";
-						}
-					}					
+                if (!currentColumn.IsSum && !currentColumn.IsCountDistinct && !currentColumn.IsMax)
+                {
+                    if (currentColumn.Constraints != null && currentColumn.Constraints.Count > 0)
+                        if (currentColumn.Constraints.ContainsKey(Constraints.GROUP_BY_CONTRAINT_TYPE))
+                        {
+                            constraintList = (ArrayList)currentColumn.Constraints[Constraints.GROUP_BY_CONTRAINT_TYPE];
+                            for (int i = 0; i < constraintList.Count; i++)
+                            {
+                                sql += constraintList[i].ToString() + ",";
+                            }
+                        }
+                }
 			}
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
@@ -475,13 +498,19 @@ namespace TNS.AdExpress.Domain.Level
 			string sql="";
 			ArrayList constraintList=null;
 			foreach(GenericColumnItemInformation currentColumn in columns){
-				if(currentColumn.Constraints!=null && currentColumn.Constraints.Count>0)
-					if(currentColumn.Constraints.ContainsKey(Constraints.GROUP_BY_CONTRAINT_TYPE)){
-						constraintList = (ArrayList)currentColumn.Constraints[Constraints.GROUP_BY_CONTRAINT_TYPE];
-						for(int i=0; i<constraintList.Count; i++){
-							sql+=constraintList[i].ToString()+",";
-						}
-					}					
+                if (!currentColumn.IsSum && !currentColumn.IsCountDistinct && !currentColumn.IsMax)
+                {
+
+                    if (currentColumn.Constraints != null && currentColumn.Constraints.Count > 0)
+                        if (currentColumn.Constraints.ContainsKey(Constraints.GROUP_BY_CONTRAINT_TYPE))
+                        {
+                            constraintList = (ArrayList)currentColumn.Constraints[Constraints.GROUP_BY_CONTRAINT_TYPE];
+                            for (int i = 0; i < constraintList.Count; i++)
+                            {
+                                sql += constraintList[i].ToString() + ",";
+                            }
+                        }
+                }
 			}
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
@@ -495,17 +524,22 @@ namespace TNS.AdExpress.Domain.Level
 		public string GetSqlGroupByFieldsWithoutTablePrefix(){
 			string sql="";
 			foreach(GenericColumnItemInformation currentColumn in _columns){
-				if(currentColumn.GetSqlIdFieldForGroupByWithoutTablePrefix()!=null && currentColumn.GetSqlIdFieldForGroupByWithoutTablePrefix().Length>0)
-				sql+=currentColumn.GetSqlIdFieldForGroupByWithoutTablePrefix()+",";
-				if(currentColumn.GetSqlFieldForGroupByWithoutTablePrefix()!=null && currentColumn.GetSqlFieldForGroupByWithoutTablePrefix().Length>0)
-				sql+=currentColumn.GetSqlFieldForGroupByWithoutTablePrefix()+",";
+                if (!currentColumn.IsSum && !currentColumn.IsCountDistinct && !currentColumn.IsMax)
+                {
+
+                    if (currentColumn.GetSqlIdFieldForGroupByWithoutTablePrefix() != null && currentColumn.GetSqlIdFieldForGroupByWithoutTablePrefix().Length > 0)
+                        sql += currentColumn.GetSqlIdFieldForGroupByWithoutTablePrefix() + ",";
+                    if (currentColumn.GetSqlFieldForGroupByWithoutTablePrefix() != null && currentColumn.GetSqlFieldForGroupByWithoutTablePrefix().Length > 0)
+                        sql += currentColumn.GetSqlFieldForGroupByWithoutTablePrefix() + ",";
+                }
 			}
 			if(sql.Length>0)sql=sql.Substring(0,sql.Length-1);
 			return(sql);
-		}
+        }
+        #endregion
 
-		
-		/// <summary>
+        #region From
+        /// <summary>
 		/// Obtient le code SQL des tables correspondant aux colonnes
 		/// </summary>
 		/// <param name="dbSchemaName">Schema de la base de données à utiliser</param>
@@ -615,8 +649,10 @@ namespace TNS.AdExpress.Domain.Level
             if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
             return (sql);
         }
+        #endregion
 
-		/// <summary>
+        #region Join
+        /// <summary>
 		/// Obtient le code SQL des jointures correspondant aux colonnes
 		/// </summary>
 		/// <remarks>Début par And</remarks>
@@ -842,5 +878,6 @@ namespace TNS.AdExpress.Domain.Level
 		}
 		#endregion
 
-	}
+        #endregion
+    }
 }

@@ -37,6 +37,8 @@ using TNS.AdExpress.Web.Controls.Headers;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Level;
+using System.Collections;
 
 namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
@@ -280,6 +282,24 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// Style of Information cells
         /// </summary>
         protected string _cssCellInfo = string.Empty;
+        /// <summary>
+        /// Get / Set Creative/Insertion parameter
+        /// </summary>
+        public bool IsCreativeConfig
+        {
+            get
+            {
+                return _isCreativeConfig;
+            }
+            set
+            {
+                _isCreativeConfig = value;
+            }
+        }
+        /// <summary>
+        /// Creative/Insertion parameter
+        /// </summary>
+        protected bool _isCreativeConfig = false;
         #endregion
 
         #region Constructor
@@ -309,8 +329,24 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             this._header.PeriodContainerName = "resultParameters.Zoom";
             this._header.VehicleContainerName = "resultParameters.IdVehicle";
             this._header.AutoInitRefresh = false;
-            this.Vehicles = _rulesLayer.GetPresentVehicles(_idsFilter, this._idUnivers);
-            this.Controls.Add(_columns);
+            this.Vehicles = _rulesLayer.GetPresentVehicles(_idsFilter, this._idUnivers, this._isCreativeConfig);
+            if (!this._isCreativeConfig)
+            {
+                this.Controls.Add(_columns);
+            }
+            else
+            {
+                _customerWebSession.DetailLevel = new GenericDetailLevel(new ArrayList());
+                List<Int64> genericColumnList = new List<Int64>();
+                List<GenericColumnItemInformation> columnItemList = WebApplicationParameters.CreativesDetail.GetDetailColumns(_idVehicle, _customerWebSession.CurrentModule);
+                foreach (GenericColumnItemInformation column in columnItemList)
+                {
+                    genericColumnList.Add((int)column.Id);
+                }
+                _customerWebSession.GenericInsertionColumns = new GenericColumns(genericColumnList);
+                _customerWebSession.Save();
+
+            }
             base.OnInit(e);
         }
         #endregion
@@ -354,9 +390,12 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
                 _header.RenderControl(output);
                 output.WriteLine("</td></tr>");
-                output.WriteLine("<tr width=\"100%\" align=\"left\"><td width=\"100%\">");
-                _columns.RenderControl(output);
-                output.WriteLine("</td></tr>");
+                if (!_isCreativeConfig)
+                {
+                    output.WriteLine("<tr width=\"100%\" align=\"left\"><td width=\"100%\">");
+                    _columns.RenderControl(output);
+                    output.WriteLine("</td></tr>");
+                }
             }
             output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
             base.Render(output);
@@ -416,19 +455,44 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             param[0] = session;
             param[1] = module.Id;
             IInsertionsResult result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.Default.dll", "TNS.AdExpressI.Insertions.Default.InsertionsResult", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
-            ResultTable data = result.GetInsertions(vehicle, fromDate, toDate, _idsFilter, _idUnivers);
-
-            if (_cssCellInfo != null && _cssCellInfo.Length > 0){
-                switch (vehicle.Id)
+            ResultTable data = null;
+            if (_isCreativeConfig)
+            {
+                List<GenericColumnItemInformation> columns = WebApplicationParameters.CreativesDetail.GetDetailColumns(vehicle.DatabaseId, module.Id);
+                List<Int64> columnsId = new List<long>();
+                foreach (GenericColumnItemInformation g in columns)
                 {
-                    case CstDBClassif.Vehicles.names.press:
-                    case CstDBClassif.Vehicles.names.internationalPress:
-                    case CstDBClassif.Vehicles.names.outdoor:
-                        this._cssL4 = _cssCellInfo;
-                        this._highlightBackgroundColorL4 = string.Empty;
-                        break;
-                    default:
-                        break;
+                    columnsId.Add(g.Id.GetHashCode());
+                }
+                _customerWebSession.GenericInsertionColumns = new GenericColumns(columnsId);
+                data = result.GetCreatives(vehicle, fromDate, toDate, _idsFilter, _idUnivers);
+            }
+            else
+            {
+                data = result.GetInsertions(vehicle, fromDate, toDate, _idsFilter, _idUnivers);
+            }
+
+            if (_isCreativeConfig)
+            {
+                this._cssL4 = _cssCellInfo;
+                this._highlightBackgroundColorL4 = string.Empty;
+            }
+            else
+            {
+                if (_cssCellInfo != null && _cssCellInfo.Length > 0)
+                {
+                    switch (vehicle.Id)
+                    {
+                        case CstDBClassif.Vehicles.names.press:
+                        case CstDBClassif.Vehicles.names.internationalPress:
+                        case CstDBClassif.Vehicles.names.outdoor:
+                        case CstDBClassif.Vehicles.names.directMarketing:
+                            this._cssL4 = _cssCellInfo;
+                            this._highlightBackgroundColorL4 = string.Empty;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -455,6 +519,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             js.Append("\r\n\t obj.Filters = '" + this._idsFilter + "';");
             js.Append("\r\n\t obj.IdModule = '" + this._idModule + "';");
             js.Append("\r\n\t obj.CssInfo = '" + this._cssCellInfo + "';");
+            js.Append("\r\n\t obj.CreativeConfig = '" + this._isCreativeConfig + "';");
             js.Append("\r\n\t}");
             return (js.ToString());
         }
@@ -494,6 +559,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 {
                     this._idModule = Convert.ToInt64(o["IdModule"].Value.Replace("\"", ""));
                 }
+                if (o.Contains("CreativeConfig"))
+                {
+                    this._isCreativeConfig = Convert.ToBoolean(o["CreativeConfig"].Value.Replace("\"", ""));
+                }
+
             }
 
         }

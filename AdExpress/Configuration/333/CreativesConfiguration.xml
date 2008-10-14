@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <vehicleGroups>
+    <vehicle id="1"   name="presse">
+      <detailColumns>
+        <detailColumn id="11">
+          <allowedModules>
+            <allowedModule name="Alerte Plan Média" privilegecode="198"/>
+            <allowedModule name="Alerte Plan Média Concurrentiel" privilegecode="199"/>
+            <allowedModule name="Alerte concurrentielle" privilegecode="277"/>
+            <allowedModule name="Alerte de potentiels" privilegecode="280"/>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184"/>
+            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="Analyse de potentiels" privilegecode="281"/>
+            <allowedModule name="Alerte Portefeuille d'un support" privilegecode="282"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="11"  name="presse internationale">
+      <detailColumns>
+        <detailColumn id="11">
+          <allowedModules>
+            <allowedModule name="Alerte Plan Média" privilegecode="198"/>
+            <allowedModule name="Alerte Plan Média Concurrentiel" privilegecode="199"/>
+            <allowedModule name="Alerte concurrentielle" privilegecode="277"/>
+            <allowedModule name="Alerte de potentiels" privilegecode="280"/>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184"/>
+            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="Analyse de potentiels" privilegecode="281"/>
+            <allowedModule name="Alerte Portefeuille d'un support" privilegecode="282"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="2"   name="radio" >
+      <detailColumns>
+        <detailColumn id="12">
+          <allowedModules>
+            <allowedModule name="Alerte Plan Média" privilegecode="198"/>
+            <allowedModule name="Alerte Plan Média Concurrentiel" privilegecode="199"/>
+            <allowedModule name="Alerte concurrentielle" privilegecode="277"/>
+            <allowedModule name="Alerte de potentiels" privilegecode="280"/>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184"/>
+            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="Analyse de potentiels" privilegecode="281"/>
+            <allowedModule name="Alerte Portefeuille d'un support" privilegecode="282"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="3"   name="télévision" >
+      <detailColumns>
+        <detailColumn id="13">
+          <allowedModules>
+            <allowedModule name="Alerte Plan Média" privilegecode="198"/>
+            <allowedModule name="Alerte Plan Média Concurrentiel" privilegecode="199"/>
+            <allowedModule name="Alerte concurrentielle" privilegecode="277"/>
+            <allowedModule name="Alerte de potentiels" privilegecode="280"/>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184"/>
+            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="Analyse de potentiels" privilegecode="281"/>
+            <allowedModule name="Alerte Portefeuille d'un support" privilegecode="282"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="5"   name="Autres" >
+      <detailColumns>
+        <detailColumn id="13">
+          <allowedModules>
+            <allowedModule name="Alerte Plan Média" privilegecode="198"/>
+            <allowedModule name="Alerte Plan Média Concurrentiel" privilegecode="199"/>
+            <allowedModule name="Alerte concurrentielle" privilegecode="277"/>
+            <allowedModule name="Alerte de potentiels" privilegecode="280"/>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184"/>
+            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="Analyse de potentiels" privilegecode="281"/>
+            <allowedModule name="Alerte Portefeuille d'un support" privilegecode="282"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="8"   name="Publicité Extérieure" >
+      <detailColumns>
+        <detailColumn id="14">
+          <allowedModules>
+            <allowedModule name="Alerte Plan Média" privilegecode="198"/>
+            <allowedModule name="Alerte Plan Média Concurrentiel" privilegecode="199"/>
+            <allowedModule name="Alerte concurrentielle" privilegecode="277"/>
+            <allowedModule name="Alerte de potentiels" privilegecode="280"/>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184"/>
+            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="Analyse de potentiels" privilegecode="281"/>
+            <allowedModule name="Alerte Portefeuille d'un support" privilegecode="282"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="10"  name="VMC" >
+      <detailColumns>
+        <detailColumn id="16">
+          <allowedModules>
+            <allowedModule name="Alerte Plan Média" privilegecode="198"/>
+            <allowedModule name="Alerte Plan Média Concurrentiel" privilegecode="199"/>
+            <allowedModule name="Alerte concurrentielle" privilegecode="277"/>
+            <allowedModule name="Alerte de potentiels" privilegecode="280"/>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184"/>
+            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="Analyse de potentiels" privilegecode="281"/>
+            <allowedModule name="Alerte Portefeuille d'un support" privilegecode="282"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+  </vehicleGroups>
+
+</configuration>
+

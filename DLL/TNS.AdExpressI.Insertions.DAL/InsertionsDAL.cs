@@ -34,6 +34,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// Current module
         /// </summary>
         protected TNS.AdExpress.Domain.Web.Navigation.Module _module;
+        protected bool _creaConfig = false;
         #endregion
 
         #region Constructor
@@ -112,11 +113,12 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="moduleId">User Current Module</param>
         /// <param name="vehicles">Vehicles to check</param>
         /// <returns>List of vehicles present</returns>
-        public virtual List<VehicleInformation> GetPresentVehicles(List<VehicleInformation> vehicles, string filters, int fromDate, int toDate, int universId, TNS.AdExpress.Domain.Web.Navigation.Module module)
+        public virtual List<VehicleInformation> GetPresentVehicles(List<VehicleInformation> vehicles, string filters, int fromDate, int toDate, int universId, TNS.AdExpress.Domain.Web.Navigation.Module module, bool sloganNotNull)
         {
             StringBuilder sql = new StringBuilder();
             List<VehicleInformation> found = new List<VehicleInformation>();
             DataSet ds = null;
+            this._creaConfig = sloganNotNull;
 
             try
             {
@@ -154,7 +156,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                                 sql.Append(" select id_vehicle from ");
                                 sql.AppendFormat(" {0} ", dataTable.SqlWithPrefix);
                                 sql.Append(" where ");
-                                AppendUniversFilters(sql, dataTable, fromDate, toDate, v, universId, filters, module);
+                                AppendUniversFilters(sql, dataTable, fromDate, toDate, v, universId, filters);
                                 sql.AppendFormat(" and rownum < 2 ");
                             }
                             posUnivers++;
@@ -170,7 +172,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                         sql.Append(" select id_vehicle from ");
                         sql.AppendFormat(" {0} ", dataTable.SqlWithPrefix);
                         sql.Append(" where ");
-                        AppendUniversFilters(sql, dataTable, fromDate, toDate, v, universId, filters, module);
+                        AppendUniversFilters(sql, dataTable, fromDate, toDate, v, universId, filters);
                         sql.AppendFormat(" and rownum < 2 ");
                     }
 
@@ -214,184 +216,6 @@ namespace TNS.AdExpressI.Insertions.DAL
                 default:
                     throw new ArgumentException("Type of module is not supported");
             }
-        }
-        #endregion
-
-        #region GetUniversFilters
-        protected void AppendUniversFilters(StringBuilder sql, Table table, int fromDate, int toDate, VehicleInformation vehicle, int universId, string filters, TNS.AdExpress.Domain.Web.Navigation.Module module)
-        {
-
-            #region Period
-            if (_session.PeriodType == CstWeb.CustomerSessions.Period.Type.dateToDate)
-            {
-                int begin = Convert.ToInt32(_session.PeriodBeginningDate);
-                if (begin > fromDate)
-                {
-                    sql.AppendFormat(" {1}.date_media_num >= {0}", begin, table.Prefix);
-                }
-                else
-                {
-                    sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, table.Prefix);
-                }
-                int end = Convert.ToInt32(_session.PeriodEndDate);
-                if (end < toDate)
-                {
-                    sql.AppendFormat(" and {1}.date_media_num <= {0}", end, table.Prefix);
-                }
-                else
-                {
-                    sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, table.Prefix);
-                }
-            }
-            else
-            {
-                sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, table.Prefix);
-                sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, table.Prefix);
-            }
-            #endregion
-
-            #region Advertiser dimension
-            //Creatives univers
-            if (module.Id == CstWeb.Module.Name.ALERTE_PLAN_MEDIA && _session.SloganIdList != null && _session.SloganIdList.Length > 0)
-            {
-                sql.AppendFormat(" and {1}.id_slogan in ( {0} ) ", _session.SloganIdList, table.Prefix);
-            }
-            if (vehicle.Id != CstDBClassif.Vehicles.names.adnettrack)
-                sql.AppendFormat(" and {0}.id_slogan is not null ", table.Prefix);
-
-            //Product selection
-            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
-            {
-                if (universId < 0)
-                {
-                    sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(table.Prefix, true));
-                }
-                else
-                {
-                    sql.Append(_session.PrincipalProductUniverses[universId].GetSqlConditions(table.Prefix, true));
-                }
-            }
-            #endregion
-
-            #region Media dimension
-            string listMediaAccess = string.Empty;
-            if (module.Id == CstWeb.Module.Name.ALERTE_PORTEFEUILLE ||
-                module.Id == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE)
-            {
-                listMediaAccess += _session.GetSelection((TreeNode)_session.ReferenceUniversMedia, CstCustomer.Right.type.mediaAccess) + ",";
-            }
-            if (module.Id == CstWeb.Module.Name.ALERTE_CONCURENTIELLE ||
-                module.Id == CstWeb.Module.Name.ALERTE_POTENTIELS ||
-                module.Id == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE ||
-                module.Id == CstWeb.Module.Name.ANALYSE_POTENTIELS)
-            {
-                int positionUnivers = 1;
-                while (_session.CompetitorUniversMedia[positionUnivers] != null)
-                {
-                    listMediaAccess += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess) + ",";
-                    positionUnivers++;
-                }
-
-
-            }
-            if (listMediaAccess.Length > 0)
-            {
-                sql.AppendFormat(" and (({1}.id_media in ({0}))) ", listMediaAccess.Substring(0, listMediaAccess.Length - 1), table.Prefix);
-            }
-            #endregion
-
-            #region Rights
-
-            #region Product Rights
-            sql.Append(SQLGenerator.getAnalyseCustomerProductRight(_session, table.Prefix, true));
-            #endregion
-
-            #region Media rights
-            if (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack)
-                sql.Append(SQLGenerator.GetAdNetTrackMediaRight(_session, table.Prefix, true));
-            else
-                sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, table.Prefix, true));
-            #endregion
-
-            #endregion
-
-            #region Sponsorship univers
-            if (module.Id == CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES
-                || module.Id == CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS)
-            {
-                string tmp = string.Empty;
-                if (_session.CurrentUniversMedia != null && _session.CurrentUniversMedia.Nodes.Count > 0)
-                {
-                    tmp = _session.GetSelection(_session.CurrentUniversMedia, CstCustomer.Right.type.mediaAccess);
-                }
-                if (tmp.Length > 0)
-                    sql.AppendFormat(" and  {1}.id_media in ({0}) ", tmp, table.Prefix);
-                //Program classification
-                //Selection
-                sql.Append(SQLGenerator.GetCustomerProgramSelection(_session, table.Prefix, table.Prefix, true));
-                //Sponsorship type
-                sql.Append(SQLGenerator.GetCustomerSponsorshipFormSelection(_session, table.Prefix, true));
-            }
-            #endregion
-
-            #region Global rules
-            // Product classification filters
-            switch (module.Id)
-            {
-                case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
-                case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
-                case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
-                case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
-                case CstWeb.Module.Name.ANALYSE_POTENTIELS:
-                    sql.Append(SQLGenerator.getLevelProduct(_session, table.Prefix, true));
-                    break;
-            }
-
-
-            // Radio exceptions
-            if (module.ModuleType == CstWeb.Module.Type.tvSponsorship)
-                sql.Append(SQLGenerator.getAdExpressUniverseCondition(CstWeb.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID, table.Prefix, table.Prefix, table.Prefix, true));
-            else
-                sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, table.Prefix, true, false));
-            sql.AppendFormat(" and {0}.id_category<>35  ", table.Prefix);// No data for TV NAT thématiques
-            #endregion
-
-            #region Filters
-            if (filters != null && filters.Length > 0)
-            {
-                GenericDetailLevel detailLevels = null;
-                switch (module.Id)
-                {
-                    case CstWeb.Module.Name.ALERTE_CONCURENTIELLE:
-                    case CstWeb.Module.Name.ALERTE_PORTEFEUILLE:
-                    case CstWeb.Module.Name.ALERTE_POTENTIELS:
-                    case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
-                        detailLevels = _session.GenericProductDetailLevel;
-                        break;
-                    case CstWeb.Module.Name.ALERTE_PLAN_MEDIA:
-                    case CstWeb.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE:
-                    case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
-                    case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
-
-                    case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
-                    case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
-                    case CstWeb.Module.Name.ANALYSE_POTENTIELS:
-                    case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
-                    case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
-                        detailLevels = _session.GenericMediaDetailLevel;
-                        break;
-                }
-                sql.Append(GetFiltersClause(table, detailLevels, filters, vehicle));
-                sql.AppendFormat(CheckZeroVersion(table, detailLevels, vehicle, filters));
-            }
-            if (_session.SloganIdZoom > -1)
-            {
-                sql.AppendFormat(" and {1}.id_slogan={0}", _session.SloganIdZoom, table.Prefix);
-            }
-            #endregion
-
-            sql.AppendFormat(" and {1}.id_vehicle={0}", vehicle.DatabaseId, table.Prefix);
-
         }
         #endregion
 
@@ -459,7 +283,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 
         #region Insertions
         /// <summary>
-        /// Extract advertising detail 
+        /// Extract advertising detail for insertions details 
         /// </summary>
         /// <param name="dateBegin">Beginning of the period</param>
         /// <param name="dateEnd">End of the period</param>
@@ -467,19 +291,57 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <returns>Advertising detail Data</returns>		
         public DataSet GetInsertionsData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters)
         {
+            _creaConfig = false;
+            return GetData(vehicle, fromDate, toDate, universId, filters);
+        }
+        #endregion 
+
+        #region Creatives
+        /// <summary>
+        /// Extract advertising detail for creatives details 
+        /// </summary>
+        /// <param name="dateBegin">Beginning of the period</param>
+        /// <param name="dateEnd">End of the period</param>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <returns>Advertising detail Data</returns>		
+        public DataSet GetCreativesData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters)
+        {
+            _creaConfig = true;
+            return GetData(vehicle, fromDate, toDate, universId, filters);
+        }
+        #endregion
+
+        #region GetData
+        /// <summary>
+        /// Extract advertising detail for creatives or insertions details 
+        /// </summary>
+        /// <param name="dateBegin">Beginning of the period</param>
+        /// <param name="dateEnd">End of the period</param>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <param name="insertionDetail">Insertion detail if true, creatives if false</param>
+        /// <returns>Advertising detail Data</returns>		
+        protected DataSet GetData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters)
+        {
 
             StringBuilder sql = new StringBuilder(5000);
             ArrayList detailLevelsIds = new ArrayList();
             Table tData = SQLGenerator.GetDataTable(vehicle, _module.ModuleType);
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
             string tmp = string.Empty;
-            Int64 idColumnSet = WebApplicationParameters.InsertionsDetail.GetDetailColumnsId(vehicle.DatabaseId, _module.Id);
-            List<GenericColumnItemInformation> columns = WebApplicationParameters.InsertionsDetail.GetDetailColumns(vehicle.DatabaseId, _module.Id);
+            List<GenericColumnItemInformation> columns = null;
+            if (!_creaConfig)
+            {
+                columns = WebApplicationParameters.InsertionsDetail.GetDetailColumns(vehicle.DatabaseId, _module.Id);
+            }
+            else
+            {
+                columns = WebApplicationParameters.CreativesDetail.GetDetailColumns(vehicle.DatabaseId, _module.Id);
+            }
             try
             {
 
                 //Select
-                sql.Append(" select ");
+                sql.Append(" select distinct ");
                 AppendInsertionsSqlFields(tData, vehicle, sql, detailLevelsIds, columns);
                 sql.Length -= 1;
 
@@ -541,6 +403,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         {
 			
             bool detailLevelSelected = false;
+            bool hasSlogan = false;
             bool hasCategory = false;
             bool hasInsertionFields = false;
             string tmp = string.Empty;
@@ -686,9 +549,9 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 sql.AppendFormat(" and {1}.id_slogan in ( {0} ) ", _session.SloganIdList, tData.Prefix);
             }
-            if (vehicle.Id != CstDBClassif.Vehicles.names.adnettrack){
-                sql.AppendFormat(" and {0}.id_slogan is not null ", tData.Prefix);
-            }
+            //if (vehicle.Id != CstDBClassif.Vehicles.names.adnettrack){
+            //    sql.AppendFormat(" and {0}.id_slogan is not null ", tData.Prefix);
+            //}
 
             //Product classification selection
             if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
@@ -825,6 +688,11 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 sql.AppendFormat(" and wp.id_slogan={0}", _session.SloganIdZoom);
             }
+            if (_creaConfig)
+            {
+                sql.AppendFormat(" and {0}.id_slogan is not null", tData.Prefix);
+            }
+
             #endregion
 
             sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
@@ -875,7 +743,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 
             AppendSloganField(sql, tData, vehicle, columns);
 
-            if (tmp.Length > 0 && vehicle.Id == CstDBClassif.Vehicles.names.tv && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category))
+            if (!first && vehicle.Id == CstDBClassif.Vehicles.names.tv && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category))
             {
                 sql.AppendFormat(" , {0}.id_category", tData.Prefix);
             }

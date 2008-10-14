@@ -23,6 +23,7 @@ namespace TNS.AdExpressI.Insertions
     {
 
         ResultTable GetInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId);
-        List<VehicleInformation> GetPresentVehicles(string filters, int universId);
+        ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId);
+        List<VehicleInformation> GetPresentVehicles(string filters, int universId, bool sloaganNotNull);
     }
 }

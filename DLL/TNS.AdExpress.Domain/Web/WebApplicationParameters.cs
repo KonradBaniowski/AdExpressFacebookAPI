@@ -76,6 +76,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         protected static InsertionDetails _insertionsDetails;
         /// <summary>
+        /// Creatives details description
+        /// </summary>
+        protected static InsertionDetails _creativesDetails;
+        /// <summary>
         /// Columns displayed in a result of type "Media Detail" in the Portefolio module
         /// </summary>
         protected static PortofolioDetailMediaColumns _portofolioDetailMediaColumns;
@@ -103,6 +107,7 @@ namespace TNS.AdExpress.Domain.Web {
             _genericColumnItemsInformation = new GenericColumnItemsInformation(GenericColumnItemsInformationXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME)));
             _genericColumnsInformation = new GenericColumnsInformation(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
             _insertionsDetails = new InsertionDetails(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.MEDIA_PLANS_INSERTION_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
+            _creativesDetails = new InsertionDetails(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CREATIVES_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
             _portofolioDetailMediaColumns = new PortofolioDetailMediaColumns(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION_FILENAME));
         }
         #endregion
@@ -179,6 +184,13 @@ namespace TNS.AdExpress.Domain.Web {
         public static InsertionDetails InsertionsDetail
         {
             get { return _insertionsDetails; }
+        }
+        /// <summary>
+        /// Creatives details description
+        /// </summary>
+        public static InsertionDetails CreativesDetail
+        {
+            get { return _creativesDetails; }
         }
         /// <summary>
         /// Get Columns displayed in a result of type "Media Detail" in the Portefolio module
