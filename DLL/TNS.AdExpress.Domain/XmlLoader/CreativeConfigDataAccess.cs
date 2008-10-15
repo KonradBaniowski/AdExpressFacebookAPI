@@ -57,6 +57,9 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     throw new XmlException("Invalid parameter");
                                 switch (id)
                                 {
+                                    case "CREA_ADNETTRACK":
+                                        CreationServerPathes.CREA_ADNETTRACK = value;
+                                        break;
                                     case "IMAGES":
                                         CreationServerPathes.IMAGES = value;
                                         break;

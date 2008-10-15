@@ -34,7 +34,7 @@ namespace TNS.AdExpressI.Insertions.Cells
     /// Cellule contenant les informations d'une insertions
     /// </summary>
     [System.Serializable]
-    public class CellVMCInsertionInformation : CellInsertionInformation
+    public class CellInsertionVMCInformation : CellInsertionInformation
     {
 
         #region Properties
@@ -57,7 +57,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellVMCInsertionInformation(WebSession session, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells)
+        public CellInsertionVMCInformation(WebSession session, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells)
             : base(session, columns, columnNames, cells)
         {
             List<GenericColumnItemInformation> allColumns = WebApplicationParameters.InsertionsDetail.GetDetailColumns(VehiclesInformation.Get(CstDBClassif.Vehicles.names.directMarketing).DatabaseId, _session.CurrentModule);

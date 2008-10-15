@@ -49,6 +49,14 @@ namespace TNS.AdExpressI.Insertions
         /// </summary>
         protected bool _getCreatives = false;
         /// <summary>
+        /// Zoom indicator
+        /// </summary>
+        protected string _zoomDate = string.Empty;
+        /// <summary>
+        /// Univers Id parameter
+        /// </summary>
+        protected Int64 _universId = -1;
+        /// <summary>
         /// Mutex
         /// </summary>
         protected object _mutex = new object();
@@ -172,17 +180,21 @@ namespace TNS.AdExpressI.Insertions
         #endregion
 
         #region GetInsertions
-        public virtual ResultTable GetInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId)
+        public virtual ResultTable GetInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
             this._getCreatives = false;
+            this._zoomDate = zoomDate;
+            this._universId = universId;
             return GetData(vehicle, fromDate, toDate, filters, universId);
         }
         #endregion
 
         #region GetCreatives
-        public virtual ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId)
+        public virtual ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
             this._getCreatives = true;
+            this._zoomDate = zoomDate;
+            this._universId = universId;
             return GetData(vehicle, fromDate, toDate, filters, universId);
         }
         #endregion
@@ -398,7 +410,7 @@ namespace TNS.AdExpressI.Insertions
                 switch (vehicle.Id)
                 {
                     case CstDBClassif.Vehicles.names.directMarketing:
-                        tab[cLine, 1] = c = new CellVMCInsertionInformation(_session, columns, columnsName, cells);
+                        tab[cLine, 1] = c = new CellInsertionVMCInformation(_session, columns, columnsName, cells);
                         break;
                     default:
                         tab[cLine, 1] = c = new CellInsertionInformation(_session, columns, columnsName, cells);
@@ -428,7 +440,17 @@ namespace TNS.AdExpressI.Insertions
                 switch (vehicle.Id)
                 {
                     case CstDBClassif.Vehicles.names.directMarketing:
-                        tab[cLine, 1] = c = new CellVMCCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        tab[cLine, 1] = c = new CellCreativesVMCInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        break;
+                    case CstDBClassif.Vehicles.names.radio:
+                        tab[cLine, 1] = c = new CellCreativesRadioInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        break;
+                    case CstDBClassif.Vehicles.names.tv:
+                    case CstDBClassif.Vehicles.names.others:
+                       tab[cLine, 1] = c = new CellCreativesTvInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        break;
+                    case CstDBClassif.Vehicles.names.adnettrack:
+                        tab[cLine, 1] = c = new CellCreativesAdNetTrackInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId);
                         break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
@@ -787,6 +809,22 @@ namespace TNS.AdExpressI.Insertions
 
                     }
                     break;
+                case CstDBClassif.Vehicles.names.adnettrack:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG))
+                    {
+                        break;
+                    }
+
+                    if (row["associated_file"] != System.DBNull.Value)
+                    {
+                        string[] files = row["associated_file"].ToString().Split(',');
+                        foreach (string s in files)
+                        {
+                            visuals.Add(this.GetCreativePathAdNetTrack(s));
+                        }
+
+                    }
+                    break;
                 default:
                     break;
             }
@@ -850,6 +888,10 @@ namespace TNS.AdExpressI.Insertions
         protected string GetCreativePathRadio(string file)
         {
             return file;
+        }
+        protected string GetCreativePathAdNetTrack(string file)
+        {
+            return string.Format("{0}/{1}", CstWeb.CreationServerPathes.CREA_ADNETTRACK, file);
         }
         protected string GetCreativePathTv(string file)
         {

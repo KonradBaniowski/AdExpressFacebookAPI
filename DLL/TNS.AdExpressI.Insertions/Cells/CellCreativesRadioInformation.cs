@@ -35,104 +35,17 @@ namespace TNS.AdExpressI.Insertions.Cells
     /// Cellule contenant les informations d'une insertions
     /// </summary>
     [System.Serializable]
-    public class CellCreativesInformation : CellInsertionInformation
+    public class CellCreativesRadioInformation : CellCreativesInformation
     {
-
-        #region Properties
-        /// <summary>
-        /// Format container. Used to divide result by the number for a bug purpose
-        /// </summary>
-        protected string _divideString = string.Empty;
-        /// <summary>
-        /// Insertion media
-        /// </summary>
-        protected string _mediaCol = string.Empty;
-        /// <summary>
-        /// Media Id
-        /// </summary>
-        protected string _idMedia = string.Empty;
-        /// <summary>
-        /// Vehicle
-        /// </summary>
-        protected VehicleInformation _vehicle = null;
-        /// <summary>
-        /// List of columns visibility
-        /// </summary>
-        protected List<bool> _visibility = new List<bool>();
-        /// <summary>
-        /// Version Id
-        /// </summary>
-        protected Int64 _idVersion = -1;
-        /// <summary>
-        /// Current module
-        /// </summary>
-        protected Module _module = null;
-        #endregion
 
         #region Constructeur
         /// <summary>
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellCreativesInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, Module module) : base(session, columns, columnNames, cells)
+        public CellCreativesRadioInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, Module module)
+            : base(session, vehicle, columns, columnNames, cells, module)
         {
-            _vehicle = vehicle;
-            _module = module;
-            Int64 idColumnsSet = WebApplicationParameters.CreativesDetail.GetDetailColumnsId(vehicle.DatabaseId, module.Id);
-            int i = -1;
-            foreach (GenericColumnItemInformation g in columns)
-            {
-                i++;
-                _visibility.Add(WebApplicationParameters.GenericColumnsInformation.IsVisible(idColumnsSet, g.Id));
-            }
-
-        }
-        #endregion
-
-        #region Add Values
-        public virtual void Add(DataRow row, List<string> visuals)
-        {
-
-            int i = -1;
-            string cValue;
-            Cell cCell;
-            if (_visuals.Count <= 0)
-            {
-                foreach (string s in visuals)
-                {
-                    if (!_visuals.Contains(s))
-                    {
-                        _visuals.Add(s);
-                    }
-                }
-            }
-            foreach (GenericColumnItemInformation g in _columns)
-            {
-
-                i++;
-                cValue = row[_columnsName[i]].ToString();
-                cCell = _values[i];
-                if (g.Id == GenericColumnItemInformation.Columns.slogan)
-                {
-                    _idVersion = Convert.ToInt64(row[g.DataBaseIdField]);
-                }
-
-                if (cCell is CellUnit)
-                {
-                    ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
-                }
-                else
-                {
-                    if (cValue != _previousValues[i] && cValue.Length > 0)
-                    {
-                        CellLabel c = ((CellLabel)cCell);
-                        c.Label = string.Format("{0}{2}{1}", c.Label, cValue, ((c.Label.Length > 0) ? "," : ""));
-                    }
-                }
-                _previousValues[i] = cValue;
-
-            }
-
         }
         #endregion
 
@@ -148,7 +61,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             string[] values;
             int i = -1;
 
-            #region Informations
+            #region Init Informations
             List<string> cols = new List<string>();
 
             bool hasData = false;
@@ -157,7 +70,6 @@ namespace TNS.AdExpressI.Insertions.Cells
                 i++;
                 _values[i].Parent = this.Parent;
                 value = _values[i].ToString();
-
                 if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
                 {
 
@@ -196,13 +108,12 @@ namespace TNS.AdExpressI.Insertions.Cells
             #region visuals
             bool hasVisual = false;
             str.Append("<tr><td valign=\"top\">");
-            string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
             foreach (string s in _visuals)
             {
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp)
                 {
-                    str.AppendFormat("<a href=\"javascript:openPressCreation('{1}');\"><img src=\"{0}\"/></a>", st, pathes);
+                    str.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\" class=\"audioFileBackGround\"></a>", s, _idVersion, this._session.IdSession, _vehicle.DatabaseId);
                     hasVisual = true;
                 }
             }
@@ -234,7 +145,6 @@ namespace TNS.AdExpressI.Insertions.Cells
             }
             str.Append("</table></td></tr></p>");
             #endregion
-
 
             str.Append("</tr></table></td>");
 

@@ -325,7 +325,27 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Max path (for unicity purpose)
             /// </summary>
-            numberBoardSum
+            numberBoardSum,
+            /// <summary>
+            /// AdNetTrack product
+            /// </summary>
+            productAdNetTrack,
+            /// <summary>
+            /// Banner Format
+            /// </summary>
+            bannerFormat,
+            /// <summary>
+            /// Banner dimension
+            /// </summary>
+            bannerDimension,
+            /// <summary>
+            /// Banner url
+            /// </summary>
+            bannerUrl,
+            /// <summary>
+            /// Banner url
+            /// </summary>
+            bannerHashcode
 
 }
 		#endregion

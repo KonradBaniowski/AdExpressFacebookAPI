@@ -46,10 +46,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cells\CellVMCInsertionInformation.cs" />
+    <Compile Include="Cells\CellInsertionVMCInformation.cs" />
     <Compile Include="Cells\CellInsertionInformation.cs" />
     <Compile Include="Cells\CellCreativesInformation.cs" />
-    <Compile Include="Cells\CellVMCCreativesInformation.cs" />
+    <Compile Include="Cells\CellCreativesVMCInformation.cs" />
+    <Compile Include="Cells\CellCreativesAdNetTrackInformation.cs" />
+    <Compile Include="Cells\CellCreativesRadioInformation.cs" />
+    <Compile Include="Cells\CellCreativesTvInformation.cs" />
     <Compile Include="Exceptions\InsertionsException.cs" />
     <Compile Include="IInsertionsResult.cs" />
     <Compile Include="InsertionsResult.cs" />

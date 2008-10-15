@@ -1961,6 +1961,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// </summary>
         public static string IMAGES = string.Empty;
         /// <summary>
+        /// Répertoire virtuel des créations adnettrack
+        /// </summary>
+        public static string CREA_ADNETTRACK = string.Empty;
+        /// <summary>
         /// Répertoire virtuel des créations marketing direct
         /// </summary>
         public static string IMAGES_MD = string.Empty;

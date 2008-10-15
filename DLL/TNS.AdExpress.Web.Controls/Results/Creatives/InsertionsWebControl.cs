@@ -465,11 +465,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     columnsId.Add(g.Id.GetHashCode());
                 }
                 _customerWebSession.GenericInsertionColumns = new GenericColumns(columnsId);
-                data = result.GetCreatives(vehicle, fromDate, toDate, _idsFilter, _idUnivers);
+                data = result.GetCreatives(vehicle, fromDate, toDate, _idsFilter, _idUnivers, ZoomDate);
             }
             else
             {
-                data = result.GetInsertions(vehicle, fromDate, toDate, _idsFilter, _idUnivers);
+                data = result.GetInsertions(vehicle, fromDate, toDate, _idsFilter, _idUnivers, ZoomDate);
             }
 
             if (_isCreativeConfig)

@@ -688,7 +688,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 sql.AppendFormat(" and wp.id_slogan={0}", _session.SloganIdZoom);
             }
-            if (_creaConfig)
+            if (_creaConfig && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack)
             {
                 sql.AppendFormat(" and {0}.id_slogan is not null", tData.Prefix);
             }

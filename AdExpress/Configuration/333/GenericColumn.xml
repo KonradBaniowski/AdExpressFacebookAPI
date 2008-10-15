@@ -139,6 +139,11 @@
     <column id="74" name="Insertions" webTextId="2253" isSum="true"  dbLabel="insertion" dbLabelAlias="insertion" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="75" name="Max Spot" webTextId="869" isMax="true"  dbLabel="associated_file" dbLabelAlias="associated_file"/>
     <column id="76" name="Somme Nombre de panneaux" webTextId="1939" isSum="true"  dbLabel="number_board" dbLabelAlias="number_board" CellType="TNS.FrameWork.WebResultUI.CellInsertion" format="max0"/>
+    <column id="77" name="Produit AdNetTrack" webTextId="2154" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="78" name="Format banner" webTextId="1420" dbId="id_format_banners" dbLabel="format_banners" dbLabelAlias="format_banners" dbTable="format_banners" dbTablePrefixe="fban"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="79" name="Dimension banner" webTextId="1420" dbId="id_dimension_banners" dbLabel="dimension_banners" dbLabelAlias="dimension_banners" dbTable="dimension_banners" dbTablePrefixe="dban"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="80" name="Banner url" webTextId="1420" isMax="true" dbLabel="url" dbLabelAlias="url" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="81" name="Banner hashcode" webTextId="1888" dbLabel="hashcode" dbLabelAlias="hashcode" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
 
 
   </columnItems>
@@ -411,7 +416,7 @@
     </detailColumn>
     <!-- VMC-->
     <detailColumn id="16" name="Visuel\Annonceur\Groupe\Produit\supports\Version\Budget\Volume\Poid\Items\Format\Format enveloppe\Format contenant\Type de doc\Contenu">
-      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="6" name="slogan" isKey="true"/>
       <columnItem id="41" name="Visuel"/>
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
@@ -426,6 +431,17 @@
       <columnItem id="66" name="Format enveloppe"/>
       <columnItem id="60" name="Type de doc"/>
       <columnItem id="65" name="Contenu"/>
+    </detailColumn>
+    <!--Evaliant-->
+    <detailColumn id="17" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="81" name="hashcode" visible="false"  isKey="true"/>
+      <columnItem id="75" name="Banner"/>
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="77" name="Produit AdNetTrack"/>
+      <columnItem id="78" name="Format banner"/>
+      <columnItem id="79" name="Dimension banner" visible="false"/>
+      <columnItem id="80" name="url" visible="false"/>
     </detailColumn>
     <!--/Détail versions-->
   </detailColumns>

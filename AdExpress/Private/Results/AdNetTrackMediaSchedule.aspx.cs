@@ -134,8 +134,8 @@ namespace AdExpress.Private.Results{
                 #endregion 
 
                 #region Return Button
-                Random rand = new Random();
-                _returnLink = "&nbsp;<a href=\"/Private/Results/Creatives.aspx?idSession=" + _webSession.IdSession + "&ids=" + _urlParameters + "&zoomDate=" + _zoomDate + "&idUnivers=" + _universId + "&moduleId=" + _moduleId + "&param=" + rand.Next()+ "&page=" + ((page!=null && page.Length > 0)?page:"1") + "&vehicleId=" + DBClassifCst.Vehicles.names.adnettrack.GetHashCode() + "\" class=\"roll06\">" + GestionWeb.GetWebWord(2159, _webSession.SiteLanguage) + "</a>";
+                //Random rand = new Random();
+                //_returnLink = "&nbsp;<a href=\"/Private/Results/Creatives.aspx?idSession=" + _webSession.IdSession + "&ids=" + _urlParameters + "&zoomDate=" + _zoomDate + "&idUnivers=" + _universId + "&moduleId=" + _moduleId + "&param=" + rand.Next()+ "&page=" + ((page!=null && page.Length > 0)?page:"1") + "&vehicleId=" + DBClassifCst.Vehicles.names.adnettrack.GetHashCode() + "\" class=\"roll06\">" + GestionWeb.GetWebWord(2159, _webSession.SiteLanguage) + "</a>";
 				#endregion
 
                 #region Period Management

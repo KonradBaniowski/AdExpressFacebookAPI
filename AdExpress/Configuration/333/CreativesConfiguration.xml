@@ -134,6 +134,26 @@
         </detailColumn>
       </detailColumns>
     </vehicle>
+    <vehicle id="6"   name="presse">
+      <detailColumns>
+        <detailColumn id="17">
+          <allowedModules>
+            <allowedModule name="Alerte Plan Média" privilegecode="198"/>
+            <allowedModule name="Alerte Plan Média Concurrentiel" privilegecode="199"/>
+            <allowedModule name="Alerte concurrentielle" privilegecode="277"/>
+            <allowedModule name="Alerte de potentiels" privilegecode="280"/>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184"/>
+            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="Analyse de potentiels" privilegecode="281"/>
+            <allowedModule name="Alerte Portefeuille d'un support" privilegecode="282"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+
   </vehicleGroups>
 
 </configuration>
