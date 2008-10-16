@@ -15,7 +15,7 @@ namespace TNS.AdExpress.Web.Common.Results
 	/// <summary>
 	/// Description résumée de DetailVersionItem.
 	/// </summary>
-	public class ExportVersionItem:VersionItem{
+	public class _ExportVersionItem:_VersionItem{
 
 
 		#region Variables
@@ -103,13 +103,13 @@ namespace TNS.AdExpress.Web.Common.Results
 		///<summary>Constructor</summary>
 		/// <author>rkaina</author>
 		/// <since>jeudi 17 août 2006</since>
-		public ExportVersionItem( Int64 id, string cssClass, string parution ):base( id, cssClass, parution ){
+		public _ExportVersionItem( Int64 id, string cssClass, string parution ):base( id, cssClass, parution ){
 		}
 
 		///<summary>Constructor</summary>
 		/// <author>rkaina</author>
 		/// <since>jeudi 17 août 2006</since>
-		public ExportVersionItem( Int64 id, string cssClass ):base( id, cssClass ){
+		public _ExportVersionItem( Int64 id, string cssClass ):base( id, cssClass ){
 		}
 		#endregion
 

@@ -15,7 +15,7 @@ namespace TNS.AdExpress.Web.Common.Results
 	/// <summary>
 	/// VersionItem provides information for the display of a version
 	/// </summary>
-	public class VersionItem
+	public class _VersionItem
 	{
 
 		#region Variables
@@ -172,7 +172,7 @@ namespace TNS.AdExpress.Web.Common.Results
 		///<summary>Constructor</summary>
 		/// <author>gragneau</author>
 		/// <since>jeudi 13 juillet 2006</since>
-		public VersionItem( Int64 id, string cssClass, string parution ) {
+		public _VersionItem( Int64 id, string cssClass, string parution ) {
 			_id = id;
 			_cssClass = cssClass;
 			_parution = parution;
@@ -181,7 +181,7 @@ namespace TNS.AdExpress.Web.Common.Results
 		///<summary>Constructor</summary>
 		/// <author>gragneau</author>
 		/// <since>jeudi 13 juillet 2006</since>
-		public VersionItem( Int64 id, string cssClass ) {
+		public _VersionItem( Int64 id, string cssClass ) {
 			_id = id; 
 			_cssClass = cssClass;
 		}

@@ -15,6 +15,7 @@ using System.ComponentModel;
 
 using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Results;
 
 using TNS.FrameWork.Date;
 

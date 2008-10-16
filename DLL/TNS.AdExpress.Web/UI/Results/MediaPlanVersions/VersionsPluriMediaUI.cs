@@ -22,7 +22,7 @@ using CustomCst = TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Classification;
-
+using DomainResults = TNS.AdExpress.Domain.Results;
 
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
@@ -43,7 +43,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 		/// </summary>
 		/// <author>gragneau</author>
 		/// <since>jeudi 20 juillet 2006</since>
-		private	Hashtable _versions;
+        private Dictionary<Int64, DomainResults.VersionItem> _versions = new Dictionary<long, DomainResults.VersionItem>();
 		/// <summary>
 		/// Considered Vehicles
 		/// </summary>
@@ -82,7 +82,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 		///<summary>Get / Set versions</summary>
 		/// <author>gragneau</author>
 		/// <since>jeudi 20 juillet 2006</since>
-		public Hashtable versions 
+        public Dictionary<Int64, DomainResults.VersionItem> versions 
 		{
 			get {return (_versions);}
 			set {_versions = value;}
@@ -102,7 +102,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 		/// </summary>
 		/// <param name="webSession">Customer Session</param>
 		/// <param name="versions">List of verions details indexed by their Id</param>
-		public VersionsPluriMediaUI(WebSession webSession, Hashtable versions){
+        public VersionsPluriMediaUI(WebSession webSession, Dictionary<Int64, DomainResults.VersionItem> versions) {
 			this._webSession = webSession;
 			this._versions = versions;
 		}
@@ -112,7 +112,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
         /// <param name="webSession">Customer Session</param>
         /// <param name="versions">List of verions details indexed by their Id</param>
         /// <param name="period">Période sélectionnée</param>
-        public VersionsPluriMediaUI(WebSession webSession, Hashtable versions,MediaSchedulePeriod period) {
+        public VersionsPluriMediaUI(WebSession webSession, Dictionary<Int64, DomainResults.VersionItem> versions, MediaSchedulePeriod period) {
             this._webSession = webSession;
             this._versions = versions;
             this._period = period;

@@ -6,7 +6,10 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
+
+using DomainResults = TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpress.Web.Common.Results
 {
@@ -26,7 +29,7 @@ namespace TNS.AdExpress.Web.Common.Results
         /// </summary>
         ///  <since>13/07/2006</since>
         ///  <author>G. Facon</author>
-        private Hashtable _versionsDetail = new Hashtable();
+        private Dictionary<Int64, DomainResults.VersionItem> _versionsDetail = new Dictionary<Int64, DomainResults.VersionItem>();
         #endregion
 
         #region Constructeurs
@@ -47,7 +50,7 @@ namespace TNS.AdExpress.Web.Common.Results
         /// </summary>
         ///  <since>13/07/2006</since>
         ///  <author>G. Facon</author>
-        public Hashtable VersionsDetail
+        public Dictionary<Int64, DomainResults.VersionItem> VersionsDetail
         {
             get { return (_versionsDetail); }
         }

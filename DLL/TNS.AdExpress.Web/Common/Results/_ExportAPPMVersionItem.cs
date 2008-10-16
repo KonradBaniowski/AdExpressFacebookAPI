@@ -15,7 +15,7 @@ namespace TNS.AdExpress.Web.Common.Results
 	/// <summary>
 	/// Description résumée de ExportAPPMVersionItem.
 	/// </summary>
-	public class ExportAPPMVersionItem:VersionItem {
+	public class _ExportAPPMVersionItem:_VersionItem {
 
 		#region Variables
 		/// <summary>Nom d'Agence Média</summary>
@@ -312,14 +312,14 @@ namespace TNS.AdExpress.Web.Common.Results
 		///<summary>Constructor</summary>
 		/// <author>rkaina</author>
 		/// <since>jeudi 17 août 2006</since>
-		public ExportAPPMVersionItem( Int64 id, string cssClass, string parution ):base( id, cssClass, parution ) 
+		public _ExportAPPMVersionItem( Int64 id, string cssClass, string parution ):base( id, cssClass, parution ) 
 		{
 		}
 
 		///<summary>Constructor</summary>
 		/// <author>rkaina</author>
 		/// <since>jeudi 17 août 2006</since>
-		public ExportAPPMVersionItem( Int64 id, string cssClass ):base( id, cssClass ) {
+		public _ExportAPPMVersionItem( Int64 id, string cssClass ):base( id, cssClass ) {
 		}
 		#endregion
 

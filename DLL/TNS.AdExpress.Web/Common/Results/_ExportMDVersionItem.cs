@@ -13,7 +13,7 @@ namespace TNS.AdExpress.Web.Common.Results {
     /// <summary>
     /// L'item utilisé pour les exports du plan media pour le marketing direct
     /// </summary>
-    public class ExportMDVersionItem : VersionItem {
+    public class _ExportMDVersionItem : _VersionItem {
 
         #region Variables
         /// <summary>
@@ -138,11 +138,11 @@ namespace TNS.AdExpress.Web.Common.Results {
 
         #region Constructors
 		///<summary>Constructor</summary>
-		public ExportMDVersionItem( Int64 id, string cssClass, string parution ):base( id, cssClass, parution ){
+		public _ExportMDVersionItem( Int64 id, string cssClass, string parution ):base( id, cssClass, parution ){
 		}
 
 		///<summary>Constructor</summary>
-        public ExportMDVersionItem(Int64 id, string cssClass): base(id, cssClass){
+        public _ExportMDVersionItem(Int64 id, string cssClass): base(id, cssClass){
 		}
 		#endregion
 

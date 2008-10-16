@@ -29,7 +29,7 @@ using TNS.AdExpress.Web.Functions;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
-//using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpress.Web.UI.Results {
     /// <summary>

@@ -10,14 +10,15 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
 
 
-using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.Exceptions;
@@ -42,7 +43,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		///<summary>List of Versions</summary>
 		/// <author>gragneau</author>
 		/// <since>jeudi 13 juillet 2006</since>
-		private Hashtable _versions;
+        private Dictionary<Int64, VersionItem> _versions = new Dictionary<Int64, VersionItem>();
 		/// <summary>
 		/// Media Classification considered in the web control
 		/// </summary>
@@ -99,7 +100,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		///<summary>Get / Set versions</summary>
 		/// <author>gragneau</author>
 		/// <since>jeudi 13 juillet 2006</since>
-		public Hashtable versions {
+        public Dictionary<Int64, VersionItem> versions {
     		get {return (_versions);}
     		set {_versions = value;}
 		}
@@ -119,7 +120,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		/// <param name="webSession">Customer Session</param>
 		/// <param name="versions">List of verions details indexed by their Id</param>
 		/// <param name="vehicle">Vehicle considered</param>
-		public VersionsVehicleUI(WebSession webSession, Hashtable versions, DBCst.Vehicles.names vehicle){
+        public VersionsVehicleUI(WebSession webSession, Dictionary<Int64, VersionItem> versions, DBCst.Vehicles.names vehicle) {
 			this._webSession = webSession;
 			this._versions = versions;
 			this._vehicle = vehicle;
@@ -131,7 +132,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
         /// <param name="versions">List of verions details indexed by their Id</param>
         /// <param name="vehicle">Vehicle considered</param>
         /// <param name="period">Période utilisée</param>
-        public VersionsVehicleUI(WebSession webSession, Hashtable versions, DBCst.Vehicles.names vehicle, MediaSchedulePeriod period) {
+        public VersionsVehicleUI(WebSession webSession, Dictionary<Int64, VersionItem> versions, DBCst.Vehicles.names vehicle, MediaSchedulePeriod period) {
             this._webSession = webSession;
             this._versions = versions;
             this._vehicle = vehicle;
@@ -167,7 +168,6 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 						dtSet = VersionDataAccess.GetAPPMVersions(_versions.Keys, _webSession);
 					}
 					else{
-//						dtSet = VersionDataAccess.GetPressVersions(_versions.Keys, _webSession);
 						dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession,DBCst.Vehicles.names.press,_period);
 					}
 					break;

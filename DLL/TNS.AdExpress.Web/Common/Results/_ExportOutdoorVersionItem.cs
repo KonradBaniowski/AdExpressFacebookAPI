@@ -17,7 +17,7 @@ namespace TNS.AdExpress.Web.Common.Results {
     /// <summary>
     /// Objet version pour un export de la publicité extérieur
     /// </summary>
-    public class ExportOutdoorVersionItem : VersionItem {
+    public class _ExportOutdoorVersionItem : _VersionItem {
 
         #region Variables
 		/// <summary>
@@ -73,7 +73,7 @@ namespace TNS.AdExpress.Web.Common.Results {
 		///<summary>
         ///Constructor
         ///</summary>
-        public ExportOutdoorVersionItem(Int64 id, string cssClass): base(id, cssClass) {
+        public _ExportOutdoorVersionItem(Int64 id, string cssClass): base(id, cssClass) {
 		}
 		#endregion
 

@@ -674,10 +674,10 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					}
 					#endregion
 
-                    //VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(webSession,result.VersionsDetail,period);
-                    //html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
-                    //html.Append(versionsUI.GetHtml());
-                    //html.Append("\r\n\t\t</td>\r\n\t</tr>");
+                    VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(webSession, result.VersionsDetail, period);
+                    html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
+                    html.Append(versionsUI.GetHtml());
+                    html.Append("\r\n\t\t</td>\r\n\t</tr>");
 					
 					html.Append("\r\n\t<tr height=\"1\">\r\n\t\t<td>");
 					html.Append("\r\n\t\t</td>\r\n\t</tr>");

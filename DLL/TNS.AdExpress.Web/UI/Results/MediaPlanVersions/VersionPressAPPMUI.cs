@@ -12,8 +12,8 @@ using System.Text;
 
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Common.Results;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions {
 
