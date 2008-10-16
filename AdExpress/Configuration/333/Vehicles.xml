@@ -41,6 +41,13 @@
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem> <!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- RADIO -->
   <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="true">
@@ -126,6 +133,14 @@
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="8"/>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
+        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem><!-- Support -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- MEDIA TACTIQUE -->
   <vehicle id="mediasTactics" databaseId="4" showInsertions="false" showCreations="false">
@@ -133,6 +148,11 @@
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- OTHERS -->  
   <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true">
