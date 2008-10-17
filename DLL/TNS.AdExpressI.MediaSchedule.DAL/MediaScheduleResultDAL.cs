@@ -281,12 +281,28 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
                 // Periodicity
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, vehicleId, periodDisplay);
+                
                 // Get classification fields
-                mediaFieldName = detailLevel.GetSqlFields();
+                if(VehiclesInformation.Contains(vehicleId)
+                    && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack) {
+                    mediaFieldName = GetAdnettrackSqlFields(detailLevel);
+                }
+                else {
+                    mediaFieldName = detailLevel.GetSqlFields();
+                }
+                
                 // Get field order
                 orderFieldName = detailLevel.GetSqlOrderFields();
+                
                 // Get group by clause
-                groupByFieldName = detailLevel.GetSqlGroupByFields();
+                if(VehiclesInformation.Contains(vehicleId)
+                    && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack) {
+                    groupByFieldName = GetAdnettrackSqlGroupByFields(detailLevel);
+                }
+                else {
+                    groupByFieldName = detailLevel.GetSqlGroupByFields();
+                }
+                
                 // Get joins for classification
                 mediaJoinCondition = detailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             }
@@ -574,6 +590,45 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             catch {
                 throw new MediaScheduleDALException("Not managed unit (Alert Module)");
             }
+        }
+
+        /// <summary>
+        /// Obtient le code SQL des champs correspondant aux éléments du niveau de détail
+        /// </summary>
+        /// <remarks>Ne termine pas par une virgule</remarks>
+        /// <returns>Code SQL</returns>
+        protected virtual string GetAdnettrackSqlFields(GenericDetailLevel levelsList) {
+            string sql = "";
+            string prefix = "";
+            foreach(DetailLevelItemInformation currentLevel in levelsList.Levels) {
+                if(currentLevel.Id != DetailLevelItemInformation.Levels.slogan)
+                    sql += currentLevel.GetSqlFieldId() + "," + currentLevel.GetSqlField() + ",";
+                else {
+                    if(currentLevel.DataBaseTableNamePrefix != null && currentLevel.DataBaseTableNamePrefix.Length > 0) 
+                        prefix = currentLevel.DataBaseTableNamePrefix + ".";
+                    sql += "nvl(" + prefix + "hashcode,0) as " + currentLevel.DataBaseAliasIdField + ",nvl(" + prefix + "hashcode,0) as " + currentLevel.DataBaseAliasField + ",";
+                }
+            }
+            if(sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
+            return (sql);
+        }
+
+        /// <summary>
+        /// Obtient le code SQL de la clause group by correspondant aux éléments du niveau de détail
+        /// </summary>
+        /// <remarks>Ne termine pas par une virgule</remarks>
+        /// <returns>Code SQL</returns>
+        protected virtual string GetAdnettrackSqlGroupByFields(GenericDetailLevel levelsList) {
+            string sql = "";
+            foreach(DetailLevelItemInformation currentLevel in levelsList.Levels) {
+                if(currentLevel.Id != DetailLevelItemInformation.Levels.slogan)
+                    sql += currentLevel.GetSqlIdFieldForGroupBy() + "," + currentLevel.GetSqlFieldForGroupBy() + ",";
+                else {
+                    sql += "hashcode,hashcode,";
+                }
+            }
+            if(sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
+            return (sql);
         }
         #endregion
 
