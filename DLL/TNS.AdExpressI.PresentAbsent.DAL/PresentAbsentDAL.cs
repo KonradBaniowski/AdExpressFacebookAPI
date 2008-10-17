@@ -494,7 +494,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             try {
                 if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
                 {
-                    sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2} {3}, {5}"
+                    sql.AppendFormat(" select {0}.id_media, {1} as columnDetailLevel, {2} {3}, {4}"
                         , WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix
                         , columnDetailLevel
                         , productFieldName
@@ -533,7 +533,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
                 // Group by
                 if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
-                    sql.AppendFormat(" group by {0}.id_media, {1}, {2}{3}, {5}",
+                    sql.AppendFormat(" group by {0}.id_media, {1}, {2}{3}{4}",
                         WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
                         columnDetailLevel,
                         groupByFieldName,
@@ -675,11 +675,13 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                     if (customerPeriod.IsDataVehicle) {
                         sqlDataVehicle.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
                         sql = sqlDataVehicle;
+                        orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
                     }
 
                     if (customerPeriod.IsWebPlan) {
                         sqlWebPlan.Append(GetRequest(CstDB.TableType.Type.webPlan));
                         sql = sqlWebPlan;
+                        orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
                     }
 
                     if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
@@ -700,8 +702,8 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                             groupByFieldNameWithoutTablePrefix,
                             dataFieldsForGadWithoutTablePrefix,
                             groupByOptional);
+                        orderClause = string.Format(" order by {0}, id_media", orderFieldNameWithoutTablePrefix);
                     }
-                    orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
                     if (_vehicleInformation.Id != CstDBClassif.Vehicles.names.adnettrack || _session.Unit != CstWeb.CustomerSessions.Unit.versionNb)
                     {
                         sql.Append(orderClause);

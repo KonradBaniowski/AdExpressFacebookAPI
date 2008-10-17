@@ -196,7 +196,7 @@
     <detailColumn id="8"/>
   </vehicle>
   <!-- ADNETTRACK -->
-  <vehicle id="adnettrack" databaseId="6" showInsertions="true" showCreations="true">
+  <vehicle id="adnettrack" databaseId="6" showInsertions="false" showCreations="true">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>insertion</allowedUnit>

@@ -24,7 +24,7 @@ function OpenCreationCompetitorAlert(idSession,ids,zoomDate){
 }
 
 function OpenInsertions(idSession,ids,zoomDate){
-	window.open('/Private/Results/CompetitorAlertCreationsResults.aspx?idSession='+idSession+'&ids='+ids+'&zoomDate='+zoomDate, '', "top="+(screen.height-600)/2+", left="+(screen.width-1024)/2+", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1");
+	window.open('/Private/Results/Insertions.aspx?idSession='+idSession+'&ids='+ids+'&zoomDate='+zoomDate, '', "top="+(screen.height-600)/2+", left="+(screen.width-1024)/2+", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1");
 }
 
 function OpenCreation(idSession,ids,zoomDate){

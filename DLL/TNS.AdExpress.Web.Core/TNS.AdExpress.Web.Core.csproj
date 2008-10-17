@@ -284,6 +284,7 @@
     </Compile>
     <Compile Include="Result\SponsorshipShowLinkRules.cs" />
     <Compile Include="Utilities\CheckedText.cs" />
+    <Compile Include="Utilities\DataAdapter.cs" />
     <Compile Include="Utilities\Dates.cs" />
     <Compile Include="Utilities\ExtendedHashTable.cs" />
     <Compile Include="Utilities\MediaDetailLevel.cs" />

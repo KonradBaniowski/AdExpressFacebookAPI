@@ -517,7 +517,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			string js=string.Empty;
 			if (!this._forbidOptionsPages){
 				foreach(OptionalPageInformation cInfo in _module.OptionalsPages){
-					if(cInfo.ShowLink){ 
+					if((_forbidOptionsPagesList == null || !_forbidOptionsPagesList.Contains(cInfo.Id)) && cInfo.ShowLink){ 
 						js+="\r\n\t\t"+menuObjectName+".addMenuItem(new menuItem(\""+GestionWeb.GetWebWord(cInfo.IdWebText,_webSession.SiteLanguage)+"\", \""+cInfo.IconeName+"Item\",\"javascript:__doPostBack('"+this.ID+"','"+cInfo.Id+"');\"));";
 						js+="\r\n\t\t"+menuObjectName+".items."+cInfo.IconeName+"Item.showIcon(\""+cInfo.IconeName+"MenuIcon\", \""+cInfo.IconeName+"MenuIcon\");";
 					}

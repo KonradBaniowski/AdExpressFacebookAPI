@@ -41,6 +41,7 @@ using AjaxPro;
 
 using TNS.AdExpress.Domain.Classification;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -430,7 +431,10 @@ namespace AdExpress.Private.Results{
 					||  _webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly
 				) {
 				InitializeProductWebControl1.Visible = false;
-				MenuWebControl2.ForbidOptionPages = true;
+                ArrayList forbiddenOptions = new ArrayList();
+                forbiddenOptions.Add(7);
+                MenuWebControl2.ForbidOptionPagesList = forbiddenOptions;
+				//MenuWebControl2.ForbidOptionPages = true;
 			}
 		}
 		#endregion

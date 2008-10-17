@@ -103,7 +103,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			ResultTable resultTable = null;
 			LineType lineType = LineType.level1;
 			string typeReseauStr = string.Empty;
-			string unitFormat = "max0";
+			string unitFormat = "{0:max0}";
 			#endregion
 			
 			#region Accès aux tables

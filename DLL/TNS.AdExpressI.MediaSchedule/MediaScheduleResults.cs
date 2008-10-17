@@ -1893,20 +1893,20 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="level">Column index of the current level (except for level 4 which represent by level 3)</param>
         protected virtual void AppendInsertionLink(object[,] data, StringBuilder t, string themeName, int line, string cssClasse, int level) {
             if(data[line, level] != null) {
-                t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertion('{1}','{2}','{3}','-1','{4}');\"><img border=0 src=\"/App_Themes/{5}/Images/Common/picto_plus.gif\"></a></td>"
-                    , cssClasse
-                    , _session.IdSession
-                    , GetLevelFilter(data, line, level)
-                    , _zoom
-                    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
-                    , themeName);
-                //t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertions('{1}','{2}','{3}');\"><img border=0 src=\"/App_Themes/{4}/Images/Common/picto_plus.gif\"></a></td>"
+                //t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertion('{1}','{2}','{3}','-1','{4}');\"><img border=0 src=\"/App_Themes/{5}/Images/Common/picto_plus.gif\"></a></td>"
                 //    , cssClasse
                 //    , _session.IdSession
                 //    , GetLevelFilter(data, line, level)
                 //    , _zoom
-                //    , themeName
-                //);
+                //    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
+                //    , themeName);
+                t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertions('{1}','{2}','{3}');\"><img border=0 src=\"/App_Themes/{4}/Images/Common/picto_plus.gif\"></a></td>"
+                    , cssClasse
+                    , _session.IdSession
+                    , GetLevelFilter(data, line, level)
+                    , _zoom
+                    , themeName
+                );
             }
             else {
                 t.AppendFormat("<td align=\"center\" class=\"{0}\">&nbsp;</td>", cssClasse);

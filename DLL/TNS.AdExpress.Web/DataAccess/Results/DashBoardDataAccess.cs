@@ -21,6 +21,7 @@ using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.FrameWork.Date;
 using Oracle.DataAccess.Client;
 using WebModule = TNS.AdExpress.Constantes.Web.Module;
@@ -29,6 +30,8 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results {
@@ -74,23 +77,26 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             #endregion
 
+            string groupby = string.Empty;
+            string orderby = string.Empty;
+
             #region Construction de la requête
             if (IsRepartitionSelected(webSession) || vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack) {
                 #region Détaillé par répartition
                 if (webSession.ComparativeStudy) hasUnionAll = true;
                 //Requete Période N				
-                sql += GetSqlQuery(webSession, yearN.ToString(), hasUnionAll);
+                sql += GetSqlQuery(webSession, yearN.ToString(), hasUnionAll, ref groupby, ref orderby);
                 if (hasUnionAll) {
                     sql += " UNION ALL";
                     //Requete Période N1							
-                    sql += GetSqlQuery(webSession, yearN1.ToString(), !hasUnionAll);
+                    sql += GetSqlQuery(webSession, yearN1.ToString(), !hasUnionAll, ref groupby, ref orderby);
                 }
                 #endregion
             }
             else {
                 #region Sans répartition
                 //Requete Période N				
-                sql += GetSqlQuery(webSession, yearN.ToString(), hasUnionAll);
+                sql += GetSqlQuery(webSession, yearN.ToString(), hasUnionAll, ref groupby, ref orderby);
                 #endregion
             }
 
@@ -130,7 +136,38 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     || (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
                     || (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb))) {
 
-                    return (GetDataEvaliant(ds, webSession, hasUnionAll));
+                    //return (GetDataEvaliant(ds, webSession, hasUnionAll));
+
+                        DataSet ds2 = new DataSet();
+                        //Regex regex = new Regex(@"(order\s*by\s*\w*\.)|(group\s*by\s*\w*\.)|(,\s*\w*\.)|(\s*\w*\.)");
+                        //string order = regex.Replace(orderby, ",");
+                        //string group = regex.Replace(groupby, ",");
+                        //if (order.Length > 0) order = order.TrimStart(',');
+                        //if (group.Length > 0) group = group.TrimStart(',');
+                        //string[] tOrders = order.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        //string[] tGroups = group.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        //List<string> lOrders = new List<string>();
+                        //List<string> lGroups = new List<string>();
+                        //List<string> lSum = new List<string>();
+                        //for (int i = 0; i < tOrders.Length; i++) { lOrders.Add(tOrders[i].ToUpper().Trim()); }
+                        //for (int i = 0; i < tGroups.Length; i++) { lGroups.Add(tGroups[i].ToUpper().Trim()); }
+                        //lGroups.Remove("LINEID");
+                        //lSum.Add("VERSIONNB");
+                        List<string> lOrders = new List<string>();
+                        List<string> lGroups = new List<string>();
+                        lGroups.Add("ID_INTEREST_CENTER");
+                        lGroups.Add("INTEREST_CENTER");
+                        lGroups.Add("PERIOD");
+                        List<string> lSum = new List<string>();
+                        lSum.Add("VERSIONNB");
+
+                        FctUtilities.DataAdapter adapter = new FctUtilities.DataAdapter();
+                        DataTable dt = adapter.GroupBy(ds.Tables[0], lOrders, lGroups, "LINEID", lSum);
+                        ds2.Tables.Add(dt);
+                        return ds2;
+
+
+
                 }
 
                 return ds;
@@ -153,7 +190,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="year">année table de données</param>
         /// <param name="hasUnionAll">vrai si clause <code>union all</code></param>
         /// <returns>chaine de requete sql</returns>
-        private static string GetSqlQuery(WebSession webSession, string year, bool hasUnionAll) {
+        private static string GetSqlQuery(WebSession webSession, string year, bool hasUnionAll, ref string groupBy, ref string orderBy)
+        {
             string sql = "";
             string sqlJoint = "";
 
@@ -174,7 +212,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             //Droits produits et média 
             sql += "  " + GetCustomerRight(webSession);
             //Clause Group by
-            sql += "   Group by " + GetGroupBy(webSession);
+            groupBy = GetGroupBy(webSession) + ",lb.COLUMN_VALUE, dshb.rowid";
+            sql += "   Group by " + groupBy;
 
             if (webSession.CurrentModule == WebModule.Name.TABLEAU_DE_BORD_EVALIANT &&
                 ((webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
@@ -187,8 +226,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 && !(webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb))) {
 
                 //Clause Order by
-                if (!hasUnionAll && GetOrderClause(webSession, "desc", hasUnionAll).Length > 0)
-                    sql += "  " + GetOrderClause(webSession, "desc", !hasUnionAll);
+                orderBy = GetOrderClause(webSession, "desc", !hasUnionAll);
+                if (!hasUnionAll && orderBy.Length > 0)
+                {
+                    sql += "  " + orderBy;
+                }
 
             }
             return sql;
@@ -1986,10 +2028,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             if (allUnit) {
                 sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, insertion.DatabaseField, insertion.Id.ToString());
                 sqlUnit.AppendFormat(", ");
-                sqlUnit.AppendFormat("{0}{1} as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, "stragg2(distinct " + nestedTablePrefixe + ".COLUMN_VALUE)", versionNb.Id.ToString());
+                //sqlUnit.AppendFormat("{0}{1} as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, "stragg2(distinct " + nestedTablePrefixe + ".COLUMN_VALUE)", versionNb.Id.ToString());
+                sqlUnit.AppendFormat("to_char({0}.COLUMN_VALUE) as {1}, {2}rowid as lineId", nestedTablePrefixe, versionNb.Id.ToString(), dataTablePrefixe);
             }
             else
-                sqlUnit.AppendFormat("{0}{1} as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, "stragg2(distinct " + nestedTablePrefixe + ".COLUMN_VALUE)", versionNb.Id.ToString());
+                sqlUnit.AppendFormat("to_char({0}.COLUMN_VALUE) as {1}, {2}rowid as lineId", nestedTablePrefixe, versionNb.Id.ToString(), dataTablePrefixe);
+                //sqlUnit.AppendFormat("{0}{1} as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, "stragg2(distinct " + nestedTablePrefixe + ".COLUMN_VALUE)", versionNb.Id.ToString());
             
             return sqlUnit.ToString();
         }

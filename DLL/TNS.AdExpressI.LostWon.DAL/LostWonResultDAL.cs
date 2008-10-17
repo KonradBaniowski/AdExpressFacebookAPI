@@ -19,6 +19,8 @@ using CstDB = TNS.AdExpress.Constantes.DB;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using FctWeb = TNS.AdExpress.Web.Functions;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using System.Collections.Generic;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
@@ -30,6 +32,7 @@ using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+using System.Text.RegularExpressions;
 #endregion
 
 namespace TNS.AdExpressI.LostWon.DAL
@@ -114,6 +117,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             string unitFieldSumWithAlias = string.Empty;
             string dataFieldsForGadWithoutTablePrefix = string.Empty;
             string groupByOptional = string.Empty;
+            string orderByOptional = string.Empty;
             CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
             #endregion
@@ -127,8 +131,9 @@ namespace TNS.AdExpressI.LostWon.DAL
 
                 if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
                 {
-                    unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
-                    groupByOptional = string.Format(", {0}", FctWeb.SQLGenerator.GetUnitAlias(_session));
+                    unitFieldSumWithAlias = string.Format("{0},lineId", FctWeb.SQLGenerator.GetUnitAlias(_session));
+                    groupByOptional = string.Format(", {0}, lineId", unitFieldSumWithAlias);
+                    orderByOptional = ", lineId";
                 }
                 else
                 {
@@ -154,7 +159,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
                     {
                         sqlTemp = new StringBuilder();
-                        sqlTemp.AppendFormat("{0} UNION {1}", sqlDataVehicle, sqlWebPlan);
+                        sqlTemp.AppendFormat("{0} UNION ALL {1}", sqlDataVehicle, sqlWebPlan);
                     }
 
                     productFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
@@ -168,22 +173,22 @@ namespace TNS.AdExpressI.LostWon.DAL
                         , unitFieldSumWithAlias);
                     sql.Append(" from (");
                     sql.Append(sql4M);
-                    sql.Append(" UNION ");
+                    sql.Append(" UNION ALL ");
                     sql.Append(sqlTemp);
                     sql.Append(" ) ");
-                    sql.AppendFormat(" group by id_media, columnDetailLevel, date_num, {0} {1} {2}"
+                    groupByFieldNameWithoutTablePrefix = string.Format("id_media, columnDetailLevel, date_num, {0} {1}"
                         , groupByFieldNameWithoutTablePrefix
-                        , dataFieldsForGadWithoutTablePrefix
-                        , groupByOptional);
-                    sql.AppendFormat(" order by {0}, id_media, date_num ", orderFieldNameWithoutTablePrefix);
+                        , dataFieldsForGadWithoutTablePrefix);
+                    sql.AppendFormat(" group by {0}{1}", groupByFieldNameWithoutTablePrefix, groupByOptional);
+                    orderFieldNameWithoutTablePrefix = string.Format(" {0}, id_media, date_num ", orderFieldNameWithoutTablePrefix);
+                    sql.AppendFormat(" order by {0} {1}", orderFieldNameWithoutTablePrefix, orderByOptional);
 
                 }
                 else if (!customerPeriod.IsDataVehicle && !customerPeriod.IsWebPlan)
                 {
                     sql.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
-                    sql.AppendFormat(" order by {0}, {1}.id_media, date_num  "
-                        , orderFieldName
-                        , DATA_TABLE_PREFIXE);
+                    orderFieldNameWithoutTablePrefix = string.Format(" {0}, {1}.id_media, date_num ", orderFieldName, DATA_TABLE_PREFIXE);
+                    sql.AppendFormat(" order by {0} {1} ", orderFieldNameWithoutTablePrefix, orderByOptional);
                 }
                 else
                 {
@@ -200,11 +205,14 @@ namespace TNS.AdExpressI.LostWon.DAL
                         sql = sqlWebPlan;
                     }
 
+                    if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
+                        dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+                    groupByFieldNameWithoutTablePrefix = string.Format(" id_media, columnDetailLevel, date_num, {0} {1}"
+                        , groupByFieldNameWithoutTablePrefix
+                        , dataFieldsForGadWithoutTablePrefix);
                     if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
                     {
                         productFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
-                        if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
-                            dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
                         sql = new StringBuilder();
                         sql.AppendFormat(" select id_media, columnDetailLevel, {0} {1}, date_num, {2}"
                             , productFieldNameWithoutTablePrefix
@@ -212,17 +220,13 @@ namespace TNS.AdExpressI.LostWon.DAL
                             , unitFieldSumWithAlias);
                         sql.Append(" from (");
                         sql.Append(sqlDataVehicle);
-                        sql.Append(" UNION ");
+                        sql.Append(" UNION ALL ");
                         sql.Append(sqlWebPlan);
                         sql.Append(" ) ");
-                        sql.AppendFormat(" group by id_media, columnDetailLevel, date_num, {0} {1} {2}"
-                            , groupByFieldNameWithoutTablePrefix
-                            , dataFieldsForGadWithoutTablePrefix
-                            , groupByOptional);
+                        sql.AppendFormat(" group by {0}{1}", groupByFieldNameWithoutTablePrefix, groupByOptional);
                     }
-
-                    sql.AppendFormat(" order by {0}, id_media, date_num "
-                        , orderFieldNameWithoutTablePrefix);
+                    orderFieldNameWithoutTablePrefix = string.Format(" {0}, id_media, date_num ", orderFieldNameWithoutTablePrefix);
+                    sql.AppendFormat(" order by {0} {1}", orderFieldNameWithoutTablePrefix, orderByOptional);
 
                 }
 
@@ -239,7 +243,30 @@ namespace TNS.AdExpressI.LostWon.DAL
                 DataSet ds = _session.Source.Fill(sql.ToString());
                 if (ds == null || ds.Tables[0] == null || ds.Tables[0].Rows.Count <= 0)
                     return null;
-                return ds.Tables[0];
+                DataTable dt = ds.Tables[0];
+                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                {
+                    Regex regex = new Regex(@"(order\s*by\s*\w*\.)|(group\s*by\s*\w*\.)|(,\s*\w*\.)|(\s*\w*\.)");
+                    string order = regex.Replace(orderFieldNameWithoutTablePrefix, ",");
+                    string group = regex.Replace(groupByFieldNameWithoutTablePrefix, ",");
+                    if (order.StartsWith(",")) order = order.Substring(0, order.Length - 1);
+                    if (group.StartsWith(",")) group = group.Substring(0, group.Length - 1);
+                    string[] tOrders = order.Split(',');
+                    string[] tGroups = group.Split(',');
+                    List<string> lOrders = new List<string>();
+                    List<string> lGroups = new List<string>();
+                    List<string> lSum = new List<string>();
+                    for (int i = 0; i < tOrders.Length; i++) { lOrders.Add(tOrders[i].ToUpper().Trim());}
+                    for (int i = 0; i < tGroups.Length; i++) { lGroups.Add(tGroups[i].ToUpper().Trim()); }
+                    lGroups.Remove("LINEID");
+                    lSum.Add(FctWeb.SQLGenerator.GetUnitAlias(_session).ToUpper().Trim());
+                    
+                    FctUtilities.DataAdapter adapter = new FctUtilities.DataAdapter();
+                    dt = adapter.GroupBy(dt, lOrders, lGroups, "LINEID", lSum);
+                    
+
+                }
+                return dt;
             }
             catch (System.Exception err)
             {
@@ -647,12 +674,14 @@ namespace TNS.AdExpressI.LostWon.DAL
                     UnitInformation u = _session.GetSelectedUnit();
                     if (type != CstDB.TableType.Type.webPlan)
                     {
-                        unitFieldSumWithAlias = string.Format("{0}.stragg({2}) as {1}", schAdExpr03.Label, u.Id.ToString(), u.DatabaseField);
+                        unitFieldSumWithAlias = string.Format("to_char({0}) as {1}, {2}.rowid as lineId ", u.DatabaseField, u.Id.ToString(), u.DatabaseField, DATA_TABLE_PREFIXE);
+                        groupOptional = string.Format(",{0} , {1}.rowid ", u.DatabaseField, DATA_TABLE_PREFIXE);
                     }
                     else
                     {
-                        unitFieldSumWithAlias = string.Format("{0}.stragg(t2.COLUMN_VALUE) as {1}", schAdExpr03.Label, u.Id.ToString());
+                        unitFieldSumWithAlias = string.Format("to_char(t2.COLUMN_VALUE) as {0}, {1}.rowid as lineId ", u.Id.ToString(), DATA_TABLE_PREFIXE);
                         fromOptional = string.Format(", table({0}.{1}) t2", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
+                        groupOptional = string.Format(",t2.COLUMN_VALUE , {0}.rowid ", DATA_TABLE_PREFIXE);
                     }
                 }
                 else

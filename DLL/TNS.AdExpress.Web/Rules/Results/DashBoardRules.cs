@@ -3680,7 +3680,7 @@ namespace TNS.AdExpress.Web.Rules.Results
                     coord = currentIndex.Split(',');
                     row = int.Parse(coord[0]);
                     col = int.Parse(coord[1]);
-                    unitCellN = new CellIdsNumber(tab[row, col].ToString().Split(','));
+                    unitCellN = new CellIdsNumber(tab[row, col].ToString().Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     tab[row, col] = unitCellN.Value;
                 }
 

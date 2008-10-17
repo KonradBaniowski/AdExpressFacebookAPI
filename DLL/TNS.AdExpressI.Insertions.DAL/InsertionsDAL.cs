@@ -594,6 +594,9 @@ namespace TNS.AdExpressI.Insertions.DAL
                 sql.AppendFormat(" and (({1}.id_media in ({0}))) ", listMediaAccess.Substring(0, listMediaAccess.Length - 1), tData.Prefix);
             }
 
+            if (_session.SecondaryMediaUniverses != null && _session.SecondaryMediaUniverses.Count > 0)
+                sql.Append(_session.SecondaryMediaUniverses[0].GetSqlConditions(tData.Prefix, true));
+
             #endregion
 
             #region Rights
@@ -666,6 +669,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                     case CstWeb.Module.Name.ALERTE_PORTEFEUILLE:
                     case CstWeb.Module.Name.ALERTE_POTENTIELS:
                     case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                    case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
                         detailLevels = _session.GenericProductDetailLevel;
                         break;
                     case CstWeb.Module.Name.ALERTE_PLAN_MEDIA:
@@ -674,7 +678,6 @@ namespace TNS.AdExpressI.Insertions.DAL
                     case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
 
                     case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
-                    case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
                     case CstWeb.Module.Name.ANALYSE_POTENTIELS:
                     case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
                     case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:

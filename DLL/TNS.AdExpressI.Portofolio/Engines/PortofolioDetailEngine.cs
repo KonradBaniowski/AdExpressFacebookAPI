@@ -309,7 +309,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(currentUnit.WebTextId, _webSession.SiteLanguage), currentUnit.WebTextId));
                         type = assembly.GetType(currentUnit.CellType);
                         cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
-						cellUnit.StringFormat = currentUnit.Format;
+						cellUnit.StringFormat = currentUnit.StringFormat;
                         columnsName[columnIndex + creatives + insertions] = currentUnit.Id.ToString();
                         cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory((CellUnit)cellUnit);
                         if(cellUnit is CellIdsNumber) {
