@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TNS.AdExpress.Domain.Theme.Border">
+    <Position X="7.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Border.cs</FileName>
+      <HashCode>AAAAAAAAAAAIAAAAABAAAAAAAAAAAAAAAAAAgABAAAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="TNS.AdExpress.Domain.Theme.Border.CellBorderType">
+        <TypeIdentifier>
+          <NewMemberFileName>Theme\Border.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Theme.Borders">
+    <Position X="7.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Borders.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="TNS.AdExpress.Domain.Theme.Borders.BorderType">
+        <TypeIdentifier>
+          <NewMemberFileName>Theme\Borders.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Theme.Box">
+    <Position X="3" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Box.cs</FileName>
+      <HashCode>AAAAAAQABgCAAAAAAAAAAEAAABAAAAEAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Theme.Cell">
+    <Position X="7.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Cell.cs</FileName>
+      <HashCode>AAEAAAQAQAggAAAAAAAAAAAAAACAAAAAAAAAAABCQAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Theme.Font">
+    <Position X="0.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Font.cs</FileName>
+      <HashCode>AAAgKAQAAAAIgAgAAAAAAAQIAAAgABACAAACgAIAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Theme.Margin">
+    <Position X="3" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Margin.cs</FileName>
+      <HashCode>CAAAAAAAQIAgAAAAAAAAAAAAABBAAAAAAAAICAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Theme.Picture">
+    <Position X="5.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Picture.cs</FileName>
+      <HashCode>AAAAAAQABACCAAIAAAAAAEAAABAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Theme.Style">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Style.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAIAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Theme.Tag">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Tag.cs</FileName>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.Theme.Theme">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Theme\Theme.cs</FileName>
+      <HashCode>AABAAAAAAAAAAAIAAAAABAAAAAAAAAAIAAACAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpress.Domain.XmlLoader.ThemeXL">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>XmlLoader\ThemeXL.cs</FileName>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+</ClassDiagram>
