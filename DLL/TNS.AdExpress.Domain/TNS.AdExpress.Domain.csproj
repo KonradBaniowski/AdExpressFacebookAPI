@@ -32,8 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=4.5.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Aspose.Cells.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Interop.PDFCreatorPilotLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="TNS.Baal.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -66,6 +75,16 @@
     <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
     <Compile Include="Classification\VehiclesInformation.cs" />
+    <Compile Include="Theme\Border.cs" />
+    <Compile Include="Theme\Borders.cs" />
+    <Compile Include="Theme\Box.cs" />
+    <Compile Include="Theme\Cell.cs" />
+    <Compile Include="Theme\Font.cs" />
+    <Compile Include="Theme\Margin.cs" />
+    <Compile Include="Theme\Picture.cs" />
+    <Compile Include="Theme\Style.cs" />
+    <Compile Include="Theme\Tag.cs" />
+    <Compile Include="Theme\Theme.cs" />
     <Compile Include="XmlLoader\CreativeConfigDataAccess.cs" />
     <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="DataBaseDescription\DataBase.cs" />
@@ -159,6 +178,7 @@
     <Compile Include="XmlLoader\ModuleCategoryListXL.cs" />
     <Compile Include="XmlLoader\ModulesListXL.cs" />
     <Compile Include="XmlLoader\PortofolioDetailMediaColumnsXL.cs" />
+    <Compile Include="XmlLoader\ThemeXL.cs" />
     <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />
     <Compile Include="XmlLoader\VehiclesInformationXL.cs" />
     <Compile Include="XmlLoader\WebLanguagesXL.cs" />
@@ -168,6 +188,7 @@
   <ItemGroup>
     <None Include="Classification\ClassDiagram.cd" />
     <None Include="DataBaseDescription\DataBaseConfiguration.cd" />
+    <None Include="Theme\ClassDiagramTheme.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
