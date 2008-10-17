@@ -75,6 +75,7 @@
     <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
     <Compile Include="Classification\VehiclesInformation.cs" />
+    <Compile Include="Results\MSCreativesDetails.cs" />
     <Compile Include="Theme\Border.cs" />
     <Compile Include="Theme\Borders.cs" />
     <Compile Include="Theme\Box.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="XmlLoader\ListsDescriptionXL.cs" />
     <Compile Include="XmlLoader\ModuleCategoryListXL.cs" />
     <Compile Include="XmlLoader\ModulesListXL.cs" />
+    <Compile Include="XmlLoader\MSCreativesDetailsXL.cs" />
     <Compile Include="XmlLoader\PortofolioDetailMediaColumnsXL.cs" />
     <Compile Include="XmlLoader\ThemeXL.cs" />
     <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />

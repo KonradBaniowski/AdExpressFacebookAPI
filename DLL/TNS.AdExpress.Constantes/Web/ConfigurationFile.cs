@@ -44,7 +44,10 @@ namespace TNS.AdExpress.Constantes.Web {
         /// Fichier de configuration des colonnes MediaPlanInsertionConfiguration.xml
         /// </summary>
         public const string CREATIVES_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME = @"CreativesConfiguration.xml";
-
+        /// <summary>
+        /// Fichier de configuration des colonnes MSCreativesDetails.xml
+        /// </summary>
+        public const string MS_CREATIVES_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME = @"MSCreativesDetails.xml";
         /// <summary>
         /// Fichier de configuration de Link server LinkClient.xml
         /// </summary>

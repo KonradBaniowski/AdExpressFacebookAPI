@@ -80,6 +80,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         protected static InsertionDetails _creativesDetails;
         /// <summary>
+        /// Creatives details description for media schedule result and PDF export
+        /// </summary>
+        protected static MSCreativesDetails _msCreativesDetails;
+        /// <summary>
         /// Columns displayed in a result of type "Media Detail" in the Portefolio module
         /// </summary>
         protected static PortofolioDetailMediaColumns _portofolioDetailMediaColumns;
@@ -108,6 +112,7 @@ namespace TNS.AdExpress.Domain.Web {
             _genericColumnsInformation = new GenericColumnsInformation(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
             _insertionsDetails = new InsertionDetails(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.MEDIA_PLANS_INSERTION_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
             _creativesDetails = new InsertionDetails(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CREATIVES_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
+            _msCreativesDetails = new MSCreativesDetails(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.MS_CREATIVES_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
             _portofolioDetailMediaColumns = new PortofolioDetailMediaColumns(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION_FILENAME));
         }
         #endregion
@@ -191,6 +196,12 @@ namespace TNS.AdExpress.Domain.Web {
         public static InsertionDetails CreativesDetail
         {
             get { return _creativesDetails; }
+        }
+        /// <summary>
+        /// Creatives details description for media schedule result and PDF export
+        /// </summary>
+        public static MSCreativesDetails MsCreativesDetail {
+            get { return _msCreativesDetails; }
         }
         /// <summary>
         /// Get Columns displayed in a result of type "Media Detail" in the Portefolio module

@@ -144,7 +144,8 @@
     <column id="79" name="Dimension banner" webTextId="1420" dbId="id_dimension_banners" dbLabel="dimension_banners" dbLabelAlias="dimension_banners" dbTable="dimension_banners" dbTablePrefixe="dban"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="80" name="Banner url" webTextId="1420" isMax="true" dbLabel="url" dbLabelAlias="url" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="81" name="Banner hashcode" webTextId="1888" dbLabel="hashcode" dbLabelAlias="hashcode" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-
+    <column id="82" name="Famille" webTextId="1103" dbId="id_sector" dbLabel="sector" dbTable="sector" dbTablePrefixe="sc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="83" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
 
   </columnItems>
 
@@ -444,5 +445,74 @@
       <columnItem id="80" name="url" visible="false"/>
     </detailColumn>
     <!--/Détail versions-->
+
+    <!--MS Détail versions-->
+    <!-- PRESS -->
+    <!-- PRESS INT -->
+    <detailColumn id="18" name="Visuel\Annonceur\Groupe\Produit\Version\Budget\Insertions\Volume page\Nb supports">
+      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="35" name="Visuel"/>
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="82" name="Famille"/>
+      <columnItem id="83" name="Classe"/>
+      <columnItem id="67" name="Budget"/>
+      <columnItem id="72" name="insertion"/>
+      <columnItem id="68" name="Surface"/>
+      <columnItem id="71" name="Nb supports"/>
+      <columnItem id="57" name="Date de couverture" visible="false"/>
+      <columnItem id="73" name="Date kiosque" visible="false"/>
+    </detailColumn>
+    <!--Radio-->
+    <!--TV-->
+    <detailColumn id="19" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="75" name="Spot"/>
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="82" name="Famille"/>
+      <columnItem id="83" name="Classe"/>
+      <columnItem id="67" name="Budget"/>
+      <columnItem id="74" name="Nb spots"/>
+      <columnItem id="69" name="Durée"/>
+      <columnItem id="70" name="nb Support"/>
+    </detailColumn>
+    <!--Outdoor-->
+    <detailColumn id="20" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
+      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="41" name="Affiche"/>
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="82" name="Famille"/>
+      <columnItem id="83" name="Classe"/>
+      <columnItem id="67" name="Budget"/>
+      <columnItem id="76" name="Nb panneaux"/>
+      <columnItem id="70" name=" Nb Supports"/>
+    </detailColumn>
+    <!-- VMC-->
+    <detailColumn id="21" name="Visuel\Annonceur\Groupe\Produit\supports\Version\Budget\Volume\Poid\Items\Format\Format enveloppe\Format contenant\Type de doc\Contenu">
+      <columnItem id="6" name="slogan" isKey="true"/>
+      <columnItem id="41" name="Visuel"/>
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="9" name="Produit"/>
+      <columnItem id="3" name="Support"/>
+      <columnItem id="82" name="Famille"/>
+      <columnItem id="83" name="Classe"/>
+      <columnItem id="67" name="Budget"/>
+      <columnItem id="61" name="Volume"/>
+      <columnItem id="62" name="Poid"/>
+      <columnItem id="63" name="Item"/>
+      <columnItem id="11" name="Format"/>
+      <columnItem id="64" name="Format enveloppe"/>
+      <columnItem id="66" name="Format enveloppe"/>
+      <columnItem id="60" name="Type de doc"/>
+      <columnItem id="65" name="Contenu"/>
+    </detailColumn>
+    <!--/MS Détail versions-->
+    
   </detailColumns>
 </genericColumn>
