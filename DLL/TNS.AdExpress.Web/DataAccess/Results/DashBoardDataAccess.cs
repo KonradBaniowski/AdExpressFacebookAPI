@@ -31,14 +31,15 @@ using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 #endregion
 
-namespace TNS.AdExpress.Web.DataAccess.Results {
+namespace TNS.AdExpress.Web.DataAccess.Results
+{
     /// <summary>
     /// Extraction des données pour les tableaux de bord
     /// </summary>
-    public class DashBoardDataAccess {
+    public class DashBoardDataAccess
+    {
 
         #region GetData
         /// <summary>
@@ -64,7 +65,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="yearN">année courante</param>
         /// <param name="yearN1">année précédente</param>
         /// <returns>Groupe de données</returns>
-        public static DataSet getData(WebSession webSession, int yearN, int yearN1) {
+        public static DataSet getData(WebSession webSession, int yearN, int yearN1)
+        {
 
             #region Variables
             string sql = "  ";
@@ -77,33 +79,34 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             #endregion
 
-            string groupby = string.Empty;
-            string orderby = string.Empty;
-
             #region Construction de la requête
-            if (IsRepartitionSelected(webSession) || vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack) {
+            if (IsRepartitionSelected(webSession) || vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
+            {
                 #region Détaillé par répartition
                 if (webSession.ComparativeStudy) hasUnionAll = true;
                 //Requete Période N				
-                sql += GetSqlQuery(webSession, yearN.ToString(), hasUnionAll, ref groupby, ref orderby);
-                if (hasUnionAll) {
+                sql += GetSqlQuery(webSession, yearN.ToString(), hasUnionAll);
+                if (hasUnionAll)
+                {
                     sql += " UNION ALL";
                     //Requete Période N1							
-                    sql += GetSqlQuery(webSession, yearN1.ToString(), !hasUnionAll, ref groupby, ref orderby);
+                    sql += GetSqlQuery(webSession, yearN1.ToString(), !hasUnionAll);
                 }
                 #endregion
             }
-            else {
+            else
+            {
                 #region Sans répartition
                 //Requete Période N				
-                sql += GetSqlQuery(webSession, yearN.ToString(), hasUnionAll, ref groupby, ref orderby);
+                sql += GetSqlQuery(webSession, yearN.ToString(), hasUnionAll);
                 #endregion
             }
 
             //Requête spécifique pour tableau 13 (medias\familles)
-            if (sql.Length > 0 && webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector) {
+            if (sql.Length > 0 && webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector)
+            {
                 if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
-                    GetUnitFieldNameSumUnionWithAlias = GetUnitFieldNameSumWithAlias("",webSession,true);
+                    GetUnitFieldNameSumUnionWithAlias = GetUnitFieldNameSumWithAlias("", webSession, true);
                 else
                     GetUnitFieldNameSumUnionWithAlias = WebFunctions.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(webSession);
                 tempSql = " Select " + GetMediaSelectFields(webSession, "") + "," + GetSectorSelectFields(webSession, "") + ",period," + GetUnitFieldNameSumUnionWithAlias + " from (";
@@ -113,7 +116,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             }
 
             //Specific Request for Dimension X Format table
-            if (sql.Length > 0 && webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format) {
+            if (sql.Length > 0 && webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format)
+            {
                 tempSql = " Select " + GetDimensionSelectFields(webSession, "") + "," + GetFormatSelectFields(webSession, "") + ",period," + GetUnitFieldNameSumWithAlias("", webSession, true) + " from (";
                 tempSql += "  " + sql;
                 tempSql += " ) group by " + GetDimensionGroupBy(webSession, "") + "," + GetFormatGroupBy(webSession, "") + ",period ";
@@ -123,7 +127,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             #endregion
 
             #region Execution de la requête
-            try {
+            try
+            {
                 ds = webSession.Source.Fill(sql.ToString());
 
                 if (webSession.CurrentModule == WebModule.Name.TABLEAU_DE_BORD_EVALIANT &&
@@ -134,45 +139,44 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format)
                     || (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
                     || (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
-                    || (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb))) {
+                    || (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)))
+                {
 
                     //return (GetDataEvaliant(ds, webSession, hasUnionAll));
 
-                        DataSet ds2 = new DataSet();
-                        //Regex regex = new Regex(@"(order\s*by\s*\w*\.)|(group\s*by\s*\w*\.)|(,\s*\w*\.)|(\s*\w*\.)");
-                        //string order = regex.Replace(orderby, ",");
-                        //string group = regex.Replace(groupby, ",");
-                        //if (order.Length > 0) order = order.TrimStart(',');
-                        //if (group.Length > 0) group = group.TrimStart(',');
-                        //string[] tOrders = order.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                        //string[] tGroups = group.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                        //List<string> lOrders = new List<string>();
-                        //List<string> lGroups = new List<string>();
-                        //List<string> lSum = new List<string>();
-                        //for (int i = 0; i < tOrders.Length; i++) { lOrders.Add(tOrders[i].ToUpper().Trim()); }
-                        //for (int i = 0; i < tGroups.Length; i++) { lGroups.Add(tGroups[i].ToUpper().Trim()); }
-                        //lGroups.Remove("LINEID");
-                        //lSum.Add("VERSIONNB");
-                        List<string> lOrders = new List<string>();
-                        List<string> lGroups = new List<string>();
-                        lGroups.Add("ID_INTEREST_CENTER");
-                        lGroups.Add("INTEREST_CENTER");
-                        lGroups.Add("PERIOD");
-                        List<string> lSum = new List<string>();
-                        lSum.Add("VERSIONNB");
+                    DataSet ds2 = new DataSet();
+                    //Regex regex = new Regex(@"(order\s*by\s*\w*\.)|(group\s*by\s*\w*\.)|(,\s*\w*\.)|(\s*\w*\.)");
+                    //string order = regex.Replace(orderby, ",");
+                    //string group = regex.Replace(groupby, ",");
+                    //if (order.Length > 0) order = order.TrimStart(',');
+                    //if (group.Length > 0) group = group.TrimStart(',');
+                    //string[] tOrders = order.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    //string[] tGroups = group.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    //List<string> lOrders = new List<string>();
+                    //List<string> lGroups = new List<string>();
+                    //List<string> lSum = new List<string>();
+                    //for (int i = 0; i < tOrders.Length; i++) { lOrders.Add(tOrders[i].ToUpper().Trim()); }
+                    //for (int i = 0; i < tGroups.Length; i++) { lGroups.Add(tGroups[i].ToUpper().Trim()); }
+                    //lGroups.Remove("LINEID");
+                    //lSum.Add("VERSIONNB");
+                    List<string> lOrders = new List<string>();
+                    List<string> lGroups = new List<string>();
+                    lGroups.Add("ID_INTEREST_CENTER");
+                    lGroups.Add("INTEREST_CENTER");
+                    lGroups.Add("PERIOD");
+                    List<string> lSum = new List<string>();
+                    lSum.Add("VERSIONNB");
 
-                        FctUtilities.DataAdapter adapter = new FctUtilities.DataAdapter();
-                        DataTable dt = adapter.GroupBy(ds.Tables[0], lOrders, lGroups, "LINEID", lSum);
-                        ds2.Tables.Add(dt);
-                        return ds2;
-
-
-
+                    FctUtilities.DataAdapter adapter = new FctUtilities.DataAdapter();
+                    DataTable dt = adapter.GroupBy(ds.Tables[0], lOrders, lGroups, string.Empty, lSum);
+                    ds2.Tables.Add(dt);
+                    return ds2;
                 }
 
                 return ds;
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new DashBoardDataAccessException("Impossible de charger les données pour les tableaux de bord:" + sql, err));
             }
             #endregion
@@ -190,7 +194,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="year">année table de données</param>
         /// <param name="hasUnionAll">vrai si clause <code>union all</code></param>
         /// <returns>chaine de requete sql</returns>
-        private static string GetSqlQuery(WebSession webSession, string year, bool hasUnionAll, ref string groupBy, ref string orderBy)
+        private static string GetSqlQuery(WebSession webSession, string year, bool hasUnionAll)
         {
             string sql = "";
             string sqlJoint = "";
@@ -212,8 +216,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             //Droits produits et média 
             sql += "  " + GetCustomerRight(webSession);
             //Clause Group by
-            groupBy = GetGroupBy(webSession) + ",lb.COLUMN_VALUE, dshb.rowid";
-            sql += "   Group by " + groupBy;
+            sql += "   Group by " + GetGroupBy(webSession);
 
             if (webSession.CurrentModule == WebModule.Name.TABLEAU_DE_BORD_EVALIANT &&
                 ((webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
@@ -223,14 +226,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 && webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format)
                 && !(webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
                 && !(webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)
-                && !(webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb))) {
+                && !(webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual && webSession.Unit == CstWeb.CustomerSessions.Unit.versionNb)))
+            {
 
                 //Clause Order by
-                orderBy = GetOrderClause(webSession, "desc", !hasUnionAll);
-                if (!hasUnionAll && orderBy.Length > 0)
-                {
-                    sql += "  " + orderBy;
-                }
+                if (!hasUnionAll && GetOrderClause(webSession, "desc", hasUnionAll).Length > 0)
+                    sql += "  " + GetOrderClause(webSession, "desc", !hasUnionAll);
 
             }
             return sql;
@@ -247,13 +248,15 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">Session utilisateur</param>
         /// <param name="year">année de la table</param>
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
-        private static string GetTablesName(WebSession webSession, string year) {
+        private static string GetTablesName(WebSession webSession, string year)
+        {
             //identification du Média  sélectionné
             ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             string sql = "  ";
             string nestedTable = "list_banners";
             string nestedTablePrefixe = "lb";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
@@ -264,7 +267,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
                     sql += GetTBord_1_2_3_TableName(webSession, year);
                     if (GetTablesNomenclatureName(webSession).Length > 0) sql += " , " + GetTablesNomenclatureName(webSession);
-                    if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack) sql += " ,table(" + DBConstantes.Tables.DASH_BOARD_PREFIXE + "." + nestedTable + ") " + nestedTablePrefixe + "";
+                    //if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack) sql += " ,table(" + DBConstantes.Tables.DASH_BOARD_PREFIXE + "." + nestedTable + ") " + nestedTablePrefixe + "";
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format:
@@ -289,9 +292,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
-        private static string GetTablesNomenclatureName(WebSession webSession) {
+        private static string GetTablesNomenclatureName(WebSession webSession)
+        {
             string sql = "";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
@@ -327,24 +332,29 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) médias à attaquer</returns>
-        private static string GetMediaTablesName(WebSession webSession) {
+        private static string GetMediaTablesName(WebSession webSession)
+        {
             string sql = "";
             //identification du Média  sélectionné
             ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
-            if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia) {
+            if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia)
+            {
                 sql += "" + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".interest_center   " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE;
                 if (!IsRepartitionSelected(webSession) && vehicleType != ClassificationCst.DB.Vehicles.names.adnettrack) sql += "," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".vehicle   " + DBConstantes.Tables.VEHICLE_PREFIXE;
                 sql += "," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media   " + DBConstantes.Tables.MEDIA_PREFIXE;
             }
-            else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter) {
+            else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter)
+            {
                 sql += "" + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".interest_center   " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE;
-                if (!IsRepartitionSelected(webSession) && vehicleType != ClassificationCst.DB.Vehicles.names.adnettrack) {
+                if (!IsRepartitionSelected(webSession) && vehicleType != ClassificationCst.DB.Vehicles.names.adnettrack)
+                {
                     if (sql.Length > 0) sql += ",";
                     sql += " " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".vehicle   " + DBConstantes.Tables.VEHICLE_PREFIXE;
                 }
             }
-            else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia) {
+            else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia)
+            {
                 if (!IsRepartitionSelected(webSession) && vehicleType != ClassificationCst.DB.Vehicles.names.adnettrack) sql += " " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".vehicle   " + DBConstantes.Tables.VEHICLE_PREFIXE;
                 if (sql.Length > 0) sql += ",";
                 sql += " " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media   " + DBConstantes.Tables.MEDIA_PREFIXE;
@@ -357,7 +367,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">Customer client</param>
         /// <returns>SQL table name</returns>
-        private static string GetFormatTablesName(WebSession webSession) {
+        private static string GetFormatTablesName(WebSession webSession)
+        {
 
             string sql = "";
 
@@ -371,7 +382,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">Customer client</param>
         /// <returns>SQL table name</returns>
-        private static string GetDimensionTablesName(WebSession webSession) {
+        private static string GetDimensionTablesName(WebSession webSession)
+        {
 
             string sql = "";
 
@@ -385,7 +397,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">Customer client</param>
         /// <returns>SQL table name</returns>
-        private static string GetDimensionFormatTablesName(WebSession webSession) {
+        private static string GetDimensionFormatTablesName(WebSession webSession)
+        {
 
             string sql = "";
 
@@ -403,14 +416,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session du client</param>
         /// <param name="year">suffixe année de la table de donnée</param>
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
-        private static string GetTBord_1_2_3_TableName(WebSession webSession, string year) {
+        private static string GetTBord_1_2_3_TableName(WebSession webSession, string year)
+        {
             //identification du Média  sélectionné
-			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             //Obtient la table à attaquer
-            if (IsRepartitionSelected(webSession)) {
-                if (IsCrossRepartitionType(webSession)) {
+            if (IsRepartitionSelected(webSession))
+            {
+                if (IsCrossRepartitionType(webSession))
+                {
                     //Obtient la table à attaquer
-                    switch (vehicleType) {
+                    switch (vehicleType)
+                    {
                         case ClassificationCst.DB.Vehicles.names.radio:
                             return DBConstantes.DashBoard.Tables.TABLEAU_BORD_RADIO_DAY + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
                         case ClassificationCst.DB.Vehicles.names.tv:
@@ -422,11 +439,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 }
                 else return GetTBord_4_to_12_TableName(webSession, year);
             }
-            else {
+            else
+            {
                 //Sans détail de répartition
-                switch (webSession.DetailPeriod) {
+                switch (webSession.DetailPeriod)
+                {
                     case CstPeriodDetail.monthly:
-                        if(vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
+                        if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
                             return DBConstantes.DashBoard.Tables.TABLEAU_BORD_EVALIANT_MONTH + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
                         else
                             return DBConstantes.DashBoard.Tables.TABLEAU_BORD_PLURI_MONTH + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
@@ -449,12 +468,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session du client</param>
         /// <param name="year">suffixe représentant année de la table</param>
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
-        private static string GetTBord_4_to_12_TableName(WebSession webSession, string year) {
+        private static string GetTBord_4_to_12_TableName(WebSession webSession, string year)
+        {
             //identification du Média  sélectionné
-			//string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+            //string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
             ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             //Obtient la table à attaquer
-            switch (vehicleType) {
+            switch (vehicleType)
+            {
                 case ClassificationCst.DB.Vehicles.names.radio:
                     return GetTBord_4_to_12_RadioTableName(webSession, year);
                 case ClassificationCst.DB.Vehicles.names.tv:
@@ -470,11 +491,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session client</param>
         /// <param name="year">suffixe représentant année de la table</param>
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
-        private static string GetTBord_4_to_12_RadioTableName(WebSession webSession, string year) {
+        private static string GetTBord_4_to_12_RadioTableName(WebSession webSession, string year)
+        {
             if (IsCrossRepartitionType(webSession))
                 return DBConstantes.DashBoard.Tables.TABLEAU_BORD_RADIO_DAY + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
-            else {
-                switch (webSession.DetailPeriod) {
+            else
+            {
+                switch (webSession.DetailPeriod)
+                {
                     case CstPeriodDetail.monthly:
                         return DBConstantes.DashBoard.Tables.TABLEAU_BORD_RADIO_R_MTH + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
                     case CstPeriodDetail.weekly:
@@ -490,11 +514,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session client</param>
         /// <param name="year">suffixe représentant année de la table</param>
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
-        private static string GetTBord_4_to_12_TvTableName(WebSession webSession, string year) {
+        private static string GetTBord_4_to_12_TvTableName(WebSession webSession, string year)
+        {
             if (IsCrossRepartitionType(webSession))
                 return DBConstantes.DashBoard.Tables.TABLEAU_BORD_TV_DAY + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
-            else {
-                switch (webSession.DetailPeriod) {
+            else
+            {
+                switch (webSession.DetailPeriod)
+                {
                     case CstPeriodDetail.monthly:
                         return DBConstantes.DashBoard.Tables.TABLEAU_BORD_TV_REP_MTH + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
                     case CstPeriodDetail.weekly:
@@ -515,14 +542,17 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">sessiion du client</param>
         /// <param name="year">suffixe année de la table de donnée</param>
         /// <returns>Chaîne de caractère correspondant aux champs de(s) table(s) à attaquer</returns>
-        private static string GetSelectClause(WebSession webSession, string year) {
+        private static string GetSelectClause(WebSession webSession, string year)
+        {
             string sql = "  Select  ";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
 
                     sql += "  " + GetMediaSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
-                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year))) {
+                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year)))
+                    {
                         sql += "," + GetDateSelectFields(webSession, year);
                     }
 
@@ -530,7 +560,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
                     sql += "  " + GetFormatSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
-                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year))) {
+                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year)))
+                    {
                         sql += "," + GetDateSelectFields(webSession, year);
                     }
 
@@ -539,7 +570,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
                     sql += "  " + GetDimensionSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
-                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year))) {
+                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year)))
+                    {
                         sql += "," + GetDateSelectFields(webSession, year);
                     }
 
@@ -548,14 +580,16 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
                     sql += "  " + GetDimensionSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
                     sql += "," + GetFormatSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
-                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year))) {
+                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year)))
+                    {
                         sql += "," + GetDateSelectFields(webSession, year);
                     }
                     sql += "," + GetUnitSelectFields(webSession);
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
                     sql += " " + GetSectorSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
-                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year))) {
+                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year)))
+                    {
                         sql += "," + GetDateSelectFields(webSession, year);
                     }
 
@@ -567,7 +601,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     sql += "  " + GetSectorSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
                     sql += " ," + GetRepartitionField(webSession);
                     sql += "," + GetUnitSelectFields(webSession);
-                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year))) {
+                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year)))
+                    {
                         sql += "," + GetDateSelectFields(webSession, year);
                     }
                     break;
@@ -578,7 +613,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     sql += "  " + GetMediaSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
                     sql += " ," + GetRepartitionField(webSession);
                     sql += "," + GetUnitSelectFields(webSession);
-                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year))) {
+                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year)))
+                    {
                         sql += "," + GetDateSelectFields(webSession, year);
                     }
                     break;
@@ -587,13 +623,15 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice:
                     sql += "  " + GetRepartitionField(webSession);
                     sql += "," + GetUnitSelectFields(webSession);
-                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year))) {
+                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year)))
+                    {
                         sql += "," + GetDateSelectFields(webSession, year);
                     }
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector:
                     sql += "  " + GetMediaSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE) + " , " + GetSectorSelectFields(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
-                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year))) {
+                    if (WebFunctions.CheckedText.IsStringEmpty(GetDateSelectFields(webSession, year)))
+                    {
                         sql += "," + GetDateSelectFields(webSession, year);
                     }
                     sql += "," + GetUnitSelectFields(webSession);
@@ -610,7 +648,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session du client</param>
         /// <param name="prefixe">prefixe table de données</param>
         /// <returns>Chaîne de caractère de familles à sélectionner</returns>
-        private static string GetSectorSelectFields(WebSession webSession, string prefixe) {
+        private static string GetSectorSelectFields(WebSession webSession, string prefixe)
+        {
             if (prefixe != null && prefixe.Length > 0)
                 return prefixe + ".id_sector," + DBConstantes.Tables.SECTOR_PREFIXE + ".sector";
             else return " id_sector,sector";
@@ -624,9 +663,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session du client</param>
         /// <param name="prefixe">prefixe table de données</param>
         /// <returns>Chaîne de caractère de média à sélectionner</returns>
-        private static string GetMediaSelectFields(WebSession webSession, string prefixe) {
+        private static string GetMediaSelectFields(WebSession webSession, string prefixe)
+        {
 
-            switch (webSession.PreformatedMediaDetail) {
+            switch (webSession.PreformatedMediaDetail)
+            {
                 // selection du niveau media/support
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia:
                     if (prefixe != null && prefixe.Length > 0)
@@ -656,9 +697,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session du client</param>
         /// <param name="year">suffixe année de la table de donnée</param>
         /// <returns>Chaîne de caractère des dates</returns>
-        private static string GetDateSelectFields(WebSession webSession, string year) {
+        private static string GetDateSelectFields(WebSession webSession, string year)
+        {
             string sql = "";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
@@ -681,7 +724,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_NamedDay:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice:
-                    if (IsRepartitionSelected(webSession)) {
+                    if (IsRepartitionSelected(webSession))
+                    {
                         sql += "  " + year + " as period";
                     }
                     break;
@@ -695,19 +739,24 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>Chaîne de caractère des dates</returns>
-        private static string GetDetailPeriodSelectClause(WebSession webSession) {
+        private static string GetDetailPeriodSelectClause(WebSession webSession)
+        {
             string sql = "";
-            if (!IsRepartitionSelected(webSession)) {
+            if (!IsRepartitionSelected(webSession))
+            {
                 if (webSession.DetailPeriod == CstPeriodDetail.monthly)
                     sql += DBConstantes.Tables.DASH_BOARD_PREFIXE + ".month_media_num";
                 else if (webSession.DetailPeriod == CstPeriodDetail.weekly)
                     sql += DBConstantes.Tables.DASH_BOARD_PREFIXE + ".week_media_num";
             }
-            else {
-                if (IsCrossRepartitionType(webSession)) {
+            else
+            {
+                if (IsCrossRepartitionType(webSession))
+                {
                     sql += DBConstantes.Tables.DASH_BOARD_PREFIXE + ".date_media_num";
                 }
-                else {
+                else
+                {
                     if (webSession.DetailPeriod == CstPeriodDetail.monthly)
                         sql += DBConstantes.Tables.DASH_BOARD_PREFIXE + ".month_media_num";
                     else if (webSession.DetailPeriod == CstPeriodDetail.weekly)
@@ -724,19 +773,22 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>Chaîne de caractère des unités à sélectionner</returns>
-        private static string GetUnitSelectFields(WebSession webSession) {
+        private static string GetUnitSelectFields(WebSession webSession)
+        {
             string sql = "";
             //identification du Média  sélectionné
-			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             //Choix de l'unité
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
-                    if(vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
-                        sql += GetUnitFieldsName(DBConstantes.Tables.DASH_BOARD_PREFIXE,true);
-                    else if (IsRepartitionSelected(webSession)) {
+                    if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
+                        sql += GetUnitFieldsName(DBConstantes.Tables.DASH_BOARD_PREFIXE, true);
+                    else if (IsRepartitionSelected(webSession))
+                    {
                         sql += WebFunctions.SQLGenerator.GetUnitFieldsName(webSession, Constantes.DB.TableType.Type.dataVehicle, DBConstantes.Tables.DASH_BOARD_PREFIXE);
                     }
                     else sql += WebFunctions.SQLGenerator.GetUnitFieldsName(webSession, Constantes.DB.TableType.Type.webPlan, DBConstantes.Tables.DASH_BOARD_PREFIXE);
@@ -749,9 +801,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
-                    if(vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
-                        sql += GetUnitFieldNameSumWithAlias(DBConstantes.Tables.DASH_BOARD_PREFIXE, webSession,false);
-                    else if (IsRepartitionSelected(webSession)) {
+                    if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
+                        sql += GetUnitFieldNameSumWithAlias(DBConstantes.Tables.DASH_BOARD_PREFIXE, webSession, false);
+                    else if (IsRepartitionSelected(webSession))
+                    {
                         sql += WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, Constantes.DB.TableType.Type.dataVehicle);
                     }
                     else sql += WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, Constantes.DB.TableType.Type.webPlan);
@@ -763,14 +816,16 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice:
 
-                    if (IsRepartitionSelected(webSession)) {
+                    if (IsRepartitionSelected(webSession))
+                    {
                         sql += WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(webSession, Constantes.DB.TableType.Type.dataVehicle);
                     }
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice:
-                    if (IsRepartitionSelected(webSession)) {
+                    if (IsRepartitionSelected(webSession))
+                    {
                         sql += WebFunctions.SQLGenerator.GetUnitFieldsName(webSession, Constantes.DB.TableType.Type.dataVehicle, DBConstantes.Tables.DASH_BOARD_PREFIXE);
                     }
                     break;
@@ -787,12 +842,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>	
         /// <param name="webSession">Session du client</param>		
         /// <returns></returns>
-        private static string GetRepartitionField(WebSession webSession) {
+        private static string GetRepartitionField(WebSession webSession)
+        {
             //identification du Média  sélectionné
-			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
             string repartition = "repartition";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format:
@@ -808,7 +865,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice:
-                    if (webSession.Format != CstWeb.Repartition.Format.Total || webSession.NamedDay != CstWeb.Repartition.namedDay.Total) {
+                    if (webSession.Format != CstWeb.Repartition.Format.Total || webSession.NamedDay != CstWeb.Repartition.namedDay.Total)
+                    {
                         if (ClassificationCst.DB.Vehicles.names.radio == vehicleType)
                             repartition = DBConstantes.DashBoard.Fields.RADIO_TIME_SLICE + " as repartition";
                         else if (ClassificationCst.DB.Vehicles.names.tv == vehicleType || ClassificationCst.DB.Vehicles.names.others == vehicleType)
@@ -828,7 +886,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">Customer session</param>
         /// <param name="prefixe">Tabled prefixe</param>
         /// <returns>SQL select clause</returns>
-        private static string GetFormatSelectFields(WebSession webSession, string prefixe) {
+        private static string GetFormatSelectFields(WebSession webSession, string prefixe)
+        {
 
             if (prefixe != null && prefixe.Length > 0)
                 return "  " + prefixe + ".id_format_banners," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.formatBanners).Prefix + ".format_banners";
@@ -844,7 +903,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">Customer session</param>
         /// <param name="prefixe">Tabled prefixe</param>
         /// <returns>SQL select clause</returns>
-        private static string GetDimensionSelectFields(WebSession webSession, string prefixe) {
+        private static string GetDimensionSelectFields(WebSession webSession, string prefixe)
+        {
 
             if (prefixe != null && prefixe.Length > 0)
                 return "  " + prefixe + ".id_dimension_banners," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dimensionBanners).Prefix + ".dimension_banners";
@@ -862,7 +922,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session du client</param>
         /// <param name="year">suffixe année de la table de donnée</param>
         /// <returns>Chaîne de caractère correspondant à la clause from de la requete</returns>
-        private static string GetFromClause(WebSession webSession, string year) {
+        private static string GetFromClause(WebSession webSession, string year)
+        {
             return " From " + GetTablesName(webSession, year);
         }
 
@@ -874,19 +935,21 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>Chaîne de caractère correspondant aux jointures</returns>
-        private static string GetJointClause(WebSession webSession) {
+        private static string GetJointClause(WebSession webSession)
+        {
             string sql = "";
             //identification du Média  sélectionné
             //			string vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
             //			bool premier =true;
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_NamedDay:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice:
                     return GetMediaJointClause(webSession);
-                
+
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
                     return GetFormatJointClause(webSession);
 
@@ -920,32 +983,37 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>Chaîne de caractère correspondant aux jointures</returns>
-        private static string GetMediaJointClause(WebSession webSession) {
+        private static string GetMediaJointClause(WebSession webSession)
+        {
             string sql = "";
             bool premier = true;
             //identification du Média  sélectionné
             ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
-            if (!IsRepartitionSelected(webSession) && vehicleType != ClassificationCst.DB.Vehicles.names.adnettrack) {
+            if (!IsRepartitionSelected(webSession) && vehicleType != ClassificationCst.DB.Vehicles.names.adnettrack)
+            {
                 sql += "   " + DBConstantes.Tables.VEHICLE_PREFIXE + ".id_vehicle=" + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_vehicle"
                     + "   and " + DBConstantes.Tables.VEHICLE_PREFIXE + ".id_language=" + webSession.DataLanguage
                     + "  and " + DBConstantes.Tables.VEHICLE_PREFIXE + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
                 premier = false;
             }
             if (!premier) sql += " and ";
-            if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia) {
+            if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia)
+            {
                 sql += DBConstantes.Tables.INTEREST_CENTER_PREFIXE + ".id_interest_center=" + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_interest_center  ";
                 sql += " and  " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE + ".id_language=" + webSession.DataLanguage
                     + "   and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_media=" + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media"
                     + "   and  " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.DataLanguage + "  "
                     + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
             }
-            else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter) {
+            else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter)
+            {
                 sql += DBConstantes.Tables.INTEREST_CENTER_PREFIXE + ".id_interest_center=" + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_interest_center  "
                     + "   and  " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE + ".id_language=" + webSession.DataLanguage
                     + "  and " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
             }
-            else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia) {
+            else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia)
+            {
                 sql += DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_media=" + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media"
                     + "   and  " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.DataLanguage + "  "
                     + "  and " + DBConstantes.Tables.MEDIA_PREFIXE + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
@@ -958,7 +1026,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">Customer session</param>
         /// <returns>SQL format joint clause</returns>
-        private static string GetFormatJointClause(WebSession webSession) {
+        private static string GetFormatJointClause(WebSession webSession)
+        {
             string sql = "";
 
             sql += DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_format_banners=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.formatBanners).Prefix + ".id_format_banners"
@@ -974,7 +1043,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">Customer session</param>
         /// <returns>SQL format joint clause</returns>
-        private static string GetDimensionJointClause(WebSession webSession) {
+        private static string GetDimensionJointClause(WebSession webSession)
+        {
             string sql = "";
 
             sql += DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_dimension_banners=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dimensionBanners).Prefix + ".id_dimension_banners"
@@ -990,7 +1060,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">Customer session</param>
         /// <returns>SQL dimension format joint clause</returns>
-        private static string GetDimensionFormatJointClause(WebSession webSession) {
+        private static string GetDimensionFormatJointClause(WebSession webSession)
+        {
             string sql = "";
 
             sql += DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_dimension_banners=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dimensionBanners).Prefix + ".id_dimension_banners"
@@ -1010,7 +1081,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>Chaîne de caractère correspondant aux jointures</returns>
-        private static string GetSectorJointClause(WebSession webSession) {
+        private static string GetSectorJointClause(WebSession webSession)
+        {
 
             return "   " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_sector=" + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_sector"
                 + "   and " + DBConstantes.Tables.SECTOR_PREFIXE + ".id_language=" + webSession.DataLanguage
@@ -1025,7 +1097,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">séssion client</param>
         /// <param name="year">année sélectionnée</param>
         /// <returns>Chaîne de caractère correspondant aux familles sélectionnées</returns>
-        private static string GetSelectionClause(WebSession webSession, string year) {
+        private static string GetSelectionClause(WebSession webSession, string year)
+        {
             string sql = "";
             string selectionClause = GetSectorSelectionClause(webSession);
 
@@ -1056,7 +1129,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">séssion client</param>	
         /// <returns>Chaîne de caractère correspondant aux familles sélectionnées</returns>
-        private static string GetSectorSelectionClause(WebSession webSession) {
+        private static string GetSectorSelectionClause(WebSession webSession)
+        {
             string sql = "";
             //string listSector="";
             #region ancienne version
@@ -1088,28 +1162,33 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">séssion client</param>	
         /// <returns>Chaîne de caractère correspondant aux familles sélectionnées</returns>
-        private static string GetMediaSelectionClause(WebSession webSession) {
+        private static string GetMediaSelectionClause(WebSession webSession)
+        {
             bool premier = true;
             string MediaAccessList = "";
             string VehicleAccessList = "";
             string InterestCenterAccessList = "";
             //identification du Média  sélectionné          
-			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
-            if (IsInterestCenterSelected(webSession)) {
+            if (IsInterestCenterSelected(webSession))
+            {
                 InterestCenterAccessList = webSession.GetSelection(webSession.CurrentUniversMedia, CustomerRightConstante.type.interestCenterAccess);
             }
-            else {
+            else
+            {
                 MediaAccessList = webSession.GetSelection(webSession.SelectionUniversMedia, CustomerRightConstante.type.mediaAccess);
                 VehicleAccessList = webSession.GetSelection(webSession.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess);
                 InterestCenterAccessList = webSession.GetSelection(webSession.SelectionUniversMedia, CustomerRightConstante.type.interestCenterAccess);
             }
             string sql = "";
-            if (WebFunctions.CheckedText.IsStringEmpty(InterestCenterAccessList)) {
+            if (WebFunctions.CheckedText.IsStringEmpty(InterestCenterAccessList))
+            {
                 sql += " and ( " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_interest_center in (" + InterestCenterAccessList + ")";
                 premier = false;
             }
-            if (WebFunctions.CheckedText.IsStringEmpty(MediaAccessList)) {
+            if (WebFunctions.CheckedText.IsStringEmpty(MediaAccessList))
+            {
                 if (!premier) sql += " or ";
                 else sql += " and ( ";
                 sql += "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_media in (" + MediaAccessList + ")";
@@ -1122,7 +1201,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 && vehicleType == ClassificationCst.DB.Vehicles.names.others)
                 sql += " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_category in (" + Media.GetItemsList(CstWeb.AdExpressUniverse.DASHBOARD_PANEURO_MEDIA_LIST_ID).CategoryList + ")";
 
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
@@ -1143,16 +1223,20 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session du client</param>
         /// <param name="year">année sélectionnée</param>
         /// <returns>Chaîne de caractère correspondant aux dates sélectionnées</returns>
-        private static string GetDateSelectionClause(WebSession webSession, string year) {
+        private static string GetDateSelectionClause(WebSession webSession, string year)
+        {
             string sql = "";
             int yearN1 = 0;
             yearN1 = int.Parse(webSession.PeriodBeginningDate.Substring(0, 4)) - 1;
 
-            if (IsCrossRepartitionType(webSession)) {
-                if (!IsDetailPeriod(webSession)) {
+            if (IsCrossRepartitionType(webSession))
+            {
+                if (!IsDetailPeriod(webSession))
+                {
                     sql += DateMediaNumSelection(webSession, webSession.PeriodBeginningDate, webSession.PeriodEndDate, year);
                 }
-                else {
+                else
+                {
                     sql += DateMediaNumSelection(webSession, webSession.DetailPeriodBeginningDate, webSession.DetailPeriodEndDate, year);
                 }
             }
@@ -1167,39 +1251,48 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session client</param>
         /// <param name="yearN1">année précédente</param>
         /// <returns>chaine de caractère Date sélectionnée</returns>
-        private static string GetMonthOrWeekMediaNum(WebSession webSession, string yearN1) {
+        private static string GetMonthOrWeekMediaNum(WebSession webSession, string yearN1)
+        {
 
             AtomicPeriodWeek currentPeriod, beginPreviousPeriod, endPreviousPeriod;
 
             string sql = "";
             //Avec répartition
-            if (webSession.DetailPeriod == CstPeriodDetail.monthly) {
+            if (webSession.DetailPeriod == CstPeriodDetail.monthly)
+            {
                 //Mois sélectionnés
-                if (!IsDetailPeriod(webSession)) {
+                if (!IsDetailPeriod(webSession))
+                {
                     sql += " and ((month_media_num between " + webSession.PeriodBeginningDate
                         + " and " + webSession.PeriodEndDate + ") ";
-                    if (webSession.ComparativeStudy) {
+                    if (webSession.ComparativeStudy)
+                    {
                         sql += " or (month_media_num between " + yearN1 + webSession.PeriodBeginningDate.Substring(4, 2)
                             + " and  " + yearN1 + webSession.PeriodEndDate.Substring(4, 2) + ")";
                     }
                     sql += " ) ";
                 }
-                else {
+                else
+                {
                     sql += " and ((month_media_num between " + webSession.DetailPeriodBeginningDate
                         + " and " + webSession.DetailPeriodEndDate + ") ";
-                    if (webSession.ComparativeStudy) {
+                    if (webSession.ComparativeStudy)
+                    {
                         sql += " or ( month_media_num between " + yearN1 + webSession.DetailPeriodBeginningDate.Substring(4, 2)
                             + " and  " + yearN1 + webSession.DetailPeriodEndDate.Substring(4, 2) + ")";
                     }
                     sql += " ) ";
                 }
             }
-            else if (webSession.DetailPeriod == CstPeriodDetail.weekly) {
+            else if (webSession.DetailPeriod == CstPeriodDetail.weekly)
+            {
                 //semaines sélectionnées
-                if (!IsDetailPeriod(webSession)) {
+                if (!IsDetailPeriod(webSession))
+                {
                     sql += " and ((week_media_num between " + webSession.PeriodBeginningDate
                         + " and " + webSession.PeriodEndDate + ") ";
-                    if (webSession.ComparativeStudy) {
+                    if (webSession.ComparativeStudy)
+                    {
                         currentPeriod = new AtomicPeriodWeek(int.Parse(webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(webSession.PeriodBeginningDate.Substring(4, 2)));
                         beginPreviousPeriod = currentPeriod;
                         beginPreviousPeriod.SubWeek(52);
@@ -1211,10 +1304,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     }
                     sql += " ) ";
                 }
-                else {
+                else
+                {
                     sql += " and ((week_media_num between " + webSession.DetailPeriodBeginningDate
                         + " and " + webSession.DetailPeriodEndDate + ") ";
-                    if (webSession.ComparativeStudy) {
+                    if (webSession.ComparativeStudy)
+                    {
                         currentPeriod = new AtomicPeriodWeek(int.Parse(webSession.DetailPeriodBeginningDate.Substring(0, 4)), int.Parse(webSession.DetailPeriodBeginningDate.Substring(4, 2)));
                         beginPreviousPeriod = currentPeriod;
                         beginPreviousPeriod.SubWeek(52);
@@ -1239,18 +1334,21 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="wsPeriodEndDate">date de fin de session</param>
         /// <param name="year">année sélectionnée</param>
         /// <returns>chaine de caractère Date sélectionnée</returns>
-        private static string DateMediaNumSelection(WebSession webSession, string wsPeriodBeginningDate, string wsPeriodEndDate, string year) {
+        private static string DateMediaNumSelection(WebSession webSession, string wsPeriodBeginningDate, string wsPeriodEndDate, string year)
+        {
             string sql = "";
             AtomicPeriodWeek BeginningPeriod = new AtomicPeriodWeek(int.Parse(year), int.Parse(wsPeriodBeginningDate.Substring(4, 2)));
             AtomicPeriodWeek EndPeriod = new AtomicPeriodWeek(int.Parse(year), int.Parse(wsPeriodEndDate.Substring(4, 2)));
-            if (webSession.DetailPeriod == CstPeriodDetail.weekly) {
+            if (webSession.DetailPeriod == CstPeriodDetail.weekly)
+            {
                 sql = " and (date_media_num between " + BeginningPeriod.FirstDay.Year.ToString() + (BeginningPeriod.FirstDay.Month.ToString().Length > 1 ? BeginningPeriod.FirstDay.Month.ToString() : "0" + BeginningPeriod.FirstDay.Month.ToString())
                     + (BeginningPeriod.FirstDay.Day.ToString().Length > 1 ? BeginningPeriod.FirstDay.Day.ToString() : "0" + BeginningPeriod.FirstDay.Day.ToString());
                 sql += " and " + EndPeriod.LastDay.Year.ToString() + (EndPeriod.LastDay.Month.ToString().Length > 1 ? EndPeriod.LastDay.Month.ToString() : "0" + EndPeriod.LastDay.Month.ToString())
                     + (EndPeriod.LastDay.Day.ToString().Length > 1 ? EndPeriod.LastDay.Day.ToString() : "0" + EndPeriod.LastDay.Day.ToString());
                 sql += ")";
             }
-            else {
+            else
+            {
                 sql = " and (date_media_num between " + year + wsPeriodBeginningDate.Substring(4, 2) + "01";
                 sql += " and " + year + wsPeriodEndDate.Substring(4, 2) + "31";
                 sql += ")";
@@ -1262,7 +1360,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">client</param>
         /// <returns>vraie si la periode est sélectionnée et faux sinon</returns>
-        private static bool IsDetailPeriod(WebSession webSession) {
+        private static bool IsDetailPeriod(WebSession webSession)
+        {
             return !(webSession.DetailPeriodBeginningDate.Equals("") || webSession.DetailPeriodBeginningDate.Equals("0"));
         }
 
@@ -1271,7 +1370,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">client</param>
         /// <returns>vraie si la famille est sélectionnée et faux sinon</returns>
-        private static bool IsDetailSector(WebSession webSession) {
+        private static bool IsDetailSector(WebSession webSession)
+        {
             return !(webSession.SelectionUniversProduct == null || webSession.SelectionUniversProduct.Nodes == null
                 || webSession.SelectionUniversProduct.Nodes.Count == 0);
         }
@@ -1281,7 +1381,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>vrai si un centre d'intérêt à été sélectionné</returns>
-        private static bool IsInterestCenterSelected(WebSession webSession) {
+        private static bool IsInterestCenterSelected(WebSession webSession)
+        {
             return !(webSession.CurrentUniversMedia == null || webSession.CurrentUniversMedia.Nodes == null
                 || webSession.CurrentUniversMedia.Nodes.Count == 0);
         }
@@ -1291,11 +1392,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>	
         /// <returns>Chaîne de caractère correspondant aux Répartition sélectionnées</returns>
-        private static string GetRepartitionSelectionClause(WebSession webSession) {
+        private static string GetRepartitionSelectionClause(WebSession webSession)
+        {
             string sql = "";
-			//Int64 idVehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID;
-			ClassificationCst.DB.Vehicles.names vehicletype = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-            switch (webSession.PreformatedTable) {
+            //Int64 idVehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+            ClassificationCst.DB.Vehicles.names vehicletype = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
@@ -1337,12 +1440,15 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session du client</param>	
         /// <param name="vehicletype">type de média</param>
         /// <returns>Chaîne de caractère correspondant aux Répartition sélectionnées</returns>
-        private static string Get_1_2_3_RepartitionSelectionClause(WebSession webSession, ClassificationCst.DB.Vehicles.names vehicletype) {
+        private static string Get_1_2_3_RepartitionSelectionClause(WebSession webSession, ClassificationCst.DB.Vehicles.names vehicletype)
+        {
             string sql = "";
             if (webSession.Format != CstWeb.Repartition.Format.Total || webSession.NamedDay != CstWeb.Repartition.namedDay.Total ||
-                webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total) {
+                webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)
+            {
 
-                switch (webSession.PreformatedTable) {
+                switch (webSession.PreformatedTable)
+                {
                     case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                     case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                     case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
@@ -1352,12 +1458,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                         if ((webSession.Format != CstWeb.Repartition.Format.Total && webSession.NamedDay != CstWeb.Repartition.namedDay.Total)
                             || (webSession.Format != CstWeb.Repartition.Format.Total && webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)
                             || (webSession.NamedDay != CstWeb.Repartition.namedDay.Total && webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)
-                            ) {
+                            )
+                        {
                             //Format							
                             if (webSession.Format != CstWeb.Repartition.Format.Total)
                                 sql += " AND " + DBConstantes.DashBoard.Fields.ID_FORMAT_REPARTITION + "=" + webSession.Format.GetHashCode().ToString();
                             //Jour Nommé
-                            if (webSession.NamedDay != CstWeb.Repartition.namedDay.Total) {
+                            if (webSession.NamedDay != CstWeb.Repartition.namedDay.Total)
+                            {
                                 if (webSession.NamedDay == CstWeb.Repartition.namedDay.Week_5_day)
                                     sql += " AND " + DBConstantes.DashBoard.Fields.ID_DAY + " in (" + CstWeb.Repartition.namedDay.Monday.GetHashCode().ToString()
                                         + "," + CstWeb.Repartition.namedDay.Tuesday.GetHashCode().ToString() + "," + CstWeb.Repartition.namedDay.Wednesdays.GetHashCode().ToString()
@@ -1370,27 +1478,33 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                                     sql += " AND " + DBConstantes.DashBoard.Fields.ID_DAY + "=" + webSession.NamedDay.GetHashCode().ToString();
                             }
                             //Tranche horaire
-                            if (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total) {
-                                if (ClassificationCst.DB.Vehicles.names.radio == vehicletype) {
+                            if (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)
+                            {
+                                if (ClassificationCst.DB.Vehicles.names.radio == vehicletype)
+                                {
                                     sql += " AND " + DBConstantes.DashBoard.Fields.RADIO_TIME_SLICE + "=" + webSession.TimeInterval.GetHashCode().ToString();
                                 }
-                                else if (ClassificationCst.DB.Vehicles.names.tv == vehicletype || ClassificationCst.DB.Vehicles.names.others == vehicletype) {
+                                else if (ClassificationCst.DB.Vehicles.names.tv == vehicletype || ClassificationCst.DB.Vehicles.names.others == vehicletype)
+                                {
                                     sql += " AND " + DBConstantes.DashBoard.Fields.TV_TIME_SLICE + "=" + webSession.TimeInterval.GetHashCode().ToString();
                                 }
                             }
 
                         }
-                        else {
+                        else
+                        {
                             //Sinon on attaque les tables de bord mensuels ou hebdomadaires
 
                             //Format							
-                            if (webSession.Format != CstWeb.Repartition.Format.Total) {
+                            if (webSession.Format != CstWeb.Repartition.Format.Total)
+                            {
                                 sql += " AND  repartition_code=" + CstWeb.Repartition.repartitionCode.Format.GetHashCode().ToString();
                                 sql += " AND repartition = " + webSession.Format.GetHashCode().ToString();
                             }
 
                             //Jour Nommé						
-                            if (webSession.NamedDay != CstWeb.Repartition.namedDay.Total) {
+                            if (webSession.NamedDay != CstWeb.Repartition.namedDay.Total)
+                            {
                                 sql += "  AND repartition_code=" + CstWeb.Repartition.repartitionCode.namedDay.GetHashCode().ToString();
                                 if (webSession.NamedDay == CstWeb.Repartition.namedDay.Week_5_day)
                                     sql += " AND repartition  in (" + CstWeb.Repartition.namedDay.Monday.GetHashCode().ToString()
@@ -1405,7 +1519,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                             }
 
                             //Tranche horaire
-                            if (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total) {
+                            if (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)
+                            {
                                 sql += "  AND repartition_code=" + CstWeb.Repartition.repartitionCode.timeInterval.GetHashCode().ToString();
                                 sql += " AND repartition = " + webSession.TimeInterval.GetHashCode().ToString();
                             }
@@ -1424,16 +1539,20 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">Session du client</param>
         /// <param name="vehicletype">type de média</param>
         /// <returns>Chaîne de caractère correspondant aux Répartition sélectionnées</returns>
-        private static string Get_4_to_12_RepartitionSelectionClause(WebSession webSession, ClassificationCst.DB.Vehicles.names vehicletype) {
+        private static string Get_4_to_12_RepartitionSelectionClause(WebSession webSession, ClassificationCst.DB.Vehicles.names vehicletype)
+        {
             string sql = "";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
 
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
-                    if ((webSession.NamedDay != CstWeb.Repartition.namedDay.Total) || (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)) {
+                    if ((webSession.NamedDay != CstWeb.Repartition.namedDay.Total) || (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total))
+                    {
                         //Jour Nommé
-                        if (webSession.NamedDay != CstWeb.Repartition.namedDay.Total) {
+                        if (webSession.NamedDay != CstWeb.Repartition.namedDay.Total)
+                        {
                             if (webSession.NamedDay == CstWeb.Repartition.namedDay.Week_5_day)
                                 sql += " AND " + DBConstantes.DashBoard.Fields.ID_DAY + " in (" + CstWeb.Repartition.namedDay.Monday.GetHashCode().ToString()
                                     + "," + CstWeb.Repartition.namedDay.Tuesday.GetHashCode().ToString() + "," + CstWeb.Repartition.namedDay.Wednesdays.GetHashCode().ToString()
@@ -1446,11 +1565,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                                 sql += " AND " + DBConstantes.DashBoard.Fields.ID_DAY + "=" + webSession.NamedDay.GetHashCode().ToString();
                         }
                         //Tranche horaire
-                        if (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total) {
-                            if (ClassificationCst.DB.Vehicles.names.radio == vehicletype) {
+                        if (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)
+                        {
+                            if (ClassificationCst.DB.Vehicles.names.radio == vehicletype)
+                            {
                                 sql += " AND " + DBConstantes.DashBoard.Fields.RADIO_TIME_SLICE + "=" + webSession.TimeInterval.GetHashCode().ToString();
                             }
-                            else if (ClassificationCst.DB.Vehicles.names.tv == vehicletype || ClassificationCst.DB.Vehicles.names.others == vehicletype) {
+                            else if (ClassificationCst.DB.Vehicles.names.tv == vehicletype || ClassificationCst.DB.Vehicles.names.others == vehicletype)
+                            {
                                 sql += " AND " + DBConstantes.DashBoard.Fields.TV_TIME_SLICE + "=" + webSession.TimeInterval.GetHashCode().ToString();
                             }
                         }
@@ -1459,16 +1581,20 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_NamedDay:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_NamedDay:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay:
-                    if ((webSession.Format != CstWeb.Repartition.Format.Total) || (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)) {
+                    if ((webSession.Format != CstWeb.Repartition.Format.Total) || (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total))
+                    {
                         //Format							
                         if (webSession.Format != CstWeb.Repartition.Format.Total)
                             sql += " AND " + DBConstantes.DashBoard.Fields.ID_FORMAT_REPARTITION + "=" + webSession.Format.GetHashCode().ToString();
                         //Tranche horaire
-                        if (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total) {
-                            if (ClassificationCst.DB.Vehicles.names.radio == vehicletype) {
+                        if (webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)
+                        {
+                            if (ClassificationCst.DB.Vehicles.names.radio == vehicletype)
+                            {
                                 sql += " AND " + DBConstantes.DashBoard.Fields.RADIO_TIME_SLICE + "=" + webSession.TimeInterval.GetHashCode().ToString();
                             }
-                            else if (ClassificationCst.DB.Vehicles.names.tv == vehicletype || ClassificationCst.DB.Vehicles.names.others == vehicletype) {
+                            else if (ClassificationCst.DB.Vehicles.names.tv == vehicletype || ClassificationCst.DB.Vehicles.names.others == vehicletype)
+                            {
                                 sql += " AND " + DBConstantes.DashBoard.Fields.TV_TIME_SLICE + "=" + webSession.TimeInterval.GetHashCode().ToString();
                             }
                         }
@@ -1477,12 +1603,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice:
-                    if ((webSession.Format != CstWeb.Repartition.Format.Total) || (webSession.NamedDay != CstWeb.Repartition.namedDay.Total)) {
+                    if ((webSession.Format != CstWeb.Repartition.Format.Total) || (webSession.NamedDay != CstWeb.Repartition.namedDay.Total))
+                    {
                         //Format							
                         if (webSession.Format != CstWeb.Repartition.Format.Total)
                             sql += " AND " + DBConstantes.DashBoard.Fields.ID_FORMAT_REPARTITION + "=" + webSession.Format.GetHashCode().ToString();
                         //Jour Nommé
-                        if (webSession.NamedDay != CstWeb.Repartition.namedDay.Total) {
+                        if (webSession.NamedDay != CstWeb.Repartition.namedDay.Total)
+                        {
                             if (webSession.NamedDay == CstWeb.Repartition.namedDay.Week_5_day)
                                 sql += " AND " + DBConstantes.DashBoard.Fields.ID_DAY + " in (" + CstWeb.Repartition.namedDay.Monday.GetHashCode().ToString()
                                     + "," + CstWeb.Repartition.namedDay.Tuesday.GetHashCode().ToString() + "," + CstWeb.Repartition.namedDay.Wednesdays.GetHashCode().ToString()
@@ -1508,7 +1636,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>chaine  de caractère des droits client</returns>
-        private static string GetCustomerRight(WebSession webSession) {
+        private static string GetCustomerRight(WebSession webSession)
+        {
             string sql = "";
             //identification du Média  sélectionné
             ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
@@ -1528,9 +1657,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>chaine de caractère correspondant au regroupement des données</returns>
-        private static string GetGroupBy(WebSession webSession) {
+        private static string GetGroupBy(WebSession webSession)
+        {
             string sql = "";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
@@ -1538,6 +1669,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice:
                     //Média
                     sql += "  " + GetMediaGroupBy(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
+                    sql += ", list_banners ";
                     break;
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
                     sql += " " + GetFormatGroupBy(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
@@ -1567,7 +1699,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     break;
             }
             //dates
-            if (!IsRepartitionSelected(webSession)) {
+            if (!IsRepartitionSelected(webSession))
+            {
                 if (sql.Length > 0 && GetDateGroupBy(webSession).Length > 0) sql += "," + GetDateGroupBy(webSession);
                 else if (sql.Length == 0 && GetDateGroupBy(webSession).Length > 0) sql += " " + GetDateGroupBy(webSession);
             }
@@ -1576,7 +1709,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             else if (sql.Length == 0 && GetRepartitionGroupBy(webSession).Length > 0) sql = "  " + GetRepartitionGroupBy(webSession);
 
             //dates pour répartition
-            if (IsRepartitionSelected(webSession)) {
+            if (IsRepartitionSelected(webSession))
+            {
                 if (sql.Length > 0 && GetDateGroupBy(webSession).Length > 0) sql += "," + GetDateGroupBy(webSession);
                 else if (sql.Length == 0 && GetDateGroupBy(webSession).Length > 0) sql += " " + GetDateGroupBy(webSession);
             }
@@ -1589,7 +1723,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">sessiuon du client</param>
         /// <returns>Chaîne de caractère correspondant aux regroupement de média</returns>
-        private static string GetMediaGroupBy(WebSession webSession) {
+        private static string GetMediaGroupBy(WebSession webSession)
+        {
             return GetMediaGroupBy(webSession, "");
         }
 
@@ -1599,9 +1734,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">sessiuon du client</param>
         /// <param name="prefixe">prefixe table de données</param>
         /// <returns>Chaîne de caractère correspondant aux regroupement de média</returns>
-        private static string GetMediaGroupBy(WebSession webSession, string prefixe) {
+        private static string GetMediaGroupBy(WebSession webSession, string prefixe)
+        {
             string sql = "  ";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
@@ -1621,7 +1758,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">Customer session</param>
         /// <param name="prefixe">Table prefixe</param>
         /// <returns>SQL format gourp by</returns>
-        private static string GetFormatGroupBy(WebSession webSession, string prefixe) {
+        private static string GetFormatGroupBy(WebSession webSession, string prefixe)
+        {
             string sql = "  ";
             sql = GetFormatSelectFields(webSession, prefixe);
             return sql;
@@ -1633,7 +1771,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">Customer session</param>
         /// <param name="prefixe">Table prefixe</param>
         /// <returns>SQL format gourp by</returns>
-        private static string GetDimensionGroupBy(WebSession webSession, string prefixe) {
+        private static string GetDimensionGroupBy(WebSession webSession, string prefixe)
+        {
             string sql = "  ";
             sql = GetDimensionSelectFields(webSession, prefixe);
             return sql;
@@ -1645,7 +1784,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">Customer session</param>
         /// <param name="prefixe">Table prefixe</param>
         /// <returns>SQL dimension format gourp by</returns>
-        private static string GetDimensionFormatGroupBy(WebSession webSession, string prefixe) {
+        private static string GetDimensionFormatGroupBy(WebSession webSession, string prefixe)
+        {
             string sql = "  ";
             sql = GetDimensionSelectFields(webSession, prefixe);
             sql += ", " + GetFormatSelectFields(webSession, prefixe);
@@ -1657,7 +1797,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">sessiuon du client</param>
         /// <returns>Chaîne de caractère correspondant aux regroupement de familles</returns>
-        private static string GetSectorGroupBy(WebSession webSession) {
+        private static string GetSectorGroupBy(WebSession webSession)
+        {
             return GetSectorGroupBy(webSession, "");
         }
 
@@ -1667,10 +1808,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">sessiuon du client</param>
         /// <param name="prefixe">prefixe table de données</param>
         /// <returns>Chaîne de caractère correspondant aux regroupement de familles</returns>
-        private static string GetSectorGroupBy(WebSession webSession, string prefixe) {
+        private static string GetSectorGroupBy(WebSession webSession, string prefixe)
+        {
 
 
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_NamedDay:
@@ -1686,9 +1829,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">sesion du client</param>
         /// <returns>chiane caractère dates à regroupés</returns>
-        private static string GetDateGroupBy(WebSession webSession) {
+        private static string GetDateGroupBy(WebSession webSession)
+        {
             string sql = "";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
@@ -1707,7 +1852,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
                     if (IsCrossRepartitionType(webSession))
                         sql += "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".date_media_num";
-                    else {
+                    else
+                    {
                         if (webSession.DetailPeriod == CstPeriodDetail.monthly)
                             sql += "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".month_media_num";
                         else if (webSession.DetailPeriod == CstPeriodDetail.weekly)
@@ -1723,12 +1869,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>	
         /// <returns>Chaine de caractère repartition</returns>
-        private static string GetRepartitionGroupBy(WebSession webSession) {
+        private static string GetRepartitionGroupBy(WebSession webSession)
+        {
             //identification du Média  sélectionné
             string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
             ClassificationCst.DB.Vehicles.names vehicleType = (ClassificationCst.DB.Vehicles.names)int.Parse(Vehicle);
 
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
 
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_NamedDay:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_NamedDay:
@@ -1740,11 +1888,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice:
-                    if (IsCrossRepartitionType(webSession)) {
-                        if (ClassificationCst.DB.Vehicles.names.radio == vehicleType) {
+                    if (IsCrossRepartitionType(webSession))
+                    {
+                        if (ClassificationCst.DB.Vehicles.names.radio == vehicleType)
+                        {
                             return DBConstantes.DashBoard.Fields.RADIO_TIME_SLICE;
                         }
-                        else if (ClassificationCst.DB.Vehicles.names.tv == vehicleType || ClassificationCst.DB.Vehicles.names.others == vehicleType) {
+                        else if (ClassificationCst.DB.Vehicles.names.tv == vehicleType || ClassificationCst.DB.Vehicles.names.others == vehicleType)
+                        {
                             return DBConstantes.DashBoard.Fields.TV_TIME_SLICE;
                         }
                         else throw (new DashBoardDataAccessException("getRepartitionGroupBy(WebSession webSession) : Impossible de déterminer le média à traiter."));
@@ -1770,9 +1921,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="order">ordre</param>
         /// <param name="hasUnionAll">vrai si clause <code>union all</code></param>
         /// <returns>ordre champs</returns>
-        public static string GetOrderClause(WebSession webSession, string order, bool hasUnionAll) {
+        public static string GetOrderClause(WebSession webSession, string order, bool hasUnionAll)
+        {
             string sql = "";
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
@@ -1803,14 +1956,16 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                             + (!hasUnionAll ? DBConstantes.Tables.DASH_BOARD_PREFIXE + ".week_media_num " : " period ") + "  " + order;
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
-                        if (webSession.DetailPeriod == CstPeriodDetail.monthly) {
-                            sql += "  Order by  " + GetDimensionFormatOrderFields(webSession, hasUnionAll, "")+ ","
-                                + (!hasUnionAll ? DBConstantes.Tables.DASH_BOARD_PREFIXE + ".month_media_num" : " period ") + " " + order;
-                        }
-                        else if (webSession.DetailPeriod == CstPeriodDetail.weekly) {
-                            sql += "  Order by  " + GetDimensionFormatOrderFields(webSession, hasUnionAll, "") + ","
-                                + (!hasUnionAll ? DBConstantes.Tables.DASH_BOARD_PREFIXE + ".week_media_num " : " period ") + "  " + order;
-                        }
+                    if (webSession.DetailPeriod == CstPeriodDetail.monthly)
+                    {
+                        sql += "  Order by  " + GetDimensionFormatOrderFields(webSession, hasUnionAll, "") + ","
+                            + (!hasUnionAll ? DBConstantes.Tables.DASH_BOARD_PREFIXE + ".month_media_num" : " period ") + " " + order;
+                    }
+                    else if (webSession.DetailPeriod == CstPeriodDetail.weekly)
+                    {
+                        sql += "  Order by  " + GetDimensionFormatOrderFields(webSession, hasUnionAll, "") + ","
+                            + (!hasUnionAll ? DBConstantes.Tables.DASH_BOARD_PREFIXE + ".week_media_num " : " period ") + "  " + order;
+                    }
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format:
@@ -1824,11 +1979,13 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                             + (!hasUnionAll ? DBConstantes.Tables.DASH_BOARD_PREFIXE + ".week_media_num " : " period ") + "  " + order;
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector:
-                    if (webSession.DetailPeriod == CstPeriodDetail.monthly) {
+                    if (webSession.DetailPeriod == CstPeriodDetail.monthly)
+                    {
                         sql += "  Order by  " + GetMediaOrderFields(webSession, hasUnionAll, "") + "," + GetSectorOrderFields(webSession, hasUnionAll) + ","
                             + (!hasUnionAll ? DBConstantes.Tables.DASH_BOARD_PREFIXE + ".month_media_num" : " period ") + " " + order;
                     }
-                    else if (webSession.DetailPeriod == CstPeriodDetail.weekly) {
+                    else if (webSession.DetailPeriod == CstPeriodDetail.weekly)
+                    {
                         sql += "  Order by  " + GetMediaOrderFields(webSession, hasUnionAll, "") + "," + GetSectorOrderFields(webSession, hasUnionAll) + ","
                             + (!hasUnionAll ? DBConstantes.Tables.DASH_BOARD_PREFIXE + ".week_media_num " : " period ") + "  " + order;
                     }
@@ -1845,8 +2002,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="hasUnionAll">vrai si clause <code>union all</code></param>
         /// <param name="prefixe">Prefixe table de données</param>
         /// <returns>Chaîne de caractère de média à sélectionner</returns>
-        private static string GetMediaOrderFields(WebSession webSession, bool hasUnionAll, string prefixe) {
-            switch (webSession.PreformatedMediaDetail) {
+        private static string GetMediaOrderFields(WebSession webSession, bool hasUnionAll, string prefixe)
+        {
+            switch (webSession.PreformatedMediaDetail)
+            {
                 // selection du niveau media/support
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia:
                     if (prefixe != null && prefixe.Length > 0)
@@ -1875,7 +2034,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="hasUnionAll">vrai si clause <code>union all</code></param>
         /// <param name="prefixe">Table Prefixe</param>
         /// <returns>SQl Format Order Fields</returns>
-        private static string GetFormatOrderFields(WebSession webSession, bool hasUnionAll, string prefixe) {
+        private static string GetFormatOrderFields(WebSession webSession, bool hasUnionAll, string prefixe)
+        {
 
             if (prefixe != null && prefixe.Length > 0)
                 return "  " + (!hasUnionAll ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.formatBanners).Prefix + ".format_banners ," + prefixe + ".id_format_banners" : " format_banners ," + prefixe + ".id_format_banners");
@@ -1890,7 +2050,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="hasUnionAll">vrai si clause <code>union all</code></param>
         /// <param name="prefixe">Table Prefixe</param>
         /// <returns>SQl Format Order Fields</returns>
-        private static string GetDimensionOrderFields(WebSession webSession, bool hasUnionAll, string prefixe) {
+        private static string GetDimensionOrderFields(WebSession webSession, bool hasUnionAll, string prefixe)
+        {
 
             if (prefixe != null && prefixe.Length > 0)
                 return "  " + (!hasUnionAll ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dimensionBanners).Prefix + ".dimension_banners ," + prefixe + ".id_dimension_banners" : " dimension_banners ," + prefixe + ".id_dimension_banners");
@@ -1905,7 +2066,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="hasUnionAll">vrai si clause <code>union all</code></param>
         /// <param name="prefixe">Table Prefixe</param>
         /// <returns>SQl Dimension Format Order Fields</returns>
-        private static string GetDimensionFormatOrderFields(WebSession webSession, bool hasUnionAll, string prefixe) {
+        private static string GetDimensionFormatOrderFields(WebSession webSession, bool hasUnionAll, string prefixe)
+        {
 
             string sql = string.Empty;
 
@@ -1928,7 +2090,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">session du client</param>
         /// <param name="hasUnionAll">vrai si clause <code>union all</code></param>
         /// <returns>Chaîne de caractère de familles à sélectionner</returns>
-        private static string GetSectorOrderFields(WebSession webSession, bool hasUnionAll) {
+        private static string GetSectorOrderFields(WebSession webSession, bool hasUnionAll)
+        {
             return (!hasUnionAll ? DBConstantes.Tables.SECTOR_PREFIXE + ".sector" : " sector ");
         }
         #endregion
@@ -1941,17 +2104,21 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session</param>
         /// <returns>vrai si répartition sélectionné</returns>
-        private static bool IsRepartitionSelected(WebSession webSession) {
+        private static bool IsRepartitionSelected(WebSession webSession)
+        {
             //identification du Média  sélectionné			
             ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             bool isRepartition = false;
-            if (ClassificationCst.DB.Vehicles.names.press != vehicleType) {
+            if (ClassificationCst.DB.Vehicles.names.press != vehicleType)
+            {
                 isRepartition = !(webSession.Format == CstWeb.Repartition.Format.Total
                     && webSession.NamedDay == CstWeb.Repartition.namedDay.Total
                     && webSession.TimeInterval == CstWeb.Repartition.timeInterval.Total
                     );
-                if (!isRepartition) {
-                    switch (webSession.PreformatedTable) {
+                if (!isRepartition)
+                {
+                    switch (webSession.PreformatedTable)
+                    {
                         case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format:
                         case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_NamedDay:
                         case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice:
@@ -1975,13 +2142,15 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>vrai si au moins 2 types de répatition sélectionnés</returns>
-        public static bool IsCrossRepartitionType(WebSession webSession) {
+        public static bool IsCrossRepartitionType(WebSession webSession)
+        {
             if ((webSession.Format != CstWeb.Repartition.Format.Total && webSession.NamedDay != CstWeb.Repartition.namedDay.Total)
                 || (webSession.Format != CstWeb.Repartition.Format.Total && webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)
                 || (webSession.NamedDay != CstWeb.Repartition.namedDay.Total && webSession.TimeInterval != CstWeb.Repartition.timeInterval.Total)
                 )
                 return true;
-            switch (webSession.PreformatedTable) {
+            switch (webSession.PreformatedTable)
+            {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Format:
@@ -2014,7 +2183,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// </summary>
         ///<param name="dataTablePrefixe">Data table prefixe</param>
         /// <returns>Evaliant units list</returns>
-        public static string GetUnitFieldsName(string dataTablePrefixe, bool allUnit) {
+        public static string GetUnitFieldsName(string dataTablePrefixe, bool allUnit)
+        {
             StringBuilder sqlUnit = new StringBuilder();
             UnitInformation insertion = UnitsInformation.Get(CstWeb.CustomerSessions.Unit.insertion);
             UnitInformation versionNb = UnitsInformation.Get(CstWeb.CustomerSessions.Unit.versionNb);
@@ -2025,16 +2195,18 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             else
                 dataTablePrefixe = "";
 
-            if (allUnit) {
+            if (allUnit)
+            {
                 sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, insertion.DatabaseField, insertion.Id.ToString());
                 sqlUnit.AppendFormat(", ");
                 //sqlUnit.AppendFormat("{0}{1} as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, "stragg2(distinct " + nestedTablePrefixe + ".COLUMN_VALUE)", versionNb.Id.ToString());
-                sqlUnit.AppendFormat("to_char({0}.COLUMN_VALUE) as {1}, {2}rowid as lineId", nestedTablePrefixe, versionNb.Id.ToString(), dataTablePrefixe);
+                sqlUnit.AppendFormat("{0} as {1} ", versionNb.DatabaseMultimediaField, versionNb.Id.ToString());
             }
             else
-                sqlUnit.AppendFormat("to_char({0}.COLUMN_VALUE) as {1}, {2}rowid as lineId", nestedTablePrefixe, versionNb.Id.ToString(), dataTablePrefixe);
                 //sqlUnit.AppendFormat("{0}{1} as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, "stragg2(distinct " + nestedTablePrefixe + ".COLUMN_VALUE)", versionNb.Id.ToString());
-            
+                sqlUnit.AppendFormat("{0} as {1} ", versionNb.DatabaseMultimediaField, versionNb.Id.ToString());
+
+
             return sqlUnit.ToString();
         }
 
@@ -2045,8 +2217,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">Web Session</param>
         /// <param name="usePrefixe">True if we're going to use versionNb prefixe instead of COLUMN_VALUE</param>
         /// <returns>Sum Unit Field</returns>
-        public static string GetUnitFieldNameSumWithAlias(string prefixe, WebSession webSession, bool usePrefixe) {
-            
+        public static string GetUnitFieldNameSumWithAlias(string prefixe, WebSession webSession, bool usePrefixe)
+        {
+
             StringBuilder sql = new StringBuilder();
             string nestedTablePrefixe = "lb";
 
@@ -2057,20 +2230,21 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
             UnitInformation unitInformation = webSession.GetSelectedUnit();
 
-            switch (unitInformation.Id) { 
+            switch (unitInformation.Id)
+            {
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion:
                     sql.AppendFormat("sum({0}{1}) as {2}", prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
                     break;
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb:
-                    if(usePrefixe)
+                    if (usePrefixe)
                         sql.AppendFormat("{0}{1} as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, "stragg2(distinct " + unitInformation.Id.ToString() + ")", unitInformation.Id.ToString());
                     else
                         sql.AppendFormat("{0}{1} as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, "stragg2(distinct " + nestedTablePrefixe + ".COLUMN_VALUE)", unitInformation.Id.ToString());
                     break;
             }
-             
+
             return sql.ToString();
-            
+
         }
 
         /// <summary>
@@ -2080,7 +2254,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">Customer session</param>
         /// <param name="hasUnionAll">Has union all</param>
         /// <returns>Sorted Data set</returns>
-        private static DataSet GetDataEvaliant(DataSet ds, WebSession webSession, bool hasUnionAll) {
+        private static DataSet GetDataEvaliant(DataSet ds, WebSession webSession, bool hasUnionAll)
+        {
 
             string orderClause = string.Empty;
 
@@ -2091,9 +2266,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             dt.Locale = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
 
             DataView v = dt.DefaultView;
-            if (hasUnionAll && GetOrderClause(webSession, "desc", hasUnionAll).Length > 0) {
+            if (hasUnionAll && GetOrderClause(webSession, "desc", hasUnionAll).Length > 0)
+            {
                 orderClause = "  " + GetOrderClause(webSession, "desc", hasUnionAll);
-                if(webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format)
+                if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format)
                     v.Sort = string.Format("{0}", GetDimensionOrderFields(webSession, true, "") + "," + GetFormatOrderFields(webSession, true, "") + ",period desc");
                 else
                     v.Sort = string.Format("{0}", orderClause.Replace(" Order by ", string.Empty));
@@ -2105,7 +2281,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             ds.Tables.Add(dt);
 
             return ds;
-        
+
         }
         #endregion
 

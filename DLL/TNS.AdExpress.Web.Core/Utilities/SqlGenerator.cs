@@ -2051,7 +2051,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         }
                         else
                         {
-                            sql.AppendFormat("{0}.stragg2(distinct {1}{2}) as {3}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
+                            sql.AppendFormat("to_char({0}{1}) as {2}", prefixe, unitInformation.DatabaseField, unitInformation.Id.ToString());
                         }
                         return sql.ToString();
                     }
@@ -2069,7 +2069,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         }
                         else
                         {
-                            sql.AppendFormat("{0}.stragg2(distinct {1}column_value) as {3}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, prefixe, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                            sql.AppendFormat("{0}{1} as {2}", prefixe, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
                         }
                         return sql.ToString();
                     }
@@ -2103,7 +2103,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 }
                 else
                 {
-                    sql.AppendFormat("{0}.stragg2(distinct {1}) as {1}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, u.Id.ToString());
+                    sql.AppendFormat("{0} as {0}", u.Id.ToString());
                 }
                 return sql.ToString();
             }

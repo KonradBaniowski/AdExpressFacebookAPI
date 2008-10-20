@@ -27,7 +27,6 @@ namespace TNS.AdExpress.Web.Core.Utilities
     public class DataAdapter
     {
         StringBuilder str;
-
         public DataTable GroupBy(DataTable dt, List<string> orderFields, List<string> groupFields, string lineIdField, List<string> forceSumFields)
         {
 
@@ -37,7 +36,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 return dt;
             }
             string orderBy = (orderFields.Count>0)?string.Format("{0} asc", string.Join(" asc,", orderFields.ToArray())):string.Empty;
-            string groupBy = string.Format("{0} asc, {1} asc", string.Join(" asc,", groupFields.ToArray()), lineIdField);
+            //string groupBy = string.Format("{0} asc, {1} asc", string.Join(" asc,", groupFields.ToArray()), lineIdField);
+            string groupBy = string.Format("{0} asc", string.Join(" asc,", groupFields.ToArray()));
             #endregion
 
             #region Order input
@@ -130,7 +130,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
 
                 newRow = false;
-                cIdLine = cRecord[lineIdField].ToString();
+                //cIdLine = cRecord[lineIdField].ToString();
                 foreach (string s in groupFields)
                 {
                     if (oldRecord == null || !oldRecord[s].Equals(cRecord[s]))
@@ -153,7 +153,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 {
                     for(int i = 0; i < sumNb; i++)
                     {
-                        if (forceSum[i] || oldIdLine != cIdLine)
+                        if (forceSum[i])// || oldIdLine != cIdLine)
                         {
                             sumDelegates[i](oldRecord, sumFields[i], cRecord[sumFields[i]]);
                         }

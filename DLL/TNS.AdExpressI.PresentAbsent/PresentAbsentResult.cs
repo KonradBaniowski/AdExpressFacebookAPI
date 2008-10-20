@@ -513,7 +513,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             string mediaList = "";
             string expression = "";
             string sort = "id_media asc";
-			string unitFormat = "max0";
+			string unitFormat = "{0:max0}";
 			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             #endregion
 
