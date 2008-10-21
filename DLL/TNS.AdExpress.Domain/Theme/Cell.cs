@@ -9,6 +9,33 @@ namespace TNS.AdExpress.Domain.Theme {
     /// </summary>
     public class Cell : Tag {
 
+        #region Enum
+        /// <summary>
+        /// Background Type
+        /// </summary>
+        public enum BackgroundType {
+            None = 0,
+            Solid = 1,
+            Gray50 = 2,
+            Gray75 = 3,
+            Gray25 = 4,
+            HorizontalStripe = 5,
+            VerticalStripe = 6,
+            ReverseDiagonalStripe = 7,
+            DiagonalStripe = 8,
+            DiagonalCrosshatch = 9,
+            ThickDiagonalCrosshatch = 10,
+            ThinHorizontalStripe = 11,
+            ThinVerticalStripe = 12,
+            ThinReverseDiagonalStripe = 13,
+            ThinDiagonalStripe = 14,
+            ThinHorizontalCrosshatch = 15,
+            ThinDiagonalCrosshatch = 16,
+            Gray12 = 17,
+            Gray6 = 18,
+        }
+        #endregion
+
         #region Variables
         /// <summary>
         /// Foreground Color
@@ -22,6 +49,10 @@ namespace TNS.AdExpress.Domain.Theme {
         /// Font
         /// </summary>
         private Font _font=new Font();
+        /// <summary>
+        /// Background Type
+        /// </summary>
+        private BackgroundType _backgroundType = BackgroundType.Solid;
         #endregion
 
         #region Assessor
@@ -93,6 +124,7 @@ namespace TNS.AdExpress.Domain.Theme {
                 cells[row, column].Style.Font.IsBold = this._font.IsBold;
                 cells[row, column].Style.Font.IsStrikeout = this._font.IsStrikeout;
                 cells[row, column].Style.ForegroundColor = _foregroundColor;
+                cells[row, column].Style.Pattern = SetBackgroundType(cells[row, column].Style.Pattern,_backgroundType);
                 SetBorderCell(cells[row, column].Style.Borders);
         }
         /// <summary>
@@ -130,27 +162,27 @@ namespace TNS.AdExpress.Domain.Theme {
         private void SetBorderCell(Aspose.Cells.Borders borders) {
             if (_borders.Border.ContainsKey(Borders.BorderType.TopBorder)) {
                 borders[Aspose.Cells.BorderType.TopBorder].Color = _borders.Border[Borders.BorderType.TopBorder].Color;
-                SetLineStyleCell(borders[Aspose.Cells.BorderType.TopBorder].LineStyle, _borders.Border[Borders.BorderType.TopBorder].LineStyle);
+                borders[Aspose.Cells.BorderType.TopBorder].LineStyle = SetLineStyleCell(borders[Aspose.Cells.BorderType.TopBorder].LineStyle, _borders.Border[Borders.BorderType.TopBorder].LineStyle);
             }
             if (_borders.Border.ContainsKey(Borders.BorderType.RightBorder)) {
                 borders[Aspose.Cells.BorderType.RightBorder].Color = _borders.Border[Borders.BorderType.RightBorder].Color;
-                SetLineStyleCell(borders[Aspose.Cells.BorderType.RightBorder].LineStyle, _borders.Border[Borders.BorderType.RightBorder].LineStyle);
+                borders[Aspose.Cells.BorderType.RightBorder].LineStyle = SetLineStyleCell(borders[Aspose.Cells.BorderType.RightBorder].LineStyle, _borders.Border[Borders.BorderType.RightBorder].LineStyle);
             }
             if (_borders.Border.ContainsKey(Borders.BorderType.BottomBorder)) {
                 borders[Aspose.Cells.BorderType.BottomBorder].Color = _borders.Border[Borders.BorderType.BottomBorder].Color;
-                SetLineStyleCell(borders[Aspose.Cells.BorderType.BottomBorder].LineStyle, _borders.Border[Borders.BorderType.BottomBorder].LineStyle);
+                borders[Aspose.Cells.BorderType.BottomBorder].LineStyle = SetLineStyleCell(borders[Aspose.Cells.BorderType.BottomBorder].LineStyle, _borders.Border[Borders.BorderType.BottomBorder].LineStyle);
             }
             if (_borders.Border.ContainsKey(Borders.BorderType.LeftBorder)) {
                 borders[Aspose.Cells.BorderType.LeftBorder].Color = _borders.Border[Borders.BorderType.LeftBorder].Color;
-                SetLineStyleCell(borders[Aspose.Cells.BorderType.LeftBorder].LineStyle, _borders.Border[Borders.BorderType.LeftBorder].LineStyle);
+                borders[Aspose.Cells.BorderType.LeftBorder].LineStyle = SetLineStyleCell(borders[Aspose.Cells.BorderType.LeftBorder].LineStyle, _borders.Border[Borders.BorderType.LeftBorder].LineStyle);
             }
             if (_borders.Border.ContainsKey(Borders.BorderType.DiagonalDown)) {
                 borders[Aspose.Cells.BorderType.DiagonalDown].Color = _borders.Border[Borders.BorderType.DiagonalDown].Color;
-                SetLineStyleCell(borders[Aspose.Cells.BorderType.DiagonalDown].LineStyle, _borders.Border[Borders.BorderType.DiagonalDown].LineStyle);
+                borders[Aspose.Cells.BorderType.DiagonalDown].LineStyle = SetLineStyleCell(borders[Aspose.Cells.BorderType.DiagonalDown].LineStyle, _borders.Border[Borders.BorderType.DiagonalDown].LineStyle);
             }
             if (_borders.Border.ContainsKey(Borders.BorderType.DiagonalUp)) {
                 borders[Aspose.Cells.BorderType.DiagonalUp].Color = _borders.Border[Borders.BorderType.DiagonalUp].Color;
-                SetLineStyleCell(borders[Aspose.Cells.BorderType.DiagonalUp].LineStyle, _borders.Border[Borders.BorderType.DiagonalUp].LineStyle);
+                borders[Aspose.Cells.BorderType.DiagonalUp].LineStyle = SetLineStyleCell(borders[Aspose.Cells.BorderType.DiagonalUp].LineStyle, _borders.Border[Borders.BorderType.DiagonalUp].LineStyle);
             }
         }
         /// <summary>
@@ -158,7 +190,7 @@ namespace TNS.AdExpress.Domain.Theme {
         /// </summary>
         /// <param name="cellBorderTypeExcel"></param>
         /// <param name="cellBorderType"></param>
-        private void SetLineStyleCell(Aspose.Cells.CellBorderType cellBorderTypeExcel, Border.CellBorderType cellBorderType) {
+        private Aspose.Cells.CellBorderType SetLineStyleCell(Aspose.Cells.CellBorderType cellBorderTypeExcel, Border.CellBorderType cellBorderType) {
             switch (cellBorderType) {
                 case Border.CellBorderType.DashDot:
                     cellBorderTypeExcel = Aspose.Cells.CellBorderType.DashDot;
@@ -203,6 +235,71 @@ namespace TNS.AdExpress.Domain.Theme {
                     cellBorderTypeExcel = Aspose.Cells.CellBorderType.None;
                     break;
             }
+            return cellBorderTypeExcel;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="backgroundType"></param>
+        /// <returns></returns>
+        private Aspose.Cells.BackgroundType SetBackgroundType(Aspose.Cells.BackgroundType backgroundTypeExcel, BackgroundType backgroundType) {
+            switch (backgroundType) {
+                case BackgroundType.DiagonalCrosshatch:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.DiagonalCrosshatch;
+                    break;
+                case BackgroundType.DiagonalStripe:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.DiagonalStripe;
+                    break;
+                case BackgroundType.Gray12:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.Gray12;
+                    break;
+                case BackgroundType.Gray25:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.Gray25;
+                    break;
+                case BackgroundType.Gray50:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.Gray50;
+                    break;
+                case BackgroundType.Gray75:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.Gray75;
+                    break;
+                case BackgroundType.HorizontalStripe:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.HorizontalStripe;
+                    break;
+                case BackgroundType.None:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.None;
+                    break;
+                case BackgroundType.ReverseDiagonalStripe:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.ReverseDiagonalStripe;
+                    break;
+                case BackgroundType.ThickDiagonalCrosshatch:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.ThickDiagonalCrosshatch;
+                    break;
+                case BackgroundType.ThinDiagonalCrosshatch:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.ThinDiagonalCrosshatch;
+                    break;
+                case BackgroundType.ThinDiagonalStripe:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.ThinDiagonalStripe;
+                    break;
+                case BackgroundType.ThinHorizontalCrosshatch:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.ThinHorizontalCrosshatch;
+                    break;
+                case BackgroundType.ThinHorizontalStripe:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.ThinHorizontalStripe;
+                    break;
+                case BackgroundType.ThinReverseDiagonalStripe:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.ThinReverseDiagonalStripe;
+                    break;
+                case BackgroundType.ThinVerticalStripe:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.ThinVerticalStripe;
+                    break;
+                case BackgroundType.VerticalStripe:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.VerticalStripe;
+                    break;
+                default:
+                    backgroundTypeExcel = Aspose.Cells.BackgroundType.Solid;
+                    break;
+            }
+            return backgroundTypeExcel;
         }
         #endregion
 

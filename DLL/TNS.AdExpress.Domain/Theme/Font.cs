@@ -151,7 +151,12 @@ namespace TNS.AdExpress.Domain.Theme {
         /// <param name="firstColumn"></param>
         /// <param name="lastColumn"></param>
         public override void SetStyle(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, int row, int column) {
-            throw new Exception("The method or operation is not implemented.");
+            cells[row, column].Style.Font.Name = this._name;
+            cells[row, column].Style.Font.Color = this._color;
+            cells[row, column].Style.Font.Size = Convert.ToInt32(this._size);
+            cells[row, column].Style.Font.IsItalic = this._isItalic;
+            cells[row, column].Style.Font.IsBold = this._isBold;
+            cells[row, column].Style.Font.IsStrikeout = this._isStrikeout;
         }
 
         /// <summary>

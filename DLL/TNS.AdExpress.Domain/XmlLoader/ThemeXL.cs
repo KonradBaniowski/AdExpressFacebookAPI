@@ -18,7 +18,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
         /// </summary>
         /// <param name="dataSrc">Data Source</param>
         /// <param name="styles">Styles Configuration</param>
-        internal static void Load(IDataSource dataSrc, Theme.Theme theme, Dictionary<string, Tag> tagList) {
+        internal static void Load(IDataSource dataSrc, Dictionary<string, Style> style, Dictionary<string, Tag> tagList) {
 
             #region variables
             XmlTextReader Reader;
@@ -143,6 +143,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                         tagList[label] = new Cell(font, foregroundColor, borders);
                                     else
                                         tagList.Add(label, new Cell(font, foregroundColor, borders));
+
+                                    borders = null;
                                 }
                                 catch {
                                     if (tagList.ContainsKey(label))
@@ -230,20 +232,24 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 label = Reader.GetAttribute("name");
                                 ReaderTemp = Reader.ReadSubtree();
                                 Dictionary<string, Tag> tagListTemp = new Dictionary<string, Tag>();
+                                string labelTag = string.Empty;
                                 while (ReaderTemp.Read()) {
                                     if (ReaderTemp.NodeType == XmlNodeType.Element) {
                                         switch (ReaderTemp.LocalName) {
                                             case "tag":
+                                                labelTag = ReaderTemp.GetAttribute("name");
                                                 value = ReaderTemp.ReadString();
-                                                tagListTemp.Add(value, tagList[value]);
+                                                tagListTemp.Add(labelTag, tagList[value]);
                                                 break;
                                         }
                                     }
                                 }
-                                if(theme.StyleList.ContainsKey(label))
-                                    theme.StyleList[label] = new Style(tagListTemp);
+                                if (style.ContainsKey(label))
+                                    style[label] = new Style(tagListTemp);
                                 else
-                                    theme.StyleList.Add(label, new Style(tagListTemp));
+                                    style.Add(label, new Style(tagListTemp));
+
+                                tagListTemp = null;
                                 #endregion
 
                                 break;

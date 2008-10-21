@@ -23,13 +23,13 @@ namespace TNS.AdExpress.Domain.Theme {
         #endregion
 
         #region Assessor
-        /// <summary>
+        /*/// <summary>
         /// Get / Set List of Style
         /// </summary>
         public Dictionary<string, Style> StyleList {
             get { return _styleList; }
             set { _styleList = value; }
-        }
+        }*/
         #endregion
 
         #region Constructor
@@ -82,12 +82,22 @@ namespace TNS.AdExpress.Domain.Theme {
         #endregion
 
         #region Public Methods
+
+        /// <summary>
+        /// Get the Style
+        /// </summary>
+        /// <param name="styleName">Style Name</param>
+        /// <returns>Style</returns>
+        public Style GetStyle(string styleName) {
+            return _styleList[styleName];
+        }
+
         /// <summary>
         /// Update The list of Style
         /// </summary>
         /// <param name="dataSource">Datasource Xml</param>
         public void UpdateList(IDataSource dataSource) {
-            ThemeXL.Load(dataSource, this, _tagList);
+            ThemeXL.Load(dataSource, _styleList, _tagList);
         }
 
         /// <summary>
