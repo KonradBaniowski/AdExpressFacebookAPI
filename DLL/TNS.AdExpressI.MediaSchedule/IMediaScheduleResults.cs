@@ -13,6 +13,7 @@
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.MediaSchedule;
 using Aspose.Cells;
+using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpressI.MediaSchedule{
     
@@ -64,7 +65,7 @@ namespace TNS.AdExpressI.MediaSchedule{
         /// <summary>
         /// Get Raw data for an excel export by Anubis of the media schedule
         /// </summary>
-        void GetRawData(Workbook excel);
+        void GetRawData(Workbook excel, Theme theme);
         #endregion
     }
 }
