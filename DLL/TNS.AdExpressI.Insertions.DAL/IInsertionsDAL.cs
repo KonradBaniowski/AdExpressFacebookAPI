@@ -15,5 +15,6 @@ namespace TNS.AdExpressI.Insertions.DAL
         List<VehicleInformation> GetPresentVehicles(List<VehicleInformation> vehicles, string filters, int fromDate, int toDate, int universId, Module module, bool sloganNotNull);
         DataSet GetInsertionsData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters);
         DataSet GetCreativesData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters);
+        DataSet GetMSCreativesData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters);
     }
 }

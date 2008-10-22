@@ -49,6 +49,10 @@ namespace TNS.AdExpressI.Insertions
         /// </summary>
         protected bool _getCreatives = false;
         /// <summary>
+        /// Get Creatives for media schedule and PDF export
+        /// </summary>
+        protected bool _getMSCreatives = false;
+        /// <summary>
         /// Zoom indicator
         /// </summary>
         protected string _zoomDate = string.Empty;
@@ -199,6 +203,15 @@ namespace TNS.AdExpressI.Insertions
         }
         #endregion
 
+        #region GetMSCreatives
+        public virtual ResultTable GetMSCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate) {
+            this._getMSCreatives = true;
+            this._zoomDate = zoomDate;
+            this._universId = universId;
+            return GetData(vehicle, fromDate, toDate, filters, universId);
+        }
+        #endregion
+
         #region GetData
         protected virtual ResultTable GetData(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId)
         {
@@ -209,12 +222,14 @@ namespace TNS.AdExpressI.Insertions
                 return null;
 
             DataSet ds = null;
-            if (_getCreatives)
-            {
+
+            if (_getMSCreatives) {
+                ds = _dalLayer.GetMSCreativesData(vehicle, fromDate, toDate, universId, filters);
+            }
+            else if (_getCreatives){
                 ds = _dalLayer.GetCreativesData(vehicle, fromDate, toDate, universId, filters);
             }
-            else
-            {
+            else{
                 ds = _dalLayer.GetInsertionsData(vehicle, fromDate, toDate, universId, filters);
             }
 

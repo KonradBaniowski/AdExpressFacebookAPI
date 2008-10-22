@@ -34,7 +34,14 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// Current module
         /// </summary>
         protected TNS.AdExpress.Domain.Web.Navigation.Module _module;
+        /// <summary>
+        /// Creatives config
+        /// </summary>
         protected bool _creaConfig = false;
+        /// <summary>
+        /// Media schedule creatives config
+        /// </summary>
+        protected bool _msCreaConfig = false;
         #endregion
 
         #region Constructor
@@ -311,6 +318,20 @@ namespace TNS.AdExpressI.Insertions.DAL
         }
         #endregion
 
+        #region MS Creatives
+        /// <summary>
+        /// Extract advertising detail for media schedule creatives details 
+        /// </summary>
+        /// <param name="dateBegin">Beginning of the period</param>
+        /// <param name="dateEnd">End of the period</param>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <returns>Advertising detail Data</returns>		
+        public DataSet GetMSCreativesData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters) {
+            _msCreaConfig = true;
+            return GetData(vehicle, fromDate, toDate, universId, filters);
+        }
+        #endregion
+
         #region GetData
         /// <summary>
         /// Extract advertising detail for creatives or insertions details 
@@ -329,14 +350,12 @@ namespace TNS.AdExpressI.Insertions.DAL
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
             string tmp = string.Empty;
             List<GenericColumnItemInformation> columns = null;
-            if (!_creaConfig)
-            {
-                columns = WebApplicationParameters.InsertionsDetail.GetDetailColumns(vehicle.DatabaseId, _module.Id);
-            }
-            else
-            {
+            if(_msCreaConfig)
+                columns = WebApplicationParameters.MsCreativesDetail.GetDetailColumns(vehicle.DatabaseId);
+            else if(_creaConfig)
                 columns = WebApplicationParameters.CreativesDetail.GetDetailColumns(vehicle.DatabaseId, _module.Id);
-            }
+            else
+                columns = WebApplicationParameters.InsertionsDetail.GetDetailColumns(vehicle.DatabaseId, _module.Id);
             try
             {
 
