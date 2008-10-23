@@ -374,12 +374,6 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         protected override void Render(HtmlTextWriter output)
         {
 
-
-            //if (Vehicles.Count > 0)
-            //{
-            //    AjaxScripts(output);
-            //}
-
             output.WriteLine(this.AjaxEventScript());
 
             output.WriteLine("<table align=\"center\" class=\"whiteBackGround\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");

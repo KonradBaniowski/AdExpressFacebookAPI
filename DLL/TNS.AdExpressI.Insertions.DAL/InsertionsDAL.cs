@@ -589,15 +589,11 @@ namespace TNS.AdExpressI.Insertions.DAL
             #region Media modules
 
             string listMediaAccess = string.Empty;
-            if (_module.Id == CstWeb.Module.Name.ALERTE_PORTEFEUILLE ||
-                _module.Id == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE)
+            if (_module.Id == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE)
             {
                 listMediaAccess = _session.GetSelection((TreeNode)_session.ReferenceUniversMedia, CstCustomer.Right.type.mediaAccess) + ",";
             }
-            if (_module.Id == CstWeb.Module.Name.ALERTE_CONCURENTIELLE ||
-                _module.Id == CstWeb.Module.Name.ALERTE_POTENTIELS ||
-                _module.Id == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE ||
-                _module.Id == CstWeb.Module.Name.ANALYSE_POTENTIELS)
+            if (_module.Id == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE)
             {
                 int positionUnivers = 1;
                 while (_session.CompetitorUniversMedia[positionUnivers] != null)
@@ -607,6 +603,11 @@ namespace TNS.AdExpressI.Insertions.DAL
                 }
 
 
+            }
+            if (_module.Id == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)
+            {
+                string list = _session.GetSelection(_session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
+                if (list.Length > 0) sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", tData.Prefix, list);
             }
             if (listMediaAccess.Length > 0)
             {
@@ -684,20 +685,12 @@ namespace TNS.AdExpressI.Insertions.DAL
                 GenericDetailLevel detailLevels = null;
                 switch (_module.Id)
                 {
-                    case CstWeb.Module.Name.ALERTE_CONCURENTIELLE:
-                    case CstWeb.Module.Name.ALERTE_PORTEFEUILLE:
-                    case CstWeb.Module.Name.ALERTE_POTENTIELS:
                     case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
                     case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
                         detailLevels = _session.GenericProductDetailLevel;
                         break;
-                    case CstWeb.Module.Name.ALERTE_PLAN_MEDIA:
-                    case CstWeb.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE:
                     case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
-                    case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
-
                     case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
-                    case CstWeb.Module.Name.ANALYSE_POTENTIELS:
                     case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
                     case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
                         detailLevels = _session.GenericMediaDetailLevel;
