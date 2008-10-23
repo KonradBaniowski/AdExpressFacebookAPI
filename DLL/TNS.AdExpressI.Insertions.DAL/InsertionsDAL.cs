@@ -137,14 +137,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 Schema sAdEx = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
                 foreach (VehicleInformation v in vehicles)
                 {
-                    if (v.Id != CstDBClassif.Vehicles.names.internet)
-                    {
-                        dataTable = SQLGenerator.GetDataTable(v, module.ModuleType);
-                    }
-                    else
-                    {
-                        dataTable = GetInternetTable(module.ModuleType);
-                    }
+                    dataTable = GetDataTable(v, module.ModuleType);
 
                     if (module.Id == CstWeb.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE
                         || module.Id == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE)
@@ -160,7 +153,14 @@ namespace TNS.AdExpressI.Insertions.DAL
                                     sql.Append(" UNION ");
                                 else
                                     first = false;
-                                sql.Append(" select id_vehicle from ");
+                                if (v.Id != CstDBClassif.Vehicles.names.internet)
+                                {
+                                    sql.Append(" select id_vehicle from ");
+                                }
+                                else
+                                {
+                                    sql.AppendFormat(" select {0} as id_vehicle from ", v.DatabaseId);
+                                }
                                 sql.AppendFormat(" {0} ", dataTable.SqlWithPrefix);
                                 sql.Append(" where ");
                                 AppendUniversFilters(sql, dataTable, fromDate, toDate, v, universId, filters);
@@ -206,22 +206,30 @@ namespace TNS.AdExpressI.Insertions.DAL
         }
         #endregion
 
-        #region GetInternetTable
+        #region GetDataTable
         /// <summary>
         /// Get Table to use when the study is about internet creatives
         /// </summary>
         /// <param name="moduleType">Type of module</param>
         /// <returns>Table Description</returns>
-        protected Table GetInternetTable(CstWeb.Module.Type moduleType)
+        protected Table GetDataTable(VehicleInformation vehicle, CstWeb.Module.Type moduleType)
         {
-            switch (moduleType)
+            if (vehicle.Id != CstDBClassif.Vehicles.names.internet)
             {
-                case CstWeb.Module.Type.alert:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersionAlert);
-                case CstWeb.Module.Type.analysis:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersion);
-                default:
-                    throw new ArgumentException("Type of module is not supported");
+                return SQLGenerator.GetDataTable(vehicle, _module.ModuleType);
+            }
+            else
+            {
+
+                switch (moduleType)
+                {
+                    case CstWeb.Module.Type.alert:
+                        return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersionAlert);
+                    case CstWeb.Module.Type.analysis:
+                        return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersion);
+                    default:
+                        throw new ArgumentException("Type of module is not supported");
+                }
             }
         }
         #endregion
@@ -249,8 +257,8 @@ namespace TNS.AdExpressI.Insertions.DAL
                 level = (DetailLevelItemInformation)detailLevels.Levels[i];
                 if (id > 0)
                 {
-                    //if (level.DataBaseIdField == CstDB.Fields.ID_VEHICLE && id == VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.internet))
-                    //    id = DBClassifCst.Vehicles.names.adnettrack.GetHashCode();
+                    if (level.DataBaseIdField == CstDB.Fields.ID_VEHICLE && id == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.internet))
+                        id = CstDBClassif.Vehicles.names.adnettrack.GetHashCode();
                     str.AppendFormat(" and {2}.{0} = {1}", level.DataBaseIdField, id, table.Prefix);
                 }
                 if (id == 0 && level.Id == DetailLevelItemInformation.Levels.slogan && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack)
@@ -346,7 +354,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 
             StringBuilder sql = new StringBuilder(5000);
             ArrayList detailLevelsIds = new ArrayList();
-            Table tData = SQLGenerator.GetDataTable(vehicle, _module.ModuleType);
+            Table tData = GetDataTable(vehicle, _module.ModuleType);
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
             string tmp = string.Empty;
             List<GenericColumnItemInformation> columns = null;
@@ -607,6 +615,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             if (_module.Id == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)
             {
                 string list = _session.GetSelection(_session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
+                if (list.Length > 0 && vehicle.Id == CstDBClassif.Vehicles.names.internet) list = list.Replace(vehicle.DatabaseId.ToString(), VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId.ToString());
                 if (list.Length > 0) sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", tData.Prefix, list);
             }
             if (listMediaAccess.Length > 0)
@@ -703,14 +712,21 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 sql.AppendFormat(" and wp.id_slogan={0}", _session.SloganIdZoom);
             }
-            if (_creaConfig && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack)
+            if (_creaConfig && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet)
             {
                 sql.AppendFormat(" and {0}.id_slogan is not null", tData.Prefix);
             }
 
             #endregion
 
-            sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
+            if (vehicle.Id != CstDBClassif.Vehicles.names.internet)
+            {
+                sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
+            }
+            else
+            {
+                sql.AppendFormat(" and {1}.id_vehicle={0} ", VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId, tData.Prefix);
+            }
 
         }
 
