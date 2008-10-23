@@ -291,7 +291,7 @@ DIV.simpleDropPanel {
 	FONT-SIZE: 11px;BORDER-RIGHT: #5b5b5b 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #5b5b5b 1px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #5b5b5b 1px solid; WIDTH: 200px; PADDING-TOP: 2px; BORDER-BOTTOM: #5b5b5b 1px solid; HEIGHT: 80px
 }
 DIV.simpleColumn {
-	WIDTH: 55px; HEIGHT: 25px
+	WIDTH: 55px; HEIGHT: 25px;text-align:center;
 }
 SPAN.indentedLine {
 	DISPLAY: block; MARGIN-LEFT: 110px

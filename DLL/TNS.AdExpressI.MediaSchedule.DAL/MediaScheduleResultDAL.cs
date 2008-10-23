@@ -170,6 +170,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             DataSet ds = new DataSet();
             string[] listVehicles = null;
             StringBuilder sql = new StringBuilder();
+            string groupOptional = string.Empty;
             #endregion
 
             #region Query Building
@@ -222,9 +223,11 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
             sql.Append(") ");
             sql.AppendFormat(" group by {0},date_num ", detailLevel.GetSqlGroupByFieldsWithoutTablePrefix());
-            if(_session.GetSelectedUnit().Id != CstWeb.CustomerSessions.Unit.versionNb) {
-                sql.AppendFormat(" order by {0}, date_num ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix());
+            UnitInformation u = _session.GetSelectedUnit();
+            if(u.Id == CstWeb.CustomerSessions.Unit.versionNb) {
+                sql.AppendFormat(", {0} ", u.Id.ToString());
             }
+            sql.AppendFormat(" order by {0}, date_num ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix());
             #endregion
 
             #region Execution de la requête
@@ -266,6 +269,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             string unitAlias = null;
             string mediaJoinCondition = null;
             string groupByFieldName = null;
+            string groupByOptional = null;
             #endregion
 
             #region Construction de la requête
@@ -339,24 +343,21 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 switch(periodBreakDown) {
                     case CstPeriod.PeriodBreakdownType.data:
                     case CstPeriod.PeriodBreakdownType.data_4m:
-                        sql.AppendFormat(_schAdexpr03.Label + ".stragg2(distinct {0}) as {1}", _session.GetSelectedUnit().DatabaseField, unitAlias);
+                        unitFieldName = string.Format(" to_char({0}.{1}) as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField, _session.GetSelectedUnit().Id.ToString());
+                        groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField);
                         break;
                     default:
-                        sql.AppendFormat(_schAdexpr03.Label + ".stragg2(distinct t2.column_value) as {0}", unitAlias);
+                        unitFieldName = string.Format(" {0}.{1} as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField, _session.GetSelectedUnit().Id.ToString());
+                        groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField);
                         break;
                 }
+                sql.AppendFormat("{0}", unitFieldName);
             }
             else
                 sql.AppendFormat("sum({0}) as {1}", unitFieldName, unitAlias);
             
             // From : Tables
             sql.AppendFormat(" from {0}{1} ", mediaTableName, tableName);
-            if(VehiclesInformation.Contains(vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
-                && _session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb
-                && periodBreakDown != CstPeriod.PeriodBreakdownType.data
-                && periodBreakDown != CstPeriod.PeriodBreakdownType.data_4m) {
-                sql.AppendFormat(", table({0}.list_banners) t2 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-            }
             
             // Where : Conditions media
             sql.AppendFormat("where 0=0 {0}", mediaJoinCondition);
@@ -455,7 +456,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             #endregion
 
             // Order
-            sql.AppendFormat("Group by {0} ", groupByFieldName);
+            sql.AppendFormat("Group by {0} {1}", groupByFieldName, groupByOptional);
             // And date
             sql.AppendFormat(", {0} ", dateFieldName);
             #endregion
@@ -583,7 +584,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 if(webSession.GetSelectedUnit().Id != CstWeb.CustomerSessions.Unit.versionNb)
                     sql.AppendFormat("sum({0}) as {0}", webSession.GetSelectedUnit().Id.ToString());
                 else
-                    sql.AppendFormat(_schAdexpr03.Label + ".stragg2(distinct {0}) as {0}", webSession.GetSelectedUnit().Id.ToString());
+                    sql.AppendFormat("{0} as {0}", webSession.GetSelectedUnit().Id.ToString());
 
                 return sql.ToString();
             }

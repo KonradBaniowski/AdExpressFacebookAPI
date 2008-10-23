@@ -763,7 +763,13 @@ namespace TNS.AdExpressI.Insertions.DAL
                 }
             }
 
-            AppendSloganField(sql, tData, vehicle, columns);
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)
+                && vehicle.Id == CstDBClassif.Vehicles.names.radio
+                && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.slogan)
+                )
+            {
+                sql.AppendFormat(", {0}.id_slogan ", tData.Prefix);
+            }
 
             if (!first && vehicle.Id == CstDBClassif.Vehicles.names.tv && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category))
             {

@@ -136,7 +136,7 @@ namespace TNS.AdExpressI.Insertions
             }
             for (int i = vehicles.Count-1; i >= 0; i-- )
             {
-                if (!_module.AllowedMediaUniverse.GetVehicles().Contains(vehicles[i].DatabaseId))
+                if (_module.AllowedMediaUniverse.GetVehicles() != null && !_module.AllowedMediaUniverse.GetVehicles().Contains(vehicles[i].DatabaseId))
                 {
                     vehicles.Remove(vehicles[i]);
                 }
@@ -401,6 +401,13 @@ namespace TNS.AdExpressI.Insertions
                                     tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(), _session);
                                     break;
                             }
+                            break;
+                        case GenericColumnItemInformation.Columns.dayOfWeek:
+                            Int32 n = Convert.ToInt32(row[columnsName[i]]);
+                            int y = n/10000;
+                            int m = (n-(10000*y))/100;
+                            int d = n-(10000*y + 100*m);                            
+                            tab[cLine, j] = new CellDate(new DateTime(y, m, d), string.Format("{{0:{0}}}", g.StringFormat));
                             break;
                         default:
                             if (tab[cLine, j] == null)

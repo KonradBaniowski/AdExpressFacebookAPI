@@ -74,6 +74,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			#region Variables
 			StringBuilder sql = new StringBuilder(5000);
 			string sqlFields = "";
+            string sqlGroupBy = "";
 			string sqlConstraintFields = "";
 			string sqlTables = "";
 			string sqlConstraintTables = "";
@@ -87,7 +88,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			try {
 				sqlFields = _webSession.GenericInsertionColumns.GetSqlFields(null);
-				sqlConstraintFields = _webSession.GenericInsertionColumns.GetSqlConstraintFields();
+                sqlGroupBy = _webSession.GenericInsertionColumns.GetSqlGroupByFields(null);
+                sqlConstraintFields = _webSession.GenericInsertionColumns.GetSqlConstraintFields();
 				string tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert); //WebFunctions.SQLGenerator.GetVehicleTableNameForAlertDetailResult(_vehicleName);
 				sqlTables = _webSession.GenericInsertionColumns.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, null);
 				sqlConstraintTables = _webSession.GenericInsertionColumns.GetSqlConstraintTables(DBConstantes.Schema.ADEXPRESS_SCHEMA);
@@ -96,14 +98,23 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				sql.Append(" select distinct");
 				if (sqlFields.Length > 0) sql.Append(" " + sqlFields);
 
-				if (_webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.agenceMedia))
-					sql.Append(" , advertising_agency");
+                if (_webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.agenceMedia))
+                {
+                    sql.Append(" , advertising_agency");
+                    sqlGroupBy += " , advertising_agency";
+                }
 
-				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
-					sql.Append(" , date_cover_num");
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+                {
+                    sql.Append(" , date_cover_num");
+                    sqlGroupBy += " , date_cover_num";
+                }
 
-				if (sqlConstraintFields.Length > 0)
-					sql.Append(" , " + sqlConstraintFields);//Fields for constraint management
+                if (sqlConstraintFields.Length > 0)
+                {
+                    sql.Append(" , " + sqlConstraintFields);//Fields for constraint management
+                    sqlGroupBy += " , " + _webSession.GenericInsertionColumns.GetSqlConstraintGroupByFields();
+                }
 
 				sql.Append(" from ");
 				sql.Append(" " + tableName + " ");
@@ -165,6 +176,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
 
 				#endregion
+
+                //Group by
+                sql.Append(" group by ");
+                if (sqlGroupBy.Length > 0) sql.Append(sqlGroupBy);
+
 
 				// Order by
 				sql.Append(orderby);

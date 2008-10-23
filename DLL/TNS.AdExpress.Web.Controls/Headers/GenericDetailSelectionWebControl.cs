@@ -550,7 +550,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
 			#region Début du tableau (support et dates)
             output.Write("<table width=\"500\" class=\"whiteBackGround\" style=\"MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px;BORDER:SOLID 0px;\"");
-			output.Write("cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">");
+			output.Write("cellPadding=\"0\" cellSpacing=\"0\" align=\"left\" border=\"0\">");
 			#endregion
 
 			if ((!_idVehicleFromTab.Equals(null))&&(_idVehicleFromTab!=0))

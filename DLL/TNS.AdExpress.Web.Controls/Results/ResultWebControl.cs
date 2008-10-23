@@ -31,6 +31,7 @@ using NewCreatives = TNS.AdExpressI.NewCreatives;
 
 using Domain=TNS.AdExpress.Domain.Web.Navigation;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Web.Controls.Results{
 	/// <summary>
@@ -832,13 +833,16 @@ namespace TNS.AdExpress.Web.Controls.Results{
                 js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" class=\"resultTableWithoutBorder\">');");
 
             js.Append("\r\n\t\t sb.append('<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0>');");
-			for (int n = 0; n < _nbTableBeginningLinesToRepeat; n++) {
+			//for (int n = 0; n < _nbTableBeginningLinesToRepeat; n++) {
+            for (int n = 0; n < 1; n++)
+            {
 				//js.Append("\r\n\t\t sb.append( tab[0]);");
 				js.Append("\r\n\t\t sb.append( tab[" + n + "]);");
 			}
 			js.Append("\r\n\t if(currentPageIndex==1) ");
 			//js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + 1 ; ");
-			js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + " + _nbTableBeginningLinesToRepeat + " ; ");
+            //js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + " + _nbTableBeginningLinesToRepeat + " ; ");
+			js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + " + 1 + " ; ");
 			js.Append("\r\n\t else ");
 			js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ); ");
 			
@@ -1995,14 +1999,15 @@ namespace TNS.AdExpress.Web.Controls.Results{
                 // Lorsque le tableau ne contient pas une ligne total, on met le header dans la première case du tableau tab
                 // et on met la premier ligne du résultat dans la deuxième case de tab, ainsi on n'affiche pas la première ligne du résultat
                 // au début de chaque page de pagination
-                if (temp.Length > 0 && _data.LinesNumber > 0 && ((LineStart)_data[0, 0]).LineType != LineType.total) {
+//                if (temp.Length > 0 && _data.LinesNumber > 0 && ((LineStart)_data[0, 0]).LineType != LineType.total) {
+//                {
                     tab = new object[_data.LinesNumber + 1];
                     tab[nbLineToSchow] = temp;
                     nbLineToSchow++;
                     temp = "";
                     newtab = new object[nbLineToSchow];
                     Array.Copy(tab, newtab, nbLineToSchow);
-                }
+                //}
 				try{
 					for(i = 0; i < _data.LinesNumber; i++) {
 						//Utilisation des styles au niveau des balises <TR>
@@ -2054,40 +2059,39 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			int[] tab;
 			int nbLinesType=data.LinesStart.Count;
 
-			tab = new int[nbLineToSchow];
+			tab = new int[nbLineToSchow+1];
 
-			int[] tLevIndex = new int[nbLinesType];
-			for(int i = 0; i < tLevIndex.Length; i++){
-				tLevIndex[i] = -1;
-			}
-
-			LineStart lStart = null;
-			CellLevel curLevel = null;
-			int tabLine = 0;
-			for(int i = 0; i < data.LinesNumber; i++){
-				lStart = data.GetLineStart(i);
-				if (lStart.LineType==LineType.total){
-					tab[tabLine]=0;
-					tabLine++;
-				}
-				else if (!(lStart is LineHide)){
-					//recherche du niveau
-					for(int j=1;j<data.ColumnsNumber - 2;j++){
-						curLevel = data[i,j] as CellLevel;
-						if (curLevel != null){
-							tLevIndex[curLevel.Level] = tabLine;
-							if (curLevel.Level > 1){
-								tab[tabLine] = tLevIndex[curLevel.Level-1];
-							}
-							else{
-								tab[tabLine] = 0;
-							}
-							tabLine++;
-							break;
-						}
-					}
-				}
-				
+            List<LineType> lTypes = new List<LineType>();
+            List<int> lTypeIndex = new List<int>();
+            LineType cLineType = LineType.level4;
+            LineStart cLineStart = null;
+            LineType oldLineType = LineType.level4;
+            lTypes.Add(LineType.header);
+            lTypeIndex.Add(0);
+            int cLine = 1;
+            int pLine = -1;
+            for (int i = 0; i < data.LinesNumber; i++)
+            {
+                cLineStart = data.GetLineStart(i);
+                cLineType = cLineStart.LineType;
+				if (cLineType != oldLineType && !(cLineStart is LineHide) ){
+                    oldLineType = cLineType;
+                    if (!lTypes.Contains(cLineType)){
+                        lTypes.Add(cLineType);
+                        lTypeIndex.Add(cLine);
+                    }
+                    lTypeIndex[lTypes.IndexOf(cLineType)] = cLine;
+                }
+                pLine = lTypes.IndexOf(cLineType);
+                if (pLine > 0)
+                {
+                    tab[cLine] = lTypeIndex[pLine - 1];
+                }
+                else
+                {
+                    tab[cLine] = 0;
+                }
+                cLine++;
 			}
 
 

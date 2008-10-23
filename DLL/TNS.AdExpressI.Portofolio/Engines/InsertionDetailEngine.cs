@@ -300,6 +300,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 										if (showDate) {
 											type = assembly.GetType(Column.CellType);
 											curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
+                                            curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
 											date = row[Column.DataBaseField].ToString();
 											if (date.Length > 0)
 												curCell.SetCellValue((object)new DateTime(int.Parse(date.Substring(0, 4)), int.Parse(date.Substring(4, 2)), int.Parse(date.Substring(6, 2))));
@@ -315,13 +316,15 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 												tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
 											else
 												tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(0);
+                                            curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
 										}
 										break;
 									case GenericColumnItemInformation.Columns.product:
 										if (Column.Visible && showProduct) {
 											type = assembly.GetType(Column.CellType);
 											curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
-											curCell.SetCellValue(row[Column.DataBaseField]);
+                                            curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
+                                            curCell.SetCellValue(row[Column.DataBaseField]);
 											tab[iCurLine, iCurColumn++] = curCell;
 										}
 										break;
@@ -329,7 +332,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 										if (Column.Visible) {
 											type = assembly.GetType(Column.CellType);
 											curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
-											curCell.SetCellValue(row[Column.DataBaseField]);
+                                            curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
+                                            curCell.SetCellValue(row[Column.DataBaseField]);
 											tab[iCurLine, iCurColumn++] = curCell;
 										}
 										break;

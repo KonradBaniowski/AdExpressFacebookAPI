@@ -961,11 +961,13 @@ namespace TNS.AdExpressI.MediaSchedule {
                     #region Treat present
                     try {
                         while(periodItemsList[currentDate] != Int64.Parse(currentRow["date_num"].ToString())) {
-                            //tab[currentLineIndex,FIRST_PERIOD_INDEX+currentDate]=false;
-                            if(selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
-                                oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItemIds(-1);
-                            else
-                                oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem((long)-1);
+                            if (oTab[currentLineIndex, firstPeriodIndex + currentDate] == null)
+                            {
+                                if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                    oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItemIds(-1);
+                                else
+                                    oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem((long)-1);
+                            }
                             currentDate++;
                         }
                     }
@@ -976,11 +978,11 @@ namespace TNS.AdExpressI.MediaSchedule {
                     if(selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
                         unitIds = new CellIdsNumber();
                         unitIds.Add(currentRow[unitAlias].ToString().Split(','));
-                        oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItemIds(Int64.Parse(currentRow["period_count"].ToString()));
+                        oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItemIds(Math.Max(((MediaPlanItemIds)oTab[currentLineIndex, firstPeriodIndex + currentDate]).PeriodicityId, Int64.Parse(currentRow["period_count"].ToString())));
                     }
                     else {
                         unit = double.Parse(currentRow[unitAlias].ToString());
-                        oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem(Int64.Parse(currentRow["period_count"].ToString()));
+                        oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem(Math.Max(((MediaPlanItem)oTab[currentLineIndex, firstPeriodIndex + currentDate]).PeriodicityId, Int64.Parse(currentRow["period_count"].ToString())));
                     }
 
                     if(nbLevels >= 4) {
@@ -1074,15 +1076,22 @@ namespace TNS.AdExpressI.MediaSchedule {
                     currentDate++;
                     oldCurrentDate = currentDate;
                     while(oldCurrentDate < periodItemsList.Count) {
-                        if(selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
-                            oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItemIds(-1);
-                        }
-                        else {
-                            oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem(-1);
+                        if (oTab[currentLineIndex, firstPeriodIndex + currentDate] == null)
+                        {
+                            if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                            {
+                                oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItemIds(-1);
+                            }
+                            else
+                            {
+                                oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem(-1);
+                            }
                         }
                         oldCurrentDate++;
                     }
                     #endregion
+
+                    currentDate = 0;
                 }
             }
             catch(System.Exception) {
@@ -1877,20 +1886,20 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="level">Column index of the current level (except for level 4 which represent by level 3)</param>
         protected virtual void AppendInsertionLink(object[,] data, StringBuilder t, string themeName, int line, string cssClasse, int level) {
             if(data[line, level] != null) {
-                //t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertion('{1}','{2}','{3}','-1','{4}');\"><img border=0 src=\"/App_Themes/{5}/Images/Common/picto_plus.gif\"></a></td>"
-                //    , cssClasse
-                //    , _session.IdSession
-                //    , GetLevelFilter(data, line, level)
-                //    , _zoom
-                //    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
-                //    , themeName);
-                t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertions('{1}','{2}','{3}');\"><img border=0 src=\"/App_Themes/{4}/Images/Common/picto_plus.gif\"></a></td>"
+                t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertion('{1}','{2}','{3}','-1','{4}');\"><img border=0 src=\"/App_Themes/{5}/Images/Common/picto_plus.gif\"></a></td>"
                     , cssClasse
                     , _session.IdSession
                     , GetLevelFilter(data, line, level)
                     , _zoom
-                    , themeName
-                );
+                    , CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
+                    , themeName);
+                //t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:OpenInsertions('{1}','{2}','{3}');\"><img border=0 src=\"/App_Themes/{4}/Images/Common/picto_plus.gif\"></a></td>"
+                //    , cssClasse
+                //    , _session.IdSession
+                //    , GetLevelFilter(data, line, level)
+                //    , _zoom
+                //    , themeName
+                //);
             }
             else {
                 t.AppendFormat("<td align=\"center\" class=\"{0}\">&nbsp;</td>", cssClasse);

@@ -62,17 +62,12 @@
       <detailColumns>
         <detailColumn id="13">
           <allowedModules>
-            <allowedModule name="Alerte Plan Média" privilegecode="198"/>
-            <allowedModule name="Alerte Plan Média Concurrentiel" privilegecode="199"/>
-            <allowedModule name="Alerte concurrentielle" privilegecode="277"/>
-            <allowedModule name="Alerte de potentiels" privilegecode="280"/>
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
-            <allowedModule name="Analyse Plan Média Annonceur Concurrentiel" privilegecode="184"/>
-            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
-            <allowedModule name="Analyse dynamique" privilegecode="197"/>
-            <allowedModule name="Analyse de potentiels" privilegecode="281"/>
-            <allowedModule name="Alerte Portefeuille d'un support" privilegecode="282"/>
+            <allowedModule name="present/absent" privilegecode="278"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+            <allowedModule name="Analyse des dispositifs" privilegecode="1780"/>
+            <allowedModule  name="Analyse des programmes" privilegecode="1781"/>
           </allowedModules>
         </detailColumn>
       </detailColumns>

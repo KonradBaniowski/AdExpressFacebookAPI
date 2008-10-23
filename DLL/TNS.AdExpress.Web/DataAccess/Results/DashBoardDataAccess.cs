@@ -88,7 +88,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 sql += GetSqlQuery(webSession, yearN.ToString(), hasUnionAll);
                 if (hasUnionAll)
                 {
-                    sql += " UNION ALL";
+                    sql += " UNION ALL ";
                     //Requete Période N1							
                     sql += GetSqlQuery(webSession, yearN1.ToString(), !hasUnionAll);
                 }
@@ -216,7 +216,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             //Droits produits et média 
             sql += "  " + GetCustomerRight(webSession);
             //Clause Group by
-            sql += "   Group by " + GetGroupBy(webSession);
+            //sql += "   Group by " + GetGroupBy(webSession);
 
             if (webSession.CurrentModule == WebModule.Name.TABLEAU_DE_BORD_EVALIANT &&
                 ((webSession.PreformatedTable != CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units
@@ -446,12 +446,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 {
                     case CstPeriodDetail.monthly:
                         if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
-                            return DBConstantes.DashBoard.Tables.TABLEAU_BORD_EVALIANT_MONTH + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                            //return DBConstantes.DashBoard.Tables.TABLEAU_BORD_EVALIANT_MONTH + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                            return "TABLEAU_BORD01A.TABLEAU_BORD_EVAL_R2_MTH" + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
                         else
                             return DBConstantes.DashBoard.Tables.TABLEAU_BORD_PLURI_MONTH + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
                     case CstPeriodDetail.weekly:
                         if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
-                            return DBConstantes.DashBoard.Tables.TABLEAU_BORD_EVALIANT_WEEK + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                            //return DBConstantes.DashBoard.Tables.TABLEAU_BORD_EVALIANT_WEEK + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                            return "TABLEAU_BORD01A.TABLEAU_BORD_EVAL_R2_WEEK" + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
                         else
                             return DBConstantes.DashBoard.Tables.TABLEAU_BORD_PLURI_WEEK + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
                     default:
@@ -1669,7 +1671,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice:
                     //Média
                     sql += "  " + GetMediaGroupBy(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
-                    sql += ", list_banners ";
+                    sql += " ";
                     break;
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
                     sql += " " + GetFormatGroupBy(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE);
@@ -2197,7 +2199,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 
             if (allUnit)
             {
-                sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, insertion.DatabaseField, insertion.Id.ToString());
+                sqlUnit.AppendFormat("{0}{1} as {2}", dataTablePrefixe, insertion.DatabaseField, insertion.Id.ToString());
                 sqlUnit.AppendFormat(", ");
                 //sqlUnit.AppendFormat("{0}{1} as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, "stragg2(distinct " + nestedTablePrefixe + ".COLUMN_VALUE)", versionNb.Id.ToString());
                 sqlUnit.AppendFormat("{0} as {1} ", versionNb.DatabaseMultimediaField, versionNb.Id.ToString());

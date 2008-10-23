@@ -18,7 +18,8 @@ namespace TNS.AdExpress.Web.Core.Result {
         public CellOneLevelInsertionsLink(CellLevel cellLevel,WebSession webSession,GenericDetailLevel genericDetailLevel)
             : base(cellLevel,webSession,genericDetailLevel) {
             _linkRules=new OneLevelShowLinkRules(cellLevel,genericDetailLevel);
-            _link="javascript:OpenCreationCompetitorAlert('{0}','{1},{2}','');";
+            //_link="javascript:OpenCreationCompetitorAlert('{0}','{1},{2}','');";
+            _link = "javascript:OpenInsertion('{0}','{1},{2}','','-1','{3}');";
         }
         /// <summary>
         /// Constructeur
@@ -31,7 +32,8 @@ namespace TNS.AdExpress.Web.Core.Result {
         public CellOneLevelInsertionsLink(CellLevel cellLevel,WebSession webSession,GenericDetailLevel genericDetailLevel,string zoomDate,int universId)
             : base(cellLevel,webSession,genericDetailLevel) {
             _linkRules=new OneLevelShowLinkRules(cellLevel,genericDetailLevel);
-            _link="javascript:OpenCreationCompetitorAlert('{0}','{1},{2}','');";
+            //_link="javascript:OpenCreationCompetitorAlert('{0}','{1},{2}','');";
+            _link = "javascript:OpenInsertion('{0}','{1},{2}','','-1','{3}');";
         }
         #endregion
 
@@ -42,7 +44,7 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <returns>Adresse du lien</returns>
         public override string GetLink() {
             if(_linkRules.ShowLink()) {
-                return (string.Format(_link,_webSession.IdSession,_cellLevel.Id,_cellLevel.Level));
+                return (string.Format(_link,_webSession.IdSession,_cellLevel.Id,_cellLevel.Level, _webSession.CurrentModule));
             }
             return ("");
         }

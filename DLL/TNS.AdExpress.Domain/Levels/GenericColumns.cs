@@ -122,7 +122,7 @@ namespace TNS.AdExpress.Domain.Level
                 }
                 else {
                     if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
-                        sql += string.Format("{0}.stragg({1}) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03), currentColumn.DataBaseField, currentColumn.DataBaseAliasField);
+                        sql += string.Format("{0}.stragg({1}) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, currentColumn.DataBaseField, ((currentColumn.DataBaseAliasField != null && currentColumn.DataBaseAliasField.Length > 0) ? currentColumn.DataBaseAliasField : currentColumn.DataBaseField));
                 }
             }
             if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
@@ -147,7 +147,8 @@ namespace TNS.AdExpress.Domain.Level
                     }
                     else {
                         if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
-                            sql += string.Format("{0}.stragg({1}) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03), currentColumn.DataBaseField, currentColumn.DataBaseAliasField);
+                            sql += string.Format("{0}.stragg({1}) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, currentColumn.DataBaseField
+                                ,((currentColumn.DataBaseAliasField != null && currentColumn.DataBaseAliasField.Length > 0) ? currentColumn.DataBaseAliasField : currentColumn.DataBaseField));
                     }
 				}
 			}
@@ -309,16 +310,19 @@ namespace TNS.AdExpress.Domain.Level
         public static string GetSqlOrderFields(List<GenericColumnItemInformation> columns, ArrayList detailLevelList)
         {
             string sql = "";
-            foreach (GenericColumnItemInformation currentColumn in columns)
+            foreach (GenericColumnItemInformation currentColumn in columns)            
             {
-                if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))
+                if (currentColumn.Id != GenericColumnItemInformation.Columns.associatedFile && currentColumn.Id != GenericColumnItemInformation.Columns.associatedFileMax && currentColumn.Id != GenericColumnItemInformation.Columns.poster && currentColumn.Id != GenericColumnItemInformation.Columns.visual)
                 {
-                    if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0)
+                    if (detailLevelList == null || detailLevelList.Count == 0 || !detailLevelList.Contains(currentColumn.IdDetailLevelMatching))
                     {
-                        if (currentColumn.GetSqlFieldForOrder() != null && currentColumn.GetSqlFieldForOrder().Length > 0)
-                            sql += currentColumn.GetSqlFieldForOrder() + ",";
-                        if (currentColumn.GetSqlIdFieldForOrder() != null && currentColumn.GetSqlIdFieldForOrder().Length > 0)
-                            sql += currentColumn.GetSqlIdFieldForOrder() + ",";
+                        if (currentColumn.Constraints == null || currentColumn.Constraints.Count <= 0)
+                        {
+                            if (currentColumn.GetSqlFieldForOrder() != null && currentColumn.GetSqlFieldForOrder().Length > 0)
+                                sql += currentColumn.GetSqlFieldForOrder() + ",";
+                            if (currentColumn.GetSqlIdFieldForOrder() != null && currentColumn.GetSqlIdFieldForOrder().Length > 0)
+                                sql += currentColumn.GetSqlIdFieldForOrder() + ",";
+                        }
                     }
                 }
             }

@@ -25,6 +25,7 @@ using CustomerConstantes = TNS.AdExpress.Constantes.Customer;
 using WebExceptions = TNS.AdExpress.Web.Exceptions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Web.Controls.Results {
@@ -247,7 +248,9 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			parameters[2] = _dayOfWeek;
 			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			//return (portofolioResult.GetPortofolioDetailMediaResultTable());
-			return (portofolioResult.GetInsertionDetailResultTable());
+            ResultTable r = portofolioResult.GetInsertionDetailResultTable();
+            r.CultureInfo = WebApplicationParameters.AllowedLanguages[customerWebSession.SiteLanguage].CultureInfo;
+			return r;
         }
         #endregion
 
