@@ -2037,7 +2037,7 @@ namespace TNS.AdExpress.Constantes.Web{
         /// <summary>
         /// Répertoire contenant les visuels de la presse
         /// </summary>
-        public static string LOCAL_PATH_IMAGE = string.Empty;
+        public static string LOCAL_PATH_IMAGE = "\\\\frmitch-fs03/quanti_multimedia_perf/AdexDatas/Press/SCANS/";
         /// <summary>
         /// Répertoire contenant les visuels du Marketing Direct
         /// </summary>
