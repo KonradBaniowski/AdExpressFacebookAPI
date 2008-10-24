@@ -69,6 +69,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 //			double avgNbWeek=0, minNbWeek=0, maxNbWeek=0;
 //			double avgGRPWeek=0, minGRPWeek=0, maxGRPWeek=0;
 			ResultTable resultTable=null;
+			string grpFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.grp).Format;
+			string afinityFormat = "max0", cGrpFormat = "max0", numberFormat = "max0";
 			#endregion			
 
 			try{
@@ -115,7 +117,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					headers.Root.Add(new Header(GestionWeb.GetWebWord(2096,webSession.SiteLanguage),APPMConstantes.MIN_COLUMN_INDEX-1));
 					headers.Root.Add(new Header(GestionWeb.GetWebWord(2097,webSession.SiteLanguage),APPMConstantes.MAX_COLUMN_INDEX-1));
 					#endregion
-
+					
 					#region Crétaion de la table resultTable
 					long nbLines=LINES_NUMBER;
 					long nbCol;
@@ -314,47 +316,73 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1712,webSession.SiteLanguage)+" : ");
 					//budget (moyenne)
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellEuro(avgBudget);
+					CellEuro cE = new CellEuro(avgBudget);
+					cE.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).Format;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cE;
 					//budget (min)
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellEuro(minBudget);
+					CellEuro cE1 = new CellEuro(minBudget);
+					cE1.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).Format;
+					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cE1;
 					//budget (max)
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellEuro(maxBudget);
+					CellEuro cE2 = new CellEuro(maxBudget);
+					cE2.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).Format;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cE2;
 					#endregion
 
 					#region Supports
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2108,webSession.SiteLanguage)+" : ");
 					//Nombre de supports (moyenne)
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellNumber(avgNbMedia);
+					CellNumber cN = new CellNumber(avgNbMedia);
+					cN.StringFormat = numberFormat;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cN;
 					//Nombre de supports (min)
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellNumber(minNbMedia);
+					CellNumber cN1 = new CellNumber(minNbMedia);
+					cN1.StringFormat = numberFormat;
+					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cN1;
 					//Nombre de supports (max)
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellNumber(maxNbMedia);
+					CellNumber cN2 = new CellNumber(maxNbMedia);
+					cN2.StringFormat = numberFormat;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cN2;
 					#endregion
 
+					string insertionFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).Format;
 					#region Insertions
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1398,webSession.SiteLanguage)+" : ");
 					//nombre d'insertions (moyenne)
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellInsertion(avgInsertions);
+					CellInsertion cI = new CellInsertion(avgInsertions);
+					cI.StringFormat = insertionFormat;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cI;
 					//nombre d'insertions (min)
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellInsertion(minInsertions);
+					CellInsertion cI1 = new CellInsertion(minInsertions);
+					cI1.StringFormat = insertionFormat;
+					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cI1;
 					//nombre d'insertions (max)
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellInsertion(maxInsertions);
+					CellInsertion cI2 = new CellInsertion(maxInsertions);
+					cI2.StringFormat = insertionFormat;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cI2;
 					#endregion
 
+					string pageFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages).Format;
 					#region Pages
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1385,webSession.SiteLanguage)+" : ");
 					//nombre de pages utilisés (moyenne)
 					avgPages=Math.Round(avgPages,3);
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellPage(avgPages);
+					CellPage cP = new CellPage(avgPages);
+					cP.StringFormat = pageFormat;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cP;
 					//nombre de pages utilisés (min)
 					minPages=Math.Round(minPages,3);
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellPage(minPages);
+					CellPage cP1 = new CellPage(minPages);
+					cP1.StringFormat = pageFormat;
+					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cP1;
 					//nombre de pages utilisés (max)
 					maxPages=Math.Round(maxPages,3);
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellPage(maxPages);
+					CellPage cP2 = new CellPage(maxPages);
+					cP2.StringFormat = pageFormat;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cP2;
 					#endregion
 
 					#region Ligne blanche
@@ -365,100 +393,107 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellLabel("");
 					#endregion
 
-					#region Durée de présence & nombre de GRP/semaine active sur cible
-//					if(presenceDuration!=null && presenceDuration.Rows.Count>0){
-//
-//						DataRow presenceData = presenceDuration.Rows[0];
-//
-//						#region Durée de présence (nombre de semaine actives)
-//						avgNbWeek = Convert.ToDouble(presenceData["avgNbWeek"].ToString());
-//						minNbWeek = Convert.ToDouble(presenceData["minNbWeek"].ToString());
-//						maxNbWeek = Convert.ToDouble(presenceData["maxNbWeek"].ToString());
-//						lineIndex = resultTable.AddNewLine(LineType.level1);
-//						resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2083,webSession.SiteLanguage)+" : ");
-//						resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellNumber(avgNbWeek);
-//						resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellNumber(minNbWeek);
-//						resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellNumber(maxNbWeek);
-//						#endregion
-//
-//						#region nombre de GRP/semaine active sur cible
-//						avgGRPWeek = Convert.ToDouble(presenceData["avgGRP_Week"].ToString());	
-//						minGRPWeek = Convert.ToDouble(presenceData["minGRP_Week"].ToString());	
-//						maxGRPWeek = Convert.ToDouble(presenceData["maxGRP_Week"].ToString());	
-//						lineIndex = resultTable.AddNewLine(LineType.level2);
-//						resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2084,webSession.SiteLanguage)+" : ");
-//						resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellNumber(avgGRPWeek);
-//						resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellNumber(minGRPWeek);
-//						resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellNumber(maxGRPWeek);
-//						#endregion
-//
-//					}
-					#endregion
-
+					
 					#region GRP (cible selectionnée)
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1673,webSession.SiteLanguage)+" : ");
 					//nombre de GRP(cible selectionnée) (moyenne)
 					avgAdditionalTargetGRP=Math.Round(avgAdditionalTargetGRP,3);
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellGRP(avgAdditionalTargetGRP);
+					CellGRP cGrp = new CellGRP(avgAdditionalTargetGRP);
+					cGrp.StringFormat = grpFormat;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cGrp;
 					//nombre de GRP(cible selectionnée) (min)
 					minAdditionalTargetGRP=Math.Round(minAdditionalTargetGRP,3);
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellGRP(minAdditionalTargetGRP);
+					CellGRP cGrp1 = new CellGRP(minAdditionalTargetGRP);
+					cGrp1.StringFormat = grpFormat;
+					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cGrp1;
 					//nombre de GRP(cible selectionnée) (max)
 					maxAdditionalTargetGRP=Math.Round(maxAdditionalTargetGRP,3);
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellGRP(maxAdditionalTargetGRP);
+					CellGRP cGrp2 = new CellGRP(maxAdditionalTargetGRP);
+					cGrp2.StringFormat = grpFormat;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cGrp2;
 					#endregion
 
 					#region GRP (cible 15 ans et +)
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1673,webSession.SiteLanguage) + " " +  targetBase + " : ");
 					//nombre de GRP(cible 15 ans et +) (moyenne)
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellGRP(Math.Round(avgBaseTargetGRP, 3));
+					CellGRP cGrp3 = new CellGRP(Math.Round(avgBaseTargetGRP, 3));
+					cGrp3.StringFormat = grpFormat;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cGrp3;
 					//nombre de GRP(cible 15 ans et +) (min)
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellGRP(Math.Round(minBaseTargetGRP, 3));
+					CellGRP cGrp4 = new CellGRP(Math.Round(minBaseTargetGRP, 3));
+					cGrp4.StringFormat = grpFormat;
+					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cGrp4;
 					//nombre de GRP(cible 15 ans et +) (max)
 					maxAdditionalTargetGRP=Math.Round(maxAdditionalTargetGRP,3);
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellGRP(Math.Round(maxBaseTargetGRP, 3));
+					CellGRP cGrp5 = new CellGRP(Math.Round(maxBaseTargetGRP, 3));
+					cGrp5.StringFormat = grpFormat;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cGrp5;
 					#endregion
 
 					#region Affinité GRP vs cible 15 ans et +
                     //Affinité GRP vs cible 15 ans à + (moyenne)
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2076,webSession.SiteLanguage)+" vs "+targetBase+" : ");
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellAffinity(avgGRPAffinities);
+					CellAffinity cAf = new CellAffinity(avgGRPAffinities);
+					cAf.StringFormat = afinityFormat;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cAf;
 					//Affinité GRP vs cible 15 ans à + (min) & (max)
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellAffinity(minGRPAffinities);
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellAffinity(maxGRPAffinities);
+					CellAffinity cAf1 = new CellAffinity(minGRPAffinities);
+					cAf1.StringFormat = afinityFormat;
+					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cAf1;
+					CellAffinity cAf2 = new CellAffinity(maxGRPAffinities);
+					cAf2.StringFormat = afinityFormat;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cAf2;
 					#endregion
 
 					#region Coût GRP(cible selectionnée)
 					// Coût GRP(cible selectionnée) (moyenne)
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1675,webSession.SiteLanguage)+" : ");
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellCGRP(avgAdditionalTargetCost);
+					CellCGRP cCgrp = new CellCGRP(avgAdditionalTargetCost);
+					cCgrp.StringFormat = cGrpFormat;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cCgrp;
 					// Coût GRP(cible selectionnée) (min) & (max)
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellCGRP(minAdditionalTargetCost);
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellCGRP(maxAdditionalTargetCost);
+					CellCGRP cCgrp1 = new CellCGRP(minAdditionalTargetCost);
+					cCgrp1.StringFormat = cGrpFormat;
+					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cCgrp1;
+					CellCGRP cCgrp2 = new CellCGRP(maxAdditionalTargetCost);
+					cCgrp2.StringFormat = cGrpFormat;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cCgrp2;
 					#endregion
 
 					#region Coût GRP(cible 15 et +)
 					// Coût GRP(cible 15 et +) (moyenne)
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1675,webSession.SiteLanguage) + " " +  targetBase + " : ");
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellCGRP(avgBaseTargetCost);
+					CellCGRP cCgrp3 = new CellCGRP(avgBaseTargetCost);
+					cCgrp3.StringFormat = cGrpFormat;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cCgrp3;
 					// Coût GRP(cible 15 et +) (min) & (max)
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellCGRP(minBaseTargetCost);
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellCGRP(maxBaseTargetCost);
+					CellCGRP cCgrp4 = new CellCGRP(minBaseTargetCost);
+					cCgrp4.StringFormat = cGrpFormat;
+					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]= cCgrp4;
+					CellCGRP cCgrp5 = new CellCGRP(maxBaseTargetCost);
+					cCgrp5.StringFormat = cGrpFormat;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cCgrp5;
 					#endregion	
 
 					#region Affinité coût GRP vs cible 15 ans et +
 					//Affinité coût GRP vs cible 15 ans à + (moyenne)
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2077,webSession.SiteLanguage)+" vs "+targetBase+" : ");
-					resultTable[lineIndex,APPMConstantes.AVERAGE_COLUMN_INDEX]=new CellAffinity(avgCGRPAffinities);
+					CellAffinity cAf3 = new CellAffinity(avgCGRPAffinities);
+					cAf3.StringFormat = afinityFormat;
+					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cAf3;
 					//Affinité coût GRP vs cible 15 ans à + (min) & (max)
-					resultTable[lineIndex,APPMConstantes.MIN_COLUMN_INDEX]=new CellAffinity(minCGRPAffinities);
-					resultTable[lineIndex,APPMConstantes.MAX_COLUMN_INDEX]=new CellAffinity(maxCGRPAffinities);
+					CellAffinity cAf4 = new CellAffinity(minCGRPAffinities);
+					cAf4.StringFormat = afinityFormat;
+					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cAf4;
+					CellAffinity cAf5 = new CellAffinity(maxCGRPAffinities);
+					cAf5.StringFormat = afinityFormat;
+					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cAf5;
 					#endregion
 
 					#endregion

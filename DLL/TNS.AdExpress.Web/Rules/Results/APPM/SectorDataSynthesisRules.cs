@@ -18,6 +18,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Units;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Rules.Results.APPM{
 	/// <summary>
@@ -75,6 +76,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			double pages=0;
 			ResultTable resultTable=null;
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+			string numberFormat = "max0", affinityFormat = "max0", cGrpFormat = "max0";
 			#endregion	
 
 			try{
@@ -152,65 +154,87 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 
 					// Période d'analyse
 					lineIndex = resultTable.AddNewLine(LineType.level1);
-					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(381,webSession.SiteLanguage)+" : ");
+					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(381,webSession.SiteLanguage)+" : ");					
 					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellLabel(startDate+" "+GestionWeb.GetWebWord(125,webSession.SiteLanguage)+" "+endDate);
 
 					//budget (euros)
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2075,webSession.SiteLanguage)+" : ");
-					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellEuro(budget);
+					CellEuro cE = new CellEuro(budget);
+					cE.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).Format;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cE;
 
 					//nombre de titre
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2108,webSession.SiteLanguage)+" : ");
-					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellNumber(numberOfMedia);
+					CellNumber cN = new CellNumber(numberOfMedia);
+					cN.StringFormat = numberFormat;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN;
 
 					//nombre d'insertions
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(144,webSession.SiteLanguage)+" : ");
-					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellInsertion(insertions);
+					CellInsertion cI = new CellInsertion(insertions);
+					cI.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).Format;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cI;
 					
 					//nombre de pages utilisés
 					pages=Math.Round(pages,3);
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1385,webSession.SiteLanguage)+" : ");
-					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellPage(pages);
+					CellPage cP = new CellPage(pages);
+					cP.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages).Format;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cP;
 					
 					//nombre d'annonceurs
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2073,webSession.SiteLanguage)+" : ");
-					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellNumber(numberOfAdvertiser);
+					CellNumber cN1 = new CellNumber(numberOfAdvertiser);
+					cN1.StringFormat = numberFormat;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN1;
 					
 					//nombre de marques
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2074,webSession.SiteLanguage)+" : ");
-					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellNumber(numberOfBrand);
+					CellNumber cN2 = new CellNumber(numberOfBrand);
+					cN2.StringFormat = numberFormat;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN2;
 					
 					//nombre de produits
 					if (showProduct) {
 						lineIndex = resultTable.AddNewLine(LineType.level2);
 						resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, webSession.SiteLanguage) + " : ");
-						resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellNumber(numberOfProduct);
+						CellNumber cN3 = new CellNumber(numberOfProduct);
+						cN3.StringFormat = numberFormat;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN3;
 					}
 					//nombre de GRP(cible selectionnée)
 					additionalTargetGRP=Math.Round(additionalTargetGRP,3);
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1673,webSession.SiteLanguage)+" : ");
-					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellGRP(additionalTargetGRP);
+					CellGRP cGrp = new CellGRP(additionalTargetGRP);
+					cGrp.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.grp).Format;
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cGrp;
 					
 					//nombre de GRP(cible 15 ans et +)
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1673,webSession.SiteLanguage) + " " +  targetBase + " : ");
-					resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellGRP(Math.Round(baseTargetGRP, 3));
+					CellGRP cGrp1 = new CellGRP(Math.Round(baseTargetGRP, 3));
+					cGrp1.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.grp).Format; 
+					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cGrp1;
 					
 					//Affinité GRP vs cible 15 ans à +
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2076,webSession.SiteLanguage)+" vs "+targetBase+" : ");
 					if(baseTargetGRP>0){
-						resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellAffinity(Math.Round((additionalTargetGRP/baseTargetGRP)*100,3));
+						CellAffinity cAf = new CellAffinity(Math.Round((additionalTargetGRP / baseTargetGRP) * 100, 3));
+						cAf.StringFormat = affinityFormat;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cAf;
 					}
 					else{
-						resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellAffinity(0.0);
+						CellAffinity cAf1 = new CellAffinity(0.0);
+						cAf1.StringFormat = affinityFormat;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cAf1;
 					}
 					// Coût GRP(cible selectionnée)
 					additionalTargetCost=Math.Round(additionalTargetCost,3);
@@ -218,28 +242,40 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1675,webSession.SiteLanguage)+" : ");
 					if(additionalTargetGRP>0){
 						additionalTargetCost=Math.Round(budget/additionalTargetGRP,3);
-						resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellCGRP(additionalTargetCost);
+						CellCGRP cGrp2 = new CellCGRP(additionalTargetCost);
+						cGrp2.StringFormat = cGrpFormat;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cGrp2;
 					}
 					else{
-						resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellCGRP(0.0);
+						CellCGRP cGrp3 = new CellCGRP(0.0);
+						cGrp3.StringFormat = cGrpFormat;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cGrp3;
 					}
 					// Coût GRP(cible 15 et +)
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1675,webSession.SiteLanguage) + " " +  targetBase + " : ");
 					if(baseTargetGRP>0){
-						resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellCGRP(Math.Round(budget/baseTargetGRP,3));
+						CellCGRP cGrp4 = new CellCGRP(Math.Round(budget / baseTargetGRP, 3));
+						cGrp4.StringFormat = cGrpFormat;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cGrp4;
 					}
 					else{
-						resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellCGRP(0.0);
+						CellCGRP cGrp5 = new CellCGRP(0.0);
+						cGrp5.StringFormat = cGrpFormat;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cGrp5;
 					}
 					//Affinité coût GRP vs cible 15 ans à +
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2077,webSession.SiteLanguage)+" vs "+targetBase+" : ");
 					if(additionalTargetGRP>0 && baseTargetGRP>0){
-						resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellAffinity(Math.Round(((budget/additionalTargetGRP)/(budget/baseTargetGRP))*100,3));
+						CellAffinity cAf2 = new CellAffinity(Math.Round(((budget / additionalTargetGRP) / (budget / baseTargetGRP)) * 100, 3));
+						cAf2.StringFormat = affinityFormat;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cAf2;
 					}
 					else{
-						resultTable[lineIndex,SECOND_COLUMN_INDEX]=new CellAffinity(0.0);
+						CellAffinity cAf3 = new CellAffinity(0.0);
+						cAf3.StringFormat = affinityFormat;
+						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cAf3;
 					}
 					#endregion
 				}

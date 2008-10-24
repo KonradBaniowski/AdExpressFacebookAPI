@@ -157,6 +157,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 			string products=string.Empty;
 			double currentUnit=0;
 			string period=string.Empty;
+			string percentFormat = "percentage";
 			#endregion
 
 			try{
@@ -246,10 +247,14 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 					lineIndex = resultTable.AddNewLine(LineType.total);
 					resultTable[lineIndex,APPMConstantes.TYPE_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1401,webSession.SiteLanguage));
 					resultTable[lineIndex,baseValueColumn]=cellUnitFactory.Get(totalBaseTargetUnit);
-					resultTable[lineIndex,baseDistributionColumn]=new CellPercent(100);
+					CellPercent cPr = new CellPercent(100);
+					cPr.StringFormat = percentFormat;
+					resultTable[lineIndex, baseDistributionColumn] = cPr;
 					if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
 						resultTable[lineIndex,additionalValueColumn]=cellUnitFactory.Get(totalAdditionalTargetUnit);
-						resultTable[lineIndex,additionalDistributionColumn]=new CellPercent(100);
+						CellPercent cPr1 = new CellPercent(100);
+						cPr1.StringFormat = percentFormat;
+						resultTable[lineIndex, additionalDistributionColumn] = cPr1;
 					}
 
 					foreach(DataRow dt in periodicityPlanTable.Rows){
@@ -262,12 +267,16 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM
 							resultTable[lineIndex,APPMConstantes.TYPE_COLUMN_INDEX]=new CellLabel(dt["periodicity"].ToString());
 						
 							resultTable[lineIndex,baseValueColumn]=cellUnitFactory.Get(currentUnit);
-							resultTable[lineIndex,baseDistributionColumn]=new CellPercent(Math.Round((currentUnit*100/totalBaseTargetUnit),2));
+							CellPercent cPr2 = new CellPercent(Math.Round((currentUnit * 100 / totalBaseTargetUnit), 2)); 
+							cPr2.StringFormat = percentFormat;
+							resultTable[lineIndex, baseDistributionColumn] = cPr2;
 						}
 						else if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
 
 							resultTable[lineIndex,additionalValueColumn]=cellUnitFactory.Get(currentUnit);
-							resultTable[lineIndex,additionalDistributionColumn]=new CellPercent(Math.Round((currentUnit*100/totalAdditionalTargetUnit),2));
+							CellPercent cPr3 = new CellPercent(Math.Round((currentUnit * 100 / totalAdditionalTargetUnit), 2));
+							cPr3.StringFormat = percentFormat;
+							resultTable[lineIndex, additionalDistributionColumn] = cPr3;
 						}
 					}
 					#endregion

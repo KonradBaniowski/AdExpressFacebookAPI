@@ -44,6 +44,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			ResultTable resultTable=null;
 			bool baseTargetNotFound=true;
 			string baseTarget=string.Empty;
+			string numberFormat = "max0", affinityFormat = "max0", cGrpFormat = "max0", percentFormat = "percentage";
+
 			#endregion
 		
 			#region Création des headers
@@ -93,17 +95,32 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					//Base Target Values
 					lineIndex = resultTable.AddNewLine(LineType.total);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(baseTarget);
-					resultTable[lineIndex,APPMConstantes.GRP_COLUMN_INDEX]=new CellGRP(Math.Round(grpBaseTarget,3));
-					if(grpBaseTarget!=0)
-						resultTable[lineIndex,APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX]=new CellAffinity(Math.Round((grpBaseTarget/grpBaseTarget)*100,3));
-					else
-						resultTable[lineIndex,APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX]=new CellAffinity(0);
-					
-					resultTable[lineIndex,APPMConstantes.CGRP_COLUMN_INDEX]=new CellCGRP(Math.Round(cgrpBaseTarget,3));
-					if(cgrpBaseTarget!=0)
-						resultTable[lineIndex,APPMConstantes.AFFINITIES_CGRP_COLUMN_INDEX]=new CellAffinity(Math.Round((cgrpBaseTarget/cgrpBaseTarget)*100,3));
-					else
-						resultTable[lineIndex,APPMConstantes.AFFINITIES_CGRP_COLUMN_INDEX]=new CellAffinity(0);
+					CellGRP cGrp = new CellGRP(Math.Round(grpBaseTarget, 3));
+					cGrp.StringFormat = UnitsInformation.Get(WebCste.CustomerSessions.Unit.grp).Format;
+					resultTable[lineIndex, APPMConstantes.GRP_COLUMN_INDEX] = cGrp;
+					if (grpBaseTarget != 0) {
+						CellAffinity cAf = new CellAffinity(Math.Round((grpBaseTarget / grpBaseTarget) * 100, 3));
+						cAf.StringFormat = affinityFormat;
+						resultTable[lineIndex, APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX] = cAf;
+					}
+					else {
+						CellAffinity cAf1 = new CellAffinity(0);
+						cAf1.StringFormat = affinityFormat;
+						resultTable[lineIndex, APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX] = cAf1;
+					}
+					CellCGRP cCgrp0 = new CellCGRP(Math.Round(cgrpBaseTarget, 3));
+					cCgrp0.StringFormat = cGrpFormat;
+					resultTable[lineIndex, APPMConstantes.CGRP_COLUMN_INDEX] = cCgrp0;
+					if (cgrpBaseTarget != 0) {
+						CellAffinity cAf2 = new CellAffinity(Math.Round((cgrpBaseTarget / cgrpBaseTarget) * 100, 3)); 
+						cAf2.StringFormat = affinityFormat;
+						resultTable[lineIndex, APPMConstantes.AFFINITIES_CGRP_COLUMN_INDEX] = cAf2;
+					}
+					else {
+						CellAffinity cAf3 = new CellAffinity(0);
+						cAf3.StringFormat = affinityFormat;
+						resultTable[lineIndex, APPMConstantes.AFFINITIES_CGRP_COLUMN_INDEX] = cAf3;
+					}
 
 					//Additional targets
 					foreach(DataRow row in data.Rows){
@@ -112,25 +129,43 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 						else{
 							lineIndex = resultTable.AddNewLine(LineType.level1);
 							resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(row["target"].ToString());
-                            resultTable[lineIndex, APPMConstantes.GRP_COLUMN_INDEX] = new CellGRP(Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3));
-							if(grpBaseTarget!=0)
-                                resultTable[lineIndex, APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX] = new CellAffinity(Math.Round((Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]) / grpBaseTarget) * 100, 3));
-							else
-								resultTable[lineIndex,APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX]=new CellAffinity(0);
+							CellGRP cGrp1 = new CellGRP(Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3));
+							cGrp1.StringFormat = UnitsInformation.Get(WebCste.CustomerSessions.Unit.grp).Format;
+							resultTable[lineIndex, APPMConstantes.GRP_COLUMN_INDEX] = cGrp1;
+							if (grpBaseTarget != 0) {
+								CellAffinity cAf4 = new CellAffinity(Math.Round((Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]) / grpBaseTarget) * 100, 3));
+								cAf4.StringFormat = affinityFormat;
+								resultTable[lineIndex, APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX] = cAf4;
+							}
+							else {
+								CellAffinity cAf5 = new CellAffinity(0);
+								cAf5.StringFormat = affinityFormat;
+								resultTable[lineIndex, APPMConstantes.AFFINITIES_GRP_COLUMN_INDEX] = cAf5;
+							}
 
                             if (Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]) != 0) {
-                                resultTable[lineIndex, APPMConstantes.CGRP_COLUMN_INDEX] = new CellCGRP(Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]) / Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3));
+								CellCGRP cCgrp = new CellCGRP(Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]) / Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3));
+								cCgrp.StringFormat = cGrpFormat;
+								resultTable[lineIndex, APPMConstantes.CGRP_COLUMN_INDEX] = cCgrp;
                                 cgrp = Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()]) / Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3);
 							}
 							else{
-								resultTable[lineIndex,APPMConstantes.CGRP_COLUMN_INDEX]=new CellCGRP(0);
+								CellCGRP cCgrp1 = new CellCGRP(0);
+								cCgrp1.StringFormat = cGrpFormat;
+								resultTable[lineIndex, APPMConstantes.CGRP_COLUMN_INDEX] = cCgrp1;
 								cgrp=0;
 							}
 
-							if(cgrpBaseTarget!=0)
-								resultTable[lineIndex,APPMConstantes.AFFINITIES_CGRP_COLUMN_INDEX]=new CellAffinity(Math.Round((cgrp/cgrpBaseTarget)*100,3));
-							else
-								resultTable[lineIndex,APPMConstantes.AFFINITIES_CGRP_COLUMN_INDEX]=new CellAffinity(0);
+							if (cgrpBaseTarget != 0) {
+								CellAffinity cAf6 = new CellAffinity(Math.Round((cgrp / cgrpBaseTarget) * 100, 3));
+								cAf6.StringFormat = affinityFormat;
+								resultTable[lineIndex, APPMConstantes.AFFINITIES_CGRP_COLUMN_INDEX] = cAf6;
+							}
+							else {
+								CellAffinity cAf7 = new CellAffinity(0);
+								cAf7.StringFormat = affinityFormat;
+								resultTable[lineIndex, APPMConstantes.AFFINITIES_CGRP_COLUMN_INDEX] = cAf7;
+							}
 						}
 					}
 					#endregion
