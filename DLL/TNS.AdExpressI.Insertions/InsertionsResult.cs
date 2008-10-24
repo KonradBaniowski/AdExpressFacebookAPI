@@ -241,19 +241,28 @@ namespace TNS.AdExpressI.Insertions
 
             #region Init ResultTable
             List<DetailLevelItemInformation> levels = new List<DetailLevelItemInformation>();
-            foreach (DetailLevelItemInformation d in _session.DetailLevel.Levels) {
-                levels.Add((DetailLevelItemInformation)d);
+            if (!_getMSCreatives) {
+                foreach (DetailLevelItemInformation d in _session.DetailLevel.Levels) {
+                    levels.Add((DetailLevelItemInformation)d);
+                }
             }
-            List<GenericColumnItemInformation> columns = _session.GenericInsertionColumns.Columns;
+            List<GenericColumnItemInformation> columns ;
+
+            if (this._getMSCreatives)
+                columns = WebApplicationParameters.MsCreativesDetail.GetDetailColumns(vehicle.DatabaseId);
+            else
+                columns = _session.GenericInsertionColumns.Columns;
+
             Int64 idColumnsSet = -1;
-            if (this._getCreatives)
-            {
+            if (this._getMSCreatives) 
+                idColumnsSet = WebApplicationParameters.MsCreativesDetail.GetDetailColumnsId(vehicle.DatabaseId);
+            else if (this._getCreatives){
                 idColumnsSet = WebApplicationParameters.CreativesDetail.GetDetailColumnsId(vehicle.DatabaseId, _module.Id);
             }
-            else
-            {
+            else{
                 idColumnsSet = WebApplicationParameters.InsertionsDetail.GetDetailColumnsId(vehicle.DatabaseId, _module.Id);
-            }            
+            }
+            
             //Data Keys
             List<GenericColumnItemInformation> keys = WebApplicationParameters.GenericColumnsInformation.GetKeys(idColumnsSet);
             List<string> keyIdName = new List<string>();
@@ -267,7 +276,7 @@ namespace TNS.AdExpressI.Insertions
             //Result Table init
             data = new ResultTable(nbLine, GetHeaders(vehicle, columns));
             SetLine setLine = null;
-            if (_getCreatives)
+            if (_getCreatives || _getMSCreatives)
             {
                 setLine = new SetLine(SetCreativeLine);
             }
@@ -651,7 +660,7 @@ namespace TNS.AdExpressI.Insertions
         protected Headers GetHeaders(VehicleInformation vehicle, List<GenericColumnItemInformation> columns) {
 
             Headers root = new Headers();
-            if (_getCreatives)
+            if (_getCreatives || _getMSCreatives)
             {
                 root.Root.Add(new Header(string.Empty));
             }

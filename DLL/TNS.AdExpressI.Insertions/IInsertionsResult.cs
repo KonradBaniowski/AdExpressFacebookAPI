@@ -24,6 +24,7 @@ namespace TNS.AdExpressI.Insertions
 
         ResultTable GetInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate);
         ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate);
+        ResultTable GetMSCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate);
         List<VehicleInformation> GetPresentVehicles(string filters, int universId, bool sloaganNotNull);
     }
 }
