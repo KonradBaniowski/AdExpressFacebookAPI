@@ -26,7 +26,6 @@
     <level id="3" name="group_"/>
     <level id="4" name="segment"/>
   </branch>
-
   <branch id="7"  name="category" labelId="1382">
     <level id="11" name="vehicle"/>
     <level id="12" name="category"/>

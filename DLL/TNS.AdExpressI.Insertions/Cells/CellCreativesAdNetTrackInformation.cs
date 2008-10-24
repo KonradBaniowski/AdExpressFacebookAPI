@@ -138,11 +138,11 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     _idVersion = Convert.ToInt64(row[g.DataBaseField]);
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.bannerDimension)
+                if (g.Id == GenericColumnItemInformation.Columns.bannerDimension || g.Id == GenericColumnItemInformation.Columns.bannerInternetDimension)
                 {
                     _dimension = row[g.DataBaseField].ToString();
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.bannerFormat)
+                if (g.Id == GenericColumnItemInformation.Columns.bannerFormat || g.Id == GenericColumnItemInformation.Columns.bannerInternetFormat)
                 {
                     _format = row[g.DataBaseField].ToString();
                 }

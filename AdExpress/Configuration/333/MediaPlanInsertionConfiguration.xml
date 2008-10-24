@@ -6,13 +6,13 @@
         <detailColumn id="1">
           <allowedModules>
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
-            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
           </allowedModules>
         </detailColumn>
         <detailColumn id="9">
           <allowedModules>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
-            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Present/absent" privilegecode="278"/>
           </allowedModules>
         </detailColumn>
       </detailColumns>
@@ -44,12 +44,12 @@
         <detailColumn id="1">
           <allowedModules>
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
-            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
           </allowedModules>
         </detailColumn>
         <detailColumn id="9">
           <allowedModules>
-            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="present/absent" privilegecode="278"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
           </allowedModules>
         </detailColumn>
@@ -82,12 +82,12 @@
         <detailColumn id="2">
           <allowedModules>
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
-            <allowedModule name="Analyse dynamique" privilegecode="197"/>
+            <allowedModule name="Lost/Won" privilegecode="197"/>
           </allowedModules>
         </detailColumn>
         <detailColumn id="23">
           <allowedModules>
-            <allowedModule name="Analyse concurrentielle" privilegecode="278"/>
+            <allowedModule name="Present/Absent" privilegecode="278"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
           </allowedModules>
         </detailColumn>

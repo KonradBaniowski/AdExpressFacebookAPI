@@ -142,9 +142,6 @@ namespace Private.Results{
                 this.CreativesWebControl1.PageIndex = (page != null && page.Length > 0) ? Convert.ToInt32(page) : 1;
 
 
-                string sizes = "10,15,20";
-                this.CreativesWebControl1.PageSizeOptions = sizes;
-
             }
             catch (System.Exception exc)
             {

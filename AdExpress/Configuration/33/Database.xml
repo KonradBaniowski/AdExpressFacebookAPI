@@ -67,7 +67,7 @@
     <table enumId="42" description="Data: Tv" schemaEnumId="0" label="data_tv" prefix="wp"/>
     <table enumId="43" description="Data: Outdoor" schemaEnumId="0" label="data_outdoor" prefix="wp"/>
     <table enumId="44" description="Data: Internet" schemaEnumId="0" label="data_internet" prefix="wp"/>
-    <table enumId="45" description="Data: AdNetTrack" schemaEnumId="0" label="data_adnettrack" prefix="wp"/>
+    <table enumId="45" description="Data: Evaliant" schemaEnumId="0" label="data_evaliant" prefix="wp"/>
     <table enumId="46" description="Data: APPM" schemaEnumId="1" label="data_press_appm" prefix="wp"/>
     <table enumId="47" description="Data: Sponsorship" schemaEnumId="0" label="data_sponsorship" prefix="wp"/>
     <table enumId="48" description="Data: VMC" schemaEnumId="0" label="data_marketing_direct" prefix="wp"/>
@@ -152,7 +152,7 @@
     <table enumId="137" description="Right: Module category" schemaEnumId="2" label="module_category" prefix="mc"/>
     <table enumId="138" description="Right: Flag" schemaEnumId="2" label="flag" prefix="fg"/>
     <table enumId="139" description="Right: Project flag assignment" schemaEnumId="2" label="flag_project_assignment" prefix="fgpa"/>
-    <table enumId="140" description="Data: AdNetTrack 4M" schemaEnumId="0" label="data_adnettrack_4M" prefix="wp"/>
+    <table enumId="140" description="Data: Evaliant 4M" schemaEnumId="0" label="data_evaliant_4M" prefix="wp"/>
     <table enumId="141" description="Classif: Data location" schemaEnumId="0" label="data_location" prefix="dl"/>
     <table enumId="142" description="Recap Data: Emailing" schemaEnumId="4" label="recap_emailing" prefix="rcp"/>
     <table enumId="143" description="Recap Data: Emailing Segment" schemaEnumId="4" label="recap_emailing_segment" prefix="rcp"/>
@@ -166,7 +166,9 @@
     <table enumId="153" description="Data: Cinema" schemaEnumId="0" label="data_cinema" prefix="wp"/>
     <table enumId="154" description="Data: Cinema" schemaEnumId="0" label="data_cinema_4M" prefix="wp"/>
     <table enumId="155" description="Custormer directory: directory" schemaEnumId="5" label="directory" prefix="drt"/>
-    <table enumId="156" description="Data: banners" schemaEnumId="0" label="banners" prefix="bn"/>
+    <table enumId="156" description="Data: banners" schemaEnumId="0" label="banners" prefix="wp"/>
+    <table enumId="157" description="Classif: format banners" schemaEnumId="0" label="format_banners" prefix="fb"/>
+    <table enumId="158" description="Classif: dimension banners" schemaEnumId="0" label="dimension_banners" prefix="db"/>
 
   </tables>
   <views>

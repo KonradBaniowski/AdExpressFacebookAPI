@@ -288,7 +288,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
         /// <summary>
 		/// Nombre par defaut de ligne dans une page
 		/// </summary>
-		private int _defaultPageSize = 100;
+		protected int _defaultPageSize = 100;
 		/// <summary>
 		/// Nombre par defaut de ligne dans une page
 		/// </summary>
@@ -304,7 +304,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// <summary>
 		/// Obtient  / définit les options de pagination
 		/// </summary>
-		private string _pageSizeOptions = "100,200,500,1000"; 
+        protected string _pageSizeOptions = "100,200,500,1000"; 
 		/// <summary>
 		/// Obtient  / définit les options de pagination
 		/// </summary>
@@ -319,7 +319,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// <summary>
 		/// Obtient  / définit le nombre maximale d'index de page à afficher
 		/// </summary>
-		private int _numberIndexPage = 5; 
+        protected int _numberIndexPage = 5; 
 		/// <summary>
 		/// Obtient  / définit les options de pagination
 		/// </summary>
@@ -349,7 +349,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// <summary>
 		/// Obtient / définit la taille (nombre de lignes) d'une page 
 		/// </summary>
-		private int _pageSize = 0;
+        protected int _pageSize = 0;
 		/// <summary>
 		///  Obtient / définit la taille (nombre de lignes) d'une page 
 		/// </summary>
@@ -364,7 +364,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// <summary>
 		/// Obtient / définit le nombre de lignes) de debut du tableau à repeter comme entete (total,nombre de parution...) 
 		/// </summary>
-		private int _nbTableBeginningLinesToRepeat = 1;
+        protected int _nbTableBeginningLinesToRepeat = 1;
 		/// <summary>
 		///  Obtient / définit la taille (nombre de lignes) d'une page 
 		/// </summary>
@@ -465,7 +465,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// Génère le code JavaSript pour ajuster le time out d'AjaxPro
 		/// </summary>
 		/// <returns>Code JavaScript</returns>
-		private string AjaxProTimeOutScript(){
+        protected string AjaxProTimeOutScript()
+        {
 			StringBuilder js=new StringBuilder(100);
 			js.Append("\r\n<SCRIPT language=javascript>\r\n<!--");
 			js.Append("\r\nAjaxPro.timeoutPeriod="+_ajaxProTimeOut.ToString()+"*1000;"); 
@@ -479,7 +480,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
         /// Génération du JavaScript pour les paramètres du résultat
         /// </summary>
         /// <returns>Script</returns>
-        private string ResultParametersScript(){
+        protected string ResultParametersScript()
+        {
             StringBuilder js = new StringBuilder(3000);
             js.Append("\r\n<SCRIPT language=javascript>\r\n<!--");
             js.Append("\r\n\t var resultParameters = new Object();");
@@ -514,7 +516,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
         /// Génération du JavaScript des paramètres pour les styles
         /// </summary>
         /// <returns>Script</returns>
-        private string StyleParametersScript(){
+        protected string StyleParametersScript()
+        {
             StringBuilder js = new StringBuilder(3000);
             js.Append("\r\n<SCRIPT language=javascript>\r\n<!--");
             js.Append("\r\n\t var styleParameters = new Object();");
@@ -590,7 +593,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
         /// Génération du JavaScript des paramètres pour les tris
         /// </summary>
         /// <returns>Script</returns>
-        private string SortParametersScript(){
+        protected string SortParametersScript()
+        {
             StringBuilder js = new StringBuilder(3000);
             js.Append("\r\n<SCRIPT language=javascript>\r\n<!--");
             js.Append("\r\n\t var sortParameters = new Object();");
@@ -2054,7 +2058,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// <param name="data">Tableau de données à traiter</param>
 		/// <param name="nbLineToSchow">Nombre de ligne affichée</param>
 		/// <returns>tableau d'index</returns>
-		private int[] GetTableIndex(ResultTable data, long nbLineToSchow){
+        protected int[] GetTableIndex(ResultTable data, long nbLineToSchow)
+        {
 		
 			int[] tab;
 			int nbLinesType=data.LinesStart.Count;

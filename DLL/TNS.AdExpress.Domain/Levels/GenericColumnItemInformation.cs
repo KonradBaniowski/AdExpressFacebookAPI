@@ -197,155 +197,167 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Famille
             /// </summary>
-            famille,
+            famille=44,
             /// <summary>
             /// Surface en mmc
             /// </summary>
-            surfaceMMC,
+            surfaceMMC=45,
             /// <summary>
             /// Rang famille
             /// </summary>
-            rangFamille,
+            rangFamille=46,
             /// <summary>
             /// Rang groupe
             /// </summary>
-            rangGroupe,
+            rangGroupe=47,
             /// <summary>
             /// Rang support
             /// </summary>
-            rangSupport,
+            rangSupport=48,
             /// <summary>
             /// Date de diffusion
             /// </summary>
-            dateDiffusion,
+            dateDiffusion=49,
             /// <summary>
             /// Code écran
             /// </summary>
-            codeEcran,
+            codeEcran=50,
             /// <summary>
             /// Prix du 30 sec
             /// </summary>
-            prix30Sec,
+            prix30Sec=51,
             /// <summary>
             /// Type page
             /// </summary>
-            typePage,
+            typePage=52,
             /// <summary>
             /// Plan Media
             /// </summary>
-            planMedia,
+            planMedia=53,
             /// <summary>
             /// Id pub presse
             /// </summary>
-            idPressAdvertisment,
+            idPressAdvertisment=54,
             /// <summary>
             /// Id Cobranding
             /// </summary>
-            idCobranding,
+            idCobranding=55,
             /// <summary>
             /// Id Outdoor
             /// </summary>            
-            idDataOutDoor,
+            idDataOutDoor=56,
             /// <summary>
             /// Cover date
             /// </summary>
-            dateCoverNum,
+            dateCoverNum=57,
             /// <summary>
             /// ID VMC data
             /// </summary>
-            idVMC,
+            idVMC=58,
             /// <summary>
             /// Mailing rapidity
             /// </summary>
-            rapidity,
+            rapidity=59,
             /// <summary>
             /// Type of document
             /// </summary>
-            typeDoc,
+            typeDoc=60,
             /// <summary>
             /// Volume
             /// </summary>
-            volume,
+            volume=61,
             /// <summary>
             /// Weight
             /// </summary>
-            weight,
+            weight=62,
             /// <summary>
             /// Item number
             /// </summary>
-            itemNb,
+            itemNb=63,
             /// <summary>
             /// Mail format (standard or specific)
             /// </summary>
-            mailFormat,
+            mailFormat=64,
             /// <summary>
             /// Mail Content
             /// </summary>
-            content,
+            content=65,
             /// <summary>
             /// Type of mail (blister...)
             /// </summary>
-            mailType,
+            mailType=66,
             /// <summary>
             /// Expenditure as a sum
             /// </summary>
-            sumExpenditure,
+            sumExpenditure=67,
             /// <summary>
             /// Somme Surface page
             /// </summary>
-            sumSurface,
+            sumSurface=68,
             /// <summary>
             /// Somme Durée
             /// </summary>
-            sumDuration,
+            sumDuration=69,
             /// <summary>
             /// Nombre de supports
             /// </summary>
-            countMedia,
+            countMedia=70,
             /// <summary>
             /// Nombre de supports press
             /// </summary>
-            countMediaPress,
+            countMediaPress=71,
             /// <summary>
             /// Insertions
             /// </summary>
-            sumInsert,
+            sumInsert=72,
             /// <summary>
             /// Date kiosque (press)
             /// </summary>
-            dateKiosque,
+            dateKiosque=73,
             /// <summary>
             /// Nb spots
             /// </summary>
-            sumSpot,
+            sumSpot=74,
             /// <summary>
             /// Max path (for unicity purpose)
             /// </summary>
-            associatedFileMax,
+            associatedFileMax=75,
             /// <summary>
             /// Max path (for unicity purpose)
             /// </summary>
-            numberBoardSum,
+            numberBoardSum=76,
             /// <summary>
             /// AdNetTrack product
             /// </summary>
-            productAdNetTrack,
+            productAdNetTrack=77,
             /// <summary>
             /// Banner Format
             /// </summary>
-            bannerFormat,
+            bannerFormat=78,
             /// <summary>
             /// Banner dimension
             /// </summary>
-            bannerDimension,
+            bannerDimension=79,
             /// <summary>
             /// Banner url
             /// </summary>
-            bannerUrl,
+            bannerUrl=80,
             /// <summary>
-            /// Banner url
+            /// Banner hashcode
             /// </summary>
-            bannerHashcode
+            bannerHashcode=81,
+            /// <summary>
+            /// Sub Sector
+            /// </summary>
+            subSector=82,
+            /// <summary>
+            /// Banner Internet format
+            /// </summary>
+            bannerInternetFormat=83,
+            /// <summary>
+            /// Banner Internet DImension
+            /// </summary>
+            bannerInternetDimension=84
 
 }
 		#endregion

@@ -260,6 +260,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     case DBClassifCst.Vehicles.names.directMarketing:
                         vehicle = GestionWeb.GetWebWord(2219, _webSession.SiteLanguage); 
                         break;
+                    case DBClassifCst.Vehicles.names.internet:
+                        vehicle = GestionWeb.GetWebWord(1301, _webSession.SiteLanguage); 
+                        break;
                 }
                 #endregion
 

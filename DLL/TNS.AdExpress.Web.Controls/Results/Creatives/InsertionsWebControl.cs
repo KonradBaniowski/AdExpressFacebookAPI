@@ -468,6 +468,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
             if (_isCreativeConfig)
             {
+                this._cssLHeader = string.Empty;
                 this._cssL4 = _cssCellInfo;
                 this._highlightBackgroundColorL4 = string.Empty;
             }

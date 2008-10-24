@@ -26,7 +26,9 @@ namespace TNS.AdExpress.Web.Core.Result {
         public CellCreativesLink(CellLevel cellLevel,WebSession webSession,GenericDetailLevel genericDetailLevel,string zoomDate,int universId)
             : base(cellLevel,webSession,genericDetailLevel,zoomDate,universId) {
             _linkRules=new DefaultShowLinkRules(cellLevel,genericDetailLevel);
-            _link = "javascript:OpenCreatives('{0}','{1},{2}','');";
+            //_link = "javascript:OpenCreatives('{0}','{1},{2}','');";
+            _link = "javascript:OpenCreatives('{0}','{1}','{2}','{3}','{4}');";
+
 		}
 
         /// <summary>
@@ -40,7 +42,9 @@ namespace TNS.AdExpress.Web.Core.Result {
         public CellCreativesLink(CellLevel cellLevel,WebSession webSession,GenericDetailLevel genericDetailLevel)
             : base(cellLevel,webSession,genericDetailLevel,"",-1) {
             _linkRules=new DefaultShowLinkRules(cellLevel,genericDetailLevel);
-            _link = "javascript:OpenCreatives('{0}','{1},{2}','');";
+            //_link = "javascript:OpenCreatives('{0}','{1},{2}','');";
+            _link = "javascript:OpenCreatives('{0}','{1}','{2}','{3}','{4}');";
+
         }
 		#endregion
 

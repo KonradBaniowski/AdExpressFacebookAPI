@@ -21,7 +21,7 @@
           <dbOrderConstraints>
             <dbOrderConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
           </dbOrderConstraints>
-          <dbGroupbyConstraints>  
+          <dbGroupbyConstraints>
             <dbGroupbyConstraint id="1" name="Publicité presse" dbField="id_advertisement" dbTablePrefixe="wp"/>
           </dbGroupbyConstraints>
           <dbFieldConstraints>
@@ -144,8 +144,9 @@
     <column id="79" name="Dimension banner" webTextId="1420" dbId="id_dimension_banners" dbLabel="dimension_banners" dbLabelAlias="dimension_banners" dbTable="dimension_banners" dbTablePrefixe="dban"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="80" name="Banner url" webTextId="1420" isMax="true" dbLabel="url" dbLabelAlias="url" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="81" name="Banner hashcode" webTextId="1888" dbLabel="hashcode" dbLabelAlias="hashcode" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="82" name="Famille" webTextId="1103" dbId="id_sector" dbLabel="sector" dbTable="sector" dbTablePrefixe="sc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="83" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="82" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="84" name="Dimension banner Internet" webTextId="1420" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
 
   </columnItems>
 
@@ -455,8 +456,8 @@
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
-      <columnItem id="82" name="Famille"/>
-      <columnItem id="83" name="Classe"/>
+      <columnItem id="44" name="Famille"/>
+      <columnItem id="82" name="Classe"/>
       <columnItem id="67" name="Budget"/>
       <columnItem id="72" name="insertion"/>
       <columnItem id="68" name="Surface"/>
@@ -472,8 +473,8 @@
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
-      <columnItem id="82" name="Famille"/>
-      <columnItem id="83" name="Classe"/>
+      <columnItem id="44" name="Famille"/>
+      <columnItem id="82" name="Classe"/>
       <columnItem id="67" name="Budget"/>
       <columnItem id="74" name="Nb spots"/>
       <columnItem id="69" name="Durée"/>
@@ -486,8 +487,8 @@
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
-      <columnItem id="82" name="Famille"/>
-      <columnItem id="83" name="Classe"/>
+      <columnItem id="44" name="Famille"/>
+      <columnItem id="82" name="Classe"/>
       <columnItem id="67" name="Budget"/>
       <columnItem id="76" name="Nb panneaux"/>
       <columnItem id="70" name=" Nb Supports"/>
@@ -500,8 +501,8 @@
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
       <columnItem id="3" name="Support"/>
-      <columnItem id="82" name="Famille"/>
-      <columnItem id="83" name="Classe"/>
+      <columnItem id="44" name="Famille"/>
+      <columnItem id="82" name="Classe"/>
       <columnItem id="67" name="Budget"/>
       <columnItem id="61" name="Volume"/>
       <columnItem id="62" name="Poid"/>
@@ -564,6 +565,17 @@
       <columnItem id="31" name="Réseau afficheur"/>
       <columnItem id="32" name="Agglomeration"/>
       <columnItem id="14" name="Prix"/>
+    </detailColumn>
+    <!--Créations Internet-->
+    <detailColumn id="25" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="81" name="hashcode" visible="false"  isKey="true"/>
+      <columnItem id="75" name="Banner"/>
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="77" name="Produit AdNetTrack"/>
+      <columnItem id="83" name="Format banner"/>
+      <columnItem id="84" name="Dimension banner" visible="false"/>
+      <columnItem id="80" name="url" visible="false"/>
     </detailColumn>
 
   </detailColumns>

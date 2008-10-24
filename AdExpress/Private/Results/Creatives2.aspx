@@ -16,7 +16,7 @@
     <asp:HiddenField ID="vehicleParam" runat="server" EnableViewState="true"/>
 
     <div>
-        <cc1:InsertionsWebControl ID="CreativesWebControl1" runat="server" SkinID="creativeControl"/>
+        <cc1:InsertionsWebControl ID="CreativesWebControl1" runat="server" SkinID="creativeControl" PageSize="10" PageSizeOptions="10,15,20"/>
         &nbsp;</div>
     </form>
     <%=divClose%>
