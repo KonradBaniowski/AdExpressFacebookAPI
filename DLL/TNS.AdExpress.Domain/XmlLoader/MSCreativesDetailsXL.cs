@@ -26,7 +26,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
         /// </summary>
         /// <param name="source">Data source</param>
         /// <param name="detailColumnsList">Detail column list</param>
-        public static void Load(IDataSource source, Dictionary<Int64, List<GenericColumnItemInformation>> detailColumnsList) {
+        public static void Load(IDataSource source, Dictionary<Int64, List<GenericColumnItemInformation>> detailColumnsList, Dictionary<Int64, Int64> detailColumnsByVehicle) {
             XmlTextReader Reader;
             Int64 vehicleId = 0;
             Int64 idDetailColumn = 0;
@@ -46,6 +46,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 if (Reader.GetAttribute("id") != null) {
                                     idDetailColumn = Int64.Parse(Reader.GetAttribute("id"));
                                     detailColumnsList.Add(vehicleId, WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(idDetailColumn));
+                                    detailColumnsByVehicle.Add(vehicleId, idDetailColumn);
                                 }
                                 break;
                         }

@@ -23,6 +23,10 @@ namespace TNS.AdExpress.Domain.Results {
         /// Detail column list to load
         /// </summary>
         protected Dictionary<Int64, List<GenericColumnItemInformation>> _detailColumnsList = new Dictionary<Int64, List<GenericColumnItemInformation>>();
+        /// <summary>
+        /// Detail column by vehicle
+        /// </summary>
+        protected Dictionary<Int64, Int64> _detailColumnsByVehicle = new Dictionary<Int64, Int64>();
         #endregion
 
         #region Constructor
@@ -31,7 +35,7 @@ namespace TNS.AdExpress.Domain.Results {
         /// </summary>
         /// <param name="source">Data source</param>
         public MSCreativesDetails(IDataSource source) {
-            MSCreativesDetailsXL.Load(source, _detailColumnsList);
+            MSCreativesDetailsXL.Load(source, _detailColumnsList, _detailColumnsByVehicle);
         }
         #endregion
 
@@ -47,6 +51,20 @@ namespace TNS.AdExpress.Domain.Results {
             }
             catch (System.Exception) {
                 return (null);
+            }
+        }
+        /// <summary>
+        /// Get Detail Column Set Id
+        /// </summary>
+        /// <param name="idVehicle">Current vehicle Id</param>
+        /// <returns>Column Detail Id matching idVehicle</returns>
+        public Int64 GetDetailColumnsId(Int64 idVehicle) {
+            try {
+                return _detailColumnsByVehicle[idVehicle];
+
+            }
+            catch (System.Exception) {
+                return (-1);
             }
         }
         #endregion

@@ -385,9 +385,10 @@ namespace TNS.AdExpressI.Insertions.DAL
                 {
                     sql.AppendFormat(" {0} ", tmp);
                 }
-                if (_session.DetailLevel != null)
-                {
-                    sql.AppendFormat(" {0} ", _session.DetailLevel.GetSqlJoins(_session.DataLanguage, tData.Prefix));
+                if (!_msCreaConfig) {
+                    if (_session.DetailLevel != null) {
+                        sql.AppendFormat(" {0} ", _session.DetailLevel.GetSqlJoins(_session.DataLanguage, tData.Prefix));
+                    }
                 }
                 sql.AppendFormat(" {0} ", GenericColumns.GetSqlContraintJoins(columns));
 
@@ -436,21 +437,22 @@ namespace TNS.AdExpressI.Insertions.DAL
             string tmp = string.Empty;
 
             //Detail levels
-			if (_session.DetailLevel != null && _session.DetailLevel.Levels != null && _session.DetailLevel.Levels.Count > 0) {
-				foreach (DetailLevelItemInformation detailLevelItemInformation in _session.DetailLevel.Levels) {
-                    if (detailLevelItemInformation.Id == DetailLevelItemInformation.Levels.category)
-                    {
-                        hasCategory = true;
+            if (!_msCreaConfig) {
+                if (_session.DetailLevel != null && _session.DetailLevel.Levels != null && _session.DetailLevel.Levels.Count > 0) {
+                    foreach (DetailLevelItemInformation detailLevelItemInformation in _session.DetailLevel.Levels) {
+                        if (detailLevelItemInformation.Id == DetailLevelItemInformation.Levels.category) {
+                            hasCategory = true;
+                        }
+                        detailLevelsIds.Add(detailLevelItemInformation.Id.GetHashCode());
                     }
-					detailLevelsIds.Add(detailLevelItemInformation.Id.GetHashCode());
-				}
-                tmp = _session.DetailLevel.GetSqlFields();
-				if (tmp.Length > 0) {
-					sql.AppendFormat(" {0}", tmp);
-					detailLevelSelected = true;
-				}
+                    tmp = _session.DetailLevel.GetSqlFields();
+                    if (tmp.Length > 0) {
+                        sql.AppendFormat(" {0}", tmp);
+                        detailLevelSelected = true;
+                    }
 
-			}
+                }
+            }
 
             //Insertions fields
             tmp = GenericColumns.GetSqlFields(columns, detailLevelsIds);
@@ -507,12 +509,12 @@ namespace TNS.AdExpressI.Insertions.DAL
             string tmp = string.Empty;
 
             sql.AppendFormat(" from {0} ", tData.SqlWithPrefix);
-            if (_session.DetailLevel != null)
-            {
-                tmp = _session.DetailLevel.GetSqlTables(sAdExpr03.Label);
-                if (tmp.Length > 0)
-                {
-                    sql.AppendFormat(", {0} ", tmp);
+            if (!_msCreaConfig) {
+                if (_session.DetailLevel != null) {
+                    tmp = _session.DetailLevel.GetSqlTables(sAdExpr03.Label);
+                    if (tmp.Length > 0) {
+                        sql.AppendFormat(", {0} ", tmp);
+                    }
                 }
             }
             tmp = GenericColumns.GetSqlTables(sAdExpr03.Label, columns, detailLevelsIds);
@@ -744,12 +746,13 @@ namespace TNS.AdExpressI.Insertions.DAL
             bool first = true;
 
             sql.Append(" group by");
-            if (_session.DetailLevel != null){
-                tmp = _session.DetailLevel.GetSqlGroupByFields();
-                if (tmp.Length > 0)
-                {
-                    sql.AppendFormat(" {0}", tmp);
-                    first = false;
+            if (!_msCreaConfig) {
+                if (_session.DetailLevel != null) {
+                    tmp = _session.DetailLevel.GetSqlGroupByFields();
+                    if (tmp.Length > 0) {
+                        sql.AppendFormat(" {0}", tmp);
+                        first = false;
+                    }
                 }
             }
 
@@ -799,13 +802,13 @@ namespace TNS.AdExpressI.Insertions.DAL
             bool first = true;
 
             sql.Append(" order by ");
-            if (_session.DetailLevel != null)
-            {
-                tmp = _session.DetailLevel.GetSqlOrderFields();
-                if (tmp.Length > 0)
-                {
-                    sql.AppendFormat(" {0}", tmp);
-                    first = false;
+            if (!_msCreaConfig) {
+                if (_session.DetailLevel != null) {
+                    tmp = _session.DetailLevel.GetSqlOrderFields();
+                    if (tmp.Length > 0) {
+                        sql.AppendFormat(" {0}", tmp);
+                        first = false;
+                    }
                 }
             }
 
