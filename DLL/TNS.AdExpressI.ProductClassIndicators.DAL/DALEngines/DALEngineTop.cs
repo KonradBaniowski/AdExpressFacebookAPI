@@ -57,7 +57,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         /// <param name="session">User session</param>
         /// <param name="typeYear">Type of study</param>
         /// <param name="classifLevel">Detail of the indicator</param>
-        public DALEngineTop(WebSession session, CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel):base(session){
+        public DALEngineTop(WebSession session, CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel, DALUtilities dalUtilities)
+            : base(session, dalUtilities)
+        {
             _typeYear = typeYear;
             _classifLevel = classifLevel;
         }
@@ -102,7 +104,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             }
 
             //Media Selection
-            sql.AppendFormat(" and {0}", this.GetMediaSelection(dataTable.Prefix));
+            sql.AppendFormat(" and {0}", _utilities.GetMediaSelection(dataTable.Prefix));
 
             #region Product classification
             // Product selection

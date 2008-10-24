@@ -48,6 +48,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// Report vehicle
         /// </summary>
         protected CstDBClassif.Vehicles.names _vehicle;
+        protected DALUtilities _dalUtilities = null;
         #endregion
 
         #region Accessors
@@ -69,6 +70,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         public ProductClassIndicatorsDAL(WebSession session)
         {
             _session = session;
+            _dalUtilities = new DALUtilities(session);
         }
         #endregion
 
@@ -80,7 +82,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="typeYear">Type of study</param>
         public DataSet GetTops(CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel)
         {
-            return (new DALEngineTop(this._session, typeYear, classifLevel)).GetData();
+            return (new DALEngineTop(this._session, typeYear, classifLevel,_dalUtilities)).GetData();
         }
         /// <summary>
         /// Implements default data access layer for evolution indicator
@@ -89,14 +91,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="typeYear">Type of study</param>
         public DataSet GetEvolution(CstResult.MotherRecap.ElementType classifLevel)
         {
-            return (new DALEngineEvolution(this._session, classifLevel)).GetData();
+            return (new DALEngineEvolution(this._session, classifLevel, _dalUtilities)).GetData();
         }        /// <summary>
         /// Implements default data access layer for novelty indicator
         /// </summary>
         /// <param name="classifLevel">Classification detail (product or advertiser)</param>
         public DataSet GetNovelty(CstResult.MotherRecap.ElementType classifLevel)
         {
-            return (new DALEngineNovelty(this._session, classifLevel)).GetData();
+            return (new DALEngineNovelty(this._session, classifLevel, _dalUtilities)).GetData();
         }
         /// <summary>
         /// Get Total of sector or advertising market on the Data from database for the report of the user session
@@ -105,7 +107,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <returns>Total depending on User selection</returns>
         public double GetTotal(CstResult.PalmaresRecap.typeYearSelected typeYear)
         {
-            return (new DALEngine(this._session)).GetTotal(typeYear);
+            return (new DALEngine(this._session,_dalUtilities)).GetTotal(typeYear);
         }
         /// <summary>
         /// Get Total of sector or advertising market on the Data from database for the report of the user session
@@ -114,7 +116,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <returns>Total depending on User selection</returns>
         public double GetMonthTotal(CstResult.PalmaresRecap.typeYearSelected typeYear)
         {
-            return (new DALEngine(this._session)).GetMonthTotal(typeYear);
+            return (new DALEngine(this._session,_dalUtilities)).GetMonthTotal(typeYear);
         }
         /// <summary>
         /// Get Total on the Data from database for the report of the user session
@@ -124,7 +126,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <returns>Total depending on User selection</returns>
         public double GetTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear)
         {
-            return (new DALEngine(this._session)).GetTotal(totalType, typeYear);
+            return (new DALEngine(this._session, _dalUtilities)).GetTotal(totalType, typeYear);
         }
         /// <summary>
         /// Get Total on the Data from database for the report of the user session
@@ -134,7 +136,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <returns>Total depending on User selection</returns>
         public double GetMonthTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear)
         {
-            return (new DALEngine(this._session)).GetMonthTotal(totalType, typeYear);
+            return (new DALEngine(this._session, _dalUtilities)).GetMonthTotal(totalType, typeYear);
         }
         /// <summary>
         /// Get required data to build a seasonality table
@@ -143,7 +145,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="withRights">Aply product classification rights</param>
         public DataSet GetSeasonalityTblData(bool withAdvertisers, bool withRights)
         {
-            return (new DALEngineSeasonality(this._session)).GetTableData(withAdvertisers, withRights);
+            return (new DALEngineSeasonality(this._session, _dalUtilities)).GetTableData(withAdvertisers, withRights);
         }
         /// <summary>
         /// Get required data to build a seasonality graph
@@ -152,14 +154,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="withRights">Aply product classification rights</param>
         public DataSet GetSeasonalityGraphData(bool withAdvertisers, bool withRights)
         {
-            return (new DALEngineSeasonality(this._session)).GetChartData(withAdvertisers, withRights);
+            return (new DALEngineSeasonality(this._session, _dalUtilities)).GetChartData(withAdvertisers, withRights);
         }        /// <summary>
         /// Get Total of sector or advertising market on the Data from database for the seasonality table
         /// </summary>
         /// <returns>Total depending on User selection</returns>
         public DataSet GetSeasonalityTotal()
         {
-            return (new DALEngineSeasonality(this._session)).GetSeasonalityTotal();
+            return (new DALEngineSeasonality(this._session, _dalUtilities)).GetSeasonalityTotal();
         }
         /// <summary>
         /// Get number of elements on year N and N-1 if required
@@ -169,7 +171,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <returns>Number of distinct advertisers or products on N and N-1</returns>
         public DataSet GetSummaryVolumes(CstComparisonCriterion totalType, CstResult.MotherRecap.ElementType classifLevel)
         {
-            return (new DALEngineSummary(this._session)).GetVolumes(totalType, classifLevel);
+            return (new DALEngineSummary(this._session, _dalUtilities)).GetVolumes(totalType, classifLevel);
         }
         /// <summary>
         /// Get investments on year N and N-1 if required
@@ -178,7 +180,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <returns>Investments on N and N-1</returns>
         public DataSet GetSummaryInvestments(CstComparisonCriterion totalType)
         {
-            return (new DALEngineSummary(this._session)).GetInvestments(totalType);
+            return (new DALEngineSummary(this._session, _dalUtilities)).GetInvestments(totalType);
         }
         /// <summary>
         /// Define contract to access media strategy data when using a table
@@ -188,7 +190,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <returns>DataTable to build media Strategy Indicator</returns>
         public DataSet GetMediaStrategyTblData(CstResult.MotherRecap.ElementType classifLevel, CstComparisonCriterion totalType, bool applyAdvFilter)
         {
-            return (new DALEngineMediaStrategy(this._session)).GetTableData(classifLevel, totalType, applyAdvFilter);
+            return (new DALEngineMediaStrategy(this._session, _dalUtilities)).GetTableData(classifLevel, totalType, applyAdvFilter);
         }
         /// <summary>
         /// Define contract to access media strategy tops data when using a table
@@ -200,7 +202,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <returns>DataTable to build media Strategy Indicator</returns>
         public DataSet GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType classifLevel, CstComparisonCriterion totalType, CstResult.MediaStrategy.MediaLevel mediaLevel, bool isPluri)
         {
-            return (new DALEngineMediaStrategy(this._session)).GetTopElements(classifLevel, totalType, mediaLevel, isPluri);
+            return (new DALEngineMediaStrategy(this._session, _dalUtilities)).GetTopElements(classifLevel, totalType, mediaLevel, isPluri);
         }        
         #endregion
     }

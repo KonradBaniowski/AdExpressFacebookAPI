@@ -46,8 +46,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
         /// Default constructor
         /// </summary>
         /// <param name="session">User session</param>
-        public DALEngineSeasonality(WebSession session)
-            : base(session) {
+        public DALEngineSeasonality(WebSession session, DALUtilities dalUtilities)
+            : base(session, dalUtilities)
+        {
         }
         #endregion
 
@@ -101,7 +102,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
             #endregion
 
             #region Media selection
-            sql.AppendFormat(" and {0}", this.GetMediaSelection(dataTable.Prefix));
+            sql.AppendFormat(" and {0}", _utilities.GetMediaSelection(dataTable.Prefix));
             #endregion
 
             #region Product selection
@@ -257,7 +258,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
             #endregion
 
             #region Selection
-            sql.AppendFormat(" {0}", this.GetMediaSelection(dataTable.Prefix));
+            sql.AppendFormat(" {0}", _utilities.GetMediaSelection(dataTable.Prefix));
 
             //Advertiser
             if (withAdvertisers) {
@@ -415,7 +416,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
                 sql.Append(" where");
 
                 #region where
-                sql.AppendFormat(" {0}", this.GetMediaSelection(dataTable.Prefix));
+                sql.AppendFormat(" {0}", _utilities.GetMediaSelection(dataTable.Prefix));
 
                 if (_session.ComparaisonCriterion == CstComparaisonCriterion.universTotal) {
                     // Product selection

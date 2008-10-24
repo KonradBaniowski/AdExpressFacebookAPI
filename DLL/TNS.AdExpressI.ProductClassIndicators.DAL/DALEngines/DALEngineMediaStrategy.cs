@@ -45,8 +45,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         /// Default constructor
         /// </summary>
         /// <param name="session">User session</param>
-        public DALEngineMediaStrategy(WebSession session)
-            : base(session)
+        public DALEngineMediaStrategy(WebSession session, DALUtilities dalUtilities)
+            : base(session, dalUtilities)
         {
         }
         #endregion
@@ -191,7 +191,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             }
             #endregion
 
-            sql.AppendFormat(" and {0}", this.GetMediaSelection(dataTable.Prefix));
+            sql.AppendFormat(" and {0}", _utilities.GetMediaSelection(dataTable.Prefix));
 
             #endregion
 
@@ -324,7 +324,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             }
             #endregion
 
-            sql.AppendFormat(" and {0}", this.GetMediaSelection(dataTable.Prefix));
+            sql.AppendFormat(" and {0}", _utilities.GetMediaSelection(dataTable.Prefix));
             sql.AppendFormat(" and TOTAL_YEAR_N{0} > 0", _strYearId);
 
             #endregion

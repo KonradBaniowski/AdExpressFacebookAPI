@@ -46,8 +46,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         /// <param name="session">User session</param>
         /// <param name="typeYear">Type of study</param>
         /// <param name="classifLevel">Detail of the indicator</param>
-        public DALEngineSummary(WebSession session)
-            : base(session)
+        public DALEngineSummary(WebSession session, DALUtilities dalUtilities)
+            : base(session, dalUtilities)
         {
         }
         #endregion
@@ -112,7 +112,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
             #region sélection des médias
             if (and) sql.Append(" and ");
-            sql.AppendFormat(" {0}", this.GetMediaSelection(dataTable.Prefix));
+            sql.AppendFormat(" {0}", _utilities.GetMediaSelection(dataTable.Prefix));
             #endregion
 
             #endregion
@@ -192,7 +192,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #endregion
 
             #region sélection des médias
-            sql.AppendFormat(" {0}", this.GetMediaSelection(dataTable.Prefix));
+            sql.AppendFormat(" {0}", _utilities.GetMediaSelection(dataTable.Prefix));
             #endregion
 
             sql.AppendFormat(" group by {0}", idElement);

@@ -57,6 +57,7 @@
     <Compile Include="DALEngines\DALEngineNovelty.cs" />
     <Compile Include="DALEngines\DALEngine.cs" />
     <Compile Include="DALEngines\DALEngineTop.cs" />
+    <Compile Include="DALUtilities.cs" />
     <Compile Include="Exceptions\ProductClassIndicatorsDALException.cs" />
     <Compile Include="IProductClassIndicatorsDAL.cs" />
     <Compile Include="ProductClassIndicatorsDAL.cs" />

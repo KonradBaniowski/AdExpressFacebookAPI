@@ -85,6 +85,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         /// </summary>
         protected CstDBClassif.Vehicles.names _vehicle;
 
+        protected DALUtilities _utilities = null;
+
         #region Rules Engine attributes
         /// <summary>
         /// Specify if the table contains advertisers as references or competitors
@@ -124,9 +126,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         /// Default Constructor
         /// </summary>
         /// <param name="session">User session</param>
-        public DALEngine(WebSession session)
+        public DALEngine(WebSession session, DALUtilities dalUtilities)
         {
             _session = session;
+            _utilities = dalUtilities;
             _vehicle = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.CurrentUniversMedia.FirstNode.Tag).ID);
 
             #region Dates
@@ -400,7 +403,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             }
 
             #region Media selection
-            sql.AppendFormat(" and {0} ", this.GetMediaSelection(dataTable.Prefix));
+            sql.AppendFormat(" and {0} ", _utilities.GetMediaSelection(dataTable.Prefix));
             #endregion
 
             sql.AppendFormat(" group by {0}.id_sector, {1}.sector ", dataTable.Prefix, _recapSector.Prefix);
@@ -466,47 +469,5 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         }
         #endregion
 
-        #region Get Media Selection
-        /// <summary>
-        /// Get Media Selection Clause (plurimedia?, Sponsorship?)
-        /// </summary>
-        /// <param name="prefix"></param>
-        /// <returns></returns>
-        protected virtual string GetMediaSelection(string prefix){
-
-            StringBuilder sql = new StringBuilder();
-			bool first = true;
-			string temp = "";
-            // Multimedia
-			//if (_vehicle == CstDBClassif.Vehicles.names.plurimedia)
-			//{
-
-			//    sql.Append(FctUtilities.SQLGenerator.getAdExpressUniverseCondition(_session, CstWeb.AdExpressUniverse.RECAP_MEDIA_LIST_ID, prefix, false));
-			//}
-			//else
-			//{
-			//    sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, prefix, false));
-			//    first = false;
-			//}
-			temp = FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, prefix, !first);
-			sql.Append(" " + temp);
-
-			if (_vehicle != CstDBClassif.Vehicles.names.plurimedia) {
-				if (temp != null && temp.Length > 0) first = false;
-				sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, prefix, !first));
-				first = false;
-			}
-            //TV Sponsorship rights
-            if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
-            {
-                sql.AppendFormat("  and  {0}.id_category not in (68) ", prefix);
-				first = false;
-            }
-            sql.Append(FctUtilities.SQLGenerator.GetRecapMediaSelection(_session.GetSelection(_session.CurrentUniversMedia, CstRight.type.categoryAccess), _session.GetSelection(_session.CurrentUniversMedia, CstRight.type.mediaAccess), true));
-
-            
-			return sql.ToString();
-        }
-        #endregion
     }
 }

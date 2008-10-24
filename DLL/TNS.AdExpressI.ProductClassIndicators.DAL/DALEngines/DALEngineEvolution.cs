@@ -47,8 +47,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         /// </summary>
         /// <param name="session">User session</param>
         /// <param name="classifLevel">Detail of the indicator</param>
-        public DALEngineEvolution(WebSession session, CstResult.MotherRecap.ElementType classifLevel)
-            : base(session)
+        public DALEngineEvolution(WebSession session, CstResult.MotherRecap.ElementType classifLevel, DALUtilities dalUtilities)
+            : base(session, dalUtilities)
         {
             _classifLevel = classifLevel;
         }
@@ -93,7 +93,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             }
 
             //Media Selection
-            sql.AppendFormat(" and {0}", this.GetMediaSelection(dataTable.Prefix));
+            sql.AppendFormat(" and {0}", _utilities.GetMediaSelection(dataTable.Prefix));
 
             #region Product classification
             // Product selection
