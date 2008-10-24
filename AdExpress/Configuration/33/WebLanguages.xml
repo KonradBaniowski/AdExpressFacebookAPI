@@ -11,7 +11,7 @@
         <unitformat name="duration" format="#0 H 00 M 00 S"               excelFormat="#0 H 00 M 00 S"/>
       </unitformats>
       <dateFormats>
-        <dateFormat name="shortdatepattern" format="d/M/yyyy"             excelFormat="d/M/yyyy"/>
+        <dateFormat name="shortdatepattern" format="dd/MM/yyyy"             excelFormat="dd/MM/yyyy"/>
         <dateFormat name="customdatepattern" format="ddd dd MMM yyyy"     excelFormat="ddd dd MMM yyyy"/>
       </dateFormats>
     </language>
@@ -25,7 +25,7 @@
         <unitformat name="duration" format="#0 H 00 M 00 S"               excelFormat="#0 H 00 M 00 S"/>
       </unitformats>
       <dateFormats>
-        <dateFormat name="shortdatepattern" format="M/d/yyyy"             excelFormat="M/d/yyyy"/>
+        <dateFormat name="shortdatepattern" format="MM/dd/yyyy"             excelFormat="MM/dd/yyyy"/>
         <dateFormat name="customdatepattern" format="ddd, MMM dd, yyyy"   excelFormat="ddd, MMM dd, yyyy"/>
       </dateFormats>
     </language>

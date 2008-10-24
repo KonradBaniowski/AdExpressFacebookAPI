@@ -41,6 +41,13 @@
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- RADIO -->
   <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="true">
@@ -82,6 +89,14 @@
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="7"/>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
+        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem><!-- Support -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- TV -->
   <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="true">
@@ -126,6 +141,14 @@
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="8"/>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
+        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem><!-- Support -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- MEDIA TACTIQUE -->
   <vehicle id="mediasTactics" databaseId="4" showInsertions="false" showCreations="false">
@@ -133,6 +156,11 @@
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- OTHERS -->  
   <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true">
@@ -261,6 +289,13 @@
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
     </MediaSelectionParents>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- OUTDOOR -->
   <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true">
@@ -299,6 +334,14 @@
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
     </MediaSelectionParents>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
+        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem><!-- Support -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- CINEMA -->
   <vehicle id="cinema" databaseId="9" showInsertions="false" showCreations="false">
@@ -306,6 +349,11 @@
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- DIRECT_MARKETING -->
   <vehicle id="directMarketing" databaseId="10" showInsertions="true" showCreations="true">
@@ -344,6 +392,12 @@
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>      <!-- Régie -->
       <MediaSelectionParent>title</MediaSelectionParent>      <!-- Titre -->
     </MediaSelectionParents>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem> <!-- Media -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- INTERNATIONAL_PRESS -->
   <vehicle id="internationalPress" databaseId="11" showInsertions="true" showCreations="true">
@@ -387,6 +441,13 @@
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
@@ -394,6 +455,11 @@
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
   <!-- EMAILING -->
   <vehicle id="emailing" databaseId="13" showInsertions="false" showCreations="false">
@@ -401,12 +467,28 @@
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
-  </vehicle>  
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
+        <!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>
+        <!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
+  </vehicle>
   <!--TELEPHONIE MOBILE-->
   <vehicle id="mobileTelephony" databaseId="12" showInsertions="false" showCreations="false">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
   </vehicle>
 </vehicles>

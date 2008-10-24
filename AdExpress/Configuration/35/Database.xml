@@ -25,6 +25,7 @@
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
     <table enumId="1" description="List detail table" schemaEnumId="5" label="list_detail" prefix="lstd"/>
     <table enumId="2" description="tracking table" schemaEnumId="5" label="tracking" prefix="tr"/>
+    <table enumId="3" description="Right: Result table" schemaEnumId="2" label="result" prefix="rs"/>
 
     <table enumId="4" description="Classif: Sector" schemaEnumId="0" label="sector" prefix="sc"/>
     <table enumId="5" description="Classif: SubSector" schemaEnumId="0" label="sub_sector" prefix="ss"/>
@@ -56,8 +57,6 @@
     <table enumId="33" description="Customer Universe: Universe client" schemaEnumId="5" label="universe_client" prefix="se"/>
     <table enumId="34" description="Customer Universe: Universe client description" schemaEnumId="5" label="universe_client_description" prefix="ucd"/>
     <table enumId="35" description="Customer Universe: Group Universe client" schemaEnumId="5" label="group_universe_client" prefix="dir"/>
-
-
     <table enumId="36" description="Data: Month" schemaEnumId="0" label="web_plan_media_month" prefix="wp"/>
     <table enumId="37" description="Data: Week" schemaEnumId="0" label="web_plan_media_week" prefix="wp"/>
     <table enumId="38" description="Data: Month APPM" schemaEnumId="1" label="web_plan_appm_month" prefix="wp"/>
@@ -102,13 +101,32 @@
     <table enumId="83" description="Recap Data: Internet Segment" schemaEnumId="4" label="recap_internet_segment" prefix="rcp"/>
     <table enumId="84" description="Recap Data: Cinema Segment" schemaEnumId="4" label="recap_cinema_segment" prefix="rcp"/>
     <table enumId="85" description="Recap Data: Tactic Segment" schemaEnumId="4" label="recap_tactic_segment" prefix="rcp"/>
-
     <table enumId="86" description="Classif: Periodicity" schemaEnumId="0" label="periodicity" prefix="pe"/>
     <table enumId="89" description="Classif: Target Media Assignment" schemaEnumId="1" label="target_media_assignment" prefix="tma"/>
     <table enumId="91" description="Right: Login" schemaEnumId="2" label="login" prefix="lo"/>
-    
+    <table enumId="92" description="Right: Contact" schemaEnumId="2" label="contact" prefix="ctt"/>
+    <table enumId="93" description="Right: Contact group" schemaEnumId="2" label="group_contact" prefix="gct"/>
+    <table enumId="94" description="Right: Address" schemaEnumId="2" label="address" prefix="adr"/>
+    <table enumId="95" description="Right: Company" schemaEnumId="2" label="company" prefix="cpn"/>
+    <table enumId="96" description="Tracking: Connection by login" schemaEnumId="5" label="connection_by_login" prefix="cnxlog"/>
     <table enumId="97" description="Right: Module" schemaEnumId="2" label="module" prefix="m"/>
     <table enumId="98" description="Right: Module group" schemaEnumId="2" label="module_group" prefix="mg"/>
+
+    <table enumId="99" description="Tracking: Top module" schemaEnumId="5" label="top_module" prefix="tmdl"/>
+    <table enumId="100" description="Tracking: Top gad" schemaEnumId="5" label="top_gad" prefix="tg"/>
+    <table enumId="101" description="Tracking: Top media agency" schemaEnumId="5" label="top_media_agency" prefix="tma"/>
+    <table enumId="102" description="Tracking: Top export excel" schemaEnumId="5" label="top_export_excel" prefix="txls"/>
+    <table enumId="103" description="Tracking: Top option" schemaEnumId="5" label="top_option" prefix="topt"/>
+    <table enumId="104" description="Tracking: Top unit" schemaEnumId="5" label="top_unit" prefix="tun"/>
+    <table enumId="105" description="Tracking: Top period" schemaEnumId="5" label="top_periode" prefix="tpd"/>
+    <table enumId="106" description="Tracking: Unit list" schemaEnumId="5" label="unit" prefix="ut"/>
+    <table enumId="107" description="Tracking: Period" schemaEnumId="5" label="periode" prefix="pd"/>
+    <table enumId="108" description="Tracking: Top vehicle" schemaEnumId="5" label="top_vehicle" prefix="tpv"/>
+    <table enumId="109" description="Tracking: Top my adexpress" schemaEnumId="5" label="top_my_adexpress" prefix="tpa"/>
+    <table enumId="110" description="Tracking: Top vehicle by module" schemaEnumId="5" label="top_vehicle_by_module" prefix="tvm"/>
+    <table enumId="111" description="Tracking: Login Ip" schemaEnumId="5" label="ip_by_login" prefix="ipl"/>
+    <table enumId="112" description="Tracking: Connection time" schemaEnumId="5" label="connection_time" prefix="cnxt"/>
+
 
     <table enumId="120" description="Recap: advertiser" schemaEnumId="4" label="advertiser" prefix="recap_a"/>
     <table enumId="121" description="Recap: brand" schemaEnumId="4" label="brand" prefix="recap_b"/>
@@ -145,6 +163,7 @@
     <table enumId="153" description="Data: Cinema" schemaEnumId="0" label="data_cinema" prefix="wp"/>
     <table enumId="154" description="Data: Cinema" schemaEnumId="0" label="data_cinema_4M" prefix="wp"/>
     <table enumId="155" description="Custormer directory: directory" schemaEnumId="5" label="directory" prefix="drt"/>
+    <table enumId="156" description="Data: banners" schemaEnumId="0" label="banners" prefix="bn"/>
 
   </tables>
   <views>
