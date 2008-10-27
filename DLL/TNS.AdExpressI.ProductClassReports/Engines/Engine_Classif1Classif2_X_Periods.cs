@@ -328,6 +328,11 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			string[] Keys;
 
 			#region Construction du tableau
+            for (int i = 0; i < MAIN_CLASSIF_INDEXES.GetLength(0); i++)
+            {
+                //clé de l'index courant
+                MAIN_CLASSIF_INDEXES[i, 1] = -1;
+            }
 
 			foreach(DataRow currentRow in dtData.Rows){
 				//For each row of from DAL layer

@@ -176,7 +176,14 @@ namespace TNS.AdExpressI.Insertions.DAL
                             sql.Append(" UNION ");
                         else
                             first = false;
-                        sql.Append(" select id_vehicle from ");
+                        if (v.Id != CstDBClassif.Vehicles.names.internet)
+                        {
+                            sql.Append(" select id_vehicle from ");
+                        }
+                        else
+                        {
+                            sql.AppendFormat(" select {0} as id_vehicle from ", v.DatabaseId);
+                        }
                         sql.AppendFormat(" {0} ", dataTable.SqlWithPrefix);
                         sql.Append(" where ");
                         AppendUniversFilters(sql, dataTable, fromDate, toDate, v, universId, filters);

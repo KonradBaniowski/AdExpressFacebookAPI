@@ -60,7 +60,9 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		#endregion
 			
 		#region Propriétés
-		/// <summary>
+
+        #region Style
+        /// <summary>
 		/// Classe CSS de la ligne de niveau 1
 		/// </summary>
 		protected string _cssDetailSelectionL1="";
@@ -266,6 +268,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			get{throw(new NotImplementedException());}
 			set{throw(new NotImplementedException());}
         }
+        #endregion
 
         #region Show Container
         /// <summary>
@@ -285,6 +288,21 @@ namespace TNS.AdExpress.Web.Controls.Results{
         #endregion
 
         #region Pagination
+        /// <summary>
+        /// Get / Set the name of the cookie which contains the pahe size
+        /// </summary>
+        protected string _pageSizeCookieName = TNS.AdExpress.Constantes.Web.Cookies.CurrentPageSize;
+        /// <summary>
+        /// Get / Set the name of the cookie which contains the pahe size
+        /// </summary>
+        [Bindable(true),
+       Category("Paging"),
+        DefaultValue("")]
+        public string PageSizeCookieName
+        {
+            get { return _pageSizeCookieName; }
+            set { _pageSizeCookieName = value; }
+        }
         /// <summary>
 		/// Nombre par defaut de ligne dans une page
 		/// </summary>
@@ -345,7 +363,21 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			get {return _allowPaging;}
 			set {_allowPaging = value;}
 		}
-
+		/// <summary>
+		/// Get / Set option "Repeat headers"
+		/// </summary>
+		protected bool _allowRepeatHeader = true;
+        /// <summary>
+        /// Get / Set option "Repeat headers"
+        /// </summary>
+        [Bindable(true),
+        Category("Paging"),
+        DefaultValue("true")]
+        public bool AllowRepeatHeader
+        {
+            get { return _allowRepeatHeader; }
+            set { _allowRepeatHeader = value; }
+        }
 		/// <summary>
 		/// Obtient / définit la taille (nombre de lignes) d'une page 
 		/// </summary>
@@ -749,7 +781,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			js.Append("\r\n\t pageCount  = 0;");
 
 			//Sauvergarde Nombre de lignes dans cookie
-			 js.Append("\r\n\t   var cook = GetCookie(\""+TNS.AdExpress.Constantes.Web.Cookies.CurrentPageSize+"\"); ");
+			 js.Append("\r\n\t   var cook = GetCookie(\""+_pageSizeCookieName+"\"); ");
 			 js.Append("\r\n\t if(cook != null){");
 			 js.Append("\r\n\t pageSize = cook;");
 			 js.Append("\r\n\t }");
@@ -843,12 +875,13 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				//js.Append("\r\n\t\t sb.append( tab[0]);");
 				js.Append("\r\n\t\t sb.append( tab[" + n + "]);");
 			}
-			js.Append("\r\n\t if(currentPageIndex==1) ");
-			//js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + 1 ; ");
-            //js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + " + _nbTableBeginningLinesToRepeat + " ; ");
-			js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + " + 1 + " ; ");
-			js.Append("\r\n\t else ");
-			js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ); ");
+            //js.Append("\r\n\t if(currentPageIndex==1) ");
+            ////js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + 1 ; ");
+            ////js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + " + _nbTableBeginningLinesToRepeat + " ; ");
+            //js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ) + " + 1 + " ; ");
+            //js.Append("\r\n\t else ");
+            //js.Append("\r\n\t\t i=(currentPageIndex*pageSize - pageSize ); ");
+            js.Append("\r\n\t\t i = (currentPageIndex*pageSize - pageSize ) + 1; ");
 			
 			#region Répétion en-tête parent
 			//Repete parent si page courante commance par niveau le plus bas	
@@ -857,7 +890,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			js.Append("\r\n\t }");
 			#endregion
 		
-			js.Append("\r\n\t for( i ; i< (currentPageIndex*pageSize) && i <tab.length ; i++){ ");					
+			js.Append("\r\n\t for( i ; i< (currentPageIndex*pageSize)+1 && i <tab.length ; i++){ ");					
 			js.Append("\r\n\t\t sb.append(tab[i]);");		
 			js.Append("\r\n\t }");								
 			js.Append("\r\n\t\t sb.append('</table></td></tr>');");
@@ -970,12 +1003,19 @@ namespace TNS.AdExpress.Web.Controls.Results{
             js.Append("\r\n\t\t\t\t  lastpage = lastpage +'<IMG border=0 alt=\"\" name=\"'+up+'_last_img\" src=\"/App_Themes/" + themeName + "/Images/Common/Result/bt_last_up.gif\">';");
 			js.Append("\r\n\t\t\t  }");
 			js.Append("\r\n\t\t\t  htmlNavigationBar=htmlNavigationBar+lastpage;");
-			js.Append("\r\n\t\t } ");		
+			js.Append("\r\n\t\t } ");
 
-			//Option ajout répétion en-tête élément parent 
-			js.Append("\r\n\t\t\t if(tabIndex!=null && pageCount>1) {");
-			js.Append("\r\n\t\t htmlNavigationBar=HeaderParentOption(htmlNavigationBar,up); ");
-			js.Append("\r\n\t\t }");
+            if (_allowRepeatHeader)
+            {
+                //Option ajout répétion en-tête élément parent 
+                js.Append("\r\n\t\t\t if(tabIndex!=null && pageCount>1) {");
+                js.Append("\r\n\t\t htmlNavigationBar=HeaderParentOption(htmlNavigationBar,up); ");
+                js.Append("\r\n\t\t }");
+            }
+            else
+            {
+                js.Append("\r\n\t\t\t isShowParenHeader =  false;");
+            }
 
 			//Sélection options taille page
 			js.Append("\r\n\t\t htmlNavigationBar=PageSizeOptions(pageSizeOptionsList,htmlNavigationBar,up); }");
@@ -1018,7 +1058,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			js.Append("\r\n\n function ChangePageSize(pagesizeIndex){");			
 			js.Append("\r\n\t pageSize = pagesizeIndex;  ");
 
-			js.Append("\r\n\t setCookie(\""+TNS.AdExpress.Constantes.Web.Cookies.CurrentPageSize+"\",pagesizeIndex,365); ");//
+            js.Append("\r\n\t setCookie(\"" + _pageSizeCookieName + "\",pagesizeIndex,365); ");//
 
 			js.Append("\r\n\t currentPageIndex  = 1, leftPageIndex  = 0, rightPageIndex  = 0;");
 			js.Append("\r\n\t if(tab!=null && tab.length>0){");//Total pages

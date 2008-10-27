@@ -374,6 +374,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         protected override void Render(HtmlTextWriter output)
         {
 
+            if (_isCreativeConfig)
+            {
+                this.PageSizeCookieName = TNS.AdExpress.Constantes.Web.Cookies.CurrentPageSizeCreatives;
+            }
             output.WriteLine(this.AjaxEventScript());
 
             output.WriteLine("<table align=\"center\" class=\"whiteBackGround\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
@@ -482,6 +486,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
                         case CstDBClassif.Vehicles.names.directMarketing:
+                            this._cssLHeader = string.Empty;
                             this._cssL4 = _cssCellInfo;
                             this._highlightBackgroundColorL4 = string.Empty;
                             break;

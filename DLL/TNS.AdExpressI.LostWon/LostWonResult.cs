@@ -1118,12 +1118,12 @@ namespace TNS.AdExpressI.LostWon {
                 }
                 //Evol
                 cEvol = new CellEvol(tabResult[cLine, NIndex], tabResult[cLine, N1Index]);
-                cEvol.StringFormat = "percentage";
+                cEvol.StringFormat = "{0:percentage}";
                 tabResult[cLine, EvolIndex] = cEvol;
                 for (Int64 k = EvolIndex + 1; k <= tabResult.DataColumnsNumber; k++)
                 {
                     cEvol = new CellEvol(tabResult[cLine, NIndex + (k - EvolIndex)], tabResult[cLine, N1Index + (k - EvolIndex)]);
-                    cEvol.StringFormat = "percentage";
+                    cEvol.StringFormat = "{0:percentage}";
                     tabResult[cLine, k] = cEvol;
                 }
 
@@ -1218,12 +1218,12 @@ namespace TNS.AdExpressI.LostWon {
             }
             //Evol
             CellEvol cEvol = new CellEvol(toTab[toLine, NIndex], toTab[toLine, N1Index]);
-            cEvol.StringFormat = "percentage";
+            cEvol.StringFormat = "{0:percentage}";
             toTab[toLine, EvolIndex] = cEvol;
             for (Int64 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
             {
                 cEvol = new CellEvol(toTab[toLine, NIndex + (k - EvolIndex)], toTab[toLine, N1Index + (k - EvolIndex)]);
-                cEvol.StringFormat = "percentage";
+                cEvol.StringFormat = "{0:percentage}";
                 toTab[toLine, k] = cEvol;
             }
 
@@ -1276,12 +1276,12 @@ namespace TNS.AdExpressI.LostWon {
             }
             //Evol
             CellEvol cEvol = new CellEvol(toTab[toLine, NIndex], toTab[toLine, N1Index]);
-            cEvol.StringFormat = "percentage";
+            cEvol.StringFormat = "{0:percentage}";
             toTab[toLine, EvolIndex] = cEvol;
             for (Int64 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
             {
                 cEvol = new CellEvol(toTab[toLine, NIndex + (k - EvolIndex)], toTab[toLine, N1Index + (k - EvolIndex)]);
-                cEvol.StringFormat = "percentage";
+                cEvol.StringFormat = "{0:percentage}";
                 toTab[toLine, k] = cEvol;
             }
 
