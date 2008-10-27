@@ -50,7 +50,7 @@
     <Compile Include="Cells\CellInsertionInformation.cs" />
     <Compile Include="Cells\CellCreativesInformation.cs" />
     <Compile Include="Cells\CellCreativesVMCInformation.cs" />
-    <Compile Include="Cells\CellCreativesAdNetTrackInformation.cs" />
+    <Compile Include="Cells\CellCreativesEvaliantInformation.cs" />
     <Compile Include="Cells\CellCreativesRadioInformation.cs" />
     <Compile Include="Cells\CellCreativesTvInformation.cs" />
     <Compile Include="Exceptions\InsertionsException.cs" />

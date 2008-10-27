@@ -36,7 +36,7 @@ namespace TNS.AdExpressI.Insertions.Cells
     /// Cellule contenant les informations d'une insertions
     /// </summary>
     [System.Serializable]
-    public class CellCreativesAdNetTrackInformation : CellCreativesInformation
+    public class CellCreativesEvaliantInformation : CellCreativesInformation
     {
 
         #region Constantes
@@ -98,7 +98,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Constructeur
         /// </summary>
         /// <param name="label">Texte</param>
-        public CellCreativesAdNetTrackInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, Module module, string zoomDate, Int64 universId)
+        public CellCreativesEvaliantInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, Module module, string zoomDate, Int64 universId)
             : base(session, vehicle, columns, columnNames, cells, module)
         {
             this._universId = universId;

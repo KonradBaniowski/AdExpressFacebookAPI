@@ -481,7 +481,8 @@ namespace TNS.AdExpressI.Insertions
                        tab[cLine, 1] = c = new CellCreativesTvInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
                     case CstDBClassif.Vehicles.names.adnettrack:
-                        tab[cLine, 1] = c = new CellCreativesAdNetTrackInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId);
+                    case CstDBClassif.Vehicles.names.internet:
+                        tab[cLine, 1] = c = new CellCreativesEvaliantInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId);
                         break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
@@ -670,6 +671,7 @@ namespace TNS.AdExpressI.Insertions
                 {
                     case CstDBClassif.Vehicles.names.directMarketing:
                     case CstDBClassif.Vehicles.names.adnettrack:
+                    case CstDBClassif.Vehicles.names.internet:
                     case CstDBClassif.Vehicles.names.internationalPress:
                     case CstDBClassif.Vehicles.names.outdoor:
                     case CstDBClassif.Vehicles.names.press:
@@ -841,6 +843,7 @@ namespace TNS.AdExpressI.Insertions
                     }
                     break;
                 case CstDBClassif.Vehicles.names.adnettrack:
+                case CstDBClassif.Vehicles.names.internet:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG))
                     {
                         break;
