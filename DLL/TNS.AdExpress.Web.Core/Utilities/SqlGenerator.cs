@@ -1766,8 +1766,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
 		public static string GetExcludeProducts(int idList,string prefix) {
 			// Exclude product 
 			string sql = "";
-			ProductItemsList prList = Product.GetItemsList(idList);
-			if (prList != null)
+			ProductItemsList prList = null; ;
+			if (Product.Contains(idList) && (prList = Product.GetItemsList(idList)) != null)
 				sql = prList.GetExcludeItemsSql(true, prefix);
 			return sql;
 		}

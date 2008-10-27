@@ -580,8 +580,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		protected virtual string GetExcludeProducts(string prefix) {
 			// Exclude product 
 			string sql = "";
-			ProductItemsList prList = Product.GetItemsList(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
-			if (prList != null)
+			ProductItemsList prList = null; ;
+			if (Product.Contains(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (prList = Product.GetItemsList(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
 				sql = prList.GetExcludeItemsSql(true, prefix);
 			return sql;
 		}
