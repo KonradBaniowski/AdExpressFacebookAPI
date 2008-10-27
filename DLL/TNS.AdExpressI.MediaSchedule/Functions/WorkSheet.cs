@@ -50,17 +50,17 @@ namespace TNS.AdExpressI.MediaSchedule.Functions {
             Aspose.Cells.PageSetup pageSetup = sheet.PageSetup;
 
             //Set margins, in unit of inches 					
-            style.GetTag("layout").SetStyle(sheet);
-            style.GetTag("header").SetStyle(sheet);
-            style.GetTag("footer").SetStyle(sheet);
+            style.GetTag("layout").SetStyleExcel(sheet);
+            style.GetTag("header").SetStyleExcel(sheet);
+            style.GetTag("footer").SetStyleExcel(sheet);
             pageSetup.CenterHorizontally = true;
             if (headerRowIndex != null) {
                 pageSetup.PrintTitleRows = "$" + headerRowIndex + ":$4";//+headerRowIndex;
             }
 
             //Ajout des logos TNS et Appm
-            style.GetTag("LogoTNSMedia").SetStyle(sheet, 0, 0);
-            style.GetTag("LogoAPPM").SetStyle(sheet, 0, upperLeftColumn);
+            style.GetTag("LogoTNSMedia").SetStyleExcel(sheet, 0, 0);
+            style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
 
             //Set current date and current time at the center section of header and change the font of the header
             pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");
@@ -88,9 +88,9 @@ namespace TNS.AdExpressI.MediaSchedule.Functions {
             Aspose.Cells.PageSetup pageSetup = sheet.PageSetup;
 
             //Set margins, in unit of inches 					
-            style.GetTag("layout").SetStyle(sheet);
-            style.GetTag("header").SetStyle(sheet);
-            style.GetTag("footer").SetStyle(sheet);
+            style.GetTag("layout").SetStyleExcel(sheet);
+            style.GetTag("header").SetStyleExcel(sheet);
+            style.GetTag("footer").SetStyleExcel(sheet);
             pageSetup.CenterHorizontally = true;
             pageSetup.FitToPagesTall = 32000;
             pageSetup.FitToPagesWide = 1;
@@ -99,8 +99,8 @@ namespace TNS.AdExpressI.MediaSchedule.Functions {
             }
 
             //Ajout des logos TNS et Appm
-            style.GetTag("LogoTNSMedia").SetStyle(sheet, 0, 0);
-            style.GetTag("LogoAPPM").SetStyle(sheet, 0, upperLeftColumn);
+            style.GetTag("LogoTNSMedia").SetStyleExcel(sheet, 0, 0);
+            style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
 
             //Set current date and current time at the center section of header and change the font of the header
             pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");
@@ -126,7 +126,7 @@ namespace TNS.AdExpressI.MediaSchedule.Functions {
                 format = "General";
 
             cells[row, column].PutValue(data);
-            style.GetTag(tagName).SetStyle(excel, cells, row, column);
+            style.GetTag(tagName).SetStyleExcel(excel, cells, row, column);
             cells[row, column].Style.Custom = format;
 
             if (column >= startColumn && format == "General")

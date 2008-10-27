@@ -57,6 +57,10 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             double left;
             #endregion
 
+            #region Line
+            Line.BordersStyle borderStyle = Line.BordersStyle.NotSet;
+            #endregion
+
             #endregion
 
             try {
@@ -65,10 +69,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 while (Reader.Read()) {
                     if (Reader.NodeType == XmlNodeType.Element) {
                         switch (Reader.LocalName) {
-                            case "font":
 
-                                #region Font
-                                
+                            #region Font
+                            case "font":
                                 if (Reader.GetAttribute("policeName") != null && Reader.GetAttribute("policeName").Length > 0
                                     && Reader.GetAttribute("color") != null && Reader.GetAttribute("color").Length > 0
                                     && Reader.GetAttribute("size") != null && Reader.GetAttribute("size").Length > 0) {
@@ -94,7 +97,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     else
                                         isStrikeout = false;
 
-                                    if(tagList.ContainsKey(Reader.GetAttribute("name")))
+                                    if (tagList.ContainsKey(Reader.GetAttribute("name")))
                                         tagList[Reader.GetAttribute("name")] = new Theme.Font(policeName, color, size, isBold, isItalic, isUnderline, isStrikeout);
                                     else
                                         tagList.Add(Reader.GetAttribute("name"), new Theme.Font(policeName, color, size, isBold, isItalic, isUnderline, isStrikeout));
@@ -102,12 +105,11 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 else {
                                     throw new Exception("Font Format Invalid in style xml file !");
                                 }
-                                #endregion
-
                                 break;
-                            case "cell":
+                            #endregion
 
-                                #region cell
+                            #region cell
+                            case "cell":
                                 if (borders == null)
                                     borders = new Borders();
 
@@ -152,13 +154,11 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     else
                                         tagList.Add(label, new Cell(font, foregroundColor));
                                 }
-                                #endregion
-
                                 break;
+                            #endregion
+
+                            #region Picture
                             case "picture":
-
-                                #region Picture
-
                                 if (Reader.GetAttribute("path") != null && Reader.GetAttribute("path").Length > 0) {
                                     path = Reader.GetAttribute("path");
                                     if (Reader.GetAttribute("width") != null && Reader.GetAttribute("width").Length > 0
@@ -183,13 +183,11 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 else {
                                     throw new Exception("Path of Picture is not specified in Theme xml File !");
                                 }
-
-                                #endregion
-
                                 break;
-                            case "box":
+                            #endregion
 
-                                #region Box
+                            #region Box
+                            case "box":
                                 if (Reader.GetAttribute("width") != null && Reader.GetAttribute("width").Length > 0)
                                     width = double.Parse(Reader.GetAttribute("width"));
                                 else
@@ -222,13 +220,55 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     tagList[Reader.GetAttribute("name")] = new Box(margin, height, width);
                                 else
                                     tagList.Add(Reader.GetAttribute("name"), new Box(margin, height, width));
-                                #endregion
-
                                 break;
+                            #endregion
+
+                            #region colorList
+                            case "colorList":
+                                label = Reader.GetAttribute("name");
+
+                                ReaderTemp = Reader.ReadSubtree();
+                                List<Color> pieListTemp = new List<Color>();
+                                while (ReaderTemp.Read()) {
+                                    if (ReaderTemp.NodeType == XmlNodeType.Element) {
+                                        switch (ReaderTemp.LocalName) {
+                                            case "color":
+                                                value = ReaderTemp.ReadString();
+                                                pieListTemp.Add(Color.FromArgb(int.Parse(value.Split(",".ToCharArray())[0]), int.Parse(value.Split(",".ToCharArray())[1]), int.Parse(value.Split(",".ToCharArray())[2])));
+                                                break;
+                                        }
+                                    }
+                                }
+                                if (tagList.ContainsKey(label))
+                                    tagList[label] = new Colors(pieListTemp);
+                                else
+                                    tagList.Add(label, new Colors(pieListTemp));
+                                break;
+                            #endregion
+
+                            #region line
+                            case "line":
+                                if (Reader.GetAttribute("borderStyle") != null && Reader.GetAttribute("borderStyle").Length > 0
+                                    && Reader.GetAttribute("color") != null && Reader.GetAttribute("color").Length > 0
+                                    && Reader.GetAttribute("size") != null && Reader.GetAttribute("size").Length > 0) {
+
+                                    borderStyle = ((Line.BordersStyle)Enum.Parse(typeof(Line.BordersStyle), Reader.GetAttribute("borderStyle")));
+                                    color = Color.FromArgb(int.Parse(Reader.GetAttribute("color").Split(",".ToCharArray())[0]), int.Parse(Reader.GetAttribute("color").Split(",".ToCharArray())[1]), int.Parse(Reader.GetAttribute("color").Split(",".ToCharArray())[2]));
+                                    size = double.Parse(Reader.GetAttribute("size"));
+
+                                    if (tagList.ContainsKey(Reader.GetAttribute("name")))
+                                        tagList[Reader.GetAttribute("name")] = new Theme.Line(size, color, borderStyle);
+                                    else
+                                        tagList.Add(Reader.GetAttribute("name"), new Theme.Line(size, color, borderStyle));
+                                }
+                                else {
+                                    throw new Exception("Line Format Invalid in style xml file !");
+                                }
+                                break;
+                            #endregion
+
+                            #region Style
                             case "style":
-
-                                #region Style
-
                                 label = Reader.GetAttribute("name");
                                 ReaderTemp = Reader.ReadSubtree();
                                 Dictionary<string, Tag> tagListTemp = new Dictionary<string, Tag>();
@@ -239,7 +279,15 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                             case "tag":
                                                 labelTag = ReaderTemp.GetAttribute("name");
                                                 value = ReaderTemp.ReadString();
-                                                tagListTemp.Add(labelTag, tagList[value]);
+                                                if (tagList.ContainsKey(value)) {
+                                                    if (tagListTemp.ContainsKey(labelTag))
+                                                        tagListTemp[labelTag] = tagList[value];
+                                                    else
+                                                        tagListTemp.Add(labelTag, tagList[value]);
+                                                }
+                                                else {
+                                                    throw new Exception("Le tag '" + value + "' n'est pas référencé dans le fichier xml des themes!");
+                                                }
                                                 break;
                                         }
                                     }
@@ -250,9 +298,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     style.Add(label, new Style(tagListTemp));
 
                                 tagListTemp = null;
-                                #endregion
-
                                 break;
+                            #endregion
                         }
                     }
                 }

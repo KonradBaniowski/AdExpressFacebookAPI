@@ -49,6 +49,7 @@ using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
 using TNS.FrameWork.WebResultUI;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 	/// <summary>
@@ -96,8 +97,8 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public AtonPdfSystem(IDataSource dataSource, AtonConfig config, DataRow rqDetails, WebSession webSession):
-		base(config.LeftMargin, config.RightMargin, config.TopMargin, config.BottomMargin,config.HeaderHeight,config.FooterHeight){
+		public AtonPdfSystem(IDataSource dataSource, AtonConfig config, DataRow rqDetails, WebSession webSession,Theme theme):
+        base(theme.GetStyle("Aton")) {
 			this._dataSource = dataSource;
 			this._config = config;
 			this._rqDetails = rqDetails;
@@ -168,11 +169,9 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 				#region Header and Footer
 				this.AddHeadersAndFooters(
-                    _webSession,
-					@"Images\Common\logo_Tns.bmp",
-					@"Images\Common\APPM.bmp",
+                    _webSession, true, true,
                     GestionWeb.GetWebWord(2182, _webSession.SiteLanguage) + " - " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern),
-					0,-1,_config.HeaderFontColor,_config.HeaderFont);
+					0,-1);
 				#endregion
 
 			}
@@ -278,8 +277,8 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 		private void MainPageDesign(){
 		
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-	
-			string imgPath = @"Images\" + _webSession.SiteLanguage + @"\LogoAdExpress.jpg";
+
+            string imgPath = ((TNS.AdExpress.Domain.Theme.Picture)Style.GetTag("pictureTitle")).Path;
 			System.Drawing.Image imgG = System.Drawing.Image.FromFile(imgPath);
             string pdfTitle = GestionWeb.GetWebWord(2182, _webSession.SiteLanguage);
 			
@@ -293,27 +292,12 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				(double)(this.PDFPAGE_Width/2 - coef*imgG.Width/2), (double)(this.WorkZoneBottom - coef*imgG.Height - 100),
 				(double)(coef*imgG.Width),(double)(coef*imgG.Height),0);
 
-			this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R)/256.0
-				,((double)_config.MainPageFontColor.G)/256.0
-				,((double)_config.MainPageFontColor.B)/256.0);
-			this.PDFPAGE_SetActiveFont(_config.MainPageTitleFont.Name,
-				_config.MainPageTitleFont.Bold,
-				_config.MainPageTitleFont.Italic,
-				_config.MainPageTitleFont.Underline,
-				_config.MainPageTitleFont.Strikeout,
-				_config.MainPageTitleFont.SizeInPoints,TxFontCharset.charsetANSI_CHARSET);
-
+            Style.GetTag("bigTitle").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
             this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(pdfTitle)) / 2,
                 (this.PDFPAGE_Height) / 4, 0, pdfTitle);
 
             string str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
-			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
-				_config.MainPageDefaultFont.Bold,
-				_config.MainPageDefaultFont.Italic,
-				_config.MainPageDefaultFont.Underline,
-				_config.MainPageDefaultFont.Strikeout,
-				_config.MainPageDefaultFont.SizeInPoints,
-				TxFontCharset.charsetANSI_CHARSET);
+            Style.GetTag("createdTitle").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(str))/2, 
 				1*this.PDFPAGE_Height/3,0,str);
 
@@ -840,17 +824,14 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				
 				string workFile = GetWorkDirectory() + @"\"+fileName+"" + _rqDetails["id_static_nav_session"]+ ".bmp";
 
-				UISeasonalityGraph graph = new UISeasonalityGraph(_webSession, _dataSource, _config, seasonalityPlanData);
+				UISeasonalityGraph graph = new UISeasonalityGraph(_webSession, _dataSource, _config, seasonalityPlanData,Style);
 
 				this.NewPage();
 				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
 				#region Title
-				this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-					_config.TitleFont.Underline, _config.TitleFont.Strikeout, _config.TitleFont.SizeInPoints, 0);
-				this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-					,((double)_config.TitleFontColor.G)/256.0
-					,((double)_config.TitleFontColor.B)/256.0);
+
+                Style.GetTag("SeasonalityGraphBigTitleFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 				this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1139,_webSession.SiteLanguage));
 				#endregion
 
@@ -907,17 +888,14 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				
 				string workFile = GetWorkDirectory() + @"\"+fileName+"" + _rqDetails["id_static_nav_session"]+ ".bmp";
 
-				UIFamilyGraph graph = new UIFamilyGraph(_webSession, _dataSource, _config, InterestFamilyPlanData);
+				UIFamilyGraph graph = new UIFamilyGraph(_webSession, _dataSource, _config, InterestFamilyPlanData,Style);
 
 				this.NewPage();
 				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
 				#region Title
-				this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-					_config.TitleFont.Underline, _config.TitleFont.Strikeout, _config.TitleFont.SizeInPoints, 0);
-				this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-					,((double)_config.TitleFontColor.G)/256.0
-					,((double)_config.TitleFontColor.B)/256.0);
+
+                Style.GetTag("PeriodicityGraphBigTitleGrpFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 				this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1777,_webSession.SiteLanguage));
 				#endregion
 
@@ -973,17 +951,13 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				
 				string workFile = GetWorkDirectory() + @"\"+fileName+"" + _rqDetails["id_static_nav_session"]+ ".bmp";
 
-				UIPeriodicityGraph graph = new UIPeriodicityGraph(_webSession, _dataSource, _config, periodicityPlanData);
+				UIPeriodicityGraph graph = new UIPeriodicityGraph(_webSession, _dataSource, _config, periodicityPlanData,Style);
 
 				this.NewPage();
 				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
 				#region Title
-				this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-					_config.TitleFont.Underline, _config.TitleFont.Strikeout, _config.TitleFont.SizeInPoints, 0);
-				this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-					,((double)_config.TitleFontColor.G)/256.0
-					,((double)_config.TitleFontColor.B)/256.0);
+                Style.GetTag("PeriodicityGraphBigTitleFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 				this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1754,_webSession.SiteLanguage));
 				#endregion
 

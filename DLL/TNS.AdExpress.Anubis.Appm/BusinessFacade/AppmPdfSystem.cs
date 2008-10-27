@@ -58,6 +58,7 @@ using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Domain.Web.Navigation;
 using DomainLevel = TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Theme;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
@@ -89,9 +90,9 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public AppmPdfSystem(IDataSource dataSource, AppmConfig config, DataRow rqDetails, WebSession webSession):
-			base(config.LeftMargin, config.RightMargin, config.TopMargin, config.BottomMargin,
-			config.HeaderHeight,config.FooterHeight){
+		public AppmPdfSystem(IDataSource dataSource, AppmConfig config, DataRow rqDetails, WebSession webSession,Theme theme):
+            base(theme.GetStyle("Appm")) {
+
 			this._dataSource = dataSource;
 			this._config = config;
 			this._rqDetails = rqDetails;
@@ -161,12 +162,9 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 
 				#region Header and Footer
 				this.AddHeadersAndFooters(
-                    _webSession,
-					@"Images\Common\logo_Tns.bmp",
-					@"Images\Common\APPM.bmp",
+                    _webSession,true,true,
                     GestionWeb.GetWebWord(2181,_webSession.SiteLanguage) + " - " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern),
-                                                
-					0,-1,_config.HeaderFontColor,_config.HeaderFont);
+					0,-1);
 				#endregion
 
 			}
@@ -273,8 +271,8 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 		private void MainPageDesign(){
 		
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-	
-			string imgPath = @"Images\" + _webSession.SiteLanguage + @"\LogoAdExpress.jpg";
+
+            string imgPath = ((TNS.AdExpress.Domain.Theme.Picture)Style.GetTag("pictureTitle")).Path;
 			Image imgG = Image.FromFile(imgPath);
             string PdfTitle = GestionWeb.GetWebWord(1587, _webSession.SiteLanguage);
 			
@@ -288,28 +286,14 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				(double)(this.PDFPAGE_Width/2 - coef*imgG.Width/2), (double)(this.WorkZoneBottom - coef*imgG.Height - 100),
 				(double)(coef*imgG.Width),(double)(coef*imgG.Height),0);
 
-
-			this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R)/256.0
-				,((double)_config.MainPageFontColor.G)/256.0
-				,((double)_config.MainPageFontColor.B)/256.0);
-			this.PDFPAGE_SetActiveFont(_config.MainPageTitleFont.Name,
-				_config.MainPageTitleFont.Bold,
-				_config.MainPageTitleFont.Italic,
-				_config.MainPageTitleFont.Underline,
-				_config.MainPageTitleFont.Strikeout,
-				_config.MainPageTitleFont.SizeInPoints,TxFontCharset.charsetANSI_CHARSET);
-
+            Style.GetTag("bigTitle").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
             this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(PdfTitle)) / 2,
                 (this.PDFPAGE_Height) / 4, 0, PdfTitle);			
 
-            string str = GestionWeb.GetWebWord(1922,_webSession.SiteLanguage) + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
-			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
-				_config.MainPageDefaultFont.Bold,
-				_config.MainPageDefaultFont.Italic,
-				_config.MainPageDefaultFont.Underline,
-				_config.MainPageDefaultFont.Strikeout,
-				_config.MainPageDefaultFont.SizeInPoints,
-				TxFontCharset.charsetANSI_CHARSET);
+
+
+            string str = GestionWeb.GetWebWord(1922,_webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
+            Style.GetTag("createdTitle").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(str))/2, 
 				1*this.PDFPAGE_Height/3,0,str);
 
@@ -323,7 +307,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 		private void SessionParameter(){
 
 			StreamWriter sw = null;
-            classCss = string.Empty;
+            string classCss = string.Empty;
 
 			try{
 				this.NewPage();
@@ -813,11 +797,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp";
 
 				#region Title
-				this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-					_config.TitleFont.Underline, _config.TitleFont.Strikeout, _config.TitleFont.SizeInPoints, 0);
-				this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-					,((double)_config.TitleFontColor.G)/256.0
-					,((double)_config.TitleFontColor.B)/256.0);
+                Style.GetTag("GrpGraphDefaultBigTitleFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 				#endregion
 
 				#region GetData
@@ -865,7 +845,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 
 				#region GRP graph
 			
-				UIGRPGraph graph = new UIGRPGraph(_webSession, _dataSource, _config, dsData);
+				UIGRPGraph graph = new UIGRPGraph(_webSession, _dataSource, _config, dsData,Style);
 				graph.BuildGRP();
 				graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
 				img = Image.FromFile(workFile);
@@ -894,7 +874,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				workFile = GetWorkDirectory() + @"\CGRP_" + _rqDetails["id_static_nav_session"]+ ".bmp";
 				this.NewPage();
 				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-				graph = new UIGRPGraph(_webSession, _dataSource, _config, dsData);
+				graph = new UIGRPGraph(_webSession, _dataSource, _config, dsData,Style);
 				 graph.BuildCGRP();
 				graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
 				img = Image.FromFile(workFile);
@@ -1422,7 +1402,8 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				path="";
 				path=pathes[i].Replace("/imagette","");
 				path=pathes[i].Replace("/ImagesPresse","");
-				imgG = Image.FromFile(CreationServerPathes.LOCAL_PATH_IMAGE + path);
+				
+                imgG = Image.FromFile(CreationServerPathes.LOCAL_PATH_IMAGE + path);
 				imgI = this.AddImageFromFilename(CreationServerPathes.LOCAL_PATH_IMAGE + path,TxImageCompressionType.itcFlate);
 
 				double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;

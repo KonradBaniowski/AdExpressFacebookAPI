@@ -39,6 +39,9 @@ namespace TNS.AdExpress.Anubis.Satet.Common
 		/// Serveur web de stats
 		/// </summary>
 		private string _webServer;
+        /// Theme xml file Path
+        /// </summary>
+        private string _themePath;
 		#endregion
 
 		#region Propriétés
@@ -85,6 +88,13 @@ namespace TNS.AdExpress.Anubis.Satet.Common
 			get{return _webServer;}
 			set{_webServer = value;}
 		}
+
+        /// Get / Set Theme xml file Path
+        /// </summary>
+        public string ThemePath {
+            get { return _themePath; }
+            set { _themePath = value; }
+        }
 		#endregion
 
 		#region Constructeur

@@ -72,11 +72,16 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		private const int FIFTH_SHEET_COLUMN=5;
 		#endregion
 
+        #region Variables Theme Name
+        private static string _rowDefault = "AffinitiesRowDefault";
+        private static string _rowTotal = "AffinitiesRowTotal";
+        #endregion
+
 		#region Affinities
 		/// <summary>
 		/// Affinities
 		/// </summary>
-		internal static void SetExcelSheet(Workbook excel,WebSession webSession,IDataSource dataSource){
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
 
 			try{
 		
@@ -104,28 +109,28 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 					Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
 					Cells cells = sheet.Cells;
 					int cellRow = 5, cellColumn=1;
-					Color foreGroundColor;
+                    string tagName = string.Empty;
 
-					cellRow = AmsetFunctions.WorkSheet.RenderHeader(sheet,cells,resultTable.NewHeaders.Root,cellRow,cellColumn);
+					cellRow = AmsetFunctions.WorkSheet.RenderHeader(excel,sheet,cells,style,resultTable.NewHeaders.Root,cellRow,cellColumn);
 
 					#region Lignes du tableau
 					for(int i=0; i<resultTable.LinesNumber;i++){
-				
-						if(i==0)
-							foreGroundColor=Color.White;
-						else
-							foreGroundColor=Color.FromArgb(177,163,193);
 
-						AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow,FIRST_SHEET_COLUMN,FIFTH_SHEET_COLUMN,true,Color.Black,foreGroundColor,Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,8,false);
-						AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((CellLabel)resultTable[i,FIRST_TABLE_COLUMN]).Label,cellRow,FIRST_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-						AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((CellUnit)resultTable[i,SECOND_TABLE_COLUMN]).Value,cellRow,SECOND_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-						cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom =WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);//.Style;
-						AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((CellUnit)resultTable[i,THIRD_TABLE_COLUMN]).Value,cellRow,THIRD_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-						cells[cellRow, THIRD_TABLE_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).StringFormat);//.Style;
-						AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((CellUnit)resultTable[i,FOURTH_TABLE_COLUMN]).Value,cellRow,FOURTH_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-						cells[cellRow, FOURTH_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).StringFormat);//.Style;
-						AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((CellUnit)resultTable[i,FIFTH_TABLE_COLUMN]).Value,cellRow,FIFTH_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-						cells[cellRow, FIFTH_TABLE_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, FIFTH_TABLE_COLUMN]).StringFormat);//.Style;
+                        if (i == 0)
+                            tagName = _rowTotal;
+                        else
+                            tagName = _rowDefault;
+
+                        AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(tagName), null, cellRow, FIRST_SHEET_COLUMN, FIFTH_SHEET_COLUMN, false);
+                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).Value, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                        //cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);//.Style;
+                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).Value, cellRow, THIRD_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                        //cells[cellRow, THIRD_TABLE_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).StringFormat);//.Style;
+                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).Value, cellRow, FOURTH_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                        //cells[cellRow, FOURTH_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).StringFormat);//.Style;
+                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, FIFTH_TABLE_COLUMN]).Value, cellRow, FIFTH_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                        //cells[cellRow, FIFTH_TABLE_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, FIFTH_TABLE_COLUMN]).StringFormat);//.Style;
 
 						cellRow++;
 					}
@@ -136,7 +141,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 					cells.SetColumnWidth((byte)THIRD_SHEET_COLUMN,12);
 					cells.SetColumnWidth((byte)FOURTH_SHEET_COLUMN,12);
 					cells.SetColumnWidth((byte)FIFTH_SHEET_COLUMN,12);
-					AmsetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1687, webSession.SiteLanguage), (int)resultTable.LinesNumber, 42, 10, "", "1", webSession.SiteLanguage);
+                    AmsetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1687, webSession.SiteLanguage), (int)resultTable.LinesNumber, 42, 10, "", "1", webSession.SiteLanguage, style);
 				}
 			}
 			catch(Exception e){

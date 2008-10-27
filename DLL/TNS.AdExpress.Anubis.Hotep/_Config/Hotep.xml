@@ -3,19 +3,11 @@
 	<CustomerMail server="smtp2.secodip.com" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.tnsadexpress.com" subject="AdExpress"/>
   <PdfPath path="\\testarossa2\adexdatas\AdExCustomerFiles"/>
   <!--<PdfPath path="AdExCustomerFiles"/>-->
+  <!--If path empty then path = current directory of executable-->
+  <ThemePath path=""/>
   <!--<PdfCreatorPilot login="and@tns-global.com" pass="2SN7J-6TWNG-VCQKV-7XCCT-45YEH"/>-->
   <PdfCreatorPilot login="laurent.roucaute@tnsmi.fr" pass="WHBRS-AAQWR-7QC3S-9H28E"/>
   <!--<Html2Pdf login="An DangDuy" pass="3GKL5-4UFS4-F4HZ4-EK6WY"/>-->
   <Html2Pdf login="laurent.roucaute@tnsmi.fr" pass="FBZ9Q-CQHV9-VTC8P-DFD9V"/>	
-	<PdfLayout>
-		<Margins top="15" bottom="15" left="15" right="15"/>
-		<Header size="30"/>
-		<Footer size="20"/>
-		<HeaderFont name="Arial" size="10" color="100,72,131" bold="false" italic="false" underline="false"/>
-		<DefaultFont name="Arial" size="10" color="100,72,131" bold="false" italic="false" underline="false"/>
-		<TitleFont name="Arial" size="12" color="100,72,131" bold="true" italic="false" underline="false"/>
-		<MainPageTitleFont name="Arial" size="40" color="100,72,131" bold="true" italic="false" underline="false"/>
-		<MainPageDefaultFont name="Arial" size="12" color="100,72,131" bold="false" italic="false" underline="false"/>
-	</PdfLayout>
 	<PdfProperties author="TNS Media Intelligence" subject="Indicateurs" title="Analyses Sectorielles" producer="TNS AdExpress (Anubis)" keywords="Analyses Sectorielles, adExpress, Indicateurs, TNS Media Intelligence"/>
 </Configuration>

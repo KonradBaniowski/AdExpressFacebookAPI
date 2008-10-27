@@ -28,6 +28,7 @@ using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.FrameWork.DB.Common;
+using System.Collections.Generic;
 
 
 namespace TNS.AdExpress.Anubis.Appm.UI
@@ -67,8 +68,18 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 		/// Data Periodicity
 		/// </summary>
 		private DataTable _dtPeriodicityData = null;
-
-
+        /// <summary>
+        /// Style
+        /// </summary>
+        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        /// <summary>
+        /// Pie ColorS
+        /// </summary>
+        private List<Color> _pieColors = null;
+        /// <summary>
+        /// Bar Colors
+        /// </summary>
+        private List<Color> _barColors = null;
 		#endregion
 
 		#region Constructeur
@@ -79,7 +90,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 		/// <param name="dataSource">date source</param>
 		/// <param name="config">config parameters</param>
 		/// <param name="dsData">tables de données</param>
-		public UIGRPGraph(WebSession webSession,IDataSource dataSource, AppmConfig config, DataSet dsData):base() {
+		public UIGRPGraph(WebSession webSession,IDataSource dataSource, AppmConfig config, DataSet dsData,TNS.AdExpress.Domain.Theme.Style style):base() {
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
@@ -87,6 +98,10 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 			_dtTotalPdvData = dsData.Tables["TotalPdv"];
 			_dtFamilyData = dsData.Tables["Family"];
 			_dtPeriodicityData = dsData.Tables["Periodicity"];
+            _style = style;
+
+            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("GrpGraphPieColors")).ColorList;
+            _barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("GrpGraphBarColors")).ColorList;
 		}
 		#endregion
 
@@ -119,13 +134,10 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 
 				if(_dtPdvData!=null && _dtPdvData.Rows.Count>0 && _dtFamilyData!=null && _dtFamilyData.Rows.Count>0 && _dtPeriodicityData!=null && _dtPeriodicityData.Rows.Count>0){
 
-					this.Size = new Size(1100,700);
+                    _style.GetTag("GrpGraphSize").SetStyleDundas(this);
 					//Graph Properties
 					this.BackGradientType = GradientType.TopBottom;
-					this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
-					this.BorderStyle=ChartDashStyle.Solid;
-					this.BorderLineColor=Color.FromArgb(99,73,132);
-					this.BorderLineWidth=1;
+                    _style.GetTag("GrpGraphLineEnCircle").SetStyleDundas(this);
 
 					cAreaPDV  = new ChartArea();
 					cAreaFamily = new ChartArea();
@@ -201,22 +213,22 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					
 					//PDV points
 					for(int k=0 ; k<sPDVData.Points.Count ; k++){
-						if(k < CstUI.UI.pieColors.Length){
-							sPDVData.Points[k].Color = CstUI.UI.pieColors[k];
+						if(k < _pieColors.Count){
+                            sPDVData.Points[k].Color = _pieColors[k];
 						}
 						sPDVData.Points[k]["Exploded"] = "true";
 					}
 					//Interst family point
 					for(int k=0 ; k<sFamilyData.Points.Count ; k++){
-						if(k < CstUI.UI.pieColors.Length){
-							sFamilyData.Points[k].Color = CstUI.UI.pieColors[k];
+                        if (k < _pieColors.Count) {
+                            sFamilyData.Points[k].Color = _pieColors[k];
 						}
 						sFamilyData.Points[k]["Exploded"] = "true";
 					}
 					//Periodicity points
 					for(int k=0 ; k < _dtPeriodicityData.Rows.Count ; k++){
-						if (k < CstUI.UI.pieColors.Length){
-							sPeriodicityData.Points[k].Color = CstUI.UI.pieColors[k];
+                        if (k < _pieColors.Count) {
+                            sPeriodicityData.Points[k].Color = _pieColors[k];
 						}
 						sPeriodicityData.Points[k]["Exploded"] = "true";
 					}
@@ -235,14 +247,13 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					Legend lPDV = new Legend(cAreaPDV.Name);				
 					Legend lFamily = new Legend(cAreaFamily.Name);
 
-					lPeriodicity.Enabled=lPDV.Enabled=lFamily.Enabled=true;					
-					
-					lPeriodicity.Font = lFamily.Font = lPDV.Font = new Font(_config.DefaultFont.Name,8,
-						((_config.DefaultFont.Bold)?FontStyle.Bold:0)
-						|((_config.DefaultFont.Underline)?FontStyle.Underline:0)
-						|((_config.DefaultFont.Italic)?FontStyle.Italic:0)
-						);
-					lPeriodicity.FontColor = lPDV.FontColor = lFamily.FontColor = _config.DefaultFontColor;
+					lPeriodicity.Enabled=lPDV.Enabled=lFamily.Enabled=true;
+
+
+                    _style.GetTag("GrpGraphDefaultFont").SetStyleDundas(lPeriodicity);
+                    _style.GetTag("GrpGraphDefaultFont").SetStyleDundas(lFamily);
+                    _style.GetTag("GrpGraphDefaultFont").SetStyleDundas(lPDV);
+
 					//Docking
 					lPeriodicity.Docking = lPDV.Docking = lFamily.Docking = LegendDocking.Bottom;
 					
@@ -288,12 +299,9 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 
 
 					this.Titles[2].DockInsideChartArea = this.Titles[1].DockInsideChartArea = this.Titles[0].DockInsideChartArea = true;
-					this.Titles[2].Font = this.Titles[1].Font = this.Titles[0].Font = new Font(_config.TitleFont.Name,(float)10,
-						((_config.TitleFont.Bold)?FontStyle.Bold:0)
-						|((_config.TitleFont.Underline)?FontStyle.Underline:0)
-						|((_config.TitleFont.Italic)?FontStyle.Italic:0)
-						);
-					this.Titles[2].Color = this.Titles[1].Color = this.Titles[0].Color = _config.DefaultFontColor;
+                    _style.GetTag("GrpGraphDefaultTitleFont").SetStyleDundas(this.Titles[2]);
+                    _style.GetTag("GrpGraphDefaultTitleFont").SetStyleDundas(this.Titles[1]);
+                    _style.GetTag("GrpGraphDefaultTitleFont").SetStyleDundas(this.Titles[0]);
 
 					//Add Series
 					this.Series.Add(sPDVData);
@@ -334,13 +342,10 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 
 				if(_dtFamilyData!=null && _dtFamilyData.Rows.Count>0 && _dtPeriodicityData!=null && _dtPeriodicityData.Rows.Count>0){
 
-					this.Size = new Size(1000,700);
-					//Graph Properties
-					this.BackGradientType = GradientType.TopBottom;
-					this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
-					this.BorderStyle=ChartDashStyle.Solid;
-					this.BorderLineColor=Color.FromArgb(99,73,132);
-					this.BorderLineWidth=1;
+                    _style.GetTag("CgrpGraphSize").SetStyleDundas(this);
+                    //Graph Properties
+                    this.BackGradientType = GradientType.TopBottom;
+                    _style.GetTag("CgrpGraphLineEnCircle").SetStyleDundas(this);
 
 					cAreaFamily = new ChartArea();
 					cAreaPeriodicity = new ChartArea();
@@ -350,12 +355,10 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 
 					cAreaFamily.Area3DStyle.Enable3D = cAreaPeriodicity.Area3DStyle.Enable3D = false;
 					cAreaFamily.BackColor = cAreaPeriodicity.BackColor = Color.FromArgb(222,207,231);
-					cAreaFamily.AxisY.LabelStyle.Font = cAreaFamily.AxisX.LabelStyle.Font = cAreaPeriodicity.AxisY.LabelStyle.Font = cAreaPeriodicity.AxisX.LabelStyle.Font = new Font(_config.DefaultFont.Name,8,
-						((_config.DefaultFont.Bold)?FontStyle.Bold:0)
-						|((_config.DefaultFont.Underline)?FontStyle.Underline:0)
-						|((_config.DefaultFont.Italic)?FontStyle.Italic:0)
-						);
-					cAreaFamily.AxisY.LabelStyle.FontColor = cAreaFamily.AxisX.LabelStyle.FontColor = cAreaPeriodicity.AxisY.LabelStyle.FontColor = cAreaPeriodicity.AxisX.LabelStyle.FontColor = _config.DefaultFontColor;
+                    _style.GetTag("CgrpGraphDefaultFont").SetStyleDundas(cAreaFamily.AxisY.LabelStyle);
+                    _style.GetTag("CgrpGraphDefaultFont").SetStyleDundas(cAreaFamily.AxisX.LabelStyle);
+                    _style.GetTag("CgrpGraphDefaultFont").SetStyleDundas(cAreaPeriodicity.AxisY.LabelStyle);
+                    _style.GetTag("CgrpGraphDefaultFont").SetStyleDundas(cAreaPeriodicity.AxisX.LabelStyle);
 
 					//name
 					cAreaFamily.Name = GestionWeb.GetWebWord(1685,_webSession.SiteLanguage)
@@ -405,8 +408,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					cAreaFamily.AxisY.Maximum= maxScale+1000;
 
 					for(int k=0 ; k < xUnitValues.Length ; k++){
-						sDataFamily.Points[k].Color = CstUI.UI.barColors[0];
-						sTargetDataFamily.Points[k].Color = CstUI.UI.barColors[1];
+						sDataFamily.Points[k].Color = _barColors[0];
+						sTargetDataFamily.Points[k].Color = _barColors[1];
 					}
 					sTargetDataFamily["LabelStyle"] = sDataFamily["LabelStyle"] = "Outside";
 					sTargetDataFamily["PointWidth"] = sDataFamily["PointWidth"] = "1.0";
@@ -423,8 +426,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					cAreaPeriodicity.AxisY.Maximum= maxScale+1000;
 
 					for(int k=0 ; k < xUnitValues.Length ; k++){
-						sDataPeriodicity.Points[k].Color = CstUI.UI.barColors[0];
-						sTargetDataPeriodicity.Points[k].Color = CstUI.UI.barColors[1];
+						sDataPeriodicity.Points[k].Color = _barColors[0];
+						sTargetDataPeriodicity.Points[k].Color = _barColors[1];
 					}
 
 					//common legend
@@ -440,8 +443,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					l.Docking = LegendDocking.Bottom;
 					l.Alignment = StringAlignment.Center;
 					l.LegendStyle = LegendStyle.Row;
-					l.CustomItems.Add(CstUI.UI.barColors[0],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtFamilyData.Rows[0]["baseTarget"]+") ");
-					l.CustomItems.Add(CstUI.UI.barColors[1],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtFamilyData.Rows[0]["additionalTarget"]+") ");
+					l.CustomItems.Add(_barColors[0],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtFamilyData.Rows[0]["baseTarget"]+") ");
+					l.CustomItems.Add(_barColors[1],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtFamilyData.Rows[0]["additionalTarget"]+") ");
 
 
 					this.Legends.Add(l);
@@ -470,12 +473,9 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					this.Titles[0].DockToChartArea = cAreaFamily.Name;
 					this.Titles[1].DockToChartArea = cAreaPeriodicity.Name;
 
-					this.Titles[1].Font = this.Titles[0].Font = new Font(_config.TitleFont.Name,(float)_config.DefaultFont.Size,
-						((_config.TitleFont.Bold)?FontStyle.Bold:0)
-						|((_config.TitleFont.Underline)?FontStyle.Underline:0)
-						|((_config.TitleFont.Italic)?FontStyle.Italic:0)
-						);
-					this.Titles[1].Color = this.Titles[0].Color = _config.DefaultFontColor;
+                    _style.GetTag("CgrpGraphDefaultTitleFont").SetStyleDundas(this.Titles[0]);
+                    _style.GetTag("CgrpGraphDefaultTitleFont").SetStyleDundas(this.Titles[1]);
+					
 
 					//Add Series
 					this.Series.Add(sDataFamily);

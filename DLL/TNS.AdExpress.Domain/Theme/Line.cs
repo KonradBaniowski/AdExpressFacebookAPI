@@ -5,58 +5,71 @@ using System.Drawing;
 
 namespace TNS.AdExpress.Domain.Theme {
     /// <summary>
-    /// Define object Box (for create an object Header or Footer)
+    /// Defined a line
     /// </summary>
-    public class Box : Tag {
+    public class Line : Tag {
+
+        #region Enum
+        /// <summary>
+        /// Enum Border Style
+        /// </summary>
+        public enum BordersStyle {
+            NotSet = 0,
+            Dash = 1,
+            DashDot = 2,
+            DashDotDot = 3,
+            Dot = 4,
+            Solid = 5,
+        }
+        #endregion
 
         #region Variables
         /// <summary>
-        /// Margin of Box
+        /// Size
         /// </summary>
-        private Margin _margin;
+        private double _size = 1;
         /// <summary>
-        /// Height of Box
+        /// Color 
         /// </summary>
-        private double _height = -1;
+        private Color _color = Color.Black;
         /// <summary>
-        /// Width of Box
+        /// Border Style
         /// </summary>
-        private double _width = -1;
+        private BordersStyle _borderStyle = BordersStyle.NotSet;
         #endregion
 
         #region Assessor
         /// <summary>
-        /// Get Margin of Box
+        /// Get Color list
         /// </summary>
-        public Margin Margin { get { return _margin; } }
-        /// <summary>
-        /// Get Height of Box
-        /// </summary>
-        public double Height { get { return _height; } }
-        /// <summary>
-        /// Get Width of Box
-        /// </summary>
-        public double Width { get { return _width; } }
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="margin">Margin of Box</param>
-        /// <param name="height">Height of Box</param>
-        /// <param name="width">Width of Box</param>
-        public Box(Margin margin, double height,double width):this(margin) {
-            _height = height;
-            _width = width;
+        public BordersStyle BorderStyle {
+            get { return _borderStyle; }
         }
         /// <summary>
+        /// Get Color list
+        /// </summary>
+        public double Size {
+            get { return _size; }
+        }
+        /// <summary>
+        /// Get Color 
+        /// </summary>
+        public Color Color {
+            get { return _color; }
+        }
+        #endregion
+
+        #region Constructor
+        /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="margin">Margin of Box</param>
-        public Box(Margin margin) {
-            if (margin == null) throw new ArgumentNullException("Margin parameter is null");
-            _margin = margin;
+        /// <param name="size">Size</param>
+        /// <param name="color">Color</param>
+        /// <param name="borderStyle">Border Style</param>
+        public Line(double size, Color color, BordersStyle borderStyle) {
+            _size = size;
+            _color = color;
+            _borderStyle = borderStyle;
         }
         #endregion
 
@@ -65,70 +78,41 @@ namespace TNS.AdExpress.Domain.Theme {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        /// <summary>
-        /// Apllied a style to Excel Object
-        /// </summary>
-        /// <param name="sheet">Sheet Excel Object</param>
         public override void SetStyleExcel(Aspose.Cells.Worksheet sheet) {
-            sheet.PageSetup.TopMarginInch = this.Margin.MarginTop;
-            sheet.PageSetup.BottomMarginInch = this.Margin.MarginBottom;
-            sheet.PageSetup.RightMargin = this.Margin.MarginRight;
-            sheet.PageSetup.LeftMargin = this.Margin.MarginLeft;
+            throw new Exception("The method or operation is not implemented.");
         }
 
-        /// <summary>
-        /// Set a Style to Excel Object
-        /// </summary>
-        /// <param name="sheet">Sheet Excel Object</param>
-        /// <param name="upperLeftRow">Upper Left Row</param>
-        /// <param name="upperLeftColumn">Upper Left Column</param>
         public override void SetStyleExcel(Aspose.Cells.Worksheet sheet, int upperLeftRow, int upperLeftColumn) {
             throw new Exception("The method or operation is not implemented.");
         }
-        
-        /// <summary>
-        /// Apllied a style to PDF Object
-        /// </summary>
-        /// <param name="pdfObject">PDF Object</param>
+
         public override void SetStylePdf(PDFCreatorPilotLib.PDFDocument3Class pdfObject, PDFCreatorPilotLib.TxFontCharset charset) {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        /// <summary>
-        /// Apllied a style Font To an Object Font
-        /// </summary>
-        /// <param name="font">Font To Init</param>
         public override void SetStyleDundas(Dundas.Charting.WinControl.Legend legend) {
             throw new Exception("The method or operation is not implemented.");
         }
-        /// <summary>
-        /// Apllied a style Font To an Object Font
-        /// </summary>
-        /// <param name="title">title</param>
+
         public override void SetStyleDundas(Dundas.Charting.WinControl.Title title) {
             throw new Exception("The method or operation is not implemented.");
         }
-        /// <summary>
-        /// Apllied a style Font To an Object Font
-        /// </summary>
-        /// <param name="label">label</param>
+
         public override void SetStyleDundas(Dundas.Charting.WinControl.Label label) {
             throw new Exception("The method or operation is not implemented.");
         }
-        /// <summary>
-        /// Apllied a style Font To an Object Font
-        /// </summary>
-        /// <param name="series">series</param>
+
         public override void SetStyleDundas(Dundas.Charting.WinControl.Series series) {
             throw new Exception("The method or operation is not implemented.");
         }
-
         /// <summary>
         /// Apllied a style Line To an Object chart
         /// </summary>
         /// <param name="chart">Chart</param>
         public override void SetStyleDundas(Dundas.Charting.WinControl.Chart chart) {
-            chart.Size = new System.Drawing.Size(Convert.ToInt32(_width), Convert.ToInt32(_height));
+            chart.BorderStyle = GetChartDashStyle(_borderStyle);
+            chart.BorderLineColor = _color;
+            chart.BorderLineWidth = Convert.ToInt32(_size);
         }
         /// <summary>
         /// Apllied a style Font To an Object Font
@@ -143,6 +127,38 @@ namespace TNS.AdExpress.Domain.Theme {
         /// <param name="axis">Title axis</param>
         public override void SetStyleDundas(ref Color color) {
             throw new Exception("The method or operation is not implemented.");
+        }
+        #endregion
+
+        #region Methods private
+        /// <summary>
+        /// Get Chart Dash Style
+        /// </summary>
+        /// <param name="borderStyle">Border Style</param>
+        /// <returns>Chart Dash Style</returns>
+        private Dundas.Charting.WinControl.ChartDashStyle GetChartDashStyle(BordersStyle borderStyle) {
+            Dundas.Charting.WinControl.ChartDashStyle chartDashStyle;
+            switch (borderStyle) {
+                case BordersStyle.Dash:
+                    chartDashStyle = Dundas.Charting.WinControl.ChartDashStyle.Dash;
+                    break;
+                case BordersStyle.DashDot:
+                    chartDashStyle = Dundas.Charting.WinControl.ChartDashStyle.DashDot;
+                    break;
+                case BordersStyle.DashDotDot:
+                    chartDashStyle = Dundas.Charting.WinControl.ChartDashStyle.DashDotDot;
+                    break;
+                case BordersStyle.Dot:
+                    chartDashStyle = Dundas.Charting.WinControl.ChartDashStyle.Dot;
+                    break;
+                case BordersStyle.Solid:
+                    chartDashStyle = Dundas.Charting.WinControl.ChartDashStyle.Solid;
+                    break;
+                default:
+                    chartDashStyle = Dundas.Charting.WinControl.ChartDashStyle.NotSet;
+                    break;
+            }
+            return chartDashStyle;
         }
         #endregion
     }

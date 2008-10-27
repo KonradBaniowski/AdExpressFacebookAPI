@@ -22,6 +22,7 @@ using TNS.AdExpress.Web.Rules.Results.APPM;
 
 using Dundas.Charting.WinControl;
 using TNS.FrameWork.DB.Common;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Anubis.Aton.UI{
 	/// <summary>
@@ -46,14 +47,26 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// Data reserved to the calcul of PDVs
 		/// </summary>
 		private DataTable _dtGraphicsData = null;
+        /// <summary>
+        /// Style
+        /// </summary>
+        private static TNS.AdExpress.Domain.Theme.Style _style = null;
+        /// <summary>
+        /// Pie ColorS
+        /// </summary>
+        private List<Color> _newPieColors = null;
 		#endregion
 
 		#region Constructeur
-		public UIPeriodicityGraph(WebSession webSession,IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData):base(){
+        public UIPeriodicityGraph(WebSession webSession, IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData, TNS.AdExpress.Domain.Theme.Style style)
+            : base() {
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
 			_dtGraphicsData = dtGraphicsData;
+            _style = style;
+
+            _newPieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphNewPieColors32")).ColorList;
 		}
 		#endregion
 
@@ -72,25 +85,8 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 
 			#region Constantes
 			//couleurs des tranches du graphique
-			Color[] pieColors={
-								  Color.FromArgb(100,72,131),
-								  Color.FromArgb(177,163,193),
-								  Color.FromArgb(208,200,218),
-								  Color.FromArgb(225,224,218),
-								  Color.FromArgb(255,215,215),
-								  Color.FromArgb(255,240,240),
-								  Color.FromArgb(202,255,202),
-								  Color.FromArgb(255,5,182),
-								  Color.FromArgb(157,152,133),
-								  Color.FromArgb(241,241,241),
-								  Color.FromArgb(77,150,75),
-								  Color.FromArgb(0,0,0)
-							  };
-
-			Color[] barColors={ 
-								  Color.FromArgb(255,223,222),
-								   
-			};
+            List<Color> pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphPieColors12")).ColorList;
+            List<Color> barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphBarColors")).ColorList;
 			#endregion
 
 			#region Initialisation
@@ -188,7 +184,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 
 					#endregion
 
-					seriePeriodicity=SetSeriesPeriodicity(_dtGraphicsData,chartAreaUnit,seriePeriodicity,xUnitValues,yUnitValues,WebConstantes.UI.UI.newPieColors,chartAreaName);												
+                    seriePeriodicity = SetSeriesPeriodicity(_dtGraphicsData, chartAreaUnit, seriePeriodicity, xUnitValues, yUnitValues, _newPieColors, chartAreaName);												
 					#endregion												
  
 					#region legend chart Area
@@ -247,7 +243,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 						chartAreaUnitadditional.Position.Height=areaUnitadditionalPositionHeight;
 						this.ChartAreas.Add(chartAreaUnitadditional);
 						//Charger les séries de valeurs 
-						seriePeriodicityadditional=SetSeriesPeriodicity(_dtGraphicsData,chartAreaUnitadditional,seriePeriodicityadditional,xUnitValues,yUnitValues,WebConstantes.UI.UI.newPieColors,chartAreaAdditionalName);												
+                        seriePeriodicityadditional = SetSeriesPeriodicity(_dtGraphicsData, chartAreaUnitadditional, seriePeriodicityadditional, xUnitValues, yUnitValues, _newPieColors, chartAreaAdditionalName);												
 					}
 					#endregion
 					
@@ -347,7 +343,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="barColors">couleurs du graphique</param>		
 		/// <param name="chartAreaName">Nom du conteneur de l'image</param>
 		/// <returns>séries de valeurs</returns>
-		private static  Dundas.Charting.WinControl.Series SetSeriesPeriodicity(DataTable dt ,ChartArea chartArea,Dundas.Charting.WinControl.Series series,string[] xValues,double[] yValues,Color[] barColors,string chartAreaName){
+		private static  Dundas.Charting.WinControl.Series SetSeriesPeriodicity(DataTable dt ,ChartArea chartArea,Dundas.Charting.WinControl.Series series,string[] xValues,double[] yValues,List<Color> barColors,string chartAreaName){
 
 			#region  Création graphique
 			if(xValues!=null && yValues!=null){
@@ -368,7 +364,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 				
 				#region Définition des couleurs
 				//couleur du graphique
-				for(int k=0;k<dt.Rows.Count && k<11;k++){
+                for (int k = 0; k < dt.Rows.Count && k < barColors.Count; k++) {
 					series.Points[k].Color=barColors[k];
 				}
 				#endregion
@@ -392,9 +388,11 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			#endregion 
 
 			return series;
-		}
+        }
 
-		/// <summary>
+        #region SetSeriesBarPeriodicity (Non utilisé)
+        /*
+        /// <summary>
 		/// Crétion du graphique unité Cgrp (histogramme)
 		/// </summary>
 		/// <param name="dt">tableau de résultats</param>
@@ -448,10 +446,12 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			#endregion 
 
 			return series;
-		}
+        }
+        */
+        #endregion
 
 
-		/// <summary>
+        /// <summary>
 		/// Initialise les styles du webcontrol pour média radio et télé
 		/// </summary>
 		/// <param name="appmChart">Objet Webcontrol</param>
@@ -463,10 +463,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			appmChart.Width=700;
 			appmChart.Height=400;
 			appmChart.BackGradientType = GradientType.TopBottom;
-			appmChart.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
-			appmChart.BorderStyle=ChartDashStyle.Solid;
-			appmChart.BorderLineColor=Color.FromArgb(99,73,132);
-			appmChart.BorderLineWidth=2;
+            _style.GetTag("PeriodicityGraphLineEnCircle").SetStyleDundas(appmChart);			
 			appmChart.Legend.Enabled=true;
 			#endregion	
 
@@ -497,10 +494,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			appmChart.Width=700;
 			appmChart.Height=700;
 			appmChart.BackGradientType = GradientType.TopBottom;
-			appmChart.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
-			appmChart.BorderStyle=ChartDashStyle.Solid;
-			appmChart.BorderLineColor=Color.FromArgb(99,73,132);
-			appmChart.BorderLineWidth=2;
+            _style.GetTag("PeriodicityGraphLineEnCircle").SetStyleDundas(appmChart);
 			appmChart.Legend.Enabled=true;
 			#endregion
 

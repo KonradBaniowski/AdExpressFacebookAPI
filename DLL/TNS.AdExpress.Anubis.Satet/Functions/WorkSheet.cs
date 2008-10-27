@@ -10,6 +10,7 @@ using Aspose.Cells;
 using System.Drawing;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Theme;
 
 
 namespace TNS.AdExpress.Anubis.Satet.Functions
@@ -29,34 +30,26 @@ namespace TNS.AdExpress.Anubis.Satet.Functions
 		/// <param name="nbMaxRowByPage">nombre de ligne maximu par page</param>		
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="vPageBreaks">saut de page vertical</param>
-		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int upperLeftColumn){
-            int indexPicture = 0;
+		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int upperLeftColumn, TNS.AdExpress.Domain.Theme.Style style){
 			// Nom de la feuille
 			sheet.Name=name; 														
 			
 			sheet.IsGridlinesVisible = false;
 			sheet.PageSetup.Orientation = PageOrientationType.Landscape;
+
+
+            style.GetTag("layout").SetStyleExcel(sheet);
+            style.GetTag("header").SetStyleExcel(sheet);
+            style.GetTag("footer").SetStyleExcel(sheet);
+
 			Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
 
 			//Set margins, in unit of inches 					
-			pageSetup.TopMarginInch = 0.3; 
-			pageSetup.BottomMarginInch = 0.3; 
-			pageSetup.HeaderMarginInch = 0.3; 
-			pageSetup.FooterMarginInch = 0.3; 										
-			pageSetup.RightMargin=0.3;
-			pageSetup.LeftMargin=0.3;
 			pageSetup.CenterHorizontally=true;			
 			
 			//Ajout des logos TNS et Appm
-			Pictures pics = sheet.Pictures;
-			string tnsLogoPath=@"Images\logoTNSMedia.gif";	
-			string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
-            indexPicture = pics.Add(0, 0, logoPath, 75, 75);
-            sheet.Pictures[indexPicture].Placement = PlacementType.Move;
-			string appmLogoPath=@"Images\Common\APPM.bmp";
-			string bastetImagePath = System.IO.Path.GetFullPath(appmLogoPath);
-            indexPicture = pics.Add(0, upperLeftColumn, bastetImagePath, 55, 45);
-            sheet.Pictures[indexPicture].Placement = PlacementType.Move;
+            style.GetTag("LogoTNSMedia").SetStyleExcel(sheet,0,0);
+            style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
 		
 			//Set current date and current time at the center section of header and change the font of the header
 			pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
@@ -74,8 +67,8 @@ namespace TNS.AdExpress.Anubis.Satet.Functions
 		/// <param name="nbMaxRowByPage">nombre de ligne maximu par page</param>
 		/// <param name="s">compteur de page</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
-		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int nbRows,int nbMaxRowByPage,ref int s,int upperLeftColumn){
-			PageSettings(sheet,name,nbRows,nbMaxRowByPage,ref s,upperLeftColumn,"",null);
+		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int nbRows,int nbMaxRowByPage,ref int s,int upperLeftColumn, TNS.AdExpress.Domain.Theme.Style style){
+            PageSettings(sheet, name, nbRows, nbMaxRowByPage, ref s, upperLeftColumn, "", null, style);
 		}
 
 	
@@ -90,7 +83,7 @@ namespace TNS.AdExpress.Anubis.Satet.Functions
 		/// <param name="printArea">Zone d'impression</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="vPageBreaks">saut de page vertical</param>
-		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int nbRows,int nbMaxRowByPage,ref int s,int upperLeftColumn,string vPageBreaks,string headerRowIndex){
+		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int nbRows,int nbMaxRowByPage,ref int s,int upperLeftColumn,string vPageBreaks,string headerRowIndex, TNS.AdExpress.Domain.Theme.Style style){
 			
 			int nbPages=0;
 			int currentNbRowByPage=nbMaxRowByPage;
@@ -117,27 +110,17 @@ namespace TNS.AdExpress.Anubis.Satet.Functions
 			Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
 
 			//Set margins, in unit of inches 					
-			pageSetup.TopMarginInch = 0.3; 
-			pageSetup.BottomMarginInch = 0.3; 
-			pageSetup.HeaderMarginInch = 0.3; 
-			pageSetup.FooterMarginInch = 0.3; 										
-			pageSetup.RightMargin=0.3;
-			pageSetup.LeftMargin=0.3;
+            style.GetTag("layout").SetStyleExcel(sheet);
+            style.GetTag("header").SetStyleExcel(sheet);
+            style.GetTag("footer").SetStyleExcel(sheet);
 			pageSetup.CenterHorizontally=true;	
 			if(headerRowIndex!=null){
 				pageSetup.PrintTitleRows="$"+headerRowIndex+":$4";//+headerRowIndex;
 			}
 
 			//Ajout des logos TNS et Appm
-			Pictures pics = sheet.Pictures;
-			string tnsLogoPath=@"Images\logoTNSMedia.gif";	
-			string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
-            indexPicture = pics.Add(0, 0, logoPath, 75, 75);
-            sheet.Pictures[indexPicture].Placement = PlacementType.Move;
-			string appmLogoPath=@"Images\Common\APPM.bmp";
-			string bastetImagePath = System.IO.Path.GetFullPath(appmLogoPath);
-            indexPicture = pics.Add(0, upperLeftColumn, bastetImagePath, 55, 45);
-            sheet.Pictures[indexPicture].Placement = PlacementType.Move;
+            style.GetTag("LogoTNSMedia").SetStyleExcel(sheet, 0, 0);
+            style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
 
 			//Set current date and current time at the center section of header and change the font of the header
 			pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
@@ -154,114 +137,93 @@ namespace TNS.AdExpress.Anubis.Satet.Functions
 		/// <param name="s">compteur de page</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="headerRowIndex">En-tête</param>
-		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,ref int s,int upperLeftColumn,string headerRowIndex){
+        internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, ref int s, int upperLeftColumn, string headerRowIndex, TNS.AdExpress.Domain.Theme.Style style) {
             int indexPicture = 0;
-			sheet.Name=name; // A mettre dans web word		
-													
-			sheet.IsGridlinesVisible = false;
-			sheet.PageSetup.Orientation = PageOrientationType.Landscape;
-			Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
 
-			//Set margins, in unit of inches 					
-			pageSetup.TopMarginInch = 0.3; 
-			pageSetup.BottomMarginInch = 0.3; 
-			pageSetup.HeaderMarginInch = 0.3; 
-			pageSetup.FooterMarginInch = 0.3; 										
-			pageSetup.RightMargin=0.3;
-			pageSetup.LeftMargin=0.3;
-			pageSetup.CenterHorizontally=true;	
-			pageSetup.FitToPagesTall=32000;
-			pageSetup.FitToPagesWide=1;
-			if(headerRowIndex!=null){
-				pageSetup.PrintTitleRows="$"+headerRowIndex+":$4";//+headerRowIndex;
-			}
+            sheet.Name = name; // A mettre dans web word		
 
-			//Ajout des logos TNS et Appm
-			Pictures pics = sheet.Pictures;
-			string tnsLogoPath=@"Images\logoTNSMedia.gif";	
-			string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
-            indexPicture = pics.Add(0, 0, logoPath, 75, 75);
-            sheet.Pictures[indexPicture].Placement = PlacementType.Move;
-			string appmLogoPath=@"Images\Common\APPM.bmp";
-			string bastetImagePath = System.IO.Path.GetFullPath(appmLogoPath);
-            indexPicture = pics.Add(0, upperLeftColumn, bastetImagePath, 55, 45);
-            sheet.Pictures[indexPicture].Placement = PlacementType.Move;
+            sheet.IsGridlinesVisible = false;
+            sheet.PageSetup.Orientation = PageOrientationType.Landscape;
+            Aspose.Cells.PageSetup pageSetup = sheet.PageSetup;
 
-			//Set current date and current time at the center section of header and change the font of the header
-			pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
-					
-			//Set current page number at the center section of footer
-			pageSetup.SetFooter(1, "&A"+" - Page "+"&P"+" sur "+"&N");			
+            //Set margins, in unit of inches 					
+            style.GetTag("layout").SetStyleExcel(sheet);
+            style.GetTag("header").SetStyleExcel(sheet);
+            style.GetTag("footer").SetStyleExcel(sheet);
+            pageSetup.CenterHorizontally = true;
+            pageSetup.FitToPagesTall = 32000;
+            pageSetup.FitToPagesWide = 1;
+            if (headerRowIndex != null) {
+                pageSetup.PrintTitleRows = "$" + headerRowIndex + ":$4";//+headerRowIndex;
+            }
+
+            //Ajout des logos TNS et Appm
+            style.GetTag("LogoTNSMedia").SetStyleExcel(sheet, 0, 0);
+            style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
+
+            //Set current date and current time at the center section of header and change the font of the header
+            pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");
+
+            //Set current page number at the center section of footer
+            pageSetup.SetFooter(1, "&A" + " - Page " + "&P" + " sur " + "&N");	
 		}
 		#endregion
 
 		#region Style des cellules 
-		/// <summary>
-		/// Met le style des cellules en-têtes
-		/// </summary>
-		/// <param name="cells">cellules</param>
-		/// <param name="data">donnée</param>
-		/// <param name="row">ligne</param>
-		/// <param name="firstColumn">1ere colonne de la collection</param>
-		/// <param name="lastColumn">dernière colonne de la collection</param>
-		/// <param name="isBold">vrai si police en gras</param>
-		/// <param name="fontColor">Couleur de la police</param>
-		/// <param name="foregroundColor">Couleur de fond</param>
-		///<param name="borderColor">Couleur de la bordure</param>
-		///<param name="rightBorderType">Type de la bordure droite</param>
-		///<param name="leftBorderType">Type de la bordure gauche</param>
-		///<param name="topBorderType">Type de la bordure en haut</param>
-		///<param name="bottomBorderType">Type de la bordure en bas</param>
-		/// <param name="size">Taille du texte</param>
-		/// <param name="textAlignmentTypeCenter">Alignement du texte</param>
-		internal static void CellsStyle(Aspose.Cells.Cells cells,object data,int row,int firstColumn,int lastColumn,bool isBold,System.Drawing.Color fontColor,System.Drawing.Color foregroundColor,System.Drawing.Color borderColor,CellBorderType rightBorderType,CellBorderType leftBorderType,CellBorderType topBorderType,CellBorderType bottomBorderType,short size,bool textAlignmentTypeCenter)
-		{
-			for(int i=firstColumn;i<=lastColumn;i++)
-			{
-				if(data!=null)cells[row,i].PutValue(data);
-				
-				cells[row,i].Style.Borders[BorderType.RightBorder].LineStyle = rightBorderType;
-				cells[row,i].Style.Borders[BorderType.RightBorder].Color = borderColor;
-				cells[row,i].Style.Borders[BorderType.LeftBorder].LineStyle = leftBorderType;
-				cells[row,i].Style.Borders[BorderType.LeftBorder].Color = borderColor;
-				cells[row,i].Style.Borders[BorderType.TopBorder].LineStyle = topBorderType;
-				cells[row,i].Style.Borders[BorderType.TopBorder].Color = borderColor;
-				cells[row,i].Style.Borders[BorderType.BottomBorder].LineStyle = bottomBorderType;
-				cells[row,i].Style.Borders[BorderType.BottomBorder].Color = borderColor;
-
-				cells[row,i].Style.ForegroundColor =  foregroundColor;
-                cells[row, i].Style.Pattern = BackgroundType.Solid;
-				cells[row,i].Style.Font.Color = fontColor;
-				cells[row,i].Style.Font.IsBold = isBold;
-				cells[row,i].Style.Font.Size = size;
-				if(textAlignmentTypeCenter==true)
-					cells[row,i].Style.HorizontalAlignment = TextAlignmentType.Center;
-				//				cells[row,i].Style.Number = CellFormat
-			}			
-		}
+        /// <summary>
+        /// Met le style des cellules
+        /// </summary>
+        /// <param name="cells">cellules</param>
+        /// <param name="tag">tag</param>
+        /// <param name="data">donnée</param>
+        /// <param name="row">ligne</param>
+        /// <param name="firstColumn">1ere colonne de la collection</param>
+        /// <param name="lastColumn">dernière colonne de la collection</param>
+        /// <param name="textAlignmentTypeCenter">Alignement du texte</param>
+        internal static void CellsStyle(Aspose.Cells.Workbook excel ,Aspose.Cells.Cells cells,Tag tag, object data, int row, int firstColumn, int lastColumn, bool textAlignmentTypeCenter) {
+            for (int i = firstColumn; i <= lastColumn; i++) {
+                if (data != null) cells[row, i].PutValue(data);
+                tag.SetStyleExcel(excel, cells, row, i);
+                if (textAlignmentTypeCenter == true)
+                    cells[row, i].Style.HorizontalAlignment = TextAlignmentType.Center;
+            }
+        }
 		#endregion
 
 		#region Insertion d'une donnée dans une cellule
-		/// <summary>
-		/// Insert une donnée dans une cellule
-		/// </summary>
-		/// <param name="cells">Cellules</param>
-		/// <param name="data">donnée</param>
-		/// <param name="row">ligne</param>
-		/// <param name="column">colonne</param>
-		/// <param name="isBold">vrai si police en gras</param>
-		/// <param name="color">couleur de la police</param>
-		/// <param name="size">Taille du texte</param>
-		internal static void PutCellValue(Worksheet sheet,Aspose.Cells.Cells cells,object data,int row,int column,bool isBold,System.Drawing.Color color,short size,int startColumn)
-		{
-			cells[row,column].PutValue(data);
-			cells[row,column].Style.Font.Size = size;
-			if(column>=startColumn)
-				cells[row,column].Style.HorizontalAlignment = TextAlignmentType.Center;
+        /// <summary>
+        /// Insert une donnée dans une cellule
+        /// </summary>
+        /// <param name="cells">Cellules</param>
+        /// <param name="data">donnée</param>
+        /// <param name="row">ligne</param>
+        /// <param name="column">colonne</param>
+        /// <param name="isBold">vrai si police en gras</param>
+        /// <param name="color">couleur de la police</param>
+        /// <param name="size">Taille du texte</param>
+        internal static void PutCellValue(Aspose.Cells.Workbook excel, Worksheet sheet, Aspose.Cells.Cells cells, Tag tag, object data, int row, int column, int startColumn) {
+            cells[row, column].PutValue(data);
+            tag.SetStyleExcel(excel, cells, row, column);
+            if (column >= startColumn)
+                cells[row, column].Style.HorizontalAlignment = TextAlignmentType.Center;
 
-			//sheet.AutoFitColumn(column);	
-			
-		}
+            //sheet.AutoFitColumn(column);	
+
+        }
+
+        /// <summary>
+        /// Insert une donnée dans une cellule
+        /// </summary>
+        /// <param name="cells">Cellules</param>
+        /// <param name="data">donnée</param>
+        /// <param name="row">ligne</param>
+        /// <param name="column">colonne</param>
+        /// <param name="startColumn"></param>
+        internal static void PutCellValue(Aspose.Cells.Cells cells, object data, int row, int column, int startColumn) {
+            cells[row, column].PutValue(data);
+            if (column >= startColumn)
+                cells[row, column].Style.HorizontalAlignment = TextAlignmentType.Center;
+        }
 		#endregion
 	}
 }

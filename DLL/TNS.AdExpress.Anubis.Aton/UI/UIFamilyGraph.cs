@@ -22,6 +22,7 @@ using TNS.AdExpress.Web.Rules.Results.APPM;
 
 using Dundas.Charting.WinControl;
 using TNS.FrameWork.DB.Common;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Anubis.Aton.UI{
 	/// <summary>
@@ -46,14 +47,25 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// Data reserved to the calcul of PDVs
 		/// </summary>
 		private DataTable _dtGraphicsData = null;
+        /// <summary>
+        /// Style
+        /// </summary>
+        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        /// <summary>
+        /// Pie ColorS
+        /// </summary>
+        private List<Color> _newPieColors = null;
 		#endregion
 
 		#region Constructeur
-		public UIFamilyGraph(WebSession webSession,IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData):base(){
+		public UIFamilyGraph(WebSession webSession,IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData,TNS.AdExpress.Domain.Theme.Style style):base(){
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
 			_dtGraphicsData = dtGraphicsData;
+            _style = style;
+
+            _newPieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("FamilyGraphNewPieColors32")).ColorList;
 		}
 		#endregion
 
@@ -154,7 +166,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 
 					#endregion
 					
-					serieInterestFamily=setSeriesInterestFamily(this,_dtGraphicsData,chartAreaUnit,serieInterestFamily,xUnitValues,yUnitValues,WebConstantes.UI.UI.newPieColors,chartAreaName);												
+					serieInterestFamily=setSeriesInterestFamily(this,_dtGraphicsData,chartAreaUnit,serieInterestFamily,xUnitValues,yUnitValues,_newPieColors,chartAreaName);												
 
 					serieInterestFamily.ShowInLegend=false;				
 
@@ -251,7 +263,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 					chartAreaAdditionalName+=GestionWeb.GetWebWord(1737,_webSession.SiteLanguage);
 					#endregion
 
-					serieInterestFamilyadditional=setSeriesInterestFamily(this,_dtGraphicsData,chartAreaUnitadditional,serieInterestFamilyadditional,xUnitValues,yUnitValues,WebConstantes.UI.UI.newPieColors,chartAreaAdditionalName);												
+                    serieInterestFamilyadditional = setSeriesInterestFamily(this, _dtGraphicsData, chartAreaUnitadditional, serieInterestFamilyadditional, xUnitValues, yUnitValues, _newPieColors, chartAreaAdditionalName);												
 
 					serieInterestFamilyadditional.ShowInLegend=false;				
 
@@ -266,8 +278,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 				}
 				else{
 					this.Titles.Add(GestionWeb.GetWebWord(2106,_webSession.SiteLanguage));
-					this.Titles[0].Font=new Font("Arial", (float)8,System.Drawing.FontStyle.Bold);
-					this.Titles[0].Color=Color.FromArgb(100,72,131);
+                    _style.GetTag("FamilyGraphDefaultFont").SetStyleDundas(this.Titles[0]);
 					this.Width=250;
 					this.Height=25;
 				}
@@ -344,7 +355,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="barColors">couleurs du graphique</param>
 		/// <param name="chartAreaName">Nom du conteneur de l'image</param>
 		/// <returns>séries de valeurs</returns>
-		private static  Dundas.Charting.WinControl.Series setSeriesInterestFamily(Chart appmChart,DataTable dt ,ChartArea chartArea,Dundas.Charting.WinControl.Series series,string[] xValues,double[] yValues,Color[] barColors,string chartAreaName){
+		private static  Dundas.Charting.WinControl.Series setSeriesInterestFamily(Chart appmChart,DataTable dt ,ChartArea chartArea,Dundas.Charting.WinControl.Series series,string[] xValues,double[] yValues,List<Color> barColors,string chartAreaName){
 	
 			#region  Création graphique
 			if(xValues!=null && yValues!=null){
@@ -368,7 +379,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 				
 				#region Définition des couleurs
 				//couleur du graphique
-				for(int k=0;k<dt.Rows.Count && k<32;k++){
+                for (int k = 0; k < dt.Rows.Count && k < barColors.Count; k++) {
 					series.Points[k].Color=barColors[k];
 				}
 				#endregion
@@ -393,8 +404,10 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			#endregion 
 
 			return series;
-		}
+        }
 
+        #region SetSeriesBarInterestFamily (Non utilisé)
+        /*
 		/// <summary>
 		/// Crétion du graphique unité Cgrp (histogramme)
 		/// </summary>
@@ -454,10 +467,12 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			#endregion 
 
 			return series;
-		}
+		}*/
+        #endregion
 
-
-		/// <summary>
+        #region InitializeComponent (Non utilisé)
+        /*
+        /// <summary>
 		/// Initialise les styles du webcontrol pour média radio et télé
 		/// </summary>
 		/// <param name="dt">tableau de données</param>
@@ -521,6 +536,8 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			appmChart.Titles[1].DockToChartArea=chartAreaUnitadditional.Name;
 			#endregion
 		}
+        */
+        #endregion
 
 		/// <summary>
 		/// Initialise les styles du webcontrol pour média radio et télé
@@ -528,32 +545,28 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="dt">tableau de données</param>
 		/// <param name="appmChart">Objet Webcontrol</param>
 		/// <param name="chartAreaUnit">conteneur de l'image répartition unité</param>
-		private static void InitializeComponent(DataTable dt ,Chart appmChart, ChartArea chartAreaUnit){			
+		private void InitializeComponent(DataTable dt ,Chart appmChart, ChartArea chartAreaUnit){			
 
 			#region Initialisation
-			int height = 0;
+			string TagName = string.Empty;
 			float positionY=0;
 			
 			positionY=8;
 			if(dt.Rows.Count<6){
-				height=350;
+                TagName = "FamilyGraphSizeLittle";
 			}
 			else if(dt.Rows.Count>=6 && dt.Rows.Count<16 ){
-				height=400;
+                TagName = "FamilyGraphSizeMedium";
 			}
 			if(dt.Rows.Count>=16){
-				height=550;
+                TagName = "FamilyGraphSizeBig";
 			}
 			#endregion
 
 			#region Chart
-			appmChart.Width=900;
-			appmChart.Height=height;
+            _style.GetTag(TagName).SetStyleDundas(this);
 			appmChart.BackGradientType = GradientType.TopBottom;
-			appmChart.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
-			appmChart.BorderStyle=ChartDashStyle.Solid;
-			appmChart.BorderLineColor=Color.FromArgb(99,73,132);
-			appmChart.BorderLineWidth=2;
+            _style.GetTag("FamilyGraphLineEnCircle").SetStyleDundas(this);
 			appmChart.Legend.Enabled=true;
 			#endregion	
 
@@ -565,8 +578,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			appmChart.Titles[0].Position.Auto = false;
 			appmChart.Titles[0].Position.X = 50;
 			appmChart.Titles[0].Position.Y = positionY;
-			appmChart.Titles[0].Font=new Font("Arial", (float)10);
-			appmChart.Titles[0].Color=Color.FromArgb(100,72,131);
+            _style.GetTag("FamilyGraphTitleFont").SetStyleDundas(appmChart.Titles[0]);
 			appmChart.Titles[0].DockToChartArea=chartAreaUnit.Name;	
 			#endregion
 		}

@@ -28,6 +28,7 @@ using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Theme;
 
 
 namespace TNS.AdExpress.Anubis.Satet.BusinessFacade
@@ -61,7 +62,8 @@ namespace TNS.AdExpress.Anubis.Satet.BusinessFacade
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public SatetExcelSystem(IDataSource dataSource, SatetConfig config, DataRow rqDetails, WebSession webSession):base(){
+        public SatetExcelSystem(IDataSource dataSource, SatetConfig config, DataRow rqDetails, WebSession webSession, Theme theme)
+            : base(theme.GetStyle("Satet")) {
 		
 			this._dataSource = dataSource;
 			this._config = config;
@@ -92,25 +94,24 @@ namespace TNS.AdExpress.Anubis.Satet.BusinessFacade
 		/// Génère les résultats APPM dans un document excel
 		/// </summary>
 		public void Fill(){
-
 			//Page principale
-			this.MainPageDesign(_webSession);
+            this.MainPageDesign(_webSession, _style);
 			//Paramètres d'étude			
-			UI.SessionParameter.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.SessionParameter.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Synthèse
-			UI.Synthesis.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.Synthesis.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Calendrier d'actions
-			UI.MediaPlan.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.MediaPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Analyse par titre
-			UI.SupportPlan.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.SupportPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Analyse des parts de voix
-			UI.PDVPlan.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.PDVPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Analyse par périodicité
-			UI.PeriodicityPlan.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.PeriodicityPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Analyse par famille de presse
-			UI.AnalyseFamilyInterestPlan.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.AnalyseFamilyInterestPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Affinités
-			UI.Affinities.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.Affinities.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			
 			if(_excel!=null){
 				this.Save(_excelFilePath);

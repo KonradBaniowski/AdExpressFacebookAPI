@@ -22,34 +22,42 @@ using SatetFunctions=TNS.AdExpress.Anubis.Satet.Functions;
 using RulesResultsAPPM=TNS.AdExpress.Web.Rules.Results.APPM;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Web.Functions;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
 	/// <summary>
 	/// Document Excel résultats APPM
 	/// </summary>
-	public class SatetExcel
-	{
-		/// <summary>
+	public class SatetExcel {
+
+        #region variables
+        /// <summary>
 		/// Composant excel
 		/// </summary>
         protected Workbook _excel;
+        /// <summary>
+        /// Composant excel
+        /// </summary>
+        protected TNS.AdExpress.Domain.Theme.Style _style;
 		/// <summary>
 		/// Licence Aspose Excel
 		/// </summary>
 		License _license;
-		
-		#region Constructeur
-		/// <summary>
+        #endregion
+
+        #region Constructeur
+        /// <summary>
 		/// Constructeur
 		/// </summary>
-		public SatetExcel(){
+		public SatetExcel(TNS.AdExpress.Domain.Theme.Style style){
             _excel = new Workbook();
 			_license = new License();
 			_license.SetLicense("Aspose.Cells.lic");
-			
-			//Ajout de couleurs			
-			AddColor(Color.FromArgb(128,128,192));
+            _style = style;
+					
+            //initialisation de la palette de couleur Excel
+            _style.InitExcelColorPalette(this._excel);
 			
 		}
 		#endregion
@@ -69,53 +77,33 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// Page pricipale
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
-		protected void MainPageDesign(WebSession webSession){
+		protected void MainPageDesign(WebSession webSession,TNS.AdExpress.Domain.Theme.Style style){
 			int cellRow =9;
-			int startIndex=cellRow;			
-			
-
-			//Ajout d'une couleur
-			
-			//Adding Orchid color to the palette 
-			_excel.ChangePalette(Color.FromArgb(177,163,193),55);
-			_excel.ChangePalette(Color.FromArgb(208,200,218),54);
-			_excel.ChangePalette(Color.FromArgb(100,72,131),53);
-			_excel.ChangePalette(Color.FromArgb(177,163,193),52);
-			_excel.ChangePalette(Color.FromArgb(233,230,239),51);
-			_excel.ChangePalette(Color.FromArgb(107,89,139),50);
-			_excel.ChangePalette(Color.FromArgb(162,125,203),49);
-			_excel.ChangePalette(Color.FromArgb(225,224,218),48);
-			_excel.ChangePalette(Color.FromArgb(222,216,229),47);
+			int startIndex=cellRow;
 
 			//Obtaining the reference of the newly added worksheet by passing its sheet index
 			Worksheet sheet = this._excel.Worksheets[0];
 
 			Cells cells = sheet.Cells;	
-			SatetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(1587,webSession.SiteLanguage),15);
+
+            //Mise en page
+            SatetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1587, webSession.SiteLanguage), 15, style);
 
 			//intitulé du fichier excel			
-			cells["F"+cellRow].PutValue(GestionWeb.GetWebWord(1587,webSession.SiteLanguage));
-			cells["F"+cellRow].Style.Font.Size =40;
-			cells["F"+cellRow].Style.Font.Color = Color.FromArgb(100,72,131);
-			cells["F"+cellRow].Style.Font.IsBold = true;		
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,4,4,8,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+            SatetFunctions.WorkSheet.CellsStyle(_excel, cells, style.GetTag("bigTitle"), GestionWeb.GetWebWord(1587, webSession.SiteLanguage), cellRow - 1, 5, 5, false);
+
+            //Police par default
+            SatetFunctions.WorkSheet.CellsStyle(_excel, cells, style.GetTag("defaultTitle"), null, 4, 4, 8, false);
 			sheet.AutoFitRow(cellRow-1);
 			cellRow++;
 
 			//Date de création
-			cells["H"+cellRow].PutValue(GestionWeb.GetWebWord(1922,webSession.SiteLanguage)+"  "+WebFunctions.Dates.DateToString(DateTime.Now,webSession.SiteLanguage));
-			cells["H"+cellRow].Style.Font.Size =12;
-			cells["H"+cellRow].Style.Font.Color =  Color.FromArgb(100,72,131);
-			cells["H"+cellRow].Style.Font.IsBold = true;
-			cells["H"+cellRow].Style.HorizontalAlignment = TextAlignmentType.Center;
+            SatetFunctions.WorkSheet.CellsStyle(_excel, cells, style.GetTag("createdTitle"), GestionWeb.GetWebWord(1922, webSession.SiteLanguage) + "  " + Dates.DateToString(DateTime.Now, webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern), cellRow - 1, 7, 7, true);
 			sheet.AutoFitRow(cellRow-1);
 			cellRow+=6;	
 		
 			// Ajout de l'image dans la cellule
-			Pictures pics = sheet.Pictures;
-			string adexpressLogoPath=@"Images\" + webSession.SiteLanguage + @"\LogoAdExpress.jpg";
-			int pos = sheet.Pictures.Add(cellRow,2,adexpressLogoPath,70,80);
-			Picture pic = sheet.Pictures[pos];			 			
+            style.GetTag("LogoAdExpress").SetStyleExcel(sheet, cellRow, 2);			 			
 		}
 		#endregion
 
@@ -130,25 +118,5 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		}
 		#endregion
 
-		#region Méthodes internes
-		/// <summary>
-		/// Code couleur
-		/// </summary>
-		private int    m_indexCouleur=55;
-  
-		/// <summary>
-		/// Création éventuel de la couleur
-		/// </summary>
-		/// <param name="couleur">Couleur existante ? si non créé la</param>
-		private void AddColor(Color couleur) {
-			// Création de la couleur
-			if(!_excel.IsColorInPalette(couleur)) {
-				if (m_indexCouleur>=0) 
-					_excel.ChangePalette(couleur, m_indexCouleur--);
-			}
-		}
-
-
-		#endregion
 	}
 }

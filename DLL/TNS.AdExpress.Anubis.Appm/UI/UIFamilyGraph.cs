@@ -25,6 +25,7 @@ using TNS.AdExpress.Anubis.Appm.Exceptions;
 
 using Dundas.Charting.WinControl;
 using TNS.FrameWork.DB.Common;
+using System.Collections.Generic;
 
 
 namespace TNS.AdExpress.Anubis.Appm.UI {
@@ -50,15 +51,31 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 		/// Data reserved to the calcul of PDVs
 		/// </summary>
 		private DataTable _dtGraphicsData = null;
-
+        /// <summary>
+        /// Style
+        /// </summary>
+        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        /// <summary>
+        /// Pie ColorS
+        /// </summary>
+        private List<Color> _pieColors = null;
+        /// <summary>
+        /// Bar Colors
+        /// </summary>
+        private List<Color> _barColors = null;
 		#endregion
 
 		#region Constructeur
-		public UIFamilyGraph(WebSession webSession,IDataSource dataSource, AppmConfig config, DataTable dtGraphicsData):base() {
+        public UIFamilyGraph(WebSession webSession, IDataSource dataSource, AppmConfig config, DataTable dtGraphicsData, TNS.AdExpress.Domain.Theme.Style style)
+            : base() {
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
 			_dtGraphicsData = dtGraphicsData;
+            _style = style;
+
+            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("FamilyGraphPieColors")).ColorList;
+            _barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("FamilyGraphBarColors")).ColorList;
 		}
 		#endregion
 
@@ -79,12 +96,9 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 				if(_dtGraphicsData.Rows.Count>0){
 
 					#region Graph Properties
-					this.Size = new Size(800,500);
+                    _style.GetTag("FamilyGraphSize").SetStyleDundas(this);
 					this.BackGradientType = GradientType.TopBottom;
-					this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
-					this.BorderStyle=ChartDashStyle.Solid;
-					this.BorderLineColor=Color.FromArgb(99,73,132);
-					this.BorderLineWidth=1;
+                    _style.GetTag("FamilyGraphLineEnCircle").SetStyleDundas(this);
 
 					cArea = new ChartArea();
 					cArea.Name = GestionWeb.GetWebWord(1736,_webSession.SiteLanguage)
@@ -126,8 +140,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 
 					#region Defining Colour
 					for(int k=0 ; k<sData.Points.Count ; k++){
-						if(k < CstUI.UI.pieColors.Length){
-							sData.Points[k].Color = CstUI.UI.pieColors[k];
+						if(k < _pieColors.Count){
+							sData.Points[k].Color = _pieColors[k];
 						}
 						sData.Points[k]["Exploded"] = "true";
 					}
@@ -138,19 +152,9 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 					sData.Label="#PERCENT #VALX" ;
 					sData["PieLineColor"]="Black";
 					sData.ShowInLegend = false;
-					sData.Font = new Font(_config.DefaultFont.Name,8,
-						((_config.DefaultFont.Bold)?FontStyle.Bold:0)
-						|((_config.DefaultFont.Underline)?FontStyle.Underline:0)
-						|((_config.DefaultFont.Italic)?FontStyle.Italic:0)
-						);
-					sData.FontColor = _config.DefaultFontColor;
+                    _style.GetTag("FamilyGraphDefaultFont").SetStyleDundas(sData);
 					this.Titles.Add(cArea.Name);
-					this.Titles[0].Font = new Font(_config.TitleFont.Name,(float)_config.DefaultFont.Size,
-						((_config.TitleFont.Bold)?FontStyle.Bold:0)
-						|((_config.TitleFont.Underline)?FontStyle.Underline:0)
-						|((_config.TitleFont.Italic)?FontStyle.Italic:0)
-						);
-					this.Titles[0].Color = _config.TitleFontColor;
+                    _style.GetTag("FamilyGraphDefaultTitleFont").SetStyleDundas(this.Titles[0]);
 
 					#endregion
 
@@ -167,7 +171,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 		#endregion
 
 
-		#region CGRP
+		#region CGRP (Non Utilisé)
+        /*
 		internal void BuildBars(){
 		
 			#region variable
@@ -200,13 +205,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 
 					cArea.Area3DStyle.Enable3D = false;
 					cArea.BackColor =Color.FromArgb(222,207,231);
-					cArea.AxisY.LabelStyle.Font = cArea.AxisX.LabelStyle.Font = new Font(_config.DefaultFont.Name,8,
-						((_config.DefaultFont.Bold)?FontStyle.Bold:0)
-						|((_config.DefaultFont.Underline)?FontStyle.Underline:0)
-						|((_config.DefaultFont.Italic)?FontStyle.Italic:0)
-						);
-					cArea.AxisY.LabelStyle.FontColor = cArea.AxisX.LabelStyle.FontColor = _config.DefaultFontColor;
-
+                    _style.GetTag("defaultFont").SetStyleDundas(cArea.AxisY.LabelStyle);
+					
 					//name
 					cArea.Name = GestionWeb.GetWebWord(1685,_webSession.SiteLanguage)
 						+ " " + GestionWeb.GetWebWord(1738,_webSession.SiteLanguage) + " :"
@@ -239,8 +239,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 					cArea.AxisY.Maximum= maxScale+1000;
 
 					for(int k=0 ; k < xUnitValues.Length ; k++){
-						sData.Points[k].Color = CstUI.UI.barColors[0];
-						sTargetData.Points[k].Color = CstUI.UI.barColors[1];
+						sData.Points[k].Color = _barColors[0];
+						sTargetData.Points[k].Color = _barColors[1];
 					}
 					sTargetData["LabelStyle"] = sData["LabelStyle"] = "Outside";
 					sTargetData["PointWidth"] = sData["PointWidth"] = "1.0";
@@ -262,8 +262,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 					l.Docking = LegendDocking.Bottom;
 					l.Alignment = StringAlignment.Center;
 					l.LegendStyle = LegendStyle.Row;
-					l.CustomItems.Add(CstUI.UI.barColors[0],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtGraphicsData.Rows[0]["baseTarget"]+") ");
-					l.CustomItems.Add(CstUI.UI.barColors[1],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtGraphicsData.Rows[0]["additionalTarget"]+") ");
+					l.CustomItems.Add(_barColors[0],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtGraphicsData.Rows[0]["baseTarget"]+") ");
+					l.CustomItems.Add(_barColors[1],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtGraphicsData.Rows[0]["additionalTarget"]+") ");
 
 
 					this.Legends.Add(l);
@@ -274,12 +274,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 
 					//titles
 					this.Titles.Add(cArea.Name);
-					this.Titles[0].Font = new Font(_config.TitleFont.Name,(float)_config.DefaultFont.Size,
-						((_config.TitleFont.Bold)?FontStyle.Bold:0)
-						|((_config.TitleFont.Underline)?FontStyle.Underline:0)
-						|((_config.TitleFont.Italic)?FontStyle.Italic:0)
-						);
-					this.Titles[0].Color = _config.DefaultFontColor;
+                    _style.GetTag("defaultTitleFont").SetStyleDundas(this.Titles[0]);
 
 					//Add Series
 					this.Series.Add(sData);
@@ -290,10 +285,9 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 			catch(System.Exception err){				
 				throw(new UIPeriodicityChartException("Unable to build bars for periodicity.",err));
 			}
-		}
+		}*/
 		#endregion
-
-
+        
 		#region méthodes privées
 		/// <summary>
 		/// Obtient les séries de valeurs des unités pour la cible de base à afficher graphiquement

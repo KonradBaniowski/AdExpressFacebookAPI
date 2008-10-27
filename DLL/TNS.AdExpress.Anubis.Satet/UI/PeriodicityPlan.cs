@@ -24,6 +24,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -32,12 +33,22 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 	/// </summary>
 	public class PeriodicityPlan
 	{
+        #region Variables Theme Name
+        private static string _rowTitleFirstRow = "PeriodicityPlanRowTitleFirstRow";
+        private static string _rowTitleFirstRowFirstCol = "PeriodicityPlanRowTitleFirstRowFirstCol";
+        private static string _rowTitleSecondRow = "PeriodicityPlanRowTitleSecondRow";
+        private static string _rowTitleSecondRowFirstCol = "PeriodicityPlanRowTitleSecondRowFirstCol";
+        private static string _rowTotal = "PeriodicityPlanRowTotal";
+        private static string _rowTotalFirstCol = "PeriodicityPlanRowTotalFirstCol";
+        private static string _rowDefault = "PeriodicityPlanRowDefault";
+        private static string _rowDefaultFirstCol = "PeriodicityPlanRowDefaultFirstCol";
+        #endregion
 
 		#region Analyse par périodicité
 		/// <summary>
 		/// Analyse par périodicité
 		/// </summary>
-        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource) {
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
 			
 			#region targets
 			//base target
@@ -59,10 +70,10 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				//En-tête du tableau  			
 			
 				if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
-					GRPTreatment(excel,webSession,PeriodicityPlanData);
+					GRPTreatment(excel,webSession,PeriodicityPlanData,style);
 				}
 				else 
-					SimpleTreatment(excel,webSession,PeriodicityPlanData);
+					SimpleTreatment(excel,webSession,PeriodicityPlanData,style);
 				#endregion
 			}
 		}
@@ -74,7 +85,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// </summary>
 		/// <param name="excel">excel</param>
 		/// <param name="periodicityPlanData">source de données</param>
-        private static void GRPTreatment(Workbook excel, WebSession webSession, DataTable periodicityPlanData) {
+        private static void GRPTreatment(Workbook excel, WebSession webSession, DataTable periodicityPlanData, TNS.AdExpress.Domain.Theme.Style style) {
 			int s=1;
 			int nbMaxRowByPage=42;		
 			int upperLeftColumn=9;
@@ -110,72 +121,62 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				default : break;
 			}
             cells.Merge(cellRow-1,1,2,1);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1774,webSession.SiteLanguage),cellRow-1,1,false,Color.White,8,2);
+			SatetFunctions.WorkSheet.PutCellValue(excel,sheet,cells,style.GetTag(_rowTitleFirstRowFirstCol),GestionWeb.GetWebWord(1774,webSession.SiteLanguage),cellRow-1,1,2);
+            SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_rowTitleSecondRowFirstCol),null, cellRow, 1,1, false);
 			cells.Merge(cellRow-1,2,1,2);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ " (" +periodicityPlanData.Rows[0]["baseTarget"]+")",cellRow-1,2,false,Color.White,8,2);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells,style.GetTag(_rowTitleFirstRow), GestionWeb.GetWebWord(1679, webSession.SiteLanguage) + " (" + periodicityPlanData.Rows[0]["baseTarget"] + ")", cellRow - 1, 2, 2);
 			GRP1Length = GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ " (" +periodicityPlanData.Rows[0]["baseTarget"]+")";
 			cells.Merge(cellRow-1,4,1,2);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ " (" +periodicityPlanData.Rows[0]["additionalTarget"]+")",cellRow-1,4,false,Color.White,8,2);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitleFirstRow), GestionWeb.GetWebWord(1679, webSession.SiteLanguage) + " (" + periodicityPlanData.Rows[0]["additionalTarget"] + ")", cellRow - 1, 4, 2);
 			GRP2Length = GestionWeb.GetWebWord(1679,webSession.SiteLanguage)+ " (" +periodicityPlanData.Rows[0]["additionalTarget"]+")";
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,startIndex-1,1,5,true,Color.White,Color.FromArgb(100,72,131),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
 		
 			cellRow++;
 
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,unitName,cellRow-1,2,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(264,webSession.SiteLanguage),cellRow-1,3,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,unitName,cellRow-1,4,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(264,webSession.SiteLanguage),cellRow-1,5,false,Color.White,8,2);
-			cells[cellRow-1,1].Style.ForegroundColor =  Color.FromArgb(100,72,131);
-            cells[cellRow - 1, 1].Style.Pattern = BackgroundType.Solid;
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,2,5,true,Color.White,Color.FromArgb(100,72,131),Color.White,CellBorderType.Thin,CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,8,false);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitleSecondRow), unitName, cellRow - 1, 2, 2);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitleSecondRow), GestionWeb.GetWebWord(264, webSession.SiteLanguage), cellRow - 1, 3, 2);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitleSecondRow), unitName, cellRow - 1, 4, 2);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitleSecondRow), GestionWeb.GetWebWord(264, webSession.SiteLanguage), cellRow - 1, 5, 2);
 		
 			#endregion
 
            cellRow++;
 
 			#region Total
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1401,webSession.SiteLanguage),cellRow-1,1,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalBaseTargetUnit"]).ToString(),webSession.Unit,false)),cellRow-1,2,false,Color.White,8,2);
+           SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotalFirstCol), GestionWeb.GetWebWord(1401, webSession.SiteLanguage), cellRow - 1, 1, 2);
+           cells[cellRow - 1, 1].Style.HorizontalAlignment = TextAlignmentType.Left;
+           SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotal), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalBaseTargetUnit"]).ToString(), webSession.Unit, false)), cellRow - 1, 2, 2);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,1,cellRow-1,3,false,Color.White,8,2);
+            cells[cellRow - 1, 2].Style.HorizontalAlignment = TextAlignmentType.Right;
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotal), 1, cellRow - 1, 3, 2);
 			cells[cellRow-1,3].Style.Number = 9;
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalAdditionalTargetUnit"]).ToString(),webSession.Unit,false)),cellRow-1,4,false,Color.White,8,2);
+            cells[cellRow - 1, 3].Style.HorizontalAlignment = TextAlignmentType.Right;
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotal), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalAdditionalTargetUnit"]).ToString(), webSession.Unit, false)), cellRow - 1, 4, 2);
             cells[cellRow - 1, 4].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,1,cellRow-1,5,false,Color.White,8,2);
+            cells[cellRow - 1, 4].Style.HorizontalAlignment = TextAlignmentType.Right;
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotal), 1, cellRow - 1, 5, 2);
 			cells[cellRow-1,5].Style.Number = 9;
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,5,true,Color.Black,Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+            cells[cellRow - 1, 5].Style.HorizontalAlignment = TextAlignmentType.Right;
+			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,5,true,Color.Black,Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
 			#endregion
 
 			cellRow++;
 
 			#region Lignes du tableau
 			for(int i=1; i<periodicityPlanData.Rows.Count-1;i++){
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,periodicityPlanData.Rows[i]["periodicity"],cellRow-1,1,false,Color.White,8,2);
-				cells[cellRow-1,1].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
-				cells[cellRow-1,1].Style.Borders[BorderType.TopBorder].Color = Color.White;
-				
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString(),webSession.Unit,false)),cellRow-1,2,false,Color.White,8,2);
-				cells[cellRow-1,2].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
-				cells[cellRow-1,2].Style.Borders[BorderType.TopBorder].Color = Color.White;
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefaultFirstCol), periodicityPlanData.Rows[i]["periodicity"], cellRow - 1, 1, 2);
+                cells[cellRow - 1, 1].Style.HorizontalAlignment = TextAlignmentType.Left;
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefault), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString(), webSession.Unit, false)), cellRow - 1, 2, 2);
                 cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
-				
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(periodicityPlanData.Rows[i]["distributionBase"])/100,cellRow-1,3,false,Color.White,8,2);
-				cells[cellRow-1,3].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
-				cells[cellRow-1,3].Style.Borders[BorderType.TopBorder].Color = Color.White;
+                cells[cellRow - 1, 2].Style.HorizontalAlignment = TextAlignmentType.Right;
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefault), Convert.ToDouble(periodicityPlanData.Rows[i]["distributionBase"]) / 100, cellRow - 1, 3, 2);
 				cells[cellRow-1,3].Style.Number = 10;
-				
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitSelected"]).ToString(),webSession.Unit,false)),cellRow-1,4,false,Color.White,8,2);
-				cells[cellRow-1,4].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
-				cells[cellRow-1,4].Style.Borders[BorderType.TopBorder].Color = Color.White;
+                cells[cellRow - 1, 3].Style.HorizontalAlignment = TextAlignmentType.Right;
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefault), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitSelected"]).ToString(), webSession.Unit, false)), cellRow - 1, 4, 2);
                 cells[cellRow - 1, 4].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
-				
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(periodicityPlanData.Rows[i]["distributionSelected"])/100,cellRow-1,5,false,Color.White,8,2);
-				cells[cellRow-1,5].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
-				cells[cellRow-1,5].Style.Borders[BorderType.TopBorder].Color = Color.White;
+                cells[cellRow - 1, 4].Style.HorizontalAlignment = TextAlignmentType.Right;
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefault), Convert.ToDouble(periodicityPlanData.Rows[i]["distributionSelected"]) / 100, cellRow - 1, 5, 2);
 				cells[cellRow-1,5].Style.Number = 10;
-
-				//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,5,true,Color.Black,Color.FromArgb(177,163,193),Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
-				SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,5,true,Color.Black,Color.FromArgb(177,163,193),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,8,false);
+                cells[cellRow - 1, 5].Style.HorizontalAlignment = TextAlignmentType.Right;
 				cellRow++;
 			}
 			#endregion
@@ -207,7 +208,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 
 			upperLeftColumn=(int)indexLogo;
 			vPageBreaks = cells[cellRow,(int)indexLogo+1].Name;
-			SatetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(1665,webSession.SiteLanguage),periodicityPlanData.Rows.Count,nbMaxRowByPage,ref s,upperLeftColumn,vPageBreaks,header.ToString());
+            SatetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1665, webSession.SiteLanguage), periodicityPlanData.Rows.Count, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, header.ToString(), style);
 
 		}
 		/// <summary>
@@ -215,7 +216,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// </summary>
 		/// <param name="excel">excel</param>
 		/// <param name="periodicityPlanData">source de données</param>
-        private static void SimpleTreatment(Workbook excel, WebSession webSession, DataTable periodicityPlanData) {
+        private static void SimpleTreatment(Workbook excel, WebSession webSession, DataTable periodicityPlanData, TNS.AdExpress.Domain.Theme.Style style) {
 			int s=1;
 			int nbMaxRowByPage=42;		
 			int upperLeftColumn=9;
@@ -250,33 +251,36 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				default : break;
 			}
 
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1774,webSession.SiteLanguage),cellRow-1,3,false,Color.White,8,4);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,unitName,cellRow-1,4,false,Color.White,8,4);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(264,webSession.SiteLanguage),cellRow-1,5,false,Color.White,8,4);
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,startIndex-1,3,5,true,Color.White,Color.FromArgb(100,72,131),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,true);
+			SatetFunctions.WorkSheet.PutCellValue(excel,sheet,cells,style.GetTag(_rowTitleFirstRowFirstCol),GestionWeb.GetWebWord(1774,webSession.SiteLanguage),cellRow-1,3,4);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitleFirstRow), unitName, cellRow - 1, 4, 4);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitleFirstRow), GestionWeb.GetWebWord(264, webSession.SiteLanguage), cellRow - 1, 5, 4);
 			#endregion
 
 			cellRow++;
 			
 			#region Total
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1401,webSession.SiteLanguage),cellRow-1,3,false,Color.White,8,4);
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalBaseTargetUnit"]).ToString(),webSession.Unit,false)),cellRow-1,4,false,Color.White,8,4);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotalFirstCol), GestionWeb.GetWebWord(1401, webSession.SiteLanguage), cellRow - 1, 3, 4);
+            cells[cellRow - 1, 3].Style.HorizontalAlignment = TextAlignmentType.Left;
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotal), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalBaseTargetUnit"]).ToString(), webSession.Unit, false)), cellRow - 1, 4, 4);
             cells[cellRow - 1, 4].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,1,cellRow-1,5,false,Color.White,8,4);
+            cells[cellRow - 1, 4].Style.HorizontalAlignment = TextAlignmentType.Right;
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotal), 1, cellRow - 1, 5, 4);
 			cells[cellRow-1,5].Style.Number = 9;
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,3,5,true,Color.Black,Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+            cells[cellRow - 1, 5].Style.HorizontalAlignment = TextAlignmentType.Right;
 			#endregion
 
 			cellRow++;
 
 			#region Lignes du tableau
 			for(int i=1; i<periodicityPlanData.Rows.Count-1;i++){
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,periodicityPlanData.Rows[i]["periodicity"],cellRow-1,3,false,Color.White,8,4);
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString(),webSession.Unit,false)),cellRow-1,4,false,Color.White,8,4);
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefaultFirstCol), periodicityPlanData.Rows[i]["periodicity"], cellRow - 1, 3, 4);
+                cells[cellRow - 1, 3].Style.HorizontalAlignment = TextAlignmentType.Left;
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefault), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString(), webSession.Unit, false)), cellRow - 1, 4, 4);
                 cells[cellRow - 1, 4].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,Convert.ToDouble(periodicityPlanData.Rows[i]["distributionBase"])/100,cellRow-1,5,false,Color.White,8,4);
+                cells[cellRow - 1, 4].Style.HorizontalAlignment = TextAlignmentType.Right;
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefault), Convert.ToDouble(periodicityPlanData.Rows[i]["distributionBase"]) / 100, cellRow - 1, 5, 4);
 				cells[cellRow-1,5].Style.Number = 10;
-				SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,3,5,true,Color.Black,Color.FromArgb(177,163,193),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,8,false);
+                cells[cellRow - 1, 5].Style.HorizontalAlignment = TextAlignmentType.Right;
 				cellRow++;
 			}
 			#endregion
@@ -297,7 +301,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 
 			upperLeftColumn=(int)indexLogo;
 			vPageBreaks = cells[cellRow,(int)indexLogo+1].Name;
-			SatetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(1665,webSession.SiteLanguage),periodicityPlanData.Rows.Count+8,nbMaxRowByPage,ref s,upperLeftColumn,vPageBreaks,header.ToString());
+            SatetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1665, webSession.SiteLanguage), periodicityPlanData.Rows.Count + 8, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, header.ToString(), style);
 		}
 
 		private static int IndexFitColumn(int GRPLength){

@@ -15,6 +15,8 @@ using TNS.AdExpress.Anubis.Hotep.BusinessFacade;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
 using PDFCreatorPilotLib;
+using TNS.AdExpress.Domain.Theme;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Hotep{
 	/// <summary>
@@ -62,6 +64,10 @@ namespace TNS.AdExpress.Anubis.Hotep{
 		/// Configuration du plug-in
 		/// </summary>
 		private HotepConfig _hotepConfig;
+        /// <summary>
+        /// Theme
+        /// </summary>
+        private Theme _theme;
 		#endregion
 
         #region Constructeur
@@ -112,6 +118,12 @@ namespace TNS.AdExpress.Anubis.Hotep{
 				OnError(_navSessionId,"Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration",err);
 				return;
 			}
+            try {
+                _theme = new Theme(new XmlReaderDataSource(_hotepConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)ParameterSystem.Load(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
+            }
+            catch (System.Exception err) {
+                throw new Exception("File of theme not found ! (in Plugin APPM in TreatmentSystem class)");
+            }
 			#endregion
 
 			_dataSource=dataSource;
@@ -144,8 +156,8 @@ namespace TNS.AdExpress.Anubis.Hotep{
 				#endregion
 
 				#region PDF management
-				
-				pdf = new HotepPdfSystem(_dataSource, _hotepConfig, rqDetails, (WebSession)ParameterSystem.Load(_navSessionId));
+
+                pdf = new HotepPdfSystem(_dataSource, _hotepConfig, rqDetails, (WebSession)ParameterSystem.Load(_navSessionId), _theme);
 				string fileName = pdf.Init();
 				pdf.AutoLaunch = false;
 				//TODO update Database for physical file name

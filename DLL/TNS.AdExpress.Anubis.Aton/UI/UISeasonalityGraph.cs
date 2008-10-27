@@ -20,6 +20,7 @@ using CstUI = TNS.AdExpress.Constantes.Web.UI;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 
 using Dundas.Charting.WinControl;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Anubis.Aton.UI{
 	/// <summary>
@@ -53,10 +54,6 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// </summary>
 		const int SERIES_ANGLE=-90;
 		/// <summary>
-		/// La taille des chiffres
-		/// </summary>
-		const int FONT_SIZE=8;
-		/// <summary>
 		/// La largeur de l'image
 		/// </summary>
 		const int CHART_WIDTH=600;
@@ -76,10 +73,6 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// La position verticale du titre
 		/// </summary>
 		const int DISTRIBUTION_TITLE_POSITION_Y=54;
-		/// <summary>
-		/// La taille des titres
-		/// </summary>
-		const int TITLE_FONT_SIZE=10;
 		#endregion
 
 		#region Attributes
@@ -99,35 +92,32 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// Data reserved to the calcul of PDVs
 		/// </summary>
 		private DataTable _dtGraphicsData = null;
-		#endregion
-
-		#region Variables
-		/// <summary>
-		/// couleurs des tranches du graphique
-		/// </summary>
-		Color[] pieColors={
-							  Color.FromArgb(100,72,131),
-							  Color.FromArgb(177,163,193),
-							  Color.FromArgb(208,200,218),
-							  Color.FromArgb(225,224,218),
-							  Color.FromArgb(255,215,215),
-							  Color.FromArgb(255,240,240),
-							  Color.FromArgb(202,255,202),
-							  Color.FromArgb(255,5,182),
-							  Color.FromArgb(157,152,133),
-							  Color.FromArgb(241,241,241),
-							  Color.FromArgb(77,150,75),
-							  Color.FromArgb(0,0,0)
-						  };
+        /// <summary>
+        /// Style
+        /// </summary>
+        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        /// <summary>
+        /// Pie ColorS
+        /// </summary>
+        private List<Color> _pieColors = null;
+        /// <summary>
+        /// bar ColorS
+        /// </summary>
+        private List<Color> _barColors = null;
 		#endregion
 
 		#region Constructeur
-		public UISeasonalityGraph(WebSession webSession,IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData):base()
+        public UISeasonalityGraph(WebSession webSession, IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData, TNS.AdExpress.Domain.Theme.Style style)
+            : base()
 		{
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
 			_dtGraphicsData = dtGraphicsData;
+            _style = style;
+
+            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("SeasonalityGraphPieColors")).ColorList;
+            _barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("SeasonalityGraphBarColors")).ColorList;
 		}
 		#endregion
 
@@ -145,7 +135,8 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			double[]  yUnitValues = null;
 			string[]  xUnitValues  = null;
 			double[]  y1UnitValues = null;
-			int chartWidth=0, fontSize=0;
+            int chartWidth = 0;
+            string tagNameFontSize = string.Empty;
 			double rowCount=0, div=8;
 			#endregion
 
@@ -166,9 +157,9 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 
 					#region Initialisation font Size
 					if(_dtGraphicsData.Rows.Count<=16)
-						fontSize=FONT_SIZE+1;
+                        tagNameFontSize = "SeasonalityGraphTitleFontSerie9";
 					else
-						fontSize=FONT_SIZE;
+                        tagNameFontSize = "SeasonalityGraphTitleFontSerie8";
 					#endregion
 
 					#region Get Series Data
@@ -235,11 +226,11 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 					} 
 					#endregion
 
-					serieSeasonality=SetSeriesSeasonality(_dtGraphicsData,chartAreaUnit,serieSeasonality,xUnitValues,yUnitValues,pieColors,chartAreaName,GestionWeb.GetWebWord(1795,_webSession.SiteLanguage),fontSize);												
+					serieSeasonality=SetSeriesSeasonality(_dtGraphicsData,chartAreaUnit,serieSeasonality,xUnitValues,yUnitValues,_barColors,chartAreaName,GestionWeb.GetWebWord(1795,_webSession.SiteLanguage),tagNameFontSize);												
 					#endregion		
 
 					#region initialisation du control
-					InitializeComponent(this,chartAreaUnit,null,chartWidth,fontSize);
+					InitializeComponent(this,chartAreaUnit,null,chartWidth,tagNameFontSize);
 					if(_dtGraphicsData!=null && _dtGraphicsData.Rows.Count>0){
 						this.Series.Add(serieSeasonality);
 					}
@@ -248,10 +239,8 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 				}
 				else{
 					this.Titles.Add(GestionWeb.GetWebWord(2106,_webSession.SiteLanguage));
-					this.Titles[0].Font=new Font("Arial", (float)8,System.Drawing.FontStyle.Bold);
-					this.Titles[0].Color=Color.FromArgb(100,72,131);
-					this.Width=250;
-					this.Height=20;
+                    _style.GetTag("SeasonalityGraphNoResultFont").SetStyleDundas(this.Titles[0]);
+                    _style.GetTag("SeasonalityGraphNoResultSize").SetStyleDundas(this);
 				}
 				
 			}
@@ -272,7 +261,8 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			double[]  yUnitValues = null;
 			string[]  xUnitValues  = null;
 			double[]  y1UnitValues = null;
-			int chartWidth=0, fontSize=0;
+            int chartWidth = 0;
+            string tagNameFontSize = string.Empty;
 			double rowCount=0, div=8;
 			#endregion
 
@@ -290,9 +280,9 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 
 					#region Initialisation font Size
 					if(_dtGraphicsData.Rows.Count<=16)
-						fontSize=FONT_SIZE+1;
-					else
-						fontSize=FONT_SIZE;
+                        tagNameFontSize = "SeasonalityGraphTitleFontSerie9";
+                    else
+                        tagNameFontSize = "SeasonalityGraphTitleFontSerie8";
 					#endregion
 
 					#region Get Series Data
@@ -322,11 +312,11 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 					chartAreaDistribution.Position.Height=CHART_AREA_POSITION_HEIGHT;
 					this.ChartAreas.Add(chartAreaDistribution);
 					//Charger les séries de valeurs 
-					serieSeasonalityDistribution=SetSeriesSeasonalityDistribution(_dtGraphicsData,chartAreaDistribution,serieSeasonalityDistribution,xUnitValues,y1UnitValues,pieColors,chartAreaDistributionName,GestionWeb.GetWebWord(1743,_webSession.SiteLanguage),fontSize);
+                    serieSeasonalityDistribution = SetSeriesSeasonalityDistribution(_dtGraphicsData, chartAreaDistribution, serieSeasonalityDistribution, xUnitValues, y1UnitValues, _pieColors, chartAreaDistributionName, GestionWeb.GetWebWord(1743, _webSession.SiteLanguage), tagNameFontSize);
 					#endregion
 
 					#region initialisation du control pour le module Données de cadrage
-					InitializeComponentDistribution(this,chartAreaDistribution,chartWidth,fontSize);
+                    InitializeComponentDistribution(this, chartAreaDistribution, chartWidth, tagNameFontSize);
 					if(_dtGraphicsData!=null && _dtGraphicsData.Rows.Count>0){
 						this.Series.Add(serieSeasonalityDistribution);
 					}
@@ -334,10 +324,8 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 				}
 				else{
 					this.Titles.Add(GestionWeb.GetWebWord(2106,_webSession.SiteLanguage));
-					this.Titles[0].Font=new Font("Arial", (float)8,System.Drawing.FontStyle.Bold);
-					this.Titles[0].Color=Color.FromArgb(100,72,131);
-					this.Width=250;
-					this.Height=20;
+                    _style.GetTag("SeasonalityGraphNoResultFont").SetStyleDundas(this.Titles[0]);
+                    _style.GetTag("SeasonalityGraphNoResultSize").SetStyleDundas(this);
 				}
 			}
 			catch(System.Exception err){
@@ -432,7 +420,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="legendText">Legende Texte</param>
 		/// <param name="fontSize">Font size</param>
 		/// <returns>séries de valeurs</returns>
-		private static  Dundas.Charting.WinControl.Series SetSeriesSeasonality(DataTable dt ,ChartArea chartArea,Dundas.Charting.WinControl.Series series,string[] xValues,double[] yValues,Color[] barColors,string chartAreaName,string legendText,int fontSize){
+        private Dundas.Charting.WinControl.Series SetSeriesSeasonality(DataTable dt, ChartArea chartArea, Dundas.Charting.WinControl.Series series, string[] xValues, double[] yValues, List<Color> barColors, string chartAreaName, string legendText, string tagNameFontSize) {
 			
 			#region  Création graphique
 			if(xValues!=null && yValues!=null){
@@ -443,15 +431,22 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 				series.ShowLabelAsValue=true;
 				series.XValueType=Dundas.Charting.WinControl.ChartValueTypes.String;
 				series.YValueType=Dundas.Charting.WinControl.ChartValueTypes.Double;
-				series.Color= Color.FromArgb(148,121,181);
+
+
+                _style.GetTag(tagNameFontSize).SetStyleDundas(series);
 				series.Enabled=true;
-				series.Font=new Font("Arial", (float)fontSize);
+
                 series.FontAngle=SERIES_ANGLE;
 				series["LabelStyle"] = "Top";
 																				
 				chartArea.Name=chartAreaName;
 				series.ChartArea=chartArea.Name;
 				series.Points.DataBindXY(xValues,yValues);
+
+                for (int k = 0; k < series.Points.Count; k++) {
+                        series.Points[k].Color = barColors[0];
+                    series.Points[k]["Exploded"] = "true";
+                }
 				#endregion	
 
 			}
@@ -475,7 +470,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="legendText">Legende Texte</param>
 		/// <param name="fontSize">Font size</param>
 		/// <returns>séries de valeurs</returns>
-		private static  Dundas.Charting.WinControl.Series SetSeriesSeasonalityDistribution(DataTable dt ,ChartArea chartArea,Dundas.Charting.WinControl.Series series,string[] xValues,double[] yValues,Color[] barColors,string chartAreaName,string legendText,int fontSize){
+        private Dundas.Charting.WinControl.Series SetSeriesSeasonalityDistribution(DataTable dt, ChartArea chartArea, Dundas.Charting.WinControl.Series series, string[] xValues, double[] yValues, List<Color> barColors, string chartAreaName, string legendText, string tagNameFontSize) {
 			
 			#region  Création graphique
 			if(xValues!=null && yValues!=null){
@@ -487,12 +482,19 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 				series.XValueType=Dundas.Charting.WinControl.ChartValueTypes.String;
 				series.YValueType=Dundas.Charting.WinControl.ChartValueTypes.Double;
 				series.Enabled=true;
-				series.Font=new Font("Arial", (float)fontSize);
+                _style.GetTag(tagNameFontSize).SetStyleDundas(series);
 				series["LabelStyle"] = "Right";
 													
 				chartArea.Name=chartAreaName;
 				series.ChartArea=chartArea.Name;
 				series.Points.DataBindXY(xValues,yValues);
+
+                for (int k = 0; k < series.Points.Count; k++) {
+                    if (k < barColors.Count) {
+                        series.Points[k].Color = barColors[k];
+                    }
+                    series.Points[k]["Exploded"] = "true";
+                }
 				#endregion	
 
 			}
@@ -512,30 +514,29 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="ImageType">sortie flash</param>
 		/// <param name="chart_width">Taille de l'image</param>
 		/// <param name="fontSize">Font size</param>
-		private static void InitializeComponent(Chart sectorDataChart, ChartArea chartAreaUnit, ChartArea chartAreaDistribution,int chart_width,int fontSize){					
+		private void InitializeComponent(Chart sectorDataChart, ChartArea chartAreaUnit, ChartArea chartAreaDistribution,int chart_width,string tagNameFontSize){					
 
 			#region Chart
 			sectorDataChart.BackGradientType = GradientType.TopBottom;
-			sectorDataChart.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
-			sectorDataChart.ChartAreas[chartAreaUnit.Name].BackColor=Color.FromArgb(222,207,231);		
-			sectorDataChart.BorderStyle=ChartDashStyle.Solid;
-			sectorDataChart.BorderLineColor=Color.FromArgb(99,73,132);
-			sectorDataChart.BorderLineWidth=2;
+            Color colorTemp = Color.Black;
+            _style.GetTag("SeasonalityGraphBackColor").SetStyleDundas(ref colorTemp);
+            sectorDataChart.ChartAreas[chartAreaUnit.Name].BackColor = colorTemp;
+            _style.GetTag("SeasonalityGraphLineEnCircle").SetStyleDundas(sectorDataChart);
 
 			sectorDataChart.Width=chart_width;
 			sectorDataChart.Height=CHART_HEIGHT;
 			sectorDataChart.Legend.Enabled=false;
 
 			#region Axe des X
-			SetAxisX(sectorDataChart,chartAreaUnit.Name,fontSize);
+            SetAxisX(sectorDataChart, chartAreaUnit.Name, tagNameFontSize);
 			#endregion
 
 			#region Axe des Y
-			SetAxisY(sectorDataChart,chartAreaUnit.Name,fontSize);
+            SetAxisY(sectorDataChart, chartAreaUnit.Name, tagNameFontSize);
 			#endregion
 
 			#region Axe des Y2
-			SetAxisY2(sectorDataChart,chartAreaUnit.Name,fontSize);
+            SetAxisY2(sectorDataChart, chartAreaUnit.Name, tagNameFontSize);
 			#endregion
 
 			#endregion	
@@ -546,8 +547,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			sectorDataChart.Titles[0].DockInsideChartArea=true;
 			sectorDataChart.Titles[0].Position.X=TITLE_POSITION_X;
 			sectorDataChart.Titles[0].Position.Y=UNIT_TITLE_POSITION_Y;
-			sectorDataChart.Titles[0].Font=new Font("Arial", (float)TITLE_FONT_SIZE);
-			sectorDataChart.Titles[0].Color=Color.FromArgb(100,72,131);
+            _style.GetTag("SeasonalityGraphNoResultFont").SetStyleDundas(sectorDataChart.Titles[0]);
 			sectorDataChart.Titles[0].DockToChartArea=chartAreaUnit.Name;
 			#endregion
 		}
@@ -563,30 +563,29 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="ImageType">sortie flash</param>
 		/// <param name="chart_width">Taille de l'image</param>
 		/// <param name="fontSize">Font size</param>
-		private static void InitializeComponentDistribution(Chart sectorDataChart, ChartArea chartAreaDistribution,int chart_width,int fontSize){
+        private void InitializeComponentDistribution(Chart sectorDataChart, ChartArea chartAreaDistribution, int chart_width, string tagNameFontSize) {
 
 			#region Chart
 			sectorDataChart.BackGradientType = GradientType.TopBottom;
-			sectorDataChart.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
-			sectorDataChart.ChartAreas[chartAreaDistribution.Name].BackColor=Color.FromArgb(222,207,231);
-			sectorDataChart.BorderStyle=ChartDashStyle.Solid;
-			sectorDataChart.BorderLineColor=Color.FromArgb(99,73,132);
-			sectorDataChart.BorderLineWidth=2;
+            Color colorTemp = Color.Black;
+            _style.GetTag("SeasonalityGraphBackColor").SetStyleDundas(ref colorTemp);
+            sectorDataChart.ChartAreas[chartAreaDistribution.Name].BackColor = colorTemp;
+            _style.GetTag("SeasonalityGraphLineEnCircle").SetStyleDundas(sectorDataChart);
 
 			sectorDataChart.Width=chart_width;
 			sectorDataChart.Height=CHART_HEIGHT;
 			sectorDataChart.Legend.Enabled=false;
 
 			#region Axe des X
-			SetAxisX(sectorDataChart,chartAreaDistribution.Name,fontSize);
+            SetAxisX(sectorDataChart, chartAreaDistribution.Name, tagNameFontSize);
 			#endregion
 
 			#region Axe des Y
-			SetAxisY(sectorDataChart,chartAreaDistribution.Name,fontSize);
+            SetAxisY(sectorDataChart, chartAreaDistribution.Name, tagNameFontSize);
 			#endregion
 
 			#region Axe des Y2
-			SetAxisY2(sectorDataChart,chartAreaDistribution.Name,fontSize);
+            SetAxisY2(sectorDataChart, chartAreaDistribution.Name, tagNameFontSize);
 			#endregion
 
 			#endregion	
@@ -596,8 +595,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			sectorDataChart.Titles[0].DockInsideChartArea=true;
 			sectorDataChart.Titles[0].Position.X=TITLE_POSITION_X;
 			sectorDataChart.Titles[0].Position.Y=UNIT_TITLE_POSITION_Y;
-			sectorDataChart.Titles[0].Font=new Font("Arial", (float)TITLE_FONT_SIZE);
-			sectorDataChart.Titles[0].Color=Color.FromArgb(100,72,131);
+            _style.GetTag("SeasonalityGraphTitleFont10").SetStyleDundas(sectorDataChart.Titles[0]);
 			sectorDataChart.Titles[0].DockToChartArea=chartAreaDistribution.Name;
 			#endregion
 		}
@@ -610,10 +608,10 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="sectorDataChart">Objet Webcontrol</param>
 		/// <param name="chartAreaName">Le nom de la chart Area</param>
 		/// <param name="fontSize">Font size</param>
-		private static void SetAxisX(Chart sectorDataChart, string chartAreaName,int fontSize){
+        private void SetAxisX(Chart sectorDataChart, string chartAreaName, string tagNameFontSize) {
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelStyle.Enabled = true;
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelsAutoFit = false;
-			sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelStyle.Font=new Font("Arial", (float)fontSize);
+            _style.GetTag(tagNameFontSize).SetStyleDundas(sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelStyle);
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.MajorGrid.LineWidth=0;
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.Interval=1;				
 			sectorDataChart.ChartAreas[chartAreaName].AxisX.LabelStyle.FontAngle = SERIES_ANGLE;
@@ -627,12 +625,12 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="sectorDataChart">Objet Webcontrol</param>
 		/// <param name="chartAreaName">Le nom de la chart Area</param>
 		/// 		/// <param name="fontSize">Font size</param>
-		private static void SetAxisY(Chart sectorDataChart, string chartAreaName,int fontSize){
+        private void SetAxisY(Chart sectorDataChart, string chartAreaName, string tagNameFontSize) {
 			sectorDataChart.ChartAreas[chartAreaName].AxisY.Enabled=AxisEnabled.True;
 			sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelStyle.Enabled=true;
-			sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelsAutoFit=false;			
-			sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelStyle.Font=new Font("Arial", (float)fontSize);
-			sectorDataChart.ChartAreas[chartAreaName].AxisY.TitleFont=new Font("Arial", (float)fontSize);
+			sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelsAutoFit=false;
+            _style.GetTag(tagNameFontSize).SetStyleDundas(sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelStyle);
+            _style.GetTag(tagNameFontSize).SetStyleDundas(sectorDataChart.ChartAreas[chartAreaName].AxisY);
 			sectorDataChart.ChartAreas[chartAreaName].AxisY.MajorGrid.LineWidth=0;
 		}
 		#endregion
@@ -644,12 +642,12 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		/// <param name="sectorDataChart">Objet Webcontrol</param>
 		/// <param name="chartAreaName">Le nom de la chart Area</param>
 		/// 		/// <param name="fontSize">Font size</param>
-		private static void SetAxisY2(Chart sectorDataChart, string chartAreaName,int fontSize){
+        private void SetAxisY2(Chart sectorDataChart, string chartAreaName, string tagNameFontSize) {
 			sectorDataChart.ChartAreas[chartAreaName].AxisY2.Enabled=AxisEnabled.True;
 			sectorDataChart.ChartAreas[chartAreaName].AxisY2.LabelStyle.Enabled=true;
 			sectorDataChart.ChartAreas[chartAreaName].AxisY2.LabelsAutoFit=false;
-			sectorDataChart.ChartAreas[chartAreaName].AxisY2.LabelStyle.Font=new Font("Arial", (float)fontSize);
-			sectorDataChart.ChartAreas[chartAreaName].AxisY2.TitleFont=new Font("Arial", (float)fontSize);
+            _style.GetTag(tagNameFontSize).SetStyleDundas(sectorDataChart.ChartAreas[chartAreaName].AxisY.LabelStyle);
+            _style.GetTag(tagNameFontSize).SetStyleDundas(sectorDataChart.ChartAreas[chartAreaName].AxisY);
 		}
 		#endregion
 

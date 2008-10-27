@@ -52,16 +52,26 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// Tableau d'objets qui contient les résultats
 		/// </summary>
 		private object[,] _tab=null;
-		
+        /// <summary>
+        /// Style
+        /// </summary>
+        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        /// <summary>
+        /// Pie ColorS
+        /// </summary>
+        private List<Color> _pieColors = null;
 		#endregion
 		
 		#region Constructeur
-		public UIMediaStrategyGraph(WebSession webSession,IDataSource dataSource, HotepConfig config,object[,] tab):base(){
-		_webSession = webSession;
-		_dataSource = dataSource;
-		_config = config;
-		_tab = tab;
-		}
+        public UIMediaStrategyGraph(WebSession webSession, IDataSource dataSource, HotepConfig config, object[,] tab, TNS.AdExpress.Domain.Theme.Style style)
+            : base() {
+            _webSession = webSession;
+            _dataSource = dataSource;
+            _config = config;
+            _tab = tab;
+            _style = style;
+            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("MediaStrategyGraphPieColors")).ColorList;
+        }
 		#endregion
 		
 		#region MediaStrategy
@@ -71,15 +81,6 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		internal void BuildMediaStrategy(){
 			
 			#region Constantes
-			Color[] pieColors={
-								  Color.FromArgb(100,72,131),
-								  Color.FromArgb(177,163,193),
-								  Color.FromArgb(208,200,218),
-								  Color.FromArgb(225,224,218),
-								  Color.FromArgb(255,215,215),
-								  Color.FromArgb(255,240,240),
-								  Color.FromArgb(202,255,202)};
-
 			const int NBRE_MEDIA=5;
 			/// <summary>
 			/// Hauteur d'un graphique stratégie média
@@ -105,12 +106,9 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			#region Chart
             ChartArea chartArea = new ChartArea();
             this.ChartAreas.Add(chartArea);
-			this.Size = new Size(800,500);
+            _style.GetTag("MediaStrategyGraphSize").SetStyleDundas(this);
 			this.BackGradientType = GradientType.TopBottom;
-			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
-			this.BorderStyle=ChartDashStyle.Solid;
-			this.BorderLineColor=Color.FromArgb(99,73,132);
-			this.BorderLineWidth=2;
+            _style.GetTag("MediaStrategyGraphLineEnCircle").SetStyleDundas(this);
 			this.Legend.Enabled=false;
 			#endregion		
 
@@ -592,8 +590,8 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 					#endregion
 				
 					#region Définition des couleurs
-					for(k=0;k<6&&k<((Series)listSeriesMedia[(string)listSeriesName[j]]).Points.Count;k++){
-						((Series)listSeriesMedia[(string)listSeriesName[j]]).Points[k].Color=pieColors[k];
+                    for (k = 0; k < _pieColors .Count && k < ((Series)listSeriesMedia[(string)listSeriesName[j]]).Points.Count; k++) {
+						((Series)listSeriesMedia[(string)listSeriesName[j]]).Points[k].Color=_pieColors[k];
 					}
 					#endregion
 				
@@ -618,8 +616,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
                     this.Titles[iterator].Position.Auto = false;
                     this.Titles[iterator].Position.X = 45;
                     this.Titles[iterator].Position.Y = 3 + ((96 / listSeriesMedia.Count) * iterator);
-                    this.Titles[iterator].Font = new Font("Arial", (float)13);
-                    this.Titles[iterator].Color = Color.FromArgb(100, 72, 131);
+                    _style.GetTag("MediaStrategyGraphTitleFont").SetStyleDundas(this.Titles[iterator]);
                     this.Titles[iterator].DockToChartArea = chartArea2.Name;
 					#endregion
 

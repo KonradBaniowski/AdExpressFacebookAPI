@@ -71,11 +71,20 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		private const int PAGES_INDEX=3;
 		#endregion
 
+        #region Variables Theme Name
+        private static string _title = "AverageTitle";
+        private static string _labelLine1 = "AverageLabelLine1";
+        private static string _labelLine2 = "AverageLabelLine2";
+        private static string _valueLine1 = "AverageValueLine1";
+        private static string _valueLine2 = "AverageValueLine2";
+
+        #endregion
+
 		#region Average
 		/// <summary>
 		/// Average
 		/// </summary>
-		internal static void SetExcelSheet(Workbook excel,WebSession webSession,IDataSource dataSource){
+		internal static void SetExcelSheet(Workbook excel,WebSession webSession,IDataSource dataSource,TNS.AdExpress.Domain.Theme.Style style){
 		
 			try{
 				string format = "";
@@ -106,7 +115,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 					Color foreGroundColor, fontColor;
 					double tempValue=0;
 
-					cellRow = AmsetFunctions.WorkSheet.RenderHeader(sheet,cells,resultTable.NewHeaders.Root,cellRow,cellColumn);
+					cellRow = AmsetFunctions.WorkSheet.RenderHeader(excel,sheet,cells,style,resultTable.NewHeaders.Root,cellRow,cellColumn);
 				
 					#region Lignes du tableau
 					int changeColor=0;
@@ -130,7 +139,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 								tempValue=((CellUnit)resultTable[i,SECOND_TABLE_COLUMN]).Value;
 							
 							AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,tempValue,cellRow,SECOND_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-							format = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);
+                            //format = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);
 							cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom = format;
 							
 							if(i==PAGES_INDEX)
@@ -139,7 +148,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 								tempValue=((CellUnit)resultTable[i,THIRD_TABLE_COLUMN]).Value;
 							
 							AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,tempValue,cellRow,THIRD_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-							cells[cellRow, THIRD_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).StringFormat); 
+                            //cells[cellRow, THIRD_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).StringFormat); 
 							
 							if(i==PAGES_INDEX)
 								tempValue=((CellUnit)resultTable[i,FOURTH_TABLE_COLUMN]).Value/1000;
@@ -147,7 +156,8 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 								tempValue=((CellUnit)resultTable[i,FOURTH_TABLE_COLUMN]).Value;
 							
 							AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,tempValue,cellRow,FOURTH_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-							cells[cellRow,FOURTH_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i,FOURTH_TABLE_COLUMN]).StringFormat);//.Style;
+                            //cells[cellRow, FOURTH_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).StringFormat);//.Style;*
+                           
 							cellRow++;
 						}
 					}
@@ -160,7 +170,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 							cells.SetColumnWidth((byte)c,12);
 					}
 				
-					AmsetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(2081,webSession.SiteLanguage),10,webSession.SiteLanguage);
+					AmsetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(2081,webSession.SiteLanguage),10,webSession.SiteLanguage,style);
 				}
 			}
 			catch(Exception e){

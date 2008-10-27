@@ -65,6 +65,7 @@ using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
 using DomainLevel = TNS.AdExpress.Domain.Level;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using TNS.AdExpress.Domain.Theme;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
@@ -131,10 +132,9 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-        public MiysisPdfSystem(IDataSource dataSource, MiysisConfig config, DataRow rqDetails, WebSession webSession)
+        public MiysisPdfSystem(IDataSource dataSource, MiysisConfig config, DataRow rqDetails, WebSession webSession, Theme theme)
             :
-        base(config.LeftMargin, config.RightMargin, config.TopMargin, config.BottomMargin,
-        config.HeaderHeight, config.FooterHeight) {
+        base(theme.GetStyle("Miysis")) {
             this._dataSource = dataSource;
             this._config = config;
             this._rqDetails = rqDetails;
@@ -188,10 +188,9 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
 				this.AddHeadersAndFooters(
 				_webSession,
-				@"Images\Common\logo_Tns.bmp",
 				imagePosition.leftImage,
 				GestionWeb.GetWebWord(751, _webSession.SiteLanguage) + " - " + dateString,
-				0, -1, _config.HeaderFontColor, _config.HeaderFont, true, _webSession);
+				0, -1, true);
 				#endregion
 				
 				
@@ -313,31 +312,15 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 				(double)(this.PDFPAGE_Width/2 - coef*imgG.Width/2), (double)(this.WorkZoneBottom - coef*imgG.Height - 100),
 				(double)(coef*imgG.Width),(double)(coef*imgG.Height),0);
 
-
-			this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R)/256.0
-				,((double)_config.MainPageFontColor.G)/256.0
-				,((double)_config.MainPageFontColor.B)/256.0);
-			this.PDFPAGE_SetActiveFont(_config.MainPageTitleFont.Name,
-				_config.MainPageTitleFont.Bold,
-				_config.MainPageTitleFont.Italic,
-				_config.MainPageTitleFont.Underline,
-				_config.MainPageTitleFont.Strikeout,
-				_config.MainPageTitleFont.SizeInPoints,TxFontCharset.charsetANSI_CHARSET);
-			
+            Style.GetTag("bigTitle").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);			
 			string str = "";
 			
 			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GestionWeb.GetWebWord(751, _webSession.SiteLanguage))) / 2,
 					(this.PDFPAGE_Height) / 4, 0, GestionWeb.GetWebWord(751, _webSession.SiteLanguage));			
 			
             str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
-				
-			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
-				_config.MainPageDefaultFont.Bold,
-				_config.MainPageDefaultFont.Italic,
-				_config.MainPageDefaultFont.Underline,
-				_config.MainPageDefaultFont.Strikeout,
-				_config.MainPageDefaultFont.SizeInPoints,
-				TxFontCharset.charsetANSI_CHARSET);
+
+            Style.GetTag("createdTitle").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(str))/2, 
 				1*this.PDFPAGE_Height/3,0,str);
 

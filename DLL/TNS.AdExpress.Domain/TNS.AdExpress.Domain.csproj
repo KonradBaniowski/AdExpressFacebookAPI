@@ -36,6 +36,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="DundasWinChart, Version=5.5.1.1711, Culture=neutral, PublicKeyToken=a4c03dce5db22406, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\DundasWinChart.dll</HintPath>
+    </Reference>
     <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Interop.PDFCreatorPilotLib.dll</HintPath>
@@ -44,6 +48,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TNS.Baal.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -75,6 +80,8 @@
     <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
     <Compile Include="Classification\VehiclesInformation.cs" />
+    <Compile Include="Theme\Line.cs" />
+    <Compile Include="Theme\Colors.cs" />
     <Compile Include="Results\MSCreativesDetails.cs" />
     <Compile Include="Theme\Border.cs" />
     <Compile Include="Theme\Borders.cs" />

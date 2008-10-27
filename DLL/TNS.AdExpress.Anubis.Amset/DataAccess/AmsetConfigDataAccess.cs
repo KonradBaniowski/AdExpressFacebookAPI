@@ -50,7 +50,12 @@ namespace TNS.AdExpress.Anubis.Amset.DataAccess{
 							case "ExcelPath":
 								Value=Reader.GetAttribute("path");
 								if (Value!=null) cfg.ExcelPath = Value;
-								break;																				
+								break;
+                            case "ThemePath":
+                                Value = Reader.GetAttribute("path");
+                                if (Value != null && Value.Length > 0) cfg.ThemePath = Value;
+                                else cfg.ThemePath = AppDomain.CurrentDomain.BaseDirectory;
+                                break;										
 						}
 					}
 				}

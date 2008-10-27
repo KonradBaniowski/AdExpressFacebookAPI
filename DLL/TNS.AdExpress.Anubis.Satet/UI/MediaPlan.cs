@@ -27,6 +27,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Classification;
 using System.Reflection;
 using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -40,7 +41,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <summary>
 		/// Calendrier d'actions
 		/// </summary>
-        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource) {
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
 
             #region Variables
 			string currentCategoryName=string.Empty;
@@ -86,7 +87,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
             mediaScheduleResult.Module = module;
 
             //tab=TNS.AdExpress.Web.Rules.Results.APPM.MediaPlanRules.GetFormattedTable(webSession,dataSource,dateBegin,dateEnd,idBaseTarget,idAdditionalTarget,webSession.DetailPeriod);
-            mediaScheduleResult.GetRawData(excel);
+            mediaScheduleResult.GetRawData(excel,style);
             #endregion	
 
         }

@@ -54,6 +54,11 @@ namespace TNS.AdExpress.Anubis.Shou.DataAccess
 								Value=Reader.GetAttribute("path");
 								if (Value!=null) cfg.PdfPath = Value;
 								break;
+                            case "ThemePath":
+                                Value = Reader.GetAttribute("path");
+                                if (Value != null && Value.Length > 0) cfg.ThemePath = Value;
+                                else cfg.ThemePath = AppDomain.CurrentDomain.BaseDirectory;
+                                break;
 							case "PdfCreatorPilot":
 								Value=Reader.GetAttribute("login");
 								if (Value!=null) cfg.PdfCreatorPilotLogin = Value;
@@ -66,24 +71,6 @@ namespace TNS.AdExpress.Anubis.Shou.DataAccess
 								Value=Reader.GetAttribute("pass");
 								if (Value!=null) cfg.Html2PdfPass = Value;
 								break;
-							case "Margins":
-								Value=Reader.GetAttribute("top");
-								if (Value!=null) cfg.TopMargin = double.Parse(Value);
-								Value=Reader.GetAttribute("bottom");
-								if (Value!=null) cfg.BottomMargin = double.Parse(Value);
-								Value=Reader.GetAttribute("left");
-								if (Value!=null) cfg.LeftMargin = double.Parse(Value);
-								Value=Reader.GetAttribute("right");
-								if (Value!=null) cfg.RightMargin = double.Parse(Value);
-								break;
-							case "Header":
-								Value=Reader.GetAttribute("size");
-								if (Value!=null) cfg.HeaderHeight = double.Parse(Value);
-								break;
-							case "Footer":
-								Value=Reader.GetAttribute("size");
-								if (Value!=null) cfg.FooterHeight = double.Parse(Value);
-								break;
 							case "PdfProperties":
 								Value=Reader.GetAttribute("author");
 								if (Value!=null) cfg.PdfAuthor = Value;
@@ -95,96 +82,6 @@ namespace TNS.AdExpress.Anubis.Shou.DataAccess
 								if (Value!=null) cfg.PdfProducer = Value;
 								Value=Reader.GetAttribute("keywords");
 								if (Value!=null) cfg.PdfKeyWords = Value;
-								break;
-							case "DefaultFont":
-								name=Reader.GetAttribute("name");
-								if (name==null) name = "Arial";
-								size=Reader.GetAttribute("size");
-								if (size==null) size = "10";
-								Value=Reader.GetAttribute("bold");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Bold;
-								Value=Reader.GetAttribute("italic");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Italic;
-								Value=Reader.GetAttribute("underline");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Underline;
-								cfg.DefaultFont = new Font(name, float.Parse(size),fontStyle);
-								Value=Reader.GetAttribute("color");
-								if (Value!=null)cfg.SetDefaultFontColor(Value);
-								break;
-							case "HeaderFont":
-								name=Reader.GetAttribute("name");
-								if (name==null) name = "Arial";
-								size=Reader.GetAttribute("size");
-								if (size==null) size = "10";
-								Value=Reader.GetAttribute("bold");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Bold;
-								Value=Reader.GetAttribute("italic");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Italic;
-								Value=Reader.GetAttribute("underline");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Underline;
-								cfg.HeaderFont = new Font(name, float.Parse(size),fontStyle);
-								Value=Reader.GetAttribute("color");
-								if (Value!=null)cfg.SetHeadersFontColor(Value);
-								break;
-							case "TitleFont":
-								name=Reader.GetAttribute("name");
-								if (name==null) name = "Arial";
-								size=Reader.GetAttribute("size");
-								if (size==null) size = "10";
-								Value=Reader.GetAttribute("bold");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Bold;
-								Value=Reader.GetAttribute("italic");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Italic;
-								Value=Reader.GetAttribute("underline");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Underline;
-								cfg.TitleFont = new Font(name, float.Parse(size),fontStyle);
-								Value=Reader.GetAttribute("color");
-								if (Value!=null)cfg.SetTitleFontColor(Value);
-								break;
-							case "MainPageTitleFont":
-								name=Reader.GetAttribute("name");
-								if (name==null) name = "Arial";
-								size=Reader.GetAttribute("size");
-								if (size==null) size = "10";
-								Value=Reader.GetAttribute("bold");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Bold;
-								Value=Reader.GetAttribute("italic");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Italic;
-								Value=Reader.GetAttribute("underline");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Underline;
-								cfg.MainPageTitleFont = new Font(name, float.Parse(size),fontStyle);
-								Value=Reader.GetAttribute("color");
-								if (Value!=null)cfg.SetMainPageTitleFontColor(Value);
-								break;
-							case "MainPageDefaultFont":
-								name=Reader.GetAttribute("name");
-								if (name==null) name = "Arial";
-								size=Reader.GetAttribute("size");
-								if (size==null) size = "10";
-								Value=Reader.GetAttribute("bold");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Bold;
-								Value=Reader.GetAttribute("italic");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Italic;
-								Value=Reader.GetAttribute("underline");
-								if (Value!=null) 
-									if (Convert.ToBoolean(Value))fontStyle = fontStyle|FontStyle.Underline;
-								cfg.MainPageDefaultFont = new Font(name, float.Parse(size),fontStyle);
-								Value=Reader.GetAttribute("color");
-								if (Value!=null)cfg.SetMainPageFontColor(Value);
 								break;
 						}
 					}

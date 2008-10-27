@@ -65,7 +65,7 @@ namespace TNS.AdExpressI.MediaSchedule{
         /// <summary>
         /// Get Raw data for an excel export by Anubis of the media schedule
         /// </summary>
-        void GetRawData(Workbook excel, Theme theme);
+        void GetRawData(Workbook excel, TNS.AdExpress.Domain.Theme.Style style);
         #endregion
     }
 }

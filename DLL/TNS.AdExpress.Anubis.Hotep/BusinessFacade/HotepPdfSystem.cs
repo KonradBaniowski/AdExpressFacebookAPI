@@ -55,6 +55,7 @@ using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Theme;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
@@ -99,9 +100,9 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
         /// <param name="config">Config</param>
         /// <param name="rqDetails">Request details</param>
         /// <param name="webSession">Web session</param>
-		public HotepPdfSystem(IDataSource dataSource, HotepConfig config, DataRow rqDetails, WebSession webSession):
-			base(config.LeftMargin, config.RightMargin, config.TopMargin, config.BottomMargin,
-			config.HeaderHeight,config.FooterHeight){
+        public HotepPdfSystem(IDataSource dataSource, HotepConfig config, DataRow rqDetails, WebSession webSession, Theme theme)
+            :
+            base(theme.GetStyle("Hotep")) {
 			this._dataSource = dataSource;
 			this._config = config;
 			this._rqDetails = rqDetails;
@@ -193,10 +194,9 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 				this.AddHeadersAndFooters(
                 _webSession,
-				@"Images\Common\logo_Tns.bmp",
 				imagePosition.leftImage,
                 GestionWeb.GetWebWord(1053, _webSession.SiteLanguage) + " - " + dateString,
-				0,-1,_config.HeaderFontColor,_config.HeaderFont,true,_webSession); 
+				0,-1,true); 
 				#endregion
 				
 			}
@@ -311,8 +311,8 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			this.SetCurrentPage(0);
 
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-	
-			string imgPath = @"Images\" + _webSession.SiteLanguage + @"\LogoAdExpress220.jpg";
+
+            string imgPath = ((TNS.AdExpress.Domain.Theme.Picture)Style.GetTag("pictureTitle")).Path;
 			Image imgG = Image.FromFile(imgPath);
 			
 			double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
@@ -746,17 +746,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp";
 
 					#region Title
-					this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-						_config.TitleFont.Underline, _config.TitleFont.Strikeout, 16, 0);
-					this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-						,((double)_config.TitleFontColor.G)/256.0
-						,((double)_config.TitleFontColor.B)/256.0);
+                    Style.GetTag("SeasonalityGraphTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 					this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1139 ,_webSession.SiteLanguage));
 					#endregion
 
 					#region GRP graph
 			
-					UISeasonalityGraph graph = new UISeasonalityGraph(_webSession, _dataSource, _config, tab);
+					UISeasonalityGraph graph = new UISeasonalityGraph(_webSession, _dataSource, _config, tab,Style);
 					graph.BuildSeasonality();
 					graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
 					img = Image.FromFile(workFile);
@@ -824,17 +820,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp";
 
 					#region Title
-					this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-						_config.TitleFont.Underline, _config.TitleFont.Strikeout, 16, 0);
-					this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-						,((double)_config.TitleFontColor.G)/256.0
-						,((double)_config.TitleFontColor.B)/256.0);
+                    Style.GetTag("PalmaresGraphTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 					this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1980 ,_webSession.SiteLanguage));
 					#endregion
 
 					#region GRP graph
 			
-					UIPalmaresGraph graph = new UIPalmaresGraph(_webSession, _dataSource, _config, tab);
+					UIPalmaresGraph graph = new UIPalmaresGraph(_webSession, _dataSource, _config, tab,Style);
 					graph.BuildPalmares(tableType);
 					graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
 					img = Image.FromFile(workFile);
@@ -965,17 +957,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp";
 
 					#region Title
-					this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-						_config.TitleFont.Underline, _config.TitleFont.Strikeout, 16, 0);
-					this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-						,((double)_config.TitleFontColor.G)/256.0
-						,((double)_config.TitleFontColor.B)/256.0);
+                    Style.GetTag("EvolutionGraphTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 					this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1207 ,_webSession.SiteLanguage));
 					#endregion
 
 					#region GRP graph
 			
-					UIEvolutionGraph graph = new UIEvolutionGraph(_webSession, _dataSource, _config, tab);
+					UIEvolutionGraph graph = new UIEvolutionGraph(_webSession, _dataSource, _config, tab,Style);
 					graph.BuildEvolution(tableType);
 					graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
 					img = Image.FromFile(workFile);
@@ -1051,17 +1039,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp";
 
 					#region Title
-					this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-						_config.TitleFont.Underline, _config.TitleFont.Strikeout, 16, 0);
-					this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-						,((double)_config.TitleFontColor.G)/256.0
-						,((double)_config.TitleFontColor.B)/256.0);
+                    Style.GetTag("MediaStrategyGraphTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 					this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1227 ,_webSession.SiteLanguage));
 					#endregion
 
 					#region GRP graph
 			
-					UIMediaStrategyGraph graph = new UIMediaStrategyGraph(_webSession, _dataSource, _config, tab);
+					UIMediaStrategyGraph graph = new UIMediaStrategyGraph(_webSession, _dataSource, _config, tab,Style);
 					graph.BuildMediaStrategy();
 					graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
 					img = Image.FromFile(workFile);
@@ -1801,11 +1785,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			if(withTitle){
 
 				#region Title
-				this.PDFPAGE_SetActiveFont(_config.TitleFont.Name, _config.TitleFont.Bold,_config.TitleFont.Italic,
-					_config.TitleFont.Underline, _config.TitleFont.Strikeout, 16, 0);
-				this.PDFPAGE_SetRGBColor(((double)_config.TitleFontColor.R)/256.0
-					,((double)_config.TitleFontColor.G)/256.0
-					,((double)_config.TitleFontColor.B)/256.0);
+                Style.GetTag("NoveltyPictureTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 				this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1197 ,_webSession.SiteLanguage));
 				#endregion
 

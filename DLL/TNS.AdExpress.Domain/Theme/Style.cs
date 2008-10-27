@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Domain.XmlLoader;
 using TNS.FrameWork.DB.Common;
+using System.Drawing;
 
 namespace TNS.AdExpress.Domain.Theme {
     /// <summary>
@@ -40,7 +41,51 @@ namespace TNS.AdExpress.Domain.Theme {
         /// <param name="tagName">Tag Name</param>
         /// <returns>Tag</returns>
         public Tag GetTag(string tagName) {
-            return _tagList[tagName];
+            if (_tagList != null && _tagList.ContainsKey(tagName))
+                return _tagList[tagName];
+            else
+                throw new Exception("Tag Name '" + tagName + "' is invalid ! (GetTag() in class Style)");
+        }
+        /// <summary>
+        /// Init the palette whith all color defined to xml theme file for this style which use Aspose.cells
+        /// </summary>
+        /// <param name="excel">Object Excel to Init</param>
+        /// <param name="styleName">Style Name</param>
+        public void InitExcelColorPalette(Aspose.Cells.Workbook excel) {
+            List<Color> color = getColorList();
+            if (color.Count > 0) {
+                for (int i = 0; i < color.Count && i < excel.Colors.Length; i++) {
+                    excel.ChangePalette(color[i], i);
+                }
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Get all color defined in tag List of style
+        /// </summary>
+        /// <returns>Color List Defined in tag List of style</returns>
+        private List<Color> getColorList() {
+            List<Color> colorList = new List<Color>();
+            foreach (Tag tag in _tagList.Values) {
+
+                if (tag.GetType() == typeof(Font)) {
+                    if (!colorList.Contains(((Font)tag).Color))
+                        colorList.Add(((Font)tag).Color);
+                }
+                else if (tag.GetType() == typeof(Cell)) {
+                    if (!colorList.Contains(((Cell)tag).ForegroundColor))
+                        colorList.Add(((Cell)tag).ForegroundColor);
+                    foreach (Border border in ((Cell)tag).Borders.Border.Values)
+                        if (!colorList.Contains(border.Color))
+                            colorList.Add(border.Color);
+                }
+
+
+            }
+
+            return colorList;
         }
         #endregion
 

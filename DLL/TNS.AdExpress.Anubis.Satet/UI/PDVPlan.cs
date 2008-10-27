@@ -22,6 +22,8 @@ using CsteCustomer=TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Theme;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -31,11 +33,24 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 	public class PDVPlan
 	{
 
+        #region Variables Theme Name
+        private static string _rowTitle = "PDVPlanRowTitle";
+        private static string _rowTitleFirstCol = "PDVPlanRowTitleFirstCol";
+        private static string _rowTotal = "PDVPlanRowTotal";
+        private static string _rowTotalFirstCol = "PDVPlanRowTotalFirstCol";
+        private static string _rowReferent = "PDVPlanRowReferent";
+        private static string _rowReferentFirstCol = "PDVPlanRowReferentFirstCol";
+        private static string _rowPdv = "PDVPlanRowPDV";
+        private static string _rowPdvFirstCol = "PDVPlanRowPDVFirstCol";
+        private static string _rowDefault = "PDVPlanRowDefault";
+        private static string _rowDefaultFirstCol = "PDVPlanRowDefaultFirstCol";
+        #endregion
+
 		#region Analyse des parts de voix
 		/// <summary>
 		/// Analyse des parts de voix
 		/// </summary>
-        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource) {
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
 			
 			#region targets
 			//base target
@@ -51,9 +66,10 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			// Données resultats
 			DataTable PDVPlanData=TNS.AdExpress.Web.Rules.Results.APPM.PDVPlanRules.GetData(webSession,dataSource,int.Parse(webSession.PeriodBeginningDate),int.Parse(webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget,false);
 		
-			if((PDVPlanData!=null) && PDVPlanData.Rows.Count>0){
+			if((PDVPlanData!=null) && PDVPlanData.Rows.Count>0) {
 
-				int nbMaxRowByPage=42;
+                #region Variables
+                int nbMaxRowByPage=42;
 				int s=1;
 				int cellRow = 9;
 				int startIndex=cellRow;	
@@ -69,18 +85,17 @@ namespace TNS.AdExpress.Anubis.Satet.UI
                 string excelPatternNameMax0 = "max0";
                 string excelPatternNameMax3 = "max3";
                 string excelPatternNamePercentage = "percentage";
-	
-				#region insertion des résultats dans feuille excel
+                #endregion
 
-				//En-tête du tableau  			
-				oArray = new object[] {GestionWeb.GetWebWord(938,webSession.SiteLanguage),GestionWeb.GetWebWord(943,webSession.SiteLanguage),GestionWeb.GetWebWord(940,webSession.SiteLanguage),GestionWeb.GetWebWord(1679,webSession.SiteLanguage),GestionWeb.GetWebWord(1735,webSession.SiteLanguage)}; 					
-				range = cells.CreateRange("C"+startIndex,"G"+startIndex);
-				cells.ImportObjectArray(oArray,range.FirstRow,range.FirstColumn,false);									
-				range.SetOutlineBorder(BorderType.RightBorder,CellBorderType.Thin,Color.White);
-				range.SetOutlineBorder(BorderType.TopBorder,CellBorderType.Thin,Color.White);
-				range.SetOutlineBorder(BorderType.BottomBorder,CellBorderType.Thin,Color.White);
-				range.SetOutlineBorder(BorderType.LeftBorder,CellBorderType.Thin,Color.White);
-				SatetFunctions.WorkSheet.CellsStyle(cells,null,startIndex-1,1,6,true,Color.White,Color.FromArgb(100,72,131),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,true);				
+                #region insertion des résultats dans feuille excel
+
+                //En-tête du tableau  			
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitleFirstCol), null, startIndex - 1, 1, 1);
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitle), GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].WebTextId, webSession.SiteLanguage), startIndex - 1, 2, 1);
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitle), GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages].WebTextId, webSession.SiteLanguage), startIndex - 1, 3, 1);
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitle), GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage), startIndex - 1, 4, 1);
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitle), GestionWeb.GetWebWord(1679, webSession.SiteLanguage), startIndex - 1, 5, 1);
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTitle), GestionWeb.GetWebWord(1735, webSession.SiteLanguage), startIndex - 1, 6, 1);
 			
 				//Insertion des résultats
 				cellRow++;
@@ -88,50 +103,60 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				oArray = new object[6] ;
 				foreach(DataRow row in PDVPlanData.Rows){
 					if(row["products"].Equals("PDV")){
-						oArray[0]=row["products"];
-						oArray[1]=Convert.ToDouble(row["euros"])/100;
-						oArray[2]=Convert.ToDouble(row["pages"])/100;
-						oArray[3]=Convert.ToDouble(row["insertions"])/100;
-						oArray[4]=Convert.ToDouble(row["GRP"])/100;
-						oArray[5]=Convert.ToDouble(row["GRPBaseTarget"])/100;
-						SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,6,true,Color.Black,Color.FromArgb(208,200,218),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
-						for(int i=2;i<=6;i++)
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowPdvFirstCol), row["products"], cellRow - 1, 1, 1);
+                        cells[cellRow - 1, 1].Style.HorizontalAlignment = TextAlignmentType.Left;
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowPdv), Convert.ToDouble(row["euros"])/100, cellRow - 1, 2, 1);
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowPdv), Convert.ToDouble(row["pages"])/100, cellRow - 1, 3, 1);
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowPdv), Convert.ToDouble(row["insertions"])/100, cellRow - 1, 4, 1);
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowPdv), Convert.ToDouble(row["GRP"])/100, cellRow - 1, 5, 1);
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowPdv), Convert.ToDouble(row["GRPBaseTarget"]) / 100, cellRow - 1, 6, 1);
+                        for (int i = 2; i <= 6; i++) {
+                            cells[cellRow - 1, i].Style.HorizontalAlignment = TextAlignmentType.Right;
                             cells[cellRow - 1, i].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNamePercentage); // Number = 10;
+                        }
 					}
 					else{
-						oArray[0]=row["products"];
-						oArray[1]=Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["euros"].ToString(),WebConstantes.CustomerSessions.Unit.euro,false));
-						oArray[2]=Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["pages"].ToString(),WebConstantes.CustomerSessions.Unit.pages,false));
-						oArray[3]=Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["insertions"].ToString(),WebConstantes.CustomerSessions.Unit.insertion,false));
-						oArray[4]=Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["GRP"].ToString(),WebConstantes.CustomerSessions.Unit.grp,false));
-						oArray[5]=Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["GRPBaseTarget"].ToString(),WebConstantes.CustomerSessions.Unit.grp,false));
-						if(!oArray[0].Equals("Total") && !oArray[0].Equals("Univers de référence"))
-							SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,6,true,Color.Black,Color.FromArgb(177,163,193),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
-						else
-							SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,6,true,Color.Black,Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
-						for(int i=2;i<=6;i++)
-							if((i!=2)&&(i!=4))
-								cells[cellRow-1,i].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3);// "# ### ##0.0##";
-							else
+                        string currentStyle = string.Empty;
+                        string currentStyleFirstCol = string.Empty;
+                        if (row["products"].Equals("Total")) {
+                            currentStyle = _rowTotal;
+                            currentStyleFirstCol = _rowTotalFirstCol;
+                        }
+                        else if (row["products"].Equals("Univers de référence")) {
+                            currentStyle = _rowReferent;
+                            currentStyleFirstCol = _rowReferentFirstCol;
+                        }
+                        else {
+                            currentStyle = _rowDefault;
+                            currentStyleFirstCol = _rowDefaultFirstCol;
+                        }
+
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(currentStyleFirstCol), row["products"], cellRow - 1, 1, 1);
+                        cells[cellRow - 1, 1].Style.HorizontalAlignment = TextAlignmentType.Left;
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(currentStyle), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["euros"].ToString(), WebConstantes.CustomerSessions.Unit.euro, false)), cellRow - 1, 2, 1);
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(currentStyle), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["pages"].ToString(), WebConstantes.CustomerSessions.Unit.pages, false)), cellRow - 1, 3, 1);
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(currentStyle), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["insertions"].ToString(), WebConstantes.CustomerSessions.Unit.insertion, false)), cellRow - 1, 4, 1);
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(currentStyle), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["GRP"].ToString(), WebConstantes.CustomerSessions.Unit.grp, false)), cellRow - 1, 5, 1);
+                        SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(currentStyle), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(row["GRPBaseTarget"].ToString(), WebConstantes.CustomerSessions.Unit.grp, false)), cellRow - 1, 6, 1);
+                        for (int i = 2; i <= 6; i++) {
+                            cells[cellRow - 1, i].Style.HorizontalAlignment = TextAlignmentType.Right;
+                            if ((i != 2) && (i != 4))
+                                cells[cellRow - 1, i].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3);// "# ### ##0.0##";
+                            else
                                 cells[cellRow - 1, i].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
-					}
-					range = cells.CreateRange("B"+cellRow,"G"+cellRow);
-					cells.ImportObjectArray(oArray,range.FirstRow,range.FirstColumn,false);									
-					range.SetOutlineBorder(BorderType.RightBorder,CellBorderType.Thin,Color.White);
-					range.SetOutlineBorder(BorderType.TopBorder,CellBorderType.Thin,Color.White);
-					range.SetOutlineBorder(BorderType.BottomBorder,CellBorderType.Thin,Color.White);
-					range.SetOutlineBorder(BorderType.LeftBorder,CellBorderType.Thin,Color.White);				 
+                        }
+					}		 
 
 					cellRow++;
-				}
-
-				//Ajustement de la taile des cellules en fonction du contenu
-				for(int c=1;c<=6;c++){
+                }
+                #region Ajustement de la taile des cellules en fonction du contenu
+                for (int c=1;c<=6;c++){
 					sheet.AutoFitColumn(c);
 				}		
 				#endregion
 
-				//Mise en page de la feuille excel
+                #region Mise en Page
+                //Mise en page de la feuille excel
 
 				for(index=0;index<20;index++){
 					columnWidth += cells.GetColumnWidth((byte)index);
@@ -143,8 +168,11 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 
 				upperLeftColumn=(int)indexLogo;
 				vPageBreaks = cells[cellRow,(int)indexLogo+1].Name;
-				SatetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(1728,webSession.SiteLanguage),PDVPlanData.Rows.Count+9,nbMaxRowByPage,ref s,upperLeftColumn,vPageBreaks,header.ToString());
-			}		
+                SatetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1728, webSession.SiteLanguage), PDVPlanData.Rows.Count + 9, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, header.ToString(), style);
+                #endregion
+
+                #endregion
+            }		
 
 		}
 		#endregion

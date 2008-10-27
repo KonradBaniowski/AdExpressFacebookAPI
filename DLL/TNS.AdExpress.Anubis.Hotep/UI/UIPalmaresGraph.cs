@@ -54,16 +54,21 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// Tableau d'objets qui contient les résultats
 		/// </summary>
 		private object[,] _tab=null;
-		
+        /// <summary>
+        /// Style
+        /// </summary>
+        private TNS.AdExpress.Domain.Theme.Style _style = null;
 		#endregion
 
 		#region Constructeur
-		public UIPalmaresGraph(WebSession webSession,IDataSource dataSource, HotepConfig config,object[,] tab):base(){
-		_webSession = webSession;
-		_dataSource = dataSource;
-		_config = config;
-		_tab = tab;
-		}
+        public UIPalmaresGraph(WebSession webSession, IDataSource dataSource, HotepConfig config, object[,] tab, TNS.AdExpress.Domain.Theme.Style style)
+            : base() {
+            _webSession = webSession;
+            _dataSource = dataSource;
+            _config = config;
+            _tab = tab;
+            _style = style;
+        }
 		#endregion
 		
 		#region Palmares
@@ -73,6 +78,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		internal void BuildPalmares(FrameWorkConstantes.Results.PalmaresRecap.ElementType tableType) {
 
             #region Init Chart
+            Color colorTemp = Color.Black;
             bool referenceElement = false;
             bool competitorElement = false;
             // There is at least one element
@@ -86,14 +92,13 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			#endregion
 
             #region Chart Design
-            this.Size = new Size(800,500);
+            _style.GetTag("PalmaresGraphSize").SetStyleDundas(this);
 			this.BackGradientType = GradientType.TopBottom;
 			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
-			this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);
+            _style.GetTag("PalmaresGraphBackColor").SetStyleDundas(ref colorTemp);
+            this.ChartAreas[strChartArea].BackColor = colorTemp;
 			this.DataManipulator.Sort(PointsSortOrder.Descending,series);
-			this.BorderStyle=ChartDashStyle.Solid;
-			this.BorderLineColor=Color.FromArgb(99,73,132);
-			this.BorderLineWidth=2;
+            _style.GetTag("PalmaresGraphLineEnCircle").SetStyleDundas(this);
 			#endregion
 
             #region Title
@@ -119,8 +124,9 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 							strTitle = GestionWeb.GetWebWord(1169,_webSession.SiteLanguage) + " (" + GestionWeb.GetWebWord(1316,_webSession.SiteLanguage)+ ")";
 				title = new Title(""+strTitle+"");
 			}
-			title.Font = new Font("Arial", (float)14);
+            
 			this.Titles.Add(title);
+            _style.GetTag("PalmaresGraphTitleFont").SetStyleDundas(this.Titles[0]);
 			#endregion	
 
 			#region Series
@@ -128,9 +134,10 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			series.ShowLabelAsValue=true;
 			series.XValueType=ChartValueTypes.String;
 			series.YValueType=ChartValueTypes.Double;
-			series.Color= Color.FromArgb(148,121,181);
+            _style.GetTag("PalmaresGraphColorSerie").SetStyleDundas(ref colorTemp);
+            series.Color = colorTemp;
 			series.Enabled=true;
-			series.Font=new Font("Arial", (float)10);
+            _style.GetTag("PalmaresGraphTitleFontSerie").SetStyleDundas(series);
 			series.FontAngle=45;
 			#endregion			
 
@@ -147,12 +154,14 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
                     // Competitor in red
                     if (_tab[i, EngineTop.COMPETITOR] != null) {
                         if ((int)_tab[i, EngineTop.COMPETITOR] == 2) {
-                            series.Points[i - 1].Color = Color.FromArgb(255, 223, 222);
+                            _style.GetTag("PalmaresGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
+                            series.Points[i - 1].Color = colorTemp;
                             competitorElement = true;
                         }
                         // Reference in green
                         else if ((int)_tab[i, EngineTop.COMPETITOR] == 1) {
-                            series.Points[i - 1].Color = Color.FromArgb(222, 255, 222);	
+                            _style.GetTag("PalmaresGraphColorLegendItemReference").SetStyleDundas(ref colorTemp);
+                            series.Points[i - 1].Color = colorTemp;	
                             referenceElement = true;
                         }
                     }
@@ -171,7 +180,8 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			}
 			LegendItem legendItemReference = new LegendItem();			
 			legendItemReference.BorderWidth=0;
-			legendItemReference.Color=Color.FromArgb(222,255,222);
+            _style.GetTag("PalmaresGraphColorLegendItemReference").SetStyleDundas(ref colorTemp);
+            legendItemReference.Color = colorTemp;
 			if(referenceElement){
 				if(tableType==FrameWorkConstantes.Results.PalmaresRecap.ElementType.advertiser){
 					legendItemReference.Name=GestionWeb.GetWebWord(1201,_webSession.SiteLanguage);
@@ -184,8 +194,9 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 				}
 			}			
 			LegendItem legendItemCompetitor = new LegendItem();
-			legendItemCompetitor.BorderWidth=0;			
-			legendItemCompetitor.Color=Color.FromArgb(255,223,222);
+			legendItemCompetitor.BorderWidth=0;
+            _style.GetTag("PalmaresGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
+            legendItemCompetitor.Color = colorTemp;
 
 			if(competitorElement){
 				if(tableType==FrameWorkConstantes.Results.PalmaresRecap.ElementType.advertiser){
@@ -202,7 +213,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			#region Axe des X
 			this.ChartAreas[strChartArea].AxisX.LabelStyle.Enabled = true;
 			this.ChartAreas[strChartArea].AxisX.LabelsAutoFit = false;
-			this.ChartAreas[strChartArea].AxisX.LabelStyle.Font=new Font("Arial", (float)8);
+            _style.GetTag("PalmaresGraphLabelFontAxisX").SetStyleDundas(this.ChartAreas[strChartArea].AxisX.LabelStyle);
 			this.ChartAreas[strChartArea].AxisX.MajorGrid.LineWidth=0;
 			this.ChartAreas[strChartArea].AxisX.Interval=1;				
 			this.ChartAreas[strChartArea].AxisX.LabelStyle.FontAngle = 35;
@@ -211,11 +222,10 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			#region Axe des Y
 			this.ChartAreas[strChartArea].AxisY.Enabled=AxisEnabled.True;
 			this.ChartAreas[strChartArea].AxisY.LabelStyle.Enabled=true;
-			this.ChartAreas[strChartArea].AxisY.LabelsAutoFit=false;			
-
-			this.ChartAreas[strChartArea].AxisY.LabelStyle.Font=new Font("Arial", (float)10);
+			this.ChartAreas[strChartArea].AxisY.LabelsAutoFit=false;
+            _style.GetTag("PalmaresGraphLabelFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY.LabelStyle);
 			this.ChartAreas[strChartArea].AxisY.Title=""+GestionWeb.GetWebWord(1206,_webSession.SiteLanguage)+"";
-			this.ChartAreas[strChartArea].AxisY.TitleFont=new Font("Arial", (float)10);
+            _style.GetTag("PalmaresGraphTitleFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY);
             double dd = Convert.ToDouble(_tab[0, EngineTop.TOTAL_N]);
             double uu = Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(dd, _webSession.Unit));
             if (uu > 0)
@@ -229,9 +239,8 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			this.ChartAreas[strChartArea].AxisY2.Enabled=AxisEnabled.True;
 			this.ChartAreas[strChartArea].AxisY2.LabelStyle.Enabled=true;
 			this.ChartAreas[strChartArea].AxisY2.LabelsAutoFit=false;
-			
-			this.ChartAreas[strChartArea].AxisY2.LabelStyle.Font=new Font("Arial", (float)10);
-			this.ChartAreas[strChartArea].AxisY2.TitleFont=new Font("Arial", (float)10);
+            _style.GetTag("PalmaresGraphLabelFontAxisY2").SetStyleDundas(this.ChartAreas[strChartArea].AxisY2.LabelStyle);
+            _style.GetTag("PalmaresGraphTitleFontAxisY2").SetStyleDundas(this.ChartAreas[strChartArea].AxisY2);
 			this.ChartAreas[strChartArea].AxisY2.Maximum=100;
 			this.ChartAreas[strChartArea].AxisY2.Title=""+GestionWeb.GetWebWord(1205,_webSession.SiteLanguage)+"";
 			#endregion					

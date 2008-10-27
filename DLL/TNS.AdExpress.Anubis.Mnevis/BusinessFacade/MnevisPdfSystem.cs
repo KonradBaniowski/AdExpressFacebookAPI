@@ -55,6 +55,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Theme;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
@@ -83,9 +84,8 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public MnevisPdfSystem(IDataSource dataSource, MnevisConfig config, DataRow rqDetails, WebSession webSession):
-		base(config.LeftMargin, config.RightMargin, config.TopMargin, config.BottomMargin,
-		config.HeaderHeight,config.FooterHeight) {
+		public MnevisPdfSystem(IDataSource dataSource, MnevisConfig config, DataRow rqDetails, WebSession webSession, Theme theme):
+        base(theme.GetStyle("Mnevis")) {
 		this._dataSource = dataSource;
 		this._config = config;
 		this._rqDetails = rqDetails;
@@ -139,10 +139,10 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 				#region Header and Footer
 				this.AddHeadersAndFooters(
                     _webSession,
-					@"Images\Common\logo_Tns.bmp",
-					@"Images\Common\APPM.bmp",
+                    true,
+					true,
                     GestionWeb.GetWebWord(2535, _webSession.SiteLanguage) + " - " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern),
-					0,-1,_config.HeaderFontColor,_config.HeaderFont);
+					0,-1);
 				#endregion
 
 			}
@@ -274,28 +274,12 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 				(double)(this.PDFPAGE_Width/2 - coef*imgG.Width/2), (double)(this.WorkZoneBottom - coef*imgG.Height - 100),
 				(double)(coef*imgG.Width),(double)(coef*imgG.Height),0);
 
-			this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R)/256.0
-				,((double)_config.MainPageFontColor.G)/256.0
-				,((double)_config.MainPageFontColor.B)/256.0);
-			this.PDFPAGE_SetActiveFont(_config.MainPageTitleFont.Name,
-				_config.MainPageTitleFont.Bold,
-				_config.MainPageTitleFont.Italic,
-				_config.MainPageTitleFont.Underline,
-				_config.MainPageTitleFont.Strikeout,
-				_config.MainPageTitleFont.SizeInPoints,TxFontCharset.charsetANSI_CHARSET);
+            Style.GetTag("bigTitle").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 
             this.PDFPAGE_TextOut(((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GestionWeb.GetWebWord(1587, _webSession.SiteLanguage))) / 2), 
-				((this.PDFPAGE_Height)/4)-75,0,GestionWeb.GetWebWord(1587,_webSession.SiteLanguage));			
+				((this.PDFPAGE_Height)/4)-75,0,GestionWeb.GetWebWord(1587,_webSession.SiteLanguage));
 
-			this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R)/256.0
-				,((double)_config.MainPageFontColor.G)/256.0
-				,((double)_config.MainPageFontColor.B)/256.0);
-			this.PDFPAGE_SetActiveFont(_config.MainPageTitleFont.Name,
-				_config.MainPageTitleFont.Bold,
-				_config.MainPageTitleFont.Italic,
-				_config.MainPageTitleFont.Underline,
-				_config.MainPageTitleFont.Strikeout,
-				32,TxFontCharset.charsetANSI_CHARSET);
+            Style.GetTag("bigTitle").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 			
 			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GestionWeb.GetWebWord(2535, _webSession.SiteLanguage)))/2,
                 (this.PDFPAGE_Height) / 4, 0, "(" + GestionWeb.GetWebWord(2535, _webSession.SiteLanguage) + ")");			
@@ -303,13 +287,8 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			string str = string.Empty;
             str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 
-			this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
-				_config.MainPageDefaultFont.Bold,
-				_config.MainPageDefaultFont.Italic,
-				_config.MainPageDefaultFont.Underline,
-				_config.MainPageDefaultFont.Strikeout,
-				_config.MainPageDefaultFont.SizeInPoints,
-				TxFontCharset.charsetANSI_CHARSET);
+
+            Style.GetTag("createdTitle").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 			this.PDFPAGE_TextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(str))/2, 
 				1*this.PDFPAGE_Height/3,0,str);
 

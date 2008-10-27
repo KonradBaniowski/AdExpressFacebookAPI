@@ -58,16 +58,21 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// Tableau d'objets qui contient les résultats
 		/// </summary>
 		private object[,] _tab=null;
-		
+        /// <summary>
+        /// Style
+        /// </summary>
+        private TNS.AdExpress.Domain.Theme.Style _style = null;
 		#endregion
 
 		#region Constructeur
-		public UISeasonalityGraph(WebSession webSession,IDataSource dataSource, HotepConfig config,object[,] tab):base(){
-		_webSession = webSession;
-		_dataSource = dataSource;
-		_config = config;
-		_tab = tab;
-		}
+        public UISeasonalityGraph(WebSession webSession, IDataSource dataSource, HotepConfig config, object[,] tab, TNS.AdExpress.Domain.Theme.Style style)
+            : base() {
+            _webSession = webSession;
+            _dataSource = dataSource;
+            _config = config;
+            _tab = tab;
+            _style = style;
+        }
 		#endregion
 		
 		#region Seasonality
@@ -79,7 +84,8 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			#region Variables
 			bool referenceElement=false;
 			bool competitorElement=false;
-            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization); 
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+            Color colorTemp = Color.Black;
 			#endregion
 
             #region Series Init
@@ -129,19 +135,17 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             #endregion
 
             #region Chart
-            this.Size = new Size(800,500);
+            _style.GetTag("SeasonalityGraphSize").SetStyleDundas(this);
 			this.BackGradientType = GradientType.TopBottom;
-			this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);
-			this.ChartAreas[strChartArea].BackColor=Color.FromArgb(222,207,231);			
-			this.BorderStyle=ChartDashStyle.Solid;
-			this.BorderLineColor=Color.FromArgb(99,73,132);
-			this.BorderLineWidth=2;
+            _style.GetTag("SeasonalityGraphBackColor").SetStyleDundas(ref colorTemp);
+            this.ChartAreas[strChartArea].BackColor = colorTemp;
+            _style.GetTag("SeasonalityGraphLineEnCircle").SetStyleDundas(this);
 			#endregion
 
 			#region Titre
 			Title title = new Title(GestionWeb.GetWebWord(1139,_webSession.SiteLanguage));
-			title.Font = new Font("Arial", (float)14);
 			this.Titles.Add(title);
+            _style.GetTag("SeasonalityGraphTitleFont").SetStyleDundas(this.Titles[0]);
 			#endregion	
 
             #region Series Design
@@ -150,7 +154,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			serieUnivers.XValueType=ChartValueTypes.String;
 			serieUnivers.YValueType=ChartValueTypes.Double;
 			serieUnivers.Enabled=true;
-			serieUnivers.Font=new Font("Arial", (float)8);
+            _style.GetTag("SeasonalityGraphTitleFontSerieUnivers").SetStyleDundas(serieUnivers);
 			serieUnivers["LabelStyle"] = "Top";
 			
 			serieSectorMarket.Type = SeriesChartType.Line;
@@ -158,7 +162,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			serieSectorMarket.XValueType=ChartValueTypes.String;
 			serieSectorMarket.YValueType=ChartValueTypes.Double;
 			serieSectorMarket.Enabled=true;
-			serieSectorMarket.Font=new Font("Arial", (float)8);
+            _style.GetTag("SeasonalityGraphTitleFontSerieSectorMarket").SetStyleDundas(serieSectorMarket);
 			serieSectorMarket["LabelStyle"] = "Bottom";
 							
 			serieMediumMonth.Type = SeriesChartType.Line;
@@ -166,7 +170,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			serieMediumMonth.XValueType=ChartValueTypes.String;
 			serieMediumMonth.YValueType=ChartValueTypes.Double;
 			serieMediumMonth.Enabled=true;
-			serieMediumMonth.Font=new Font("Arial", (float)8);
+            _style.GetTag("SeasonalityGraphTitleFontSerieMediumMonth").SetStyleDundas(serieMediumMonth);
 			serieMediumMonth.LabelToolTip= GestionWeb.GetWebWord(1233,_webSession.SiteLanguage);
 			#endregion			
 
@@ -210,10 +214,10 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
                             s.XValueType = ChartValueTypes.String;
                             s.YValueType = ChartValueTypes.Double;
                             s.Enabled = true;
-                            s.Font = new Font("Arial", (float)8);
+                            _style.GetTag("SeasonalityGraphTitleFontSerieAdvertiser").SetStyleDundas(s);
                             s.LegendText = _tab[i, EngineSeasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
                             s.Enabled = true;
-                            s.Font = new Font("Arial", (float)8);
+                            _style.GetTag("SeasonalityGraphTitleFontSerieAdvertiser").SetStyleDundas(s);
                             s.LabelToolTip = _tab[i, EngineSeasonality.LABEL_ELEMENT_COLUMN_INDEX].ToString();
 
                             if (advertiserTotal[idElement] > 0) {
@@ -245,14 +249,17 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 
 			LegendItem legendItemReference = new LegendItem();			
 			legendItemReference.BorderWidth=0;
-			legendItemReference.Color=Color.FromArgb(222,255,222);
+            _style.GetTag("SeasonalityGraphColorLegendItemReference").SetStyleDundas(ref colorTemp);
+            legendItemReference.Color = colorTemp;
+
 			if(referenceElement){								
 				legendItemReference.Name=GestionWeb.GetWebWord(1203,_webSession.SiteLanguage);
 				this.Legends["Default"].CustomItems.Add(legendItemReference);			
 			}			
 			LegendItem legendItemCompetitor = new LegendItem();
-			legendItemCompetitor.BorderWidth=0;			
-			legendItemCompetitor.Color=Color.FromArgb(255,223,222);
+			legendItemCompetitor.BorderWidth=0;
+            _style.GetTag("SeasonalityGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
+            legendItemCompetitor.Color = colorTemp;
 
 			if(competitorElement){
 				
@@ -264,7 +271,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             #region X axe
             this.ChartAreas[strChartArea].AxisX.LabelStyle.Enabled = true;
 			this.ChartAreas[strChartArea].AxisX.LabelsAutoFit = false;
-			this.ChartAreas[strChartArea].AxisX.LabelStyle.Font=new Font("Arial", (float)8);
+            _style.GetTag("SeasonalityGraphLabelFontAxisX").SetStyleDundas(this.ChartAreas[strChartArea].AxisX.LabelStyle);
 			this.ChartAreas[strChartArea].AxisX.MajorGrid.LineWidth=0;
 			this.ChartAreas[strChartArea].AxisX.Interval=1;				
 			this.ChartAreas[strChartArea].AxisX.LabelStyle.FontAngle = 35;
@@ -273,9 +280,9 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             #region Y axe
             this.ChartAreas[strChartArea].AxisY.Enabled=AxisEnabled.True;
 			this.ChartAreas[strChartArea].AxisY.LabelStyle.Enabled=true;
-			this.ChartAreas[strChartArea].AxisY.LabelsAutoFit=false;			
-			this.ChartAreas[strChartArea].AxisY.LabelStyle.Font=new Font("Arial", (float)10);
-			this.ChartAreas[strChartArea].AxisY.TitleFont=new Font("Arial", (float)10);
+			this.ChartAreas[strChartArea].AxisY.LabelsAutoFit=false;
+            _style.GetTag("SeasonalityGraphLabelFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY.LabelStyle);
+            _style.GetTag("SeasonalityGraphTitleFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY);
 			this.ChartAreas[strChartArea].AxisY.MajorGrid.LineWidth=0;
 			#endregion
 
@@ -283,8 +290,8 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             this.ChartAreas[strChartArea].AxisY2.Enabled=AxisEnabled.True;
 			this.ChartAreas[strChartArea].AxisY2.LabelStyle.Enabled=true;
 			this.ChartAreas[strChartArea].AxisY2.LabelsAutoFit=false;
-			this.ChartAreas[strChartArea].AxisY2.LabelStyle.Font=new Font("Arial", (float)10);
-			this.ChartAreas[strChartArea].AxisY2.TitleFont=new Font("Arial", (float)10);
+            _style.GetTag("SeasonalityGraphLabelFontAxisY2").SetStyleDundas(this.ChartAreas[strChartArea].AxisY2.LabelStyle);
+            _style.GetTag("SeasonalityGraphTitleFontAxisY2").SetStyleDundas(this.ChartAreas[strChartArea].AxisY2);
 			this.ChartAreas[strChartArea].AxisY2.Title=""+GestionWeb.GetWebWord(1236,_webSession.SiteLanguage)+"";
 			#endregion							
 

@@ -150,7 +150,7 @@ namespace TNS.AdExpress.Domain.Theme {
         /// <param name="row"></param>
         /// <param name="firstColumn"></param>
         /// <param name="lastColumn"></param>
-        public override void SetStyle(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, int row, int column) {
+        public override void SetStyleExcel(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, int row, int column) {
             cells[row, column].Style.Font.Name = this._name;
             cells[row, column].Style.Font.Color = this._color;
             cells[row, column].Style.Font.Size = Convert.ToInt32(this._size);
@@ -163,7 +163,7 @@ namespace TNS.AdExpress.Domain.Theme {
         /// Apllied a style to Excel Object
         /// </summary>
         /// <param name="sheet">Sheet Excel Object</param>
-        public override void SetStyle(Aspose.Cells.Worksheet sheet) {
+        public override void SetStyleExcel(Aspose.Cells.Worksheet sheet) {
             throw new Exception("The method or operation is not implemented.");
         }
 
@@ -173,17 +173,100 @@ namespace TNS.AdExpress.Domain.Theme {
         /// <param name="sheet">Sheet Excel Object</param>
         /// <param name="upperLeftRow">Upper Left Row</param>
         /// <param name="upperLeftColumn">Upper Left Column</param>
-        public override void SetStyle(Aspose.Cells.Worksheet sheet, int upperLeftRow, int upperLeftColumn) {
+        public override void SetStyleExcel(Aspose.Cells.Worksheet sheet, int upperLeftRow, int upperLeftColumn) {
             throw new Exception("The method or operation is not implemented.");
         }
-        /*
+        
         /// <summary>
         /// Apllied a style to PDF Object
         /// </summary>
         /// <param name="pdfObject">PDF Object</param>
-        public override void SetStyle(PDFCreatorPilotLib.PDFDocument3Class pdfObject) {
+        public override void SetStylePdf(PDFCreatorPilotLib.PDFDocument3Class pdfObject,PDFCreatorPilotLib.TxFontCharset charset) {
+            pdfObject.PDFPAGE_SetActiveFont(_name, _isBold, _isItalic, _isUnderline, _isStrikeout, _size, charset);
+            pdfObject.PDFPAGE_SetRGBColor(((double)_color.R) / 256.0
+                        , ((double)_color.G) / 256.0
+                        , ((double)_color.B) / 256.0);
+        }
+
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="font">Font To Init</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Legend legend) {
+            legend.Font = new System.Drawing.Font(_name, (float) _size,
+                        ((_isBold) ? FontStyle.Bold : 0)
+                        | ((_isUnderline) ? FontStyle.Underline : 0)
+                        | ((_isItalic) ? FontStyle.Italic : 0)
+                        | ((_isStrikeout) ? FontStyle.Italic : 0)
+                        );
+            legend.FontColor = _color;
+        }
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="title">title</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Title title) {
+            title.Font = new System.Drawing.Font(_name, (float)_size,
+                        ((_isBold) ? FontStyle.Bold : 0)
+                        | ((_isUnderline) ? FontStyle.Underline : 0)
+                        | ((_isItalic) ? FontStyle.Italic : 0)
+                        | ((_isStrikeout) ? FontStyle.Italic : 0)
+                        );
+            title.Color = _color;
+        }
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="label">label</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Label label) {
+            label.Font = new System.Drawing.Font(_name, (float)_size,
+                        ((_isBold) ? FontStyle.Bold : 0)
+                        | ((_isUnderline) ? FontStyle.Underline : 0)
+                        | ((_isItalic) ? FontStyle.Italic : 0)
+                        | ((_isStrikeout) ? FontStyle.Italic : 0)
+                        );
+            label.FontColor = _color;
+        }
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="series">series</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Series series) {
+            series.Font = new System.Drawing.Font(_name, (float)_size,
+                        ((_isBold) ? FontStyle.Bold : 0)
+                        | ((_isUnderline) ? FontStyle.Underline : 0)
+                        | ((_isItalic) ? FontStyle.Italic : 0)
+                        | ((_isStrikeout) ? FontStyle.Italic : 0)
+                        );
+            series.FontColor = _color;
+        }
+        /// <summary>
+        /// Apllied a style Line To an Object chart
+        /// </summary>
+        /// <param name="chart">Chart</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Chart chart) {
             throw new Exception("The method or operation is not implemented.");
-        }*/
+        }
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="axis">Title axis</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Axis axis) {
+            axis.TitleFont = new System.Drawing.Font(_name, (float)_size,
+                        ((_isBold) ? FontStyle.Bold : 0)
+                        | ((_isUnderline) ? FontStyle.Underline : 0)
+                        | ((_isItalic) ? FontStyle.Italic : 0)
+                        | ((_isStrikeout) ? FontStyle.Italic : 0)
+                        );
+            axis.TitleColor = _color;
+        }
+        /// <summary>
+        /// Apllied a style Color To an Object Color
+        /// </summary>
+        /// <param name="axis">Title axis</param>
+        public override void SetStyleDundas(ref Color color) {
+            throw new Exception("The method or operation is not implemented.");
+        }
         #endregion
     }
 }

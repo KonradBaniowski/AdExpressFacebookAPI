@@ -51,90 +51,106 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		private const int PAGES_INDEX=4;
 		#endregion
 
+        #region Variables Theme Name
+        private static string _title = "SynthesisTitle";
+        private static string _labelLine1 = "SynthesisLabelLine1";
+        private static string _labelLine2 = "SynthesisLabelLine2";
+        private static string _valueLine1 = "SynthesisValueLine1";
+        private static string _valueLine2 = "SynthesisValueLine2";
+
+        #endregion
+
 		#region Synthesis
 		/// <summary>
 		/// Synthesis
 		/// </summary>
-		internal static void SetExcelSheet(Workbook excel,WebSession webSession,IDataSource dataSource){
-		
-			try{
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
 
-				#region Paramétrage des dates
-				//Formatting date to be used in the tabs which use APPM Press table
-				int dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
-				int dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
-				#endregion
+            try {
 
-				#region targets
-				//base target
-				Int64 idBaseTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CustomerConstantes.Right.type.aepmBaseTargetAccess));
-				//additional target
-				Int64 idAdditionalTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CustomerConstantes.Right.type.aepmTargetAccess));									
-				#endregion
+                #region Paramétrage des dates
+                //Formatting date to be used in the tabs which use APPM Press table
+                int dateBegin = int.Parse(WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd"));
+                int dateEnd = int.Parse(WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd"));
+                #endregion
 
-				#region Wave
-				Int64 idWave = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave, CustomerConstantes.Right.type.aepmWaveAccess));									
-				#endregion
+                #region targets
+                //base target
+                Int64 idBaseTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CustomerConstantes.Right.type.aepmBaseTargetAccess));
+                //additional target
+                Int64 idAdditionalTarget = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMTarget, CustomerConstantes.Right.type.aepmTargetAccess));
+                #endregion
 
-				ResultTable resultTable = APPMRules.SectorDataSynthesisRules.GetSynthesisFormattedTable(webSession,int.Parse(webSession.PeriodBeginningDate),int.Parse(webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget);					
+                #region Wave
+                Int64 idWave = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave, CustomerConstantes.Right.type.aepmWaveAccess));
+                #endregion
 
-				if(resultTable.LinesNumber>0){
+                ResultTable resultTable = APPMRules.SectorDataSynthesisRules.GetSynthesisFormattedTable(webSession, int.Parse(webSession.PeriodBeginningDate), int.Parse(webSession.PeriodEndDate), idBaseTarget, idAdditionalTarget);
 
-					Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
-					Cells cells = sheet.Cells;
-					int cellRow = 6;
-					Color foreGroundColor, fontColor;
-					double tempValue=0;
+                if (resultTable.LinesNumber > 0) {
 
-					#region Title
-					AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(2114,webSession.SiteLanguage),cellRow-1,FIRST_SHEET_COLUMN,false,8,2);
-					AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,FIRST_SHEET_COLUMN,SECOND_SHEET_COLUMN,true,Color.White,Color.FromArgb(100,72,131),Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,true);
-					cells.Merge(cellRow-1,FIRST_SHEET_COLUMN,1,2);
-					#endregion
+                    Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
+                    Cells cells = sheet.Cells;
+                    int cellRow = 6;
+                    Color foreGroundColor, fontColor;
+                    double tempValue = 0;
 
-					#region Lignes du tableau
-					for(int i=0; i<resultTable.LinesNumber;i++){
-				
-						fontColor=Color.Black;
-						if((i%2)==0)
-							foreGroundColor=Color.FromArgb(233,230,239);
-						else
-							foreGroundColor=Color.FromArgb(208,200,218);
+                    #region Title
+                    AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_title), GestionWeb.GetWebWord(2114, webSession.SiteLanguage), cellRow - 1, FIRST_SHEET_COLUMN, 2);
+                    AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_title), null, cellRow - 1, FIRST_SHEET_COLUMN, SECOND_SHEET_COLUMN, true);
+                    cells.Merge(cellRow - 1, FIRST_SHEET_COLUMN, 1, 2);
+                    #endregion
 
-						AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow,FIRST_SHEET_COLUMN,SECOND_SHEET_COLUMN,true,fontColor,foreGroundColor,Color.White,CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,8,false);
+                    #region Lignes du tableau
+                    for (int i = 0; i < resultTable.LinesNumber; i++) {
 
-						AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((CellLabel)resultTable[i,FIRST_TABLE_COLUMN]).Label,cellRow,FIRST_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-						if(i==0)
-							AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((CellLabel)resultTable[i,SECOND_TABLE_COLUMN]).Label,cellRow,SECOND_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-						else{
+                        fontColor = Color.Black;
+                        if ((i % 2) == 0)
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_labelLine1), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                        else
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_labelLine2), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN, FIRST_SHEET_COLUMN);
 
-							if(i==PAGES_INDEX)
-								tempValue=((CellUnit)resultTable[i,SECOND_TABLE_COLUMN]).Value/1000;
-							else
-								tempValue=((CellUnit)resultTable[i,SECOND_TABLE_COLUMN]).Value;
 
-							AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,tempValue,cellRow,SECOND_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-							string format = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat); 
-							cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom = format;//.Style;
-						}
-						cellRow++;
-					}
-					#endregion
+                        if (i == 0) {
+                            if ((i % 2) == 0)
+                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine1), ((CellLabel)resultTable[i, SECOND_TABLE_COLUMN]).Label, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                            else
+                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine2), ((CellLabel)resultTable[i, SECOND_TABLE_COLUMN]).Label, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                        }
+                        else {
 
-					for(int c=FIRST_SHEET_COLUMN;c<=SECOND_SHEET_COLUMN;c++){
-						if(c==FIRST_SHEET_COLUMN)
-							cells.SetColumnWidth((byte)c,44);
-						else
-							cells.SetColumnWidth((byte)c,24);
-					}
+                            if (i == PAGES_INDEX)
+                                tempValue = ((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).Value / 1000;
+                            else
+                                tempValue = ((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).Value;
 
-					AmsetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2114, webSession.SiteLanguage), 9, webSession.SiteLanguage);
+                            if ((i % 2) == 0)
+                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine1), tempValue, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                            else
+                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine2), tempValue, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
 
-				}
-			}
-			catch(Exception e){
-				throw(new AmsetExceptions.AmsetExcelSystemException("Unable to build the synthesis page.",e));
-			}
+                            //string format = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);
+                            //cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom = format;//.Style;
+                           
+                        }
+                        cellRow++;
+                    }
+                    #endregion
+
+                    for (int c = FIRST_SHEET_COLUMN; c <= SECOND_SHEET_COLUMN; c++) {
+                        if (c == FIRST_SHEET_COLUMN)
+                            cells.SetColumnWidth((byte)c, 44);
+                        else
+                            cells.SetColumnWidth((byte)c, 24);
+                    }
+
+                    AmsetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2114, webSession.SiteLanguage), 9, webSession.SiteLanguage, style);
+
+                }
+            }
+            catch (Exception e) {
+                throw (new AmsetExceptions.AmsetExcelSystemException("Unable to build the synthesis page.", e));
+            }
 		}
 		#endregion
 

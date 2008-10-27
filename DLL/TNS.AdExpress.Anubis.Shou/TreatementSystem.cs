@@ -21,6 +21,8 @@ using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Domain.Web.Navigation;
 
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Theme;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Shou
 {
@@ -69,6 +71,10 @@ namespace TNS.AdExpress.Anubis.Shou
 		/// Configuration du plug-in
 		/// </summary>
 		private ShouConfig _shouConfig;
+        /// <summary>
+        /// Theme
+        /// </summary>
+        private Theme _theme;
 		#endregion
 
 		#region Constructeur
@@ -119,6 +125,12 @@ namespace TNS.AdExpress.Anubis.Shou
 				OnError(_navSessionId,"Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration",err);
 				return;
 			}
+            try {
+                _theme = new Theme(new XmlReaderDataSource(_shouConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)ParameterSystem.Load(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
+            }
+            catch (System.Exception err) {
+                throw new Exception("File of theme not found ! (in Plugin APPM in TreatmentSystem class)");
+            }
 			#endregion			
 
 			_dataSource=dataSource;
@@ -152,7 +164,7 @@ namespace TNS.AdExpress.Anubis.Shou
 
 				#region PDF management
 				
-				pdf = new ShouPdfSystem(_dataSource, _shouConfig,rqDetails,(ProofDetail)ParameterSystem.LoadProofDetail(_navSessionId));
+				pdf = new ShouPdfSystem(_dataSource, _shouConfig,rqDetails,(ProofDetail)ParameterSystem.LoadProofDetail(_navSessionId),_theme);
 				string fileName = pdf.Init();
 				pdf.Fill();
 		

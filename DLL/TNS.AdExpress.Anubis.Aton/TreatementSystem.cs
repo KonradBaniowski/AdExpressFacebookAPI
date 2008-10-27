@@ -16,6 +16,8 @@ using TNS.AdExpress.Anubis.Aton.BusinessFacade;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
 using PDFCreatorPilotLib;
+using TNS.AdExpress.Domain.Theme;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Aton{
 	/// <summary>
@@ -63,6 +65,10 @@ namespace TNS.AdExpress.Anubis.Aton{
 		/// Configuration du plug-in
 		/// </summary>
 		private AtonConfig _atonConfig;
+        /// <summary>
+        /// Theme
+        /// </summary>
+        private Theme _theme;
 		#endregion
 
 		#region Constructeur
@@ -112,6 +118,12 @@ namespace TNS.AdExpress.Anubis.Aton{
 				OnError(_navSessionId,"Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration",err);
 				return;
 			}
+            try {
+                _theme = new Theme(new XmlReaderDataSource(_atonConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)ParameterSystem.Load(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
+            }
+            catch (System.Exception err) {
+                throw new Exception("File of theme not found ! (in Plugin Aton in TreatmentSystem class)");
+            }
 			#endregion
 
 			_dataSource=dataSource;
@@ -144,7 +156,7 @@ namespace TNS.AdExpress.Anubis.Aton{
 				#endregion
 
 				#region PDF management
-				pdf = new AtonPdfSystem(_dataSource,_atonConfig,rqDetails,(WebSession)ParameterSystem.Load(_navSessionId));
+                pdf = new AtonPdfSystem(_dataSource, _atonConfig, rqDetails, (WebSession)ParameterSystem.Load(_navSessionId), _theme);
 				string fileName = pdf.Init();
 				pdf.AutoLaunch = false;
 				//TODO update Database for physical file name

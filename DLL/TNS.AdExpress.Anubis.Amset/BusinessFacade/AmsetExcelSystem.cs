@@ -28,6 +28,7 @@ using TNS.AdExpress.Domain.Translation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Amset.BusinessFacade{
 	/// <summary>
@@ -59,7 +60,8 @@ namespace TNS.AdExpress.Anubis.Amset.BusinessFacade{
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public AmsetExcelSystem(IDataSource dataSource, AmsetConfig config, DataRow rqDetails, WebSession webSession):base(){
+        public AmsetExcelSystem(IDataSource dataSource, AmsetConfig config, DataRow rqDetails, WebSession webSession, Theme theme)
+            : base(theme.GetStyle("Amset")) {
 			this._dataSource = dataSource;
 			this._config = config;
 			this._rqDetails = rqDetails;
@@ -91,22 +93,22 @@ namespace TNS.AdExpress.Anubis.Amset.BusinessFacade{
 		public void Fill(){
 
 			//Page principale
-			this.MainPageDesign(_webSession);
+            this.MainPageDesign(_webSession, _style);
 			//Paramètres d'étude			
-			UI.SessionParameter.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.SessionParameter.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Synthesis
-			UI.Synthesis.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.Synthesis.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Average
-			UI.Average.SetExcelSheet(this._excel,_webSession,_dataSource);
+			UI.Average.SetExcelSheet(this._excel,_webSession,_dataSource,_style);
 			//Seasonality
 			if (_webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.weekly)
-				UI.Seasonality.SetExcelSheet(this._excel,_webSession,_dataSource);
+                UI.Seasonality.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Interest Family
-			UI.InterestFamily.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.InterestFamily.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Periodicity
-			UI.Periodicity.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.Periodicity.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Affinities
-			UI.Affinities.SetExcelSheet(this._excel,_webSession,_dataSource);
+            UI.Affinities.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			
 			if(_excel!=null){
 				this.Save(_excelFilePath);

@@ -32,7 +32,7 @@ namespace TNS.AdExpress.Domain.Theme {
         }*/
         #endregion
 
-        #region Constructor
+        #region Constructors
         /// <summary>
         /// Constructor
         /// </summary>
@@ -89,7 +89,10 @@ namespace TNS.AdExpress.Domain.Theme {
         /// <param name="styleName">Style Name</param>
         /// <returns>Style</returns>
         public Style GetStyle(string styleName) {
-            return _styleList[styleName];
+            if(_styleList != null && _styleList.ContainsKey(styleName))
+                return _styleList[styleName];
+            else
+                throw new Exception("Style Name '" + styleName + "' is invalid ! (GetStyle() in class Theme)");
         }
 
         /// <summary>
@@ -101,9 +104,10 @@ namespace TNS.AdExpress.Domain.Theme {
         }
 
         /// <summary>
-        /// Init the palette which use Aspose.cells
+        /// Init the palette whith all color defined to xml theme file which use Aspose.cells
         /// </summary>
         /// <param name="excel">Object Excel to Init</param>
+        /// <param name="styleName">Style Name</param>
         public void InitExcelColorPalette(Aspose.Cells.Workbook excel) {
             List<Color> color = getColorList();
             if (color.Count > 0) {

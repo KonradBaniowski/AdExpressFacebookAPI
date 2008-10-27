@@ -36,6 +36,7 @@ using PDFCreatorPilotLib;
 using HTML2PDFAddOn;
 
 using TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 {
@@ -69,9 +70,8 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public ShouPdfSystem(IDataSource dataSource, ShouConfig config, DataRow rqDetails, ProofDetail proofDetail):
-			base(config.LeftMargin, config.RightMargin, config.TopMargin, config.BottomMargin,
-			config.HeaderHeight,config.FooterHeight) {
+		public ShouPdfSystem(IDataSource dataSource, ShouConfig config, DataRow rqDetails, ProofDetail proofDetail,Theme theme):
+            base(theme.GetStyle("Shou")) {
 			this._dataSource = dataSource;
 			this._config = config;
 			this._rqDetails = rqDetails;
@@ -127,11 +127,9 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				#endregion
 				
 				#region Header and Footer
-				this.AddHeadersAndFooters(_webSession,
-					@"Images\Common\logo_Tns.bmp",
-					"",
-					Convertion.ToHtmlString(GestionWeb.GetWebWord(1766, _webSession.SiteLanguage)) + " - " + DateTime.Now.ToString("ddd dd MMM yyyy"),
-					0,-1,_config.HeaderFontColor,_config.HeaderFont);
+                this.AddHeadersAndFooters(_webSession, true, false,
+                    Convertion.ToHtmlString(GestionWeb.GetWebWord(1766, _webSession.SiteLanguage)) + " - " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern),
+					0,-1);
 				#endregion
 
 			}
@@ -295,18 +293,9 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 
 						str = GestionWeb.GetWebWord(2113, _webSession.SiteLanguage);
-						this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R) / 256.0
-							, ((double)_config.MainPageFontColor.G) / 256.0
-							, ((double)_config.MainPageFontColor.B) / 256.0);
-						this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
-							true,
-							_config.MainPageDefaultFont.Italic,
-							_config.MainPageDefaultFont.Underline,
-							_config.MainPageDefaultFont.Strikeout,
-							_config.MainPageDefaultFont.SizeInPoints,
-							TxFontCharset.charsetANSI_CHARSET);
-						this.PDFPAGE_TextOut(_config.LeftMargin + 10,
-							_config.TopMargin + 35, 0, str);
+                        Style.GetTag("ShouTitleFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
+						this.PDFPAGE_TextOut(this.LeftMargin + 10,
+							this.TopMargin + 35, 0, str);
 
 					}
 
@@ -659,7 +648,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 				#region Insertion Couverture
 
-				string imgPath = @"\\hera\AdexDatas\images\" + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + TNS.AdExpress.Constantes.Web.CreationServerPathes.COUVERTURE;
+                string imgPath = CreationServerPathes.LOCAL_PATH_IMAGE + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + TNS.AdExpress.Constantes.Web.CreationServerPathes.COUVERTURE;
 				if (File.Exists(imgPath)) {
 					Image imgG = Image.FromFile(imgPath);
 					double zoomValue = 0.6;
@@ -672,13 +661,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 					this.PDFPAGE_ShowImage(imgI,250, 85,(double)(coef * imgG.Width), (double)(coef * imgG.Height), 0);
 				}
 				string str = null;
-				this.PDFPAGE_SetRGBColor(((double)_config.MainPageFontColor.R) / 256.0, ((double)_config.MainPageFontColor.G) / 256.0, ((double)_config.MainPageFontColor.B) / 256.0);
-				this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name, true,
-					_config.MainPageDefaultFont.Italic,
-					_config.MainPageDefaultFont.Underline,
-					_config.MainPageDefaultFont.Strikeout,
-					_config.MainPageDefaultFont.SizeInPoints,
-					TxFontCharset.charsetANSI_CHARSET);
+                Style.GetTag("ShouTitleFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 				
 
 				//Support
@@ -688,13 +671,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 						300, 0, str);
 					
 				}
-				this.PDFPAGE_SetActiveFont(_config.MainPageDefaultFont.Name,
-					false,
-					_config.MainPageDefaultFont.Italic,
-					_config.MainPageDefaultFont.Underline,
-					_config.MainPageDefaultFont.Strikeout,
-					_config.MainPageDefaultFont.SizeInPoints,
-					TxFontCharset.charsetANSI_CHARSET);				
+                Style.GetTag("ShouTitleFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);				
 
 				//Date de parution
 				if (dtResult.Rows[0]["datePublication"] != System.DBNull.Value) {

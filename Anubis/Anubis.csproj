@@ -93,6 +93,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Content Include="App_Themes\DefaultAdExpressFr\Styles.xml" />
     <None Include="ModelSupport\default.txaPackage" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -106,6 +107,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Anubis.ico" />
+    <Content Include="App_Themes\DefaultAdExpressUk\Styles.xml" />
+    <Content Include="App_Themes\FinlandAdExpressUk\Styles.xml" />
     <Content Include="Config\Anubis.xml" />
     <Content Include="Config\DataBase.xml" />
     <Content Include="Config\Network.xml" />

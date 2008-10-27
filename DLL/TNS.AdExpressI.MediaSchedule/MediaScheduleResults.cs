@@ -476,12 +476,12 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <summary>
         /// Get Excel for an excel export by Anubis of the media schedule
         /// </summary>
-        public virtual void GetRawData(Workbook excel,Theme theme) {
+        public virtual void GetRawData(Workbook excel, TNS.AdExpress.Domain.Theme.Style style) {
             _isCreativeDivisionMS = false;
             _showValues = false;
             _allowTotal = false;
             _allowPdm = false;
-            ComputeDesignExcel(ComputeData(), excel, theme);
+            ComputeDesignExcel(ComputeData(), excel, style);
         }
 
         #endregion
@@ -1983,7 +1983,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// </summary>
         /// <param name="data">Preformated Data</param>
         /// <param name="excel">Object Excel for compute a page lan media</param>
-        protected virtual void ComputeDesignExcel(object[,] data, Workbook excel, Theme theme) {
+        protected virtual void ComputeDesignExcel(object[,] data, Workbook excel, TNS.AdExpress.Domain.Theme.Style styleExcel) {
 
             if(data.GetLength(0) != 0) {
 
@@ -2053,10 +2053,6 @@ namespace TNS.AdExpressI.MediaSchedule {
                 int labColSpan = 1;
                 #endregion
 
-                #region Variables Theme
-                TNS.AdExpress.Domain.Theme.Style styleExcel = theme.GetStyle("MediaPlan");
-                #endregion
-
                 #region Rappel de sélection
                 /*if (_isExcelReport) {
                     if (_isCreativeDivisionMS) {
@@ -2088,12 +2084,12 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                 #region Title first column (Product Column)
                 cells.Merge(cellRow - 1, colSupport, rowSpanNb, labColSpan);
-                WorkSheet.PutCellValue(excel, cells, GestionWeb.GetWebWord(804, _session.SiteLanguage), cellRow - 1, colSupport, colFirstMediaPlan, "CellTitle", null, styleExcel);
+                WorkSheet.PutCellValue(excel, cells, GestionWeb.GetWebWord(804, _session.SiteLanguage), cellRow - 1, colSupport, colFirstMediaPlan, "MediaPlanCellTitle", null, styleExcel);
                 cells[cellRow - 1, colSupport].Style.HorizontalAlignment = TextAlignmentType.Left;
                 cells[cellRow - 1, colSupport].Style.VerticalAlignment = TextAlignmentType.Top;
-                styleExcel.GetTag("CellTitle").SetStyle(excel, cells, cellRow, colSupport);
+                styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colSupport);
                 if(_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
-                    styleExcel.GetTag("CellTitle").SetStyle(excel, cells, cellRow+1, colSupport);
+                    styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow+1, colSupport);
                 }
                 nbColTabFirst++;
                 #endregion
@@ -2107,10 +2103,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                     colTotalYears++;
                     colFirstMediaPlan++;
                     cells.Merge(cellRow - 1, colTotal, rowSpanNb, labColSpan);
-                    WorkSheet.PutCellValue(excel, cells, GestionWeb.GetWebWord(805, _session.SiteLanguage), cellRow - 1, colTotal, colFirstMediaPlan, "CellTitle", null, styleExcel);
-                    styleExcel.GetTag("CellTitle").SetStyle(excel, cells, cellRow, colSupport);
+                    WorkSheet.PutCellValue(excel, cells, GestionWeb.GetWebWord(805, _session.SiteLanguage), cellRow - 1, colTotal, colFirstMediaPlan, "MediaPlanCellTitle", null, styleExcel);
+                    styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colSupport);
                     if(_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
-                        styleExcel.GetTag("CellTitle").SetStyle(excel, cells, cellRow+1, colTotal);
+                        styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow+1, colTotal);
                     }
                     int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
                     int nbSpace = (nbtot - 1) / 3;
@@ -2134,10 +2130,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                     colFirstMediaPlan++;
                     colTotalYears++;
                     cells.Merge(cellRow - 1, colPdm, rowSpanNb, labColSpan);
-                    WorkSheet.PutCellValue(excel, cells, GestionWeb.GetWebWord(806, _session.SiteLanguage), cellRow - 1, colPdm, colFirstMediaPlan, "CellTitle", null, styleExcel);
-                    styleExcel.GetTag("CellTitle").SetStyle(excel, cells, cellRow, colPdm);
+                    WorkSheet.PutCellValue(excel, cells, GestionWeb.GetWebWord(806, _session.SiteLanguage), cellRow - 1, colPdm, colFirstMediaPlan, "MediaPlanCellTitle", null, styleExcel);
+                    styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colPdm);
                     if(_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
-                        styleExcel.GetTag("CellTitle").SetStyle(excel, cells, cellRow+1, colPdm);
+                        styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow+1, colPdm);
                     }
                     nbColTabFirst++;
                 }
@@ -2155,11 +2151,11 @@ namespace TNS.AdExpressI.MediaSchedule {
                     // Years necessary if the period consists of several years
                     for(int k = FIRST_PERIOD_INDEX, l = 0; k < firstPeriodIndex; k++, l++) {
                         cells.Merge(cellRow - 1, colTotalYears + l, rowSpanNb, labColSpan);
-                        styleExcel.GetTag("CellTitle").SetStyle(excel, cells, cellRow, colTotalYears + l);
+                        styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colTotalYears + l);
                         if(_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
-                            styleExcel.GetTag("CellTitle").SetStyle(excel, cells, cellRow+1, colTotalYears + l);
+                            styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow+1, colTotalYears + l);
                         }
-                        WorkSheet.PutCellValue(excel, cells, data[0, k], cellRow - 1, colTotalYears + l, colFirstMediaPlan, "CellTitle", null, styleExcel);
+                        WorkSheet.PutCellValue(excel, cells, data[0, k], cellRow - 1, colTotalYears + l, colFirstMediaPlan, "MediaPlanCellTitle", null, styleExcel);
                         nbColTabFirst++;
                     }
 
@@ -2183,11 +2179,11 @@ namespace TNS.AdExpressI.MediaSchedule {
                             if(prevPeriod != int.Parse(data[0, j].ToString().Substring(0, 4))) {
                                 cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
                                 if(nbPeriod < 3)
-                                    WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "CellYear1", null, styleExcel);
+                                    WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear1", null, styleExcel);
                                 else
-                                    WorkSheet.PutCellValue(excel, cells, prevPeriod, startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "CellYear1", null, styleExcel);
+                                    WorkSheet.PutCellValue(excel, cells, prevPeriod, startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear1", null, styleExcel);
 
-                                styleExcel.GetTag("CellYear1").SetStyle(excel, cells, startIndex - 1, nbColTabFirst + nbPeriod);
+                                styleExcel.GetTag("MediaPlanCellYear1").SetStyleExcel(excel, cells, startIndex - 1, nbColTabFirst + nbPeriod);
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
                                 prevPeriod = int.Parse(data[0, j].ToString().Substring(0, 4));
@@ -2199,10 +2195,10 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                     #region Period Color Management
                                     // First Period or last period is incomplete
-                                    periodStyle = "CellPeriod";
+                                    periodStyle = "MediaPlanCellPeriod";
                                     if((j == firstPeriodIndex && _period.Begin.Day != 1)
                                        || (j == (nbColTab - 1) && _period.End.Day != _period.End.AddDays(1 - _period.End.Day).AddMonths(1).AddDays(-1).Day)) {
-                                        periodStyle = "CellPeriodIncomplete";
+                                        periodStyle = "MediaPlanCellPeriodIncomplete";
                                     }
                                     #endregion
 
@@ -2211,10 +2207,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
 
                                     #region Period Color Management
-                                    periodStyle = "CellPeriod";
+                                    periodStyle = "MediaPlanCellPeriod";
                                     if((j == firstPeriodIndex && _period.Begin.DayOfWeek != DayOfWeek.Monday)
                                        || (j == (nbColTab - 1) && _period.End.DayOfWeek != DayOfWeek.Sunday)) {
-                                        periodStyle = "CellPeriodIncomplete";
+                                        periodStyle = "MediaPlanCellPeriodIncomplete";
                                     }
                                     #endregion
 
@@ -2228,9 +2224,9 @@ namespace TNS.AdExpressI.MediaSchedule {
                         // Compute last date
                         cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
                         if(nbPeriod < 3)
-                            WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "CellYear", null, styleExcel);
+                            WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear", null, styleExcel);
                         else
-                            WorkSheet.PutCellValue(excel, cells, prevPeriod, startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "CellYear", null, styleExcel);
+                            WorkSheet.PutCellValue(excel, cells, prevPeriod, startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear", null, styleExcel);
 
                         for(int k = colFirstMediaPlan; k < (nbPeriodTotal + colFirstMediaPlan); k++) {
                             cells[startIndex - 1, k].Style.Number = 1;
@@ -2248,10 +2244,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                             if(currentDay.Month != prevPeriod) {
                                 cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
                                 if(nbPeriod >= 8)
-                                    WorkSheet.PutCellValue(excel, cells, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "CellYear1", null, styleExcel);
+                                    WorkSheet.PutCellValue(excel, cells, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear1", null, styleExcel);
                                 else
-                                    WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "CellYear1", null, styleExcel);
-                                styleExcel.GetTag("CellYear1").SetStyle(excel, cells, startIndex - 1, nbColTabFirst + nbPeriod);
+                                    WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear1", null, styleExcel);
+                                styleExcel.GetTag("MediaPlanCellYear1").SetStyleExcel(excel, cells, startIndex - 1, nbColTabFirst + nbPeriod);
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
                                 prevPeriod = currentDay.Month;
@@ -2259,20 +2255,20 @@ namespace TNS.AdExpressI.MediaSchedule {
                             nbPeriod++;
                             nbPeriodTotal++;
                             //Period Number
-                            WorkSheet.PutCellValue(excel, cells, currentDay.ToString("dd"), startIndex, currentColMediaPlan, colFirstMediaPlan, "CellPeriod", null, styleExcel);
+                            WorkSheet.PutCellValue(excel, cells, currentDay.ToString("dd"), startIndex, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellPeriod", null, styleExcel);
                             //Period day
                             if(currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
-                                WorkSheet.PutCellValue(excel, cells, DayString.GetCharacters(currentDay, cultureInfo, 1), startIndex + 1, currentColMediaPlan, colFirstMediaPlan, "CellDayWE", null, styleExcel);
+                                WorkSheet.PutCellValue(excel, cells, DayString.GetCharacters(currentDay, cultureInfo, 1), startIndex + 1, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellDayWE", null, styleExcel);
                             else
-                                WorkSheet.PutCellValue(excel, cells, DayString.GetCharacters(currentDay, cultureInfo, 1), startIndex + 1, currentColMediaPlan, colFirstMediaPlan, "CellDay", null, styleExcel);
+                                WorkSheet.PutCellValue(excel, cells, DayString.GetCharacters(currentDay, cultureInfo, 1), startIndex + 1, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellDay", null, styleExcel);
                         }
 
 
                         cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
                         if(nbPeriod >= 8)
-                            WorkSheet.PutCellValue(excel, cells, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "CellYear", null, styleExcel);
+                            WorkSheet.PutCellValue(excel, cells, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")), startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear", null, styleExcel);
                         else
-                            WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "CellYear", null, styleExcel);
+                            WorkSheet.PutCellValue(excel, cells, "", startIndex - 1, nbColTabFirst + 1, colFirstMediaPlan, "MediaPlanCellYear", null, styleExcel);
 
 
                         for(int k = colFirstMediaPlan; k < (nbPeriodTotal + colFirstMediaPlan); k++) {
@@ -2309,7 +2305,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             sloganId = Convert.ToInt64(data[i, sloganIndex]);
                             if(!_session.SloganColors.ContainsKey(sloganId)) {
                                 colorNumberToUse = (colorItemIndex % _style.CellVersions.Count) + 1;
-                                _session.SloganColors.Add(sloganId, "CellVersions"+colorNumberToUse);
+                                _session.SloganColors.Add(sloganId, "MediaPlanCellVersions"+colorNumberToUse);
                                 switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
                                     case CstDBClassif.Vehicles.names.directMarketing:
                                         //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, style));
@@ -2342,8 +2338,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                             stringItem = "x";
                         }
                         else {
-                            presentstyle = "CellPresent";
-                            extendedStyle = "CellExtended";
+                            presentstyle = "MediaPlanCellPresent";
+                            extendedStyle = "MediaPlanCellExtended";
                             stringItem = "";
                         }
                         #endregion
@@ -2364,14 +2360,14 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                         #region Style define
                                         if(i == TOTAL_LINE_INDEX) {
-                                            style = "CellLevelTotal";
-                                            styleNb = "CellLevelTotalNb";
-                                            stylePdmNb = "CellLevelTotalPdmNb";
+                                            style = "MediaPlanCellLevelTotal";
+                                            styleNb = "MediaPlanCellLevelTotalNb";
+                                            stylePdmNb = "MediaPlanCellLevelTotalPdmNb";
                                         }
                                         else {
-                                            style = "CellLevelL1";
-                                            styleNb = "CellLevelL1Nb";
-                                            stylePdmNb = "CellLevelL1PdmNb";
+                                            style = "MediaPlanCellLevelL1";
+                                            styleNb = "MediaPlanCellLevelL1Nb";
+                                            stylePdmNb = "MediaPlanCellLevelL1PdmNb";
                                         }
                                         #endregion
 
@@ -2406,14 +2402,14 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                         #region Style define
                                         if(premier) {
-                                            style = "CellLevelL2_1";
-                                            styleNb = "CellLevelL2_1Nb";
-                                            stylePdmNb = "CellLevelL2_1PdmNb";
+                                            style = "MediaPlanCellLevelL2_1";
+                                            styleNb = "MediaPlanCellLevelL2_1Nb";
+                                            stylePdmNb = "MediaPlanCellLevelL2_1PdmNb";
                                         }
                                         else {
-                                            style = "CellLevelL2_2";
-                                            styleNb = "CellLevelL2_2Nb";
-                                            stylePdmNb = "CellLevelL2_2PdmNb";
+                                            style = "MediaPlanCellLevelL2_2";
+                                            styleNb = "MediaPlanCellLevelL2_2Nb";
+                                            stylePdmNb = "MediaPlanCellLevelL2_2PdmNb";
                                         }
                                         #endregion
 
@@ -2447,7 +2443,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 #region Level 3
                                 case L3_COLUMN_INDEX:
                                     if(data[i, j] != null) {
-                                        WorkSheet.PutCellValue(excel, cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, "CellLevelL3", null, styleExcel);
+                                        WorkSheet.PutCellValue(excel, cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, "MediaPlanCellLevelL3", null, styleExcel);
                                         /*
                                         AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan);
                                         */
@@ -2461,7 +2457,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                 #region Level 4
                                 case L4_COLUMN_INDEX:
-                                    WorkSheet.PutCellValue(excel, cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, "CellLevelL4", null, styleExcel);
+                                    WorkSheet.PutCellValue(excel, cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, "MediaPlanCellLevelL4", null, styleExcel);
                                     //AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan);
 
                                     for(int k = 1; k <= nbColYear; k++) {
@@ -2474,7 +2470,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 #region Other
                                 default:
                                     if(data[i, j] == null) {
-                                        WorkSheet.PutCellValue(excel, cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, "CellNotPresent", null, styleExcel);
+                                        WorkSheet.PutCellValue(excel, cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellNotPresent", null, styleExcel);
                                         currentColMediaPlan++;
                                         break;
                                     }
@@ -2482,17 +2478,17 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         switch(((MediaPlanItem)data[i, j]).GraphicItemType) {
                                             case DetailledMediaPlan.graphicItemType.present:
                                                 if(_showValues) {
-                                                    WorkSheet.PutCellValue(excel, cells, ((MediaPlanItem)data[i, j]).Unit, cellRow, currentColMediaPlan, colFirstMediaPlan, "CellPresent", formatTotal, styleExcel);
+                                                    WorkSheet.PutCellValue(excel, cells, ((MediaPlanItem)data[i, j]).Unit, cellRow, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellPresent", formatTotal, styleExcel);
                                                 }
                                                 else {
-                                                    WorkSheet.PutCellValue(excel, cells, stringItem, cellRow, currentColMediaPlan, colFirstMediaPlan, "CellPresent", null, styleExcel);
+                                                    WorkSheet.PutCellValue(excel, cells, stringItem, cellRow, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellPresent", null, styleExcel);
                                                 }
                                                 break;
                                             case DetailledMediaPlan.graphicItemType.extended:
-                                                WorkSheet.PutCellValue(excel, cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, "CellExtended", null, styleExcel);
+                                                WorkSheet.PutCellValue(excel, cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellExtended", null, styleExcel);
                                                 break;
                                             default:
-                                                WorkSheet.PutCellValue(excel, cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, "CellNotPresent", null, styleExcel);
+                                                WorkSheet.PutCellValue(excel, cells, "", cellRow, currentColMediaPlan, colFirstMediaPlan, "MediaPlanCellNotPresent", null, styleExcel);
                                                 break;
                                         }
                                         currentColMediaPlan++;

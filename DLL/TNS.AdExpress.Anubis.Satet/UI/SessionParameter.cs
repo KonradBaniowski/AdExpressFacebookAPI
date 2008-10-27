@@ -32,6 +32,7 @@ using FrameWorkResultConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -40,14 +41,38 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 	/// </summary>
 	public class SessionParameter
 	{
+        #region Variables Theme Name
+        private static string _tagTitle = "SessionParameterTitle";
+        private static string _tagPeriodTitle = "SessionParameterPeriodTitle";
+        private static string _tagPeriodValue = "SessionParameterPeriodValue";
+        private static string _tagWaveTitle = "SessionParameterWaveTitle";
+        private static string _tagWaveValue = "SessionParameterWaveValue";
+        private static string _tagTargetTitle = "SessionParameterTargetTitle";
+        private static string _tagTargetValue = "SessionParameterTargetValue";
+        private static string _tagProductTitle = "SessionParameterProductTitle";
+        private static string _tagProductValue = "SessionParameterProductValue";
+        private static string _tagProductCompetitor = "SessionParameterProductCompetitor";
+        private static string _tagProductPrincipal = "SessionParameterProductPrincipal";
+        private static string _tagGroupTitle = "SessionParameterGroupTitle";
+        private static string _tagGroupValue = "SessionParameterGroupValue";
+        private static string _tagLvl1Col1 = "SessionParameterLvl1Col1";
+        private static string _tagLvl1Col2 = "SessionParameterLvl1Col2";
+        private static string _tagLvl1Col3 = "SessionParameterLvl1Col3";
+        private static string _tagLvl2Col1 = "SessionParameterLvl2Col1";
+        private static string _tagLvl2Col2 = "SessionParameterLvl2Col2";
+        private static string _tagLvl2Col3 = "SessionParameterLvl2Col3";
+        private static string _tagCheckBox = "SessionParameterCheckBox";
+        private static string _tagCheckBoxNotChecked = "SessionParameterCheckBoxNotChecked";
+        #endregion
 
 		#region SessionParameter
 		/// <summary>
 		/// Session parameter design
 		/// </summary>
-        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource) {
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
 
-			int nbMaxRowByPage=42;
+            #region Variables
+            int nbMaxRowByPage=42;
 			int s=1;
 			int cellRow = 5;
 			int startIndex=cellRow;	
@@ -58,37 +83,36 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			string vPageBreaks="";
 			double columnWidth=0,indexLogo=0,index;
 			bool verif=true;
+            #endregion
 
-			#region Title
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1752,webSession.SiteLanguage),cellRow-1,1,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,11,false);
+            #region Title
+            //SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1752,webSession.SiteLanguage),cellRow-1,1,false,Color.White,8,2);
+            cells[cellRow - 1, 1].PutValue(GestionWeb.GetWebWord(1752, webSession.SiteLanguage));
+            SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagTitle), null, cellRow - 1, 1, 3, false);
 			cellRow+=2;
 			#endregion
 
 			#region Period
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1755,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,10,false);
+            cells[cellRow - 1, 1].PutValue(GestionWeb.GetWebWord(1755, webSession.SiteLanguage) + " :");
+            SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagPeriodTitle), null, cellRow - 1, 1, 3, false);
 			cellRow++;
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,HtmlFunctions.GetPeriodDetailForExcel(webSession),cellRow-1,1,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+            SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagPeriodValue), HtmlFunctions.GetPeriodDetailForExcel(webSession), cellRow - 1, 1, 1, false);
 			cells[cellRow-1,1].Style.IndentLevel=1;
 			cellRow+=2;
 			#endregion
 
 			#region Wave
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1771,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,10,false);
+            cells[cellRow - 1, 1].PutValue(GestionWeb.GetWebWord(1771, webSession.SiteLanguage) + " :");
+            SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagWaveTitle), null, cellRow - 1, 1, 3, false);
 			cellRow++;
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,((LevelInformation)webSession.SelectionUniversAEPMWave.Nodes[0].Tag).Text,cellRow-1,1,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+            SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagWaveValue), ((LevelInformation)webSession.SelectionUniversAEPMWave.Nodes[0].Tag).Text, cellRow - 1, 1, 1, false);
 			cells[cellRow-1,1].Style.IndentLevel=1;
 			cellRow+=2;
 			#endregion
 
 			#region Targets
-
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1757,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,10,false);
+            cells[cellRow - 1, 1].PutValue(GestionWeb.GetWebWord(1757, webSession.SiteLanguage) + " :");
+            SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagTargetTitle), null, cellRow - 1, 1, 3, false);
 			cellRow++;
 
 			//Base target
@@ -98,8 +122,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, webSession.Source);
 
 			foreach(DataRow r in ds.Tables[0].Rows){
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,r["target"].ToString(),cellRow-1,1,false,Color.White,8,2);
-				SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+                SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagTargetValue), r["target"].ToString(), cellRow - 1, 1, 1, false);
 				cells[cellRow-1,1].Style.IndentLevel=1;
 				cellRow++;
 			}
@@ -108,15 +131,14 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			#endregion
 
 			#region Products
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1759,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,10,false);
+            cells[cellRow - 1, 1].PutValue(GestionWeb.GetWebWord(1759, webSession.SiteLanguage) + " :");
+            SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagProductTitle), null, cellRow - 1, 1, 3, false);
 			cellRow++;
 			//reference
-			SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1677,webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
-			SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+            SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagProductValue), GestionWeb.GetWebWord(1677, webSession.SiteLanguage) + " :", cellRow - 1, 1, 1, false);
 			cellRow+=2;
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
-                TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[0], excel, webSession, sheet, ref cellRow, cells, webSession.Source);
+                TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[0], excel, webSession, sheet, ref cellRow, cells, webSession.Source, style);
 			//TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(((CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[1]).TreeCompetitorAdvertiser,excel,webSession,sheet,ref cellRow,cells);
 
 			cellRow++;
@@ -124,28 +146,26 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//competitor
 
 			if (webSession.PrincipalProductUniverses.Count>1){
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1678, webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
-				SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+                SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagProductCompetitor), GestionWeb.GetWebWord(1678, webSession.SiteLanguage) + " :", cellRow - 1, 1, 1, false);
 				cellRow+=2;
 			}
 			else{
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1668, webSession.SiteLanguage)+" :",cellRow-1,1,false,Color.White,8,2);
-				SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+                SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagProductCompetitor), GestionWeb.GetWebWord(1668, webSession.SiteLanguage) + " :", cellRow - 1, 1, 1, false);
 				cellRow+=2;
 			
 			}
 
 
 			if (webSession.PrincipalProductUniverses.Count > 1) {
-                TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[1], excel, webSession, sheet, ref cellRow, cells, webSession.Source);
+                TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[1], excel, webSession, sheet, ref cellRow, cells, webSession.Source,style);
 				//TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(((CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[2]).TreeCompetitorAdvertiser,excel,webSession,sheet,ref cellRow,cells);
 			}
 			else{
 				ds = GroupSystem.ListFromSelection(dataSource, webSession);
 				for(int i =0; i < ds.Tables[0].Rows.Count; i++){
 					cells.Merge(cellRow-1,1,1,3);
-					SatetFunctions.WorkSheet.PutCellValue(sheet,cells,ds.Tables[0].Rows[i][0].ToString(),cellRow-1,1,false,Color.White,8,2);
-					SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.Thin,CellBorderType.Thin,10,false);
+                    cells[cellRow - 1, 1].PutValue(ds.Tables[0].Rows[i][0].ToString());
+                    SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagProductPrincipal), null, cellRow - 1, 1, 3, false);
 					cellRow++;
 				}
 				ds.Dispose();
@@ -153,7 +173,8 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			}
 			#endregion
 
-			//Ajustement de la taile des cellules en fonction du contenu
+            #region Mise en forme
+            //Ajustement de la taile des cellules en fonction du contenu
 			for(int c=1;c<=3;c++){
 				sheet.AutoFitColumn(c,5,50);
 				cells.SetColumnWidth((byte)c,cells.GetColumnWidth((byte)c)+10);
@@ -170,8 +191,9 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			upperLeftColumn=(int)indexLogo-1;
 
 			vPageBreaks = cells[cellRow,(int)indexLogo].Name;
-			SatetFunctions.WorkSheet.PageSettings(sheet,GestionWeb.GetWebWord(1752,webSession.SiteLanguage),cellRow+17,nbMaxRowByPage,ref s,upperLeftColumn,vPageBreaks,header.ToString());
-		}
+            SatetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1752, webSession.SiteLanguage), cellRow + 17, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, header.ToString(), style);
+            #endregion
+        }
 		#endregion
 
 		#region Affichage d'un arbre pour Excel 
@@ -179,11 +201,11 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// Affichage d'un arbre pour l'export Excel
 		/// </summary>
 		/// <param name="root">Arbre</param>
-        public static void ToExcel(TreeNode root, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells) {
+        public static void ToExcel(TreeNode root, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, TNS.AdExpress.Domain.Theme.Style style) {
 			int maxLevel=0;
 			GetNbLevels(root,1,ref maxLevel);
 			int nbTD=1;
-			TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(root,0,maxLevel-1,ref nbTD,excel,webSession,sheet,ref cellRow,cells);
+            TNS.AdExpress.Anubis.Satet.UI.SessionParameter.ToExcel(root, 0, maxLevel - 1, ref nbTD, excel, webSession, sheet, ref cellRow, cells, style);
 		}
 
 		/// <summary>
@@ -202,14 +224,14 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// Met le style d'une cellule selon le niveau de l'arbre
 		/// </summary>
 		/// <param name="level">Niveau de l'arbre</param>
-        private static void SetLevelStyle(int level, Workbook excel, Worksheet sheet, int cellRow, Cells cells, int nbTD) {
+        private static void SetLevelStyle(int level, Workbook excel, Worksheet sheet, int cellRow, Cells cells, int nbTD,TNS.AdExpress.Domain.Theme.Style style) {
 			switch(level){
 				case 1:{
 					//cells.Merge(cellRow-1,1,1,3);
 					if(nbTD==1){
-						SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(100,72,131),CellBorderType.None,CellBorderType.Thin,CellBorderType.Thin,CellBorderType.Thin,8,false);
-						SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,2,2,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(100,72,131),CellBorderType.None,CellBorderType.None,CellBorderType.Thin,CellBorderType.Thin,8,false);
-						SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,3,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,CellBorderType.Thin,8,false);
+                        style.GetTag(_tagLvl1Col1).SetStyleExcel(excel, cells, cellRow - 1, 1);
+                        style.GetTag(_tagLvl1Col2).SetStyleExcel(excel, cells, cellRow - 1, 2);
+                        style.GetTag(_tagLvl1Col3).SetStyleExcel(excel, cells, cellRow - 1, 3);
 					}
 //					else if(nbTD==2){
 //						SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,2,2,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(100,72,131),CellBorderType.None,CellBorderType.Thin,CellBorderType.Thin,CellBorderType.Thin,8,false);
@@ -220,12 +242,12 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 
 					break;
 				}
-				case 2:{
-					SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.FromArgb(222,216,229),Color.FromArgb(100,72,131),CellBorderType.None,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,8,false);
-					SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,2,2,true,Color.FromArgb(100,72,131),Color.FromArgb(222,216,229),Color.FromArgb(100,72,131),CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
-					SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,3,3,true,Color.FromArgb(100,72,131),Color.FromArgb(222,216,229),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
-					break;
-				}
+            case 2: {
+                    style.GetTag(_tagLvl2Col1).SetStyleExcel(excel, cells, cellRow - 1, 1);
+                    style.GetTag(_tagLvl2Col2).SetStyleExcel(excel, cells, cellRow - 1, 2);
+                    style.GetTag(_tagLvl2Col3).SetStyleExcel(excel, cells, cellRow - 1, 3);
+                    break;
+                }
 				//case 3:
 //				default:
 //					return("Level1");
@@ -245,44 +267,39 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// dans la méthode ci-après et ajouter les niveaux dans la méthode GetLevelCss(int level)
 		/// - Affichage sur 3 colonnes dans le dernier niveau
 		/// </remarks>
-        private static bool ToExcel(TreeNode root, int level, int maxLevel, ref int nbTD, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells) {
+        private static bool ToExcel(TreeNode root, int level, int maxLevel, ref int nbTD, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, TNS.AdExpress.Domain.Theme.Style style) {
 
 			#region Variables
-			string img="";
-			string imgPath="";
-			Pictures pics = sheet.Pictures;
-            int indexImage = 0;
+            string TagCheckedName = _tagCheckBox;
 			#endregion
 
 			#region Checkbox
 			// Non cocher
 			if(!root.Checked){
-				img=@"Images\checkbox_not_checked.GIF";
-				imgPath = System.IO.Path.GetFullPath(img);
+                TagCheckedName = _tagCheckBoxNotChecked;
 			}
 				// Cocher
 			else if(root.Checked){
-				img=@"Images\checkbox.GIF";
-				imgPath = System.IO.Path.GetFullPath(img);
+                TagCheckedName = _tagCheckBox;
 			}
 			#endregion
 
 			// Si on est dans le dernier niveau de l'arbre
 			if(level==maxLevel){ 
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
-                indexImage = pics.Add(cellRow - 1, nbTD, imgPath, 100, 100);
-                sheet.Pictures[indexImage].Placement = PlacementType.Move;
-				SatetFunctions.WorkSheet.PutCellValue(sheet,cells,((LevelInformation)root.Tag).Text,cellRow-1,nbTD,false,Color.White,8,2);
-				SetLevelStyle(level,excel,sheet,cellRow,cells,nbTD);
+                style.GetTag(TagCheckedName).SetStyleExcel(sheet, cellRow - 1, nbTD);
+                cells[cellRow-1, nbTD].PutValue(((LevelInformation)root.Tag).Text);
+                style.GetTag(_tagGroupValue).SetStyleExcel(excel, cells, cellRow - 1, nbTD);
+				SetLevelStyle(level,excel,sheet,cellRow,cells,nbTD,style);
 				cells[cellRow-1,nbTD].Style.IndentLevel = 2;
 			}
 			else{
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
 				if(level!=0){
-                    pics.Add(cellRow - 1, 1, imgPath, 100, 100);
-                    sheet.Pictures[indexImage].Placement = PlacementType.Move;
-					SatetFunctions.WorkSheet.PutCellValue(sheet,cells,((LevelInformation)root.Tag).Text,cellRow-1,1,false,Color.White,8,2);
-					SetLevelStyle(level,excel,sheet,cellRow,cells,nbTD);
+                    style.GetTag(TagCheckedName).SetStyleExcel(sheet, cellRow - 1, 1);
+                    cells[cellRow - 1, 1].PutValue(((LevelInformation)root.Tag).Text);
+                    style.GetTag(_tagGroupValue).SetStyleExcel(excel, cells, cellRow - 1, 1);
+                    SetLevelStyle(level, excel, sheet, cellRow, cells, nbTD, style);
 					cells[cellRow-1,1].Style.IndentLevel = 2;
 				}
 				// On prépare l'affichage du dernier niveau de l'arbre (nouvelle ligne) si on affiche le père d'une feuille
@@ -293,15 +310,15 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			foreach(TreeNode currentNode in root.Nodes){
 				// Si le niveau inférieur indique qu'il faut changer de ligne et que la demande n'a pas été faite par le dernier fils
 				//ToExcel(currentNode,level+1,maxLevel,ref nbTD,excel,webSession,sheet,ref cellRow,cells);
-				if(ToExcel(currentNode,level+1,maxLevel,ref nbTD,excel,webSession,sheet,ref cellRow,cells) && currentNode!=root.LastNode){
+				if(ToExcel(currentNode,level+1,maxLevel,ref nbTD,excel,webSession,sheet,ref cellRow,cells,style) && currentNode!=root.LastNode){
 					cellRow++;
 				}
-
+                /*
 				if((currentNode==root.LastNode)&&(level==maxLevel-1)){
 					for(int i=1;i<4;i++){
 						cells[cellRow-1,i].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
 						cells[cellRow-1,i].Style.Borders[BorderType.BottomBorder].Color = Color.FromArgb(100,72,131);}
-				}
+				}*/
 			}
 			//On est dans le niveau père des feuilles et il a des fils on fait les bordures
 			if(level==maxLevel-1 && root.Nodes.Count>0){
@@ -335,21 +352,21 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <param name="cellRow">cell row</param>
 		/// <param name="cells">cells</param>
 		/// <param name="connection">connection</param>
-        public static void ToExcel(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source) {
+        public static void ToExcel(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, Workbook excel, WebSession webSession, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source, TNS.AdExpress.Domain.Theme.Style style) {
 			List<NomenclatureElementsGroup> groups = null;
 
 			if (adExpressUniverse != null && adExpressUniverse.Count() > 0) {
 				//Groups of items excludes
 				groups = adExpressUniverse.GetExludes();
 				if (groups != null && groups.Count > 0) {
-					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, source, AccessType.excludes, webSession.SiteLanguage);
+					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, source, AccessType.excludes, webSession.SiteLanguage, style);
 					cellRow++;
 				}
 
 				//Groups of items includes
 				groups = adExpressUniverse.GetIncludes();
 				if (groups != null && groups.Count > 0) {
-					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, source, AccessType.includes, webSession.SiteLanguage);
+					SetUniverseGroups(groups, excel, sheet, ref cellRow, cells, source, AccessType.includes, webSession.SiteLanguage, style);
 					cellRow++;
 				}
 			}
@@ -366,98 +383,72 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <param name="connection">DB connection</param>
 		/// <param name="accessType">access type (includes, excludes)</param>
 		/// <param name="language">language</param>
-        private static void SetUniverseGroups(List<NomenclatureElementsGroup> groups, Workbook excel, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source, AccessType accessType, int language) {
+        private static void SetUniverseGroups(List<NomenclatureElementsGroup> groups, Workbook excel, Worksheet sheet, ref int cellRow, Cells cells, IDataSource source, AccessType accessType, int language, TNS.AdExpress.Domain.Theme.Style style) {
 
-			int nbTD = 1;
+            int nbTD = 1;
             TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
-            
+            int code = (accessType == AccessType.includes) ? 2281 : 2282;
+            int level = 1;
+            ArrayList itemIdList = null;
 
-			int code = (accessType == AccessType.includes) ? 2281 : 2282;
-			int level = 1;
-			Pictures pics = sheet.Pictures;
-			string img = @"Images\checkbox.GIF";
-			string imgPath = System.IO.Path.GetFullPath(img);
-			ArrayList itemIdList = null;
-            int indexImage = 0;
+            if (groups != null && groups.Count > 0) {
+                for (int i = 0; i < groups.Count; i++) {
+                    List<long> levelIdsList = groups[i].GetLevelIdsList();
+                    if (i > 0 && accessType == AccessType.includes) code = 2368;
 
-			if (groups != null && groups.Count > 0) {
-				for (int i = 0; i < groups.Count; i++) {
-					List<long> levelIdsList = groups[i].GetLevelIdsList();
+                    //Group title
+                    SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagGroupTitle), GestionWeb.GetWebWord(code, language) + " :", cellRow, 1, 1, false);
+                    cellRow += 2;
 
-					if (i > 0 && accessType == AccessType.includes) code = 2368;
+                    //For each group's level
+                    if (levelIdsList != null && levelIdsList.Count > 0) {
+                        for (int j = 0; j < levelIdsList.Count; j++) {
 
-					//Group title
-					SatetFunctions.WorkSheet.PutCellValue(sheet, cells, GestionWeb.GetWebWord(code, language) + " :", cellRow, 1, false, Color.White, 8, 2);//cellRow - 1	
-					SatetFunctions.WorkSheet.CellsStyle(cells, null, cellRow, 1, 1, true, Color.FromArgb(100, 72, 131), Color.White, Color.White, CellBorderType.None, CellBorderType.None, CellBorderType.None, CellBorderType.None, 8, false);
-					cellRow += 2;
 
-					//For each group's level
-					if (levelIdsList != null && levelIdsList.Count > 0) {
-						for (int j = 0; j < levelIdsList.Count; j++) {
 
-							
-
-							//Show all level items											
+                            //Show all level items											
                             universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName, groups[i].GetAsString(levelIdsList[j]), language, source);
-							if (universeItems != null) {
-								
-								itemIdList = universeItems.IdListOrderByClassificationItem;
-								if (itemIdList != null && itemIdList.Count > 0) {
-									
-									//Level label
-									level = 1;
-									nbTD = 1;
-									SatetFunctions.WorkSheet.PutCellValue(sheet, cells, GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language), cellRow, 1, false, Color.White, 8, 2);//cellRow - 1	
-									SetLevelStyle(level, excel, sheet, cellRow + 1, cells, nbTD);
-									cells[cellRow, 1].Style.IndentLevel = 2;
-									cellRow++;
+                            if (universeItems != null) {
 
-									level = 2;
-									for (int k = 0; k < itemIdList.Count; k++) {
-										//Add item label										
-                                        indexImage = pics.Add(cellRow, nbTD, imgPath, 100, 100);//cellRow - 1
-                                        sheet.Pictures[indexImage].Placement = PlacementType.Move;
-										SatetFunctions.WorkSheet.PutCellValue(sheet, cells, universeItems[Int64.Parse(itemIdList[k].ToString())], cellRow, nbTD, false, Color.White, 8, 2);
-										SetLevelStyle(level, excel, sheet, cellRow + 1, cells, nbTD);
-										cells[cellRow, nbTD].Style.IndentLevel = 2;	//cellRow - 1									
-										if (k == (itemIdList.Count - 1)) {
-											for (int n = 1; n < 4; n++) {
-												cells[cellRow, n].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
-												cells[cellRow, n].Style.Borders[BorderType.BottomBorder].Color = Color.FromArgb(100, 72, 131);
-											}
-										}
-										nbTD++;
-										if (nbTD > 3) {//row changing
-											nbTD = 1;
-											cellRow++;
-										}
-									}
-									//Complete TD missing for one row
-									if (nbTD == 2 || nbTD == 3) {
-										SetLevelStyle(level, excel, sheet, cellRow + 1, cells, nbTD);
-										cells[cellRow, nbTD].Style.IndentLevel = 2;
+                                itemIdList = universeItems.IdListOrderByClassificationItem;
+                                if (itemIdList != null && itemIdList.Count > 0) {
 
-										if (nbTD == 2) {
-											SetLevelStyle(level, excel, sheet, cellRow + 1, cells, 3);
-											cells[cellRow, 3].Style.IndentLevel = 2;
-										}
-										for (int n = 1; n < 4; n++) {											
-											cells[cellRow, n].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
-											cells[cellRow, n].Style.Borders[BorderType.BottomBorder].Color = Color.FromArgb(100, 72, 131);
-										}
-										cellRow++;
-									}
-								}
-							}
+                                    //Level label
+                                    level = 1;
+                                    nbTD = 1;
 
-						}
-					}
-					cellRow++;
-				}
-			}
+                                    cells[cellRow, 1].PutValue(GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, language));
+                                    style.GetTag(_tagGroupValue).SetStyleExcel(excel, cells, cellRow, 1);
+                                    SetLevelStyle(level, excel, sheet, cellRow + 1, cells, nbTD, style);
+                                    cells[cellRow, 1].Style.IndentLevel = 2;
+                                    cellRow++;
 
-		}
-		#endregion
+                                    level = 2;
+                                    for (int k = 0; k < itemIdList.Count; k++) {
+                                        //Add item label										
+                                        style.GetTag(_tagCheckBox).SetStyleExcel(sheet, cellRow, nbTD);
+
+                                        cells[cellRow, nbTD].PutValue(universeItems[Int64.Parse(itemIdList[k].ToString())]);
+                                        style.GetTag(_tagGroupValue).SetStyleExcel(excel, cells, cellRow, 1);
+                                        SetLevelStyle(level, excel, sheet, cellRow + 1, cells, nbTD,style);
+                                        cells[cellRow, nbTD].Style.IndentLevel = 2;	//cellRow - 1									
+                                        nbTD++;
+                                        if (nbTD > 3) {//row changing
+                                            nbTD = 1;
+                                            cellRow++;
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    cellRow++;
+                }
+            }
+
+        }
+        #endregion
 
 	}
 }

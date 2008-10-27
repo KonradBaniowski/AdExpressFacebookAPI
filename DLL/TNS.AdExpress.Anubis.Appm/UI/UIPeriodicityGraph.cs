@@ -27,6 +27,7 @@ using TNS.FrameWork.DB.Common;
 
 
 using Dundas.Charting.WinControl;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Anubis.Appm.UI
 {
@@ -52,16 +53,39 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 		/// Data
 		/// </summary>
 		private DataTable _dtData = null;
-
+        /// <summary>
+        /// Style
+        /// </summary>
+        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        /// <summary>
+        /// Pie ColorS
+        /// </summary>
+        private List<Color> _pieColors = null;
+        /// <summary>
+        /// Bar Colors
+        /// </summary>
+        private List<Color> _barColors = null;
 		#endregion
 
 		#region Constructeur
-		public UIPeriodicityGraph(WebSession webSession,IDataSource dataSource, AppmConfig config, DataTable dtData):base()
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">webSession</param>
+        /// <param name="dataSource">dataSource</param>
+        /// <param name="config">config</param>
+        /// <param name="dtData">dtData</param>
+        public UIPeriodicityGraph(WebSession webSession, IDataSource dataSource, AppmConfig config, DataTable dtData, TNS.AdExpress.Domain.Theme.Style style)
+            : base()
 		{
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
 			_dtData = dtData;
+            _style = style;
+
+            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphPieColors")).ColorList;
+            _barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphBarColors")).ColorList;
 		}
 		#endregion
 
@@ -85,14 +109,11 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 			try {
 
 				if(_dtData!=null && _dtData.Rows.Count>0){
-
-					this.Size = new Size(1000,500);
+					
+                    _style.GetTag("PeriodicityGraphSize").SetStyleDundas(this);
 					//Graph Properties
 					this.BackGradientType = GradientType.TopBottom;
-					this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
-					this.BorderStyle=ChartDashStyle.Solid;
-					this.BorderLineColor=Color.FromArgb(99,73,132);
-					this.BorderLineWidth=1;
+                    _style.GetTag("PeriodicityGraphLineEnCircle").SetStyleDundas(this);
 
 					cArea = new ChartArea();
 					cAreaTarget = new ChartArea();
@@ -137,8 +158,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					sTargetData.Points.DataBindXY(xUnitValues, yUnitValues);
 
 					for(int k=0 ; k < _dtData.Rows.Count ; k++){
-						if (k < CstUI.UI.pieColors.Length){
-							sTargetData.Points[k].Color = sData.Points[k].Color = CstUI.UI.pieColors[k];
+                        if (k < _pieColors.Count) {
+                            sTargetData.Points[k].Color = sData.Points[k].Color = _pieColors[k];
 						}
 						sTargetData.Points[k]["Exploded"] = sData.Points[k]["Exploded"] = "true";
 					}
@@ -150,12 +171,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					sTargetData.ShowInLegend = false;
 					Legend l = new Legend(cArea.Name);
 					l.Enabled=true;
-					l.Font = new Font(_config.DefaultFont.Name,8,
-						((_config.DefaultFont.Bold)?FontStyle.Bold:0)
-						|((_config.DefaultFont.Underline)?FontStyle.Underline:0)
-						|((_config.DefaultFont.Italic)?FontStyle.Italic:0)
-						);
-					l.FontColor = _config.DefaultFontColor;
+                    _style.GetTag("PeriodicityGraphDefaultFont").SetStyleDundas(l);
 					l.Docking = LegendDocking.Bottom;
 					l.Alignment = StringAlignment.Center;
 					l.LegendStyle = LegendStyle.Row;
@@ -163,8 +179,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					sData.LegendText="#VALX";
 
 					//Series Font
-					sTargetData.Font = sData.Font = l.Font;
-					sTargetData.FontColor = sData.FontColor = l.FontColor;
+                    _style.GetTag("PeriodicityGraphDefaultFont").SetStyleDundas(sData);
+                    _style.GetTag("PeriodicityGraphDefaultFont").SetStyleDundas(sTargetData);
 					this.Legends.Add(l);
 
 					//titles
@@ -175,12 +191,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					this.Titles[1].DockToChartArea = cAreaTarget.Name;
 
 					this.Titles[1].DockInsideChartArea = this.Titles[0].DockInsideChartArea = true;
-					this.Titles[1].Font = this.Titles[0].Font = new Font(_config.TitleFont.Name,(float)_config.DefaultFont.Size,
-						((_config.TitleFont.Bold)?FontStyle.Bold:0)
-						|((_config.TitleFont.Underline)?FontStyle.Underline:0)
-						|((_config.TitleFont.Italic)?FontStyle.Italic:0)
-						);
-					this.Titles[1].Color = this.Titles[0].Color = _config.DefaultFontColor;
+                    _style.GetTag("PeriodicityGraphDefaultTitleFont").SetStyleDundas(this.Titles[1]);
 
 					//Add Series
 					this.Series.Add(sData);
@@ -194,7 +205,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 		}
 		#endregion	
 
-		#region periodicity
+		#region periodicity (non utilisé)
+        /*
 		internal void BuildBars(){
 		
 			#region variable
@@ -227,12 +239,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 
 					cArea.Area3DStyle.Enable3D = false;
 					cArea.BackColor =Color.FromArgb(222,207,231);
-					cArea.AxisY.LabelStyle.Font = cArea.AxisX.LabelStyle.Font = new Font(_config.DefaultFont.Name,8,
-						((_config.DefaultFont.Bold)?FontStyle.Bold:0)
-						|((_config.DefaultFont.Underline)?FontStyle.Underline:0)
-						|((_config.DefaultFont.Italic)?FontStyle.Italic:0)
-						);
-					cArea.AxisY.LabelStyle.FontColor = cArea.AxisX.LabelStyle.FontColor = _config.DefaultFontColor;
+                    _style.GetTag("PeriodicityGraphDefaultFont").SetStyleDundas(cArea.AxisY.LabelStyle);
+                    _style.GetTag("PeriodicityGraphDefaultFont").SetStyleDundas(cArea.AxisX.LabelStyle);
 
 					//name
 					cArea.Name = GestionWeb.GetWebWord(1685,_webSession.SiteLanguage)
@@ -266,8 +274,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					cArea.AxisY.Maximum= maxScale+1000;
 
 					for(int k=0 ; k < xUnitValues.Length ; k++){
-						sData.Points[k].Color = CstUI.UI.barColors[0];
-						sTargetData.Points[k].Color = CstUI.UI.barColors[1];
+                        sData.Points[k].Color = _barColors[0];
+                        sTargetData.Points[k].Color = _barColors[1];
 					}
 					sTargetData["LabelStyle"] = sData["LabelStyle"] = "Outside";
 					sTargetData.Label = sData.Label="#VALY";
@@ -283,8 +291,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					l.Docking = LegendDocking.Bottom;
 					l.Alignment = StringAlignment.Center;
 					l.LegendStyle = LegendStyle.Row;
-					l.CustomItems.Add(CstUI.UI.barColors[0],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtData.Rows[0]["baseTarget"]+") ");
-					l.CustomItems.Add(CstUI.UI.barColors[1],GestionWeb.GetWebWord(1685,_webSession.SiteLanguage) + " ("+_dtData.Rows[0]["additionalTarget"]+") ");
+                    l.CustomItems.Add(_barColors[0], GestionWeb.GetWebWord(1685, _webSession.SiteLanguage) + " (" + _dtData.Rows[0]["baseTarget"] + ") ");
+                    l.CustomItems.Add(_barColors[1], GestionWeb.GetWebWord(1685, _webSession.SiteLanguage) + " (" + _dtData.Rows[0]["additionalTarget"] + ") ");
 
 
 					this.Legends.Add(l);
@@ -297,12 +305,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					this.Titles.Add(cArea.Name);
 					//this.Titles[0].DockToChartArea = cArea.Name;
 					//this.Titles[0].DockInsideChartArea = true;
-					this.Titles[0].Font = new Font(_config.TitleFont.Name,(float)_config.DefaultFont.Size,
-						((_config.TitleFont.Bold)?FontStyle.Bold:0)
-						|((_config.TitleFont.Underline)?FontStyle.Underline:0)
-						|((_config.TitleFont.Italic)?FontStyle.Italic:0)
-						);
-					this.Titles[0].Color = _config.DefaultFontColor;
+                    _style.GetTag("PeriodicityGraphDefaultTitleFont").SetStyleDundas(this.Titles[0]);
 
 					//Add Series
 					this.Series.Add(sData);
@@ -314,6 +317,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 				throw(new UIPeriodicityChartException("Unable to build bars for periodicity.",err));
 			}
 		}
+        */
 		#endregion
 
 		#region GetSeriesDataAdditional
@@ -426,7 +430,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 
 		#endregion
 
-		#region SetSeriesPeriodicityBar
+		#region SetSeriesPeriodicityBar (non utilisé)
+        /*
 		/// <summary>
 		/// Crétion du graphique unité Cgrp (histogramme)
 		/// </summary>
@@ -461,8 +466,9 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 				chartArea.AxisY.Maximum= maxScale+1000;
 				//chartArea.AxisX.Maximum= dt.Rows.Count+1;
 				series.Points.DataBindXY(xValues,yValues);
-				chartArea.AxisX.LabelStyle.Font = new Font("Arial", 8);
-				chartArea.AxisY.LabelStyle.Font = new Font("Arial", 8);
+                _style.GetTag("PeriodicityGraphDefaultFont").SetStyleDundas(chartArea.AxisX.LabelStyle);
+                _style.GetTag("PeriodicityGraphDefaultFont").SetStyleDundas(chartArea.AxisY.LabelStyle);
+
 				
 				#region Définition des couleurs
 				//couleur du graphique
@@ -484,7 +490,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 
 			return series;
 		}
-
+        */
 		#endregion
 
 	}

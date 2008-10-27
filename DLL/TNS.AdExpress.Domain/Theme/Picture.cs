@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace TNS.AdExpress.Domain.Theme {
     /// <summary>
@@ -66,7 +67,7 @@ namespace TNS.AdExpress.Domain.Theme {
         /// Apllied a style to Excel Object
         /// </summary>
         /// <param name="cells">Excel Object</param>
-        public override void SetStyle(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, int row, int column) {
+        public override void SetStyleExcel(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, int row, int column) {
             throw new Exception("The method or operation is not implemented.");
         }
 
@@ -74,7 +75,7 @@ namespace TNS.AdExpress.Domain.Theme {
         /// Apllied a style to Excel Object
         /// </summary>
         /// <param name="sheet">Sheet Excel Object</param>
-        public override void SetStyle(Aspose.Cells.Worksheet sheet) {
+        public override void SetStyleExcel(Aspose.Cells.Worksheet sheet) {
             
         }
         /// <summary>
@@ -83,19 +84,70 @@ namespace TNS.AdExpress.Domain.Theme {
         /// <param name="sheet">Sheet Excel Object</param>
         /// <param name="upperLeftRow">Upper Left Row</param>
         /// <param name="upperLeftColumn">Upper Left Column</param>
-        public override void SetStyle(Aspose.Cells.Worksheet sheet, int upperLeftRow, int upperLeftColumn) {
+        public override void SetStyleExcel(Aspose.Cells.Worksheet sheet, int upperLeftRow, int upperLeftColumn) {
             string logoPath = System.IO.Path.GetFullPath(this._path);
             int indexPicture = sheet.Pictures.Add(upperLeftRow, upperLeftColumn, this._path, Convert.ToInt32(this._width), Convert.ToInt32(this._height));
             sheet.Pictures[indexPicture].Placement = Aspose.Cells.PlacementType.Move;
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Apllied a style to PDF Object
         /// </summary>
         /// <param name="pdfObject">PDF Object</param>
-        public override void SetStyle(PDFCreatorPilotLib.PDFDocument3Class pdfObject) {
+        public override void SetStylePdf(PDFCreatorPilotLib.PDFDocument3Class pdfObject, PDFCreatorPilotLib.TxFontCharset charset) {
             throw new Exception("The method or operation is not implemented.");
-        }*/
+        }
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="font">Font To Init</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Legend legend) {
+            throw new Exception("The method or operation is not implemented.");
+        }
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="title">title</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Title title) {
+            throw new Exception("The method or operation is not implemented.");
+        }
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="label">label</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Label label) {
+            throw new Exception("The method or operation is not implemented.");
+        }
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="series">series</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Series series) {
+            throw new Exception("The method or operation is not implemented.");
+        }
+        /// <summary>
+        /// Apllied a style Line To an Object chart
+        /// </summary>
+        /// <param name="chart">Chart</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Chart chart) {
+            throw new Exception("The method or operation is not implemented.");
+        }
+        /// <summary>
+        /// Apllied a style Font To an Object Font
+        /// </summary>
+        /// <param name="axis">Title axis</param>
+        public override void SetStyleDundas(Dundas.Charting.WinControl.Axis axis) {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+
+        /// <summary>
+        /// Apllied a style Color To an Object Color
+        /// </summary>
+        /// <param name="axis">Title axis</param>
+        public override void SetStyleDundas(ref Color color) {
+            throw new Exception("The method or operation is not implemented.");
+        }
         #endregion
     }
 }

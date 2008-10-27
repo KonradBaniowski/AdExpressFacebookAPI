@@ -25,6 +25,7 @@ using TNS.AdExpress.Anubis.Appm.Exceptions;
 using TNS.FrameWork.DB.Common;
 
 using Dundas.Charting.WinControl;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Anubis.Appm.UI {
 	/// <summary>
@@ -53,16 +54,25 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 		/// Data containing total GRP (for the rest)
 		/// </summary>
 		private DataTable _dtTotalData = null;
-
+        /// <summary>
+        /// Style
+        /// </summary>
+        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        /// <summary>
+        /// Pie ColorS
+        /// </summary>
+        private List<Color> _pieColors = null;
 		#endregion
 
 		#region Constructeur
-		public UIPDVPlanGraph(WebSession webSession,IDataSource dataSource, AppmConfig config, DataTable dtGraphicsData, DataTable dtTotalData):base() {
+		public UIPDVPlanGraph(WebSession webSession,IDataSource dataSource, AppmConfig config, DataTable dtGraphicsData, DataTable dtTotalData,TNS.AdExpress.Domain.Theme.Style style):base() {
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
 			_dtGraphicsData = dtGraphicsData;
 			_dtTotalData = dtTotalData;
+            _style = style;
+            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PdvPlanGraphPieColors")).ColorList;
 		}
 		#endregion
 
@@ -82,12 +92,10 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 				if(_dtGraphicsData.Rows.Count>0){
 
 					#region Graph Properties
-					this.Size = new Size(800,400);					
+                    _style.GetTag("PdvPlanGraphSize").SetStyleDundas(this);
 					this.BackGradientType = GradientType.TopBottom;
-					this.BorderLineColor = Color.FromKnownColor(KnownColor.LightGray);											
-					this.BorderStyle=ChartDashStyle.Solid;
-					this.BorderLineColor=Color.FromArgb(99,73,132);
-					this.BorderLineWidth=1;
+                    _style.GetTag("PdvPlanGraphLineEnCircle").SetStyleDundas(this);
+
 
 					cArea = new ChartArea();
 					cArea.Name = GestionWeb.GetWebWord(1775, _webSession.SiteLanguage);
@@ -121,8 +129,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 
 					#region Defining Colour
 					for(int k=0 ; k<sData.Points.Count ; k++){
-						if(k < CstUI.UI.pieColors.Length){
-							sData.Points[k].Color = CstUI.UI.pieColors[k];
+						if(k < _pieColors.Count){
+							sData.Points[k].Color = _pieColors[k];
 						}
 						sData.Points[k]["Exploded"] = "true";
 					}
@@ -133,22 +141,13 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 					sData.Label="#PERCENT #VALX" ;
 					sData["PieLineColor"]="Black";
 					sData.ShowInLegend = false;
-					sData.Font = new Font(_config.DefaultFont.Name,8,
-						((_config.DefaultFont.Bold)?FontStyle.Bold:0)
-						|((_config.DefaultFont.Underline)?FontStyle.Underline:0)
-						|((_config.DefaultFont.Italic)?FontStyle.Italic:0)
-						);
-					sData.FontColor = _config.DefaultFontColor;
+
+                    _style.GetTag("PdvGraphDefaultFont").SetStyleDundas(sData);
+
 					this.Titles.Add(cArea.Name);
 					this.Titles[0].DockToChartArea = cArea.Name;
 					this.Titles[0].DockInsideChartArea = true;
-					this.Titles[0].Font = new Font(_config.TitleFont.Name,(float)_config.DefaultFont.Size,
-						((_config.TitleFont.Bold)?FontStyle.Bold:0)
-						|((_config.TitleFont.Underline)?FontStyle.Underline:0)
-						|((_config.TitleFont.Italic)?FontStyle.Italic:0)
-						);
-					this.Titles[0].Color = _config.TitleFontColor;
-
+                    _style.GetTag("PdvGraphDefaultTitleFont").SetStyleDundas(this.Titles[0]);
 					#endregion
 
 					this.Series.Add(sData);

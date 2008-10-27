@@ -18,6 +18,8 @@ using TNS.AdExpress.Anubis.Satet.BusinessFacade;
 using TNS.AdExpress.Web.Core.Sessions;
 
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Theme;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Anubis.Satet {
@@ -70,6 +72,10 @@ namespace TNS.AdExpress.Anubis.Satet {
 		/// Composant excel
 		/// </summary>
 		private SatetExcelSystem _excel = null;
+        /// <summary>
+        /// Theme
+        /// </summary>
+        private Theme _theme;
 		#endregion
 
 		#region Constructeur
@@ -120,6 +126,12 @@ namespace TNS.AdExpress.Anubis.Satet {
 				OnError(_navSessionId,"Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration",err);
 				return;
 			}
+            try {
+                _theme = new Theme(new XmlReaderDataSource(_satetConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)ParameterSystem.Load(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
+            }
+            catch (System.Exception err) {
+                throw new Exception("File of theme not found ! (in Plugin Satet in TreatmentSystem class)");
+            }
 			#endregion
 
 			_dataSource=dataSource;
@@ -153,7 +165,7 @@ namespace TNS.AdExpress.Anubis.Satet {
 
 				#region excel management
 				
-				_excel = new SatetExcelSystem(_dataSource,_satetConfig,rqDetails,(WebSession)ParameterSystem.Load(_navSessionId));
+				_excel = new SatetExcelSystem(_dataSource,_satetConfig,rqDetails,(WebSession)ParameterSystem.Load(_navSessionId),_theme);
 				string fileName = _excel.Init();				
 				_excel.Fill();
 				ParameterSystem.RegisterFile(_dataSource,_navSessionId,fileName);
