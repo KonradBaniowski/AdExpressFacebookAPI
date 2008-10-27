@@ -276,12 +276,14 @@ namespace TNS.AdExpressI.Insertions
             //Result Table init
             data = new ResultTable(nbLine, GetHeaders(vehicle, columns));
             SetLine setLine = null;
-            if (_getCreatives || _getMSCreatives)
-            {
+            SetSpecificLine setSpecificLine = null;
+            if (_getMSCreatives) {
+                setSpecificLine = new SetSpecificLine(SetMSCreativeLine);
+            }
+            if (_getMSCreatives){
                 setLine = new SetLine(SetCreativeLine);
             }
-            else
-            {
+            else{
                 switch (vehicle.Id)
                 {
                     case CstDBClassif.Vehicles.names.directMarketing:
@@ -369,8 +371,10 @@ namespace TNS.AdExpressI.Insertions
                     cLine = data.AddNewLine(lineTypes[3]);
                 }
 
-
-                setLine(vehicle, data, row, cLine, columns, columnsName, cells);
+                if(_getMSCreatives)
+                    setSpecificLine(vehicle, data, row, cLine, columns, columnsName, cells, idColumnsSet);
+                else
+                    setLine(vehicle, data, row, cLine, columns, columnsName, cells);
 
             }
 
@@ -497,6 +501,44 @@ namespace TNS.AdExpressI.Insertions
             {
                 if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.associatedFileMax)
                 {
+                    visuals = GetPath(vehicle, row, columns, columnsName);
+                }
+            }
+            c.Add(row, visuals);
+
+        }
+
+        protected delegate void SetSpecificLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet);
+        protected void SetMSCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet) {
+
+            CellCreativesInformation c;
+            List<string> visuals = new List<string>();
+            if (tab[cLine, 1] == null) {
+                switch (vehicle.Id) {
+                    case CstDBClassif.Vehicles.names.directMarketing:
+                        tab[cLine, 1] = c = new CellCreativesVMCInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
+                        break;
+                    case CstDBClassif.Vehicles.names.radio:
+                        tab[cLine, 1] = c = new CellCreativesRadioInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
+                        break;
+                    case CstDBClassif.Vehicles.names.tv:
+                    case CstDBClassif.Vehicles.names.others:
+                        tab[cLine, 1] = c = new CellCreativesTvInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
+                        break;
+                    case CstDBClassif.Vehicles.names.adnettrack:
+                    case CstDBClassif.Vehicles.names.internet:
+                        tab[cLine, 1] = c = new CellCreativesEvaliantInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
+                        break;
+                    default:
+                        tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
+                        break;
+                }
+            }
+            else {
+                c = (CellCreativesInformation)tab[cLine, 1];
+            }
+            foreach (GenericColumnItemInformation g in columns) {
+                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.associatedFileMax) {
                     visuals = GetPath(vehicle, row, columns, columnsName);
                 }
             }
