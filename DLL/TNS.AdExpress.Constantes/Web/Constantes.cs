@@ -1165,6 +1165,10 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// Cooky dedicated to the current page size
 		/// </summary>
 		public static string CurrentPageSize = "currentPageSize";
+		/// <summary>
+		/// Cooky dedicated to the current page size in th ecreatives pages
+		/// </summary>
+		public static string CurrentPageSizeCreatives = "currentPageSizeCreatives";
 
 		/// <summary>
 		/// Cooky dedicated to the type of media file open
