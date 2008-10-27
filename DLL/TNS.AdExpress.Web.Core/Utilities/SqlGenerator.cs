@@ -1866,25 +1866,27 @@ namespace TNS.AdExpress.Web.Core.Utilities
             try
             {
                 string sql = " ";
-                string condition = "";
 
-                if (access)
-                {
-                    condition = "in";
-                }
-                else
-                {
-                    condition = " not in";
-                }
+				ProductItemsList prList = null; ;
+				if (Product.Contains(idProductItemsList) && (prList = Product.GetItemsList(idProductItemsList)) != null) {
+					string condition = "";
 
-                if (beginByAnd) sql += "And ";
-                ProductItemsList adexpressProductItemsList = Product.GetItemsList(idProductItemsList);
-                if (adexpressProductItemsList.GetSectorItemsList.Length > 0) sql += sectorTablePrefixe + ".id_sector " + condition + " (" + adexpressProductItemsList.GetSectorItemsList + ") ";
-                if (adexpressProductItemsList.GetSubSectorItemsList.Length > 0) sql += subSectorTablePrefixe + ".id_subSector " + condition + " (" + adexpressProductItemsList.GetSubSectorItemsList + ") ";
-                if (adexpressProductItemsList.GetGroupItemsList.Length > 0) sql += groupTablePrefixe + ".id_group_ " + condition + "(" + adexpressProductItemsList.GetGroupItemsList + ") ";
-                if (adexpressProductItemsList.GetSegmentItemsList.Length > 0) sql += segmentTablePrefixe + ".id_segment " + condition + "(" + adexpressProductItemsList.GetSegmentItemsList + ") ";
-                if (adexpressProductItemsList.GetProductItemsList.Length > 0) sql += productTablePrefixe + ".id_product " + condition + "(" + adexpressProductItemsList.GetProductItemsList + ") ";
-                if (sql.Length < 6) return ("");
+					if (access) {
+						condition = "in";
+					}
+					else {
+						condition = " not in";
+					}
+
+					if (beginByAnd) sql += "And ";
+					ProductItemsList adexpressProductItemsList = Product.GetItemsList(idProductItemsList);
+					if (adexpressProductItemsList.GetSectorItemsList.Length > 0) sql += sectorTablePrefixe + ".id_sector " + condition + " (" + adexpressProductItemsList.GetSectorItemsList + ") ";
+					if (adexpressProductItemsList.GetSubSectorItemsList.Length > 0) sql += subSectorTablePrefixe + ".id_subSector " + condition + " (" + adexpressProductItemsList.GetSubSectorItemsList + ") ";
+					if (adexpressProductItemsList.GetGroupItemsList.Length > 0) sql += groupTablePrefixe + ".id_group_ " + condition + "(" + adexpressProductItemsList.GetGroupItemsList + ") ";
+					if (adexpressProductItemsList.GetSegmentItemsList.Length > 0) sql += segmentTablePrefixe + ".id_segment " + condition + "(" + adexpressProductItemsList.GetSegmentItemsList + ") ";
+					if (adexpressProductItemsList.GetProductItemsList.Length > 0) sql += productTablePrefixe + ".id_product " + condition + "(" + adexpressProductItemsList.GetProductItemsList + ") ";
+					if (sql.Length < 6) return ("");
+				}
                 return (sql);
             }
             catch (System.Exception e)
