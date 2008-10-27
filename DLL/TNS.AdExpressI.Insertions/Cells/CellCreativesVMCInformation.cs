@@ -91,6 +91,48 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             }
         }
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="label">Texte</param>
+        public CellCreativesVMCInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, Module module, Int64 idColumnsSet)
+            : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet) {
+            List<GenericColumnItemInformation> allColumns = WebApplicationParameters.InsertionsDetail.GetDetailColumns(VehiclesInformation.Get(CstDBClassif.Vehicles.names.directMarketing).DatabaseId, _session.CurrentModule);
+            foreach (GenericColumnItemInformation g in allColumns) {
+                switch (g.Id) {
+                    case GenericColumnItemInformation.Columns.content:
+                        //Data Base ID
+                        if (g.DataBaseAliasIdField != null && g.DataBaseAliasIdField.Length > 0) {
+                            _divideString = g.DataBaseAliasIdField.ToUpper();
+                        }
+                        else if (g.DataBaseIdField != null && g.DataBaseIdField.Length > 0) {
+                            _divideString = g.DataBaseIdField.ToUpper();
+                        }
+                        //Database Label
+                        if (g.DataBaseAliasField != null && g.DataBaseAliasField.Length > 0) {
+                            _divideString = g.DataBaseAliasField.ToUpper();
+                        }
+                        else if (g.DataBaseField != null && g.DataBaseField.Length > 0) {
+                            _divideString = g.DataBaseField.ToUpper();
+                        }
+                        break;
+                    case GenericColumnItemInformation.Columns.media:
+                        //Data Base ID
+                        if (g.DataBaseAliasIdField != null && g.DataBaseAliasIdField.Length > 0) {
+                            _mediaCol = g.DataBaseAliasIdField.ToUpper();
+                        }
+                        else if (g.DataBaseIdField != null && g.DataBaseIdField.Length > 0) {
+                            _mediaCol = g.DataBaseIdField.ToUpper();
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+
+
+            }
+        }
         #endregion
 
         #region Add Values

@@ -47,6 +47,13 @@ namespace TNS.AdExpressI.Insertions.Cells
             : base(session, vehicle, columns, columnNames, cells, module)
         {
         }
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="label">Texte</param>
+        public CellCreativesRadioInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, Module module, Int64 idColumnsSet)
+            : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet) {
+        }
         #endregion
 
         #region Render

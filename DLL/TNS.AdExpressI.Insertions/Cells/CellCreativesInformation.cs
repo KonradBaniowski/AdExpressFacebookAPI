@@ -87,6 +87,20 @@ namespace TNS.AdExpressI.Insertions.Cells
             }
 
         }
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="label">Texte</param>
+        public CellCreativesInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, Module module, Int64 idColumnsSet) : base(session, columns, columnNames, cells) {
+            _vehicle = vehicle;
+            _module = module;
+            int i = -1;
+            foreach (GenericColumnItemInformation g in columns) {
+                i++;
+                _visibility.Add(WebApplicationParameters.GenericColumnsInformation.IsVisible(idColumnsSet, g.Id));
+            }
+
+        }
         #endregion
 
         #region Add Values

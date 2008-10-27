@@ -104,6 +104,15 @@ namespace TNS.AdExpressI.Insertions.Cells
             this._universId = universId;
             this._zoomDate = zoomDate;
         }
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="label">Texte</param>
+        public CellCreativesEvaliantInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, Module module, string zoomDate, Int64 universId, Int64 idColumnsSet)
+            : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet) {
+            this._universId = universId;
+            this._zoomDate = zoomDate;
+        }
         #endregion
 
         #region Add Values
