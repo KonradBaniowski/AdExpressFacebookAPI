@@ -76,7 +76,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			double pages=0;
 			ResultTable resultTable=null;
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
-			string numberFormat = "max0", affinityFormat = "max0", cGrpFormat = "max0";
+            string numberFormat = "{0:max0}", affinityFormat = "{0:max0}", cGrpFormat = "{0:max0}";
 			#endregion	
 
 			try{
@@ -161,7 +161,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(2075,webSession.SiteLanguage)+" : ");
 					CellEuro cE = new CellEuro(budget);
-					cE.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).Format;
+					cE.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).StringFormat;
 					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cE;
 
 					//nombre de titre
@@ -175,7 +175,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(144,webSession.SiteLanguage)+" : ");
 					CellInsertion cI = new CellInsertion(insertions);
-					cI.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).Format;
+					cI.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).StringFormat;
 					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cI;
 					
 					//nombre de pages utilisés
@@ -183,7 +183,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1385,webSession.SiteLanguage)+" : ");
 					CellPage cP = new CellPage(pages);
-					cP.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages).Format;
+					cP.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages).StringFormat;
 					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cP;
 					
 					//nombre d'annonceurs
@@ -213,14 +213,14 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1673,webSession.SiteLanguage)+" : ");
 					CellGRP cGrp = new CellGRP(additionalTargetGRP);
-					cGrp.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.grp).Format;
+					cGrp.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.grp).StringFormat;
 					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cGrp;
 					
 					//nombre de GRP(cible 15 ans et +)
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1673,webSession.SiteLanguage) + " " +  targetBase + " : ");
 					CellGRP cGrp1 = new CellGRP(Math.Round(baseTargetGRP, 3));
-					cGrp1.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.grp).Format; 
+					cGrp1.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.grp).StringFormat; 
 					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cGrp1;
 					
 					//Affinité GRP vs cible 15 ans à +

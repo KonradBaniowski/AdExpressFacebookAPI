@@ -69,8 +69,8 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 //			double avgNbWeek=0, minNbWeek=0, maxNbWeek=0;
 //			double avgGRPWeek=0, minGRPWeek=0, maxGRPWeek=0;
 			ResultTable resultTable=null;
-			string grpFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.grp).Format;
-			string afinityFormat = "max0", cGrpFormat = "max0", numberFormat = "max0";
+			string grpFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.grp).StringFormat;
+            string afinityFormat = "{0:max0}", cGrpFormat = "{0:max0}", numberFormat = "{0:max0}";
 			#endregion			
 
 			try{
@@ -317,15 +317,15 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1712,webSession.SiteLanguage)+" : ");
 					//budget (moyenne)
 					CellEuro cE = new CellEuro(avgBudget);
-					cE.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).Format;
+					cE.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).StringFormat;
 					resultTable[lineIndex, APPMConstantes.AVERAGE_COLUMN_INDEX] = cE;
 					//budget (min)
 					CellEuro cE1 = new CellEuro(minBudget);
-					cE1.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).Format;
+					cE1.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).StringFormat;
 					resultTable[lineIndex, APPMConstantes.MIN_COLUMN_INDEX] = cE1;
 					//budget (max)
 					CellEuro cE2 = new CellEuro(maxBudget);
-					cE2.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).Format;
+					cE2.StringFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro).StringFormat;
 					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cE2;
 					#endregion
 
@@ -346,7 +346,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cN2;
 					#endregion
 
-					string insertionFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).Format;
+					string insertionFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).StringFormat;
 					#region Insertions
 					lineIndex = resultTable.AddNewLine(LineType.level1);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1398,webSession.SiteLanguage)+" : ");
@@ -364,7 +364,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					resultTable[lineIndex, APPMConstantes.MAX_COLUMN_INDEX] = cI2;
 					#endregion
 
-					string pageFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages).Format;
+					string pageFormat = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages).StringFormat;
 					#region Pages
 					lineIndex = resultTable.AddNewLine(LineType.level2);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(GestionWeb.GetWebWord(1385,webSession.SiteLanguage)+" : ");

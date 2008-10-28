@@ -63,18 +63,33 @@ namespace TNS.AdExpress.Domain.Theme {
             foreach (Tag tag in _tagList.Values) {
 
                 if (tag.GetType() == typeof(Font)) {
-                    if (!colorList.Contains(((Font)tag).Color))
-                        colorList.Add(((Font)tag).Color);
+                    Font fontTag = ((Font)tag);
+                    if (!colorList.Contains(fontTag.Color))
+                        colorList.Add(fontTag.Color);
                 }
                 else if (tag.GetType() == typeof(Cell)) {
-                    if (!colorList.Contains(((Cell)tag).ForegroundColor))
-                        colorList.Add(((Cell)tag).ForegroundColor);
-                    foreach (Border border in ((Cell)tag).Borders.Border.Values)
-                        if (!colorList.Contains(border.Color))
+                    Cell cellTag = ((Cell)tag);
+                    if (!colorList.Contains(cellTag.ForegroundColor))
+                        colorList.Add(cellTag.ForegroundColor);
+                    foreach (Border border in cellTag.Borders.Border.Values)
+                        if (!colorList.Contains(border.Color) && !colorList.Contains(border.Color))
                             colorList.Add(border.Color);
+                    if (cellTag.Font != null && cellTag.Font.Color != null && !colorList.Contains(cellTag.Font.Color))
+                        colorList.Add(cellTag.Font.Color);
                 }
-
-
+                else if (tag.GetType() == typeof(Colors)) {
+                    Colors colorsTag = ((Colors)tag);
+                    if (colorsTag != null)
+                        for (int i = 0; i < colorsTag.ColorList.Count; i++) {
+                            if (!colorList.Contains(colorsTag.ColorList[i]))
+                                colorList.Add(colorsTag.ColorList[i]);
+                        }
+                }
+                else if (tag.GetType() == typeof(Line)) {
+                    Line lineTag = ((Line)tag);
+                    if (lineTag != null && !colorList.Contains(lineTag.Color))
+                        colorList.Add(lineTag.Color);
+                }
             }
 
             return colorList;

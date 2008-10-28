@@ -92,7 +92,6 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
                     Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
                     Cells cells = sheet.Cells;
                     int cellRow = 6;
-                    Color foreGroundColor, fontColor;
                     double tempValue = 0;
 
                     #region Title
@@ -104,18 +103,17 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
                     #region Lignes du tableau
                     for (int i = 0; i < resultTable.LinesNumber; i++) {
 
-                        fontColor = Color.Black;
                         if ((i % 2) == 0)
-                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_labelLine1), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_labelLine1), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN, SECOND_SHEET_COLUMN);
                         else
-                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_labelLine2), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_labelLine2), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN, SECOND_SHEET_COLUMN);
 
 
                         if (i == 0) {
                             if ((i % 2) == 0)
-                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine1), ((CellLabel)resultTable[i, SECOND_TABLE_COLUMN]).Label, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine1), ((CellLabel)resultTable[i, SECOND_TABLE_COLUMN]).Label, cellRow, SECOND_SHEET_COLUMN, SECOND_SHEET_COLUMN);
                             else
-                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine2), ((CellLabel)resultTable[i, SECOND_TABLE_COLUMN]).Label, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine2), ((CellLabel)resultTable[i, SECOND_TABLE_COLUMN]).Label, cellRow, SECOND_SHEET_COLUMN, SECOND_SHEET_COLUMN);
                         }
                         else {
 
@@ -125,12 +123,12 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
                                 tempValue = ((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).Value;
 
                             if ((i % 2) == 0)
-                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine1), tempValue, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine1), tempValue, cellRow, SECOND_SHEET_COLUMN, SECOND_SHEET_COLUMN);
                             else
-                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine2), tempValue, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
+                                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_valueLine2), tempValue, cellRow, SECOND_SHEET_COLUMN, SECOND_SHEET_COLUMN);
 
-                            //string format = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);
-                            //cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom = format;//.Style;
+                            string format = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);
+                            cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom = format;//.Style;
                            
                         }
                         cellRow++;

@@ -272,7 +272,9 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
             cells[row, column].PutValue(data);
             tag.SetStyleExcel(excel, cells, row, column);
             if (column >= startColumn)
-                cells[row, column].Style.HorizontalAlignment = TextAlignmentType.Center;
+                cells[row, column].Style.HorizontalAlignment = TextAlignmentType.Right;
+            else
+                cells[row, column].Style.HorizontalAlignment = TextAlignmentType.Left;
 
             //sheet.AutoFitColumn(column);	
 
@@ -289,7 +291,9 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
         internal static void PutCellValue(Aspose.Cells.Cells cells, object data, int row, int column, int startColumn) {
             cells[row, column].PutValue(data);
             if (column >= startColumn)
-                cells[row, column].Style.HorizontalAlignment = TextAlignmentType.Center;
+                cells[row, column].Style.HorizontalAlignment = TextAlignmentType.Right;
+            else
+            cells[row, column].Style.HorizontalAlignment = TextAlignmentType.Left;
         }
 		#endregion
 

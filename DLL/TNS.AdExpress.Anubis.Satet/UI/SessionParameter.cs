@@ -128,6 +128,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			}
 			ds.Dispose();
 			ds = null;
+            cellRow++;
 			#endregion
 
 			#region Products

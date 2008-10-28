@@ -44,7 +44,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 			ResultTable resultTable=null;
 			bool baseTargetNotFound=true;
 			string baseTarget=string.Empty;
-			string numberFormat = "max0", affinityFormat = "max0", cGrpFormat = "max0", percentFormat = "percentage";
+            string numberFormat = "{0:max0}", affinityFormat = "{0:max0}", cGrpFormat = "{0:max0}", percentFormat = "{0:percentage}";
 
 			#endregion
 		
@@ -96,7 +96,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					lineIndex = resultTable.AddNewLine(LineType.total);
 					resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(baseTarget);
 					CellGRP cGrp = new CellGRP(Math.Round(grpBaseTarget, 3));
-					cGrp.StringFormat = UnitsInformation.Get(WebCste.CustomerSessions.Unit.grp).Format;
+					cGrp.StringFormat = UnitsInformation.Get(WebCste.CustomerSessions.Unit.grp).StringFormat;
 					resultTable[lineIndex, APPMConstantes.GRP_COLUMN_INDEX] = cGrp;
 					if (grpBaseTarget != 0) {
 						CellAffinity cAf = new CellAffinity(Math.Round((grpBaseTarget / grpBaseTarget) * 100, 3));
@@ -130,7 +130,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 							lineIndex = resultTable.AddNewLine(LineType.level1);
 							resultTable[lineIndex,APPMConstantes.FIRST_COLUMN_INDEX]=new CellLabel(row["target"].ToString());
 							CellGRP cGrp1 = new CellGRP(Math.Round(Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]), 3));
-							cGrp1.StringFormat = UnitsInformation.Get(WebCste.CustomerSessions.Unit.grp).Format;
+							cGrp1.StringFormat = UnitsInformation.Get(WebCste.CustomerSessions.Unit.grp).StringFormat;
 							resultTable[lineIndex, APPMConstantes.GRP_COLUMN_INDEX] = cGrp1;
 							if (grpBaseTarget != 0) {
 								CellAffinity cAf4 = new CellAffinity(Math.Round((Convert.ToDouble(row[UnitsInformation.List[WebCste.CustomerSessions.Unit.grp].DatabaseField]) / grpBaseTarget) * 100, 3));

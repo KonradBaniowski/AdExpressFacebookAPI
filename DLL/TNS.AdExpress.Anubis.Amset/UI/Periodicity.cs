@@ -128,22 +128,22 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 						else
                             AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(tagName), null, cellRow, FIRST_SHEET_COLUMN, THIRD_SHEET_COLUMN, false);
 
-                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN,FIRST_SHEET_COLUMN);
+                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN, SECOND_SHEET_COLUMN);
 					
 						if((webSession.Unit==WebConstantes.CustomerSessions.Unit.kEuro)||(webSession.Unit==WebConstantes.CustomerSessions.Unit.pages))
 							valeur = ((CellUnit)resultTable[i,SECOND_TABLE_COLUMN]).Value/1000;
 						else
 							valeur = ((CellUnit)resultTable[i,SECOND_TABLE_COLUMN]).Value;
 
-                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), valeur, cellRow, SECOND_SHEET_COLUMN, FIRST_SHEET_COLUMN);
-						//cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);//Style
-                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).Value, cellRow, THIRD_SHEET_COLUMN, FIRST_SHEET_COLUMN);
-						//cells[cellRow, THIRD_TABLE_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).StringFormat);//Style
+                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), valeur, cellRow, SECOND_SHEET_COLUMN, SECOND_SHEET_COLUMN);
+						cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);//Style
+                        AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).Value, cellRow, THIRD_SHEET_COLUMN, SECOND_SHEET_COLUMN);
+						cells[cellRow, THIRD_TABLE_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).StringFormat);//Style
 						if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
-                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).Value, cellRow, FOURTH_SHEET_COLUMN, FIRST_SHEET_COLUMN);
-							//cells[cellRow, FOURTH_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).StringFormat);// Style;
-                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, FIFTH_TABLE_COLUMN]).Value, cellRow, FIFTH_SHEET_COLUMN, FIRST_SHEET_COLUMN);
-							//cells[cellRow, FIFTH_TABLE_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, FIFTH_TABLE_COLUMN]).StringFormat);//Style;
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).Value, cellRow, FOURTH_SHEET_COLUMN, SECOND_SHEET_COLUMN);
+							cells[cellRow, FOURTH_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).StringFormat);// Style;
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellUnit)resultTable[i, FIFTH_TABLE_COLUMN]).Value, cellRow, FIFTH_SHEET_COLUMN, SECOND_SHEET_COLUMN);
+							cells[cellRow, FIFTH_TABLE_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, FIFTH_TABLE_COLUMN]).StringFormat);//Style;
 						}
 
 						cellRow++;

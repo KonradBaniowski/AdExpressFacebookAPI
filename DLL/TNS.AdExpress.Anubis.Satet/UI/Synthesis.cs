@@ -56,7 +56,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
         private static string _supportValue = "SynthesisSupportValue";
         private static string _referenceTitle = "SynthesisReferenceTitle";
         private static string _referenceValue = "SynthesisReferenceValue";
-        private static string _referenceEnd = "SynthesisReferenceEnd";
+        private static string _referenceEnd = "SynthesisReferenceValueEnd";
         private static string _pdvTitle = "SynthesisPdvTitle";
         private static string _pdvValue = "SynthesisPdvValue";
         private static string _targetSelectedTitle = "SynthesistargetSelectedTitle";
@@ -154,12 +154,14 @@ namespace TNS.AdExpress.Anubis.Satet.UI
                 SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_productValue), synthesisData["product"], cellRow - 1, 2, 2);
 				//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
 				cells[cellRow-1,2].Style.IndentLevel = 2;
+                
 				cellRow++;
 				//Nom de l'announceur
                 SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells,style.GetTag(_annonceurTitle), GestionWeb.GetWebWord(1667, webSession.SiteLanguage) + " :", cellRow - 1, 1, 2);
                 SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_annonceurValue), synthesisData["advertiser"], cellRow - 1, 2, 2);
 				//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
 				cells[cellRow-1,2].Style.IndentLevel = 2;
+                
 				cellRow++;
 				
 				if(mediaAgencyAccess && synthesisData["agency"].ToString().Length>0){
@@ -168,6 +170,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
                     SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_agenceMediaValue), synthesisData["agency"], cellRow - 1, 2,  2);
 					//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
 					cells[cellRow-1,2].Style.IndentLevel = 2;
+                    
 					cellRow++;
 				}
 			}
@@ -177,6 +180,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_periodeValue), synthesisData["dateBegin"] + " " + GestionWeb.GetWebWord(125, webSession.SiteLanguage) + " " + synthesisData["dateEnd"], cellRow - 1, 2,  2);
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			//Budget brut (euros)
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_budgetTitle), GestionWeb.GetWebWord(1669, webSession.SiteLanguage) + " :", cellRow - 1, 1,  2);
@@ -185,6 +189,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].Format);// "# ### ##0";
 			cells[cellRow-1,2].Style.HorizontalAlignment = TextAlignmentType.Left;
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			//Nombre d'insertions
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_insertionTitle), GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + " :", cellRow - 1, 1,  2);
@@ -192,6 +197,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Format); //"# ### ##0";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			//Nombre des pages
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_pageTitle), GestionWeb.GetWebWord(1385, webSession.SiteLanguage) + " :", cellRow - 1, 1,  2);
@@ -199,6 +205,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages].Format); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			//Nombre de supports utilisés
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_supportTitle), GestionWeb.GetWebWord(1670, webSession.SiteLanguage) + " :", cellRow - 1, 1,  2);
@@ -206,6 +213,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 
 			//Secteur de référence
@@ -218,6 +226,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
                     SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_referenceValue), gr, cellRow - 1, 2,  2);
 					//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,10,false);
 					cells[cellRow-1,2].Style.IndentLevel = 2;
+                    
 					cellRow++;
 				}
                 SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_referenceEnd), null, cellRow - 2, 1, 2, false);
@@ -230,6 +239,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
 				cells[cellRow-1,2].Style.IndentLevel = 2;
                 cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNamePercentage);
+                
 				cellRow++;
 			}
 
@@ -238,6 +248,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_targetSelectedValue), synthesisData["targetSelected"], cellRow - 1, 2,  2);
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			// nombre de GRP
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_grpTitle), GestionWeb.GetWebWord(1673, webSession.SiteLanguage) + " :", cellRow - 1, 1,  2);
@@ -245,6 +256,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			// nombre de GRP 15 et +
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_grp15PlusTitle), GestionWeb.GetWebWord(1673, webSession.SiteLanguage) + " " + synthesisData["baseTarget"] + " :", cellRow - 1, 1,  2);
@@ -252,6 +264,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			//Indice GRP vs cible 15 ans à +																				   
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_grpVsTargetTitle), GestionWeb.GetWebWord(1674, webSession.SiteLanguage) + " vs " + synthesisData["baseTarget"] + " :", cellRow - 1, 1,  2);
@@ -259,6 +272,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			// Coût GRP(cible selectionnée)					
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_coutGrpTitle), GestionWeb.GetWebWord(1675, webSession.SiteLanguage) + " :", cellRow - 1, 1,  2);
@@ -266,6 +280,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			// Coût GRP(cible 15 ans et +)					
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_coutGrp15PlusTitle), GestionWeb.GetWebWord(1675, webSession.SiteLanguage) + " " + synthesisData["baseTarget"] + " :", cellRow - 1, 1,  2);
@@ -273,6 +288,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.White,Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 			//Indice coût GRP vs cible 15 ans à +
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_coutGrpVsTargetTitle), GestionWeb.GetWebWord(1676, webSession.SiteLanguage) + " vs " + synthesisData["baseTarget"] + " :", cellRow - 1, 1,  2);
@@ -280,6 +296,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,10,false);
             cells[cellRow - 1, 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax3); //"# ### ##0.0##";
 			cells[cellRow-1,2].Style.IndentLevel = 2;
+            
 			cellRow++;
 
 			#endregion

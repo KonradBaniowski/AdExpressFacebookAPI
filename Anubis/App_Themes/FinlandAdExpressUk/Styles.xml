@@ -223,6 +223,12 @@
         <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
       </borders>
     </cell>
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="TitleFontBlack8" foregroundColor="233, 230, 239">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
     <cell name="CellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="FontBlack8" foregroundColor="233, 230, 239">
       <borders>
         <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
@@ -462,16 +468,13 @@
     <tag name="SessionParameterCheckBoxNotChecked">PictureCheckBoxNotChecked</tag>
 
     <tag name="SynthesisTitle">TitleCellWhite12ForegroundColorPurple</tag>
-    <tag name="SynthesisLabelLine1">CellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
-    <tag name="SynthesisLabelLine2">CellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
-    <tag name="SynthesisValueLine1">CellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
-    <tag name="SynthesisValueLine2">CellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+    <tag name="SynthesisLabelLine1">TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
+    <tag name="SynthesisLabelLine2">TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+    <tag name="SynthesisValueLine1">TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
+    <tag name="SynthesisValueLine2">TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
 
-    <tag name="AverageTitle">TitleCellWhite12ForegroundColorPurple</tag>
-    <tag name="AverageLabelLine1">CellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
-    <tag name="AverageLabelLine2">CellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
-    <tag name="AverageValueLine1">CellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
-    <tag name="AverageValueLine2">CellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+    <tag name="AverageLine1">TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
+    <tag name="AverageLine2">TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
 
     <tag name="SeasonalityRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
     <tag name="SeasonalityRowTotal">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>

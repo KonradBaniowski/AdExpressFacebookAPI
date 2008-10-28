@@ -72,12 +72,8 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		#endregion
 
         #region Variables Theme Name
-        private static string _title = "AverageTitle";
-        private static string _labelLine1 = "AverageLabelLine1";
-        private static string _labelLine2 = "AverageLabelLine2";
-        private static string _valueLine1 = "AverageValueLine1";
-        private static string _valueLine2 = "AverageValueLine2";
-
+        private static string _rowLine1 = "AverageLine1";
+        private static string _rowLine2 = "AverageLine2";
         #endregion
 
 		#region Average
@@ -112,7 +108,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 					Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
 					Cells cells = sheet.Cells;
 					int cellRow = 5, cellColumn=1;
-					Color foreGroundColor, fontColor;
+                    string tagName = string.Empty;
 					double tempValue=0;
 
 					cellRow = AmsetFunctions.WorkSheet.RenderHeader(excel,sheet,cells,style,resultTable.NewHeaders.Root,cellRow,cellColumn);
@@ -122,41 +118,40 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 					for(int i=0; i<resultTable.LinesNumber;i++){
 				
 						if(i!=WHITE_LINE){
-							fontColor=Color.Black;
 							if((changeColor%2)==0)
-								foreGroundColor=Color.FromArgb(233,230,239);
-							else
-								foreGroundColor=Color.FromArgb(208,200,218);
+                                tagName = _rowLine1;
+                            else
+                                tagName = _rowLine2;
 							changeColor++;
 
-							AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow,FIRST_SHEET_COLUMN,FOURTH_SHEET_COLUMN,true,fontColor,foreGroundColor,Color.White,CellBorderType.Thin,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,8,false);
+							AmsetFunctions.WorkSheet.CellsStyle(excel,cells,style.GetTag(tagName),null,cellRow,FIRST_SHEET_COLUMN,FOURTH_SHEET_COLUMN,false);
 
-							AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((CellLabel)resultTable[i,FIRST_TABLE_COLUMN]).Label,cellRow,FIRST_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), ((CellLabel)resultTable[i, FIRST_TABLE_COLUMN]).Label, cellRow, FIRST_SHEET_COLUMN,SECOND_SHEET_COLUMN);
 							
 							if(i==PAGES_INDEX)
 								tempValue=((CellUnit)resultTable[i,SECOND_TABLE_COLUMN]).Value/1000;
 							else
 								tempValue=((CellUnit)resultTable[i,SECOND_TABLE_COLUMN]).Value;
-							
-							AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,tempValue,cellRow,SECOND_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-                            //format = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);
+
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), tempValue, cellRow, SECOND_SHEET_COLUMN, SECOND_SHEET_COLUMN);
+                            format = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, SECOND_TABLE_COLUMN]).StringFormat);
 							cells[cellRow, SECOND_SHEET_COLUMN].Style.Custom = format;
 							
 							if(i==PAGES_INDEX)
 								tempValue=((CellUnit)resultTable[i,THIRD_TABLE_COLUMN]).Value/1000;
 							else
 								tempValue=((CellUnit)resultTable[i,THIRD_TABLE_COLUMN]).Value;
-							
-							AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,tempValue,cellRow,THIRD_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-                            //cells[cellRow, THIRD_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).StringFormat); 
+
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), tempValue, cellRow, THIRD_SHEET_COLUMN, SECOND_SHEET_COLUMN);
+                            cells[cellRow, THIRD_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, THIRD_TABLE_COLUMN]).StringFormat); 
 							
 							if(i==PAGES_INDEX)
 								tempValue=((CellUnit)resultTable[i,FOURTH_TABLE_COLUMN]).Value/1000;
 							else
 								tempValue=((CellUnit)resultTable[i,FOURTH_TABLE_COLUMN]).Value;
-							
-							AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,tempValue,cellRow,FOURTH_SHEET_COLUMN,false,8,FIRST_SHEET_COLUMN);
-                            //cells[cellRow, FOURTH_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).StringFormat);//.Style;*
+
+                            AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(tagName), tempValue, cellRow, FOURTH_SHEET_COLUMN, SECOND_SHEET_COLUMN);
+                            cells[cellRow, FOURTH_SHEET_COLUMN].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPatternFromStringFormat(((CellUnit)resultTable[i, FOURTH_TABLE_COLUMN]).StringFormat);//.Style;*
                            
 							cellRow++;
 						}

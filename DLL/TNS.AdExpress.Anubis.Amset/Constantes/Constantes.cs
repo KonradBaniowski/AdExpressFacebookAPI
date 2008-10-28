@@ -7,7 +7,7 @@ namespace TNS.AdExpress.Anubis.Amset.Constantes {
 		/// <summary>
 		/// Logo TNS
 		/// </summary>
-		public const string LOGO_TNS = @"Images\logoTNSMedia.gif";
+		/*public const string LOGO_TNS = @"Images\logoTNSMedia.gif";
 		/// <summary>
 		/// Logo BASTET
 		/// </summary>
@@ -15,6 +15,6 @@ namespace TNS.AdExpress.Anubis.Amset.Constantes {
 		/// <summary>
 		/// Checkbox image
 		/// </summary>
-		public const string CHECK_BOX = @"Images\checkbox.GIF";
+		public const string CHECK_BOX = @"Images\checkbox.GIF";*/
 	}
 }

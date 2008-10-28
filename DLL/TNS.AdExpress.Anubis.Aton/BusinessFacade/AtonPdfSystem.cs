@@ -525,6 +525,8 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				ResultTable resultTable = APPMRules.SectorDataSynthesisRules.GetSynthesisFormattedTable(_webSession,int.Parse(_webSession.PeriodBeginningDate),int.Parse(_webSession.PeriodEndDate),_idBaseTarget,_idAdditionalTarget);
 				WebControlResultTable webControlResultTable=new WebControlResultTable();
 
+                resultTable.CultureInfo = TNS.AdExpress.Domain.Translation.AdExpressCultureInfo.CurrentUICulture;
+
 				webControlResultTable.Data=resultTable;
 				webControlResultTable.CssL1="synthesisLv1";
 				webControlResultTable.CssL2="synthesisLv2";

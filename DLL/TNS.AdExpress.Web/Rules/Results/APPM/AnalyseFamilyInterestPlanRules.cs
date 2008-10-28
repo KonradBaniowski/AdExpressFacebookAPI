@@ -156,7 +156,7 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM {
 			string products=string.Empty;
 			double currentUnit=0;
 			string period=string.Empty;
-			string percentFormat = "percentage";
+			string percentFormat = "{0:percentage}";
 
 			#endregion
 			
