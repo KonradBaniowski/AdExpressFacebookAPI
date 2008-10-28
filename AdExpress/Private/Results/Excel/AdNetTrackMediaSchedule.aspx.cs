@@ -69,11 +69,12 @@ namespace AdExpress.Private.Results.Excel
 				#region Chargement des paramètres
 				TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type selectionType=(TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type) int.Parse(HttpContext.Current.Request.QueryString.Get("idLevel"));
 				Int64 id=Int64.Parse(HttpContext.Current.Request.QueryString.Get("id"));
+				Int32 vehicleId=Int32.Parse(HttpContext.Current.Request.QueryString.Get("vehicleId"));
 
 				_zooDate = HttpContext.Current.Request.QueryString.Get("zoomDate");
 				if(_zooDate !=null && _zooDate.Length>0)
 					AlertAdNetTrackMediaScheduleWebControl1.ZoomDate = _zooDate;
-
+                AlertAdNetTrackMediaScheduleWebControl1.VehicleId = vehicleId;
 
 
 				_webSession.AdNetTrackSelection=new AdNetTrackProductSelection(selectionType,id);

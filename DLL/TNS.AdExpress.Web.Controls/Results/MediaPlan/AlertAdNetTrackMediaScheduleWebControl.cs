@@ -89,6 +89,14 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             get { return _currentPage; }
             set { _currentPage = value; }
         }
+        /// <summary>
+        /// Get/Set Vehicle Id
+        /// </summary>
+        public int VehicleId {
+            get { return _vehicleId; }
+            set { _vehicleId = value; }
+        }
+        protected int _vehicleId = -1;
         #endregion
 
         #region Javascript
@@ -238,7 +246,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 }
                 param[0] = _customerWebSession;
                 param[1] = period;
-                param[2] = VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.adnettrack);
+                param[2] = _vehicleId;
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 result = mediaScheduleResult.GetHtml();
 

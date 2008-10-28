@@ -75,6 +75,10 @@ namespace AdExpress.Private.Results{
         /// L'identificateur du module
         /// </summary>
         protected Int64 _moduleId = -1;
+        /// <summary>
+        /// L'identificateur du vehicle
+        /// </summary>
+        protected Int32 _vehicleId = -1;
 		#endregion
 
 		#region Constructeur
@@ -118,6 +122,7 @@ namespace AdExpress.Private.Results{
 				#region Chargement des paramètres
 				 selectionType=(TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type) int.Parse(HttpContext.Current.Request.QueryString.Get("idLevel"));
 				 id=Int64.Parse(HttpContext.Current.Request.QueryString.Get("id"));
+                 _vehicleId = Int32.Parse(HttpContext.Current.Request.QueryString.Get("vehicleId"));
 				_zoomDate = HttpContext.Current.Request.QueryString.Get("zoomDate");
 				_urlParameters = HttpContext.Current.Request.QueryString.Get("urlParameters");
                 if(HttpContext.Current.Request.QueryString.Get("universId").Length > 0)
@@ -130,6 +135,7 @@ namespace AdExpress.Private.Results{
                 AlertAdNetTrackMediaScheduleWebControl1.ModuleId = _moduleId;
                 AlertAdNetTrackMediaScheduleWebControl1.UniversId = _universId;
                 AlertAdNetTrackMediaScheduleWebControl1.CurrentPage = page;
+                AlertAdNetTrackMediaScheduleWebControl1.VehicleId = _vehicleId;
 				_webSession.AdNetTrackSelection=new AdNetTrackProductSelection(selectionType,id);
                 #endregion 
 
@@ -247,7 +253,7 @@ namespace AdExpress.Private.Results{
 
 				MenuWebControl1.ForbidHelpPages = true;
 				//MenuWebControl1.ForceHelp = "/Private/Results/Helps/.../ .aspx?idSession="+_webSession.IdSession;
-				MenuWebControl1.ForcePrint = "/Private/Results/Excel/AdNetTrackMediaSchedule.aspx?idSession="+_webSession.IdSession+"&idLevel="+selectionType.GetHashCode()+"&id="+id+"&zoomDate="+_zoomDate;
+				MenuWebControl1.ForcePrint = "/Private/Results/Excel/AdNetTrackMediaSchedule.aspx?idSession="+_webSession.IdSession+"&idLevel="+selectionType.GetHashCode()+"&id="+id+"&zoomDate="+_zoomDate+"&vehicleId="+_vehicleId;
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){

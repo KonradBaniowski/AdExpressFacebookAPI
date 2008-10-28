@@ -43,6 +43,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
         #region Properties
 
+        protected bool _isAdNetTrackMediaSchedule = false;
+
         #region DataBase description
         protected static Schema _schAdexpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
         #endregion
@@ -134,7 +136,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         /// <returns>Data</returns>
         public virtual DataSet GetMediaScheduleAdNetTrackData() {
             string additionalConditions = "";
-            this._vehicleId = VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack);
+            _isAdNetTrackMediaSchedule = true;
             switch(_session.AdNetTrackSelection.SelectionType) {
                 case CstFmk.Results.AdNetTrackMediaSchedule.Type.advertiser:
                     additionalConditions = string.Format(" AND {0}.id_advertiser={1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.AdNetTrackSelection.Id + " ");
@@ -275,20 +277,27 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             #region Construction de la requête
             try {
                 // Get the name of the data table
-                tableName = FctWeb.SQLGenerator.GetDataTableName(periodBreakDown, vehicleId);
+                if (_isAdNetTrackMediaSchedule && vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                {
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersion).SqlWithPrefix;
+                    unitFieldName = string.Format("OCCURRENCE");
+                }
+                else
+                {
+                    tableName = FctWeb.SQLGenerator.GetDataTableName(periodBreakDown, vehicleId);
+                    unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, vehicleId, periodBreakDown);
+                }
                 // Get the classification table
                 mediaTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
                 if(mediaTableName.Length > 0) mediaTableName += ",";
                 // Get unit field
-                dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
-                unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, vehicleId, periodBreakDown);
+                dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);                
                 unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
                 // Periodicity
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, vehicleId, periodDisplay);
                 
                 // Get classification fields
-                if(VehiclesInformation.Contains(vehicleId)
-                    && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack) {
+                if(_isAdNetTrackMediaSchedule || (VehiclesInformation.Contains(vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)) {
                     mediaFieldName = GetAdnettrackSqlFields(detailLevel);
                 }
                 else {
@@ -299,8 +308,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 orderFieldName = detailLevel.GetSqlOrderFields();
                 
                 // Get group by clause
-                if(VehiclesInformation.Contains(vehicleId)
-                    && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack) {
+                if(_isAdNetTrackMediaSchedule || (VehiclesInformation.Contains(vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)) {
                     groupByFieldName = GetAdnettrackSqlGroupByFields(detailLevel);
                 }
                 else {
@@ -421,7 +429,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
             #region Sélection produit
             // product
-            sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            if (!_isAdNetTrackMediaSchedule)
+            {
+                sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            }
             #endregion
 
             #region Sélection support
@@ -433,21 +444,23 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
             #region Rights
             // No media right if AdNetTrack media schedule
-            if(VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
+            if(_isAdNetTrackMediaSchedule)
                 sql.Append(FctWeb.SQLGenerator.GetAdNetTrackMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             else
                 sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Selection
-            if(periodDisplay == CstPeriod.DisplayLevel.dayly || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)) {
+            if(_isAdNetTrackMediaSchedule){
+                sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId);
+            }
+            else if(periodDisplay == CstPeriod.DisplayLevel.dayly) {
                 sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, vehicleId);
             }
             else {
                 list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
                 if(list.Length > 0) sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, list);
             }
-
             #endregion
 
             //Universe media
