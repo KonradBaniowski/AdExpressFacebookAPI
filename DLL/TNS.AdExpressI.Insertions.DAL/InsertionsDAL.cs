@@ -730,6 +730,13 @@ namespace TNS.AdExpressI.Insertions.DAL
                 sql.AppendFormat(" and {0}.id_slogan is not null", tData.Prefix);
             }
 
+            // Version selection
+            string slogans = _session.SloganIdList;
+
+            // Refine vesions
+            if (slogans.Length > 0) {
+                sql.AppendFormat(" and {0}.id_slogan in({1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, slogans);
+            }
             #endregion
 
             if (vehicle.Id != CstDBClassif.Vehicles.names.internet)
