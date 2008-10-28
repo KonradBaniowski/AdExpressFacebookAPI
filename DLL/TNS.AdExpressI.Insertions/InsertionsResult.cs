@@ -4,6 +4,7 @@ using System.Text;
 
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using CsCustomer = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 
@@ -115,6 +116,13 @@ namespace TNS.AdExpressI.Insertions
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
                     string[] ids = filters.Split(',');
                     vehicles = GetVehicles(Convert.ToInt64(ids[0]), Convert.ToInt64(ids[1]), Convert.ToInt64(ids[2]), Convert.ToInt64(ids[3]));
+                    string[] list = _session.GetSelection(_session.SelectionUniversMedia, CsCustomer.Right.type.vehicleAccess).Split(',');
+                    for (int i = vehicles.Count-1; i >= 0; i--)
+                    {
+                        if (Array.IndexOf(list, vehicles[i].DatabaseId.ToString()) < 0){
+                            vehicles.Remove(vehicles[i]);
+                        }
+                    }
                     break;
                 case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
                 case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
@@ -290,7 +298,7 @@ namespace TNS.AdExpressI.Insertions
             if (_getMSCreatives) {
                 setSpecificLine = new SetSpecificLine(SetMSCreativeLine);
             }
-            if (_getMSCreatives){
+            if (_getCreatives){
                 setLine = new SetLine(SetCreativeLine);
             }
             else{

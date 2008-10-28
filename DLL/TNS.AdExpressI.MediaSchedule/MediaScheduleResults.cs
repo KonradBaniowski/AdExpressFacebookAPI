@@ -1579,13 +1579,24 @@ namespace TNS.AdExpressI.MediaSchedule {
                 string cssExtendedClass = string.Empty;
                 string cssClasse = string.Empty;
                 string cssClasseNb = string.Empty;
+                GenericDetailLevel detailLevel = null;
+                if (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) == CstDBClassif.Vehicles.names.adnettrack)
+                {
+                    detailLevel = _session.GenericAdNetTrackDetailLevel;
+                }
+                else
+                {
+                    detailLevel = _session.GenericMediaDetailLevel;
+                }
+
 
                 for(i = 1; i < nbline; i++) {
 
                     #region Color Management
                     if(sloganIndex != -1 && data[i, sloganIndex] != null &&
-                        ((_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) == _session.GenericMediaDetailLevel.GetNbLevels) ||
-                        (_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) < _session.GenericMediaDetailLevel.GetNbLevels && data[i, sloganIndex + 1] == null))) {
+                        ((detailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) == detailLevel.GetNbLevels) ||
+                        (detailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) < detailLevel.GetNbLevels && data[i, sloganIndex + 1] == null)))
+                    {
                         sloganId = Convert.ToInt64(data[i, sloganIndex]);
                         if(!_session.SloganColors.ContainsKey(sloganId)) {
                             colorNumberToUse = (colorItemIndex % _style.CellVersions.Count) + 1;

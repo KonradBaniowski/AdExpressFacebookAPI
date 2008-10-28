@@ -137,7 +137,7 @@ namespace Private.Results{
                 //Module Id
                 this.CreativesWebControl1.IdModule = idModule;
                 //Current vehicle
-                this.CreativesWebControl1.IdVehicle = (idVehicle != null && idVehicle.Length > 0) ? Convert.ToInt32(idVehicle) : -1;
+                this.CreativesWebControl1.IdVehicle = (idVehicle != null && idVehicle.Length > 0) ? Convert.ToInt64(idVehicle) : -1;
                 //Current page
                 this.CreativesWebControl1.PageIndex = (page != null && page.Length > 0) ? Convert.ToInt32(page) : 1;
 

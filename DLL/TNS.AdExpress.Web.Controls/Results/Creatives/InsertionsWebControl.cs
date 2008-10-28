@@ -331,6 +331,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             this._header.VehicleContainerName = "resultParameters.IdVehicle";
             this._header.AutoInitRefresh = false;
             this.Vehicles = _rulesLayer.GetPresentVehicles(_idsFilter, this._idUnivers, this._isCreativeConfig);
+            if (this.Vehicles.Count <= 0)
+            {
+                return;
+            }
             if (!this._isCreativeConfig)
             {
                 this.Controls.Add(_columns);

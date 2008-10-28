@@ -257,16 +257,22 @@ namespace TNS.AdExpressI.Insertions.DAL
             string[] ids = filters.Split(',');
 
             DetailLevelItemInformation level = null;
-            int id = 0;
+            Int64 id = 0;
             for (int i = 0; i < ids.Length && i < detailLevels.Levels.Count; i++)
             {
-                id = Convert.ToInt32(ids[i]);
+                id = Convert.ToInt64(ids[i]);
                 level = (DetailLevelItemInformation)detailLevels.Levels[i];
-                if (id > 0)
+                if (id > 0 || (id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet)))
                 {
                     if (level.DataBaseIdField == CstDB.Fields.ID_VEHICLE && id == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.internet))
                         id = CstDBClassif.Vehicles.names.adnettrack.GetHashCode();
-                    str.AppendFormat(" and {2}.{0} = {1}", level.DataBaseIdField, id, table.Prefix);
+                    if (level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet))
+                    {
+                        str.AppendFormat(" and {1}.hashcode = {0}", id, table.Prefix);
+                    }
+                    else{
+                        str.AppendFormat(" and {2}.{0} = {1}", level.DataBaseIdField, id, table.Prefix);
+                    }
                 }
                 if (id == 0 && level.Id == DetailLevelItemInformation.Levels.slogan && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack)
                 {
@@ -290,12 +296,12 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <returns>SQL</returns>
         private static string CheckZeroVersion(Table table, TNS.AdExpress.Domain.Level.GenericDetailLevel detailLevels, VehicleInformation vehicle, string filters)
         {
-            int id = 0;
+            Int64 id = 0;
             string[] ids = filters.Split(',');
             int rank = detailLevels.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan);
             if (rank != 0)
             {
-                id = Convert.ToInt32(ids[rank - 1]);
+                id = Convert.ToInt64(ids[rank - 1]);
                 if (id == 0 && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack) 
                     return string.Format(" and {0}.id_slogan is null ", table.Prefix);
             }

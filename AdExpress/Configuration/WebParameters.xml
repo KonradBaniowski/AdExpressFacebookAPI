@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<!--<configuration directoryName="33" countryName="France">-->
-<!--<configuration directoryName="333" countryName="France">-->
-<configuration directoryName="35" countryName="Finland">
-</configuration>
+<!--<configuration directoryName="33" countryName="France"/>-->
+<configuration directoryName="333" countryName="France"/>
+<!--<configuration directoryName="35" countryName="Finland"/>-->
