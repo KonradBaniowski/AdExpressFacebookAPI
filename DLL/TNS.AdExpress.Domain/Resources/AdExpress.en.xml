@@ -1,0 +1,1731 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<localization>
+  <globalization>
+    <culture>en</culture>
+  </globalization>
+  <items>
+	  <item mnemonic="w18" type="System.String">Vehicle</item>
+	  <item mnemonic="w46" type="System.String">Ending period date must be higher than than starting period date</item>
+	  <item mnemonic="w67" type="System.String">Name</item>
+	  <item mnemonic="w68" type="System.String">Company</item>
+	  <item mnemonic="w69" type="System.String">Adress</item>
+	  <item mnemonic="w70" type="System.String">Country</item>
+	  <item mnemonic="w71" type="System.String">Phone</item>
+	  <item mnemonic="w72" type="System.String">Postcode</item>
+	  <item mnemonic="w73" type="System.String">Town</item>
+	  <item mnemonic="w74" type="System.String">Comments</item>
+	  <item mnemonic="w75" type="System.String">You can also contact our Adex Monitoring Team</item>
+	  <item mnemonic="w76" type="System.String">Adex Monitoring director</item>
+	  <item mnemonic="w77" type="System.String">Adex Monitoring manager</item>
+	  <item mnemonic="w119" type="System.String">Period</item>
+	  <item mnemonic="w124" type="System.String">From</item>
+	  <item mnemonic="w125" type="System.String">to</item>
+	  <item mnemonic="w144" type="System.String">Number of insertion</item>
+	  <item mnemonic="w150" type="System.String">Media schedule</item>
+	  <item mnemonic="w156" type="System.String">"Please enter your ""keyword"" product"</item>
+	  <item mnemonic="w174" type="System.String">Group of product</item>
+	  <item mnemonic="w175" type="System.String">Category</item>
+	  <item mnemonic="w176" type="System.String">Advertiser</item>
+	  <item mnemonic="w177" type="System.String">There is no result with those parameters</item>
+	  <item mnemonic="w190" type="System.String">Media</item>
+	  <item mnemonic="w201" type="System.String">All</item>
+	  <item mnemonic="w204" type="System.String">PRINT</item>
+	  <item mnemonic="w205" type="System.String">RADIO</item>
+	  <item mnemonic="w206" type="System.String">TELEVISION</item>
+	  <item mnemonic="w210" type="System.String">MULTIMEDIA</item>
+	  <item mnemonic="w228" type="System.String">Category/Group of product</item>
+	  <item mnemonic="w264" type="System.String">Breakdown</item>
+	  <item mnemonic="w280" type="System.String">Duration</item>
+	  <item mnemonic="w285" type="System.String">No request saved.</item>
+	  <item mnemonic="w286" type="System.String">Your request has successfully been deleted</item>
+	  <item mnemonic="w299" type="System.String">Format</item>
+	  <item mnemonic="w304" type="System.String">Unit</item>
+	  <item mnemonic="w305" type="System.String">Mixed</item>
+	  <item mnemonic="w352" type="System.String">Please enter at least 3 letters</item>
+	  <item mnemonic="w363" type="System.String">Media</item>
+	  <item mnemonic="w381" type="System.String">Period of analysis</item>
+	  <item mnemonic="w391" type="System.String">you must select at least one advertiser !</item>
+	  <item mnemonic="w437" type="System.String">SOV</item>
+	  <item mnemonic="w454" type="System.String">Units</item>
+	  <item mnemonic="w464" type="System.String">Spreadsheet parameters</item>
+	  <item mnemonic="w468" type="System.String">Product</item>
+	  <item mnemonic="w469" type="System.String">Surface</item>
+	  <item mnemonic="w471" type="System.String">Price</item>
+	  <item mnemonic="w472" type="System.String">Specification</item>
+	  <item mnemonic="w495" type="System.String">Ad break</item>
+	  <item mnemonic="w496" type="System.String">Date of issue</item>
+	  <item mnemonic="w512" type="System.String">Table parameters :</item>
+	  <item mnemonic="w518" type="System.String">Filters</item>
+	  <item mnemonic="w525" type="System.String">Except insets</item>
+	  <item mnemonic="w527" type="System.String">Except self advertising and subscription</item>
+	  <item mnemonic="w540" type="System.String">Creatives</item>
+	  <item mnemonic="w541" type="System.String">M</item>
+	  <item mnemonic="w542" type="System.String">T</item>
+	  <item mnemonic="w543" type="System.String">T</item>
+	  <item mnemonic="w544" type="System.String">F</item>
+	  <item mnemonic="w545" type="System.String">S</item>
+	  <item mnemonic="w546" type="System.String">S</item>
+	  <item mnemonic="w552" type="System.String">Sub category</item>
+	  <item mnemonic="w561" type="System.String">colour</item>
+	  <item mnemonic="w566" type="System.String">Pages</item>
+	  <item mnemonic="w571" type="System.String">Nber of spots</item>
+	  <item mnemonic="w573" type="System.String">Value</item>
+	  <item mnemonic="w592" type="System.String">Sub group</item>
+	  <item mnemonic="w593" type="System.String">Surface in pages</item>
+	  <item mnemonic="w595" type="System.String">Surface in mmc</item>
+	  <item mnemonic="w597" type="System.String">Adbreak duration</item>
+	  <item mnemonic="w599" type="System.String">Position esp</item>
+	  <item mnemonic="w600" type="System.String">Adbreak duration esp</item>
+	  <item mnemonic="w618" type="System.String">W</item>
+	  <item mnemonic="w644" type="System.String">Radio</item>
+	  <item mnemonic="w646" type="System.String">International press</item>
+	  <item mnemonic="w647" type="System.String">Other Media</item>
+	  <item mnemonic="w648" type="System.String">AdNetTrack</item>
+	  <item mnemonic="w654" type="System.String">MONDAY</item>
+	  <item mnemonic="w655" type="System.String">TUESDAY</item>
+	  <item mnemonic="w656" type="System.String">WEDNESDAY</item>
+	  <item mnemonic="w657" type="System.String">THURSDAY</item>
+	  <item mnemonic="w658" type="System.String">FRIDAY</item>
+	  <item mnemonic="w659" type="System.String">SATURDAY</item>
+	  <item mnemonic="w660" type="System.String">SUNDAY</item>
+	  <item mnemonic="w696" type="System.String">Create a directory</item>
+	  <item mnemonic="w697" type="System.String">Delete a directory</item>
+	  <item mnemonic="w698" type="System.String">Rename a directory</item>
+	  <item mnemonic="w700" type="System.String">Name a new directory</item>
+	  <item mnemonic="w701" type="System.String">Select the directory to be deleted</item>
+	  <item mnemonic="w702" type="System.String">Select a directory</item>
+	  <item mnemonic="w703" type="System.String">Rename the selected directory:</item>
+	  <item mnemonic="w711" type="System.String">Impossible to save this request, you have not created a directory</item>
+	  <item mnemonic="w731" type="System.String">Media agency</item>
+	  <item mnemonic="w750" type="System.String">Media Schedule Alert</item>
+	  <item mnemonic="w751" type="System.String">Media Schedule</item>
+	  <item mnemonic="w756" type="System.String">Information Request Form</item>
+	  <item mnemonic="w757" type="System.String">Presentation</item>
+	  <item mnemonic="w758" type="System.String">TNS Media Intelligence</item>
+	  <item mnemonic="w759" type="System.String">Login</item>
+	  <item mnemonic="w760" type="System.String">Modules</item>
+	  <item mnemonic="w761" type="System.String">My AdExpress</item>
+	  <item mnemonic="w762" type="System.String">Info/News</item>
+	  <item mnemonic="w763" type="System.String">Contact</item>
+	  <item mnemonic="w764" type="System.String">Contact and Information Request Form</item>
+	  <item mnemonic="w765" type="System.String">Please enter your name</item>
+	  <item mnemonic="w766" type="System.String">Please enter the name of your company</item>
+	  <item mnemonic="w767" type="System.String">Please enter an e-mail address</item>
+	  <item mnemonic="w768" type="System.String">The format of your e-mail address is invalid</item>
+	  <item mnemonic="w769" type="System.String">Save working set</item>
+	  <item mnemonic="w770" type="System.String">Load a working set</item>
+	  <item mnemonic="w771" type="System.String">Save your search</item>
+	  <item mnemonic="w772" type="System.String">Search by selecting options from the list opposite:</item>
+	  <item mnemonic="w775" type="System.String">Please select one or more media categories from the list opposite:</item>
+	  <item mnemonic="w776" type="System.String">Search by Calendar Period</item>
+	  <item mnemonic="w777" type="System.String">Search by Rolling Period</item>
+	  <item mnemonic="w781" type="System.String">year(s)</item>
+	  <item mnemonic="w783" type="System.String">month(s)</item>
+	  <item mnemonic="w784" type="System.String">week(s)</item>
+	  <item mnemonic="w785" type="System.String">In the last:</item>
+	  <item mnemonic="w786" type="System.String">Or in the last</item>
+	  <item mnemonic="w787" type="System.String">last year</item>
+	  <item mnemonic="w788" type="System.String">last month</item>
+	  <item mnemonic="w789" type="System.String">Last week</item>
+	  <item mnemonic="w790" type="System.String">Save my results</item>
+	  <item mnemonic="w791" type="System.String">Export to MS Excel</item>
+	  <item mnemonic="w792" type="System.String">Analysis Options</item>
+	  <item mnemonic="w793" type="System.String">Results</item>
+	  <item mnemonic="w794" type="System.String">Other Results</item>
+	  <item mnemonic="w795" type="System.String">SEARCH PARAMETERS</item>
+	  <item mnemonic="w796" type="System.String">Click on one of the links below to change your search parameters.</item>
+	  <item mnemonic="w798" type="System.String">Product set selection</item>
+	  <item mnemonic="w799" type="System.String">Media selection</item>
+	  <item mnemonic="w800" type="System.String">Please select a period from the list opposite:</item>
+	  <item mnemonic="w801" type="System.String">Search by Parent company</item>
+	  <item mnemonic="w802" type="System.String">Search by Advertiser</item>
+	  <item mnemonic="w803" type="System.String">Search by Product</item>
+	  <item mnemonic="w804" type="System.String">VEHICLES</item>
+	  <item mnemonic="w805" type="System.String">TOTAL</item>
+	  <item mnemonic="w806" type="System.String">Market share</item>
+	  <item mnemonic="w811" type="System.String">Search by selecting a product classification level.</item>
+	  <item mnemonic="w812" type="System.String">Click on the corresponding check box to select an item.</item>
+	  <item mnemonic="w813" type="System.String">List of Advertisers:</item>
+	  <item mnemonic="w814" type="System.String">List of Parent companies:</item>
+	  <item mnemonic="w815" type="System.String">List of References:</item>
+	  <item mnemonic="w816" type="System.String">Select/Deselect all advertisers</item>
+	  <item mnemonic="w817" type="System.String">Select/Deselect all products</item>
+	  <item mnemonic="w819" type="System.String">There are no new results for this keyword</item>
+	  <item mnemonic="w820" type="System.String">There are no results for this keyword</item>
+	  <item mnemonic="w821" type="System.String">Welcome to AdExpress, the TNS Media Intelligence AdEx Division website. Please enter your login and password to access our services.</item>
+	  <item mnemonic="w822" type="System.String">Please enter a name to save your search</item>
+	  <item mnemonic="w823" type="System.String">The saved search name may not exceed 50 characters</item>
+	  <item mnemonic="w824" type="System.String">Save unsuccessful. This search name already exists</item>
+	  <item mnemonic="w825" type="System.String">Save unsuccessful. Please try again</item>
+	  <item mnemonic="w826" type="System.String">Your save was successful</item>
+	  <item mnemonic="w827" type="System.String">My AdExpress lists all your saved searches.&lt;br&gt; You can view search parameters, access results directly and create, modify and delete folders.</item>
+	  <item mnemonic="w829" type="System.String">MY ADEXPRESS</item>
+	  <item mnemonic="w830" type="System.String">The search has not been deleted</item>
+	  <item mnemonic="w831" type="System.String">You must select a saved search</item>
+	  <item mnemonic="w832" type="System.String">You are not authorised to view this page. Your rights have been modified.</item>
+	  <item mnemonic="w833" type="System.String">No folders</item>
+	  <item mnemonic="w834" type="System.String">Unable to create folder. This folder name already exists.</item>
+	  <item mnemonic="w835" type="System.String">The folder has been created</item>
+	  <item mnemonic="w836" type="System.String">Unable to create folder. Please try again</item>
+	  <item mnemonic="w837" type="System.String">The field is blank</item>
+	  <item mnemonic="w838" type="System.String">Unable to delete folder. The folder is not empty.</item>
+	  <item mnemonic="w839" type="System.String">No folders found. Please create a folder.</item>
+	  <item mnemonic="w840" type="System.String">Unable to delete your sole folder.</item>
+	  <item mnemonic="w841" type="System.String">The information and advert source you have requested are not available.</item>
+	  <item mnemonic="w842" type="System.String">Study selected:</item>
+	  <item mnemonic="w843" type="System.String">Image not available</item>
+	  <item mnemonic="w844" type="System.String">Period:</item>
+	  <item mnemonic="w845" type="System.String">Medium:</item>
+	  <item mnemonic="w846" type="System.String">Start</item>
+	  <item mnemonic="w847" type="System.String">to finish</item>
+	  <item mnemonic="w848" type="System.String">Week</item>
+	  <item mnemonic="w849" type="System.String">Unit:</item>
+	  <item mnemonic="w851" type="System.String">Unable to load the page</item>
+	  <item mnemonic="w852" type="System.String">Search Parameters:</item>
+	  <item mnemonic="w853" type="System.String">View your selection</item>
+	  <item mnemonic="w854" type="System.String">Selecting a period</item>
+	  <item mnemonic="w855" type="System.String">Your product working set</item>
+	  <item mnemonic="w856" type="System.String">Select all</item>
+	  <item mnemonic="w857" type="System.String">Advertiser</item>
+	  <item mnemonic="w858" type="System.String">Product</item>
+	  <item mnemonic="w859" type="System.String">Group</item>
+	  <item mnemonic="w860" type="System.String">Time aired</item>
+	  <item mnemonic="w861" type="System.String">Duration</item>
+	  <item mnemonic="w862" type="System.String">Position</item>
+	  <item mnemonic="w863" type="System.String">Duration&lt;br&gt;of&lt;br&gt;ad break</item>
+	  <item mnemonic="w864" type="System.String">Number&lt;br&gt;of&lt;br&gt;spots/breaks</item>
+	  <item mnemonic="w865" type="System.String">Position&lt;br&gt;excluding self-promotion</item>
+	  <item mnemonic="w866" type="System.String">Duration&lt;br&gt;of ad break&lt;br&gt;excluding self-promotion</item>
+	  <item mnemonic="w867" type="System.String">Number of spots&lt;br&gt;excluding&lt;br&gt;self-promotion</item>
+	  <item mnemonic="w868" type="System.String">Price (euros)</item>
+	  <item mnemonic="w869" type="System.String">Spot</item>
+	  <item mnemonic="w870" type="System.String">Selection Parameters:</item>
+	  <item mnemonic="w871" type="System.String">Go to Results</item>
+	  <item mnemonic="w872" type="System.String">Save working set</item>
+	  <item mnemonic="w874" type="System.String">Save</item>
+	  <item mnemonic="w875" type="System.String">MY WORKING SET</item>
+	  <item mnemonic="w876" type="System.String">View / Save a source</item>
+	  <item mnemonic="w878" type="System.String">Error: no items have been selected</item>
+	  <item mnemonic="w880" type="System.String">Login / password incorrect</item>
+	  <item mnemonic="w881" type="System.String">Select the working set you wish to move from the following list:</item>
+	  <item mnemonic="w882" type="System.String">Move the selected working set to:</item>
+	  <item mnemonic="w883" type="System.String">Move a working set:</item>
+	  <item mnemonic="w884" type="System.String">Marketing Director</item>
+	  <item mnemonic="w885" type="System.String">You must select a time period</item>
+	  <item mnemonic="w886" type="System.String">You must select a start and an end date before validating</item>
+	  <item mnemonic="w887" type="System.String">Error</item>
+	  <item mnemonic="w888" type="System.String">Information</item>
+	  <item mnemonic="w890" type="System.String">Unable to display Creatives for the media you have chosen or file not specified.</item>
+	  <item mnemonic="w891" type="System.String">Unable to load your session (session missing).</item>
+	  <item mnemonic="w892" type="System.String">The media files are not available.</item>
+	  <item mnemonic="w893" type="System.String">Your working sets</item>
+	  <item mnemonic="w894" type="System.String">Page</item>
+	  <item mnemonic="w895" type="System.String">Date</item>
+	  <item mnemonic="w896" type="System.String">From</item>
+	  <item mnemonic="w897" type="System.String">to</item>
+	  <item mnemonic="w898" type="System.String">For further information about ADEXPRESS and subscriptions, please fill in this form. We will contact you shortly.</item>
+	  <item mnemonic="w900" type="System.String">
+	  </item>
+	  <item mnemonic="w901" type="System.String">Use the dropdown menu to zoom in on one or several levels of the product classification system.&lt;br&gt;You may also zoom in on a particular week or month simply by clicking on it.&lt;br&gt;Furthermore, you may obtain more detailed information about media and sub me</item>
+	  <item mnemonic="w902" type="System.String">"Browse from one period to the next using the directional arrow icons on either side of the period heading. Click on the icon in the ""Creative"" column to view creatives and information bout the insertions.&lt;br&gt;To return to the original results table, click "</item>
+	  <item mnemonic="w903" type="System.String">My working set lists all your saved working set.&lt;br&gt;You can view search parameters and create, modify and delete working set groups.</item>
+	  <item mnemonic="w904" type="System.String">My AdExpress enables you to save all your search parameters&lt;br&gt;(product details (categories or advertisers), vehicles and period).&lt;br&gt;You may therefore re-launch a search a query without re-entering parameters.</item>
+	  <item mnemonic="w905" type="System.String">My working sets enables you to save product or vehicle parameters&lt;br&gt;(categories or advertisers)</item>
+	  <item mnemonic="w906" type="System.String">Search for a saved search</item>
+	  <item mnemonic="w907" type="System.String">Select searches from the following list:</item>
+	  <item mnemonic="w908" type="System.String">Save search:</item>
+	  <item mnemonic="w909" type="System.String">Move search</item>
+	  <item mnemonic="w910" type="System.String">Select the search you wish to move from the following list:</item>
+	  <item mnemonic="w911" type="System.String">Move the selected search to:</item>
+	  <item mnemonic="w912" type="System.String">Create a working set group:</item>
+	  <item mnemonic="w913" type="System.String">Name your working set group:</item>
+	  <item mnemonic="w914" type="System.String">Delete a working set group</item>
+	  <item mnemonic="w915" type="System.String">Select the working set group to be deleted:</item>
+	  <item mnemonic="w916" type="System.String">Rename a working set group</item>
+	  <item mnemonic="w917" type="System.String">Select a working set group:</item>
+	  <item mnemonic="w918" type="System.String">Rename the selected working set group:</item>
+	  <item mnemonic="w920" type="System.String">"To download the creative, select ""Save"", right-click on your desired format and select ""Save target as...""."</item>
+	  <item mnemonic="w921" type="System.String">Save successful</item>
+	  <item mnemonic="w922" type="System.String">Save unsuccessful. Please try again</item>
+	  <item mnemonic="w923" type="System.String">Save unsuccessful. This working set name already exists.</item>
+	  <item mnemonic="w925" type="System.String">Save unsuccessful. You have not created a working set group.</item>
+	  <item mnemonic="w926" type="System.String">You must select a working set</item>
+	  <item mnemonic="w927" type="System.String">No working set groups found. Please create a working set group.</item>
+	  <item mnemonic="w928" type="System.String">Unable to create the working set group. This working set group already exists.</item>
+	  <item mnemonic="w929" type="System.String">Unable to delete your sole working set group.</item>
+	  <item mnemonic="w930" type="System.String">You have not created any working sets</item>
+	  <item mnemonic="w931" type="System.String">Unable to delete the working set group. The working set group is not empty.</item>
+	  <item mnemonic="w932" type="System.String">Delete working set</item>
+	  <item mnemonic="w933" type="System.String">Unable to create the working set group. Please try again.</item>
+	  <item mnemonic="w934" type="System.String">The working set group has been created.</item>
+	  <item mnemonic="w936" type="System.String">Select the working set you wish to delete from the following list:</item>
+	  <item mnemonic="w937" type="System.String">Deletion successful</item>
+	  <item mnemonic="w938" type="System.String">Euros</item>
+	  <item mnemonic="w939" type="System.String">Spots</item>
+	  <item mnemonic="w940" type="System.String">Insertions</item>
+	  <item mnemonic="w941" type="System.String">mm/col</item>
+	  <item mnemonic="w942" type="System.String">Duration</item>
+	  <item mnemonic="w943" type="System.String">Pages</item>
+	  <item mnemonic="w944" type="System.String">Select/Deselect all media</item>
+	  <item mnemonic="w945" type="System.String">January</item>
+	  <item mnemonic="w946" type="System.String">February</item>
+	  <item mnemonic="w947" type="System.String">March</item>
+	  <item mnemonic="w948" type="System.String">April</item>
+	  <item mnemonic="w949" type="System.String">May</item>
+	  <item mnemonic="w950" type="System.String">June</item>
+	  <item mnemonic="w951" type="System.String">July</item>
+	  <item mnemonic="w952" type="System.String">August</item>
+	  <item mnemonic="w953" type="System.String">September</item>
+	  <item mnemonic="w954" type="System.String">October</item>
+	  <item mnemonic="w955" type="System.String">November</item>
+	  <item mnemonic="w956" type="System.String">December</item>
+	  <item mnemonic="w958" type="System.String">One or several parameters are missing. Unable to process your request.</item>
+	  <item mnemonic="w959" type="System.String">An error occurred while your request was being processed.</item>
+	  <item mnemonic="w960" type="System.String">working set Parameters</item>
+	  <item mnemonic="w961" type="System.String">Please select the working set whose parameters you wish to view:</item>
+	  <item mnemonic="w962" type="System.String">Search by Category</item>
+	  <item mnemonic="w963" type="System.String">Search by Sub category</item>
+	  <item mnemonic="w964" type="System.String">Search by Group</item>
+	  <item mnemonic="w965" type="System.String">List of Category:</item>
+	  <item mnemonic="w966" type="System.String">List of sub categories:</item>
+	  <item mnemonic="w967" type="System.String">List of Groups:</item>
+	  <item mnemonic="w968" type="System.String">Select all sub categories</item>
+	  <item mnemonic="w969" type="System.String">Select all groups</item>
+	  <item mnemonic="w970" type="System.String">Category</item>
+	  <item mnemonic="w971" type="System.String">Vehicle</item>
+	  <item mnemonic="w972" type="System.String">Keyword</item>
+	  <item mnemonic="w974" type="System.String">Stop search</item>
+	  <item mnemonic="w975" type="System.String">Click on the following link to return to the results page.</item>
+	  <item mnemonic="w976" type="System.String">Please enter a name to save your working set.</item>
+	  <item mnemonic="w977" type="System.String">Working set</item>
+	  <item mnemonic="w979" type="System.String">Cancel all active working sets</item>
+	  <item mnemonic="w980" type="System.String">"The AdExpress website is best viewed with Internet Explorer (version 6.0). You can download this software from Microsoft's website: &lt;a href=""http://www.microsoft.fr"" target=""blank"" class=""roll05""&gt;http://www.microsoft.fr&lt;/a&gt;."</item>
+	  <item mnemonic="w981" type="System.String">The website may be accessed via a PC.</item>
+	  <item mnemonic="w982" type="System.String">DATA SHEET</item>
+	  <item mnemonic="w983" type="System.String">(August 2004 version)</item>
+	  <item mnemonic="w984" type="System.String">The site is best viewed with the screen resolution set to 1024 by 768 pixels. To modify the resolution, go to the Start menu, select Settings, then Control Panel and launch the Display Properties window. Click on the Settings tab to change the parameters.</item>
+	  <item mnemonic="w985" type="System.String">Excel version 2000 is required to export the data.</item>
+	  <item mnemonic="w986" type="System.String">"Acrobat Reader (version 6.0) is required to view tables in PDF format. You can download this software from Adobe's website: &lt;a href=""http://www.adobe.fr"" target=""blank"" class=""roll05""&gt;www.adobe.fr&lt;/a&gt;."</item>
+	  <item mnemonic="w987" type="System.String">"Certain images on the site may require Macromedia Flash Player (version 7.0). You can download this software from Macromedia's website: &lt;a href=""http://www.macromedia.com"" target=""blank"" class=""roll05""&gt;www.macromedia.com&lt;/a&gt;."</item>
+	  <item mnemonic="w988" type="System.String">"Audio and video advertisements can be accessed via Real One Player (version 2) or Windows Media Player (version 9). You can download this software from Real Networks' website: &lt;a href=""http://www.france.real.com"" target=""blank"" class=""roll05""&gt;www.france"</item>
+	  <item mnemonic="w989" type="System.String">You must save a minimum of two working set groups.</item>
+	  <item mnemonic="w990" type="System.String">Configuration</item>
+	  <item mnemonic="w992" type="System.String">Help</item>
+	  <item mnemonic="w993" type="System.String">Online Help</item>
+	  <item mnemonic="w994" type="System.String">"There are two methods for selecting a product set:&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;1.&amp;nbsp;Search by keyword for product groups, classes, etc.&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;2.&amp;nbsp;Load a saved product working set."</item>
+	  <item mnemonic="w995" type="System.String">Manual Search Function for Product Classification Items</item>
+	  <item mnemonic="w996" type="System.String">Search by selecting your required product classification level and entering a keyword in the text box provided (minimum 2 characters).&lt;br&gt;&lt;br&gt;AdExpress has identified the product items corresponding to your search parameters.&lt;br&gt;&lt;br&gt;Click on the correspon</item>
+	  <item mnemonic="w997" type="System.String">Click on</item>
+	  <item mnemonic="w998" type="System.String">to confirm your current selection and complete the product selection process.&lt;br&gt;&lt;br&gt;</item>
+	  <item mnemonic="w999" type="System.String">"&lt;img src=""/Images/Common/button/initialize_up.gif""&gt;&amp;nbsp;Click on this icon to reset search parameters."</item>
+	  <item mnemonic="w1000" type="System.String">&lt;u&gt;There are 3 selection methods available:&lt;/u&gt;</item>
+	  <item mnemonic="w1001" type="System.String">"1.&amp;nbsp;To select all references represented by a particular advertiser, click on the corresponding advertiser heading. If you then save your selection, all new products from this particular advertiser will be taken into account."</item>
+	  <item mnemonic="w1002" type="System.String">"2.&amp;nbsp;To select an advertiser and remove certain references from the selection, click on the corresponding advertiser heading, then roll out the full list of references by clicking on the double arrow to the right of the advertiser heading and deselect "</item>
+	  <item mnemonic="w1003" type="System.String">"3&amp;nbsp;To select only certain references, roll out the full list by clicking on the double arrow on the right of the advertiser heading and click on the corresponding check boxes. If you then save your selection, only the references you selected will be t"</item>
+	  <item mnemonic="w1004" type="System.String">"This method of selection also applies at other levels of the product classification system.&lt;br&gt;&lt;br&gt;For each level selected, the level directly below can be viewed as follows:&lt;br&gt;&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViole"</item>
+	  <item mnemonic="w1005" type="System.String">&lt;br&gt;Click on</item>
+	  <item mnemonic="w1006" type="System.String">to save your search for future use. You can also name your working set and designate a folder in which it should be stored. The folder ADEXPRESS exists by default. Should you wish to create other folders, go to My AdExpress.</item>
+	  <item mnemonic="w1007" type="System.String">Automatic Download of Saved Product Working set</item>
+	  <item mnemonic="w1008" type="System.String">"The ""My Working sets"" section enables you to reuse saved product sets. To load a working set, click on the double arrow icon located on the right-hand side of the page to bring up a list of available working sets. Make your choice and click on"</item>
+	  <item mnemonic="w1009" type="System.String">to validate.&lt;br&gt;You can order other elements to the loaded working set by using the search by keyword facility.</item>
+	  <item mnemonic="w1010" type="System.String">Browser Icons</item>
+	  <item mnemonic="w1012" type="System.String">This icon enables you to view your parameters at any stage of the search. It is displayed when the first parameter is selected.</item>
+	  <item mnemonic="w1013" type="System.String">This icon enables you to reset the current product set and select new parameters.</item>
+	  <item mnemonic="w1014" type="System.String">This icon enables you to reset the current media set and select new parameters.</item>
+	  <item mnemonic="w1015" type="System.String">This icon enables you to reset your chosen time period and select new parameters.</item>
+	  <item mnemonic="w1016" type="System.String">This icon is displayed when the user modifies search parameters after viewing the results table. It enables you to reset the results table without modifying search parameters.</item>
+	  <item mnemonic="w1017" type="System.String">Selection of a Medium</item>
+	  <item mnemonic="w1018" type="System.String">"To select a medium, click on the corresponding check box.&lt;br&gt;&lt;br&gt;To select or deselect all media, click on the ""Select/Deselect all Media"" link above the list of media.&lt;br&gt;&lt;br&gt;"</item>
+	  <item mnemonic="w1019" type="System.String">to confirm your current selection and complete the media selection process.</item>
+	  <item mnemonic="w1020" type="System.String">"There are two methods for selecting the required time period:&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;1.&amp;nbsp;Search by Calendar Period&lt;br&gt;&amp;nbsp;&amp;nbsp;2.&amp;nbsp;Search by Rolling Period&lt;br&gt;"</item>
+	  <item mnemonic="w1021" type="System.String">Search by Calendar Period</item>
+	  <item mnemonic="w1022" type="System.String">To select a calendar period, use the monthly and weekly calendars provided to choose a start date and an end date. The double arrow icons located on either side of the month heading enable you to skip backwards and forwards in time.&lt;br&gt;&lt;br&gt;</item>
+	  <item mnemonic="w1023" type="System.String">to confirm your current selection and complete the time period selection process. This type of period can be saved in My AdExpress but cannot be shifted over time.</item>
+	  <item mnemonic="w1024" type="System.String">Search by Rolling Period</item>
+	  <item mnemonic="w1025" type="System.String">"To define a rolling period, use the dropdown menus to select as follows:&lt;br&gt;&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11""&gt;&lt;tr&gt;&lt;td width=""10px""&gt;&lt;img src=""/Images/Common/pixel.gif"" width=""10px""&gt;&lt;/td&gt;&lt;td align=""left""&gt;&lt;li&gt;t"</item>
+	  <item mnemonic="w1026" type="System.String">Previous period refers to that preceding the period that is currently active and available on the site.</item>
+	  <item mnemonic="w1027" type="System.String">"&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11""&gt;&lt;tr&gt;&lt;td width=""10px""&gt;&lt;img src=""/Images/Common/pixel.gif"" width=""10px""&gt;&lt;/td&gt;&lt;td align=""left""&gt;&lt;li&gt;the previous year,&lt;br&gt;&lt;li&gt;the previous month,&lt;li&gt;the previous week.&lt;/td&gt;&lt;/tr&gt;&lt;/ta"</item>
+	  <item mnemonic="w1028" type="System.String">&lt;br&gt;or click the check box to make your selection&lt;br&gt;</item>
+	  <item mnemonic="w1029" type="System.String">to confirm your current selection and complete the time period selection process. This type of period can be saved in My AdExpress and can be shifted over time.</item>
+	  <item mnemonic="w1030" type="System.String">To select a calendar period, use the monthly and weekly calendars provided to choose a start date and an end date. The double arrow icons located on either side of the month heading enable you to skip backwards and forwards in time.</item>
+	  <item mnemonic="w1031" type="System.String">"To define a rolling period, use the dropdown menus to select as follows:&lt;br&gt;&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11""&gt;&lt;tr&gt;&lt;td width=""10px""&gt;&lt;img src=""/Images/Common/pixel.gif"" width=""10px""&gt;&lt;/td&gt;&lt;td align=""left""&gt;&lt;li&gt;t"</item>
+	  <item mnemonic="w1032" type="System.String">"&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11""&gt;&lt;tr&gt;&lt;td width=""10px""&gt;&lt;img src=""/Images/Common/pixel.gif"" width=""10px""&gt;&lt;/td&gt;&lt;td align=""left""&gt;&lt;li&gt;the previous month,&lt;li&gt;the previous week.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;"</item>
+	  <item mnemonic="w1033" type="System.String">"The ""Analysis Options"" function enables you to select your required unit of measurement."</item>
+	  <item mnemonic="w1034" type="System.String">Saving</item>
+	  <item mnemonic="w1035" type="System.String">This icon enables you to save your search. Click here to open a save menu window.</item>
+	  <item mnemonic="w1036" type="System.String">"You can name your working set and designate a particular folder in which to save it. The ""AdExpress"" folder exists by default. Should you wish to create other folders, go to ""My AdExpress""."</item>
+	  <item mnemonic="w1038" type="System.String">Results</item>
+	  <item mnemonic="w1042" type="System.String">This icon enables you to display the media hierarchy in detail, down to vehicle level.</item>
+	  <item mnemonic="w1043" type="System.String">This icon enables you to close the media hierarchy back to sub media level.</item>
+	  <item mnemonic="w1044" type="System.String">Click on a main sub media heading to display sub-headings in detail, down to vehicle level. Click on the heading again to mask the sub-headings.&lt;br&gt;&lt;br&gt;Click on a vehicle title to zoom in on its advertising activity. Click on the title again to display th</item>
+	  <item mnemonic="w1045" type="System.String">Zoom Mode</item>
+	  <item mnemonic="w1046" type="System.String">The calendar of advertising activity is set out by month or by week, depending on the search parameters. You can view the calendar in terms of individual days by clicking on the heading corresponding to the required month or week.</item>
+	  <item mnemonic="w1047" type="System.String">In zoom mode, the results are displayed by day over a given month or week. The double arrow icons on either side of the month and week headings enable you to move backwards and forwards in time.</item>
+	  <item mnemonic="w1048" type="System.String">The Creative column enables you to access both the creatives available and a list of insertions. You can access this option by clicking on the</item>
+	  <item mnemonic="w1049" type="System.String">corresponding to your required level (Medium / Sub media / Vehicle). You can then export lists of insertions (month by month or week by week) by clicking on</item>
+	  <item mnemonic="w1050" type="System.String">To return to the original calendar, organised by month or week, click on</item>
+	  <item mnemonic="w1051" type="System.String">in the left-hand margin.</item>
+	  <item mnemonic="w1052" type="System.String">Please select at least one medium.</item>
+	  <item mnemonic="w1053" type="System.String">Category Analysis</item>
+	  <item mnemonic="w1054" type="System.String">Key reports</item>
+	  <item mnemonic="w1055" type="System.String">Detailed reports</item>
+	  <item mnemonic="w1062" type="System.String">Vehicle Portfolio Alert</item>
+	  <item mnemonic="w1064" type="System.String">Please select a medium from the list opposite:</item>
+	  <item mnemonic="w1065" type="System.String">Selection of a Medium</item>
+	  <item mnemonic="w1066" type="System.String">Select/Deselect all vehicles</item>
+	  <item mnemonic="w1067" type="System.String">Select/Deselect all lines</item>
+	  <item mnemonic="w1069" type="System.String">You may select 5 product working sets each comprising one or more items.</item>
+	  <item mnemonic="w1070" type="System.String">You can name your current product working set, before selecting a new working set, by entering the name of your choice in the corresponding text box.</item>
+	  <item mnemonic="w1071" type="System.String">confirms the selection of your current product set, enabling you to continue the product selection process.</item>
+	  <item mnemonic="w1074" type="System.String">"This method of selection also applies at other levels of the product classification system.&lt;br&gt;&lt;br&gt;For each level selected, the level directly below can be viewed as follows:&lt;br&gt;&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViole"</item>
+	  <item mnemonic="w1075" type="System.String">You can modify the name of your saved product working set by entering the new name into the corresponding text box.</item>
+	  <item mnemonic="w1076" type="System.String">Key to the Calendar of Advertising Activity</item>
+	  <item mnemonic="w1077" type="System.String">This colour represents the period in which the advertisement was placed and other available units.</item>
+	  <item mnemonic="w1078" type="System.String">This colour represents the period of advertising coverage, depending on the periodicity of issue of the vehicle.</item>
+	  <item mnemonic="w1079" type="System.String">This colour represents a period of inactivity.</item>
+	  <item mnemonic="w1080" type="System.String">The results table is presented as standard by Media Total / Media / Sub media. The product working sets (maximum of 5) you have selected are listed at each level. </item>
+	  <item mnemonic="w1081" type="System.String">You have no rights concerning the product classification system.</item>
+	  <item mnemonic="w1082" type="System.String">Select/Deselect all sub categories</item>
+	  <item mnemonic="w1083" type="System.String">Select/Deselect all groups</item>
+	  <item mnemonic="w1084" type="System.String">Open / Close all categories</item>
+	  <item mnemonic="w1086" type="System.String">Unable to load the working set. Items contained in this working set have already been selected.</item>
+	  <item mnemonic="w1087" type="System.String">List of vehicles:</item>
+	  <item mnemonic="w1088" type="System.String">Incorrect keyword</item>
+	  <item mnemonic="w1089" type="System.String">List of media:</item>
+	  <item mnemonic="w1090" type="System.String">List of sub media:</item>
+	  <item mnemonic="w1091" type="System.String">You have no rights concerning the media classification system.</item>
+	  <item mnemonic="w1092" type="System.String">Select the groups and sub groups for which you would like to carry out a product class analysis.</item>
+	  <item mnemonic="w1093" type="System.String">Select your reference items</item>
+	  <item mnemonic="w1094" type="System.String">Select your comparative items</item>
+	  <item mnemonic="w1095" type="System.String">No advertisers available</item>
+	  <item mnemonic="w1096" type="System.String">Rename a working set</item>
+	  <item mnemonic="w1097" type="System.String">Select the working set to rename from the following list:</item>
+	  <item mnemonic="w1098" type="System.String">Validate your chosen reference advertisers and select a group of advertisers with which to compare them.</item>
+	  <item mnemonic="w1099" type="System.String">Validate your group of competing advertisers</item>
+	  <item mnemonic="w1100" type="System.String">Rename the selected working set:</item>
+	  <item mnemonic="w1101" type="System.String">Unable to rename the working set. This working set already exists.</item>
+	  <item mnemonic="w1102" type="System.String">SUB-TOTAL</item>
+	  <item mnemonic="w1103" type="System.String">Category</item>
+	  <item mnemonic="w1104" type="System.String">Category/Sub category/Group</item>
+	  <item mnemonic="w1105" type="System.String">Category/Product</item>
+	  <item mnemonic="w1106" type="System.String">Advertiser</item>
+	  <item mnemonic="w1107" type="System.String">Advertiser/Brand</item>
+	  <item mnemonic="w1108" type="System.String">Advertiser/Product</item>
+	  <item mnemonic="w1109" type="System.String">Advertiser/Brand/Product</item>
+	  <item mnemonic="w1110" type="System.String">Group</item>
+	  <item mnemonic="w1111" type="System.String">Group/Brand</item>
+	  <item mnemonic="w1112" type="System.String">Group/Product</item>
+	  <item mnemonic="w1113" type="System.String">Group/Brand/Product</item>
+	  <item mnemonic="w1114" type="System.String">Agency Network/Agency</item>
+	  <item mnemonic="w1115" type="System.String">Media agency/Advertiser</item>
+	  <item mnemonic="w1116" type="System.String">Media agency/Product</item>
+	  <item mnemonic="w1117" type="System.String">Open/Close all media</item>
+	  <item mnemonic="w1118" type="System.String">Comparative study</item>
+	  <item mnemonic="w1119" type="System.String">current year</item>
+	  <item mnemonic="w1120" type="System.String">Year N-2</item>
+	  <item mnemonic="w1121" type="System.String">Year N-1</item>
+	  <item mnemonic="w1122" type="System.String">Selection of Reference Advertisers</item>
+	  <item mnemonic="w1123" type="System.String">Selection of Competing Advertisers</item>
+	  <item mnemonic="w1124" type="System.String">Products classed by:</item>
+	  <item mnemonic="w1125" type="System.String">Portfolio</item>
+	  <item mnemonic="w1126" type="System.String">Absent</item>
+	  <item mnemonic="w1127" type="System.String">Present in more than one vehicle</item>
+	  <item mnemonic="w1128" type="System.String">Exclusive to one vehicle</item>
+	  <item mnemonic="w1129" type="System.String">Click on the links below to refine your selection.</item>
+	  <item mnemonic="w1130" type="System.String">Refine your Product working set</item>
+	  <item mnemonic="w1131" type="System.String">Cancel the product selection</item>
+	  <item mnemonic="w1132" type="System.String">Company</item>
+	  <item mnemonic="w1133" type="System.String">Address</item>
+	  <item mnemonic="w1134" type="System.String">Telephone</item>
+	  <item mnemonic="w1135" type="System.String">Fax</item>
+	  <item mnemonic="w1136" type="System.String">E-mail</item>
+	  <item mnemonic="w1137" type="System.String">www.editiondapres.com</item>
+	  <item mnemonic="w1138" type="System.String">contact@editionsdapres.com</item>
+	  <item mnemonic="w1139" type="System.String">Seasonal variations</item>
+	  <item mnemonic="w1140" type="System.String">Table format:</item>
+	  <item mnemonic="w1141" type="System.String">Media</item>
+	  <item mnemonic="w1142" type="System.String">Media/Sub media</item>
+	  <item mnemonic="w1143" type="System.String">Media/Sub media/Vehicle</item>
+	  <item mnemonic="w1144" type="System.String">Groups/Sub Group</item>
+	  <item mnemonic="w1145" type="System.String">Group/Advertiser</item>
+	  <item mnemonic="w1146" type="System.String">Advertisers</item>
+	  <item mnemonic="w1147" type="System.String">Advertiser/Brand</item>
+	  <item mnemonic="w1148" type="System.String">Advertiser/Product</item>
+	  <item mnemonic="w1149" type="System.String">Brands</item>
+	  <item mnemonic="w1150" type="System.String">Media classed by:</item>
+	  <item mnemonic="w1151" type="System.String">Select/Deselect all sub media</item>
+	  <item mnemonic="w1152" type="System.String">No. of Ref.</item>
+	  <item mnemonic="w1153" type="System.String">Average budget</item>
+	  <item mnemonic="w1154" type="System.String">Top Advertiser</item>
+	  <item mnemonic="w1155" type="System.String">Top Reference</item>
+	  <item mnemonic="w1156" type="System.String">€K (year n)</item>
+	  <item mnemonic="w1157" type="System.String">Strengths</item>
+	  <item mnemonic="w1158" type="System.String">Prospects</item>
+	  <item mnemonic="w1163" type="System.String">Lost</item>
+	  <item mnemonic="w1164" type="System.String">Products</item>
+	  <item mnemonic="w1165" type="System.String">League table</item>
+	  <item mnemonic="w1166" type="System.String">SOV</item>
+	  <item mnemonic="w1167" type="System.String">SOV</item>
+	  <item mnemonic="w1168" type="System.String">Change</item>
+	  <item mnemonic="w1169" type="System.String">Top 10 References</item>
+	  <item mnemonic="w1170" type="System.String">Total in €K</item>
+	  <item mnemonic="w1171" type="System.String">SOV to date</item>
+	  <item mnemonic="w1172" type="System.String">Ranking</item>
+	  <item mnemonic="w1173" type="System.String">Change&lt;br&gt;in ranking</item>
+	  <item mnemonic="w1174" type="System.String">Customised items</item>
+	  <item mnemonic="w1178" type="System.String">View change between the two years.</item>
+	  <item mnemonic="w1179" type="System.String">Show market share.</item>
+	  <item mnemonic="w1180" type="System.String">Show share-of-voice.</item>
+	  <item mnemonic="w1181" type="System.String">Display only customised items (reference items and competing items).</item>
+	  <item mnemonic="w1182" type="System.String">Change unit of calculation.</item>
+	  <item mnemonic="w1183" type="System.String">Validate all display options.</item>
+	  <item mnemonic="w1184" type="System.String">Top 10 Advertisers</item>
+	  <item mnemonic="w1186" type="System.String">SOV</item>
+	  <item mnemonic="w1187" type="System.String">on</item>
+	  <item mnemonic="w1188" type="System.String">Working set</item>
+	  <item mnemonic="w1189" type="System.String">Total</item>
+	  <item mnemonic="w1190" type="System.String">Category Total</item>
+	  <item mnemonic="w1191" type="System.String">Advertising Market Total</item>
+	  <item mnemonic="w1192" type="System.String">Graph</item>
+	  <item mnemonic="w1193" type="System.String">Table</item>
+	  <item mnemonic="w1194" type="System.String">There can be no more than 50 items in your list of reference and competing advertisers.</item>
+	  <item mnemonic="w1195" type="System.String">Media Breakdown</item>
+	  <item mnemonic="w1196" type="System.String">List of Reference Advertisers</item>
+	  <item mnemonic="w1197" type="System.String">List of Competing Advertisers</item>
+	  <item mnemonic="w1198" type="System.String">What's New</item>
+	  <item mnemonic="w1199" type="System.String">You must select at least one group or sub group</item>
+	  <item mnemonic="w1200" type="System.String">You must select at least one item.</item>
+	  <item mnemonic="w1201" type="System.String">References</item>
+	  <item mnemonic="w1202" type="System.String">Reference Advertisers</item>
+	  <item mnemonic="w1203" type="System.String">Competing Advertisers</item>
+	  <item mnemonic="w1204" type="System.String">Reference Items</item>
+	  <item mnemonic="w1205" type="System.String">Competing Items</item>
+	  <item mnemonic="w1206" type="System.String">Ad spend as a %</item>
+	  <item mnemonic="w1207" type="System.String">Ad spend in €K</item>
+	  <item mnemonic="w1209" type="System.String">Change</item>
+	  <item mnemonic="w1210" type="System.String">Top 10 Products (Decreases)</item>
+	  <item mnemonic="w1211" type="System.String">Top 10 Advertisers (Increases)</item>
+	  <item mnemonic="w1212" type="System.String">Top 10 Advertisers (Decreases)</item>
+	  <item mnemonic="w1213" type="System.String">Change (%)</item>
+	  <item mnemonic="w1214" type="System.String">Difference</item>
+	  <item mnemonic="w1215" type="System.String">new</item>
+	  <item mnemonic="w1216" type="System.String">Top 10 Advertisers (Increases-Decreases)</item>
+	  <item mnemonic="w1217" type="System.String">Top 10 Products (Increases-Decreases)</item>
+	  <item mnemonic="w1218" type="System.String">Difference in €K</item>
+	  <item mnemonic="w1219" type="System.String">Most recent active month &lt;br&gt; Previous year (€K)</item>
+	  <item mnemonic="w1220" type="System.String">Most recent active month &lt;br&gt; Previous year</item>
+	  <item mnemonic="w1221" type="System.String">Period of inactivity &lt;br&gt; (No. of Months)</item>
+	  <item mnemonic="w1222" type="System.String">Current month (€K)</item>
+	  <item mnemonic="w1223" type="System.String">New Advertisers</item>
+	  <item mnemonic="w1224" type="System.String">New Products</item>
+	  <item mnemonic="w1225" type="System.String">No results found. The graph is only available if the comparative study option has been selected.</item>
+	  <item mnemonic="w1226" type="System.String">Most recent active months</item>
+	  <item mnemonic="w1227" type="System.String">Inactive months</item>
+	  <item mnemonic="w1228" type="System.String">Media Strategy</item>
+	  <item mnemonic="w1229" type="System.String">Current Year</item>
+	  <item mnemonic="w1230" type="System.String">Year N-2</item>
+	  <item mnemonic="w1231" type="System.String">: Reference items</item>
+	  <item mnemonic="w1232" type="System.String">: Competing items</item>
+	  <item mnemonic="w1233" type="System.String">Other: Neutral elements</item>
+	  <item mnemonic="w1234" type="System.String">Theoretical average month</item>
+	  <item mnemonic="w1235" type="System.String">&lt;center&gt;The frequency of delivery of your data is not valid for this module.&lt;br&gt;Please contact us to resolve this problem.&lt;/center&gt;</item>
+	  <item mnemonic="w1236" type="System.String">Enlarge image</item>
+	  <item mnemonic="w1237" type="System.String">Percentage</item>
+	  <item mnemonic="w1238" type="System.String">Unable to identify the Media level selected.</item>
+	  <item mnemonic="w1239" type="System.String">for the products</item>
+	  <item mnemonic="w1240" type="System.String">for the advertisers</item>
+	  <item mnemonic="w1241" type="System.String">Portfolio</item>
+	  <item mnemonic="w1242" type="System.String">Recurring</item>
+	  <item mnemonic="w1243" type="System.String">Recurring (sliders)</item>
+	  <item mnemonic="w1244" type="System.String">Recurring (climbers)</item>
+	  <item mnemonic="w1245" type="System.String">Won</item>
+	  <item mnemonic="w1246" type="System.String">Lost</item>
+	  <item mnemonic="w1249" type="System.String">Ad spend</item>
+	  <item mnemonic="w1250" type="System.String">Displayed on the screen is a list of the categories from which at least one group or line is active.&lt;br&gt;To define a product set, click on the double arrow icon on the right of the category heading in order to roll out the list of sub category, groups and </item>
+	  <item mnemonic="w1251" type="System.String">1. To select all items within a group, click on the corresponding group heading. If you then save your selection, all new sub groups added to the group will also be taken into account.</item>
+	  <item mnemonic="w1252" type="System.String">2. To select a group but remove certain sub groups, click on the corresponding group heading, roll out the group list by clicking on the double arrow icon and then deselect unwanted sub groups. To select or deselect all lsub groups in the group, simply cl</item>
+	  <item mnemonic="w1253" type="System.String">3. To select sub groups individually, roll out the full list by clicking on the double arrow icon on the right of the group heading and click on the corresponding check boxes. If you then save your selection, only the sub groups you selected will be taken</item>
+	  <item mnemonic="w1254" type="System.String">Updated on</item>
+	  <item mnemonic="w1255" type="System.String">Media Strategy</item>
+	  <item mnemonic="w1256" type="System.String">Print Media</item>
+	  <item mnemonic="w1257" type="System.String">Alert Module</item>
+	  <item mnemonic="w1258" type="System.String">Analysis Module</item>
+	  <item mnemonic="w1259" type="System.String">Data available, by periodicity of issue, until:</item>
+	  <item mnemonic="w1260" type="System.String">at 3 p.m.</item>
+	  <item mnemonic="w1261" type="System.String">at 5 p.m.</item>
+	  <item mnemonic="w1262" type="System.String">at 1 p.m.</item>
+	  <item mnemonic="w1263" type="System.String">at 4 p.m.</item>
+	  <item mnemonic="w1264" type="System.String">Daily and weekly publications* issued today and last Saturday and Sunday</item>
+	  <item mnemonic="w1265" type="System.String">All other types of publication issued today</item>
+	  <item mnemonic="w1266" type="System.String">Daily and weekly publications* issued today</item>
+	  <item mnemonic="w1267" type="System.String">*Depending on the issue date</item>
+	  <item mnemonic="w1268" type="System.String">You can receive advert tracking analysis data in the form of daily alerts.</item>
+	  <item mnemonic="w1269" type="System.String">Television</item>
+	  <item mnemonic="w1270" type="System.String">Full data available until:</item>
+	  <item mnemonic="w1271" type="System.String">Friday, Saturday and Sunday of week N-1</item>
+	  <item mnemonic="w1272" type="System.String">Monday of week N</item>
+	  <item mnemonic="w1273" type="System.String">Tuesday of week N</item>
+	  <item mnemonic="w1274" type="System.String">Wednesday of week N</item>
+	  <item mnemonic="w1275" type="System.String">Thursday of week N</item>
+	  <item mnemonic="w1276" type="System.String">Radio</item>
+	  <item mnemonic="w1277" type="System.String">Alert and Analysis Modules</item>
+	  <item mnemonic="w1278" type="System.String">Viewing data from Category Analyses</item>
+	  <item mnemonic="w1279" type="System.String">at 2 p.m.</item>
+	  <item mnemonic="w1280" type="System.String">at 6 p.m.</item>
+	  <item mnemonic="w1281" type="System.String">Alert: data is available by time slot until:</item>
+	  <item mnemonic="w1282" type="System.String">Friday and Saturday of week N-1</item>
+	  <item mnemonic="w1283" type="System.String">Sunday of week N-1</item>
+	  <item mnemonic="w1284" type="System.String">5-9 a.m. today</item>
+	  <item mnemonic="w1285" type="System.String">5-9 a.m. on Saturday of week N-1</item>
+	  <item mnemonic="w1286" type="System.String">5-9 a.m. on Sunday of week N-1</item>
+	  <item mnemonic="w1287" type="System.String">9 a.m. to midnight on Friday of week N-1</item>
+	  <item mnemonic="w1288" type="System.String">9 a.m. to midnight on Saturday of week N-1</item>
+	  <item mnemonic="w1289" type="System.String">9 a.m. to midnight on Monday of week N</item>
+	  <item mnemonic="w1290" type="System.String">9 a.m. to midnight on Tuesday of week N</item>
+	  <item mnemonic="w1291" type="System.String">9 a.m. to midnight on Wednesday of week N</item>
+	  <item mnemonic="w1292" type="System.String">9 a.m. to midnight on Thursday of week N</item>
+	  <item mnemonic="w1293" type="System.String">Media</item>
+	  <item mnemonic="w1294" type="System.String">Periodicity of Issue</item>
+	  <item mnemonic="w1295" type="System.String">Monthly</item>
+	  <item mnemonic="w1296" type="System.String">Quarterly</item>
+	  <item mnemonic="w1297" type="System.String">Half-yearly</item>
+	  <item mnemonic="w1298" type="System.String">Annual</item>
+	  <item mnemonic="w1299" type="System.String">Press</item>
+	  <item mnemonic="w1300" type="System.String">Radio</item>
+	  <item mnemonic="w1301" type="System.String">Television</item>
+	  <item mnemonic="w1302" type="System.String">Internet</item>
+	  <item mnemonic="w1303" type="System.String">Outdoor</item>
+	  <item mnemonic="w1304" type="System.String">Cinema</item>
+	  <item mnemonic="w1305" type="System.String">Tactical Media</item>
+	  <item mnemonic="w1306" type="System.String">3 weeks*</item>
+	  <item mnemonic="w1308" type="System.String">*Following the period of study</item>
+	  <item mnemonic="w1310" type="System.String">Seasonal Variations</item>
+	  <item mnemonic="w1313" type="System.String">What's New</item>
+	  <item mnemonic="w1314" type="System.String">Unit</item>
+	  <item mnemonic="w1315" type="System.String">Top 10 References</item>
+	  <item mnemonic="w1316" type="System.String">Top 10 References (increases)</item>
+	  <item mnemonic="w1317" type="System.String">Advertising Market Total</item>
+	  <item mnemonic="w1318" type="System.String">Save image</item>
+	  <item mnemonic="w1319" type="System.String">To select a calendar period, use the monthly calendar provided to choose a start date and an end date in the same calendar year. The double arrow icons located on either side of the month heading enable you to skip backwards and forwards in time.&lt;br&gt;&lt;br&gt;</item>
+	  <item mnemonic="w1320" type="System.String">If you wish to carry out a comparative study, check the corresponding box. The previous period will automatically be selected.&lt;br&gt;&lt;br&gt;</item>
+	  <item mnemonic="w1321" type="System.String">"To define a rolling period, use the dropdown menus to select as follows:&lt;br&gt;&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11""&gt;&lt;tr&gt;&lt;td width=""10px""&gt;&lt;img src=""/Images/Common/pixel.gif"" width=""10px""&gt;&lt;/td&gt;&lt;td align=""left""&gt;&lt;li&gt;t"</item>
+	  <item mnemonic="w1322" type="System.String">"&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11""&gt;&lt;tr&gt;&lt;td width=""10px""&gt;&lt;img src=""/Images/Common/pixel.gif"" width=""10px""&gt;&lt;/td&gt;&lt;td align=""left""&gt;&lt;li&gt;the current year,&lt;li&gt;year N-1,&lt;li&gt;year N-2.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;"</item>
+	  <item mnemonic="w1323" type="System.String">If the year N-2 is selected as the reference year, there can be no comparative study.&lt;br&gt;&lt;br&gt;</item>
+	  <item mnemonic="w1324" type="System.String">For each module, you can monitor updates to the site using the tables opposite.</item>
+	  <item mnemonic="w1325" type="System.String">You can consult all TNS Media Intelligence AdEx Division products in the dropdown menus opposite.</item>
+	  <item mnemonic="w1327" type="System.String">In a Multimedia study, the following option</item>
+	  <item mnemonic="w1328" type="System.String">is not active. You can only access the media level when carrying out a Multimedia study.</item>
+	  <item mnemonic="w1329" type="System.String">"The ""Products classed by"" option enables you to change the level of detail at which products are displayed. Select the required level of detail from the dropdown menu."</item>
+	  <item mnemonic="w1330" type="System.String">enables you to zoom in or out in terms of vehicle classification levels (medium, category, vehicle, etc.). You can modify presentation using the dropdown menu.</item>
+	  <item mnemonic="w1331" type="System.String">In a Monomedia study, the following option</item>
+	  <item mnemonic="w1332" type="System.String">"The ""Table Format"" option enables you to change the presentation of your table. Select the required presentation style from the dropdown menu. 9 different formats are available."</item>
+	  <item mnemonic="w1334" type="System.String">You can display or mask change, market share (vehicles) and SOV (products) by checking or unchecking the corresponding boxes and clicking on</item>
+	  <item mnemonic="w1335" type="System.String">shows that no reference or competing items have been selected.</item>
+	  <item mnemonic="w1336" type="System.String">shows that reference and competing items have been selected. These items can therefore be viewed individually.</item>
+	  <item mnemonic="w1337" type="System.String">enables you to confirm the analysis options you have selected.</item>
+	  <item mnemonic="w1340" type="System.String">You can save your parameters using the following options:</item>
+	  <item mnemonic="w1341" type="System.String">"The ""OTHER RESULTS"" function enables you to switch from the ""DETAILED REPORTS"" module to the ""KEY REPORTS"" module by clicking on the ""key reports"" link."</item>
+	  <item mnemonic="w1342" type="System.String">Click on</item>
+	  <item mnemonic="w1343" type="System.String">to view a list of competing advertisers.</item>
+	  <item mnemonic="w1344" type="System.String">To select the competing advertisers, click on the corresponding check boxes to confirm your selection and return to the results table.</item>
+	  <item mnemonic="w1345" type="System.String">"In the ""refine your selection"" zone, click on this icon to customise the presentation of the results table by assigning different colours to reference advertisers and competing advertisers. Click on this icon to view the list of reference advertisers."</item>
+	  <item mnemonic="w1346" type="System.String">To select them from the reference advertisers, click on the corresponding check boxes and to confirm your selection click on</item>
+	  <item mnemonic="w1347" type="System.String">enables you to return to the reference advertiser selection page.</item>
+	  <item mnemonic="w1348" type="System.String">"The 5 following indicators are available:&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;Seasonal Variations:&lt;/b&gt; Breakdown by month of advertising expenditure for the products concerned in year N.&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;League Table:&lt;/b&gt; Ranking of the top ten advertisers and referen"</item>
+	  <item mnemonic="w1349" type="System.String">By default, a graph will be displayed. You can modify the presentation of your results using the following options:</item>
+	  <item mnemonic="w1350" type="System.String">"This option enables you to select the benchmark against which your Product Set will be compared. This option is not available for all key reports. You have 3 options:&lt;br&gt;&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11""&gt;&lt;tr"</item>
+	  <item mnemonic="w1351" type="System.String">You can display the results in graph or table format:</item>
+	  <item mnemonic="w1352" type="System.String">This option enables you to display your results in a graph.</item>
+	  <item mnemonic="w1353" type="System.String">This option enables you to display your results in a table.</item>
+	  <item mnemonic="w1354" type="System.String">This option enables you to enlarge the graph.</item>
+	  <item mnemonic="w1355" type="System.String">"The ""Results"" option enables you to select another key report."</item>
+	  <item mnemonic="w1357" type="System.String">"The ""OTHER RESULTS"" function enables you to switch from the ""KEY REPORTS"" module to the ""DETAILED REPORTS"" module by clicking on the ""Detailed reports"" link."</item>
+	  <item mnemonic="w1358" type="System.String">Media</item>
+	  <item mnemonic="w1360" type="System.String">Search again</item>
+	  <item mnemonic="w1361" type="System.String">Unable to calculate ad spend for the active month</item>
+	  <item mnemonic="w1362" type="System.String">Unable to calculate SOV because the type of calculation total (by working set, category or market) has not been defined.</item>
+	  <item mnemonic="w1363" type="System.String">Unable to identify the type of item (product or advertiser) to be displayed.</item>
+	  <item mnemonic="w1364" type="System.String">Unable to calculate change for each month.</item>
+	  <item mnemonic="w1365" type="System.String">Unable to retrieve the list of months for the period of study.</item>
+	  <item mnemonic="w1366" type="System.String">Reference vehicles</item>
+	  <item mnemonic="w1367" type="System.String">Competing vehicles</item>
+	  <item mnemonic="w1368" type="System.String">Click on the corresponding check box to select a medium.&lt;br&gt;&lt;br&gt;</item>
+	  <item mnemonic="w1369" type="System.String">"There are two methods for selecting a vehicle set:&lt;br&gt;&lt;br&gt;&amp;nbsp;1.&amp;nbsp;Search vehicles by keyword.&lt;br&gt;&amp;nbsp;2.&amp;nbsp;Load a saved vehicle working set."</item>
+	  <item mnemonic="w1370" type="System.String">Vehicle Search Function</item>
+	  <item mnemonic="w1371" type="System.String">"To search, please enter a keyword in the dialogue box (minimum of 2 characters). AdExpress has identified the vehicles that correspond to your search parameters.&lt;br&gt;&lt;br&gt;Click on the corresponding check box to select an element, then click on&amp;nbsp;&lt;img src"</item>
+	  <item mnemonic="w1372" type="System.String">confirms the selection of your current product set and completes the product selection process.</item>
+	  <item mnemonic="w1373" type="System.String">Unable to identify the required summary table.</item>
+	  <item mnemonic="w1374" type="System.String">Please select the date you wish to analyse.</item>
+	  <item mnemonic="w1375" type="System.String">End date</item>
+	  <item mnemonic="w1376" type="System.String">Advertising Summary</item>
+	  <item mnemonic="w1377" type="System.String">Portfolio Breakdown</item>
+	  <item mnemonic="w1378" type="System.String">What's New</item>
+	  <item mnemonic="w1379" type="System.String">Vehicle Breakdown</item>
+	  <item mnemonic="w1380" type="System.String">Structure</item>
+	  <item mnemonic="w1381" type="System.String">Broadcast date</item>
+	  <item mnemonic="w1382" type="System.String">Date of issue</item>
+	  <item mnemonic="w1383" type="System.String">Sub media</item>
+	  <item mnemonic="w1384" type="System.String">Media Owner</item>
+	  <item mnemonic="w1385" type="System.String">Media Genre</item>
+	  <item mnemonic="w1386" type="System.String">Number of pages</item>
+	  <item mnemonic="w1387" type="System.String">Number of pages of advertisements</item>
+	  <item mnemonic="w1388" type="System.String">No. of pages of adverts/no. of pages ratio</item>
+	  <item mnemonic="w1389" type="System.String">Number of pages of advertisements excluding insets</item>
+	  <item mnemonic="w1390" type="System.String">Number of pages of advertisements including insets</item>
+	  <item mnemonic="w1393" type="System.String">Total ad spends in euros</item>
+	  <item mnemonic="w1394" type="System.String">Number of products</item>
+	  <item mnemonic="w1395" type="System.String">Number of new products in the advert tracking selection</item>
+	  <item mnemonic="w1396" type="System.String">Number of new products in the vehicle</item>
+	  <item mnemonic="w1397" type="System.String">Number of advertisers</item>
+	  <item mnemonic="w1398" type="System.String">VIEW OF THE VEHICLE</item>
+	  <item mnemonic="w1399" type="System.String">Number of insertions</item>
+	  <item mnemonic="w1400" type="System.String">ad spend</item>
+	  <item mnemonic="w1401" type="System.String">Insertion:</item>
+	  <item mnemonic="w1402" type="System.String">Total</item>
+	  <item mnemonic="w1403" type="System.String">Inset</item>
+	  <item mnemonic="w1404" type="System.String">Excluding inset</item>
+	  <item mnemonic="w1409" type="System.String">No. of spots (excl. self-promotion)</item>
+	  <item mnemonic="w1410" type="System.String">Click on the cover to view vehicle pages</item>
+	  <item mnemonic="w1411" type="System.String">Advertising Summary</item>
+	  <item mnemonic="w1412" type="System.String">Media Genre</item>
+	  <item mnemonic="w1413" type="System.String">Number of ad breaks</item>
+	  <item mnemonic="w1414" type="System.String">Total duration</item>
+	  <item mnemonic="w1415" type="System.String">Average duration of a spot</item>
+	  <item mnemonic="w1416" type="System.String">Average number of spots per ad break</item>
+	  <item mnemonic="w1417" type="System.String">Category</item>
+	  <item mnemonic="w1418" type="System.String">Advertising Agency</item>
+	  <item mnemonic="w1419" type="System.String">Product name</item>
+	  <item mnemonic="w1420" type="System.String">Value (Euros)</item>
+	  <item mnemonic="w1421" type="System.String">Format</item>
+	  <item mnemonic="w1422" type="System.String">in the vehicle</item>
+	  <item mnemonic="w1423" type="System.String">in the advert tracking selection</item>
+	  <item mnemonic="w1424" type="System.String">Euros</item>
+	  <item mnemonic="w1425" type="System.String">mm/col</item>
+	  <item mnemonic="w1426" type="System.String">Specifications</item>
+	  <item mnemonic="w1427" type="System.String">Category ranking</item>
+	  <item mnemonic="w1428" type="System.String">Group ranking</item>
+	  <item mnemonic="w1429" type="System.String">Vehicle ranking</item>
+	  <item mnemonic="w1430" type="System.String">View data on individual insertions</item>
+	  <item mnemonic="w1431" type="System.String">Duration</item>
+	  <item mnemonic="w1432" type="System.String">ad break</item>
+	  <item mnemonic="w1433" type="System.String">Duration of the ad break</item>
+	  <item mnemonic="w1435" type="System.String">Spots/break</item>
+	  <item mnemonic="w1436" type="System.String">Duration</item>
+	  <item mnemonic="w1437" type="System.String">confirms the selection of your current product set and completes the product selection process.</item>
+	  <item mnemonic="w1438" type="System.String">A standard table will be displayed by default. You can modify parameters using the dropdown menu.</item>
+	  <item mnemonic="w1439" type="System.String">Colour</item>
+	  <item mnemonic="w1440" type="System.String">Position</item>
+	  <item mnemonic="w1441" type="System.String">Insets</item>
+	  <item mnemonic="w1443" type="System.String">To obtain the result as a %, check the corresponding box.</item>
+	  <item mnemonic="w1445" type="System.String">You can sort the product elements in the table by selecting the required order from the dropdown menu.</item>
+	  <item mnemonic="w1446" type="System.String">Video</item>
+	  <item mnemonic="w1447" type="System.String">Price of a 30 sec. Spot</item>
+	  <item mnemonic="w1448" type="System.String">Display product media schedule</item>
+	  <item mnemonic="w1449" type="System.String">Media Agency</item>
+	  <item mnemonic="w1450" type="System.String">New Products:</item>
+	  <item mnemonic="w1451" type="System.String">Periodicity of Issue</item>
+	  <item mnemonic="w1452" type="System.String">Television</item>
+	  <item mnemonic="w1453" type="System.String">Performances</item>
+	  <item mnemonic="w1455" type="System.String">Issues</item>
+	  <item mnemonic="w1456" type="System.String">Cancel customisation</item>
+	  <item mnemonic="w1457" type="System.String">Please select one or more vehicles from the list opposite:</item>
+	  <item mnemonic="w1458" type="System.String">Please select a vehicle from the list opposite:</item>
+	  <item mnemonic="w1459" type="System.String">Vehicle Information</item>
+	  <item mnemonic="w1460" type="System.String">This option shows that no reference or competing items have been selected.</item>
+	  <item mnemonic="w1461" type="System.String">This option shows that reference and competing items have been selected. To cancel the customisation of items, check the following box.</item>
+	  <item mnemonic="w1462" type="System.String">This option shows that no individual products have been selected. The results table therefore displays results for all products in the database.</item>
+	  <item mnemonic="w1463" type="System.String">This option shows that the product set has been refined. To return to the original selection, check the following box.</item>
+	  <item mnemonic="w1464" type="System.String">In the results table, the Advertiser rows include a link to the DOC MARKETING (subject to subscription to this service). To obtain this information, simply click on the corresponding link.</item>
+	  <item mnemonic="w1465" type="System.String">The list of vehicles processed by AdExpress is organised by media genre. To display these lists, click on the double arrow icon on the right of the media genre heading.</item>
+	  <item mnemonic="w1466" type="System.String">confirms the selection of your reference vehicle set and enables you to select a competing vehicle set.</item>
+	  <item mnemonic="w1467" type="System.String">It is possible to create several competing working set by repeating this action.</item>
+	  <item mnemonic="w1468" type="System.String">Each competing working set will be preceded by a sub-total.</item>
+	  <item mnemonic="w1469" type="System.String">Selecting competing vehicles is an optional process. If you do not wish to select a competing vehicle, click on</item>
+	  <item mnemonic="w1470" type="System.String">1. To select all items within a category, click on the corresponding category heading. If you then save your selection, all new sub categories added to the category will also be taken into account.</item>
+	  <item mnemonic="w1471" type="System.String">2. To select a category but remove certain sub categories, click on the corresponding category heading, roll out the category list by clicking on the double arrow icon and then deselect unwanted sub categories. To select or deselect all sub categories in </item>
+	  <item mnemonic="w1472" type="System.String">3. To select sub categories individually, roll out the full list by clicking on the double arrow icon on the right of the category heading and click on the corresponding check boxes. If you then save your selection, only the sub categories you selected wi</item>
+	  <item mnemonic="w1473" type="System.String">"This selection method also applies at other levels of the product classification system.&lt;br&gt;&lt;br&gt;For each level selected, the level directly below can be viewed as follows:&lt;br&gt;&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11"</item>
+	  <item mnemonic="w1474" type="System.String">Please enter at least 2 characters</item>
+	  <item mnemonic="w1475" type="System.String">Calendar of Advertising Activity</item>
+	  <item mnemonic="w1476" type="System.String">"Some vehicles have already been selected. Click on ""Cancel all Current Working sets"" to reset the product selection process."</item>
+	  <item mnemonic="w1477" type="System.String">&lt;b&gt;Strengths:&lt;/b&gt; product items whose market share is higher than the total share of products from all reference vehicles.</item>
+	  <item mnemonic="w1478" type="System.String">&lt;b&gt;Prospects:&lt;/b&gt; product items whose market share is lower than the total share of products from all reference vehicles.</item>
+	  <item mnemonic="w1479" type="System.String">Product media schedule</item>
+	  <item mnemonic="w1480" type="System.String">The vehicle(s) you have selected is/are invalid.</item>
+	  <item mnemonic="w1481" type="System.String">The vehicle(s) you have selected is/are invalid.</item>
+	  <item mnemonic="w1482" type="System.String">The period you have selected is invalid.</item>
+	  <item mnemonic="w1483" type="System.String">The product(s) you have selected is/are invalid.</item>
+	  <item mnemonic="w1484" type="System.String">The medium you have selected is invalid.</item>
+	  <item mnemonic="w1485" type="System.String">"When a working set is redefined, previously selected items are deleted.&lt;br&gt;You cannot use the ""Forward"" and ""Back"" buttons to return to the previous result since elements required to calculate the table will no longer exist."</item>
+	  <item mnemonic="w1486" type="System.String">Your information request has not been sent.</item>
+	  <item mnemonic="w1487" type="System.String">Your e-mail has been sent.</item>
+	  <item mnemonic="w1488" type="System.String">Please select at least one medium.</item>
+	  <item mnemonic="w1489" type="System.String">The module you have requested cannot be accessed.</item>
+	  <item mnemonic="w1490" type="System.String">An error has occurred.&lt;br&gt;The page requested cannot be displayed.</item>
+	  <item mnemonic="w1491" type="System.String">Undefined error.</item>
+	  <item mnemonic="w1492" type="System.String">Category/Advertiser</item>
+	  <item mnemonic="w1493" type="System.String">Category/Advertiser/Product</item>
+	  <item mnemonic="w1494" type="System.String">Results</item>
+	  <item mnemonic="w1495" type="System.String">Recurring</item>
+	  <item mnemonic="w1496" type="System.String">Recurring (sliders)</item>
+	  <item mnemonic="w1497" type="System.String">Recurring (climbers)</item>
+	  <item mnemonic="w1498" type="System.String">Won</item>
+	  <item mnemonic="w1500" type="System.String">Lost</item>
+	  <item mnemonic="w1501" type="System.String">Trends</item>
+	  <item mnemonic="w1502" type="System.String">"There are two methods for selecting a product set:&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;1.&amp;nbsp;Search by keyword for product classification items&lt;br&gt;&amp;nbsp;&amp;nbsp;2.&amp;nbsp;Load saved product working sets&lt;br&gt;"</item>
+	  <item mnemonic="w1503" type="System.String">to confirm your selection.</item>
+	  <item mnemonic="w1504" type="System.String">To search, please enter a keyword in the dialogue box (minimum of 2 characters). AdExpress has identified the vehicles that correspond to your search parameters.&lt;br&gt;&lt;br&gt;Click on the corresponding check box to select an item, then click on</item>
+	  <item mnemonic="w1505" type="System.String">Titles</item>
+	  <item mnemonic="w1506" type="System.String">to confirm your selection.</item>
+	  <item mnemonic="w1507" type="System.String">Please select a date by clicking on the corresponding link.</item>
+	  <item mnemonic="w1508" type="System.String">"The ""Advertising Summary"" table is displayed by default. You can modify its presentation style using the following dropdown menu:"</item>
+	  <item mnemonic="w1509" type="System.String">This key report presents your selection in a summary table, according to the following criteria:</item>
+	  <item mnemonic="w1510" type="System.String">This key report presents your selection in a summary table, according to the following criteria:</item>
+	  <item mnemonic="w1511" type="System.String">In Press, the covers of the various issues of the publications are displayed. Click on the cover to view the publication.</item>
+	  <item mnemonic="w1513" type="System.String">In Press, the following table will be displayed:</item>
+	  <item mnemonic="w1514" type="System.String">"The Creative column enables you to access both the creatives available and a list of insertions. You can access this option by clicking on the corresponding &lt;img src=""/Images/Common/picto_plus.gif""&gt; icon."</item>
+	  <item mnemonic="w1515" type="System.String">"The media schedule column enables you to access media schedules at different product classification levels, simply by clicking on the corresponding &lt;img src=""/Images/Common/picto_plus.gif""&gt; icon."</item>
+	  <item mnemonic="w1516" type="System.String">This table can be displayed showing only insets, including insets or excluding insets by selecting the required option in the following dropdown menu.</item>
+	  <item mnemonic="w1517" type="System.String">In Television and Radio, the following table will be displayed:</item>
+	  <item mnemonic="w1518" type="System.String">In Television and Radio, this key report enables you to view the list of spots per day for the relevant period.</item>
+	  <item mnemonic="w1520" type="System.String">In Press, this key report enables you to view the list of insertions included in each issue of the relevant publication(s).</item>
+	  <item mnemonic="w1521" type="System.String">In Press, this key report enables you to view adverts sorted by format, colour, position and insert.</item>
+	  <item mnemonic="w1522" type="System.String">In Television and Radio, this key report enables you to view all adverts sorted by time slot.</item>
+	  <item mnemonic="w1523" type="System.String">You can view your results in table or graph format by selecting from the following menu:</item>
+	  <item mnemonic="w1524" type="System.String">This key report enables you to view your chosen vehicle's advertising activity sorted by date.</item>
+	  <item mnemonic="w1525" type="System.String">You can switch product classification levels, unit value or market share using the following menus:</item>
+	  <item mnemonic="w1526" type="System.String">Weekly period:</item>
+	  <item mnemonic="w1527" type="System.String">Monthly period:</item>
+	  <item mnemonic="w1528" type="System.String">Year to date</item>
+	  <item mnemonic="w1529" type="System.String">Display the date total.</item>
+	  <item mnemonic="w1530" type="System.String">Click on the link to an ad break from a particular date to obtain information concerning individual adverts.</item>
+	  <item mnemonic="w1532" type="System.String">No corresponding period</item>
+	  <item mnemonic="w1533" type="System.String">Category/Sub category</item>
+	  <item mnemonic="w1534" type="System.String">Select/Deselect all the categories</item>
+	  <item mnemonic="w1535" type="System.String">No categories available</item>
+	  <item mnemonic="w1536" type="System.String">Selecting a Categories</item>
+	  <item mnemonic="w1537" type="System.String">Validate your category selection.</item>
+	  <item mnemonic="w1538" type="System.String">You must select at least one category in order to continue.</item>
+	  <item mnemonic="w1539" type="System.String">Select your categories.</item>
+	  <item mnemonic="w1540" type="System.String">Your search parameters&lt;br&gt;on</item>
+	  <item mnemonic="w1541" type="System.String">Select/Deselect all the media genres</item>
+	  <item mnemonic="w1542" type="System.String">Period selected</item>
+	  <item mnemonic="w1543" type="System.String">Media/Media Genre</item>
+	  <item mnemonic="w1544" type="System.String">Media/Media Genre/Vehicle</item>
+	  <item mnemonic="w1545" type="System.String">Media/Vehicle</item>
+	  <item mnemonic="w1546" type="System.String">1-9 sec</item>
+	  <item mnemonic="w1547" type="System.String">10 sec</item>
+	  <item mnemonic="w1548" type="System.String">11-19 sec</item>
+	  <item mnemonic="w1549" type="System.String">20 sec</item>
+	  <item mnemonic="w1550" type="System.String">21-29 sec</item>
+	  <item mnemonic="w1551" type="System.String">30 sec</item>
+	  <item mnemonic="w1552" type="System.String">31-45 sec</item>
+	  <item mnemonic="w1553" type="System.String">more than 45 sec</item>
+	  <item mnemonic="w1554" type="System.String">5-day week</item>
+	  <item mnemonic="w1555" type="System.String">Monday</item>
+	  <item mnemonic="w1556" type="System.String">Tuesday</item>
+	  <item mnemonic="w1557" type="System.String">Wednesday</item>
+	  <item mnemonic="w1558" type="System.String">Thursday</item>
+	  <item mnemonic="w1559" type="System.String">Friday</item>
+	  <item mnemonic="w1560" type="System.String">Saturday</item>
+	  <item mnemonic="w1561" type="System.String">Sunday</item>
+	  <item mnemonic="w1562" type="System.String">Week end</item>
+	  <item mnemonic="w1563" type="System.String">5.00-6.59</item>
+	  <item mnemonic="w1564" type="System.String">7.00-8.59</item>
+	  <item mnemonic="w1565" type="System.String">7.00-12.00</item>
+	  <item mnemonic="w1566" type="System.String">9.00-12.59</item>
+	  <item mnemonic="w1567" type="System.String">12.00-14.00</item>
+	  <item mnemonic="w1568" type="System.String">13.00-18.59</item>
+	  <item mnemonic="w1569" type="System.String">14.00-17.00</item>
+	  <item mnemonic="w1570" type="System.String">17.00-19.00</item>
+	  <item mnemonic="w1571" type="System.String">19.00-22.00</item>
+	  <item mnemonic="w1572" type="System.String">19.00-24.00</item>
+	  <item mnemonic="w1573" type="System.String">22.00-24.00</item>
+	  <item mnemonic="w1574" type="System.String">24.00-7.00</item>
+	  <item mnemonic="w1575" type="System.String">Day</item>
+	  <item mnemonic="w1576" type="System.String">Time slot</item>
+	  <item mnemonic="w1577" type="System.String">Media Genres</item>
+	  <item mnemonic="w1578" type="System.String">Sub Group/Advertiser</item>
+	  <item mnemonic="w1579" type="System.String">Sub Group/Product</item>
+	  <item mnemonic="w1580" type="System.String">Sub Group/Brand</item>
+	  <item mnemonic="w1581" type="System.String">Media Agency :</item>
+	  <item mnemonic="w1582" type="System.String">Year not available</item>
+	  <item mnemonic="w1584" type="System.String">Category Total</item>
+	  <item mnemonic="w1585" type="System.String">Search by Brand</item>
+	  <item mnemonic="w1587" type="System.String">List of brands</item>
+	  <item mnemonic="w1588" type="System.String">Campaign Review</item>
+	  <item mnemonic="w1589" type="System.String">"&amp;#37;"</item>
+	  <item mnemonic="w1590" type="System.String">Parent</item>
+	  <item mnemonic="w1591" type="System.String">Parent/Advertiser</item>
+	  <item mnemonic="w1592" type="System.String">Parent/Advertiser/Brand</item>
+	  <item mnemonic="w1593" type="System.String">Parent/Advertiser/Product</item>
+	  <item mnemonic="w1594" type="System.String">Tactical media</item>
+	  <item mnemonic="w1596" type="System.String">Other media</item>
+	  <item mnemonic="w1597" type="System.String">Multimedia</item>
+	  <item mnemonic="w1598" type="System.String">Portfolio details</item>
+	  <item mnemonic="w1599" type="System.String">Export (year in columns) to an MS Excel file</item>
+	  <item mnemonic="w1600" type="System.String">Pan-European TV</item>
+	  <item mnemonic="w1601" type="System.String">at 8 p.m.</item>
+	  <item mnemonic="w1602" type="System.String">Calculation of category total</item>
+	  <item mnemonic="w1603" type="System.String">Sub Group/Advertiser/Product</item>
+	  <item mnemonic="w1604" type="System.String">Sub Group/Advertiser/Brand</item>
+	  <item mnemonic="w1605" type="System.String">Numbre of boards</item>
+	  <item mnemonic="w1606" type="System.String">Media Options</item>
+	  <item mnemonic="w1607" type="System.String">Display by:</item>
+	  <item mnemonic="w1608" type="System.String">Wave start date</item>
+	  <item mnemonic="w1609" type="System.String">Wave end date</item>
+	  <item mnemonic="w1610" type="System.String">Type of network</item>
+	  <item mnemonic="w1611" type="System.String">Poster</item>
+	  <item mnemonic="w1612" type="System.String">Outdoor network</item>
+	  <item mnemonic="w1613" type="System.String">No data available for this period: data for month N (full) will be made available on the Friday of the first full week of the following month. Please select another period.</item>
+	  <item mnemonic="w1614" type="System.String">Press reports</item>
+	  <item mnemonic="w1615" type="System.String">Radio reports</item>
+	  <item mnemonic="w1617" type="System.String">Television reports</item>
+	  <item mnemonic="w1618" type="System.String">Open / Close all the Media genres</item>
+	  <item mnemonic="w1619" type="System.String">last week loaded</item>
+	  <item mnemonic="w1620" type="System.String">last month loaded</item>
+	  <item mnemonic="w1621" type="System.String">A default table will be proposed and will include the following elements:&lt;br&gt;&lt;u&gt;Rows:&lt;/u&gt; Vehicles&lt;br&gt;- Press: Media, Categories, Titles.&lt;br&gt;- Radio &amp; TV: Media, Categories, Vehicles.&lt;br&gt;&lt;u&gt;Columns:&lt;/u&gt; Media units selected, periods N and N-1 and changes.</item>
+	  <item mnemonic="w1622" type="System.String">This option enables you to display the results, either cumulated, from the beginning of the year, as weekly or monthly totals.</item>
+	  <item mnemonic="w1623" type="System.String">&lt;b&gt;For Press vehicles, only the year-to-date results are available.&lt;/b&gt;</item>
+	  <item mnemonic="w1624" type="System.String">Regional</item>
+	  <item mnemonic="w1625" type="System.String">National</item>
+	  <item mnemonic="w1642" type="System.String">Local</item>
+	  <item mnemonic="w1643" type="System.String">Ag. Network/Agency/Advertiser</item>
+	  <item mnemonic="w1646" type="System.String">Ag. Network/Agency/Product</item>
+	  <item mnemonic="w1650" type="System.String">Select a wave</item>
+	  <item mnemonic="w1651" type="System.String">Select an AEPM wave</item>
+	  <item mnemonic="w1652" type="System.String">Select an AEPM wave from the following list:</item>
+	  <item mnemonic="w1653" type="System.String">You must select at least one AEPM wave.</item>
+	  <item mnemonic="w1654" type="System.String">No AEPM waves are available.</item>
+	  <item mnemonic="w1655" type="System.String">Select a basic target and an additional target from the following list:</item>
+	  <item mnemonic="w1656" type="System.String">Select a target</item>
+	  <item mnemonic="w1658" type="System.String">No AEPM targets are available.</item>
+	  <item mnemonic="w1659" type="System.String">Basic target</item>
+	  <item mnemonic="w1660" type="System.String">Select an additional target</item>
+	  <item mnemonic="w1662" type="System.String">Agglomeration</item>
+	  <item mnemonic="w1663" type="System.String">Click on this button to export the table of results as it is presented on-screen and print it.The table will then be copied into an Excel document, which will open automatically. All elements produced on-line will be exported into the same column. You wil</item>
+	  <item mnemonic="w1664" type="System.String">Click on this button to export the results table to sort data with Excel. The table will then be copied into an Excel document, which will open automatically. All elements produced on-line will be exported into separate columns. You will then be able to s</item>
+	  <item mnemonic="w1665" type="System.String">Summary</item>
+	  <item mnemonic="w1666" type="System.String">Analysis by periodicity</item>
+	  <item mnemonic="w1667" type="System.String">Campaign summary</item>
+	  <item mnemonic="w1668" type="System.String">Advertiser name</item>
+	  <item mnemonic="w1669" type="System.String">Reference sector</item>
+	  <item mnemonic="w1670" type="System.String">Gross budget (euros)</item>
+	  <item mnemonic="w1671" type="System.String">Number of vehicles used</item>
+	  <item mnemonic="w1672" type="System.String">Campaign share of voice</item>
+	  <item mnemonic="w1673" type="System.String">Target selected</item>
+	  <item mnemonic="w1674" type="System.String">Number of GRPs</item>
+	  <item mnemonic="w1675" type="System.String">GRP index</item>
+	  <item mnemonic="w1676" type="System.String">GRP cost</item>
+	  <item mnemonic="w1677" type="System.String">GRP cost index</item>
+	  <item mnemonic="w1678" type="System.String">Reference set</item>
+	  <item mnemonic="w1679" type="System.String">Competitor set</item>
+	  <item mnemonic="w1680" type="System.String">GRP</item>
+	  <item mnemonic="w1682" type="System.String">Analysis by title</item>
+	  <item mnemonic="w1684" type="System.String">Valuation of the plan</item>
+	  <item mnemonic="w1685" type="System.String">100%</item>
+	  <item mnemonic="w1686" type="System.String">GRP cost</item>
+	  <item mnemonic="w1687" type="System.String">Affinity</item>
+	  <item mnemonic="w1688" type="System.String">Affinities</item>
+	  <item mnemonic="w1689" type="System.String">The list of media is displayed on screen. To select an element, click on the corresponding box. You may select one or more elements from a particular medium.</item>
+	  <item mnemonic="w1690" type="System.String">Click on MULTIMEDIA to obtain a Multimedia Product Class Analysis broken down by medium.&lt;br&gt;&lt;br&gt;Click on CINEMA to obtain a Product Class Analysis with no further detail.&lt;br&gt;&lt;br&gt;Click on PRESS or INTERNET to obtain a Sector-based Analysis broken down by s</item>
+	  <item mnemonic="w1691" type="System.String">Selection criteria:</item>
+	  <item mnemonic="w1692" type="System.String">You cannot deselect the categories and vehicles of a particular medium simply by clicking on it. They are selected and deselected for the medium as a whole.</item>
+	  <item mnemonic="w1693" type="System.String">You cannot deselect the vehicles of a particular sub-medium simply by clicking on it. They are selected and deselected for the sub-medium as a whole.</item>
+	  <item mnemonic="w1694" type="System.String">"Click to select one or more vehicles; only selected vehicles will be included in the set."</item>
+	  <item mnemonic="w1695" type="System.String">Click on the following link to select or deselect all the categories of a particular medium:</item>
+	  <item mnemonic="w1696" type="System.String">Click on the following link to select or deselect all the vehicles of a particular category:</item>
+	  <item mnemonic="w1697" type="System.String">Click on the following link to expand or collapse all the media:</item>
+	  <item mnemonic="w1698" type="System.String">Click on the double arrow icon located next to your medium to expand or collapse it:</item>
+	  <item mnemonic="w1699" type="System.String">The lack of a double arrow icon indicates that there is no further detail available for this element.</item>
+	  <item mnemonic="w1700" type="System.String">Click on the button to validate your current selection</item>
+	  <item mnemonic="w1701" type="System.String">The list of available categories is displayed on screen. You can select one or several categories. Check the corresponding box to select a category.&lt;br&gt;Click on the following link to select or deselect all the categories:</item>
+	  <item mnemonic="w1702" type="System.String">The list of vehicles is displayed by genre. You can select one or more elements. To select an element (Medium, Genre or Vehicle), check the appropriate box(es).</item>
+	  <item mnemonic="w1703" type="System.String">
+	  </item>
+	  <item mnemonic="w1704" type="System.String">You cannot deselect the vehicles of a particular media genre simply by clicking on it. They are selected and deselected for the media genre as a whole.</item>
+	  <item mnemonic="w1705" type="System.String">"Click to select one or more vehicles; only selected vehicles will be included in the set."</item>
+	  <item mnemonic="w1706" type="System.String">Click on the following link to expand or collapse all the genres:</item>
+	  <item mnemonic="w1707" type="System.String">Click on the following link to select or deselect all the genres of a particular medium:</item>
+	  <item mnemonic="w1708" type="System.String">Click on the following link to select or deselect all the vehicles of a particular genre:</item>
+	  <item mnemonic="w1709" type="System.String">Targets</item>
+	  <item mnemonic="w1710" type="System.String">To define a calendar period, select a start date and an end date from the monthly calendar that is broken down into weeks. The double arrow icons located on either side of the year box allow you to move backwards and forwards in time.&lt;br&gt;&lt;br&gt;The dates you</item>
+	  <item mnemonic="w1711" type="System.String">"Check the appropriate boxes to define your sliding period.&lt;br&gt;&lt;br&gt;Check the appropriate box as listed under the sliding periods to carry out a comparative study.&lt;br&gt;&lt;br&gt;""Last month loaded"" refers to the most recent loaded and complete month.&lt;br&gt;""Last week"</item>
+	  <item mnemonic="w1712" type="System.String">to confirm your current selection and complete the definition of your sliding period. This type of period may be saved in My AdExpress and modified over time.</item>
+	  <item mnemonic="w1713" type="System.String">Budget</item>
+	  <item mnemonic="w1714" type="System.String">Performance</item>
+	  <item mnemonic="w1715" type="System.String">A default spreadsheet will be displayed. You can modify its layout using the following options. Some options are specific to certain media and are not always available.</item>
+	  <item mnemonic="w1716" type="System.String">Use the dropdown menu to zoom in on a particular genre.</item>
+	  <item mnemonic="w1717" type="System.String">Use the dropdown menu to zoom in on a particular category.</item>
+	  <item mnemonic="w1718" type="System.String">Use the dropdown menu to display the unit for each medium.</item>
+	  <item mnemonic="w1719" type="System.String">Use the dropdown menu to zoom in on a particular day.</item>
+	  <item mnemonic="w1720" type="System.String">Use the dropdown menu to zoom in on a particular time slot.</item>
+	  <item mnemonic="w1721" type="System.String">Use the dropdown menu to zoom in on a particular format.</item>
+	  <item mnemonic="w1722" type="System.String">Use the dropdown menu to zoom in on a particular month or week.</item>
+	  <item mnemonic="w1723" type="System.String">Use the dropdown menu to modify the level of detail of your spreadsheet.</item>
+	  <item mnemonic="w1724" type="System.String">Check the relevant boxes to add additional criteria:&lt;br&gt;MS: Market Share (Products)&lt;br&gt;SOV: Share of Voice (Vehicles)&lt;br&gt;%: horizontal percentage&lt;br&gt;Change: change if using comparative periods</item>
+	  <item mnemonic="w1725" type="System.String">Use the dropdown menu to select the type of spreadsheet you want to use.</item>
+	  <item mnemonic="w1727" type="System.String">Use the dropdown menu to turn the insert option on or off.</item>
+	  <item mnemonic="w1728" type="System.String">Analysis by insertion</item>
+	  <item mnemonic="w1729" type="System.String">Analysis by share of voice</item>
+	  <item mnemonic="w1730" type="System.String">from</item>
+	  <item mnemonic="w1731" type="System.String">to</item>
+	  <item mnemonic="w1732" type="System.String">Proof</item>
+	  <item mnemonic="w1733" type="System.String">Location</item>
+	  <item mnemonic="w1734" type="System.String">Analysis by title</item>
+	  <item mnemonic="w1735" type="System.String">Reference Set</item>
+	  <item mnemonic="w1736" type="System.String">GRP 15yrs</item>
+	  <item mnemonic="w1737" type="System.String">Breakdown of</item>
+	  <item mnemonic="w1738" type="System.String">by press category</item>
+	  <item mnemonic="w1739" type="System.String">by periodicity</item>
+	  <item mnemonic="w1740" type="System.String">and</item>
+	  <item mnemonic="w1741" type="System.String">Analysis by press category</item>
+	  <item mnemonic="w1742" type="System.String">Analysis by location</item>
+	  <item mnemonic="w1743" type="System.String">Types of location</item>
+	  <item mnemonic="w1746" type="System.String">Breakdown</item>
+	  <item mnemonic="w1747" type="System.String">File name</item>
+	  <item mnemonic="w1748" type="System.String">Save as a PDF</item>
+	  <item mnemonic="w1749" type="System.String">Please enter a file name and your e-mail address</item>
+	  <item mnemonic="w1750" type="System.String">AdExpress -- APPM PDF generated</item>
+	  <item mnemonic="w1751" type="System.String">The PDF document</item>
+	  <item mnemonic="w1752" type="System.String">"is available on &lt;a href=""{0}""&gt;AdExpress&lt;/a&gt; in the ""My AdExpress"" section."</item>
+	  <item mnemonic="w1753" type="System.String">Study parameters</item>
+	  <item mnemonic="w1754" type="System.String">My downloads lists all your pending files. Open this window to select the file or files you require.</item>
+	  <item mnemonic="w1755" type="System.String">Press periodicities</item>
+	  <item mnemonic="w1757" type="System.String">Period</item>
+	  <item mnemonic="w1759" type="System.String">Targets</item>
+	  <item mnemonic="w1760" type="System.String">Product set</item>
+	  <item mnemonic="w1761" type="System.String">Search for a file</item>
+	  <item mnemonic="w1762" type="System.String">Select a file from the following list:</item>
+	  <item mnemonic="w1763" type="System.String">Wave:</item>
+	  <item mnemonic="w1764" type="System.String">Targets:</item>
+	  <item mnemonic="w1765" type="System.String">Click on this button to export your spreadsheet of results as shown on screen and print it. The spreadsheet will then be copied into an Excel file that will open automatically. The periods listed in the spreadsheet will be exported in columns (and not in </item>
+	  <item mnemonic="w1766" type="System.String">Unable to select a wave for this period. Please select a different period.</item>
+	  <item mnemonic="w1767" type="System.String">Advertiser's copy</item>
+	  <item mnemonic="w1768" type="System.String">Surface in pages</item>
+	  <item mnemonic="w1769" type="System.String">Surface in mmc</item>
+	  <item mnemonic="w1770" type="System.String">Specification</item>
+	  <item mnemonic="w1771" type="System.String">Ad spend</item>
+	  <item mnemonic="w1773" type="System.String">Current AEPM wave</item>
+	  <item mnemonic="w1774" type="System.String">Schedule of actions</item>
+	  <item mnemonic="w1775" type="System.String">Types of periodicity</item>
+	  <item mnemonic="w1776" type="System.String">Breakdown of SOV in GRP</item>
+	  <item mnemonic="w1777" type="System.String">For more information, please visit tnsadexpress.com or contact any of the members of the AdEx Division team at TNS Media Intelligence.</item>
+	  <item mnemonic="w1778" type="System.String">Press Categories</item>
+	  <item mnemonic="w1779" type="System.String">My download</item>
+	  <item mnemonic="w1780" type="System.String">OUTDOOR</item>
+	  <item mnemonic="w1781" type="System.String">Selection total</item>
+	  <item mnemonic="w1782" type="System.String">Select an image:</item>
+	  <item mnemonic="w1783" type="System.String">Choosing an image</item>
+	  <item mnemonic="w1786" type="System.String">No images are available for this vehicle.</item>
+	  <item mnemonic="w1787" type="System.String">Example of an image</item>
+	  <item mnemonic="w1788" type="System.String">Unable to access the results as the data for this period are incomplete.</item>
+	  <item mnemonic="w1789" type="System.String">You must select an additional target.</item>
+	  <item mnemonic="w1790" type="System.String">Keuros</item>
+	  <item mnemonic="w1791" type="System.String">Gross budget (KEuros)</item>
+	  <item mnemonic="w1792" type="System.String">RECAP OF YOUR CHOICES</item>
+	  <item mnemonic="w1793" type="System.String">Media</item>
+	  <item mnemonic="w1794" type="System.String">Start date</item>
+	  <item mnemonic="w1795" type="System.String">End date</item>
+	  <item mnemonic="w1796" type="System.String">Unit</item>
+	  <item mnemonic="w1797" type="System.String">Excel format</item>
+	  <item mnemonic="w1798" type="System.String">Export as a PDF file</item>
+	  <item mnemonic="w1799" type="System.String">AdExpress -- Excel statistics generated</item>
+	  <item mnemonic="w1800" type="System.String">For a calendar period, select (using the monthly or weekly calendar) a start date and an end date. You can access data from the last 12 months or the last 53 weeks.&lt;br&gt;&lt;br&gt;You can select a month by clicking on it and a week by clicking on its number.</item>
+	  <item mnemonic="w1801" type="System.String">Selecting an additional target</item>
+	  <item mnemonic="w1802" type="System.String">to confirm the selection of your additional target.</item>
+	  <item mnemonic="w1803" type="System.String">You can choose an additional target by selecting it from the following list. It will then be automatically added to your original target base.</item>
+	  <item mnemonic="w1804" type="System.String">This is a round-up of the campaign parameters.</item>
+	  <item mnemonic="w1805" type="System.String">Use this dropdown menu to choose which Media Agencies file you wish to work on.</item>
+	  <item mnemonic="w1806" type="System.String">Use this dropdown menu to display one of the products from your original selection.</item>
+	  <item mnemonic="w1807" type="System.String">This indicator enables you to view a calendar of all the plan's active vehicles. It is broken down by month or by week, depending on your initial specifications. You can view the calendar in greater detail (day) by clicking on the heading of the appropria</item>
+	  <item mnemonic="w1808" type="System.String">"Click on the image &lt;img src=""/Images/Common/picto_plus.gif""&gt; in the ""Creations"" column of the calendar to view details of individual ad insertions in a given vehicle."</item>
+	  <item mnemonic="w1809" type="System.String">"You can also export this analysis by insertion by clicking on the icon &lt;img src=""/Images/Common/button/print_up.gif""&gt; in the upper left area of the spreadsheet."</item>
+	  <item mnemonic="w1810" type="System.String">"From the ""analysis by insertion"" results page, click on the image &lt;img src=""/Images/Common/picto_plus.gif""&gt; in the ""Copy"" column to display the advertiser's copy of the insertion in question."</item>
+	  <item mnemonic="w1811" type="System.String">Click on the image to enlarge it.</item>
+	  <item mnemonic="w1812" type="System.String">to display the view of the vehicle at the page where the selected insertion is located.</item>
+	  <item mnemonic="w1813" type="System.String">to exit zoom mode and return to the initial calendar.</item>
+	  <item mnemonic="w1814" type="System.String">This indicator enables you to view the results of the plan broken down by title and according to the budget or GRP of the targets, as a value or a percentage.</item>
+	  <item mnemonic="w1815" type="System.String">This indicator enables you to view the share of voice of the plan in relation to the reference set (all the product groups of the set or the sum of the selected elements) according to the following variables: budget, page count, insertions and GRP of the </item>
+	  <item mnemonic="w1816" type="System.String">This indicator enables you to view the breakdown (as a value and as a %) of the investments per period according to the following variables: budget, page count, insertions and GRP of the targets.</item>
+	  <item mnemonic="w1817" type="System.String">This indicator enables you to view the breakdown (as a value and as a %) of the investments per press category according to the following variables: budget, page count, insertions and GRP of the targets.</item>
+	  <item mnemonic="w1818" type="System.String">This indicator enables you to view the relationship between each individual target and the overall 15 target, in terms of GRP and C/GRP.</item>
+	  <item mnemonic="w1820" type="System.String">This dropdown menu enables you to display your result according to all the other available variables.</item>
+	  <item mnemonic="w1821" type="System.String">"Click on this icon to open the following window and to enter a file name and an e-mail address to enable us to inform you when the PDF file is available.&lt;br&gt;&lt;br&gt;The ""select an image"" option enables you to select one of the plan's available images to be ex"</item>
+	  <item mnemonic="w1822" type="System.String">to validate your choices and begin extracting the PDF file.</item>
+	  <item mnemonic="w1823" type="System.String">to cancel the PDF export request.</item>
+	  <item mnemonic="w1824" type="System.String">"Your PDF file is available on AdExpress in the ""My AdExpress"" section."</item>
+	  <item mnemonic="w1825" type="System.String">"from the ""My Downloads"" menu, you can access the list of all available PDF files.&lt;br&gt;&lt;br&gt;You can then select your required file by clicking on it (link) to open and then save it to your computer.&lt;br&gt;&lt;br&gt;Files are stored in My AdExpress for 7 days."</item>
+	  <item mnemonic="w1826" type="System.String">Outdoor Advertising</item>
+	  <item mnemonic="w1827" type="System.String">at 9am</item>
+	  <item mnemonic="w1828" type="System.String">Sunday of week N-2</item>
+	  <item mnemonic="w1829" type="System.String">Trend Modules and Reports</item>
+	  <item mnemonic="w1830" type="System.String">* The Trends module is presented, for each medium, based on the alert vehicles, in addition to the CABLE&amp;SATELLITE CHANNELS category for the TV medium.</item>
+	  <item mnemonic="w1831" type="System.String">Trends Module *&lt;br&gt;Press Reports Module&lt;br&gt;Radio Reports Module&lt;br&gt;TV Reports Module</item>
+	  <item mnemonic="w1832" type="System.String">List of available vehicles (on alert)</item>
+	  <item mnemonic="w1833" type="System.String">List of available vehicles</item>
+	  <item mnemonic="w1834" type="System.String">File not available</item>
+	  <item mnemonic="w1835" type="System.String">The attached Excel file contains the usage statistics of AdExpress, the TNS Media Intelligence AdEx portal.</item>
+	  <item mnemonic="w1836" type="System.String">There are no statistics concerning the AdExpress portal for your parameters.</item>
+	  <item mnemonic="w1837" type="System.String">Display the list of spots for the whole period.</item>
+	  <item mnemonic="w1838" type="System.String">Display the list of insertions for the whole period.</item>
+	  <item mnemonic="w1839" type="System.String">TV</item>
+	  <item mnemonic="w1840" type="System.String">TV (theme channels)</item>
+	  <item mnemonic="w1841" type="System.String">at 7.30pm</item>
+	  <item mnemonic="w1842" type="System.String">Radio</item>
+	  <item mnemonic="w1843" type="System.String">Radio (Paris stations)</item>
+	  <item mnemonic="w1844" type="System.String">Pan-Euro TV (standard channels)</item>
+	  <item mnemonic="w1845" type="System.String">Pan-Euro TV (sponsored channels)</item>
+	  <item mnemonic="w1846" type="System.String">at 7pm</item>
+	  <item mnemonic="w1847" type="System.String">last month(s) of the current year</item>
+	  <item mnemonic="w1848" type="System.String">Categories</item>
+	  <item mnemonic="w1849" type="System.String">Sub-categories</item>
+	  <item mnemonic="w1850" type="System.String">Groups</item>
+	  <item mnemonic="w1851" type="System.String">Agency Networks</item>
+	  <item mnemonic="w1852" type="System.String">Agencies</item>
+	  <item mnemonic="w1853" type="System.String">Number</item>
+	  <item mnemonic="w1854" type="System.String">Summary</item>
+	  <item mnemonic="w1855" type="System.String">The dates you have selected are not in the same format.</item>
+	  <item mnemonic="w1856" type="System.String">The end date of your period may not fall before its start date.</item>
+	  <item mnemonic="w1857" type="System.String">The study is carried out by calendar year.</item>
+	  <item mnemonic="w1858" type="System.String">Comparative studies may not be carried out using the year N-2.</item>
+	  <item mnemonic="w1859" type="System.String">Export the values to an Excel file</item>
+	  <item mnemonic="w1860" type="System.String">Module</item>
+	  <item mnemonic="w1861" type="System.String">Media/M. Owner</item>
+	  <item mnemonic="w1862" type="System.String">Media/M. Owner/Vehicle</item>
+	  <item mnemonic="w1863" type="System.String">M. Owner/Vehicle</item>
+	  <item mnemonic="w1864" type="System.String">M. Owner/Media/Vehicle</item>
+	  <item mnemonic="w1865" type="System.String">M. Owner/Media Genre</item>
+	  <item mnemonic="w1866" type="System.String">M. Owner/Media Genre/Vehicle</item>
+	  <item mnemonic="w1867" type="System.String">Media/Sub-Media/Vehicle/Version</item>
+	  <item mnemonic="w1868" type="System.String">Media/Vehicle/Version</item>
+	  <item mnemonic="w1869" type="System.String">Media/Media Genre/Vehicle/Version</item>
+	  <item mnemonic="w1870" type="System.String">Media/M. Owner/Vehicle/Version</item>
+	  <item mnemonic="w1871" type="System.String">M. Owner/Vehicle/Version</item>
+	  <item mnemonic="w1872" type="System.String">M. Owner/Media/Vehicle/Version</item>
+	  <item mnemonic="w1873" type="System.String">M. Owner/Media Genre/Vehicle/Version</item>
+	  <item mnemonic="w1874" type="System.String">Version/Vehicle</item>
+	  <item mnemonic="w1875" type="System.String">Version/Media/Vehicle</item>
+	  <item mnemonic="w1876" type="System.String">Version/Media/Sub-Media/Vehicle</item>
+	  <item mnemonic="w1877" type="System.String">Version/Media/Media Genre/Vehicle</item>
+	  <item mnemonic="w1878" type="System.String">Version/Media/M. Owner/Vehicle</item>
+	  <item mnemonic="w1879" type="System.String">Version/M. Owner/Vehicle</item>
+	  <item mnemonic="w1880" type="System.String">Version/M. Owner/Media/Vehicle</item>
+	  <item mnemonic="w1881" type="System.String">Version/M. Owner/Media Genre/Vehicle</item>
+	  <item mnemonic="w1882" type="System.String">Version Code</item>
+	  <item mnemonic="w1884" type="System.String">No results: you do not have autorisation to access the details of Outdoor Advertising insertions.</item>
+	  <item mnemonic="w1885" type="System.String">This button enables you to export the results table as it is presented on-screen in order to print it. Click on this button to copy the values from the calendar into an Excel file, which will open automatically. You may then save the file for future refer</item>
+	  <item mnemonic="w1886" type="System.String">"In a media schedule presented by version, the presence of a version is indicated by an ""X"" on a coloured background. This symbol is placed under the period during which the ad was placed. The versions are assigned different colours to allow you to differe"</item>
+	  <item mnemonic="w1887" type="System.String">Levels broken down by:</item>
+	  <item mnemonic="w1888" type="System.String">Media genre</item>
+	  <item mnemonic="w1889" type="System.String">Version</item>
+	  <item mnemonic="w1890" type="System.String">Brand</item>
+	  <item mnemonic="w1891" type="System.String">Agency network</item>
+	  <item mnemonic="w1892" type="System.String">Agency</item>
+	  <item mnemonic="w1893" type="System.String">Pan-Euro Reports</item>
+	  <item mnemonic="w1894" type="System.String">Category/Parent Co./Advertiser</item>
+	  <item mnemonic="w1895" type="System.String">List of sub-groups:</item>
+	  <item mnemonic="w1896" type="System.String">List of products:</item>
+	  <item mnemonic="w1897" type="System.String">Customised levels</item>
+	  <item mnemonic="w1898" type="System.String">Saved levels</item>
+	  <item mnemonic="w1899" type="System.String">L</item>
+	  <item mnemonic="w1900" type="System.String">Construction</item>
+	  <item mnemonic="w1901" type="System.String">Budget in €K (selection total)</item>
+	  <item mnemonic="w1902" type="System.String">Budget in €K (category total)</item>
+	  <item mnemonic="w1903" type="System.String">Budget in €K (market total)</item>
+	  <item mnemonic="w1904" type="System.String">SOV (selection compared with category total)</item>
+	  <item mnemonic="w1905" type="System.String">SOV (selection compared with market total)</item>
+	  <item mnemonic="w1906" type="System.String">No. of active advertisers (selection total)</item>
+	  <item mnemonic="w1907" type="System.String">No. of active products (selection total)</item>
+	  <item mnemonic="w1908" type="System.String">Average budget KEuros per advertiser (selection total)</item>
+	  <item mnemonic="w1909" type="System.String">Average budget KEuros per product (selection total)</item>
+	  <item mnemonic="w1911" type="System.String">Image</item>
+	  <item mnemonic="w1912" type="System.String">Loading...</item>
+	  <item mnemonic="w1913" type="System.String">Save as a text file</item>
+	  <item mnemonic="w1914" type="System.String">Export as a text file</item>
+	  <item mnemonic="w1915" type="System.String">Product code</item>
+	  <item mnemonic="w1916" type="System.String">Vehicle code</item>
+	  <item mnemonic="w1917" type="System.String">Advertiser code</item>
+	  <item mnemonic="w1918" type="System.String">AdExpress -- APPM Text File generated</item>
+	  <item mnemonic="w1919" type="System.String">The text document</item>
+	  <item mnemonic="w1920" type="System.String">Text ChronoPresse</item>
+	  <item mnemonic="w1921" type="System.String">AdExpress -- APPM Excel File generated</item>
+	  <item mnemonic="w1922" type="System.String">The Excel document</item>
+	  <item mnemonic="w1923" type="System.String">Created on</item>
+	  <item mnemonic="w1925" type="System.String">Export as an Excel file</item>
+	  <item mnemonic="w1926" type="System.String">Choose your versions</item>
+	  <item mnemonic="w1927" type="System.String">Including self-advertising and subscriptions</item>
+	  <item mnemonic="w1928" type="System.String">Including inserts</item>
+	  <item mnemonic="w1929" type="System.String">Creative</item>
+	  <item mnemonic="w1931" type="System.String">Alert</item>
+	  <item mnemonic="w1932" type="System.String">Sub-category</item>
+	  <item mnemonic="w1933" type="System.String">Select/deselect all versions</item>
+	  <item mnemonic="w1934" type="System.String">Duration</item>
+	  <item mnemonic="w1935" type="System.String">Ad break code</item>
+	  <item mnemonic="w1936" type="System.String">Price in €</item>
+	  <item mnemonic="w1937" type="System.String">"Price in &amp;euro;"</item>
+	  <item mnemonic="w1938" type="System.String"># spots / adbreak</item>
+	  <item mnemonic="w1939" type="System.String"># spots esp</item>
+	  <item mnemonic="w1940" type="System.String">#billboards</item>
+	  <item mnemonic="w1941" type="System.String">Excel ChronoPresse</item>
+	  <item mnemonic="w1942" type="System.String">Hello,&lt;br&gt;&lt;br&gt;here is the advertiser portfolio of the following vehicle:</item>
+	  <item mnemonic="w1943" type="System.String">No results for the advertiser portfolio of the following vehicle:</item>
+	  <item mnemonic="w1944" type="System.String">Deleting the set¿</item>
+	  <item mnemonic="w1945" type="System.String">Saving the set¿</item>
+	  <item mnemonic="w1946" type="System.String">Unable to save</item>
+	  <item mnemonic="w1949" type="System.String">Cancel your Version set</item>
+	  <item mnemonic="w1950" type="System.String">esp : except self promotion</item>
+	  <item mnemonic="w1951" type="System.String">Trash</item>
+	  <item mnemonic="w1952" type="System.String">Delete</item>
+	  <item mnemonic="w1953" type="System.String">Save</item>
+	  <item mnemonic="w1955" type="System.String">"&lt;img src=""/Images/Common/button/bt_loupe_up.gif""&gt;&amp;nbsp;Use this button for search help. After entering a search item in the relevant field, click on the search help key. You then see the number of items corresponding to your search and indicated in each b"</item>
+	  <item mnemonic="w1956" type="System.String">"The ""Analysis options"" function allows you to select the unit, one of the predefined detail levels or one of the customised detail levels using the dropdown menus below:"</item>
+	  <item mnemonic="w1957" type="System.String">"The ""Customised Levels"" option helps you to choose the levels of detail that you wish to display in your schedule. You have 4 possible hierarchical levels from the product and vehicle detail levels. Use the dropdown lists to build your own customised leve"</item>
+	  <item mnemonic="w1958" type="System.String">Confirm your choice by clicking on</item>
+	  <item mnemonic="w1959" type="System.String">"The ""Saved levels"" option allows you to reuse previously saved levels. Click on the arrow on the right to display the dropdown menu of the levels saved, thus allowing you to select the desired level."</item>
+	  <item mnemonic="w1960" type="System.String">Click on this icon to save your own levels of detail and reuse them later.</item>
+	  <item mnemonic="w1961" type="System.String">Click on this icon to delete the customised levels of detail that you no longer require.</item>
+	  <item mnemonic="w1962" type="System.String">This button is used to fine-tune your set of versions. Click on this button to access the list of versions classified by Advertiser, Product, Medium. You can then apply a filter at version level.</item>
+	  <item mnemonic="w1963" type="System.String">Cancel this option by checking the option box</item>
+	  <item mnemonic="w1964" type="System.String">Cancel your filter by clicking on</item>
+	  <item mnemonic="w1965" type="System.String">This button is used to export the list of spots (or insertions) as displayed on the screen for printing.&lt;br&gt;Click on this button to copy the list of spots (or insertions) into an Excel table opened automatically. All the items produced online will be expo</item>
+	  <item mnemonic="w1966" type="System.String">This option is used to export only those items that you wish to export. By clicking on the double arrow, the window below will open allowing you to choose the columns to export and their classification in Excel. You can change the order of the columns by </item>
+	  <item mnemonic="w1967" type="System.String">Drag and drop columns to the trash in the right-hand side of the window to delete them.&lt;br&gt;Add deleted items by dragging and dropping them into the customised levels at the required location.</item>
+	  <item mnemonic="w1968" type="System.String">This button is used to delete all the customised levels.</item>
+	  <item mnemonic="w1969" type="System.String">This button is used to add all the customised levels.</item>
+	  <item mnemonic="w1970" type="System.String">"Confirm your choice by clicking on the key&amp;nbsp;&lt;img src=""/Images/Common/button/ok_up.gif""&gt;, then on the export icon&amp;nbsp;&lt;img src=""/Images/Common/button/print_up.gif""&gt;."</item>
+	  <item mnemonic="w1971" type="System.String">Save as a Excel file</item>
+	  <item mnemonic="w1972" type="System.String">AdExpress -- Key reports Pdf File generated</item>
+	  <item mnemonic="w1973" type="System.String">Detail of press versions</item>
+	  <item mnemonic="w1974" type="System.String">An error has occurred and the result cannot be calculated</item>
+	  <item mnemonic="w1975" type="System.String">last few days</item>
+	  <item mnemonic="w1976" type="System.String">day before</item>
+	  <item mnemonic="w1978" type="System.String">Title</item>
+	  <item mnemonic="w1979" type="System.String">Go back</item>
+	  <item mnemonic="w1980" type="System.String">Market summary</item>
+	  <item mnemonic="w1981" type="System.String">League table</item>
+	  <item mnemonic="w1982" type="System.String">PDF ChronoPresse</item>
+	  <item mnemonic="w1983" type="System.String">PDF Key reports</item>
+	  <item mnemonic="w1984" type="System.String">Result</item>
+	  <item mnemonic="w1985" type="System.String">Product</item>
+	  <item mnemonic="w1986" type="System.String">Medium</item>
+	  <item mnemonic="w1987" type="System.String">Date</item>
+	  <item mnemonic="w1988" type="System.String">Version</item>
+	  <item mnemonic="w1989" type="System.String">Help</item>
+	  <item mnemonic="w1990" type="System.String">Selection reminder</item>
+	  <item mnemonic="w1991" type="System.String">Save</item>
+	  <item mnemonic="w1992" type="System.String">Target</item>
+	  <item mnemonic="w1993" type="System.String">Export</item>
+	  <item mnemonic="w1994" type="System.String">Fine-tune versions</item>
+	  <item mnemonic="w1996" type="System.String">Versions</item>
+	  <item mnemonic="w1997" type="System.String">Formatted result (Excel)</item>
+	  <item mnemonic="w1998" type="System.String">Result with values (Excel)</item>
+	  <item mnemonic="w1999" type="System.String">Schedule by version</item>
+	  <item mnemonic="w2000" type="System.String">Number of vehicles</item>
+	  <item mnemonic="w2001" type="System.String">Date of the first insertion of the version</item>
+	  <item mnemonic="w2002" type="System.String">Brand name</item>
+	  <item mnemonic="w2003" type="System.String">Version weight v product total</item>
+	  <item mnemonic="w2005" type="System.String">Campaign summary by version</item>
+	  <item mnemonic="w2006" type="System.String">Version number</item>
+	  <item mnemonic="w2007" type="System.String">AdExpress -- Media Schedule Alert Pdf File generated</item>
+	  <item mnemonic="w2008" type="System.String">You can select no more than 1000 versions</item>
+	  <item mnemonic="w2009" type="System.String">PDF Media Schedule Alert</item>
+	  <item mnemonic="w2010" type="System.String">PDF schedule by version</item>
+	  <item mnemonic="w2011" type="System.String">AdExpress -- PDF Schedule by version generated</item>
+	  <item mnemonic="w2012" type="System.String">Detail of radio versions</item>
+	  <item mnemonic="w2013" type="System.String">Detail of television versions</item>
+	  <item mnemonic="w2014" type="System.String">Year in columns (Excel)</item>
+	  <item mnemonic="w2015" type="System.String">Gross result (Excel)</item>
+	  <item mnemonic="w2016" type="System.String">All results (PDF)</item>
+	  <item mnemonic="w2017" type="System.String">Result (Image)</item>
+	  <item mnemonic="w2018" type="System.String">Result (PDF)</item>
+	  <item mnemonic="w2020" type="System.String">9.00-24.00 from Sunday of week N-1</item>
+	  <item mnemonic="w2021" type="System.String">The buttons below appear as a search is being built and when a results table is being modified and can be accessed with a right mouse-click.</item>
+	  <item mnemonic="w2022" type="System.String">The buttons below can be accessed with a right mouse-click</item>
+	  <item mnemonic="w2023" type="System.String">This button is for exporting all the images from our set and the schedule by version in PDF format.</item>
+	  <item mnemonic="w2024" type="System.String">"When the schedule is presented by ""Version"", the images from each version present in the set being searched are placed above the schedule."</item>
+	  <item mnemonic="w2025" type="System.String">This button is for viewing a version's rotation schedule</item>
+	  <item mnemonic="w2026" type="System.String">Click on this link to go back to the initial schedule presenting all the versions.</item>
+	  <item mnemonic="w2027" type="System.String">This button is for exporting the various items produced from your result in the different columns.</item>
+	  <item mnemonic="w2028" type="System.String">This key is for exporting the various items produced from your result in the different columns.</item>
+	  <item mnemonic="w2029" type="System.String">This button is for displaying the list of spots over the entire period searched.</item>
+	  <item mnemonic="w2030" type="System.String">This button is for enlarging the graph displayed on the screen.</item>
+	  <item mnemonic="w2031" type="System.String">This key allows you to export all indicators in their graphic format in PDF format</item>
+	  <item mnemonic="w2032" type="System.String">"The option ""Reference Advertisers"" can be accessed with a right mouse-click and allows you to display only the reference advertisers and rival advertisers defined using the icon &lt;img src=""/Images/Common/button/universe_up.gif""&gt;. Check the box to view thes"</item>
+	  <item mnemonic="w2033" type="System.String">Use this button to export the list of Press insertions from the set searched in text format.</item>
+	  <item mnemonic="w2034" type="System.String">Use this key to export all the different results from the set searched in Excel format.</item>
+	  <item mnemonic="w2035" type="System.String">PDF result: this key is used to export the schedule by Version in PDF format.</item>
+	  <item mnemonic="w2037" type="System.String">All the results (PDF): this key allows you to export your campaign report in PDF format (outside of the schedule).</item>
+	  <item mnemonic="w2038" type="System.String">This key report allows you to display a schedule with the images from all the active vehicles in the schedule. The schedule by version is presented by month broken down into weeks offering a daily view of the advertising activity.</item>
+	  <item mnemonic="w2039" type="System.String">The images from each version present in the set searched are placed above the schedule.</item>
+	  <item mnemonic="w2041" type="System.String">Click on this link to view a campaign summary by version.</item>
+	  <item mnemonic="w2042" type="System.String">The e-mail address you have entered is incorrect</item>
+	  <item mnemonic="w2043" type="System.String">of</item>
+	  <item mnemonic="w2044" type="System.String">Periods &lt;font color=#F83939&gt;« « in red »&lt;/font&gt; are not completely updated and are thus not comparable with those of the previous year.</item>
+	  <item mnemonic="w2045" type="System.String">Print</item>
+	  <item mnemonic="w2046" type="System.String">Number of lines per page</item>
+	  <item mnemonic="w2048" type="System.String">Repeat header</item>
+	  <item mnemonic="w2049" type="System.String">Campaign analysis</item>
+	  <item mnemonic="w2050" type="System.String">Programme analysis</item>
+	  <item mnemonic="w2051" type="System.String">Programme category</item>
+	  <item mnemonic="w2052" type="System.String">Programmes</item>
+	  <item mnemonic="w2053" type="System.String">Sponsorship Categories</item>
+	  <item mnemonic="w2054" type="System.String">Refine the vehicle population</item>
+	  <item mnemonic="w2055" type="System.String">Open/close all programme categories</item>
+	  <item mnemonic="w2056" type="System.String">Select/deselect all programmes</item>
+	  <item mnemonic="w2057" type="System.String">Select/deselect all sponsorship categories</item>
+	  <item mnemonic="w2058" type="System.String">Choose one or more sponsorship categories from the following list:</item>
+	  <item mnemonic="w2059" type="System.String">Choose one or more programme categories/programmes from the following list:</item>
+	  <item mnemonic="w2060" type="System.String">You must select at least one sponsorship category!</item>
+	  <item mnemonic="w2061" type="System.String">You must select at least one programme!</item>
+	  <item mnemonic="w2062" type="System.String">Units</item>
+	  <item mnemonic="w2063" type="System.String">List of programme categories:</item>
+	  <item mnemonic="w2064" type="System.String">List of sponsorship categories:</item>
+	  <item mnemonic="w2065" type="System.String">Horizontal</item>
+	  <item mnemonic="w2066" type="System.String">Vertical</item>
+	  <item mnemonic="w2067" type="System.String">Programme categories:</item>
+	  <item mnemonic="w2068" type="System.String">Sponsorship Categories:</item>
+	  <item mnemonic="w2069" type="System.String">Day Week</item>
+	  <item mnemonic="w2070" type="System.String">Cancel the vehicle selection</item>
+	  <item mnemonic="w2071" type="System.String">Prog. categories/Progs</item>
+	  <item mnemonic="w2073" type="System.String">Framework data</item>
+	  <item mnemonic="w2074" type="System.String">Number of advertisers</item>
+	  <item mnemonic="w2075" type="System.String">Number of brands</item>
+	  <item mnemonic="w2076" type="System.String">Total budget</item>
+	  <item mnemonic="w2077" type="System.String">GRP affinity</item>
+	  <item mnemonic="w2078" type="System.String">GRP cost affinity</item>
+	  <item mnemonic="w2079" type="System.String">You are connected as</item>
+	  <item mnemonic="w2080" type="System.String">"Right click on your desired format and select ""Save as..."" to download the creation."</item>
+	  <item mnemonic="w2081" type="System.String">News</item>
+	  <item mnemonic="w2082" type="System.String">Averages</item>
+	  <item mnemonic="w2083" type="System.String">Averages by:</item>
+	  <item mnemonic="w2084" type="System.String">Spot time</item>
+	  <item mnemonic="w2085" type="System.String">Number of GRP/issue weeks</item>
+	  <item mnemonic="w2086" type="System.String">Real Player format</item>
+	  <item mnemonic="w2087" type="System.String">Windows Media Player format</item>
+	  <item mnemonic="w2088" type="System.String">To play the creation you need to download</item>
+	  <item mnemonic="w2090" type="System.String">Windows Media Player</item>
+	  <item mnemonic="w2091" type="System.String">Real Player</item>
+	  <item mnemonic="w2092" type="System.String">Country</item>
+	  <item mnemonic="w2095" type="System.String">http://www2.docmarketing.fr/societes/index.asp?id_soc={0}&amp;perso=0&amp;cle={1}</item>
+	  <item mnemonic="w2096" type="System.String">Advertiser information form {0}</item>
+	  <item mnemonic="w2097" type="System.String">Min</item>
+	  <item mnemonic="w2098" type="System.String">Max</item>
+	  <item mnemonic="w2099" type="System.String">Contact information, organisation chart, products, history of ad spend in the last 5 years...</item>
+	  <item mnemonic="w2100" type="System.String">"If you click on ""Back"" or ""Forward"", you will not be able to display your results as the data required to calculate the spreadsheet will not have been defined."</item>
+	  <item mnemonic="w2101" type="System.String">Media Reports</item>
+	  <item mnemonic="w2102" type="System.String">Advertiser Reports</item>
+	  <item mnemonic="w2104" type="System.String">Key Indicators</item>
+	  <item mnemonic="w2105" type="System.String">Press documentation</item>
+	  <item mnemonic="w2106" type="System.String">Weight of each period</item>
+	  <item mnemonic="w2107" type="System.String">There are no results for those parameters.</item>
+	  <item mnemonic="w2108" type="System.String">AdExpress -- Framework Data Excel File generated</item>
+	  <item mnemonic="w2110" type="System.String">Number of titles</item>
+	  <item mnemonic="w2111" type="System.String">Gross budgets (euros)</item>
+	  <item mnemonic="w2112" type="System.String">Gross budgets (KEuros)</item>
+	  <item mnemonic="w2113" type="System.String">by period</item>
+	  <item mnemonic="w2114" type="System.String">Editorial environment</item>
+	  <item mnemonic="w2115" type="System.String">Product class summary</item>
+	  <item mnemonic="w2116" type="System.String">AdExpress -- Justification sheet generated</item>
+	  <item mnemonic="w2117" type="System.String">AdExpress -- Framework Data PDF generated</item>
+	  <item mnemonic="w2118" type="System.String">Save the e-mail address</item>
+	  <item mnemonic="w2119" type="System.String">Justification sheet PDF</item>
+	  <item mnemonic="w2120" type="System.String">Framework data Excel </item>
+	  <item mnemonic="w2121" type="System.String">Framework data PDF</item>
+	  <item mnemonic="w2122" type="System.String">Frm. Sponsorship</item>
+	  <item mnemonic="w2123" type="System.String">G. programmes</item>
+	  <item mnemonic="w2125" type="System.String">You are not authorised to display this page.</item>
+	  <item mnemonic="w2126" type="System.String">The data are not available for a study detailed by week.</item>
+	  <item mnemonic="w2127" type="System.String">"You can modify the level of ""Product"" detail of your spreadsheet by selecting one of the preset levels or a personalised level from the dropdown menus below:"</item>
+	  <item mnemonic="w2128" type="System.String">"The ""Personalised Levels"" option allows you to choose the level of detail you would like to see in your results spreadsheet. You can set 3 product classification levels. Use the dropdown menus to create your own personalised levels."</item>
+	  <item mnemonic="w2129" type="System.String">"The ""Saved Levels"" option allows you to reuse levels you have already defined. Click on the arrow on the right to open a dropdown menu and choose your desired level."</item>
+	  <item mnemonic="w2130" type="System.String">Click on this button to save your own levels and reuse them in the future.</item>
+	  <item mnemonic="w2131" type="System.String">Click on this button to delete personalised level options you no longer need.</item>
+	  <item mnemonic="w2132" type="System.String">Result page display</item>
+	  <item mnemonic="w2133" type="System.String">Recap of your selection</item>
+	  <item mnemonic="w2134" type="System.String">Sorting columns</item>
+	  <item mnemonic="w2135" type="System.String">"You can sort your results using the arrows &lt;img src=""/Images/Common/Help/arrowsTri.gif""&gt; at the top of each column. The results may be sorted in ascending or descending order. If your spreadsheet contains more than one classification level, the sort will "</item>
+	  <item mnemonic="w2136" type="System.String">This option allows you to display the details of your selection in a new window. Close the window by clicking on the cross in the top right-hand corner.</item>
+	  <item mnemonic="w2137" type="System.String">To display your results faster, the spreadsheets are now in page format. You can change the number of lines displayed on-screen using the dropdown menu above the results spreadsheet.&lt;br&gt;You can choose to display 100, 200, 500 or 1000 lines in your spreads</item>
+	  <item mnemonic="w2138" type="System.String">"For tables with more than one classification level, use the ""Repeat classification"" option to repeat the higher level of a group of elements on the next page, where necessary."</item>
+	  <item mnemonic="w2139" type="System.String">"This option &lt;img src=""/Images/Common/Help/navigation.gif""&gt; allows you to move around within your results set. You can move from page to page using the page numbers&lt;img src=""/Images/Common/Help/pagesNum.gif""&gt;or the double arrows &lt;img src=""/Images/Common/He"</item>
+	  <item mnemonic="w2140" type="System.String">Use this button to fine-tune your vehicle set. Click on this button to access the list of television vehicles. You can then create a filter for TV vehicles and view only selected channels on your report.</item>
+	  <item mnemonic="w2141" type="System.String">"Use the ""Analysis options"" function to select:&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11""&gt;&lt;tr&gt;&lt;td width=""10px""&gt;&lt;img src=""/Images/Common/pixel.gif"" width=""10px""&gt;&lt;/td&gt;&lt;td align=""left""&gt;&lt;li&gt;the required unit&lt;li&gt;percentage"</item>
+	  <item mnemonic="w2142" type="System.String">"The ""Customised Levels"" option allows you to choose the levels of detail you wish to display in your report. There are 4 possible hierarchical levels from the product, vehicle and format detail levels. Use the dropdown lists to build your own customised l"</item>
+	  <item mnemonic="w2143" type="System.String">"The ""Type of report"" option allows you to change your report presentation by selecting the required report presentation from the dropdown list. 3 pre-formatted reports are available."</item>
+	  <item mnemonic="w2144" type="System.String">Use this button to go back to the selection of one or more forms of sponsoring at each stage.</item>
+	  <item mnemonic="w2145" type="System.String">Use this button to go back to the selection of one or more types of program at each stage.</item>
+	  <item mnemonic="w2146" type="System.String">Use this button to fine-tune your product set. Click on this button to access the list of television vehicles. You can then create a filter for the TV vehicles and view selected channels only on your report.</item>
+	  <item mnemonic="w2147" type="System.String">"The ""Creatives"" column in the report offers access to the TV spot to spot breakdown and to visuals"</item>
+	  <item mnemonic="w2148" type="System.String">"The ""Customised Levels"" option above the ""Spot to spot"" report allows you to choose the levels of detail you wish to display in your report (Lines and columns)."</item>
+	  <item mnemonic="w2149" type="System.String">"The ""Media Options"" function allows you to change the display of the Television vehicles.&lt;br&gt;&lt;br&gt;- Media genre&lt;br&gt;- Advertising agency&lt;br&gt;- Title"</item>
+	  <item mnemonic="w2150" type="System.String">Please select one or more television vehicles.</item>
+	  <item mnemonic="w2151" type="System.String">When you have done so, you can also choose to work on one or more types of program or forms of sponsoring.</item>
+	  <item mnemonic="w2152" type="System.String">Program types:</item>
+	  <item mnemonic="w2153" type="System.String">Forms of sponsoring:</item>
+	  <item mnemonic="w2154" type="System.String">Percentage:</item>
+	  <item mnemonic="w2155" type="System.String">AdNetTrack product</item>
+	  <item mnemonic="w2156" type="System.String">Format</item>
+	  <item mnemonic="w2157" type="System.String">AdNetTrack media schedule</item>
+	  <item mnemonic="w2158" type="System.String">Data are not available for this period</item>
+	  <item mnemonic="w2159" type="System.String">No results found: you are not entitled to display the breakdown of creatives</item>
+	  <item mnemonic="w2160" type="System.String">Go back to the list of banners</item>
+	  <item mnemonic="w2161" type="System.String">TV sponsoring modules</item>
+	  <item mnemonic="w2164" type="System.String">TV Media (TV sponsoring)</item>
+	  <item mnemonic="w2167" type="System.String">Vehicle portfolio</item>
+	  <item mnemonic="w2168" type="System.String">Present/absent report</item>
+	  <item mnemonic="w2169" type="System.String">Strength/potential report</item>
+	  <item mnemonic="w2170" type="System.String">Lost/won report</item>
+	  <item mnemonic="w2171" type="System.String">Vehicle portfolio</item>
+	  <item mnemonic="w2172" type="System.String">Media schedule</item>
+	  <item mnemonic="w2173" type="System.String">Comparative media schedule</item>
+	  <item mnemonic="w2174" type="System.String">Product class analysis: Graphic key reports</item>
+	  <item mnemonic="w2175" type="System.String">Product class analysis: Detailed reports</item>
+	  <item mnemonic="w2176" type="System.String">Press report</item>
+	  <item mnemonic="w2177" type="System.String">TV report</item>
+	  <item mnemonic="w2178" type="System.String">Radio report</item>
+	  <item mnemonic="w2179" type="System.String">Trends</item>
+	  <item mnemonic="w2180" type="System.String">Program analysis</item>
+	  <item mnemonic="w2181" type="System.String">Campaign analysis</item>
+	  <item mnemonic="w2182" type="System.String">Campaign review</item>
+	  <item mnemonic="w2183" type="System.String">Framework data</item>
+	  <item mnemonic="w2184" type="System.String">Advertising market news from the last 4 months</item>
+	  <item mnemonic="w2185" type="System.String">Advertising market analysis over several years</item>
+	  <item mnemonic="w2186" type="System.String">TV sponsorship operations</item>
+	  <item mnemonic="w2187" type="System.String">Summary of media performance</item>
+	  <item mnemonic="w2188" type="System.String">If you are working on the latest data, take advantage of up-to-the-minute updates and direct access to the most detailed data (insertion) here.</item>
+	  <item mnemonic="w2189" type="System.String">If you are working on a long history (on one medium or on a multimedia level) up to the most detailed level in our product brand classification, you can compare media strategies and consult summary media analyses.</item>
+	  <item mnemonic="w2190" type="System.String">All non-ad break advertising per programme or form of sponsoring on the 7 terrestrial channels is listed here.</item>
+	  <item mnemonic="w2193" type="System.String">Launched in conjunction with the APPM (promotion of the magazine press), Chronopresse is the first online tool crossing the TNS Media Intelligence press data with magazine and national daily readership measured by AEPM (magazine press) and EPIQ (daily pre</item>
+	  <item mnemonic="w2196" type="System.String">Analyse the constitution of a rival vehicle support in real time</item>
+	  <item mnemonic="w2197" type="System.String">Prepare your sales meetings and detect areas offering potential customers: product classes / advertisers / products absent from/present in a competition set</item>
+	  <item mnemonic="w2198" type="System.String">Diagnose strong / weak points in a vehicle support: analysis of product class / advertiser market share levels with respect to the average</item>
+	  <item mnemonic="w2199" type="System.String">Compare the development of a vehicle advertising support: product classes / advertisers / products lost / won between two periods</item>
+	  <item mnemonic="w2200" type="System.String">Analyse the constitution of a rival vehicle support </item>
+	  <item mnemonic="w2201" type="System.String">Know the advertising activity of an advertiser or a product class </item>
+	  <item mnemonic="w2202" type="System.String">Compare the advertising activity of several advertisers</item>
+	  <item mnemonic="w2203" type="System.String">Assess the strengths present in a product class and understand changes</item>
+	  <item mnemonic="w2204" type="System.String">Analyse the media strategy of your direct competitors and spot newcomers</item>
+	  <item mnemonic="w2205" type="System.String">Understand the nature of Press medium changes: media genres, formats, product classes, etc.</item>
+	  <item mnemonic="w2206" type="System.String">Understand the nature of TV medium changes: time slots, formats, product classes, etc.</item>
+	  <item mnemonic="w2207" type="System.String">Understand the nature of Radio medium changes: time slots, formats, product classes, etc.</item>
+	  <item mnemonic="w2208" type="System.String">Keep abreast of mass media changes</item>
+	  <item mnemonic="w2209" type="System.String">Analyse an advertiser or brand system: channel, type, program, forms, etc.</item>
+	  <item mnemonic="w2210" type="System.String">Study a type of program, a program or a specific form of sponsoring</item>
+	  <item mnemonic="w2211" type="System.String">Measure the GRP pressure of a press campaign (magazines  national dailies)</item>
+	  <item mnemonic="w2212" type="System.String">Analyse the GRP pressure of a product class over a period</item>
+	  <item mnemonic="w2213" type="System.String">Press documentation</item>
+	  <item mnemonic="w2214" type="System.String">Check that an advertisement/visual is in the correct issue</item>
+	  <item mnemonic="w2215" type="System.String">Pan euro report</item>
+	  <item mnemonic="w2216" type="System.String">Understand the nature of TV medium changes: time slots, formats, product classes, etc.</item>
+	  <item mnemonic="w2217" type="System.String">Volumes</item>
+	  <item mnemonic="w2219" type="System.String">Breakdown of direct marketing versions</item>
+	  <item mnemonic="w2220" type="System.String">Post</item>
+	  <item mnemonic="w2221" type="System.String">Weight (in g)</item>
+	  <item mnemonic="w2222" type="System.String">Document type</item>
+	  <item mnemonic="w2223" type="System.String">Content format</item>
+	  <item mnemonic="w2224" type="System.String">Management budget</item>
+	  <item mnemonic="w2225" type="System.String">Number of items</item>
+	  <item mnemonic="w2226" type="System.String">The selection principle also applies to the other hierarchical levels in the product brand classification.&lt;br&gt;&lt;br&gt;For each hierarchical level chosen, the level of detail proposed is the level directly below:&lt;br&gt;&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 bord</item>
+	  <item mnemonic="w2227" type="System.String">The history available is the last 24 months or the last 106 weeks.</item>
+	  <item mnemonic="w2228" type="System.String">"&lt;table cellspaccing=0 cellpadding=0 border=0 align=""left"" class=""txtViolet11""&gt;&lt;tr&gt;&lt;td width=""10px""&gt;&lt;img src=""/Images/Common/pixel.gif"" width=""10px""&gt;&lt;/td&gt;&lt;td align=""left""&gt;&lt;li&gt;current year,&lt;li&gt;previous year,&lt;li&gt;previous month,&lt;li&gt;previous week.&lt;/td&gt;&lt;/tr&gt;&lt;/t"</item>
+	  <item mnemonic="w2229" type="System.String">"The results report can be used to obtain a breakdown of each insertion by advertising agency, title, date and on the different available units.&lt;br&gt;Click on the pictogram &lt;img src=""/Images/Common/picto_plus.gif""&gt;in the ""&lt;b&gt;Justif&lt;/b&gt;"" column to display the"</item>
+	  <item mnemonic="w2230" type="System.String">Result (PDF): Use this button to export your justification record in PDF format.</item>
+	  <item mnemonic="w2231" type="System.String">For a calendar period, use the monthly or weekly calendar to select a start and end date. The available history is the last 16 months or the last 70 weeks.&lt;br&gt;&lt;br&gt;You can select a month by clicking on its name or a week by clicking on its number.</item>
+	  <item mnemonic="w2232" type="System.String">This button allows you to redefine the additional target. If this is the case, the current target set will be deleted for redefinition purposes.</item>
+	  <item mnemonic="w2233" type="System.String">Result (PDF): Use this button to export your result in PDF format.</item>
+	  <item mnemonic="w2234" type="System.String">Use this table to display an average for different indicators (number of titles used, number of insertions, number of pages, etc.) according to Advertiser, Brand or Product variables.</item>
+	  <item mnemonic="w2235" type="System.String">This result shows the breakdown of budgets or one of the other units present month by month.</item>
+	  <item mnemonic="w2236" type="System.String">This result also allows you to visualise the weight of each Period.</item>
+	  <item mnemonic="w2237" type="System.String">This result shows the breakdown by press category as a % on the budget, page layout, insertions and target GRP variables.</item>
+	  <item mnemonic="w2238" type="System.String">This result shows the breakdown as a % of investment by periodicity on the budget, page layout, insertions and target GRP variables.</item>
+	  <item mnemonic="w2239" type="System.String">This result shows the affinity of each target with respect to the  overall '15 and over' target in terms of GRP and C/GRP.</item>
+	  <item mnemonic="w2240" type="System.String">Description</item>
+	  <item mnemonic="w2241" type="System.String">Standard format</item>
+	  <item mnemonic="w2242" type="System.String">Original format</item>
+	  <item mnemonic="w2244" type="System.String">Search by sub-group</item>
+	  <item mnemonic="w2245" type="System.String">There is no insertion by insertion breakdown for the Internet medium</item>
+	  <item mnemonic="w2246" type="System.String">Insertions</item>
+	  <item mnemonic="w2247" type="System.String">Page type</item>
+	  <item mnemonic="w2248" type="System.String">Volume</item>
+	  <item mnemonic="w2249" type="System.String">Weight</item>
+	  <item mnemonic="w2250" type="System.String">Number of objects</item>
+	  <item mnemonic="w2251" type="System.String">You are not entitled to access&lt;br/&gt;the creative visuals for this medium.</item>
+	  <item mnemonic="w2252" type="System.String">Volume (page)</item>
+	  <item mnemonic="w2253" type="System.String">Number of active vehicles</item>
+	  <item mnemonic="w2254" type="System.String">Number of spots</item>
+	  <item mnemonic="w2255" type="System.String">No results found: you are not entitled to access the breakdown of Outdoor Advertising creatives.</item>
+	  <item mnemonic="w2256" type="System.String">Breakdown of outside advertising versions</item>
+	  <item mnemonic="w2257" type="System.String">Impossible to save, the levels of detail already exist</item>
+	  <item mnemonic="w2258" type="System.String">Rename a result</item>
+	  <item mnemonic="w2259" type="System.String">Select the result to rename from the list below:</item>
+	  <item mnemonic="w2260" type="System.String">Rename the selected result:</item>
+	  <item mnemonic="w2261" type="System.String">Impossible to rename, a query already exists under this name</item>
+	  <item mnemonic="w2263" type="System.String">Save as:</item>
+	  <item mnemonic="w2264" type="System.String">New result:</item>
+	  <item mnemonic="w2265" type="System.String">Please select fewer than 200 items</item>
+	  <item mnemonic="w2266" type="System.String">Please select fewer than 1000 items</item>
+	  <item mnemonic="w2267" type="System.String">(c) Copyright TNS SAS</item>
+	  <item mnemonic="w2268" type="System.String">Vehicle date</item>
+	  <item mnemonic="w2269" type="System.String">New set:</item>
+	  <item mnemonic="w2270" type="System.String">Exclude</item>
+	  <item mnemonic="w2271" type="System.String">Include</item>
+	  <item mnemonic="w2272" type="System.String">Product Class</item>
+	  <item mnemonic="w2273" type="System.String">Branch</item>
+	  <item mnemonic="w2274" type="System.String">"Enter your ""keyword"""</item>
+	  <item mnemonic="w2275" type="System.String">Overlap</item>
+	  <item mnemonic="w2276" type="System.String">Period Selected:</item>
+	  <item mnemonic="w2277" type="System.String">Browsing by month:</item>
+	  <item mnemonic="w2278" type="System.String">Browsing by week:</item>
+	  <item mnemonic="w2279" type="System.String">items(s)</item>
+	  <item mnemonic="w2280" type="System.String">Empty all selected items</item>
+	  <item mnemonic="w2281" type="System.String">"Periods &lt;font color=#787878&gt;""in dark gray""&lt;/font&gt; have not yet been completely uploaded and thus cannot be compared with those of the previous year."</item>
+	  <item mnemonic="w2282" type="System.String">Included items</item>
+	  <item mnemonic="w2283" type="System.String">Excluded items</item>
+	  <item mnemonic="w2284" type="System.String">{0} items out of {1} .&lt;br&gt;Narrow your search.</item>
+	  <item mnemonic="w2285" type="System.String">"Periods &lt;font color=#787878&gt;""in dark gray""&lt;/font&gt; have not yet been completely uploaded."</item>
+	  <item mnemonic="w2286" type="System.String">Same-level items can't be selected in included groups.</item>
+	  <item mnemonic="w2287" type="System.String">You may only select up to 1000 items per level.</item>
+	  <item mnemonic="w2289" type="System.String">"Keyword alone = Search ""starting with.""  Keyword preceded by a * = Search ""containing."""</item>
+	  <item mnemonic="w2290" type="System.String">Day</item>
+	  <item mnemonic="w2291" type="System.String">Month</item>
+	  <item mnemonic="w2292" type="System.String">Period of the study:</item>
+	  <item mnemonic="w2293" type="System.String">Comparative period:</item>
+	  <item mnemonic="w2294" type="System.String">Type of comparative selection</item>
+	  <item mnemonic="w2295" type="System.String">Date to date</item>
+	  <item mnemonic="w2296" type="System.String">Date of comparative week</item>
+	  <item mnemonic="w2297" type="System.String">Data availability type</item>
+	  <item mnemonic="w2298" type="System.String">Last calendar day</item>
+	  <item mnemonic="w2299" type="System.String">Last available complete period</item>
+	  <item mnemonic="w2300" type="System.String">You must select at least one item to be included.</item>
+	  <item mnemonic="w2301" type="System.String">Columns broken down by:</item>
+	  <item mnemonic="w2302" type="System.String">Competing product set</item>
+	  <item mnemonic="w2303" type="System.String">Reference product set</item>
+	  <item mnemonic="w2304" type="System.String">1st trim.</item>
+	  <item mnemonic="w2305" type="System.String">2nd trim.</item>
+	  <item mnemonic="w2306" type="System.String">3rd trim.</item>
+	  <item mnemonic="w2307" type="System.String">4th trim.</item>
+	  <item mnemonic="w2308" type="System.String">1st Semester</item>
+	  <item mnemonic="w2309" type="System.String">2nd Semester</item>
+	  <item mnemonic="w2310" type="System.String">Leave zoom mode</item>
+	  <item mnemonic="w2311" type="System.String">Module (Group of modules)</item>
+	  <item mnemonic="w2312" type="System.String">International Print Media</item>
+	  <item mnemonic="w2313" type="System.String">Nat. Radio</item>
+	  <item mnemonic="w2314" type="System.String">Ile-de-France Radio</item>
+	  <item mnemonic="w2315" type="System.String">Nat. TV</item>
+	  <item mnemonic="w2316" type="System.String">Theme TV&lt;br&gt;TV TNT</item>
+	  <item mnemonic="w2317" type="System.String">TV Sponsoring</item>
+	  <item mnemonic="w2318" type="System.String">Pan-Euro TV</item>
+	  <item mnemonic="w2319" type="System.String">Pan-Euro TV Sponsoring</item>
+	  <item mnemonic="w2321" type="System.String">Media schedule (Analysis)&lt;br&gt;&lt;br&gt;Portfolio (News)&lt;br&gt;&lt;br&gt;Portfolio (Analysis)&lt;br&gt;&lt;br&gt;Print Media Tear Sheets (Analysis)&lt;br&gt;&lt;br&gt;ChronoPresse (Media performance summary)&lt;br&gt;&lt;br&gt;Framing data (Media performance summary)&lt;br&gt;&lt;br&gt;Lost/Won Report (Analysis)&lt;br&gt;&lt;b</item>
+	  <item mnemonic="w2322" type="System.String">Trends (Analysis)</item>
+	  <item mnemonic="w2323" type="System.String">Reports (Analysis)</item>
+	  <item mnemonic="w2324" type="System.String">Analysis by product class: Dynamic tables (Analysis)&lt;br&gt;&lt;br&gt;Analysis by product class: Graphical indicators (Analysis)</item>
+	  <item mnemonic="w2325" type="System.String">8:00 a.m.</item>
+	  <item mnemonic="w2326" type="System.String">9:00 a.m.</item>
+	  <item mnemonic="w2327" type="System.String">1:00 p.m.</item>
+	  <item mnemonic="w2328" type="System.String">2:00 p.m.</item>
+	  <item mnemonic="w2329" type="System.String">3:00 p.m.</item>
+	  <item mnemonic="w2330" type="System.String">4:00 p.m.</item>
+	  <item mnemonic="w2331" type="System.String">5:00 p.m.</item>
+	  <item mnemonic="w2332" type="System.String">6:00 p.m.</item>
+	  <item mnemonic="w2333" type="System.String">7:00 p.m.</item>
+	  <item mnemonic="w2334" type="System.String">7:30 p.m.</item>
+	  <item mnemonic="w2335" type="System.String">8:00 p.m.</item>
+	  <item mnemonic="w2336" type="System.String">Upon&lt;br&gt;receipt&lt;br&gt;of&lt;br&gt;vehicles</item>
+	  <item mnemonic="w2337" type="System.String">Other&lt;br&gt;periodicities&lt;br&gt;of the same day</item>
+	  <item mnemonic="w2338" type="System.String">3&lt;br&gt;weeks&lt;br&gt;after&lt;br&gt;the end&lt;br&gt;of the previous&lt;br&gt;month</item>
+	  <item mnemonic="w2339" type="System.String">Previous Monday</item>
+	  <item mnemonic="w2340" type="System.String">Previous Monday and Tuesday</item>
+	  <item mnemonic="w2341" type="System.String">Previous Tuesday</item>
+	  <item mnemonic="w2342" type="System.String">Previous Wednesday</item>
+	  <item mnemonic="w2343" type="System.String">Previous Thursday</item>
+	  <item mnemonic="w2344" type="System.String">Previous Friday</item>
+	  <item mnemonic="w2345" type="System.String">Previous Saturday and Sunday</item>
+	  <item mnemonic="w2346" type="System.String">Previous Sunday</item>
+	  <item mnemonic="w2347" type="System.String">Previous Friday, Saturday and Sunday</item>
+	  <item mnemonic="w2348" type="System.String">Sunday two weeks previous</item>
+	  <item mnemonic="w2349" type="System.String">Daily??&lt;br&gt;of the same day</item>
+	  <item mnemonic="w2350" type="System.String">Daily??&lt;br&gt;of the day&lt;br&gt;of the previous&lt;br&gt;Saturday and Sunday</item>
+	  <item mnemonic="w2351" type="System.String">5 a.m.-9 a.m. daypart&lt;br&gt;of the same day,&lt;br&gt;of the previous&lt;br&gt;Saturday and Sunday</item>
+	  <item mnemonic="w2352" type="System.String">5 a.m.-9 a.m. daypart&lt;br&gt;of the same day</item>
+	  <item mnemonic="w2353" type="System.String">9 a.m.-12 a.m. daypart&lt;br&gt;of the previous&lt;br&gt;Sunday and Monday</item>
+	  <item mnemonic="w2354" type="System.String">9 a.m.-12 a.m. daypart&lt;br&gt;of the previous Tuesday</item>
+	  <item mnemonic="w2355" type="System.String">9 a.m.-12 a.m. daypart&lt;br&gt;of the previous Wednesday</item>
+	  <item mnemonic="w2356" type="System.String">9 a.m.-12 a.m. daypart&lt;br&gt;of the previous Thursday</item>
+	  <item mnemonic="w2367" type="System.String">9 a.m.-12 a.m. daypart&lt;br&gt;of the previous&lt;br&gt;Friday and Saturday</item>
+	  <item mnemonic="w2368" type="System.String">Monthly, quarterly, half-yearly or yearly updating 3 months before the end of the period studied</item>
+	  <item mnemonic="w2369" type="System.String">Overlap with</item>
+	  <item mnemonic="w2370" type="System.String">Period Selected:</item>
+	  <item mnemonic="w2371" type="System.String">Comparative selection</item>
+	  <item mnemonic="w2372" type="System.String">Close</item>
+	  <item mnemonic="w2373" type="System.String">or Esc Key</item>
+	  <item mnemonic="w2374" type="System.String">For a calendar period, use the monthly calendar with day-by-day detail to select a start and end date.  The periods selected are highlighted in green.</item>
+	  <item mnemonic="w2375" type="System.String">Use the double arrows to the right of the calendar to move up or down in History.</item>
+	  <item mnemonic="w2376" type="System.String">The dates selected appear at the bottom of the calendar.</item>
+	  <item mnemonic="w2377" type="System.String">"The set's start and end dates are displayed according to the period selected:&lt;ul type=""square""&gt;&lt;li&gt;Start and end day for a selection of days or weeks.&lt;/li&gt;&lt;li&gt;Start and end month for a selection of months.&lt;/li&gt;&lt;li&gt;Start and end quarters for a selection of"</item>
+	  <item mnemonic="w2378" type="System.String">lets you re-initialize your selected period.</item>
+	  <item mnemonic="w2379" type="System.String">confirms your current selection and ends the selection of your calendar period.  This type of period can be saved in My AdExpress, but open-endedness is restricted to the dates searched for.</item>
+	  <item mnemonic="w2380" type="System.String">To set a rolling period, use the pull-down menus to select one of the options below:</item>
+	  <item mnemonic="w2381" type="System.String">Possible options when selecting comparative periods</item>
+	  <item mnemonic="w2382" type="System.String">"1. When selecting the periods below :&lt;ul type=""square""&gt;&lt;li&gt;Comparative calendar period in weeks (or in days)&lt;/li&gt;&lt;li&gt;Rolling period within previous day or previous week&lt;/li&gt;&lt;/ul&gt;You will be able to choose between two types of comparative selection:&lt;br&gt;&lt;br"</item>
+	  <item mnemonic="w2383" type="System.String">"2. When selecting the periods below:&lt;ul type=""square""&gt;&lt;li&gt;Rolling period over the previous N Months&lt;/li&gt;&lt;/ul&gt;You will need to choose between 2 types of comparative selection:&lt;br&gt;&lt;br&gt;&lt;u&gt;Last calendar day :&lt;/u&gt; Your period will run to the last day of the ca"</item>
+	  <item mnemonic="w2384" type="System.String">"3. When selecting the periods below:&lt;ul type=""square""&gt;&lt;li&gt;Rolling period over the previous N weeks&lt;/li&gt;&lt;li&gt;Rolling period over the previous N days&lt;/li&gt;&lt;/ul&gt;You will need to choose from among 4 types of comparative selection:&lt;br&gt;&lt;br&gt;&lt;u&gt;Date of comparative "</item>
+	  <item mnemonic="w2385" type="System.String">A default table will appear.  You can modify it using the following options:</item>
+	  <item mnemonic="w2386" type="System.String">Select units</item>
+	  <item mnemonic="w2387" type="System.String">You can select the desired unit by selecting it from the drop-down list.</item>
+	  <item mnemonic="w2388" type="System.String">Select type of results</item>
+	  <item mnemonic="w2389" type="System.String">Select column detail</item>
+	  <item mnemonic="w2390" type="System.String">You can choose the vehicle-level detail in column by selecting it from the drop-down menu.</item>
+	  <item mnemonic="w2391" type="System.String">Select media agencies</item>
+	  <item mnemonic="w2392" type="System.String">You can choose the year of the media agency file you want to work with.</item>
+	  <item mnemonic="w2393" type="System.String">Select the Doc Marketing link</item>
+	  <item mnemonic="w2394" type="System.String">If your access permits, you can obtain more detailed information on an advertiser by clicking on</item>
+	  <item mnemonic="w2395" type="System.String">Access to the media schedule</item>
+	  <item mnemonic="w2396" type="System.String">"You can access the hierarchical level schedule chosen by clicking on the pictogram &lt;img src=""/Images/Common/picto_plus.gif""&gt; of the Media Schedule column in your table of results.  This media schedule will bear on the period and the medium initially chose"</item>
+	  <item mnemonic="w2397" type="System.String">Options accessible by right-clicking the mouse</item>
+	  <item mnemonic="w2398" type="System.String">The following functions appear as a request is being constructed, as well as when a table of results is being modified. By clicking the mouse, you can access the following options:</item>
+	  <item mnemonic="w2399" type="System.String">Redefine your set: products, vehicles, date and versions:</item>
+	  <item mnemonic="w2400" type="System.String">Set definition functions:</item>
+	  <item mnemonic="w2401" type="System.String">Save functions :</item>
+	  <item mnemonic="w2402" type="System.String">Export functions :</item>
+	  <item mnemonic="w2403" type="System.String">Reminder of your selection :</item>
+	  <item mnemonic="w2404" type="System.String">Use this button to view the entire set of parameters for your set. It appears as soon as a dimension has been defined.&lt;br&gt;Right click to export these parameters.</item>
+	  <item mnemonic="w2405" type="System.String">To do a search, set the desired level of brand classification and enter your keyword in the indicated area (minimum 2 characters).</item>
+	  <item mnemonic="w2406" type="System.String">"&lt;u&gt;There are 3 search modes :&lt;/u&gt;&lt;ul type=""square""&gt;&lt;li&gt;A Keyword alone allows you to search for labels ""starting with.""&lt;/li&gt;&lt;li&gt;A Keyword preceded or followed by a ""*"" allows you to search for a label containing the keyword (before or after the *.)&lt;/li&gt;&lt;l"</item>
+	  <item mnemonic="w2407" type="System.String">Use this button to launch your search.</item>
+	  <item mnemonic="w2408" type="System.String">Use this button to re-initialize your search.</item>
+	  <item mnemonic="w2409" type="System.String">The search allows you to view the items found in the different hierarchical levels of the chosen branch.&lt;br&gt;The number of items found is indicated above each hierarchical level.&lt;br&gt;You can do several successive searches on different hierarchical levels in</item>
+	  <item mnemonic="w2410" type="System.String">"To select your product set you can either:&lt;ul type=""square""&gt;&lt;li&gt;&lt;u&gt;Exclude items.&lt;/u&gt; To exclude items, select them in the windows displaying your search results and click on the corresponding arrow &lt;img src=""/Images/Common/exclude_item.gif""&gt; to exclude t"</item>
+	  <item mnemonic="w2411" type="System.String">"&lt;ul type=""square""&gt;&lt;li&gt;&lt;u&gt;Add items.&lt;/u&gt; To add items, select them in the windows displaying your search results and click on the corresponding arrow &lt;img src=""/Images/Common/include_item.gif""&gt; to add them.&lt;br&gt;All items selected within a single window are "</item>
+	  <item mnemonic="w2412" type="System.String">"&lt;blockquote&gt;The button &lt;img src=""/Images/Common/intersection.gif""&gt; allows you to display the 2nd window of included items which will allow you to search the overlap of several product sets.&lt;/blockquote&gt;"</item>
+	  <item mnemonic="w2413" type="System.String">"&lt;ul type=""square""&gt;&lt;li&gt;&lt;u&gt;Choose the overlap between 2 sets.&lt;/u&gt; To search the overlap between two product sets from different branches,  you must click on the corresponding arrows &lt;img src=""/Images/Common/include_item.gif""&gt; to add them separately in the 2"</item>
+	  <item mnemonic="w2414" type="System.String">You may also make combinations among the 3 possibilities.  Your product set may therefore bear on included, overlapping as well as excluded items.</item>
+	  <item mnemonic="w2415" type="System.String">Use this button to deselect an item.</item>
+	  <item mnemonic="w2416" type="System.String">Use this icon to delete all the excluded or included items in your set.</item>
+	  <item mnemonic="w2417" type="System.String">Your set bears on the past 4 months and was created using the daily calendar, the calendar displayed will be detailed by day.</item>
+	  <item mnemonic="w2418" type="System.String">Your set bears on a yesterday greater than the past 4 months, the calendar displayed will be detailed by month or week according to the definition of your period.</item>
+	  <item mnemonic="w2419" type="System.String">If the campaign calendar is detailed by month or by week according to the initial definition, you may click on the header of a desired month or week to view day-by-day detail.</item>
+	  <item mnemonic="w2420" type="System.String">Use the option below to browse through the History.&lt;br&gt;You may browse by week or by month according to the detail chosen in the calendar. The period zoomed in on is highlighted in green.</item>
+	  <item mnemonic="w2421" type="System.String">Leave zoom mode by using the option</item>
+	  <item mnemonic="w2422" type="System.String">"The ""Unit"" function allows you to select the desired unit."</item>
+	  <item mnemonic="w2423" type="System.String">Select the level of detail for the period</item>
+	  <item mnemonic="w2424" type="System.String">"The ""Period detailed by"" function allows you to choose your calendar's level of detail. Day-by-day detail is only available if your set bears exclusively on the past 4 months."</item>
+	  <item mnemonic="w2425" type="System.String">Select line-level detail - Personalized levels</item>
+	  <item mnemonic="w2426" type="System.String">You can change your table's Product or Vehicle detail level by selecting one of the predefined detail levels using the pull-down lists below:</item>
+	  <item mnemonic="w2427" type="System.String">View work schedule</item>
+	  <item mnemonic="w2428" type="System.String">Click on the creative to enlarge the visual or to view the spot.</item>
+	  <item mnemonic="w2429" type="System.String">Access creatives presented by version</item>
+	  <item mnemonic="w2430" type="System.String">"The versions Creatives column allows you to access creatives presented by version. You can access this option by clicking on the pictogram &lt;img src=""/Images/Common/picto_plus.gif""&gt; corresponding to the desired level. Creatives may be viewed by clicking on"</item>
+	  <item mnemonic="w2431" type="System.String">If you click on an active level on several media, you will display one medium at a time and can go from one to the other using the media buttons.</item>
+	  <item mnemonic="w2432" type="System.String">From the creatives page, you can browse the History by week or by month according to the detail chosen in the calendar. The period zoomed in on is highlighted in green.</item>
+	  <item mnemonic="w2433" type="System.String">Use this option to choose the number of lines you want to display per page of results.</item>
+	  <item mnemonic="w2434" type="System.String">When creatives are displayed, a mouse click on the creative allows you to enlarge the visual or to view the spot.</item>
+	  <item mnemonic="w2435" type="System.String">Right-click to access export options.</item>
+	  <item mnemonic="w2436" type="System.String">Access insertion detail</item>
+	  <item mnemonic="w2437" type="System.String">"The Insertions column allows you to access insertion detail. You can access this option by clicking on the pictogram &lt;img src=""/Images/Common/picto_plus.gif""&gt; corresponding to the desired level."</item>
+	  <item mnemonic="w2438" type="System.String">If you click on an active level on several media, one medium will be displayed at a time and you can go from one to the other using the media buttons. The current media is indicated under the media buttons.</item>
+	  <item mnemonic="w2439" type="System.String">"The ""Personalized Levels"" option allows you to export only the elements you are interested in. When you click on the double arrow, the window below opens and allows you to choose the columns to be exported and their classification in Excel.&lt;br&gt;Column orde"</item>
+	  <item mnemonic="w2440" type="System.String">From the insertions page, you can browse in the History by week or by month according to the detail chosen in the calendar.  The period zoomed in on is highlighted in green.</item>
+	  <item mnemonic="w2441" type="System.String">"When creatives are displayed, a mouse click on the creative allows you to enlarge the visual and a click on the pictogramme &lt;img src=""/Images/Common/Picto_pellicule.gif""&gt; allows the spot to be viewed."</item>
+	  <item mnemonic="w2442" type="System.String">"&lt;ul type=""square""&gt;&lt;li&gt;&lt;u&gt;Portfolio :&lt;/u&gt; This option displays the active product items in the set being searched.&lt;/li&gt;&lt;li&gt;&lt;u&gt;Common :&lt;/u&gt; This option displays the product items in common between the reference vehicles and the competing vehicles.&lt;/li&gt;&lt;li&gt;&lt;"</item>
+	  <item mnemonic="w2443" type="System.String">"Creatives presented by version may be accessed by clicking on the pictogram &lt;img src=""/Images/Common/picto_plus.gif""&gt; of the desired level for the Versions column."</item>
+	  <item mnemonic="w2444" type="System.String">If you have selected a period greater than the past 4 months, you have the option of viewing the active versions month by month by clicking on the month numbers below.</item>
+	  <item mnemonic="w2445" type="System.String">"Insertion detail can be accessed by clicking on the pictogram &lt;img src=""/Images/Common/picto_plus.gif""&gt; of the desired level for the Insertions column."</item>
+	  <item mnemonic="w2446" type="System.String">If you have selected a period greater than the past 4 months, you have the option of viewing the insertions month by month by clicking on the month numbers below.</item>
+	  <item mnemonic="w2447" type="System.String">Use this button to export the list of spots (or insertions) as it appears on screen in order to print it. When you click on this button, the list of spots (or insertions) in the table will be copied in an Excel sheet which opens automatically. All the ite</item>
+	  <item mnemonic="w2448" type="System.String">allows you to save your search for later use.</item>
+	  <item mnemonic="w2449" type="System.String">"Click on this button for the following options:&lt;ul type=""square""&gt;&lt;li&gt;You may create a name for your set by entering it in the ""New set"" field, indicate the directory in which it is to be saved and click on the ""OK"" button. A new working set has just been "</item>
+	  <item mnemonic="w2450" type="System.String">"&lt;ul type=""square""&gt;&lt;li&gt;You may replace an existing set with the one being defined by using the same name. Click on the arrow to the right of the ""Save As"" pull-down menu for the list of saved sets to appear. Then select the desired existing set and click o"</item>
+	  <item mnemonic="w2451" type="System.String">There is a directory named MY ADEXPRESS by default. Use the My AdExpress model to create other directories.</item>
+	  <item mnemonic="w2452" type="System.String">The menu can be accessed with a right click and allows you to save your result for later use.</item>
+	  <item mnemonic="w2453" type="System.String">"By selecting this menu, you have the following options:&lt;ul type=""square""&gt;&lt;li&gt;You may give a name to your result by entering in the ""New result"" field, indicate the directory in which it is to be saved and click on the ""OK"" button. A new working result has"</item>
+	  <item mnemonic="w2454" type="System.String">"&lt;ul type=""square""&gt;&lt;li&gt;You may replace an existing result with the one currently being displayed by using the same name. Click on the arrow to the right of the ""Save As"" pull-down menu for the list of saved results to appear. Then select the desired existi"</item>
+	  <item mnemonic="w2455" type="System.String">Click on to export the list of insertions.</item>
+	  <item mnemonic="w2456" type="System.String">This result is no longer available.</item>
+	  <item mnemonic="w2457" type="System.String">Click on this icon to reset search parameters.</item>
+	  <item mnemonic="w2458" type="System.String">Cancel all active working sets.</item>
+	  <item mnemonic="w2459" type="System.String">"The ""Reference Advertisers"" option, accessible via a right mouse-click, allows you to display only the reference advertisers and rival advertisers defined using the icon"</item>
+	  <item mnemonic="w2460" type="System.String">Base Rate</item>
+	  <item mnemonic="w2461" type="System.String">PUBLICATIONS</item>
+	  <item mnemonic="w2462" type="System.String">Open / Close all the elements</item>
+	  <item mnemonic="w2463" type="System.String">0 H - 7 H </item>
+	  <item mnemonic="w2464" type="System.String">7 H - 12 H</item>
+	  <item mnemonic="w2465" type="System.String">12 H - 14 H</item>
+	  <item mnemonic="w2466" type="System.String">14 H - 17 H</item>
+	  <item mnemonic="w2467" type="System.String">17 H - 19 H</item>
+	  <item mnemonic="w2468" type="System.String">19 H - 22 H </item>
+	  <item mnemonic="w2469" type="System.String">22 H - 24 H</item>
+	  <item mnemonic="w2470" type="System.String">5H - 7H</item>
+	  <item mnemonic="w2471" type="System.String">7H - 9H</item>
+	  <item mnemonic="w2472" type="System.String">9H - 13H</item>
+	  <item mnemonic="w2473" type="System.String">13H - 19H</item>
+	  <item mnemonic="w2474" type="System.String">19H - 24H</item>
+	  <item mnemonic="w2475" type="System.String">for the period</item>
+	  <item mnemonic="w2476" type="System.String">Cinema</item>
+	  <item mnemonic="w2477" type="System.String">Français</item>
+	  <item mnemonic="w2478" type="System.String">English</item>	
+	  <item mnemonic="w2479" type="System.String">Schedule by version</item>
+	  <item mnemonic="w2481" type="System.String">Evaliant report</item>
+	  <item mnemonic="w2482" type="System.String">Evaliant reports</item>
+	  <item mnemonic="w2483" type="System.String">-</item>
+	  <item mnemonic="w2484" type="System.String">-</item>
+	  <item mnemonic="w2485" type="System.String">-</item>
+	  <item mnemonic="w2486" type="System.String">-</item>
+	  <item mnemonic="w2487" type="System.String">-</item>
+	  <item mnemonic="w2488" type="System.String">-</item>
+	  <item mnemonic="w2489" type="System.String">-</item>
+	  <item mnemonic="w2490" type="System.String">-</item>
+	  <item mnemonic="w2491" type="System.String">-</item>
+	  <item mnemonic="w2492" type="System.String">-</item>
+	  <item mnemonic="w2493" type="System.String">-</item>
+	  <item mnemonic="w2494" type="System.String">-</item>
+	  <item mnemonic="w2495" type="System.String">-</item>
+	  <item mnemonic="w2496" type="System.String">-</item>
+	  <item mnemonic="w2497" type="System.String">-</item>
+	  <item mnemonic="w2498" type="System.String">-</item>
+	  <item mnemonic="w2499" type="System.String">-</item>
+	  <item mnemonic="w2500" type="System.String">-</item>
+	  <item mnemonic="w2501" type="System.String">-</item>
+	  <item mnemonic="w2502" type="System.String">-</item>
+	  <item mnemonic="w2503" type="System.String">-</item>
+	  <item mnemonic="w2504" type="System.String">-</item>
+	  <item mnemonic="w2505" type="System.String">-</item>
+	  <item mnemonic="w2506" type="System.String">-</item>
+	  <item mnemonic="w2507" type="System.String">-</item>
+	  <item mnemonic="w2508" type="System.String">-</item>
+	  <item mnemonic="w2509" type="System.String">-</item>
+	  <item mnemonic="w2510" type="System.String">-</item>
+	  <item mnemonic="w2511" type="System.String">-</item>
+	  <item mnemonic="w2512" type="System.String">-</item>
+	  <item mnemonic="w2513" type="System.String">-</item>
+	  <item mnemonic="w2514" type="System.String">-</item>
+	  <item mnemonic="w2515" type="System.String">-</item>
+	  <item mnemonic="w2516" type="System.String">-</item>
+	  <item mnemonic="w2517" type="System.String">-</item>
+	  <item mnemonic="w2518" type="System.String">-</item>
+	  <item mnemonic="w2519" type="System.String">-</item>
+	  <item mnemonic="w2520" type="System.String">-</item>
+	  <item mnemonic="w2521" type="System.String">-</item>
+	  <item mnemonic="w2522" type="System.String">-</item>
+	  <item mnemonic="w2523" type="System.String">-</item>
+	  <item mnemonic="w2524" type="System.String">-</item>
+	  <item mnemonic="w2525" type="System.String">-</item>
+	  <item mnemonic="w2526" type="System.String">-</item>
+	  <item mnemonic="w2527" type="System.String">-</item>
+	  <item mnemonic="w2528" type="System.String">-</item>
+	  <item mnemonic="w2529" type="System.String">-</item>
+	  <item mnemonic="w2530" type="System.String">-</item>
+	  <item mnemonic="w2531" type="System.String">-</item>
+	  <item mnemonic="w2532" type="System.String">-</item>
+	  <item mnemonic="w2533" type="System.String">-</item>
+	  <item mnemonic="w2534" type="System.String">-</item>
+	  <item mnemonic="w2535" type="System.String">-</item>
+	  <item mnemonic="w2536" type="System.String">-</item>
+	  <item mnemonic="w2537" type="System.String">-</item>
+	  <item mnemonic="w2538" type="System.String">-</item>
+	  <item mnemonic="w2539" type="System.String">-</item>
+	  <item mnemonic="w2540" type="System.String">-</item>
+	  <item mnemonic="w2541" type="System.String">-</item>
+	</items>
+</localization>
