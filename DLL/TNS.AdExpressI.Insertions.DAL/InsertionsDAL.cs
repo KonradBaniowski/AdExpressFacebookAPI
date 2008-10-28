@@ -274,7 +274,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                         str.AppendFormat(" and {2}.{0} = {1}", level.DataBaseIdField, id, table.Prefix);
                     }
                 }
-                if (id == 0 && level.Id == DetailLevelItemInformation.Levels.slogan && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack)
+                if (id == 0 && level.Id == DetailLevelItemInformation.Levels.slogan && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet)
                 {
                     str.AppendFormat(" and {2}.{0} = {1}", level.DataBaseIdField, id, table.Prefix);
                 }
@@ -302,7 +302,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             if (rank != 0)
             {
                 id = Convert.ToInt64(ids[rank - 1]);
-                if (id == 0 && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack) 
+                if (id == 0 && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet) 
                     return string.Format(" and {0}.id_slogan is null ", table.Prefix);
             }
             return ("");
