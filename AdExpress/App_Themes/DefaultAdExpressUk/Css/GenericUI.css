@@ -1,4 +1,148 @@
-﻿/* WebControl */
+﻿/* Error message style */
+.error
+{
+	background-color:White;	
+	vertical-align:middle;
+	text-align:center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #7D3200;
+	font-weight: bold;
+	padding:50px;
+	border:0;
+
+}
+
+
+/* Insertion Information Cellule */
+.insertionInfo
+{
+	background-color:White;	
+	vertical-align:top;
+
+}
+tr.insertionInfo td
+{
+	color:#644883;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	text-align:left;	
+	height:20px;
+	white-space:nowrap;
+
+}
+tr.insertionInfo td
+{
+	border-bottom : solid 1px #644883;
+}
+tr.insertionInfo td table tr td
+{
+	border:0;
+	vertical-align:top;
+}
+img.insertionInfo
+{
+	border : 0;
+	vertical-align:top;
+}
+tr.insertionInfo table tr td table
+{
+	border:0;
+	padding:0;
+	border-spacing:0;
+}
+tr.insertionInfo td table tr>td:first-child
+{
+	width:10%;
+}
+a.insertionInfo, a.insertionInfo:active,a.insertionInfo:visited
+{
+	text-decoration: none;
+	border: solid thin #644883;
+	vertical-align:top;
+
+}
+a.insertionInfo:hover{
+	text-decoration: none;
+	border: solid thin #D0C8DA;
+	vertical-align:top;
+}
+tr.insertionInfo td table tr td
+{
+	vertical-align:top;
+}
+tr.insertionInfo table tr td table tr td
+{
+	color:#644883;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align:left;	
+	vertical-align:top;
+}
+
+tr.insertionInfo td table tr td table tr td span
+{
+	font-weight:bold;
+}
+/* Creative Information Cellule */
+.creativeInfo
+{
+	background-color:White;	
+	vertical-align:top;
+}
+tr.creativeInfo td table
+{
+	padding:0px;
+	
+}
+tr.creativeInfo td table tr td table tr td span
+{
+	font-weight:bold;
+}
+tr.creativeInfo td table p tr td table tr td
+{
+	min-width:20px;
+}
+tr.creativeInfo td
+{
+	color:#644883;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	padding-bottom:2px;
+}
+tr.creativeInfo td table
+{
+	min-width:600px;
+	width:100%;
+	border:solid 1px #B1A3C1;
+	border-spacing:0px;
+	border-collapse:collapse;
+}
+tr.creativeInfo td table tr td
+{
+	background-color:#D0C8DA;
+	padding:10px;
+	text-align:center;
+}
+tr.creativeInfo td table p table tr
+{
+	height:15px;
+	vertical-align:text-top;
+}
+tr.creativeInfo td table p tr td
+{
+	text-align:left;
+	background-color:#B1A3C1;
+	white-space:nowrap;
+	padding:2px;
+}
+tr.creativeInfo td table p
+{
+	text-align:left;
+	background-color:#B1A3C1;
+	white-space:nowrap;
+	padding:2px;
+}
+/* WebControl */
 td.nav{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -181,6 +325,47 @@ tr.lv1 td{
 	padding-left:4px;
 	padding-right:4px;	
 }
+tr.insertionlv1 td{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:bold;
+	height:20px;	
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 0px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;		
+	text-align:left;
+
+}
+tr.insertionlv1{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:bold;
+	text-align : right;
+	height:20px;	
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;	
+}
 td.exlv1 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -222,6 +407,28 @@ tr.lv2 td{
 	padding-left:4px;
 	padding-right:4px;			
 }
+tr.insertionlv2 td{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	height:20px;	
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-color:#FFFFFF;
+	border-top-width:0px;
+	border-top-style:solid;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 0px; 
+	border-right-style:solid;
+	padding-left:14px;
+	padding-right:4px;		
+	text-align:left;
+
+}
 td.exlv2 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -261,6 +468,26 @@ tr.lv3 td{
 	padding-left:4px;
 	padding-right:4px;		
 }
+tr.insertionlv3 td{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;	
+	height:20px;	
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 0px; 
+	border-right-style:solid;
+	padding-left:24px;
+	padding-right:4px;	
+	text-align:left;
+
+}
 tr.lv4 td{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -278,6 +505,25 @@ tr.lv4 td{
 	border-right-style:solid;
 	padding-left:4px;
 	padding-right:4px;		
+}
+tr.insertionlv4 td{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;	
+	height:20px;	
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;		
+	text-align:center;
 }
 td.exlv3{
 	font-family: Arial, Helvetica, sans-serif;

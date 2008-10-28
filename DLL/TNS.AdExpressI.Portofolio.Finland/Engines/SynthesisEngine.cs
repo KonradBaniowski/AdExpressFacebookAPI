@@ -302,7 +302,7 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1413, _webSession.SiteLanguage));
 				CellDuration c = new CellDuration(double.Parse(totalDuration));
-				c.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).Format;
+                c.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).StringFormat;
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = c;
                 ChangeLineType(ref lineType);
             }
@@ -312,7 +312,7 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage));
 				CellEuro cE = new CellEuro(double.Parse(investment));
-				cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+                cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat;
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cE;
                 ChangeLineType(ref lineType);
             }
@@ -321,7 +321,7 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
 				lineIndex = resultTable.AddNewLine(lineType);
 				resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage));
 				CellNumber cN = new CellNumber(double.Parse(numberProduct.ToString()));
-				cN.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+				cN.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat;
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN;
 				ChangeLineType(ref lineType);
 			}
@@ -329,7 +329,7 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             lineIndex = resultTable.AddNewLine(lineType);
             resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));
 			CellNumber cN1 = new CellNumber(double.Parse(numberAdvertiser.ToString()));
-			cN1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+            cN1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat;
 			resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN1;
             ChangeLineType(ref lineType);
             #endregion

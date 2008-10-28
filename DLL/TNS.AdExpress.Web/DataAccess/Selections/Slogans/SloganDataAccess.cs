@@ -185,9 +185,10 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				//Droits en accès
 				sql += SQLGenerator.getAnalyseCustomerProductRight(webSession, tablePrefixe, true);
 				// Produit à exclure 
-				ProductItemsList productItemsList = Product.GetItemsList(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
-				if(productItemsList !=null )
+                ProductItemsList productItemsList = null;
+                if (Product.Contains(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (productItemsList = Product.GetItemsList(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null){
 					sql += productItemsList.GetExcludeItemsSql(true, tablePrefixe);
+                }
 				#endregion
 
 				#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection)				
@@ -302,9 +303,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				//Droits en accès
 				sql += SQLGenerator.getAnalyseCustomerProductRight(webSession, tablePrefixe, true);
 				// Produit à exclure 
-				ProductItemsList productItemsList = Product.GetItemsList(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
-				if (productItemsList != null)
-					sql += productItemsList.GetExcludeItemsSql(true, tablePrefixe);
+                ProductItemsList productItemsList = null;
+                if (Product.Contains(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (productItemsList = Product.GetItemsList(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
+                {
+                    sql += productItemsList.GetExcludeItemsSql(true, tablePrefixe);
+                }
 				#endregion
 
 				// Gestion des sélections et des droits

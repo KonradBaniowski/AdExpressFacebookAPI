@@ -1,4 +1,18 @@
-﻿/* Insertion Information Cellule */
+﻿/* Error message style */
+.error
+{
+	background-color:White;	
+	vertical-align:middle;
+	text-align:center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	padding:50px;
+	border:0;
+
+}
+/* Insertion Information Cellule */
 .insertionInfo
 {
 	background-color:White;	

@@ -667,6 +667,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
 						   DefaultPageSize="10"
 						   PageSizeOptions="10,15,20" 
+						   AllowRepeatHeader="False"
 						   AllowPaging="True"
 						   CssDetailSelectionBordelLevel="dsBorderLevel"
 						   CssDetailSelectionL1="dsLv1" 

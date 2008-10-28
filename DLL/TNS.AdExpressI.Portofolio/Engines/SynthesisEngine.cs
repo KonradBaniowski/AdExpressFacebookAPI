@@ -465,7 +465,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(2216, _webSession.SiteLanguage));
 				CellVolume cV = new CellVolume(double.Parse(volume));
-				cV.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.volume).Format;
+                cV.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.volume).StringFormat;
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cV;
                 ChangeLineType(ref lineType);
             }
@@ -538,7 +538,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     lineIndex = resultTable.AddNewLine(lineType);
                     resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1386, _webSession.SiteLanguage));
 					CellPage cP = new CellPage(double.Parse(adNumber));
-					cP.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).Format;
+					cP.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat;
 					resultTable[lineIndex, SECOND_COLUMN_INDEX] = cP;
                     ChangeLineType(ref lineType);
 
@@ -563,7 +563,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         lineIndex = resultTable.AddNewLine(lineType);
                         resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1388, _webSession.SiteLanguage));
 						CellPage cP1 = new CellPage(double.Parse(adNumberExcludingInsets));
-						cP1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).Format;
+                        cP1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat;
 						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cP1;
                         ChangeLineType(ref lineType);
                     }
@@ -575,7 +575,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         lineIndex = resultTable.AddNewLine(lineType);
                         resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1389, _webSession.SiteLanguage));
 						CellPage cP2 = new CellPage(double.Parse(adNumberIncludingInsets));
-						cP2.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).Format;
+                        cP2.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat;
 						resultTable[lineIndex, SECOND_COLUMN_INDEX] = cP2;
                         ChangeLineType(ref lineType);
                     }
@@ -617,7 +617,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1413, _webSession.SiteLanguage));
 				CellDuration cD = new CellDuration(double.Parse(totalDuration));
-				cD.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).Format;
+                cD.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).StringFormat;
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cD;
                 ChangeLineType(ref lineType);
             }
@@ -639,7 +639,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage));
 				CellEuro cE = new CellEuro(double.Parse(investment));
-				cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+                cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat;
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cE;
                 ChangeLineType(ref lineType);
             }
@@ -690,7 +690,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1414, _webSession.SiteLanguage));
 				CellDuration cD1 = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
-				cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).Format;
+                cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat;
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cD1;
                 ChangeLineType(ref lineType);
 

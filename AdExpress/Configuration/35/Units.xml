@@ -5,9 +5,4 @@
   <unit id="spot"        format="max0"      webTextId="939"   baseId ="insertion"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="totalinsert"/>
   <unit id="insertion"   format="max0"      webTextId="940"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="totalinsert"/>
   <unit id="duration"    format="duration"  webTextId="280"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellDuration"   field="duration"          multimediaField="totalduree"/>
-  <!--<unit id="mmPerCol"    webTextId="941"   baseId ="none"       field="area_mmc"          multimediaField="totalmmc"/> -->
-  <!--<unit id="pages"       webTextId="943"   baseId ="none"       field="area_page"         multimediaField="totalpages"/> -->
-  <!--<unit id="numberBoard" webTextId="936"   baseId ="insertion"  field="number_board"      multimediaField="totalinsert"/> -->
-  <!--<unit id="grp"         webTextId="1679"  baseId ="none"       field="grp"               /> -->
-  <!--<unit id="volume"      webTextId="2216"  baseId ="none"       field="volume"            multimediaField="totalvolume"/> -->
 </units>

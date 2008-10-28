@@ -21,6 +21,7 @@ using AjaxPro;
 
 using WebCst = TNS.AdExpress.Constantes.Web;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
+using CstFlags = TNS.AdExpress.Constantes.DB.Flags;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -108,7 +109,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     ids.Add(v.DatabaseId);
                 }
                 this._header.Vehicles = ids;
-                if (this.IdVehicle <= 0)
+                if (this.IdVehicle <= 0 && this.Vehicles.Count >0)
                 {
                     this.IdVehicle = this.Vehicles[0].DatabaseId;
                 }
@@ -374,17 +375,16 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         protected override void Render(HtmlTextWriter output)
         {
 
-            if (_isCreativeConfig)
-            {
-                this.PageSizeCookieName = TNS.AdExpress.Constantes.Web.Cookies.CurrentPageSizeCreatives;
-            }
-            output.WriteLine(this.AjaxEventScript());
 
-            output.WriteLine("<table align=\"center\" class=\"whiteBackGround\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
-
-            //header
             if (Vehicles.Count > 0)
             {
+                if (_isCreativeConfig)
+                {
+                    this.PageSizeCookieName = TNS.AdExpress.Constantes.Web.Cookies.CurrentPageSizeCreatives;
+                }
+                output.WriteLine(this.AjaxEventScript());
+
+                output.WriteLine("<table align=\"center\" class=\"whiteBackGround\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
                 output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
                 _header.RenderControl(output);
                 output.WriteLine("</td></tr>");
@@ -394,12 +394,20 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     _columns.RenderControl(output);
                     output.WriteLine("</td></tr>");
                 }
-            }
-            output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
-            base.Render(output);
-            output.WriteLine("</td></tr>");
+                output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
+                base.Render(output);
+                output.WriteLine("</td></tr>");
 
-            output.WriteLine("</table>");
+                output.WriteLine("</table>");
+            }
+            else
+            {
+                output.WriteLine("<table align=\"center\" valign=\"middle\" class=\"error\">");
+                output.WriteLine("<tr width=\"100%\" class=\"error\"><td width=\"100%\" class=\"error\">");
+                output.WriteLine(GestionWeb.GetWebWord(2106, _customerWebSession.SiteLanguage));
+                output.WriteLine("</td></tr>");
+                output.WriteLine("</table>");
+            }
 
 
         }
@@ -416,6 +424,29 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             Domain.Web.Navigation.Module module = session.CustomerLogin.GetModule(session.CurrentModule);
             VehicleInformation vehicle = VehiclesInformation.Get(_idVehicle);
             string filters = string.Empty;
+            ResultTable data = null;
+
+
+            string message = string.Empty;
+            if (vehicle.Id == CstDBClassif.Vehicles.names.outdoor && !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))
+            {
+                message = GestionWeb.GetWebWord(1882, _customerWebSession.SiteLanguage);
+            }
+            if (!this._isCreativeConfig && vehicle.Id == CstDBClassif.Vehicles.names.internet)
+            {
+                message = GestionWeb.GetWebWord(2244, _customerWebSession.SiteLanguage);
+            }
+            if (message.Length > 0)
+            {
+                data = new ResultTable(1, 1);
+                data.AddNewLine(LineType.total);
+                CellLabel c = new CellLabel(message);
+                c.CssClass = "error";
+                this.CssLTotal = "error";
+                data[0, 1] = c;
+                return data;
+            }
+
 
              //date
             int fromDate = 0;
@@ -453,7 +484,6 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             param[0] = session;
             param[1] = module.Id;
             IInsertionsResult result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.Default.dll", "TNS.AdExpressI.Insertions.Default.InsertionsResult", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
-            ResultTable data = null;
             if (_isCreativeConfig)
             {
                 List<GenericColumnItemInformation> columns = WebApplicationParameters.CreativesDetail.GetDetailColumns(vehicle.DatabaseId, module.Id);

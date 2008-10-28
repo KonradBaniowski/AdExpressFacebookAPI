@@ -555,8 +555,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         /// <returns></returns>
         protected virtual void GetExcludeProudcts(StringBuilder sql) {
             // Exclude product 
-            ProductItemsList prList = Product.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID);
-            if(prList != null)
+            ProductItemsList prList = null;
+            if (Product.Contains(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (prList = Product.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
                 sql.Append(prList.GetExcludeItemsSql(true, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
         }
         /// <summary>

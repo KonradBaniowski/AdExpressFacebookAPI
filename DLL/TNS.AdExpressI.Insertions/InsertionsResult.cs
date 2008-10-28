@@ -141,6 +141,16 @@ namespace TNS.AdExpressI.Insertions
                     vehicles.Remove(vehicles[i]);
                 }
             }
+            for (int i = vehicles.Count-1; i >= 0; i--)
+            {
+                if ((_getCreatives && !vehicles[i].ShowCreations) || (!_getCreatives && !vehicles[i].ShowInsertions)){
+                    vehicles.Remove(vehicles[i]);
+                }
+            }
+            if (vehicles.Count <= 0)
+            {
+                return vehicles;
+            }
             return _dalLayer.GetPresentVehicles(vehicles, filters, iDateBegin, iDateEnd, universId, _module, _getCreatives);
 
         }
