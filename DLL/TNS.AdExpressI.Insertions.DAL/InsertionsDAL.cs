@@ -392,10 +392,8 @@ namespace TNS.AdExpressI.Insertions.DAL
                 {
                     sql.AppendFormat(" {0} ", tmp);
                 }
-                if (!_msCreaConfig) {
-                    if (_session.DetailLevel != null) {
-                        sql.AppendFormat(" {0} ", _session.DetailLevel.GetSqlJoins(_session.DataLanguage, tData.Prefix));
-                    }
+                if (!_msCreaConfig && _session.DetailLevel != null) {
+                    sql.AppendFormat(" {0} ", _session.DetailLevel.GetSqlJoins(_session.DataLanguage, tData.Prefix));
                 }
                 sql.AppendFormat(" {0} ", GenericColumns.GetSqlContraintJoins(columns));
 
@@ -444,21 +442,19 @@ namespace TNS.AdExpressI.Insertions.DAL
             string tmp = string.Empty;
 
             //Detail levels
-            if (!_msCreaConfig) {
-                if (_session.DetailLevel != null && _session.DetailLevel.Levels != null && _session.DetailLevel.Levels.Count > 0) {
-                    foreach (DetailLevelItemInformation detailLevelItemInformation in _session.DetailLevel.Levels) {
-                        if (detailLevelItemInformation.Id == DetailLevelItemInformation.Levels.category) {
-                            hasCategory = true;
-                        }
-                        detailLevelsIds.Add(detailLevelItemInformation.Id.GetHashCode());
+            if (!_msCreaConfig && _session.DetailLevel != null && _session.DetailLevel.Levels != null && _session.DetailLevel.Levels.Count > 0) {
+                foreach (DetailLevelItemInformation detailLevelItemInformation in _session.DetailLevel.Levels) {
+                    if (detailLevelItemInformation.Id == DetailLevelItemInformation.Levels.category) {
+                        hasCategory = true;
                     }
-                    tmp = _session.DetailLevel.GetSqlFields();
-                    if (tmp.Length > 0) {
-                        sql.AppendFormat(" {0}", tmp);
-                        detailLevelSelected = true;
-                    }
-
+                    detailLevelsIds.Add(detailLevelItemInformation.Id.GetHashCode());
                 }
+                tmp = _session.DetailLevel.GetSqlFields();
+                if (tmp.Length > 0) {
+                    sql.AppendFormat(" {0}", tmp);
+                    detailLevelSelected = true;
+                }
+
             }
 
             //Insertions fields
@@ -476,10 +472,11 @@ namespace TNS.AdExpressI.Insertions.DAL
             }
 
             //Slogan fields
-			AppendSloganField(sql, tData, vehicle, columns);
+            if (!_msCreaConfig)
+			    AppendSloganField(sql, tData, vehicle, columns);
 
             //Category
-            if (vehicle.Id == CstDBClassif.Vehicles.names.tv && !hasCategory)
+            if (!_msCreaConfig && vehicle.Id == CstDBClassif.Vehicles.names.tv && !hasCategory)
             {
                 sql.AppendFormat(" {0}.id_category,", tData.Prefix);
             }
@@ -516,12 +513,10 @@ namespace TNS.AdExpressI.Insertions.DAL
             string tmp = string.Empty;
 
             sql.AppendFormat(" from {0} ", tData.SqlWithPrefix);
-            if (!_msCreaConfig) {
-                if (_session.DetailLevel != null) {
-                    tmp = _session.DetailLevel.GetSqlTables(sAdExpr03.Label);
-                    if (tmp.Length > 0) {
-                        sql.AppendFormat(", {0} ", tmp);
-                    }
+            if (!_msCreaConfig && _session.DetailLevel != null) {
+                tmp = _session.DetailLevel.GetSqlTables(sAdExpr03.Label);
+                if (tmp.Length > 0) {
+                    sql.AppendFormat(", {0} ", tmp);
                 }
             }
             tmp = GenericColumns.GetSqlTables(sAdExpr03.Label, columns, detailLevelsIds);
@@ -753,13 +748,12 @@ namespace TNS.AdExpressI.Insertions.DAL
             bool first = true;
 
             sql.Append(" group by");
-            if (!_msCreaConfig) {
-                if (_session.DetailLevel != null) {
-                    tmp = _session.DetailLevel.GetSqlGroupByFields();
-                    if (tmp.Length > 0) {
-                        sql.AppendFormat(" {0}", tmp);
-                        first = false;
-                    }
+
+            if (!_msCreaConfig && _session.DetailLevel != null) {
+                tmp = _session.DetailLevel.GetSqlGroupByFields();
+                if (tmp.Length > 0) {
+                    sql.AppendFormat(" {0}", tmp);
+                    first = false;
                 }
             }
 
@@ -782,7 +776,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 }
             }
 
-            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)
+            if (!_msCreaConfig && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)
                 && vehicle.Id == CstDBClassif.Vehicles.names.radio
                 && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.slogan)
                 )
@@ -790,7 +784,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 sql.AppendFormat(", {0}.id_slogan ", tData.Prefix);
             }
 
-            if (!first && vehicle.Id == CstDBClassif.Vehicles.names.tv && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category))
+            if (!_msCreaConfig && !first && vehicle.Id == CstDBClassif.Vehicles.names.tv && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category))
             {
                 sql.AppendFormat(" , {0}.id_category", tData.Prefix);
             }
@@ -809,13 +803,12 @@ namespace TNS.AdExpressI.Insertions.DAL
             bool first = true;
 
             sql.Append(" order by ");
-            if (!_msCreaConfig) {
-                if (_session.DetailLevel != null) {
-                    tmp = _session.DetailLevel.GetSqlOrderFields();
-                    if (tmp.Length > 0) {
-                        sql.AppendFormat(" {0}", tmp);
-                        first = false;
-                    }
+
+            if (!_msCreaConfig && _session.DetailLevel != null) {
+                tmp = _session.DetailLevel.GetSqlOrderFields();
+                if (tmp.Length > 0) {
+                    sql.AppendFormat(" {0}", tmp);
+                    first = false;
                 }
             }
 
@@ -837,7 +830,8 @@ namespace TNS.AdExpressI.Insertions.DAL
                 }
             }
 
-            AppendSloganField(sql, tData, vehicle,columns);
+            if (!_msCreaConfig)
+                AppendSloganField(sql, tData, vehicle,columns);
 
         }
         #endregion
