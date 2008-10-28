@@ -695,7 +695,10 @@ namespace TNS.AdExpressI.Insertions.DAL
             else{
                 sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, tData.Prefix, true, false));
             }
-            sql.AppendFormat(" and {0}.id_category<>35  ", tData.Prefix);//NO TV NAT thématiques
+			string idCategoryThematic = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.thematicTv);
+			if (idCategoryThematic != null && idCategoryThematic.Length > 0) {
+				sql.AppendFormat("  and  {0}.id_category not in ( {1}) ", tData.Prefix, idCategoryThematic);				
+			}
             #endregion
 
             #region Filtres
