@@ -3090,4 +3090,55 @@ namespace TNS.AdExpress.Constantes.Web{
 		public const string LOGO_APPM = "/Images/common/logo_Appm.gif";
 	}
 	#endregion
+
+	#region Lists management
+	/// <summary>
+	///groups lists type
+	/// </summary>
+	public class GroupList {
+		/// <summary>
+		/// Action au niveau des univers
+		/// </summary>
+		public enum ID {
+			/// <summary>
+			/// inset group of list
+			/// </summary>
+			inset = 0,
+			/// <summary>
+			/// category group of list
+			/// </summary>
+			category = 1
+		}
+		/// <summary>
+		/// Category of vehicle list
+		/// </summary>
+		public enum Type {
+			/// <summary>
+			/// ID encart
+			/// </summary>
+			encart=0,
+			/// <summary>
+			/// ID encart
+			/// </summary>
+			flyingEncart=1,
+			/// <summary>
+			/// ID excart
+			/// </summary>
+			Excart=2,
+			/// <summary>
+			/// List thematic TV
+			/// </summary>
+			thematicTv = 3,
+			/// <summary>
+			/// List digital TV 
+			/// </summary>
+			digitalTv = 4,
+			/// <summary>
+			/// Sponsor ship TV
+			/// </summary>
+			sponsorShipTv = 5
+		}
+	}
+	#endregion
+
 }

@@ -56,6 +56,10 @@ namespace TNS.AdExpress.Domain.Classification {
         /// Detail column id
         /// </summary>
         private Int64 _detailColumnId;
+		/// <summary>
+		/// Allowed recap media level items list
+		/// </summary>
+		private List<DetailLevelItemInformation.Levels> _allowedRecapMediaLevelItemsList;
         #endregion
 
         #region Constructor
@@ -99,6 +103,30 @@ namespace TNS.AdExpress.Domain.Classification {
             _detailColumnId = detailColumnId;
 
         }
+		 /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">Vehicle id</param>
+        /// <param name="databaseId">Data base id</param>
+        /// <param name="showInsertions">Show insertions</param>
+        /// <param name="showCreations">Show creations</param>
+        /// <param name="allowedUnitsList">Allowed units list</param>
+        /// <param name="allowedMediaLevelItemsList">Allowed media level items list</param>
+        /// <param name="mediaSelectionParentsList">Media selection parents list</param>
+        /// <param name="detailColumnId">Detail column id</param>
+		/// <param name="allowedRecapMediaLevelItemsList">Allowed recap media level items list</param>
+		public VehicleInformation(string id,
+								  Int64 databaseId,
+								  bool showInsertions,
+								  bool showCreations,
+								  List<CustomerSessions.Unit> allowedUnitsList,
+								  List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList,
+								  string defaultMediaSelectionParent,
+								  List<DetailLevelItemInformation.Levels> mediaSelectionParentsList,
+								  Int64 detailColumnId,List<DetailLevelItemInformation.Levels> allowedRecapMediaLevelItemsList):
+			this(id, databaseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent,mediaSelectionParentsList, detailColumnId) {
+			_allowedRecapMediaLevelItemsList = allowedRecapMediaLevelItemsList;
+		}
         #endregion
 
         #region Accessors
@@ -166,6 +194,13 @@ namespace TNS.AdExpress.Domain.Classification {
         public List<DetailLevelItemInformation.Levels> AllowedMediaLevelItemsEnumList {
             get { return _allowedMediaLevelItemsList; }
         }
+		/// <summary>
+		/// Get allowed recap media level items enum list
+		/// </summary>
+		public List<DetailLevelItemInformation.Levels> AllowedRecapMediaLevelItemsEnumList {
+			get { return _allowedRecapMediaLevelItemsList; }
+		}
+		
         /// <summary>
         /// Get allowed media level items information list
         /// </summary>
@@ -177,6 +212,17 @@ namespace TNS.AdExpress.Domain.Classification {
                 return list;
             }
         }
+		/// <summary>
+		/// Get allowed recap media level items information list
+		/// </summary>
+		public List<DetailLevelItemInformation> AllowedRecapMediaLevelItemsInformationList {
+			get {
+				List<DetailLevelItemInformation> list = new List<DetailLevelItemInformation>();
+				foreach (DetailLevelItemInformation.Levels currentLevel in _allowedRecapMediaLevelItemsList)
+					list.Add(DetailLevelItemsInformation.Get(currentLevel.GetHashCode()));
+				return list;
+			}
+		}
         /// <summary>
         /// Get Default media selection parent
         /// </summary>

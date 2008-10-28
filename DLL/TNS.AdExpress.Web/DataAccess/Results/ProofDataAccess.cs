@@ -27,6 +27,8 @@ using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Units;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 #endregion
 
@@ -150,64 +152,72 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 		public static DataSet GetProofFileData( WebSession webSession, string idMedia, string idProduct, string dateParution, string page){ //IDataSource dataSource
 			
 			StringBuilder sql = new StringBuilder(3000);
+			Table pressTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPress);
+			Table mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.media);
+			Table advertiserTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.advertiser);
+			Table productTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.product);
+			Table groupTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.group);
+			Table colorTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.color);
+			Table formatTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.format);			
+			
+			string DATA_PRESS_PREFIXE = pressTable.Prefix;
 
 			#region Select
-			sql.Append("select "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_media, "+ DBConstantes.Tables.MEDIA_PREFIXE +".media, ");
-            sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE + ".date_media_num, " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".date_cover_num, ");
-			sql.Append(DBConstantes.Tables.ADVERTISER_PREFIXE +".advertiser, ");
-			sql.Append(DBConstantes.Tables.PRODUCT_PREFIXE +".product, "+ DBConstantes.Tables.GROUP_PREFIXE +".group_, ");
+			sql.Append("select "+ DATA_PRESS_PREFIXE +".id_media, "+ mediaTable.Prefix +".media, ");
+            sql.Append(DATA_PRESS_PREFIXE + ".date_media_num, " + DATA_PRESS_PREFIXE + ".date_cover_num, ");
+			sql.Append(advertiserTable.Prefix +".advertiser, ");
+			sql.Append(productTable.Prefix +".product, "+ groupTable.Prefix +".group_, ");
 			sql.AppendFormat("{0}.media_paging, {0}.{1} as {2}, "
-                , DBConstantes.Tables.DATA_PRESS_PREFIXE
+                , DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString());
 			sql.AppendFormat("{0}.{1} as {2}, {3}.color, "
-                , DBConstantes.Tables.DATA_PRESS_PREFIXE
+                , DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.mmPerCol].DatabaseField
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.mmPerCol].Id.ToString()
-                , DBConstantes.Tables.COLOR_PREFIXE);
-			sql.Append(DBConstantes.Tables.FORMAT_PREFIXE +".format, "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".rank_sector, ");
-			sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE +".rank_group_, "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".rank_media, ");
-			sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_advertisement, ");
+                , colorTable.Prefix);
+			sql.Append(formatTable.Prefix +".format, "+ DATA_PRESS_PREFIXE +".rank_sector, ");
+			sql.Append(DATA_PRESS_PREFIXE +".rank_group_, "+ DATA_PRESS_PREFIXE +".rank_media, ");
+			sql.Append(DATA_PRESS_PREFIXE +".id_advertisement, ");
 			sql.AppendFormat("{0}.visual, {0}.{1} as {2}"
-                , DBConstantes.Tables.DATA_PRESS_PREFIXE
+                , DATA_PRESS_PREFIXE
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
 			#endregion
 
 			#region From
-			sql.Append(" from " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.DATA_PRESS + " " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ",");
-			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.MEDIA + " " + DBConstantes.Tables.MEDIA_PREFIXE + ",");
-			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ADVERTISER + " " + DBConstantes.Tables.ADVERTISER_PREFIXE + ",");
-			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.PRODUCT + " " + DBConstantes.Tables.PRODUCT_PREFIXE + ",");
-			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.GROUP_ + " " + DBConstantes.Tables.GROUP_PREFIXE + ",");
-			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.COLOR + " " + DBConstantes.Tables.COLOR_PREFIXE + ",");
-			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.FORMAT + " " + DBConstantes.Tables.FORMAT_PREFIXE + " ");
+			sql.Append(" from " + pressTable.SqlWithPrefix + ",");
+			sql.Append(mediaTable.SqlWithPrefix+ ",");
+			sql.Append(advertiserTable.SqlWithPrefix + ",");
+			sql.Append(productTable.SqlWithPrefix+ ",");
+			sql.Append(groupTable.SqlWithPrefix + ",");
+			sql.Append(colorTable.SqlWithPrefix + ",");
+			sql.Append(formatTable.SqlWithPrefix + " ");
 			#endregion
 
 			#region Where
-			sql.Append(" where "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_media = "+ idMedia);
-			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_product = "+ idProduct);
+			sql.Append(" where "+ DATA_PRESS_PREFIXE +".id_media = "+ idMedia);
+			sql.Append(" and "+ DATA_PRESS_PREFIXE +".id_product = "+ idProduct);
 
-            sql.Append(" and " + DBConstantes.Tables.DATA_PRESS_PREFIXE + ".date_media_num = " + dateParution);			
+            sql.Append(" and " + DATA_PRESS_PREFIXE + ".date_media_num = " + dateParution);			
 			
-			sql.Append(" and rtrim(ltrim("+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".media_paging)) like '"+ page +"'");
-			//sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_language_data_i = "+ webSession.DataLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.MEDIA_PREFIXE +".id_language = "+ webSession.DataLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.ADVERTISER_PREFIXE +".id_language = "+ webSession.DataLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.PRODUCT_PREFIXE +".id_language = "+ webSession.DataLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.GROUP_PREFIXE +".id_language = "+ webSession.DataLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.COLOR_PREFIXE +".id_language = "+ webSession.DataLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.FORMAT_PREFIXE +".id_language = "+ webSession.DataLanguage);
-			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_media = "+ DBConstantes.Tables.MEDIA_PREFIXE +".id_media ");
-			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_advertiser = "+ DBConstantes.Tables.ADVERTISER_PREFIXE +".id_advertiser ");
-			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_product = "+ DBConstantes.Tables.PRODUCT_PREFIXE +".id_product ");
-			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_group_ = "+ DBConstantes.Tables.GROUP_PREFIXE +".id_group_ ");
-			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_color = "+ DBConstantes.Tables.COLOR_PREFIXE +".id_color ");
-			sql.Append(" and "+ DBConstantes.Tables.DATA_PRESS_PREFIXE +".id_format = "+ DBConstantes.Tables.FORMAT_PREFIXE +".id_format ");
+			sql.Append(" and rtrim(ltrim("+ DATA_PRESS_PREFIXE +".media_paging)) like '"+ page +"'");
+			sql.Append(" and " + mediaTable.Prefix + ".id_language = " + webSession.DataLanguage);
+			sql.Append(" and "+ advertiserTable.Prefix +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ productTable.Prefix +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ groupTable.Prefix+".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+ colorTable.Prefix +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and "+formatTable.Prefix +".id_language = "+ webSession.DataLanguage);
+			sql.Append(" and " + DATA_PRESS_PREFIXE + ".id_media = " + mediaTable.Prefix + ".id_media ");
+			sql.Append(" and " + DATA_PRESS_PREFIXE + ".id_advertiser = " + advertiserTable.Prefix + ".id_advertiser ");
+			sql.Append(" and " + DATA_PRESS_PREFIXE + ".id_product = " + productTable.Prefix + ".id_product ");
+			sql.Append(" and " + DATA_PRESS_PREFIXE + ".id_group_ = " + groupTable.Prefix + ".id_group_ ");
+			sql.Append(" and " + DATA_PRESS_PREFIXE + ".id_color = " + colorTable.Prefix + ".id_color ");
+			sql.Append(" and " + DATA_PRESS_PREFIXE + ".id_format = " + formatTable.Prefix + ".id_format ");
 			//media rights
-			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBConstantes.Tables.DATA_PRESS_PREFIXE, true));
+			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DATA_PRESS_PREFIXE, true));
 			//product rights
-			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DBConstantes.Tables.DATA_PRESS_PREFIXE, true));
+			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DATA_PRESS_PREFIXE, true));
 
 			#endregion
 

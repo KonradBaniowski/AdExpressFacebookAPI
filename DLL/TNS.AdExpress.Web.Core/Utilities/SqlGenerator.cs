@@ -3902,7 +3902,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 				case WebConstantes.CustomerSessions.Insert.withOutInsert:
 					return " and  (" + dataTablePrefixe + ".id_inset=0 or " + dataTablePrefixe + ".id_inset is null )";
 				case WebConstantes.CustomerSessions.Insert.insert:
-					string fieldsList = Lists.GetInsetIdList();
+					string fieldsList = Lists.GetIdList(WebConstantes.GroupList.ID.inset);
 					if (fieldsList != null && fieldsList.Length > 0)
 						return " and  " + dataTablePrefixe + ".id_inset in (" + fieldsList + ")";
 					else return "";

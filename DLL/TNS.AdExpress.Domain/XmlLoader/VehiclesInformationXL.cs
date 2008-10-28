@@ -34,6 +34,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             List<CustomerSessions.Unit> allowedUnitsList = new List<CustomerSessions.Unit>();
             List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
             List<DetailLevelItemInformation.Levels> mediaSelectionParentsList = new List<DetailLevelItemInformation.Levels>();
+			List<DetailLevelItemInformation.Levels> allowedRecapMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
             XmlTextReader reader = null;
             string id= string.Empty;
             string defaultMediaSelectionParent = string.Empty;
@@ -52,12 +53,13 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                         switch (reader.LocalName) {
                             case "vehicle":
                                 if (id.Length > 0) { 
-                                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId));
+                                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId,allowedRecapMediaLevelItemsList));
                                     id = string.Empty;
                                     defaultMediaSelectionParent = string.Empty;
                                     allowedUnitsList = new List<CustomerSessions.Unit>();
                                     allowedMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
                                     mediaSelectionParentsList = new List<DetailLevelItemInformation.Levels>();
+									allowedRecapMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
                                 }
                                 if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
                                 id = reader.GetAttribute("id");
@@ -91,11 +93,16 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid detailColumn parameter"));
                                 detailColumnId = Int64.Parse(reader.GetAttribute("id"));
                                 break;
+							case "allowedRecapMediaLevelItem":
+								readString = reader.ReadString();
+								if (readString == null || readString.Length == 0) throw (new InvalidXmlValueException("Invalid allowedMediaLevelItem parameter"));
+								allowedRecapMediaLevelItemsList.Add((DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), readString, true));
+								break;
                         }
                     }
                 }
                 if (id.Length > 0) {
-                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId));
+                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId,allowedRecapMediaLevelItemsList));
                 }
             }
             catch (System.Exception err) {

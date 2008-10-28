@@ -1171,7 +1171,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
             string VehicleAccessList = "";
             string InterestCenterAccessList = "";
             //identification du Média  sélectionné          
-            ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            //ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+			VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
             if (IsInterestCenterSelected(webSession))
             {
@@ -1200,7 +1201,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 
             //sélection Pan euro
             if (!WebFunctions.CheckedText.IsStringEmpty(InterestCenterAccessList) && !WebFunctions.CheckedText.IsStringEmpty(MediaAccessList)
-                && vehicleType == ClassificationCst.DB.Vehicles.names.others)
+				&& vehicleInfo.Id == ClassificationCst.DB.Vehicles.names.others)
                 sql += " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_category in (" + Media.GetItemsList(CstWeb.AdExpressUniverse.DASHBOARD_PANEURO_MEDIA_LIST_ID).CategoryList + ")";
 
             switch (webSession.PreformatedTable)
@@ -1209,8 +1210,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector:
-                    if (!IsRepartitionSelected(webSession) && VehicleAccessList.Length > 0 && vehicleType != ClassificationCst.DB.Vehicles.names.adnettrack)
-                        sql = " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_vehicle in (" + VehicleAccessList + ") ";
+					if (!IsRepartitionSelected(webSession) && vehicleInfo.Id != ClassificationCst.DB.Vehicles.names.adnettrack)
+						sql = " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_vehicle in (" + vehicleInfo.DatabaseId + ") ";
                     break;
                 default: return sql;
 

@@ -25,8 +25,12 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using WebFunction = TNS.AdExpress.Web.Functions.Script;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 
 using TNS.AdExpressI.ProductClassReports;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Level;
 #endregion
 
 namespace AdExpress{
@@ -116,6 +120,14 @@ namespace AdExpress{
 					Page.Response.Flush();
 				}
 				#endregion
+
+				VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+				if (vehicleInfo != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null
+					&& !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)
+					&& !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)) {					
+					_webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicle;
+					_webSession.Save();
+				}
 
 				#region Url Suivante
 //				_nextUrl=this.recallWebControl.NextUrl;

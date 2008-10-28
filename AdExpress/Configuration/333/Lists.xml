@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<insets>
-  <inset id="encart"   dataBaseId ="108"/>
-  <inset id="flyingEncart"  dataBaseId ="85"/>
-  <inset id="Excart"  dataBaseId ="999"/>
-</insets>
+<lists>
+  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="encart" listIds="108"/>
+  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="flyingEncart" listIds="85"/>
+  <list group="inset" keyType="TTNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="Excart" listIds="999"/>
+  <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="thematicTv" listIds ="35"/>
+  <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="digitalTv" listIds ="78"/>
+  <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="sponsorShipTv" listIds ="68"/>
+</lists>

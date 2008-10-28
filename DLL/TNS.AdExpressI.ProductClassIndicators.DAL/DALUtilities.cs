@@ -2,6 +2,7 @@ using CstRight = TNS.AdExpress.Constantes.Customer.Right;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using WebConstantes=TNS.AdExpress.Constantes.Web;
 
 
 using System;
@@ -43,6 +44,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
             string temp = "";
             temp = FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, prefix, !first);
             sql.Append(" " + temp);
+			string idSponsorShipCategory = "";
 
             if (_vehicle != CstDBClassif.Vehicles.names.plurimedia)
             {
@@ -50,11 +52,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
                 sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, prefix, !first));
                 first = false;
             }
-            //TV Sponsorship rights
-            if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
+
+			  
+			//TV Sponsorship rights
+			if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
             {
-                sql.AppendFormat("  and  {0}.id_category not in (68) ", prefix);
-                first = false;
+				 idSponsorShipCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category,WebConstantes.GroupList.Type.sponsorShipTv);
+				 if (idSponsorShipCategory != null && idSponsorShipCategory.Length > 0) {
+					 sql.AppendFormat("  and  {0}.id_category not in ( {1}) ", prefix, idSponsorShipCategory);
+					 first = false;
+				 }			
             }
             sql.Append(FctUtilities.SQLGenerator.GetRecapMediaSelection(_session.GetSelection(_session.CurrentUniversMedia, CstRight.type.categoryAccess), _session.GetSelection(_session.CurrentUniversMedia, CstRight.type.mediaAccess), true));
 

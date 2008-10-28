@@ -212,7 +212,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 				
 				//Execute PL/SQL block
 				sqlCommand.ExecuteNonQuery();
-				idStaticNavSession=(Int64)param2.Value;
+				idStaticNavSession = Int64.Parse(param2.Value.ToString());
 
 			}
 				#endregion

@@ -316,22 +316,22 @@ namespace AdExpress.Private.Selection{
 		#endregion
 
 		#region Méthodes interne
-		/// <summary>
-		/// Indique si le niveau catégorie doit être montrer pour le média (vehicle)
-		/// </summary>
-		/// <param name="idVehicle">Vehicle à traiter</param>
-		/// <returns>True s'il doit être montrer, false sinon</returns>
-		private bool showCategory(Int64 idVehicle) {
-			DBConstantesClassification.Vehicles.names vehicletype=(DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString());
-			switch(vehicletype) {
-				case DBConstantesClassification.Vehicles.names.cinema:
-					return(false);
-				case DBConstantesClassification.Vehicles.names.plurimedia:
-					return(false);
-				default:
-					return(true);
-			}
-		}
+		///// <summary>
+		///// Indique si le niveau catégorie doit être montrer pour le média (vehicle)
+		///// </summary>
+		///// <param name="idVehicle">Vehicle à traiter</param>
+		///// <returns>True s'il doit être montrer, false sinon</returns>
+		//private bool showCategory(Int64 idVehicle) {
+		//    DBConstantesClassification.Vehicles.names vehicletype=(DBConstantesClassification.Vehicles.names)int.Parse(idVehicle.ToString());
+		//    switch(vehicletype) {
+		//        case DBConstantesClassification.Vehicles.names.cinema:
+		//            return(false);
+		//        case DBConstantesClassification.Vehicles.names.plurimedia:
+		//            return(false);
+		//        default:
+		//            return(true);
+		//    }
+		//}
 		#endregion
 
 		#region Implémentation méthodes abstraites

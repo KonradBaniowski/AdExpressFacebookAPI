@@ -43,7 +43,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								id = reader.GetAttribute("id");								
 								if (reader.GetAttribute("dataBaseId") == null || reader.GetAttribute("dataBaseId").Length == 0) throw (new InvalidXmlValueException("Invalid data base Id parameter"));;
 								dataBaseId = long.Parse(reader.GetAttribute("dataBaseId"));
-								list.Add((CustomerSessions.InsertType)Enum.Parse(typeof(CustomerSessions.InsertType), id, true), dataBaseId);
+								list.Add((CustomerSessions.InsertType)Enum.Parse(typeof(CustomerSessions.InsertType), id, true), dataBaseId);								
 								break;
 						}
 					}
@@ -59,6 +59,66 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 			}
 			source.Close();
 			return (list);
+
+		}
+		/// <summary>
+		/// Load group list 
+		/// </summary>
+		/// <param name="source">source</param>
+		/// <returns>group list</returns>
+		public static Dictionary<GroupList.ID, Dictionary<GroupList.Type, string>> LoadGroupList(IDataSource source) {
+
+			#region Variables
+			Dictionary<GroupList.ID, Dictionary<GroupList.Type, string>> groupsDesciption = new Dictionary<GroupList.ID, Dictionary<GroupList.Type, string>>();
+
+			Dictionary<GroupList.Type, string> lists = new Dictionary<GroupList.Type, string>();
+			XmlTextReader reader = null;
+			GroupList.Type keyType;
+			GroupList.ID group;
+			string values;
+			string oldGroup = "";
+			#endregion
+
+			try {
+				source.Open();
+				reader = (XmlTextReader)source.GetSource();
+				while (reader.Read()) {
+					if (reader.NodeType == XmlNodeType.Element) {
+						switch (reader.LocalName) {
+							case "list":
+								
+								if (reader.GetAttribute("group") == null || reader.GetAttribute("group").Length == 0) throw (new InvalidXmlValueException("Invalid group parameter"));
+								group = (GroupList.ID)Enum.Parse(typeof(GroupList.ID), reader.GetAttribute("group"), true);
+								if(oldGroup !=null && oldGroup.Length>0 && !oldGroup.Equals(reader.GetAttribute("group"))){
+									groupsDesciption.Add((GroupList.ID)Enum.Parse(typeof(GroupList.ID), oldGroup, true), lists);
+									lists= new Dictionary<GroupList.Type,string>();
+								}
+								if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid data keyType parameter")); ;
+								keyType = (GroupList.Type)Enum.Parse(typeof(GroupList.Type), reader.GetAttribute("id"), true);
+								if (reader.GetAttribute("listIds") == null || reader.GetAttribute("listIds").Length == 0) throw (new InvalidXmlValueException("Invalid listIds parameter"));
+								values = reader.GetAttribute("listIds");
+								lists.Add(keyType, values);
+								oldGroup = reader.GetAttribute("group");
+								break;
+						}
+					}
+				}
+				if (oldGroup != null && oldGroup.Length > 0) {
+					groupsDesciption.Add((GroupList.ID)Enum.Parse(typeof(GroupList.ID), oldGroup, true), lists);
+					lists = new Dictionary<GroupList.Type, string>();
+				}
+
+			}
+			catch (System.Exception err) {
+
+				#region Close the file
+				if (source.GetSource() != null) source.Close();
+				#endregion
+
+				throw (new Exception(" Error : ", err));
+			}
+			source.Close();
+			return (groupsDesciption);
 
 		}
 	}

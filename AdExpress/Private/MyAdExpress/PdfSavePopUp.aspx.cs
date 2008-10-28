@@ -116,11 +116,7 @@ namespace AdExpress.Private.MyAdExpress
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try{
-				#region Textes et Langage du site
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
-				#endregion
+				
 
 				#region Paramètres pour les fiches justificatives
 				//Récupération des paramètres de l'url
@@ -128,7 +124,7 @@ namespace AdExpress.Private.MyAdExpress
 					_idMedia	= Page.Request.QueryString.Get("idmedia");
 					_idProduct	= Page.Request.QueryString.Get("idproduct");
 					_dateCover = Page.Request.QueryString.Get("dateCover");
-					_dateParution = Page.Request.QueryString.Get("dateKiosque");
+					_dateParution = Page.Request.QueryString.Get("dateParution");
 					_pageNumber		= Page.Request.QueryString.Get("page");
 				}
 				#endregion

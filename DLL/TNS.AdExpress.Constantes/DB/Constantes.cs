@@ -1354,11 +1354,29 @@ namespace TNS.AdExpress.Constantes.DB{
         /// ID category corresponding to digital TV
         /// </summary>
         public const Int64 ID_DIGITAL_TV = 78;
+		/// <summary>
+		/// KEY category corresponding to digital TV
+		/// </summary>
+		public const string KEY_DIGITAL_TV = "KEY_DIGITAL_TV";
 
 		/// <summary>
 		/// ID category corresponding to thematic TV
 		/// </summary>
 		public const Int64 ID_THEMATIC_TV = 35;
+		/// <summary>
+		/// key category corresponding to excluded thematic TV
+		/// </summary>
+		public const string KEY_EXCLUDE_THEMATIC_TV = "KEY_EXCLUDE_THEMATIC_TV";
+
+		/// <summary>
+		/// ID category corresponding to Sponsorship TV
+		/// </summary>
+		public const Int64 ID_SPONSORSHIP_TV = 68;
+
+		/// <summary>
+		/// key category corresponding to excluded Sponsorship TV
+		/// </summary>
+		public const string KEY_EXCLUDE_SPONSORSHIP_TV = "KEY_EXCLUDE_SPONSORSHIP_TV";
         #endregion
 
     }

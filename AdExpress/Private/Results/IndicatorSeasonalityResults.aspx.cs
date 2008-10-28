@@ -32,6 +32,7 @@ using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Translation.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -138,6 +139,26 @@ namespace AdExpress.Private.Results {
                 zoomTitle = GestionWeb.GetWebWord(1235, _webSession.SiteLanguage);
                 InformationWebControl1.Language = _webSession.SiteLanguage;
                 #endregion
+
+				VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+
+				if (_webSession.CurrentTab == CstResult.MediaStrategy.MEDIA_STRATEGY) {
+					if (vehicleInfo != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null
+						&& !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)
+						&& !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)
+						&& vehicleInfo.Id != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia ) {
+						_webSession.Graphics = false;
+						ResultsOptionsWebControl1.GraphRadioButton.Checked = false;
+						ResultsOptionsWebControl1.GraphRadioButton.Visible = false;
+						ResultsOptionsWebControl1.TableRadioButton.Visible = false;
+						_webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicle;
+						_webSession.Save();
+					}
+				}
+				else {
+					ResultsOptionsWebControl1.GraphRadioButton.Visible = true;
+					ResultsOptionsWebControl1.TableRadioButton.Visible = true;
+				}
 
                 if (!IsPostBack)
                 {
@@ -282,8 +303,7 @@ namespace AdExpress.Private.Results {
                         totalChoice = true;
                         if (_webSession.Graphics)
                         {
-							VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-							if (vehicleInfo != null) {
+							if (vehicleInfo != null ) {
 								// si WebSession est au niveau media on se met au niveau categorie/media
 								if (_webSession.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicle && vehicleInfo.Id != CstDBClassif.Vehicles.names.plurimedia) {
 									_webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory;
@@ -328,6 +348,7 @@ namespace AdExpress.Private.Results {
 			InitializeProductWebControl1.CustomerWebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
             ProductClassContainerWebControl1.Session = _webSession;
+			
 			return tmp;
 		}
 		#endregion

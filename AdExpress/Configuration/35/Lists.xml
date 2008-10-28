@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<insets>
-  <inset id="encart"   dataBaseId ="3"/>
-  <inset id="flyingEncart"  dataBaseId ="4"/>
-</insets>
+<lists>
+  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="encart" listIds="3"/>
+  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="flyingEncart" listIds="4"/>   
+</lists>

@@ -23,6 +23,7 @@ using TNS.AdExpress.Domain.Translation;
 using DBConstantesClassification=TNS.AdExpress.Constantes.Classification.DB;
 using VhCstes=TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
 using TableName=TNS.AdExpress.Constantes.Classification.DB.Table.name;
+using TNS.AdExpress.Domain.Level;
 
 
 
@@ -174,7 +175,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				#region variables locales				
 				//variables du niveau  Media
 				Int64 idVehicleOld=-1;
-				Int64 idVehicle;										
+				Int64 idVehicle = -2;										
 				int startVehicle=-1;	
 				string vhSeparator="";
 				string VehicleIds="";
@@ -182,27 +183,13 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				string 	vhlist="";								
 				//variables du niveau Category
 				Int64 idCategoryOld=-1;
-				Int64 idCategory;										
+				Int64 idCategory = -2;										
 				int startCategory=-1;										
 				//variables du niveau Support
 				Int64 i = 0;				
 				int numColumn = 0;			
 				string checkBox="";						
-				#endregion
-
-				#region Old version
-				////Récupération de la liste des média autorisés pour l'utilisateur courant
-				//if(webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap].Length>0){
-				//    vhlist=webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap];
-				//    VehicleIdsArr = vhlist.Split(',');
-				//    for(int v=0;v<VehicleIdsArr.Length;v++){
-				//        if(v>0)vhSeparator="-";
-				//        VehicleIds+=vhSeparator+"vh_"+VehicleIdsArr[v].ToString();
-				//    }
-				//    if(VehicleIds.Length>0)VehicleIds+="-vh_"+VhCstes.plurimedia.GetHashCode().ToString();
-				//}
-				//else  throw (new WebControlInitializationException("Impossible d'initialiser le composant, aucun média n'est accessible."));	
-				#endregion
+				#endregion				
 
 				if (_currentVehicleList != null && _currentVehicleList.Count>0) {
 					
@@ -234,150 +221,168 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 				#region For each  vehicle
 
-				foreach(DataRow currentRow in dtVehicle.Rows)
-				{	
+				foreach (DataRow currentRow in dtVehicle.Rows) {
 					//Initialisation of parents Id
-					idVehicle=(Int64)currentRow["id_vehicle"];
-					idCategory=(Int64)currentRow["id_category"];
-					
+					idVehicle = (Int64)currentRow["id_vehicle"];
+					idCategory = (Int64)currentRow["id_category"];
+
 					#region contruction tableau principal
-						//Close Category				
-					if (idCategory != idCategoryOld && startCategory == 0)
-						{	//Fermeture support
-							if (showMedia(idVehicle))
-							{
-								if (numColumn!=0)t.Append("</tr>");
-							}
-							t.Append("</table>");							
-							t.Append("</td></tr></table></div></DIV></td></tr>");										
+					//Close Category				
+					if (idCategory != idCategoryOld && startCategory == 0) {	//Fermeture support
+						if (showMedia(idVehicle)) {
+							if (numColumn != 0) t.Append("</tr>");
 						}
+						t.Append("</table>");
+						t.Append("</td></tr></table></div>");
+						t.Append("</DIV></td></tr>");
 
-						//Close Vehicle				
-						if (idVehicle!= idVehicleOld && startVehicle==0 )
-						{
-							startCategory=-1;
-							t.Append("\n</TD></TR></TABLE></Div>");
-							t.Append("\n</td></tr></table></div></td></tr>");
+					}
+
+					//Close Vehicle				
+					if (idVehicle != idVehicleOld && startVehicle == 0) {
+						startCategory = -1;
+						if (OpenVehicleDiv(idVehicle)) {
+							t.Append("\n</TD></TR>");
 						}
+						t.Append("\n</TABLE></Div>\n</td></tr>");
 
-						#region New Vehicle
-						//New Vehicle 
-						if (idVehicle!= idVehicleOld)
-						{							
-							//Border top table						
-							t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_"+idVehicle+"\" >");
-							if (idVehicleOld == -1)t.Append("\n<table class=\"whiteBackGround violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
-                            else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+						t.Append("\n</table></div>");
+						t.Append("\n</td></tr>");
+					}
 
-								//Cursor on  line
-							if (OpenVehicleDiv(idVehicle))
-									t.Append("\n<tr  style=\"cursor : hand\">");
-							else t.Append("\n<tr>");						
-														
-							idVehicleOld=idVehicle;
-							startVehicle=0;							
+					#region New Vehicle
+					//New Vehicle 
+					if (idVehicle != idVehicleOld) {
+						//Border top table						
+						t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_" + idVehicle + "\" >");
+						if (idVehicleOld == -1) t.Append("\n<table class=\"whiteBackGround violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+						else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
 
-							//checkbox vehicle 
-							t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" >");
-							t.Append("\n<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$"+i+"\" name=\"SectorAnalysisVehicleSelectionWebControl1_"+i+"\" onClick=\"CheckAllChilds('vh_"+idVehicle+"','"+VehicleIds+"','vh_"+idVehicle+"')\" value=vh_"+idVehicle+"></td>");																											
+						//Cursor on  line
+						if (OpenVehicleDiv(idVehicle))
+							t.Append("\n<tr  style=\"cursor : hand\">");
+						else t.Append("\n<tr>");
 
-							//End label vehicle 						
-							if(OpenVehicleDiv(idVehicle)){
-								t.Append("<td width=100% align=\"left\" onClick=\"javascript : DivDisplayer('vhDiv" + idVehicle + "');\" >" + currentRow["vehicle"].ToString() + "");
-								t.Append("</td><td align=\"right\" onClick=\"javascript : DivDisplayer('vhDiv" + idVehicle + "');\">");
-								t.Append("<IMG src=\"/App_Themes/"+themeName+"/images/Common/button/bt_arrow_down.gif\" width=\"15\">");
-							}else t.Append("<td width=100% align=\"left\" >"+currentRow["vehicle"].ToString()+"");														
-							t.Append("</td></tr>");							
-							t.Append("<tr><td colspan=\"3\" >");
-							t.Append("<Div  style=\"display ='none'\" id=\"vhDiv" + idVehicle + "\">");
-                            t.Append("<TABLE cellpadding=0 cellspacing=0 width=100% class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\">");
-							if(OpenVehicleDiv(idVehicle)){	
-							t.Append("<tr><td class=\"roll04\"><a href=\"javascript: SelectExclusiveAllChilds('vh_"+idVehicle+"','"+VehicleIds+"','vh_"+idVehicle+"','vh_','ct_')\" title=\""+GestionWeb.GetWebWord(1151,webSession.SiteLanguage)+"\" class=\"roll04\">&nbsp;&nbsp;"+GestionWeb.GetWebWord(1151,webSession.SiteLanguage)+"</td></tr>");
-								t.Append("<TR><TD>");	
-							}
-							i++;	
+						idVehicleOld = idVehicle;
+						startVehicle = 0;
+
+						//checkbox vehicle 
+						t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" >");
+						t.Append("\n<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$" + i + "\" name=\"SectorAnalysisVehicleSelectionWebControl1_" + i + "\" onClick=\"CheckAllChilds('vh_" + idVehicle + "','" + VehicleIds + "','vh_" + idVehicle + "')\" value=vh_" + idVehicle + "></td>");
+
+						//End label vehicle 						
+						if (OpenVehicleDiv(idVehicle)) {
+							t.Append("<td width=100% align=\"left\" onClick=\"javascript : DivDisplayer('vhDiv" + idVehicle + "');\" >" + currentRow["vehicle"].ToString() + "");
+							t.Append("</td><td align=\"right\" onClick=\"javascript : DivDisplayer('vhDiv" + idVehicle + "');\">");
+							t.Append("<IMG src=\"/App_Themes/" + themeName + "/images/Common/button/bt_arrow_down.gif\" width=\"15\">");
 						}
-						#endregion
-
-						#region New category
-						if (idCategory!=idCategoryOld && showMediaBranchItem(TableName.category,idVehicle))
-						{	
-							numColumn=0;															
-							if(startCategory== -1)t.Append("<tr><td ><div style=\"MARGIN-LEFT: 5px; width=100%;\" class=\"violetBackGroundV3\"  id=\"ct_"+idCategory+"\"><table class=\"violetBackGroundV3 txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
-							else t.Append("<tr><td><div style=\"MARGIN-LEFT: 5px; width=100%;\" class=\"violetBackGroundV3\"  id=\"ct_"+idCategory+"\"><table class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
-
-							//Cursor on  line
-							if(showMediaBranchItem(TableName.media,idVehicle)) t.Append("\n<tr  style=\"cursor : pointer\">");
-							else t.Append("\n<tr>");
-
-							idCategoryOld=idCategory;
-							startCategory=0;
-							t.Append("<td  align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">");
-							
-							// checkbox category 
-							t.Append("<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$"+i+"\" id=\"SectorAnalysisVehicleSelectionWebControl1_"+i+"\" onClick=\"CheckAllChilds('ct_"+idCategory+"','"+VehicleIds+"','vh_"+idVehicle+"')\" value=\"ct_"+idCategory+"\">");
-							t.Append("\n</td>\n");
-							//Label category
-							t.Append("<td width=100% valign=\"middle\" height=\"10\" onClick=\"javascript : DivDisplayer('"+idCategory+"');\" align=\"left\"  ");
-							if(showMediaBranchItem(TableName.media,idVehicle)){
-								t.Append(">&nbsp;"+currentRow["category"].ToString()+"</td>");
-								t.Append("<td valign=\"baseline\"  onClick=\"javascript : DivDisplayer('"+idCategory+"');\"   ");
-								t.Append(">&nbsp;<IMG height=\"15\" src=\"/App_Themes/"+themeName+"/images/Common/button/bt_arrow_down.gif\" width=\"15\" align=\"right\"></td>");
-							}
-							else t.Append(" width=\"15\" colspan=\"2\" >&nbsp;"+currentRow["category"].ToString()+"</td>");
-
-							t.Append("</tr><tr><td colspan=\"3\"><DIV id=\""+idCategory+"\" ><table cellpadding=0 cellspacing=0 border=\"0\" width=100%>");							
-							if(showMediaBranchItem(TableName.media,idVehicle))
-							{
-                                t.Append("<table cellpadding=0 cellspacing=0 border=\"0\" width=100% class=\"mediumPurple1 whiteTopBorder txtViolet10\">");	
-								t.Append("<tr><td colspan=\"3\" class=\"roll04\" ><a href=\"javascript: SelectExclusiveAllChilds('ct_"+idCategory+"','"+VehicleIds+"','vh_"+idVehicle+"','vh_','ct_')\" title=\""+GestionWeb.GetWebWord(1066,webSession.SiteLanguage)+"\" class=\"roll04\">&nbsp;"+GestionWeb.GetWebWord(1066,webSession.SiteLanguage)+"</a></td></tr>");
-							}
-							i++;
-						}							
-						#endregion
-
-						#region Show media checkbox
-						if(showMediaBranchItem(TableName.media,idVehicle))
-						{
-							if(numColumn==0)
-							{								
-								t.Append("<tr >");
-								t.Append("<td  width=\"33%\">");								
-								t.Append("<input type=\"checkbox\" "+checkBox+" name=\"SectorAnalysisVehicleSelectionWebControl1$"+i+"\" id=\"SectorAnalysisVehicleSelectionWebControl1_"+i+"\" value=\"md_"+currentRow["media"]+"\" onClick=\"CheckAllChilds('md_"+currentRow["id_media"]+"','"+VehicleIds+"','vh_"+idVehicle+"')\">"+currentRow["media"].ToString());
-								t.Append("</td>");								
-								numColumn++;
-								i++;					
-							}
-							else if(numColumn==1 )
-							{
-								t.Append("<td  width=\"33%\">");								
-								t.Append("<input type=\"checkbox\" "+checkBox+" name=\"SectorAnalysisVehicleSelectionWebControl1$"+i+"\"  id=\"SectorAnalysisVehicleSelectionWebControl1_"+i+"\" value=\"md_"+currentRow["media"]+"\" onClick=\"CheckAllChilds('md_"+currentRow["id_media"]+"','"+VehicleIds+"','vh_"+idVehicle+"')\">"+currentRow["media"].ToString());
-								t.Append("</td>");								
-								numColumn++;
-								i++;
-							}
-							else 
-							{
-								t.Append("<td  width=\"33%\">");								
-								t.Append("<input type=\"checkbox\" name=\"SectorAnalysisVehicleSelectionWebControl1$"+i+"\" onClick=\"CheckAllChilds('md_"+currentRow["id_media"]+"','"+VehicleIds+"','vh_"+idVehicle+"')\"  value=\"md_"+currentRow["media"]+"\" id=\"SectorAnalysisVehicleSelectionWebControl1_"+i+"\" >"+currentRow["media"].ToString());
-								t.Append("</td></tr>");
-								numColumn=0;
-								i++;
-							}
+						else {
+							t.Append("<td width=100% align=\"left\">" + currentRow["vehicle"].ToString() + "");
 						}
-						#endregion
-					
+						t.Append("</td></tr>");
+
+						t.Append("<tr><td colspan=\"3\" >");
+						t.Append("<Div  style=\"display ='none'\" id=\"vhDiv" + idVehicle + "\">");
+						t.Append("<TABLE cellpadding=0 cellspacing=0 width=100% class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\">");
+
+						if (OpenVehicleDiv(idVehicle)) {
+							t.Append("<tr><td class=\"roll04\"><a href=\"javascript: SelectExclusiveAllChilds('vh_" + idVehicle + "','" + VehicleIds + "','vh_" + idVehicle + "','vh_','ct_')\" title=\"" + GestionWeb.GetWebWord(1151, webSession.SiteLanguage) + "\" class=\"roll04\">&nbsp;&nbsp;" + GestionWeb.GetWebWord(1151, webSession.SiteLanguage) + "</td></tr>");
+							t.Append("<TR><TD>");
+						}
+						i++;
+					}
 					#endregion
-					
+
+					#region New category
+					if (idCategory != idCategoryOld && showMediaBranchItem(TableName.category, idVehicle)) {
+						numColumn = 0;
+						if (startCategory == -1) t.Append("<tr><td ><div style=\"MARGIN-LEFT: 5px; width=100%;\" class=\"violetBackGroundV3\"  id=\"ct_" + idCategory + "\"><table class=\"violetBackGroundV3 txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+						else t.Append("<tr><td><div style=\"MARGIN-LEFT: 5px; width=100%;\" class=\"violetBackGroundV3\"  id=\"ct_" + idCategory + "\"><table class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+
+						//Cursor on  line
+						if (showMediaBranchItem(TableName.media, idVehicle)) t.Append("\n<tr  style=\"cursor : pointer\">");
+						else t.Append("\n<tr>");
+
+						idCategoryOld = idCategory;
+						startCategory = 0;
+						t.Append("<td  align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">");
+
+						// checkbox category 
+						t.Append("<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$" + i + "\" id=\"SectorAnalysisVehicleSelectionWebControl1_" + i + "\" onClick=\"CheckAllChilds('ct_" + idCategory + "','" + VehicleIds + "','vh_" + idVehicle + "')\" value=\"ct_" + idCategory + "\">");
+						t.Append("\n</td>\n");
+						//Label category
+						t.Append("<td width=100% valign=\"middle\" height=\"10\" onClick=\"javascript : DivDisplayer('" + idCategory + "');\" align=\"left\"  ");
+						if (showMediaBranchItem(TableName.media, idVehicle)) {
+							t.Append(">&nbsp;" + currentRow["category"].ToString() + "</td>");
+							t.Append("<td valign=\"baseline\"  onClick=\"javascript : DivDisplayer('" + idCategory + "');\"   ");
+							t.Append(">&nbsp;<IMG height=\"15\" src=\"/App_Themes/" + themeName + "/images/Common/button/bt_arrow_down.gif\" width=\"15\" align=\"right\"></td>");
+						}
+						else t.Append(" width=\"15\" colspan=\"2\" >&nbsp;" + currentRow["category"].ToString() + "</td>");
+
+						t.Append("</tr><tr><td colspan=\"3\"><DIV id=\"" + idCategory + "\" ><table cellpadding=0 cellspacing=0 border=\"0\" width=100%>");
+						if (showMediaBranchItem(TableName.media, idVehicle)) {
+							t.Append("<table cellpadding=0 cellspacing=0 border=\"0\" width=100% class=\"mediumPurple1 whiteTopBorder txtViolet10\">");
+							t.Append("<tr><td colspan=\"3\" class=\"roll04\" ><a href=\"javascript: SelectExclusiveAllChilds('ct_" + idCategory + "','" + VehicleIds + "','vh_" + idVehicle + "','vh_','ct_')\" title=\"" + GestionWeb.GetWebWord(1066, webSession.SiteLanguage) + "\" class=\"roll04\">&nbsp;" + GestionWeb.GetWebWord(1066, webSession.SiteLanguage) + "</a></td></tr>");
+						}
+						i++;
+					}
+					#endregion
+
+					#region Show media checkbox
+					if (showMediaBranchItem(TableName.media, idVehicle)) {
+						if (numColumn == 0) {
+							t.Append("<tr >");
+							t.Append("<td  width=\"33%\">");
+							t.Append("<input type=\"checkbox\" " + checkBox + " name=\"SectorAnalysisVehicleSelectionWebControl1$" + i + "\" id=\"SectorAnalysisVehicleSelectionWebControl1_" + i + "\" value=\"md_" + currentRow["media"] + "\" onClick=\"CheckAllChilds('md_" + currentRow["id_media"] + "','" + VehicleIds + "','vh_" + idVehicle + "')\">" + currentRow["media"].ToString());
+							t.Append("</td>");
+							numColumn++;
+							i++;
+						}
+						else if (numColumn == 1) {
+							t.Append("<td  width=\"33%\">");
+							t.Append("<input type=\"checkbox\" " + checkBox + " name=\"SectorAnalysisVehicleSelectionWebControl1$" + i + "\"  id=\"SectorAnalysisVehicleSelectionWebControl1_" + i + "\" value=\"md_" + currentRow["media"] + "\" onClick=\"CheckAllChilds('md_" + currentRow["id_media"] + "','" + VehicleIds + "','vh_" + idVehicle + "')\">" + currentRow["media"].ToString());
+							t.Append("</td>");
+							numColumn++;
+							i++;
+						}
+						else {
+							t.Append("<td  width=\"33%\">");
+							t.Append("<input type=\"checkbox\" name=\"SectorAnalysisVehicleSelectionWebControl1$" + i + "\" onClick=\"CheckAllChilds('md_" + currentRow["id_media"] + "','" + VehicleIds + "','vh_" + idVehicle + "')\"  value=\"md_" + currentRow["media"] + "\" id=\"SectorAnalysisVehicleSelectionWebControl1_" + i + "\" >" + currentRow["media"].ToString());
+							t.Append("</td></tr>");
+							numColumn = 0;
+							i++;
+						}
+					}
+					#endregion
+
+					#endregion
+
 				}
 
 				#endregion
 
 				//Fermeture Tableau global	
-											
-				t.Append(" \n\n<tr> \n\n</table></td></tr></table></DIV></div></td></tr>");				
-				t.Append(" \n\n</td></tr></table></div></td></tr>");
-				t.Append(" </TD></TR></TABLE></Div> \n\n</td>\n</tr>\n ");
+				//Close Category				
+				if ( startCategory == 0 && showMediaBranchItem(TableName.category, idVehicle)) {	//Fermeture support
+					if (showMedia(idVehicle)) {
+						if (numColumn != 0) t.Append("</tr>");
+					}
+					t.Append("</table>");
+					t.Append("</td></tr></table></div>");
+					t.Append("</DIV></td></tr>");
+				}
+				//Close Vehicle				
+				if ( startVehicle == 0) {
+					if (OpenVehicleDiv(idVehicle)) {
+						t.Append("\n</TD></TR>");
+					}
+					t.Append("\n</TABLE></Div>\n</td></tr>");
+
+					t.Append("\n</table></div>");
+					t.Append("\n</td></tr>");
+
+				}				
+				t.Append(" \n\n</td>\n</tr>\n ");
 			}
 			else
 			{
@@ -396,15 +401,15 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		#region Internal methods
 
 		/// <summary>
-		/// Dermine if category level can be shown for the current vehicle 
+		/// Dermine if media level can be shown for the current vehicle 
 		/// </summary>
 		/// <param name="idVehicle">Id Vehicle</param>
 		/// <param name="mediaBranchItem">Media branch</param>
 		/// <returns>True if category level can be shown </returns>
-		private bool showMediaBranchItem(DBConstantesClassification.Table.name mediaBranchItem, Int64 idVehicle)
-		{
+		private bool showMediaBranchItem(DBConstantesClassification.Table.name mediaBranchItem, Int64 idVehicle) {
+			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
 			switch(mediaBranchItem)
-			{
+			{	
 				case DBConstantesClassification.Table.name.vehicle:
 					return(true);
 				case DBConstantesClassification.Table.name.category:
@@ -423,13 +428,16 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		private bool showCategory(Int64 idVehicle)
 		{
 			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
-			switch (vehicleInfo.Id)
-			{
-				case DBConstantesClassification.Vehicles.names.cinema:
-					return(false);
-				default:
-					return(true);
-			}
+			return (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category));
+			#region A supprimer
+			//switch (vehicleInfo.Id)
+			//{
+			//    case DBConstantesClassification.Vehicles.names.cinema:
+			//        return(false);
+			//    default:
+			//        return(true);
+			//}
+			#endregion
 		}
 
 		/// <summary>
@@ -440,18 +448,21 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		private bool showMedia(Int64 idVehicle)
 		{
 			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
-			switch (vehicleInfo.Id)
-			{
-				case DBConstantesClassification.Vehicles.names.internet:
-				case DBConstantesClassification.Vehicles.names.press:
-				case DBConstantesClassification.Vehicles.names.internationalPress:
-				case DBConstantesClassification.Vehicles.names.cinema:
-				case DBConstantesClassification.Vehicles.names.mobileTelephony:
-				case DBConstantesClassification.Vehicles.names.emailing:
-					return(false);
-				default:
-					return(true);
-			}
+			return (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media));
+			#region A supprimer
+			//switch (vehicleInfo.Id)
+			//{
+			//    case DBConstantesClassification.Vehicles.names.internet:
+			//    case DBConstantesClassification.Vehicles.names.press:
+			//    case DBConstantesClassification.Vehicles.names.internationalPress:
+			//    case DBConstantesClassification.Vehicles.names.cinema:
+			//    case DBConstantesClassification.Vehicles.names.mobileTelephony:
+			//    case DBConstantesClassification.Vehicles.names.emailing:
+			//        return(false);
+			//    default:
+			//        return(true);
+			//}
+			#endregion
 		}
 
 		/// <summary>
@@ -463,13 +474,16 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		private bool OpenVehicleDiv(Int64 idVehicle)
 		{
 			VehicleInformation vehicleInfo = VehiclesInformation.Get(idVehicle);
-			switch (vehicleInfo.Id)
-			{
-				case DBConstantesClassification.Vehicles.names.cinema:
-					return(false);
-				default:
-					return(true);
-			}
+			return (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category));
+			#region A supprimer
+			//switch (vehicleInfo.Id)
+			//{
+			//    case DBConstantesClassification.Vehicles.names.cinema:
+			//        return(false);
+			//    default:
+			//        return(true);
+			//}
+			#endregion
 		}
 		#endregion
 

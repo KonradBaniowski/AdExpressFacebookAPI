@@ -734,6 +734,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         {
 
             bool first = true;
+			string idSponsorShipCategory = "";
 
             #region Sélection media
             //vehicle
@@ -782,7 +783,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             //Droits Parrainage TV
             if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
             {
-                sql.AppendFormat(" and {0}.id_category not in (68) ", _dataTable.Prefix);
+				idSponsorShipCategory = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.sponsorShipTv);
+				if (idSponsorShipCategory != null && idSponsorShipCategory.Length > 0) {
+					sql.AppendFormat("  and  {0}.id_category not in ( {1}) ", _dataTable.Prefix, idSponsorShipCategory);
+				}		      
             }
 
             #endregion

@@ -68,7 +68,7 @@ namespace AdExpress.Private.Results
 					MenuWebControl2.ForcePdfExportResult = "/Private/MyAdExpress/PdfSavePopUp.aspx?idSession="
 						+ this._webSession.IdSession + "&idmedia=" + proofresultwebcontrol1.IdMedia
 						+ "&idproduct=" + proofresultwebcontrol1.IdProduct + "&dateParution=" + proofresultwebcontrol1.DateMediaNum
-						+ "&dateFacial=" + proofresultwebcontrol1.DateFacial + "&page=" + proofresultwebcontrol1.PageNumber;
+						+ "&dateCover=" + proofresultwebcontrol1.DateFacial + "&page=" + proofresultwebcontrol1.PageNumber;
 
 				}
 				
@@ -87,7 +87,7 @@ namespace AdExpress.Private.Results
 				MenuWebControl2.ForcePdfExportResult = "/Private/MyAdExpress/PdfSavePopUp.aspx?idSession="
 					+ this._webSession.IdSession + "&idmedia=" + proofresultwebcontrol1.IdMedia
                     + "&idproduct=" + proofresultwebcontrol1.IdProduct + "&dateParution=" + proofresultwebcontrol1.DateMediaNum
-                    + "&dateFacial=" + proofresultwebcontrol1.DateFacial + "&page=" + proofresultwebcontrol1.PageNumber;
+					+ "&dateCover=" + proofresultwebcontrol1.DateFacial + "&page=" + proofresultwebcontrol1.PageNumber;
 			}
 			else MenuWebControl2.Visible = false;
 

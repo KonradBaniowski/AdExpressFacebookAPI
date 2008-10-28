@@ -17,6 +17,7 @@ using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork;
 using TNS.FrameWork.Date;
+using FctUtilities=TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.UI
 {
@@ -79,10 +80,10 @@ namespace TNS.AdExpress.Web.UI
 						return Convertion.ToHtmlString(GestionWeb.GetWebWord(846,webSession.SiteLanguage)+" "+monthBegin+" "+yearBegin+" "+GestionWeb.GetWebWord(847,webSession.SiteLanguage)+" "+monthEnd+" "+yearEnd);
 					case CustomerSessions.Period.Type.dateToDateWeek:
 						AtomicPeriodWeek tmp=new AtomicPeriodWeek(int.Parse(webSession.PeriodBeginningDate.Substring(0,4)),int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4,2)));
-						str=tmp.FirstDay.Date.ToString("dd/MM/yyyy");
+						str = FctUtilities.Dates.DateToString(tmp.FirstDay.Date, webSession.SiteLanguage);  //tmp.FirstDay.Date.ToString("dd/MM/yyyy");
 						tmp=new AtomicPeriodWeek(int.Parse(webSession.PeriodEndDate.Substring(0,4)),int.Parse(webSession.PeriodEndDate.ToString().Substring(4,2)));
 						str+=" "+GestionWeb.GetWebWord(125,webSession.SiteLanguage)+"";
-						str+=" "+tmp.LastDay.Date.ToString("dd/MM/yyyy")+"";
+						str += " " + FctUtilities.Dates.DateToString(tmp.LastDay.Date, webSession.SiteLanguage) + "";// tmp.LastDay.Date.ToString("dd/MM/yyyy") + "";
 						return str;
 					case CustomerSessions.Period.Type.nLastWeek:
 						return Convertion.ToHtmlString(webSession.PeriodLength.ToString()+" "+GestionWeb.GetWebWord(784,webSession.SiteLanguage));
@@ -92,8 +93,8 @@ namespace TNS.AdExpress.Web.UI
                     case CustomerSessions.Period.Type.cumlDate:
 						string dateBegin;
 						string dateEnd;
-						dateBegin = DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodBeginningDate.ToString(),webSession.SiteLanguage);
-						dateEnd = DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodEndDate.ToString(),webSession.SiteLanguage);
+						dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.PeriodBeginningDate.ToString(), webSession.SiteLanguage);
+						dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.PeriodEndDate.ToString(), webSession.SiteLanguage);
 						if(!dateBegin.Equals(dateEnd))
 						return Convertion.ToHtmlString(GestionWeb.GetWebWord(896,webSession.SiteLanguage)+" "+dateBegin+" "+GestionWeb.GetWebWord(897,webSession.SiteLanguage)+" "+dateEnd);
 						else return " "+dateBegin;
@@ -141,9 +142,9 @@ namespace TNS.AdExpress.Web.UI
                             TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
                         str += "" + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " ";
-                        str += begin.Date.ToString("dd/MM/yyyy");
+						str += FctUtilities.Dates.DateToString(begin.Date, webSession.SiteLanguage);// begin.Date.ToString("dd/MM/yyyy");
                         str += " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + "";
-                        str += " " + end.Date.ToString("dd/MM/yyyy") + "";
+						str += " " + FctUtilities.Dates.DateToString(end.Date, webSession.SiteLanguage) + "";//end.Date.ToString("dd/MM/yyyy")
 						return str;
                     case CustomerSessions.Period.DisplayLevel.monthly:
                         
@@ -158,7 +159,7 @@ namespace TNS.AdExpress.Web.UI
                         end = TNS.AdExpress.Web.Functions.Dates.Min(end,
                             TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + begin.ToString("dd/MM/yyyy") + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + end.ToString("dd/MM/yyyy"));
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + FctUtilities.Dates.DateToString(begin,webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + FctUtilities.Dates.DateToString(end,webSession.SiteLanguage));
                     default:
                         return "";
                 }
@@ -178,9 +179,9 @@ namespace TNS.AdExpress.Web.UI
             try {
                 string dateBegin;
                 string dateEnd;
-                
-                dateBegin = DateString.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.StartDate.ToString(), webSession.SiteLanguage);
-                dateEnd = DateString.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.EndDate.ToString(), webSession.SiteLanguage);
+
+				dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.StartDate.ToString(), webSession.SiteLanguage);
+				dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.EndDate.ToString(), webSession.SiteLanguage);
                 
                 if (!dateBegin.Equals(dateEnd))
                     return Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + dateBegin + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + dateEnd);
@@ -201,8 +202,8 @@ namespace TNS.AdExpress.Web.UI
                 string dateBegin;
                 string dateEnd;
 
-                dateBegin = DateString.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeStartDate.ToString(), webSession.SiteLanguage);
-                dateEnd = DateString.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeEndDate.ToString(), webSession.SiteLanguage);
+				dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeStartDate.ToString(), webSession.SiteLanguage);
+				dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeEndDate.ToString(), webSession.SiteLanguage);
 
                 if (!dateBegin.Equals(dateEnd))
                     return Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + dateBegin + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + dateEnd);
