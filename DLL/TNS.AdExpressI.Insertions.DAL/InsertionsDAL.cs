@@ -262,7 +262,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 id = Convert.ToInt64(ids[i]);
                 level = (DetailLevelItemInformation)detailLevels.Levels[i];
-                if (id > 0 || (id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet)))
+                if (id > 0 || (id != -1 && id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet)))
                 {
                     if (level.DataBaseIdField == CstDB.Fields.ID_VEHICLE && id == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.internet))
                         id = CstDBClassif.Vehicles.names.adnettrack.GetHashCode();
