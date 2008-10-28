@@ -722,7 +722,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 sql.AppendFormat(" and wp.id_slogan={0}", _session.SloganIdZoom);
             }
-            if (_creaConfig && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet)
+            if ((_msCreaConfig || _creaConfig) && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet)
             {
                 sql.AppendFormat(" and {0}.id_slogan is not null", tData.Prefix);
             }
