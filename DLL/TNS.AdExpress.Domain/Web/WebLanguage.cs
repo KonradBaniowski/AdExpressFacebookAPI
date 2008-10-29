@@ -68,6 +68,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Extended culture info for the specific language
         /// </summary>
         private AdExpressCultureInfo _cInfo = null;
+        /// <summary>
+        /// Rss Description
+        /// </summary>
+        private Rss _rss;
         #endregion
 
         #region Constructor
