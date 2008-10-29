@@ -110,14 +110,17 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
         /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
-        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string nlsSort, AdExpressCultureInfo cInfo)
+        /// <param name="nlsSort">nls sort</param>
+        /// <param name="cInfo">Culture info object</param>
+        /// <param name="rss">Rss object</param>
+        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, Rss rss)
             : this(id,imageSourceText,localization,charset,contentEncoding,excelContentEncoding) {
             if(name!=null&&name.Length>0) _name=name;
 			if (nlsSort != null && nlsSort.Length > 0) _nlsSort = nlsSort;		
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
             _classificationLanguageId=classificationLanguageId;
             _cInfo = cInfo;
-            
+            _rss = rss;
         }
         #endregion
 
@@ -184,6 +187,12 @@ namespace TNS.AdExpress.Domain.Web {
         {
             get { return _cInfo; }
             set { _cInfo = value; }
+        }
+        /// <summary>
+        /// Get Set rss feed
+        /// </summary>
+        public Rss Rss {
+            get { return _rss; }
         }
         #endregion
     }

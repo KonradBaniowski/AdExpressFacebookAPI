@@ -14,6 +14,7 @@ using TNS.FrameWork.Net.Rss;
 using TNS.FrameWork.Net.Rss.Channel;
 using TNS.FrameWork.Net.Rss.Collections;
 using TNS.FrameWork.Net.Rss.Item;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
@@ -210,29 +211,25 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// </summary>
 		/// <param name="e">Arguments</param>
 		protected override void OnPreRender(EventArgs e) {
-
-#if DEBUG
-            _rssFileUrl = "http://thebes/Rss/" + _languageId.ToString() + "/" + _rssFileName;
-            _ExternRssFileUrl = _rssFileUrl;
-#else
-            _rssFileUrl="http://thebes/Rss/"+_languageId.ToString()+"/"+_rssFileName;
-            _ExternRssFileUrl="http://www.tnsadexpress.com/Rss/"+_languageId.ToString()+"/"+_rssFileName;
-#endif
-
-            try {
-                // Read Rss
-                RssFeed feed = RssFeed.Read(_rssFileUrl);
-                // Channel
-                RssChannel channel = (RssChannel)feed.Channels[0];
-                // Rss Items collection
-                RssItemCollection items = channel.Items;
-                // Write html items in arraylist
-                foreach(RssItem item in items) {
-                    _items.Add("<font " + ((_rssDescriptionCss.Length > 0) ? " class=\"" + _rssDescriptionCss + "\"" : "") + ">&raquo;&nbsp;<font " + ((_rssTitleCss.Length > 0) ? " class=\"" + _rssTitleCss + "\"" : "") + ">" + item.Title + " : </font>" + item.Description + "</font>");
+            WebLanguage webLanguage = WebApplicationParameters.AllowedLanguages[_languageId];
+            if(webLanguage.Rss.Display) {
+                _rssFileUrl = AppDomain.CurrentDomain.BaseDirectory + webLanguage.Rss.FilePath;
+                _ExternRssFileUrl = webLanguage.Rss.Link;
+                try {
+                    // Read Rss
+                    RssFeed feed = RssFeed.Read(_rssFileUrl);
+                    // Channel
+                    RssChannel channel = (RssChannel)feed.Channels[0];
+                    // Rss Items collection
+                    RssItemCollection items = channel.Items;
+                    // Write html items in arraylist
+                    foreach(RssItem item in items) {
+                        _items.Add("<font " + ((_rssDescriptionCss.Length > 0) ? " class=\"" + _rssDescriptionCss + "\"" : "") + ">&raquo;&nbsp;<font " + ((_rssTitleCss.Length > 0) ? " class=\"" + _rssTitleCss + "\"" : "") + ">" + item.Title + " : </font>" + item.Description + "</font>");
+                    }
                 }
-            }
-            catch(System.Exception) {
-                _items.Clear();
+                catch(System.Exception) {
+                    _items.Clear();
+                }
             }
 			base.OnPreRender(e);
 		}

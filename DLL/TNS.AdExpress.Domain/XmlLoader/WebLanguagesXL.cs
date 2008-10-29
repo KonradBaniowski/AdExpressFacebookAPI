@@ -4,7 +4,6 @@
 // Modifications: 
 #endregion
 
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,8 +15,6 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Exceptions;
 
 namespace TNS.AdExpress.Domain.XmlLoader{
-
-    
     /// <summary>
     /// Load all the configuration parameter for languages management
     /// </summary>
@@ -64,8 +61,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
         }
         #endregion
 
-		#region Default Language
-		/// <summary>
+        #region Default DataLanguage
+        /// <summary>
 		/// Load default Data Language
 		/// </summary>
 		/// <param name="dataSource">Data source</param>
@@ -131,6 +128,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             string formatName = string.Empty;
             string format = string.Empty;
             string excelFormat = string.Empty;
+            
+            Rss rss = null;
+            //bool displayRss = false;
+            //string rssFilePath = string.Empty;
+            //string rssHttpLink = string.Empty;
             #endregion
 
             try {
@@ -161,7 +163,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								if (reader.GetAttribute("nlsSort") != null && reader.GetAttribute("nlsSort").Length > 0)
 									nlsSort = reader.GetAttribute("nlsSort");															
                                 cInfo = new AdExpressCultureInfo(localization);
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,nlsSort, cInfo));
+                                rss = new Rss();
+                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,nlsSort, cInfo, rss));
                                 break;
                             case "unitformat":
                                 if(reader.GetAttribute("name")!=null) formatName=reader.GetAttribute("name");
@@ -179,6 +182,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								cInfo.AddPattern(formatName, format);
                                 cInfo.AddExcelPattern(formatName, excelFormat);
 								break;
+                            case "rss":
+                                if(reader.GetAttribute("display") != null) rss.Display = bool.Parse(reader.GetAttribute("display"));
+                                if(reader.GetAttribute("path") != null) rss.FilePath = reader.GetAttribute("path");
+                                if(reader.GetAttribute("link") != null) rss.Link = reader.GetAttribute("link");
+                                break;
                         }
                     }
                 }
