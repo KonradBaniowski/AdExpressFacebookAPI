@@ -28,15 +28,6 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web.Navigation;
 
-using TNS.Classification.Universe;
-using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.Domain.DataBaseDescription;
-using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Classification;
-using TNS.AdExpress.Domain.Units;
-using TNS.AdExpress.Constantes.Web;
-
-
 namespace TNS.AdExpress.Anubis.BusinessFacade.Core{
 	/// <summary>
 	/// Distribution des demandes
@@ -212,38 +203,6 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Core{
 
 			//MediaPublicationDatesSystem.Init();
  
-			#region Initialisations des Listes 
-			// Initialisation des descriptions des éléments de niveaux de détail
-			DetailLevelItemsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_DETAIL_LEVEL_ITEMS_CONFIGURATION_FILENAME)); 
-			// Initialisation des descriptions des niveaux de détail
-            DetailLevelsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_DETAIL_LEVEL_CONFIGURATION_FILENAME)); 				
-			// Chargement des noms de modules
-            //ModulesList.Init(AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CONFIGURATION_FILENAME,AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME);
-            //Charge les niveaux d'univers
-            UniverseLevels.getInstance(new TNS.FrameWork.DB.Common.XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory +@"Configuration\"+ TNS.AdExpress.Constantes.Web.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
-
-            //Charge les styles personnalisés des niveaux d'univers
-            UniverseLevelsCustomStyles.getInstance(new TNS.FrameWork.DB.Common.XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory +@"Configuration\"+ TNS.AdExpress.Constantes.Web.ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_FILENAME));
-
-            //Charge la hierachie de niveau d'univers
-            UniverseBranches.getInstance(new TNS.FrameWork.DB.Common.XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory +@"Configuration\"+ TNS.AdExpress.Constantes.Web.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
-
-            // Initialisation des listes de texte
-            TNS.AdExpress.AdExpressWordListLoader.LoadLists();
-
-            Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
-            Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
-
-            //Units
-            UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
-
-            //Vehicles
-            VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
-
-            //Load flag list
-            TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
-            #endregion
-  
 			while(_myThread.IsAlive && !(_stop && this.RunningJobCount<=0))
 			{
 				lock(_requestList){

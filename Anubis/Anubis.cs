@@ -29,6 +29,14 @@ using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.Error.Log;
 using TNS.FrameWork.Net.Mail;
 
+using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+
 #endregion
 
 
@@ -123,79 +131,124 @@ namespace Anubis {
 
 		#endregion
 
-
 		#region Constructeur
 		public Anubis() {
-			InitializeComponent();
+            try {
 
+                #region Initialisation
+                InitializeComponent();
+                try {
 
-			#region Chargement des paramètres de l'application
-			_anubisConfiguration = new AnubisConfig(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory + TNSAnubisConstantes.Application.Configuration.CONFIGURATION_DIRECTORY + @"\" + TNSAnubisConstantes.Application.Configuration.ANUBIS_CONFIGURATION_FILE));
-			#endregion
+                    #region Initialisations des Listes
+                    // Initialisation des listes de texte
+                    TNS.AdExpress.AdExpressWordListLoader.LoadLists();
 
-			#region Log Management
-			SetupTrace();
-			try { _trace.WriteLine("Anubis started"); }
-			catch (System.Exception) { }
-			#endregion
+                    #region Chargement des paramètres de l'application
+                    _anubisConfiguration = new AnubisConfig(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNSAnubisConstantes.Application.Configuration.ANUBIS_CONFIGURATION_FILE));
+                    #endregion
 
-			#region Chargement des plug-ins
-			_plugInList = PluginsSystem.GetPluginsToLoad(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory + TNSAnubisConstantes.Application.Configuration.CONFIGURATION_DIRECTORY + @"\" + TNSAnubisConstantes.Application.Configuration.PLUGINS_FILE));
-			LoadPluginsList();
-			#endregion
+                    #region Init log Management
+                    SetupTrace();
+                    #endregion
 
-			#region Construction de la connexion à la base de données
-			_dataSource = new OracleDataSource(DataBaseConfigurationBussinessFacade.GetOne(AppDomain.CurrentDomain.BaseDirectory + TNSAnubisConstantes.Application.Configuration.CONFIGURATION_DIRECTORY + @"\" + TNSAnubisConstantes.Application.Configuration.DATABASE_FILE).ConnectionString);
-			try {
-				_dataSource.Open();
-			}
-			catch (TNS.FrameWork.Exceptions.BaseException err) {
-				string t = err.GetHtmlDetail();
-				ErrorManagement(t);
-				throw new BaseException("Anubis failed to run", err);
-			}
-			#endregion
+                    Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+                    Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
 
-			#region Action journalière
-			CleanResults();
-			_timer = new Timer();
-			_timer.Interval = Convert.ToInt32(GetMillisecondsToTommorow());
-			_timer.Tick += new EventHandler(timer_Tick);
-            _timer.Enabled = true;
-            _timer.Start();
-			#endregion
+                    //Units
+                    UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
+                    //Vehicles
+                    VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
 
-			#region Job List
-			try {
-				_requestList = RequestsSystem.Get(_dataSource, "", _plugInList);
-			}
-			catch (System.Exception exc) {
-				string m = "Unable to launch request update server <br>";
-				try {
-					m += ((BaseException)exc).GetHtmlDetail();
-				}
-				catch (System.Exception e) {
-					m += e.Message + " - " + e.StackTrace;
-				}
-				ErrorManagement(m);
-			}
-			_requestsUpdateServer = new RequestsUpdateSystem(_anubisConfiguration, _requestList, _dataSource, _plugInList);
-			_requestsUpdateServer.OnNewLines += new TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.NewLines(requestsUpdateSystem_OnNewLines);
-			_requestsUpdateServer.OnError += new TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.Error(requestsUpdateServer_OnError);
-			_requestsUpdateServer.Treatement();
-			#endregion
+                    //Charge les niveaux d'univers
+                    UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
+                    //Charge les styles personnalisés des niveaux d'univers
+                    UniverseLevelsCustomStyles.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_FILENAME));
+                    //Charge la hierachie de niveau d'univers
+                    UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
 
-			#region Distribution des Jobs
-			_distributionServer = new DistributionSystem(_anubisConfiguration, _plugInList, _requestList, _dataSource);
-			_distributionServer.OnStartJob += new TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StartJob(distributionServer_OnStartJob);
-			_distributionServer.OnStopJob += new TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StopJob(distributionServer_OnStopJob);
-			_distributionServer.OnErrorJob += new TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.ErrorJob(distributionServer_OnErrorJob);
-			_distributionServer.OnWarningJob += new TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.WarningJob(distributionServer_OnWarningJob);
-			_distributionServer.Treatement();
-			#endregion
+                    // Chargement des noms de modules
+                    //ModulesList.Init(AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CONFIGURATION_FILENAME,AppDomain.CurrentDomain.BaseDirectory+@"Configuration\"+TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CATEGORY_CONFIGURATION_FILENAME);
+                    //Charge les niveaux d'univers
+                    UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
+
+                    //Load flag list
+                    TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
+                    #endregion
+
+                }
+                catch (Exception error) {
+                    string t = "Initialisation Error : " + error.Message;
+                    ErrorManagement(t);
+                    throw new BaseException("Anubis failed to run", error);
+                }
+                #endregion
+
+                #region Log Management
+                try { _trace.WriteLine("Anubis started"); }
+                catch (System.Exception) { }
+                #endregion
+
+                #region Chargement des plug-ins
+                _plugInList = PluginsSystem.GetPluginsToLoad(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNSAnubisConstantes.Application.Configuration.PLUGINS_FILE));
+                LoadPluginsList();
+                #endregion
+
+                #region Construction de la connexion à la base de données
+
+                _dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.webAdministration); 
+                try {
+                    _dataSource.Open();
+                }
+                catch (TNS.FrameWork.Exceptions.BaseException err) {
+                    string t = err.GetHtmlDetail();
+                    ErrorManagement(t);
+                    throw new BaseException("Anubis failed to run", err);
+                }
+                #endregion
+
+                #region Action journalière
+                CleanResults();
+                _timer = new Timer();
+                _timer.Interval = Convert.ToInt32(GetMillisecondsToTommorow());
+                _timer.Tick += new EventHandler(timer_Tick);
+                _timer.Enabled = true;
+                _timer.Start();
+                #endregion
+
+                #region Job List
+                try {
+                    _requestList = RequestsSystem.Get(_dataSource, "", _plugInList);
+                }
+                catch (System.Exception exc) {
+                    string m = "Unable to launch request update server <br>";
+                    try {
+                        m += ((BaseException)exc).GetHtmlDetail();
+                    }
+                    catch (System.Exception e) {
+                        m += e.Message + " - " + e.StackTrace;
+                    }
+                    ErrorManagement(m);
+                }
+                _requestsUpdateServer = new RequestsUpdateSystem(_anubisConfiguration, _requestList, _dataSource, _plugInList);
+                _requestsUpdateServer.OnNewLines += new TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.NewLines(requestsUpdateSystem_OnNewLines);
+                _requestsUpdateServer.OnError += new TNS.AdExpress.Anubis.BusinessFacade.Core.RequestsUpdateSystem.Error(requestsUpdateServer_OnError);
+                _requestsUpdateServer.Treatement();
+                #endregion
+
+                #region Distribution des Jobs
+                _distributionServer = new DistributionSystem(_anubisConfiguration, _plugInList, _requestList, _dataSource);
+                _distributionServer.OnStartJob += new TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StartJob(distributionServer_OnStartJob);
+                _distributionServer.OnStopJob += new TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.StopJob(distributionServer_OnStopJob);
+                _distributionServer.OnErrorJob += new TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.ErrorJob(distributionServer_OnErrorJob);
+                _distributionServer.OnWarningJob += new TNS.AdExpress.Anubis.BusinessFacade.Core.DistributionSystem.WarningJob(distributionServer_OnWarningJob);
+                _distributionServer.Treatement();
+                #endregion
+            }
+            catch (Exception e) {
+                MessageBox.Show(e.Message);
+            }
 		}
 		#endregion
-
 
 		#region Evènements
 
@@ -389,29 +442,29 @@ namespace Anubis {
 		/// <param name="sender">Objet source</param>
 		/// <param name="e">Arguments</param>
 		private void menuItemFileExit_Click(object sender, System.EventArgs e) {
+            if (_distributionServer != null) {
+                _distributionServer.StopServer();
 
-			_distributionServer.StopServer();
+                if (_distributionServer.RunningJobCount > 0) {
 
-			if (_distributionServer.RunningJobCount > 0) {
+                    try { _trace.WriteLine("Attempt to stop Anubis while " + _distributionServer.RunningJobCount + " job(s) still running : " + _distributionServer.JobList); }
+                    catch (System.Exception) { }
 
-				try { _trace.WriteLine("Attempt to stop Anubis while " + _distributionServer.RunningJobCount + " job(s) still running : " + _distributionServer.JobList); }
-				catch (System.Exception) { }
+                    (new Exit(_distributionServer)).ShowDialog();
 
-				(new Exit(_distributionServer)).ShowDialog();
+                    try { _trace.WriteLine("Anubis stopping while " + _distributionServer.RunningJobCount + " job(s) still running : " + _distributionServer.JobList); }
+                    catch (System.Exception) { }
+                }
+                _distributionServer.AbortServer();
 
-				try { _trace.WriteLine("Anubis stopping while " + _distributionServer.RunningJobCount + " job(s) still running : " + _distributionServer.JobList); }
-				catch (System.Exception) { }
-			}
-			_distributionServer.AbortServer();
+                try { _trace.WriteLine("Distribution server stopped"); }
+                catch (System.Exception) { }
 
-			try { _trace.WriteLine("Distribution server stopped"); }
-			catch (System.Exception) { }
+                _requestsUpdateServer.StopServer();
 
-			_requestsUpdateServer.StopServer();
-
-			try { _trace.WriteLine("Request update server stopped"); }
-			catch (System.Exception) { }
-
+                try { _trace.WriteLine("Request update server stopped"); }
+                catch (System.Exception) { }
+            }
 			this.Close();
 		}
 
@@ -478,7 +531,7 @@ namespace Anubis {
 			}
 			//envoi Mail sending
 			try {
-				(new SmtpUtilities(AppDomain.CurrentDomain.BaseDirectory + TNSAnubisConstantes.Application.Configuration.CONFIGURATION_DIRECTORY + @"\" + TNSAnubisConstantes.Application.Configuration.ANUBIS_CONFIGURATION_FILE))
+                (new SmtpUtilities(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ErrorManager.WEBSERVER_ERROR_MAIL_FILE))
 					.SendWithoutThread("Anubis Error on " + navSessionId + " (" + Environment.MachineName + ")", Convertion.ToHtmlString(message + "<br><br>" + exc).Replace("at ", "<br>at "), true, false);
 			}
 			catch (System.Exception err) {
@@ -493,7 +546,7 @@ namespace Anubis {
 			}
 			catch (System.Exception err) {
 				try {
-					(new SmtpUtilities(AppDomain.CurrentDomain.BaseDirectory + TNSAnubisConstantes.Application.Configuration.CONFIGURATION_DIRECTORY + @"\" + TNSAnubisConstantes.Application.Configuration.ANUBIS_CONFIGURATION_FILE))
+                    (new SmtpUtilities(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ErrorManager.WEBSERVER_ERROR_MAIL_FILE))
 						.SendWithoutThread("Anubis Error (" + Environment.MachineName + ")", Convertion.ToHtmlString("Unable to write log for " + navSessionId + "<br>Mail sending error :<br>" + err.Message + " - " + err.StackTrace + "<br><br>Message to send:<br>" + message + "<br><br>" + exc).Replace("at ", "<br>at "), true, false);
 				}
 				catch (System.Exception) { }
@@ -507,7 +560,7 @@ namespace Anubis {
 		private void ErrorManagement(string message) {
 			//envoi Mail sending
 			try {
-				(new SmtpUtilities(AppDomain.CurrentDomain.BaseDirectory + TNSAnubisConstantes.Application.Configuration.CONFIGURATION_DIRECTORY + @"\" + TNSAnubisConstantes.Application.Configuration.ANUBIS_CONFIGURATION_FILE))
+                (new SmtpUtilities(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ErrorManager.WEBSERVER_ERROR_MAIL_FILE))
 					.SendWithoutThread("Anubis Error  (" + Environment.MachineName + ")", Convertion.ToHtmlString(message).Replace("at ", "<br>at "), true, false);
 			}
 			catch (System.Exception err) {
@@ -522,7 +575,7 @@ namespace Anubis {
 			}
 			catch (System.Exception err) {
 				try {
-					(new SmtpUtilities(AppDomain.CurrentDomain.BaseDirectory + TNSAnubisConstantes.Application.Configuration.CONFIGURATION_DIRECTORY + @"\" + TNSAnubisConstantes.Application.Configuration.ANUBIS_CONFIGURATION_FILE))
+                    (new SmtpUtilities(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ErrorManager.WEBSERVER_ERROR_MAIL_FILE))
 						.SendWithoutThread("Anubis Error (" + Environment.MachineName + ")", Convertion.ToHtmlString("Unable to write log" + "<br>Mail sending error :<br>" + err.Message + " - " + err.StackTrace + "<br><br>Message to send:<br>" + message).Replace("at ", "<br>at "), true, false);
 				}
 				catch (System.Exception) { }
@@ -545,7 +598,7 @@ namespace Anubis {
 				Console.SetError(_trace = new XmlWriter(trPath));
 			}
 			catch (System.Exception err) {
-				(new SmtpUtilities(AppDomain.CurrentDomain.BaseDirectory + TNSAnubisConstantes.Application.Configuration.CONFIGURATION_DIRECTORY + @"\" + TNSAnubisConstantes.Application.Configuration.ANUBIS_CONFIGURATION_FILE))
+                (new SmtpUtilities(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ErrorManager.WEBSERVER_ERROR_MAIL_FILE))
 					.Send("Anubis Error", "Unable to initialize log file " + trPath + "<br>" + err.Source + "<br>" + err.Message, true, false);
 			}
 		}

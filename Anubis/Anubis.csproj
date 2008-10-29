@@ -43,6 +43,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.dll</HintPath>
+    </Reference>
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.dll</HintPath>
@@ -109,24 +113,101 @@
     <Content Include="Anubis.ico" />
     <Content Include="App_Themes\DefaultAdExpressUk\Styles.xml" />
     <Content Include="App_Themes\FinlandAdExpressUk\Styles.xml" />
-    <Content Include="Config\Anubis.xml" />
-    <Content Include="Config\DataBase.xml" />
-    <Content Include="Config\Network.xml" />
-    <Content Include="Config\Plugins.xml" />
+    <Content Include="Configuration\33\Anubis.xml" />
+    <Content Include="Configuration\33\BaalList.xml" />
+    <Content Include="Configuration\33\CreativesConfiguration.xml" />
+    <Content Include="Configuration\33\CustomerErrorMail.xml" />
+    <Content Include="Configuration\33\Database.xml" />
+    <Content Include="Configuration\33\Flags.xml" />
+    <Content Include="Configuration\33\GenericColumn.xml" />
+    <Content Include="Configuration\33\GenericDetailLevel.xml" />
+    <Content Include="Configuration\33\MediaPlanInsertionConfiguration.xml" />
+    <Content Include="Configuration\33\MSCreativesDetails.xml" />
+    <Content Include="Configuration\33\Network.xml" />
+    <Content Include="Configuration\33\Plugins.xml" />
+    <Content Include="Configuration\33\Plugins\Amset.xml" />
+    <Content Include="Configuration\33\Plugins\Appm.xml" />
+    <Content Include="Configuration\33\Plugins\Aton.xml" />
+    <Content Include="Configuration\33\Plugins\Hotep.xml" />
+    <Content Include="Configuration\33\Plugins\Miysis.xml" />
+    <Content Include="Configuration\33\Plugins\Mnevis.xml" />
+    <Content Include="Configuration\33\Plugins\Satet.xml" />
+    <Content Include="Configuration\33\Plugins\Shou.xml" />
+    <Content Include="Configuration\33\Plugins\Sobek.xml" />
+    <Content Include="Configuration\33\PortofolioDetailMediaConfiguration.xml" />
+    <Content Include="Configuration\33\Units.xml" />
+    <Content Include="Configuration\33\UniverseBranches.xml" />
+    <Content Include="Configuration\33\UniverseLevels.xml" />
+    <Content Include="Configuration\33\UniverseLevelsCustomStyles.xml" />
+    <Content Include="Configuration\33\Vehicles.xml" />
+    <Content Include="Configuration\33\WebLanguages.xml" />
+    <Content Include="Configuration\33\WebThemes.xml" />
+    <Content Include="Configuration\35\Anubis.xml" />
+    <Content Include="Configuration\35\BaalList.xml" />
+    <Content Include="Configuration\35\CreativesConfiguration.xml" />
+    <Content Include="Configuration\35\CustomerErrorMail.xml" />
+    <Content Include="Configuration\35\Database.xml" />
+    <Content Include="Configuration\35\Flags.xml" />
+    <Content Include="Configuration\35\GenericColumn.xml" />
+    <Content Include="Configuration\35\GenericDetailLevel.xml" />
+    <Content Include="Configuration\35\MediaPlanInsertionConfiguration.xml" />
+    <Content Include="Configuration\35\MSCreativesDetails.xml" />
+    <Content Include="Configuration\35\Network.xml" />
+    <Content Include="Configuration\35\Plugins.xml" />
+    <Content Include="Configuration\35\Plugins\Hotep.xml" />
+    <Content Include="Configuration\35\Plugins\Miysis.xml" />
+    <Content Include="Configuration\35\PortofolioDetailMediaConfiguration.xml" />
+    <Content Include="Configuration\35\Units.xml" />
+    <Content Include="Configuration\35\UniverseBranches.xml" />
+    <Content Include="Configuration\35\UniverseLevels.xml" />
+    <Content Include="Configuration\35\UniverseLevelsCustomStyles.xml" />
+    <Content Include="Configuration\35\Vehicles.xml" />
+    <Content Include="Configuration\35\WebLanguages.xml" />
+    <Content Include="Configuration\35\WebThemes.xml" />
+    <Content Include="Configuration\WebParameters.xml" />
+    <Content Include="Images\33\LogoAdExpress.jpg" />
+    <Content Include="Images\33\LogoAdExpress220.jpg" />
+    <Content Include="Images\33\LogoAdExpressWater.bmp" />
+    <Content Include="Images\33\LogoAdExpressWater.jpg" />
+    <Content Include="Images\35\LogoAdExpress.jpg" />
+    <Content Include="Images\35\LogoAdExpress220.jpg" />
+    <Content Include="Images\44\LogoAdExpress.jpg" />
+    <Content Include="Images\44\LogoAdExpress220.jpg" />
     <Content Include="Images\AnubisBar.jpg" />
+    <Content Include="Images\APPM.bmp" />
+    <Content Include="Images\Bastet.gif" />
+    <Content Include="Images\checkbox.GIF" />
+    <Content Include="Images\checkbox_not_checked.GIF" />
+    <Content Include="Images\Common\APPM.bmp" />
+    <Content Include="Images\Common\logo_Tns.bmp" />
+    <Content Include="Images\g.jpg" />
     <Content Include="Images\Gray.gif" />
+    <Content Include="Images\gsep.jpg" />
+    <Content Include="Images\logoTNSMedia.gif" />
+    <Content Include="Images\logo_Tns.bmp" />
+    <Content Include="Images\o.jpg" />
+    <Content Include="Images\p.jpg" />
     <Content Include="Images\Purple.gif" />
+    <Content Include="Images\r.jpg" />
     <Content Include="Images\Red.gif" />
     <Content Include="Images\yellow.gif" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DLL\TNS.ADEXPRESS.ANUBIS.CONSTANTES\TNS.AdExpress.Anubis.Constantes.csproj">
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Anubis.Constantes\TNS.AdExpress.Anubis.Constantes.csproj">
       <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
       <Name>TNS.AdExpress.Anubis.Constantes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DLL\TNS.ADEXPRESS.ANUBIS\TNS.AdExpress.Anubis.csproj">
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Anubis\TNS.AdExpress.Anubis.csproj">
       <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
       <Name>TNS.AdExpress.Anubis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\DLL\TNS.ADEXPRESS\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
