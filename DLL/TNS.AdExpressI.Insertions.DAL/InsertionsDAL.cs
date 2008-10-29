@@ -558,25 +558,41 @@ namespace TNS.AdExpressI.Insertions.DAL
                 if (begin > fromDate)
                 {
                     sql.AppendFormat(" {1}.date_media_num >= {0}", begin, tData.Prefix);
+                    if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
+                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1}','yyyymmdd') ", tData.Prefix, begin);
+                    }
                 }
                 else
                 {
                     sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
+                    if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
+                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1}','yyyymmdd') ", tData.Prefix, fromDate);
+                    }
                 }
                 int end = Convert.ToInt32(_session.PeriodEndDate);
                 if (end < toDate)
                 {
                     sql.AppendFormat(" and {1}.date_media_num <= {0}", end, tData.Prefix);
+                    if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
+                        sql.AppendFormat(" and {0}.date_creation <= to_date('{1}','yyyymmdd') ", tData.Prefix, end);
+                    }
                 }
                 else
                 {
                     sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
+                    if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
+                        sql.AppendFormat(" and {0}.date_creation <= to_date('{1}','yyyymmdd') ", tData.Prefix, toDate);
+                    }
                 }
             }
             else
             {
                 sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
                 sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
+                if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
+                    sql.AppendFormat(" and {0}.date_creation >= to_date('{1}','yyyymmdd') ", tData.Prefix, fromDate);
+                    sql.AppendFormat(" and {0}.date_creation <= to_date('{1}','yyyymmdd') ", tData.Prefix, toDate);
+                }
             }
             #endregion
 
@@ -591,7 +607,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             //}
 
             //Product classification selection
-            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+            if (_module.Id != CstWeb.Module.Name.NEW_CREATIVES && _session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
             {
                 if (universId < 0)
                 {
@@ -708,6 +724,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 switch (_module.Id)
                 {
                     case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                    case CstWeb.Module.Name.NEW_CREATIVES:
                     case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
                         detailLevels = _session.GenericProductDetailLevel;
                         break;

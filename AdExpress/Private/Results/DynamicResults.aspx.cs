@@ -277,6 +277,15 @@ namespace AdExpress.Private.Results{
 
 			resultwebcontrol1.CustomerWebSession = _webSession;
 
+            #region Option autopromo (Evaliant)
+            Int64 id = ((LevelInformation)_webSession.SelectionUniversMedia.Nodes[0].Tag).ID;
+            if (VehiclesInformation.DatabaseIdToEnum(id) == DBClassificationConstantes.Vehicles.names.adnettrack)
+            {
+                ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
+            }
+            #endregion
+
+
 			return tmp;
 		}
 		#endregion

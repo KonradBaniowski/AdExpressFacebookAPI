@@ -128,6 +128,9 @@ namespace TNS.AdExpressI.Insertions
                 case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
                     vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
                     break;
+                case CstWeb.Module.Name.NEW_CREATIVES:
+                    vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack));
+                    break;
             }
 
             if (vehicles.Count <= 0)

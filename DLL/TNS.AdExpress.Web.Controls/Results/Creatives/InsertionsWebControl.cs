@@ -425,7 +425,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// <returns>Data</returns>
         protected override ResultTable GetResultTable(WebSession session)
         {
-            Domain.Web.Navigation.Module module = session.CustomerLogin.GetModule(session.CurrentModule);
+            Domain.Web.Navigation.Module module = session.CustomerLogin.GetModule(this._idModule);
             VehicleInformation vehicle = VehiclesInformation.Get(_idVehicle);
             string filters = string.Empty;
             ResultTable data = null;

@@ -608,6 +608,12 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             string productsRights = FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
             sql.AppendFormat(" {0}", productsRights);
 
+            // Autopromo Evaliant
+            if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.AutopromoEvaliant)
+            {
+                sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            }
+
             return sql.ToString();
         }
         #endregion
