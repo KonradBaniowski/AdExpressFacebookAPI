@@ -1,7 +1,0 @@
-obj\Debug\ResolveAssemblyReference.cache
-obj\Debug\TNS.AdExpress.Anubis.Bastet.dll
-obj\Debug\TNS.AdExpress.Anubis.Bastet.pdb
-..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Bastet.dll
-..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Bastet.pdb
-..\..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Bastet.dll
-..\..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Bastet.pdb

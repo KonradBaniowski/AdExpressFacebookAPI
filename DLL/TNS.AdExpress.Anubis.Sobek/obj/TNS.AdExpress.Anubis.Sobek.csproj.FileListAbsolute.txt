@@ -1,5 +1,0 @@
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Sobek.dll
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Sobek.pdb
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Sobek\obj\Debug\ResolveAssemblyReference.cache
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Sobek\obj\Debug\TNS.AdExpress.Anubis.Sobek.dll
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Sobek\obj\Debug\TNS.AdExpress.Anubis.Sobek.pdb

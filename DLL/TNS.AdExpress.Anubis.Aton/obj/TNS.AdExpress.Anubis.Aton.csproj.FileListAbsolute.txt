@@ -1,8 +1,0 @@
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Aton.dll
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Aton.pdb
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Aton\obj\Debug\ResolveAssemblyReference.cache
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Aton\obj\Debug\TNS.AdExpress.Anubis.Aton.csproj.ResolveComReference.cache
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Aton\obj\Debug\TNS.AdExpress.Anubis.Aton.UI.UISeasonalityGraph.resources
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Aton\obj\Debug\TNS.AdExpress.Anubis.Aton.csproj.GenerateResource.Cache
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Aton\obj\Debug\TNS.AdExpress.Anubis.Aton.dll
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Aton\obj\Debug\TNS.AdExpress.Anubis.Aton.pdb

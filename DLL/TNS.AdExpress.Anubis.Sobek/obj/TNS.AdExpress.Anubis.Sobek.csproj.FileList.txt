@@ -1,9 +1,0 @@
-obj\Debug\ResolveAssemblyReference.cache
-obj\Debug\TNS.AdExpress.Anubis.Sobek.dll
-obj\Debug\TNS.AdExpress.Anubis.Sobek.pdb
-..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Sobek.dll
-..\..\..\..\TNS\AdExpress\Anubis2007\Debug\TNS.AdExpress.Anubis.Sobek.pdb
-..\..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Sobek.dll
-..\..\..\..\..\TNS\AdExpress\Anubis\Debug\TNS.AdExpress.Anubis.Sobek.pdb
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Sobek.dll
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Sobek.pdb

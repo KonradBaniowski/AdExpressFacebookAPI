@@ -1,5 +1,0 @@
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Satet.dll
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Satet.pdb
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Satet\obj\Debug\ResolveAssemblyReference.cache
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Satet\obj\Debug\TNS.AdExpress.Anubis.Satet.dll
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Satet\obj\Debug\TNS.AdExpress.Anubis.Satet.pdb

@@ -1,6 +1,0 @@
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Mnevis.dll
-\\hera\Prog_Sources\Versionning\Anubis\Plug-ins\Debug\TNS.AdExpress.Anubis.Mnevis.pdb
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Mnevis\obj\Debug\ResolveAssemblyReference.cache
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Mnevis\obj\Debug\TNS.AdExpress.Anubis.Mnevis.csproj.ResolveComReference.cache
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Mnevis\obj\Debug\TNS.AdExpress.Anubis.Mnevis.dll
-C:\Dev\Csharp2\DLL\TNS.AdExpress.Anubis.Mnevis\obj\Debug\TNS.AdExpress.Anubis.Mnevis.pdb
