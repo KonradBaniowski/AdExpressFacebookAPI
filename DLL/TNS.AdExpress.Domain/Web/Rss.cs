@@ -20,10 +20,6 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         private bool _display = false;
         /// <summary>
-        /// File path
-        /// </summary>
-        private string _filePath = string.Empty;
-        /// <summary>
         /// HTTP link
         /// </summary>
         private string _link = string.Empty;
@@ -39,11 +35,11 @@ namespace TNS.AdExpress.Domain.Web {
 
         #region Accessors
         /// <summary>
-        /// Get file path
+        /// Get if display or not rss feed on the page
         /// </summary>
-        public string FilePath {
-            get { return (_filePath); }
-            set { _filePath = value; }
+        public bool Display {
+            get { return (_display); }
+            set { _display = value; }
         }
         /// <summary>
         /// Get file link
@@ -51,13 +47,6 @@ namespace TNS.AdExpress.Domain.Web {
         public string Link {
             get { return (_link); }
             set { _link = value; }
-        }
-        /// <summary>
-        /// Get if display or not rss feed on the page
-        /// </summary>
-        public bool Display {
-            get { return (_display); }
-            set { _display = value; }
         }
         #endregion
 

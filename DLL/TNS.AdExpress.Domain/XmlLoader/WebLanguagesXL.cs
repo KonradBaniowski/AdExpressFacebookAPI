@@ -128,11 +128,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             string formatName = string.Empty;
             string format = string.Empty;
             string excelFormat = string.Empty;
-            
             Rss rss = null;
-            //bool displayRss = false;
-            //string rssFilePath = string.Empty;
-            //string rssHttpLink = string.Empty;
             #endregion
 
             try {
@@ -184,7 +180,6 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								break;
                             case "rss":
                                 if(reader.GetAttribute("display") != null) rss.Display = bool.Parse(reader.GetAttribute("display"));
-                                if(reader.GetAttribute("path") != null) rss.FilePath = reader.GetAttribute("path");
                                 if(reader.GetAttribute("link") != null) rss.Link = reader.GetAttribute("link");
                                 break;
                         }

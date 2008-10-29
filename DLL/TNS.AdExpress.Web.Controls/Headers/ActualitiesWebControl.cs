@@ -47,10 +47,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// URL du fichier XML du flux RSS
 		/// </summary>
 		protected string _rssFileUrl = string.Empty;
-		/// <summary>
-		/// URL du fichier XML du flux RSS
-		/// </summary>
-		protected string _ExternRssFileUrl = string.Empty;
 
 		/// <summary>
 		/// Css du titre principal
@@ -213,8 +209,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		protected override void OnPreRender(EventArgs e) {
             WebLanguage webLanguage = WebApplicationParameters.AllowedLanguages[_languageId];
             if(webLanguage.Rss.Display) {
-                _rssFileUrl = AppDomain.CurrentDomain.BaseDirectory + webLanguage.Rss.FilePath;
-                _ExternRssFileUrl = webLanguage.Rss.Link;
+                _rssFileUrl = webLanguage.Rss.Link;
                 try {
                     // Read Rss
                     RssFeed feed = RssFeed.Read(_rssFileUrl);
@@ -252,7 +247,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				html.Append("\r\n\t\t\t<table cellpadding=0 cellspacing=0 border=0 width=\"100%\">");
 				html.Append("\r\n\t\t\t\t<tr>");
 				html.Append("\r\n\t\t\t\t\t<td width=\"100%\" " + ((_titleCss.Length > 0) ? " class=\"" + _titleCss + "\"" : "") + ">" + GestionWeb.GetWebWord(2080, _languageId) + "</td>");
-				html.Append("\r\n\t\t\t\t\t<td width=\"14\" " + ((_titleCss.Length > 0) ? " class=\"" + _titleCss + "\"" : "") + ">" + ((_imageRssUrlPath.Length > 0) ? "<a href=\"" + ((_ExternRssFileUrl.Length > 0) ? "" + _ExternRssFileUrl + "\" target=\"blank\"" : "#\"") + "><img src=\"" + _imageRssUrlPath + "\" border=\"0\"></a>" : "") + "</td>");
+                html.Append("\r\n\t\t\t\t\t<td width=\"14\" " + ((_titleCss.Length > 0) ? " class=\"" + _titleCss + "\"" : "") + ">" + ((_imageRssUrlPath.Length > 0) ? "<a href=\"" + ((_rssFileUrl.Length > 0) ? "" + _rssFileUrl + "\" target=\"blank\"" : "#\"") + "><img src=\"" + _imageRssUrlPath + "\" border=\"0\"></a>" : "") + "</td>");
 				html.Append("\r\n\t\t\t</tr>");
                 foreach (string currentItem in _items) {
                     html.Append("<tr>\r\n\t\t\t\t\t<td colspan=\"2\">" + currentItem + "</td>\r\n\t\t\t</tr>");
