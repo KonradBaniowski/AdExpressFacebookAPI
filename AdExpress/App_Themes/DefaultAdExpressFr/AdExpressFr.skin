@@ -422,6 +422,36 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   CssDetailSelectionTitleData="dsTitleData" 
 						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
 />
+<ctrCreatives:InsertionsWebControl  
+                           runat="server"
+                           
+                           CssL1="exlv1" 
+                           CssL2="exlv2" 
+                           CssL3="exlv3" 
+                           CssL4="exlv4" 
+                           CssCellInfo="insertionInfo"
+                           CssLHeader="exh2"
+						   CssLTotal="exlv0" 
+						   CssCHeader="exh2"
+						   BackgroudColorL1="#B1A3C1"
+						   BackgroudColorL2="#D0C8DA" 
+						   BackgroudColorL3="#E1E0DA"
+						   BackgroudColorL4="#F1F1F1" 
+						   CssDetailSelectionBordelLevel="dsBorderLevel"
+						   CssDetailSelectionL1="dsLv1" 
+						   CssDetailSelectionL2="dsLv2" 
+						   CssDetailSelectionL3="dsLv3" 
+						   CssDetailSelectionRightBorderL1 = "dsRightBorderLv1"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3"
+						   CssDetailSelectionTitle="dsTitle"
+						   CssDetailSelectionTitleData="dsTitleData" 
+						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
+						   SkinID="excelInsertion"
+/>
 <%-- Result web control : used to display a olist of creatives --%>
 <ctrCreatives:InsertionsWebControl  
                            runat="server"

@@ -604,7 +604,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				throw(new WebExceptions.ExcelWebPageException("Impossible de construire le rappel des paramètres dans le fichier Excel",err)); 
 			}
 		}
-		#endregion
+        #endregion
 
 		#region GetLogo
 		/// <summary>

@@ -52,7 +52,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// <summary>
 		/// Rappel de la sélection
 		/// </summary>
-		TNS.AdExpress.Web.Controls.Selections.DetailSelectionWebControl detailSelectionWebControl=null;
+		protected TNS.AdExpress.Web.Controls.Selections.DetailSelectionWebControl detailSelectionWebControl=null;
         /// <summary>
         /// Specify if the ajax scripts have been rendered;
         /// </summary>

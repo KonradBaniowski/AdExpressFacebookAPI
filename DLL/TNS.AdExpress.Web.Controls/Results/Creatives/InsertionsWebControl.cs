@@ -22,6 +22,8 @@ using AjaxPro;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstFlags = TNS.AdExpress.Constantes.DB.Flags;
+using ExcelFunction = TNS.AdExpress.Web.UI.ExcelWebPage;
+
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -40,6 +42,7 @@ using TNS.AdExpressI.Insertions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using System.Collections;
+using System.Collections.Specialized;
 
 namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
@@ -67,6 +70,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// Columns Management Control
         /// </summary>
         protected GenericDetailSelectionWebControl _columns = new GenericDetailSelectionWebControl();
+        protected int _fromDate = 0;
+        protected int _toDate = 0;
+
         #endregion
 
         #region Properties
@@ -316,6 +322,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// <param name="e"></param>
         protected override void OnInit(EventArgs e)
         {
+            if (this._renderType != RenderType.html)
+            {
+                base.OnInit(e);
+                return;
+            }
             if (this._javaScriptRefresh.Length <= 0)
             {
                 this._javaScriptRefresh = string.Format("get_{0}", this.ID);
@@ -378,41 +389,75 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// <param name="output">output</param>
         protected override void Render(HtmlTextWriter output)
         {
-
-
-            if (Vehicles.Count > 0)
+            switch (_renderType)
             {
-                if (_isCreativeConfig)
-                {
-                    this.PageSizeCookieName = TNS.AdExpress.Constantes.Web.Cookies.CurrentPageSizeCreatives;
-                }
-                output.WriteLine(this.AjaxEventScript());
+                case RenderType.html:
+                    if (Vehicles.Count > 0)
+                    {
+                        if (_isCreativeConfig)
+                        {
+                            this.PageSizeCookieName = TNS.AdExpress.Constantes.Web.Cookies.CurrentPageSizeCreatives;
+                        }
+                        output.WriteLine(this.AjaxEventScript());
 
-                output.WriteLine("<table align=\"center\" class=\"whiteBackGround\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
-                output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
-                _header.RenderControl(output);
-                output.WriteLine("</td></tr>");
-                if (!_isCreativeConfig)
-                {
-                    output.WriteLine("<tr width=\"100%\" align=\"left\"><td width=\"100%\">");
-                    _columns.RenderControl(output);
-                    output.WriteLine("</td></tr>");
-                }
-                output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
-                base.Render(output);
-                output.WriteLine("</td></tr>");
+                        output.WriteLine("<table align=\"center\" class=\"whiteBackGround\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
+                        output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
+                        _header.RenderControl(output);
+                        output.WriteLine("</td></tr>");
+                        if (!_isCreativeConfig)
+                        {
+                            output.WriteLine("<tr width=\"100%\" align=\"left\"><td width=\"100%\">");
+                            _columns.RenderControl(output);
+                            output.WriteLine("</td></tr>");
+                        }
+                        output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
+                        base.Render(output);
+                        output.WriteLine("</td></tr>");
 
-                output.WriteLine("</table>");
+                        output.WriteLine("</table>");
+                    }
+                    else
+                    {
+                        output.WriteLine("<table align=\"center\" valign=\"middle\" class=\"error\">");
+                        output.WriteLine("<tr width=\"100%\" class=\"error\"><td width=\"100%\" class=\"error\">");
+                        output.WriteLine(GestionWeb.GetWebWord(2106, _customerWebSession.SiteLanguage));
+                        output.WriteLine("</td></tr>");
+                        output.WriteLine("</table>");
+                    } 
+                    break;
+                case RenderType.rawExcel:
+                    _data = GetResultTable(_customerWebSession);
+                    if (_data != null)
+                    {
+                        string[] filters = new string[5] { "-1", "-1", "-1", "-1", "-1" };
+                        string[] tmp = _idsFilter.Split(',');
+                        Array.Copy(tmp, filters, tmp.Length);
+
+                        ListDictionary mediaImpactedList = WebFct.MediaDetailLevel.GetImpactedMedia(_customerWebSession, long.Parse(filters[0]), long.Parse(filters[1]), long.Parse(filters[2]), long.Parse(filters[3]));	
+
+                        output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));
+                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession, false, _fromDate.ToString(), _toDate.ToString(), mediaImpactedList, Convert.ToInt32(_idVehicle)));
+                        output.WriteLine(base.GetRawExcel());
+                        output.WriteLine(detailSelectionWebControl.GetFooter());
+                    }
+                    break;
+                case RenderType.excel:
+                    _data = GetResultTable(_customerWebSession);
+                    if (_data != null)
+                    {
+                        string[] filters = new string[5] { "-1", "-1", "-1", "-1", "-1" };
+                        string[] tmp = _idsFilter.Split(',');
+                        Array.Copy(tmp, filters, tmp.Length);
+
+                        ListDictionary mediaImpactedList = WebFct.MediaDetailLevel.GetImpactedMedia(_customerWebSession, long.Parse(filters[0]), long.Parse(filters[1]), long.Parse(filters[2]), long.Parse(filters[3]));	
+
+                        output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));
+                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession, false, _fromDate.ToString(), _toDate.ToString(), mediaImpactedList, Convert.ToInt32(_idVehicle)));
+                        output.WriteLine(base.GetExcel());
+                        output.WriteLine(detailSelectionWebControl.GetFooter());
+                    }
+                    break;
             }
-            else
-            {
-                output.WriteLine("<table align=\"center\" valign=\"middle\" class=\"error\">");
-                output.WriteLine("<tr width=\"100%\" class=\"error\"><td width=\"100%\" class=\"error\">");
-                output.WriteLine(GestionWeb.GetWebWord(2106, _customerWebSession.SiteLanguage));
-                output.WriteLine("</td></tr>");
-                output.WriteLine("</table>");
-            }
-
 
         }
         #endregion
@@ -453,8 +498,6 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
 
              //date
-            int fromDate = 0;
-            int toDate = 0;
             WebCst.CustomerSessions.Period.Type periodType = _customerWebSession.PeriodType;
             string periodBegin = _customerWebSession.PeriodBeginningDate;
             string periodEnd = _customerWebSession.PeriodEndDate;
@@ -469,19 +512,19 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 {
                     periodType = WebCst.CustomerSessions.Period.Type.dateToDateMonth;
                 }
-                fromDate = Convert.ToInt32(
+                _fromDate = Convert.ToInt32(
                     WebFct.Dates.Max(WebFct.Dates.getZoomBeginningDate(ZoomDate, periodType),
                         WebFct.Dates.getPeriodBeginningDate(periodBegin, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
                     );
-                toDate = Convert.ToInt32(
+                _toDate = Convert.ToInt32(
                     WebFct.Dates.Min(WebFct.Dates.getZoomEndDate(ZoomDate, periodType),
                         WebFct.Dates.getPeriodEndDate(periodEnd, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
                     );
             }
             else
             {
-                fromDate = Convert.ToInt32(WebFct.Dates.getZoomBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
-                toDate = Convert.ToInt32(WebFct.Dates.getZoomEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
+                _fromDate = Convert.ToInt32(WebFct.Dates.getZoomBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
+                _toDate = Convert.ToInt32(WebFct.Dates.getZoomEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
             }
 
             object[] param = new object[2];
@@ -494,14 +537,32 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 List<Int64> columnsId = new List<long>();
                 foreach (GenericColumnItemInformation g in columns)
                 {
+                    if (this._renderType != RenderType.html && (g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.associatedFileMax || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.visual))
+                    {
+                        continue;
+                    }
                     columnsId.Add(g.Id.GetHashCode());
                 }
                 _customerWebSession.GenericInsertionColumns = new GenericColumns(columnsId);
-                data = result.GetCreatives(vehicle, fromDate, toDate, _idsFilter, _idUnivers, ZoomDate);
+                data = result.GetCreatives(vehicle, _fromDate, _toDate, _idsFilter, _idUnivers, ZoomDate);
             }
             else
             {
-                data = result.GetInsertions(vehicle, fromDate, toDate, _idsFilter, _idUnivers, ZoomDate);
+                if (this._renderType != RenderType.html){
+                    List<GenericColumnItemInformation> columns = _customerWebSession.GenericInsertionColumns.Columns;
+                    List<Int64> columnIds = new List<Int64>();
+                    foreach (GenericColumnItemInformation g in columns)
+                    {
+                        if (g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.associatedFileMax || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.visual)
+                        {
+                            continue;
+                        }
+                        columnIds.Add(g.Id.GetHashCode());
+                    }
+                    _customerWebSession.GenericInsertionColumns = new GenericColumns(columnIds);
+                }
+
+                data = result.GetInsertions(vehicle, _fromDate, _toDate, _idsFilter, _idUnivers, ZoomDate);
             }
 
             if (_isCreativeConfig)
@@ -512,7 +573,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
             else
             {
-                if (_cssCellInfo != null && _cssCellInfo.Length > 0)
+                if (data != null && data.NewHeaders == null && _cssCellInfo != null && _cssCellInfo.Length > 0)
                 {
                     switch (vehicle.Id)
                     {
@@ -601,6 +662,106 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
 
         }
+        #endregion
+
+        #region GetRawExcel
+        ///// <summary>
+        ///// Génère le code html destinée à un fichier excel brut
+        ///// </summary>
+        ///// <returns>Code html</returns>
+        //public override string GetRawExcel()
+        //{
+
+        //    #region Tri des données
+        //    if (this._data != null)
+        //    {
+        //        int iCol = (int)this._data.GetHeadersIndexInResultTable(this._sSortKey);
+        //        if (iCol >= 0 && !this._sortOrder.Equals(ResultTable.SortOrder.NONE))
+        //        {
+        //            this._data.Sort(this._sortOrder, iCol);
+        //        }
+        //    }
+        //    #endregion
+
+        //    StringBuilder output = new StringBuilder(10000);
+        //    int i = 0, j = 0;
+        //    InitCss();
+
+        //    #region Process html code
+        //    output.Append("<table border=1>");
+
+        //    string[] levelHeadersLabels = GetLevelHeadersLabels();
+        //    if (_data.NewHeaders != null)
+        //    {
+        //        output.Append(_data.NewHeaders.RenderRowExcel(_cssLHeader, levelHeadersLabels, iLevelColumn));
+        //    }
+
+        //    try
+        //    {
+        //        //Get lower level
+        //        LineType dataLineType = LineType.level1;
+        //        foreach(LineType l in _data.LinesStart.Keys){
+        //            if (l.GetHashCode() <= dataLineType.GetHashCode() && l != LineType.header && l != LineType.nbParution && l != LineType.total){
+        //                dataLineType = l;
+        //            }
+        //        }
+
+        //        string lineStart = string.Empty;
+        //        LineType cType = LineType.header;
+        //        for (i = 0; i < _data.LinesNumber; i++)
+        //        {
+        //            cType = _data.GetLineStart(i).LineType;
+        //            if (cType != dataLineType)
+        //            {
+        //            }
+        //            //Utilisation des styles au niveau des balises <TR>				
+        //            lineStart = _data[i, 0].RenderRowExcel();
+        //            if (lineStart.Length == 0) continue;
+        //            output.Append(lineStart);
+
+        //            for (j = 1; j < _data.ColumnsNumber - 1; j++)
+        //            {
+        //                if (j != iLevelColumn)
+        //                {
+        //                    output.Append(_data[i, j].RenderRowExcel());
+        //                }
+        //                else
+        //                {
+        //                    cLevel = (CellLevel)_data[i, j];
+        //                    if (cLevel.Level > 0)
+        //                    {
+        //                        tLevels[cLevel.Level - 1] = cLevel;
+        //                    }
+        //                    for (int k = 0; k < (cLevel.Level); k++)
+        //                    {
+        //                        output.Append(tLevels[k].RenderRowExcel());
+        //                    }
+        //                    string tmp = cLevel.Label;
+        //                    if (!(_data[i, 0] is LineStart && ((LineStart)_data[i, 0]).LineType == LineType.nbParution))
+        //                        cLevel.Label = "Total";
+        //                    for (int k = cLevel.Level; k < tLevels.Length; k++)
+        //                    {
+        //                        output.Append(cLevel.RenderRowExcel());
+        //                    }
+        //                    cLevel.Label = tmp;
+        //                }
+        //            }
+        //            output.Append(_data[i, _data.ColumnsNumber - 1].RenderRowExcel());
+
+        //        }
+
+
+        //        output.Append("</table>");
+        //    }
+        //    catch (System.Exception err)
+        //    {
+        //        throw (new System.Exception(err.Message + " Impossible de rendre la cellule [" + i + "," + j + "]"));
+        //    }
+        //    #endregion
+
+        //    return (output.ToString());
+
+        //}
         #endregion
     }
 }

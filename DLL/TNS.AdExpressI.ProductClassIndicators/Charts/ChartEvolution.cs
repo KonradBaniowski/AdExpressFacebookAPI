@@ -115,7 +115,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 ecart = Convert.ToDouble(tab[i, EngineEvolution.ECART]);
                 if (ecart > 0)
                 {
-                    series.Points.AddXY(tab[i, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit)));
+                    series.Points.AddXY(tab[i, EngineEvolution.PRODUCT].ToString(), ecart/1000);
                     series.Points[compteur].ShowInLegend = true;
 
                     #region Reference or competitor ?
@@ -140,7 +140,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 ecart = Convert.ToDouble(tab[last, EngineEvolution.ECART]);
                 if (ecart < 0)
                 {
-                    series.Points.AddXY(tab[last, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit).Replace(" ",string.Empty)));
+                    series.Points.AddXY(tab[last, EngineEvolution.PRODUCT].ToString(), ecart/1000);
                     series.Points[compteur].ShowInLegend = true;
                     series.Points[compteur].CustomAttributes = "LabelStyle=top";
 

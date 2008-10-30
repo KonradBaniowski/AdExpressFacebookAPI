@@ -50,6 +50,7 @@ namespace Private.Results {
         /// Identifiant du module courant
         /// </summary>
         private Int64 idModule = -1;
+        private string idUnivers = "";
         #endregion
 
         #region Page_Load
@@ -65,6 +66,18 @@ namespace Private.Results {
                 Page.Response.Write(LoadingSystem.GetHtmlDiv(_webSession.SiteLanguage, Page));
                 Page.Response.Flush();
                 #endregion
+
+                MenuWebControl2.ForceHelp = WebCst.Links.HELP_FILE_PATH+"MediaInsertionsCreationsResultsHelp.aspx";
+                MenuWebControl2.ForcePrint = string.Format("/Private/Results/Excel/Insertions.aspx?idSession={0}&zoomDate={1}&ids={2}&vehicleId={3}&idUnivers={4}&moduleId={5}",
+                    _webSession.IdSession,
+                    zoomDate,
+                    idsString,
+                    idVehicle,
+                    idUnivers,
+                    idModule);
+
+                MenuWebControl2.DisplayHtmlPrint = true;
+
 
             }
             catch (System.Exception exc) {
@@ -84,6 +97,10 @@ namespace Private.Results {
         protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 
             System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+            MenuWebControl2.CustomerWebSession = _webSession;
+            MenuWebControl2.ForbidHelpPages = true;
+
+
             string setParameters = string.Empty;
 
             try {
@@ -91,7 +108,7 @@ namespace Private.Results {
                 idsString = Page.Request.QueryString.Get("ids");
                 ids = idsString.Split(',');
                 zoomDate = Page.Request.QueryString.Get("zoomDate");
-                string idUnivers = Page.Request.QueryString.Get("idUnivers");
+                idUnivers = Page.Request.QueryString.Get("idUnivers");
                 idModule = Int64.Parse(Page.Request.QueryString.Get("moduleId"));
                 idVehicle = Page.Request.QueryString.Get("vehicleId");
                 string page = Page.Request.QueryString.Get("page");

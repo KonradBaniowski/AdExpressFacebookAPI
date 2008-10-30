@@ -127,7 +127,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 {
                     oneProductExist = true;
 
-                    series.Points.AddXY(tab[i, EngineTop.PRODUCT], Convert.ToDouble(u));
+                    series.Points.AddXY(tab[i, EngineTop.PRODUCT], d/1000);
 
                     series.Points[i - 1].ShowInLegend = true;
                     // Competitor in red
@@ -214,7 +214,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             this.ChartAreas[strChartArea].AxisY.Title = "" + GestionWeb.GetWebWord(1206, _session.SiteLanguage) + "";
             this.ChartAreas[strChartArea].AxisY.TitleFont = new Font("Arial", (float)10);
             double dd = Convert.ToDouble(tab[0, EngineTop.TOTAL_N]);
-            double uu = Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(dd, _session.Unit));
+            double uu = dd / 1000;
             if (uu > 0)
             {
                 this.ChartAreas[strChartArea].AxisY.Maximum = uu;
