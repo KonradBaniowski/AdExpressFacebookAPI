@@ -10,6 +10,7 @@
     <font name="TitleFontPurple11" policeName="Arial" size="11" color="100,72,131" isBold="true"/>
     <font name="TitleFontPurple10" policeName="Arial" size="10" color="100,72,131" isBold="true"/>
     <font name="TitleFontHighPurple10" policeName="Arial" size="10" color="107,89,139" isBold="true"/>
+    <font name="FontHighPurple10" policeName="Arial" size="10" color="107,89,139"/>
     <font name="FontPurple10" policeName="Arial" size="10" color="100,72,131"/>
     <font name="TitleFontWhite9" policeName="Arial" size="9" color="255,255,255" isBold="true"/>
     <font name="TitleFontBlack9" policeName="Arial" size="9" color="0,0,0" isBold="true"/>
@@ -50,7 +51,20 @@
         <border type="LeftBorder" color="100, 72, 131" lineStyle="Thin"/>
       </borders>
     </cell>
+    <cell name="CellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2" fontName="FontHighPurple10" foregroundColor="233,230,239">
+      <borders>
+        <border type="RightBorder" color="100, 72, 131" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100, 72, 131" lineStyle="Thin"/>
+      </borders>
+    </cell>
     <cell name="TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2" fontName="TitleFontHighPurple10" foregroundColor="233,230,239">
+      <borders>
+        <border type="BottomBorder" color="100, 72, 131" lineStyle="Thin"/>
+        <border type="RightBorder" color="100, 72, 131" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100, 72, 131" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2" fontName="FontHighPurple10" foregroundColor="233,230,239">
       <borders>
         <border type="BottomBorder" color="100, 72, 131" lineStyle="Thin"/>
         <border type="RightBorder" color="100, 72, 131" lineStyle="Thin"/>
@@ -64,7 +78,13 @@
         <border type="LeftBorder" color="100, 72, 131" lineStyle="Thin"/>
       </borders>
     </cell>
-
+    <cell name="CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite" fontName="FontHighPurple10" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100, 72, 131" lineStyle="Thin"/>
+        <border type="RightBorder" color="100, 72, 131" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100, 72, 131" lineStyle="Thin"/>
+      </borders>
+    </cell>
 
     <cell name="TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple" fontName="TitleFontWhite9" foregroundColor="100, 72, 131">
       <borders>
@@ -223,13 +243,13 @@
         <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
       </borders>
     </cell>
-    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="TitleFontBlack8" foregroundColor="233, 230, 239">
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="FontBlack8" foregroundColor="233, 230, 239">
       <borders>
         <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
         <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
       </borders>
     </cell>
-    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="FontBlack8" foregroundColor="233, 230, 239">
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="TitleFontBlack8" foregroundColor="233, 230, 239">
       <borders>
         <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
         <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
@@ -747,40 +767,40 @@
 
     <tag name="SynthesisTitle">TitleCellWhite12ForegroundColorPurple</tag>
     <tag name="SynthesisProductTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesisProductValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisProductValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
     <tag name="SynthesisAnnonceurTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
-    <tag name="SynthesisAnnonceurValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisAnnonceurValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
     <tag name="SynthesisAgenceMediaTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesisAgenceMediaValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisAgenceMediaValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
     <tag name="SynthesisPeriodeTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
-    <tag name="SynthesisPeriodeValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisPeriodeValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
     <tag name="SynthesisBudgetTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesisBudgetValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisBudgetValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
     <tag name="SynthesisInsertionTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
-    <tag name="SynthesisInsertionValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisInsertionValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
     <tag name="SynthesisPageTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesisPageValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisPageValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
     <tag name="SynthesisSupportTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
-    <tag name="SynthesisSupportValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisSupportValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
     <tag name="SynthesisReferenceTitle">TitleCellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesisReferenceValue">TitleCellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesisReferenceEnd">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisReferenceValue">CellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisReferenceValueEnd">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
     <tag name="SynthesisPdvTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
-    <tag name="SynthesisPdvValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisPdvValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
     <tag name="SynthesistargetSelectedTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesistargetSelectedValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesistargetSelectedValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
     <tag name="SynthesisGrpTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
-    <tag name="SynthesisGrpValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisGrpValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
     <tag name="SynthesisGrp15PlusTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesisGrp15PlusValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisGrp15PlusValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
     <tag name="SynthesisGrpVsTargetTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
-    <tag name="SynthesisGrpVsTargetValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisGrpVsTargetValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
     <tag name="SynthesisCoutGrpTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesisCoutGrpValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisCoutGrpValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
     <tag name="SynthesisCoutGrp15PlusTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
-    <tag name="SynthesisCoutGrp15PlusValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisCoutGrp15PlusValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
     <tag name="SynthesisCoutGrpVsTargetTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
-    <tag name="SynthesisCoutGrpVsTargetValue">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisCoutGrpVsTargetValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
 
     <tag name="MediaPlanVersionCell0">CellWhite8BorderRightBottomPurpleV3ForegroundColorPurple</tag>
     <tag name="MediaPlanCellNotPresent">CellWhite8BorderRightBottomPurpleV3ForegroundColorPurpleV3</tag>

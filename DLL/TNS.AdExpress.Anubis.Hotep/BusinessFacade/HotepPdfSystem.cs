@@ -405,6 +405,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 			html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 			html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
+            html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
 			html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 			html.ConnectToPDFLibrary (this);
 			html.LoadHTMLFile(workFile);
@@ -691,6 +692,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
+                html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
 				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 				html.ConnectToPDFLibrary (this);
 				html.LoadHTMLFile(workFile);
@@ -1437,6 +1439,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 			html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 			html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
+            html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
 			html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 			html.ConnectToPDFLibrary (this);
 			html.LoadHTMLFile(workFile);

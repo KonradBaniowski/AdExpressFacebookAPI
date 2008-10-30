@@ -627,17 +627,16 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 				#region Html file loading
 				Functions.CloseHtmlFile(sw);
-				HTML2PDFClass html = new HTML2PDFClass();
+				HTML2PDF2Class html = new HTML2PDF2Class();
 				html.MarginLeft = 170;	//Convert.ToInt32(this.LeftMargin);		
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1); ;//Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
+                html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
 				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);				
 				html.ConnectToPDFLibrary(this);
 				//html.SetLogFile("LodsHtmlToPdf.txt");
-				html.LoadFromFile(workFile);
+				html.LoadHTMLFile(workFile);
 				html.ConvertPage(0);
-				
-				html.ClearCache();
 				html.DisconnectFromPDFLibrary();
 
 				#endregion
