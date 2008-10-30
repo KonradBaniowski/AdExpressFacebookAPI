@@ -17,7 +17,7 @@
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Default.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Default.MediaScheduleResultDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--331-->
-          <ModuleVehicles list="1,2,3,5,6,7,8,11"/>
+          <ModuleVehicles list="1,2,3,5,6,7,8,10,11"/>
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
