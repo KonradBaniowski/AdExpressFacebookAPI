@@ -93,6 +93,12 @@ namespace TNS.AdExpress.Anubis.Appm.Common {
         private string _themePath;
         #endregion
 
+        #region Scan Properties
+        /// Scan xml file Path
+        /// </summary>
+        private string _scanPath;
+        #endregion
+
         #endregion
 
         #region Constructeur
@@ -229,6 +235,15 @@ namespace TNS.AdExpress.Anubis.Appm.Common {
         public string ThemePath {
             get { return _themePath; }
             set { _themePath = value; }
+        }
+        #endregion
+
+        #region Scan Properties
+        /// Get / Set Scan xml file Path
+        /// </summary>
+        public string ScanPath {
+            get { return _scanPath; }
+            set { _scanPath = value; }
         }
         #endregion
 		

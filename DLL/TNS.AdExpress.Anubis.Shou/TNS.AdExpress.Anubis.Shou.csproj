@@ -78,7 +78,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.HTML2PDFAddOn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Interop.HTML2PDFAddOn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Interop.HTML2PDFAddOn.dll</HintPath>
+    </Reference>
     <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\Anubis PZL\Librairies\Interop.PDFCreatorPilotLib.dll</HintPath>

@@ -1408,8 +1408,8 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				path=pathes[i].Replace("/imagette","");
 				path=pathes[i].Replace("/ImagesPresse","");
 				
-                imgG = Image.FromFile(CreationServerPathes.LOCAL_PATH_IMAGE + path);
-				imgI = this.AddImageFromFilename(CreationServerPathes.LOCAL_PATH_IMAGE + path,TxImageCompressionType.itcFlate);
+                imgG = Image.FromFile(_config.ScanPath + path);
+                imgI = this.AddImageFromFilename(_config.ScanPath + path, TxImageCompressionType.itcFlate);
 
 				double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
 				double coef = Math.Min((double)1.0,w);
@@ -1474,7 +1474,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 					//Insertion de chaque visuel
 					for(int i=0;i<visualList.Length && i<4;i++){
 
-						imgPath = CreationServerPathes.LOCAL_PATH_IMAGE+ fileList[1].ToString()+ @"\"+fileList[2].ToString()+ @"\"+"imagette"+ @"\"+visualList[i].ToString();
+                        imgPath = _config.ScanPath + fileList[1].ToString() + @"\" + fileList[2].ToString() + @"\" + "imagette" + @"\" + visualList[i].ToString();
 						imgG = Image.FromFile(imgPath);
 						imgI = this.AddImageFromFilename(imgPath,TxImageCompressionType.itcFlate);
 

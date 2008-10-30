@@ -4,6 +4,7 @@
   <PdfPath path="\\fitnses-dmzad01\AdExCustomerFiles"/>
   <!--If path empty then path = current directory of executable-->
   <ThemePath path=""/>
+  <ScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
   <PdfCreatorPilot login="laurent.roucaute@tnsmi.fr" pass="WHBRS-AAQWR-7QC3S-9H28E"/>
   <Html2Pdf login="laurent.roucaute@tnsmi.fr" pass="FBZ9Q-CQHV9-VTC8P-DFD9V"/>
   <PdfProperties author="TNS Media Intelligence" subject="Plan Média" title="Plan Média" producer="TNS AdExpress (Anubis)" keywords="Plan Média,adExpress,TNS Media Intelligence"/>

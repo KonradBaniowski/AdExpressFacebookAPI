@@ -876,8 +876,8 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 				path="";
 				path=pathes[i].Replace("/imagette","");
 				path=pathes[i].Replace("/ImagesPresse","");
-				imgG = Image.FromFile(CreationServerPathes.LOCAL_PATH_IMAGE + path);
-				imgI = this.AddImageFromFilename(CreationServerPathes.LOCAL_PATH_IMAGE + path,TxImageCompressionType.itcFlate);
+                imgG = Image.FromFile(_config.ScanPath + path);
+                imgI = this.AddImageFromFilename(_config.ScanPath + path, TxImageCompressionType.itcFlate);
 
 				double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
 				double coef = Math.Min((double)1.0,w);

@@ -266,7 +266,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 
 					//Environnement rédactionnel 										
-					allMediaFiles = Directory.GetFiles(CreationServerPathes.LOCAL_PATH_IMAGE + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette", "*.jpg");
+                    allMediaFiles = Directory.GetFiles(_config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette", "*.jpg");
 
 					#region Insertion uniquement des visuels
 					//Insertion uniquement des visuels				
@@ -335,7 +335,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 			string imgPath = null;
 			int nbMaxPagesByLine = 5;
 
-			imgPath = CreationServerPathes.LOCAL_PATH_IMAGE + _proofDetail.IdMedia+ @"\"+ _proofDetail.DateCover + @"\"+"imagette"+ @"\"+ referenceVisual;
+            imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + referenceVisual;
 
 		
 			for (int j=0; j<allMediaFiles.Length;j++) {
@@ -416,7 +416,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 
 				if (environmentPages) imgPath = visualList[i].ToString();
-				else imgPath = CreationServerPathes.LOCAL_PATH_IMAGE + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + visualList[i].ToString();
+                else imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + visualList[i].ToString();
 
 
 
@@ -647,7 +647,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 				#region Insertion Couverture
 
-                string imgPath = CreationServerPathes.LOCAL_PATH_IMAGE + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + TNS.AdExpress.Constantes.Web.CreationServerPathes.COUVERTURE;
+                string imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + TNS.AdExpress.Constantes.Web.CreationServerPathes.COUVERTURE;
 				if (File.Exists(imgPath)) {
 					Image imgG = Image.FromFile(imgPath);
 					double zoomValue = 0.6;

@@ -62,6 +62,10 @@ namespace TNS.AdExpress.Anubis.Appm.DataAccess{
                                 if (Value != null && Value.Length > 0) cfg.ThemePath = Value;
                                 else cfg.ThemePath = AppDomain.CurrentDomain.BaseDirectory;
                                 break;
+                            case "ScanPath":
+                                Value = Reader.GetAttribute("path");
+                                if (Value != null) cfg.ScanPath = Value;
+                                break;
 							case "PdfCreatorPilot":
 								Value=Reader.GetAttribute("login");
 								if (Value!=null) cfg.PdfCreatorPilotLogin = Value;
