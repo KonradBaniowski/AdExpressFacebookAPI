@@ -96,6 +96,10 @@ namespace TNS.AdExpressI.Portofolio {
 		/// Table type
 		/// </summary>
 		TNS.AdExpress.Constantes.DB.TableType.Type _tableType;
+		/// <summary>
+		/// List of media to test for creative acces (press specific)
+		/// </summary>
+		protected List<long> _mediaList = null;
         #endregion
 
         #region Constructor
@@ -322,10 +326,21 @@ namespace TNS.AdExpressI.Portofolio {
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			DataSet ds = portofolioDAL.GetListDate(true, _tableType);
 
+			if (_mediaList == null) {
+				try {
+					string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
+					if(mediaList!=null && mediaList.Length>0)
+						_mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));					
+				}
+				catch { }
+			}
 			dic.Clear();
 			foreach (DataRow dr in ds.Tables[0].Rows) {
-				if (dr["disponibility_visual"] != System.DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10)
-					dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
+				if (dr["disponibility_visual"] != System.DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10) {
+					if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
+						dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_media_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
+					else dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
+				}
 				else
 					dic.Add(dr["date_media_num"].ToString(), "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif");
 			}

@@ -288,19 +288,19 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         , customerPeriod.PeriodMonthEnd[0].ToString().Substring(0, 6));
 					break;
 			}
-            switch (type) {
-                case DBConstantes.TableType.Type.dataVehicle4M:
-                case DBConstantes.TableType.Type.dataVehicle:
-                    if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
-                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
-                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
-                        && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
-                        sql.AppendFormat(" and {0}={1}"
-                            , UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).DatabaseField
-                            , this._cobrandindConditionValue);
-                    }
-                    break;
-            }
+			//switch (type) {
+			//    case DBConstantes.TableType.Type.dataVehicle4M:
+			//    case DBConstantes.TableType.Type.dataVehicle:
+			//        if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+			//            && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+			//            && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+			//            && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
+			//            sql.AppendFormat(" and {0}={1}"
+			//                , UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion).DatabaseField
+			//                , this._cobrandindConditionValue);
+			//        }
+			//        break;
+			//}
             sql.Append(product);
 			sql.Append(productsRights);
 			sql.Append(mediaRights);

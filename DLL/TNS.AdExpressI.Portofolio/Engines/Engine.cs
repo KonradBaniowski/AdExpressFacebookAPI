@@ -62,6 +62,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// Current Module
 		/// </summary>
 		protected TNS.AdExpress.Domain.Web.Navigation.Module _module;
+		/// <summary>
+		/// List of media to test for creative acces (press specific)
+		/// </summary>
+		protected List<long> _mediaList = null;
 		#endregion
 
 		#region Constructor
@@ -169,11 +173,21 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         }
 						
                         CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+						if (_mediaList == null) {
+							try {
+								string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
+								if (mediaList != null && mediaList.Length > 0)
+									_mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
+							}
+							catch { }
+						}
 						for (int i = 0; i < dtVisuel.Rows.Count; i++) {
 							//date_media_num
 
 							if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
-								pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
+								if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
+									pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_media_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
+								else pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
 							}
 							else {
 								pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
@@ -199,7 +213,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 							t.Append("<tr><td class=\"portofolioSynthesis\" align=center >" + day + "</td><tr>");
 							t.Append("<tr><td align=\"center\" class=\"portofolioSynthesis\" >");
 							if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
-								t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
+								if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
+									t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
+								else t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
 							}
 							t.Append(" <img alt=\"" + GestionWeb.GetWebWord(1409, _webSession.SiteLanguage) + "\" src='" + pathWeb + "' border=\"0\" width=180 height=220>");
 							if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {

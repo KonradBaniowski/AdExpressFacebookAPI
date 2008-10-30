@@ -259,7 +259,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			//Checks if media belong to TV Nat Thematics
 			string idThematicCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.thematicTv);
 			if(idThematicCategory!=null && idThematicCategory.Length>0)
-			isTvNatThematiques = portofolioDAL.IsMediaBelongToCategory(_idMedia, long.Parse(idThematicCategory));
+			isTvNatThematiques = portofolioDAL.IsMediaBelongToCategory(_idMedia,idThematicCategory);
 			
 			List<UnitInformation> unitsList = _webSession.GetValidUnitForResult();
 

@@ -284,7 +284,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 
 			#region Construction de la requête
             sql += " select " + insertionFieldNameSumWithAlias + "," + euroFieldNameSumWithAlias + ",date_cover_num date1";
-			sql += "  from " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+			sql += "  from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).Sql + "  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;//+ DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
 			sql += " where id_media=" + _idMedia + " ";
 			if (_beginingDate.Length > 0)
 				sql += " and date_media_num>=" + _beginingDate + " ";
@@ -311,7 +311,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 				}
 			}
 			catch (System.Exception err) {
-				throw (new PortofolioDALException("error whene getting investment by media", err));
+				throw (new PortofolioDALException("error when getting investment by media", err));
 			}
 			#endregion
 
@@ -424,7 +424,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// <param name="idMedia">Id media</param>
 		/// <param name="idCategory">Id Category</param>
 		/// <returns>True if media belong to Category</returns>
-		public bool IsMediaBelongToCategory(Int64 idMedia, Int64 idCategory) {
+		public bool IsMediaBelongToCategory(Int64 idMedia, string idCategory) {
 
 			StringBuilder t = new StringBuilder(1000);
 			DataTable dt = null;
@@ -439,7 +439,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix + ".id_language = " + _webSession.DataLanguage);
 			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_language = " + _webSession.DataLanguage);
 			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix + ".id_language = " + _webSession.DataLanguage);
-			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media = " + idMedia);
+			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media in ( " + idMedia +")  ");
 			t.Append("  order by media ");
 
 			#region Execution de la requête

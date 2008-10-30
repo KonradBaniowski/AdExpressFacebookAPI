@@ -172,8 +172,12 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 				//Rights detail spot to spot TNT
 				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-					&& !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG))
-					sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_category != " + DBConstantes.Category.ID_DIGITAL_TV + "  ");
+					&& !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG)) {					
+					string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category, WebConstantes.GroupList.Type.digitalTv);
+					if (idTNTCategory != null && idTNTCategory.Length > 0) {
+						sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_category not in (" + idTNTCategory + ")  ");
+					}		
+				}
 
 				#endregion
 
@@ -183,7 +187,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 
 				// Order by
-				sql.Append(orderby);
+				sql.Append("  " +orderby);
 
 			}
 			catch (System.Exception err) {
@@ -218,17 +222,17 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page,media_paging, id_product," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement";
 				case DBClassificationConstantes.Vehicles.names.radio:
 					if (allPeriod) return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";
-					else return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";
+					else return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";
 				case DBClassificationConstantes.Vehicles.names.tv:
 					// Top diffusion
 					if (allPeriod)
-						return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion ";
-					else return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion ";
+						return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion ";
+					else return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion ";
 				case DBClassificationConstantes.Vehicles.names.others:
 					// order by date, scrreen code 
 					if (allPeriod)
-						return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_commercial_break ";
-					else return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_commercial_break";
+						return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_commercial_break ";
+					else return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_commercial_break";
 				default:
 					throw new PortofolioDALException("GetOrderByDetailMedia : This media is not treated. None related table.");
 			}

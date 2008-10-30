@@ -24,38 +24,37 @@ namespace TNS.AdExpress.Domain {
 		/// Groups desciptions 
 		/// </summary>
 		private static Dictionary<GroupList.ID, Dictionary<GroupList.Type, string>> _groupsDesciption = new Dictionary<GroupList.ID, Dictionary<GroupList.Type, string>>();
-	
-		/////<summary>
-		///// Insets description lists
-		///// </summary>
-		//private static Dictionary<CustomerSessions.InsertType, long> _insetList = new Dictionary<CustomerSessions.InsertType, long>();
-		///// <summary>
-		///// Category lists 
-		///// </summary>
-		//private static Dictionary<GroupList.Category, string> _mediaList = new Dictionary<GroupList.Category, string>();
-
-
+		
 		#endregion
 
-		#region Accessors
-		///// <summary>
-		///// Get insets description list
-		///// </summary>
-		//public static Dictionary<CustomerSessions.InsertType, long> InsetList {
-		//    get { return _insetList; }
-		//}
-		///// <summary>
-		///// Get specific media list to exclude 
-		///// </summary>
-		//public static Dictionary<string, string> MediaList {
-		//    get { return _mediaList; }
-		//}
+		#region Accessors		
 		#endregion
 
 		#region Methods public
 		/// <summary>
 		/// Get Id list
 		/// </summary>
+		/// <param name="id">Id type of list</param>
+		public static string GetIdList(GroupList.Type id) {
+			string fieldsIdList = "";
+			try {
+				if (_groupsDesciption != null && _groupsDesciption.Count > 0) {
+					foreach (KeyValuePair<GroupList.ID, Dictionary<GroupList.Type, string>> kpv in _groupsDesciption) {
+						if (kpv.Value.ContainsKey(id)) 
+							return kpv.Value[id];
+					}
+				}
+				return fieldsIdList;
+			}
+			catch (System.Exception err) {
+				throw (new ArgumentException("impossible to retreive the id list", err));
+			}
+		}
+		/// <summary>
+		/// Get Id list
+		/// </summary>
+		/// <param name="id">Id type of list</param>
+		/// <param name="idGroup">Id group of list</param>
 		public static string GetIdList(GroupList.ID idGroup,GroupList.Type id) {
 			string fieldsIdList = "";
 			try {

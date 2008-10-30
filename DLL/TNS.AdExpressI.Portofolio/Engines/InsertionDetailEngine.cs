@@ -101,7 +101,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			parameters[5] = _adBreak;
 			if (_adBreak != null && _adBreak.Length > 0) allPeriod = false;
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-			isDigitalTV = portofolioDAL.IsMediaBelongToCategory(_idMedia, DBCst.Category.ID_DIGITAL_TV);
+			string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.digitalTv);
+			if (idTNTCategory != null && idTNTCategory.Length > 0)
+				isDigitalTV = portofolioDAL.IsMediaBelongToCategory(_idMedia, idTNTCategory);
 
 			#region Product detail level (Generic)
 			// Initialisation to product
@@ -227,7 +229,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 					// assembly loading
 					assembly = Assembly.Load(@"TNS.FrameWork.WebResultUI");
-
+					if (_mediaList == null) {
+						try {
+							string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
+							if (mediaList != null && mediaList.Length > 0)
+								_mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
+						}
+						catch { }
+					}
 					foreach (DataRow row in dt.Rows) {
 
 						#region Initialisation of dateMediaNum
@@ -248,8 +257,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						if (_dayOfWeek == dateMediaNum || allPeriod) {
 
 							tab.AddNewLine(LineType.level1);
-							iCurColumn = 1;
-
+							iCurColumn = 1;							
 							foreach (GenericColumnItemInformation Column in columnItemList) {
 								switch (Column.Id) {
 									case GenericColumnItemInformation.Columns.visual://Visual press
@@ -258,7 +266,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 												// Creation
 												files = row[Column.DataBaseField].ToString().Split(',');
 												foreach (string str in files) {
-													listVisual += "/ImagesPresse/" + _idMedia + "/" + row["date_cover_num"] + "/" + str + ",";
+													if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
+														listVisual += "/ImagesPresse/" + _idMedia + "/" + row["date_media_num"] + "/" + str + ",";
+													else listVisual += "/ImagesPresse/" + _idMedia + "/" + row["date_cover_num"] + "/" + str + ",";
 												}
 												if (listVisual.Length > 0) {
 													listVisual = listVisual.Substring(0, listVisual.Length - 1);
