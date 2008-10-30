@@ -15,10 +15,7 @@ namespace TNS.AdExpress {
         /// Load AdExpress Word list
         /// </summary>
         public static void LoadLists(){
-            WordListDAL wld=new WordListDAL(WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.translation));
-            foreach(WebLanguage wll in WebApplicationParameters.AllowedLanguages.Values) {
-                GestionWeb.Add=new WordList(wll.Id,wld.GetList(wll.Id));
-            }
+            WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.translation);
         }
     }
 }

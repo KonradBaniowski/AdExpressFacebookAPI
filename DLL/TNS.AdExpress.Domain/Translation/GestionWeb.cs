@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using AdExpress.Localization;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Domain.Translation{
@@ -17,7 +19,28 @@ namespace TNS.AdExpress.Domain.Translation{
 	/// </summary>
 	///  <stereotype>utility</stereotype>
 	public class GestionWeb {
-		/// <summary>
+				/// <summary>
+		/// Texte à extraire.
+		/// Si la function retourne ! c'est que le code langue n'est pas correct
+		/// Si la function retourne ? c'est que le code du mots n'existe pas
+		/// </summary>
+		/// <param name="code">Code du mot à extraire</param>
+		/// <param name="langue">Langue souhaitée</param>
+		/// <returns></returns>
+		public static string GetWebWord(Int64 code,int langue){
+			try{
+                return Global.GetValue("w" + code.ToString(), WebApplicationParameters.AllowedLanguages[langue].CultureInfo).ToString();
+				//return _list[langue].GetWebWord(code);
+
+			}
+			catch(System.Exception){
+				// le code langue n'est pas correcte
+				return("!");
+			}
+        }
+        #region Old Code
+        /*
+        /// <summary>
 		/// Ensemble des listes de mots
 		/// </summary>
 		/// <remarks>La clé est le code de la langue</remarks>
@@ -29,8 +52,8 @@ namespace TNS.AdExpress.Domain.Translation{
 		static GestionWeb(){
             _list=new Dictionary<int,WordList>();
 		}
-
-		/// <summary>
+         
+        /// <summary>
 		/// Texte à extraire.
 		/// Si la function retourne ! c'est que le code langue n'est pas correct
 		/// Si la function retourne ? c'est que le code du mots n'existe pas
@@ -41,14 +64,15 @@ namespace TNS.AdExpress.Domain.Translation{
 		public static string GetWebWord(Int64 code,int langue){
 			try{
 				return _list[langue].GetWebWord(code);
+
 			}
 			catch(System.Exception){
 				// le code langue n'est pas correcte
 				return("!");
 			}
 		}
-
-		/// <summary>
+        
+        /// <summary>
 		/// Initialise la classe
 		/// </summary>
 		public static void Init(){
@@ -60,9 +84,10 @@ namespace TNS.AdExpress.Domain.Translation{
         /// </summary>
         public static WordList Add {
             set {
+
                 _list.Add(value.LangueSite,value);
             }
-        }
+        }*/
         #endregion
     }
 }

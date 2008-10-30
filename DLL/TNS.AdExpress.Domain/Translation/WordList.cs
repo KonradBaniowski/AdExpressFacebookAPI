@@ -16,7 +16,7 @@ namespace TNS.AdExpress.Domain.Translation{
 	/// Classe gérant les textes du site Web AdExpress
 	/// </summary>
 	public class WordList{
-
+        /*
 		#region Variables
 		/// <summary>
 		/// Identifiant de la langue
@@ -90,6 +90,6 @@ namespace TNS.AdExpress.Domain.Translation{
 			get{return(_idLanguage);}
 		}
 
-		#endregion
+		#endregion*/
 	}
 }
