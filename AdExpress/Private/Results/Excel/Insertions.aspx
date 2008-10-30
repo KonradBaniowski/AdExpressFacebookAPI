@@ -9,7 +9,7 @@
 </head>
 <body>
     <form id="Form1" runat="server">
-        <cc1:InsertionsWebControl id="ResultWebControl1" runat="server" OutputType="excel" SkinID="excelInsertion"/>
+        <cc1:InsertionsWebControl id="ResultWebControl1" runat="server" OutputType="rawExcel" SkinID="excelInsertion"/>
     </form>
 </body>
 </html>

@@ -15,7 +15,9 @@ using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using DBClassifCst = TNS.AdExpress.Constantes.Classification;
+using WebFunctions = TNS.AdExpress.Web.Functions;
 using System.Text;
+using TNS.FrameWork.Date;
 
 namespace Private.Results {
 
@@ -72,7 +74,7 @@ namespace Private.Results {
                     _webSession.IdSession,
                     zoomDate,
                     idsString,
-                    idVehicle,
+                    this.InsertionsWebControl1.IdVehicle,
                     idUnivers,
                     idModule);
 
@@ -114,9 +116,26 @@ namespace Private.Results {
                 string page = Page.Request.QueryString.Get("page");
 
                 #region Parameters
-                if (Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0)
+                if (Page.Request.Form.GetValues("zoomParam") != null)
                 {
                     zoomDate = Page.Request.Form.GetValues("zoomParam")[0];
+                }
+                else
+                {
+                    zoomDate = Page.Request.QueryString.Get("zoomDate");
+                    if (zoomDate != null && zoomDate.Length <= 0)
+                    {
+                        DateTime begin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+                        if (_webSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
+                        {
+                            AtomicPeriodWeek week = new AtomicPeriodWeek(begin);
+                            zoomDate = string.Format("{0}{1}", week.Year, week.Week.ToString("0#"));
+                        }
+                        else
+                        {
+                            zoomDate = begin.ToString("yyyyMM");
+                        }
+                    }
                 }
                 zoomParam.Value = zoomDate;
                 if (Page.Request.Form.GetValues("vehicleParam") != null && Page.Request.Form.GetValues("vehicleParam")[0].Length > 0)

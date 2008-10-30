@@ -207,7 +207,7 @@
   <vehicle id="adnettrack" databaseId="6" showInsertions="false" showCreations="true">
     <!-- Units-->
     <allowedUnits>
-      <allowedUnit>insertion</allowedUnit>
+      <allowedUnit>occurence</allowedUnit>
       <allowedUnit>versionNb</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->

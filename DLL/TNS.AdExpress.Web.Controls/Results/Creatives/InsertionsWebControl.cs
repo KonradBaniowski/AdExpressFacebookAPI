@@ -193,18 +193,18 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
             set
             {
-                if ((value == null || value.Length <= 0) && _customerWebSession != null)
-                {
-                    if (_customerWebSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
-                    {
-                        AtomicPeriodWeek tmp = new AtomicPeriodWeek(new DateTime(int.Parse(_customerWebSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_customerWebSession.PeriodBeginningDate.Substring(4, 2)), int.Parse(_customerWebSession.PeriodBeginningDate.Substring(6, 2))));
-                        value = string.Format("{0}{1}", tmp.FirstDay.AddDays(3).Year, tmp.Week.ToString("0#"));
-                    }
-                    else
-                    {
-                        value = _customerWebSession.PeriodBeginningDate.Substring(0, 6);
-                    }
-                }
+                //if ((value == null || value.Length <= 0) && _customerWebSession != null)
+                //{
+                //    if (_customerWebSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
+                //    {
+                //        AtomicPeriodWeek tmp = new AtomicPeriodWeek(new DateTime(int.Parse(_customerWebSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_customerWebSession.PeriodBeginningDate.Substring(4, 2)), int.Parse(_customerWebSession.PeriodBeginningDate.Substring(6, 2))));
+                //        value = string.Format("{0}{1}", tmp.FirstDay.AddDays(3).Year, tmp.Week.ToString("0#"));
+                //    }
+                //    else
+                //    {
+                //        value = _customerWebSession.PeriodBeginningDate.Substring(0, 6);
+                //    }
+                //}
                 _zoom = value;
                 this._header.ZoomDate = _zoom;
                 this._columns.ZoomDate = _zoom;
@@ -437,7 +437,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
                         output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));
                         output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession, false, _fromDate.ToString(), _toDate.ToString(), mediaImpactedList, Convert.ToInt32(_idVehicle)));
-                        output.WriteLine(base.GetRawExcel());
+                        output.WriteLine(GetRawExcel());
                         output.WriteLine(detailSelectionWebControl.GetFooter());
                     }
                     break;
@@ -665,103 +665,111 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         #endregion
 
         #region GetRawExcel
-        ///// <summary>
-        ///// Génère le code html destinée à un fichier excel brut
-        ///// </summary>
-        ///// <returns>Code html</returns>
-        //public override string GetRawExcel()
-        //{
+        /// <summary>
+        /// Génère le code html destinée à un fichier excel brut
+        /// </summary>
+        /// <returns>Code html</returns>
+        public new string GetRawExcel()
+        {
 
-        //    #region Tri des données
-        //    if (this._data != null)
-        //    {
-        //        int iCol = (int)this._data.GetHeadersIndexInResultTable(this._sSortKey);
-        //        if (iCol >= 0 && !this._sortOrder.Equals(ResultTable.SortOrder.NONE))
-        //        {
-        //            this._data.Sort(this._sortOrder, iCol);
-        //        }
-        //    }
-        //    #endregion
+            #region Tri des données
+            if (this._data != null)
+            {
+                int iCol = (int)this._data.GetHeadersIndexInResultTable(this._sSortKey);
+                if (iCol >= 0 && !this._sortOrder.Equals(ResultTable.SortOrder.NONE))
+                {
+                    this._data.Sort(this._sortOrder, iCol);
+                }
+            }
+            #endregion
 
-        //    StringBuilder output = new StringBuilder(10000);
-        //    int i = 0, j = 0;
-        //    InitCss();
+            StringBuilder output = new StringBuilder(10000);
+            int i = 0, j = 0;
+            InitCss();
 
-        //    #region Process html code
-        //    output.Append("<table border=1>");
+            #region Process html code
 
-        //    string[] levelHeadersLabels = GetLevelHeadersLabels();
-        //    if (_data.NewHeaders != null)
-        //    {
-        //        output.Append(_data.NewHeaders.RenderRowExcel(_cssLHeader, levelHeadersLabels, iLevelColumn));
-        //    }
+            output.Append("<table border=1>");
 
-        //    try
-        //    {
-        //        //Get lower level
-        //        LineType dataLineType = LineType.level1;
-        //        foreach(LineType l in _data.LinesStart.Keys){
-        //            if (l.GetHashCode() <= dataLineType.GetHashCode() && l != LineType.header && l != LineType.nbParution && l != LineType.total){
-        //                dataLineType = l;
-        //            }
-        //        }
+            #region Headers
+            output.Append("<tr>");
+            bool b = false;
 
-        //        string lineStart = string.Empty;
-        //        LineType cType = LineType.header;
-        //        for (i = 0; i < _data.LinesNumber; i++)
-        //        {
-        //            cType = _data.GetLineStart(i).LineType;
-        //            if (cType != dataLineType)
-        //            {
-        //            }
-        //            //Utilisation des styles au niveau des balises <TR>				
-        //            lineStart = _data[i, 0].RenderRowExcel();
-        //            if (lineStart.Length == 0) continue;
-        //            output.Append(lineStart);
+            foreach (DetailLevelItemInformation d in _customerWebSession.DetailLevel.Levels)
+            {
+                Header tmp = new Header(GestionWeb.GetWebWord(d.WebTextId, _customerWebSession.SiteLanguage), d.Id.GetHashCode(), _cssLHeader);
+                tmp.RenderExcel(output, ref b, null, 1, null);
+            }
 
-        //            for (j = 1; j < _data.ColumnsNumber - 1; j++)
-        //            {
-        //                if (j != iLevelColumn)
-        //                {
-        //                    output.Append(_data[i, j].RenderRowExcel());
-        //                }
-        //                else
-        //                {
-        //                    cLevel = (CellLevel)_data[i, j];
-        //                    if (cLevel.Level > 0)
-        //                    {
-        //                        tLevels[cLevel.Level - 1] = cLevel;
-        //                    }
-        //                    for (int k = 0; k < (cLevel.Level); k++)
-        //                    {
-        //                        output.Append(tLevels[k].RenderRowExcel());
-        //                    }
-        //                    string tmp = cLevel.Label;
-        //                    if (!(_data[i, 0] is LineStart && ((LineStart)_data[i, 0]).LineType == LineType.nbParution))
-        //                        cLevel.Label = "Total";
-        //                    for (int k = cLevel.Level; k < tLevels.Length; k++)
-        //                    {
-        //                        output.Append(cLevel.RenderRowExcel());
-        //                    }
-        //                    cLevel.Label = tmp;
-        //                }
-        //            }
-        //            output.Append(_data[i, _data.ColumnsNumber - 1].RenderRowExcel());
+            string s = string.Empty;
+            if (_data.NewHeaders != null)
+            {
+                s = _data.NewHeaders.RenderExcel(_cssLHeader);
+                s = s.Replace("<tr>", string.Empty);
+            }
+            output.Append(s);
+            #endregion
 
-        //        }
+            #region table body
+            try
+            {
+                //Get lower level
+                LineType dataLineType = LineType.level1;
+                foreach (LineType l in _data.LinesStart.Keys)
+                {
+                    if (l.GetHashCode() <= dataLineType.GetHashCode() && l != LineType.header && l != LineType.nbParution && l != LineType.total)
+                    {
+                        dataLineType = l;
+                    }
+                }
+                //Render lower levels
+                LineType cType = LineType.header;
+                List<ICell> parents = new List<ICell>();
+                List<LineType> parentType = new List<LineType>();
+                LineStart lStart;
+                for (i = 0; i < _data.LinesNumber; i++)
+                {
+                    lStart = _data.GetLineStart(i);
+                    cType = lStart.LineType;
+                    if (cType != dataLineType)
+                    {
+                        if (!parentType.Contains(cType))
+                        {
+                            parentType.Add(cType);
+                            parents.Add(null);
+                        }                        
+                        parents[parentType.IndexOf(cType)] = _data[i, 1];
+                        continue;
+                    }
+                    output.Append(lStart.RenderExcel(string.Empty));
+                    //parents
+                    foreach (ICell c in parents)
+                    {
+                        output.Append(c.RenderExcel(lStart.CssClass));
+                    }
+                    //data line
+                    for (j = 1; j < _data.ColumnsNumber ; j++)
+                    {
+                        output.Append(_data[i, j].RenderExcel(lStart.CssClass));
+                    }
 
 
-        //        output.Append("</table>");
-        //    }
-        //    catch (System.Exception err)
-        //    {
-        //        throw (new System.Exception(err.Message + " Impossible de rendre la cellule [" + i + "," + j + "]"));
-        //    }
-        //    #endregion
+                }
 
-        //    return (output.ToString());
+            }
+            catch (System.Exception err)
+            {
+                throw (new System.Exception(err.Message + " Impossible de rendre la cellule [" + i + "," + j + "]"));
+            }
+            #endregion
 
-        //}
+            output.Append("</table>");
+
+            #endregion
+
+            return (output.ToString());
+
+        }
         #endregion
     }
 }

@@ -425,8 +425,12 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Unité = Nombres de versions
             /// </summary>
-            versionNb = 10
-		
+            versionNb = 10,
+		    /// <summary>
+            /// Unité = Nombre d'occurences
+            /// </summary>
+            occurence = 11
+
 		}
 		#endregion
 
