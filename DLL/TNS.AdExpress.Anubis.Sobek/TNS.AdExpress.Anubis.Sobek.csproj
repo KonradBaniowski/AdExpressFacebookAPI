@@ -181,7 +181,7 @@
     <Compile Include="UI\InsertionsDetail.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Content Include="_Config\Sobek.xml" />
+    <Content Include="Configuration\33\Plugins\Sobek.xml" />
     <None Include="ModelSupport\default.txaPackage" />
     <None Include="ModelSupport\default.txvpck" />
     <None Include="ModelSupport\TNS\AdExpress\Anubis\default.txaPackage" />
@@ -207,6 +207,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configuration\35\Plugins\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

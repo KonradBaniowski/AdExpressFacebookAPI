@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <CustomerMail server="fitnses-ex01.tnsad.com" port="25" from="tnsadexpress@tnsmi.fi" webServer="http://www.tnsadexpress.fi" subject="TNS AdExpress"/>
+  <PdfPath path="\\fitnses-dmzad01\AdExCustomerFiles"/>
+  <!--If path empty then path = current directory of executable-->
+  <ThemePath path=""/>
+  <PdfCreatorPilot login="laurent.roucaute@tnsmi.fr" pass="WHBRS-AAQWR-7QC3S-9H28E"/>
+  <Html2Pdf login="laurent.roucaute@tnsmi.fr" pass="FBZ9Q-CQHV9-VTC8P-DFD9V"/>
+  <PdfProperties author="TNS Media Intelligence" subject="Indicateurs" title="Analyses Sectorielles" producer="TNS AdExpress (Anubis)" keywords="Analyses Sectorielles, adExpress, Indicateurs, TNS Media Intelligence"/>
+</Configuration>

@@ -199,11 +199,14 @@
     <Compile Include="TreatementSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Content Include="_Config\Mnevis.xml" />
+    <Content Include="Configuration\33\Plugins\Mnevis.xml" />
     <None Include="ModelSupport\default.txaPackage" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configuration\35\Plugins\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

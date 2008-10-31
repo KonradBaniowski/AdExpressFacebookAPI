@@ -227,6 +227,7 @@
     <Compile Include="UI\UISeasonalityGraph.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="Configuration\35\Plugins\Hotep.xml" />
     <Content Include="Images\33\LogoAdExpress.jpg" />
     <Content Include="Images\33\LogoAdExpress220.jpg" />
     <Content Include="Images\33\LogoAdExpressWater.bmp" />
@@ -235,7 +236,7 @@
     <Content Include="Images\44\LogoAdExpress220.jpg" />
     <Content Include="Images\Common\APPM.bmp" />
     <Content Include="Images\Common\logo_Tns.bmp" />
-    <Content Include="_Config\Hotep.xml" />
+    <Content Include="Configuration\33\Plugins\Hotep.xml" />
     <None Include="ModelSupport\default.txaPackage" />
     <None Include="ModelSupport\default.txvpck" />
     <None Include="ModelSupport\TNS\AdExpress\Anubis\default.txaPackage" />
