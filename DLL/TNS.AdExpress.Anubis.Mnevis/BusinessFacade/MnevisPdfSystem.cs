@@ -332,7 +332,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 				html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
 				html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
 				html.Append("</HEAD>");
-				html.Append("<body>");
+                html.Append("<body style=\"margin-top:0px;\">");
 
 				htmlHeader.Append(html.ToString());
 
@@ -580,9 +580,8 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
 			html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
 			html.Append("</HEAD>");
-			html.Append("<body>");
+            html.Append("<body style=\"margin-top:0px;\">");
 			html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
-			html.Append("\r\n\t<tr>\r\n\t\t<td>");
 			html.Append("\r\n\t<tr>\r\n\t\t<td>");
 			return(html.ToString());
            
@@ -612,7 +611,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			hBitmap = IntPtr.Zero;
 			snap = new CHtmlSnapClass();
 			snap.SetTimeOut(100000);
-			snap.SetCode("21063505C78EB32A");
+			snap.SetCode("21063505C78EB32A"); 
 			snap.SnapHtmlString(html.ToString(), "*");
 
 			html=new StringBuilder(10000);

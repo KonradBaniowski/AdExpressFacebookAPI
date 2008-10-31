@@ -956,7 +956,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
 				html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
 				html.Append("</HEAD>");
-				html.Append("<body>");
+				html.Append("<body style=\"margin-top:0px;\">");
 
 				htmlHeader.Append(html.ToString());
 
@@ -1099,9 +1099,9 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
 			html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
 			html.Append("</HEAD>");
-			html.Append("<body>");
+			//html.Append("<body>");
+            html.Append("<body style=\"margin-top:0px;\">");
 			html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
-			html.Append("\r\n\t<tr>\r\n\t\t<td>");
 			html.Append("\r\n\t<tr>\r\n\t\t<td>");
 			return(html.ToString());
 		}
@@ -1258,6 +1258,7 @@ namespace TNS.AdExpress.Anubis.Appm.BusinessFacade{
 				htmlTmp.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				htmlTmp.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				htmlTmp.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
+                htmlTmp.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
 				htmlTmp.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 				htmlTmp.ConnectToPDFLibrary (this);
 				htmlTmp.LoadHTMLFile(workFile);
