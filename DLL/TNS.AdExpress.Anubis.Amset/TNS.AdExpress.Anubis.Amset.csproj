@@ -222,7 +222,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\35\Plugins\" />
-    <Folder Include="_Config\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
