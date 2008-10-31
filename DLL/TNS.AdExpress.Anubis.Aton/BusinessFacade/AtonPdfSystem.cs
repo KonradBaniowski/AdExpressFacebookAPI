@@ -50,6 +50,8 @@ using TNS.FrameWork.WebResultUI;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Theme;
+using System.Globalization;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 	/// <summary>
@@ -526,8 +528,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				ResultTable resultTable = APPMRules.SectorDataSynthesisRules.GetSynthesisFormattedTable(_webSession,int.Parse(_webSession.PeriodBeginningDate),int.Parse(_webSession.PeriodEndDate),_idBaseTarget,_idAdditionalTarget);
 				WebControlResultTable webControlResultTable=new WebControlResultTable();
 
-                resultTable.CultureInfo = TNS.AdExpress.Domain.Translation.AdExpressCultureInfo.CurrentUICulture;
-
+                webControlResultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 				webControlResultTable.Data=resultTable;
 				webControlResultTable.CssL1="synthesisLv1";
 				webControlResultTable.CssL2="synthesisLv2";
@@ -619,6 +620,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				ResultTable resultTable = APPMRules.SectorDataAverageRules.GetAverageFormattedTable(_webSession,int.Parse(_webSession.PeriodBeginningDate),int.Parse(_webSession.PeriodEndDate),_idBaseTarget,_idAdditionalTarget);
 				WebControlResultTable webControlResultTable=new WebControlResultTable();
 
+                webControlResultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 				webControlResultTable.Data=resultTable;
 				webControlResultTable.CssL1="synthesisLv1";
 				webControlResultTable.CssL2="synthesisLv2";
@@ -698,6 +700,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				ResultTable resultTable = APPMRules.SectorDataAffintiesRules.GetData(_webSession,_webSession.Source,int.Parse(_webSession.PeriodBeginningDate),int.Parse(_webSession.PeriodEndDate),_idBaseTarget,_idWave);
 				WebControlResultTable webControlResultTable=new WebControlResultTable();
 
+                webControlResultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 				webControlResultTable.Data=resultTable;
 				webControlResultTable.CssL1="affinitiesLv1";
 				webControlResultTable.CssLTotal="lv0";
