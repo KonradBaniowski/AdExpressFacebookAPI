@@ -157,6 +157,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			DataTable dt = null;
 			int oldIdVentilationType = -1;
 			int labelCode;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 
 			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
 			object[] parameters = new object[6];
@@ -211,7 +212,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					else t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>&nbsp;</td>");
                     UnitInformation unitInformation = UnitsInformation.Get(WebCst.CustomerSessions.Unit.insertion);
                     if (dr[unitInformation.Id.ToString()] != null) {
-                        t.Append("\r\n\t<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr[unitInformation.Id.ToString()].ToString(), unitInformation.Id, false) + "</td>");
+                        t.Append("\r\n\t<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr[unitInformation.Id.ToString()], unitInformation.Id, false, fp) + "</td>");
 					}
 					else t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>&nbsp;</td>");
 					t.Append("</tr>");
@@ -244,6 +245,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			string classCss = "acl1";
 			string hourIntervallLabel = "";
 			double totalUnit = 0;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 
 			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
 			object[] parameters = new object[7];
@@ -295,7 +297,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     foreach (DataRow dr in dt.Rows) {
                         totalUnit += (dr[unitInformationList[i].Id.ToString()] != System.DBNull.Value) ? double.Parse(dr[unitInformationList[i].Id.ToString()].ToString()) : 0;
                     }
-                    t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(totalUnit.ToString(), unitInformationList[i].Id, false) + "</td>");
+                    t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(totalUnit, unitInformationList[i].Id, false, fp) + "</td>");
                 }
 
 				t.Append("</tr>");
@@ -311,7 +313,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					t.Append("\r\n\t<td align=\"left\" class=\"" + classCss + "\" nowrap>" + hourIntervallLabel + "</td>");
                     //Unit Value
                     for (int i = 0; i < unitInformationList.Count; i++) {
-                        t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr[unitInformationList[i].Id.ToString()].ToString(), unitInformationList[i].Id, false) + "</td>");
+                        t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr[unitInformationList[i].Id.ToString()], unitInformationList[i].Id, false,fp) + "</td>");
                     }
 					t.Append("</tr>");
 

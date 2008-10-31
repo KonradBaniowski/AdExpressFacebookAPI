@@ -32,6 +32,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpressI.ProductClassIndicators.Exceptions;
 using TNS.FrameWork;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -283,6 +284,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             string cssNb = (_excel) ? "acl21" : "acl2Bg";
             #endregion
 
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+
             t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 align=center>");
 
             #region Headers
@@ -321,38 +324,38 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     case AVERAGE_INVEST_BY_ADVERTISER_LINE_INDEX:
                     case AVERAGE_INVEST_BY_PRODUCT_LINE_INDEX:
                         //N
-                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N_COLUMN_INDEX], _session.Unit));
+                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N_COLUMN_INDEX], _session.Unit, fp));
                         //N-1
                         if (_session.ComparativeStudy)
                         {
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N1_COLUMN_INDEX], _session.Unit));
-                            AppendEvol(t, tab, cssNb, i);
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N1_COLUMN_INDEX], _session.Unit, fp));
+                            AppendEvol(t, tab, cssNb, i, fp);
                             //Difference
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], _session.Unit));
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], _session.Unit, fp));
                         }
                         break;
                     case NB_ADVERTISER_LINE_INDEX:
                     case NB_PRODUCT_LINE_INDEX:
 						
                         //N
-                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N_COLUMN_INDEX], CstUnit.euro));
+                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N_COLUMN_INDEX], CstUnit.euro, fp));
                         //N-1
                         if (_session.ComparativeStudy)
                         {
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N1_COLUMN_INDEX], CstUnit.euro));
-                            AppendEvol(t, tab, cssNb, i);
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N1_COLUMN_INDEX], CstUnit.euro, fp));
+                            AppendEvol(t, tab, cssNb, i, fp);
                             //Difference
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], CstUnit.euro));
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], CstUnit.euro, fp));
                         }
                         break;
                     case PDV_UNIV_TOTAL_MARKET_LINE_INDEX:
                     case PDV_UNIV_TOTAL_SECTOR_LINE_INDEX:
                         //N
-                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1} %</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N_COLUMN_INDEX], _session.Unit, true));
+                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1} %</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N_COLUMN_INDEX], _session.Unit, true, fp));
                         //N-1
                         if (_session.ComparativeStudy)
                         {
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1} %</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N1_COLUMN_INDEX], _session.Unit, true));
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1} %</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N1_COLUMN_INDEX], _session.Unit, true, fp));
                             t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap></td>", cssNb);
                             t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap></td>", cssNb);
                         }
@@ -382,7 +385,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <param name="tab">Data table</param>
         /// <param name="cssNb">CSS Style to apply</param>
         /// <param name="line">Current line</param>
-        protected void AppendEvol(System.Text.StringBuilder t, object[,] tab, string cssNb, int line)
+        protected void AppendEvol(System.Text.StringBuilder t, object[,] tab, string cssNb, int line, IFormatProvider fp)
         {
             //Evol
             string img = string.Empty;
@@ -412,7 +415,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}{2}</td>"
                     , cssNb
-                    , (Double.IsInfinity(value)) ? string.Empty : string.Format("{0} %", FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[line, EVOLUTION_COLUMN_INDEX], _session.Unit, true))
+                    , (Double.IsInfinity(value)) ? string.Empty : string.Format("{0} %", FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[line, EVOLUTION_COLUMN_INDEX], _session.Unit, true, fp))
                     , img);
             }
             else

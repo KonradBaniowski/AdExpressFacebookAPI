@@ -604,7 +604,8 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					LIGHT_L2_CSS = L1_DATA_INDEX>0?"asl5bx":"asl3bx";
 				}
 			}
-			#endregion
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            #endregion
 
 			#region Table begin
 			str.Append("<table cellPadding=0 cellSpacing=1px border=0>");
@@ -641,7 +642,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 				str.AppendFormat(" nowrap>{0}</td>", data[i,0]);
 				for(j = FIRST_DATA_INDEX; j < data.GetLength(1)-_isPersonalized; j++){
 					if (data[i,j]!=null){
-                        AppendNumericData(_session, str, Convert.ToDouble(data[i, j]), IsMultiYearLine(i,0,NB_YEAR,NB_OPTION), data[i,0].ToString(), false);
+                        AppendNumericData(_session, str, Convert.ToDouble(data[i, j]), IsMultiYearLine(i,0,NB_YEAR,NB_OPTION), data[i,0].ToString(), false,  fp);
 					}
 					else{
 						str.Append("<td nowrap></td>");
@@ -746,7 +747,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					else {
 						if (display){
 							if(data[i,j]!=null){
-                                AppendNumericData(_session, output, Convert.ToDouble(data[i, j]), IsMultiYearLine(i,0,NB_YEAR,NB_OPTION),data[i,labelIndex].ToString(), totalLine);
+                                AppendNumericData(_session, output, Convert.ToDouble(data[i, j]), IsMultiYearLine(i,0,NB_YEAR,NB_OPTION),data[i,labelIndex].ToString(), totalLine, fp);
 							}
 							else if(j>L2_DATA_INDEX)
 								output.Append("<td></td>"); //<td>- </td>

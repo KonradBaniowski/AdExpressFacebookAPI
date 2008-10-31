@@ -13,6 +13,7 @@ using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
 //using FctWeb = TNS.AdExpress.Web.
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
@@ -418,6 +419,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			}
 
 			string lineCssClass = "";
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
 			#endregion
 
@@ -460,7 +462,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			for (int j = FIRST_DATA_INDEX; j < data.GetLength(1)-_isPersonalized; j++){
 				if(data[0,j]!=null)
 					AppendNumericData(_session, str,double.Parse(data[0,j].ToString()), evolution, percentage,
-						data.GetUpperBound(1)-_isPersonalized, j, FIRST_DATA_INDEX, _excel);
+						data.GetUpperBound(1)-_isPersonalized, j, FIRST_DATA_INDEX, _excel, fp);
 				else
 					str.Append("<td></td>");
 			}
@@ -528,12 +530,12 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 								if(headersstr.Length<1)
 								{
 									AppendNumericData(_session, str, double.Parse(data[i,j].ToString()), evolution, 
-										percentage,data.GetUpperBound(1)-_isPersonalized, j, FIRST_DATA_INDEX, _excel);
+										percentage,data.GetUpperBound(1)-_isPersonalized, j, FIRST_DATA_INDEX, _excel, fp);
 								}
 								else
 								{
 									AppendNumericData(_session, headersstr, double.Parse(data[i,j].ToString()), evolution, 
-										percentage,data.GetUpperBound(1)-_isPersonalized, j, FIRST_DATA_INDEX, _excel);
+										percentage,data.GetUpperBound(1)-_isPersonalized, j, FIRST_DATA_INDEX, _excel, fp);
 								}
 							}
 							else

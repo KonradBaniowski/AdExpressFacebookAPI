@@ -14,6 +14,7 @@ using TNS.Classification.Universe;
 using TNS.AdExpressI.ProductClassReports.Exceptions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
 {
@@ -817,6 +818,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			}
 
 			string lineCssClass = "";
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
 			#endregion
 
@@ -870,7 +872,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 				
 				for(j=FIRST_DATA_INDEX; j < data.GetLength(1)-_isPersonalized; j++){
 					if (data[i,j] != null)
-                        AppendNumericData(_session, str, Convert.ToDouble(data[i, j]), IsMultiYearLine(i,FIRST_DATA_LINE,NB_YEAR,NB_OPTION), data[i,0].ToString(), false);
+                        AppendNumericData(_session, str, Convert.ToDouble(data[i, j]), IsMultiYearLine(i,FIRST_DATA_LINE,NB_YEAR,NB_OPTION), data[i,0].ToString(), false, fp);
 					else
 						str.Append("<td>-</td>");
 
@@ -978,7 +980,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					else {
 						if (display){
 							if(data[i,j]!=null){
-                                AppendNumericData(_session, output, Convert.ToDouble(data[i, j]), IsMultiYearLine(i,FIRST_DATA_LINE,NB_YEAR,NB_OPTION),data[i,labelIndex].ToString(),totalLine);
+                                AppendNumericData(_session, output, Convert.ToDouble(data[i, j]), IsMultiYearLine(i,FIRST_DATA_LINE,NB_YEAR,NB_OPTION),data[i,labelIndex].ToString(),totalLine, fp);
 	
 							}
 							else if (j >= FIRST_DATA_INDEX)

@@ -32,6 +32,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpressI.ProductClassIndicators.Charts
@@ -86,6 +87,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 return;
             }
 
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+
             #region Chart Design
             this.Width = new Unit("750px");
             this.Height = new Unit("750px");
@@ -122,12 +125,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             for (int i = 1; i < tab.GetLongLength(0) && i < 11; i++)
             {
                 double d = Convert.ToDouble(tab[i, EngineTop.TOTAL_N]);
-                string u = FctUtilities.Units.ConvertUnitValueToString(d, _session.Unit);
-                if ( d != 0 && FctUtilities.CheckedText.IsNotEmpty(u) )
+                string u = FctUtilities.Units.ConvertUnitValueToString(d, _session.Unit, fp).Trim();
+                if (d != 0 && u != null && u.Length > 0 )
                 {
                     oneProductExist = true;
 
-                    series.Points.AddXY(tab[i, EngineTop.PRODUCT], d/1000);
+                    series.Points.AddXY(tab[i, EngineTop.PRODUCT], Convert.ToDouble(u, fp));
 
                     series.Points[i - 1].ShowInLegend = true;
                     // Competitor in red
@@ -214,7 +217,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             this.ChartAreas[strChartArea].AxisY.Title = "" + GestionWeb.GetWebWord(1206, _session.SiteLanguage) + "";
             this.ChartAreas[strChartArea].AxisY.TitleFont = new Font("Arial", (float)10);
             double dd = Convert.ToDouble(tab[0, EngineTop.TOTAL_N]);
-            double uu = dd / 1000;
+            double uu = FctUtilities.Units.ConvertUnitValue(dd, _session.Unit);
             if (uu > 0)
             {
                 this.ChartAreas[strChartArea].AxisY.Maximum = uu;

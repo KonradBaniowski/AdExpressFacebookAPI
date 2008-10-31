@@ -23,6 +23,7 @@ using TNS.FrameWork.DB.Common;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM{
 
@@ -56,7 +57,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 				string classCss3="insertionHeader";
                 string classCssImg = "affinitiesBorderImg";
 				string unitName="";
-				#endregion					
+                IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
+                #endregion					
 				
 				#region Données
 				try{
@@ -124,15 +126,13 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 
  				#region 1er ligne du tableau (Données:Total)
 				html.Append("\r\n\t<tr height=\"20px\" >");
-				html.Append("<td align= \"left\" class=\""+classCss2+"\" nowrap>"+GestionWeb.GetWebWord(1401,webSession.SiteLanguage)+ "</td>");		
-//				html.Append("<td  class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(periodicityPlanData.Rows[0]["totalBaseTargetUnit"]).ToString("# ### ##0.##")+" </td>");
-				html.Append("<td  class=\""+classCss2+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalBaseTargetUnit"]).ToString(),webSession.Unit,false)+" </td>");
+				html.Append("<td align= \"left\" class=\""+classCss2+"\" nowrap>"+GestionWeb.GetWebWord(1401,webSession.SiteLanguage)+ "</td>");
+                html.Append("<td  class=\"" + classCss2 + "\" nowrap >" + WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalBaseTargetUnit"]), webSession.Unit, false, fp) + " </td>");
 				html.Append("<td  class=\""+classCss2+"\" nowrap >  "+GestionWeb.GetWebWord(1684,webSession.SiteLanguage)+ " </td>");
 				if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
 					if(!excel)
                         html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
-//					html.Append("<td  class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(periodicityPlanData.Rows[0]["totalAdditionalTargetUnit"]).ToString("# ### ##0.##")+" </td>");
-					html.Append("<td  class=\""+classCss2+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalAdditionalTargetUnit"]).ToString(),webSession.Unit,false)+" </td>");
+                    html.Append("<td  class=\"" + classCss2 + "\" nowrap >" + WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalAdditionalTargetUnit"]), webSession.Unit, false, fp) + " </td>");
 					html.Append("<td  class=\""+classCss2+"\" nowrap >"+GestionWeb.GetWebWord(1684,webSession.SiteLanguage)+ " </td>");
 				}
 				html.Append("</tr>");
@@ -142,14 +142,12 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 				for(int i=1; i<periodicityPlanData.Rows.Count-1;i++){
                     html.Append("\r\n\t<tr onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\"  class=\"violetBackGroundV3\" height=\"20px\">");
 					html.Append("<td  class=\""+classCss3+"\" nowrap >"+periodicityPlanData.Rows[i]["periodicity"]+" </td>");
-//					html.Append("<td  class=\""+classCss3+"\" nowrap >"+Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString("# ### ##0.##")+"</td>");
-					html.Append("<td  class=\""+classCss3+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString(),webSession.Unit,false)+"</td>");
+					html.Append("<td  class=\""+classCss3+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]),webSession.Unit,false, fp)+"</td>");
 					html.Append("<td  class=\""+classCss3+"\" nowrap >"+periodicityPlanData.Rows[i]["distributionBase"]+"%</td>");
 					if(webSession.Unit==WebConstantes.CustomerSessions.Unit.grp){
 						if(!excel)
                             html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
-//						html.Append("<td  class=\""+classCss3+"\" nowrap >"+Convert.ToDouble(periodicityPlanData.Rows[i]["unitSelected"]).ToString("# ### ##0.##")+"</td>");
-						html.Append("<td  class=\""+classCss3+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitSelected"]).ToString(),webSession.Unit,false)+"</td>");
+                        html.Append("<td  class=\"" + classCss3 + "\" nowrap >" + WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitSelected"]), webSession.Unit, false, fp) + "</td>");
 						html.Append("<td  class=\""+classCss3+"\" nowrap >"+periodicityPlanData.Rows[i]["distributionSelected"]+"% </td>");
 					}
 					html.Append("</tr>");

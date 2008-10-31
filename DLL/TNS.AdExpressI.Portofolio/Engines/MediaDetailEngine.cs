@@ -235,6 +235,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			DataTable dt = null;
 			StringBuilder t = new StringBuilder(20000);
 			long oldEcranCode = -1;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
             #endregion
 
             #region Get Data
@@ -341,7 +342,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         if (!_excel && !isTvNatThematiques)
                             t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','" + dayName[i] + "','" + dr["screenCode"].ToString() + "');\" class=\"txtLinkBlack11\"> ");
                         
-                        t.Append(Units.ConvertUnitValueAndPdmToString(dr[dayName[i]].ToString(), unitInformation.Id, false));
+                        t.Append(Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));
 
                         if (!_excel && !isTvNatThematiques)
                             t.Append("</a>");

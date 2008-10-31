@@ -48,6 +48,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 
 			StringBuilder html = new StringBuilder();
             string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
 
 			if (dtResult.Rows.Count > 0){
                 html.Append("<TABLE  class=\"insertionBorderV2 whiteBackGround\"");
@@ -137,26 +138,20 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 							html.Append("<td></td>");
 						}
 						else{						
-							//html.Append("<td align=\"center\"><a href=\"javascript:openPopUpJustificatif('"+webSession.IdSession+"','"+ row["idMedia"].ToString().Trim() +"','"+ row["idProduct"].ToString().Trim() +"','"+ row["mediaPaging"].ToString().Trim() +"','"+ DateString.DateTimeToYYYYMMDD((DateTime)row["date"]) +"','"+ DateString.DateTimeToYYYYMMDD((DateTime)row["dateParution"]) +"');\"><img border=0 src=\"/Images/Common/picto_plus.gif\"></a></td>");
                             html.Append("<td align=\"center\"><a href=\"javascript:openPopUpJustificatif('" + webSession.IdSession + "','" + row["idMedia"].ToString().Trim() + "','" + row["idProduct"].ToString().Trim() + "','" + row["mediaPaging"].ToString().Trim() + "','" + DateString.DateTimeToYYYYMMDD((DateTime)row["date"]) + "','" + DateString.DateTimeToYYYYMMDD((DateTime)row["dateCover"]) + "');\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Common/picto_plus.gif\"></a></td>");
 						}
 					}
 
-					//if (row["dateParution"]!= DBNull.Value){//
-					//html.Append("<td nowrap align=\"center\">" + ((DateTime)row["dateParution"]).ToShortDateString() + "</td>");
-					//}
-					//else{
 						if (row["date"] != DBNull.Value){
 							html.Append("<td nowrap align=\"center\">" + ((DateTime)row["Date"]).ToShortDateString() + "</td>");
 						}
 						else{
 							html.Append("<td></td>");
 						}
-					//}
 					html.Append("<td nowrap align=\"center\">" + row["format"] + "</td>");
 					html.Append("<td nowrap align=\"center\">" + row["location"] + "</td>");
-					html.Append("<td nowrap>" + WebFnc.Units.ConvertUnitValueAndPdmToString(row["budget"].ToString(),WebCst.CustomerSessions.Unit.euro,false)+ "</td>");
-					html.Append("<td nowrap>" + WebFnc.Units.ConvertUnitValueAndPdmToString(row["pdm"].ToString(),webSession.Unit,true)+ "&nbsp;%</td>");
+					html.Append("<td nowrap>" + WebFnc.Units.ConvertUnitValueAndPdmToString(row["budget"],WebCst.CustomerSessions.Unit.euro,false, fp)+ "</td>");
+                    html.Append("<td nowrap>" + WebFnc.Units.ConvertUnitValueAndPdmToString(row["pdm"], webSession.Unit, true, fp) + "&nbsp;%</td>");
 					html.Append("</tr>");
 				}
 				#endregion						

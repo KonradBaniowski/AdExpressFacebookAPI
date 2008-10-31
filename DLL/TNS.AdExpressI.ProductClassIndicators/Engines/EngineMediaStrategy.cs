@@ -38,6 +38,7 @@ using TNS.AdExpressI.ProductClassIndicators.Exceptions;
 using System.Collections;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -313,6 +314,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             object oRefInvest = null;
             string cssLabel = string.Empty;
             string cssNb = string.Empty;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
             for (int i = 0; i < tab.GetLength(0); i++)
             {
@@ -341,7 +343,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
                     oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
 
-                    AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+                    AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest, fp);
                 }
                 #endregion
 
@@ -369,7 +371,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
                     oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
 
-                    AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+                    AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest, fp);
 
                 }
                 #endregion
@@ -398,7 +400,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
                     oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
 
-                    AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+                    AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest, fp);
 
                 }
                 #endregion
@@ -431,7 +433,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
                         oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
 
-                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest, fp);
 
                     }
                     #endregion
@@ -451,7 +453,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
                         oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
 
-                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest, fp);
 
                     }
                     #endregion
@@ -487,7 +489,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
                         oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
 
-                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest, fp);
 
                     }
                     #endregion
@@ -505,7 +507,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
                         oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
 
-                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest, fp);
 
                     }
                     #endregion
@@ -549,7 +551,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         oPDM = tab[i, PDM_COLUMN_INDEX];
                         oEvol = tab[i, EVOL_COLUMN_INDEX];
 
-                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, null, null, null, null);
+                        AppendLine(cssLabel, cssNb, t, oLevelLabel, oLabel, oTotal, oPDM, oEvol, null, null, null, null, fp);
 
                 }
                 #endregion
@@ -565,7 +567,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         }
 
         #region AppendLine
-        protected void AppendLine(string cssLabel, string cssNb, System.Text.StringBuilder t, object oLevelLabel, object oLabel, object oTotal, object oPDM, object oEvol, object oAdvLabel, object oAdvInvest, object oRefLabel, object oRefInvest)
+        protected void AppendLine(string cssLabel, string cssNb, System.Text.StringBuilder t, object oLevelLabel, object oLabel, object oTotal, object oPDM, object oEvol, object oAdvLabel, object oAdvInvest, object oRefLabel, object oRefInvest, IFormatProvider fp)
         {
             t.Append("<tr>");
             if (oLevelLabel != null)
@@ -584,7 +586,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             if (oTotal != null)
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(oTotal, _session.Unit));
+                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(oTotal, _session.Unit, fp));
             }
             else
             {
@@ -593,7 +595,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //PDM
             if (oPDM != null)
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(oPDM, _session.Unit, true));
+                t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(oPDM, _session.Unit, true, fp));
             }
             else
             {
@@ -621,7 +623,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             image = " <img src=\"/I/o.gif\"/>";
                         }
                     }
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}%{2}</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(dEvol, _session.Unit, true), image);
+                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}%{2}</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(dEvol, _session.Unit, true, fp), image);
                 }
                 else
                 {
@@ -644,7 +646,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             if (oAdvInvest != null)
             {
-                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(oAdvInvest, _session.Unit));
+                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(oAdvInvest, _session.Unit, fp));
             }
             else
             {
@@ -663,7 +665,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 					t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssLabel);
 				}
 				if (oRefInvest != null) {
-					t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(oRefInvest, _session.Unit));
+					t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(oRefInvest, _session.Unit, fp));
 				}
 				else {
 					t.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);

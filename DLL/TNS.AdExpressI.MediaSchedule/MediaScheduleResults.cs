@@ -1310,6 +1310,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             MediaScheduleData oMediaScheduleData = new MediaScheduleData();
             StringBuilder t = new System.Text.StringBuilder(5000);
             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
             #region Theme Name
             string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
@@ -1390,9 +1391,9 @@ namespace TNS.AdExpressI.MediaSchedule {
                 //int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
                 int nbtot;
                 if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                    nbtot = FctWeb.Units.ConvertUnitValueToString( ((CellIdsNumber)data[1, TOTAL_COLUMN_INDEX]).Value.ToString(), _session.Unit).Length;
+                    nbtot = FctWeb.Units.ConvertUnitValueToString( ((CellIdsNumber)data[1, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
                 else
-                    nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
+                    nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                 
                 int nbSpace = (nbtot - 1) / 3;
                 int nbCharTotal = nbtot + nbSpace - 5;
@@ -1680,7 +1681,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         j = int.MaxValue - 2;
                                         break;
                                     }
-                                    AppenLabelTotalPDM(data, t, i, cssClasse, cssClasseNb, j, string.Empty, labColSpan);
+                                    AppenLabelTotalPDM(data, t, i, cssClasse, cssClasseNb, j, string.Empty, labColSpan, fp);
                                     if(_allowVersion) {
                                         if(i != TOTAL_LINE_INDEX) {
                                             AppendCreativeLink(data, t, themeName, i, cssClasse, j);
@@ -1700,7 +1701,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     }
                                     //Totals
                                     for(int k = 1; k <= nbColYear; k++) {
-                                        AppendYearsTotal(data, t, i, cssClasseNb, j + 10 + k);
+                                        AppendYearsTotal(data, t, i, cssClasseNb, j + 10 + k, fp);
                                     }
                                     j = j + 10 + nbColYear;
                                 }
@@ -1710,7 +1711,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             #region Level 2
                             case L2_COLUMN_INDEX:
                                 if(data[i, j] != null) {
-                                    AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, "&nbsp;", labColSpan);
+                                    AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, "&nbsp;", labColSpan, fp);
                                     if(_allowVersion) {
                                         AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
                                     }
@@ -1719,7 +1720,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     }
 
                                     for(int k = 1; k <= nbColYear; k++) {
-                                        AppendYearsTotal(data, t, i, _style.CellLevelL2Nb, j + 9 + k);
+                                        AppendYearsTotal(data, t, i, _style.CellLevelL2Nb, j + 9 + k, fp);
                                     }
                                     j = j + 9 + nbColYear;
                                 }
@@ -1729,7 +1730,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             #region Level 3
                             case L3_COLUMN_INDEX:
                                 if(data[i, j] != null) {
-                                    AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan);
+                                    AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan, fp);
                                     if(_allowVersion) {
                                         AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, j);
                                     }
@@ -1738,7 +1739,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     }
 
                                     for(int k = 1; k <= nbColYear; k++) {
-                                        AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + 8 + k);
+                                        AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + 8 + k, fp);
                                     }
                                     j = j + 8 + nbColYear;
                                 }
@@ -1747,7 +1748,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                             #region Level 4
                             case L4_COLUMN_INDEX:
-                                AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan);
+                                AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan, fp);
                                 if(_allowVersion) {
                                     AppendCreativeLink(data, t, themeName, i, _style.CellLevelL4, j);
                                 }
@@ -1756,7 +1757,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 }
 
                                 for(int k = 1; k <= nbColYear; k++) {
-                                    AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + 7 + k);
+                                    AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + 7 + k, fp);
                                 }
                                 j = j + 7 + nbColYear;
                                 break;
@@ -1774,9 +1775,9 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         case DetailledMediaPlan.graphicItemType.present:
                                             if(_showValues) {
                                                 if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, FctWeb.Units.ConvertUnitValueToString(((MediaPlanItemIds)data[i, j]).IdsNumber.Value.ToString(), _session.Unit));
+                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, FctWeb.Units.ConvertUnitValueToString(((MediaPlanItemIds)data[i, j]).IdsNumber.Value, _session.Unit, fp));
                                                 else
-                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, FctWeb.Units.ConvertUnitValueToString(((MediaPlanItem)data[i, j]).Unit.ToString(), _session.Unit));
+                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, FctWeb.Units.ConvertUnitValueToString(((MediaPlanItem)data[i, j]).Unit, _session.Unit, fp));
                                             }
                                             else {
                                                 t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, stringItem);
@@ -1826,9 +1827,9 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="line">Current line</param>
         /// <param name="cssClasseNb">Line syle</param>
         /// <param name="tmpCol">Year column in data source</param>
-        protected virtual void AppendYearsTotal(object[,] data, StringBuilder t, int line, string cssClasseNb, int tmpCol) {
+        protected virtual void AppendYearsTotal(object[,] data, StringBuilder t, int line, string cssClasseNb, int tmpCol, IFormatProvider fp) {
             if(_allowTotal) {
-                string s = FctWeb.Units.ConvertUnitValueToString(data[line, tmpCol].ToString(), _session.Unit).Trim();
+                string s = FctWeb.Units.ConvertUnitValueToString(data[line, tmpCol], _session.Unit, fp).Trim();
                 if(s.Length <= 0) {
                     s = "&nbsp;";
                 }
@@ -1850,20 +1851,20 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="cssClasseNb">Line syle for numbers</param>
         /// <param name="col">Column to consider</param>
         /// <param name="padding">Stirng to insert before Label</param>
-        protected virtual void AppenLabelTotalPDM(object[,] data, StringBuilder t, int line, string cssClasse, string cssClasseNb, int col, string padding, int labColSpan) {
+        protected virtual void AppenLabelTotalPDM(object[,] data, StringBuilder t, int line, string cssClasse, string cssClasseNb, int col, string padding, int labColSpan, IFormatProvider fp) {
             if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb) {
                 t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{6}\">{5}{1}</td>"
                     , cssClasse
                     , data[line, col]
                     , cssClasseNb
-                    , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value.ToString(), _session.Unit)
+                    , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp)
                     , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00")
                     , padding
                     , labColSpan);
                 if(_allowTotal) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
-                        , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value.ToString(), _session.Unit)
+                        , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp)
                         , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00"));
                 }
                 if(_allowPdm) {
@@ -1877,14 +1878,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                     , cssClasse
                     , data[line, col]
                     , cssClasseNb
-                    , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX].ToString(), _session.Unit)
+                    , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp)
                     , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00")
                     , padding
                     , labColSpan);
                 if(_allowTotal) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
-                        , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX].ToString(), _session.Unit)
+                        , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp)
                         , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00"));
                 }
                 if(_allowPdm) {
@@ -2009,6 +2010,8 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                 #region Init Variables
                 CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+                IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+
                 MediaScheduleData oMediaScheduleData = new MediaScheduleData();
                 UnitInformation unitInformation = _session.GetSelectedUnit();
 
@@ -2128,7 +2131,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                     if(_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
                         styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow+1, colTotal);
                     }
-                    int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
+                    int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                     int nbSpace = (nbtot - 1) / 3;
                     int nbCharTotal = nbtot + nbSpace - 5;
                     nbColTabFirst++;

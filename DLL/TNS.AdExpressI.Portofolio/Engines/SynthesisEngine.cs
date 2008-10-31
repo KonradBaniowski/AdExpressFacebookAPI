@@ -104,6 +104,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			LineType lineType = LineType.level1;
 			string typeReseauStr = string.Empty;
 			string unitFormat = "{0:max0}";
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 			#endregion
 			
 			#region Accès aux tables
@@ -194,7 +195,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if(_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.volume) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString())) {
                 if(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString().Length > 0) {
                     volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString())));
-                    volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false);
+                    volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false,fp);
                 }
                 else volume = "0";
             }

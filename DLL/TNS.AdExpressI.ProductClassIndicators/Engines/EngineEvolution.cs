@@ -188,6 +188,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             object[,] tab = this.GetData(classifLevel);
             string periodLabel = string.Format("{0}-{1}",FctUtilities.Dates.DateToString( _periodBegin.Date ,_session.SiteLanguage), FctUtilities.Dates.DateToString(_periodEnd.Date,_session.SiteLanguage));
             long last = tab.GetLongLength(0) - 1;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
             #region No Data
             if (tab.GetLongLength(0) == 0)
@@ -280,16 +281,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     evol = Convert.ToDouble(tab[i, EVOLUTION]);
                     total = Convert.ToDouble(tab[i, TOTAL_N]);
                     t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, tab[i, PRODUCT]);
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit));
+                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit, fp));
                     if (!Double.IsInfinity(evol))
                     {
-                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true));
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true, fp));
                     }
                     else
                     {
                         t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, GestionWeb.GetWebWord(1214, _session.SiteLanguage));
                     }
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit));
+                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit, fp));
                 }
                 else
                 {
@@ -333,16 +334,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     evol = Convert.ToDouble(tab[last, EVOLUTION]);
                     total = Convert.ToDouble(tab[last, TOTAL_N]);
                     t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, tab[last, PRODUCT]);
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit));
+                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit, fp));
                     if (!Double.IsInfinity(evol))
                     {
-                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true));
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(evol, _session.Unit, true, fp));
                     }
                     else
                     {
                         t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, GestionWeb.GetWebWord(1214, _session.SiteLanguage));
                     }
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit));
+                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit, fp));
                 }
                 else
                 {

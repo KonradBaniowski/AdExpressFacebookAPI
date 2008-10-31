@@ -21,6 +21,7 @@ using TNS.FrameWork;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Web.UI.Results.APPM
@@ -53,7 +54,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 
 
 			StringBuilder html = new StringBuilder();
-
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
 
@@ -116,11 +117,11 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 //							html.Append(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2).ToString("# ### ##0.##"));
 //						}
 						if (row.Table.Columns[i].ColumnName.IndexOf("budget")>-1){
-							html.Append(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2).ToString(),WebConstantes.CustomerSessions.Unit.euro,false));
+							html.Append(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2),WebConstantes.CustomerSessions.Unit.euro,false, fp));
 						}else if(row.Table.Columns[i].ColumnName.IndexOf("GRP")>-1 && !(row.Table.Columns[i].ColumnName.IndexOf("C/GRP")>-1)){
-							html.Append(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2).ToString(),WebConstantes.CustomerSessions.Unit.grp,false));
+							html.Append(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2),WebConstantes.CustomerSessions.Unit.grp,false, fp));
 						}else if(row.Table.Columns[i].ColumnName.IndexOf("PDM")>-1){
-							html.Append(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2).ToString(),WebConstantes.CustomerSessions.Unit.euro,true));
+							html.Append(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),2),WebConstantes.CustomerSessions.Unit.euro,true, fp));
 						}else{
 							html.Append(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()),0).ToString("# ### ###"));
 						}

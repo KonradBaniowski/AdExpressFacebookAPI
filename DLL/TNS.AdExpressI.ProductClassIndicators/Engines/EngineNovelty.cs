@@ -30,6 +30,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpressI.ProductClassIndicators.Exceptions;
 using TNS.FrameWork;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -301,6 +302,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             object[,] tab = this.GetData();
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
             #region No data
             if (tab.GetLength(0) == 0)
@@ -373,7 +375,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 {
                     //Investments
                     if (tab[i, LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX] != null)
-                        t.AppendFormat("<td nowrap class={0}>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX], _session.Unit));
+                        t.AppendFormat("<td nowrap class={0}>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX], _session.Unit, fp));
                     else
                         t.AppendFormat("<td nowrap class={0}>&nbsp;</td>", cssNb);
                     //Last active month label
@@ -389,12 +391,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
                 //Current month Investments
                 if (tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX] != null)
-                    t.AppendFormat("<td nowrap class={0}>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX], _session.Unit));
+                    t.AppendFormat("<td nowrap class={0}>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX], _session.Unit, fp));
                 else
                     t.AppendFormat("<td nowrap class={0}>&nbsp;</td>", cssNb);
                 //SOV
                 if (tab[i, SOV_COLUMN_INDEX] != null) 
-                    t.AppendFormat("<td nowrap class={0}>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, SOV_COLUMN_INDEX], _session.Unit, true));
+                    t.AppendFormat("<td nowrap class={0}>{1}%</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, SOV_COLUMN_INDEX], _session.Unit, true, fp));
                 else
                     t.AppendFormat("<td nowrap class={0}>&nbsp;</td>", cssNb);
                 t.Append("</tr>");
@@ -418,6 +420,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             StringBuilder t = new StringBuilder(10000);
             object[,] tab = this.GetData();
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
             #region No data
             if (tab.GetLength(0) == 0)
@@ -550,7 +553,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         {
                             if (tab[i, LATEST_ACTIVE_MONTH_ID_COLUMN_INDEX].Equals(k))
                             {
-                                t.AppendFormat("<td nowrap class=pmcategorynb>{0}</td>", FctUtilities.Units.ConvertUnitValueToString(tab[i, LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX], _session.Unit));
+                                t.AppendFormat("<td nowrap class=pmcategorynb>{0}</td>", FctUtilities.Units.ConvertUnitValueToString(tab[i, LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX], _session.Unit, fp));
                                 found = true;
                             }
                             else if (found)
@@ -593,7 +596,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     //Current month
                     if (tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX] != null)
                     {
-                        t.AppendFormat("<td nowrap class=\"pmcategorynb\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX], _session.Unit));
+                        t.AppendFormat("<td nowrap class=\"pmcategorynb\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX], _session.Unit, fp));
                     }
                     else
                     {

@@ -15,6 +15,7 @@ using APPMUIs = TNS.AdExpress.Web.UI.Results.APPM;
 using TNS.FrameWork;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM
 {
@@ -42,7 +43,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 			string classCss1="p2";
 			string classCss2="insertionHeader";
             string classCssImg = "affinitiesBorderImg";
-			#endregion
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
+            #endregion
 
 			#region getting data 
 			DataTable affinitiesData=TNS.AdExpress.Web.Rules.Results.APPM.AffintiesRules.GetData(webSession,dataSource,dateBegin,dateEnd,baseTarget,idWave);
@@ -79,8 +81,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 						html.Append("<td align= \"left\" class=\""+classCss2+"\" nowrap>"+row["target"]+"</td>");
 						if(!excel)
                             html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
-//						html.Append("<td class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(row["totalGRP"]).ToString("# ### ##0.##")+ "</td>");
-						html.Append("<td class=\""+classCss2+"\" nowrap >"+WebFunctions.Units.ConvertUnitValueAndPdmToString(row["totalGRP"].ToString(),WebConstantes.CustomerSessions.Unit.grp,false)+ "</td>");
+                        html.Append("<td class=\"" + classCss2 + "\" nowrap >" + WebFunctions.Units.ConvertUnitValueAndPdmToString(row["totalGRP"], WebConstantes.CustomerSessions.Unit.grp, false, fp) + "</td>");
 						html.Append("<td class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(row["GRPAffinities"]).ToString("# ### ##0")+ "</td>");
 						if(!excel)
                             html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");

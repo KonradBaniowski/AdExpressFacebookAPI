@@ -308,7 +308,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             DataRow[] foundRows;
             string cssLabel = cssTotalLabel;
             string cssNb = cssTotalNb;
-            Int64 currentLine=1;								
+            Int64 currentLine=1;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             for (int m = 1; m <= nbMonths; m++)
             {
 
@@ -332,7 +333,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 						refInvest = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_INVEST_COLUMN_INDEX];
 						refSOV = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_SOV_COLUMN_INDEX];
 					}
-                    AppendLine(str, GestionWeb.GetWebWord(1189, _session.SiteLanguage), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
+                    AppendLine(str, GestionWeb.GetWebWord(1189, _session.SiteLanguage), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV, fp);
 
                     str.Append("</tr>");
 
@@ -366,7 +367,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 								refSOV = foundRows[0]["SOV_FIRST_PRODUCT"];
 							}
 
-                            AppendLine(str, GestionWeb.GetWebWord(1190, _session.SiteLanguage), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
+                            AppendLine(str, GestionWeb.GetWebWord(1190, _session.SiteLanguage), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV, fp);
 
                             str.Append("</tr>");
 
@@ -393,7 +394,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 						refInvest = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_INVEST_COLUMN_INDEX];
 						refSOV = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_SOV_COLUMN_INDEX];
 					}
-                    AppendLine(str, GestionWeb.GetWebWord(1188, _session.SiteLanguage), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
+                    AppendLine(str, GestionWeb.GetWebWord(1188, _session.SiteLanguage), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV, fp);
 
                     str.Append("</tr>");
 
@@ -438,7 +439,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         refInvest = null;
                         refSOV = null;
 
-                        AppendLine(str, tab[i, ADVERTISER_COLUMN_INDEX].ToString(), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
+                        AppendLine(str, tab[i, ADVERTISER_COLUMN_INDEX].ToString(), cssLabel, cssNb, invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV, fp);
 
                         str.Append("</tr>");
 
@@ -1202,14 +1203,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <param name="refLabel">First Product Label</param>
         /// <param name="refInvest">First Product Investments</param>
         /// <param name="refSOV">First Product Share of voice</param>
-        protected void AppendLine(StringBuilder str, string lineLabel, string cssLabel, string cssNb, object invest, object evol, object refNb, object avgInvest, object advLabel, object advInvest, object advSOV, object refLabel, object refInvest, object refSOV)
+        protected void AppendLine(StringBuilder str, string lineLabel, string cssLabel, string cssNb, object invest, object evol, object refNb, object avgInvest, object advLabel, object advInvest, object advSOV, object refLabel, object refInvest, object refSOV, IFormatProvider fp)
         {
 			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             string img = "/I/p.gif";
             str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", lineLabel, cssLabel);
             if (invest != null)
             {
-                str.AppendFormat("<td nowrap  class=\"{0}{2}\">{1}</td>", (_excel ? "" : "violetBackGroundV3 "), FctUtilities.Units.ConvertUnitValueAndPdmToString(invest, _session.Unit, false), cssNb);
+                str.AppendFormat("<td nowrap  class=\"{0}{2}\">{1}</td>", (_excel ? "" : "violetBackGroundV3 "), FctUtilities.Units.ConvertUnitValueAndPdmToString(invest, _session.Unit, false, fp), cssNb);
             }
             else
             {
@@ -1235,11 +1236,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     }
                     if (!_excel)
                     {
-                        str.AppendFormat("<td nowrap class=\"violetBackGroundV3 {2}\">{0}%&nbsp;<img src={1}></td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(d, _session.Unit, true), img, cssNb);
+                        str.AppendFormat("<td nowrap class=\"violetBackGroundV3 {2}\">{0}%&nbsp;<img src={1}></td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(d, _session.Unit, true, fp), img, cssNb);
                     }
                     else
                     {
-                        str.AppendFormat("<td nowrap class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(d, _session.Unit, true), cssNb);
+                        str.AppendFormat("<td nowrap class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(d, _session.Unit, true, fp), cssNb);
                     }
                 }
                 else
@@ -1250,7 +1251,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             if (refNb != null)
             {
-                str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refNb, CstUnit.euro), cssNb);
+                str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refNb, CstUnit.euro, fp), cssNb);
             }
             else
             {
@@ -1258,7 +1259,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             if (avgInvest != null)
             {
-                str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(avgInvest, _session.Unit), cssNb);
+                str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(avgInvest, _session.Unit, fp), cssNb);
             }
             else
             {
@@ -1278,11 +1279,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
                 if (advInvest != null)
                 {
-                    str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(advInvest, _session.Unit), cssNb);
+                    str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(advInvest, _session.Unit, fp), cssNb);
                 }
                 if (advSOV != null)
                 {
-                    str.AppendFormat("<td class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(advSOV, _session.Unit, true), cssNb);
+                    str.AppendFormat("<td class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(advSOV, _session.Unit, true, fp), cssNb);
                 }
 				if (showProduct) {
 					//Separator
@@ -1294,10 +1295,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 						str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", refLabel, cssLabel);
 					}
 					if (refInvest != null) {
-						str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refInvest, _session.Unit), cssNb);
+						str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refInvest, _session.Unit, fp), cssNb);
 					}
 					if (refSOV != null) {
-						str.AppendFormat("<td class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(refSOV, _session.Unit, true), cssNb);
+						str.AppendFormat("<td class=\"{1}\">{0}%</td>", FctUtilities.Units.ConvertUnitValueAndPdmToString(refSOV, _session.Unit, true, fp), cssNb);
 					}
 				}
             }

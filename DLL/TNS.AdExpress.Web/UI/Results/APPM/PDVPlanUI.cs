@@ -18,6 +18,7 @@ using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.FrameWork;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Web;
 namespace TNS.AdExpress.Web.UI.Results.APPM
 {
 	/// <summary>
@@ -38,6 +39,8 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 		/// <returns>HTML string for the synthesis table</returns>
 		public static string GetHTML(WebSession webSession,IDataSource dataSource, int dateBegin,int dateEnd,Int64 baseTarget,Int64 additionalTarget)
 		{
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
+
 			#region CSS Styles
 			string header_css = "astd0";
 			string table_css="asl0";
@@ -80,6 +83,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 					int i=0;
 					bool pdm=false; //Pour gérer l'affichage des pourcentages
 					foreach(DataRow dr in PDVPlanData.Rows){
+
 						#region styles
 						if(i<2){
 							table_css=vh_css;
@@ -97,22 +101,14 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 							pdm=false;
 						}
 						#endregion
-//						html.Append("<tr class=\"" + table_css +"\">");
-//						html.Append("<td align= \"left\" nowrap>"+dr["products"]+"</td>");
-//						html.Append("<td nowrap>"+Convert.ToDouble(dr["euros"]).ToString("# ### ##0.##")+percentage+"</td>");
-//						html.Append("<td nowrap>"+Convert.ToDouble(dr["pages"]).ToString("# ### ##0.##")+percentage+"</td>");
-//						html.Append("<td nowrap>"+Convert.ToDouble(dr["insertions"]).ToString("# ### ##0.##")+percentage+"</td>");
-//						html.Append("<td nowrap>"+Convert.ToDouble(dr["GRP"]).ToString("# ### ##0.##")+percentage+"</td>");
-//						html.Append("<td nowrap>"+Convert.ToDouble(dr["GRPBaseTarget"]).ToString("# ### ##0.##")+percentage+"</td>");
-//						html.Append("</tr>");
 
 						html.Append("<tr class=\"" + table_css +"\">");
 						html.Append("<td align= \"left\" nowrap>"+dr["products"]+"</td>");
-						html.Append("<td nowrap>"+WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["euros"].ToString(),WebConstantes.CustomerSessions.Unit.euro,pdm)+percentage+"</td>");
-						html.Append("<td nowrap>"+WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["pages"].ToString(),WebConstantes.CustomerSessions.Unit.pages,pdm)+percentage+"</td>");
-						html.Append("<td nowrap>"+WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["insertions"].ToString(),WebConstantes.CustomerSessions.Unit.insertion,pdm)+percentage+"</td>");
-						html.Append("<td nowrap>"+WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["GRP"].ToString(),WebConstantes.CustomerSessions.Unit.grp,pdm)+percentage+"</td>");
-						html.Append("<td nowrap>"+WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["GRPBaseTarget"].ToString(),WebConstantes.CustomerSessions.Unit.grp,pdm)+percentage+"</td>");
+						html.Append("<td nowrap>"+WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["euros"],WebConstantes.CustomerSessions.Unit.euro,pdm, fp)+percentage+"</td>");
+                        html.Append("<td nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["pages"], WebConstantes.CustomerSessions.Unit.pages, pdm, fp) + percentage + "</td>");
+                        html.Append("<td nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["insertions"], WebConstantes.CustomerSessions.Unit.insertion, pdm, fp) + percentage + "</td>");
+                        html.Append("<td nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["GRP"], WebConstantes.CustomerSessions.Unit.grp, pdm, fp) + percentage + "</td>");
+                        html.Append("<td nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(dr["GRPBaseTarget"], WebConstantes.CustomerSessions.Unit.grp, pdm, fp) + percentage + "</td>");
 						html.Append("</tr>");
 
 						i++;

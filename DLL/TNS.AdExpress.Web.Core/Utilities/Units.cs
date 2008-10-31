@@ -20,6 +20,8 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Units;
+using System.Threading;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -29,39 +31,49 @@ namespace TNS.AdExpress.Web.Core.Utilities
     public class Units
     {
 
-        #region Attributes
-        /// <summary>
-        /// List of formats depending on the size of decimal part
-        /// </summary>
-        protected static Dictionary<int, string> _formats = new Dictionary<int, string>();
-        #endregion
-
         #region Units formatting
         /// <summary>
-        /// Format value depending on the type of unit required
+        /// Format value depending on the unit
         /// </summary>
         /// <param name="value">Value</param>
         /// <param name="unit">Unit</param>
+        /// <param name="fp">Format provider (if null, current thread culture UI is used)</param>
         /// <returns>Formatted value</returns>
-        public static string ConvertUnitValueToString(object value, CstWeb.CustomerSessions.Unit unit)
+        public static string ConvertUnitValueToString(object value, CstWeb.CustomerSessions.Unit unit, IFormatProvider fp)
         {
+
+            if (value == null || value.ToString().Length <= 0)
+                return string.Empty;
+
+            if (fp == null)
+            {
+                fp = Thread.CurrentThread.CurrentUICulture;
+            }
+            string f = "{0:N}";
+            try{
+                f = UnitsInformation.Get(unit).StringFormat;
+            }
+            catch{}
+            
+
             switch (unit)
             {
-                case CstWeb.CustomerSessions.Unit.pages:
-                    return ConvertUnitValueToString(value, unit, 3);
-                case CstWeb.CustomerSessions.Unit.grp:
-                    return ConvertUnitValueToString(value, unit, 2);
-                case CstWeb.CustomerSessions.Unit.kEuro:
+                case CstWeb.CustomerSessions.Unit.pages:                    
+                    return string.Format(fp, f, ConvertToPages(value));
                 case CstWeb.CustomerSessions.Unit.duration:
+                    return string.Format(fp, f, ConvertToDuration(value));
+                case CstWeb.CustomerSessions.Unit.kEuro:
+                    return string.Format(fp, f, ConvertToKEuro(value));
                 case CstWeb.CustomerSessions.Unit.euro:
-                case CstWeb.CustomerSessions.Unit.mmPerCol:
+                case CstWeb.CustomerSessions.Unit.grp:
                 case CstWeb.CustomerSessions.Unit.spot:
                 case CstWeb.CustomerSessions.Unit.insertion:
                 case CstWeb.CustomerSessions.Unit.versionNb:
-                case CstWeb.CustomerSessions.Unit.volume:
+                case CstWeb.CustomerSessions.Unit.mmPerCol:
                 default:
-                    return ConvertUnitValueToString(value, unit, 0);
+                    return string.Format(fp, f, Convert.ToDouble(value));
             }
+            
         }
 
         /// <summary>
@@ -69,34 +81,22 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="value">Value</param>
         /// <param name="unit">Unit</param>
-        /// <param name="decimals">Size of the decimal part</param>
+        /// <param name="fp">Format provider (if null, current thread culture UI is used)</param>
         /// <returns>Formatted value</returns>
-        public static string ConvertUnitValueToString(object value, CstWeb.CustomerSessions.Unit unit, int decimals)
+        public static double ConvertUnitValue(object value, CstWeb.CustomerSessions.Unit unit)
         {
 
-            #region Check Format
-            if (!_formats.ContainsKey(decimals))
-            {
-                string decimalsString = "### ### ### ##0.";
-                for (int i = 0; i < decimals; i++)
-                {
-                    decimalsString += "#";
-                }
-                _formats.Add(decimals, decimalsString);
-            }
-            #endregion
-
             if (value == null || value.ToString().Length <= 0)
-                return string.Empty;
+                return 0;
 
             switch (unit)
             {
-                case CstWeb.CustomerSessions.Unit.pages:
-                    return ConvertToPages(value, decimals);
+                case CstWeb.CustomerSessions.Unit.pages:                    
+                    return ConvertToPages(value);
                 case CstWeb.CustomerSessions.Unit.duration:
-                    return DateString.SecondToHH_MM_SS(Convert.ToInt64(value));
+                    return ConvertToDuration(value);
                 case CstWeb.CustomerSessions.Unit.kEuro:
-                    return ConvertToKEuro(value, decimals);
+                    return ConvertToKEuro(value);
                 case CstWeb.CustomerSessions.Unit.euro:
                 case CstWeb.CustomerSessions.Unit.grp:
                 case CstWeb.CustomerSessions.Unit.spot:
@@ -104,10 +104,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstWeb.CustomerSessions.Unit.versionNb:
                 case CstWeb.CustomerSessions.Unit.mmPerCol:
                 default:
-                    return Convert.ToDouble(value).ToString(_formats[decimals]);
+                    return Convert.ToDouble(value);
             }
+            
         }
-
         /// <summary>
         /// Format value with specified unit format (PDM or not)
         /// </summary>
@@ -115,21 +115,28 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="unit">Unit</param>
         /// <param name="pdm">Format as PDM if true</param>
         /// <returns>Formatted value</returns>
-        public static string ConvertUnitValueAndPdmToString(object value, CstWeb.CustomerSessions.Unit unit, bool pdm)
+        public static string ConvertUnitValueAndPdmToString(object value, CstWeb.CustomerSessions.Unit unit, bool pdm, IFormatProvider fp)
         {
-            if (!pdm) return ConvertUnitValueToString(value, unit);
-            else return Convert.ToDouble(value).ToString("# ##0.00");	// ToString("# ### ##0.##")
-        }
-
-        /// <summary>
-        /// Format value from euro to keuro
-        /// </summary>
-        /// <param name="value">Value</param>
-        /// <returns>Formatted value</returns>
-        /// <remarks>Divide value by 1000</remarks>
-        protected static string ConvertToKEuro(object value)
-        {
-            return ConvertToKEuro(value, 0);
+            if (!pdm){
+                return ConvertUnitValueToString(value, unit, fp);
+            }
+            else{
+                if (fp != null)
+                {
+                    return string.Format(fp, "{0:#,###.00}", Convert.ToDouble(value));
+                }
+                else
+                {
+                    if (value != null && value.ToString().Length > 0)
+                    {
+                        return Convert.ToDouble(value).ToString("#,###.00");
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -139,42 +146,36 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="decimals">Size of the decimal part</param>
         /// <returns>Formatted value</returns>
         /// <remarks>Divide value by 1000</remarks>
-        protected static string ConvertToKEuro(object value, int decimals)
+        public static double ConvertToKEuro(object value)
         {
-            double d = Convert.ToDouble(value) / 1000;
+            return Convert.ToDouble(value) / 1000;
             
-            if ( d == 0 ) return string.Empty;
-            
-            return d.ToString(_formats[decimals]);
-
         }
 
         /// <summary>
-        /// Format value as Pages
+        /// Get value as pages
         /// </summary>
         /// <param name="value">Value</param>
-        /// <returns>Formatted string</returns>
+        /// <returns>Formattable value</returns>
         /// <remarks>Divide value by 1000</remarks>
-        protected static string ConvertToPages(object value)
+        public static double ConvertToPages(object value)
         {
-            return ConvertToPages(value, 0);
+            return Convert.ToDouble(value) / 1000;
         }
-
         /// <summary>
-        /// Format value as Pages
+        /// Get value (seconds : SSSSSSSSS) as duration (HHMMSS)
         /// </summary>
         /// <param name="value">Value</param>
-        /// <param name="decimals">Size of the decimal part</param>
-        /// <returns>Formatted string</returns>
-        /// <remarks>Divide value by 1000</remarks>
-        protected static string ConvertToPages(object value, int decimals)
+        /// <returns>Formattable value</returns>
+        /// <remarks>Convert number of seconds in numerical value set as HHMMSS</remarks>
+        public static double ConvertToDuration(object value)
         {
-            double d = Convert.ToDouble(value) / 1000;
-
-            if (d == 0) return string.Empty;
-
-            return d.ToString(_formats[decimals]);
-
+            long v = Convert.ToInt64(value);
+            long h = (long)v / 3600;
+            long m = (long)(v - (h * 3600)) / 60;
+            long s = (long)(v - (h * 3600) - (m * 60));
+            v = (h * 10000) + (m * 100) + s;
+            return v;
         }
         #endregion
 

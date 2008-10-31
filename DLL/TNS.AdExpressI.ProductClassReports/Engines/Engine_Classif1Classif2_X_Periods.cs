@@ -1004,6 +1004,8 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			bool dysplayChild = true;
 
 			StringBuilder outputHtml = str;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+
 
 			bool newLine = false;
 
@@ -1130,13 +1132,13 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 							{
 								//year
 								tmpData = Convert.ToDouble(data[i,j]);
-								outputHtml.AppendFormat("<td nowrap>{0}</td>", (!double.IsNaN(tmpData) && tmpData!=0) ? FctUtilities.Units.ConvertUnitValueToString(tmpData,_session.Unit) : "");
+								outputHtml.AppendFormat("<td nowrap>{0}</td>", (!double.IsNaN(tmpData) && tmpData!=0) ? FctUtilities.Units.ConvertUnitValueToString(tmpData,_session.Unit, fp) : "");
 							}
 							else if ( (j == PDV_COLUMN || j == PDM_COLUMN || j== PDM_N_1_COLUMN || j == PDV_N_1_COLUMN)  && displayFather ) 
 							{
 								//pourcentage
 								tmpData = Convert.ToDouble(data[i,j]);
-                                outputHtml.AppendFormat("<td nowrap>{0}</td>", (tmpData == 0 || Double.IsNaN(tmpData) || Double.IsInfinity(tmpData)) ? "" : (FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true) + " %"));
+                                outputHtml.AppendFormat("<td nowrap>{0}</td>", (tmpData == 0 || Double.IsNaN(tmpData) || Double.IsInfinity(tmpData)) ? "" : (FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true, fp) + " %"));
 							}
 							else if ( j == EVOL_COLUMN && displayFather) 
 							{
@@ -1145,9 +1147,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 									//evol
 									tmpData = Convert.ToDouble(data[i,j]);
 									if (tmpData>0) //rise
-                                        outputHtml.AppendFormat("<td nowrap>{0}<img src=/I/g.gif></td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true) + " %" : ""));
+                                        outputHtml.AppendFormat("<td nowrap>{0}<img src=/I/g.gif></td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true, fp) + " %" : ""));
 									else if(tmpData<0) //slide
-                                        outputHtml.AppendFormat("<td nowrap>{0}<img src=/I/r.gif></td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true) + " %" : ""));
+                                        outputHtml.AppendFormat("<td nowrap>{0}<img src=/I/r.gif></td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true, fp) + " %" : ""));
 									else if (!Double.IsNaN(tmpData)) // 0 exactly
                                         outputHtml.AppendFormat("<td nowrap>0 %<img src=/I/o.gif></td>");
 									else
@@ -1158,9 +1160,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 									//evol
 									tmpData = double.Parse(data[i,j].ToString());
 									if (tmpData>0) //rise
-										outputHtml.AppendFormat("<td nowrap>{0}</td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true) + " %" : ""));
+										outputHtml.AppendFormat("<td nowrap>{0}</td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true, fp) + " %" : ""));
 									else if(tmpData<0) //slide
-                                        outputHtml.AppendFormat("<td nowrap>{0}</td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true) + " %" : ""));
+                                        outputHtml.AppendFormat("<td nowrap>{0}</td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true, fp) + " %" : ""));
 									else if (!Double.IsNaN(tmpData))
                                         outputHtml.AppendFormat("<td nowrap> 0 %</td>");
 									else
@@ -1283,13 +1285,13 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 								{
 									//year
 									tmpData = double.Parse(data[i,j].ToString());
-                                    dataOutput.AppendFormat("<td nowrap>{0}</td>", ((!double.IsNaN(tmpData) && tmpData != 0) ? FctUtilities.Units.ConvertUnitValueToString(tmpData, _session.Unit) : ""));
+                                    dataOutput.AppendFormat("<td nowrap>{0}</td>", ((!double.IsNaN(tmpData) && tmpData != 0) ? FctUtilities.Units.ConvertUnitValueToString(tmpData, _session.Unit, fp) : ""));
 								}
 								else if ((j == PDV_COLUMN || j == PDM_COLUMN || j== PDM_N_1_COLUMN || j == PDV_N_1_COLUMN)  && displayFather && (dysplayChild || addScndData)) 
 								{
 									//percentage
 									tmpData = double.Parse(data[i,j].ToString());
-									dataOutput.AppendFormat("<td nowrap>{0}</td>", ( (tmpData==0||Double.IsNaN(tmpData)||Double.IsInfinity(tmpData)) ? "" : FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData,_session.Unit,true) + " %" ));
+									dataOutput.AppendFormat("<td nowrap>{0}</td>", ( (tmpData==0||Double.IsNaN(tmpData)||Double.IsInfinity(tmpData)) ? "" : FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData,_session.Unit,true, fp) + " %" ));
 								}
 								else if (j == EVOL_COLUMN && (dysplayChild || addScndData)) 
 								{
@@ -1298,9 +1300,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 										//evol
 										tmpData = double.Parse(data[i,j].ToString());
 										if (tmpData>0) //rise
-                                            dataOutput.AppendFormat("<td nowrap>{0}<img src=/I/g.gif></td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true) + " %" : ""));
+                                            dataOutput.AppendFormat("<td nowrap>{0}<img src=/I/g.gif></td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true, fp) + " %" : ""));
 										else if(tmpData<0) //slide
-                                            dataOutput.AppendFormat("<td nowrap>{0}<img src=/I/r.gif></td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true) + " %" : ""));
+                                            dataOutput.AppendFormat("<td nowrap>{0}<img src=/I/r.gif></td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true, fp) + " %" : ""));
 										else if (!Double.IsNaN(tmpData)) // 0 exactly
 											dataOutput.Append("<td nowrap>0 %<img src=/I/o.gif></td>");
 										else
@@ -1311,9 +1313,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 										//evol
 										tmpData = double.Parse(data[i,j].ToString());
 										if (tmpData>0) //rise
-                                            dataOutput.AppendFormat("<td nowrap>{0}</td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true) + " %" : ""));
+                                            dataOutput.AppendFormat("<td nowrap>{0}</td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true, fp) + " %" : ""));
 										else if(tmpData<0) //slide
-                                            dataOutput.AppendFormat("<td nowrap>{0}</td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true) + " %" : ""));
+                                            dataOutput.AppendFormat("<td nowrap>{0}</td>", ((!Double.IsInfinity(tmpData)) ? FctUtilities.Units.ConvertUnitValueAndPdmToString(tmpData, _session.Unit, true, fp) + " %" : ""));
 										else if (!Double.IsNaN(tmpData)) // 0 exactly
 											dataOutput.Append("<td nowrap> 0 %</td>");
 										else

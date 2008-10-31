@@ -262,7 +262,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
         /// <param name="lineLabel">Line label</param>
         /// <param name="excel">True if Excel</param>
         /// <param name="totalLine">Total line</param>
-        protected virtual void AppendNumericData(WebSession _session, StringBuilder html, double data, bool multiYearLine, string lineLabel, bool totalLine)
+        protected virtual void AppendNumericData(WebSession _session, StringBuilder html, double data, bool multiYearLine, string lineLabel, bool totalLine, IFormatProvider fp)
         {
 
             if (!multiYearLine && lineLabel.StartsWith(GestionWeb.GetWebWord(1168, _session.SiteLanguage)))
@@ -271,9 +271,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
                 {
                     //Evolution
                     if (data > 0) //rise
-                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %" : "") + "<img src=/I/g.gif></td>");
+                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %" : "") + "<img src=/I/g.gif></td>");
                     else if (data < 0) //slide
-                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %" : "") + "<img src=/I/r.gif></td>");
+                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %" : "") + "<img src=/I/r.gif></td>");
                     else if (!Double.IsNaN(data)) // 0 exactly
                         html.Append("<td nowrap>0 %<img src=/I/o.gif></td>");
                     else
@@ -283,9 +283,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
                 {
                     //Evolution
                     if (data > 0) //rise
-                        html.Append("<td nowrap> " + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %" : "") + "</td>");
+                        html.Append("<td nowrap> " + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %" : "") + "</td>");
                     else if (data < 0) //slide
-                        html.Append("<td nowrap> " + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %" : "") + "</td>");
+                        html.Append("<td nowrap> " + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %" : "") + "</td>");
                     else if (!Double.IsNaN(data)) // 0 exactly
                         html.Append("<td nowrap> 0 %</td>");
                     else
@@ -297,14 +297,14 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
                 || (!multiYearLine && lineLabel.StartsWith(GestionWeb.GetWebWord(806, _session.SiteLanguage))))
             {
                 //PDV ou PDM
-                html.Append("<td nowrap>" + ((data == 0 || Double.IsNaN(data) || Double.IsInfinity(data)) ? "" : Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %") + "</td>");
+                html.Append("<td nowrap>" + ((data == 0 || Double.IsNaN(data) || Double.IsInfinity(data)) ? "" : Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %") + "</td>");
             }
             else
             {
                 //!PDV et !PDM et !evol
                 if (!totalLine)
                 {
-                    html.Append("<td nowrap>" + ((!double.IsNaN(data) && data != 0) ? Units.ConvertUnitValueToString(data, _session.Unit) : "") + "</td>");
+                    html.Append("<td nowrap>" + ((!double.IsNaN(data) && data != 0) ? Units.ConvertUnitValueToString(data, _session.Unit, fp) : "") + "</td>");
                 }
                 else
                 {
@@ -327,7 +327,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
         /// <param name="currenCol">Current column</param>
         /// <param name="first_data_column">First column</param>
         /// <param name="excel">True if Excel, False either</param>
-        protected virtual void AppendNumericData(WebSession _session, StringBuilder html, double data, bool evolution, bool percentage, int dataLineUpperbound, int currenCol, int first_data_column, bool excel)
+        protected virtual void AppendNumericData(WebSession _session, StringBuilder html, double data, bool evolution, bool percentage, int dataLineUpperbound, int currenCol, int first_data_column, bool excel, IFormatProvider fp)
         {
 
             if (evolution && currenCol == dataLineUpperbound)
@@ -336,9 +336,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
                 {
                     //Evolution
                     if (data > 0) //rise
-                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %" : "") + "<img src=/I/g.gif></td>");
+                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %" : "") + "<img src=/I/g.gif></td>");
                     else if (data < 0) //slide
-                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %" : "") + "<img src=/I/r.gif></td>");
+                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %" : "") + "<img src=/I/r.gif></td>");
                     else if (!Double.IsNaN(data)) // 0 exactly
                         html.Append("<td nowrap> 0 %<img src=/I/o.gif></td>");
                     else
@@ -348,9 +348,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
                 {
                     //Evolution
                     if (data > 0) //rise
-                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %" : "") + "</td>");
+                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %" : "") + "</td>");
                     else if (data < 0) //slide
-                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %" : "") + "</td>");
+                        html.Append("<td nowrap>" + ((!Double.IsInfinity(data)) ? Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %" : "") + "</td>");
                     else if (!Double.IsNaN(data)) // 0 exactly
                         html.Append("<td nowrap> 0 %</td>");
                     else
@@ -360,12 +360,12 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
             else if (data != 0 && percentage && ((currenCol - first_data_column) % 2) == 1)
             {
                 //PDV ou PDM
-                html.Append("<td nowrap>" + ((data == 0 || Double.IsNaN(data) || Double.IsInfinity(data)) ? "" : Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true) + " %") + "</td>");
+                html.Append("<td nowrap>" + ((data == 0 || Double.IsNaN(data) || Double.IsInfinity(data)) ? "" : Units.ConvertUnitValueAndPdmToString(data, _session.Unit, true, fp) + " %") + "</td>");
             }
             else
             {
                 //!PDV et !PDM et !evol
-                html.Append("<td nowrap>" + ((!double.IsNaN(data) && data != 0) ? Units.ConvertUnitValueToString(data, _session.Unit) : "") + "</td>");
+                html.Append("<td nowrap>" + ((!double.IsNaN(data) && data != 0) ? Units.ConvertUnitValueToString(data, _session.Unit, fp) : "") + "</td>");
 
             }
 
