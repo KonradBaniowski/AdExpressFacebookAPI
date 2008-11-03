@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <vehicleGroups>
+    <!--Press-->
+    <vehicle id="1"   name="presse">
+      <detailColumns>
+        <detailColumn id="11">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Present/Absent" privilegecode="278"/>
+            <allowedModule name="Lost/Won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <!--Radio-->
+    <vehicle id="2"   name="radio" >
+      <detailColumns>
+        <detailColumn id="12">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Present/Absent" privilegecode="278"/>
+            <allowedModule name="Lost/Won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <!--TV-->
+    <vehicle id="3"   name="télévision" >
+      <detailColumns>
+        <detailColumn id="13">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="present/absent" privilegecode="278"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+            <allowedModule name="Analyse des dispositifs" privilegecode="1780"/>
+            <allowedModule  name="Analyse des programmes" privilegecode="1781"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+  </vehicleGroups>
+
+</configuration>
+

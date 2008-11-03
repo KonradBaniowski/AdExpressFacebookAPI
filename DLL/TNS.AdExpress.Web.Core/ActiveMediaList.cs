@@ -28,7 +28,7 @@ namespace TNS.AdExpress.Web.Core{
         /// <summary>
         /// Liste des vehicles
         /// </summary>
-		private static Vehicles.names[] _vehicleList = new Vehicles.names[1] { Vehicles.names.internet };
+        private static Vehicles.names[] _vehicleList=new Vehicles.names[0] { };//= new Vehicles.names[1] { Vehicles.names.internet };
         #endregion
 
         #region Constructeur
