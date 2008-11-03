@@ -115,6 +115,7 @@
     <Content Include="App_Themes\FinlandAdExpressUk\Styles.xml" />
     <Content Include="Configuration\33\Anubis.xml" />
     <Content Include="Configuration\33\BaalList.xml" />
+    <Content Include="Configuration\33\CreativesAccess.xml" />
     <Content Include="Configuration\33\CreativesConfiguration.xml" />
     <Content Include="Configuration\33\CustomerErrorMail.xml" />
     <Content Include="Configuration\33\Database.xml" />
@@ -122,6 +123,8 @@
     <Content Include="Configuration\33\GenericColumn.xml" />
     <Content Include="Configuration\33\GenericDetailLevel.xml" />
     <Content Include="Configuration\33\MediaPlanInsertionConfiguration.xml" />
+    <Content Include="Configuration\33\ModuleCategory.xml" />
+    <Content Include="Configuration\33\ModulesConfiguration.xml" />
     <Content Include="Configuration\33\MSCreativesDetails.xml" />
     <Content Include="Configuration\33\Network.xml" />
     <Content Include="Configuration\33\Plugins.xml" />
@@ -144,6 +147,7 @@
     <Content Include="Configuration\33\WebThemes.xml" />
     <Content Include="Configuration\35\Anubis.xml" />
     <Content Include="Configuration\35\BaalList.xml" />
+    <Content Include="Configuration\35\CreativesAccess.xml" />
     <Content Include="Configuration\35\CreativesConfiguration.xml" />
     <Content Include="Configuration\35\CustomerErrorMail.xml" />
     <Content Include="Configuration\35\Database.xml" />
@@ -151,6 +155,8 @@
     <Content Include="Configuration\35\GenericColumn.xml" />
     <Content Include="Configuration\35\GenericDetailLevel.xml" />
     <Content Include="Configuration\35\MediaPlanInsertionConfiguration.xml" />
+    <Content Include="Configuration\35\ModuleCategory.xml" />
+    <Content Include="Configuration\35\ModulesConfiguration.xml" />
     <Content Include="Configuration\35\MSCreativesDetails.xml" />
     <Content Include="Configuration\35\Network.xml" />
     <Content Include="Configuration\35\Plugins.xml" />
