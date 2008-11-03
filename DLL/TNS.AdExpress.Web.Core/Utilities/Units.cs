@@ -71,7 +71,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstWeb.CustomerSessions.Unit.versionNb:
                 case CstWeb.CustomerSessions.Unit.mmPerCol:
                 default:
-                    return string.Format(fp, f, Convert.ToDouble(value));
+                    return string.Format(fp, f, Convert.ToDouble(value.ToString()));
             }
             
         }
