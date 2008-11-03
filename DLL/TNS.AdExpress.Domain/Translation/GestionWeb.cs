@@ -29,6 +29,7 @@ namespace TNS.AdExpress.Domain.Translation{
 		/// <returns></returns>
 		public static string GetWebWord(Int64 code,int langue){
 			try{
+                Global.CurrentCultureInfo = WebApplicationParameters.AllowedLanguages[langue].CultureInfo;
                 return Global.GetValue("w" + code.ToString(), WebApplicationParameters.AllowedLanguages[langue].CultureInfo).ToString();
 				//return _list[langue].GetWebWord(code);
 
