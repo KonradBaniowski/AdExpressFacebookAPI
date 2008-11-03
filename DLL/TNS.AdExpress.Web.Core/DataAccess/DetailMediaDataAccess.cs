@@ -39,6 +39,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             bool premier = true;
             DataSet dsListAdvertiser = null;
             StringBuilder sql = new StringBuilder(500);
+            string activeMediaList = string.Empty;
             #endregion
 
             #region Requête
@@ -51,8 +52,11 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
 				sql.Append(" id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
 
                 //Liste des supports actifs pour Internet
-				if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet))
-					sql.Append(" and id_media in (" + TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID) + ")");
+                if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet)) {
+                    activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                    if(activeMediaList.Length>0)
+                        sql.Append(" and id_media in (" + activeMediaList + ")");
+                }
 
 				//Condition universe media in access
 				WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
@@ -179,6 +183,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             bool premier = true;
             DataSet dsListAdvertiser = null;
             StringBuilder sql = new StringBuilder(500);
+            string activeMediaList = string.Empty;
             #endregion
 
             #region Requête
@@ -199,8 +204,11 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             sql.Append(" and id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
 
             //Liste des supports actifs pour Internet
-            if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet))
-                sql.Append(" and id_media in (" + TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID) + ")");
+            if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet)) {
+                activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                if(activeMediaList.Length>0)
+                    sql.Append(" and id_media in (" + activeMediaList + ")");
+            }
 
 			//Condition universe media in access
 			WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);

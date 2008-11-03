@@ -234,7 +234,7 @@
     </MediaSelectionParents>
   </vehicle>
   <!-- INTERNET -->
-  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true">
+  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>

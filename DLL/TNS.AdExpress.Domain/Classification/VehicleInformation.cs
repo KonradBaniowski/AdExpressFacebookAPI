@@ -37,6 +37,10 @@ namespace TNS.AdExpress.Domain.Classification {
         /// </summary>
         private bool _showCreations;
         /// <summary>
+        /// Show active media
+        /// </summary>
+        private bool _showActiveMedia;
+        /// <summary>
         /// Allowed units list
         /// </summary>
         private List<CustomerSessions.Unit> _allowedUnitsList;
@@ -70,6 +74,7 @@ namespace TNS.AdExpress.Domain.Classification {
         /// <param name="databaseId">Data base id</param>
         /// <param name="showInsertions">Show insertions</param>
         /// <param name="showCreations">Show creations</param>
+        /// <param name="showActiveMedia">Show avtive media</param>
         /// <param name="allowedUnitsList">Allowed units list</param>
         /// <param name="allowedMediaLevelItemsList">Allowed media level items list</param>
         /// <param name="mediaSelectionParentsList">Media selection parents list</param>
@@ -77,7 +82,8 @@ namespace TNS.AdExpress.Domain.Classification {
         public VehicleInformation(string id, 
                                   Int64 databaseId, 
                                   bool showInsertions, 
-                                  bool showCreations, 
+                                  bool showCreations,
+                                  bool showActiveMedia,
                                   List<CustomerSessions.Unit> allowedUnitsList, 
                                   List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList,
                                   string defaultMediaSelectionParent,
@@ -100,6 +106,7 @@ namespace TNS.AdExpress.Domain.Classification {
             _databaseId = databaseId;
             _showInsertions = showInsertions;
             _showCreations = showCreations;
+            _showActiveMedia = showActiveMedia;
             _detailColumnId = detailColumnId;
 
         }
@@ -119,12 +126,13 @@ namespace TNS.AdExpress.Domain.Classification {
 								  Int64 databaseId,
 								  bool showInsertions,
 								  bool showCreations,
+                                  bool showActiveMedia,  
 								  List<CustomerSessions.Unit> allowedUnitsList,
 								  List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList,
 								  string defaultMediaSelectionParent,
 								  List<DetailLevelItemInformation.Levels> mediaSelectionParentsList,
 								  Int64 detailColumnId,List<DetailLevelItemInformation.Levels> allowedRecapMediaLevelItemsList):
-			this(id, databaseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent,mediaSelectionParentsList, detailColumnId) {
+			this(id, databaseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent,mediaSelectionParentsList, detailColumnId) {
 			_allowedRecapMediaLevelItemsList = allowedRecapMediaLevelItemsList;
 		}
         #endregion
@@ -153,6 +161,12 @@ namespace TNS.AdExpress.Domain.Classification {
         /// </summary>
         public bool ShowCreations {
             get { return _showCreations; }
+        }
+        /// <summary>
+        /// Get show active media
+        /// </summary>
+        public bool ShowActiveMedia {
+            get { return _showActiveMedia; }
         }
         /// <summary>
         /// Get allowed units enum list

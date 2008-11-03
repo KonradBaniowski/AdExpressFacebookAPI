@@ -32,10 +32,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 		/// <returns>Dataset avec 4 colonnes : id_title, title, id_media, media</returns>
 		public static DataSet DetailTitleListDataAccess(WebSession webSession){
 			
-			#region Variables	
+			#region Variables
 		
 			bool premier=true;			
 			StringBuilder sql=new StringBuilder(1000);
+            string activeMediaList = string.Empty;
 
 			#endregion
 
@@ -64,8 +65,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 			sql.Append(" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle="+((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID+"");
 
             //Liste des supports actifs pour Internet
-            if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)VehicleClassificationCst.internet)
-                sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media in (" + TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID) + ")"); 
+            if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)VehicleClassificationCst.internet) {
+                activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                if(activeMediaList.Length>0)
+                    sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media in (" + activeMediaList + ")");
+            }
 
 			//Condition univers des médias AdExpress en accès
 			if(WebFunctions.Modules.IsSponsorShipTVModule(webSession)) 
@@ -165,9 +169,10 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 		/// <returns>Données</returns>
 		public static DataSet keyWordTitleListDataAccess(WebSession webSession, string keyWord, string listMedia){
 		
-			#region Variables		
+			#region Variables
 			bool premier=true;			
 			StringBuilder sql=new StringBuilder(1000);
+            string activeMediaList = string.Empty;
 			#endregion
 
 			#region Requête
@@ -205,8 +210,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_vehicle="+((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID+"");
 
             //Liste des supports actifs pour Internet
-            if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)VehicleClassificationCst.internet)
-                sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media in (" + TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID) + ")"); 
+            if (((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)VehicleClassificationCst.internet) {
+                activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                if(activeMediaList.Length>0)
+                    sql.Append(" and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media in (" + activeMediaList + ")");
+            }
 		
 			//Condition univers des médias AdExpress en accès
 			if(WebFunctions.Modules.IsSponsorShipTVModule(webSession)) 

@@ -28,7 +28,7 @@ namespace TNS.AdExpress.Web.Core{
         /// <summary>
         /// Liste des vehicles
         /// </summary>
-        private static Vehicles.names[] _vehicleList=new Vehicles.names[0] { };//= new Vehicles.names[1] { Vehicles.names.internet };
+        private static List<Vehicles.names> _vehicleList = new List<Vehicles.names>();//= new Vehicles.names[1] { Vehicles.names.internet };
         #endregion
 
         #region Constructeur
@@ -48,6 +48,14 @@ namespace TNS.AdExpress.Web.Core{
 
             ArrayList activeMediaList=new ArrayList();
             DataSet ds;
+            string[] vehicleIdsList = VehiclesInformation.GetDatabaseIds().Split(',');
+            VehicleInformation vehicle;
+
+            foreach (string currentVehicle in vehicleIdsList) {
+                vehicle = VehiclesInformation.Get(Int64.Parse(currentVehicle));
+                if (vehicle.ShowActiveMedia)
+                    _vehicleList.Add(vehicle.Id);
+            }
 
 			foreach (Vehicles.names str in _vehicleList) {
 
@@ -73,12 +81,15 @@ namespace TNS.AdExpress.Web.Core{
 
             string sql = string.Empty;
 
-            foreach (Int64 mediaId in (ArrayList)_htActiveMedia[vehicleId]) {
-                 sql += mediaId + ",";
-            }
+            if (_htActiveMedia != null && _htActiveMedia[vehicleId] != null) {
 
-            if (sql.Length > 1){
-                sql = sql.Substring(0, sql.Length - 1);
+                foreach (Int64 mediaId in (ArrayList)_htActiveMedia[vehicleId]) {
+                    sql += mediaId + ",";
+                }
+
+                if (sql.Length > 1) {
+                    sql = sql.Substring(0, sql.Length - 1);
+                }
             }
 
             return sql;

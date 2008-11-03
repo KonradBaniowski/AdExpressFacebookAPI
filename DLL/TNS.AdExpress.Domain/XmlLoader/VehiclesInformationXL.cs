@@ -41,7 +41,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             Int64 baseId=0;
             Int64 detailColumnId = 0;
             bool showInsertions=false;
-            bool showCreations=false;
+            bool showCreations = false;
+            bool showActiveMedia = false;
             string readString = string.Empty;
             #endregion
 
@@ -53,8 +54,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                         switch (reader.LocalName) {
                             case "vehicle":
                                 if (id.Length > 0) { 
-                                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId,allowedRecapMediaLevelItemsList));
+                                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId,allowedRecapMediaLevelItemsList));
                                     id = string.Empty;
+                                    showActiveMedia = false;
                                     defaultMediaSelectionParent = string.Empty;
                                     allowedUnitsList = new List<CustomerSessions.Unit>();
                                     allowedMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
@@ -69,6 +71,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 showInsertions = bool.Parse(reader.GetAttribute("showInsertions"));
                                 if (reader.GetAttribute("showCreations") == null || reader.GetAttribute("showCreations").Length == 0) throw (new InvalidXmlValueException("Invalid showCreations parameter"));
                                 showCreations = bool.Parse(reader.GetAttribute("showCreations"));
+                                if (reader.GetAttribute("showActiveMedia") != null && reader.GetAttribute("showActiveMedia").Length > 0)
+                                    showActiveMedia = bool.Parse(reader.GetAttribute("showActiveMedia"));
                                 break;
                             case "allowedUnit":
                                 readString = reader.ReadString();
@@ -102,7 +106,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                     }
                 }
                 if (id.Length > 0) {
-                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId,allowedRecapMediaLevelItemsList));
+                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId,allowedRecapMediaLevelItemsList));
                 }
             }
             catch (System.Exception err) {
