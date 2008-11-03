@@ -1618,7 +1618,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 							//PreviousYearActiveMonth = tab[i,ConstResults.Novelty.LATEST_ACTIVE_MONTH_LABEL_COLUMN_INDEX].ToString();
 							if(tab[i,CstResult.Novelty.LATEST_ACTIVE_MONTH_ID_COLUMN_INDEX].ToString().Equals(k.ToString())){							
 								//								t.Append("<td nowrap  class=pmcategorynb>"+double.Parse(tab[i,ConstResults.Novelty.LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX].ToString()).ToString("### ### ### ### ##0")+"</td>");
-								t.Append("<td nowrap  class=pmcategorynb>"+TNS.AdExpress.Web.Functions.Units.ConvertUnitValueToString(tab[i,CstResult.Novelty.LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX].ToString(),webSession.Unit)+"</td>");
+                                t.Append("<td nowrap  class=pmcategorynb>" + TNS.AdExpress.Web.Functions.Units.ConvertUnitValueToString(tab[i, CstResult.Novelty.LATEST_ACTIVE_MONTH_INVEST_COLUMN_INDEX].ToString(), webSession.Unit, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo) + "</td>");
 								PreviousYearActiveMonth=true;
 							}
 							else if(PreviousYearActiveMonth) t.Append("<td nowrap class="+classe3+">&nbsp;</td>");
@@ -1640,7 +1640,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					//Colonne mois en cours (KE)
 					if(tab[i,CstResult.Novelty.CURRENT_MONTH_INVEST_COLUMN_INDEX]!=null && !tab[i,CstResult.Novelty.CURRENT_MONTH_INVEST_COLUMN_INDEX].ToString().Equals("-"))
 						//						t.Append("<td nowrap  class=\"pmcategorynb\">"+double.Parse(tab[i,ConstResults.Novelty.CURRENT_MONTH_INVEST_COLUMN_INDEX].ToString()).ToString("### ### ### ### ##0")+"</td>");
-						t.Append("<td nowrap  class=\"pmcategorynb\">"+TNS.AdExpress.Web.Functions.Units.ConvertUnitValueToString(tab[i,CstResult.Novelty.CURRENT_MONTH_INVEST_COLUMN_INDEX].ToString(),webSession.Unit)+"</td>");
+						t.Append("<td nowrap  class=\"pmcategorynb\">"+TNS.AdExpress.Web.Functions.Units.ConvertUnitValueToString(tab[i,CstResult.Novelty.CURRENT_MONTH_INVEST_COLUMN_INDEX].ToString(),webSession.Unit,WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo) + "</td>");
 					else t.Append("<td nowrap  class="+classe+">&nbsp;</td>");
 					t.Append("\n</tr>");
 

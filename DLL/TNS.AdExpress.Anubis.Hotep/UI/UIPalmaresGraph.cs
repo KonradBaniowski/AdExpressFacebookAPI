@@ -28,6 +28,7 @@ using TNS.FrameWork;
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Hotep.UI
 {
@@ -144,7 +145,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             #region Data building
             for (int i = 1; i < _tab.GetLongLength(0) && i < 11; i++) {
                 double d = Convert.ToDouble(_tab[i, EngineTop.TOTAL_N]);
-                string u = FctUtilities.Units.ConvertUnitValueToString(d, _webSession.Unit);
+                string u = FctUtilities.Units.ConvertUnitValueToString(d, _webSession.Unit, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo);
                 if (d != 0 && FctUtilities.CheckedText.IsNotEmpty(u)) {
                     oneProductExist = true;
 
@@ -227,7 +228,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			this.ChartAreas[strChartArea].AxisY.Title=""+GestionWeb.GetWebWord(1206,_webSession.SiteLanguage)+"";
             _style.GetTag("PalmaresGraphTitleFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY);
             double dd = Convert.ToDouble(_tab[0, EngineTop.TOTAL_N]);
-            double uu = Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(dd, _webSession.Unit));
+            double uu = Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(dd, _webSession.Unit, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo));
             if (uu > 0)
                 this.ChartAreas[strChartArea].AxisY.Maximum = uu;
             else

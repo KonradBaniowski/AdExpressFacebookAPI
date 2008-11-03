@@ -138,18 +138,18 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 					for(int i = 3; i < row.ItemArray.Length; i++){
                         if (row.ItemArray[i] != DBNull.Value) {
                             if (row.Table.Columns[i].ColumnName.IndexOf("budget") > -1) {
-                                SatetFunctions.WorkSheet.PutCellValue(cells, Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()), 2).ToString(), WebConstantes.CustomerSessions.Unit.euro, false)), cellRow - 1, i - 2, 1);
+                                SatetFunctions.WorkSheet.PutCellValue(cells, Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()), 2).ToString(), WebConstantes.CustomerSessions.Unit.euro, false, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo)), cellRow - 1, i - 2, 1);
                                 cells[cellRow - 1, i - 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].Format); //"# ### ##0";
                             }
                             else if (row.Table.Columns[i].ColumnName.IndexOf("GRP") > -1 && !(row.Table.Columns[i].ColumnName.IndexOf("C/GRP") > -1)) {
                                 if (row.ItemArray[i].ToString().Equals("0"))
                                     SatetFunctions.WorkSheet.PutCellValue(cells, 0, cellRow - 1, i - 2, 1);
                                 else
-                                    SatetFunctions.WorkSheet.PutCellValue(cells, Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()), 2).ToString(), WebConstantes.CustomerSessions.Unit.grp, false)), cellRow - 1, i - 2, 1);
+                                    SatetFunctions.WorkSheet.PutCellValue(cells, Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()), 2).ToString(), WebConstantes.CustomerSessions.Unit.grp, false, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo)), cellRow - 1, i - 2, 1);
                                 cells[cellRow - 1, i - 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.grp].Format); //"# ### ##0.0##";
                             }
                             else if (row.Table.Columns[i].ColumnName.IndexOf("PDM") > -1) {
-                                PDM = WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()), 2).ToString(), WebConstantes.CustomerSessions.Unit.euro, true);
+                                PDM = WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Decimal.Parse(row.ItemArray[i].ToString()), 2).ToString(), WebConstantes.CustomerSessions.Unit.euro, true, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo);
                                 SatetFunctions.WorkSheet.PutCellValue(cells, Math.Round(Decimal.Parse(PDM), 2), cellRow - 1, i - 2, 1);
                                 cells[cellRow - 1, i - 2].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNamePercentage); //10;
                             }

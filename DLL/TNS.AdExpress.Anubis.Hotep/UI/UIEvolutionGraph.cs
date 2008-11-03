@@ -27,6 +27,7 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Hotep.UI
 {
@@ -129,7 +130,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             for (int i = 0; i < _tab.GetLongLength(0) && i < 10; i++) {
                 ecart = Convert.ToDouble(_tab[i, EngineEvolution.ECART]);
                 if (ecart > 0) {
-                    series.Points.AddXY(_tab[i, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _webSession.Unit)));
+                    series.Points.AddXY(_tab[i, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _webSession.Unit, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo)));
                     series.Points[compteur].ShowInLegend = true;
 
                     #region Reference or competitor ?
@@ -152,7 +153,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
                 }
                 ecart = Convert.ToDouble(_tab[last, EngineEvolution.ECART]);
                 if (ecart < 0) {
-                    series.Points.AddXY(_tab[last, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _webSession.Unit).Replace(" ", string.Empty)));
+                    series.Points.AddXY(_tab[last, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _webSession.Unit, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo).Replace(" ", string.Empty)));
                     series.Points[compteur].ShowInLegend = true;
                     series.Points[compteur].CustomAttributes = "LabelStyle=top";
 
