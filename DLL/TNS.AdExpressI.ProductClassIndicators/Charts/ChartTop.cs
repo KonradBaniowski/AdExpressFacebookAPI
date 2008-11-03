@@ -130,7 +130,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 {
                     oneProductExist = true;
 
-                    series.Points.AddXY(tab[i, EngineTop.PRODUCT], Convert.ToDouble(u, fp));
+                    series.Points.AddXY(tab[i, EngineTop.PRODUCT], Convert.ToDouble(u.Replace(" ", string.Empty), fp));
 
                     series.Points[i - 1].ShowInLegend = true;
                     // Competitor in red
