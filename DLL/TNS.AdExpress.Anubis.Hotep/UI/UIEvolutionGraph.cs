@@ -130,7 +130,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             for (int i = 0; i < _tab.GetLongLength(0) && i < 10; i++) {
                 ecart = Convert.ToDouble(_tab[i, EngineEvolution.ECART]);
                 if (ecart > 0) {
-                    series.Points.AddXY(_tab[i, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _webSession.Unit, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo)));
+                    series.Points.AddXY(_tab[i, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _webSession.Unit)));
                     series.Points[compteur].ShowInLegend = true;
 
                     #region Reference or competitor ?
@@ -153,7 +153,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
                 }
                 ecart = Convert.ToDouble(_tab[last, EngineEvolution.ECART]);
                 if (ecart < 0) {
-                    series.Points.AddXY(_tab[last, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(FctUtilities.Units.ConvertUnitValueToString(ecart, _webSession.Unit, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo).Replace(" ", string.Empty)));
+                    series.Points.AddXY(_tab[last, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _webSession.Unit)));
                     series.Points[compteur].ShowInLegend = true;
                     series.Points[compteur].CustomAttributes = "LabelStyle=top";
 
