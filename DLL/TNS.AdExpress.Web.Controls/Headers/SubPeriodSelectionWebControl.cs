@@ -224,7 +224,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
             //if ((_zoom != periodBegin || _zoom != periodEnd) && _isZoomEnabled)
             #region Period
-            if ((_zoom.Length > 0 || _isAllPeriodAllowed) && _isZoomEnabled && (_zoom != periodBegin || _zoom != periodEnd))
+            if ((_zoom.Length > 0 || _isAllPeriodAllowed) && _isZoomEnabled && (_zoom != periodBegin || _zoom != periodEnd) && periodBegin != periodEnd)
             {
 
                 #region Data

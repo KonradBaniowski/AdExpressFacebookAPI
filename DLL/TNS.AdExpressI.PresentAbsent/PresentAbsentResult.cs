@@ -466,7 +466,14 @@ namespace TNS.AdExpressI.PresentAbsent{
             #endregion
 
             #region Build Final Table (only required lines + total and parution numbers)
-            tabResult = GetResultTable(tabData, nbLine, universesSubTotal, elementsHeader, elementsSubTotal);
+            if (nbLine > 0)
+            {
+                tabResult = GetResultTable(tabData, nbLine, universesSubTotal, elementsHeader, elementsSubTotal);
+            }
+            else
+            {
+                return null;
+            }
             #endregion
 
             #region Strength and prospects filters

@@ -664,7 +664,7 @@ namespace TNS.AdExpressI.LostWon {
             }
             DataTable dtMedia = dsMedia.Tables[0];
 
-            if (dt != null && dt.Rows.Count == 0)
+            if (dt == null || dt.Rows.Count == 0)
             {
                 return null;
             }
@@ -1426,6 +1426,9 @@ namespace TNS.AdExpressI.LostWon {
             Int64 cIdL1 = -1;
             Int64 cIdL2 = -1;
             Int64 cIdL3 = -1;
+
+            if (dt == null || dt.Rows.Count <= 0)
+                return 0;
 
             foreach (DataRow row in dt.Rows)
             {

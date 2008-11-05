@@ -2127,16 +2127,19 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     }
                     lTypeIndex[lTypes.IndexOf(cLineType)] = cLine;
                 }
-                pLine = lTypes.IndexOf(cLineType);
-                if (pLine > 0)
+                if (!(cLineStart is LineHide))
                 {
-                    tab[cLine] = lTypeIndex[pLine - 1];
+                    pLine = lTypes.IndexOf(cLineType);
+                    if (pLine > 0)
+                    {
+                        tab[cLine] = lTypeIndex[pLine - 1];
+                    }
+                    else
+                    {
+                        tab[cLine] = 0;
+                    }
+                    cLine++;
                 }
-                else
-                {
-                    tab[cLine] = 0;
-                }
-                cLine++;
 			}
 
 
