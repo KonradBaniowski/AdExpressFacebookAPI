@@ -591,7 +591,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
                 result = mediaScheduleResult.GetPDFHtml();
                 SortedDictionary<Int64, List<CellCreativesInformation>> creativeCells = new SortedDictionary<Int64, List<CellCreativesInformation>>();
 
-                if (vehicles.Length == 1 && _webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.dayly && _webSession.SloganColors.Count > 0) {
+                if (vehicles.Length == 1 && _webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.dayly && result.VersionsDetail.Count > 0) {
 
                     VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, period, "");
                     html.Append("\r\n\t<tr class=\"whiteBackGround\">\r\n\t\t<td>");
