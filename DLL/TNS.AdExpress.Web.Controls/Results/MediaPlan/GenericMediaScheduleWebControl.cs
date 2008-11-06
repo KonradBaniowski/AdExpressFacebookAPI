@@ -673,7 +673,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					}
 					#endregion
 
-                    if (webSession.SloganColors.Count > 0) {
+                    if (result.VersionsDetail.Count > 0) {
                         VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(webSession, period, _zoomDate);
                         html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
                         html.Append(versionsUI.GetMSCreativesHtml());
