@@ -147,6 +147,8 @@
     <column id="82" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="84" name="Dimension banner Internet" webTextId="1420" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="85" name="Euros" webTextId="1423" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
 
   </columnItems>
 
@@ -449,67 +451,58 @@
 
     <!--MS Détail versions-->
     <!-- PRESS -->
-    <!-- PRESS INT -->
-    <detailColumn id="18" name="Visuel\Annonceur\Groupe\Produit\Version\Budget\Insertions\Volume page\Nb supports">
-      <columnItem id="6" name="Version" isKey="true"/>
+    <detailColumn id="18" name="Version\Visuel\Annonceur\Groupe\Produi\Date de parutiont\Insertions\Nb supports\Budget\Date de couverture\Date kiosque">
+      <columnItem id="6" name="Version" isKey="true" visible="false"/>
       <columnItem id="35" name="Visuel"/>
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
-      <columnItem id="44" name="Famille"/>
-      <columnItem id="82" name="Classe"/>
-      <columnItem id="67" name="Budget"/>
+      <columnItem id="86" name="Date de parution"/>
       <columnItem id="72" name="insertion"/>
-      <columnItem id="68" name="Surface"/>
       <columnItem id="71" name="Nb supports"/>
+      <columnItem id="85" name="Budget"/>
       <columnItem id="57" name="Date de couverture" visible="false"/>
       <columnItem id="73" name="Date kiosque" visible="false"/>
     </detailColumn>
     <!--Radio-->
     <!--TV-->
-    <detailColumn id="19" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
-      <columnItem id="6" name="Version" isKey="true"/>
+    <detailColumn id="19" name="Version\Spot\Annonceur\Groupe\Produit\Date de parution\Nb spots\nb Support\Budget">
+      <columnItem id="6" name="Version" isKey="true" visible="false"/>
       <columnItem id="75" name="Spot"/>
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
-      <columnItem id="44" name="Famille"/>
-      <columnItem id="82" name="Classe"/>
-      <columnItem id="67" name="Budget"/>
+      <columnItem id="86" name="Date de parution"/>
       <columnItem id="74" name="Nb spots"/>
-      <columnItem id="69" name="Durée"/>
       <columnItem id="70" name="nb Support"/>
+      <columnItem id="85" name="Budget"/>
     </detailColumn>
     <!--Outdoor-->
-    <detailColumn id="20" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
-      <columnItem id="6" name="Version" isKey="true"/>
+    <detailColumn id="20" name="Annonceur\Groupe\Produit\Version\budget\Nb panneaux\Nb supports">
       <columnItem id="41" name="Affiche"/>
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
-      <columnItem id="44" name="Famille"/>
-      <columnItem id="82" name="Classe"/>
-      <columnItem id="67" name="Budget"/>
+      <columnItem id="6" name="Version" isKey="true"/>
+      <columnItem id="85" name="Budget"/>
       <columnItem id="76" name="Nb panneaux"/>
       <columnItem id="70" name=" Nb Supports"/>
     </detailColumn>
     <!-- VMC-->
-    <detailColumn id="21" name="Visuel\Annonceur\Groupe\Produit\supports\Version\Budget\Volume\Poid\Items\Format\Format enveloppe\Format contenant\Type de doc\Contenu">
-      <columnItem id="6" name="slogan" isKey="true"/>
+    <detailColumn id="21" name="slogan\Visuel\Annonceur\Groupe\Produit\Poid\Budget\Volume\Format\Format enveloppe\Type enveloppe\Type de doc\Contenu">
+      <columnItem id="6" name="slogan" isKey="true" visible="false"/>
       <columnItem id="41" name="Visuel"/>
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
-      <columnItem id="3" name="Support"/>
-      <columnItem id="44" name="Famille"/>
-      <columnItem id="82" name="Classe"/>
-      <columnItem id="67" name="Budget"/>
-      <columnItem id="61" name="Volume"/>
+      <columnItem id="3" name="Support" visible="false"/>
       <columnItem id="62" name="Poid"/>
-      <columnItem id="63" name="Item"/>
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="61" name="Volume"/>
       <columnItem id="11" name="Format"/>
+      <columnItem id="63" name="Item"/>
       <columnItem id="64" name="Format enveloppe"/>
-      <columnItem id="66" name="Format enveloppe"/>
+      <columnItem id="66" name="Type enveloppe"/>
       <columnItem id="60" name="Type de doc"/>
       <columnItem id="65" name="Contenu"/>
     </detailColumn>

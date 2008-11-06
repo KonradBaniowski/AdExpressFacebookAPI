@@ -9,6 +9,7 @@
 #endregion
 
 using System;
+using System.Drawing;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -29,10 +30,16 @@ using CustomerCst=TNS.AdExpress.Constantes.Customer;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Web.Core.Selection;
 
 using TNS.FrameWork;
 using TNS.FrameWork.Exceptions;
+using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpressI.Insertions;
+using TNS.AdExpressI.Insertions.Cells;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 {
@@ -67,8 +74,18 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		/// Object genberating html code
 		/// </summary>
 		private	ArrayList _versionsUIs;
-
+        /// <summary>
+        /// Show product
+        /// </summary>
 		private bool _showProduct = true;
+        /// <summary>
+        /// Période utilisée
+        /// </summary>
+        private MediaSchedulePeriod _period = null;
+        /// <summary>
+        /// Zoom date
+        /// </summary>
+        private string _zoomDate = string.Empty;
 		#endregion
 
 		#region Accessors
@@ -107,6 +124,18 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			get {return (_versions);}
 			set {_versions = value;}
 		}
+        ///<summary>Get / Set La période sélectionnée</summary>
+        /// <author>yrkaina</author>
+        /// <since>jeudi 24 janvier 2008</since>
+        public MediaSchedulePeriod Period {
+            get { return (_period); }
+            set { _period = value; }
+        }
+        ///<summary>Get / Set Zoom date</summary>
+        public string ZoomDate {
+            get { return (_zoomDate); }
+            set { _zoomDate = value; }
+        }
 		#endregion
 
 		#region Constructor
@@ -122,11 +151,27 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			this._vehicle = vehicle;
 			_showProduct = _webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
-		}			
+		}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>
+        /// <param name="vehicle">Vehicle considered</param>
+        /// <param name="period">Period</param>
+        /// <param name="zoomDate">Zoom date</param>
+        public ExportVersionsVehicleUI(WebSession webSession, DBCst.Vehicles.names vehicle, MediaSchedulePeriod period, string zoomDate) {
+            this._webSession = webSession;
+            this._vehicle = vehicle;
+            this._period = period;
+            this._zoomDate = zoomDate;
+            _showProduct = _webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+        }	
 		#endregion
 
 		#region Public Methods
-		/// <summary>
+
+        #region GetHtml
+        /// <summary>
 		/// Build Html code to display the set of version
 		/// </summary>
 		/// <returns>Html Code</returns>
@@ -167,8 +212,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			}
 	
 			return htmlBld.ToString();
-		}
-		/// <summary>
+        }
+        #endregion
+
+        #region GetAPPMHtml
+        /// <summary>
 		/// Build Html code to display the set of version
 		/// </summary>
 		/// <returns>Html Code</returns>
@@ -178,13 +226,289 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			versionsUIs = this._versionsUIs;
 			partitHTMLVersion = APPMBuildHtml(title);
 			return partitHTMLVersion;
-		}
-		#endregion
+        }
+        #endregion
 
-		#region Protected Methods
+        #region GetMSCreativesHtml
+        /// <summary>
+		/// Build Html code to display the set of version
+		/// </summary>
+        /// <param name="creativeCells">Images path</param>
+        /// <param name="style">Style</param>
+		/// <returns>Html Code</returns>
+        public string GetMSCreativesHtml(ref SortedDictionary<Int64, List<CellCreativesInformation>> creativeCells, Style style) {
 
-		#region PressSetUp()
-		/// <summary>
+            StringBuilder htmlBld = new StringBuilder(10000);
+
+            #region MSCreatives
+            object[] paramMSCraetives = new object[2];
+            paramMSCraetives[0] = _webSession;
+            paramMSCraetives[1] = _webSession.CurrentModule;
+            ResultTable resultTable = null;
+            IInsertionsResult resultMSCreatives = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.Default.dll", "TNS.AdExpressI.Insertions.Default.InsertionsResult", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, paramMSCraetives, null, null, null);
+            string[] vehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CustomerCst.Right.type.vehicleAccess).Split(',');
+            string filters = string.Empty;
+            int fromDate = Convert.ToInt32(_period.Begin.ToString("yyyyMMdd"));
+            int toDate = Convert.ToInt32(_period.End.ToString("yyyyMMdd"));
+            VehicleInformation currentVehicle = VehiclesInformation.Get(Int64.Parse(vehicles[0]));
+            #endregion
+
+            resultTable = resultMSCreatives.GetMSCreatives(VehiclesInformation.Get(Int64.Parse(vehicles[0])), fromDate, toDate, filters, -1, _zoomDate);
+            if (resultTable != null)
+                resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+
+            if (currentVehicle.Id == DBCst.Vehicles.names.tv || currentVehicle.Id == DBCst.Vehicles.names.radio) {
+                List<Color> colorList = ((Colors)style.GetTag("msCreativesColor")).ColorList;
+                BuildMSCreativesHtml(htmlBld, resultTable, colorList);
+            }
+            else {
+                creativeCells = InitCreativeCells(resultTable);
+                BuildMSCreativesWithImgHtml(htmlBld, creativeCells);
+            }
+            return htmlBld.ToString();
+
+        }
+        #endregion
+
+        #endregion
+
+        #region Protected Methods
+
+        #region BuildMSCreativesWithImgHtml
+        /// <summary> 
+		/// Render all versions controls
+		/// </summary>
+		/// <returns>Html code</returns>
+        protected void BuildMSCreativesWithImgHtml(StringBuilder output, SortedDictionary<Int64, List<CellCreativesInformation>> creativeCells) {
+
+            int startToMedium = 0, mediumToEnd = 0, end = 0, indexTable = 0;
+
+            output.Append("<table align=\"left\" border=\"0\" class=\"txtViolet14BoldWhiteBG\">");
+            output.Append("<tr><td colSpan=\"" + _nb_column + "\">");
+            if (_title == string.Empty) {
+                switch (this._vehicle) {
+                    case DBCst.Vehicles.names.press:
+                        _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(1972, this._webSession.SiteLanguage));
+                        break;
+                    case DBCst.Vehicles.names.directMarketing:
+                        _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2219, this._webSession.SiteLanguage));
+                        break;
+                    case DBCst.Vehicles.names.outdoor:
+                        _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2255, this._webSession.SiteLanguage));
+                        break;
+                    default:
+                        _title = "?";
+                        break;
+                }
+            }
+            output.Append(_title);
+            output.Append("</td></tr>");
+
+            int columnIndex = 0;
+            Int64 nbVisuals = 0;
+            foreach (List<CellCreativesInformation> currentList in creativeCells.Values) {
+                foreach (CellCreativesInformation cell in currentList) {
+
+                    nbVisuals = cell.NbVisuals;
+
+                    if (nbVisuals == 1) {
+                        startToMedium = 1;
+                        if ((columnIndex % 2) == 0) {
+
+                            if (columnIndex > 0) {
+                                output.Append("</tr>");
+                                if ((columnIndex % 4) == 0) {
+                                    output.Append("<br>");
+                                }
+                            }
+                            output.Append("<tr>");
+
+                        }
+                        output.Append("<td>");
+                        if (indexTable == 0) {
+                            output.Append("<table>");
+                            output.Append("<tr>");
+                            output.Append("<td>");
+                        }
+
+                        output.Append(cell.RenderPDF(true, 0));
+
+                        indexTable++;
+
+                        if (indexTable == 2) {
+                            output.Append("</td>");
+                            output.Append("</tr>");
+                            output.Append("</table>");
+                            indexTable = 0;
+                        }
+                        output.Append("</td>");
+                        columnIndex++;
+                    }
+                    else if (nbVisuals < 5) {
+
+                        if (indexTable == 1) {
+                            output.Append("</td>");
+                            output.Append("</tr>");
+                            output.Append("</table>");
+                            indexTable = 0;
+                        }
+
+                        mediumToEnd = 1;
+                        if ((columnIndex % Nb_Columns) == 0) {
+
+                            if (columnIndex > 0) {
+                                output.Append("</tr>");
+                                if (startToMedium == 1) {
+                                    if (((columnIndex % 4) == 0) || ((columnIndex + 1) % 4 == 0)) {
+                                        output.Append("<br>");
+                                    }
+                                    if (((columnIndex % 4) == 0) || ((columnIndex + 1) % 4 == 0))
+                                        columnIndex = 0;
+                                    else
+                                        columnIndex = 1;
+                                    startToMedium = 0;
+                                }
+                                else {
+                                    if ((columnIndex % 2) == 0)
+                                        output.Append("<br>");
+                                }
+                            }
+                            output.Append("<tr>");
+
+                        }
+
+                        output.Append("<td>");
+
+                        output.Append(cell.RenderPDF(true, 0));
+
+
+                        output.Append("</td>");
+                        columnIndex++;
+
+                    }
+                    else if (nbVisuals >= 5) {
+
+                        if (indexTable == 1) {
+                            output.Append("</td>");
+                            output.Append("</tr>");
+                            output.Append("</table>");
+                            indexTable = 0;
+                        }
+
+                        end = (int)Math.Ceiling((double)nbVisuals / 4);
+
+                        for (int j = 0; j < end; j++) {
+
+                            if ((columnIndex % Nb_Columns) == 0) {
+
+                                if (columnIndex > 0) {
+                                    output.Append("</tr>");
+                                    if (mediumToEnd == 1) {
+                                        if ((columnIndex % 2) == 0) {
+                                            output.Append("<br>");
+                                        }
+                                        if (columnIndex % 2 == 0)
+                                            columnIndex = 0;
+                                        else
+                                            columnIndex = 1;
+                                        mediumToEnd = 0;
+                                    }
+                                    else {
+                                        if ((columnIndex % 2) == 0)
+                                            output.Append("<br>");
+                                    }
+                                }
+                                output.Append("<tr>");
+
+                            }
+                            output.Append("<td>");
+
+                            if (j == 0) {
+                                output.Append(cell.RenderPDF(false, 0));
+                            }
+                            else {
+                                if (j == end - 1) {
+                                    output.Append(cell.RenderPDF(true, j + (4 * j)));
+                                }
+                                else {
+                                    output.Append(cell.RenderPDF(false, j + (4 * j)));
+                                }
+                            }
+                            output.Append("</td>");
+                            columnIndex++;
+                        }
+
+                    }
+                }
+            }
+                output.Append("</tr>");
+                output.Append("</table>");
+                output.Append("<br>");
+
+        }
+        #endregion
+
+        #region BuildMSCreativesHtml
+        /// <summary> 
+		/// Render all versions controls
+		/// </summary>
+		/// <returns>Html code</returns>
+        protected void BuildMSCreativesHtml(StringBuilder output, ResultTable resultTable, List<Color> colorList) {
+
+            output.Append("<table align=\"left\" border=\"0\" class=\"txtViolet14BoldWhiteBG\">");
+            output.Append("<tr><td colSpan=\"" + _nb_column + "\">");
+            if (_title == string.Empty) {
+                switch (this._vehicle) {
+                    case DBCst.Vehicles.names.tv:
+                        _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2012, this._webSession.SiteLanguage));
+                        break;
+                    case DBCst.Vehicles.names.radio:
+                        _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2011, this._webSession.SiteLanguage));
+                        break;
+                    default:
+                        _title = "?";
+                        break;
+                }
+            }
+            output.Append(_title);
+            output.Append("</td></tr>");
+
+            output.Append("<tr><td class=\"whiteBackGround\" style=\"HEIGHT: 40px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\"></td></tr>");
+
+            int columnIndex = 0;
+
+            CellCreativesInformation cell;
+
+            for (int i = 0; i < resultTable.LinesNumber; i++) {
+
+                cell = (CellCreativesInformation)resultTable[i, 1];
+                if ((columnIndex % 3) == 0) {
+                    if (columnIndex > 0) {
+                        output.Append("</tr>");
+                        if ((columnIndex % 9) == 0) {
+                            output.Append("<br>");
+                        }
+                    }
+                    output.Append("<tr>");
+
+                }
+                output.Append("<td>");
+
+                output.Append(cell.RenderPDF(true, columnIndex, colorList));
+
+                output.Append("</td>");
+                columnIndex++;
+            }
+
+            output.Append("</tr>");
+            output.Append("</table>");
+            output.Append("<br>");
+        
+        }
+        #endregion
+
+        #region PressSetUp()
+        /// <summary>
 		/// Initialise all webcontrols For Press
 		/// </summary>
 		protected void PressSetUp() {
@@ -1665,8 +1989,35 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
         }
         #endregion
 
-		#endregion
+        #region Init image path
+        /// <summary>
+        /// Init images path
+        /// </summary>
+        /// <returns>Full path to access an image</returns>
+        private SortedDictionary<Int64, List<CellCreativesInformation>> InitCreativeCells(ResultTable resultTable) {
+
+            SortedDictionary<Int64, List<CellCreativesInformation>> dictionary = new SortedDictionary<Int64, List<CellCreativesInformation>>();
+            CellCreativesInformation cell;
+            List<CellCreativesInformation> list;
+
+            for (int i = 0; i < resultTable.LinesNumber; i++) {
+
+                cell = (CellCreativesInformation)resultTable[i, 1];
+                if (dictionary.ContainsKey(cell.NbVisuals))
+                    dictionary[cell.NbVisuals].Add(cell);
+                else {
+                    list = new List<CellCreativesInformation>();
+                    list.Add(cell);
+                    dictionary.Add(cell.NbVisuals, list);
+                }
+            }
+
+            return dictionary;
+        }
+        #endregion
+
+        #endregion
 
 
-	}
+    }
 }

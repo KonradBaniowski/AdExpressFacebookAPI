@@ -59,6 +59,26 @@ namespace TNS.AdExpressI.Insertions.Cells
         protected WebSession _session = null;
         #endregion
 
+        #region Properties
+        /// <summary>
+        /// Get Number Visuals
+        /// </summary>
+        public Int64 NbVisuals {
+            get {
+                if (_visuals != null)
+                    return _visuals.Count;
+                else
+                    return -1;
+            }
+        }
+        /// <summary>
+        /// Get Visuals
+        /// </summary>
+        public List<string> Visuals {
+            get {return _visuals;}
+        }
+        #endregion
+
         #region Constructeur
         /// <summary>
         /// Constructeur

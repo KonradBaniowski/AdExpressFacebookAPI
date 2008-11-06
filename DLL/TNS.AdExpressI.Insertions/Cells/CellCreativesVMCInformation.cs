@@ -9,6 +9,7 @@
  * */
 #endregion
 
+#region Using
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstVMCMedia = TNS.AdExpress.Constantes.DB.Media;
 using CstVMCFormat = TNS.AdExpress.Constantes.DB.Format;
@@ -28,6 +29,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
+#endregion
 
 namespace TNS.AdExpressI.Insertions.Cells
 {
@@ -37,7 +39,6 @@ namespace TNS.AdExpressI.Insertions.Cells
     [System.Serializable]
     public class CellCreativesVMCInformation : CellCreativesInformation
     {
-
 
         #region Constructeur
         /// <summary>
@@ -158,6 +159,10 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     cCell = _values[i];
 
+                    if (g.Id == GenericColumnItemInformation.Columns.slogan) {
+                        _idVersion = Convert.ToInt64(row[g.DataBaseIdField]);
+                    }
+
                     if (cCell is CellUnit)
                     {
                         int divide = 1;
@@ -236,6 +241,8 @@ namespace TNS.AdExpressI.Insertions.Cells
 
         }
         #endregion
+
+        #region Render
 
         #region Render
         public override string Render(string cssClass)
@@ -382,6 +389,105 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             return str.ToString();
         }
+        #endregion
+
+        #region RenderPDF
+        /// <summary>
+        /// Render
+        /// </summary>
+        /// <param name="withDetail">Width detail</param>
+        /// <param name="index">Index</param>
+        /// <returns>HTML Code</returns>
+        public override string RenderPDF(bool withDetail, Int64 index) {
+
+            string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
+            StringBuilder str = new StringBuilder();
+            string value;
+            string[] values;
+            int i = -1;
+
+            //Table
+            str.Append("<table cellpadding=0 cellspacing=0 width=100% border=\"0\" class=\"whiteBackGround\">");
+            //Render Verion visual
+            str.Append("<tr>");
+            str.Append("<TD>");
+            str.Append("<table cellpadding=0 cellspacing=0 border=\"0\" class=\"whiteBackGround\">");
+            str.Append("<tr>");
+            str.Append("<td align=\"left\" class=\"whiteBackGround\">");
+            base.RenderImage(str, index);
+            str.Append("</td>");
+
+            //Informations
+            List<string> cols = new List<string>();
+            List<string> description = new List<string>();
+
+            bool hasData = false;
+            foreach (GenericColumnItemInformation g in _columns) {
+                i++;
+                _values[i].Parent = this.Parent;
+                value = _values[i].ToString();
+
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax) {
+
+                    StringBuilder tmpStr = new StringBuilder();
+                    tmpStr.AppendFormat("<td width=\"1%\" nowrap><span>{0}<span></td> ", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
+                    tmpStr.Append("<td>: ");
+                    hasData = false;
+                    if (_values[i] != null) {
+                        if (!(_values[i] is CellUnit)) {
+                            values = value.Split(',');
+                            foreach (string s in values) {
+                                if (hasData) {
+                                    tmpStr.Append("<br/>&nbsp;&nbsp;");
+                                }
+                                hasData = true;
+                                tmpStr.AppendFormat("{0}", s);
+                            }
+                        }
+                        else {
+                            tmpStr.AppendFormat("{0}", value);
+                        }
+                    }
+                    tmpStr.Append("</td>");
+                    cols.Add(tmpStr.ToString());
+
+                }
+            }
+
+            int nbLine = cols.Count;
+            StringBuilder t = new StringBuilder();
+
+            if (withDetail) {
+
+                str.Append("<td valign=\"top\"><TABLE width=\"300\" cellSpacing=\"0\" border=\"0\" class=\"txtViolet11Bold\" valign=\"top\">");
+                for (int l = 0; l < cols.Count; l++) {
+                    str.Append("<tr valign=\"top\">" + cols[l] + "</tr>");
+                }
+                str.Append("</TABLE></td>");
+            }
+
+            str.Append("</tr>");
+
+            str.Append("<tr ><td nowrap " +
+                ((_session.SloganColors[_idVersion].ToString().Length > 0) ? "class=\"" + _session.SloganColors[_idVersion].ToString().Replace("c", "m") + "\">" : "\">"));
+
+            str.Append("<font size=1>");
+            str.Append("&nbsp;" + _idVersion);
+            str.Append("</font></td>");
+            str.Append("</tr>");
+
+            //End table
+            str.Append("</table>");
+            str.Append("</td>");
+            str.Append("</tr>");
+            str.Append("</table>");
+            str.Append("</td>");
+
+            return str.ToString();
+
+        }
+        #endregion
+
         #endregion
 
     }

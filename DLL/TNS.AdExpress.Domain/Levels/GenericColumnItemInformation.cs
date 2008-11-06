@@ -357,8 +357,15 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Banner Internet DImension
             /// </summary>
-            bannerInternetDimension=84
-
+            bannerInternetDimension=84,
+            /// <summary>
+            /// Euros
+            /// </summary>
+            euros=85,
+            /// <summary>
+            /// First date parution
+            /// </summary>
+            firstDateParution = 86
 }
 		#endregion
 
@@ -456,6 +463,10 @@ namespace TNS.AdExpress.Domain.Level
         /// Specify if column is a max of units
         /// </summary>
         private bool _isMax = false;
+        /// <summary>
+        /// Specify if column is a min of units
+        /// </summary>
+        private bool _isMin = false;
         #endregion
 
 		#region Constructeur
@@ -543,6 +554,13 @@ namespace TNS.AdExpress.Domain.Level
         {
             get { return _isMax; }
             set { _isMax = value; }
+        }
+        /// <summary>
+        /// Specify if column is a min of units
+        /// </summary>
+        public bool IsMin {
+            get { return _isMin; }
+            set { _isMin = value; }
         }
         /// <summary>
         /// Specify if column is a cout of units
@@ -705,6 +723,7 @@ namespace TNS.AdExpress.Domain.Level
             if (sql.Length > 0 && _isSum) sql = string.Format("sum({0})", sql);
             if (sql.Length > 0 && _isCountDistinct) sql = string.Format("count(distinct {0})", sql);
             if (sql.Length > 0 && _isMax) sql = string.Format("max({0})", sql);
+            if (sql.Length > 0 && _isMin) sql = string.Format("min({0})", sql);
             if (_dataBaseAliasField != null) sql += " as " + _dataBaseAliasField;
 			return(sql);
 		}
@@ -720,6 +739,7 @@ namespace TNS.AdExpress.Domain.Level
             if (sql.Length > 0 && _isSum) sql = string.Format("sum({0})", sql);
             if (sql.Length > 0 && _isCountDistinct) sql = string.Format("count(distinct {0})", sql);
             if (sql.Length > 0 && _isMax) sql = string.Format("max({0})", sql);
+            if (sql.Length > 0 && _isMin) sql = string.Format("min({0})", sql);
             if (_dataBaseAliasField != null) sql += " as " + _dataBaseAliasField;
 			return(sql);
 		}
@@ -738,6 +758,7 @@ namespace TNS.AdExpress.Domain.Level
             if (sql.Length>0 && _isSum) sql = string.Format("sum({0})", sql);
             if (sql.Length > 0 && _isCountDistinct) sql = string.Format("count(distinct {0})", sql);
             if (sql.Length > 0 && _isMax) sql = string.Format("max({0})", sql);
+            if (sql.Length > 0 && _isMin) sql = string.Format("min({0})", sql);
             if (_dataBaseAliasIdField != null) sql += " as " + _dataBaseAliasIdField;
 			return(sql);
 		}
@@ -753,6 +774,7 @@ namespace TNS.AdExpress.Domain.Level
             if (sql.Length > 0 && _isSum) sql = string.Format("sum({0})", sql);
             if (sql.Length > 0 && _isCountDistinct) sql = string.Format("count(distinct {0})", sql);
             if (sql.Length > 0 && _isMax) sql = string.Format("max({0})", sql);
+            if (sql.Length > 0 && _isMin) sql = string.Format("min({0})", sql);
             if (_dataBaseAliasIdField != null) sql += " as " + _dataBaseAliasIdField;
 			return(sql);
         }

@@ -24,8 +24,13 @@ using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.Exceptions;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
 using WeBCst = TNS.AdExpress.Constantes.Web;
+using CustomCst = TNS.AdExpress.Constantes.Customer;
 
 using TNS.FrameWork.Exceptions;
+using TNS.FrameWork.WebResultUI;
+using TNS.AdExpressI.Insertions;
+using TNS.AdExpressI.Insertions.Cells;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 {
@@ -65,6 +70,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
         /// Période utilisée
         /// </summary>
         private MediaSchedulePeriod _period = null;
+        /// <summary>
+        /// Zoom date
+        /// </summary>
+        private string _zoomDate = string.Empty;
 		#endregion
 
 		#region Accessors
@@ -111,6 +120,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             get { return (_period); }
             set { _period = value; }
         }
+        ///<summary>Get / Set Zoom date</summary>
+        public string ZoomDate {
+            get { return (_zoomDate); }
+            set { _zoomDate = value; }
+        }
 		#endregion
 
 		#region Constructor
@@ -138,6 +152,19 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             this._vehicle = vehicle;
             this._period = period;
         }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>
+        /// <param name="vehicle">Vehicle considered</param>
+        /// <param name="period">Période utilisée</param>
+        /// <param name="zoomDate">Zoom date</param>
+        public VersionsVehicleUI(WebSession webSession, DBCst.Vehicles.names vehicle, MediaSchedulePeriod period, string zoomDate) {
+            this._webSession = webSession;
+            this._vehicle = vehicle;
+            this._period = period;
+            this._zoomDate = zoomDate;
+        }
 		#endregion
 
 		#region Public Methods
@@ -151,10 +178,36 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			BuildHtml(htmlBld);
 			return htmlBld.ToString();
 		}
+        /// <summary>
+        /// Build Html code to display the set of version
+        /// </summary>
+        /// <returns>Html Code</returns>
+        public string GetMSCreativesHtml() {
+
+            #region MSCreatives
+            object[] paramMSCraetives = new object[2];
+            paramMSCraetives[0] = _webSession;
+            paramMSCraetives[1] = _webSession.CurrentModule;
+            IInsertionsResult resultMSCreatives = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.Default.dll", "TNS.AdExpressI.Insertions.Default.InsertionsResult", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, paramMSCraetives, null, null, null);
+            ResultTable data = null;
+            string[] vehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CustomCst.Right.type.vehicleAccess).Split(',');
+            string filters = string.Empty;
+            int fromDate = Convert.ToInt32(_period.Begin.ToString("yyyyMMdd"));
+            int toDate = Convert.ToInt32(_period.End.ToString("yyyyMMdd"));
+            #endregion
+
+            data = resultMSCreatives.GetMSCreatives(VehiclesInformation.Get(Int64.Parse(vehicles[0])), fromDate, toDate, filters, -1, _zoomDate); 
+
+            StringBuilder htmlBld = new StringBuilder(10000);
+            BuildMSCreativesHtml(htmlBld, data);
+            return htmlBld.ToString();
+        }
 		#endregion
 
 		#region Protected Methods
-		/// <summary>
+
+        #region SetUp
+        /// <summary>
 		/// Initialise all webcontrols
 		/// </summary>
 		protected void SetUp() {
@@ -311,7 +364,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			#endregion
 
 		}
-		/// <summary> 
+        #endregion
+
+        #region BuildHtml
+        /// <summary> 
 		/// Render all versions controls
 		/// </summary>
 		/// <returns>Html code</returns>
@@ -372,11 +428,76 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 				output.Append("</tr>");
 				output.Append("</table>");
 			}
-		}
-		#endregion
+        }
+        #endregion
 
-		#region Internal Methods
-		/// <summary>
+        #region BuildMSCreativesHtml
+        /// <summary> 
+		/// Render all versions controls
+		/// </summary>
+		/// <returns>Html code</returns>
+        protected void BuildMSCreativesHtml(StringBuilder output, ResultTable resultTable) {
+ 
+            output.Append("<table align=\"left\" border=\"0\" class=\"violetBackGroundV3 txtBlanc12Bold\">");
+            output.Append("<tr><td colSpan=\"" + _nb_column + "\">");
+            if (_title == string.Empty) {
+                switch (this._vehicle) {
+                    case DBCst.Vehicles.names.press:
+                        _title = GestionWeb.GetWebWord(1972, this._webSession.SiteLanguage);
+                        break;
+
+                    case DBCst.Vehicles.names.internationalPress:
+                        _title = GestionWeb.GetWebWord(1972, this._webSession.SiteLanguage);
+                        break;
+
+                    case DBCst.Vehicles.names.tv:
+                        _title = GestionWeb.GetWebWord(2012, this._webSession.SiteLanguage);
+                        break;
+
+                    case DBCst.Vehicles.names.radio:
+                        _title = GestionWeb.GetWebWord(2011, this._webSession.SiteLanguage);
+                        break;
+
+                    case DBCst.Vehicles.names.directMarketing:
+                        _title = GestionWeb.GetWebWord(2217, this._webSession.SiteLanguage);
+                        break;
+
+                    case DBCst.Vehicles.names.outdoor:
+                        _title = GestionWeb.GetWebWord(2255, this._webSession.SiteLanguage);
+                        break;
+
+                    default:
+                        _title = "?";
+                        break;
+                }
+            }
+            output.Append(_title);
+            output.Append("</td></tr>");
+
+            int columnIndex = 0;
+            for (int i = 0; i < resultTable.LinesNumber; i++) {
+                if ((columnIndex % Nb_Columns) == 0) {
+                    if (columnIndex > 0) {
+                        output.Append("</tr>");
+                    }
+                    output.Append("<tr>");
+
+                }
+                output.Append("<td>");
+                output.Append(((CellCreativesInformation)resultTable[i, 1]).RenderThumbnails());
+                output.Append("</td>");
+                columnIndex++;
+            }
+            output.Append("</tr>");
+            output.Append("</table>");
+            
+        }
+        #endregion
+
+        #endregion
+
+        #region Internal Methods
+        /// <summary>
 		/// Build visual access path depending on the vehicle
 		/// </summary>
 		/// <param name="date">date to format YYYYMMDD</param>

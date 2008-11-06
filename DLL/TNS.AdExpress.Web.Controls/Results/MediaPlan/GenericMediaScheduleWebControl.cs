@@ -30,9 +30,12 @@ using TNS.FrameWork.Date;
 using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using CustomCst = TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Domain.Classification;
 
 using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpressI.Insertions;
 namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 	/// <summary>
 	/// Affiche le résultat d'une alerte plan media
@@ -650,19 +653,15 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 mediaScheduleResult.Module = _module;
                 result = mediaScheduleResult.GetHtml();
+
                 #region Data
 				if(result!=null && result.HTMLCode.Length>0){
-
-                    //#region Obtention du résultat du calendrier d'action				
-                    //result=TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetHtml(tab,webSession, period,_zoomDate);
-                    //#endregion
-				
+                    				
 					#region Construction du tableaux global
                     html.Append("<table width=100% align=\"left\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
                     html.Append("<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/"+_themeName+"/Images/Common/Result/header.gif\">&nbsp;</td></tr>");
                     html.Append("<tr><td align=\"center\" style=\"padding:10px;\" class=\"MSVioletRightLeftBorder\">");
 					html.Append("<table align=\"center\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
-
 					#endregion
 
 					#region Revenir aux versions sans zoom
@@ -674,11 +673,13 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					}
 					#endregion
 
-                    VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(webSession, result.VersionsDetail, period);
-                    html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
-                    html.Append(versionsUI.GetHtml());
-                    html.Append("\r\n\t\t</td>\r\n\t</tr>");
-					
+                    if (webSession.SloganColors.Count > 0) {
+                        VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(webSession, period, _zoomDate);
+                        html.Append("\r\n\t<tr class=\"violetBackGroundV3\">\r\n\t\t<td>");
+                        html.Append(versionsUI.GetMSCreativesHtml());
+                        html.Append("\r\n\t\t</td>\r\n\t</tr>");
+                    }
+
 					html.Append("\r\n\t<tr height=\"1\">\r\n\t\t<td>");
 					html.Append("\r\n\t\t</td>\r\n\t</tr>");
 					html.Append("\r\n\t<tr>\r\n\t\t<td>");

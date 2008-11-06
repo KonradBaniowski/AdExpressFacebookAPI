@@ -98,6 +98,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 			string dbGroupbyConstraint=null;
 			string sqlOperation=null;
             bool isSum = false;
+            bool isMin = false;
             bool isCountDistinct = false;
 			#endregion
 
@@ -124,6 +125,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								convertNullDbId=false;
 								convertNullDbLabel=false;
                                 isSum = false;
+                                isMin = false;
                                 isCountDistinct = false;
 								
 								if ((reader.GetAttribute("id")!=null && reader.GetAttribute("id").Length>0) && 
@@ -175,6 +177,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     if (reader.GetAttribute("isSum") != null && reader.GetAttribute("isSum").Length > 0) genericColumnItemInformation.IsSum = bool.Parse(reader.GetAttribute("isSum"));
                                     if (reader.GetAttribute("isCountDistinct") != null && reader.GetAttribute("isCountDistinct").Length > 0) genericColumnItemInformation.IsCountDistinct = bool.Parse(reader.GetAttribute("isCountDistinct"));
                                     if (reader.GetAttribute("isMax") != null && reader.GetAttribute("isMax").Length > 0) genericColumnItemInformation.IsMax = bool.Parse(reader.GetAttribute("isMax"));
+                                    if (reader.GetAttribute("isMin") != null && reader.GetAttribute("isMin").Length > 0) genericColumnItemInformation.IsMin = bool.Parse(reader.GetAttribute("isMin"));
 									list.Add(id,genericColumnItemInformation);
 
 									

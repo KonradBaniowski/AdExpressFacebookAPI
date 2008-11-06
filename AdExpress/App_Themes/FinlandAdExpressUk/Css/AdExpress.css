@@ -515,6 +515,18 @@ table.creationWhiteBorder{
 	color: #ffffff;
 	font-weight: bold;
 }
+.txtOrange10{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #FF6319;
+	font-weight: normal;
+}
+.txtBlanc14Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: bold;
+}
 .pinkTextColor{
 	color:#FF0099;
 }

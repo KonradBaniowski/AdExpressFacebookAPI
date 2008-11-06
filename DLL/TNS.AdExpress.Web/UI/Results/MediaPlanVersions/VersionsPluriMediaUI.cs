@@ -9,6 +9,7 @@
 #endregion
 
 using System;
+using System.Drawing;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -20,9 +21,13 @@ using TNS.AdExpress.Web.Core.Selection;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
 using CustomCst = TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
+using TNS.FrameWork.WebResultUI;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Classification;
 using DomainResults = TNS.AdExpress.Domain.Results;
+using TNS.AdExpressI.Insertions;
+using TNS.AdExpressI.Insertions.Cells;
+using TNS.AdExpress.Domain.Theme;
 
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
@@ -66,6 +71,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
         /// Période utilisée
         /// </summary>
         private MediaSchedulePeriod _period = null;
+        /// <summary>
+        /// Zoom Date
+        /// </summary>
+        private string _zoomDate = string.Empty;
 		#endregion
 
 		#region Accessors
@@ -94,6 +103,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
             get { return (_period); }
             set { _period = value; }
         }
+        ///<summary>Get / Set zoom date</summary>
+        public string ZoomDate {
+            get { return (_zoomDate); }
+            set { _zoomDate = value; }
+        }
 		#endregion
 
 		#region Constructor
@@ -116,11 +130,92 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
             this._webSession = webSession;
             this._versions = versions;
             this._period = period;
-        }	
+        }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>
+        /// <param name="period">Période sélectionnée</param>
+        /// <param name="zoomDate">Zoom date</param>
+        public VersionsPluriMediaUI(WebSession webSession, MediaSchedulePeriod period, string zoomDate) {
+            this._webSession = webSession;
+            this._period = period;
+            this._zoomDate = zoomDate;
+        }
 		#endregion
 
 		#region Public Methods
-		/// <summary>
+
+        #region GetMSCreativesHtml
+        /// <summary>
+        /// Build Html code to display the set of version
+        /// </summary>
+        /// <returns>Html Code</returns>
+        public string GetMSCreativesHtml() {
+
+            StringBuilder htmlBld = new StringBuilder(10000);
+
+            //listing of vehicle to display
+            string[] vehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CustomCst.Right.type.vehicleAccess).Split(',');
+            _vehicles = new ArrayList();
+            if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))) {
+                foreach (string str in vehicles) {
+                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))) {
+                        _vehicles.Add(new VersionsVehicleUI(_webSession, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)), Period, ZoomDate));
+                    }
+                }
+            }
+
+            //build components
+            htmlBld.Append("<table cellspacing=\"0\" cellpadding=\"0\"  border=\"0\">");
+            foreach (VersionsVehicleUI vUi in _vehicles) {
+                htmlBld.Append("\r\n\t<tr>\r\n\t\t<td>");
+                htmlBld.Append(vUi.GetMSCreativesHtml());
+                htmlBld.Append("\r\n\t\t</td>\r\n\t</tr>");
+            }
+            htmlBld.Append("</table>");
+
+            return htmlBld.ToString();
+        }
+        #endregion
+
+        #region GetExportMSCreativesHtml
+        /// <summary>
+        /// Build Html code to display the set of version
+        /// </summary>
+        /// <param name="creativeCells">creativeCells</param>
+        /// <param name="style">Style</param>
+        /// <returns>Html Code</returns>
+        public string GetExportMSCreativesHtml(ref SortedDictionary<Int64, List<CellCreativesInformation>> creativeCells, Style style) {
+
+            StringBuilder htmlBld = new StringBuilder(10000);
+
+            //listing of vehicle to display
+            string[] vehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CustomCst.Right.type.vehicleAccess).Split(',');
+            _vehicles = new ArrayList();
+            if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))) {
+                foreach (string str in vehicles) {
+                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))) {
+                        _vehicles.Add(new ExportVersionsVehicleUI(_webSession, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)), Period, ZoomDate));
+                    }
+                }
+            }
+
+            //build components
+            htmlBld.Append("<table cellspacing=\"0\" cellpadding=\"0\"  border=\"0\">");
+            foreach (ExportVersionsVehicleUI vUi in _vehicles) {
+                htmlBld.Append("\r\n\t<tr>\r\n\t\t<td>");
+                htmlBld.Append(vUi.GetMSCreativesHtml(ref creativeCells, style));
+                htmlBld.Append("\r\n\t\t</td>\r\n\t</tr>");
+            }
+            htmlBld.Append("</table>");
+
+            return htmlBld.ToString();
+        }
+        #endregion
+
+        #region GetHtml
+        /// <summary>
 		/// Build Html code to display the set of version
 		/// </summary>
 		/// <returns>Html Code</returns>
@@ -152,9 +247,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			htmlBld.Append("</table>");
 
 			return htmlBld.ToString();
-		} 
+        }
+        #endregion
 
-		/// <summary>
+        #region GetHtmlExport
+        /// <summary>
 		/// Build Html code to display the set of version for the export UI
 		/// </summary>
 		/// <returns>Html Code</returns>
@@ -183,9 +280,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			htmlBld.Append("</table>");
 
 			return htmlBld.ToString();
-		} 
+        }
+        #endregion
 
-		/// <summary>
+        #region GetAPPMHtmlExport
+        /// <summary>
 		/// Build Html code to display the set of version for the export UI
 		/// </summary>
 		/// <returns>Html Code</returns>
@@ -208,8 +307,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 				partitHTMLVersion =	vUi.GetAPPMHtml(dataSource, title, ref versionsUIs);
 			}
 				return partitHTMLVersion;
-		} 
-		#endregion
+            }
+        #endregion
 
-	}
+        #endregion
+
+        }
 }
