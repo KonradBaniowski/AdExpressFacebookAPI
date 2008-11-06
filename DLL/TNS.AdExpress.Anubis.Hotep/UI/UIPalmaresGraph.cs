@@ -151,7 +151,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
                 if (d != 0 && FctUtilities.CheckedText.IsNotEmpty(u)) {
                     oneProductExist = true;
 
-                    series.Points.AddXY(_tab[i, EngineTop.PRODUCT], FctUtilities.Units.ConvertUnitValue(d, _webSession.Unit));
+                    series.Points.AddXY(_tab[i, EngineTop.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(d, _webSession.Unit)));
 
                     series.Points[i - 1].ShowInLegend = true;
                     // Competitor in red
