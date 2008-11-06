@@ -56,6 +56,7 @@ using TNS.AdExpressI.ProductClassIndicators.Engines;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Theme;
+using System.Collections.Generic;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
@@ -1032,48 +1033,558 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			#endregion
 
 			try{
-				if(tab.GetLongLength(0)!=0){
+                if (tab.GetLongLength(0) != 0) {
 
-					this.NewPage();
+                    #region GRP graph
 
-					this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
+                    #region Init Series
 
-					string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp";
+                    #region Constantes
+                    const int NBRE_MEDIA = 5;
+                    #endregion
 
-					#region Title
-                    Style.GetTag("MediaStrategyGraphTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
-					this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1227 ,_webSession.SiteLanguage));
-					#endregion
+                    #region Niveau de détail
+                    int MEDIA_LEVEL_NUMBER;
+                    switch (_webSession.PreformatedMediaDetail) {
+                        case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle:
+                            MEDIA_LEVEL_NUMBER = 1;
+                            break;
+                        case CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory:
+                            MEDIA_LEVEL_NUMBER = 2;
+                            break;
+                        default:
+                            MEDIA_LEVEL_NUMBER = 3;
+                            break;
+                    }
+                    #endregion
 
-					#region GRP graph
-			
-					UIMediaStrategyGraph graph = new UIMediaStrategyGraph(_webSession, _dataSource, _config, tab,Style);
-					graph.BuildMediaStrategy();
-					graph.SaveAsImage(workFile,ChartImageFormat.Bmp);
-					img = Image.FromFile(workFile);
-					double coef = Math.Min(1.0, ((double)this.PDFPAGE_Width/((double)img.Width)));
-					coef = Math.Min(coef, ((double)(this.WorkZoneBottom - this.WorkZoneTop - 40)/((double)img.Height)));
-					int i = this.AddImageFromFilename(workFile, TxImageCompressionType.itcFlate);
-					this.PDFPAGE_ShowImage(i, 
-						(this.PDFPAGE_Width / 2) - (coef * img.Width /2),
-						this.PDFPAGE_Height/2 - (coef * img.Height / 2),
-						coef * img.Width,
-						coef * img.Height,
-						0);
-					img.Dispose();
-					img = null;
-					graph.Dispose();
-					graph = null;
-			
-			
-					#region Clean File
-					File.Delete(workFile);
-					#endregion
-				
-					#endregion
+                    #region Variables
+                    Dictionary<string, Series> listSeriesMedia = new Dictionary<string, Series>();
+                    Dictionary<int, string> listSeriesName = new Dictionary<int, string>();
+                    Dictionary<string, double> listSeriesMediaRefCompetitor = new Dictionary<string, double>();
+                    Dictionary<string, DataTable> listTableRefCompetitor = new Dictionary<string, DataTable>();
+                    bool universTotalVerif = false;
+                    #endregion
 
-					_titleList.Add(Convertion.ToHtmlString(GestionWeb.GetWebWord(1227,_webSession.SiteLanguage)));
-				}
+                    if (_webSession.ComparaisonCriterion == TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal) {
+                        _webSession.ComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal;
+                        universTotalVerif = true;
+                    }
+
+                    #region Create Series
+                    // Serie Univers
+                    listSeriesMedia.Add(GestionWeb.GetWebWord(1780, _webSession.SiteLanguage), new Series());
+                    listSeriesName.Add(0, GestionWeb.GetWebWord(1780, _webSession.SiteLanguage));
+                    // Serie Famille
+                    if (_webSession.ComparaisonCriterion == TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal) {
+                        listSeriesMedia.Add(GestionWeb.GetWebWord(1189, _webSession.SiteLanguage), new Series());
+                        listSeriesName.Add(1, GestionWeb.GetWebWord(1189, _webSession.SiteLanguage));
+                        // Serie Marché
+                    }
+                    else {
+                        listSeriesMedia.Add(GestionWeb.GetWebWord(1316, _webSession.SiteLanguage), new Series());
+                        listSeriesName.Add(1, GestionWeb.GetWebWord(1316, _webSession.SiteLanguage));
+                    }
+
+                    // Create series (one per media)
+                    for (int i = 1; i < tab.GetLongLength(0); i++) {
+
+                        //	Dictionary with advertiser label as key and total as value
+                        if (tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null) {
+                            if (!listSeriesMediaRefCompetitor.ContainsKey(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString())) {
+                                listSeriesMediaRefCompetitor.Add(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString(), new double());
+                            }
+
+                            if (!listTableRefCompetitor.ContainsKey(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString())) {
+                                DataTable tableCompetitorRef = new DataTable();
+                                tableCompetitorRef.Columns.Add("Name");
+                                tableCompetitorRef.Columns.Add("Position", typeof(double));
+                                listTableRefCompetitor.Add(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString(), tableCompetitorRef);
+
+                            }
+
+                            if (!listSeriesMedia.ContainsKey(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString())) {
+                                listSeriesMedia.Add(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString(), new Series());
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region Totals
+                    double totalUniversValue = 0;
+                    double totalSectorValue = 0;
+                    double totalMarketValue = 0;
+
+                    #region Once Media
+                    if (MEDIA_LEVEL_NUMBER == 2 || MEDIA_LEVEL_NUMBER == 3) {
+                        for (int i = 1; i < tab.GetLongLength(0); i++) {
+                            for (int j = 0; j < EngineMediaStrategy.NB_MAX_COLUMNS; j++) {
+                                switch (j) {
+
+                                    #region support
+                                    // Univers Total
+                                    case EngineMediaStrategy.TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 3) {
+                                            totalUniversValue += Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX]);
+                                        }
+                                        break;
+                                    // Sector Total
+                                    case EngineMediaStrategy.TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 3) {
+                                            totalSectorValue += Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX]);
+                                        }
+                                        break;
+                                    // Market Total
+                                    case EngineMediaStrategy.TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 3) {
+                                            totalMarketValue += Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX]);
+                                        }
+                                        break;
+                                    #endregion
+
+                                    #region Advertisers
+                                    case EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null
+                                            && tab[i, EngineMediaStrategy.LABEL_MEDIA_COLUMN_INDEX] != null
+                                            && tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null
+                                            && MEDIA_LEVEL_NUMBER == 3) {
+                                            listSeriesMediaRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()] += Convert.ToDouble(tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX]);
+                                        }
+                                        else if (tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null
+                                            && tab[i, EngineMediaStrategy.LABEL_CATEGORY_COLUMN_INDEX] != null
+                                            && tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null
+                                            && tab[i, EngineMediaStrategy.LABEL_MEDIA_COLUMN_INDEX] == null
+                                            && MEDIA_LEVEL_NUMBER == 2) {
+                                            listSeriesMediaRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()] += Convert.ToDouble(tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX]);
+                                        }
+                                        break;
+                                    #endregion
+
+                                    #region Category
+                                    // Univers Total	
+                                    case EngineMediaStrategy.TOTAL_UNIV_CATEGORY_INVEST_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.TOTAL_UNIV_CATEGORY_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 2) {
+                                            totalUniversValue += Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_UNIV_CATEGORY_INVEST_COLUMN_INDEX]);
+                                        }
+                                        break;
+                                    // Sector Total
+                                    case EngineMediaStrategy.TOTAL_SECTOR_CATEGORY_INVEST_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_CATEGORY_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 2) {
+                                            totalSectorValue += Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_SECTOR_CATEGORY_INVEST_COLUMN_INDEX]);
+                                        }
+                                        break;
+                                    // Market Total
+                                    case EngineMediaStrategy.TOTAL_MARKET_CATEGORY_INVEST_COLUMN_INDEX:
+
+                                        if (tab[i, EngineMediaStrategy.TOTAL_MARKET_CATEGORY_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 2) {
+                                            totalMarketValue += Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_MARKET_CATEGORY_INVEST_COLUMN_INDEX]);
+                                        }
+
+                                        break;
+                                    #endregion
+
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region PluriMedia
+                    if (MEDIA_LEVEL_NUMBER == 1) {
+                        for (int i = 0; i < tab.GetLongLength(0); i++) {
+                            for (int j = 0; j < EngineMediaStrategy.NB_MAX_COLUMNS; j++) {
+                                switch (j) {
+                                    case EngineMediaStrategy.TOTAL_UNIV_INVEST_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.TOTAL_UNIV_INVEST_COLUMN_INDEX] != null) {
+                                            totalUniversValue += Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_UNIV_INVEST_COLUMN_INDEX]);
+                                        }
+                                        break;
+                                    case EngineMediaStrategy.TOTAL_SECTOR_INVEST_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_INVEST_COLUMN_INDEX] != null) {
+                                            totalSectorValue += Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_SECTOR_INVEST_COLUMN_INDEX]);
+                                        }
+                                        break;
+                                    case EngineMediaStrategy.TOTAL_MARKET_INVEST_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.TOTAL_MARKET_INVEST_COLUMN_INDEX] != null) {
+                                            totalMarketValue += Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_MARKET_INVEST_COLUMN_INDEX]);
+                                        }
+                                        break;
+                                    case EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX:
+                                        if (tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null
+                                            && tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null
+                                            && tab[i, EngineMediaStrategy.LABEL_VEHICLE_COLUMN_INDEX] != null) {
+                                            listSeriesMediaRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()] += Convert.ToDouble(tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX]);
+                                        }
+
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #endregion
+
+                    #region Table
+                    double elementValue;
+                    DataTable tableUnivers = new DataTable();
+                    DataTable tableSectorMarket = new DataTable();
+                    // Define columns
+                    tableUnivers.Columns.Add("Name");
+                    tableUnivers.Columns.Add("Position", typeof(double));
+                    tableSectorMarket.Columns.Add("Name");
+                    tableSectorMarket.Columns.Add("Position", typeof(double));
+
+                    for (int i = 1; i < tab.GetLongLength(0); i++) {
+                        for (int j = 0; j < EngineMediaStrategy.NB_MAX_COLUMNS; j++) {
+                            switch (j) {
+
+                                #region Media
+                                case EngineMediaStrategy.TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 3) {
+                                        if (totalUniversValue != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX]) / totalUniversValue * 100;
+                                            DataRow row = tableUnivers.NewRow();
+                                            row["Name"] = tab[i, EngineMediaStrategy.LABEL_MEDIA_COLUMN_INDEX];
+                                            row["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            tableUnivers.Rows.Add(row);
+                                        }
+                                        j = j + 6;
+                                    }
+
+                                    break;
+                                case EngineMediaStrategy.TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 3) {
+                                        if (totalSectorValue != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX]) / totalSectorValue * 100;
+                                            DataRow row1 = tableSectorMarket.NewRow();
+                                            row1["Name"] = tab[i, EngineMediaStrategy.LABEL_MEDIA_COLUMN_INDEX];
+                                            row1["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            tableSectorMarket.Rows.Add(row1);
+                                        }
+                                        j = j + 5;
+                                    }
+                                    break;
+                                case EngineMediaStrategy.TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 3) {
+                                        if (totalMarketValue != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX]) / totalMarketValue * 100;
+                                            DataRow row1 = tableSectorMarket.NewRow();
+                                            row1["Name"] = tab[i, EngineMediaStrategy.LABEL_MEDIA_COLUMN_INDEX];
+                                            row1["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            tableSectorMarket.Rows.Add(row1);
+                                        }
+                                        j = j + 4;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Advertisers
+                                case EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null
+                                        && tab[i, EngineMediaStrategy.LABEL_MEDIA_COLUMN_INDEX] != null
+                                        && tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null
+                                        && MEDIA_LEVEL_NUMBER == 3) {
+
+                                        if (listSeriesMediaRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()] != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX]) / listSeriesMediaRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()] * 100;
+                                            DataRow row1 = listTableRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()].NewRow();
+                                            row1["Name"] = tab[i, EngineMediaStrategy.LABEL_MEDIA_COLUMN_INDEX];
+                                            row1["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            listTableRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()].Rows.Add(row1);
+                                        }
+
+                                        j = j + 12;
+                                    }
+                                    else if (tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null
+                                        && tab[i, EngineMediaStrategy.LABEL_CATEGORY_COLUMN_INDEX] != null
+                                        && tab[i, EngineMediaStrategy.LABEL_MEDIA_COLUMN_INDEX] == null
+                                        && tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null
+                                        && MEDIA_LEVEL_NUMBER == 2) {
+
+                                        if (listSeriesMediaRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()] != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX]) / listSeriesMediaRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()] * 100;
+                                            DataRow row1 = listTableRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()].NewRow();
+                                            row1["Name"] = tab[i, EngineMediaStrategy.LABEL_CATEGORY_COLUMN_INDEX];
+                                            row1["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            listTableRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()].Rows.Add(row1);
+                                        }
+                                        j = j + 12;
+                                    }
+                                    else if (tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null
+                                && tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null
+                                && tab[i, EngineMediaStrategy.LABEL_VEHICLE_COLUMN_INDEX] != null
+                                     && MEDIA_LEVEL_NUMBER == 1) {
+                                        if (listSeriesMediaRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()] != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX]) / listSeriesMediaRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()] * 100;
+                                            DataRow row1 = listTableRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()].NewRow();
+                                            row1["Name"] = tab[i, EngineMediaStrategy.LABEL_VEHICLE_COLUMN_INDEX];
+                                            row1["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            listTableRefCompetitor[tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()].Rows.Add(row1);
+                                        }
+                                        j = j + 12;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Categorie
+                                case EngineMediaStrategy.TOTAL_UNIV_CATEGORY_INVEST_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.TOTAL_UNIV_CATEGORY_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 2) {
+                                        if (totalUniversValue != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_UNIV_CATEGORY_INVEST_COLUMN_INDEX]) / totalUniversValue * 100;
+                                            DataRow row = tableUnivers.NewRow();
+                                            row["Name"] = tab[i, EngineMediaStrategy.LABEL_CATEGORY_COLUMN_INDEX];
+                                            row["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            tableUnivers.Rows.Add(row);
+                                        }
+                                    }
+                                    break;
+                                case EngineMediaStrategy.TOTAL_SECTOR_CATEGORY_INVEST_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_CATEGORY_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 2) {
+                                        if (totalSectorValue != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_SECTOR_CATEGORY_INVEST_COLUMN_INDEX]) / totalSectorValue * 100;
+                                            DataRow row1 = tableSectorMarket.NewRow();
+                                            row1["Name"] = tab[i, EngineMediaStrategy.LABEL_CATEGORY_COLUMN_INDEX];
+                                            row1["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            tableSectorMarket.Rows.Add(row1);
+                                        }
+                                    }
+                                    break;
+                                case EngineMediaStrategy.TOTAL_MARKET_CATEGORY_INVEST_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.TOTAL_MARKET_CATEGORY_INVEST_COLUMN_INDEX] != null && MEDIA_LEVEL_NUMBER == 2) {
+                                        if (totalMarketValue != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_MARKET_CATEGORY_INVEST_COLUMN_INDEX]) / totalMarketValue * 100;
+                                            DataRow row1 = tableSectorMarket.NewRow();
+                                            row1["Name"] = tab[i, EngineMediaStrategy.LABEL_CATEGORY_COLUMN_INDEX];
+                                            row1["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            tableSectorMarket.Rows.Add(row1);
+                                        }
+                                    }
+                                    break;
+                                #endregion
+
+                                #region PluriMedia
+                                case EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1) {
+                                        if (totalUniversValue != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX]) / totalUniversValue * 100;
+                                            DataRow row = tableUnivers.NewRow();
+                                            row["Name"] = tab[i, EngineMediaStrategy.LABEL_VEHICLE_COLUMN_INDEX];
+                                            row["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            tableUnivers.Rows.Add(row);
+                                        }
+                                    }
+                                    break;
+                                case EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1) {
+                                        if (totalSectorValue != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX]) / totalSectorValue * 100;
+                                            DataRow row1 = tableSectorMarket.NewRow();
+                                            row1["Name"] = tab[i, EngineMediaStrategy.LABEL_VEHICLE_COLUMN_INDEX];
+                                            row1["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            tableSectorMarket.Rows.Add(row1);
+                                        }
+                                    }
+                                    break;
+                                case EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX:
+                                    if (tab[i, EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1) {
+                                        if (totalMarketValue != 0) {
+                                            elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX]) / totalMarketValue * 100;
+                                            DataRow row1 = tableSectorMarket.NewRow();
+                                            row1["Name"] = tab[i, EngineMediaStrategy.LABEL_VEHICLE_COLUMN_INDEX];
+                                            row1["Position"] = Convert.ToDouble(elementValue.ToString("0.00"));
+                                            tableSectorMarket.Rows.Add(row1);
+                                        }
+                                    }
+                                    break;
+                                #endregion
+
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region Init Series
+                    string strSort = "Position  DESC";
+                    DataRow[] foundRows = null;
+                    foundRows = tableUnivers.Select("", strSort);
+                    DataRow[] foundRowsSectorMarket = null;
+                    foundRowsSectorMarket = tableSectorMarket.Select("", strSort);
+                    double[] yValues = new double[foundRows.Length];
+                    string[] xValues = new string[foundRows.Length];
+                    double[] yValuesSectorMarket = new double[foundRowsSectorMarket.Length];
+                    string[] xValuesSectorMarket = new string[foundRowsSectorMarket.Length];
+                    double otherUniversValue = 0;
+                    double otherSectorMarketValue = 0;
+                    int index = 0;
+
+                    if (MEDIA_LEVEL_NUMBER != 1) {
+                        for (int i = 0; i < 5 && i < foundRows.Length; i++) {
+                            xValues[i] = foundRows[i]["Name"].ToString();
+                            yValues[i] = Convert.ToDouble(foundRows[i]["Position"]);
+                            otherUniversValue += Convert.ToDouble(foundRows[i]["Position"]);
+                            index = i + 1;
+                        }
+                        if (foundRows.Length > NBRE_MEDIA) {
+                            xValues[index] = GestionWeb.GetWebWord(647, _webSession.SiteLanguage);
+                            yValues[index] = 100 - otherUniversValue;
+                        }
+
+                        for (int i = 0; i < 5 && i < foundRowsSectorMarket.Length; i++) {
+                            xValuesSectorMarket[i] = foundRowsSectorMarket[i]["Name"].ToString();
+                            yValuesSectorMarket[i] = Convert.ToDouble(foundRowsSectorMarket[i]["Position"]);
+                            otherSectorMarketValue += Convert.ToDouble(foundRowsSectorMarket[i]["Position"]);
+                            index = i + 1;
+                        }
+                        if (foundRowsSectorMarket.Length > NBRE_MEDIA) {
+                            xValuesSectorMarket[index] = GestionWeb.GetWebWord(647, _webSession.SiteLanguage);
+                            yValuesSectorMarket[index] = 100 - otherSectorMarketValue;
+                        }
+                    }
+                    // Cas PluriMedia
+                    else {
+                        for (int i = 0; i < foundRows.Length; i++) {
+                            xValues[i] = foundRows[i]["Name"].ToString();
+                            yValues[i] = Convert.ToDouble(foundRows[i]["Position"]);
+                            otherUniversValue += Convert.ToDouble(foundRows[i]["Position"]);
+                        }
+
+                        for (int i = 0; i < foundRowsSectorMarket.Length; i++) {
+                            xValuesSectorMarket[i] = foundRowsSectorMarket[i]["Name"].ToString();
+                            yValuesSectorMarket[i] = Convert.ToDouble(foundRowsSectorMarket[i]["Position"]);
+                            otherSectorMarketValue += Convert.ToDouble(foundRowsSectorMarket[i]["Position"]);
+                        }
+                    }
+
+                    double[] yVal = new double[foundRows.Length];
+                    string[] xVal = new string[foundRows.Length];
+                    double otherCompetitorRefValue = 0;
+                    int k = 2;
+
+                    foreach (string name in listSeriesMedia.Keys) {
+
+                        if (name == GestionWeb.GetWebWord(1780, _webSession.SiteLanguage)) {
+                            if (xValues != null && xValues.Length > 0 && xValues[0] != null)
+                                listSeriesMedia[GestionWeb.GetWebWord(1780, _webSession.SiteLanguage)].Points.DataBindXY(xValues, yValues);
+                        }
+                        else if (_webSession.ComparaisonCriterion == CstWeb.CustomerSessions.ComparisonCriterion.sectorTotal && name == GestionWeb.GetWebWord(1189, _webSession.SiteLanguage)) {
+                            if (xValuesSectorMarket != null && xValuesSectorMarket.Length > 0 && xValuesSectorMarket[0] != null)
+                                listSeriesMedia[GestionWeb.GetWebWord(1189, _webSession.SiteLanguage)].Points.DataBindXY(xValuesSectorMarket, yValuesSectorMarket);
+                        }
+                        else if (name == GestionWeb.GetWebWord(1316, _webSession.SiteLanguage)) {
+                            if (xValuesSectorMarket != null && xValuesSectorMarket.Length > 0 && xValuesSectorMarket[0] != null)
+                                listSeriesMedia[GestionWeb.GetWebWord(1316, _webSession.SiteLanguage)].Points.DataBindXY(xValuesSectorMarket, yValuesSectorMarket);
+                        }
+                        else {
+                            DataRow[] foundRowsCompetitorRef = null;
+                            foundRowsCompetitorRef = ((DataTable)listTableRefCompetitor[name]).Select("", strSort);
+                            otherCompetitorRefValue = 0;
+
+                            yVal = new double[foundRowsCompetitorRef.Length];
+                            xVal = new string[foundRowsCompetitorRef.Length];
+                            if (MEDIA_LEVEL_NUMBER != 1) {
+                                for (int i = 0; i < foundRowsCompetitorRef.Length && i < NBRE_MEDIA; i++) {
+
+
+                                    xVal[i] = foundRowsCompetitorRef[i]["Name"].ToString();
+                                    yVal[i] = Convert.ToDouble(foundRowsCompetitorRef[i]["Position"]);
+
+                                    otherCompetitorRefValue += Convert.ToDouble(foundRowsCompetitorRef[i]["Position"]);
+                                    index = i + 1;
+                                }
+                                if (foundRowsCompetitorRef.Length > NBRE_MEDIA) {
+                                    xVal[index] = "Autres";
+                                    yVal[index] = 100 - otherCompetitorRefValue;
+                                }
+                            }
+                            // PluriMedia
+                            else {
+                                for (int i = 0; i < foundRowsCompetitorRef.Length; i++) {
+                                    xVal[i] = foundRowsCompetitorRef[i]["Name"].ToString();
+                                    yVal[i] = Convert.ToDouble(foundRowsCompetitorRef[i]["Position"]);
+
+                                }
+                            }
+                            if (xVal.Length > 0 && xVal[0] != null)
+                                listSeriesMedia[name].Points.DataBindXY(xVal, yVal);
+
+
+                            listSeriesName.Add(k, name);
+                            k++;
+                        }
+
+                    }
+                    #endregion	            
+
+                    if (universTotalVerif)
+                        _webSession.ComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal;
+
+                    #endregion
+
+                    Dictionary<string, Series> listSeriesMediaTemp = new Dictionary<string, Series>();
+                    Dictionary<int, string> listSeriesNameTemp = new Dictionary<int, string>();
+                    bool first = true;
+                    for (int j = 0; j < listSeriesMedia.Count; j++) {
+                        listSeriesMediaTemp = new Dictionary<string, Series>();
+                        listSeriesNameTemp = new Dictionary<int, string>();
+
+                        for (int nbPie = 0; nbPie < 2 && j < listSeriesMedia.Count; nbPie++, j++) {
+                            while (listSeriesMedia[(string)listSeriesName[j]].Points.Count < 1 && j < listSeriesMedia.Count) { j++; }
+                            if (listSeriesMedia[(string)listSeriesName[j]].Points.Count > 0) {
+                                listSeriesMediaTemp.Add((string)listSeriesName[j], listSeriesMedia[(string)listSeriesName[j]]);
+                                listSeriesNameTemp.Add(j, listSeriesName[j]);
+                            }
+                        }
+                        if (listSeriesMediaTemp.Count > 0 && listSeriesNameTemp.Count > 0) {
+                            this.NewPage();
+
+                            this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
+
+                            string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"] + ".bmp";
+
+
+                            if (first) {
+                                #region Title
+                                Style.GetTag("MediaStrategyGraphTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
+                                this.PDFPAGE_TextOut(this.LeftMargin, this.WorkZoneTop + 25.0, 0, GestionWeb.GetWebWord(1227, _webSession.SiteLanguage));
+                                #endregion
+                                first = false;
+                            }
+
+
+                            UIMediaStrategyGraph graph = new UIMediaStrategyGraph(_webSession, _dataSource, _config, Style, listSeriesMediaTemp, listSeriesNameTemp);
+                            graph.BuildMediaStrategy();
+                            graph.SaveAsImage(workFile, ChartImageFormat.Bmp);
+                            img = Image.FromFile(workFile);
+                            double coef = Math.Min(1.0, ((double)this.PDFPAGE_Width / ((double)img.Width)));
+                            coef = Math.Min(coef, ((double)(this.WorkZoneBottom - this.WorkZoneTop - 40) / ((double)img.Height)));
+                            int indexImg = this.AddImageFromFilename(workFile, TxImageCompressionType.itcFlate);
+                            this.PDFPAGE_ShowImage(indexImg,
+                                (this.PDFPAGE_Width / 2) - (coef * img.Width / 2),
+                                this.PDFPAGE_Height / 2 - (coef * img.Height / 2),
+                                coef * img.Width,
+                                coef * img.Height,
+                                0);
+                            img.Dispose();
+                            img = null;
+                            graph.Dispose();
+                            graph = null;
+
+                            #region Clean File
+                            File.Delete(workFile);
+                            #endregion
+
+                            _titleList.Add(Convertion.ToHtmlString(GestionWeb.GetWebWord(1227, _webSession.SiteLanguage)));
+                        }
+                    }
+                    #endregion
+                }
 			}
 			catch(System.Exception ex){
 				try{
