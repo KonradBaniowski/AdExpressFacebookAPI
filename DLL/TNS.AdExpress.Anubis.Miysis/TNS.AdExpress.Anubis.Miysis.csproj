@@ -132,6 +132,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.22509, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.WebResultUI.dll</HintPath>
+    </Reference>
     <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS\TNS.AdExpress.Anubis.csproj">
       <Name>TNS.AdExpress.Anubis</Name>
       <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
@@ -164,6 +168,10 @@
       <Name>TNS.AdExpress.Web.Core</Name>
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
+      <Project>{E1A418FC-6512-46D5-99CF-374682F0C792}</Project>
+      <Name>TNS.AdExpressI.Insertions</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
       <Project>{23E7E071-0FB0-43D4-B19D-B964EC3082F6}</Project>

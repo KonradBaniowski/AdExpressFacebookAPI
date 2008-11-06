@@ -91,9 +91,18 @@ namespace TNS.AdExpress.Anubis.Miysis.Common
         #endregion
 
         #region Scan Properties
-        /// Scan xml file Path
+        /// <summary>
+        /// Press Scan xml file Path
         /// </summary>
-        private string _scanPath;
+        private string _pressScanPath;
+        /// <summary>
+        /// VMC Scan xml file Path
+        /// </summary>
+        private string _vmcScanPath;
+        /// <summary>
+        /// Outdoor Scan xml file Path
+        /// </summary>
+        private string _outdoorScanPath;
         #endregion
 
 		#endregion
@@ -236,11 +245,23 @@ namespace TNS.AdExpress.Anubis.Miysis.Common
         #endregion
 
         #region Scan Properties
-        /// Get / Set Scan xml file Path
+        /// Get / Set Press Scan xml file Path
         /// </summary>
-        public string ScanPath {
-            get { return _scanPath; }
-            set { _scanPath = value; }
+        public string PressScanPath {
+            get { return _pressScanPath; }
+            set { _pressScanPath = value; }
+        }
+        /// Get / Set VMC Scan xml file Path
+        /// </summary>
+        public string VMCScanPath {
+            get { return _vmcScanPath; }
+            set { _vmcScanPath = value; }
+        }
+        /// Get / Set Outdoor Scan xml file Path
+        /// </summary>
+        public string OutdoorScanPath {
+            get { return _outdoorScanPath; }
+            set { _outdoorScanPath = value; }
         }
         #endregion
 		

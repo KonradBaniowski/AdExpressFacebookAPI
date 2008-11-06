@@ -6,6 +6,7 @@
 #region Using
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -66,6 +67,8 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using DomainLevel = TNS.AdExpress.Domain.Level;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Domain.Theme;
+using TNS.AdExpressI.Insertions;
+using TNS.AdExpressI.Insertions.Cells;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
@@ -502,15 +505,16 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		#region Html file loading
 		sw.WriteLine("</TABLE>");
 		TNS.AdExpress.Anubis.Common.Functions.CloseHtmlFile(sw);
-		HTML2PDFClass html = new HTML2PDFClass();
+		HTML2PDF2Class html = new HTML2PDF2Class();
 		html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 		html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 		html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
+        html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
 		html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 		html.ConnectToPDFLibrary (this);
-		html.LoadFromFile(workFile);
+		html.LoadHTMLFile(workFile);
 		html.ConvertAll();
-		html.ClearCache();
+//		html.ClearCache();
 		html.ConvertAll();
 		html.DisconnectFromPDFLibrary ();
 		#endregion
@@ -530,7 +534,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 			StringBuilder htmlHeader=new StringBuilder(10000);
 			ArrayList versionsUIs = new ArrayList();
 			int startIndexVisual=0;
-			Int64 nbWeek=0;
+			Int64 nbToSplit=0;
 			int nbLines=0;
             string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
@@ -567,57 +571,71 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
                 #region result
                 Int64 idVehicle = Int64.Parse(vehicles[0]);
-                //result = GenericMediaScheduleUI.GetPdf(
-                //    GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1), _webSession, period, htmlHeader, ref nbWeek, idVehicle);
 
                 begin = Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
                 end = Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
-                if (_webSession.DetailPeriod == ConstantePeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)) {
-                    _webSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
-                }
                 period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
                 
-                if (vehicles.Length == 1)
+                if (vehicles.Length == 1) {
                     param = new object[3];
+                    param[2] = idVehicle;
+                }
                 else
                     param = new object[2];
 
                 param[0] = _webSession;
                 param[1] = period;
-                if(vehicles.Length==1)
-                    param[2] = idVehicle;
 
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 mediaScheduleResult.Module = module;
                 result = mediaScheduleResult.GetPDFHtml();
+                SortedDictionary<Int64, List<CellCreativesInformation>> creativeCells = new SortedDictionary<Int64, List<CellCreativesInformation>>();
 
-				#endregion
+                if (vehicles.Length == 1 && _webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.dayly && _webSession.SloganColors.Count > 0) {
+
+                    VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, period, "");
+                    html.Append("\r\n\t<tr class=\"whiteBackGround\">\r\n\t\t<td>");
+                    startIndexVisual = decoupageVersionHTML(html, versionsUI.GetExportMSCreativesHtml(ref creativeCells, base.Style), true, int.Parse(vehicles[0]));
+                    VehicleInformation currentVehicle = VehiclesInformation.Get(idVehicle);
+                    if (currentVehicle.Id != DBCst.Vehicles.names.tv && currentVehicle.Id != DBCst.Vehicles.names.radio)
+                        BuildVersionPDF(creativeCells, startIndexVisual);
+
+                }
+                #endregion
 
 				#region Construction du tableaux global
 				html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
-				#endregion
-
 				html.Append("\r\n\t<tr>\r\n\t\t<td>");
 				
 				Double w,width;
+                TimeSpan timeSpan = period.End.Subtract(period.Begin);
+                nbToSplit = (Int64)Math.Round((double)timeSpan.Days / 7);
 
-				if(nbWeek<5) {
-					width=863;
-					w=1;
-					nbLines=(int)Math.Round(w*(width/20))-4;
-				}
-				else {
-					w=0.652;
-					width=996+(133*(nbWeek-5));
-					nbLines=(int)Math.Round(w*(width/20))-4;
-				}
+                if (_webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.weekly)
+                    nbToSplit = (Int64)Math.Round((double)nbToSplit / 7);
+                else if (_webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.monthly)
+                    nbToSplit = (Int64)Math.Round((double)nbToSplit / 30);
+
+                if (nbToSplit < 5) {
+                        width = 863;
+                        w = 1;
+                        nbLines = (int)Math.Round(w * (width / 20)) - 4;
+                    }
+                    else {
+                        w = 0.652;
+                        width = 996 + (133 * (nbToSplit - 5));
+                        nbLines = (int)Math.Round(w * (width / 20)) - 4;
+                    }
 
 				decoupageHTML(html,Convertion.ToHtmlString(result.HTMLCode),nbLines,htmlHeader,false);
 				html.Append("\r\n\t\t</td>\r\n\t</tr>");
 				html.Append("</table>");
-				html.Append("</BODY>");
+                #endregion
+                
+                html.Append("</BODY>");
 				html.Append("</HTML>");
-			}
+            
+            }
 			catch(System.Exception err){
 				throw(new MiysisPdfException("Unable to process Media Schedule Alert export result for request " + _rqDetails["id_static_nav_session"].ToString() + ".",err)); 
 			}
@@ -630,7 +648,9 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		#endregion
 
 		#region Découpage du code HTML
-		/// <summary>
+
+        #region decoupageHTML
+        /// <summary>
 		/// Découpage du code HTML pour l'export PDF du plan média (Tableau)
 		/// </summary>
 		/// <param name="html">Le code HTML à générer</param>
@@ -679,7 +699,57 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 				else
 					SnapShots(ref html,i,partieHTML,false, ref coef);
 			}
-		}
+        }
+        #endregion
+
+        #region decoupageVersionHTML
+        /// <summary>
+        /// Découpage du code HTML pour l'export PDF du plan média (Visuels)
+        /// </summary>
+        /// <param name="html">Le code HTML à générer</param>
+        /// <param name="strHtml">Le code HTML à découper</param>
+        private int decoupageVersionHTML(StringBuilder html, string strHtml, bool version, int vehicle) {
+
+            int startIndex = 0, oldStartIndex = 0, tmp, startIndexVisual = 0;
+            ArrayList partieHTML = new ArrayList();
+            double coef = 0;
+            StringBuilder htmltmp = new StringBuilder(1000);
+            htmltmp.Append(html.ToString());
+
+            while ((startIndex < strHtml.Length) && (startIndex != -1)) {
+                tmp = 0;
+
+                while ((tmp < 1) && (startIndex < strHtml.Length) && (startIndex != -1)) {
+                    startIndex = strHtml.IndexOf("<br>", startIndex + 1);
+                    tmp++;
+                }
+
+                if (startIndex == -1)
+                    partieHTML.Add(strHtml.Substring(oldStartIndex, strHtml.Length - oldStartIndex));
+                else
+                    partieHTML.Add(strHtml.Substring(oldStartIndex, startIndex - oldStartIndex));
+                oldStartIndex = startIndex;
+            }
+
+            for (int i = 0; i < partieHTML.Count - 1; i++) {
+                if (i > 0)
+                    htmltmp.Append(GetHeader());
+                if (((DBCst.Vehicles.names)vehicle == DBCst.Vehicles.names.radio) || ((DBCst.Vehicles.names)vehicle == DBCst.Vehicles.names.tv))
+                    htmltmp.Append("<tr><td bgcolor=\"#ffffff\" style=\"HEIGHT: 50px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\"></td></tr>");
+                htmltmp.Append(partieHTML[i].ToString());
+                htmltmp.Append(GetEnd());
+                if (version)
+                    if (i == 0)
+                        startIndexVisual = HtmlToPDF(ref htmltmp, i, partieHTML, true);
+                    else
+                        HtmlToPDF(ref htmltmp, i, partieHTML, true);
+                else
+                    HtmlToPDF(ref htmltmp, i, partieHTML, false);
+            }
+            return startIndexVisual;
+        }
+        #endregion
+
 		#endregion
 
 		#region Fermeture du code HTML
@@ -905,15 +975,16 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 							
 				#region Html file loading
 				TNS.AdExpress.Anubis.Common.Functions.CloseHtmlFile(sw);
-				HTML2PDFClass htmlTmp = new HTML2PDFClass();
+                HTML2PDF2Class htmlTmp = new HTML2PDF2Class();
 				htmlTmp.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				htmlTmp.MarginTop = Convert.ToInt32(this.WorkZoneTop);
 				htmlTmp.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
+                htmlTmp.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
 				htmlTmp.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
 				htmlTmp.ConnectToPDFLibrary (this);
-				htmlTmp.LoadFromFile(workFile);
+				htmlTmp.LoadHTMLFile(workFile);
 				htmlTmp.ConvertAll();
-				htmlTmp.ClearCache();
+				//htmlTmp.ClearCache();
 				htmlTmp.ConvertAll();
 				htmlTmp.DisconnectFromPDFLibrary ();
 				#endregion
@@ -942,7 +1013,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		/// Render all versions controls
 		/// </summary>
 		/// <returns>Html code</returns>
-		protected void BuildVersionPDF(ArrayList versionsUIs,int startIndex) {
+        protected void BuildVersionPDF(SortedDictionary<Int64, List<CellCreativesInformation>> creativeCells, int startIndex) {
 
 			ArrayList partitHTMLVersion = new ArrayList();
 			StringBuilder htmltmp=new StringBuilder(1000);
@@ -952,139 +1023,136 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 			bool first=true, second=true;
             long nbVisuel = 0;
 
-			if (versionsUIs != null) {
-				
-					foreach(VersionDetailUI item in versionsUIs) {
+            if (creativeCells != null) {
 
-                        if(item.ExportVersion != null)
-                            nbVisuel = item.ExportVersion.NbVisuel;
-                        else if(item.ExportMDVersion != null)
-                            nbVisuel = item.ExportMDVersion.NbVisuel;
-                        else if(item.ExportOutdoorVersion != null)
-                            nbVisuel = item.ExportOutdoorVersion.NbVisuel;
+                foreach (List<CellCreativesInformation> currentList in creativeCells.Values) {
+                    foreach (CellCreativesInformation item in currentList) {
 
-						if (nbVisuel==1)	{
-							
-							if(indexPage==0) {
-								switch((imgPositionItems)indexFirstCase) {
-									case imgPositionItems.TOP_LEFT: X1=29; Y1=77; break;
-									case imgPositionItems.TOP_RIGHT: X1=557; Y1=77; break;
-									case imgPositionItems.BOTTOM_LEFT: X1=29; Y1=404; break;
-									case imgPositionItems.BOTTOM_RIGHT: X1=557; Y1=404; break;
-								}
-							}
-							else {
-								switch((imgPositionItems)indexFirstCase) {
-									case imgPositionItems.TOP_LEFT: X1=27; Y1=75; break;
-									case imgPositionItems.TOP_RIGHT: X1=554; Y1=75; break;
-									case imgPositionItems.BOTTOM_LEFT: X1=27; Y1=401; break;
-									case imgPositionItems.BOTTOM_RIGHT: X1=554; Y1=401; break;
-								}
-							}				
-							indexFirstCase++;
-							InsertImageInPDF(0,item,indexPage,startIndex,X1,Y1);
-							if((indexFirstCase==1)||(indexFirstCase==3)) {
-								nbLines++;
-							}
-							if (indexFirstCase==4) {
-								indexPage++;
-								indexFirstCase=0;
-							}
-						}
-						else if (nbVisuel<5) {
-							
-							if(first) {
-								if((nbLines%2)==0) {
-									indexPage=(nbLines/2);
-								}
-								else {
-									indexPage=Math.Ceiling((double)(nbLines/2));
-									indexSecondCase--;	
-								}
-									first=false;
-							}
+                        nbVisuel = item.Visuals.Count;
 
-							if(indexPage==0) {
-								switch((imgPosition)indexSecondCase) {
-									case imgPosition.TOP: X1=25; Y1=70; break;
-									case imgPosition.DYNAMIC:
-									case imgPosition.BOTTOM: X1=25; Y1=393; break;
-								}
-							}
-							else {
-								switch((imgPosition)indexSecondCase) {
-									case imgPosition.TOP: X1=25; Y1=70; break;
-									case imgPosition.DYNAMIC:		
-									case imgPosition.BOTTOM: X1=25; Y1=393; break;
-								}
-							}
+                        if (nbVisuel == 1) {
 
-							InsertImageInPDF(0,item,indexPage,startIndex,X1,Y1);
-							if(indexSecondCase==-1)
-								indexPage++;
-							indexSecondCase++;
-							nbLines++;
-							if (indexSecondCase==2) {
-								indexPage++;
-								indexSecondCase=0;
-							}
-						}
-						else if (nbVisuel>=5) {
-						
-							end=(int)Math.Ceiling((double)nbVisuel/4);
-						
-							for(int i=0;i<end;i++) {
+                            if (indexPage == 0) {
+                                switch ((imgPositionItems)indexFirstCase) {
+                                    case imgPositionItems.TOP_LEFT: X1 = 29; Y1 = 77; break;
+                                    case imgPositionItems.TOP_RIGHT: X1 = 557; Y1 = 77; break;
+                                    case imgPositionItems.BOTTOM_LEFT: X1 = 29; Y1 = 404; break;
+                                    case imgPositionItems.BOTTOM_RIGHT: X1 = 557; Y1 = 404; break;
+                                }
+                            }
+                            else {
+                                switch ((imgPositionItems)indexFirstCase) {
+                                    case imgPositionItems.TOP_LEFT: X1 = 27; Y1 = 75; break;
+                                    case imgPositionItems.TOP_RIGHT: X1 = 554; Y1 = 75; break;
+                                    case imgPositionItems.BOTTOM_LEFT: X1 = 27; Y1 = 401; break;
+                                    case imgPositionItems.BOTTOM_RIGHT: X1 = 554; Y1 = 401; break;
+                                }
+                            }
+                            indexFirstCase++;
+                            InsertImageInPDF(0, item, indexPage, startIndex, X1, Y1);
+                            if ((indexFirstCase == 1) || (indexFirstCase == 3)) {
+                                nbLines++;
+                            }
+                            if (indexFirstCase == 4) {
+                                indexPage++;
+                                indexFirstCase = 0;
+                            }
+                        }
+                        else if (nbVisuel < 5) {
 
-								if((first)||(second)) {
-									if((nbLines%2)==0) {
-										indexPage=(nbLines/2);
-									}
-									else {
-										indexPage=Math.Ceiling((double)(nbLines/2));
-										indexThirdCase--;	
-									}
-									first=false;
-									second=false;
-								}
+                            if (first) {
+                                if ((nbLines % 2) == 0) {
+                                    indexPage = (nbLines / 2);
+                                }
+                                else {
+                                    indexPage = Math.Ceiling((double)(nbLines / 2));
+                                    indexSecondCase--;
+                                }
+                                first = false;
+                            }
 
-								if(indexPage==0) {
-									switch((imgPosition)indexThirdCase) {
-										case imgPosition.TOP: X1=25; Y1=70; break;
-										case imgPosition.DYNAMIC:
-										case imgPosition.BOTTOM: X1=25; Y1=397; break;
-									}
-								}
-								else {
-									switch((imgPosition)indexThirdCase) {
-										case imgPosition.TOP: X1=25; Y1=70; break;
-										case imgPosition.DYNAMIC:		
-										case imgPosition.BOTTOM: X1=25; Y1=394; break;
-									}
-								}
-														
-								if(i==0) {
-									InsertImageInPDF(0,item,indexPage,startIndex,X1,Y1);
-								}
-								else {
-									if(i==end-1) {
-										InsertImageInPDF(i+(4*i),item,indexPage,startIndex,X1,Y1);
-									}
-									else {
-										InsertImageInPDF(i+(4*i),item,indexPage,startIndex,X1,Y1);
-									}
-								}
-								
-								if(indexThirdCase==-1)
-									indexPage++;
-								indexThirdCase++;
-							
-								if (indexThirdCase==2) {
-									indexPage++;
-									indexThirdCase=0;
-								}
-							}
-						}
-					}			
+                            if (indexPage == 0) {
+                                switch ((imgPosition)indexSecondCase) {
+                                    case imgPosition.TOP: X1 = 25; Y1 = 70; break;
+                                    case imgPosition.DYNAMIC:
+                                    case imgPosition.BOTTOM: X1 = 25; Y1 = 393; break;
+                                }
+                            }
+                            else {
+                                switch ((imgPosition)indexSecondCase) {
+                                    case imgPosition.TOP: X1 = 25; Y1 = 70; break;
+                                    case imgPosition.DYNAMIC:
+                                    case imgPosition.BOTTOM: X1 = 25; Y1 = 393; break;
+                                }
+                            }
+
+                            InsertImageInPDF(0, item, indexPage, startIndex, X1, Y1);
+                            if (indexSecondCase == -1)
+                                indexPage++;
+                            indexSecondCase++;
+                            nbLines++;
+                            if (indexSecondCase == 2) {
+                                indexPage++;
+                                indexSecondCase = 0;
+                            }
+                        }
+                        else if (nbVisuel >= 5) {
+
+                            end = (int)Math.Ceiling((double)nbVisuel / 4);
+
+                            for (int i = 0; i < end; i++) {
+
+                                if ((first) || (second)) {
+                                    if ((nbLines % 2) == 0) {
+                                        indexPage = (nbLines / 2);
+                                    }
+                                    else {
+                                        indexPage = Math.Ceiling((double)(nbLines / 2));
+                                        indexThirdCase--;
+                                    }
+                                    first = false;
+                                    second = false;
+                                }
+
+                                if (indexPage == 0) {
+                                    switch ((imgPosition)indexThirdCase) {
+                                        case imgPosition.TOP: X1 = 25; Y1 = 70; break;
+                                        case imgPosition.DYNAMIC:
+                                        case imgPosition.BOTTOM: X1 = 25; Y1 = 397; break;
+                                    }
+                                }
+                                else {
+                                    switch ((imgPosition)indexThirdCase) {
+                                        case imgPosition.TOP: X1 = 25; Y1 = 70; break;
+                                        case imgPosition.DYNAMIC:
+                                        case imgPosition.BOTTOM: X1 = 25; Y1 = 394; break;
+                                    }
+                                }
+
+                                if (i == 0) {
+                                    InsertImageInPDF(0, item, indexPage, startIndex, X1, Y1);
+                                }
+                                else {
+                                    if (i == end - 1) {
+                                        InsertImageInPDF(i + (4 * i), item, indexPage, startIndex, X1, Y1);
+                                    }
+                                    else {
+                                        InsertImageInPDF(i + (4 * i), item, indexPage, startIndex, X1, Y1);
+                                    }
+                                }
+
+                                if (indexThirdCase == -1)
+                                    indexPage++;
+                                indexThirdCase++;
+
+                                if (indexThirdCase == 2) {
+                                    indexPage++;
+                                    indexThirdCase = 0;
+                                }
+                            }
+                        }
+                    }
+                }
 				}			
 		}
 		#endregion
@@ -1095,54 +1163,31 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		///<param name="index">l'index est utilsé pour traiter le cas des verions avec plus de 4 visuels</param>
 		///  <author>rkaina</author>
 		///  <since>vendredi 18 août 2006</since>
-		protected void InsertImageInPDF(Int64 index,VersionDetailUI item,double indexPage,int startIndex, int X1, int Y1) {
-			string[] pathes = null;
+        protected void InsertImageInPDF(Int64 index, CellCreativesInformation item, double indexPage, int startIndex, int X1, int Y1) {
 			Int64 lastIndex=index+5;
 			bool firstInsertion=true;
-            bool marketingDirect = false;
-            bool outdoor = false;
             Int64 nbVisuel = 0;
 
 			this.SetCurrentPage((int)indexPage+startIndex);
-			
-			if (_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE) { 
-				pathes = item.ExportVersion.Path.Split(',');
-                nbVisuel = item.ExportVersion.NbVisuel;
-			}
-			else {
-                if (item.ExportVersion != null) {
-                    pathes = item.ExportVersion.Path.Split(',');
-                    nbVisuel = item.ExportVersion.NbVisuel;
-                }
-                else if (item.ExportMDVersion != null) {
-                    pathes = item.ExportMDVersion.Path.Split(',');
-                    nbVisuel = item.ExportMDVersion.NbVisuel;
-                    marketingDirect = true;
-                }
-                else if (item.ExportOutdoorVersion != null) {
-                    pathes = item.ExportOutdoorVersion.Path.Split(',');
-                    nbVisuel = item.ExportOutdoorVersion.NbVisuel;
-                    outdoor = true;
-                }
+		
+            nbVisuel = item.Visuals.Count;
 
-			}
+            Int64 end=0;
 
-			Int64 end=0;
-				
-			if(pathes.Length<lastIndex)
-				end=pathes.Length;
+            if (nbVisuel < lastIndex)
+                end = nbVisuel;
 			else
 				end=lastIndex;
 
-			if((pathes.Length%5)==0) {
-				if(pathes.Length>lastIndex) {
+            if ((nbVisuel % 5) == 0) {
+                if (nbVisuel > lastIndex) {
 					end=lastIndex;
-				} 
-				else if(pathes.Length==lastIndex) {
+				}
+                else if (nbVisuel == lastIndex) {
 					end=lastIndex-1;
 				} 
 				else {
-					end=pathes.Length;
+                    end = nbVisuel;
 					index--;
 				}
 			}
@@ -1153,20 +1198,20 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 			
 			for(Int64 i=index;i<end;i++) {
 				path="";
-				path=pathes[i].Replace("/imagette","");
-				path=pathes[i].Replace("/ImagesPresse","");
+				path=item.Visuals[(int)i].Replace("/imagette","");
+                path = item.Visuals[(int)i].Replace("/ImagesPresse", "");
 
-                if (marketingDirect){
-                    imgG = Image.FromFile(CreationServerPathes.LOCAL_PATH_MD_IMAGE + path);
-                    imgI = this.AddImageFromFilename(CreationServerPathes.LOCAL_PATH_MD_IMAGE + path, TxImageCompressionType.itcFlate);
+                if (item.Vehicle.Id == DBCst.Vehicles.names.directMarketing) {
+                    imgG = Image.FromFile(_config.VMCScanPath + path);
+                    imgI = this.AddImageFromFilename(_config.VMCScanPath + path, TxImageCompressionType.itcFlate);
                 }
-                else if (outdoor) {
-                    imgG = Image.FromFile(CreationServerPathes.LOCAL_PATH_OUTDOOR + path);
-                    imgI = this.AddImageFromFilename(CreationServerPathes.LOCAL_PATH_OUTDOOR + path, TxImageCompressionType.itcFlate);
+                else if (item.Vehicle.Id == DBCst.Vehicles.names.outdoor) {
+                    imgG = Image.FromFile(_config.OutdoorScanPath + path);
+                    imgI = this.AddImageFromFilename(_config.OutdoorScanPath + path, TxImageCompressionType.itcFlate);
                 }
                 else {
-                    imgG = Image.FromFile(CreationServerPathes.LOCAL_PATH_IMAGE + path);
-                    imgI = this.AddImageFromFilename(CreationServerPathes.LOCAL_PATH_IMAGE + path, TxImageCompressionType.itcFlate);
+                    imgG = Image.FromFile(_config.PressScanPath + path);
+                    imgI = this.AddImageFromFilename(_config.PressScanPath + path, TxImageCompressionType.itcFlate);
                 }
 
 				double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
