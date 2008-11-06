@@ -301,9 +301,9 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		private void MainPageDesign(){
 			
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-	
-			string imgPath = @"Images\" + _webSession.SiteLanguage + @"\LogoAdExpress.jpg";
-			Image imgG = Image.FromFile(imgPath);
+
+            string imgPath = ((TNS.AdExpress.Domain.Theme.Picture)Style.GetTag("pictureTitle")).Path;
+            Image imgG = Image.FromFile(imgPath);
 			
 			double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
 			double coef = Math.Min((double)1.0,w);
@@ -540,7 +540,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
             MediaScheduleData result = null;
             MediaSchedulePeriod period = null;
-            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
+            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
             DateTime begin;
             DateTime end;
             object[] param = null;

@@ -211,6 +211,8 @@
     <Compile Include="TreatementSystem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Content Include="Configuration\33\Plugins\Miysis.xml" />
+    <Content Include="Configuration\35\Plugins\Miysis.xml" />
     <Content Include="Images\33\LogoAdExpress.jpg" />
     <Content Include="Images\33\LogoAdExpress220.jpg" />
     <Content Include="Images\33\LogoAdExpressWater.bmp" />
@@ -218,7 +220,6 @@
     <Content Include="Images\44\LogoAdExpress.jpg" />
     <Content Include="Images\44\LogoAdExpress220.jpg" />
     <Content Include="Images\Common\logo_Tns.bmp" />
-    <Content Include="_Config\Miysis.xml" />
     <None Include="ModelSupport\default.txaPackage" />
   </ItemGroup>
   <ItemGroup>

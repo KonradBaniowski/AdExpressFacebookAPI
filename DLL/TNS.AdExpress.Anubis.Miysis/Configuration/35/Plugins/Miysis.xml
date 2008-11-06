@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
-  <CustomerMail server="smtp2.secodip.com" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.tnsadexpress.com" subject="AdExpress"/>
-  <!--  	<PdfPath path="\\testarossa2\adexdatas\AdExCustomerFiles"/>-->
-  <PdfPath path="AdExCustomerFiles"/>
+  <CustomerMail server="fitnses-ex01.tnsad.com" port="25" from="tnsadexpress@tnsmi.fi" webServer="http://www.tnsadexpress.fi" subject="TNS AdExpress"/>
+  <PdfPath path="\\fitnses-dmzad01\AdExCustomerFiles"/>
   <!--If path empty then path = current directory of executable-->
   <ThemePath path=""/>
   <PressScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>

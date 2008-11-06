@@ -142,22 +142,6 @@ namespace TNS.AdExpress.Anubis.Miysis
 //			ModulesList.Init(TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CONFIGURATION_PATH);
 			#endregion
 
-//
-//			#region
-//			// Initialisation des descriptions des éléments de niveaux de détail
-//			DetailLevelItemsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_DETAIL_LEVEL_ITEMS_CONFIGURATION_PATH)); 
-//			// Initialisation des descriptions des niveaux de détail
-//			DetailLevelsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_DETAIL_LEVEL_CONFIGURATION_PATH)); 				
-//			// Chargement des noms de modules
-//			ModulesList.Init(TNS.AdExpress.Constantes.Web.ConfigurationFile.MODULE_CONFIGURATION_PATH);
-//			// Initialisation des descriptions des éléments de niveaux de détail
-//			DetailLevelItemsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_DETAIL_LEVEL_ITEMS_CONFIGURATION_PATH)); 
-//			// Initialisation des descriptions des niveaux de détail
-//			DetailLevelsInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.GENERIC_DETAIL_LEVEL_CONFIGURATION_PATH)); 				
-//			// Initialisation des descriptions des niveaux de détail pour les insertions
-//			InsertionDetailInformation.Init(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+TNS.AdExpress.Constantes.Web.ConfigurationFile.MEDIA_PLANS_INSERTION_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_PATH)); 				
-//			#endregion
-
 			_dataSource=dataSource;
 			
 			ThreadStart myThreadStart = new ThreadStart(ComputeTreatement);
