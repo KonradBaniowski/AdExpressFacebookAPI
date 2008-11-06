@@ -2,10 +2,12 @@
 <Configuration>
   <CustomerMail server="smtp2.secodip.com" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.tnsadexpress.com" subject="AdExpress"/>
   <!--  	<PdfPath path="\\testarossa2\adexdatas\AdExCustomerFiles"/>-->
-  <PdfPath path="/AdExCustomerFiles"/>
+  <PdfPath path="AdExCustomerFiles"/>
   <!--If path empty then path = current directory of executable-->
   <ThemePath path=""/>
-  <ScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
+  <PressScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
+  <VMCScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\MarketingDirect"/>
+  <OutdoorScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Outdoor"/>
   <!--<PdfCreatorPilot login="and@tns-global.com" pass="2SN7J-6TWNG-VCQKV-7XCCT-45YEH"/>-->
   <PdfCreatorPilot login="laurent.roucaute@tnsmi.fr" pass="WHBRS-AAQWR-7QC3S-9H28E"/>
   <!--<Html2Pdf login="An DangDuy" pass="3GKL5-4UFS4-F4HZ4-EK6WY"/>-->
