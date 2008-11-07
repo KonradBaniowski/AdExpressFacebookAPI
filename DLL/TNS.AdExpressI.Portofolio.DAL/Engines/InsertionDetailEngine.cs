@@ -217,9 +217,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.press:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					if (allPeriod) return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page,media_paging,id_product," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement";
+					if (allPeriod) return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement,media_paging,id_product";
 					else
-						return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page,media_paging, id_product," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement";
+						return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement,media_paging, id_product";
 				case DBClassificationConstantes.Vehicles.names.radio:
 					if (allPeriod) return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";
 					else return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";
