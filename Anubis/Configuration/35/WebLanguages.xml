@@ -2,20 +2,21 @@
 <configuration>
   <languages default="44" defaultDataLanguage="35">
     <!--<language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" nlsSort="FRENCH"/>-->
-  <language id="44" name="English - Finland DB" imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="35" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="windows-1252" nlsSort="finnish"/>
-    <rss path="/rss/44/AdExpressFeed.xml" link="http://www.tnsadexpress.fi/rss/44/AdExpressFeed.xml"/>
+    <language id="44" name="English - Finland DB" imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="35" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="windows-1252" nlsSort="finnish" NumberDecimalSeparator="," NumberGroupSeparator=" "/>
+    <rss display="true" link="http://www.tnsadexpress.fi/Rss/44/AdExpressFeed.xml"/>
     <unitformats>
-      <unitformat name="max0" format="# ##0;-# ##0;-"                   excelFormat="# ### ### ##0;-# ### ### ##0;-"/>
+      <unitformat name="max0" format="#,###0;-#,##0;-"                  excelFormat="# ### ### ##0;-# ### ### ##0;-"/>
       <unitformat name="max1" format="#,##0.#;-#,##0.#;-"               excelFormat="#,##0.0;-#,##0.0;-"/>
       <unitformat name="max2" format="#,##0.##;-#,##0.##;-"             excelFormat="#,##0.0#;-#,##0.0#;-"/>
       <unitformat name="max3" format="#,##0.###;-#,##0.###;-"           excelFormat="#,##0.0##;-#,##0.0##;-"/>
       <unitformat name="percentage" format="#,##0.00\%;-#,##0.00\%;-"   excelFormat="#,##0.00\%;-#,##0.00\%;-"/>
+      <unitformat name="percentWOSign" format="#,##0.00;-#,##0.00;-"   excelFormat="#,##0.00;-#,##0.00;-"/>
       <unitformat name="duration" format="#0 H 00 M 00 S"               excelFormat="#0 H 00 M 00 S"/>
       <unitformat name="shortduration" format="0 m 00 s"                excelFormat="0 m 00 s"/>
       <unitformat name="airtime" format="#0:00:00"                      excelFormat="#0:00:00"/>
     </unitformats>
     <dateFormats>
-      <dateFormat name="shortdatepattern" format="dd.MM.yyyy"             excelFormat="dd.MM.yyyy"/>
+      <dateFormat name="shortdatepattern" format="dd.MM.yyyy"           excelFormat="dd.MM.yyyy"/>
       <dateFormat name="customdatepattern" format="ddd, MMM dd, yyyy"   excelFormat="ddd, MMM dd, yyyy"/>
     </dateFormats>
   </languages>
