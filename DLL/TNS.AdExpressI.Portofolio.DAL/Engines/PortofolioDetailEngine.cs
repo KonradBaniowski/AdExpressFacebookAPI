@@ -194,12 +194,21 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 }
                 else {
                     unitFields = GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-                    if(type != DBConstantes.TableType.Type.webPlan) {
-                        groupByOptional = "," + UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).DatabaseField;
+                    if (type == DBConstantes.TableType.Type.webPlan)
+                    {
+                        groupByOptional = string.Format(",{0}.list_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                     }
-                    else {
-                        fromOptional = string.Format(", table({0}.{1}) t2 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).DatabaseMultimediaField);
-                    }
+                    else
+                    {
+                        groupByOptional = string.Format(",{0}.hashcode ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    } 
+                    //if (type != DBConstantes.TableType.Type.webPlan)
+                    //{
+                    //    groupByOptional = "," + UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).DatabaseField;
+                    //}
+                    //else {
+                    //    fromOptional = string.Format(", table({0}.{1}) t2 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).DatabaseMultimediaField);
+                    //}
                 }
 				
                 detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
@@ -344,7 +353,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         if(unitsList[i].Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
                             sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
                         else
-                            sqlUnit.AppendFormat("to_char(" + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + ".stragg2(t2.column_value)) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+                            sqlUnit.AppendFormat("{1} as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+                            //sqlUnit.AppendFormat("to_char(" + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + ".stragg2(t2.column_value)) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
                         break;
                 }
             }

@@ -1385,7 +1385,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                 if (_showInsertions) tab[cLine, insertIndex] = new CellOneLevelInsertionsLink(cLevelParution, _session, _session.GenericProductDetailLevel);
                 if (_showMediaSchedule) tab[cLine, msIndex] = new CellMediaScheduleLink(cLevelParution, _session);
                 if (_showTotal) tab[cLine, totalIndex] = new CellNumber(0.0);
-                for (Int64 i = iFirstDataIndex; i < tab.DataColumnsNumber; i++)
+                for (Int64 i = iFirstDataIndex; i <= tab.DataColumnsNumber; i++)
                 {
                     tab[cLine, i] = new CellNumber(0.0);
                 }

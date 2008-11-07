@@ -1282,9 +1282,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         sql += " ) group by hashcode";
                     }
                 }
-                sqlGlobal = "select count(hashcode) as nbLines from (";
-                sqlGlobal += sql;
-                sqlGlobal += " )";
+                //sqlGlobal = "select count(hashcode) as nbLines from (";
+                //sqlGlobal += sql;
+                //sqlGlobal += " )";
             }
             catch(System.Exception err) {
                 throw (new PortofolioDALException("Impossible to build query for total investment, nb ad, sport duration" + sql, err));
@@ -1293,7 +1293,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
             #region Execution de la requête
             try {
-                return _webSession.Source.Fill(sqlGlobal.ToString());
+                return _webSession.Source.Fill(sql.ToString());
             }
             catch(System.Exception err) {
                 throw (new PortofolioDALException("Impossible to exectue query" + sql, err));
@@ -1348,7 +1348,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             StringBuilder sql = new StringBuilder();
 
             if(type == DBConstantes.TableType.Type.webPlan) {
-                sql.Append("select distinct(wp22222.column_value) as hashcode ");
+                sql.Append("select distinct list_banners as hashcode ");
             }
             else {
                 sql.Append("select distinct hashcode ");
@@ -1357,12 +1357,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             if(customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
                 sql.AppendFormat(", {0} as date_num ", date);
             }
-            if(type == DBConstantes.TableType.Type.webPlan) {
-                sql.AppendFormat(" from {0}, table(list_banners) wp22222 where id_media={1}", table, _idMedia);
-            }
-            else {
-                sql.AppendFormat(" from {0} where id_media={1}", table, _idMedia);
-            }
+            sql.AppendFormat(" from {0} where id_media={1}", table, _idMedia);
 
             // Autopromo Evaliant
             if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
@@ -1409,7 +1404,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }
             if (type == DBConstantes.TableType.Type.webPlan)
             {
-                sql.Append("wp22222.column_value");
+                sql.Append("list_banners");
             }
             else
             {

@@ -740,6 +740,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>occurence</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>

@@ -188,6 +188,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
             else if(_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.spot) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString())) 
                 nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString();
+            else if(_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.occurence) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString())) 
+                nbrSpot = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()].ToString();
 
 			if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString())) adNumber = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
             if(_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.numberBoard) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString())) numberBoard = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString();
@@ -295,7 +297,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberBanners);
                 dt = ds.Tables[0];
-                numberBanner = dt.Rows[0]["nbLines"].ToString();
+                CellIdsNumber cell = new CellIdsNumber();
+                foreach (DataRow row in dt.Rows)
+                {
+                    cell.Add(row["hashcode"].ToString().Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                }
+                numberBanner = cell.Value.ToString();
             }
             #endregion
 

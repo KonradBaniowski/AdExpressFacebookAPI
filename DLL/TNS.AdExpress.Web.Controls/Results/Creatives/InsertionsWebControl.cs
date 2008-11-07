@@ -433,10 +433,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         string[] tmp = _idsFilter.Split(',');
                         Array.Copy(tmp, filters, tmp.Length);
 
-                        ListDictionary mediaImpactedList = WebFct.MediaDetailLevel.GetImpactedMedia(_customerWebSession, long.Parse(filters[0]), long.Parse(filters[1]), long.Parse(filters[2]), long.Parse(filters[3]));	
+                        ListDictionary filtertList = GetFilters(filters);
 
                         output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));
-                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession, false, _fromDate.ToString(), _toDate.ToString(), mediaImpactedList, Convert.ToInt32(_idVehicle)));
+                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession, false, _fromDate.ToString(), _toDate.ToString(), filtertList, Convert.ToInt32(_idVehicle)));
                         output.WriteLine(GetRawExcel());
                         output.WriteLine(detailSelectionWebControl.GetFooter());
                     }
@@ -449,10 +449,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         string[] tmp = _idsFilter.Split(',');
                         Array.Copy(tmp, filters, tmp.Length);
 
-                        ListDictionary mediaImpactedList = WebFct.MediaDetailLevel.GetImpactedMedia(_customerWebSession, long.Parse(filters[0]), long.Parse(filters[1]), long.Parse(filters[2]), long.Parse(filters[3]));	
+                        ListDictionary filtertList = GetFilters(filters);
 
                         output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));
-                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession, false, _fromDate.ToString(), _toDate.ToString(), mediaImpactedList, Convert.ToInt32(_idVehicle)));
+                        output.WriteLine(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(_customerWebSession, false, _fromDate.ToString(), _toDate.ToString(), filtertList, Convert.ToInt32(_idVehicle)));
                         output.WriteLine(base.GetExcel());
                         output.WriteLine(detailSelectionWebControl.GetFooter());
                     }
@@ -771,5 +771,42 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
         }
         #endregion
+
+        #region GetFilters
+        protected ListDictionary GetFilters(string[] filters)
+        {
+            Domain.Web.Navigation.Module module = _customerWebSession.CustomerLogin.GetModule(this._idModule);
+            ListDictionary filtersList = new ListDictionary();
+            if (filters != null && filters.Length > 0)
+            {
+                GenericDetailLevel detailLevels = null;
+                switch (module.Id)
+                {
+                    case WebCst.Module.Name.ANALYSE_CONCURENTIELLE:
+                    case WebCst.Module.Name.NEW_CREATIVES:
+                    case WebCst.Module.Name.ANALYSE_PORTEFEUILLE:
+                        detailLevels = _customerWebSession.GenericProductDetailLevel;
+                        break;
+                    case WebCst.Module.Name.ANALYSE_PLAN_MEDIA:
+                    case WebCst.Module.Name.ANALYSE_DYNAMIQUE:
+                    case WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    case WebCst.Module.Name.ANALYSE_DES_PROGRAMMES:
+                        detailLevels = _customerWebSession.GenericMediaDetailLevel;
+                        break;
+                }
+
+                for (int i = 0; i < detailLevels.GetNbLevels; i++)
+                {
+                    DetailLevelItemInformation cLevel = (DetailLevelItemInformation)detailLevels.Levels[i];
+                    if (filters[i] != "-1" || (_idVehicle == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack) && cLevel.Id == DetailLevelItemInformation.Levels.slogan && filters[i] != "-1"))
+                    {
+                        filtersList.Add(cLevel.DataBaseIdField, filters[i]);
+                    }
+                }
+            }
+            return filtersList;
+        }
+        #endregion
+
     }
 }
