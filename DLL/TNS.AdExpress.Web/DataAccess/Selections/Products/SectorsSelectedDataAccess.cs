@@ -68,7 +68,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 
 			#region Execution de la requête
 			try{
-                IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
+                IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].NlsSort); 
                 ds = source.Fill(sql.ToString());
 				return (ds);
 			}

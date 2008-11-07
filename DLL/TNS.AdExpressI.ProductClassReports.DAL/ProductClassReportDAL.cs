@@ -201,7 +201,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             #endregion
 
             #region Execution de la requête
-            IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+            IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].NlsSort);
             try
             {
                 return (dataSource.Fill(sql.ToString()));

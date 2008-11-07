@@ -123,13 +123,13 @@ namespace TNS.AdExpress.Web.Core.Utilities
             else{
                 if (fp != null)
                 {
-                    return string.Format(fp, "{0:#,###.00}", Convert.ToDouble(value));
+                    return string.Format(fp, "{0:percentWOSign}", Convert.ToDouble(value));
                 }
                 else
                 {
                     if (value != null && value.ToString().Length > 0)
                     {
-                        return Convert.ToDouble(value).ToString("#,###.00");
+                        return Convert.ToDouble(value).ToString("#,##0.00");
                     }
                     else
                     {

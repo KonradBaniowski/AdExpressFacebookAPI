@@ -128,6 +128,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             string formatName = string.Empty;
             string format = string.Empty;
             string excelFormat = string.Empty;
+            string numberGroupSeparator = string.Empty;
+            string numberDecimalSeparator = string.Empty;
             Rss rss = null;
             #endregion
 
@@ -141,12 +143,16 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                         contentEncoding="";
 						nlsSort = "";
 						isUTF8 = false;
+                        numberGroupSeparator = string.Empty;
+                        numberDecimalSeparator = string.Empty;
                         switch(reader.LocalName) {
                             case "language":
                                 if(reader.GetAttribute("id")==null || reader.GetAttribute("id").Length==0) throw (new InvalidXmlValueException("Invalid id parameter"));
                                 id=int.Parse(reader.GetAttribute("id"));
                                 if(reader.GetAttribute("localization")==null || reader.GetAttribute("localization").Length==0) throw (new XmlNullValueException("Invalid localization parameter"));
                                 localization=reader.GetAttribute("localization");
+                                if (reader.GetAttribute("NumberGroupSeparator") != null && reader.GetAttribute("NumberGroupSeparator").Length > 0) numberGroupSeparator = reader.GetAttribute("NumberGroupSeparator");
+                                if (reader.GetAttribute("NumberDecimalSeparator") != null && reader.GetAttribute("NumberDecimalSeparator").Length > 0) numberDecimalSeparator = reader.GetAttribute("NumberDecimalSeparator");
                                 if(reader.GetAttribute("name")!=null) name=reader.GetAttribute("name");
                                 if(reader.GetAttribute("charset")!=null) charset=reader.GetAttribute("charset");
                                 if (reader.GetAttribute("contentEncoding") != null) contentEncoding = reader.GetAttribute("contentEncoding");
@@ -159,6 +165,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								if (reader.GetAttribute("nlsSort") != null && reader.GetAttribute("nlsSort").Length > 0)
 									nlsSort = reader.GetAttribute("nlsSort");															
                                 cInfo = new AdExpressCultureInfo(localization);
+                                if (numberDecimalSeparator.Length > 0) cInfo.NumberFormat.NumberDecimalSeparator = numberDecimalSeparator;
+                                if (numberGroupSeparator.Length > 0) cInfo.NumberFormat.NumberGroupSeparator = numberGroupSeparator;
                                 rss = new Rss();
                                 languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,nlsSort, cInfo, rss));
                                 break;

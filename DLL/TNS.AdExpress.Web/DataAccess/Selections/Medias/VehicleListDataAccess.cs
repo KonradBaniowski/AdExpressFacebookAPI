@@ -955,13 +955,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			switch (webSession.CurrentModule) {
 				case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR :
 				case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE :
-					string nlsSort = "";
-				bool isUTF8 = false;
-				if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(webSession.DataLanguage.ToString()))) {
-					nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(webSession.DataLanguage.ToString())].NlsSort;
-				} 
-                return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis,nlsSort);
-			default: return webSession.Source;
+                    return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis,WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].NlsSort);
+			    default: 
+                    return webSession.Source;
 			}
 		}
 		/// <summary>

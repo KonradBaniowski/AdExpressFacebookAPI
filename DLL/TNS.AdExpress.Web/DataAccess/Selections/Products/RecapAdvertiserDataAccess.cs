@@ -143,9 +143,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			#endregion
 			
 			#region Execution de la requête
-            IDataSource dataSource=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
+            IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].NlsSort); 
 			try{
-//				return(webSession.Source.Fill(sql.ToString()));
 				return(dataSource.Fill(sql.ToString()));
 			}
 			catch(System.Exception err) {

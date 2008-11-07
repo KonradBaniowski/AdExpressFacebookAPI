@@ -117,10 +117,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             for (int i = 0; i < tab.GetLongLength(0) && i < 10; i++)
             {
                 ecart = Convert.ToDouble(tab[i, EngineEvolution.ECART]);
-                sEcart = FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit, fp).Trim();
                 if (ecart > 0)
                 {
-                    series.Points.AddXY(tab[i, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(sEcart.Replace(" ", string.Empty), fp));
+                    series.Points.AddXY(tab[i, EngineEvolution.PRODUCT].ToString(), FctUtilities.Units.ConvertUnitValue(ecart, _session.Unit));
                     series.Points[compteur].ShowInLegend = true;
 
                     #region Reference or competitor ?
@@ -142,12 +141,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
                     compteur++;
                 }
-                ecart = Convert.ToDouble(tab[last, EngineEvolution.ECART]);
-                sEcart = FctUtilities.Units.ConvertUnitValueToString(ecart, _session.Unit, fp).Trim();
-
                 if (ecart < 0)
                 {
-                    series.Points.AddXY(tab[last, EngineEvolution.PRODUCT].ToString(), Convert.ToDouble(sEcart.Replace(" ", string.Empty), fp));
+                    series.Points.AddXY(tab[last, EngineEvolution.PRODUCT].ToString(), FctUtilities.Units.ConvertUnitValue(ecart, _session.Unit));
                     series.Points[compteur].ShowInLegend = true;
                     series.Points[compteur].CustomAttributes = "LabelStyle=top";
 

@@ -414,7 +414,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #region Execute Query
             try
             {
-                IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+                IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].NlsSort);
                 DataSet ds = source.Fill(sql.ToString());
                 if (ds.Tables[0].Rows[0][0] != System.DBNull.Value)
                 {

@@ -572,7 +572,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             // Il n'y a pas de données
-            if (tab == null && tabTotal == null && tabTotalUniv == null && dsTotal == null) return (new object[0]);
+            if (tab == null && tabTotal == null && tabTotalUniv == null) return (new object[0]);
             #endregion
 
             #region Construction du tableau de résultats pour les annonceurs de références ou concurrents sélectionnés (optionnel)
@@ -750,7 +750,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 foreach (DataColumn dtc in dtTotalUniverse.Columns)
                 {
-                    if(dtTotalUniverse.Rows[0][dtc] != System.DBNull.Value){
+                    if(dtTotalUniverse.Rows[0][dtc] != System.DBNull.Value && Convert.ToDouble(dtTotalUniverse.Rows[0][dtc]) > 0){
                         nbMaxRow += dtTotalUniverse.Rows.Count * (dtTotalUniverse.Columns.Count);
                         break;
                     }
@@ -764,7 +764,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 foreach (DataColumn dtc in dtTotal.Columns)
                 {
-                    if (dtTotal.Rows[0][dtc] != System.DBNull.Value)
+                    if (dtTotal.Rows[0][dtc] != System.DBNull.Value && Convert.ToDouble(dtTotal.Rows[0][dtc]) > 0)
                     {
                         nbMaxRow += dtTotal.Rows.Count * (dtTotal.Columns.Count);
                         break;
@@ -1052,6 +1052,19 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
             }
             #endregion
+
+            bool hasData = false;
+            for (int i = 0; i < TotNbRefByMonth.Length; i++)
+            {
+                if (TotNbRefByMonth[i] > 0)
+                {
+                    hasData = true;
+                    break;
+                }
+            }
+            if (!hasData){
+                tab = null;
+            }
 
             AdObject[0] = nbAdvertiser;
             AdObject[1] = nbProduct;

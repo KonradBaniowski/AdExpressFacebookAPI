@@ -1689,7 +1689,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         //investissement total 										
                         TotalMarketOrSectorInvest = dtTotalMarketOrSector.Compute("Sum(total_N)", "").ToString();
                         if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorInvest.Trim()))
-                            //							TotalMarketOrSectorInvest = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalMarketOrSectorInvest)/(double)1000));																																									
                             // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché et plurimédia 
                             if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorInvest.Trim()))
                             {
@@ -1710,7 +1709,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         if (dtTotalUniverse.Columns.Contains("total_N"))
                             TotalUnivInvest = dtTotalUniverse.Compute("Sum(total_N)", "").ToString();
                         if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivInvest.Trim()))
-                            //							TotalUnivInvest = String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalUnivInvest)/(double)1000));																						
                             // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et plurimédia 
                             if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivInvest.Trim()))
                             {
@@ -1777,7 +1775,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 TotalMarketOrSectorVehicleInvest = dtTotalMarketOrSector.Compute("Sum(total_N)", "id_vehicle = " + idVehicle + "").ToString();
                                 if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorVehicleInvest.ToString().Trim()))
                                 {
-                                    //									TotalMarketOrSectorVehicleInvest=String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalMarketOrSectorVehicleInvest)/(double)1000));																																
                                     // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et media (vehicle) 								
                                     tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", "", "", false, TotalMarketOrSectorVehicleInvest, tempPDM, tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                     increment = true;
@@ -1803,7 +1800,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 TotalUnivVehicleInvest = dtTotalUniverse.Compute("Sum(total_N)", "id_vehicle = " + idVehicle + "").ToString();
                                 if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivVehicleInvest.ToString().Trim()))
                                 {
-                                    //									TotalUnivVehicleInvest =  String.Format("{0:### ### ### ### ##0.##}",(double.Parse(TotalUnivVehicleInvest)/(double)1000));																									
                                     // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et media (vehicle) 								
                                     tab = FillTabInvestPdmEvol(tab, indexTabRow, idVehicle, Vehicle, "", "", "", "", "", "", false, TotalUnivVehicleInvest, tempPDM, tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                     increment = true;
@@ -2436,9 +2432,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             //Investissement total univers pour média (vehicle)
             totalInvestChild = dt.Compute(expression, filter).ToString();
-            //			if(FctUtilities.CheckedText.IsNotEmpty(totalInvestChild.ToString().Trim())){
-            //				totalInvestChild=String.Format("{0:### ### ### ### ##0.##}",(double.Parse(totalInvestChild)/(double)1000));
-            //			}
 
             //PDM pour média 				
             if (FctUtilities.CheckedText.IsNotEmpty(totalInvestParent) && FctUtilities.CheckedText.IsNotEmpty(totalInvestChild.ToString()))
@@ -2458,13 +2451,20 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 tempEvol = (double)0.0;
                 totalInvestChildPreviousYear = dt.Compute(expressionPreviuousYear, filter).ToString();
-                //				if(FctUtilities.CheckedText.IsNotEmpty(totalInvestChildPreviousYear))totalInvestChildPreviousYear =String.Format("{0:### ### ### ### ##0.##}",(double.Parse(totalInvestChildPreviousYear)/(double)1000));
                 //anneé N par rapport N-1 = ((N-(N-1))*100)/N-1 
                 if (FctUtilities.CheckedText.IsNotEmpty(totalInvestChildPreviousYear) && FctUtilities.CheckedText.IsNotEmpty(totalInvestChild) && double.Parse(totalInvestChildPreviousYear) > (double)0.0)
                 {
                     tempEvol = ((double.Parse(totalInvestChild) - double.Parse(totalInvestChildPreviousYear)) * (double)100.0) / double.Parse(totalInvestChildPreviousYear);
                     evolution = tempEvol.ToString();
                 }
+                else
+                {
+                    evolution = tempEvol.ToString();
+                }                
+            }
+            else
+            {
+                evolution = tempEvol.ToString();
             }
         }
 
@@ -2880,6 +2880,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             ArrayList OldIdAdvertiserArr = new ArrayList();
             //nombre maximal de lignes
             int nbMaxLines = 0;
+            bool hasData = false;
             #endregion
 
             #region instanciation du tableau de résultats
@@ -2895,6 +2896,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         //nombre de média (vehicle)
                         foreach (DataRow curRow in dtTotal.Rows)
                         {
+                            if (dtTotal.Columns.Contains("total_N") && Convert.ToDouble(curRow["total_N"]) > 0)
+                            {
+                                hasData = true; ;
+                            }
                             if (dtTotal.Columns.Contains("id_vehicle") && (int.Parse(OldIdVehicle) != int.Parse(curRow["id_vehicle"].ToString())))
                             {
                                 nbVehicle++;
@@ -2923,6 +2928,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         //nombre de média (vehicle)
                         foreach (DataRow curRow in dtTotal.Rows)
                         {
+                            if (dtTotal.Columns.Contains("total_N") && Convert.ToDouble(curRow["total_N"]) > 0)
+                            {
+                                hasData = true; ;
+                            }
                             if (dtTotal.Columns.Contains("id_vehicle") && (int.Parse(OldIdVehicle) != int.Parse(curRow["id_vehicle"].ToString())))
                             {
                                 nbVehicle++;
@@ -2957,6 +2966,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         //nombre de média (vehicle)
                         foreach (DataRow curRow in dtTotal.Rows)
                         {
+                            if (dtTotal.Columns.Contains("total_N") && Convert.ToDouble(curRow["total_N"]) > 0)
+                            {
+                                hasData = true; ;
+                            }
                             if (dtTotal.Columns.Contains("id_vehicle") && (int.Parse(OldIdVehicle) != int.Parse(curRow["id_vehicle"].ToString())))
                             {
                                 nbVehicle++;
@@ -2997,6 +3010,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
                 OldIdVehicle = "0";
             }
+            if (!hasData) return null;
             //création du tableau 
             tab = new object[nbMaxLines, NB_MAX_COLUMNS];
             #endregion

@@ -378,17 +378,6 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		}
 		#endregion
 
-		#region Construction d'une liste des enfants d'un noeuds
-		//private Hashtable LoadChilds(System.Windows.Forms.TreeNode tree)
-		//{
-		//    Hashtable t = new Hashtable();
-		//    foreach(System.Windows.Forms.TreeNode node in tree.Nodes){
-		//        t.Add(((LevelInformation)node.Tag).ID,node.Index);
-		//    }
-		//    return t;
-		//}
-		#endregion
-
 		#endregion
 
 		

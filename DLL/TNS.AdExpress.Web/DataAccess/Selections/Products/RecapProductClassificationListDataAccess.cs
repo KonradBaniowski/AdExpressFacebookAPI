@@ -68,83 +68,12 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 
 			#region Execution de la requête
 			try{
-                IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis); 
+                IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].NlsSort); 
 				return(source.Fill(sql.ToString()));
 			}
 			catch(System.Exception err){
 				throw (new RecapProductClassificationListDataAccessException("Impossible de charger une liste de Famille, classe, groupe,variété en fonction des droits du client",err));
 			}
-			#endregion
-
-			#region Ancien code
-//
-//			#region Execution de la requête
-//			DataSet ds=new DataSet();
-//			//OracleConnection connection=webSession.CustomerLogin.Connection;
-//			OracleConnection connection = new OracleConnection(TNS.AdExpress.Constantes.DB.Connection.RECAP_CONNECTION_STRING);
-//			OracleCommand sqlCommand=null;
-//
-//			OracleDataAdapter sqlAdapter=null;
-//
-//			#region Ouverture de la base de données
-//			bool DBToClosed=false;
-//			// On teste si la base est déjà ouverte
-//			if (connection.State==System.Data.ConnectionState.Closed){
-//				DBToClosed=true;
-//				try
-//				{
-//					connection.Open();
-//				}
-//				catch(System.Exception et)
-//				{
-//					throw(new RecapProductClassificationListDataAccessException("Impossible d'ouvrir la base de données:"+et.Message));
-//				}
-//			}
-//			#endregion
-//
-//			try{
-//				sqlCommand=new OracleCommand(sql,connection);
-//				sqlAdapter=new OracleDataAdapter(sqlCommand);
-//				sqlAdapter.Fill(ds);
-//			}
-//			#region Traitement d'erreur du chargement des données
-//			catch(System.Exception ex){
-//				try{
-//					// Fermeture de la base de données
-//					if (sqlAdapter!=null){
-//						sqlAdapter.Dispose();
-//					}
-//					if(sqlCommand!=null) sqlCommand.Dispose();
-//					if (DBToClosed) connection.Close();
-//				}
-//				catch(System.Exception et){
-//					throw(new RecapProductClassificationListDataAccessException ("Impossible de fermer la base de données, lors de la gestion d'erreur "+ex.Message+" : "+et.Message));
-//				}
-//				throw(new RecapProductClassificationListDataAccessException ("Impossible de charger les données:"+sql+" "+ex.Message));
-//			}
-//			#endregion
-//
-//			#region Fermeture de la base de données
-//			try
-//			{
-//				// Fermeture de la base de données
-//				if (sqlAdapter!=null)
-//				{
-//					sqlAdapter.Dispose();
-//				}
-//				if(sqlCommand!=null)sqlCommand.Dispose();
-//				if (DBToClosed) connection.Close();
-//			}
-//			catch(System.Exception et)
-//			{
-//				throw(new RecapProductClassificationListDataAccessException ("Impossible de fermer la base de données :"+et.Message));
-//			}
-//			#endregion
-//
-//			#endregion	
-//
-//			return(ds);
-//
 			#endregion
 
 		}

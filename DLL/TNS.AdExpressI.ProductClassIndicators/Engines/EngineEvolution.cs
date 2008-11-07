@@ -118,6 +118,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
 
                 idAdv = Convert.ToInt64(currentRow["id_advertiser"]);
+                total = Convert.ToDouble(currentRow["total_N"]);
+                ecart = Convert.ToDouble(currentRow["Ecart"]);
+
+                if (total == 0 && ecart == 0)
+                {
+                    continue;
+                }
 
                 #region Classif Info
                 if (classifLevel == CstResult.MotherRecap.ElementType.product)
@@ -133,7 +140,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
                 #endregion
 
-                tabResult[i, TOTAL_N] = total = Convert.ToDouble(currentRow["total_N"]);
+                tabResult[i, TOTAL_N] = total;
 
                 #region Reference or competitor?
                 if (_referenceIDS.Contains(idAdv))
@@ -150,12 +157,17 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 }
                 #endregion
 
-                tabResult[i, ECART] = ecart = Convert.ToDouble(currentRow["Ecart"]);
+                tabResult[i, ECART] = ecart;
                 tabResult[i, EVOLUTION] = ecart / (total - ecart) * 100;
 
                 i++;
             }
             #endregion
+
+            if (i < 1)
+            {
+                return new object[0, COMPETITOR + 1]; 
+            }
 
             return tabResult;        
         
