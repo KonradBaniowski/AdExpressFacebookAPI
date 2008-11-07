@@ -193,18 +193,15 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
             set
             {
-                //if ((value == null || value.Length <= 0) && _customerWebSession != null)
-                //{
-                //    if (_customerWebSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
-                //    {
-                //        AtomicPeriodWeek tmp = new AtomicPeriodWeek(new DateTime(int.Parse(_customerWebSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_customerWebSession.PeriodBeginningDate.Substring(4, 2)), int.Parse(_customerWebSession.PeriodBeginningDate.Substring(6, 2))));
-                //        value = string.Format("{0}{1}", tmp.FirstDay.AddDays(3).Year, tmp.Week.ToString("0#"));
-                //    }
-                //    else
-                //    {
-                //        value = _customerWebSession.PeriodBeginningDate.Substring(0, 6);
-                //    }
-                //}
+                if ((value == null || value.Length <= 0) && _customerWebSession != null) {
+                    if (_customerWebSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly) {
+                        AtomicPeriodWeek tmp = new AtomicPeriodWeek(new DateTime(int.Parse(_customerWebSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_customerWebSession.PeriodBeginningDate.Substring(4, 2)), int.Parse(_customerWebSession.PeriodBeginningDate.Substring(6, 2))));
+                        value = string.Format("{0}{1}", tmp.FirstDay.AddDays(3).Year, tmp.Week.ToString("0#"));
+                    }
+                    else {
+                        value = _customerWebSession.PeriodBeginningDate.Substring(0, 6);
+                    }
+                }
                 _zoom = value;
                 this._header.ZoomDate = _zoom;
                 this._columns.ZoomDate = _zoom;
