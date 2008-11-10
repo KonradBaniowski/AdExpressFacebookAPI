@@ -251,11 +251,14 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 result = mediaScheduleResult.GetHtml();
 
 
-                html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
+                html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\" width=\"100%\">");
                 html.Append("\r\n\t<tr height=\"1\">\r\n\t\t<td>");
                 html.Append("\r\n\t\t</td>\r\n\t</tr>");
                 html.Append("\r\n\t<tr>\r\n\t\t<td>");
-                html.Append(result.HTMLCode);
+                if (result.HTMLCode.Length == 0)
+                    html.Append(string.Format("<div align=\"center\" class=\"txtViolet11Bold\">{0}</div>", GestionWeb.GetWebWord(177, _customerWebSession.SiteLanguage)));
+                else
+                    html.Append(result.HTMLCode);
                 html.Append("\r\n\t\t</td>\r\n\t</tr>");
                 html.Append("</table>");
                 #endregion
