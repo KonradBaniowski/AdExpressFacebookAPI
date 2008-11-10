@@ -27,7 +27,7 @@
     </allowedMediaDetailLevels>    
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>               <!-- Centre d'interet -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>                <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                       <!-- Categorie -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
@@ -64,7 +64,7 @@
     </allowedMediaLevelItems>
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>            <!-- Centre d'interet -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>            <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                    <!-- Categorie -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
@@ -101,9 +101,8 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>             <!-- Centre d'interet -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>               <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
     </MediaSelectionParents>
     <!--Media detail level allowed in recap's modules-->
@@ -140,7 +139,7 @@
     <!-- Selection hierarchy-->
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>             <!-- Centre d'interet -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>             <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
     </MediaSelectionParents>
      <!--Media detail level allowed in recap's modules-->
@@ -175,9 +174,8 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>             <!-- Centre d'interet -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>               <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
     </MediaSelectionParents>
     <!--Media detail level allowed in recap's modules-->
@@ -213,10 +211,9 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>             <!-- Centre d'interet -->
-      <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>             <!-- Centre d'interet -->
+      <MediaSelectionParent>category</MediaSelectionParent>                    <!-- Categorie -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>
