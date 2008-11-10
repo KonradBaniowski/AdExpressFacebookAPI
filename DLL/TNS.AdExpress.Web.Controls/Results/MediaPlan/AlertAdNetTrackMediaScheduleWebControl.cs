@@ -284,22 +284,72 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 		/// <param name="webSession">Session du client</param>
         /// <param name="period">Study Period</param>
 		/// <returns>Code HTMl pour MS Excel</returns>
-		public  string GetExcel(WebSession webSession, MediaSchedulePeriod period){
+		public  string GetExcel(WebSession webSession){
 			StringBuilder html=new StringBuilder(10000);
-			MediaPlanResultData result=null;
-			Int64 module = webSession.CurrentModule;
-			object[,] tab = null;
+            //MediaPlanResultData result=null;
+            MediaSchedulePeriod period;
+            MediaScheduleData result = null;
+            Int64 moduleId = webSession.CurrentModule;
+            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+			//object[,] tab = null;
 			try{
 
                 #region Data
-                tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.adnettrack));
+                //tab = TNS.AdExpress.Web.Rules.Results.GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(webSession, period, VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.adnettrack));
                 #endregion
 
+                #region Period Detail
+                DateTime begin;
+                DateTime end;
+                if (_zoomDate != null && _zoomDate != string.Empty) {
+                    if (webSession.DetailPeriod == ConstantePeriod.DisplayLevel.weekly) {
+                        begin = WebFunctions.Dates.getPeriodBeginningDate(_zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                        end = WebFunctions.Dates.getPeriodEndDate(_zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    }
+                    else {
+                        begin = WebFunctions.Dates.getPeriodBeginningDate(_zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                        end = WebFunctions.Dates.getPeriodEndDate(_zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    }
+                    begin = WebFunctions.Dates.Max(begin,
+                        WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
+                    end = WebFunctions.Dates.Min(end,
+                        WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
-				if(tab!=null && tab.GetLength(0)>0){
+                    period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
+
+                }
+                else {
+                    begin = WebFunctions.Dates.getPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
+                    end = WebFunctions.Dates.getPeriodEndDate(_customerWebSession.PeriodEndDate, _customerWebSession.PeriodType);
+                    if (webSession.DetailPeriod == ConstantePeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)) {
+                        webSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
+                    }
+                    period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
+
+                }
+                #endregion
+
+                object[] param = null;
+                webSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
+                if (_zoomDate.Length > 0) {
+                    param = new object[4];
+                    param[3] = _zoomDate;
+                }
+                else {
+                    param = new object[3];
+                }
+                param[0] = _customerWebSession;
+                param[1] = period;
+                param[2] = _vehicleId;
+                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                result = mediaScheduleResult.GetExcelHtml(false);
+
+				//if(tab!=null && tab.GetLength(0)>0){
+                if (result.HTMLCode.Length > 0) {
 
 					#region Obtention du résultat du calendrier d'action				
-					result = TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetAdNetTrackExcel(webSession, period, tab, _zoomDate);
+                    //result = TNS.AdExpress.Web.UI.Results.GenericMediaScheduleUI.GetAdNetTrackExcel(webSession, period, tab, _zoomDate);
 					#endregion
 				
 					#region Construction du tableaux global				
@@ -322,7 +372,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 				throw new ControlsExceptions.AlertAdNetTrackMediaScheduleWebControlException("Impossible de générer l'Excel du plan média AdNetTrack",err);
 			}
 			finally{
-				webSession.CurrentModule = module;
+				webSession.CurrentModule = moduleId;
 			}
 			return(Convertion.ToHtmlString(html.ToString()));
 		}
@@ -409,10 +459,10 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 
 					try{
 //						_customerWebSession.CurrentModule = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
-                        output.WriteLine(ExcelFunction.GetLogo(_customerWebSession));
-                        output.WriteLine(ExcelFunction.GetExcelHeaderForAdnettrackMediaPlanPopUp(_customerWebSession, false, period.Begin.ToString("yyyyMMdd"), period.End.ToString("yyyyMMdd")));
-						output.WriteLine(GetExcel(_customerWebSession, period));
-						output.WriteLine(ExcelFunction.GetFooter(_customerWebSession));
+                        //output.WriteLine(ExcelFunction.GetLogo(_customerWebSession));
+                        //output.WriteLine(ExcelFunction.GetExcelHeaderForAdnettrackMediaPlanPopUp(_customerWebSession, false, period.Begin.ToString("yyyyMMdd"), period.End.ToString("yyyyMMdd")));
+						output.WriteLine(GetExcel(_customerWebSession));
+						//output.WriteLine(ExcelFunction.GetFooter(_customerWebSession));
 					}
 					catch(System.Exception err){
 						throw new ControlsExceptions.AlertAdNetTrackMediaScheduleWebControlException("Impossible de générer l'Excel du plan média AdNetTrack",err);
