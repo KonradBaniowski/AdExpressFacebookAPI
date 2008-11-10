@@ -200,6 +200,7 @@
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
         <allowedMediaLevelItem>media</allowedMediaLevelItem>                    <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>              <!-- Régie -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -208,6 +209,7 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                    <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>                    <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
