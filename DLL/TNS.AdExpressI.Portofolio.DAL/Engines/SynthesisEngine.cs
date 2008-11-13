@@ -1351,7 +1351,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 sql.Append("select distinct list_banners as hashcode ");
             }
             else {
-                sql.Append("select distinct hashcode ");
+
+                sql.Append("select distinct to_char(hashcode) as hashcode ");
             }
 
             if(customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
