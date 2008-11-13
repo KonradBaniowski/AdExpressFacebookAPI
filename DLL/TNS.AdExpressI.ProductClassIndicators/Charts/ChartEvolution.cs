@@ -104,7 +104,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             series.Color = (Color)_colorConverter.ConvertFrom(_seriesColor);
             series.Enabled = true;
             series.Font = new Font("Arial", (float)10);
-            series.FontAngle = 90;
+            series.FontAngle = 80;
             #endregion
 
             #region Series building
@@ -141,11 +141,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
                     compteur++;
                 }
+                ecart = Convert.ToDouble(tab[last, EngineEvolution.ECART]);
                 if (ecart < 0)
                 {
                     series.Points.AddXY(tab[last, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _session.Unit)));
                     series.Points[compteur].ShowInLegend = true;
-                    series.Points[compteur].CustomAttributes = "LabelStyle=top";
 
                     #region Reference or competitor ?
                     if (tab[last, EngineEvolution.COMPETITOR] != null)

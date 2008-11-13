@@ -96,7 +96,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstWeb.CustomerSessions.Unit.duration:
                     return ConvertToDuration(value);
                 case CstWeb.CustomerSessions.Unit.kEuro:
-                    return ConvertToKEuro(value);
+                    return Math.Round(ConvertToKEuro(value));
                 case CstWeb.CustomerSessions.Unit.euro:
                 case CstWeb.CustomerSessions.Unit.grp:
                 case CstWeb.CustomerSessions.Unit.spot:

@@ -1325,10 +1325,11 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <param name="dateFormatText">Date en format texte</param>
-		/// <param name="periodBeginning">Date de début</param>
-		/// <param name="periodEnd">Date de fin</param>
+        /// <param name="periodDisplayLevel">Type of period breakdown</param>
+        /// <param name="zoomDate">Optional zomm period</param>
 		/// <returns>HTML</returns>
-		public static string GetExcelHeaderForAdnettrackMediaPlanPopUp(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd){
+        public static string GetExcelHeaderForAdnettrackMediaPlanPopUp(WebSession webSession, bool dateFormatText, string zoomDate, int periodDisplayLevel)
+        {
 			StringBuilder t=new StringBuilder(2000);
 			try{
 				//webSession.CustomerLogin.ModuleList();
@@ -1343,7 +1344,11 @@ namespace TNS.AdExpress.Web.UI{
 				t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(793,webSession.SiteLanguage) +" :</font> "+ GestionWeb.GetWebWord(751,webSession.SiteLanguage) +"</td></tr>");
 				
 				// Date
-				t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
+                if (zoomDate == null) zoomDate = "";
+                if (zoomDate.Length > 0)
+                    t.Append(GetZoomDate(webSession, zoomDate, periodDisplayLevel));
+                else
+                    t.Append(GetDateSelected(webSession, currentModule, dateFormatText, string.Empty, string.Empty));
 				
 				// Media sélectionné (Adnettrack)
 				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(190,webSession.SiteLanguage)+" :</font> "+ GestionWeb.GetWebWord(648,webSession.SiteLanguage).ToUpper() +"</TD></TR>");

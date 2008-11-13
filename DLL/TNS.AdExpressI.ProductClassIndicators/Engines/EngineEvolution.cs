@@ -169,7 +169,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 return new object[0, COMPETITOR + 1]; 
             }
 
-            return tabResult;        
+            object[,] tab = new object[i, COMPETITOR + 1];
+            Array.Copy(tabResult, tab, i*(tabResult.GetLength(1)));
+            return tab;        
         
         }
         #endregion

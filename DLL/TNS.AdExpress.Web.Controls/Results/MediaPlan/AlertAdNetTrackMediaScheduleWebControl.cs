@@ -291,7 +291,6 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             MediaScheduleData result = null;
             Int64 moduleId = webSession.CurrentModule;
             TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
-			//object[,] tab = null;
 			try{
 
                 #region Data
@@ -330,7 +329,6 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 #endregion
 
                 object[] param = null;
-                webSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
                 if (_zoomDate.Length > 0) {
                     param = new object[4];
@@ -345,7 +343,6 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 result = mediaScheduleResult.GetExcelHtml(false);
 
-				//if(tab!=null && tab.GetLength(0)>0){
                 if (result.HTMLCode.Length > 0) {
 
 					#region Obtention du résultat du calendrier d'action				
@@ -450,25 +447,12 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					output.WriteLine(GetHTML(_customerWebSession));						
 					break;				
 				case RenderType.excel:	
-					Int64 module = _customerWebSession.CurrentModule;
-                    if (_zoomDate != null && _zoomDate != string.Empty)
-                    {
-                        _customerWebSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
-
-                    }
 
 					try{
-//						_customerWebSession.CurrentModule = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
-                        //output.WriteLine(ExcelFunction.GetLogo(_customerWebSession));
-                        //output.WriteLine(ExcelFunction.GetExcelHeaderForAdnettrackMediaPlanPopUp(_customerWebSession, false, period.Begin.ToString("yyyyMMdd"), period.End.ToString("yyyyMMdd")));
 						output.WriteLine(GetExcel(_customerWebSession));
-						//output.WriteLine(ExcelFunction.GetFooter(_customerWebSession));
 					}
 					catch(System.Exception err){
 						throw new ControlsExceptions.AlertAdNetTrackMediaScheduleWebControlException("Impossible de générer l'Excel du plan média AdNetTrack",err);
-					}
-					finally{
-						_customerWebSession.CurrentModule = module;
 					}
 					break;
 			}

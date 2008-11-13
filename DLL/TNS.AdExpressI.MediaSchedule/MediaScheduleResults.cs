@@ -1351,17 +1351,29 @@ namespace TNS.AdExpressI.MediaSchedule {
                 if(_isCreativeDivisionMS) {
                     t.Append(FctExcel.GetExcelHeaderForCreativeMediaPlan(_session));
                 }
-                else {
-                    if(_module.Id != CstWeb.Module.Name.BILAN_CAMPAGNE) {
+                else
+                {
+                    if (_module.Id != CstWeb.Module.Name.BILAN_CAMPAGNE)
+                    {
                         t.Append(FctExcel.GetLogo(_session));
-                        if(_session.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA) {
-                            t.Append(FctExcel.GetExcelHeader(_session, true, false, Zoom, (int)_session.DetailPeriod));
+                        if (VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet))
+                        {
+                            t.Append(FctExcel.GetExcelHeaderForAdnettrackMediaPlanPopUp(_session, false, Zoom, (int)_session.DetailPeriod));
                         }
-                        else {
-                            t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
+                        else
+                        {
+                            if (_session.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)
+                            {
+                                t.Append(FctExcel.GetExcelHeader(_session, true, false, Zoom, (int)_session.DetailPeriod));
+                            }
+                            else
+                            {
+                                t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
+                            }
                         }
                     }
-                    else {
+                    else
+                    {
                         t.Append(FctExcel.GetAppmLogo(_session));
                         t.Append(FctExcel.GetExcelHeader(_session, GestionWeb.GetWebWord(1474, _session.SiteLanguage)));
                     }
