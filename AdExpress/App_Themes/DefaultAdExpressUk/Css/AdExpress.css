@@ -680,6 +680,50 @@ a.txtLinkBlack11:hover{
 	font-weight: normal;
 	text-decoration : none;
 }
+/* Portofolio Creation */
+.portofolioCreation
+{
+	background-color: #E9E6EF;
+	border-color:#644883;
+}
+
+td.portofolioCreation1,
+td.portofolioCreation11,
+td.portofolioCreation111{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color : #6B598B;
+	font-weight:normal;
+	text-decoration : none;
+	background-color: #E9E6EF;	
+	padding-top:0px;
+	padding-right:4px;
+	padding-bottom:0px;
+	padding-left:4px;
+}
+
+td.portofolioCreation1{
+	border-left-width:1px;
+	border-left-color:#644883;
+	border-top-width:0px;
+	border-bottom-style:none;
+	border-right-style:none;
+}
+
+td.portofolioCreation11{
+	border-left-style:none;
+	border-bottom-style:none;
+	border-right-style:none;
+}
+
+td.portofolioCreation111
+{
+	border-left-style:none;
+	border-bottom-style:none;
+	border-right-color:#644883;
+	border-right-width: 1px; 
+	border-right-style:solid;
+}
 /* Portofolio Data */
 tr.portofolioSynthesisL1 td{
 	font-family: Arial, Helvetica, sans-serif;

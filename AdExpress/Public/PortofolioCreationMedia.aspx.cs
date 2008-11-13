@@ -17,32 +17,16 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.UI.Results;
+using TNS.AdExpress.Web.UI;
 #endregion
 
 namespace AdExpress.Public{
 	/// <summary>
 	/// Page publique du détail du chemin de fer d'un support utilisé par les alertes push mail
 	/// </summary>
-	public partial class PortofolioCreationMedia : System.Web.UI.Page{
+	public partial class PortofolioCreationMedia : WebPage{
 		
 		#region Variables
-        ///// <summary>
-        ///// Identifiant du média
-        ///// </summary>
-        //protected string idMedia="";
-        ///// <summary>
-        ///// Date de publication du support
-        ///// </summary>
-        //protected string date="";
-        ///// <summary>
-        ///// Date de parution du support
-        ///// </summary>
-        //protected string parution="";
-        ///// <summary>
-        ///// Nom du support
-        ///// </summary>
-        //protected string nameMedia="";
-
         /// <summary>
         /// identifiant du support
         /// </summary>
@@ -63,10 +47,6 @@ namespace AdExpress.Public{
 		/// Resultat
 		/// </summary>
 		public string result="";
-		/// <summary>
-		/// Langue du site
-		/// </summary>
-		public int _siteLanguage=33;
 		#endregion
 
 		#region Chargement de la page
@@ -76,23 +56,9 @@ namespace AdExpress.Public{
 		/// <param name="sender">page</param>
 		/// <param name="e">arguments</param>
 		private void Page_Load(object sender, System.EventArgs e){
+            
 			try {
-
-                #region Old version
-                //if(Page.Request.QueryString.Get("idMedia")!=null) idMedia = Page.Request.QueryString.Get("idMedia");
-                //if(Page.Request.QueryString.Get("date")!=null) date = Page.Request.QueryString.Get("date");
-                //if (Page.Request.QueryString.Get("parution") != null) date = Page.Request.QueryString.Get("parution");
-                //if(Page.Request.QueryString.Get("nameMedia")!=null) nameMedia = Page.Request.QueryString.Get("nameMedia");
-                //if(Page.Request.QueryString.Get("siteLanguage") == null) _siteLanguage = TNS.AdExpress.Constantes.DB.Language.FRENCH;
-                //else _siteLanguage = int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
-
-                //if(idMedia.Length>0 && date.Length>0 && nameMedia.Length>0){
-                //    // BUG A DEDE
-                //    //result=PortofolioUI.GetPortofolioCreationMedia(date,parution,idMedia,nameMedia,_siteLanguage);
-                //}
-                #endregion
-
-                #region New version
+                int siteLanguage;
                 if(Page.Request.QueryString.Get("idMedia") != null)
                     _idMedia = HttpContext.Current.Request.QueryString.Get("idMedia");
                 if(Page.Request.QueryString.Get("dateCoverNum") != null)
@@ -102,13 +68,12 @@ namespace AdExpress.Public{
                 if(Page.Request.QueryString.Get("nameMedia") != null)
                     _nameMedia = HttpContext.Current.Request.QueryString.Get("nameMedia");
                 if(Page.Request.QueryString.Get("siteLanguage") == null)
-                    _siteLanguage = TNS.AdExpress.Constantes.DB.Language.FRENCH;
-                else _siteLanguage = int.Parse(HttpContext.Current.Request.QueryString.Get("siteLanguage").ToString());
+                    siteLanguage = _siteLanguage;
+                else siteLanguage = int.Parse(HttpContext.Current.Request.QueryString.Get("siteLanguage").ToString());
 
                 if(_idMedia.Length > 0 && _dateCoverNum.Length > 0 && _dateMediaNum.Length > 0 && _nameMedia.Length > 0) {
-                    result = PortofolioUI.GetPortofolioCreationMedia(_dateMediaNum, _dateCoverNum, _idMedia, _nameMedia, _siteLanguage);
+                    result = PortofolioUI.GetPortofolioCreationMedia(_dateMediaNum, _dateCoverNum, _idMedia, _nameMedia, siteLanguage);
                 }
-                #endregion
 
                 #region Scripts
                 // Ouverture de la popup une création
@@ -119,7 +84,7 @@ namespace AdExpress.Public{
 
 			}
 			catch(System.Exception et){
-				Response.Redirect("/Public/Message.aspx?msgCode=5&siteLanguage="+_siteLanguage);
+                Response.Redirect("/Public/Message.aspx?msgCode=5&siteLanguage=" + _siteLanguage);
 			}
 		}
 		#endregion

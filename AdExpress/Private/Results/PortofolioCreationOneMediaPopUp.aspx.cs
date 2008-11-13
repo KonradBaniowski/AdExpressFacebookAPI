@@ -16,6 +16,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.UI.Results;
+using TNS.AdExpress.Web.UI;
 
 using Portofolio = TNS.AdExpressI.Portofolio;
 using Domain = TNS.AdExpress.Domain.Web.Navigation;
@@ -27,7 +28,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Pop up affichant une image dans le chemin de fer
 	/// </summary>
-	public partial class PortofolioCreationOneMediaPopUp : System.Web.UI.Page{
+	public partial class PortofolioCreationOneMediaPopUp : WebPage{
 
 		#region Variables		
 		/// <summary>

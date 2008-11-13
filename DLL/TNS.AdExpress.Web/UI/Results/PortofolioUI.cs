@@ -82,19 +82,19 @@ namespace TNS.AdExpress.Web.UI.Results {
             DateTime dayDT = new DateTime(int.Parse(dateKiosque.Substring(0, 4)), int.Parse(dateKiosque.Substring(4, 2)), int.Parse(dateKiosque.ToString().Substring(6, 2)));
             day = TNS.FrameWork.Date.DateString.dateTimeToDD_MM_YYYY(dayDT, languageId);
 
-            t.Append("<table border=1 bordercolor=#644883 cellpadding=0 cellspacing=0 width=100% bgcolor=#E9E6EF ><tr>");
-            t.Append("<td width=\"33%\" class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-BOTTOM-STYLE: none\">" + day + "</td>");
-            t.Append("<td width=\"33%\" align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">" + nameMedia + "</td>");
-            t.Append("<td width=\"33%\" align=right class=\"portofolio1\" style=\"BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">&nbsp;</td>");
+            t.Append("<table border=1 cellpadding=0 cellspacing=0 width=100% class=\"portofolioCreation\" ><tr>");
+            t.Append("<td width=\"33%\" class=\"portofolioCreation1\">" + day + "</td>");
+            t.Append("<td width=\"33%\" align=center class=\"portofolioCreation11\">" + nameMedia + "</td>");
+            t.Append("<td width=\"33%\" align=right class=\"portofolioCreation111\">&nbsp;</td>");
             t.Append("</tr></table>");
 
-            t.Append("<table border=0 cellpadding=0 cellspacing=0 width=100% bgcolor=#E9E6EF>");
+            t.Append("<table border=0 cellpadding=0 cellspacing=0 width=100% class=\"paleVioletBackGroundV2\">");
             foreach(string name in files) {
                 endFile = name.Split('\\');
                 // Couverture - Dos
                 if(i == 1 || i == files.Length) {
                     t.Append("<tr><td colspan=4 align=center>");
-                    t.Append("<table border=1 bordercolor=#644883 cellpadding=0 cellspacing=0 width=100%><tr><td align=center>");
+                    t.Append("<table cellpadding=0 cellspacing=0 width=100% class=\"violetBorder\"><tr><td align=center>");
                     if(i == 1) t.Append("<a name=\"C1\"></a><a name=\"C2\"></a>");
                     if(i == files.Length) t.Append("<a name=\"C3\"></a><a name=\"C4\"></a>");
                     t.Append("<a href=\"javascript:portofolioOneCreation('" + idMedia + "','" + dateCover + "','" + endFile[endFile.Length - 1] + "','');\"><img src='" + pathWeb + endFile[endFile.Length - 1] + "' border=\"0\"></a>");
@@ -113,10 +113,10 @@ namespace TNS.AdExpress.Web.UI.Results {
                     else {
                         endBalise = "";
                     }
-                    t.Append("<td align=center style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">");
+                    t.Append("<td align=center class=\"BlancBorderColorWithoutTop\">");
                     // Tableau niveau 2
                     if(compteur == 0 || compteur == 2) {
-                        t.Append("<table border=1 bordercolor=#644883 cellpadding=0 cellspacing=0 width=100%><tr><td style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">");
+                        t.Append("<table class=\"violetBorder\" cellpadding=0 cellspacing=0 width=100%><tr><td class=\"BlancBorderColorWithoutTop\">");
                         filesName[0] = endFile[endFile.Length - 1];
                         filesName[1] = files[i].Split('\\')[endFile.Length - 1];
                     }
@@ -127,7 +127,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                     t.Append("</table>");
 
                     if(compteur == 1 || compteur == -1) {
-                        t.Append("<tr ><td colspan=2 align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">Pages : " + ((int)(i - 1)).ToString() + "/" + i.ToString() + "</td></tr>");
+                        t.Append("<tr ><td colspan=2 align=center class=\"portofolioCreation11\">Pages : " + ((int)(i - 1)).ToString() + "/" + i.ToString() + "</td></tr>");
                         t.Append("</td></tr></table>");
                     }
                     t.Append("</td>");
