@@ -1865,14 +1865,16 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="padding">Stirng to insert before Label</param>
         protected virtual void AppenLabelTotalPDM(object[,] data, StringBuilder t, int line, string cssClasse, string cssClasseNb, int col, string padding, int labColSpan, IFormatProvider fp) {
             if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb) {
-                t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{6}\">{5}{1}</td>"
+                t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{6}\">{7}{5}{1}{8}</td>"
                     , cssClasse
                     , data[line, col]
                     , cssClasseNb
                     , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp)
                     , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00")
                     , padding
-                    , labColSpan);
+                    , labColSpan
+                    , ((_isExcelReport) ? "=\"" : "")
+                    , ((_isExcelReport) ? "\"" : ""));
                 if(_allowTotal) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
@@ -1886,14 +1888,16 @@ namespace TNS.AdExpressI.MediaSchedule {
                 }
             }
             else {
-                t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{6}\">{5}{1}</td>"
+                t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{6}\">{7}{5}{1}{8}</td>"
                     , cssClasse
                     , data[line, col]
                     , cssClasseNb
                     , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp)
                     , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00")
                     , padding
-                    , labColSpan);
+                    , labColSpan
+                    , ((_isExcelReport) ? "=\"" : "")
+                    , ((_isExcelReport) ? "\"" : ""));
                 if(_allowTotal) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
