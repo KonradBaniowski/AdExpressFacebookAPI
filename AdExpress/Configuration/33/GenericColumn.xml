@@ -149,6 +149,7 @@
     <column id="84" name="Dimension banner Internet" webTextId="1420" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="85" name="Euros" webTextId="1423" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="87" name="Gad" webTextId="2222" dbId="id_advertiser" dbLabel="id_address" dbTable="gad" dbTablePrefixe="gd"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false"/>
 
   </columnItems>
 
@@ -370,6 +371,7 @@
       <columnItem id="71" name="Nb supports"/>
       <columnItem id="57" name="Date de couverture" visible="false"/>
       <columnItem id="73" name="Date kiosque" visible="false"/>
+      <columnItem id="87" name="Gad" visible="false"/>
     </detailColumn>
     <!--Radio-->
     <detailColumn id="12" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
@@ -382,6 +384,7 @@
       <columnItem id="74" name="Nb spots"/>
       <columnItem id="69" name="Durée"/>
       <columnItem id="70" name="nb Support"/>
+      <columnItem id="87" name="Gad" visible="false"/>
     </detailColumn>
     <!--TV-->
     <detailColumn id="13" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
@@ -394,6 +397,7 @@
       <columnItem id="74" name="Nb spots"/>
       <columnItem id="69" name="Durée"/>
       <columnItem id="70" name="nb Support"/>
+      <columnItem id="87" name="Gad" visible="false"/>
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="14" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
@@ -405,6 +409,7 @@
       <columnItem id="67" name="Budget"/>
       <columnItem id="76" name="Nb panneaux"/>
       <columnItem id="70" name=" Nb Supports"/>
+      <columnItem id="87" name="Gad" visible="false"/>
     </detailColumn>
     <!--TV Parrainage-->
     <detailColumn id="15" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
@@ -417,6 +422,7 @@
       <columnItem id="74" name="Nb spots"/>
       <columnItem id="69" name="Durée"/>
       <columnItem id="70" name="nb Support"/>
+      <columnItem id="87" name="Gad" visible="false"/>
     </detailColumn>
     <!-- VMC-->
     <detailColumn id="16" name="Visuel\Annonceur\Groupe\Produit\supports\Version\Budget\Volume\Poid\Items\Format\Format enveloppe\Format contenant\Type de doc\Contenu">
@@ -435,6 +441,7 @@
       <columnItem id="66" name="Format enveloppe"/>
       <columnItem id="60" name="Type de doc"/>
       <columnItem id="65" name="Contenu"/>
+      <columnItem id="87" name="Gad" visible="false"/>
     </detailColumn>
     <!--Evaliant-->
     <detailColumn id="17" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
@@ -446,6 +453,7 @@
       <columnItem id="78" name="Format banner"/>
       <columnItem id="79" name="Dimension banner" visible="false"/>
       <columnItem id="80" name="url" visible="false"/>
+      <columnItem id="87" name="Gad" visible="false"/>
     </detailColumn>
     <!--/Détail versions-->
 

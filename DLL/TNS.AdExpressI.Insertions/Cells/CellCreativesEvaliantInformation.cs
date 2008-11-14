@@ -159,6 +159,11 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     _url = row[g.DataBaseField].ToString();
                 }
+                if (g.Id == GenericColumnItemInformation.Columns.addressId && row[_columnsName[i]] != System.DBNull.Value)
+                {
+                    _adressId = Convert.ToInt64(row[_columnsName[i]]);
+                }
+
 
                 i++;
                 cValue = row[_columnsName[i]].ToString();
@@ -223,7 +228,26 @@ namespace TNS.AdExpressI.Insertions.Cells
                                     tmpStr.Append("<br/>");
                                 }
                                 hasData = true;
-                                tmpStr.AppendFormat("{0}", s);
+                                if (g.Id == GenericColumnItemInformation.Columns.advertiser)
+                                {
+
+                                    #region GAD
+                                    string openBaliseA = string.Empty;
+                                    string closeBaliseA = string.Empty;
+
+                                    if (_adressId != -1)
+                                    {
+                                        openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openGad('{0}','{1}','{2}');\">", _session.IdSession, value, _adressId);
+                                        closeBaliseA = "</a>";
+                                    }
+                                    #endregion
+
+                                    tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
+                                }
+                                else
+                                {
+                                    tmpStr.AppendFormat("{0}", s);
+                                }
                             }
                         }
                         else

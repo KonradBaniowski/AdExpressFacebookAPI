@@ -100,6 +100,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             bool isSum = false;
             bool isMin = false;
             bool isCountDistinct = false;
+            bool useLanguage = true;
 			#endregion
 
 			try{
@@ -125,6 +126,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								convertNullDbId=false;
 								convertNullDbLabel=false;
                                 isSum = false;
+                                useLanguage = true;
                                 isMin = false;
                                 isCountDistinct = false;
 								
@@ -178,6 +180,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     if (reader.GetAttribute("isCountDistinct") != null && reader.GetAttribute("isCountDistinct").Length > 0) genericColumnItemInformation.IsCountDistinct = bool.Parse(reader.GetAttribute("isCountDistinct"));
                                     if (reader.GetAttribute("isMax") != null && reader.GetAttribute("isMax").Length > 0) genericColumnItemInformation.IsMax = bool.Parse(reader.GetAttribute("isMax"));
                                     if (reader.GetAttribute("isMin") != null && reader.GetAttribute("isMin").Length > 0) genericColumnItemInformation.IsMin = bool.Parse(reader.GetAttribute("isMin"));
+                                    if (reader.GetAttribute("useLanguage") != null && reader.GetAttribute("useLanguage").Length > 0) genericColumnItemInformation.UseLanguageRule = bool.Parse(reader.GetAttribute("useLanguage"));
 									list.Add(id,genericColumnItemInformation);
 
 									

@@ -675,8 +675,11 @@ namespace TNS.AdExpress.Domain.Level
 					if(currentColumn.DbRelatedTablePrefixeForJoin!=null && currentColumn.DbRelatedTablePrefixeForJoin.Length>0)
 						sql+=" and "+currentColumn.DataBaseTableNamePrefix+"."+currentColumn.DataBaseIdField+sqlOperation+currentColumn.DbRelatedTablePrefixeForJoin+"."+currentColumn.DataBaseIdField;
 					else sql+=" and "+currentColumn.DataBaseTableNamePrefix+"."+currentColumn.DataBaseIdField+sqlOperation+dataTablePrefix+"."+currentColumn.DataBaseIdField;
-					
-					sql+=" and "+currentColumn.DataBaseTableNamePrefix+".id_language"+sqlOperation+languageId.ToString();
+
+                    if (currentColumn.UseLanguageRule)
+                    {
+                        sql += " and " + currentColumn.DataBaseTableNamePrefix + ".id_language" + sqlOperation + languageId.ToString();
+                    }
 				
 					if(currentColumn.SqlOperation.Equals("leftOuterJoin"))
 						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation(+)<"+ActivationValues.UNACTIVATED;					
@@ -709,7 +712,10 @@ namespace TNS.AdExpress.Domain.Level
 					if(currentColumn.DbRelatedTablePrefixeForJoin!=null && currentColumn.DbRelatedTablePrefixeForJoin.Length>0)
 						sql+=" and "+currentColumn.DataBaseTableNamePrefix+"."+currentColumn.DataBaseIdField+sqlOperation+currentColumn.DbRelatedTablePrefixeForJoin+"."+currentColumn.DataBaseIdField;
 					else sql+=" and "+currentColumn.DataBaseTableNamePrefix+"."+currentColumn.DataBaseIdField+sqlOperation+dataTablePrefix+"."+currentColumn.DataBaseIdField;
-					sql+=" and "+currentColumn.DataBaseTableNamePrefix+".id_language"+sqlOperation+languageId.ToString();
+                    if (currentColumn.UseLanguageRule)
+                    {
+                        sql += " and " + currentColumn.DataBaseTableNamePrefix + ".id_language" + sqlOperation + languageId.ToString();
+                    }
 					if(currentColumn.SqlOperation.Equals("leftOuterJoin"))
 						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation(+)<"+ActivationValues.UNACTIVATED;					
 					else
@@ -742,7 +748,10 @@ namespace TNS.AdExpress.Domain.Level
 					if(currentColumn.DbRelatedTablePrefixeForJoin!=null && currentColumn.DbRelatedTablePrefixeForJoin.Length>0)
 						sql+=" and "+currentColumn.DataBaseTableNamePrefix+"."+currentColumn.DataBaseIdField+sqlOperation+currentColumn.DbRelatedTablePrefixeForJoin+"."+currentColumn.DataBaseIdField;
 					else sql+=" and "+currentColumn.DataBaseTableNamePrefix+"."+currentColumn.DataBaseIdField+sqlOperation+dataTablePrefix+"."+currentColumn.DataBaseIdField;
-					sql+=" and "+currentColumn.DataBaseTableNamePrefix+".id_language"+sqlOperation+languageId.ToString();
+                    if (currentColumn.UseLanguageRule)
+                    {
+                        sql += " and " + currentColumn.DataBaseTableNamePrefix + ".id_language" + sqlOperation + languageId.ToString();
+                    }
 					if(currentColumn.SqlOperation.Equals("leftOuterJoin"))
 						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation(+)<"+ActivationValues.UNACTIVATED;					
 					else

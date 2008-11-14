@@ -76,6 +76,11 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// First version parution
         /// </summary>
         protected Int64 _firstParution = -1;
+        /// <summary>
+        /// Advertiser address Id
+        /// </summary>
+        protected Int64 _adressId = -1;
+
         #endregion
 
         #region Accessors
@@ -153,6 +158,13 @@ namespace TNS.AdExpressI.Insertions.Cells
                         ((CellDate)cCell).Date = Dates.getPeriodBeginningDate(cValue, CstWeb.CustomerSessions.Period.Type.dateToDate);
                     }
                 }
+                else if (g.Id == GenericColumnItemInformation.Columns.addressId)
+                {
+                    if (row[_columnsName[i]] != System.DBNull.Value)
+                    {
+                        _adressId = Convert.ToInt64(row[_columnsName[i]]);
+                    }
+                }
                 else if (cCell is CellUnit)
                 {
                     ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
@@ -213,7 +225,26 @@ namespace TNS.AdExpressI.Insertions.Cells
                                     tmpStr.Append("<br/>");
                                 }
                                 hasData = true;
-                                tmpStr.AppendFormat("{0}", s);
+                                if (g.Id == GenericColumnItemInformation.Columns.advertiser)
+                                {
+
+                                    #region GAD
+                                    string openBaliseA = string.Empty;
+                                    string closeBaliseA = string.Empty;
+
+                                    if (_adressId != -1)
+                                    {
+                                        openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openGad('{0}','{1}','{2}');\">", _session.IdSession, value, _adressId);
+                                        closeBaliseA = "</a>";
+                                    }
+                                    #endregion
+
+                                    tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
+                                }
+                                else
+                                {
+                                    tmpStr.AppendFormat("{0}", s);
+                                }
                             }
                         }
                         else {

@@ -99,7 +99,26 @@ namespace TNS.AdExpressI.Insertions.Cells
                                     tmpStr.Append("<br/>");
                                 }
                                 hasData = true;
-                                tmpStr.AppendFormat("{0}", s);
+                                if (g.Id == GenericColumnItemInformation.Columns.advertiser)
+                                {
+
+                                    #region GAD
+                                    string openBaliseA = string.Empty;
+                                    string closeBaliseA = string.Empty;
+
+                                    if (_adressId != -1)
+                                    {
+                                        openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openGad('{0}','{1}','{2}');\">", _session.IdSession, value, _adressId);
+                                        closeBaliseA = "</a>";
+                                    }
+                                    #endregion
+
+                                    tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
+                                }
+                                else
+                                {
+                                    tmpStr.AppendFormat("{0}", s);
+                                }
                             }
                         }
                         else {

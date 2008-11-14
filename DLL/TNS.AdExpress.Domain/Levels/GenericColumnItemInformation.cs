@@ -365,7 +365,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// First date parution
             /// </summary>
-            firstDateParution = 86
+            firstDateParution = 86,
+            /// <summary>
+            /// Advertiser address id
+            /// </summary>
+            addressId = 87
 }
 		#endregion
 
@@ -467,6 +471,10 @@ namespace TNS.AdExpress.Domain.Level
         /// Specify if column is a min of units
         /// </summary>
         private bool _isMin = false;
+        /// <summary>
+        /// Specify if column is submitted to language rule or not
+        /// </summary>
+        private bool _useLanguage = true;
         #endregion
 
 		#region Constructeur
@@ -539,6 +547,14 @@ namespace TNS.AdExpress.Domain.Level
 		#endregion
 
 		#region Accesseurs
+        /// <summary>
+        /// Specify if column is submitted to language rule or not
+        /// </summary>
+        public bool UseLanguageRule
+        {
+            get { return _useLanguage; }
+            set { _useLanguage = value; }
+        }
         /// <summary>
         /// Specify if column is a sum of units
         /// </summary>
