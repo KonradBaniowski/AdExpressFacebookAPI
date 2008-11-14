@@ -374,7 +374,11 @@ namespace AdExpress.Private.Results{
 			try{
 
 				#region MAJ _webSession
-                _webSession.Unit = VehiclesInformation.Get(Convert.ToInt64(_webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess))).AllowedUnitEnumList[0];
+                VehicleInformation v = VehiclesInformation.Get(Convert.ToInt64(_webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess)));
+                if (!v.AllowedUnitEnumList.Contains(_webSession.Unit))
+                {
+                    _webSession.Unit = v.AllowedUnitEnumList[0];
+                }                
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
 				_webSession.Save();
 				#endregion
