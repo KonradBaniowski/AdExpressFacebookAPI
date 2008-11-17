@@ -177,14 +177,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("\ndocument.writeln('<PARAM NAME=\"FlashVars\" VALUE=\"\">');");
             output.Write("\ndocument.writeln('<PARAM NAME=\"Movie\" VALUE=\"" + flashUrl + "\"');");
             output.Write("\ndocument.writeln('<PARAM NAME=\"Src\" VALUE=\"" + flashUrl + "\">');");
-			output.Write("\ndocument.writeln('<PARAM NAME=\"WMode\" VALUE=\"Window\">');");
+            output.Write("\ndocument.writeln('<PARAM NAME=\"WMode\" VALUE=\"Transparent\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"Play\" VALUE=\"-1\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"Loop\" VALUE=\"-1\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"Quality\" VALUE=\"High\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"SAlign\" VALUE=\"\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"Menu\" VALUE=\"0\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"Base\" VALUE=\"\">');");
-			output.Write("\ndocument.writeln('<PARAM NAME=\"AllowScriptAccess\" VALUE=\"always\">');");
+			output.Write("\ndocument.writeln('<PARAM NAME=\"AllowScriptAccess\" VALUE=\"\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"Scale\" VALUE=\"ShowAll\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"DeviceFont\" VALUE=\"0\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"EmbedMovie\" VALUE=\"0\">');");
