@@ -525,7 +525,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
 		}
 		#endregion
-
+        estion du charset pour 
 		#region MediaPlanIpression
 		private void MediaPlanImpression(){
 	
@@ -536,7 +536,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 			int startIndexVisual=0;
 			Int64 nbToSplit=0;
 			int nbLines=0;
-            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].PdfContentEncoding;
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
             MediaScheduleData result = null;
             MediaSchedulePeriod period = null;

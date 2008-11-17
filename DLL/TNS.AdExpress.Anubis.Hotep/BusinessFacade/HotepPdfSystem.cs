@@ -881,51 +881,53 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		/// </summary>
 		private void IndicatorNovelty(){
 			
-			int verifResult=0;					
+			int verifResult=0;
 
-			try{
-				
-				IList result = new ArrayList(); 
-				IList resultAdvertiser = new ArrayList(); 
+            try {
 
-				#region result
+                IList result = new ArrayList();
+                IList resultAdvertiser = new ArrayList();
+
+                #region result
                 EngineNovelty engine = new EngineNovelty(_webSession, _productClassIndicatorDAL);
                 engine.ClassifLevel = CstResult.Novelty.ElementType.product;
                 result = GetIndicatorNoveltyGraphicHtmlUI(engine.GetData(), _webSession, CstResult.Novelty.ElementType.product);
                 engine.ClassifLevel = CstResult.Novelty.ElementType.advertiser;
                 resultAdvertiser = GetIndicatorNoveltyGraphicHtmlUI(engine.GetData(), _webSession, CstResult.Novelty.ElementType.advertiser);
-				#endregion
+                #endregion
 
-				#region Html file loading
-				if(!((((string)result[0]).Length<30) || result[0].Equals("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(1224,_webSession.SiteLanguage)+"</div>"))){
-					for(int i=0;i<result.Count;i++){
-						if(i==0)
-							addNoveltyPicture(result,i,true);
-						else
-							addNoveltyPicture(result,i,false);
-					}
-					verifResult++;
-				}
+                #region Html file loading
+                if (!((((string)result[0]).Length < 30) || result[0].Equals("<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(1224, _webSession.SiteLanguage) + "</div>"))) {
+                    for (int i = 0; i < result.Count; i++) {
+                        if (i == 0)
+                            addNoveltyPicture(result, i, true);
+                        else
+                            addNoveltyPicture(result, i, false);
+                    }
+                    verifResult++;
+                }
 
-				if(!(((string)resultAdvertiser[0]).Length<50 || resultAdvertiser[0].Equals("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(1224,_webSession.SiteLanguage)+"</div>"))){
-					for(int i=0;i<resultAdvertiser.Count;i++){
-						if((i==0)&&(verifResult==0))
-							addNoveltyPicture(resultAdvertiser,i,true);
-						else
-							addNoveltyPicture(resultAdvertiser,i,false);
-					}
-					verifResult++;
-				}
-				
-				if(verifResult >= 1){
-				_titleList.Add(Convertion.ToHtmlString(GestionWeb.GetWebWord(1197,_webSession.SiteLanguage)));
-				}
-				#endregion
-		
-			}
-			catch(System.Exception e){
-				throw(new HotepPdfException("Unable to process the Indicator Novelty result for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e)); 
-			}
+                if (!(((string)resultAdvertiser[0]).Length < 50 || resultAdvertiser[0].Equals("<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(1224, _webSession.SiteLanguage) + "</div>"))) {
+                    for (int i = 0; i < resultAdvertiser.Count; i++) {
+                        if ((i == 0) && (verifResult == 0))
+                            addNoveltyPicture(resultAdvertiser, i, true);
+                        else
+                            addNoveltyPicture(resultAdvertiser, i, false);
+                    }
+                    verifResult++;
+                }
+
+                if (verifResult >= 1) {
+                    _titleList.Add(Convertion.ToHtmlString(GestionWeb.GetWebWord(1197, _webSession.SiteLanguage)));
+                }
+                #endregion
+
+            }
+            catch (TNS.AdExpress.Domain.Exceptions.NoDataException excepNoData) {
+            }
+            catch (System.Exception e) {
+                throw (new HotepPdfException("Unable to process the Indicator Novelty result for request " + _rqDetails["id_static_nav_session"].ToString() + ".", e));
+            }
 		}
 		#endregion
 

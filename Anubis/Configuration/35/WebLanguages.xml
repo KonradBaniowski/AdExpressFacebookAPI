@@ -2,7 +2,7 @@
 <configuration>
   <languages default="44" defaultDataLanguage="35">
     <!--<language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" nlsSort="FRENCH"/>-->
-    <language id="44" name="English - Finland DB" imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="35" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="windows-1252" nlsSort="finnish" NumberDecimalSeparator="," NumberGroupSeparator=" "/>
+    <language id="44" name="English - Finland DB" imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="35" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="windows-1252" pdfContentEncoding="windows-1252" nlsSort="finnish" NumberDecimalSeparator="," NumberGroupSeparator=" "/>
     <rss display="true" link="http://www.tnsadexpress.fi/Rss/44/AdExpressFeed.xml"/>
     <unitformats>
       <unitformat name="max0" format="#,###0;-#,##0;-"                  excelFormat="# ### ### ##0;-# ### ### ##0;-"/>

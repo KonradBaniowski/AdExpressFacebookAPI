@@ -122,6 +122,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             string charset="";
             string contentEncoding = "";
             string excelContentEncoding = "";
+            string pdfContentEncoding = "";
 			string nlsSort = "";
 			bool isUTF8 = false;
             AdExpressCultureInfo cInfo = null;
@@ -157,6 +158,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 if(reader.GetAttribute("charset")!=null) charset=reader.GetAttribute("charset");
                                 if (reader.GetAttribute("contentEncoding") != null) contentEncoding = reader.GetAttribute("contentEncoding");
                                 if (reader.GetAttribute("excelContentEncoding") != null) excelContentEncoding = reader.GetAttribute("excelContentEncoding");
+                                if (reader.GetAttribute("pdfContentEncoding") != null) pdfContentEncoding = reader.GetAttribute("pdfContentEncoding");
                                 if(reader.GetAttribute("imageSourceText")!=null) imageSourceText=reader.GetAttribute("imageSourceText");
                                 if(reader.GetAttribute("classificationLanguageId")!=null && reader.GetAttribute("classificationLanguageId").Length>0)
                                     classificationLanguageId=int.Parse(reader.GetAttribute("classificationLanguageId"));
@@ -168,7 +170,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 if (numberDecimalSeparator.Length > 0) cInfo.NumberFormat.NumberDecimalSeparator = numberDecimalSeparator;
                                 if (numberGroupSeparator.Length > 0) cInfo.NumberFormat.NumberGroupSeparator = numberGroupSeparator;
                                 rss = new Rss();
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,nlsSort, cInfo, rss));
+                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,pdfContentEncoding,nlsSort, cInfo, rss));
                                 break;
                             case "unitformat":
                                 if(reader.GetAttribute("name")!=null) formatName=reader.GetAttribute("name");

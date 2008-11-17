@@ -59,6 +59,12 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         /// <example>France = "utf-8"</example>
         private string _excelContentEncoding = "utf-8";
+        /// <summary>
+        /// Content Encoding used for PDF Anubis page result
+        /// By default, the content encoding is set to utf-8
+        /// </summary>
+        /// <example>France = "utf-8"</example>
+        private string _pdfContentEncoding = "utf-8";
 		/// <summary>
 		/// NLS SORT to use any linguistic sort for an ORDER BY clause
 		/// <example> France ="FRENCH"</example>
@@ -85,7 +91,7 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
         /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
         /// <param name="cInfo">Extended culture info</param>
-        public WebLanguage(int id, string imageSourceText, string localization, string charset, string contentEncoding, string excelContentEncoding) {
+        public WebLanguage(int id, string imageSourceText, string localization, string charset, string contentEncoding, string excelContentEncoding, string pdfContentEncoding) {
             if(id<0) throw (new ArgumentException("The language Id cannot be inferior to 0"));
             _id=id;
             if(imageSourceText!=null) _imageSourceText=imageSourceText;
@@ -95,6 +101,7 @@ namespace TNS.AdExpress.Domain.Web {
             if(charset!=null && charset.Length!=0) _charset=charset;
             if (contentEncoding != null && contentEncoding.Length != 0) _contentEncoding = contentEncoding;
             if (ExcelContentEncoding != null && ExcelContentEncoding.Length != 0) _excelContentEncoding = excelContentEncoding;
+            if (pdfContentEncoding != null && pdfContentEncoding.Length != 0) _pdfContentEncoding = pdfContentEncoding;
             _name="Country name is not defined:"+_id.ToString();
             _classificationLanguageId=_id;
 
@@ -113,8 +120,8 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="nlsSort">nls sort</param>
         /// <param name="cInfo">Culture info object</param>
         /// <param name="rss">Rss object</param>
-        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, Rss rss)
-            : this(id,imageSourceText,localization,charset,contentEncoding,excelContentEncoding) {
+        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string pdfContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, Rss rss)
+            : this(id,imageSourceText,localization,charset,contentEncoding,excelContentEncoding,pdfContentEncoding) {
             if(name!=null&&name.Length>0) _name=name;
 			if (nlsSort != null && nlsSort.Length > 0) _nlsSort = nlsSort;		
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
@@ -172,6 +179,12 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         public string ExcelContentEncoding {
             get { return (_excelContentEncoding); }
+        }
+        /// <summary>
+        /// Get Content Encoding used for the PDF Anubis Page result
+        /// </summary>
+        public string PdfContentEncoding {
+            get { return (_pdfContentEncoding); }
         }
 		/// <summary>
 		/// Get NLS SORT to use any linguistic sort for an ORDER BY clause
