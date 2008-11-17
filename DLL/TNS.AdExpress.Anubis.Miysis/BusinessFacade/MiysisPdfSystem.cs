@@ -525,7 +525,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
 		}
 		#endregion
-        estion du charset pour 
+
 		#region MediaPlanIpression
 		private void MediaPlanImpression(){
 	
