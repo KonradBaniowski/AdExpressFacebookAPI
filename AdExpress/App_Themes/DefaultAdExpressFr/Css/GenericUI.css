@@ -9,7 +9,7 @@
 	color: #644883;
 	font-weight: bold;
 	padding:50px;
-	border:0;
+	border:0;	
 
 }
 /* Insertion Information Cellule */
@@ -17,7 +17,6 @@
 {
 	background-color:White;	
 	vertical-align:top;
-
 }
 tr.insertionInfo td
 {
@@ -25,18 +24,19 @@ tr.insertionInfo td
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	text-align:left;	
-	height:20px;
+	height:1px;
 	white-space:nowrap;
 
 }
 tr.insertionInfo td
 {
-	border-bottom : solid 1px #644883;
+	border-bottom : solid 1px #E1E0DA;
 }
 tr.insertionInfo td table tr td
 {
 	border:0;
 	vertical-align:top;
+
 }
 img.insertionInfo
 {
@@ -48,6 +48,7 @@ tr.insertionInfo table tr td table
 	border:0;
 	padding:0;
 	border-spacing:0;
+
 }
 tr.insertionInfo td table tr>td:first-child
 {
