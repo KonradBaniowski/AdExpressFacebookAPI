@@ -609,7 +609,7 @@ tr.h2 td{
 	font-size: 11px;
 	color : #FFFFFF;
 	font-weight: bold;
-	height:20px;
+	height:100%;
 	white-space:nowrap;
 	text-decoration : none;
 	background-color: #644883;

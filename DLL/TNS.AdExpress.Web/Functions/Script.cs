@@ -1012,8 +1012,9 @@ namespace TNS.AdExpress.Web.Functions{
 		public static string TrapEnter(string validatedComponent){
 			string scriptTrapEnter="";
 			scriptTrapEnter += "\n<script language=\"JavaScript\">";
-			scriptTrapEnter += "\nfunction trapEnter(){";
-			scriptTrapEnter += "\nif((event.which && event.which == 13)||(event.keyCode && event.keyCode == 13)){";
+			scriptTrapEnter += "\nfunction trapEnter(evt){";
+            scriptTrapEnter += "\nevt = (evt) ? evt : ((event) ? event : null);";
+			scriptTrapEnter += "\nif((evt.which && evt.which == 13)||(evt.keyCode && evt.keyCode == 13)){";
 			scriptTrapEnter += "\n__doPostBack('"+validatedComponent+"','');}";
 			scriptTrapEnter += "\n}\n</script>";
 			return scriptTrapEnter;

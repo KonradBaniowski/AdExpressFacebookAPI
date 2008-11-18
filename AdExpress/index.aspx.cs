@@ -99,7 +99,7 @@ namespace AdExpress{
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
 				#region Gestion de l'évènements "enter" sur le textBox passwd
-				passwordTextbox.Attributes.Add("onkeypress","javascript:trapEnter()");
+				passwordTextbox.Attributes.Add("onkeypress","javascript:trapEnter(event);");
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("trapEnter")) {
 					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"trapEnter",WebFunctions.Script.TrapEnter("ImageButtonRollOverWebControl1"));
 				}
