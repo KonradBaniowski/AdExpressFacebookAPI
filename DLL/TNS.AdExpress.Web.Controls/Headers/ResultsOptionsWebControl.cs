@@ -1307,12 +1307,12 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
 				output.Write("\n<tr>");
-				output.Write("\n<td>");
+                output.Write("\n<td class=\"percentageOption\">");
 				list.RenderControl(output);
-				
 				if(percentage){
 					output.Write("&nbsp;");
 					percentageCheckBox.RenderControl(output);
+                    
 					
 				}
 

@@ -2927,3 +2927,7 @@ td.jus
 	border-right-style:solid;
 }
 
+td.percentageOption span
+{
+	display:block;
+}
