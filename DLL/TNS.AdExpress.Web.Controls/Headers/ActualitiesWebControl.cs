@@ -235,8 +235,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				html.Append("\r\n\t\t\t<table cellpadding=0 cellspacing=0 border=0 width=\"100%\">");
 				html.Append("\r\n\t\t\t\t<tr>");
 				html.Append("\r\n\t\t\t\t\t<td width=\"100%\" " + ((_titleCss.Length > 0) ? " class=\"" + _titleCss + "\"" : "") + ">" + GestionWeb.GetWebWord(2080, _languageId) + "</td>");
-                html.Append("\r\n\t\t\t\t\t<td width=\"14\" " + ((_titleCss.Length > 0) ? " class=\"" + _titleCss + "\"" : "") + ">" + ((_imageRssUrlPath.Length > 0) ? "<a href=\"" + ((_rssFileUrl.Length > 0) ? "" + _rssFileUrl + "\" target=\"blank\"" : "#\"") + "><img src=\"" + _imageRssUrlPath + "\" border=\"0\"></a>" : "") + "</td>");
-				html.Append("\r\n\t\t\t</tr>");
+                
+                //html.Append("\r\n\t\t\t\t\t<td width=\"14\" " + ((_titleCss.Length > 0) ? " class=\"" + _titleCss + "\"" : "") + ">" + ((_imageRssUrlPath.Length > 0) ? "<a href=\"" + ((_rssFileUrl.Length > 0) ? "" + _rssFileUrl + "\" target=\"blank\"" : "#\"") + "><img src=\"" + _imageRssUrlPath + "\" border=\"0\"></a>" : "") + "</td>");
+                html.Append("\r\n\t\t\t\t\t<td width=\"14\" " + ((_titleCss.Length > 0) ? " class=\"" + _titleCss + "\"" : "") + ">");
+                html.Append((_rssFileUrl.Length > 0 && _imageRssUrlPath.Length > 0) ? "<a href=\"" + _rssFileUrl + "\" target=\"blank\" ><img src=\"" + _imageRssUrlPath + "\" border=\"0\"></a>" : "&nbsp;");
+                html.Append("\r\n\t\t\t\t\t</td>");
+				
+                html.Append("\r\n\t\t\t</tr>");
                 foreach (string currentItem in _items) {
                     html.Append("<tr>\r\n\t\t\t\t\t<td colspan=\"2\">" + currentItem + "</td>\r\n\t\t\t</tr>");
                 }
