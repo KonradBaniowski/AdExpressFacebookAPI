@@ -1865,49 +1865,42 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="padding">Stirng to insert before Label</param>
         protected virtual void AppenLabelTotalPDM(object[,] data, StringBuilder t, int line, string cssClasse, string cssClasseNb, int col, string padding, int labColSpan, IFormatProvider fp) {
             if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb) {
-                t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{6}\">{7}{5}{1}{8}</td>"
+                t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{1}\">{4}{2}{3}{5}</td>"
                     , cssClasse
-                    , data[line, col]
-                    , cssClasseNb
-                    , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp)
-                    , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00")
-                    , padding
                     , labColSpan
+                    , padding
+                    , data[line, col]
                     , ((_isExcelReport) ? "=\"" : "")
                     , ((_isExcelReport) ? "\"" : ""));
+
                 if(_allowTotal) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
-                        , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp)
-                        , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00"));
+                        , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp));
                 }
                 if(_allowPdm) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
-                        , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00"));
+                        , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COLUMN_INDEX]));
                 }
             }
             else {
-                t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{6}\">{7}{5}{1}{8}</td>"
+                t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{1}\">{4}{2}{3}{5}</td>"
                     , cssClasse
-                    , data[line, col]
-                    , cssClasseNb
-                    , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp)
-                    , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00")
-                    , padding
                     , labColSpan
+                    , padding
+                    , data[line, col]
                     , ((_isExcelReport) ? "=\"" : "")
                     , ((_isExcelReport) ? "\"" : ""));
                 if(_allowTotal) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
-                        , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp)
-                        , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00"));
+                        , FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp));
                 }
                 if(_allowPdm) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
-                        , ((double)data[line, PDM_COLUMN_INDEX]).ToString("0.00"));
+                        , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COLUMN_INDEX]));
                 }
             }
         }
