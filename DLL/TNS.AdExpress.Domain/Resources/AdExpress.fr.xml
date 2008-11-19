@@ -1665,6 +1665,7 @@
     <item mnemonic="w2477" type="System.String">Français</item>
     <item mnemonic="w2478" type="System.String">English</item>
     <item mnemonic="w2479" type="System.String">Nombre de bannières</item>
+    <item mnemonic="w2480" type="System.String">Encart volant</item>
     <item mnemonic="w2481" type="System.String">Statistiques AdExpress</item>
     <item mnemonic="w2482" type="System.String">Expéditeur</item>
     <item mnemonic="w2483" type="System.String">Destinataire(s)</item>
