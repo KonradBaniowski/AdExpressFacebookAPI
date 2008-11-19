@@ -23,6 +23,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// HTTP link
         /// </summary>
         private string _link = string.Empty;
+        /// <summary>
+        /// File path
+        /// </summary>
+        private string _filePath = string.Empty;
         #endregion
 
         #region Constructor
@@ -47,6 +51,14 @@ namespace TNS.AdExpress.Domain.Web {
         public string Link {
             get { return (_link); }
             set { _link = value; }
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string FilePath {
+            get { return (_filePath); }
+            set { _filePath = value; }
         }
         #endregion
 

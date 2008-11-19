@@ -34,20 +34,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
         /// Items list
         /// </summary>
         protected ArrayList _items = new ArrayList();
-
 		/// <summary>
 		/// URL du fichier CSS
 		/// </summary>
 		protected string _cssUrlPath = string.Empty;
-		/// <summary>
-		/// Nom du fichier XML du flux RSS
-		/// </summary>
-		protected string _rssFileName = string.Empty;
-		/// <summary>
+        /// <summary>
+        /// Chemin du fichier XML du flux RSS
+        /// </summary>
+        protected string _rssFilePath = string.Empty;
+        /// <summary>
 		/// URL du fichier XML du flux RSS
 		/// </summary>
 		protected string _rssFileUrl = string.Empty;
-
 		/// <summary>
 		/// Css du titre principal
 		/// </summary>
@@ -60,7 +58,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// Css des descriptions rss
 		/// </summary>
 		protected string _rssDescriptionCss = string.Empty;
-
 		/// <summary>
 		/// Affichage de l'image
 		/// </summary>
@@ -73,7 +70,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// URL de l'image
 		/// </summary>
 		protected string _imageRssUrlPath = string.Empty;
-
 		/// <summary>
 		/// Taille de la colonne de gauche
 		/// </summary>
@@ -105,20 +101,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			get { return (_cssUrlPath); }
 			set { _cssUrlPath = value; }
 		}
-		/// <summary>
-		/// Obtient ou défini l'url du fichier XML du flux RSS
-		/// </summary>
-		[Bindable(true),
-		Category("Apparence"),
-		DefaultValue("")]
-		public string RssFileName {
-			get {
-				return (_rssFileName);
-			}
-			set {
-				_rssFileName = value;
-			}
-		}
+
 		/// <summary>
 		/// Obtient ou défini le css du titre principal
 		/// </summary>
@@ -209,10 +192,15 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		protected override void OnPreRender(EventArgs e) {
             WebLanguage webLanguage = WebApplicationParameters.AllowedLanguages[_languageId];
             if(webLanguage.Rss.Display) {
+                // Chemin pour vérification de l'existance du fichier
+                _rssFilePath = webLanguage.Rss.FilePath;
+
+                // Lien http pour s'abonner au flux rss
                 _rssFileUrl = webLanguage.Rss.Link;
+
                 try {
                     // Read Rss
-                    RssFeed feed = RssFeed.Read(_rssFileUrl);
+                    RssFeed feed = RssFeed.Read(_rssFilePath);
                     // Channel
                     RssChannel channel = (RssChannel)feed.Channels[0];
                     // Rss Items collection

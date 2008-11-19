@@ -190,6 +190,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								break;
                             case "rss":
                                 if(reader.GetAttribute("display") != null) rss.Display = bool.Parse(reader.GetAttribute("display"));
+                                if(reader.GetAttribute("filePath") != null) rss.FilePath = reader.GetAttribute("filePath");
                                 if(reader.GetAttribute("link") != null) rss.Link = reader.GetAttribute("link");
                                 break;
                         }
