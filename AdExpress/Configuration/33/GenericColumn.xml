@@ -450,8 +450,8 @@
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="77" name="Produit AdNetTrack"/>
-      <columnItem id="78" name="Format banner"/>
-      <columnItem id="79" name="Dimension banner" visible="false"/>
+      <columnItem id="78" name="Format banner" filter="true"/>
+      <columnItem id="79" name="Dimension banner" filter="true"/>
       <columnItem id="80" name="url" visible="false"/>
       <columnItem id="87" name="Gad" visible="false"/>
     </detailColumn>
