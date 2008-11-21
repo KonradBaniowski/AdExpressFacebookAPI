@@ -65,6 +65,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         protected List<bool> _visibility = new List<bool>();
         /// <summary>
+        /// List of filterable columns
+        /// </summary>
+        protected List<bool> _isFilter = new List<bool>();
+        /// <summary>
         /// Version Id
         /// </summary>
         protected Int64 _idVersion = -1;
@@ -80,7 +84,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Advertiser address Id
         /// </summary>
         protected Int64 _adressId = -1;
-
+        /// <summary>
+        /// Column Indexes
+        /// </summary>
+        protected Dictionary<GenericColumnItemInformation.Columns, Int32> _columnIndex = new Dictionary<GenericColumnItemInformation.Columns, Int32>();
         #endregion
 
         #region Accessors
@@ -89,6 +96,14 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         public VehicleInformation Vehicle {
             get { return _vehicle; }
+        }
+        /// <summary>
+        /// Get Column Value
+        /// </summary>
+        /// <param name="c">Column</param>
+        /// <returns>value as a string</returns>
+        public string GetValue(GenericColumnItemInformation c){
+            return _values[_columnIndex[c.Id]].ToString();
         }
         #endregion
 
@@ -107,6 +122,8 @@ namespace TNS.AdExpressI.Insertions.Cells
             {
                 i++;
                 _visibility.Add(WebApplicationParameters.GenericColumnsInformation.IsVisible(idColumnsSet, g.Id));
+                _isFilter.Add(WebApplicationParameters.GenericColumnsInformation.IsFilter(idColumnsSet, g.Id));
+                _columnIndex.Add(g.Id, i);
             }
 
         }
@@ -121,6 +138,8 @@ namespace TNS.AdExpressI.Insertions.Cells
             foreach (GenericColumnItemInformation g in columns) {
                 i++;
                 _visibility.Add(WebApplicationParameters.GenericColumnsInformation.IsVisible(idColumnsSet, g.Id));
+                _isFilter.Add(WebApplicationParameters.GenericColumnsInformation.IsFilter(idColumnsSet, g.Id));
+                _columnIndex.Add(g.Id, i);
             }
 
         }

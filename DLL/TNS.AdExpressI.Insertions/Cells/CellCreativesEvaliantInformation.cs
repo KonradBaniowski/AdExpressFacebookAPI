@@ -135,6 +135,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             foreach (GenericColumnItemInformation g in _columns)
             {
 
+                i++;
                 if (g.Id == GenericColumnItemInformation.Columns.advertiser)
                 {
                     _idAdvertiser = Convert.ToInt64(row[g.DataBaseIdField]);
@@ -165,7 +166,6 @@ namespace TNS.AdExpressI.Insertions.Cells
                 }
 
 
-                i++;
                 cValue = row[_columnsName[i]].ToString();
                 cCell = _values[i];
                 if (cCell is CellUnit)

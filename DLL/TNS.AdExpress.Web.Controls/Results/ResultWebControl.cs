@@ -57,7 +57,11 @@ namespace TNS.AdExpress.Web.Controls.Results{
         /// Specify if the ajax scripts have been rendered;
         /// </summary>
         protected bool _ajaxRendered = false;
-		#endregion
+        /// <summary>
+        /// Option Html Code
+        /// </summary>
+        protected string _optionHtml = string.Empty;
+        #endregion
 			
 		#region Propriétés
 
@@ -682,7 +686,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			
 			#region Variables Globales
 			js.Append("\r\n var html;");
-			js.Append("\r\n var globalTable,tabIndex,tab;");
+			js.Append("\r\n var globalTable,tabIndex,tab,tabOption;");
 			js.Append("\r\n var oN;");	
 			js.Append("\r\n var pageCount = 0, pageSize = 0; minPageSize =0;");
 			js.Append("\r\n var numberIndexPage = 0;");
@@ -801,6 +805,9 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			js.Append("\r\n\t\t if(globalTable.length>1 && globalTable[1]!=null){");//Recupère tableau d'index
 			js.Append("\r\n\t\t  tabIndex = globalTable[1];");
 			js.Append("\r\n\t\t }");
+			js.Append("\r\n\t\t if(globalTable.length>2 && globalTable[2]!=null){");//Recupère les options
+            js.Append("\r\n\t\t  tabOption = globalTable[2];");
+            js.Append("\r\n\t\t }else {tabOption='';}");
 			js.Append("\r\n\t }");			
 			js.Append("\r\n\t if(tab!=null && tab.length>0){");//Total pages
 			js.Append("\r\n\t\t pageCount = Math.ceil((tab.length - 1)/pageSize);");
@@ -859,7 +866,13 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			js.Append("\r\n\t htmlNavigationBarUp=GetNavigationBar('isUp'); ");
 
             js.Append("\r\n\t\t sb.append('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">');");
-            if (_showContainer) {
+            js.Append("\r\n\t\t if (tabOption != null && tabOption.length > 0){");
+            js.Append("\r\n\t\t\t sb.append('<tr><td style=\"padding:2px;\">');");
+            js.Append("\r\n\t\t\t sb.append(tabOption);");
+            js.Append("\r\n\t\t\t sb.append('</tr></td>');");
+            js.Append("\r\n\t\t }");
+            if (_showContainer)
+            {
                 js.Append("\r\n\t\t sb.append('<tr><td class=\"nav\" height=\"27\" align=\"left\" background=\"/App_Themes/" + themeName + "/Images/Common/Result/header.gif\">');");
                 js.Append("\r\n\t\t sb.append(htmlNavigationBarUp);");
                 js.Append("\r\n\t\t sb.append('</td></tr>');");
@@ -1620,10 +1633,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
                 this.LoadResultParameters(resultParameters);
                 this.LoadStyleParameters(styleParameters);
 				_customerWebSession=(WebSession)WebSession.Load(idSession);
+                this.LoadSortParameters(sortParameters);
 				_data = GetResultTable(_customerWebSession);
 				if (_data != null){
 					StringBuilder output=new StringBuilder(10000);
-                    this.LoadSortParameters(sortParameters);
 					this.InitCss();
 					long nbLineToSchow = 0;
 					tab = GetHTMLTable(ref nbLineToSchow);//tableau des résultats (chaque ligne est en HTML)
@@ -1632,12 +1645,16 @@ namespace TNS.AdExpress.Web.Controls.Results{
 
 						tabIndex = GetTableIndex(_data, nbLineToSchow);
 						if(tabIndex!=null && tabIndex.Length>0)
-							j++;				
-
+							j++;
+                        if (_optionHtml.Length > 0)
+                        {
+                            j++;
+                        }
 						globalTable = new object[j];
 						globalTable[0]=tab;
-						if(j>1)globalTable[1]=tabIndex;
-					}
+						if(j > 1)globalTable[1]=tabIndex;
+                        if (j > 2) globalTable[2] = _optionHtml;
+                    }
 				}
 
 				_customerWebSession.Save();

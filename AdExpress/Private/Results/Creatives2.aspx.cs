@@ -117,6 +117,7 @@ namespace Private.Results{
                 js.Append("\r\n\t\tdocument.getElementById(\"zoomParam\").value = resultParameters.Zoom;");
                 js.Append("\r\n\t\tdocument.getElementById(\"vehicleParam\").value = resultParameters.IdVehicle;");
                 js.AppendFormat("\r\n\t\tget_{0}();", this.CreativesWebControl1.ID);
+                js.Append("\r\n\t\tresultParameters.IdPreviousVehicle = resultParameters.IdVehicle;");
                 js.Append("\r\n}");
                 js.Append("\r\n</script>");
                 setParameters = js.ToString();

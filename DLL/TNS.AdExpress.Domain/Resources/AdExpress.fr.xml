@@ -1727,5 +1727,7 @@
     <item mnemonic="w2539" type="System.String">Personnaliser les supports</item>
     <item mnemonic="w2540" type="System.String">Univers support</item>
     <item mnemonic="w2541" type="System.String">Aucune unité commune aux média sélectionnés, veuillez changer votre sélection</item>
+    <item mnemonic="w2542" type="System.String">Dimension déclarée</item>
+    <item mnemonic="w2543" type="System.String">Aucun résultat avec ces filtres</item>
   </items>
 </localization>

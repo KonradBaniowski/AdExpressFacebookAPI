@@ -32,6 +32,10 @@ namespace TNS.AdExpress.Domain.Level {
         /// Specify Key columns foreach Column set
         /// </summary>
         private Dictionary<Int64, List<GenericColumnItemInformation>> _keys = new Dictionary<Int64, List<GenericColumnItemInformation>>();
+        /// <summary>
+        /// Specify Filter columns foreach Column set
+        /// </summary>
+        private Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>> _filters = new Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>>();
 
 		#endregion
 
@@ -41,7 +45,7 @@ namespace TNS.AdExpress.Domain.Level {
 		/// </summary>
         public GenericColumnsInformation(IDataSource source)
         {
-            GenericColumnsInformationXL.Load(source, _list, _visibility, _keys);
+            GenericColumnsInformationXL.Load(source, _list, _visibility, _keys, _filters);
         }
 		#endregion
 
@@ -62,10 +66,17 @@ namespace TNS.AdExpress.Domain.Level {
 		}
 		///  <summary>Get the vibility tag for a specific column in a specific set of columns</summary>
 		///  <param name="idDetailColumn">Column detail Id</param>
-		///  <returns>List of columns</returns>
+		///  <returns>True if the column is visible, false neither</returns>
         public bool IsVisible(Int64 idDetailColumn, GenericColumnItemInformation.Columns columnId)
         {
 			return _visibility[idDetailColumn][columnId];
+		}
+		///  <summary>Get the filter tag for a specific column in a specific set of columns</summary>
+		///  <param name="idDetailColumn">Column detail Id</param>
+        ///  <returns>True if the column can be a filter, false neither</returns>
+        public bool IsFilter(Int64 idDetailColumn, GenericColumnItemInformation.Columns columnId)
+        {
+			return _filters[idDetailColumn][columnId];
 		}
 		#endregion
 
