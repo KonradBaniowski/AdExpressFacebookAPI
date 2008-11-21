@@ -154,10 +154,16 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                 output.Write("\n<tr><td><IMG height=10 src=\"/App_Themes/"+themeName+"/images/Common/pixel.gif\" width=\"1\"></td></tr>");
 				output.Write("\n<tr><td>");
 
-                output.Write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"pinkBackGround\"><tr><td>");
+                output.Write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td>");
 				output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
 				output.Write("\nif(hasRightFlashVersion==true){");
-				output.Write("\ndocument.writeln('<object id=\"infoOptionFlash\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"185\" height=\"48\" VIEWASTEXT>');");
+
+                output.Write("\nvar classborder = '';");
+                output.Write("\nif (navigator.appName == \"Microsoft Internet Explorer\"){");
+                output.Write("\nclassborder = 'class=\"pinkBackGround\"';}");
+
+                output.Write("\ndocument.writeln('<object id=\"infoOptionFlash\" '+classborder+' classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"185\" height=\"48\" VIEWASTEXT>');");
+
 				output.Write("\ndocument.writeln('<param name=\"movie\" value=\""+_flashPath+"\">');");
 				output.Write("\ndocument.writeln('<param name=\"quality\" value=\"high\">');");
 				output.Write("\ndocument.writeln('<param name=\"menu\" value=\"false\">');");
