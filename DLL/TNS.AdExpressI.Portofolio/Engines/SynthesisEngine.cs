@@ -253,8 +253,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 dt = ds.Tables[0];
                 nbrEcran = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
                 if (nbrEcran.Length > 0) {
-                    averageDurationEcran = decimal.Parse(dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
-                    nbrSpotByEcran = decimal.Parse(dt.Rows[0]["nbre_spot"].ToString()) / decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+					if (dt.Rows[0]["ecran_duration"] != System.DBNull.Value) averageDurationEcran = decimal.Parse(dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+                    if(dt.Rows[0]["nbre_spot"] != System.DBNull.Value) nbrSpotByEcran = decimal.Parse(dt.Rows[0]["nbre_spot"].ToString()) / decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
                 }
             }
             #endregion

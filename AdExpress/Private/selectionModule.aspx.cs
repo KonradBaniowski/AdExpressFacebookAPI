@@ -27,7 +27,7 @@ using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Dis
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Utilities;
-
+using TNS.AdExpress.Domain.Classification;
 
 namespace AdExpress{
 	/// <summary>
@@ -215,8 +215,8 @@ namespace AdExpress{
                     if(_webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS) {
                         _webSession.SelectionUniversMedia.Nodes.Clear();
                         System.Windows.Forms.TreeNode tmpNode=new System.Windows.Forms.TreeNode("TELEVISION");
-                        tmpNode.Tag=new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv.GetHashCode(),"TELEVISION");
-                        _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+						tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.tv), "TELEVISION");
+                        _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);						
                     }
 					#endregion
 

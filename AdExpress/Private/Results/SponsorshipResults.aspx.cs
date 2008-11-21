@@ -31,13 +31,14 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
+using DBConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using ClassificationCst=TNS.AdExpress.Constantes.Classification;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Web.Functions;
-
+using TNS.AdExpress.Domain.Classification;
 
 #endregion
 
@@ -209,10 +210,11 @@ namespace AdExpress.Private.Results
 			InitializeMediaWebcontrol1.CustomerWebSession = _webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 			
-			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession=_webSession;			
-			if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession=_webSession;
+			if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS) {				
 				_genericMediaLevelDetailSelectionWebControl.GenericDetailLevelType = WebConstantes.GenericDetailLevel.Type.devicesAnalysis;
-			else if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
+			}
+			else if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
 				_genericMediaLevelDetailSelectionWebControl.GenericDetailLevelType = WebConstantes.GenericDetailLevel.Type.programAnalysis;
 			
 			resultwebcontrol1.CustomerWebSession = _webSession;

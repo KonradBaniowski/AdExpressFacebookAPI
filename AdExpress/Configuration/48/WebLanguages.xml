@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <languages default="44" defaultDataLanguage="44">
-    <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="44" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="FRENCH">
+    <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="44" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="FRENCH" NumberDecimalSeparator="." NumberGroupSeparator=",">
       <rss display="false" filePath="http://poland.tnsadexpress.com/Rss/44/AdExpressFeed.xml" link="http://poland.tnsadexpress.com/Rss/44/AdExpressFeed.xml"/>
       <unitformats>
         <unitformat name="max0" format="#,##0;-#,##0;-"                   excelFormat="#,##0;-#,##0;-"/>
@@ -9,6 +9,7 @@
         <unitformat name="max2" format="#,##0.##;-#,##0.##;-"             excelFormat="#,##0.0#;-#,##0.0#;-"/>
         <unitformat name="max3" format="#,##0.###;-#,##0.###;-"           excelFormat="#,##0.0##;-#,##0.0##;-"/>
         <unitformat name="percentage" format="#,##0.00 \%;-#,##0.00 \%;-" excelFormat="#,##0.00 \%;-#,##0.00 \%;-"/>
+        <unitformat name="percentWOSign" format="#,##0.00;-#,##0.00;-"   excelFormat="#,##0.00;-#,##0.00;-"/>
         <unitformat name="duration" format="#0 H 00 M 00 S"               excelFormat="#0 H 00 M 00 S"/>
         <unitformat name="shortduration" format="0 m 00 s"                excelFormat="0 m 00 s"/>
         <unitformat name="airtime" format="#0:00:00"                      excelFormat="#0:00:00"/>

@@ -9,11 +9,11 @@
     </vehicle>
     <vehicle id="2" name="radio">
       <detailColumn id="19"/>
-    </vehicle>
-    <vehicle id="3" name="télévision">
+    </vehicle>-->
+    <!--<vehicle id="1" name="télévision">
       <detailColumn id="19"/>
-    </vehicle>
-    <vehicle id="8" name="Publicité extérieure">
+    </vehicle>-->
+   <!--<vehicle id="8" name="Publicité extérieure">
       <detailColumn id="20"/>
     </vehicle>
     <vehicle id="10" name="Courrier">

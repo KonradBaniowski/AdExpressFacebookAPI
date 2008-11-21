@@ -88,7 +88,7 @@
       <MediaSelectionParent>category</MediaSelectionParent>             <!-- Catégorie -->
       <!--<MediaSelectionParent>interestCenter</MediaSelectionParent>-->             <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>                <!-- Régie -->
-      <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
+      <!--<MediaSelectionParent>title</MediaSelectionParent>-->                      <!-- Titre -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="7"/>

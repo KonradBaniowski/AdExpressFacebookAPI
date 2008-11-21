@@ -37,6 +37,7 @@ using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Classification;
 
 
 namespace AdExpress.Private.MyAdExpress{
@@ -508,11 +509,11 @@ namespace AdExpress.Private.MyAdExpress{
                     }
                     #endregion
 
-                    if(_webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS && (_webSession.SelectionUniversMedia.FirstNode==null || _webSession.SelectionUniversMedia.FirstNode.Tag==null)) {
+					if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS && (webSessionSave.SelectionUniversMedia.FirstNode == null || webSessionSave.SelectionUniversMedia.FirstNode.Tag == null)) {
                         _webSession.SelectionUniversMedia.Nodes.Clear();
                         System.Windows.Forms.TreeNode tmpNode=new System.Windows.Forms.TreeNode("TELEVISION");
-                        tmpNode.Tag=new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv.GetHashCode(),"TELEVISION");
-                        _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+						tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, VehiclesInformation.EnumToDatabaseId(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv), "TELEVISION");
+						webSessionSave.SelectionUniversMedia.Nodes.Add(tmpNode);
                     }
 
                     _webSession.CompetitorUniversAdvertiser=webSessionSave.CompetitorUniversAdvertiser;
@@ -897,7 +898,10 @@ namespace AdExpress.Private.MyAdExpress{
 					//Nouveaux univers produit
 					_webSession.PrincipalProductUniverses = webSessionSave.PrincipalProductUniverses;
 					_webSession.SecondaryProductUniverses = webSessionSave.SecondaryProductUniverses;
-					
+					//Nouveaux univers Media
+					_webSession.PrincipalMediaUniverses = webSessionSave.PrincipalMediaUniverses;
+					_webSession.SecondaryMediaUniverses = webSessionSave.SecondaryMediaUniverses;
+
 					if(notValidPeriod){
 						//Erreur : période non disponible
 						Response.Write("<script language=javascript>");

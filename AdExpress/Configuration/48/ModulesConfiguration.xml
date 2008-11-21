@@ -26,7 +26,7 @@
             <!--<defaultMediaDetailLevel id="4" name="media\centre d'interet\support" />-->
             <!--<defaultMediaDetailLevel id="5" name="media\centre d'interet\support\version" />-->
             <defaultMediaDetailLevel id="6" name="media\regie\support" />
-            <defaultMediaDetailLevel id="7" name="media\regie\support\version" />
+            <!--<defaultMediaDetailLevel id="7" name="media\regie\support\version" />-->
             <defaultMediaDetailLevel id="8" name="media\version\support" />
           </defaultMediaDetailLevels>
           <allowedMediaLevelItems>
@@ -35,7 +35,7 @@
             <allowedMediaLevelItem id="3" name="Support"/>
             <!--<allowedMediaLevelItem id="4" name="Centre d'interet"/>-->
             <allowedMediaLevelItem id="5" name="Régie"/>
-            <!--<allowedMediaLevelItem id="6" name="Version"/>-->
+            <allowedMediaLevelItem id="6" name="Version"/>
             <allowedMediaLevelItem id="8" name="Annonceur"/>
             <allowedMediaLevelItem id="9" name="Marque"/>
             <allowedMediaLevelItem id="10" name="Produit"/>
@@ -61,7 +61,7 @@
             </allowedUniverseLevels>
             <allowedUniverseBranches>
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
-              <allowedUniverseBranch id="4"  name="advertiser\product"/>
+              <allowedUniverseBranch id="2"  name="advertiser\product"/>
               <allowedUniverseBranch id="3" name="brand\product"/>
             </allowedUniverseBranches>
           </selection>
@@ -138,7 +138,7 @@
             <allowedColumnDetailLevelItem id="2" name="Categorie"/>
             <allowedColumnDetailLevelItem id="3" name="Support"/>
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
-            <allowedColumnDetailLevelItem id="17" name="Titre"/>
+            <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <!--<allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>-->
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
@@ -307,7 +307,7 @@
             <allowedColumnDetailLevelItem id="2" name="Categorie"/>
             <allowedColumnDetailLevelItem id="3" name="Support"/>
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
-            <allowedColumnDetailLevelItem id="17" name="Titre"/>
+            <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <!--<allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>-->
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
@@ -462,7 +462,7 @@
       </module>
       <!-- *****************************************      Portefeuille d'un support           *****************************************-->
       <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
-        <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
+        <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Poland.dll" class="TNS.AdExpressI.Portofolio.Poland.PortofolioResults"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="337">
           <ModuleVehicles list="1,2,3"/>
@@ -548,7 +548,7 @@
               <detailSelection id="20" name="Generic Product Level Detail"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+         <!-- <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="1,2,3"/>
             </ResultAllowedMediaUniverse>
@@ -565,8 +565,8 @@
               <detailSelection id="9" name="Competitor Media Selected"/>
               <detailSelection id="6" name="Product Selected"/>
             </detailSelections>
-          </page>
-          <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+          </page>-->
+         <!-- <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="1,2,3"/>
             </ResultAllowedMediaUniverse>
@@ -584,7 +584,7 @@
               <detailSelection id="9" name="Competitor Media Selected"/>
               <detailSelection id="6" name="Product Selected"/>
             </detailSelections>
-          </page>
+          </page>-->
           <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="1,2,3"/>
