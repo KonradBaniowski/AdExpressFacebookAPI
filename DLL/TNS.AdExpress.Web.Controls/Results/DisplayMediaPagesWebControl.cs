@@ -210,6 +210,8 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			
 
 			string[] files = Directory.GetFiles(path, "*.jpg");
+            Array.Sort(files);
+
 			string[] endFile;
 			StringBuilder t = new StringBuilder(5000);
 			int i = 1;
