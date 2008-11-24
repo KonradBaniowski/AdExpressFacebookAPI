@@ -630,7 +630,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 _customerWebSession.GenericInsertionColumns = new GenericColumns(columnsId);
                 data = result.GetCreatives(vehicle, _fromDate, _toDate, _idsFilter, _idUnivers, ZoomDate);
 
-                BuildCustomFilter(ref data, columnFilters);
+                if (data != null)
+                {
+                    BuildCustomFilter(ref data, columnFilters);
+                }
 
             }
             else
