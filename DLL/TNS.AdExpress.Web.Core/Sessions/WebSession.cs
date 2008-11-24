@@ -529,6 +529,11 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		[System.NonSerialized]
 		protected GenericColumns _genericColumns = null;
+		/// <summary>
+		/// Colonnes génériques
+		/// </summary>
+		[System.NonSerialized]
+		protected GenericColumns _genericCreativesColumns = null;
 		#endregion
 
         #region Media Selection Parent
@@ -1993,6 +1998,41 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				_genericColumns = value;
 				userParameters[CoreConstantes.SessionParamters.genericColumns] = value.ColumnIds;
 				userParameters[CoreConstantes.SessionParamters.genericColumnsSelectedFrom] = value.FromControlItem;
+				modificationDate = DateTime.Now;
+			}
+		}
+        #endregion
+
+		#region Colonnes génériques
+		/// <summary>
+		/// Obtient et définit les colonnes du détail des créations
+		/// </summary>
+		public GenericColumns GenericCreativesColumns {
+			get {
+                List<Int64> columnsIds = null;
+				WebConstantes.GenericColumn.SelectedFrom selectedFrom;
+                if (_genericCreativesColumns == null)
+                {
+					if (userParameters.ContainsKey(CoreConstantes.SessionParamters.genericCreativesColumns)) {
+                        columnsIds = (List<Int64>)userParameters[CoreConstantes.SessionParamters.genericCreativesColumns];
+					}
+					else {
+						throw (new NotImplementedException("Undefine default GenericInsertionColumns"));
+					}
+					if (userParameters.ContainsKey(CoreConstantes.SessionParamters.genericCreativesColumnsSelectedFrom)) {
+                        selectedFrom = (WebConstantes.GenericColumn.SelectedFrom)userParameters[CoreConstantes.SessionParamters.genericCreativesColumnsSelectedFrom];
+					}
+					else {
+						selectedFrom = WebConstantes.GenericColumn.SelectedFrom.unknown;
+					}
+                    _genericCreativesColumns = new GenericColumns(columnsIds, selectedFrom);
+				}
+                return (_genericCreativesColumns);
+			}
+			set {
+                _genericCreativesColumns = value;
+                userParameters[CoreConstantes.SessionParamters.genericCreativesColumns] = value.ColumnIds;
+                userParameters[CoreConstantes.SessionParamters.genericCreativesColumnsSelectedFrom] = value.FromControlItem;
 				modificationDate = DateTime.Now;
 			}
 		}

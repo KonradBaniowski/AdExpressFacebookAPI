@@ -273,6 +273,10 @@ namespace TNS.AdExpressI.Insertions
 
             if (this._getMSCreatives)
                 columns = WebApplicationParameters.MsCreativesDetail.GetDetailColumns(vehicle.DatabaseId);
+            else if (this._getCreatives)
+            {
+                columns = _session.GenericCreativesColumns.Columns;
+            }
             else
                 columns = _session.GenericInsertionColumns.Columns;
 

@@ -200,7 +200,16 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Media selection parent 
             /// </summary>
-            mediaSelectionParent = 44
+            mediaSelectionParent = 44,
+			/// <summary>
+			/// Colonnes generqiues
+			/// </summary>
+			/// <remarks>Sert à la création de l'objet GenericColumns, il est de type ArrayList</remarks>
+			genericCreativesColumns=45,
+			/// <summary>
+			/// Emplacement d'où a été sélectionné les colonnes
+			/// </summary>			
+            genericCreativesColumnsSelectedFrom = 46,
 		}
 	
 	}

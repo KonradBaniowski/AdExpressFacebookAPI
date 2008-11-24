@@ -363,14 +363,13 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
             else
             {
-                _customerWebSession.DetailLevel = new GenericDetailLevel(new ArrayList());
                 List<Int64> genericColumnList = new List<Int64>();
                 List<GenericColumnItemInformation> columnItemList = WebApplicationParameters.CreativesDetail.GetDetailColumns(_idVehicle, _customerWebSession.CurrentModule);
                 foreach (GenericColumnItemInformation column in columnItemList)
                 {
                     genericColumnList.Add((int)column.Id);
                 }
-                _customerWebSession.GenericInsertionColumns = new GenericColumns(genericColumnList);
+                _customerWebSession.GenericCreativesColumns = new GenericColumns(genericColumnList);
                 _customerWebSession.Save();
 
             }
@@ -627,9 +626,11 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         _availableFilterValues.Add(g.Id, new List<string>());
                     }
                 }
-                _customerWebSession.GenericInsertionColumns = new GenericColumns(columnsId);
+                _customerWebSession.GenericCreativesColumns = new GenericColumns(columnsId);
+                GenericDetailLevel saveLevels = _customerWebSession.DetailLevel;
+                _customerWebSession.DetailLevel = new GenericDetailLevel(new ArrayList());
                 data = result.GetCreatives(vehicle, _fromDate, _toDate, _idsFilter, _idUnivers, ZoomDate);
-
+                _customerWebSession.DetailLevel = saveLevels;
                 if (data != null)
                 {
                     BuildCustomFilter(ref data, columnFilters);
