@@ -776,6 +776,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             string themeName = WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
             StringBuilder str = new StringBuilder();
             str.AppendFormat("<tr id=\"filters_{0}\" style=\"display:none;\" ><td colSpan=\"2\"><table>", this.ID);
+            bool checke = false;
             foreach (GenericColumnItemInformation c in columnFilters)
             {
                 if (_availableFilterValues.ContainsKey(c.Id) && _availableFilterValues[c.Id].Count > 0)
@@ -792,6 +793,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                             }
                             str.Append("<tr>");
                         }
+                        checke = checke || (_customFilterValues.ContainsKey(c.Id) && _customFilterValues[c.Id].Contains(_availableFilterValues[c.Id][i]));
                         str.AppendFormat("<td><input {4} id=\"{2}_{0}_{3}\" type=\"checkbox\" onclick=\"if(this.checked){{AddFilter({0},'{1}');}}else {{RemoveFilter({0},'{1}');}};\" ><label for=\"{2}_{0}_{3}\">{1}</label></td>"
                             , c.Id.GetHashCode(), _availableFilterValues[c.Id][i], this.ID, i
                             , (_customFilterValues.ContainsKey(c.Id)&&_customFilterValues[c.Id].Contains(_availableFilterValues[c.Id][i]))? "checked":string.Empty );
@@ -803,7 +805,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             str.AppendFormat("  <a onclick=\"{{InitFilters();ApplyFilters();}}\" onmouseover=\"filterInitButton_{0}.src='/App_Themes/{1}/Images/Common/Button/reinitialiser_down.gif';\" onmouseout=\"filterInitButton_{0}.src = '/App_Themes/{1}/Images/Common/Button/reinitialiser_up.gif';\"><img src=\"/App_Themes/{1}/Images/Common/Button/reinitialiser_up.gif\" border=0 name=filterInitButton_{0}></a></td></tr>", this.ID, themeName);
             str.Append("</table></td></tr></table><br>");
 
-            str.Insert(0, string.Format("<table class=\"creativeFilterBox\" border=\"0\" cellSpacing=\"0\" cellPadding=\"0\"><tr style=\"cursor:hand;\" onclick=\"if(filters_{1}.style.display == 'none'){{filters_{1}.style.display = '';}}else {{filters_{1}.style.display = 'none';}};\"><td>{0}</td><td align=\"right\" class=\"arrowBackGround\"></td></tr>", GestionWeb.GetWebWord(518, _customerWebSession.SiteLanguage), this.ID));
+            str.Insert(0, string.Format("<table class=\"creativeFilterBox\" border=\"0\" cellSpacing=\"0\" cellPadding=\"0\"><tr style=\"cursor:hand;\" onclick=\"if(filters_{1}.style.display == 'none'){{filters_{1}.style.display = '';}}else {{filters_{1}.style.display = 'none';}};\"><td class=\"{2}\">{0}</td><td align=\"right\" class=\"arrowBackGround\"></td></tr>", GestionWeb.GetWebWord(518, _customerWebSession.SiteLanguage), this.ID, checke ? "pinkTextColor" : string.Empty));
 
 
             _optionHtml = str.ToString();

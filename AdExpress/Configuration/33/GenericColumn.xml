@@ -146,7 +146,7 @@
     <column id="81" name="Banner hashcode" webTextId="1888" dbLabel="hashcode" dbLabelAlias="hashcode" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="82" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="84" name="Dimension banner Internet" webTextId="1420" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="84" name="Dimension banner Internet" webTextId="2542" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="85" name="Euros" webTextId="1423" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
     <column id="87" name="Gad" webTextId="2222" dbId="id_advertiser" dbLabel="id_address" dbTable="gad" dbTablePrefixe="gd"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false"/>
