@@ -392,13 +392,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     }
                     else
                     {
-                        total = FctUtilities.Units.ConvertUnitValueToString(tab[i, SOV], CstWeb.CustomerSessions.Unit.grp, fp);
+                        total = string.Format(fp, "{0:percentWOSign}", tab[i, SOV]);
                     }
                     t.AppendFormat("<td class=\"{0}\">{1}</td>", styleClassNumber, total);
                     #endregion
 
                     #region Cumul SOV
-                    t.AppendFormat("<td class=\"{0}\">{1}</td>", styleClassNumber, FctUtilities.Units.ConvertUnitValueToString(tab[i, CUMUL_SOV], CstWeb.CustomerSessions.Unit.grp, fp));
+                    t.AppendFormat("<td class=\"{0}\">{1}</td>", styleClassNumber, string.Format(fp, "{0:percentWOSign}", tab[i, CUMUL_SOV]));
                     #endregion
 
                     #region Rang

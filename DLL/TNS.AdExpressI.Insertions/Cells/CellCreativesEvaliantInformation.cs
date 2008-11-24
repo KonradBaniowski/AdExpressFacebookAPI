@@ -265,7 +265,7 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             #region Visual
             bool hasVisual = false;
-            str.Append("<tr><td valign=\"top\">");
+            str.Append("<tr><th valign=\"top\">");
             if (_visuals.Count < 1)
             {
                 str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
@@ -275,7 +275,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 RenderBanner(str);
             }
 
-            str.Append("</td></tr>");
+            str.Append("</th></tr>");
             #endregion
 
             #region Links

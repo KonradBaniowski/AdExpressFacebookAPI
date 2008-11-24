@@ -163,6 +163,13 @@ tr.creativeInfo td table
 	border-spacing:0px;
 	border-collapse:collapse;
 }
+tr.creativeInfo td table tr th
+{
+	width:expression(document.getElementById('res_CreativesWebControl1').offsetWidth < 600? '500px' : '100%'); 
+	background-color:#D0C8DA;
+	padding:10px;
+	text-align:center;
+}
 tr.creativeInfo td table tr td
 {
 	background-color:#D0C8DA;

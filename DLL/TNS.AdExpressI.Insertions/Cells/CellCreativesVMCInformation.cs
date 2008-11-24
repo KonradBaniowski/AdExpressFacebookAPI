@@ -266,7 +266,7 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             //visuals
             bool hasVisual = false;
-            str.Append("<td valign=\"top\">");
+            str.Append("<th valign=\"top\">");
             string pathes = String.Join(",", _visuals.ToArray()).Replace("/Imagette", string.Empty);
             foreach (string s in _visuals)
             {
@@ -282,7 +282,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
             }
 
-            str.Append("</td></tr>");
+            str.Append("</th></tr>");
 
 
             //Informations

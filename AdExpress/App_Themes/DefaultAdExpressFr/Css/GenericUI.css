@@ -158,7 +158,6 @@ tr.creativeInfo td
 }
 tr.creativeInfo td table
 {
-	min-width:600px;
 	width:100%;
 	border:solid 1px #B1A3C1;
 	border-spacing:0px;
@@ -166,6 +165,14 @@ tr.creativeInfo td table
 }
 tr.creativeInfo td table tr td
 {
+	background-color:#D0C8DA;
+	padding:10px;
+	text-align:center;
+}
+
+tr.creativeInfo td table tr th
+{
+	width:expression(document.getElementById('res_CreativesWebControl1').offsetWidth < 600? '500px' : '100%'); 
 	background-color:#D0C8DA;
 	padding:10px;
 	text-align:center;

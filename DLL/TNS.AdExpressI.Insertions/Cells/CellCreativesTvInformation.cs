@@ -143,7 +143,7 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             #region visuals
             bool hasVisual = false;
-            str.Append("<tr><td valign=\"top\">");
+            str.Append("<tr><th valign=\"top\">");
             foreach (string s in _visuals)
             {
                 string[] tmp = s.Split(',');
@@ -158,7 +158,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 str.AppendFormat("<span>{0}</span>", GestionWeb.GetWebWord(843, _session.SiteLanguage));
             }
 
-            str.Append("</td></tr>");
+            str.Append("</th></tr>");
             #endregion
 
             #region Info
