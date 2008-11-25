@@ -921,7 +921,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                     AdValues[indexLine, 1] = TempFirstAdInvest.ToString();
                                     AdValues[indexLine, 2] = TempFirstAdInvestName;
                                 }
-                                else if (Decimal.Parse(AdValues[indexLine, 1].ToString()) < TempFirstAdInvest)
+                                else if (AdValues[indexLine, 1] != null && Decimal.Parse(AdValues[indexLine, 1].ToString()) < TempFirstAdInvest)
                                 {
                                     AdValues[indexLine, 0] = s.ToString();
                                     AdValues[indexLine, 1] = TempFirstAdInvest.ToString();
@@ -957,7 +957,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                     RefValues[indexLineRef, 1] = TempFirstRefInvest.ToString();
                                     RefValues[indexLineRef, 2] = TempFirstRefInvestName.ToString();
                                 }
-                                else if (Decimal.Parse(RefValues[indexLineRef, 1].ToString()) < TempFirstRefInvest)
+                                else if (RefValues[indexLineRef, 1] != null && Decimal.Parse(RefValues[indexLineRef, 1].ToString()) < TempFirstRefInvest)
                                 {
                                     RefValues[indexLineRef, 0] = p.ToString();
                                     RefValues[indexLineRef, 1] = TempFirstRefInvest.ToString();
