@@ -584,7 +584,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 t.Append("<td class=\"violetBackGround whiteRightLeftBorder\"><img width=1px></td>");
             }
-            if (oTotal != null)
+            if (oTotal != null && oTotal.ToString().Length>0 && Convert.ToDouble(oTotal)>0)
             {
                 t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(oTotal, _session.Unit, fp));
             }
@@ -623,7 +623,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                             image = " <img src=\"/I/o.gif\"/>";
                         }
                     }
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}%{2}</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(dEvol, _session.Unit, true, fp), image);
+                    if (Double.IsInfinity(dEvol))
+                    {
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, image);
+                    }
+                    else
+                    {
+                        t.AppendFormat("<td class=\"{0}\" nowrap>{1}%{2}</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(dEvol, _session.Unit, true, fp), image);
+                    }
                 }
                 else
                 {
@@ -2452,15 +2459,23 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 tempEvol = (double)0.0;
                 totalInvestChildPreviousYear = dt.Compute(expressionPreviuousYear, filter).ToString();
                 //anneé N par rapport N-1 = ((N-(N-1))*100)/N-1 
-                if (FctUtilities.CheckedText.IsNotEmpty(totalInvestChildPreviousYear) && FctUtilities.CheckedText.IsNotEmpty(totalInvestChild) && double.Parse(totalInvestChildPreviousYear) > (double)0.0)
+                double dTotalInvestChild = (totalInvestChild.Length > 0) ? double.Parse(totalInvestChild) : 0;
+                double dTotalInvestChildPreviousYear = (totalInvestChildPreviousYear.Length > 0) ? double.Parse(totalInvestChildPreviousYear) : 0;
+                if (dTotalInvestChildPreviousYear > 0)
                 {
-                    tempEvol = ((double.Parse(totalInvestChild) - double.Parse(totalInvestChildPreviousYear)) * (double)100.0) / double.Parse(totalInvestChildPreviousYear);
+                    tempEvol = ((dTotalInvestChild - dTotalInvestChildPreviousYear) * (double)100.0) / dTotalInvestChildPreviousYear;
+                    evolution = tempEvol.ToString();
+                }
+                else if (dTotalInvestChild > 0)
+                {
+                    tempEvol = Double.PositiveInfinity;
                     evolution = tempEvol.ToString();
                 }
                 else
                 {
+                    tempEvol = 0.0;
                     evolution = tempEvol.ToString();
-                }                
+                }
             }
             else
             {

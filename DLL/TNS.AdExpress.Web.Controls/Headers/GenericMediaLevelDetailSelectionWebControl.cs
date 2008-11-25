@@ -600,6 +600,55 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					_customerGenericDetailLevel=new GenericDetailLevel(levels,WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
 					//_customerWebSession.GenericMediaDetailLevel.FromControlItem=WebConstantes.GenericDetailLevel.SelectedFrom.customLevels;
 				}
+                switch (_customerGenericDetailLevel.FromControlItem)
+                {
+                    case WebConstantes.GenericDetailLevel.SelectedFrom.customLevels:
+                        if (levels.Count <= 0)
+                        {
+                            if (_nbDetailLevelItemList >= 1 && _customerGenericDetailLevel.GetNbLevels >= 1 && _customerGenericDetailLevel.LevelIds[0] != null)
+                            {
+                                _l1Detail.SelectedValue = ((DetailLevelItemInformation.Levels)_customerGenericDetailLevel.LevelIds[0]).GetHashCode().ToString();
+                            }
+                            if (_nbDetailLevelItemList >= 2 && _customerGenericDetailLevel.GetNbLevels >= 2 && _customerGenericDetailLevel.LevelIds[1] != null)
+                            {
+                                _l2Detail.SelectedValue = ((DetailLevelItemInformation.Levels)_customerGenericDetailLevel.LevelIds[1]).GetHashCode().ToString();
+                            }
+                            if (_nbDetailLevelItemList >= 3 && _customerGenericDetailLevel.GetNbLevels >= 3 && _customerGenericDetailLevel.LevelIds[2] != null)
+                            {
+                                _l3Detail.SelectedValue = ((DetailLevelItemInformation.Levels)_customerGenericDetailLevel.LevelIds[2]).GetHashCode().ToString();
+                            }
+                            if (_nbDetailLevelItemList >= 4 && _customerGenericDetailLevel.GetNbLevels >= 4 && _customerGenericDetailLevel.LevelIds[3] != null)
+                            {
+                                _l4Detail.SelectedValue = ((DetailLevelItemInformation.Levels)_customerGenericDetailLevel.LevelIds[3]).GetHashCode().ToString();
+                            }
+
+                        }
+                        break;
+                    case WebConstantes.GenericDetailLevel.SelectedFrom.savedLevels:
+                        if (int.Parse(_customDetail.SelectedValue) < 0)
+                        {
+                            foreach (GenericDetailLevelSaved currentLevel in _genericDetailLevelsSaved.Values)
+                            {
+                                if (currentLevel.EqualLevelItems(_customerGenericDetailLevel))
+                                {
+                                    _customDetail.SelectedValue = currentLevel.Id.ToString();
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    case WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels:
+                        if (int.Parse(_defaultDetail.SelectedValue) < 0)
+                        {
+                            int index = -1;
+                            foreach (GenericDetailLevel currentLevel in GetDefaultDetailLevels())
+                            {
+                                if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule)) index++;
+                                if (currentLevel.EqualLevelItems(_customerGenericDetailLevel)) _defaultDetail.SelectedValue = index.ToString();
+                            }
+                        }
+                        break;
+                }
 			}
 			else{
 				if(_customerWebSession.GenericMediaDetailLevel.FromControlItem==WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels){
