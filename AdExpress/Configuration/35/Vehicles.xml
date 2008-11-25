@@ -192,6 +192,7 @@
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
+      <allowedUnit>mmPerCol</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results -->
     <allowedMediaDetailLevels>
