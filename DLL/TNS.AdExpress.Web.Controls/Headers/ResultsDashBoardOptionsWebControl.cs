@@ -597,7 +597,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					}
 				}
 				//Options Encarts
-				if (insertOption){
+				if (insertOption && WebApplicationParameters.AllowInsetOption){
 					if(Page.Request.Form.GetValues("_inserts")!=null){
 						customerWebSession.Insert = (SessionCst.Insert) Int64.Parse(Page.Request.Form.GetValues("_inserts")[0]);					
 					}
@@ -1226,7 +1226,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			}
 
 			//option choix d'un encart
-			if (insertOption){
+            if (insertOption && WebApplicationParameters.AllowInsetOption)
+            {
 				output.Write("\n<tr>");
 				output.Write("\n<td class=\"txtGris11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1400,customerWebSession.SiteLanguage));

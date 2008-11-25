@@ -98,6 +98,7 @@
     <Compile Include="Theme\Tag.cs" />
     <Compile Include="Theme\Theme.cs" />
     <Compile Include="Web\Rss.cs" />
+    <Compile Include="XmlLoader\ResultOptionsXL.cs" />
     <Compile Include="XmlLoader\CreativeConfigDataAccess.cs" />
     <Compile Include="DataBaseDescription\Connection.cs" />
     <Compile Include="DataBaseDescription\DataBase.cs" />

@@ -113,6 +113,10 @@ namespace TNS.AdExpress.Constantes.Web {
         /// Fichier de configuration des chemins d'accès aux visuels
         /// </summary>
         public const string CREATIVES_PATH_CONFIGURATION = @"CreativesAccess.xml";
+        /// <summary>
+        /// Fichier de configuration des options globales du site (Option encart disponible...)
+        /// </summary>
+        public const string RESULT_OPTIONS_CONFIGURATION_FILENAME = @"ResultOptions.xml";
 
     }
 }

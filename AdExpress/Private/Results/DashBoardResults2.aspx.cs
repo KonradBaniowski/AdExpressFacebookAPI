@@ -36,6 +36,7 @@ using WebSystem=TNS.AdExpress.Web.BusinessFacade;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace AdExpress.Private.Results
@@ -270,7 +271,7 @@ namespace AdExpress.Private.Results
 			if(_webSession.CurrentModule==WebModule.Name.TABLEAU_DE_BORD_PRESSE)
 			{
 				ResultsDashBoardOptionsWebControl1.InsertOption =true;
-				if(!Page.IsPostBack && !fromSearchSession)_webSession.Insert =  WebConstantes.CustomerSessions.Insert.withOutInsert;
+                if (!Page.IsPostBack && !fromSearchSession && WebApplicationParameters.AllowInsetOption) _webSession.Insert = WebConstantes.CustomerSessions.Insert.withOutInsert;
 			}
 			else ResultsDashBoardOptionsWebControl1.InsertOption =false;
 

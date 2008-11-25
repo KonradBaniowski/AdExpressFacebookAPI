@@ -129,6 +129,9 @@ namespace AdExpress {
 				//Load flag list
 				TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
 
+                //Load Global WebSite options
+                ResultOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.RESULT_OPTIONS_CONFIGURATION_FILENAME));
+
 			}
 			catch(System.Exception error){
 				string body="";

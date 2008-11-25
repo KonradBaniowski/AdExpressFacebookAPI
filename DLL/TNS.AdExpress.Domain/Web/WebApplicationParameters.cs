@@ -87,6 +87,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Columns displayed in a result of type "Media Detail" in the Portefolio module
         /// </summary>
         protected static PortofolioDetailMediaColumns _portofolioDetailMediaColumns;
+        /// <summary>
+        /// Inset option is allowed
+        /// </summary>
+        protected static bool _allowInsetOption = true;
         #endregion
         
         #region Contructeur
@@ -209,6 +213,19 @@ namespace TNS.AdExpress.Domain.Web {
         public static PortofolioDetailMediaColumns PortofolioDetailMediaColumns
         {
             get { return _portofolioDetailMediaColumns; }
+        }
+        /// <summary>
+        /// Inset option is allowed
+        /// </summary>
+        public static bool AllowInsetOption{
+            get
+            {
+                return _allowInsetOption;
+            }
+            set
+            {
+                _allowInsetOption = value;
+            }
         }
 
         #endregion
