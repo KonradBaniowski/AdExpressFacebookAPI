@@ -40,6 +40,8 @@ using Domain = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 using System.Reflection;
 
 #endregion
@@ -205,6 +207,16 @@ namespace AdExpress.Private.Results{
 				if(vehicleSelection==null || vehicleSelection.IndexOf(",")>0) throw(new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 				#endregion
 
+                #region Page unit as default unit
+                if (_webSession.GetValidUnitForResult().Contains(UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages))
+                    && !_webSession.ReachedModule
+                    && (vehicleSelection == DBClassificationConstantes.Vehicles.names.press.GetHashCode().ToString() || vehicleSelection == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode().ToString())
+                    )
+                {
+                    _webSession.Unit = WebConstantes.CustomerSessions.Unit.pages;
+                }
+                #endregion
+
                 #region Option encart
                 ResultsOptionsWebControl1.InsertOption=false;											
 				#endregion
@@ -231,7 +243,8 @@ namespace AdExpress.Private.Results{
 						_ResultWebControl.Visible = true;// false;
 						_genericProductLevel = false;
                         ResultsOptionsWebControl1.UnitOption = false;
-						break;
+                        ResultsOptionsWebControl1.InsertOption = false;
+                        break;
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
                         ResultsOptionsWebControl1.UnitOption = false;
                         break;
@@ -398,24 +411,6 @@ namespace AdExpress.Private.Results{
 		/// </summary>
 		/// <param name="output">sortie html</param>
 		protected override void Render(HtmlTextWriter output){			
-            //string idVehicle=_webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-			
-            //switch((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())){
-            //    case DBClassificationConstantes.Vehicles.names.press :
-            //    case DBClassificationConstantes.Vehicles.names.internationalPress :
-            //    case DBClassificationConstantes.Vehicles.names.internet:
-            //    case DBClassificationConstantes.Vehicles.names.directMarketing:
-            //    case DBClassificationConstantes.Vehicles.names.adnettrack:
-            //        break;
-            //    case DBClassificationConstantes.Vehicles.names.radio :					
-            //    case DBClassificationConstantes.Vehicles.names.tv :
-            //    case DBClassificationConstantes.Vehicles.names.others :	
-            //    case DBClassificationConstantes.Vehicles.names.outdoor:
-            //        ResultsOptionsWebControl1.resultsPages.Items.Remove(ResultsOptionsWebControl1.resultsPages.Items.FindByValue("5"));				
-            //        break;
-            //    default :				
-            //        throw new  WebExceptions.PortofolioSystemException("Le cas de ce média n'est pas gérer.");
-            //}			
 			base.Render(output);
 		}
 		#endregion
