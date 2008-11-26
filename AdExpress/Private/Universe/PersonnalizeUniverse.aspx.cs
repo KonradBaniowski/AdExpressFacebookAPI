@@ -73,7 +73,7 @@ namespace AdExpress.Private.Universe{
 		/// <summary>
 		/// Commentaire Mes pdf
 		/// </summary>
-		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText Adexpresstext8;
+		//protected TNS.AdExpress.Web.Controls.Translation.AdExpressText Adexpresstext8;
 		/// <summary>
 		/// Sélectionner le groupe d'univers à supprimer
 		/// </summary>
@@ -107,7 +107,7 @@ namespace AdExpress.Private.Universe{
 		/// <summary>
 		/// Bouton
 		/// </summary>
-		protected TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl ImageButtonRollOverWebControl1;
+		//protected TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl ImageButtonRollOverWebControl1;
 		/// <summary>
 		/// Mon AdExpress
 		/// </summary>
@@ -123,7 +123,7 @@ namespace AdExpress.Private.Universe{
 		/// <summary>
 		/// Texte
 		/// </summary>
-		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText AdExpressText15;
+		//protected TNS.AdExpress.Web.Controls.Translation.AdExpressText AdExpressText15;
 		/// <summary>
 		/// Texte
 		/// </summary>

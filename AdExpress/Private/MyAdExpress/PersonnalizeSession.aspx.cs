@@ -33,7 +33,7 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <summary>
 		/// Commentaire Mes pdf
 		/// </summary>
-		protected TNS.AdExpress.Web.Controls.Translation.AdExpressText Adexpresstext8;
+		//protected TNS.AdExpress.Web.Controls.Translation.AdExpressText Adexpresstext8;
 		#endregion
 
 		#region Variables
