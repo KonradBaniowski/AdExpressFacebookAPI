@@ -674,6 +674,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         case CstDBClassif.Vehicles.names.directMarketing:
                             this._cssLHeader = string.Empty;
                             this._cssL4 = _cssCellInfo;
+                            this._highlightBackgroundColorL1 = string.Empty;
+                            this._highlightBackgroundColorL2 = string.Empty;
+                            this._highlightBackgroundColorL3 = string.Empty;
                             this._highlightBackgroundColorL4 = string.Empty;
                             break;
                         default:

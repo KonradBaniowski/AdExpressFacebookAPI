@@ -79,9 +79,12 @@ tr.insertionInfo td
 tr.insertionInfo td
 {
 	border-bottom : solid 1px #E1E0DA;
+	width:expression(document.getElementById('res_InsertionsWebControl1').offsetWidth-100);
+
 }
 tr.insertionInfo td table tr td
 {
+	width:0;
 	border:0;
 	vertical-align:top;
 
