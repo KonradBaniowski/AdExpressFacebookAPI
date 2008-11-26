@@ -215,7 +215,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region ad Number Including Insets
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+            if (WebApplicationParameters.AllowInsetOption && _vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumberIncludingInsets);
                 dt = ds.Tables[0];
@@ -224,7 +224,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region ad Number Excluding Insets
-			if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+			if (WebApplicationParameters.AllowInsetOption && _vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumberExcludingInsets);
                 dt = ds.Tables[0];
@@ -361,8 +361,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
                     nbLines = 9;
                     if (adNumber != null && adNumber.Length > 0) nbLines = nbLines + 2;
-					if (isAlertModule && adNumber != null && adNumber.Length > 0 && adNumberExcludingInsets != null && adNumberExcludingInsets.Length > 0) nbLines++;
-					if (isAlertModule && adNumber != null && adNumber.Length > 0 && adNumberIncludingInsets!=null && adNumberIncludingInsets.Length > 0) nbLines++;
+					if (WebApplicationParameters.AllowInsetOption && isAlertModule && adNumber != null && adNumber.Length > 0 && adNumberExcludingInsets != null && adNumberExcludingInsets.Length > 0) nbLines++;
+					if (WebApplicationParameters.AllowInsetOption && isAlertModule && adNumber != null && adNumber.Length > 0 && adNumberIncludingInsets!=null && adNumberIncludingInsets.Length > 0) nbLines++;
                     if (investment != null && investment.Length > 0) nbLines++;
                     if (isAlertModule) nbLines = nbLines + 2; // nbLines = 16;
                     break;
@@ -563,7 +563,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     }
                     ChangeLineType(ref lineType);
                 }
-                if (isAlertModule) {
+                if (isAlertModule && WebApplicationParameters.AllowInsetOption == true) {
 					if (adNumberExcludingInsets != null && adNumberExcludingInsets.Length > 0) {
                         // Nombre de page de pub hors encarts
                         if (adNumberExcludingInsets.Length == 0)
