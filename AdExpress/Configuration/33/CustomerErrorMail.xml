@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <smtp>
-    <server adress="smtp2.secodip.com" port="25"/>
+    <server adress="frmitch-msprod" port="25"/>
     <message from="tnsadexpress@tnsmi.fr">
 		<to>guillaume.facon@tnsmi.fr</to>
 		<to>benjamin.masson@tnsmi.fr</to>		

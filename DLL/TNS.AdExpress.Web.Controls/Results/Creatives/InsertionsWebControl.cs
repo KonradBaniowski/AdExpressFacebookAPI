@@ -627,10 +627,21 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     }
                 }
                 _customerWebSession.GenericCreativesColumns = new GenericColumns(columnsId);
-                GenericDetailLevel saveLevels = _customerWebSession.DetailLevel;
+                GenericDetailLevel saveLevels = null;
+                try
+                {
+                    saveLevels = _customerWebSession.DetailLevel;
+                }
+                catch
+                {
+                    saveLevels = null;
+                }
                 _customerWebSession.DetailLevel = new GenericDetailLevel(new ArrayList());
                 data = result.GetCreatives(vehicle, _fromDate, _toDate, _idsFilter, _idUnivers, ZoomDate);
-                _customerWebSession.DetailLevel = saveLevels;
+                if (saveLevels != null)
+                {
+                    _customerWebSession.DetailLevel = saveLevels;
+                }
                 if (data != null)
                 {
                     BuildCustomFilter(ref data, columnFilters);
