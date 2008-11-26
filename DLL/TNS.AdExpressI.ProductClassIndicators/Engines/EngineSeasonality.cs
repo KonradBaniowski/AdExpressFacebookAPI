@@ -1062,7 +1062,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     break;
                 }
             }
-            if (!hasData){
+            if (!hasData && !isAdvertCalculation){
                 tab = null;
             }
 
