@@ -125,7 +125,11 @@ namespace TNS.AdExpress.Domain.Level{
             /// <summary>
             /// Pays
             /// </summary>
-            country=26
+            country=26,
+            /// <summary>
+            /// Basic media
+            /// </summary>
+            basicMedia=27
 		}
 		#endregion
 

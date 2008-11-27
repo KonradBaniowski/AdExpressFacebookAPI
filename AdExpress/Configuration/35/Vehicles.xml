@@ -216,7 +216,8 @@
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>             <!-- Centre d'interet -->
-      <MediaSelectionParent>category</MediaSelectionParent>                    <!-- Categorie -->
+      <MediaSelectionParent>category</MediaSelectionParent>                   <!-- Categorie -->
+      <MediaSelectionParent>basicMedia</MediaSelectionParent>                 <!-- Basic Media -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>
