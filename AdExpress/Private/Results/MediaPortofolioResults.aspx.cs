@@ -208,7 +208,8 @@ namespace AdExpress.Private.Results{
 				#endregion
 
                 #region Page unit as default unit
-                if (_webSession.GetValidUnitForResult().Contains(UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages))
+                if (UnitsInformation.List.ContainsKey(WebConstantes.CustomerSessions.Unit.pages) 
+                    && _webSession.GetValidUnitForResult().Contains(UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages))
                     && !_webSession.ReachedModule
                     && (vehicleSelection == DBClassificationConstantes.Vehicles.names.press.GetHashCode().ToString() || vehicleSelection == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode().ToString())
                     )
