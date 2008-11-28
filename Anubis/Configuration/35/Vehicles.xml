@@ -13,6 +13,7 @@
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                      <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                     <!-- Categorie -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>               <!-- Centre d'interet -->
         <allowedMediaLevelItem>media</allowedMediaLevelItem>                        <!-- Support -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>               <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>                   <!-- Annonceur -->
@@ -25,8 +26,9 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>    
     <!-- Selection hierarchy-->
-    <MediaSelectionParents DefaultMediaSelectionParent="category">
-      <MediaSelectionParent>category</MediaSelectionParent>                       <!-- Categorie -->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>                   <!-- Centre d'interet -->
+      <MediaSelectionParent>category</MediaSelectionParent>                         <!-- Categorie -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="8"/>
@@ -50,6 +52,7 @@
     <allowedMediaLevelItems>
       <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
       <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
+      <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
       <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
       <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
       <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -60,7 +63,8 @@
       <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
     </allowedMediaLevelItems>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents DefaultMediaSelectionParent="category">
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>             <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                   <!-- Categorie -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
@@ -85,6 +89,7 @@
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -96,8 +101,9 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents DefaultMediaSelectionParent="category">
-      <MediaSelectionParent>category</MediaSelectionParent>               <!-- Categorie -->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>               <!-- Centre d'interet -->
+      <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
     </MediaSelectionParents>
     <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
@@ -119,6 +125,7 @@
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -130,7 +137,9 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents DefaultMediaSelectionParent="category">
+    
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>               <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
     </MediaSelectionParents>
      <!--Media detail level allowed in recap's modules-->
@@ -153,6 +162,7 @@
       <allowedMediaLevelItems>
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -164,7 +174,8 @@
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents DefaultMediaSelectionParent="category">
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>               <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
     </MediaSelectionParents>
     <!--Media detail level allowed in recap's modules-->
@@ -181,6 +192,7 @@
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
+      <allowedUnit>mmPerCol</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results -->
     <allowedMediaDetailLevels>
@@ -188,6 +200,8 @@
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
         <allowedMediaLevelItem>media</allowedMediaLevelItem>                    <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>              <!-- Régie -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -196,11 +210,14 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                    <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>                    <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
-    <MediaSelectionParents DefaultMediaSelectionParent="category">
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>               <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
+      <MediaSelectionParent>basicMedia</MediaSelectionParent>                   <!-- Basic Media -->
     </MediaSelectionParents>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>

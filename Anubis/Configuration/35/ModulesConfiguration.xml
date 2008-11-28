@@ -15,7 +15,8 @@
         <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Finland.MediaScheduleResultDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7"/> <!--identifiant base de données-->
+          <ModuleVehicles list="1,2,3,5,6,7"/>
+          <!--identifiant base de données-->
           <!--<ModuleCategories list="1,2,3,4"/>-->
           <!--<ModuleMedias list="1,2,3,4"/>-->
         </ModuleAllowedMediaUniverse>
@@ -50,21 +51,21 @@
         </MediaDetailLevel>
         <selections>
           <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
-              <allowedUniverseLevels>
-                <allowedUniverseLevel id="1" name="sector"/>
-                <allowedUniverseLevel id="2" name="subsector"/>
-                <allowedUniverseLevel id="3" name="group_"/>
-                <allowedUniverseLevel id="4" name="segment"/>
-                <allowedUniverseLevel id="7" name="holding_company"/>
-                <allowedUniverseLevel id="6" name="advertiser"/>
-                <allowedUniverseLevel id="8" name="brand"/>
-                <allowedUniverseLevel id="5" name="product"/>
-              </allowedUniverseLevels>
-              <allowedUniverseBranches>
-                <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
-                <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
-                <allowedUniverseBranch id="3" name="brand\product"/>
-              </allowedUniverseBranches>
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+              <allowedUniverseLevel id="7" name="holding_company"/>
+              <allowedUniverseLevel id="6" name="advertiser"/>
+              <allowedUniverseLevel id="8" name="brand"/>
+              <allowedUniverseLevel id="5" name="product"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+              <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
+              <allowedUniverseBranch id="3" name="brand\product"/>
+            </allowedUniverseBranches>
           </selection>
           <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
@@ -105,7 +106,8 @@
         <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="2,3"/>          <!--identifiant base de données-->
+          <ModuleVehicles list="2"/>
+          <!--identifiant base de données-->
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -161,7 +163,7 @@
             <allowedUniverseBranches>
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
-          </optionalSelection>         
+          </optionalSelection>
         </optionalSelections>
         <results>
           <page id="0" resultid="18" name="Résultats portefeuille" traductioncode="1125" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
@@ -274,7 +276,8 @@
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="2,3"/>          <!--identifiant base de données-->
+          <ModuleVehicles list="2"/>
+          <!--identifiant base de données-->
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -464,7 +467,7 @@
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Finland.dll" class="TNS.AdExpressI.Portofolio.Finland.PortofolioResults"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Finland.dll" class="TNS.AdExpressI.Portofolio.DAL.Finland.PortofolioDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="2,3"/>
+          <ModuleVehicles list="2"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -497,7 +500,7 @@
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/PortofolioGlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >            
+          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
               <allowedUniverseLevel id="2" name="subsector"/>
@@ -564,7 +567,7 @@
       <!--******************************************      Analyse secto : Tableaux dynamiques *****************************************-->
       <module name="Tableaux dynamiques" privilegecode="194" traductioncode="2174" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapProductSelection.aspx" descriptionWebTextId="2203" descriptionImageName="/Images/Common/Infobulle/TableauDynamique.png">
         <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
-        <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>       
+        <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
@@ -575,16 +578,16 @@
               <allowedUniverseBranch id="6" name="group_\segment"/>
             </allowedUniverseBranches>
             <subSelections>
-              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SectorAnalysisVehicleSelectionHelp.aspx" >                
+              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SectorAnalysisVehicleSelectionHelp.aspx" >
               </subSelection>
               <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SectorDateSelectionHelp.aspx" >
               </subSelection>
-            </subSelections>            
-          </selection>       
+            </subSelections>
+          </selection>
         </selections>
         <optionalSelections>
           <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
-          </optionalSelection>       
+          </optionalSelection>
         </optionalSelections>
         <results>
           <page id="0" resultid="33" name="Résultats" traductioncode="750" url="/Private/Results/ASDynamicTables.aspx" printExcelUrl="/Private/Results/Excel/DynamicTables.aspx" menuTextId="1983" helpUrl="/Private/Helps/ASDynamicTablesHelp.aspx">
@@ -611,24 +614,24 @@
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
-              <allowedUniverseLevels>               
-                <allowedUniverseLevel id="3" name="group_"/>
-                <allowedUniverseLevel id="4" name="segment"/>                
-              </allowedUniverseLevels>
-              <allowedUniverseBranches>
-                <allowedUniverseBranch id="6" name="group_\segment"/>               
-              </allowedUniverseBranches>
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="6" name="group_\segment"/>
+            </allowedUniverseBranches>
             <subSelections>
               <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SectorAnalysisVehicleSelectionHelp.aspx" >
               </subSelection>
               <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SectorDateSelectionHelp.aspx" >
               </subSelection>
             </subSelections>
-          </selection>          
+          </selection>
         </selections>
         <optionalSelections>
           <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
-          </optionalSelection>         
+          </optionalSelection>
         </optionalSelections>
         <results>
           <page id="0" resultid="34" name="Seasonality" traductioncode="1139" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">

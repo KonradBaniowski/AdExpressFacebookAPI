@@ -163,6 +163,7 @@
     <Content Include="Configuration\35\Plugins\Hotep.xml" />
     <Content Include="Configuration\35\Plugins\Miysis.xml" />
     <Content Include="Configuration\35\PortofolioDetailMediaConfiguration.xml" />
+    <Content Include="Configuration\35\ResultOptions.xml" />
     <Content Include="Configuration\35\Units.xml" />
     <Content Include="Configuration\35\UniverseBranches.xml" />
     <Content Include="Configuration\35\UniverseLevels.xml" />
