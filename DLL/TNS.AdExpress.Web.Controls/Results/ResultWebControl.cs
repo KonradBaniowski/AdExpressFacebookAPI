@@ -2118,6 +2118,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
         protected int[] GetTableIndex(ResultTable data, long nbLineToSchow)
         {
 		
+
 			int[] tab;
 			int nbLinesType=data.LinesStart.Count;
 
