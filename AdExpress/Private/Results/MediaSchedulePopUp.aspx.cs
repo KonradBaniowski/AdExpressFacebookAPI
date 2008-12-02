@@ -35,6 +35,7 @@ using AjaxPro;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.DataAccess.Classification.ProductBranch;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 
 //OpenGenericMediaSchedule 
@@ -70,10 +71,10 @@ namespace AdExpress.Private.Results
         /// Initial Period Detail Saving
         /// </summary>
         ConstantesPeriod.DisplayLevel _savePeriod = ConstantesPeriod.DisplayLevel.monthly;
-		/// <summary>
-		/// Niveau de la nomenclature produit
-		/// </summary>
-		string Level="";
+        /// <summary>
+        /// Niveau de la nomenclature produit
+        /// </summary>
+        string Level = "";
         /// <summary>
         /// Id de nomenclature
         /// </summary>
@@ -167,25 +168,8 @@ namespace AdExpress.Private.Results
             GenericMediaScheduleWebControl1.CustomerWebSession = _webSession;
             SubPeriodSelectionWebControl1.WebSession = _webSession;
             _saveModule = _webSession.CurrentModule;
-            //_webSession.CurrentModule = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
             // On force l'initialisation du composant avec les valeurs du plan media
             OptionLayerWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
-            //switch (_webSession.CurrentModule)
-            //{
-            //    case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE:
-            //    case WebConstantes.Module.Name.ALERTE_POTENTIELS:
-            //    case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
-            //        //GenericMediaLevelDetailSelectionWebControl1.ForceModuleId = WebConstantes.Module.Name.ALERTE_PLAN_MEDIA;
-            //        OptionLayerWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
-            //        break;
-            //    case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-            //    case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-            //    case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
-            //    case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-            //        //GenericMediaLevelDetailSelectionWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
-            //        OptionLayerWebControl1.ForceModuleId = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
-            //        break;
-            //}
             #endregion
 
             #region Period Init
@@ -328,7 +312,7 @@ namespace AdExpress.Private.Results
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.segment, tree);
                     break;
                 case DetailLevelItemInformation.Levels.product:
-                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.productAccess,id,(new PartialProductLevelListDataAccess(id.ToString(),_webSession.DataLanguage,_webSession.Source))[id].ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.productAccess, id, (new PartialProductLevelListDataAccess(id.ToString(), _webSession.DataLanguage, _webSession.Source))[id].ToString());
                     tree.Checked = true;
                     _webSession.ProductDetailLevel = new TNS.AdExpress.Web.Core.Sessions.ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.product, tree);
                     break;

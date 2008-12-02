@@ -101,6 +101,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             bool isMin = false;
             bool isCountDistinct = false;
             bool useLanguage = true;
+            bool useActivation = true;
 			#endregion
 
 			try{
@@ -127,6 +128,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								convertNullDbLabel=false;
                                 isSum = false;
                                 useLanguage = true;
+                                useActivation = true;
                                 isMin = false;
                                 isCountDistinct = false;
 								
@@ -181,6 +183,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     if (reader.GetAttribute("isMax") != null && reader.GetAttribute("isMax").Length > 0) genericColumnItemInformation.IsMax = bool.Parse(reader.GetAttribute("isMax"));
                                     if (reader.GetAttribute("isMin") != null && reader.GetAttribute("isMin").Length > 0) genericColumnItemInformation.IsMin = bool.Parse(reader.GetAttribute("isMin"));
                                     if (reader.GetAttribute("useLanguage") != null && reader.GetAttribute("useLanguage").Length > 0) genericColumnItemInformation.UseLanguageRule = bool.Parse(reader.GetAttribute("useLanguage"));
+                                    if (reader.GetAttribute("useActivation") != null && reader.GetAttribute("useActivation").Length > 0) genericColumnItemInformation.UseActivationRule = bool.Parse(reader.GetAttribute("useActivation"));
 									list.Add(id,genericColumnItemInformation);
 
 									

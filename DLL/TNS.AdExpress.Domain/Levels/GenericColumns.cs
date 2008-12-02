@@ -680,11 +680,14 @@ namespace TNS.AdExpress.Domain.Level
                     {
                         sql += " and " + currentColumn.DataBaseTableNamePrefix + ".id_language" + sqlOperation + languageId.ToString();
                     }
-				
-					if(currentColumn.SqlOperation.Equals("leftOuterJoin"))
-						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation(+)<"+ActivationValues.UNACTIVATED;					
-					else
-						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation<"+ActivationValues.UNACTIVATED;
+
+                    if (currentColumn.UseActivationRule)
+                    {
+                        if (currentColumn.SqlOperation.Equals("leftOuterJoin"))
+                            sql += " and " + currentColumn.DataBaseTableNamePrefix + ".activation(+)<" + ActivationValues.UNACTIVATED;
+                        else
+                            sql += " and " + currentColumn.DataBaseTableNamePrefix + ".activation<" + ActivationValues.UNACTIVATED;
+                    }
 				}
 				sqlOperation="";
 			}
@@ -716,10 +719,13 @@ namespace TNS.AdExpress.Domain.Level
                     {
                         sql += " and " + currentColumn.DataBaseTableNamePrefix + ".id_language" + sqlOperation + languageId.ToString();
                     }
-					if(currentColumn.SqlOperation.Equals("leftOuterJoin"))
-						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation(+)<"+ActivationValues.UNACTIVATED;					
-					else
-						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation<"+ActivationValues.UNACTIVATED;
+                    if (currentColumn.UseActivationRule)
+                    {
+                        if (currentColumn.SqlOperation.Equals("leftOuterJoin"))
+                            sql += " and " + currentColumn.DataBaseTableNamePrefix + ".activation(+)<" + ActivationValues.UNACTIVATED;
+                        else
+                            sql += " and " + currentColumn.DataBaseTableNamePrefix + ".activation<" + ActivationValues.UNACTIVATED;
+                    }
 				}
 			}
 			return(sql);
@@ -752,10 +758,13 @@ namespace TNS.AdExpress.Domain.Level
                     {
                         sql += " and " + currentColumn.DataBaseTableNamePrefix + ".id_language" + sqlOperation + languageId.ToString();
                     }
-					if(currentColumn.SqlOperation.Equals("leftOuterJoin"))
-						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation(+)<"+ActivationValues.UNACTIVATED;					
-					else
-						sql+=" and "+currentColumn.DataBaseTableNamePrefix+".activation<"+ActivationValues.UNACTIVATED;
+                    if (currentColumn.UseActivationRule)
+                    {
+                        if (currentColumn.SqlOperation.Equals("leftOuterJoin"))
+                            sql += " and " + currentColumn.DataBaseTableNamePrefix + ".activation(+)<" + ActivationValues.UNACTIVATED;
+                        else
+                            sql += " and " + currentColumn.DataBaseTableNamePrefix + ".activation<" + ActivationValues.UNACTIVATED;
+                    }
 				}
 			}
 			return(sql);

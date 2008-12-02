@@ -150,6 +150,7 @@
     <column id="85" name="Euros" webTextId="1423" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
     <column id="87" name="Gad" webTextId="2222" dbId="id_advertiser" dbLabel="id_address" dbTable="gad" dbTablePrefixe="gd"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false"/>
+    <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
 
   </columnItems>
 
@@ -452,6 +453,7 @@
       <columnItem id="77" name="Produit AdNetTrack"/>
       <columnItem id="78" name="Format banner" filter="true"/>
       <columnItem id="79" name="Dimension banner" filter="true"/>
+      <columnItem id="88" name="First parution"/>
       <columnItem id="80" name="url" visible="false"/>
       <columnItem id="87" name="Gad" visible="false"/>
     </detailColumn>

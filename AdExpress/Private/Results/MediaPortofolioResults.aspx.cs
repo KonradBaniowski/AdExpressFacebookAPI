@@ -216,6 +216,13 @@ namespace AdExpress.Private.Results{
                 {
                     _webSession.Unit = WebConstantes.CustomerSessions.Unit.pages;
                 }
+                if (_webSession.GetValidUnitForResult().Contains(UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb))
+                    && !_webSession.ReachedModule
+                    && vehicleSelection == DBClassificationConstantes.Vehicles.names.adnettrack.GetHashCode().ToString()
+                    )
+                {
+                    _webSession.Unit = WebConstantes.CustomerSessions.Unit.versionNb;
+                }
                 #endregion
 
                 #region Option encart

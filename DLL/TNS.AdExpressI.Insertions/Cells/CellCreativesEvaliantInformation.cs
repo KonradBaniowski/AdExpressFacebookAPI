@@ -172,6 +172,10 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
                 }
+                else if (cCell is CellDate)
+                {
+                    ((CellDate)cCell).SetCellValue(row[_columnsName[i]]);
+                }
                 else
                 {
                     if (cValue != _previousValues[i] && cValue.Length > 0)

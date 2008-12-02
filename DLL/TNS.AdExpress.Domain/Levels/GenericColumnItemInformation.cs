@@ -369,7 +369,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Advertiser address id
             /// </summary>
-            addressId = 87
+            addressId = 87,
+            /// <summary>
+            /// Banner first parution
+            /// </summary>
+            bannerFirstParution = 88
 }
 		#endregion
 
@@ -475,6 +479,10 @@ namespace TNS.AdExpress.Domain.Level
         /// Specify if column is submitted to language rule or not
         /// </summary>
         private bool _useLanguage = true;
+        /// <summary>
+        /// Specify if column is submitted to   activation rule or not
+        /// </summary>
+        private bool _useActivation = true;
         #endregion
 
 		#region Constructeur
@@ -554,6 +562,14 @@ namespace TNS.AdExpress.Domain.Level
         {
             get { return _useLanguage; }
             set { _useLanguage = value; }
+        }
+        /// <summary>
+        /// Specify if column is submitted to activation rule or not
+        /// </summary>
+        public bool UseActivationRule
+        {
+            get { return _useActivation; }
+            set { _useActivation = value; }
         }
         /// <summary>
         /// Specify if column is a sum of units

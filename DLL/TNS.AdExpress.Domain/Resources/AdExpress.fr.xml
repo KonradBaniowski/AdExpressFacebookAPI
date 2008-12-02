@@ -1730,5 +1730,6 @@
     <item mnemonic="w2542" type="System.String">Dimension déclarée</item>
     <item mnemonic="w2543" type="System.String">Aucun résultat avec ces filtres</item>
     <item mnemonic="w2544" type="System.String">Basic media</item>
+    <item mnemonic="w2545" type="System.String">Première parution</item>
   </items>
 </localization>
