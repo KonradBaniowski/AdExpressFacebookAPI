@@ -2210,7 +2210,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						//Colonne mois en cours (KE)
 						if(currentMonthDate.Month<10)pluszero="0";
 						else pluszero="";
-						t.Append("<td  nowrap align=center class=\"p2\">"+GestionWeb.GetWebWord(1221,webSession.SiteLanguage)+"<br>"+pluszero+currentMonthDate.Month+"-"+currentMonthDate.Year+"</td>");
+						t.Append("<td  nowrap align=center class=\"p2\">"+TNS.FrameWork.Convertion.ToHtmlString(GestionWeb.GetWebWord(1221,webSession.SiteLanguage))+"<br>"+pluszero+currentMonthDate.Month+"-"+currentMonthDate.Year+"</td>");
 						t.Append("\n</tr>");
 						#endregion
 						
