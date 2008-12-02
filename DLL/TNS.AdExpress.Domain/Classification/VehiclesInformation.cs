@@ -290,6 +290,37 @@ namespace TNS.AdExpress.Domain.Classification {
         }
         #endregion
 
+        #region Get DetailLevelItemInformation list
+
+        /// <summary>
+        /// Get Selection DetailLevelItemInformation list
+        /// </summary>
+        /// <param name="vehicleList">Vehicle Information List</param>
+        /// <returns>Detail Level Information List</returns>
+        /// <remarks>This method is used when we have a dataBaseId list</remarks>
+        public static List<DetailLevelItemInformation> GetSelectionDetailLevelList(List<Int64> vehicleList) {
+
+            List<DetailLevelItemInformation> selectionlevelList = new List<DetailLevelItemInformation>();
+            if (vehicleList.Count > 0) {
+                List<DetailLevelItemInformation> levelList = Get(vehicleList[0]).SelectionAllowedMediaLevelItemsList;
+                if (vehicleList.Count == 1)
+                    return levelList;
+                else {
+                    foreach (DetailLevelItemInformation currentKey in levelList) {
+                        selectionlevelList.Add(currentKey);
+                    }
+                    foreach (Int64 currentVehicle in vehicleList) {
+                        foreach (DetailLevelItemInformation currentLevel in levelList)
+                            if (!Get(currentVehicle).SelectionAllowedMediaLevelItemsList.Contains(currentLevel))
+                                selectionlevelList.Remove(currentLevel);
+                    }
+                }
+            }
+
+            return selectionlevelList;
+        }
+        #endregion
+
         #region Init
         /// <summary>
         /// Initialisation de la liste à partir du fichier XML

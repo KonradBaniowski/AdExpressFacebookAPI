@@ -121,6 +121,18 @@
 		<detailLevel id="21" name="produit">
 			<levelItem id="10" name="Produit"/>			
 		</detailLevel>
+    <detailLevel id="22" name="centre d'interet\support">
+      <levelItem id="4" name="Centre d'interet"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="23" name="regie\support">  
+      <levelItem id="5" name="Régie"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>   
+    <detailLevel id="24" name="titre\support">
+      <levelItem id="17" name="Titre"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
 	</detailLevels>
 </genericDetailLevel>
 

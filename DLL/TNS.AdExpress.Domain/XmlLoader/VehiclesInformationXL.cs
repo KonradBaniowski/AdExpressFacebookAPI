@@ -35,7 +35,10 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
             List<DetailLevelItemInformation.Levels> mediaSelectionParentsList = new List<DetailLevelItemInformation.Levels>();
 			List<DetailLevelItemInformation.Levels> allowedRecapMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
+            List<DetailLevelItemInformation>  selectionAllowedMediaLevelItemsList = new List<DetailLevelItemInformation>();
+            List<TNS.AdExpress.Domain.Level.GenericDetailLevel> selectionDefaultMediaDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
             XmlTextReader reader = null;
+            VehicleInformation vhInfo = null;
             string id= string.Empty;
             string defaultMediaSelectionParent = string.Empty;
             Int64 baseId=0;
@@ -53,8 +56,11 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                     if (reader.NodeType == XmlNodeType.Element) {
                         switch (reader.LocalName) {
                             case "vehicle":
-                                if (id.Length > 0) { 
-                                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId,allowedRecapMediaLevelItemsList));
+                                if (id.Length > 0) {
+                                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
+                                    vhInfo.SelectionAllowedMediaLevelItemsList = selectionAllowedMediaLevelItemsList;
+                                    vhInfo.SelectionDefaultMediaDetailLevels = selectionDefaultMediaDetailLevels;
+                                    list.Add(vhInfo);
                                     id = string.Empty;
                                     showActiveMedia = false;
                                     defaultMediaSelectionParent = string.Empty;
@@ -62,6 +68,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     allowedMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
                                     mediaSelectionParentsList = new List<DetailLevelItemInformation.Levels>();
 									allowedRecapMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
+                                    selectionAllowedMediaLevelItemsList = new List<DetailLevelItemInformation>();
+                                    selectionDefaultMediaDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
                                 }
                                 if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
                                 id = reader.GetAttribute("id");
@@ -102,11 +110,22 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								if (readString == null || readString.Length == 0) throw (new InvalidXmlValueException("Invalid allowedMediaLevelItem parameter"));
 								allowedRecapMediaLevelItemsList.Add((DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), readString, true));
 								break;
+                            case "defaultMediaDetailLevel":
+                                if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid defaultMediaDetailLevel parameter"));
+                                selectionDefaultMediaDetailLevels.Add(DetailLevelsInformation.Get(int.Parse(reader.GetAttribute("id"))));
+                                break;
+                            case "selectionAllowedMediaLevelItem":
+                                if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid selectionAllowedMediaLevelItem parameter"));
+                                selectionAllowedMediaLevelItemsList.Add(DetailLevelItemsInformation.Get(int.Parse(reader.GetAttribute("id"))));
+                                break;
                         }
                     }
                 }
                 if (id.Length > 0) {
-                    list.Add(new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId,allowedRecapMediaLevelItemsList));
+                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
+                    vhInfo.SelectionAllowedMediaLevelItemsList = selectionAllowedMediaLevelItemsList;
+                    vhInfo.SelectionDefaultMediaDetailLevels = selectionDefaultMediaDetailLevels;
+                    list.Add(vhInfo);
                 }
             }
             catch (System.Exception err) {

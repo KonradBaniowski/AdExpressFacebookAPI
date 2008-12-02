@@ -225,6 +225,7 @@
     <Compile Include="Headers\GenericDetailSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Headers\GenericMediaDetailSelectionWebControl.cs" />
     <Compile Include="Headers\GenericMediaLevelDetailSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

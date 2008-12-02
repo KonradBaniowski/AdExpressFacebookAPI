@@ -210,6 +210,18 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// Emplacement d'où a été sélectionné les colonnes
 			/// </summary>			
             genericCreativesColumnsSelectedFrom = 46,
+            /// <summary>
+            ///  Niveau de détail générique pour les sélection
+            /// </summary>
+            genericMediaSelectionDetailLevel = 47,
+            /// <summary>
+            /// Emplacement d'où a été sélectionné le niveau de détail orienté media
+            /// </summary>
+            genericMediaSelectionDetailLevelSelectedFrom = 48,
+            /// <summary>
+            /// Type du niveau de détail générique
+            /// </summary>			
+            genericSelectionDetailLevelType = 49
 		}
 	
 	}

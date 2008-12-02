@@ -64,6 +64,16 @@ namespace TNS.AdExpress.Domain.Classification {
 		/// Allowed recap media level items list
 		/// </summary>
 		private List<DetailLevelItemInformation.Levels> _allowedRecapMediaLevelItemsList;
+        /// <summary>
+        /// Media selection parents list
+        /// <remarks>Used in generic component</remarks>
+        /// </summary>
+        private List<DetailLevelItemInformation> _selectionAllowedMediaLevelItemsList = new List<DetailLevelItemInformation>();
+        /// <summary>
+        /// Media selection default levels list
+        /// <remarks>Used in generic component</remarks>
+        /// </summary>
+        private List<TNS.AdExpress.Domain.Level.GenericDetailLevel> _selectionDefaultMediaDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
         #endregion
 
         #region Constructor
@@ -265,6 +275,23 @@ namespace TNS.AdExpress.Domain.Classification {
         /// </summary>
         public Int64 DetailColumnId {
             get { return _detailColumnId; }
+        }
+
+        /// <summary>
+        /// Get /set Media selection parents list
+        /// <remarks>Used in generic component</remarks>
+        /// </summary>
+        public List<DetailLevelItemInformation> SelectionAllowedMediaLevelItemsList {
+            get { return _selectionAllowedMediaLevelItemsList; }
+             set { _selectionAllowedMediaLevelItemsList = value; }
+        }
+        /// <summary>
+        /// Media selection default levels list
+        /// <remarks>Used in generic component</remarks>
+        /// </summary>
+        public List<TNS.AdExpress.Domain.Level.GenericDetailLevel> SelectionDefaultMediaDetailLevels {
+            get { return _selectionDefaultMediaDetailLevels; }
+            set { _selectionDefaultMediaDetailLevels = value; }
         }
         #endregion
 
