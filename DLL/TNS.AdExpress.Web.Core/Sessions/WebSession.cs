@@ -500,12 +500,12 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		///  <label>_genericMediaDetailLevel</label>
 		[System.NonSerialized]
 		protected GenericDetailLevel _genericMediaDetailLevel = null;
-        ///<summary>
-        /// Niveau de détail orienté selection media
-        /// </summary>       
-        ///  <label>_genericMediaSelectionDetailLevel</label>
-        [System.NonSerialized]
-        protected GenericDetailLevel _genericMediaSelectionDetailLevel = null;
+		/////<summary>
+		///// Niveau de détail orienté selection media
+		///// </summary>       
+		/////  <label>_genericMediaSelectionDetailLevel</label>
+		//[System.NonSerialized]
+		//protected GenericDetailLevel _genericMediaSelectionDetailLevel = null;
 		///<summary>
 		/// AdNetTrack Detail levels
 		/// </summary>
@@ -1890,48 +1890,48 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				modificationDate = DateTime.Now;
 			}
 		}
-
-        /// <summary>
-        /// Obtient et définit le niveau de détail orienté Media
-        /// </summary>
-        public GenericDetailLevel GenericMediaSelectionDetailLevel {
-            get {
-                ArrayList levelIds = null;
-                WebConstantes.GenericDetailLevel.SelectedFrom selectedFrom;
-                WebConstantes.GenericDetailLevel.Type type;
-                if (_genericMediaSelectionDetailLevel == null) {
-                    if (userParameters.ContainsKey(CoreConstantes.SessionParamters.genericMediaSelectionDetailLevel)) {
-                        levelIds = (ArrayList)userParameters[CoreConstantes.SessionParamters.genericMediaSelectionDetailLevel];
-                    }
-                    else {
-                        // TODO chargement du niveau de détail par défaut en fonction du module
-                        throw (new NotImplementedException("Undefine default genericMediaSelectionDetailLevel"));
-                    }
-                    if (userParameters.ContainsKey(CoreConstantes.SessionParamters.genericMediaSelectionDetailLevelSelectedFrom)) {
-                        selectedFrom = (WebConstantes.GenericDetailLevel.SelectedFrom)userParameters[CoreConstantes.SessionParamters.genericMediaSelectionDetailLevelSelectedFrom];
-                    }
-                    else {
-                        selectedFrom = WebConstantes.GenericDetailLevel.SelectedFrom.unknown;
-                    }
-                    if (userParameters.ContainsKey(CoreConstantes.SessionParamters.genericSelectionDetailLevelType)) {
-                        type = (WebConstantes.GenericDetailLevel.Type)userParameters[CoreConstantes.SessionParamters.genericSelectionDetailLevelType];
-                    }
-                    else {
-                        type = WebConstantes.GenericDetailLevel.Type.unknown;
-                    }
-                    _genericMediaSelectionDetailLevel = new GenericDetailLevel(levelIds, selectedFrom, type);
-                }
-                return (_genericMediaSelectionDetailLevel);
-            }
-            set {
-                _genericMediaSelectionDetailLevel = value;
-                userParameters[CoreConstantes.SessionParamters.genericMediaSelectionDetailLevel] = value.LevelIds;
-                userParameters[CoreConstantes.SessionParamters.genericMediaSelectionDetailLevelSelectedFrom] = value.FromControlItem;
-                userParameters[CoreConstantes.SessionParamters.genericSelectionDetailLevelType] = value.Type;
-                OnSetMediaAgencyInGenericDetailLevel(_genericMediaSelectionDetailLevel);
-                modificationDate = DateTime.Now;
-            }
-        }
+		
+		///// <summary>
+		///// Obtient et définit le niveau de détail orienté Media
+		///// </summary>
+		//public GenericDetailLevel GenericMediaSelectionDetailLevel {
+		//    get {
+		//        ArrayList levelIds = null;
+		//        WebConstantes.GenericDetailLevel.SelectedFrom selectedFrom;
+		//        WebConstantes.GenericDetailLevel.Type type;
+		//        if (_genericMediaSelectionDetailLevel == null) {
+		//            if (userParameters.ContainsKey(CoreConstantes.SessionParamters.genericMediaSelectionDetailLevel)) {
+		//                levelIds = (ArrayList)userParameters[CoreConstantes.SessionParamters.genericMediaSelectionDetailLevel];
+		//            }
+		//            else {
+		//                // TODO chargement du niveau de détail par défaut en fonction du module
+		//                throw (new NotImplementedException("Undefine default genericMediaSelectionDetailLevel"));
+		//            }
+		//            if (userParameters.ContainsKey(CoreConstantes.SessionParamters.genericMediaSelectionDetailLevelSelectedFrom)) {
+		//                selectedFrom = (WebConstantes.GenericDetailLevel.SelectedFrom)userParameters[CoreConstantes.SessionParamters.genericMediaSelectionDetailLevelSelectedFrom];
+		//            }
+		//            else {
+		//                selectedFrom = WebConstantes.GenericDetailLevel.SelectedFrom.unknown;
+		//            }
+		//            if (userParameters.ContainsKey(CoreConstantes.SessionParamters.genericSelectionDetailLevelType)) {
+		//                type = (WebConstantes.GenericDetailLevel.Type)userParameters[CoreConstantes.SessionParamters.genericSelectionDetailLevelType];
+		//            }
+		//            else {
+		//                type = WebConstantes.GenericDetailLevel.Type.unknown;
+		//            }
+		//            _genericMediaSelectionDetailLevel = new GenericDetailLevel(levelIds, selectedFrom, type);
+		//        }
+		//        return (_genericMediaSelectionDetailLevel);
+		//    }
+		//    set {
+		//        _genericMediaSelectionDetailLevel = value;
+		//        userParameters[CoreConstantes.SessionParamters.genericMediaSelectionDetailLevel] = value.LevelIds;
+		//        userParameters[CoreConstantes.SessionParamters.genericMediaSelectionDetailLevelSelectedFrom] = value.FromControlItem;
+		//        userParameters[CoreConstantes.SessionParamters.genericSelectionDetailLevelType] = value.Type;
+		//        OnSetMediaAgencyInGenericDetailLevel(_genericMediaSelectionDetailLevel);
+		//        modificationDate = DateTime.Now;
+		//    }
+		//}
 
 
 		/// <summary>

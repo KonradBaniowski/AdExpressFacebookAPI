@@ -746,8 +746,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		private DataSet GetData(int eventButton,string keyWord,string listAccessMedia){
 
             if (eventButton == constEvent.eventSelection.OK_EVENT && nbElement != constEvent.error.MAX_ELEMENTS)
-                return Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(webSession, keyWord, listAccessMedia, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
-            else return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(webSession, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
+				return Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(webSession, keyWord, listAccessMedia, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
+				//return Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(webSession, keyWord, listAccessMedia, webSession.GenericMediaSelectionDetailLevel);
+            else 
+				return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(webSession, DetailLevelItemsInformation.Get(webSession.MediaSelectionParent.GetHashCode()));
+			//return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(webSession, webSession.GenericMediaSelectionDetailLevel);
 
 		}
 		

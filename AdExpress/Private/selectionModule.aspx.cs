@@ -178,7 +178,7 @@ namespace AdExpress{
                         }			
 						_webSession.GenericMediaDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 						_webSession.GenericAdNetTrackDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-                        _webSession.GenericMediaSelectionDetailLevel = new GenericDetailLevel(mediaSelectionLevels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                       // _webSession.GenericMediaSelectionDetailLevel = new GenericDetailLevel(mediaSelectionLevels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 						#endregion
 
 						#region Niveau de détail produit (Generic)

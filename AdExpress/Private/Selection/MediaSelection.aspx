@@ -79,12 +79,7 @@
 							<tr>
 								<td><asp:Image ID="Image6" runat="server" height="10" width="1" SkinID="pixel" /></td>
 							</tr>
-							<tr valign="top">
-								<td id="selectionRegie"><cc2:mediasellerwebcontrol id="MediaSellerWebControl2" runat="server" CodeDescription="1456" MediaDetailOption="True"></cc2:mediasellerwebcontrol></td>
-							</tr>
-							<tr>
-								<td><asp:Image ID="Image19" runat="server" height="5" width="1" SkinID="pixel" /></td>
-							</tr>
+						
 							<tr class="whiteBackGround">
 					            <td><cc2:genericmediadetailselectionwebcontrol id="_genericMediaDetailSelectionWebControl" runat="server" NbDetailLevelItemList="2"							            
 							            GenericDetailLevelComponentProfile="media" GenericDetailLevelType="dynamicCompetitorPotential" Width="200px"></cc2:genericmediadetailselectionwebcontrol></td>

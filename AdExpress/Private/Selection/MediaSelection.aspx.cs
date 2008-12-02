@@ -211,29 +211,35 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 					eventButton=constEvent.eventSelection.OK_OPTION_MEDIA_EVENT;
 
 					// Bouton suivant
-				}else if(Request.Form.Get("__EVENTTARGET")=="nextImageButtonRollOverWebControl"){
-					eventButton=constEvent.eventSelection.NEXT_EVENT;
 				}
-					//Bouton Charger
-				else if(Request.Form.Get("__EVENTTARGET")=="loadImageButtonRollOverWebControl"){
-					eventButton=constEvent.eventSelection.LOAD_EVENT;
+				//Bouton ok (selection generique)
+				else if (Request.Form.Get("__EVENTTARGET") == "okDetailMediaImageButton") {
+					eventButton = constEvent.eventSelection.OK_OPTION_MEDIA_EVENT;
+					_webSession.MediaSelectionParent = vehicleInformation.DefaultMediaSelectionParent;
 				}
-					//Bouton Enregistrer
-				else if(Request.Form.Get("__EVENTTARGET")=="saveImageButtonRollOverWebControl"){
-					eventButton=constEvent.eventSelection.SAVE_EVENT;
+				else if (Request.Form.Get("__EVENTTARGET") == "nextImageButtonRollOverWebControl") {
+					eventButton = constEvent.eventSelection.NEXT_EVENT;
 				}
-					// Bouton OK du pop up qui enregistre l'univers
-				else if(HttpContext.Current.Request.QueryString.Get("saveUnivers")!= null){
-					eventButton=constEvent.eventSelection.OK_POP_UP_EVENT;
+				//Bouton Charger
+				else if (Request.Form.Get("__EVENTTARGET") == "loadImageButtonRollOverWebControl") {
+					eventButton = constEvent.eventSelection.LOAD_EVENT;
 				}
-				else if(Request.Form.Get("__EVENTTARGET")=="initializeButton"){
-					eventButton=constEvent.eventSelection.INITIALIZE_EVENT;
+				//Bouton Enregistrer
+				else if (Request.Form.Get("__EVENTTARGET") == "saveImageButtonRollOverWebControl") {
+					eventButton = constEvent.eventSelection.SAVE_EVENT;
 				}
-				else if(Request.Form.Get("__EVENTTARGET")=="initializeAllButton"){
-					eventButton=constEvent.eventSelection.ALL_INITIALIZE_EVENT;
+				// Bouton OK du pop up qui enregistre l'univers
+				else if (HttpContext.Current.Request.QueryString.Get("saveUnivers") != null) {
+					eventButton = constEvent.eventSelection.OK_POP_UP_EVENT;
+				}
+				else if (Request.Form.Get("__EVENTTARGET") == "initializeButton") {
+					eventButton = constEvent.eventSelection.INITIALIZE_EVENT;
+				}
+				else if (Request.Form.Get("__EVENTTARGET") == "initializeAllButton") {
+					eventButton = constEvent.eventSelection.ALL_INITIALIZE_EVENT;
 				}
 				else
-                    _webSession.MediaSelectionParent = vehicleInformation.DefaultMediaSelectionParent;
+					_webSession.MediaSelectionParent = vehicleInformation.DefaultMediaSelectionParent;
 
 				#endregion
 
@@ -428,7 +434,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode ();
 
 			//RecallWebControl1.CustomerWebSession=_webSession;
-			MediaSellerWebControl2.CustomerWebSession=_webSession;
+			//MediaSellerWebControl2.CustomerWebSession=_webSession;
 			LoadableUniversWebControl1.CustomerWebSession=_webSession;
 			LoadableUniversWebControl1.ListBranchType=branchType.GetHashCode().ToString();
 			MenuWebControl2.CustomerWebSession = _webSession;
@@ -448,7 +454,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 
 			AdvertiserSelectionWebControl1.CustomerWebSession=_webSession;
 
-            _genericMediaDetailSelectionWebControl.CustomerWebSession = _webSession;
+            //_genericMediaDetailSelectionWebControl.CustomerWebSession = _webSession;
 			return tmp;
 
 		}
