@@ -27,6 +27,7 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Controls.Buttons;
 using TNS.AdExpress.Domain.Classification;
+using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 
 namespace TNS.AdExpress.Web.Controls.Selections {
 	/// <summary>
@@ -109,6 +110,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				if( webSession != null) {
 					string periodBeginning;
 					string periodEnd;
+                    DateTime begin;
+                    DateTime end;
 
 					if((webSession.DetailPeriod==WebConstantes.CustomerSessions.Period.DisplayLevel.dayly && webSession.PeriodBeginningDate.Length<8)
 						|| webSession.CurrentModule==Constantes.Web.Module.Name.BILAN_CAMPAGNE
@@ -124,8 +127,18 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
 					if (_zoomDate != null && _zoomDate.Length > 0) {
 						if (_zoomDate.Length < 8) {
-							periodBeginning = WebFunctions.Dates.getPeriodBeginningDate(_zoomDate, _periodType).ToString("yyyyMMdd");
-							periodEnd = WebFunctions.Dates.getPeriodEndDate(_zoomDate, _periodType).ToString("yyyyMMdd");
+
+                            begin = WebFunctions.Dates.getPeriodBeginningDate(_zoomDate, _periodType);
+                            end = WebFunctions.Dates.getPeriodEndDate(_zoomDate, _periodType);
+
+                            begin = WebFunctions.Dates.Max(begin,
+                                        WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
+                            end = WebFunctions.Dates.Min(end,
+                                        WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
+
+                            periodBeginning = begin.ToString("yyyyMMdd");
+                            periodEnd = end.ToString("yyyyMMdd");
+
 						}
 						else periodBeginning = periodEnd = _zoomDate;						 
 					}
