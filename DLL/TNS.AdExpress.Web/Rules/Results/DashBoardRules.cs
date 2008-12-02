@@ -1803,7 +1803,13 @@ namespace TNS.AdExpress.Web.Rules.Results
 			row=row+1;
 			tab = SetTabLinesLabel(tab,"3",GestionWeb.GetWebWord(939,webSession.SiteLanguage),row,CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX,CstResults.DashBoard.LABEL_ELMT_L2_COLUMN_INDEX);					
 			if(webSession.ComparativeStudy)tab = SetTabLinesLabel(tab,"3",GestionWeb.GetWebWord(939,webSession.SiteLanguage),row+1,CstResults.DashBoard.ID_ELMT_L2_COLUMN_INDEX,CstResults.DashBoard.LABEL_ELMT_L2_COLUMN_INDEX);
-			operation="sum(insertion)";
+            List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
+            operation = string.Empty;
+            for (int i = 0; i < unitsList.Count && operation.Length < 1; i++) {
+                if (unitsList[i].Id == TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion || unitsList[i].BaseId == TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion) 
+                    operation = "sum(" + unitsList[i].Id.ToString() + ")";
+            }
+			
 			criteriaPeriodN ="  period="+webSession.PeriodBeginningDate.Substring(0,4);	
 			if(webSession.ComparativeStudy)criteriaPeriodN1 =" period="+yearN1.ToString();										
 			switch(webSession.PreformatedTable){
