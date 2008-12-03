@@ -234,16 +234,10 @@
 															<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
 														</tr>
 														<tr>
-															<td></td>
-															<td width="15"></td>
-															<td>
-															    <table cellpadding="0" cellspacing="0" border="0">
-                                                                    <tr>
-                                                                        <td>
-                                                                            <cc5:GlobalCalendarWebControl ID="GlobalCalendarWebControl1" runat="server"/>
-                                                                        </td>    
-                                                                    </tr>
-                                                                 </table>
+															<td width="6px"></td>
+															<td width="6px"></td>
+															<td width="100%">
+                                                                 <cc5:GlobalCalendarWebControl ID="GlobalCalendarWebControl1" runat="server"/>
 															</td>
 														</tr>
 														<tr height="5">

@@ -440,6 +440,45 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 js.Append(PeriodPrintDay());
             #endregion
 
+            #region Calendar Load
+            js.Append("var timeoutID = window.setTimeout('CheckLoadPicture()',500);\n");
+
+            js.Append("function CheckLoadPicture(){\n");
+            js.Append("var isLoadPictureCompleted = true;\n");
+            js.Append("var arrayTagDay = '';\n");
+            js.Append("var arrayTagMonth = '';\n");
+            js.Append("var indexDay;\n");
+            js.Append("var indexMonth;\n");
+            js.Append("var indexYear;\n");
+
+            js.Append("for (indexYear = " + _startYear + "; indexYear <= " + _stopYear + " && isLoadPictureCompleted; indexYear++) {\n");
+            js.Append("if(!elementsPeriod['year_' + indexYear].complete) isLoadPictureCompleted = false;\n");
+            js.Append("if(!elementsPeriod['semester_' + indexYear + '1'].complete) isLoadPictureCompleted = false;\n");
+            js.Append("if(!elementsPeriod['semester_' + indexYear + '2'].complete) isLoadPictureCompleted = false;\n");
+            js.Append("if(!elementsPeriod['trimester_' + indexYear + '1'].complete) isLoadPictureCompleted = false;\n");
+            js.Append("if(!elementsPeriod['trimester_' + indexYear + '2'].complete) isLoadPictureCompleted = false;\n");
+            js.Append("if(!elementsPeriod['trimester_' + indexYear + '3'].complete) isLoadPictureCompleted = false;\n");
+            js.Append("if(!elementsPeriod['trimester_' + indexYear + '4'].complete) isLoadPictureCompleted = false;\n");
+            js.Append("for (indexMonth = 0; indexMonth < 12 && isLoadPictureCompleted; indexMonth++) {\n");
+            js.Append("if(!elementsPeriod['month_' + indexYear + '' + (indexMonth+1)].complete) isLoadPictureCompleted = false;\n");
+            js.Append("if(indexMonth<10) arrayTagMonth = indexYear+'0'+indexMonth;\n");
+            js.Append("else arrayTagMonth = indexYear+''+indexMonth;\n");
+            js.Append("for (indexDay = 1; indexDay <= elementsDay[0][arrayTagMonth + '00'] && isLoadPictureCompleted; indexDay++) {\n");
+            js.Append("if(indexDay<10) arrayTagDay = arrayTagMonth + '0'+indexDay;\n");
+            js.Append("else arrayTagDay = arrayTagMonth+''+indexDay;\n");
+            js.Append("if(!elementsDay[0][arrayTagDay].complete) isLoadPictureCompleted = false;\n");
+            js.Append("}\n");
+            js.Append("}\n");
+            js.Append("}\n");
+
+            js.Append("if(isLoadPictureCompleted){\n");
+            js.Append("window.clearTimeout(timeoutID);\n");
+            js.Append("document.getElementById('displayLoadGlobalCalendar').style.display='none';\n");
+            js.Append("document.getElementById('displayGlobalCalendar').style.display='block';\n");
+            js.Append("}\n");
+            js.Append("}\n");
+            #endregion
+
             js.Append("\r\n</script>\r\n");
 
             output.Write(js.ToString());
@@ -2092,10 +2131,24 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             html.Append("</td>");
             html.Append("</tr>");
             html.Append("</table>");
+            output.Write("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td>");
+
+            #region Html Loading
+            output.Write("<div id=\"displayLoadGlobalCalendar\" style=\"display:block;\" width=\"100%\" align=\"center\"><img src=\"/App_Themes/" + _themeName + "/Images/Common/waitAjax.gif\"></div>");
+            output.Write("<div id=\"displayGlobalCalendar\" style=\"display:none;\">");
+            #endregion
+
             output.Write(html.ToString());
             output.Write(GetCalendarBottomHtml());
+
+            #region Html Loading
+            output.Write("</div>");
+            #endregion
+
             ImagesLoadScript(output);
             CalendarScript(output);
+
+            output.Write("</td></tr></table>\n");
         }
         #endregion
 
