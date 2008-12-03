@@ -345,10 +345,12 @@ namespace TNS.AdExpress.Web.Rules.Results
 					if(webSession.PDM || webSession.PDV)
 						tab=ComputeTabPDMOrPDV(webSession,ref tab,1,CstResults.DashBoard.NB_TOTAL_CONST_COLUMNS);
 
-                    if(webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units)
-                        tab = SortTable(tab,true);
-                    else 
-                        tab = SortTable(tab, false);
+                    if (vehicleType == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack) {
+                        if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units)
+                            tab = SortTable(tab, true);
+                        else if(webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units || webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units)
+                            tab = SortTable(tab, false);
+                    }
 					break;
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual :
 				case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual :											
