@@ -179,6 +179,7 @@ tr.creativeInfo td table tr th
 	background-color:#D0C8DA;
 	padding:10px;
 	text-align:center;
+	color:#644883;
 }
 tr.creativeInfo td table p table tr
 {
@@ -198,6 +199,13 @@ tr.creativeInfo td table p
 	background-color:#B1A3C1;
 	white-space:nowrap;
 	padding:2px;
+}
+/*no Visual Detail Versions*/
+.noVisuDetailVersion
+{
+	color:#644883;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
 }
 
 /* WebControl */

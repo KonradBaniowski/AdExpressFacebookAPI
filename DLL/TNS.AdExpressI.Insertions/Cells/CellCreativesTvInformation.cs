@@ -204,10 +204,14 @@ namespace TNS.AdExpressI.Insertions.Cells
             //Render Verion visual
             str.Append("<tr ><td  height=\"40px\" width=\"100%\" align=\"center\" class=\"sloganVioletBackGround\" >");
 
-            str.Append("<a href=\"javascript:openDownload('" + _visuals[0] + "','" + this._session.IdSession + "','" + _vehicle.DatabaseId + "');\">");
-            str.Append("<img border=0 src=\"/App_Themes/" + themeName + "/Images/common/Picto_pellicule.gif\">");
-            str.Append("</a>");
-
+            if (_visuals.Count > 0) {
+                str.Append("<a href=\"javascript:openDownload('" + _visuals[0] + "','" + this._session.IdSession + "','" + _vehicle.DatabaseId + "');\">");
+                str.Append("<img border=0 src=\"/App_Themes/" + themeName + "/Images/common/Picto_pellicule.gif\">");
+                str.Append("</a>");
+            }
+            else {
+                str.Append("<span class=\"noVisuDetailVersion\">" + GestionWeb.GetWebWord(843, this._session.SiteLanguage) + "</span>");
+            }
             str.Append("</td></tr>");
 
             //Render version nb cell
