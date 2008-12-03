@@ -86,7 +86,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				// Ordre
 				sql=" select * from (";
 				sql+=" "+tempSql;
-				sql+=" ) order by advertiser,id_advertiser,product ,id_product, vehicle,id_vehicle,id_slogan,date_media_num";											
+                sql += " ) order by advertiser,id_advertiser,product ,id_product, vehicle,id_vehicle,id_slogan,sloganFile,date_media_num";											
 			}
 
 			#region Execution de la requête

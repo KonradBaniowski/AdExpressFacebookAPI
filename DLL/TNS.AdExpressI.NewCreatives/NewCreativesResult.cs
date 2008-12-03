@@ -384,7 +384,7 @@ namespace TNS.AdExpressI.NewCreatives {
                         break;
                     case WebCst.CustomerSessions.Period.DisplayLevel.weekly:
                         headers.Root.Add(new Header(true
-                            , parution.ToString().Substring(4, 2) + "/" + parution.ToString().Substring(0, 4)
+                            , string.Format("S{0} - {1}", parution.ToString().Substring(4, 2), parution.ToString().Substring(0, 4))
                             , (long)parution));
                         break;
                     case WebCst.CustomerSessions.Period.DisplayLevel.dayly:
