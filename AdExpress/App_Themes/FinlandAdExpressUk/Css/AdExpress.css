@@ -56,6 +56,10 @@
 .whiteBackGround{
 	background-color : #FFFFFF;
 }
+.whiteBackGround2{
+	background-color : #FFFFFF;
+	width:100%
+}
 .lightPurple{
 	background-color:#DED8E5;
 }
@@ -161,6 +165,7 @@ background:url(/App_Themes/FinlandAdExpressUk/Images/Common/dupli_2.gif);
 	background-image: none; 
 	margin: 0px; 
 	background-color: #ffffff;
+	z-index:1;
 }
 /*image drop down list*/
 .ddlOut{
@@ -509,10 +514,10 @@ table.creationWhiteBorder{
 	color: #999999;
 	font-weight: bold;
 }
-.txtBlanc14Bold{
+.txtViolet14BoldWhiteBG{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
-	color: #ffffff;
+	color: #644883;
 	font-weight: bold;
 }
 .txtOrange10{
@@ -2650,6 +2655,102 @@ td.pmcategorynb
 	border-bottom :#644883 1px solid; 
 	border-left :#644883 1px solid; 
 	border-right :#644883 1px solid;
+}
+
+/* Style des bordures des cellules du tableau de la page Dates de Mises à jour */
+.RowHourTop {
+	border-top: 1px solid #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px solid #644883;
+}
+.RowHour {
+	border-top: 1px none #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px solid #644883;
+}
+.RowHourBottom {
+	border-top: 1px none #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px solid #644883;
+}
+.ColumnHeaderLeft {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px solid #644883;
+	
+}
+.ColumnHeader {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.ColumnHeaderRight {
+	border-top: 1px solid #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.CellTopLeft {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px solid #644883;
+}
+.CellMiddleLeft {
+	border-top: 1px none #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px solid #644883;
+}
+.CellBottomLeft {
+	border-top: 1px none #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px solid #644883;
+}
+.CellTopCenter {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px none #644883;
+}
+.CellSpecial01 {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.CellSpecial02 {
+	border-top: 1px solid #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.CellMiddleCenter {
+	border-top: 1px none #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px none #644883;
+}
+.CellBottomCenter {
+	border-top: 1px none #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
+.CellSpecial03 {
+	border-top: 1px solid #644883;
+	border-right: 1px dotted #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px solid #644883;
+}
+.CellSolid {
+	border: 1px solid #644883;
 }
 /* Styles utilisés pour AdExpress et Anubis */
 .UniverseItemsStyle{

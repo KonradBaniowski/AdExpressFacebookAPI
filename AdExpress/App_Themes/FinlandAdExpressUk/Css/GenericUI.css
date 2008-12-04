@@ -830,6 +830,26 @@ tr.lv2{
 	padding-left:4px;
 	padding-right:4px;			
 }
+
+tr.insertionlv2{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	text-align : right;	
+	height:20px;	
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;		
+}
 tr.exlv2{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -868,6 +888,25 @@ tr.lv3{
 	border-right-style:solid;
 	padding-left:4px;
 	padding-right:4px;			
+}
+tr.insertionlv3{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;	
+	text-align : right;	
+	height:20px;	
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;	
 }
 tr.exlv3{
 	font-family: Arial, Helvetica, sans-serif;
@@ -909,6 +948,27 @@ tr.lv4{
 	padding-left:4px;
 	padding-right:4px;			
 }
+tr.insertionlv4{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;	
+	text-align : right;	
+	height:20px;	
+	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;			
+	text-align:center
+}
+
 tr.exlv4{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
