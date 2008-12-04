@@ -282,7 +282,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						t.Append("</td></tr>");
 
 						t.Append("<tr><td colspan=\"3\" >");
-						t.Append("<Div  style=\"display ='none'\" id=\"vhDiv" + idVehicle + "\">");
+						t.Append("<Div  style=\"display:none;\" id=\"vhDiv" + idVehicle + "\">");
 						t.Append("<TABLE cellpadding=0 cellspacing=0 width=100% class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\">");
 
 						if (OpenVehicleDiv(idVehicle)) {

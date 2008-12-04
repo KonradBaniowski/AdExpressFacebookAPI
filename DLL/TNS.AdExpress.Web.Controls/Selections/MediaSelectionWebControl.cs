@@ -248,6 +248,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				int startInterestCenter=-1;
 				Dictionary<long, int> interestCenters = null;
 				int indexIc	=-1;
+                string classBorder = string.Empty;
 					
 				//variables du niveau Support
 				Int64 i = 0;				
@@ -296,11 +297,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						if (idVehicle!= idVehicleOld) {							
 							//bordure du haut de tableau						
 							t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px;  \" id=\"vh_"+idVehicle+"\" >");
-                            if (idVehicleOld == -1) t.Append("\n<table class=\"txtViolet11Bold whiteBackGround violetBorder\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
-                            else t.Append("\n<table class=\"txtViolet11Bold whiteBackGround violetBorderWithoutTop\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+
+                            if (idVehicleOld == -1) classBorder = "violetBorder";
+                            else classBorder = "violetBorderWithoutTop";
+
+                            t.Append("\n<table class=\"txtViolet11Bold whiteBackGround\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
 
 							//Curseur sur toute la ligne
-							t.Append("\n<tr  style=\"cursor : hand\">");
+							t.Append("\n<tr  style=\"cursor : hand\"><td>");
 																		
 							#region Check box vehicle state	
 							try{
@@ -340,21 +344,31 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							#endregion						
 							idVehicleOld=idVehicle;
 							startVehicle=0;
+
+                            t.Append("<Div class=\"" + classBorder + "\" style=\"width:100%;\">");
+                            t.Append("\n<table class=\"txtViolet11Bold whiteBackGround\"  cellpadding=0 cellspacing=0 width=\"100%\">\n");
+                            t.Append("<tr><td>");
 					
 							//checkbox média 
-                            t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" class=\"violetBorderBottom\">");
+                            t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\">");
 						
 							t.Append("\n<input type=checkbox name=\"MediaSelectionWebControl1$"+i+"\" id=\"MediaSelectionWebControl1_"+i+"\" "+checkBox+"  onClick=\"CheckAllChilds('vh_"+idVehicle+"','"+VehicleIds+"','vh_"+idVehicle+"')\" value=vh_"+idVehicle+"></td>");																											
 
 							//fin libellé média (nouvelle version)														
-                            t.Append("<td class=\"violetBorderBottom\" width=100% align=\"left\" onClick=\"javascript : DivDisplayer('" + "vh" + idVehicle + "');\" >" + currentRow["vehicle"].ToString() + "");
-                            t.Append("</td><td align=\"right\" class=\"violetBorderBottom\" onClick=\"javascript : DivDisplayer('" + "vh" + idVehicle + "');\">");
+                            t.Append("<td width=100% align=\"left\" onClick=\"javascript : DivDisplayer('" + "vh" + idVehicle + "');\" >" + currentRow["vehicle"].ToString() + "");
+                            t.Append("</td><td align=\"right\" onClick=\"javascript : DivDisplayer('" + "vh" + idVehicle + "');\">");
                             t.Append("<img src=\"/App_Themes/" + themeName + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\">");
-							t.Append("</td></tr>");							
-							t.Append("<tr><td colspan=\"3\" >");
+
+                            t.Append("</td></tr></table></div>");
+
+							t.Append("</td></tr>");			
+				
+
+
+							t.Append("<tr><td>");
 							if(eventButton==constEvent.eventSelection.LOAD_EVENT)
 								displayVh="";
-							t.Append("<Div  style=\"display ='"+displayVh+"'\" id=\"vh"+idVehicle+"\">");
+                            t.Append("<Div class=\"violetBorderWithoutTop\" style=\"width:100%;display ='" + displayVh + "'\" id=\"vh" + idVehicle + "\">");
                             t.Append("<TABLE class=\"violetBackGroundV3\" cellpadding=0 cellspacing=0 width=100% class=\"txtViolet11Bold violetBorderTop\">");							
 							t.Append("<tr><td class=\"roll04\"><a href=\"javascript: SelectExclusiveAllChilds('vh_"+idVehicle+"','"+VehicleIds+"','vh_"+idVehicle+"','vh_','ic_')\" title=\""+GestionWeb.GetWebWord(1540,webSession.SiteLanguage)+"\" class=\"roll04\">&nbsp;&nbsp;"+GestionWeb.GetWebWord(1540,webSession.SiteLanguage)+"</td></tr>");							
 							t.Append("<TR><TD>");							
@@ -460,9 +474,9 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							//Libellé centre d'intérêts
 							t.Append("<td width=100% valign=\"middle\" height=\"10\" onClick=\"javascript : DivDisplayer('"+"ic"+idInterestCenter+"');\" align=\"left\"  ");
 							t.Append(">&nbsp;"+currentRow["interest_center"].ToString()+"</td>");
-							t.Append("<td valign=\"baseline\"  onClick=\"javascript : DivDisplayer('"+"ic"+idInterestCenter+"');\"   ");
-							t.Append(">&nbsp;<IMG height=\"15\" src=\"/App_Themes/"+themeName+"/Images/Common/Button/bt_arrow_down.gif\" width=\"15\" align=\"right\"></td>");							
-							t.Append("</tr><tr><td colspan=\"3\"><DIV style=\" display ='"+displayIc+"' \" id=\"ic"+idInterestCenter+"\" ><table cellpadding=0 cellspacing=0 border=\"0\" width=100%>");
+                            t.Append("<td align=\"right\" style=\"VERTICAL-ALIGN: bottom;\" onClick=\"javascript : DivDisplayer('" + "ic" + idInterestCenter + "');\"   ");
+                            t.Append(">&nbsp;<IMG style=\"VERTICAL-ALIGN: bottom;\" height=\"15\" src=\"/App_Themes/" + themeName + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\"></td>");							
+							t.Append("</tr><tr><td colspan=\"3\"><DIV style=\" display:"+((displayIc.Length<1)?"block":displayIc)+"; \" id=\"ic"+idInterestCenter+"\" ><table cellpadding=0 cellspacing=0 border=\"0\" width=100%>");
                             t.Append("<table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\" class=\"txtViolet10 mediumPurple1 BlancTopBorder\">");	
 							t.Append("<tr><td colspan=\"3\" class=\"roll04\" ><a href=\"javascript: SelectExclusiveAllChilds('ic_"+idInterestCenter+"','"+VehicleIds+"','vh_"+idVehicle+"','vh_','ic_')\" title=\""+GestionWeb.GetWebWord(1066,webSession.SiteLanguage)+"\" class=\"roll04\">&nbsp;"+GestionWeb.GetWebWord(1066,webSession.SiteLanguage)+"</a></td></tr>");							
 							i++;
