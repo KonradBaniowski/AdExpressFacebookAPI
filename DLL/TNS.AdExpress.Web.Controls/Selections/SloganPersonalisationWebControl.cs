@@ -438,8 +438,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 								if(currentRow["sloganFile"]!=null && currentRow["sloganFile"].ToString().Length > 0){
 									
 									switch (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))) {
+
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press :
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+
 											#region Construction de la liste des images presse
 											fileList = currentRow["sloganFile"].ToString().Split(',');
 
@@ -468,11 +470,15 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 											}
 											else vignettes = GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "<br>";
 											#endregion
+
 											break;
+
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio :
+
 											if(currentRow["sloganFile"]!=null && currentRow["sloganFile"].ToString().CompareTo("")!=0)
 											vignettes = "<a href=\"javascript:openDownload('" + currentRow["sloganFile"].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/"+themeName+"/Images/Common/Picto_Radio.gif\"></a>";
 											break;
+
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv :
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others :
 											if (currentRow["sloganFile"] != null && currentRow["sloganFile"].ToString().CompareTo("") != 0)
@@ -523,6 +529,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 											#endregion
 											
                                             break;
+										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack :
+											if (currentRow["sloganFile"] != null && currentRow["sloganFile"].ToString().CompareTo("") != 0)
+                                                vignettes = string.Format("<a href=\"javascript:openEvaliantCreative('{1}/{0}', '{3}');\"><img border=\"0\" src=\"/App_Themes/{2}/Images/Common/Button/adnettrack.gif\"></a>", currentRow["sloganFile"].ToString().Replace(@"\", "/"), WebConstantes.CreationServerPathes.CREA_ADNETTRACK, themeName, currentRow["advertDimension"]);
+											break;
 									}
 
 								}

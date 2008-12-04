@@ -30,6 +30,7 @@ using CustomerCst=TNS.AdExpress.Constantes.Customer;
 
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
@@ -62,19 +63,18 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 			//DataSet ds = new DataSet();
             for(int i = 0; i < listVehicles.Length; i++) {
                 try {
-                    if(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(listVehicles[i])) != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack) {
 
-                        if(webSession.CurrentModule == Constantes.Web.Module.Name.BILAN_CAMPAGNE)
-                            tempSql = GetSQLQueryForAPPM(webSession, listVehicles[i], beginningDate, endDate);
-                        else
-                            tempSql = GetSQLQuery(webSession, listVehicles[i], beginningDate, endDate);
+                    if(webSession.CurrentModule == Constantes.Web.Module.Name.BILAN_CAMPAGNE)
+                        tempSql = GetSQLQueryForAPPM(webSession, listVehicles[i], beginningDate, endDate);
+                    else
+                        tempSql = GetSQLQuery(webSession, listVehicles[i], beginningDate, endDate);
 
-                        if(tempSql.Length > 0) {
-                            if(!first) sql += "  union  ";
-                            sql += tempSql;
-                            first = false;
-                        }
+                    if(tempSql.Length > 0) {
+                        if(!first) sql += "  union  ";
+                        sql += tempSql;
+                        first = false;
                     }
+
                 }
                 catch(System.Exception err) {
                     throw new Exceptions.SloganDataAccessException(" Impssible de charger la liste des versions en fonction de l'univers client.", err);
@@ -113,116 +113,139 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 		/// <param name="beginingDate">Date de début</param>
 		/// <param name="endDate">Date de fin</param>
 		/// <returns>requête sql</returns>
-		private static string GetSQLQuery(WebSession webSession,string idVehicle, string beginingDate, string endDate) {
-			#region Variables
-			string list="";
-			string tableName="";
-//			string unitField="";
-			bool premier = true;
-			string sql = "";
-			VehicleInformation vehicleInformation = null;
-			if(idVehicle !=null)
-			 vehicleInformation = VehiclesInformation.Get(Int64.Parse(idVehicle));
-			#endregion
+        private static string GetSQLQuery(WebSession webSession, string idVehicle, string beginingDate, string endDate)
+        {
 
-		 if (vehicleInformation != null && vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
-				#region Récupération des noms de tables et de champs suivant le média(vehcile)
-				TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
-				string tablePrefixe = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-				tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleInformation.Id, currentModuleDescription.ModuleType);
+            #region Variables
+            string list = "";
+            string tableName = "";
+            //			string unitField="";
+            bool premier = true;
+            string sql = "";
+            VehicleInformation vehicleInformation = null;
+            if (idVehicle != null)
+                vehicleInformation = VehiclesInformation.Get(Int64.Parse(idVehicle));
+            Table TblVehicle = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.vehicle);
+            Table TblProduct = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.product);
+            Table TblAdvertiser = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.advertiser);
+            Table TblFormat = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.format);
+            #endregion
 
-				#endregion
+            if (vehicleInformation != null && vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)
+            {
 
-				#region Construction de la requête
+                #region Récupération des noms de tables et de champs suivant le média(vehcile)
+                TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
+                string tablePrefixe = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleInformation.Id, currentModuleDescription.ModuleType);
 
-				// Sélection 
-				sql += "select distinct " + tablePrefixe + ".id_advertiser,advertiser," + tablePrefixe + ".id_product,product," + tablePrefixe + ".id_vehicle, vehicle, nvl(" + tablePrefixe + ".id_slogan,0) as id_slogan";
-				// Sélection de la date
-				if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-					|| vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
-					sql += ", date_cover_num as date_media_num ";
-				else sql += ", date_media_num ";
-				//Sélection champs spécifiques à chaque média
-				if (GetFields(vehicleInformation.Id, tablePrefixe).Length > 0)
-					sql += "," + GetFields(vehicleInformation.Id, tablePrefixe);
+                #endregion
 
-				// Tables
-				sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.vehicle).SqlWithPrefix + ", "
-					+ WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.product).SqlWithPrefix + ", "
-				+ WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.advertiser).SqlWithPrefix + ", ";
-				if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-					|| vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
-					sql += WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.format).SqlWithPrefix + ",";
-				}
+                #region Construction de la requête
 
-				sql += WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label + "." + tableName + "  " + tablePrefixe;
-
-				// Conditions de jointure
-				sql += " Where " + tablePrefixe + ".id_slogan!=0 ";
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.vehicle).Prefix + ".id_vehicle=" + tablePrefixe + ".id_vehicle ";
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.vehicle).Prefix + ".id_language=" + webSession.DataLanguage.ToString();
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.vehicle).Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.product).Prefix + ".id_product=" + tablePrefixe + ".id_product ";
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.product).Prefix + ".id_language=" + webSession.DataLanguage.ToString();
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.advertiser).Prefix + ".id_advertiser=" + tablePrefixe + ".id_advertiser ";
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.advertiser).Prefix + ".id_language=" + webSession.DataLanguage.ToString();
-				sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.advertiser).Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
-				if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-					|| vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
-					sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.format).Prefix + ".id_format(+)=" + tablePrefixe + ".id_format ";
-					sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.format).Prefix + ".id_language(+)=" + webSession.DataLanguage.ToString();
-					sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.format).Prefix + ".activation(+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
-				}
-
-				// Période
-				sql += " and date_media_num >=" + beginingDate;
-				sql += " and date_media_num <=" + endDate;
-
-				// Gestion des sélections et des droits
-
-				#region Nomenclature Produit (droits)
-				premier = true;
-				//Droits en accès
-				sql += SQLGenerator.getAnalyseCustomerProductRight(webSession, tablePrefixe, true);
-				// Produit à exclure 
-                ProductItemsList productItemsList = null;
-                if (Product.Contains(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (productItemsList = Product.GetItemsList(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null){
-					sql += productItemsList.GetExcludeItemsSql(true, tablePrefixe);
+                // Sélection 
+                sql = string.Format("select distinct {0}.id_advertiser,advertiser,{0}.id_product,product,{0}.id_vehicle, vehicle", tablePrefixe);
+                if (vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack)
+                {
+                    sql = string.Format("{1}, nvl({0}.id_slogan,0) as id_slogan", tablePrefixe, sql);
                 }
-				#endregion
+                else
+                {
+                    sql = string.Format("{1}, nvl({0}.hashcode,0) as id_slogan", tablePrefixe, sql);
+                }
+                // Sélection de la date
+                if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+                    sql += ", date_cover_num as date_media_num ";
+                else sql += ", date_media_num ";
+                //Sélection champs spécifiques à chaque média
+                if (GetFields(vehicleInformation.Id, tablePrefixe).Length > 0)
+                    sql += "," + GetFields(vehicleInformation.Id, tablePrefixe);
 
-				#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection)				
+                // Tables
+                sql += " from " + TblVehicle.SqlWithPrefix + ", "
+                    + TblProduct.SqlWithPrefix + ", "
+                + TblAdvertiser.SqlWithPrefix + ", ";
+                if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+                {
+                    sql += TblFormat.SqlWithPrefix + ",";
+                }
 
-				if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
-					sql += webSession.PrincipalProductUniverses[0].GetSqlConditions(tablePrefixe, true);
+                sql += WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label + "." + tableName + "  " + tablePrefixe;
 
-				#endregion
+                // Conditions de jointure
+                sql += " Where " + TblVehicle.Prefix + ".id_vehicle=" + tablePrefixe + ".id_vehicle ";
+                sql += " and " + TblVehicle.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+                sql += " and " + TblVehicle.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                sql += " and " + TblProduct.Prefix + ".id_product=" + tablePrefixe + ".id_product ";
+                sql += " and " + TblProduct.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+                sql += " and " + TblAdvertiser.Prefix + ".id_advertiser=" + tablePrefixe + ".id_advertiser ";
+                sql += " and " + TblAdvertiser.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+                sql += " and " + TblAdvertiser.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+                {
+                    sql += " and " + TblFormat.Prefix + ".id_format(+)=" + tablePrefixe + ".id_format ";
+                    sql += " and " + TblFormat.Prefix + ".id_language(+)=" + webSession.DataLanguage.ToString();
+                    sql += " and " + TblFormat.Prefix + ".activation(+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                }
 
-				#region Nomenclature Media (droits et sélection)
-				//Media Universe
-				sql += WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, tablePrefixe);
+                // Période
+                sql += " and date_media_num >=" + beginingDate;
+                sql += " and date_media_num <=" + endDate;
 
-				#region Droits
-				sql += SQLGenerator.getAnalyseCustomerMediaRight(webSession, tablePrefixe, true);
-				#endregion
+                // Gestion des sélections et des droits
 
-				#region Sélection
-				sql += " and ((" + tablePrefixe + ".id_vehicle= " + idVehicle + ")) ";
-				#endregion
+                #region Nomenclature Produit (droits)
+                premier = true;
+                //Droits en accès
+                sql += SQLGenerator.getAnalyseCustomerProductRight(webSession, tablePrefixe, true);
+                // Produit à exclure 
+                ProductItemsList productItemsList = null;
+                if (Product.Contains(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (productItemsList = Product.GetItemsList(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
+                {
+                    sql += productItemsList.GetExcludeItemsSql(true, tablePrefixe);
+                }
+                #endregion
 
-				#endregion
+                #region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection)
 
-				#region Nomenclature Produit (Niveau de détail)
-				// Niveau de produit
-				sql += SQLGenerator.getLevelProduct(webSession, tablePrefixe, true);
-				#endregion
+                if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
+                    sql += webSession.PrincipalProductUniverses[0].GetSqlConditions(tablePrefixe, true);
 
-			
-				#endregion
-			}
+                #endregion
 
-			return sql;
-		}
+                #region Nomenclature Media (droits et sélection)
+                //Media Universe
+                sql += WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, tablePrefixe);
+
+                #region Droits
+                sql += SQLGenerator.getAnalyseCustomerMediaRight(webSession, tablePrefixe, true);
+                #endregion
+
+                #region Sélection
+                sql += " and ((" + tablePrefixe + ".id_vehicle= " + idVehicle + ")) ";
+                #endregion
+
+                #endregion
+
+                #region Nomenclature Produit (Niveau de détail)
+                // Niveau de produit
+                sql += SQLGenerator.getLevelProduct(webSession, tablePrefixe, true);
+                #endregion
+
+                if (vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack)
+                {
+                    sql += " and " + tablePrefixe + ".id_slogan!=0 ";
+                }
+
+                #endregion
+
+            }
+
+            return sql;
+        }
 		#endregion
 
 		#region Requête pour l'APPM
@@ -350,6 +373,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 					return "id_media,type_board as advertDimension, associated_file as sloganFile";
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
 					return "id_media,TO_CHAR(weight) as advertDimension, TO_CHAR(associated_file) as sloganFile";
+				case DBClassificationConstantes.Vehicles.names.adnettrack:
+					return "id_media, (dimension || ' / ' || format) as advertDimension, TO_CHAR(associated_file) as sloganFile";
 				default : return "";
 			}
 		}

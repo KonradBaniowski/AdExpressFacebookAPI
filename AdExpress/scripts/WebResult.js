@@ -39,6 +39,11 @@ function openPressCreation(file){
     window.open('/Private/Results/ZoomCreationPopUp.aspx?creation='+file,'',"left="+((screen.width-530)/2)+", top="+((screen.height-700)/2)+",toolbar=0, directories=0, status=0, menubar=0,width=530 , height=700, scrollbars=1, location=0, resizable=1");
 }
 
+function openEvaliantCreative(file, info){
+    window.open('/Private/Results/EvaliantCreative.aspx?creation='+file+'&info='+info,'',"left="+((screen.width-530)/2)+", top="+((screen.height-530)/2)+",toolbar=0, directories=0, status=0, menubar=0,width=530 , height=530, scrollbars=1, location=0, resizable=1");
+}
+
+
 function openDownload(file,idSession, idVehicle){
     window.open("/Private/Results/DownloadCreationsPopUp.aspx?idSession="+idSession+"&idVehicle="+idVehicle+"&creation="+file, '', "top="+(screen.height-420)/2+", left="+(screen.width-830)/2+",toolbar=0, directories=0, status=0, menubar=0, width=830, height=420, scrollbars=0, location=0, resizable=0");
 }

@@ -15,12 +15,12 @@ namespace AdExpress.Private.Results{
 	/// La fenêtre prend en argument dans l'url la liste des fichiers dans un variable création
 	/// </summary>
 	public partial class ZoomCreationPopUp : TNS.AdExpress.Web.UI.WebPage{
+
 		#region Variables
 		/// <summary>
 		/// Code résultat
 		/// </summary>
-		public string result="";
-		
+		public string result="";		
 		#endregion
 
 		#region Evènements

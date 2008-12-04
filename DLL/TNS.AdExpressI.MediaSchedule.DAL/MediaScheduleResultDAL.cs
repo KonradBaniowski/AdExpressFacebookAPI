@@ -272,6 +272,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             string mediaJoinCondition = null;
             string groupByFieldName = null;
             string groupByOptional = null;
+            VehicleInformation vehicleInfo = VehiclesInformation.Get(vehicleId);
             #endregion
 
             #region Construction de la requête
@@ -403,12 +404,14 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             
             // Zoom on a specific version
             if(_session.SloganIdZoom > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly) {
-                sql.AppendFormat(" and {0}.id_slogan = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.SloganIdZoom);
+                sql.AppendFormat(" and {0}.{2} = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.SloganIdZoom
+                    ,(vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack)?"id_slogan":"hashcode");
             }
             else {
                 // Refine vesions
                 if(slogans.Length > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly) {
-                    sql.AppendFormat(" and {0}.id_slogan in({1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, slogans);
+                    sql.AppendFormat(" and {0}.{2} in({1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, slogans
+                        ,(vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack)?"id_slogan":"hashcode");
                 }
             }
 
