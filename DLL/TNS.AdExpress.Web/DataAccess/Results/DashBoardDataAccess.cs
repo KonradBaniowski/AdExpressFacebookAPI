@@ -839,8 +839,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector:
-					if (!IsRepartitionSelected(webSession) && VehicleAccessList.Length > 0 && vehicleInfo.Id != ClassificationCst.DB.Vehicles.names.adnettrack)
-						sql = " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_vehicle in (" + vehicleInfo.DatabaseId + ") ";
+					if (!IsRepartitionSelected(webSession) && vehicleInfo.Id != ClassificationCst.DB.Vehicles.names.adnettrack)
+						sql += " and  " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_vehicle in (" + vehicleInfo.DatabaseId + ") ";
                     break;
                 default: return sql;
 
