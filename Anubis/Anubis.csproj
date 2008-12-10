@@ -138,6 +138,7 @@
     <Content Include="Configuration\33\Plugins\Shou.xml" />
     <Content Include="Configuration\33\Plugins\Sobek.xml" />
     <Content Include="Configuration\33\PortofolioDetailMediaConfiguration.xml" />
+    <Content Include="Configuration\33\ResultOptions.xml" />
     <Content Include="Configuration\33\Units.xml" />
     <Content Include="Configuration\33\UniverseBranches.xml" />
     <Content Include="Configuration\33\UniverseLevels.xml" />
