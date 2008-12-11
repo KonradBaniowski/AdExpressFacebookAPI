@@ -602,10 +602,6 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 sql.AppendFormat(" and {1}.id_slogan in ( {0} ) ", _session.SloganIdList, tData.Prefix);
             }
-            //if (vehicle.Id != CstDBClassif.Vehicles.names.adnettrack){
-            //    sql.AppendFormat(" and {0}.id_slogan is not null ", tData.Prefix);
-            //}
-
             //Product classification selection
             if (_module.Id != CstWeb.Module.Name.NEW_CREATIVES && _session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
             {
