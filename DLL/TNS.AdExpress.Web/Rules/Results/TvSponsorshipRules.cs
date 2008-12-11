@@ -152,6 +152,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 			long k;
 			ResultTable resultTable = null;
 			CellUnitFactory cellUnitFactory =null,cellKeuroFactory = null,cellEuroFactory = null,cellDurationFactory = null,cellInsertionFactory = null;
+            CellUnit cellKeuro = null, cellEuro=null, cellDuration = null, cellInsertion = null;
 			#endregion
 
 			#region Calcul des pourcentages
@@ -240,10 +241,19 @@ namespace TNS.AdExpress.Web.Rules.Results
 				cellUnitFactory = webSession.GetCellUnitFactory();
 					break;
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units :
-					cellKeuroFactory = new CellUnitFactory(new CellKEuro(0.0));
-					cellEuroFactory = new CellUnitFactory(new CellEuro(0.0));
-					cellDurationFactory = new CellUnitFactory(new CellDuration(0.0));
-					cellInsertionFactory = new CellUnitFactory(new CellInsertion(0.0));
+                    cellKeuro = new CellKEuro(0.0);
+                    cellKeuro.StringFormat = UnitsInformation.Get(CustomerSessions.Unit.kEuro).StringFormat;
+                    cellEuro = new CellEuro(0.0);
+                    cellEuro.StringFormat = UnitsInformation.Get(CustomerSessions.Unit.euro).StringFormat;
+                    cellDuration = new CellDuration(0.0);
+                    cellDuration.StringFormat = UnitsInformation.Get(CustomerSessions.Unit.duration).StringFormat;
+                    cellInsertion = new CellInsertion(0.0);
+                    cellInsertion.StringFormat = UnitsInformation.Get(CustomerSessions.Unit.insertion).StringFormat;
+
+                    cellKeuroFactory = new CellUnitFactory(cellKeuro);
+                    cellEuroFactory = new CellUnitFactory(cellEuro);
+                    cellDurationFactory = new CellUnitFactory(cellDuration);
+                    cellInsertionFactory = new CellUnitFactory(cellInsertion);
 					break;
 			}
 			#endregion
