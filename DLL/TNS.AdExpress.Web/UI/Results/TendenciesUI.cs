@@ -469,7 +469,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
 				// Evolution
 				evolPicture=Evol(dtTotal.Rows[0]["expenditure_evol"],dtTotal.Rows[0]["expenditure_cur"],excel);
-				totalUnit=ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["expenditure_evol"],WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+				totalUnit=ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["expenditure_evol"],WebConstantes.CustomerSessions.Unit.kEuro,true, fp);
 				t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 
 				switch(vehicleName){
@@ -529,7 +529,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
 					
 					//totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_evol"],WebConstantes.CustomerSessions.Unit.euro,true);
-					totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_evol"],WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+					totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_evol"],WebConstantes.CustomerSessions.Unit.kEuro,true, fp);
 					evolPicture=Evol(currentRow["sub_expenditure_evol"],currentRow["sub_expenditure_cur"],excel);
 					t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 					
@@ -586,7 +586,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit+"</td>");
 					
 				//totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_evol"],WebConstantes.CustomerSessions.Unit.euro,true);
-				totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_evol"],WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+				totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_evol"],WebConstantes.CustomerSessions.Unit.kEuro,true, fp);
 				evolPicture=Evol(currentRow["expenditure_evol"],currentRow["expenditure_cur"],excel);
 				t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 				
