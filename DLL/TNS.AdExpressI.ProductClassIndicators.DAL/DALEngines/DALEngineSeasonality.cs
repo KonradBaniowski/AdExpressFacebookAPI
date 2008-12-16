@@ -129,6 +129,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
                                 sql.AppendFormat("{0})", l2);
                             }
                         }
+                        else
+                        {
+                            sql.Append(")");
+                        }
+
 
                     }
 
@@ -275,13 +280,20 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
                     if (l.Length > 0) {
                         sql.Append(l);
                     }
-                    if (l2.Length > 0) {
-                        if (l.Length > 0) {
+                    if (l2.Length > 0)
+                    {
+                        if (l.Length > 0)
+                        {
                             sql.AppendFormat(",{0})", l2);
                         }
-                        else {
+                        else
+                        {
                             sql.AppendFormat("{0})", l2);
                         }
+                    }
+                    else
+                    {
+                        sql.Append(")");
                     }
 
                 }
