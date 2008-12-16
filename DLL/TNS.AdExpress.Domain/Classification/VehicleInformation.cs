@@ -65,15 +65,21 @@ namespace TNS.AdExpress.Domain.Classification {
 		/// </summary>
 		private List<DetailLevelItemInformation.Levels> _allowedRecapMediaLevelItemsList;
         /// <summary>
-        /// Media selection parents list
+		/// Allowed selection media level items list
         /// <remarks>Used in generic component</remarks>
         /// </summary>
-        private List<DetailLevelItemInformation> _selectionAllowedMediaLevelItemsList = new List<DetailLevelItemInformation>();
+		private List<DetailLevelItemInformation> _allowedMediaSelectionLevelItemsList = new List<DetailLevelItemInformation>();
         /// <summary>
-        /// Media selection default levels list
+        /// Media selection default detail level list
         /// <remarks>Used in generic component</remarks>
         /// </summary>
-        private List<TNS.AdExpress.Domain.Level.GenericDetailLevel> _selectionDefaultMediaDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
+		private List<TNS.AdExpress.Domain.Level.GenericDetailLevel> _defaultMediaSelectionDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
+
+		/// <summary>
+		/// Media selection default detail level
+		/// <remarks>Used in generic component</remarks>
+		/// </summary>
+		private TNS.AdExpress.Domain.Level.GenericDetailLevel _defaultMediaSelectionDetailLevel = null;
         #endregion
 
         #region Constructor
@@ -277,22 +283,30 @@ namespace TNS.AdExpress.Domain.Classification {
             get { return _detailColumnId; }
         }
 
-		///// <summary>
-		///// Get /set Media selection parents list
-		///// <remarks>Used in generic component</remarks>
-		///// </summary>
-		//public List<DetailLevelItemInformation> SelectionAllowedMediaLevelItemsList {
-		//    get { return _selectionAllowedMediaLevelItemsList; }
-		//     set { _selectionAllowedMediaLevelItemsList = value; }
-		//}
-		///// <summary>
-		///// Media selection default levels list
-		///// <remarks>Used in generic component</remarks>
-		///// </summary>
-		//public List<TNS.AdExpress.Domain.Level.GenericDetailLevel> SelectionDefaultMediaDetailLevels {
-		//    get { return _selectionDefaultMediaDetailLevels; }
-		//    set { _selectionDefaultMediaDetailLevels = value; }
-		//}
+		/// <summary>
+		/// Get /Set Media selection parents list
+		/// <remarks>Used in generic component</remarks>
+		/// </summary>
+		public List<DetailLevelItemInformation> AllowedMediaSelectionLevelItemsList {
+			get { return _allowedMediaSelectionLevelItemsList; }
+			set { _allowedMediaSelectionLevelItemsList = value; }
+		}
+		/// <summary>
+		/// Get /set Media selection default levels list
+		/// <remarks>Used in generic component</remarks>
+		/// </summary>
+		public List<TNS.AdExpress.Domain.Level.GenericDetailLevel> DefaultMediaSelectionDetailLevels {
+			get { return _defaultMediaSelectionDetailLevels; }
+			set { _defaultMediaSelectionDetailLevels = value; }
+		}
+		/// <summary>
+		/// Get /Set Media selection default detail level
+		/// <remarks>Used in generic component</remarks>
+		/// </summary>
+		public TNS.AdExpress.Domain.Level.GenericDetailLevel DefaultMediaSelectionDetailLevel {
+			get { return _defaultMediaSelectionDetailLevel; }
+			set { _defaultMediaSelectionDetailLevel = value; }
+		}
         #endregion
 
         #region Public Methods
