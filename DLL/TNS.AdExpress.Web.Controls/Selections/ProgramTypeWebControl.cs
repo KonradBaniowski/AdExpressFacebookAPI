@@ -586,7 +586,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
                             t.Append("<td width=\"100%\" align=right onClick=\"DivDisplayer('" + idParent + "Ct');\" style=\"cursor : hand\"><img height=\"15\" src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_arrow_down.gif\" width=\"15\"></td>");	
 							t.Append("</tr>");
 							t.Append("</table>");
-                            t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" DISPLAY: none; WIDTH: 100%\" >");
+							t.Append("<div id=\"" + idParent + "Ct\" class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: none; WIDTH: 100%\" >");
                             t.Append("<table id=" + idParent + " class=\"violetBorderWithoutTop paleVioletBackGround\" width=100%>");
 							t.Append("<tr><td colspan=\"3\"><a href=# class=\"roll04\" style=\"TEXT-DECORATION: none\" onclick=\"allSelection('"+idParent+"',"+i+")\" ID=\""+currentRow[0]+"\">");
 							t.Append(GestionWeb.GetWebWord(2055,webSession.SiteLanguage));
