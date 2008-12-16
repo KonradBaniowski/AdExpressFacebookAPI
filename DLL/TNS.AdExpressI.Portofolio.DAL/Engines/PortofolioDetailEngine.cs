@@ -115,7 +115,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         }
 					}
 
-					//sql += " order by " + orderFieldNameWithoutTablePrefix + ", id_media ";
+					sql += " order by " + orderFieldNameWithoutTablePrefix + ", id_media ";
 				}
 			}
 			catch (System.Exception err) {
