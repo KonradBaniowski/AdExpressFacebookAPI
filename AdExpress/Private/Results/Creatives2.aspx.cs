@@ -16,6 +16,8 @@ using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using DBClassifCst = TNS.AdExpress.Constantes.Classification;
 using System.Text;
+using TNS.AdExpress.Web.Core.Utilities;
+using TNS.FrameWork.Date;
 
 
 namespace Private.Results{
@@ -100,7 +102,23 @@ namespace Private.Results{
                 string page = Page.Request.QueryString.Get("page");
 
                 #region Parameters
-                if (Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0)
+                if (tmp == null)
+                {
+                    if (zoomDate != null && zoomDate.Length <= 0)
+                    {
+                        DateTime begin = Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+                        if (_webSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
+                        {
+                            AtomicPeriodWeek week = new AtomicPeriodWeek(begin);
+                            zoomDate = string.Format("{0}{1}", week.Year, week.Week.ToString("0#"));
+                        }
+                        else
+                        {
+                            zoomDate = begin.ToString("yyyyMM");
+                        }
+                    }
+                }
+                else if (Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0)
                 {
                     zoomDate = Page.Request.Form.GetValues("zoomParam")[0];
                 }
