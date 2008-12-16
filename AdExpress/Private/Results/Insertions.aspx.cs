@@ -43,7 +43,7 @@ namespace Private.Results {
         /// <summary>
         /// Zoom Date
         /// </summary>
-        private string zoomDate = "";
+        private string zoomDate;
         /// <summary>
         /// Identifiant du média courant
         /// </summary>
@@ -116,13 +116,8 @@ namespace Private.Results {
                 string page = Page.Request.QueryString.Get("page");
 
                 #region Parameters
-                if (Page.Request.Form.GetValues("zoomParam") != null)
+                if (tmp == null)
                 {
-                    zoomDate = Page.Request.Form.GetValues("zoomParam")[0];
-                }
-                else
-                {
-                    zoomDate = Page.Request.QueryString.Get("zoomDate");
                     if (zoomDate != null && zoomDate.Length <= 0)
                     {
                         DateTime begin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
@@ -136,6 +131,10 @@ namespace Private.Results {
                             zoomDate = begin.ToString("yyyyMM");
                         }
                     }
+                }
+                else if (Page.Request.Form.GetValues("zoomParam") != null)
+                {
+                    zoomDate = Page.Request.Form.GetValues("zoomParam")[0];
                 }
                 zoomParam.Value = zoomDate;
                 if (Page.Request.Form.GetValues("vehicleParam") != null && Page.Request.Form.GetValues("vehicleParam")[0].Length > 0)
