@@ -391,13 +391,16 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 sql.Append(")) ");
             }
 
+            //INset option
+            sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
             // Autopromo Evaliant
             if(VehiclesInformation.Contains(vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack) {
                 if(_session.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                     sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             }
 
-            // Additional conditions
+            // Additional conditions            
             if(additionalConditions.Length > 0) {
                 sql.AppendFormat(" {0} ", additionalConditions);
             }
@@ -457,15 +460,15 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             #endregion
 
             #region Selection
+            list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
             if(_isAdNetTrackMediaSchedule){
                 sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId);
             }
             else if(periodDisplay == CstPeriod.DisplayLevel.dayly) {
                 sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, vehicleId);
             }
-            else {
-                list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
-                if(list.Length > 0) sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, list);
+            else if(list.Length > 0) {                
+                 sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, list);
             }
             #endregion
 

@@ -6,6 +6,7 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
+using FctWeb = TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
@@ -442,9 +443,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         {
 			
             bool detailLevelSelected = false;
-            bool hasSlogan = false;
             bool hasCategory = false;
-            bool hasInsertionFields = false;
             string tmp = string.Empty;
 
             //Detail levels
@@ -751,6 +750,8 @@ namespace TNS.AdExpressI.Insertions.DAL
                 sql.AppendFormat(" and {0}.id_slogan in({1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, slogans);
             }
             #endregion
+
+            sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
             if (vehicle.Id != CstDBClassif.Vehicles.names.internet)
             {

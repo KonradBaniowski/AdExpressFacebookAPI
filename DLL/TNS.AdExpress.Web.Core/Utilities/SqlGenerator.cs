@@ -3896,16 +3896,28 @@ namespace TNS.AdExpress.Web.Core.Utilities
         public static string GetJointForInsertDetail(WebSession webSession, string dataTablePrefixe) {
 			
 			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
+            string insertMediaList = string.Empty;
+            if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.press))
+                insertMediaList += VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.press).DatabaseId;
+            if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.internationalPress))
+            {
+                if (insertMediaList.Length > 0) insertMediaList += ",";
+                insertMediaList += VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.internationalPress).DatabaseId;
+            }
+
 			switch (webSession.Insert) {
 				case WebConstantes.CustomerSessions.Insert.total:
 					return "";
 				case WebConstantes.CustomerSessions.Insert.withOutInsert:
-					return " and  (" + dataTablePrefixe + ".id_inset=0 or " + dataTablePrefixe + ".id_inset is null )";
-				case WebConstantes.CustomerSessions.Insert.insert:
+					return string.Format(" and  ( " + dataTablePrefixe + ".id_inset=0 or " + dataTablePrefixe + ".id_inset is null )");
+                    return string.Format(" and (({0}.id_vehicle not in({1})) or ({0}.id_vehicle in({1}) and ( {0}.id_inset=0 or {0}.id_inset is null ) ))", dataTablePrefixe, insertMediaList);
+                case WebConstantes.CustomerSessions.Insert.insert:
 					string fieldsList = Lists.GetIdList(WebConstantes.GroupList.ID.inset);
-					if (fieldsList != null && fieldsList.Length > 0)
-						return " and  " + dataTablePrefixe + ".id_inset in (" + fieldsList + ")";
-					else return "";
+                    if (fieldsList != null && fieldsList.Length > 0)
+                    {
+                        return string.Format(" and (({0}.id_vehicle not in({2})) or ({0}.id_vehicle in({2}) and {0}.id_inset in ({1})))", dataTablePrefixe, fieldsList, insertMediaList);
+                    }
+                    else return "";
 				default:
 					throw new SQLGeneratorException("getJointForInsertDetail(WebSession webSession,string dataTablePrefixe)--> Impossible to retreive inset type..");
 			}

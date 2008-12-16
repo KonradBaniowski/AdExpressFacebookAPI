@@ -365,12 +365,18 @@ namespace AdExpress.Private.Results{
             InitializeMediaWebcontrol1.CustomerWebSession = _webSession;
 			SetSloganUniverseOptions();
 
-            #region Option autopromo (Evaliant)
+            #region Option par media (Evaliant)
             string vehicleListId = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
             string[] vehicles = vehicleListId.Split(',');
             foreach(string cVehicle in vehicles) {
-                if(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)) == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack) {
-                    ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
+                switch(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle))){
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                        ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
+                        break;
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+                        ResultsOptionsWebControl1.InsertOption = true;
+                        break;
                 }
             }
             #endregion

@@ -171,6 +171,20 @@ namespace TNS.AdExpress.Domain.Classification {
 				throw (new ArgumentException("impossible to reteive the requested vehicle", err));
 			}
 		}
+		/// <summary>
+		/// Verifiy if contains vehicle Id
+		/// </summary>
+		/// <param name="dataBaseVehicleId">Database vehicle Id</param>
+		/// <returns></returns>
+        public static bool Contains(Vehicles.names vehicle)
+        {
+			try {
+				return (_listVehicleNames.ContainsKey(vehicle));
+			}
+			catch (System.Exception err) {
+				throw (new ArgumentException("impossible to reteive the requested vehicle", err));
+			}
+		}
 		#endregion
 
 		#region Get commun UnitInformation list

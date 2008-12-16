@@ -178,6 +178,7 @@ namespace AdExpress.Private.Selection{
 		/// <param name="e">Arguments</param>
 		protected void validateButton_Click(object sender, System.EventArgs e) {
 			try{
+                _webSession.Insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
 				string vehiclesSelection="";
 				// On recherche les éléments sélectionnés
 				foreach(ListItem currentItem in VehicleSelectionWebControl2.Items){
