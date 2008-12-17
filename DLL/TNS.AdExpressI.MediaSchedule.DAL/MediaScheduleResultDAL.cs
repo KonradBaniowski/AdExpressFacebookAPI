@@ -392,7 +392,12 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             }
 
             //INset option
-            sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            if ((vehicleInfo != null && (vehicleInfo.Id == CstDBClassif.Vehicles.names.press || vehicleInfo.Id == CstDBClassif.Vehicles.names.internationalPress))
+                || (periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data && periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data_4m)
+                )
+            {
+                sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            }
 
             // Autopromo Evaliant
             if(VehiclesInformation.Contains(vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack) {

@@ -751,7 +751,10 @@ namespace TNS.AdExpressI.Insertions.DAL
             }
             #endregion
 
-            sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            if (vehicle.Id == CstDBClassif.Vehicles.names.press || vehicle.Id == CstDBClassif.Vehicles.names.internationalPress)
+            {
+                sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            }
 
             if (vehicle.Id != CstDBClassif.Vehicles.names.internet)
             {
