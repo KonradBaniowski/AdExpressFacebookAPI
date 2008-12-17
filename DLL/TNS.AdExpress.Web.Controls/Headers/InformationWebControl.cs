@@ -168,7 +168,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\ndocument.writeln('<param name=\"quality\" value=\"high\">');");
 				output.Write("\ndocument.writeln('<param name=\"menu\" value=\"false\">');");
 				output.Write("\ndocument.writeln('<param name=\"wmode\" value=\"transparent\">');");
-				output.Write("\ndocument.writeln('<embed src=\""+_flashPath+"\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"185\" height=\"48\"></embed>');");
+				output.Write("\ndocument.writeln('<embed src=\""+_flashPath+"\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" wmode=\"opaque\" width=\"185\" height=\"48\"></embed>');");
 				output.Write("\ndocument.writeln('</object></td>');");
 				output.Write("\n}\nelse{");
 				output.Write("\ndocument.writeln('<img src=\""+_flashReplacementPath+"\"></td>');");
@@ -197,7 +197,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\ndocument.writeln('<param name=\"quality\" value=\"high\">');");
 				output.Write("\ndocument.writeln('<param name=\"menu\" value=\"false\">');");
 				output.Write("\ndocument.writeln('<param name=\"wmode\" value=\"transparent\">');");
-                output.Write("\ndocument.writeln('<embed src=\""+_flashOneLinePath+"\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"400\" height=\"20\"></embed>');");
+                output.Write("\ndocument.writeln('<embed src=\"" + _flashOneLinePath + "\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" wmode=\"opaque\" width=\"400\" height=\"20\"></embed>');");
 				output.Write("\ndocument.writeln('</object></td>');");
 				output.Write("\n}\nelse{");
 				output.Write("\ndocument.writeln('<img src=\""+_flashOneLineReplacementPath+"\"></td>');");

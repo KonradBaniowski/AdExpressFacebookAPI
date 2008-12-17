@@ -193,7 +193,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("\ndocument.writeln('<PARAM NAME=\"MovieData\" VALUE=\"\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"SeamlessTabbing\" VALUE=\"1\">');");
             output.Write("\ndocument.writeln('<embed src=\"" + flashUrl + "\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\"');");
-			output.Write("\ndocument.writeln('type=\"application/x-shockwave-flash\" width=\"733\" height=\"31\"> </embed>');");
+            output.Write("\ndocument.writeln('type=\"application/x-shockwave-flash\" wmode=\"opaque\" width=\"733\" height=\"31\"> </embed>');");
 			output.Write("\ndocument.writeln('</OBJECT>');");
 			output.Write("\n}\nelse{");
             output.Write("\ndocument.writeln('<img src=\"" + missingFlashUrl + "\" width=\"733\" height=\"31\">');");

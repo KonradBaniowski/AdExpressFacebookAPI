@@ -232,7 +232,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 						t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">&nbsp;&nbsp;&nbsp;"+currentRow["sector"].ToString());
 						t.Append("</td>");
                         t.Append("<td align=\"right\" class=\"arrowBackGround\"></td>");		
-						t.Append("</tr><tr><td colspan=\"2\"><div class=\"violetBackGroundV3\" style=\"MARGIN-LEFT: 0px; display ='none';\" id=\"sc_"+idSector+"\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
+						t.Append("</tr><tr><td colspan=\"2\"><div class=\"violetBackGroundV3\" style=\"MARGIN-LEFT: 0px; display:none;\" id=\"sc_"+idSector+"\"><table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 						//lien tous selectionner
 						t.Append("<tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllChilds('sc_"+idSector+"')\" title=\""+GestionWeb.GetWebWord(1082,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(1082,webSession.SiteLanguage)+"</a></td></tr>");
 						SectorIds+="sc_"+idSector+",";
