@@ -139,7 +139,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             foreach (string s in _visuals) {
                 string[] tmp = s.Split(',');
                 foreach (string st in tmp) {
-                    str.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\" class=\"audioFileBackGround\"></a>", s, _idVersion, this._session.IdSession, _vehicle.DatabaseId);
+                    str.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\"><div class=\"audioFileBackGround\"></div></a>", s, _idVersion, this._session.IdSession, _vehicle.DatabaseId);
                     hasVisual = true;
                 }
             }
@@ -151,7 +151,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             #endregion
 
             #region Info
-            str.Append("<p><tr><td><table>");
+            str.Append("<tr><td><p><table>");
             int nbLine = (int)Math.Ceiling(((double)cols.Count) / 2.0);
             for (int l = 0; l < nbLine; l++) {
                 str.Append("<tr>");
@@ -165,7 +165,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 }
                 str.Append("<td width=\"100%\"></td></tr>");
             }
-            str.Append("</table></td></tr></p>");
+            str.Append("</table></p></td></tr>");
             #endregion
 
             str.Append("</tr></table></td>");

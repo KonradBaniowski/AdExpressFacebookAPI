@@ -385,7 +385,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             t.Append("</td>");
             cols.Add(t.ToString());
 
-            str.Append("<p><tr><td><table>");
+            str.Append("<tr><td><p><table>");
             for (int l = 0; l < nbLine; l++)
             {
                 str.Append("<tr>");
@@ -402,7 +402,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 str.Append("<td width=\"100%\"></td>");
                 str.Append("</tr>");
             }
-            str.Append("</table></td></tr></p>");
+            str.Append("</table></p></td></tr>");
             //end information
 
 

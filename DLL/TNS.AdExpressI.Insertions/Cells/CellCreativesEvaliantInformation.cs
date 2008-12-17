@@ -331,7 +331,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             #endregion
 
             #region Description
-            str.Append("<p><tr><td><table>");
+            str.Append("<tr><td><p><table>");
             int nbLine = cols.Count;
             for (int l = 0; l < nbLine; l++)
             {
@@ -348,7 +348,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 }
                 str.Append("<td width=\"100%\"></td></tr>");
             }
-            str.Append("</table></td></tr></p>");
+            str.Append("</table></p></td></tr>");
             #endregion
 
             str.Append("</tr></table></td>");

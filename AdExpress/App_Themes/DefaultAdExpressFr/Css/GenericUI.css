@@ -169,7 +169,6 @@ tr.creativeInfo td table
 tr.creativeInfo td table tr td
 {
 	background-color:#D0C8DA;
-	padding:10px;
 	text-align:center;
 }
 
@@ -186,19 +185,18 @@ tr.creativeInfo td table p table tr
 	height:15px;
 	vertical-align:text-top;
 }
-tr.creativeInfo td table p tr td
+tr.creativeInfo td table tr td 
 {
 	text-align:left;
 	background-color:#B1A3C1;
 	white-space:nowrap;
 	padding:2px;
 }
-tr.creativeInfo td table p
+tr.creativeInfo td table tr td p
 {
 	text-align:left;
 	background-color:#B1A3C1;
 	white-space:nowrap;
-	padding:2px;
 }
 /*no Visual Detail Versions*/
 .noVisuDetailVersion

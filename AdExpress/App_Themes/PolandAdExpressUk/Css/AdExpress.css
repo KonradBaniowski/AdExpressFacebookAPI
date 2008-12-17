@@ -46,12 +46,16 @@
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
+	margin: 0px auto; 
+	text-align: center;
 }
 .videoFileBackGround{
 	background:url(/App_Themes/PolandAdExpressUk/Images/Common/videoFile.gif);
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
+	margin: 0px auto; 
+	text-align: center;
 }
 .whiteBackGround2{
 	background-color : #FFFFFF;

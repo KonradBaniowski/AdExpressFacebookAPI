@@ -111,7 +111,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
 
             output.AppendFormat("<tr><td class=\"creativeVisualCell\">");
             if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_RADIO_CREATION_ACCESS_FLAG)) {
-                output.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\" class=\"audioFileBackGround\"></a>", this._path, this._id, this._session.IdSession, VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radio));
+                output.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\"><div class=\"audioFileBackGround\"></div></a>", this._path, this._id, this._session.IdSession, VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radio));
             }
             else {
                 output.AppendFormat("<p class=\"txtViolet12Bold\" valign=\"top\" width=\"240\">{0}</p>", GestionWeb.GetWebWord(2250, _session.SiteLanguage));
