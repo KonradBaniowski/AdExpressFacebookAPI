@@ -573,10 +573,11 @@ namespace TNS.AdExpress.Web.Controls.Headers
                                     #region Div columns
 				                    output.Write("<table id=\"Table2\" height=\"32\" width=\"986\" border=\"0\">");
 
-				                        output.Write("<tr style=\"DISPLAY: block; FLOAT: left; LIST-STYLE-TYPE: none\">");
+				                        //output.Write("<tr style=\"DISPLAY: block; FLOAT: left; LIST-STYLE-TYPE: none\">");
+                                    output.Write("<tr>");
                                         if (Page.IsPostBack && _columnSetId==_oldColumnSetId){
 					                        foreach(GenericColumnItemInformation Column in _columnItemSelectedList){
-						                        output.Write("\n<td id=\"zone"+(int)Column.Id+"\" width=\"45px\" height=\"27\" class=\"simpleDroptd\" noWrap align=\"left\">");
+						                        output.Write("\n<td id=\"zone"+(int)Column.Id+"\" height=\"27\" class=\"simpleDroptd\" noWrap align=\"left\">");
     						                        output.Write("\n<div align=\"center\" class=\"simpleColumn\" id=\""+(int)Column.Id+"\">");
 						                                output.Write("\n"+GestionWeb.GetWebWord(Column.WebTextId,_customerWebSession.SiteLanguage)+"");
 						                            output.Write("\n</div>");
