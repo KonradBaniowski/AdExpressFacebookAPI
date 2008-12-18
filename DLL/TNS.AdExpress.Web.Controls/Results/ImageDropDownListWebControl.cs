@@ -191,7 +191,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 
 			#region Partie scrollable
 			writer.WriteLine("\t\t\t <tr> ");
-			writer.WriteLine("\t\t\t <td><div id=\"scroller_" + this.ID + "\" style=\"display: none; width:100%; overflow: visible; background-color: " + bgColor + "; layer-background-color: " + bgColor + "; border: 1px none #000000; position:absolute;\">");
+			writer.WriteLine("\t\t\t <td><div id=\"scroller_" + this.ID + "\" style=\"display: none; overflow: visible; background-color: " + bgColor + "; layer-background-color: " + bgColor + "; border: 1px none #000000; position:absolute;\">");
 			writer.WriteLine("\t\t\t <table width=\"100%\" border=\"0\" cellPadding=\"1\" cellSpacing=\"0\" style=\"border: " + borderWidth + "px solid " + borderColor + "; cursor: hand;\">");
 
 			//Les items
@@ -219,7 +219,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 						writer.WriteLine("</td>");
 					}
 				}
-				writer.WriteLine("<td nowrap>" + textList[i] + "</td>");
+				writer.WriteLine("<td width=\"22px\" nowrap>" + textList[i] + "</td>");
 				writer.WriteLine("</tr>");
 			}
 			//Fermeture des balises --
