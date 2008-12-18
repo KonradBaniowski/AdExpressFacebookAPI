@@ -602,93 +602,117 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				                        output.Write("</table>");
                                         #endregion
 
-                                    #region Niveau de détail
-				output.Write("<P>");
+                    #region details Level + corbeille
 
-				output.Write("<TABLE id=\"Table3\" style=\"MARGIN-BOTTOM: 8px\" cellSpacing=\"0\" cellPadding=\"0\" height=\"114\">");
-				output.Write("<TR>");
-				output.Write("<TD>");
-				output.Write("</TD>");
-                output.Write("<TD align=left colSpan=2><A class=roll03 onmouseover=\"saveButton1.src='/App_Themes/" + _themeName + "/Images/Common/button/restore_down.gif';\" onmouseout=\"saveButton1.src ='/App_Themes/" + _themeName + "/Images/Common/button/restore_up.gif';\" href=\"javascript:initialiser();\"><IMG alt=\"Rétablir les colonnes\" src=\"/App_Themes/" + _themeName + "/Images/Common/button/restore_up.gif\" border=0 name=saveButton1></A><IMG src=\"/App_Themes/" + _themeName + "/Images/Common/pixel.gif\" width=\"165\" height=\"1\">");
-				output.Write("<A class=roll03 onmouseover=\"saveButton2.src='/App_Themes/"+_themeName+"/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"><IMG alt=\"Déplacer vers la corbeille\" src=\"/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif\" border=0 name=saveButton2></A></TD>");
-				output.Write("<TD colSpan=2 align=right><A class=roll03 onmouseover=\"saveButton2.src='/App_Themes/"+_themeName+"/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"></A>&nbsp;</TD>");
-				output.Write("</TR>");
-			
-				output.Write("<TR>");
-				output.Write("<TD  valign=top width=\"986\">");
-                output.Write("<TABLE id=\"Section\" cellSpacing=\"2\" cellPadding=\"2\" border=\"0\" class=\"dimgrayBorder\">");
-				output.Write("<TR>");
-				output.Write("<TD>");
-				output.Write("<TABLE id=\"levelSelection\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
-				output.Write("<TR>");
-				output.Write("<TD class=\"txtViolet11Bold\" colSpan=\"2\">");
-				output.Write("<P class=\"MsoNormal\">" + GestionWeb.GetWebWord(1899, _customerWebSession.SiteLanguage) + " :" + "</P>");
-				output.Write("</TD>");
-				output.Write("</TR>");
-		
-				// Niveaux
-				int i=0;
-				foreach(DropDownList currentList in _DetailLevelItemList){
-					i++;
-					output.Write("\r\n<tr>");
-					output.Write("\r\n<td class=\""+_cssListLabel+"\">"+ GestionWeb.GetWebWord(1898,_customerWebSession.SiteLanguage) +i.ToString()+":&nbsp;</td>");
-					output.Write("\r\n<td>");
-					currentList.RenderControl(output);
-					output.Write("\r\n</td>");
-					output.Write("\r\n</tr>");
-					// Espace blanc
-					output.Write("\r\n<tr>");
-                    output.Write("\r\n<td colspan=2><img src=\"/App_Themes/"+_themeName+"/Images/Common/pixel.gif\" border=\"0\" height=\"5\"></td>");
-					output.Write("\r\n</tr>");
-				}
+                    
+                    output.Write("<p>");
 
-				// Fin niveau de détaille N1...
-				output.Write("\r\n</table>");
-				output.Write("\r\n</td>");
-				output.Write("\r\n</tr>");
-				#endregion
+				    output.Write("<TABLE id=\"Table3\" style=\"MARGIN-BOTTOM: 8px\" cellSpacing=\"0\" cellPadding=\"0\" height=\"114\">");
+				    output.Write("<TR>");
+				    output.Write("<TD>");
+				    output.Write("</TD>");
+                    output.Write("<TD align=left colSpan=2><A class=roll03 onmouseover=\"saveButton1.src='/App_Themes/" + _themeName + "/Images/Common/button/restore_down.gif';\" onmouseout=\"saveButton1.src ='/App_Themes/" + _themeName + "/Images/Common/button/restore_up.gif';\" href=\"javascript:initialiser();\"><IMG alt=\"Rétablir les colonnes\" src=\"/App_Themes/" + _themeName + "/Images/Common/button/restore_up.gif\" border=0 name=saveButton1></A><IMG src=\"/App_Themes/" + _themeName + "/Images/Common/pixel.gif\" width=\"165\" height=\"1\">");
+				    output.Write("<A class=roll03 onmouseover=\"saveButton2.src='/App_Themes/"+_themeName+"/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"><IMG alt=\"Déplacer vers la corbeille\" src=\"/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif\" border=0 name=saveButton2></A></TD>");
+				    output.Write("<TD colSpan=2 align=right><A class=roll03 onmouseover=\"saveButton2.src='/App_Themes/"+_themeName+"/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"></A>&nbsp;</TD>");
+				    output.Write("</TR>");
+    			    
+				    output.Write("<TR>");
 
-				output.Write("</TABLE>");
-				output.Write("</TD>");
+                    #region Niveau de détail
+                    output.Write("<TD  valign=top width=\"986\">");
+                    output.Write("<TABLE id=\"Section\" cellSpacing=\"2\" cellPadding=\"2\" border=\"0\" class=\"dimgrayBorder\">");
+				    output.Write("<TR>");
+				    output.Write("<TD>");
+				    output.Write("<TABLE id=\"levelSelection\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
+				    output.Write("<TR>");
+				    output.Write("<TD class=\"txtViolet11Bold\" colSpan=\"2\">");
+				    output.Write("<P class=\"MsoNormal\">" + GestionWeb.GetWebWord(1899, _customerWebSession.SiteLanguage) + " :" + "</P>");
+				    output.Write("</TD>");
+				    output.Write("</TR>");
+    		
+				    // Niveaux
+				    int i=0;
+				    foreach(DropDownList currentList in _DetailLevelItemList){
+					    i++;
+					    output.Write("\r\n<tr>");
+					    output.Write("\r\n<td class=\""+_cssListLabel+"\">"+ GestionWeb.GetWebWord(1898,_customerWebSession.SiteLanguage) +i.ToString()+":&nbsp;</td>");
+					    output.Write("\r\n<td>");
+					    currentList.RenderControl(output);
+					    output.Write("\r\n</td>");
+					    output.Write("\r\n</tr>");
+					    // Espace blanc
+					    output.Write("\r\n<tr>");
+                        output.Write("\r\n<td colspan=2><img src=\"/App_Themes/"+_themeName+"/Images/Common/pixel.gif\" border=\"0\" height=\"5\"></td>");
+					    output.Write("\r\n</tr>");
+				    }
 
-				output.Write("<TD align=right valign=top>");
+				    // Fin niveau de détaille N1...
+				    output.Write("\r\n</table>");
+				    output.Write("\r\n</td>");
+				    output.Write("\r\n</tr>");
+				    
 
+				    output.Write("</TABLE>");
+				    output.Write("</TD>");
+                    #endregion
 
-				output.Write("<table id=Table4 align=left>");            
-				output.Write("<tr>");		
-				#region Corbeille
+                    #region Corbeille
+				    output.Write("<TD align=right valign=top>");
+				    output.Write("<table id=Table4 align=left>");            
+				    output.Write("<tr>");		
+				    
 
-				if (Page.IsPostBack && _columnSetId==_oldColumnSetId){
-					output.Write("<TD valign=top>");
-                    output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
-					output.Write("<DIV class=\"title\">Corbeille</DIV>");
-				
-					foreach(GenericColumnItemInformation Column in _columnItemTrashList){
-						output.Write("\n<DIV id=\""+(int)Column.Id+"\">");
-						output.Write("\n<A>"+GestionWeb.GetWebWord(Column.WebTextId,_customerWebSession.SiteLanguage)+"</A>");
-						output.Write("\n</DIV>");
-					}
-				
-					output.Write("</DIV>");
-					output.Write("</TD>");
-				}
-				else{
-					output.Write("<TD>");
-                    output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
-					output.Write("<DIV class=\"title\">" + GestionWeb.GetWebWord(1950, _customerWebSession.SiteLanguage) + "</DIV>");
-					output.Write("</DIV>");
-					output.Write("</TD>");
-				}
+				    if (Page.IsPostBack && _columnSetId==_oldColumnSetId){
+					    output.Write("<TD valign=top>");
+                        output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
+					    output.Write("<DIV class=\"title\">Corbeille</DIV>");
+    				
+					    foreach(GenericColumnItemInformation Column in _columnItemTrashList){
+						    output.Write("\n<DIV id=\""+(int)Column.Id+"\">");
+						    output.Write("\n<A>"+GestionWeb.GetWebWord(Column.WebTextId,_customerWebSession.SiteLanguage)+"</A>");
+						    output.Write("\n</DIV>");
+					    }
+    				
+					    output.Write("</DIV>");
+					    output.Write("</TD>");
+				    }
+				    else{
+					    output.Write("<TD>");
+                        output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
+					    output.Write("<DIV class=\"title\">" + GestionWeb.GetWebWord(1950, _customerWebSession.SiteLanguage) + "</DIV>");
+					    output.Write("</DIV>");
+					    output.Write("</TD>");
+				    }
 
-				#endregion			
-				output.Write("</tr>");
+				    
+                    output.Write("</tr>");
+
+                    output.Write("</table>");
+                output.Write("</td>");
+                #endregion		
+
+                output.Write("</tr>");
                 output.Write("</table>");
+                output.Write("</p>");
+                #endregion
 
+                #region initialisation du bouton
+                output.Write("<div style=\"MARGIN-LEFT: 0px;\"><table width=\"100%\"><tr><td align=\"right\">");
+                _buttonOk.RenderControl(output);
+                if (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.radio) {
+                    if (_customerWebSession.SiteLanguage == 33)
+                        output.Write("<FONT face=Arial size=1 class=\"txtViolet\" style=\"LEFT: 781px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
+                    else
+                        output.Write("<FONT face=Arial size=1 class=\"txtViolet\" style=\"LEFT: 758px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
+                }
+                output.Write("</td></tr></table></div>");
+                #endregion
 
-				output.Write("</TABLE>");
+                
 
 				output.Write("</td></tr>");
 				output.Write("</table>");
+                output.Write("</div>");
 				output.Write("</TD>");
 				output.Write("</TR>");
 
@@ -696,22 +720,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 output.Write("<tr><td>");
                 output.Write("<INPUT id=\"columnSetId_{0}\" type=\"hidden\" name=\"columnSetId_{0}\" value=\"{1}\">", this.ID, _columnSetId);
                 output.Write("<INPUT id=\"columnItemSelectedList\" type=\"hidden\" name=\"columnItemSelectedList\" value=\""+ColumnIdListInit()+"\">");
-                output.Write("</tr></td>");
+                output.Write("</td></tr>");
                 #endregion
-
-                #region initialisation du bouton
-                output.Write("<tr>");
-				output.Write("<td><div style=\"MARGIN-LEFT: 0px;\">");
-				_buttonOk.RenderControl(output); 
-				if (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab)==DBClassificationConstantes.Vehicles.names.radio){
-					if (_customerWebSession.SiteLanguage == 33)
-                        output.Write("<FONT face=Arial size=1 class=\"txtViolet\" style=\"LEFT: 781px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
-					else
-                        output.Write("<FONT face=Arial size=1 class=\"txtViolet\" style=\"LEFT: 758px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
-				}
-				output.Write("</div></td>");	
-				output.Write("</tr>");
-				#endregion
 
                 output.Write("</table>");
 
