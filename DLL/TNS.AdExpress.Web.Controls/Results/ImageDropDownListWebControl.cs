@@ -165,22 +165,22 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					if (imageList.GetUpperBound(0) >= index)
 						img = imageList[index];
 					else
-						img = "images/spacer.gif";
+                        img = "/Images/Common/pixel.gif";
 				}
 				catch(System.Exception){
-					img = "images/spacer.gif";
+                    img = "/Images/Common/pixel.gif";
 				}
 
 				writer.Write("\n\t\t\t\t\t <td  height=\""+ (imageHeight+4.0)+"\" class=\"" + OutCssClass + "\" valign=\"middle\" nowrap>");
 				if (pictShow) writer.Write("&nbsp;<img class=\"" + OutCssClass + "\" id=\"ComboImg_" + this.ID + "\" src=\"" + img + "\" width=\""+ imageWidth + "\" height=\""+ imageHeight + "\" align=\"absmiddle\">");
 				writer.Write("<label id=\"ComBoText_" + this.ID + "\">" + textList[index] + "</label>");
-				writer.Write("<img class=\"" + OutCssClass + "\" src=\"images/spacer.gif\" width=\"5\" align=\"absmiddle\"></td>");
+                writer.Write("<img class=\"" + OutCssClass + "\" src=\"/Images/Common/pixel.gif\" width=\"5\" align=\"absmiddle\"></td>");
 			}
 			else{
-				writer.Write("\n\t\t\t\t\t <td nowrap><img class=\"" + OutCssClass + "\" src=\"images/spacer.gif\" witdh=\"2\" align=\"absmiddle\">");
-				if (pictShow) writer.Write("<img class=\"" + OutCssClass + "\" id=\"ComboImg_\"" + this.ID + "\" src=\"images/spacer.gif\" width=\"15\" height=\"15\" align=\"absmiddle\">");
+                writer.Write("\n\t\t\t\t\t <td nowrap><img class=\"" + OutCssClass + "\" src=\"/Images/Common/pixel.gif\" witdh=\"2\" align=\"absmiddle\">");
+                if (pictShow) writer.Write("<img class=\"" + OutCssClass + "\" id=\"ComboImg_\"" + this.ID + "\" src=\"/Images/Common/pixel.gif\" width=\"15\" height=\"15\" align=\"absmiddle\">");
 				writer.Write("<label id=\"ComBoText_" + this.ID + "></label>");
-				writer.Write("<img class=\"" + OutCssClass + "\" src=\"images/spacer.gif\" width=\"2\" align=\"absmiddle\"></td>)");
+                writer.Write("<img class=\"" + OutCssClass + "\" src=\"/Images/Common/pixel.gif\" width=\"2\" align=\"absmiddle\"></td>)");
 			}
 			writer.WriteLine("\t\t\t\t\t <td height=\""+ (imageHeight+4.0)+"\" valign=\"middle\" ><img class=\"" + OutCssClass + "\" src=\""+imageButtonArrow+"\" border=\"0\"></td>");
 			writer.WriteLine("\t\t\t\t </tr>");
@@ -212,10 +212,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				}
 				catch(System.Exception){
 					//Aucune image n'est définie, donc on y met un pixel transparent
-					writer.WriteLine("<tr id=\"scroller_item_" + this.ID + "_" + i + "\" class=\"" + OutCssClass + "\" onMouseOver=\"ChangeItemClassDDL(this, '" + OverCssClass + "')\" onMouseOut=\"ChangeItemClassDDL(this, '" + OutCssClass + "')\" onClick=\"ItemClickDDL('" + this.ID + "',this, " + i + ", '" + textList[i].Replace("'", "\'") + "', 'images/spacer.gif')\">");
+                    writer.WriteLine("<tr id=\"scroller_item_" + this.ID + "_" + i + "\" class=\"" + OutCssClass + "\" onMouseOver=\"ChangeItemClassDDL(this, '" + OverCssClass + "')\" onMouseOut=\"ChangeItemClassDDL(this, '" + OutCssClass + "')\" onClick=\"ItemClickDDL('" + this.ID + "',this, " + i + ", '" + textList[i].Replace("'", "\'") + "', '/Images/Common/pixel.gif')\">");
 					if (pictShow) {
 						writer.WriteLine("<td width=\"1\">");
-						writer.WriteLine("<img src=\"images/spacer.gif\" height=\"15\" align=\"absmiddle\">");
+                        writer.WriteLine("<img src=\"/Images/Common/pixel.gif\" height=\"15\" align=\"absmiddle\">");
 						writer.WriteLine("</td>");
 					}
 				}
