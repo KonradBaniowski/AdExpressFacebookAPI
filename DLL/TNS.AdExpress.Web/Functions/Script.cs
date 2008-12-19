@@ -1260,48 +1260,35 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <returns>Code JavaScript</returns>
 		public static string ExpandColapseAllDivs() {
 			System.Text.StringBuilder t=new System.Text.StringBuilder(500);
+
 			t.Append("\n <script language=\"JavaScript\">");
 			t.Append("\n <!-- ");
 			t.Append("\n var allDivOpen = false; ");
 
 			t.Append("\n function ExpandColapseAllDivs(ids)");
 			t.Append("\n { ");
+			//t.Append("\n alert('All ids : ' + ids ); ");
 			t.Append("\n var divs = ids.split(','); ");
-//			t.Append("\n var IsDivOpen = 0; ");
-			
-			 
-			
-			//Verifie si un calque est ouvert
-//				t.Append("\n for(i=0; i<divs.length;i++) {"); 
-//					t.Append("if (document.all.item(divs[i])!=null && document.all.item(divs[i]).style.display =='') {"); 
-//
-//					//Fermer tous les calques si 1 est  ouvert 
-//						t.Append("\n for(j=0; j<divs.length;j++) {"); 
-//							t.Append("if(document.all.item(divs[j])!=null)document.all.item(divs[j]).style.display ='none'; ");
-//						t.Append("}");
-//						t.Append("IsDivOpen = 1; "); 	
-//					t.Append("\n\t\t break; ");
-//					t.Append("\n}"); 
-//				t.Append("}"); 
-
+			//t.Append("\n alert('Taille tableau : ' +divs.length ); ");
+			t.Append(" var oContent = null; ");
 			//Ouvrir tous les calques
-				
-//				t.Append("if (IsDivOpen == 0) {"); 
-				t.Append("if (!allDivOpen) {"); 
-					t.Append("\n for(h=0; h<divs.length;h++) {"); 
-						t.Append("if(document.all.item(divs[h])!=null)document.all.item(divs[h]).style.display =''; ");
-					t.Append("}");			
-				t.Append("}");
- 			
-//				t.Append("if (IsDivOpen == 1) {"); 
-				t.Append("if (allDivOpen) {"); 			
-					t.Append("\n for(h=0; h<divs.length;h++) {"); 
-						t.Append("if(document.all.item(divs[h])!=null)document.all.item(divs[h]).style.display ='none'; ");
-					t.Append("}");			
-				t.Append("}");
 
-				t.Append("\n  allDivOpen = !allDivOpen; ");
-	 				
+			t.Append("if (!allDivOpen) {");
+			t.Append("\n for(h=0; h<divs.length;h++) {");
+			t.Append("\n\n oContent = document.all.item(divs[h]);");
+			t.Append("\n\n if(oContent!=null)oContent.style.display =''; ");
+			t.Append("\n }");
+			t.Append("}");
+
+			t.Append("if (allDivOpen) {");
+			t.Append("\n for(h=0; h<divs.length;h++) {");
+			t.Append("\n\n oContent = document.all.item(divs[h]);");
+			t.Append("\n\n if(oContent!=null)oContent.style.display ='none'; ");
+			t.Append("}");
+			t.Append("}");
+
+			t.Append("\n  allDivOpen = !allDivOpen; ");
+
 			t.Append(" } ");
 			t.Append("\n //--> ");
 			t.Append("</script>");
@@ -1348,7 +1335,39 @@ namespace TNS.AdExpress.Web.Functions{
 			script.Append("\n</script>");
 			return script.ToString();
 		}
+		/// <summary>
+		/// Script permettant de sélectionner toutes les variétés dans sélection
+		/// de groupe
+		/// </summary>
+		/// <remarks>
+		///  Enregistrer sous SelectAllSegments
+		/// </remarks>
+		/// <returns>Code JavaScript</returns>
+		public static string SelectAllNotDisabledChilds() {
+			StringBuilder script = new StringBuilder(500);
+			script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+			script.Append("\n function SelectAllNotDisabledChilds(chkName){ ");
+			script.Append("\n var nbElement = document.getElementById(chkName).getElementsByTagName(\'input\').length; ");
+			script.Append("\n var sel=0; ");
 
+			// verifie si un element est coché
+			script.Append("\n for(i=0;i<nbElement; i++){");
+			script.Append(" if(document.getElementById(chkName).getElementsByTagName(\'input\')[i].checked==0)");
+			script.Append("\n\t	{ ");
+			script.Append("\n\t\t sel=1; ");
+			script.Append("\n\t\t break; ");
+			script.Append("\n\t	} ");
+			script.Append("\n }");
+
+			// coche ou décoche tous les éléménts fils 
+			script.Append("\n for(i=0;i<nbElement; i++){");
+			script.Append("	if(document.getElementById(chkName).getElementsByTagName(\'input\')[i].disabled==false) ");
+			script.Append(" document.getElementById(chkName).getElementsByTagName(\'input\')[i].checked = sel;");
+			script.Append("	} ");
+			script.Append(" } ");
+			script.Append("\n</script>");
+			return script.ToString();
+		}
 		/// <summary>
 		/// Script permettant de gérer le cochage des cases pour l integration automatique
 		/// de groupe
