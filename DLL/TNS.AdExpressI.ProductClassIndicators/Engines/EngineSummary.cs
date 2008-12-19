@@ -356,8 +356,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         if (_session.ComparativeStudy)
                         {
                             t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1} %</td>", cssNb, FctUtilities.Units.ConvertUnitValueAndPdmToString(tab[i, TOTAL_N1_COLUMN_INDEX], _session.Unit, true, fp));
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap></td>", cssNb);
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap></td>", cssNb);
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>&nbsp;</td>", cssNb);
                         }
                         break;
                 }
