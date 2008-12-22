@@ -41,14 +41,14 @@
     </column>
     <column id="16" name="Top de diffusion radio" webTextId="860" dbLabel="id_top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
     <column id="17" name="Top de diffusion télévision" webTextId="860" dbLabel="top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
-    <column id="18" name="Durée" webTextId="861"  dbLabel="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="shortduration"/>
+    <column id="18" name="Durée" webTextId="861"  dbLabel="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="max0"/>
     <column id="19" name="Position radio" webTextId="862"  dbLabel="rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="20" name="Position télévision" webTextId="862"  dbLabel="id_rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
-    <column id="21" name="Durée écran" webTextId="597"  dbLabel="duration_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="shortduration"/>
+    <column id="21" name="Durée écran" webTextId="597"  dbLabel="duration_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="max0"/>
     <column id="22" name="Nombre Spots écran télévision" webTextId="1937"  dbLabel="number_message_commercial_brea" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="23" name="Nombre Spots écran radio" webTextId="1937"  dbLabel="number_spot_com_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="24" name="Position hap" webTextId="599"  dbLabel="rank_wap" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
-    <column id="25" name="Durée écran hap" webTextId="600"  dbLabel="duration_com_break_wap" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="shortduration"/>
+    <column id="25" name="Durée écran hap" webTextId="600"  dbLabel="duration_com_break_wap" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="max0"/>
     <column id="26" name="Nombre spots hap" webTextId="1938"  dbLabel="number_spot_com_break_wap" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="27" name="Code écran" webTextId="495"  dbLabel="id_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="28" name="Nombre de panneaux" webTextId="1939"  dbLabel="number_board" CellType="TNS.FrameWork.WebResultUI.CellInsertion" format="max0"/>
