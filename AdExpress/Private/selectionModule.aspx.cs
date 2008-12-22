@@ -146,7 +146,6 @@ namespace AdExpress{
 						else _webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
 						#region Niveau de détail media (Generic)
 						ArrayList levels=new ArrayList();
-                        ArrayList mediaSelectionLevels = new ArrayList();
                         switch(_webSession.CurrentModule){
                             case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS:
                                 // Support
@@ -171,14 +170,11 @@ namespace AdExpress{
                                 levels.Add(1);
 							    levels.Add(2);
 
-                                //Centre d'intérêt/Support
-                                mediaSelectionLevels.Add(4);
-                                mediaSelectionLevels.Add(3);
+								
                                 break;
                         }			
 						_webSession.GenericMediaDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 						_webSession.GenericAdNetTrackDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-                       // _webSession.GenericMediaSelectionDetailLevel = new GenericDetailLevel(mediaSelectionLevels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 						#endregion
 
 						#region Niveau de détail produit (Generic)

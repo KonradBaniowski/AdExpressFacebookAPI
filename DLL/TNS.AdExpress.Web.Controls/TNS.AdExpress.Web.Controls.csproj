@@ -417,6 +417,7 @@
     <Compile Include="Selections\DetailVehicleSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\GenericDetailVehicleSelectionWebControl.cs" />
     <Compile Include="Selections\GlobalCalendarWebControl.cs" />
     <Compile Include="Selections\GlobalRestrictedCalendarWebControl.cs" />
     <Compile Include="Selections\LastMonthWeekCalendarWebControl.cs">
@@ -446,6 +447,7 @@
     <Compile Include="Selections\PortofolioDetailVehicleSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\PortofolioGenericDetailVehicleSelectionWebControl.cs.cs" />
     <Compile Include="Selections\ProgramTypeWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

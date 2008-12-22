@@ -81,8 +81,8 @@
 							</tr>
 						
 							<tr class="whiteBackGround">
-					            <td><cc2:genericmediadetailselectionwebcontrol id="_genericMediaDetailSelectionWebControl" runat="server" NbDetailLevelItemList="2"							            
-							            GenericDetailLevelComponentProfile="media" GenericDetailLevelType="dynamicCompetitorPotential" Width="200px"></cc2:genericmediadetailselectionwebcontrol></td>
+					            <td><cc2:genericmediadetailselectionwebcontrol id="_genericMediaDetailSelectionWebControl" runat="server" NbDetailLevelItemList="3"							            
+							            GenericDetailLevelComponentProfile="media" GenericDetailLevelType="dynamicCompetitorPotential" Width="185px"></cc2:genericmediadetailselectionwebcontrol></td>
 				            </tr>
 				            <tr>
 								<td><asp:Image ID="Image20" runat="server" height="5" width="1" SkinID="pixel" /></td>
@@ -215,8 +215,9 @@
 									</a>
 								</td>
 							</tr>
+							
 							<tr class="whiteBackGround">
-								<td style="WIDTH: 772px; HEIGHT: 18px"><cc3:detailvehicleselectionwebcontrol id="AdvertiserSelectionWebControl1" runat="server"></cc3:detailvehicleselectionwebcontrol></td>
+								<td style="WIDTH: 772px; HEIGHT: 18px"><cc3:genericdetailvehicleselectionwebcontrol id="GenericDetailVehicleSelectionWebControl1" runat="server"></cc3:genericdetailvehicleselectionwebcontrol></td>
 							</tr>
 							<tr>
 								<td style="WIDTH: 772px">

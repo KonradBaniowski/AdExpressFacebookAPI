@@ -30,6 +30,18 @@
       <MediaSelectionParent>interestCenter</MediaSelectionParent>                <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                       <!-- Categorie -->
     </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
     <detailColumn id="8"/>
     <!--Media detail level allowed in recap's modules-->
@@ -67,6 +79,18 @@
       <MediaSelectionParent>interestCenter</MediaSelectionParent>            <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                    <!-- Categorie -->
     </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
     <detailColumn id="7"/>
     <!--Media detail level allowed in recap's modules-->
@@ -105,6 +129,18 @@
       <MediaSelectionParent>interestCenter</MediaSelectionParent>               <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
     </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
@@ -142,6 +178,18 @@
       <MediaSelectionParent>interestCenter</MediaSelectionParent>             <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
     </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
      <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
@@ -178,6 +226,18 @@
       <MediaSelectionParent>interestCenter</MediaSelectionParent>               <!-- Centre d'interet -->
       <MediaSelectionParent>category</MediaSelectionParent>                     <!-- Categorie -->
     </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/> <!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="2"/> <!-- Catégorie -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
@@ -219,6 +279,20 @@
       <MediaSelectionParent>category</MediaSelectionParent>                   <!-- Categorie -->
       <MediaSelectionParent>basicMedia</MediaSelectionParent>                 <!-- Basic Media -->
     </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+        <defaultMediaSelectionDetailLevel id="26" name="basic media\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="27"/><!-- Basic Media -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>
      <!--Media detail level allowed in recap's modules-->
@@ -243,3 +317,5 @@
     </allowedRecapMediaDetailLevels>
   </vehicle>
 </vehicles>
+
+

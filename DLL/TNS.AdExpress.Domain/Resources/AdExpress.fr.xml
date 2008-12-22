@@ -1731,5 +1731,10 @@
     <item mnemonic="w2543" type="System.String">Aucun résultat avec ces filtres</item>
     <item mnemonic="w2544" type="System.String">Basic media</item>
     <item mnemonic="w2545" type="System.String">Première parution</item>
+    <item mnemonic="w2546" type="System.String">Sélectionner/désélectionner tous les titres</item>
+    <item mnemonic="w2547" type="System.String">Sélectionner/désélectionner tous les centre d'intérêts</item>
+    <item mnemonic="w2548" type="System.String">Sélectionner/désélectionner toutes les régies</item>
+    <item mnemonic="w2549" type="System.String">Sélectionner/désélectionner tous les basic media</item>
+    <item mnemonic="w2550" type="System.String">Sélectionner/désélectionner tous les pays</item>
   </items>
 </localization>

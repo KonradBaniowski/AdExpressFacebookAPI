@@ -40,19 +40,19 @@
       <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
-    <MediaDetailLevel>
-      <defaultMediaDetailLevels>
-        <defaultMediaDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaDetailLevel id="23" name="regie\support" />
-        <defaultMediaDetailLevel id="24" name="titre\support" />
-      </defaultMediaDetailLevels>
-      <selectionAllowedMediaLevelItems>
-        <selectionAllowedMediaLevelItem id="3"/><!-- Support -->
-        <selectionAllowedMediaLevelItem id="4"/> <!-- Centre d 'interet -->
-        <selectionAllowedMediaLevelItem id="5"/> <!-- Régie -->
-        <selectionAllowedMediaLevelItem id="17"/><!-- Titre -->
-    </selectionAllowedMediaLevelItems>
-    </MediaDetailLevel>
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/> <!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/> <!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+    </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>
     <!--Media detail level allowed in recap's modules-->
@@ -102,19 +102,19 @@
       <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
-    <MediaDetailLevel>
-      <defaultMediaDetailLevels>
-        <defaultMediaDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaDetailLevel id="23" name="regie\support" />
-        <defaultMediaDetailLevel id="24" name="titre\support" />
-      </defaultMediaDetailLevels>
-      <selectionAllowedMediaLevelItems>
-        <selectionAllowedMediaLevelItem id="3"/><!-- Support -->
-        <selectionAllowedMediaLevelItem id="4"/><!-- Centre d 'interet -->
-        <selectionAllowedMediaLevelItem id="5"/><!-- Régie -->
-        <selectionAllowedMediaLevelItem id="17"/><!-- Titre -->
-      </selectionAllowedMediaLevelItems>
-    </MediaDetailLevel>
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/> <!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+      </allowedMediaSelectionLevelItemsList>      
+    </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
     <detailColumn id="7"/>
     <!--Media detail level allowed in recap's modules-->
@@ -168,19 +168,19 @@
       <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
-    <MediaDetailLevel>
-      <defaultMediaDetailLevels>
-        <defaultMediaDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaDetailLevel id="23" name="regie\support" />
-        <defaultMediaDetailLevel id="24" name="titre\support" />
-      </defaultMediaDetailLevels>
-      <selectionAllowedMediaLevelItems>
-        <selectionAllowedMediaLevelItem id="3"/><!-- Support -->
-        <selectionAllowedMediaLevelItem id="4"/><!-- Centre d 'interet -->
-        <selectionAllowedMediaLevelItem id="5"/><!-- Régie -->
-        <selectionAllowedMediaLevelItem id="17"/><!-- Titre -->
-      </selectionAllowedMediaLevelItems>
-    </MediaDetailLevel>
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/> <!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/> <!-- Titre -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
     <detailColumn id="8"/>
     <!--Media detail level allowed in recap's modules-->
@@ -245,19 +245,19 @@
       <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
-    <MediaDetailLevel>
-      <defaultMediaDetailLevels>
-        <defaultMediaDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaDetailLevel id="23" name="regie\support" />
-        <defaultMediaDetailLevel id="24" name="titre\support" />
-      </defaultMediaDetailLevels>
-      <selectionAllowedMediaLevelItems>
-        <selectionAllowedMediaLevelItem id="3"/><!-- Support -->
-        <selectionAllowedMediaLevelItem id="4"/><!-- Centre d 'interet -->
-        <selectionAllowedMediaLevelItem id="5"/><!-- Régie -->
-        <selectionAllowedMediaLevelItem id="17"/><!-- Titre -->
-      </selectionAllowedMediaLevelItems>
-    </MediaDetailLevel>
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
     <detailColumn id="8"/>
   </vehicle>
@@ -291,15 +291,15 @@
       <MediaSelectionParent>interestCenter</MediaSelectionParent>             <!-- Centre d'interet -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
-    <MediaDetailLevel>
-      <defaultMediaDetailLevels>
-        <defaultMediaDetailLevel id="22" name="centre d'interet\support" />      
-      </defaultMediaDetailLevels>
-      <selectionAllowedMediaLevelItems>
-        <selectionAllowedMediaLevelItem id="3"/><!-- Support -->
-        <selectionAllowedMediaLevelItem id="4"/><!-- Centre d 'interet -->
-      </selectionAllowedMediaLevelItems>
-    </MediaDetailLevel>
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />       
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->       
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
   </vehicle>
   <!-- INTERNET -->
   <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true">
@@ -337,19 +337,19 @@
       <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
-    <MediaDetailLevel>
-      <defaultMediaDetailLevels>
-        <defaultMediaDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaDetailLevel id="23" name="regie\support" />
-        <defaultMediaDetailLevel id="24" name="titre\support" />
-      </defaultMediaDetailLevels>
-      <selectionAllowedMediaLevelItems>
-        <selectionAllowedMediaLevelItem id="3"/><!-- Support -->
-        <selectionAllowedMediaLevelItem id="4"/><!-- Centre d 'interet -->
-        <selectionAllowedMediaLevelItem id="5"/><!-- Régie -->
-        <selectionAllowedMediaLevelItem id="17"/><!-- Titre -->
-      </selectionAllowedMediaLevelItems>
-    </MediaDetailLevel>
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
@@ -396,19 +396,19 @@
       <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
-    <MediaDetailLevel>
-      <defaultMediaDetailLevels>
-        <defaultMediaDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaDetailLevel id="23" name="regie\support" />
-        <defaultMediaDetailLevel id="24" name="titre\support" />
-      </defaultMediaDetailLevels>
-      <selectionAllowedMediaLevelItems>
-        <selectionAllowedMediaLevelItem id="3"/><!-- Support -->
-        <selectionAllowedMediaLevelItem id="4"/><!-- Centre d 'interet -->
-        <selectionAllowedMediaLevelItem id="5"/><!-- Régie -->
-        <selectionAllowedMediaLevelItem id="17"/><!-- Titre -->
-      </selectionAllowedMediaLevelItems>
-    </MediaDetailLevel>
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/> <!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/> <!-- Titre -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
@@ -417,7 +417,8 @@
         <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>        <!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
-  </vehicle>
+  
+</vehicle>
   <!-- CINEMA -->
   <vehicle id="cinema" databaseId="9" showInsertions="false" showCreations="false">
     <!-- Units-->
@@ -468,19 +469,19 @@
       <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
-    <MediaDetailLevel>
-      <defaultMediaDetailLevels>
-        <defaultMediaDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaDetailLevel id="23" name="regie\support" />
-        <defaultMediaDetailLevel id="24" name="titre\support" />
-      </defaultMediaDetailLevels>
-      <selectionAllowedMediaLevelItems>
-        <selectionAllowedMediaLevelItem id="3"/><!-- Support -->
-        <selectionAllowedMediaLevelItem id="4"/><!-- Centre d 'interet -->
-        <selectionAllowedMediaLevelItem id="5"/><!-- Régie -->
-        <selectionAllowedMediaLevelItem id="17"/><!-- Titre -->
-      </selectionAllowedMediaLevelItems>
-    </MediaDetailLevel>
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
@@ -529,19 +530,21 @@
       <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
-    <MediaDetailLevel>
-      <defaultMediaDetailLevels>
-        <defaultMediaDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaDetailLevel id="23" name="regie\support" />
-        <defaultMediaDetailLevel id="24" name="titre\support" />
-      </defaultMediaDetailLevels>
-      <selectionAllowedMediaLevelItems>
-        <selectionAllowedMediaLevelItem id="3"/><!-- Support -->
-        <selectionAllowedMediaLevelItem id="4"/><!-- Centre d 'interet -->
-        <selectionAllowedMediaLevelItem id="5"/><!-- Régie -->
-        <selectionAllowedMediaLevelItem id="17"/><!-- Titre -->
-      </selectionAllowedMediaLevelItems>
-    </MediaDetailLevel>
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+        <defaultMediaSelectionDetailLevel id="27" name="pays\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/> <!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="26"/><!-- Pays -->
+        <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
     <detailColumn id="6"/>
     <!--Media detail level allowed in recap's modules-->

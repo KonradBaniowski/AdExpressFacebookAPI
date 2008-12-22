@@ -244,9 +244,11 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 				#endregion
 
 				#region Définition du contrôle DetailVehicleSelectionWebControl1 
-				//				AdvertiserSelectionWebControl1.CustomerWebSession=_webSession;
-				AdvertiserSelectionWebControl1.EventButton=eventButton;
-				AdvertiserSelectionWebControl1.KeyWord=keyWordTextBox.Text;
+				GenericDetailVehicleSelectionWebControl1.EventButton = eventButton;
+				GenericDetailVehicleSelectionWebControl1.KeyWord = keyWordTextBox.Text;
+
+				//AdvertiserSelectionWebControl1.EventButton=eventButton;
+				//AdvertiserSelectionWebControl1.KeyWord=keyWordTextBox.Text;
 				#endregion
 
 				#region Remplace les caractères accuentués du mot clé
@@ -254,23 +256,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 				keyWordTextBox.Text=TNS.AdExpress.Web.Functions.CheckedText.NewText(keyWordTextBox.Text);
 				#endregion
 
-				#region Boutons RollOver
-				//validImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				//validImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";		
-			
-				//nextImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/suivant_up.gif";
-				//nextImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/suivant_down.gif";			
-				//saveImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_up.gif";
-				//saveImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/enregistrer_univers_down.gif";
-				//loadImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/charger_up.gif";
-				//loadImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/charger_down.gif";
-				
-				#region Boutons parrainage				
-				//programTypeImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_up.gif";
-				//programTypeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/bt_emissions_down.gif";	
-				//formSponsoringshipImageButtonRollOverWebControl.ImageUrl="/Images/"+_siteLanguage+"/button/bt_formes_up.gif";
-				//formSponsoringshipImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_siteLanguage+"/button/bt_formes_down.gif";			
-				#endregion
+				#region Boutons RollOver										
 
 				#region test
 				if(!Page.IsPostBack){
@@ -440,21 +426,14 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 			MenuWebControl2.CustomerWebSession = _webSession;
 			
 			//On affiche pas l'icone représentant le racourci vers la page de résultats si les dates sélectionnées sont aux formats autres que mensuels
-			//et que le média Internet est sélectionné
-            /*
-			string idVehicleList =  _webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);						
-			if(_webSession.isDatesSelected() && idVehicleList!=null && idVehicleList.Length>0 
-				&& idVehicleList.IndexOf(DBClassificationConstantes.Vehicles.names.internet.GetHashCode().ToString())>=0
-				&& _webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.monthly &&  _webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.yearly){			
-				this.MenuWebControl2.ForbidResultIcon = true;									
-			}
-            */
+			//et que le média Internet est sélectionné          
             if(!_webSession.isDatesSelected())
                 this.MenuWebControl2.ForbidResultIcon = true;
 
-			AdvertiserSelectionWebControl1.CustomerWebSession=_webSession;
+			//AdvertiserSelectionWebControl1.CustomerWebSession=_webSession;
 
-            //_genericMediaDetailSelectionWebControl.CustomerWebSession = _webSession;
+			GenericDetailVehicleSelectionWebControl1.CustomerWebSession = _webSession;
+            _genericMediaDetailSelectionWebControl.CustomerWebSession = _webSession;
 			return tmp;
 
 		}
@@ -469,40 +448,33 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 		protected void nextImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			
 			try{
-//				if(_webSession.CompetitorUniversMedia!=null && _webSession.CompetitorUniversMedia.Count<5){//5 univers au maximum
-					if(AdvertiserSelectionWebControl1.NbElement!=constEvent.error.CHECKBOX_NULL && AdvertiserSelectionWebControl1.NbElement!=constEvent.error.MEDIA_SELECTED_ALREADY && AdvertiserSelectionWebControl1.NbElement!=constEvent.error.MAX_ELEMENTS){
+				if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.CHECKBOX_NULL && GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.MEDIA_SELECTED_ALREADY && GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.MAX_ELEMENTS) {
 						int numberCompetitorMedia=_webSession.CompetitorUniversMedia.Count+1;
 						_webSession.CompetitorUniversMedia.Add(numberCompetitorMedia,(System.Windows.Forms.TreeNode)_webSession.CurrentUniversMedia.Clone());
-						_webSession.Save();				
+						_webSession.Save();
 
-					}else if(AdvertiserSelectionWebControl1.NbElement==constEvent.error.CHECKBOX_NULL){
+					}
+					else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity == constEvent.error.CHECKBOX_NULL) {
 						// Erreur : Il faut sélectionner au moins un élément
 						Response.Write("<script language=javascript>");
 						Response.Write("alert(\""+GestionWeb.GetWebWord(1052,_webSession.SiteLanguage)+"\");");
 						Response.Write("history.go(-1);");
 						Response.Write("</script>");
 					}
-					else if (AdvertiserSelectionWebControl1.NbElement==constEvent.error.MAX_ELEMENTS) {
+					else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity == constEvent.error.MAX_ELEMENTS) {
 						// Erreur : Il faut sélectionner moins de 200 éléments
 						Response.Write("<script language=javascript>");
                         Response.Write("alert(\"" + GestionWeb.GetWebWord(2264, _webSession.SiteLanguage) + "\");");
 						Response.Write("history.go(-1);");
 						Response.Write("</script>");
 					}
-					else if(AdvertiserSelectionWebControl1.NbElement==constEvent.error.MEDIA_SELECTED_ALREADY){
+					else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity == constEvent.error.MEDIA_SELECTED_ALREADY) {
 						// Erreur : Les supports ont déjà été sélectionnés
 						Response.Write("<script language=javascript>");
 						Response.Write("alert(\""+GestionWeb.GetWebWord(1475,_webSession.SiteLanguage)+"\");");
 						//Response.Write("history.go(-1);");
 						Response.Write("</script>");
 					}
-//				}else{ 
-//					// Erreur : sélection de 5 univers au maximum
-//					Response.Write("<script language=javascript>");
-//					Response.Write("alert(\""+GestionWeb.GetWebWord(978,_webSession.SiteLanguage)+"\");");
-//					Response.Write("history.go(-1);");
-//					Response.Write("</script>");
-//				}
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -544,8 +516,8 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 					switch(_webSession.CurrentModule){
 						case WebConstantes.Module.Name.ALERTE_POTENTIELS:
 						case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
-					
-							if (DetailVehicleSelectionWebControl.IsEmptyList==true) {
+
+							if (GenericDetailVehicleSelectionWebControl.IsEmptyList == true) {
 								validImageButtonRollOverWebControl.Visible=false;
 								nextImageButtonRollOverWebControl.Visible=false;
 								saveImageButtonRollOverWebControl.Visible=false;							
@@ -563,7 +535,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 							break;
 
 							case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-								if (DetailVehicleSelectionWebControl.IsEmptyList==true) {
+								if (GenericDetailVehicleSelectionWebControl.IsEmptyList == true) {
 									validImageButtonRollOverWebControl.Visible=false;
 									nextImageButtonRollOverWebControl.Visible=false;
 									saveImageButtonRollOverWebControl.Visible=false;							
@@ -579,8 +551,8 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 //									saveImageButtonRollOverWebControl.Visible=false;
 //								}
 								break;
-						case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES :							
-							if (DetailVehicleSelectionWebControl.IsEmptyList==true) {
+						case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES :
+							if (GenericDetailVehicleSelectionWebControl.IsEmptyList == true) {
 								programTypeImageButtonRollOverWebControl.Visible = false;
 								formSponsoringshipImageButtonRollOverWebControl.Visible = false;
 							}else{
@@ -591,7 +563,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 
 						default:
 						
-							if (DetailVehicleSelectionWebControl.IsEmptyList==true) {
+							if (GenericDetailVehicleSelectionWebControl.IsEmptyList==true) {
 								validImageButtonRollOverWebControl.Visible=false;
 								nextImageButtonRollOverWebControl.Visible=false;
 								saveImageButtonRollOverWebControl.Visible=false;							
@@ -657,28 +629,29 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 			
 			try{
 
-				if(AdvertiserSelectionWebControl1.NbElement!=constEvent.error.CHECKBOX_NULL && AdvertiserSelectionWebControl1.NbElement!=constEvent.error.MEDIA_SELECTED_ALREADY && AdvertiserSelectionWebControl1.NbElement!=constEvent.error.MAX_ELEMENTS){
+				if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.CHECKBOX_NULL && GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.MEDIA_SELECTED_ALREADY && GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.MAX_ELEMENTS) {
 					int numberCompetitorMedia=_webSession.CompetitorUniversMedia.Count+1;
 					_webSession.CompetitorUniversMedia.Add(numberCompetitorMedia,(System.Windows.Forms.TreeNode)_webSession.CurrentUniversMedia.Clone());
 					_webSession.Save();
 					_webSession.Source.Close();
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession+"");
-				
-				}else if (AdvertiserSelectionWebControl1.NbElement==constEvent.error.CHECKBOX_NULL) {
+
+				}
+				else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity == constEvent.error.CHECKBOX_NULL) {
 					// Erreur : Il faut sélectionner au moins un élément
 					Response.Write("<script language=javascript>");
 					Response.Write("alert(\""+GestionWeb.GetWebWord(1052,_webSession.SiteLanguage)+"\");");
 					Response.Write("history.go(-1);");
 					Response.Write("</script>");
 				}
-				else if (AdvertiserSelectionWebControl1.NbElement==constEvent.error.MAX_ELEMENTS) {
+				else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity == constEvent.error.MAX_ELEMENTS) {
 					// Erreur : Il faut sélectionner moins de 200 éléments
 					Response.Write("<script language=javascript>");
                     Response.Write("alert(\"" + GestionWeb.GetWebWord(2264, _webSession.SiteLanguage) + "\");");
 					Response.Write("history.go(-1);");
 					Response.Write("</script>");
 				}
-				else if(AdvertiserSelectionWebControl1.NbElement==constEvent.error.MEDIA_SELECTED_ALREADY){
+				else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity == constEvent.error.MEDIA_SELECTED_ALREADY) {
 					// Erreur : Les supports ont déjà été sélectionnés
 					Response.Write("<script language=javascript>");
 					Response.Write("alert(\""+GestionWeb.GetWebWord(1475,_webSession.SiteLanguage)+"\");");
@@ -703,13 +676,13 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 		/// <param name="e">Arguments</param>
 		protected void saveImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			
-			try{			
-				if(AdvertiserSelectionWebControl1.NbElement!=constEvent.error.CHECKBOX_NULL && AdvertiserSelectionWebControl1.NbElement!=constEvent.error.MAX_ELEMENTS){
+			try{
+				if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.CHECKBOX_NULL && GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.MAX_ELEMENTS) {
 					Int64 idUniverseClientDescription=WebConstantes.LoadableUnivers.CATEGORY_MEDIA; 	
 
 					saveScript = WebFunctions.Script.SaveUniverseOpen(_webSession.IdSession, branchType,idUniverseClientDescription);
 				}
-				else if (AdvertiserSelectionWebControl1.NbElement==constEvent.error.MAX_ELEMENTS){
+				else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity == constEvent.error.MAX_ELEMENTS) {
 					// Erreur : Il faut sélectionner moins de 200 éléments
 					Response.Write("<script language=javascript>");
                     Response.Write("alert(\"" + GestionWeb.GetWebWord(2264, _webSession.SiteLanguage) + "\");");
@@ -740,7 +713,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 		/// <param name="e">Arguments</param>
 		private void loadImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			try{		
-				if(AdvertiserSelectionWebControl1.NbElement==constEvent.error.LOAD_NOT_POSSIBLE){
+				if(GenericDetailVehicleSelectionWebControl1.NbItemsValidity==constEvent.error.LOAD_NOT_POSSIBLE){
 					Response.Write("<script language=javascript>");
 					Response.Write("alert(\""+GestionWeb.GetWebWord(1086,_webSession.SiteLanguage)+"\");");
 					Response.Write("history.go(-1);");
@@ -820,7 +793,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 		/// <param name="e">Arguments</param>
 		protected void programTypeImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			try{
-				if(AdvertiserSelectionWebControl1.NbElement!=constEvent.error.CHECKBOX_NULL && AdvertiserSelectionWebControl1.NbElement!=constEvent.error.MEDIA_SELECTED_ALREADY){
+				if(GenericDetailVehicleSelectionWebControl1.NbItemsValidity!=constEvent.error.CHECKBOX_NULL && GenericDetailVehicleSelectionWebControl1.NbItemsValidity!=constEvent.error.MEDIA_SELECTED_ALREADY){
 					int numberCompetitorMedia=_webSession.CompetitorUniversMedia.Count+1;
 					_webSession.CompetitorUniversMedia.Add(numberCompetitorMedia,(System.Windows.Forms.TreeNode)_webSession.CurrentUniversMedia.Clone());
 					_webSession.Save();
@@ -828,14 +801,14 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 					_nextUrl = this._currentModule.GetSubSectionURL(PROGRAM_TYPE_ID,Page.Request.Url.AbsolutePath,true); 
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 				
-				}else if (AdvertiserSelectionWebControl1.NbElement==constEvent.error.CHECKBOX_NULL) {
+				}else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity==constEvent.error.CHECKBOX_NULL) {
 					// Erreur : Il faut sélectionner au moins un élément
 					Response.Write("<script language=javascript>");
 					Response.Write("alert(\""+GestionWeb.GetWebWord(1052,_webSession.SiteLanguage)+"\");");
 					Response.Write("history.go(-1);");
 					Response.Write("</script>");
 				}
-				else if(AdvertiserSelectionWebControl1.NbElement==constEvent.error.MEDIA_SELECTED_ALREADY){
+				else if(GenericDetailVehicleSelectionWebControl1.NbItemsValidity==constEvent.error.MEDIA_SELECTED_ALREADY){
 					// Erreur : Les supports ont déjà été sélectionnés
 					Response.Write("<script language=javascript>");
 					Response.Write("alert(\""+GestionWeb.GetWebWord(1475,_webSession.SiteLanguage)+"\");");
@@ -860,7 +833,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 		/// <param name="e">Arguments</param>
 		protected void formSponsoringshipImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			try{
-				if(AdvertiserSelectionWebControl1.NbElement!=constEvent.error.CHECKBOX_NULL && AdvertiserSelectionWebControl1.NbElement!=constEvent.error.MEDIA_SELECTED_ALREADY){
+				if(GenericDetailVehicleSelectionWebControl1.NbItemsValidity!=constEvent.error.CHECKBOX_NULL && GenericDetailVehicleSelectionWebControl1.NbItemsValidity!=constEvent.error.MEDIA_SELECTED_ALREADY){
 					int numberCompetitorMedia=_webSession.CompetitorUniversMedia.Count+1;
 					_webSession.CompetitorUniversMedia.Add(numberCompetitorMedia,(System.Windows.Forms.TreeNode)_webSession.CurrentUniversMedia.Clone());
 					_webSession.Save();
@@ -868,14 +841,14 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 					_nextUrl = this._currentModule.GetSubSectionURL(SPONSORSHIP_FORM_ID,Page.Request.Url.AbsolutePath,true); 
 					Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 				
-				}else if (AdvertiserSelectionWebControl1.NbElement==constEvent.error.CHECKBOX_NULL) {
+				}else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity==constEvent.error.CHECKBOX_NULL) {
 					// Erreur : Il faut sélectionner au moins un élément
 					Response.Write("<script language=javascript>");
 					Response.Write("alert(\""+GestionWeb.GetWebWord(1052,_webSession.SiteLanguage)+"\");");
 					Response.Write("history.go(-1);");
 					Response.Write("</script>");
 				}
-				else if(AdvertiserSelectionWebControl1.NbElement==constEvent.error.MEDIA_SELECTED_ALREADY){
+				else if(GenericDetailVehicleSelectionWebControl1.NbItemsValidity==constEvent.error.MEDIA_SELECTED_ALREADY){
 					// Erreur : Les supports ont déjà été sélectionnés
 					Response.Write("<script language=javascript>");
 					Response.Write("alert(\""+GestionWeb.GetWebWord(1475,_webSession.SiteLanguage)+"\");");
