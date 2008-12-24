@@ -45,8 +45,43 @@ namespace TNS.AdExpress.Web.Core.Utilities
     /// <summary>
     /// Générateur de code SQL
     /// </summary>
-    public class SQLGenerator
-    {
+    public class SQLGenerator {
+
+        #region In Clause Method
+        /// <summary>
+        /// In Clause Method
+        /// </summary>
+        /// <param name="webSession">Customer session</param>
+        /// <param name="label">Field</param>
+        /// <param name="inClauseItems">Items
+        /// <example>"3,9,6"</example>
+        /// </param>
+        /// <returns>In clause SQL code</returns>
+        public static string GetInClauseMagicMethod(WebSession webSession,string label,string inClauseItems) {
+
+            string str = string.Empty;
+            //if(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)VehicleClassificationCst.internet) {
+                //string activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                if(inClauseItems.Length > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    string[] strs = inClauseItems.Split(',');
+                    int i = 0;
+                    sb.Append("(");
+                    while(i < strs.Length) {
+                        if(i > 0) {
+                            sb.Append(" or ");
+                        }
+                        sb.AppendFormat(" {1} in ({0}) ",String.Join(",",strs,i,Math.Min(strs.Length-i,500)),label);
+                        i += 500;
+                    }
+                    sb.Append(")");
+                    return sb.ToString();
+                }
+
+            //}
+            return str;
+        }
+        #endregion
 
         #region Droits client
 
