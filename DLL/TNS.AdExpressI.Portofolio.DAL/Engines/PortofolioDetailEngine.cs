@@ -200,7 +200,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     }
                     else
                     {
-                        groupByOptional = string.Format(",{0}.hashcode ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        groupByOptional = string.Format(",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                     } 
                     //if (type != DBConstantes.TableType.Type.webPlan)
                     //{

@@ -455,7 +455,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                         groupByOptional = string.Format(",{0}.list_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                     }
                     else{
-                        groupByOptional = string.Format(",{0}.hashcode ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        groupByOptional = string.Format(",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                     }
                 }
                 //option encarts (pour la presse)

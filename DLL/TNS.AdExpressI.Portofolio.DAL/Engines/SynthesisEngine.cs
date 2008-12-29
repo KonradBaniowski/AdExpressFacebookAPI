@@ -1352,7 +1352,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }
             else {
 
-                sql.Append("select distinct to_char(hashcode) as hashcode ");
+                sql.Append("select distinct to_char(id_banners) as hashcode ");
             }
 
             if(customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
@@ -1409,7 +1409,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }
             else
             {
-                sql.Append("hashcode");
+                sql.Append("id_banners");
             }
 
             #endregion

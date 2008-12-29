@@ -95,7 +95,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     unitFieldNameSumWithAlias = WebFunctions.SQLGenerator.GetUnitFieldNameSumWithAlias(_webSession, DBConstantes.TableType.Type.dataVehicle4M); //WebFunctions.SQLGenerator.GetUnitFieldName(_webSession);
                 else {
                     unitFieldNameSumWithAlias = GetUnitFieldName(_webSession, DBConstantes.TableType.Type.dataVehicle4M);
-                    dataGroupby = ","+WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".hashcode";
+                    dataGroupby = "," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_banners";
                 }
 
                 mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
