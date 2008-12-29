@@ -697,8 +697,8 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                             groupByOptional);
                         orderClause = string.Format(" order by {0}, id_media", orderFieldNameWithoutTablePrefix);
                     }
-                    sql.Append(orderClause);
                 }
+                sql.Append(orderClause);
             }
             catch (System.Exception err) {
                 throw (new PresentAbsentDALException("Unable to build request for present/absent report : " + sql, err));

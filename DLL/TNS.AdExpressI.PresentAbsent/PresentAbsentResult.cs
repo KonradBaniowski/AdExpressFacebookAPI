@@ -1275,11 +1275,12 @@ namespace TNS.AdExpressI.PresentAbsent{
                     headerGroupSubTotal = headerGroupTmp.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUB_TOTAL_HEADER_ID);
                     universesSubTotal.Add(iUnivers, headerGroupSubTotal);
                 }
+                List<Header> heads = new List<Header>(); 
                 foreach (Int64 id in idsByUnivers[iUnivers])
-                {
+                {                    
                     headerTmp = new Header(true, levels[id], id);
+                    heads.Add(headerTmp);
                     elementsHeader.Add(string.Format("{0}-{1}",iUnivers, id), headerTmp);
-                    headerGroupTmp.Add(headerTmp);
                     if (!headerGroupTmp.ContainSubTotal)
                     {
                         if (!universesSubTotal.ContainsKey(iUnivers))
@@ -1299,6 +1300,11 @@ namespace TNS.AdExpressI.PresentAbsent{
                     {
                         elementsSubTotal.Add(string.Format("{0}-{1}", iUnivers, id), headerGroupSubTotal);
                     }
+                }
+                heads.Sort(delegate(Header h1, Header h2) { return h1.Label.CompareTo(h2.Label); });
+                foreach (Header h in heads)
+                {
+                    headerGroupTmp.Add(h);
                 }
                 headers.Root.Add(headerGroupTmp);
                 iUnivers++;
