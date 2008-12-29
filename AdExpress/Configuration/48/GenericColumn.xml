@@ -128,7 +128,7 @@
       </constraints>
     </column>
     <column id="66" name="Type enveloppe" webTextId="2222" dbId="id_mail_format" dbLabel="mail_format" dbTable="mail_format" dbTablePrefixe="mfr"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="67" name="Prix" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="67" name="Prix" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
 
     <column id="68" name="Somme Surface page" webTextId="2251" isSum="true"  dbLabel="area_page" dbLabelAlias="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>
     <column id="69" name="Somme Durée" webTextId="861" isSum="true"  dbLabel="duration" dbLabelAlias="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="shortduration"/>

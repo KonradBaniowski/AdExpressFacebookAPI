@@ -11,8 +11,10 @@
         <unitformat name="percentage" format="#,##0.00\%;-#,##0.00\%"   excelFormat="#,##0.00\%;-#,##0.00\%"/>
         <unitformat name="percentWOSign" format="#,##0.00;-#,##0.00"    excelFormat="#,##0.00;-#,##0.00"/>
         <unitformat name="duration" format="00 H 00 M 00 S"               excelFormat="00 H 00 M 00 S"/>
+        <unitformat name="durationminu" format="00 h 00 m 00 S"         excelFormat="00 h 00 m 00 S"/>
         <unitformat name="shortduration" format="0 m 00 s"                excelFormat="0 m 00 s"/>
         <unitformat name="airtime" format="#0:00:00"                      excelFormat="#0:00:00"/>
+        <unitformat name="currency" format="#,##0 €;-#,##0 €"                   excelFormat="# ### ### ##0;-# ### ### ##0"/>
       </unitformats>
       <dateFormats>
         <dateFormat name="shortdatepattern" format="dd/MM/yyyy"           excelFormat="dd/MM/yyyy"/>
@@ -29,8 +31,10 @@
         <unitformat name="percentage" format="#,##0.00 \%;-#,##0.00 \%" excelFormat="#,##0.00 \%;-#,##0.00 \%"/>
         <unitformat name="percentWOSign" format="#,##0.00;-#,##0.00"    excelFormat="#,##0.00;-#,##0.00"/>
         <unitformat name="duration" format="00 H 00 M 00 S"               excelFormat="00 H 00 M 00 S"/>
+        <unitformat name="durationminu" format="00 h 00 m 00 S"         excelFormat="00 h 00 m 00 S"/>
         <unitformat name="shortduration" format="0 m 00 s"                excelFormat="0 m 00 s"/>
         <unitformat name="airtime" format="#0:00:00"                      excelFormat="#0:00:00"/>
+        <unitformat name="currency" format="#,##0 €;-#,##0 €"                   excelFormat="# ### ### ##0;-# ### ### ##0"/>
       </unitformats>
       <dateFormats>
         <dateFormat name="shortdatepattern" format="MM/dd/yyyy"           excelFormat="MM/dd/yyyy"/>

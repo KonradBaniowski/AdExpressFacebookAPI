@@ -21,7 +21,7 @@
     <column id="49" name="Date de diffusion" webTextId="1380"  dbLabel="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
     <column id="53" name="Plan Media" webTextId="1478"/>
     <column id="54" name="Id pub presse" webTextId="860" dbLabel="id_advertisement" dbTablePrefixe="wp" />
-    <column id="67" name="Prix" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="67" name="Prix" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
     <column id="70" name="Nombre de supports" webTextId="2252" isCountDistinct="true"  dbLabel="id_media" dbTablePrefixe="wp" dbLabelAlias="nb_supports" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="71" name="Nombre de supports press" webTextId="2252" dbLabel="id_media" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellIdsNumber" format="max0"/>
     <column id="72" name="Insertions" webTextId="1398" isSum="true"  dbLabel="insertion" dbLabelAlias="insertion" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
