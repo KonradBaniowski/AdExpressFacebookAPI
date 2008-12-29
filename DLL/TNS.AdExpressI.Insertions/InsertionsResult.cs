@@ -538,11 +538,14 @@ namespace TNS.AdExpressI.Insertions
                     switch (columns[i].Id)
                     {
                         case GenericColumnItemInformation.Columns.associatedFile:
-                            switch (vehicle.Id)
-                            {
+                            switch (vehicle.Id){
                                 case CstDBClassif.Vehicles.names.others:
                                 case CstDBClassif.Vehicles.names.tv:
-                                    tab[cLine, j] = new CellTvCreativeLink(Convert.ToInt64(row[columnsName[i]]), _session, (int)vehicle.DatabaseId);
+                                    s = row[columnsName[i]].ToString();
+                                    if(s.Length > 0)
+                                        tab[cLine, j] = new CellTvCreativeLink(Convert.ToInt64(s), _session, (int)vehicle.DatabaseId);
+                                    else
+                                        tab[cLine, j] = new CellTvCreativeLink(-1, _session, (int)vehicle.DatabaseId);
                                     break;
                                 case CstDBClassif.Vehicles.names.radio:
                                     tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(), _session);
