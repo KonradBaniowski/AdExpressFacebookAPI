@@ -1614,7 +1614,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Personnaliser les supports (affiner dans les résultats)
             /// </summary>
-            mediaPersonnalizedSelected = 29
+            mediaPersonnalizedSelected = 29,
+            /// <summary>
+            /// Evaliant auto promo
+            /// </summary>
+            isAutoPromo = 30
 		}
 	}
 

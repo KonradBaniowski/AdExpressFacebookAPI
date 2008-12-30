@@ -97,6 +97,8 @@
               <detailSelection id="18" name="Generic Media Level Detail"/>
               <detailSelection id="19" name="Slogan Selected"/>
               <detailSelection id="29" name="Media Personnalized"/>
+              <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
         </results>
@@ -191,6 +193,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="1" resultid="19" name="Résultats communs" traductioncode="1127" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
@@ -218,6 +221,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="2" resultid="20" name="Résultats absents" traductioncode="1126" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
@@ -245,6 +249,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="3" resultid="21" name="Résultats exclusifs" traductioncode="1128" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
@@ -272,6 +277,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="4" resultid="6" name="Résultats Forces" traductioncode="1157" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" >
@@ -299,6 +305,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="5" resultid="7" name="Résultats Potentiels" traductioncode="1158" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" >
@@ -326,6 +333,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="6" resultid="52" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
@@ -351,6 +359,7 @@
               <detailSelection id="6" name="Product Selected"/>
               <detailSelection id="4" name="Unit"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
         </results>
@@ -448,6 +457,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="1" resultid="23" name="Résultats fidèles" traductioncode="1241" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
@@ -478,6 +488,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="2" resultid="24" name="Résultats fidèles en baisse" traductioncode="1242" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
@@ -508,6 +519,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="3" resultid="25" name="Résultats fidèles en développement" traductioncode="1243" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
@@ -538,6 +550,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="4" resultid="26" name="Résultats gagnés" traductioncode="1244" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
@@ -568,6 +581,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="5" resultid="27" name="Résultats perdus" traductioncode="1245" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
@@ -598,6 +612,7 @@
               <detailSelection id="28" name="Generic Column Level Detail"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="6" resultid="50" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
@@ -626,6 +641,7 @@
               <detailSelection id="6" name="Product Selected"/>
               <detailSelection id="4" name="Unit"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
         </results>
@@ -724,6 +740,7 @@
               <detailSelection id="5" name="Vehicle Selected"/>
               <detailSelection id="9" name="Competitor Media Selected"/>
               <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="1" resultid="32" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx">
@@ -751,6 +768,7 @@
               <detailSelection id="6" name="Product Selected"/>
               <detailSelection id="10" name="Inset selected"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
           <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
@@ -804,6 +822,7 @@
               <detailSelection id="4" name="Unit"/>
               <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
         </results>
@@ -1153,7 +1172,7 @@
               <detailSelection id="6" name="Product Selected"/>
               <detailSelection id="4" name="Unit"/>
               <detailSelection id="7" name="Media Level Detail"/>
-              <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
         </results>

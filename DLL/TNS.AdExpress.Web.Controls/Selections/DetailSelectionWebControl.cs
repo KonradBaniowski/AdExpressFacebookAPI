@@ -549,6 +549,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						case WebConstantes.DetailSelection.Type.insetSelected:
 							t.Append(GetInsetSelected(_webSession)); 
 							break;
+						case WebConstantes.DetailSelection.Type.isAutoPromo:
+                            t.Append(GetAutoPromo(_webSession, currentModule)); 
+							break;
 						case WebConstantes.DetailSelection.Type.newInMedia:
 							t.Append(GetNewInMedia(_webSession)); 
 							break;
@@ -1194,6 +1197,44 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						break;
 				}
 				return("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+GestionWeb.GetWebWord(1400,webSession.SiteLanguage)+"</font> "+GestionWeb.GetWebWord(code,webSession.SiteLanguage)+"</td></tr>");
+			}
+			return("");
+		}
+		#endregion
+
+        #region Evaliant auto promo status
+		/// <summary>
+		/// Evaliant auto promo
+		/// </summary>
+		/// <param name="webSession">User session</param>
+        /// <param name="m">Current module</param>
+		/// <returns>HTML</returns>
+        private string GetAutoPromo(WebSession webSession, Module m)
+        {
+            bool isEvaliant = false;
+            if (m.Id != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
+            {
+                ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
+                {
+                    isEvaliant = true;
+                }
+            }
+            else
+            {
+                string[] listVehicles = webSession.GetSelection(webSession.SelectionUniversMedia, Constantes.Customer.Right.type.vehicleAccess).Split(new char[] { ',' });
+                if (listVehicles != null && listVehicles.Length > 0 && VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.adnettrack) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.adnettrack).ToString()) >= 0)
+                {
+                    isEvaliant = true;
+                }
+            }
+			if(isEvaliant){
+                int code = 2551;
+                if (webSession.AutopromoEvaliant)
+                {
+                    code = 2476;
+                }
+                return ("<tr><td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2552, webSession.SiteLanguage) + "</font> " + GestionWeb.GetWebWord(code, webSession.SiteLanguage) + "</td></tr>");
 			}
 			return("");
 		}

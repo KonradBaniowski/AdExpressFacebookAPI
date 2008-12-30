@@ -1736,5 +1736,7 @@
     <item mnemonic="w2548" type="System.String">Sélectionner/désélectionner toutes les régies</item>
     <item mnemonic="w2549" type="System.String">Sélectionner/désélectionner tous les basic media</item>
     <item mnemonic="w2550" type="System.String">Sélectionner/désélectionner tous les pays</item>
+    <item mnemonic="w2551" type="System.String">Avec auto-promo Evaliant</item>
+    <item mnemonic="w2552" type="System.String">Auto-promo</item>
   </items>
 </localization>
