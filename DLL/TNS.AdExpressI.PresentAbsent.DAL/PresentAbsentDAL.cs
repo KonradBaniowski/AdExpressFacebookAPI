@@ -652,7 +652,6 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 if (customerPeriod.Is4M) {
                     sql4M.Append(GetRequest(CstDB.TableType.Type.dataVehicle4M));
                     orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
-                    sql4M.Append(orderClause);
                     sql = sql4M;
                 }
                 else if (!customerPeriod.IsDataVehicle && !customerPeriod.IsWebPlan) {
