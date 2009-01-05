@@ -699,12 +699,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 #region initialisation du bouton
                 output.Write("<div style=\"MARGIN-LEFT: 0px;\"><table width=\"100%\"><tr><td align=\"right\">");
                 _buttonOk.RenderControl(output);
-                if (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.radio) {
-                    if (_customerWebSession.SiteLanguage == 33)
-                        output.Write("<FONT face=Arial size=1 class=\"txtViolet\" style=\"LEFT: 781px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
-                    else
-                        output.Write("<FONT face=Arial size=1 class=\"txtViolet\" style=\"LEFT: 758px; POSITION: relative\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
-                }
                 output.Write("</td></tr></table></div>");
                 #endregion
 
@@ -715,6 +709,12 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 output.Write("</div>");
 				output.Write("</TD>");
 				output.Write("</TR>");
+
+                if (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.radio) {
+                    output.Write("<tr><td align=\"right\">");
+                    output.Write("<FONT face=Arial size=1 class=\"txtViolet\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
+                    output.Write("</td></tr>");
+                }
 
                 #region hidden fields
                 output.Write("<tr><td>");
