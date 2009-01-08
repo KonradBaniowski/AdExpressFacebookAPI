@@ -325,8 +325,54 @@
 				</TR>
 				<TR height="7">
 					<TD colSpan="2"></TD>
-				</TR>				
-				<!--Produits-->
+				</TR>
+                <!--Encart-->
+                <%if (displayInset){ %>
+                <tr>
+                    <td>
+                    </td>
+                    <td class="txtViolet11Bold whiteBackGround">
+                        &nbsp;
+                        <cc1:AdExpressText ID="AdExpressText18" runat="server" Code="1400" Language="33" />
+                    </td>
+                </tr>
+                <tr height="20">
+                    <td>
+                    </td>
+                    <td class="txtViolet11 whiteBackGround" valign="top">
+                        &nbsp;
+                        <cc1:AdExpressText ID="AdExpressText20" runat="server" Language="33" />
+                    </td>
+                </tr>
+                <tr height="7">
+                    <td colspan="2">
+                    </td>
+                </tr>
+                <%} %>
+                <!--Auto promo-->
+                <%if (displayAutoPromo){ %>
+                <tr>
+                    <td>
+                    </td>
+                    <td class="txtViolet11Bold whiteBackGround">
+                        &nbsp;
+                        <cc1:AdExpressText ID="AdExpressText19" runat="server" Code="2552" Language="33" /> :
+                    </td>
+                </tr>
+                <tr height="20">
+                    <td>
+                    </td>
+                    <td class="txtViolet11 whiteBackGround" valign="top">
+                        &nbsp;
+                        <cc1:AdExpressText ID="AdExpressText21" runat="server" Language="33" />
+                    </td>
+                </tr>
+                <tr height="7">
+                    <td colspan="2">
+                    </td>
+                </tr>
+                <%} %>
+                <!--Produits-->
 				<%if(displayProduct){%>
 				<TR>
 					<TD></TD>

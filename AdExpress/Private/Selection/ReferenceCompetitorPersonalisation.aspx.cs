@@ -322,7 +322,8 @@ namespace AdExpress.Private.Selection{
 			return advertisers;
 		}
 		#endregion
-		#region NextToValidate
+
+        #region NextToValidate
 		/// <summary>
 		/// Effectue les opérations nécessaires pour passer de la page type "reference" a la page type "concurrent"
 		/// (bouton suivvant==>bouton valider, liste des annonceurs selectionnés...)

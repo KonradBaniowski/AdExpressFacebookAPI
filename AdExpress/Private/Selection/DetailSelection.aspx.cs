@@ -33,7 +33,11 @@ using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.Date;
 using DBCst = TNS.AdExpress.Constantes.DB;
+using CstClassif = TNS.AdExpress.Constantes.Classification;
+using CstRight = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain;
+using TNS.AdExpress.Domain.Classification;
 #endregion
 
 namespace AdExpress.Private.Selection{
@@ -214,6 +218,9 @@ namespace AdExpress.Private.Selection{
         /// Indique si on affiche la personnalisation des supports
         /// </summary>
         protected bool displayMediaPersonnalized = false;
+        protected bool displayInset = false;
+        protected bool displayAutoPromo = false;
+
 		#endregion
 
 		#region Constructeur
@@ -399,164 +406,6 @@ namespace AdExpress.Private.Selection{
 					targetsText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMTarget,false,false,false,"100",false,false,_webSession.SiteLanguage,2,1,true);
                 }
                 #endregion
-
-                #region Ancienne version (Annonceur / référence / produits ...)
-                //// Annonceur/Référence
-				//if (_webSession.isAdvertisersSelected() && !_webSession.isCompetitorAdvertiserSelected()){
-				//    displayAdvertiser=true;
-				//    // Affichage type d'advertiser
-				//    if(((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess 
-				//        ||	((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException ) {
-				//        advertiserAdexpresstext.Code=814;
-				//    }
-				//    else if(((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess
-				//        ||	((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserException ) {
-				//        advertiserAdexpresstext.Code=813;
-				//    }
-				//    else if(((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandAccess
-				//        ||	((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandException ) 
-				//    {
-				//        advertiserAdexpresstext.Code=1585;
-				//    }
-
-				//    else if(((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productAccess 
-				//        ||	((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productException ) {
-				//        advertiserAdexpresstext.Code=815;
-				//    }
-				//    else if(((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess 
-				//        ||	((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorException ) {
-				//        advertiserAdexpresstext.Code=965;
-				//    }
-				//    else if(((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess 
-				//        ||	((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorException ) {
-				//        advertiserAdexpresstext.Code=966;
-				//    }
-				//    else if(((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupAccess 
-				//        ||	((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupException ) {
-				//        advertiserAdexpresstext.Code=964;
-				//    }
-				//    else if (((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess
-				//   || ((LevelInformation)_webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.segmentException) {
-				//        advertiserAdexpresstext.Code = 2242;
-				//    }	
-
-				//    if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent"+i+"")) {
-				//        Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"showHideContent"+i+"",TNS.AdExpress.Web.Functions.Script.ShowHideContent1(i));
-				//    }
-
-				//    // Affichage du System.Windows.Forms.TreeNode
-				//    advertiserText=TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversAdvertiser,false,true,true,"100",true,false,_webSession.SiteLanguage,2,i,true);
-				//    i++;
-				//}
-
-
-
-
-
-				//// Produit
-				//if (_webSession.isSelectionProductSelected()){
-				//    displayProduct=true;
-			
-				//    if(((LevelInformation)_webSession.CurrentUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productAccess 
-				//        ||	((LevelInformation)_webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productException ) {
-				//        productAdExpressText.Code=815;
-				//    }
-				//    else if(((LevelInformation)_webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess 
-				//        ||	((LevelInformation)_webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorException) {
-				//        productAdExpressText.Code=965;
-				//    }
-				//    else if(((LevelInformation)_webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess 
-				//        ||	((LevelInformation)_webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorException ) {
-				//        productAdExpressText.Code=966;
-				//    }
-				//    else if(((LevelInformation)_webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupAccess 
-				//        ||	((LevelInformation)_webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupException ) {
-				//        productAdExpressText.Code=964;
-				//    }
-				//    else if (((LevelInformation)_webSession.SelectionUniversProduct.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.segmentException
-				//   || ((LevelInformation)_webSession.SelectionUniversProduct.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess) {
-				//        productAdExpressText.Code = 2242;
-				//    }	
-
-				//    if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent"+i+"")) {
-				//        Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"showHideContent"+i+"",TNS.AdExpress.Web.Functions.Script.ShowHideContent1(i));
-				//    }
-
-				//    // Affichage du System.Windows.Forms.TreeNode					
-				//    productText=TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversProduct,false,true,true,"100",true,false,_webSession.SiteLanguage,2,i,true);
-				//    i++;
-				//    //changes for sector display
-				//    if(_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR ) {
-				//        productText+=TNS.AdExpress.Web.BusinessFacade.Selections.Products.SectorsSelectedBusinessFacade.GetSectorsSelected(_webSession);
-				//    }
-
-
-				//}else if(IsSelectionProductSelected(_webSession)){
-				//    displayProduct=true;
-				//    if(((LevelInformation)_webSession.CurrentUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess 
-				//        ||	((LevelInformation)_webSession.CurrentUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorException) {
-				//        productAdExpressText.Code=965;
-				//    }					
-				//    productText=TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversProduct,false,true,true,"100",true,false,_webSession.SiteLanguage,2,i,true);
-				//}
-
-
-
-
-				//// Référence advertiser
-
-				//if (_webSession.isReferenceAdvertisersSelected()){
-				//    displayReferenceAdvertiser=true;
-			
-				//    if(((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess 
-				//        ||	((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException ) {
-				//        referenceProductAdExpressText.Code=814;
-				//    }
-				//    else if(((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess
-				//        ||	((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserException ) {
-				//        referenceProductAdExpressText.Code=813;
-				//    }
-				//    else if(((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandAccess
-				//        ||	((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandException ) 
-				//    {
-				//        referenceProductAdExpressText.Code=1585;
-				//    }
-				//    else if(((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productAccess 
-				//        ||	((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productException ) {
-				//        referenceProductAdExpressText.Code=815;
-				//    }
-				//    else if(((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess 
-				//        ||	((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorException ) {
-				//        referenceProductAdExpressText.Code=965;
-				//    }
-				//    else if(((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess 
-				//        ||	((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorException ) {
-				//        referenceProductAdExpressText.Code=966;
-				//    }
-				//    else if(((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupAccess 
-				//        ||	((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupException ) {
-				//        referenceProductAdExpressText.Code=964;
-				//    }
-				//    else if (((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess
-				//   || ((LevelInformation)_webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.segmentException) {
-				//        referenceProductAdExpressText.Code = 2242;
-				//    }	
-				//    if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent"+i+"")) {
-				//        Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"showHideContent"+i+"",TNS.AdExpress.Web.Functions.Script.ShowHideContent1(i));
-				//    }
-
-				//    if(_webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR 
-				//        || _webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE 
-				//        ){
-				//        referenceProductAdExpressText.Code=1195;
-				//    }
-
-				//    // Affichage du System.Windows.Forms.TreeNode
-				//    referenceAdvertiserText=TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.ReferenceUniversAdvertiser,false,true,true,"100",true,false,_webSession.SiteLanguage,2,i,true);
-				//    i++;
-				//}
-
-				#endregion
 
                 #region Univers produit principal sélectionné
                 if(_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0) {
@@ -834,6 +683,94 @@ namespace AdExpress.Private.Selection{
 
                 #region Niveaux de détail colonne générique
                 WebFunctions.MediaDetailLevel.GetGenericLevelDetailColumn(_webSession, ref displayGenericlevelDetailColumnLabel, genericlevelDetailColumnLabel, false);
+                #endregion
+
+                Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+                ArrayList detailSelections = null;
+                try
+                {
+                    detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
+                }
+                catch (System.Exception)
+                {
+                    if (currentModule.Id == CstWeb.Module.Name.ALERTE_PORTEFEUILLE)
+                        detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation(5)).DetailSelectionItemsType;
+                }
+
+
+                #region Inset
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.insetSelected))
+                {
+                    if (_webSession.CurrentModule != CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && _webSession.SelectionUniversMedia.FirstNode != null)
+                    {
+                        CstClassif.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                        if (vehicleType == CstClassif.DB.Vehicles.names.press || vehicleType == CstClassif.DB.Vehicles.names.internationalPress)
+                        {
+                            displayInset = true;
+                        }
+                    }
+                    else
+                    {
+                        string[] listVehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(new char[] { ',' });
+                        if (listVehicles != null && listVehicles.Length > 0
+                            && (
+                                (VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.press) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.press).ToString()) >= 0)
+                                || (VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.internationalPress) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.internationalPress).ToString()) >= 0)
+                            )
+                        )
+                        {
+                            displayInset = true;
+                        }
+                    }
+                    if (displayInset)
+                    {
+                        switch (_webSession.Insert)
+                        {
+                            case CstWeb.CustomerSessions.Insert.total:
+                                AdExpressText20.Code = 1401;
+                                break;
+                            case CstWeb.CustomerSessions.Insert.withOutInsert:
+                                AdExpressText20.Code = 1403;
+                                break;
+                            case CstWeb.CustomerSessions.Insert.insert:
+                                AdExpressText20.Code = 1402;
+                                break;
+                            default:
+                                AdExpressText20.Code = 1400;
+                                break;
+                        }
+                    }
+                }
+                #endregion
+
+                #region Auto promo
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.isAutoPromo))
+                {
+                    if (_webSession.CurrentModule != CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && _webSession.SelectionUniversMedia.FirstNode != null)
+                    {
+                        CstClassif.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                        if (vehicleType == CstClassif.DB.Vehicles.names.adnettrack)
+                        {
+                            displayAutoPromo = true;
+                        }
+                    }
+                    else
+                    {
+                        string[] listVehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(new char[] { ',' });
+                        if (listVehicles != null && listVehicles.Length > 0 && VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.adnettrack) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.adnettrack).ToString()) >= 0)
+                        {
+                            displayAutoPromo = true;
+                        }
+                    }
+                    if (displayAutoPromo)
+                    {
+                        AdExpressText21.Code = 2551;
+                        if (_webSession.AutopromoEvaliant)
+                        {
+                            AdExpressText21.Code = 2476;
+                        }
+                    }
+                }
                 #endregion
 
                 #endregion
