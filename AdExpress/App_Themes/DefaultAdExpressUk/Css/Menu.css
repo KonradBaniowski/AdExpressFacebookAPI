@@ -5,7 +5,7 @@ Menu related selectors
 	background-color: #FFFFFF;
 	background-image: url(/App_Themes/DefaultAdExpressUk/Images/Common/Menu/menu_left_grey.png);
 	background-repeat: repeat-y;
-	border: 1px solid #FF0000;
+	border: 1px solid #8A867A;
 	cursor: default;
 	padding-bottom: 1px;
 	padding-top: 1px;
@@ -19,7 +19,7 @@ Menu related selectors
 	border: none;
 	color: #000000;
 	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
-	font-size: 14px;
+	font-size: 12px;
 	padding-bottom: 3px;
 	padding-left: 30px;
 	padding-right: 15px;
@@ -28,8 +28,8 @@ Menu related selectors
 }
 
 .jsdomenuitemover {
-	background-color: #7DB3A2;
-	border: 1px solid #6B5980;
+	background-color: #FFCCFF;
+	border: 1px solid #FF05B6;
 	color: #000000;
 	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
 	font-size: 12px;

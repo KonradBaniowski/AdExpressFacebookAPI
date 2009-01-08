@@ -37,7 +37,7 @@ td.moduleGroupWithBackgroung{
 	background-image:url(/App_Themes/DefaultAdExpressUk/Images/Common/dot.gif);
 	background-repeat: repeat-x;
 	background-position: bottom;
-	background-color:#FFFF99;
+	background-color:#E8E4ED;
 }
 
 td.moduleGroupInformation{
@@ -45,7 +45,7 @@ td.moduleGroupInformation{
 	font-size: 11px;
 	color: #644883;
 	font-weight: normal;
-	background-color:#FFFF99;
+	background-color:#E8E4ED;
 	padding:3px;
 }
 
@@ -76,7 +76,7 @@ a.module:hover {
 	background-image:url(/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/InfoBulleBackground.gif);
 	background-repeat:repeat-x;
 	background-position: top left;
-	background-color: #FFFF99;
+	background-color: #E8E4ED;
 	padding-left : 5px;
 	padding-right : 5px;
 	padding-bottom : 2px;
@@ -86,7 +86,7 @@ a.module:hover {
 .title{
 	FONT-WEIGHT: bold; 
 	FONT-SIZE: 11px; 
-	COLOR: #000000; 
+	COLOR: #FFFFFF; 
 	FONT-FAMILY: Arial, Helvetica, sans-serif
 }
 .custom-tip {

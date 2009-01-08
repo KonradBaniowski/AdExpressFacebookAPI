@@ -30,7 +30,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Result/bt_detail_up.gif" SkinID="bt_detail" />
 <asp:image runat="server" ImageUrl="Images/Common/Logo_Adnettrack.jpg" SkinID="Logo_Adnettrack" />
 <asp:image runat="server" ImageUrl="Images/Common/await.gif" SkinID="await" />
-<asp:image runat="server" ImageUrl="Images/Common/vide.gif" SkinID="visual_cover"/>
+<asp:image runat="server" ImageUrl="Images/Common/vide.gif" SkinID="visual_cover" />
 
 <%-- Icons du menu contextuel --%>
 <asp:image runat="server" ImageUrl="Images/Common/Menu/selectedMenuIcon.gif" SkinID="selected" />
@@ -94,15 +94,15 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
-<ctrHeader:HeaderWebControl   
-                           runat="server" 
-                           language="33" 
-                           FlashUrl="/App_Themes/DefaultAdExpressUk/Flash/Common/HeaderStrip.swf" 
-                           MissingFlashUrl="/App_Themes/DefaultAdExpressUk/Images/Common/FlashReplacement/HeaderStrip.gif" 
+<ctrHeader:HeaderWebControl  
+                            runat="server" 
+                            language="33" 
+                            FlashUrl="/App_Themes/DefaultAdExpressUk/Flash/Common/HeaderStrip.swf" 
+                            MissingFlashUrl="/App_Themes/DefaultAdExpressUk/Images/Common/FlashReplacement/HeaderStrip.gif" 
 />
 
 <%-- Flash web control : used to show a flash animation --%>
-<ctrHeader:FlashWebControl   
+<ctrHeader:FlashWebControl  
                            runat="server" 
                            FlashUrl="/App_Themes/DefaultAdExpressUk/Flash/Culture/anime6.swf" 
                            MissingFlashUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/FlashReplacement/HomeAnime.gif"
@@ -110,7 +110,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 
 <%-- A list of ImageButtonRollOver web control used in the site--%>
 <%-- Validate Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol   
+<ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/valider_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/valider_down.gif" 
@@ -118,7 +118,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Ok Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol   
+<ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/Button/ok_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/Button/ok_down.gif" 
@@ -126,7 +126,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Initialize Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol   
+<ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_down.gif" 
@@ -134,7 +134,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Initialize All Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol    
+<ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_all_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_all_down.gif" 
@@ -142,7 +142,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Next Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol   
+<ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/suivant_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/suivant_down.gif" 
@@ -150,7 +150,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Save Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol   
+<ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/enregistrer_univers_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/enregistrer_univers_down.gif" 
@@ -158,7 +158,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Load Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol    
+<ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/charger_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/charger_down.gif" 
@@ -166,7 +166,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Open Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol  
+<ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/ouvrir_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/ouvrir_down.gif" 
@@ -174,7 +174,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Close Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol  
+<ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/fermer_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/fermer_down.gif" 
@@ -182,7 +182,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Personnaliser Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol  
+<ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/personnaliser_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/personnaliser_down.gif" 
@@ -190,7 +190,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Cancel Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol  
+<ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/annuler_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/annuler_down.gif" 
@@ -198,7 +198,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Result Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol  
+<ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/resultat_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/resultat_down.gif" 
@@ -206,7 +206,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Delete Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol  
+<ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/supprimer_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/supprimer_down.gif" 
@@ -214,7 +214,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Detail Button--%>
-<ctrButtons:imagebuttonrolloverwebcontrol  
+<ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
                            ImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/detail_up.gif" 
                            RollOverImageUrl="/App_Themes/DefaultAdExpressUk/Images/Culture/button/detail_down.gif" 
@@ -238,7 +238,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Actualities web control : used to show the actualities in the selection module page --%>
-<ctrHeader:actualitieswebcontrol   
+<ctrHeader:actualitieswebcontrol  
                            runat="server" 
                            ImageUrlPath="/App_Themes/DefaultAdExpressUk/Images/Common/AdExpressVisu.gif" 
                            TitleCss="actualities" 
@@ -248,7 +248,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Module selection web control : used to show adexpress modules--%>
-<ctrSelections:moduleselection2webcontrol   
+<ctrSelections:moduleselection2webcontrol  
                            runat="server" 
                            ModuleGroupWithBackgroundCss="moduleGroupWithBackgroung" 
                            ModuleSubGroupCss="moduleSubGroup" 
@@ -260,10 +260,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 282:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Portefeuille.png,196:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/PlanMedia.png,184:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,278:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Concurrentiels.png,197:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Dynamique.png,
 281:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Potentiel.png,1950:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Justificatifs.png,283:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Portefeuille.png,194:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/TableauDynamique.png,195:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Indicateurs.png,
 450:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Tendances.png,475:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/TableauBord.png,601:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/TableauBord.png,602:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/TableauBord.png,1036:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/TableauBord.png,
-4370:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,546:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Programmes.png,4369:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Portefeuille.png"
+4370:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/TableauBord.png,546:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Programmes.png,4369:/App_Themes/DefaultAdExpressUk/Images/Common/Infobulle/Portefeuille.png"
 />
 <%-- Module title web control : used to show module title --%>
-<ctrHeader:ModuleTitleWebControl   
+<ctrHeader:ModuleTitleWebControl  
                            runat="server" 
                            BlockFlechePath="/App_Themes/DefaultAdExpressUk/Images/Common/block_fleche.gif" 
                            BlockDupliPath="/App_Themes/DefaultAdExpressUk/Images/Common/block_dupli.gif" 
@@ -271,7 +271,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Module bridge web control : used to switch between 2 modules --%>
-<ctrHeader:ModuleBridgeWebControl   
+<ctrHeader:ModuleBridgeWebControl  
                            runat="server" 
                            BlockFlechePath="/App_Themes/DefaultAdExpressUk/Images/Common/block_fleche.gif" 
                            BlockDupliPath="/App_Themes/DefaultAdExpressUk/Images/Common/block_dupli.gif" 
@@ -279,7 +279,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Media seller web control : used to show media detail : Media Genre, Title ... --%>
-<ctrHeader:mediasellerwebcontrol   
+<ctrHeader:mediasellerwebcontrol  
                            runat="server" 
                            BlockFlechePath="/App_Themes/DefaultAdExpressUk/Images/Common/block_fleche.gif" 
                            BlockDupliPath="/App_Themes/DefaultAdExpressUk/Images/Common/block_dupli.gif" 
@@ -288,7 +288,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Information web control : used to show information about how to use the web menu --%>
-<ctrHeader:InformationWebControl   
+<ctrHeader:InformationWebControl  
                            runat="server" 
                            FlashPath="/App_Themes/DefaultAdExpressUk/Flash/Culture/infoOptions.swf" 
                            FlashReplacementPath="/App_Themes/DefaultAdExpressUk/Images/Culture/FlashReplacement/infoOptions.gif" 
@@ -297,7 +297,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- One vehicle selection web control --%>
-<ctrSelections:OneVehicleSelectionWebControl   
+<ctrSelections:OneVehicleSelectionWebControl  
                            runat="server" 
                            CssClass="txtViolet11Bold" 
 />
@@ -313,7 +313,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Month calendar web control : used to show a calendar who allows you to choose between a month and year --%>
-<ctrSelections:monthcalendarwebcontrol   
+<ctrSelections:monthcalendarwebcontrol  
                            runat="server"
                            TableBorderColor = "#9D9885"
                            TableColor = "#FFFFFF"
@@ -323,29 +323,30 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            FontColorSelectedDate = "#FFFFFF"
                            TableColorNoDate = "#9378B3"
                            TdBgcolor = "#FFFFFF"
+                           SkinID="monthcalendarwebcontrol1"
 />
 
 <%-- Last month week calendar web control : used to show a calendar who allows you to choose between a month and week --%>
 <ctrSelections:lastmonthweekcalendarwebcontrol  
                            runat="server"
-                           TableBorderColor = "#000000"
+                           TableBorderColor = "#9D9885"
                            TableColor = "#FFFFFF"
-                           TableColorSelectedDate = "#000000"
-                           TitleBackgroundColor = "#000000"
-                           FontColor = "#CCCCCC"
+                           TableColorSelectedDate = "#644883"
+                           TitleBackgroundColor = "#644883"
+                           FontColor = "#644883"
                            FontColorSelectedDate = "#FFFFFF"
-                           TableColorNoDate = "#000000"
-                           SkinID="lastmonthweekcalendarwebcontrol1"
+                           TableColorNoDate = "#9378B3"
+                           SkinID="lastmonthweekcalendarwebcontrol1" 
 />
 
 <%-- Date list web control : used to build a list of numbers to allow relative dates selection --%>
-<ctrSelections:datelistwebcontrol   
+<ctrSelections:datelistwebcontrol  
                            runat="server" 
                            CssClass="txtNoir11" 
 />
 
 <%-- Result web control : used to display a generic result table (HTML) (Vehicle portfolio) --%>
-<ctrResults:Resultwebcontrol   
+<ctrResults:Resultwebcontrol  
                            runat="server" 
                            CssDetailSelectionBordelLevel="dsBorderLevel" 
                            CssDetailSelectionL1="dsLv1" 
@@ -361,13 +362,13 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssDetailSelectionTitleData="dsTitleData"
                            CssDetailSelectionTitleGlobal="dsTitleGlobal" 
                            CssLHeader="h2" 
-                           BackgroudColorL1="#8EBF86" 
-                           BackgroudColorL2="#C8E6C3" 
-                           BackgroudColorL3="#EEFFEC"
-                           BackgroudColorLNbParution="#C8F4C8" 
+                           BackgroudColorL1="#B1A3C1" 
+                           BackgroudColorL2="#D0C8DA" 
+                           BackgroudColorL3="#E1E0DA" 
+                           BackgroudColorLNbParution="#C8F4C8"
                            CssL1="lv1" 
                            CssL2="lv2" 
-                           CssL3="lv3" 
+                           CssL3="lv3"
                            CssLNbParution="lvNbParution" 
                            HighlightBackgroundColorLNbParution="#FFFFFF"
                            HighlightBackgroundColorL1="#FFFFFF" 
@@ -381,226 +382,6 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="portofolioResultTable" 
 />
 
-<%-- Result web control : used to display a generic result table (Excel) (Vehicle portfolio) --%>
-<ctrResults:ResultWebControl   
-                           runat="server" 
-                           CssLTotal="exlv0" 
-                           CssL3="exlv3" 
-                           CssL2="exlv2"
-                           CssL1="exlv1" 
-                           CssLHeader="exh2" 
-                           CssDetailSelectionL1="dsLv1Excel" 
-                           CssDetailSelectionL2="dsLv2Excel" 
-                           CssDetailSelectionL3="dsLv3Excel"
-                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
-                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
-                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
-                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
-                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
-                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"  
-                           CssDetailSelectionTitle="dsTitle" 
-                           CssDetailSelectionTitleData="dsTitleData"
-				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
-				           CssDetailSelectionBordelLevel="dsBorderLevel"
-				           SkinID="portofolioExcelResultTable"  
-/>
-
-<%-- Result web control : used to display a generic result table (Raw Excel) (Vehicle portfolio) --%>
-<ctrResults:ResultWebControl   
-                           runat="server" 
-                           CssDetailSelectionBordelLevel="dsBorderLevel"
-				           CssDetailSelectionL1="dsLv1Excel" 
-				           CssDetailSelectionL2="dsLv2Excel" 
-				           CssDetailSelectionL3="dsLv3Excel"
-				           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
-                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
-                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
-                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
-                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
-                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"
-				           CssDetailSelectionTitle="dsTitle" 
-				           CssDetailSelectionTitleData="dsTitleData" 
-				           CssDetailSelectionTitleGlobal="dsTitleGlobal"
-				           SkinID="portofolioRawExcelResultTable"  
-/>
-
-<%-- Portofolio chart web control : used to show charts for protofolio module --%>
-<%--<webUiResults:PortofolioChartUI   
-                           runat="server" 
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 
-                           PieLineColor="Black" 
-                           DefaultBorderLineColor="#C0C0C0" 
-                           ChartBorderLineColor="#634984" 
-                           TitleColor="#644883"  
-/>--%>
-<ctrResults:PortofolioChartWebControl  
-                           runat="server" 
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 
-                           PieLineColor="Black" 
-                           DefaultBorderLineColor="#C0C0C0" 
-                           ChartBorderLineColor="#634984" 
-                           TitleColor="#644883"  
-/>
-<%-- Indicators charts--%>
-<indicatorCharts:ChartSeasonality
-                           runat="server"
-                           ChartAreasBackColor="#DECFE7"
-                           ChartBorderLineColor="#634984"
-                           SeriesColor="#9479B5"
-                           CompetitorSerieColor="#FFDFDE"
-                           ReferenceSerieColor="#DEFFDE"
-                           LegendItemCompetitorColor="#FFDFDE"
-                           LegendItemReferenceColor="#DEFFDE"
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
-                           PieLineColor="Black"
-                           TitleColor="#644883"
-/>
-<indicatorCharts:ChartTop
-                           runat="server"
-                           ChartAreasBackColor="#DECFE7"
-                           ChartBorderLineColor="#634984"
-                           SeriesColor="#9479B5"
-                           CompetitorSerieColor="#FFDFDE"
-                           ReferenceSerieColor="#DEFFDE"
-                           LegendItemCompetitorColor="#FFDFDE"
-                           LegendItemReferenceColor="#DEFFDE"
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
-                           PieLineColor="Black"
-                           TitleColor="#644883"
-/>
-<indicatorCharts:ChartEvolution
-                           runat="server"
-                           ChartAreasBackColor="#DECFE7"
-                           ChartBorderLineColor="#634984"
-                           SeriesColor="#9479B5"
-                           CompetitorSerieColor="#FFDFDE"
-                           ReferenceSerieColor="#DEFFDE"
-                           LegendItemCompetitorColor="#FFDFDE"
-                           LegendItemReferenceColor="#DEFFDE"
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
-                           PieLineColor="Black"
-                           TitleColor="#644883"
-/>
-<indicatorCharts:ChartMediaStartegy
-                           runat="server"
-                           ChartAreasBackColor="#DECFE7"
-                           ChartBorderLineColor="#634984"
-                           SeriesColor="#9479B5"
-                           CompetitorSerieColor="#FFDFDE"
-                           ReferenceSerieColor="#DEFFDE"
-                           LegendItemCompetitorColor="#FFDFDE"
-                           LegendItemReferenceColor="#DEFFDE"
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
-                           PieLineColor="Black"
-                           TitleColor="#644883"
-/>
-
-<%-- Result options web control : used to display result options : insertOption, percentage, pdmOption ... --%>
-<ctrHeader:resultsoptionswebcontrol   
-                           runat="server" 
-                           CommonCssClass="txtNoir11Bold" 
-                           OutCssClass="ddlOut" 
-                           OverCssClass="ddlOver" 
-/>
-
-<%-- Result options web control : used to display result options specific to Dynamic Tables module --%>
-<ctrHeader:resultsoptionswebcontrol  
-                           runat="server" 
-                           CommonCssClass="txtNoir11Bold" 
-                           OutCssClass="ddlOut" 
-                           OverCssClass="ddlOver" 
-                           BorderColor="#644883"
-                           SkinID="resultsOptionsASDynamicTables"
-/>
-
-<%-- Portofolio detail media result : used to display generic result for portofolio media detail (HTML) --%>
-<ctrResults:PortofolioDetailMediaResultWebControl  
-                           runat="server" 
-                           BackgroudColorL1="#D0C8DA" 
-                           CssL1="lv2" 
-                           CssLHeader="h2" 
-                           HighlightBackgroundColorL1="#FFFFFF" 
-                           ImgBtnCroiOverPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
-                           CssDetailSelectionBordelLevel="dsBorderLevel" 
-                           CssDetailSelectionL1="dsLv1" 
-                           CssDetailSelectionL2="dsLv2" 
-                           CssDetailSelectionL3="dsLv3"
-                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
-                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
-                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
-                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
-                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
-                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3"  
-                           CssDetailSelectionTitle="dsTitle" 
-                           CssDetailSelectionTitleData="dsTitleData"
-                           SkinID="PortofolioPopUpResult" 
-/>
-
-<%-- Portofolio detail media result : used to display generic result for portofolio media detail (Excel) --%>
-<ctrResults:PortofolioDetailMediaResultWebControl   
-                           runat="server" 
-                           CssL1="exlv3" 
-                           CssL2="exlv2"
-                           CssLHeader="exh2" 
-                           CssDetailSelectionBordelLevel="dsBorderLevel" 
-                           CssDetailSelectionL1="dsLv1Excel" 
-                           CssDetailSelectionL2="dsLv2Excel"
-                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
-                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
-                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
-                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
-                           CssDetailSelectionTitle="dsTitle" 
-                           CssDetailSelectionTitleData="dsTitleData" 
-                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
-                           SkinID="PortofolioPopUpExcelResult"
-/>
-
-<%-- Result web control : used to display a generic result table (Excel) (Present/absent report)--%>
-<ctrResults:ResultWebControl   
-                           runat="server" 
-                           CssLTotal="exlv0" 
-                           CssL3="exlv3" 
-                           CssL2="exlv2"
-				           CssL1="exlv1" 
-				           CssLHeader="exh2" 
-				           CssLNbParution="exlvNbParution" 
-				           CssDetailSelectionL1="dsLv1Excel" 
-				           CssDetailSelectionL2="dsLv2Excel"
-				           CssDetailSelectionL3="dsLv3Excel"
-				           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
-                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
-                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
-                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
-                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
-                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"   
-				           CssDetailSelectionTitle="dsTitle" 
-				           CssDetailSelectionTitleData="dsTitleData"
-				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
-				           CssDetailSelectionBordelLevel="dsBorderLevel"
-				           SkinID="PresentAbsentExcelResult" 
-/>
-
-<%-- Result web control : used to display a generic result table (Raw Excel) (Present/absent report)--%>
-<ctrResults:ResultWebControl   
-                           runat="server" 
-                           CssDetailSelectionBordelLevel="dsBorderLevel"
-				           CssDetailSelectionL1="dsLv1Excel" 
-				           CssDetailSelectionL2="dsLv2Excel" 
-				           CssDetailSelectionL3="dsLv3Excel"
-                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
-                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
-                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
-                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
-                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
-                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel" 
-				           CssDetailSelectionTitle="dsTitle" 
-				           CssDetailSelectionTitleData="dsTitleData" 
-				           CssDetailSelectionTitleGlobal="dsTitleGlobal"
-				           SkinID="PresentAbsentRawExcelResult"  
-/>
 <%-- Result web control : used to display a list of insertions --%>
 <ctrCreatives:InsertionsWebControl  
                            runat="server"
@@ -697,8 +478,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
 						   DefaultPageSize="10"
 						   PageSizeOptions="10,15,20" 
-						   AllowRepeatHeader="False"
 						   AllowPaging="True"
+						   AllowRepeatHeader="False"
 						   CssDetailSelectionBordelLevel="dsBorderLevel"
 						   CssDetailSelectionL1="dsLv1" 
 						   CssDetailSelectionL2="dsLv2" 
@@ -714,9 +495,243 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
 				           SkinID="creativeControl"  
 />
+<%-- Result web control : used to display a generic result table (Excel) (Vehicle portfolio) --%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssLTotal="exlv0" 
+                           CssL3="exlv3" 
+                           CssL2="exlv2"
+                           CssL1="exlv1" 
+                           CssLHeader="exh2"                           
+                           CssDetailSelectionL1="dsLv1Excel" 
+                           CssDetailSelectionL2="dsLv2Excel" 
+                           CssDetailSelectionL3="dsLv3Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="portofolioExcelResultTable"  
+/>
+
+<%-- Result web control : used to display a generic result table (Raw Excel) (Vehicle portfolio) --%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel" 
+				           CssDetailSelectionL3="dsLv3Excel"
+				           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData" 
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal"
+				           SkinID="portofolioRawExcelResultTable"  
+/>
+
+<%-- Portofolio chart web control : used to show charts for protofolio module --%>
+<%--<webUiResults:PortofolioChartUI  
+                           runat="server" 
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 
+                           PieLineColor="Black" 
+                           DefaultBorderLineColor="#C0C0C0" 
+                           ChartBorderLineColor="#634984" 
+                           TitleColor="#644883"  
+/>--%>
+<ctrResults:PortofolioChartWebControl  
+                           runat="server" 
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 
+                           PieLineColor="Black" 
+                           DefaultBorderLineColor="#C0C0C0" 
+                           ChartBorderLineColor="#634984" 
+                           TitleColor="#644883"  
+/>
+
+<%-- Portofolio chart web control : used to show charts for indicators module --%>
+<%--<webUiResults:INDICATORCHARTUI  
+                           runat="server"
+                           ChartAreasBackColor="#DECFE7"
+                           ChartBorderLineColor="#634984"
+                           SeriesColor="#9479B5"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#644883"
+/>--%>
+<%-- Indicators charts--%>
+<indicatorCharts:ChartSeasonality
+                           runat="server"
+                           ChartAreasBackColor="#DECFE7"
+                           ChartBorderLineColor="#634984"
+                           SeriesColor="#9479B5"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#644883"
+/>
+<indicatorCharts:ChartTop
+                           runat="server"
+                           ChartAreasBackColor="#DECFE7"
+                           ChartBorderLineColor="#634984"
+                           SeriesColor="#9479B5"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#644883"
+/>
+<indicatorCharts:ChartEvolution
+                           runat="server"
+                           ChartAreasBackColor="#DECFE7"
+                           ChartBorderLineColor="#634984"
+                           SeriesColor="#9479B5"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#644883"
+/>
+<indicatorCharts:ChartMediaStartegy
+                           runat="server"
+                           ChartAreasBackColor="#DECFE7"
+                           ChartBorderLineColor="#634984"
+                           SeriesColor="#9479B5"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#644883"
+/>
+<%-- Result options web control : used to display result options : insertOption, percentage, pdmOption ... --%>
+<ctrHeader:resultsoptionswebcontrol  
+                           runat="server" 
+                           CommonCssClass="txtNoir11Bold" 
+                           OutCssClass="ddlOut" 
+                           OverCssClass="ddlOver" 
+/>
+
+<%-- Result options web control : used to display result options specific to Dynamic Tables module --%>
+<ctrHeader:resultsoptionswebcontrol 
+                           runat="server" 
+                           CommonCssClass="txtNoir11Bold" 
+                           OutCssClass="ddlOut" 
+                           OverCssClass="ddlOver" 
+                           BorderColor="#644883"
+                           SkinID="resultsOptionsASDynamicTables"
+/>
+
+<%-- Portofolio detail media result : used to display generic result for portofolio media detail (HTML) --%>
+<ctrResults:PortofolioDetailMediaResultWebControl 
+                           runat="server" 
+                           BackgroudColorL1="#D0C8DA" 
+                           CssL1="lv2" 
+                           CssLHeader="h2" 
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           ImgBtnCroiOverPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/DefaultAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           SkinID="PortofolioPopUpResult" 
+/>
+
+<%-- Portofolio detail media result : used to display generic result for portofolio media detail (Excel) --%>
+<ctrResults:PortofolioDetailMediaResultWebControl  
+                           runat="server" 
+                           CssL1="exlv3" 
+                           CssL2="exlv2"
+                           CssLHeader="exh2" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1Excel" 
+                           CssDetailSelectionL2="dsLv2Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData" 
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           SkinID="PortofolioPopUpExcelResult"
+/>
+
+<%-- Result web control : used to display a generic result table (Excel) (Present/absent report)--%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssLTotal="exlv0" 
+                           CssL3="exlv3" 
+                           CssL2="exlv2"
+				           CssL1="exlv1" 
+				           CssLHeader="exh2"
+				           CssLNbParution="exlvNbParution" 
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel"
+				           CssDetailSelectionL3="dsLv3Excel"
+				           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"   
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="PresentAbsentExcelResult" 
+/>
+
+<%-- Result web control : used to display a generic result table (Raw Excel) (Present/absent report)--%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel" 
+				           CssDetailSelectionL3="dsLv3Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel" 
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData" 
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal"
+				           SkinID="PresentAbsentRawExcelResult"  
+/>
 
 <%-- Creatives web control : to display a set of creations, vehicle by vehicle, depending on a univers of products and media --%>
-<ctrCreatives:CreativesWebControl   
+<ctrCreatives:CreativesWebControl  
                            runat="server" 
                            FooterImage="/App_Themes/DefaultAdExpressUk/Images/Common/Result/footer.gif"
                            HeaderImage="/App_Themes/DefaultAdExpressUk/Images/Common/Result/header.gif"
@@ -732,7 +747,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Select items in classification web control : used to select Items in Classification --%>
-<ctrSelections:SelectItemsInClassificationWebControl   
+<ctrSelections:SelectItemsInClassificationWebControl  
                            runat="server" 
                            ChildNodeExcludeCss="txtChildNodeExcludeCss" 
                            ChildNodeIncludeCss="txtChildNodeIncludeCss" 
@@ -766,7 +781,6 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            InitializeDownImage = "/App_Themes/DefaultAdExpressUk/Images/Common/button/initialize_down.gif"
                            WaitLoadingImage = "/App_Themes/DefaultAdExpressUk/Images/Common/waitAjax.gif"
 />
-
 <%-- Select items in classification web control : used to select Items in Classification specific to details selection--%>
 <ctrSelections:SelectItemsInClassificationWebControl  
                            runat="server" 
@@ -789,14 +803,14 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Global calendar web control : used to display the global calendar --%>
-<ctrSelections:GlobalCalendarWebControl   
+<ctrSelections:GlobalCalendarWebControl  
                            runat="server"
                            CssPath="Css/DefaultAdExpressUk/Calendar.css"
                            ThemeName="DefaultAdExpressUk"
 />
 
 <%-- Initialize product web control : used to initialize products selection --%>
-<ctrHeader:InitializeProductWebControl   
+<ctrHeader:InitializeProductWebControl  
                            runat="server"
                            CssClass="txtNoir11Bold" 
 />
@@ -830,12 +844,21 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Period Detail Selection WebControl : designed for Media Plan Schedules --%>
-<ctrHeader:PeriodDetailWebControl  
+<ctrHeader:PeriodDetailWebControl 
                            runat="server"
                            BackgroundColor="#ffffff"
                            LabelCssClass="txtGris11Bold"  
                            ListCssClass="txtNoir11Bold"
                            SkinID="PeriodDetailWebControl"
+/>
+
+<%-- Sector Selection WebControl : designed for new creatives --%>
+<ctrHeader:SectorWebControl 
+                           runat="server"
+                           BackgroundColor="#ffffff"
+                           LabelCssClass="txtGris11Bold"  
+                           ListCssClass="txtNoir11Bold"
+                           SkinID="SectorWebControl"
 />
 
 <%-- Generic detail selection web control : used to display columns detail --%>
@@ -845,7 +868,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%-- Media insertions creations result web control --%>
-<ctrResults:MediaInsertionsCreationsResultsWebControl  
+<ctrResults:MediaInsertionsCreationsResultsWebControl 
                            runat="server"
                            CssDefaultListLabel="txtGris11Bold"
                            CssListLabel="txtViolet11Bold"
@@ -858,14 +881,14 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrHeader:OptionLayerWebControl 
                            runat="server" 
                            CssDefaultListLabel="txtViolet11Bold"
-						   BackGroundColor="#D6F3CE" 
+						   BackGroundColor="#E1E0DA" 
 						   ThemeName = "DefaultAdExpressUk"
 />
 
 <%-- Option table types web control : used to display format table details selection --%>
 <ctrHeader:ResultsTableTypesWebControl 
                            runat="server" 
-                           BorderColor="#FF0000"
+                           BorderColor="#644883"
                            ImageButtonArrow="/App_Themes/DefaultAdExpressUk/Images/Common/Button/bt_arrow_tall_top.gif"
 						   SkinID = "ResultsTableTypesWebControl1"
 />
@@ -917,52 +940,56 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            
 				           SkinID="container"  
 />
+
+
 <%-- APPM Family interest web control : used to display APPM result in APPM container --%>
 <ctrAppm:AnalyseFamilyInterestPlanAppmChartWebControl
                            runat="server" 
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#644883"
-                           CamembertTitleTextFontColor1="#B1A3C1"
-                           CamembertTitleTextFontSize1="10"
-                           CamembertTitleTextFontFamily1="Times new Roman"
-                           CamembertTitleTextFontColor2="#B1A3C1"
-                           CamembertTitleTextFontSize2="10"
-                           CamembertTitleTextFontFamily2="Times new Roman"
                            
-                           HistogrammeTitleTextFontColor="#B1A3C1"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#F5ECFF,#395573,#6B8199,#C3D3E6,#EDF6FF,#525A3E,#B0BF86,#DCE6C3,#FAFFEC,#3E5A51,#7DB3A2,#C3E6DB,#ECFFF9,#425A3E,#8EBF86,#C8E6C3,#EEFFEC,#7D3200,#D95700,#E6A173,#FFD9BF,#43415A,#908DBF,#C9C7E6,#EFEEFF,#7D4B00,#B36B00,#FFCC80,#FFE6BF"
+                           CamembertTitleTextFontColor1="#644883"
+                           CamembertTitleTextFontSize1="10"
+                           CamembertTitleTextFontFamily1="Arial"
+                           CamembertTitleTextFontColor2="#644883"
+                           CamembertTitleTextFontSize2="10"
+                           CamembertTitleTextFontFamily2="Arial"
+                           
+                           HistogrammeTitleTextFontColor="#644883"
                            HistogrammeTitleTextFontSize="10"
-                           HistogrammeTitleTextFontFamily="Times new Roman"
-                           HistogrammeLegendTextFontColor="#E1E0DA"
+                           HistogrammeTitleTextFontFamily="Arial"
+                           HistogrammeLegendTextFontColor="#000000"
                            HistogrammeLegendTextFontSize="8"
-                           HistogrammeLegendTextFontFamily="Times new Roman"
-                           HistogrammeColorFamille1="#B1A3C1"
-                           HistogrammeColorFamille2="#9D9885"
-                           HistogrammeColorFamille3="#9D9885"
-                           HistogrammeBackgroundColor="#644883"
-                           HistogrammeOrdonneeTextFontFamily="Times new Roman" 
+                           HistogrammeLegendTextFontFamily="Arial"
+                           HistogrammeColorFamille1="#9479B5"
+                           HistogrammeColorFamille2="#FFD7D7"
+                           HistogrammeColorFamille3="#FFD7D7"
+                           HistogrammeBackgroundColor="#DECFE7"
+                           HistogrammeOrdonneeTextFontFamily="Arial" 
                            HistogrammeOrdonneeTextFontSize="8" 
-                           HistogrammeAbscisseTextFontFamily="Times new Roman" 
+                           HistogrammeAbscisseTextFontFamily="Arial" 
                            HistogrammeAbscisseTextFontSize="8" 
                            
-                           TextNoResultFontFamily="Times new Roman"         
+                           TextNoResultFontFamily="Arial"         
                            TextNoResultFontSize="8"
-                           TextNoResultFontColor="#B1A3C1" 
+                           TextNoResultFontColor="#644883" 
                            
                            ControlBorderSize="2"
-                           ControlBorderColor="#B1A3C1"                
+                           ControlBorderColor="#634984"                
                            
 				           SkinID="AnalyseFamilyInterestPlanSkinID"  
 />
+
 <%-- APPM PDV plan web control : used to display APPM result in APPM container --%>
 <ctrAppm:PdvPlanAppmChartWebControl
                            runat="server"     
                            
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#644883"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#F5ECFF,#395573,#6B8199,#C3D3E6,#EDF6FF,#525A3E,#B0BF86,#DCE6C3,#FAFFEC,#3E5A51,#7DB3A2,#C3E6DB,#ECFFF9,#425A3E,#8EBF86,#C8E6C3,#EEFFEC,#7D3200,#D95700,#E6A173,#FFD9BF,#43415A,#908DBF,#C9C7E6,#EFEEFF,#7D4B00,#B36B00,#FFCC80,#FFE6BF"        
                            
-                           CamembertEurosFontColor = "#E1E0DA"
+                           CamembertEurosFontColor = "#644883"
                            CamembertEurosFontSize = "12"
                            CamembertEurosFontFamily = "Arial"
                            
-                           CamembertPagesFontColor = "#E1E0DA"
+                           CamembertPagesFontColor = "#644883"
                            CamembertPagesFontSize = "12"
                            CamembertPagesFontFamily = "Arial"
                            
@@ -970,55 +997,58 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CamembertInsertionsFontSize = "12"
                            CamembertInsertionsFontFamily = "Arial"
                            
-                           CamembertGRPFontColor = "#E1E0DA"
+                           CamembertGRPFontColor = "#644883"
                            CamembertGRPFontSize = "12"
                            CamembertGRPFontFamily = "Arial"
                            
                            TextNoResultFontFamily="Arial"         
                            TextNoResultFontSize="8"
-                           TextNoResultFontColor="#E1E0DA"
+                           TextNoResultFontColor="#644883"
                            
                            ControlBorderSize="2"
-                           ControlBorderColor="#4D964B" 
+                           ControlBorderColor="#634984" 
                            
 				           SkinID="PdvPlanSkinID"  
 />
+
 <%-- APPM Periodicity plan web control : used to display APPM result in APPM container --%>
 <ctrAppm:PeriodicityPlanAppmChartWebControl
-                           runat="server"           
+                           runat="server"     
                            
-                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000,#644883,#644883"
-                           CamembertTitleTextFontColor1="#B1A3C1"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#F5ECFF,#395573,#6B8199,#C3D3E6,#EDF6FF,#525A3E,#B0BF86,#DCE6C3,#FAFFEC,#3E5A51,#7DB3A2,#C3E6DB,#ECFFF9,#425A3E,#8EBF86,#C8E6C3,#EEFFEC,#7D3200,#D95700,#E6A173,#FFD9BF,#43415A,#908DBF,#C9C7E6,#EFEEFF,#7D4B00,#B36B00,#FFCC80,#FFE6BF"
+                           CamembertTitleTextFontColor1="#644883"
                            CamembertTitleTextFontSize1="10"
-                           CamembertTitleTextFontFamily1="Times new Roman"
-                           CamembertTitleTextFontColor2="#B1A3C1"
+                           CamembertTitleTextFontFamily1="Arial"
+                           CamembertTitleTextFontColor2="#644883"
                            CamembertTitleTextFontSize2="10"
-                           CamembertTitleTextFontFamily2="Times new Roman"
+                           CamembertTitleTextFontFamily2="Arial"
                            
-                           HistogrammeTitleTextFontColor="#B1A3C1"
+                           HistogrammeTitleTextFontColor="#644883"
                            HistogrammeTitleTextFontSize="10"
-                           HistogrammeTitleTextFontFamily="Times new Roman"
-                           HistogrammeLegendTextFontColor="#E1E0DA"
+                           HistogrammeTitleTextFontFamily="Arial"
+                           HistogrammeLegendTextFontColor="#000000"
                            HistogrammeLegendTextFontSize="8"
-                           HistogrammeLegendTextFontFamily="Times new Roman"
-                           HistogrammeColorFamille1="#B1A3C1"
-                           HistogrammeColorFamille2="#9D9885"
-                           HistogrammeColorFamille3="#9D9885"
-                           HistogrammeBackgroundColor="#644883"
-                           HistogrammeOrdonneeTextFontFamily="Times new Roman" 
+                           HistogrammeLegendTextFontFamily="Arial"
+                           HistogrammeColorFamille1="#9479B5"
+                           HistogrammeColorFamille2="#FFD7D7"
+                           HistogrammeColorFamille3="#FFD7D7"
+                           HistogrammeBackgroundColor="#DECFE7"
+                           HistogrammeOrdonneeTextFontFamily="Arial" 
                            HistogrammeOrdonneeTextFontSize="8" 
-                           HistogrammeAbscisseTextFontFamily="Times new Roman" 
+                           HistogrammeAbscisseTextFontFamily="Arial" 
                            HistogrammeAbscisseTextFontSize="8" 
                            
-                           TextNoResultFontFamily="Times new Roman"         
+                           TextNoResultFontFamily="Arial"         
                            TextNoResultFontSize="8"
-                           TextNoResultFontColor="#B1A3C1" 
+                           TextNoResultFontColor="#644883" 
                            
                            ControlBorderSize="2"
-                           ControlBorderColor="#B1A3C1" 
-                             
+                           ControlBorderColor="#634984"
+                                    
 				           SkinID="PeriodicityPlanSkinID"  
 />
+
+
 <%-- Sector data container web control : used to display Sector data result --%>
 <ctrAppm:SectorDataContainerWebControl
                            runat="server"           
@@ -1049,6 +1079,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
   
 				           SkinID="SectorData"  
 />
+
 <%-- Sector data container web control : used to display Sector data result (excel) --%>
 <ctrAppm:SectorDataContainerWebControl
                            runat="server" 
@@ -1079,7 +1110,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrAppm:SeasonalityPlanSectorDataChartWebControl
                            runat="server"  
                            
-                           PieColors="#000000,#4D964B,#F1F1F1,#9D9885,#FF05B6,#CAFFCA,#FFF0F0,#FFD7D7,#E1E0DA,#D0C8DA,#B1A3C1,#644883"
+                           PieColors="#644883,#B1A3C1,#D0C8DA,#E1E0DA,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000"
                            
                            AbscisseTextFontFamily="Arial" 
                            Ordonnee1TextFontFamily="Arial" 

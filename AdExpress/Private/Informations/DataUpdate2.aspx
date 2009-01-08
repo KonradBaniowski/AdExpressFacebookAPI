@@ -993,7 +993,7 @@
   <!--Close-->
   <tr>
     <td align="right">
-        <cc2:ImageButtonRollOverWebControl ID="closeRollOverWebControl" runat="server" OnClick="closeRollOverWebControl_Click"></cc2:ImageButtonRollOverWebControl>
+        <cc2:ImageButtonRollOverWebControl ID="closeRollOverWebControl" runat="server" OnClick="closeRollOverWebControl_Click" SkinID="fermerButton"></cc2:ImageButtonRollOverWebControl>
         &nbsp;&nbsp;
     </td>
   </tr>

@@ -29,7 +29,7 @@ SPAN.bigTitle {
 	FONT-SIZE: 14px; FONT-FAMILY: Arial
 }
 DIV.title {
-	FONT-SIZE: 10px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px; MARGIN-TOP: 0px; WIDTH: 200px; COLOR: #ffffff; FONT-FAMILY: Arial; BACKGROUND-COLOR: #797979
+	FONT-SIZE: 10px; MARGIN-LEFT: -2px; MARGIN-RIGHT: -2px; MARGIN-TOP: -2px; WIDTH: 200px; COLOR: #ffffff; FONT-FAMILY: Arial; BACKGROUND-COLOR: #797979;
 }
 SPAN.title {
 	FONT-SIZE: 12px; MARGIN: 1px; FONT-FAMILY: Arial
@@ -288,10 +288,10 @@ H2 {
 	FONT-WEIGHT: bold; FONT-SIZE: 13px
 }
 DIV.simpleDropPanel {
-	FONT-SIZE: 11px;BORDER-RIGHT: #5b5b5b 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #5b5b5b 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; BORDER-LEFT: #5b5b5b 1px solid; WIDTH: 200px; PADDING-TOP: 0px; BORDER-BOTTOM: #5b5b5b 1px solid; min-height: 80px; height:auto !important; height:80px;
+	FONT-SIZE: 11px;BORDER-RIGHT: #5b5b5b 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #5b5b5b 1px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #5b5b5b 1px solid; WIDTH: 200px; PADDING-TOP: 2px; BORDER-BOTTOM: #5b5b5b 1px solid; min-height: 80px; height:auto !important; height:80px;
 }
 DIV.simpleColumn {
-	WIDTH: 55px; HEIGHT: 25px;text-align:center;margin-left:2px;
+	WIDTH: 55px; HEIGHT: 25px;
 }
 SPAN.indentedLine {
 	DISPLAY: block; MARGIN-LEFT: 110px

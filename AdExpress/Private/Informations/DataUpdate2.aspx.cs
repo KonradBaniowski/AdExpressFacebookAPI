@@ -53,11 +53,6 @@ public partial class Private_Informations_DataUpdate2:TNS.AdExpress.Web.UI.Priva
             //TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls, _webSession.SiteLanguage);
             #endregion
 
-            #region Rollover
-            closeRollOverWebControl.ImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/fermer_up.gif";
-            closeRollOverWebControl.RollOverImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/fermer_down.gif";
-            #endregion
-
             #region Construction du lien du fichier Excel de la liste des supports disponibles
 
             // Pour test en localhost :
