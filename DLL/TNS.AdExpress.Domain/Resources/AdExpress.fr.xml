@@ -1543,8 +1543,8 @@
     <item mnemonic="w2345" type="System.String">Di précédent</item>
     <item mnemonic="w2346" type="System.String">Ve, Sa, Di précédents</item>
     <item mnemonic="w2347" type="System.String">Di Semaine S-2</item>
-    <item mnemonic="w2348" type="System.String">Quotᷦ.&lt;br&gt;du jour</item>
-    <item mnemonic="w2349" type="System.String">Quotᷦ.&lt;br&gt;du jour,&lt;br&gt;du Sa et Di&lt;br&gt;précédents</item>
+    <item mnemonic="w2348" type="System.String">Quot+Hebdo.&lt;br&gt;du jour</item>
+    <item mnemonic="w2349" type="System.String">Quot+Hebdo.&lt;br&gt;du jour,&lt;br&gt;du Sa et Di&lt;br&gt;précédents</item>
     <item mnemonic="w2350" type="System.String">Tranche 5-9&lt;br&gt;du jour,&lt;br&gt;du Sa et Di&lt;br&gt;précédents</item>
     <item mnemonic="w2351" type="System.String">Tranche 5-9&lt;br&gt;du jour</item>
     <item mnemonic="w2352" type="System.String">Tranche 9-24&lt;br&gt;du Di et Lu&lt;br&gt;précédents</item>
