@@ -102,13 +102,15 @@ namespace AdExpress.Private.Selection{
 					_webSession.Save();
 				}
 
+                // Annuler l'univers supports personnalisé
+                _webSession.SecondaryMediaUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                _webSession.Save();
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
 					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
 				}
 			}
-
 		}
 		#endregion
 
@@ -120,12 +122,13 @@ namespace AdExpress.Private.Selection{
 		/// <param name="e">Arguments</param>
 		protected void Page_UnLoad(object sender, System.EventArgs e){
 
-			#region Gestion du cas ou l'utilisateur n'a droit quèà un média
+			#region Gestion du cas ou l'utilisateur n'a droit qu'à un média
 			if (VehicleSelectionWebControl2.Items.Count ==1){
 				VehicleSelectionWebControl2.Items[0].Selected = true;
 				this.validateButton_Click(this.validateButton, null);
 			}
 			#endregion			
+
 		}
 		#endregion
 		
