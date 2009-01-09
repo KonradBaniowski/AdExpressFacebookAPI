@@ -698,7 +698,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1414, _webSession.SiteLanguage));
 				CellDuration cD1 = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
-                cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat;
+                cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).StringFormat;
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cD1;
                 ChangeLineType(ref lineType);
 
