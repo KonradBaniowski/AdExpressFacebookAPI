@@ -303,6 +303,7 @@ namespace AdExpress.Private.Results{
 							ResultsOptionsWebControl1.InsertOption = true;
 						}
 						else ResultsOptionsWebControl1.InsertOption = false;
+                        _webSession.ReachedModule = true;
 						_webSession.Save();
 						break;
 
