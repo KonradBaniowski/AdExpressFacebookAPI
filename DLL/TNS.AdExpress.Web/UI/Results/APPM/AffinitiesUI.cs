@@ -85,7 +85,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 						html.Append("<td class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(row["GRPAffinities"]).ToString("# ### ##0")+ "</td>");
 						if(!excel)
                             html.Append("<td class=\"" + classCssImg + "\"><img width=1px></td>");
-						html.Append("<td class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(row["cgrp"]).ToString("# ### ##0")+ "</td>");
+                        html.Append("<td class=\"" + classCss2 + "\" nowrap >" + WebFunctions.Units.ConvertUnitValueAndPdmToString(Math.Round(Convert.ToDouble(row["cgrp"])), WebConstantes.CustomerSessions.Unit.grp, false, fp) + "</td>");
 						html.Append("<td class=\""+classCss2+"\" nowrap >"+Convert.ToDouble(row["cgrpAffinities"]).ToString("# ### ##0")+ "</td>");
 						html.Append("</tr>");				
 					}
