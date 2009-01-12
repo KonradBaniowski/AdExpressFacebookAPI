@@ -127,6 +127,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 DateTime DateBegin = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
                 if(DateBegin > DateTime.Now)
                     isAlertModule = true;
+                else if(DateBegin >= DateTime.Now.AddMonths(-4).Date)
+                    isAlertModule = true;
             }
             #endregion
 
@@ -412,7 +414,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internet && _webSession.CustomerPeriodSelected.Is4M)
                 || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
                 // Date begin and date end for outdooor
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && _webSession.CustomerPeriodSelected.Is4M) {
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && isAlertModule) {
                     lineIndex = resultTable.AddNewLine(lineType);
                     resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage));
                     resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(Dates.DateToString(dtFirstDate, _webSession.SiteLanguage));
