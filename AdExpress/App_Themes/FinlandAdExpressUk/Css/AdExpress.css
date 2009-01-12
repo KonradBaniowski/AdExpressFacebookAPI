@@ -2930,8 +2930,15 @@ td.jus
 	border-right-width: 1px; 
 	border-right-style:solid;
 }
-
-td.percentageOption span
-{
-	display:block;
+.unitSelectOption{
+	margin-right:4px;
+	position:fixed;
+	float:left;
+}
+.percentageOption{
+	position:relative;
+	float:left;
+}
+.percentageOption span label{
+	white-space : nowrap;
 }

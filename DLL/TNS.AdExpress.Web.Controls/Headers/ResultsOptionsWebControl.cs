@@ -1307,15 +1307,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
 				output.Write("\n<tr>");
-                output.Write("\n<td class=\"percentageOption\">");
+                output.Write("\n<td>");
+                output.Write("\n<div>");
+                output.Write("\n<div class=\"unitSelectOption\">");
 				list.RenderControl(output);
-				if(percentage){
-					output.Write("&nbsp;");
-					percentageCheckBox.RenderControl(output);
-                    
-					
-				}
+                output.Write("\n</div>");
 
+                output.Write("\n<div class=\"percentageOption\">");
+				if(percentage){
+					percentageCheckBox.RenderControl(output);
+				}
+                output.Write("\n</div>");
+                output.Write("\n</div>"); 
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
 				output.Write("\n<TR>");
