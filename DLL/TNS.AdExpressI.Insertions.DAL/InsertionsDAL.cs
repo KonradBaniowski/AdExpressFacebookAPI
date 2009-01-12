@@ -349,6 +349,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="vehicle">Vehicle Information</param>
         /// <returns>Advertising detail Data</returns>		
         public DataSet GetMSCreativesData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters) {
+            _module = ModulesList.GetModule(CstWeb.Module.Name.ANALYSE_PLAN_MEDIA);
             _msCreaConfig = true;
             return GetData(vehicle, fromDate, toDate, universId, filters);
         }
@@ -685,8 +686,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 
             #region Global rules
             // Filtre Niveau Nomenclature produits
-            switch (_module.Id)
-            {
+            switch (_module.Id) {
                 case CstWeb.Module.Name.ALERTE_PLAN_MEDIA:
                 case CstWeb.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE:
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
