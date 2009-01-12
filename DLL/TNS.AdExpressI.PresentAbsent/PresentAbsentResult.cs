@@ -1384,6 +1384,9 @@ namespace TNS.AdExpressI.PresentAbsent{
             #region Nombre parutions by media
             if (resNbParution != null && resNbParution.Count > 0)
             {
+                CellNumber cNb = new CellNumber(0.0);
+                cNb.StringFormat = "{0:max0}";
+                CellUnitFactory nbFactory = new CellUnitFactory(cNb);
                 cLine = tab.AddNewLine(LineType.nbParution);
                 CellLevel cLevelParution = new CellLevel(-1, GestionWeb.GetWebWord(2460, _session.SiteLanguage), 0, cLine);
                 tab[cLine, 1] = cLevelParution;
@@ -1393,13 +1396,13 @@ namespace TNS.AdExpressI.PresentAbsent{
                 if (_showTotal) tab[cLine, totalIndex] = new CellNumber(0.0);
                 for (Int64 i = iFirstDataIndex; i <= tab.DataColumnsNumber; i++)
                 {
-                    tab[cLine, i] = new CellNumber(0.0);
+                    tab[cLine, i] = nbFactory.Get(0.0);
                 }
 
                 //Insert numbers of parutions
                 foreach(HeaderBase h in elementsHeader.Values){
                     if (resNbParution.ContainsKey(h.Id)){
-                        tab[cLine, h.IndexInResultTable] = new CellNumber(resNbParution[h.Id]);
+                        tab[cLine, h.IndexInResultTable] = nbFactory.Get(resNbParution[h.Id]);
                     }
                 }
 

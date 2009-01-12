@@ -296,13 +296,14 @@ namespace TNS.AdExpressI.Insertions.Cells
                 _values[i].Parent = this.Parent;
                 value = _values[i].ToString();
 
-                if (canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
                 {
-
+                    StringBuilder tmpStr = new StringBuilder();
                     switch (g.Id)
                     {
                         case GenericColumnItemInformation.Columns.mailFormat:
-                            if (value.Length > 0){
+                            if (value.Length > 0)
+                            {
                                 if (value != CstVMCFormat.FORMAT_ORIGINAL)
                                 {
                                     description.Add(string.Format("{0}", GestionWeb.GetWebWord(2240, _session.SiteLanguage)));
@@ -317,7 +318,9 @@ namespace TNS.AdExpressI.Insertions.Cells
                         case GenericColumnItemInformation.Columns.format:
                         case GenericColumnItemInformation.Columns.mailType:
                         case GenericColumnItemInformation.Columns.typeDoc:
-                            if (value.Length > 0){
+                        case GenericColumnItemInformation.Columns.rapidity:
+                            if (value.Length > 0)
+                            {
                                 string[] vs = value.Split(',');
                                 foreach (string s in vs)
                                 {
@@ -326,7 +329,6 @@ namespace TNS.AdExpressI.Insertions.Cells
                             }
                             break;
                         default:
-                            StringBuilder tmpStr = new StringBuilder();
                             tmpStr.AppendFormat("<td width=\"1%\"><span>{0}<span></td> ", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
                             tmpStr.Append("<td>: ");
                             hasData = false;
@@ -375,7 +377,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                     }
                 }
             }
-            int nbLine = (int)Math.Ceiling(((double)cols.Count+1) / 2.0);
+            int nbLine = (int)Math.Ceiling(((double)cols.Count + 1) / 2.0);
             StringBuilder t = new StringBuilder();
             t.AppendFormat("<td width=\"1%\" rowspan=\"{1}\"><span>{0}<span></td><td rowspan=\"{1}\">", GestionWeb.GetWebWord(2239, _session.SiteLanguage), (1 + nbLine % 2));
             for (int c = 0; c < description.Count; c++)

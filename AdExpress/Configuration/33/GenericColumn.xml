@@ -128,7 +128,7 @@
       </constraints>
     </column>
     <column id="66" name="Type enveloppe" webTextId="2222" dbId="id_mail_format" dbLabel="mail_format" dbTable="mail_format" dbTablePrefixe="mfr"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="67" name="Prix" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
+    <column id="67" name="Prix" webTextId="1936" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
 
     <column id="68" name="Somme Surface page" webTextId="2251" isSum="true"  dbLabel="area_page" dbLabelAlias="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>
     <column id="69" name="Somme Durée" webTextId="861" isSum="true"  dbLabel="duration" dbLabelAlias="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="durationminu"/>
@@ -147,7 +147,7 @@
     <column id="82" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="84" name="Dimension banner Internet" webTextId="2542" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="85" name="Euros" webTextId="1423" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
+    <column id="85" name="Euros" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
     <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
     <column id="87" name="Gad" webTextId="2222" dbId="id_advertiser" dbLabel="id_address" dbTable="gad" dbTablePrefixe="gd"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false"/>
     <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
@@ -355,6 +355,7 @@
       <columnItem id="63" name="Item"/>
       <columnItem id="66" name="Format enveloppe"/>
       <columnItem id="60" name="Type de doc"/>
+      <columnItem id="59" name="rapidity"/>
       <columnItem id="65" name="Contenu"/>
     </detailColumn>
 
@@ -365,7 +366,7 @@
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
       <columnItem id="6" name="Version" isKey="true"/>
-      <columnItem id="67" name="Budget"/>
+      <columnItem id="85" name="Budget"/>
       <columnItem id="72" name="insertion"/>
       <columnItem id="68" name="Surface"/>
       <columnItem id="71" name="Nb supports"/>
@@ -380,7 +381,7 @@
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
       <columnItem id="6" name="Version" isKey="true"/>
-      <columnItem id="67" name="Budget"/>
+      <columnItem id="85" name="Budget"/>
       <columnItem id="74" name="Nb spots"/>
       <columnItem id="69" name="Durée"/>
       <columnItem id="70" name="nb Support"/>
@@ -393,7 +394,7 @@
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
       <columnItem id="6" name="Version" isKey="true"/>
-      <columnItem id="67" name="Budget"/>
+      <columnItem id="85" name="Budget"/>
       <columnItem id="74" name="Nb spots"/>
       <columnItem id="69" name="Durée"/>
       <columnItem id="70" name="nb Support"/>
@@ -406,7 +407,7 @@
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
       <columnItem id="6" name="Version" isKey="true"/>
-      <columnItem id="67" name="Budget"/>
+      <columnItem id="85" name="Budget"/>
       <columnItem id="76" name="Nb panneaux"/>
       <columnItem id="70" name=" Nb Supports"/>
       <columnItem id="87" name="Gad" visible="false"/>
@@ -418,7 +419,7 @@
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
       <columnItem id="6" name="Version" isKey="true"/>
-      <columnItem id="67" name="Budget"/>
+      <columnItem id="85" name="Budget"/>
       <columnItem id="74" name="Nb spots"/>
       <columnItem id="69" name="Durée"/>
       <columnItem id="70" name="nb Support"/>
@@ -432,7 +433,7 @@
       <columnItem id="9" name="Produit"/>
       <columnItem id="6" name="slogan" isKey="true"/>
       <columnItem id="3" name="Support"/>
-      <columnItem id="67" name="Budget"/>
+      <columnItem id="85" name="Budget"/>
       <columnItem id="61" name="Volume"/>
       <columnItem id="62" name="Poid"/>
       <columnItem id="63" name="Item"/>
@@ -440,6 +441,7 @@
       <columnItem id="64" name="Format enveloppe"/>
       <columnItem id="66" name="Format enveloppe"/>
       <columnItem id="60" name="Type de doc"/>
+      <columnItem id="59" name="rapidity"/>
       <columnItem id="65" name="Contenu"/>
       <columnItem id="87" name="Gad" visible="false"/>
       <columnItem id="41" name="Visuel"/>
@@ -513,6 +515,7 @@
       <columnItem id="64" name="Format enveloppe"/>
       <columnItem id="66" name="Type enveloppe"/>
       <columnItem id="60" name="Type de doc"/>
+      <columnItem id="59" name="rapidity"/>
       <columnItem id="65" name="Contenu"/>
       <columnItem id="41" name="Visuel"/>
     </detailColumn>

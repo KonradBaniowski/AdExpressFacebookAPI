@@ -1842,7 +1842,8 @@ namespace TNS.AdExpressI.MediaSchedule {
         protected virtual void AppendYearsTotal(object[,] data, StringBuilder t, int line, string cssClasseNb, int tmpCol, IFormatProvider fp) {
             if(_allowTotal) {
                 string s = FctWeb.Units.ConvertUnitValueToString(data[line, tmpCol], _session.Unit, fp).Trim();
-                if(s.Length <= 0) {
+                if (Convert.ToDouble(data[line, tmpCol]) == 0 || s.Length <= 0)
+                {
                     s = "&nbsp;";
                 }
 
