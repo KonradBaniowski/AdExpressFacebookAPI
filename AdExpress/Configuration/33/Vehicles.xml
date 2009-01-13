@@ -30,7 +30,7 @@
         <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>       <!-- Groupe d'agences -->
         <allowedMediaLevelItem>agency</allowedMediaLevelItem>                 <!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>                  <!-- Titre -->
-        <allowedMediaLevelItem>country</allowedMediaLevelItem>                <!-- Pays -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>            <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -51,6 +51,7 @@
         <allowedMediaSelectionLevelItem id="4"/> <!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="5"/> <!-- Régie -->
         <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+        <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
     </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
@@ -176,6 +177,7 @@
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/> <!-- Support -->
+        <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
         <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
         <allowedMediaSelectionLevelItem id="17"/> <!-- Titre -->
@@ -335,20 +337,20 @@
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>             <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>                <!-- Régie -->
-      <MediaSelectionParent>title</MediaSelectionParent>                      <!-- Titre -->
+      <!--<MediaSelectionParent>title</MediaSelectionParent>-->               <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
-        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+        <!--<defaultMediaSelectionDetailLevel id="24" name="titre\support" />-->
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
-        <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+        <!--<allowedMediaSelectionLevelItem id="17"/>--><!-- Titre -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
@@ -473,14 +475,14 @@
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
-        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+        <!--<defaultMediaSelectionDetailLevel id="23" name="regie\support" />-->
+        <!--<defaultMediaSelectionDetailLevel id="24" name="titre\support" />-->
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
-        <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
-        <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+        <!--<allowedMediaSelectionLevelItem id="5"/>--><!-- Régie -->
+        <!--<allowedMediaSelectionLevelItem id="17"/>--><!-- Titre -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
@@ -540,6 +542,7 @@
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/> <!-- Support -->
+        <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
         <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="26"/><!-- Pays -->
         <allowedMediaSelectionLevelItem id="5"/><!-- Régie -->
