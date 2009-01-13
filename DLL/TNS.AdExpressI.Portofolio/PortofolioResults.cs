@@ -431,7 +431,7 @@ namespace TNS.AdExpressI.Portofolio {
         /// </summary>
         /// <returns>True if the Insertion column is shown</returns>
         protected virtual bool ShowInsertions() {
-			if (!_webSession.CustomerPeriodSelected.Is4M || !_vehicleInformation.ShowInsertions) return (false);
+			if (!_webSession.CustomerPeriodSelected.IsSliding4M || !_vehicleInformation.ShowInsertions) return (false);
             foreach(DetailLevelItemInformation item in _webSession.GenericProductDetailLevel.Levels) {
                 if(item.Id.Equals(DetailLevelItemInformation.Levels.advertiser)
 					|| item.Id.Equals(DetailLevelItemInformation.Levels.product)) {
@@ -445,7 +445,7 @@ namespace TNS.AdExpressI.Portofolio {
         /// </summary>
         /// <returns>True if the creation column is shown</returns>
         protected virtual bool ShowCreatives() {
-			if (!_webSession.CustomerPeriodSelected.Is4M ||
+			if (!_webSession.CustomerPeriodSelected.IsSliding4M ||
 				!_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_SLOGAN_ACCESS_FLAG) ||
 				!_vehicleInformation.ShowCreations ||
                 !_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id)

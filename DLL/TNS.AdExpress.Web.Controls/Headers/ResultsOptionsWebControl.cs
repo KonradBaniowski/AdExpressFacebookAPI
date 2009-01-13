@@ -1600,13 +1600,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				case ClassificationCst.DB.Vehicles.names.outdoor:
 				case ClassificationCst.DB.Vehicles.names.cinema:
                 case ClassificationCst.DB.Vehicles.names.adnettrack:
-					return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.Is4M));
+					return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.IsSliding4M));
 				case ClassificationCst.DB.Vehicles.names.others:
 				case ClassificationCst.DB.Vehicles.names.tv:
 				case ClassificationCst.DB.Vehicles.names.radio:
 				case ClassificationCst.DB.Vehicles.names.press:
 				case ClassificationCst.DB.Vehicles.names.internationalPress:				
-					return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (webSession.CustomerPeriodSelected.Is4M));						
+					return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (webSession.CustomerPeriodSelected.IsSliding4M));						
 				default: throw new Exceptions.ResultsOptionsWebControlException("ResultsOptionsWebControl : Vehicle unknown.");
 			}
 			

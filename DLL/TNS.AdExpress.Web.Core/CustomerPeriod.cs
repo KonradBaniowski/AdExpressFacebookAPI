@@ -148,6 +148,19 @@ namespace TNS.AdExpress.Web.Core {
             get { return _is4M; }
         }
         /// <summary>
+        /// Indique si on doit utiliser la table 4M ou non pour les quatre derniers mois glissants
+        /// </summary>
+        public bool IsSliding4M {
+            get {
+                DateTime DateBegin = new DateTime(int.Parse(_startDate.Substring(0, 4)), int.Parse(_startDate.Substring(4, 2)), int.Parse(_startDate.Substring(6, 2)));
+                if (_is4M) return true;
+                else if (DateBegin >= DateTime.Now.AddMonths(-4).Date)
+                    return true;
+                else
+                    return false;
+            }
+        }
+        /// <summary>
         /// Indique si on doit utiliser la table DATA_VEHICLE ou non
         /// </summary>
         public bool IsDataVehicle {

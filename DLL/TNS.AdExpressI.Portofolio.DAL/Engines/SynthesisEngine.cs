@@ -142,7 +142,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			#region Construction de la requête
 			try {
-				if (customerPeriod.Is4M) {
+				if (customerPeriod.IsSliding4M) {
 					sql4M = GetRequestForAnalysisPortofolio(DBConstantes.TableType.Type.dataVehicle4M);
 					sql = sql4M;
 				}
@@ -1110,7 +1110,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             try {
 
                 #region Request
-                if (customerPeriod.Is4M) {
+                if (customerPeriod.IsSliding4M) {
                     sql4M = GetRequestForNumberProductAdvertiser(DBConstantes.TableType.Type.dataVehicle4M, dataType);
                     sql = sql4M;
                 }
@@ -1254,7 +1254,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
             #region Construction de la requête
             try {
-                if(customerPeriod.Is4M) {
+                if(customerPeriod.IsSliding4M) {
                     sql4M = GetRequestForNumberBanner(DBConstantes.TableType.Type.dataVehicle4M);
                     sql = sql4M;
                 }

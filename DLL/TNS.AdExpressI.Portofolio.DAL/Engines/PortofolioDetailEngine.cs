@@ -72,7 +72,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				orderFieldNameWithoutTablePrefix = _webSession.GenericProductDetailLevel.GetSqlOrderFieldsWithoutTablePrefix();
 				groupByFieldNameWithoutTablePrefix = _webSession.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
 
-				if (customerPeriod.Is4M) {
+				if (customerPeriod.IsSliding4M) {
 					sql4M = GetRequest(DBConstantes.TableType.Type.dataVehicle4M);
 					sql4M += " order by " + orderFieldName + "," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media ";
 					sql = sql4M;

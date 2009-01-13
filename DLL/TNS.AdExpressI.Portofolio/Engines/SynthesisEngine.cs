@@ -122,12 +122,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             DataTable dtTypeSale = null;
 
             #region AlertModule
-            bool isAlertModule = _webSession.CustomerPeriodSelected.Is4M;
+            bool isAlertModule = _webSession.CustomerPeriodSelected.IsSliding4M;
             if (isAlertModule == false) {
                 DateTime DateBegin = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
                 if(DateBegin > DateTime.Now)
-                    isAlertModule = true;
-                else if(DateBegin >= DateTime.Now.AddMonths(-4).Date)
                     isAlertModule = true;
             }
             #endregion
