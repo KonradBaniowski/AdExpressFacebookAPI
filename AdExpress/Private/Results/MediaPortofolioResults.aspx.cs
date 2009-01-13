@@ -379,10 +379,19 @@ namespace AdExpress.Private.Results{
 		
 			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 
+            #region AlertModule
+            bool isAlertModule = _webSession.CustomerPeriodSelected.Is4M;
+            if (isAlertModule == false) {
+                DateTime DateBegin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.CustomerPeriodSelected.StartDate, _webSession.PeriodType);
+                if (DateBegin >= DateTime.Now.AddMonths(-4).Date)
+                    isAlertModule = true;
+            }
+            #endregion
+
 			switch (_webSession.CurrentTab) {
 
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
-                    result = (_webSession.CustomerPeriodSelected.Is4M) ? portofolioResult.GetVehicleViewHtml(false, FrameWorkConstantes.Portofolio.SYNTHESIS) : "";
+                    result = (isAlertModule) ? portofolioResult.GetVehicleViewHtml(false, FrameWorkConstantes.Portofolio.SYNTHESIS) : "";
 					break;
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
 					result = portofolioResult.GetDetailMediaHtml(false);
