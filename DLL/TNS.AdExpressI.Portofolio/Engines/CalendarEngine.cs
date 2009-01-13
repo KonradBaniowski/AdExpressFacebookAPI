@@ -158,12 +158,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						}
 						level = _webSession.GenericProductDetailLevel.GetDetailLevelItemInformation(i);
 						//PM
-						if (level != DetailLevelItemInformation.Levels.agency && level != DetailLevelItemInformation.Levels.groupMediaAgency) {
+                        //if (level != DetailLevelItemInformation.Levels.agency && level != DetailLevelItemInformation.Levels.groupMediaAgency) {
 							tab[iCurLine, 2] = new CellMediaScheduleLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession);
-						}
-						else {
-							tab[iCurLine, 2] = new CellEmpty();
-						}                      
+                        //}
+                        //else {
+                        //    tab[iCurLine, 2] = new CellEmpty();
+                        //}                      
 
                         initLine(tab, iCurLine, cellFactory, cellLevels[i-1]);
 					}
