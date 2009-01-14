@@ -1738,5 +1738,7 @@
     <item mnemonic="w2550" type="System.String">Sélectionner/désélectionner tous les pays</item>
     <item mnemonic="w2551" type="System.String">Avec auto-promo Evaliant</item>
     <item mnemonic="w2552" type="System.String">Auto-promo</item>
+    <item mnemonic="w2553" type="System.String">L’option "personnaliser les supports" vous permet dans un Plan media au niveau du tableau de résultat final, d’effectuer une sélection sur certains supports uniquement et non de travailler sur l’ensemble de la presse sélectionné par défaut.</item>
+    <item mnemonic="w2554" type="System.String">En presse, vous avez la possibilité de travailler en Encart ou Hors encart</item>
   </items>
 </localization>
