@@ -18,6 +18,7 @@ using FrameWorkConstantes=TNS.AdExpress.Constantes.FrameWork.Results;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -338,7 +339,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			const string L2="acl2";
 			#endregion	
 
-            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
+            IFormatProvider fp = (excel) ? WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfoExcel : WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
 
 			DataTable dt = TNS.AdExpress.Web.DataAccess.Results.TendenciesDataAccess.GetDataTendencies(webSession,vehicleName).Tables[0];
 			DataTable dtTotal = TNS.AdExpress.Web.DataAccess.Results.TendenciesDataAccess.GetTotalTendencies(webSession,vehicleName).Tables[0];
@@ -486,11 +487,25 @@ namespace TNS.AdExpress.Web.UI.Results{
 						break;
 					case DBClassificationConstantes.Vehicles.names.radio:					
 					case DBClassificationConstantes.Vehicles.names.tv:
-					case DBClassificationConstantes.Vehicles.names.others:	
-						totalUnit= ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["duration_cur"],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
-						t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
-						totalUnit= ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["duration_prev"],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
-						t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
+					case DBClassificationConstantes.Vehicles.names.others:
+                        if (!excel || webSession.PDM)
+                        {
+                            totalUnit = ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["duration_cur"], WebConstantes.CustomerSessions.Unit.duration, webSession.PDM, fp);
+                        }
+                        else
+                        {
+                            totalUnit = string.Format(fp, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(dtTotal.Rows[0]["duration_cur"]));
+                        }
+                        t.Append("<td align=\"right\" class=\"" + L1 + "\" nowrap>" + totalUnit + "</td>");
+                        if (!excel || webSession.PDM)
+                        {
+                            totalUnit = ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["duration_prev"], WebConstantes.CustomerSessions.Unit.duration, webSession.PDM, fp);
+                        }
+                        else
+                        {
+                            totalUnit = string.Format(fp, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(dtTotal.Rows[0]["duration_prev"]));
+                        }
+                        t.Append("<td align=\"right\" class=\"" + L1 + "\" nowrap>" + totalUnit + "</td>");
 						// Evolution
 						evolPicture=Evol(dtTotal.Rows[0]["duration_evol"],dtTotal.Rows[0]["duration_cur"],excel);
 						totalUnit= ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["duration_evol"],WebConstantes.CustomerSessions.Unit.duration,true, fp);
@@ -549,11 +564,24 @@ namespace TNS.AdExpress.Web.UI.Results{
 						case DBClassificationConstantes.Vehicles.names.radio:
 						case DBClassificationConstantes.Vehicles.names.tv:
 						case DBClassificationConstantes.Vehicles.names.others:
-							totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_duration_cur"],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
-							t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
-					
-							totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_duration_prev"],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
-							t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
+                            if (!excel || webSession.PDM)
+                            {
+                                totalUnit = ConvertUnitValueAndPdmToString(currentRow["sub_duration_cur"], WebConstantes.CustomerSessions.Unit.duration, webSession.PDM, fp);
+                            }
+                            else
+                            {
+                                totalUnit = string.Format(fp, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(currentRow["sub_duration_cur"]));
+                            }
+                            t.Append("<td class=\"" + L1 + "\" nowrap>" + totalUnit + "</td>");
+                            if (!excel || webSession.PDM)
+                            {
+                                totalUnit = ConvertUnitValueAndPdmToString(currentRow["sub_duration_prev"], WebConstantes.CustomerSessions.Unit.duration, webSession.PDM, fp);
+                            }
+                            else
+                            {
+                                totalUnit = string.Format(fp, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(currentRow["sub_duration_prev"]));
+                            }
+                            t.Append("<td class=\"" + L1 + "\" nowrap>" + totalUnit + "</td>");
 					
 							totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_duration_evol"],WebConstantes.CustomerSessions.Unit.duration,true, fp);
 							evolPicture=Evol(currentRow["sub_duration_evol"],currentRow["sub_duration_cur"],excel);
@@ -606,11 +634,24 @@ namespace TNS.AdExpress.Web.UI.Results{
 					case DBClassificationConstantes.Vehicles.names.radio:
 					case DBClassificationConstantes.Vehicles.names.tv:
 					case DBClassificationConstantes.Vehicles.names.others:
-						totalUnit= ConvertUnitValueAndPdmToString(currentRow["duration_cur"],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
-						t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit+"</td>");
-					
-						totalUnit= ConvertUnitValueAndPdmToString(currentRow["duration_prev"],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
-						t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit+"</td>");
+                        if (!excel || webSession.PDM)
+                        {
+                            totalUnit = ConvertUnitValueAndPdmToString(currentRow["duration_cur"], WebConstantes.CustomerSessions.Unit.duration, webSession.PDM, fp);
+                        }
+                        else
+                        {
+                            totalUnit = string.Format(fp, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(currentRow["duration_cur"]));
+                        }
+                        t.Append("<td class=\"" + L2 + "\" nowrap>" + totalUnit + "</td>");
+                        if (!excel || webSession.PDM)
+                        {
+                            totalUnit = ConvertUnitValueAndPdmToString(currentRow["duration_prev"], WebConstantes.CustomerSessions.Unit.duration, webSession.PDM, fp);
+                        }
+                        else
+                        {
+                            totalUnit = string.Format(fp, UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(currentRow["duration_prev"]));
+                        }
+                        t.Append("<td class=\"" + L2 + "\" nowrap>" + totalUnit + "</td>");
 					
 						totalUnit= ConvertUnitValueAndPdmToString(currentRow["duration_evol"],WebConstantes.CustomerSessions.Unit.duration,true, fp);
 						evolPicture=Evol(currentRow["duration_evol"],currentRow["duration_cur"],excel);

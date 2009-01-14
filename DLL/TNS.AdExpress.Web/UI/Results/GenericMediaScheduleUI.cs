@@ -30,6 +30,7 @@ using TNS.FrameWork;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.UI.Results {
     /// <summary>
@@ -416,7 +417,7 @@ namespace TNS.AdExpress.Web.UI.Results {
             string stringItem = "&nbsp;";
             string periodClass;
             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
-            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfoExcel;
             #endregion
 
             #region Rappel de sélection
@@ -580,6 +581,7 @@ namespace TNS.AdExpress.Web.UI.Results {
 
             #region Calendrier d'actions
             i = 0;
+            UnitInformation unit = UnitsInformation.Get(webSession.Unit);
             try
             {
                 sloganIndex = GetSloganIdIndex(webSession);
@@ -636,13 +638,27 @@ namespace TNS.AdExpress.Web.UI.Results {
                                         break;
                                     }
                                     // On traite le cas des pages
-                                    totalUnit = WebFunctions.Units.ConvertUnitValueToString(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX], webSession.Unit, fp);
+                                    if (webSession.Unit != CustomerSessions.Unit.duration)
+                                    {
+                                        totalUnit = WebFunctions.Units.ConvertUnitValueToString(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX], webSession.Unit, fp);
+                                    }
+                                    else
+                                    {
+                                        totalUnit = string.Format(fp, unit.StringFormat, Convert.ToDouble(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX]));
+                                    }
                                     t.Append("\r\n\t<tr>\r\n\t\t<td class=\"" + classe + "\">" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L1_COLUMN_INDEX] + "</td><td class=\"" + classe + "nb\">" + totalUnit + "</td><td class=\"" + classe + "nb\">" + ((double)tab[i, FrameWorkResultConstantes.DetailledMediaPlan.PDM_COLUMN_INDEX]).ToString("0.00") + "</td>");
                                     //aller aux colonnes du calendrier d'action
                                     //MAJ GR : totaux par années si nécessaire
                                     for (k = 1; k <= nbColYear; k++)
                                     {
-                                        t.Append("<td class=\"" + classe + "nb\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j + 10 + k], webSession.Unit, fp) + "</td>");
+                                        if (unit.Id != CustomerSessions.Unit.duration)
+                                        {
+                                            t.Append("<td class=\"" + classe + "nb\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j + 10 + k], webSession.Unit, fp) + "</td>");
+                                        }
+                                        else
+                                        {
+                                            t.Append("<td class=\"" + classe + "nb\" nowrap>" + string.Format(fp, unit.StringFormat, Convert.ToDouble(tab[i, j + 10 + k])) + "</td>");                                            
+                                        }
                                     }
                                     j = j + 10 + nbColYear;
                                     //fin MAJ
@@ -655,13 +671,26 @@ namespace TNS.AdExpress.Web.UI.Results {
                                 if (tab[i, j] != null)
                                 {
                                     // On traite le cas des pages
-                                    totalUnit = WebFunctions.Units.ConvertUnitValueToString(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX], webSession.Unit, fp);
+                                    if (unit.Id != CustomerSessions.Unit.duration)
+                                    {
+                                        totalUnit = WebFunctions.Units.ConvertUnitValueToString(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX], webSession.Unit, fp);
+                                    }
+                                    else{
+                                        totalUnit = string.Format(fp, unit.StringFormat, Convert.ToDouble(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX]));
+                                    }
                                     t.Append("\r\n\t<tr>\r\n\t\t<td class=\"L2X\">&nbsp;" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L2_COLUMN_INDEX] + "</td><td class=\"L2Xnb\">" + totalUnit + "</td><td class=\"L2Xnb\">" + ((double)tab[i, FrameWorkResultConstantes.DetailledMediaPlan.PDM_COLUMN_INDEX]).ToString("0.00") + "</td>");
                                     //aller aux colonnes du calendrier d'action
                                     //MAJ GR : totaux par années si nécessaire
                                     for (k = 1; k <= nbColYear; k++)
                                     {
-                                        t.Append("<td class=\"L2Xnb\">" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j + 9 + k], webSession.Unit, fp) + "</td>");
+                                        if (unit.Id != CustomerSessions.Unit.duration)
+                                        {
+                                            t.Append("<td class=\"L2Xnb\">" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j + 9 + k], webSession.Unit, fp) + "</td>");
+                                        }
+                                        else
+                                        {
+                                            t.Append("<td class=\"L2Xnb\">" + string.Format(fp, unit.StringFormat, Convert.ToDouble(tab[i, j + 9 + k])) + "</td>");                                                                                    
+                                        }
                                     }
                                     j = j + 9 + nbColYear;
                                     //fin MAJ
@@ -675,14 +704,21 @@ namespace TNS.AdExpress.Web.UI.Results {
                                 {
                                     //vérification que la catégorie n est pas les chaines thematiques
                                     // On traite le cas des pages
-                                    totalUnit = WebFunctions.Units.ConvertUnitValueToString(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX], webSession.Unit, fp);
+                                    if (unit.Id != CustomerSessions.Unit.duration)
+                                    {
+                                        totalUnit = WebFunctions.Units.ConvertUnitValueToString(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX], webSession.Unit, fp);
+                                    }
+                                    else
+                                    {
+                                        totalUnit = string.Format(fp, unit.StringFormat, Convert.ToDouble(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX]));
+                                    }
                                     t.Append("\r\n\t<tr>\r\n\t\t<td class=\"L3X\">&nbsp;&nbsp;" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_COLUMN_INDEX] + "</td><td class=\"L3Xnb\">" + totalUnit + "</td><td class=\"L3Xnb\">" + ((double)tab[i, FrameWorkResultConstantes.DetailledMediaPlan.PDM_COLUMN_INDEX]).ToString("0.00") + "</td>");
                                     currentCategoryName = tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_COLUMN_INDEX].ToString();
                                     //aller aux colonnes du calendrier d'action
                                     //MAJ GR : totaux par années si nécessaire
                                     for (k = 1; k <= nbColYear; k++)
                                     {
-                                        t.Append("<td class=\"L3Xnb\">" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j + 8 + k], webSession.Unit, fp) + "</td>");
+                                        t.Append("<td class=\"L3Xnb\">" + string.Format(fp, unit.StringFormat, Convert.ToDouble(tab[i, j + 8 + k])) + "</td>");
                                     }
                                     j = j + 8 + nbColYear;
                                     //fin MAJ
@@ -693,7 +729,14 @@ namespace TNS.AdExpress.Web.UI.Results {
                             #region Level 4
                             case DetailledMediaPlan.L4_COLUMN_INDEX:
                                 // On traite le cas des pages
-                                totalUnit = WebFunctions.Units.ConvertUnitValueToString(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX], webSession.Unit, fp);
+                                if (unit.Id != CustomerSessions.Unit.duration)
+                                {
+                                    totalUnit = WebFunctions.Units.ConvertUnitValueToString(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX], webSession.Unit, fp);
+                                }
+                                else
+                                {
+                                    totalUnit = string.Format(fp, unit.StringFormat, Convert.ToDouble(tab[i, FrameWorkResultConstantes.DetailledMediaPlan.TOTAL_COLUMN_INDEX]));
+                                }
                                 //On verifie si la chaine IdMedia est affectée. Elle ne l'est pas dans le cas d'un support appartenant a la caté"gorie "chaîne thématique"
                                 if (tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L3_ID_COLUMN_INDEX] != null)
                                     t.Append("\r\n\t<tr>\r\n\t\t<td class=\"L4X\">&nbsp;&nbsp;&nbsp;" + tab[i, FrameWorkResultConstantes.DetailledMediaPlan.L4_COLUMN_INDEX] + "</td><td class=\"L4Xnb\">" + totalUnit + "</td><td class=\"L4Xnb\">" + ((double)tab[i, FrameWorkResultConstantes.DetailledMediaPlan.PDM_COLUMN_INDEX]).ToString("0.00") + "</td>");
@@ -702,7 +745,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                                 //MAJ GR : totaux par années si nécessaire
                                 for (k = 1; k <= nbColYear; k++)
                                 {
-                                    t.Append("<td class=\"L4Xnb\">" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j + 7 + k], webSession.Unit, fp) + "</td>");
+                                    t.Append("<td class=\"L4Xnb\">" + string.Format(fp, unit.StringFormat, Convert.ToDouble(tab[i, j + 7 + k])) + "</td>");
                                 }
                                 //fin MAJ
                                 j = j + 7 + nbColYear;//nbColYear ajouter GF
@@ -720,7 +763,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                                     {
                                         case FrameWorkResultConstantes.DetailledMediaPlan.graphicItemType.present:
                                             if (showValue) 
-                                                t.Append("<td class=\"" + presentClass + "\">" + Functions.Units.ConvertUnitValueToString(((MediaPlanItem)tab[i, j]).Unit, webSession.Unit, fp) + "</td>");
+                                                t.Append("<td class=\"" + presentClass + "\">" + string.Format(fp, unit.StringFormat, ((MediaPlanItem)tab[i, j]).Unit) + "</td>");
                                             else
                                                 t.Append("<td class=\"" + presentClass + "\">" + stringItem + "</td>");
                                             break;
