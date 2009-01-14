@@ -32,6 +32,7 @@ using DateFrameWork=TNS.FrameWork.Date;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 
 
 namespace TNS.AdExpress.Web.UI.Results {
@@ -348,10 +349,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 						if( tempoLabel2!=0){
 
 							if (tab[i,ResultConstantes.PERIOD_N_COLUMN_INDEX]!=null){
-								CurrentPeriode(tab,webSession,html,i,classCss);
+								CurrentPeriode(tab,webSession,html,i,classCss,true);
 
 							}else if (webSession.ComparativeStudy && tab[i,ResultConstantes.PERIOD_N1_COLUMN_INDEX]!=null){
-								PrecedingPeriode(tab,webSession,html,i,classCss);
+								PrecedingPeriode(tab,webSession,html,i,classCss,true);
 				
 							}else if (webSession.PDM && tab[i,ResultConstantes.PDM_COLUMN_INDEX]!=null){
 								PDM(tab,webSession,html,i,classCss, fp);
@@ -575,13 +576,13 @@ namespace TNS.AdExpress.Web.UI.Results {
 				if (tab[i,ResultConstantes.PERIOD_N_COLUMN_INDEX]!=null){
 					html.Append("\r\n\t<tr height=\"20px\">");
 					html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+tab[i,ResultConstantes.PERIOD_N_COLUMN_INDEX].ToString()+"</td>");
-					CurrentPeriode(tab,webSession,html,i,classCss);
+					CurrentPeriode(tab,webSession,html,i,classCss,excel);
 					html.Append("</tr>");
 				}
 				if (webSession.ComparativeStudy && tab[i,ResultConstantes.PERIOD_N1_COLUMN_INDEX]!=null){
 					html.Append("\r\n\t<tr height=\"20px\">");
 					html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+tab[i,ResultConstantes.PERIOD_N1_COLUMN_INDEX].ToString()+"</td>");	
-					PrecedingPeriode(tab,webSession,html,i,classCss);
+					PrecedingPeriode(tab,webSession,html,i,classCss, excel);
 					html.Append("</tr>");
 				}
 				if (webSession.Evolution && tab[i,ResultConstantes.EVOL_COLUMN_INDEX]!=null){
@@ -619,10 +620,12 @@ namespace TNS.AdExpress.Web.UI.Results {
 		///<param name="html">Html</param>
 		///<param name="i">Ligne du Tableau</param>
 		///<param name="classCss">ClasCss</param>
+        /// <param name="excel">Is excel export or not</param>
 		/// <returns>UI du tableau</returns>	
-		private static string CurrentPeriode(object[,] tab,WebSession webSession, StringBuilder html ,int i,string classCss){
+        private static string CurrentPeriode(object[,] tab, WebSession webSession, StringBuilder html, int i, string classCss, bool excel) {
 
-            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
+            IFormatProvider fp = (!excel ? WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo
+                                         : WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfoExcel);
 			string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
 			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
 			
@@ -636,16 +639,29 @@ namespace TNS.AdExpress.Web.UI.Results {
 						html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,ResultConstantes.TOTAL_COLUMN_INDEX].ToString()).ToString("### ### ### ##0.##")+" %</td>");
 					else 
 						//unité duration
-					
-						if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format|| 
-						webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay|| 
-						webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice){
-						if(tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX]!=null && tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX].ToString()=="2"){
-                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], CstWeb.CustomerSessions.Unit.duration, false, fp) + "</td>");
-						}else
-                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], webSession.Unit, fp) + "</td>");
-					}else
-                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], webSession.Unit, fp) + "</td>");
+
+                        if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format ||
+                        webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay ||
+                        webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice) {
+                            if (tab[i, ResultConstantes.ID_ELMT_L2_COLUMN_INDEX] != null && tab[i, ResultConstantes.ID_ELMT_L2_COLUMN_INDEX].ToString() == "2") {
+                                if (!excel)
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], CstWeb.CustomerSessions.Unit.duration, false, fp) + "</td>");
+                                else
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX])) + "</td>");
+                            }
+                            else {
+                                if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], webSession.Unit, fp) + "</td>");
+                                else
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX])) + "</td>");
+                            }
+                        }
+                        else {
+                            if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], webSession.Unit, fp) + "</td>");
+                            else
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX])) + "</td>");
+                        }
 				}else
 					html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");				
 			}			
@@ -704,10 +720,19 @@ namespace TNS.AdExpress.Web.UI.Results {
                                 if (tab[i, ResultConstantes.REPARTITION_PERCENT] != null) {
                                     html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + double.Parse(tab[i, j].ToString()).ToString("### ### ### ##0.##") + " %</td>");
                                 }
-                                else html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], CstWeb.CustomerSessions.Unit.duration, fp) + "</td>");
+                                else {
+                                    if (!excel)
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], CstWeb.CustomerSessions.Unit.duration, fp) + "</td>");
+                                    else
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
+                                }
                             }
-                            else
-                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                            else {
+                                if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                                else
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
+                            }
                         }
                         else
                             html.Append("<td align=\"center\" class=\"" + classCss + "\" nowrap>  </td>");
@@ -726,13 +751,24 @@ namespace TNS.AdExpress.Web.UI.Results {
                                 webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice) {
                                     if (tab[i, ResultConstantes.ID_ELMT_L2_COLUMN_INDEX] != null && tab[i, ResultConstantes.ID_ELMT_L2_COLUMN_INDEX].ToString() == "2") {
                                         //								html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+GetDurationFormatHH_MM_SS(int.Parse(tab[i,j].ToString()))+"</td>");
-                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, j], CstWeb.CustomerSessions.Unit.duration, false, fp) + "</td>");
+                                        if (!excel)
+                                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, j], CstWeb.CustomerSessions.Unit.duration, false, fp) + "</td>");
+                                        else
+                                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
                                     }
-                                    else
-                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                                    else {
+                                        if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                                        else
+                                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
+                                    }
                                 }
-                                else
-                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                                else {
+                                    if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                                    else
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
+                                }
                         }
                         else
                             html.Append("<td align=\"center\" class=\"" + classCss + "\" nowrap>  </td>");
@@ -793,10 +829,12 @@ namespace TNS.AdExpress.Web.UI.Results {
 		///<param name="html">Html</param>
 		///<param name="i">Ligne du Tableau</param>
 		///<param name="classCss">ClasCss</param>
+        /// <param name="excel">Is excel export or not</param>
 		/// <returns>UI du tableau</returns>		
-		private static string PrecedingPeriode(object[,] tab,WebSession webSession, StringBuilder html ,int i,string classCss){
+		private static string PrecedingPeriode(object[,] tab,WebSession webSession, StringBuilder html ,int i,string classCss, bool excel){
 
-            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
+            IFormatProvider fp = (!excel ? WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo
+                                         :WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfoExcel);
 			string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
 			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
 			
@@ -815,12 +853,21 @@ namespace TNS.AdExpress.Web.UI.Results {
 						webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay|| 
 						webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice){
 						if(tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX]!=null && tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX].ToString()=="2"){
-                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], CstWeb.CustomerSessions.Unit.duration, false, fp) + "</td>");
+                            if (!excel)
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], CstWeb.CustomerSessions.Unit.duration, false, fp) + "</td>");
+                            else
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX])) + "</td>");
 						}else
-                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], webSession.Unit, fp) + "</td>");
+                            if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], webSession.Unit, fp) + "</td>");
+                            else
+                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX])) + "</td>");
 						
 					}else
-                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], webSession.Unit, fp) + "</td>");
+                        if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX], webSession.Unit, fp) + "</td>");
+                        else
+                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, ResultConstantes.TOTAL_COLUMN_INDEX])) + "</td>");
 				}else
 					html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");				
 			}			
@@ -877,14 +924,23 @@ namespace TNS.AdExpress.Web.UI.Results {
 					if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){
 						if(tab[i,j]!= null){
 							//afficher la durée en h/m/s pour le tableau n°1:media/unite
-							if (j==ResultConstantes.TOTAL_COLUMN_INDEX+2){
-								if(tab[i,ResultConstantes.REPARTITION_PERCENT]!=null){
-									html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,j].ToString()).ToString("### ### ### ##0.##")+" %</td>");
-								}
-                                else html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], CstWeb.CustomerSessions.Unit.duration, fp) + "</td>");
-							}
-							else
-                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");							
+                            if (j == ResultConstantes.TOTAL_COLUMN_INDEX + 2) {
+                                if (tab[i, ResultConstantes.REPARTITION_PERCENT] != null) {
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + double.Parse(tab[i, j].ToString()).ToString("### ### ### ##0.##") + " %</td>");
+                                }
+                                else {
+                                    if (!excel)
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], CstWeb.CustomerSessions.Unit.duration, fp) + "</td>");
+                                    else
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
+                                }
+                            }
+                            else {
+                                if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                                else
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
+                            }
 						}	else
 							html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");						
 					}
@@ -897,16 +953,29 @@ namespace TNS.AdExpress.Web.UI.Results {
 							html.Append("<td align=\"right\" class=\""+classCss+"\" nowrap>"+double.Parse(tab[i,j].ToString()).ToString("### ### ### ##0.##")+" %</td>");
 						else 
 							//unité duration
-							if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format|| 
-							webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay|| 
-							webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice){
-							if(tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX]!=null && tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX].ToString()=="2"){
-                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, j], CstWeb.CustomerSessions.Unit.duration, false, fp) + "</td>");
-							}else
-                                html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
-						
-						}else
-                            html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                            if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_Format ||
+                            webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay ||
+                            webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice) {
+                                if (tab[i, ResultConstantes.ID_ELMT_L2_COLUMN_INDEX] != null && tab[i, ResultConstantes.ID_ELMT_L2_COLUMN_INDEX].ToString() == "2") {
+                                    if (!excel)
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueAndPdmToString(tab[i, j], CstWeb.CustomerSessions.Unit.duration, false, fp) + "</td>");
+                                    else
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
+                                }
+                                else {
+                                    if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                                    else
+                                        html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
+                                }
+
+                            }
+                            else {
+                                if (!excel || webSession.Unit != CstWeb.CustomerSessions.Unit.duration)
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + WebFunctions.Units.ConvertUnitValueToString(tab[i, j], webSession.Unit, fp) + "</td>");
+                                else
+                                    html.Append("<td align=\"right\" class=\"" + classCss + "\" nowrap>" + string.Format(fp, UnitsInformation.Get(CstWeb.CustomerSessions.Unit.duration).StringFormat, Convert.ToDouble(tab[i, j])) + "</td>");
+                            }
 					}else
 						html.Append("<td align=\"center\" class=\""+classCss+"\" nowrap>  </td>");
 					#endregion
