@@ -190,6 +190,27 @@
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image15" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
+				
+				
+				
+				<!-- Texte -->
+				<tr>
+					<td width="10"><asp:Image ID="Image174" runat="server" SkinID="pixel" width="10" /></td>
+					<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext70" runat="server" Code="2554"></cc1:adexpresstext></td>
+				</tr>
+				<!-- Exemple Image -->
+				<tr>
+					<td colSpan="2"><asp:Image ID="Image175" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+				</tr>
+				<tr>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/portDetailInsertionOption.gif"></td>
+				</tr>
+				<tr>
+					<td colSpan="2"><asp:Image ID="Image176" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+				</tr>
+				
+				
+				
 				<!-- Titre 3 -->
 				<TR>
 					<td class="txtViolet12Bold paleVioletBackGround" colSpan="2">&nbsp;
@@ -432,6 +453,22 @@
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image117" runat="server" SkinID="pixel" height="12" width="100%" /></td>
 				</tr>
+				
+				<tr>
+					<td width="10"><asp:Image ID="Image177" runat="server" SkinID="pixel" width="10" /></td>
+					<td>
+						<table cellSpacing="0" cellPadding="0" border="0">
+							<tr>
+								<td align="center" width="40"><asp:Image ID="Image178" runat="server" SkinID="media" /></td>
+								<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext71" runat="server" Code="2553"></cc1:adexpresstext></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colSpan="2"><asp:Image ID="Image179" runat="server" SkinID="pixel" height="12" width="100%" /></td>
+				</tr>
+				
 				<tr>
 					<td width="10"><asp:Image ID="Image74" runat="server" SkinID="pixel" width="10" /></td>
 					<td>
