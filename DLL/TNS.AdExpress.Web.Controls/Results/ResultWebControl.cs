@@ -1894,8 +1894,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					output.Write(html.ToString());
 					break;
 				case RenderType.rawExcel:
-					_data=GetResultTable(_customerWebSession); 
-					if(_data!=null){
+					_data=GetResultTable(_customerWebSession);
+                    _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_customerWebSession.SiteLanguage].CultureInfoExcel;
+                    if (_data != null)
+                    {
 						output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));
 						output.WriteLine(detailSelectionWebControl.GetHeader());
 						output.WriteLine(base.GetRawExcel());
@@ -1904,7 +1906,9 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					break;
 				case RenderType.excel:
 					_data=GetResultTable(_customerWebSession);
-					if(_data!=null){
+                    _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_customerWebSession.SiteLanguage].CultureInfoExcel;
+                    if (_data != null)
+                    {
 						output.WriteLine(detailSelectionWebControl.GetLogo(_customerWebSession));
 						output.WriteLine(detailSelectionWebControl.GetHeader());
 						output.WriteLine(base.GetExcel());

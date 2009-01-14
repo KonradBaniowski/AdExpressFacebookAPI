@@ -75,6 +75,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         private AdExpressCultureInfo _cInfo = null;
         /// <summary>
+        /// Extended culture info for the specific language in excel reports
+        /// </summary>
+        private AdExpressCultureInfo _cInfoExcel = null;
+        /// <summary>
         /// Rss Description
         /// </summary>
         private Rss _rss;
@@ -90,7 +94,6 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
         /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
-        /// <param name="cInfo">Extended culture info</param>
         public WebLanguage(int id, string imageSourceText, string localization, string charset, string contentEncoding, string excelContentEncoding, string pdfContentEncoding) {
             if(id<0) throw (new ArgumentException("The language Id cannot be inferior to 0"));
             _id=id;
@@ -120,13 +123,14 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="nlsSort">nls sort</param>
         /// <param name="cInfo">Culture info object</param>
         /// <param name="rss">Rss object</param>
-        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string pdfContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, Rss rss)
+        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string pdfContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, AdExpressCultureInfo cInfoExcel, Rss rss)
             : this(id,imageSourceText,localization,charset,contentEncoding,excelContentEncoding,pdfContentEncoding) {
             if(name!=null&&name.Length>0) _name=name;
 			if (nlsSort != null && nlsSort.Length > 0) _nlsSort = nlsSort;		
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
             _classificationLanguageId=classificationLanguageId;
             _cInfo = cInfo;
+            _cInfoExcel = cInfoExcel;
             _rss = rss;
         }
         #endregion
@@ -200,6 +204,14 @@ namespace TNS.AdExpress.Domain.Web {
         {
             get { return _cInfo; }
             set { _cInfo = value; }
+        }
+        /// <summary>
+        /// Get Set AdExpress Culture Info for this language in excel reports
+        /// </summary>
+        public AdExpressCultureInfo CultureInfoExcel
+        {
+            get { return _cInfoExcel; }
+            set { _cInfoExcel = value; }
         }
         /// <summary>
         /// Get Set rss feed

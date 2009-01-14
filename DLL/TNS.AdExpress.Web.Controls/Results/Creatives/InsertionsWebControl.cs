@@ -504,6 +504,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     break;
                 case RenderType.rawExcel:
                     _data = GetResultTable(_customerWebSession);
+                    _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_customerWebSession.SiteLanguage].CultureInfoExcel;
                     if (_data != null)
                     {
                         string[] filters = new string[5] { "-1", "-1", "-1", "-1", "-1" };
@@ -520,6 +521,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     break;
                 case RenderType.excel:
                     _data = GetResultTable(_customerWebSession);
+                    _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_customerWebSession.SiteLanguage].CultureInfoExcel;
                     if (_data != null)
                     {
                         string[] filters = new string[5] { "-1", "-1", "-1", "-1", "-1" };

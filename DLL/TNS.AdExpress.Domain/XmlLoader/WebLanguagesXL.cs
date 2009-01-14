@@ -126,6 +126,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 			string nlsSort = "";
 			bool isUTF8 = false;
             AdExpressCultureInfo cInfo = null;
+            AdExpressCultureInfo cInfoExcel = null;
             string formatName = string.Empty;
             string format = string.Empty;
             string excelFormat = string.Empty;
@@ -167,10 +168,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								if (reader.GetAttribute("nlsSort") != null && reader.GetAttribute("nlsSort").Length > 0)
 									nlsSort = reader.GetAttribute("nlsSort");															
                                 cInfo = new AdExpressCultureInfo(localization);
-                                if (numberDecimalSeparator.Length > 0) cInfo.NumberFormat.NumberDecimalSeparator = numberDecimalSeparator;
-                                if (numberGroupSeparator.Length > 0) cInfo.NumberFormat.NumberGroupSeparator = numberGroupSeparator;
+                                cInfoExcel = new AdExpressCultureInfo(localization);
+                                if (numberDecimalSeparator.Length > 0) cInfoExcel.NumberFormat.NumberDecimalSeparator = cInfo.NumberFormat.NumberDecimalSeparator = numberDecimalSeparator;
+                                if (numberGroupSeparator.Length > 0) cInfoExcel.NumberFormat.NumberGroupSeparator = cInfo.NumberFormat.NumberGroupSeparator = numberGroupSeparator;
                                 rss = new Rss();
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,pdfContentEncoding,nlsSort, cInfo, rss));
+                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,pdfContentEncoding,nlsSort, cInfo, cInfoExcel, rss));
                                 break;
                             case "unitformat":
                                 if(reader.GetAttribute("name")!=null) formatName=reader.GetAttribute("name");
@@ -179,6 +181,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 else excelFormat = format;
                                 cInfo.AddPattern(formatName, format);
                                 cInfo.AddExcelPattern(formatName, excelFormat);
+                                cInfoExcel.AddPattern(formatName, excelFormat);
+                                cInfoExcel.AddExcelPattern(formatName, excelFormat);
                                 break;
 							case "dateFormat":
 								if (reader.GetAttribute("name") != null) formatName = reader.GetAttribute("name");
@@ -187,6 +191,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 else excelFormat = format;
 								cInfo.AddPattern(formatName, format);
                                 cInfo.AddExcelPattern(formatName, excelFormat);
+                                cInfoExcel.AddPattern(formatName, excelFormat);
+                                cInfoExcel.AddExcelPattern(formatName, excelFormat);
 								break;
                             case "rss":
                                 if(reader.GetAttribute("display") != null) rss.Display = bool.Parse(reader.GetAttribute("display"));

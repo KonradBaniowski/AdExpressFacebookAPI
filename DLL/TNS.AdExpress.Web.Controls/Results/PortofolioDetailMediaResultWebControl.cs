@@ -221,7 +221,9 @@ namespace TNS.AdExpress.Web.Controls.Results {
                     output.WriteLine("</table>");
                 }
                 _data = GetResultTable(_customerWebSession);
-                if (_data != null) {
+                _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_customerWebSession.SiteLanguage].CultureInfoExcel;
+                if (_data != null)
+                {
 					output.WriteLine(zoomDetailSelectionWebControl.GetLogo(_customerWebSession));
 					output.WriteLine(zoomDetailSelectionWebControl.GetHeader());
 					output.WriteLine(base.GetExcel());
