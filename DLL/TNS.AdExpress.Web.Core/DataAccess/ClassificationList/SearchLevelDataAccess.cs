@@ -36,7 +36,6 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
             #region Tables initilization
             View oView;
             string classificationRight = "";
-            string classificationRightSql = "";
 
             try {
                 switch(dimension){
@@ -55,25 +54,11 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
             catch(System.Exception err) {
                 throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or schema label",err));
             }
-            #endregion
-
-			//Get all (product or media) rights
-            if(classificationRight != null && classificationRight.Length > 0) {
-                classificationRightSql = " select id_" + table.ToString() + " from ";
-                classificationRightSql += oView.Sql + webSession.DataLanguage.ToString() + " wp";
-                classificationRightSql += " Where 0=0 " + classificationRight;
-			}
+            #endregion		
 
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-			//sql += " from " + dBSchema + "." + table + " wp";
-            sql += " from " +oView.Sql + webSession.DataLanguage.ToString() + " wp";
-
-            #region Application des droits
-            if(classificationRight != null && classificationRight.Length > 0) {
-                sql += ",( " + classificationRightSql + " ) wp2 ";
-            }
-            #endregion
+            sql += " from " +oView.Sql + webSession.DataLanguage.ToString() + " wp";			
 
             //Word to search			
 			wordToSearch = wordToSearch.ToUpper().Replace("'", " ");
@@ -81,13 +66,12 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 			wordToSearch = "'" + wordToSearch.Trim() + "%'";
 
 			sql += " where wp." + table.ToString() + " like " + wordToSearch + "";
-			//sql += " and wp.id_language=" + webSession.DataLanguage;
-			//sql += " and wp.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
-
-            if(classificationRightSql != null && classificationRightSql.Length > 0) {
-				sql += " and  wp.id_" + table.ToString() + " =  wp2.id_" + table.ToString();
-				sql += " and rownum <= 1000 ";
+			
+			#region Application des droits
+			if (classificationRight != null && classificationRight.Length > 0) {
+				sql += " " +classificationRight;
 			}
+			#endregion
 
             switch(webSession.CurrentModule){
                 case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA:
