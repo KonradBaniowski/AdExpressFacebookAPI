@@ -35,7 +35,7 @@ namespace AdExpress.Private.Informations{
 		/// <summary>
 		/// Répertoire des fichiers
 		/// </summary>
-		public const string LOCAL_PATH_DATE_UPDATE = @"\\hera\AdexDatas\MediaList\";
+        public const string LOCAL_PATH_DATE_UPDATE = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\MediaList\";
 		/// <summary>
 		/// Nom du répertoire virtuel IIS
 		/// </summary>
