@@ -62,7 +62,8 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>TNSAdExpressAnubisAPPM.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <DebugSymbols>false</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
