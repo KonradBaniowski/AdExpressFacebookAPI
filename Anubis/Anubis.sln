@@ -127,11 +127,113 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Anubis.Hermes
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.DataAccess", "..\DLL\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj", "{A4DEDE88-C99E-495F-98F2-E2762520F4BE}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Domain", "..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj", "{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.Insertions", "..\DLL\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj", "{E1A418FC-6512-46D5-99CF-374682F0C792}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.Insertions.DAL", "..\DLL\TNS.AdExpressI.Insertions.DAL\TNS.AdExpressI.Insertions.DAL.csproj", "{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.Insertions.Default", "..\DLL\TNS.AdExpressI.Insertions.Default\TNS.AdExpressI.Insertions.Default.csproj", "{DEA1A6A0-32D0-4624-B216-A95B13070078}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.Insertions.DAL.Default", "..\DLL\TNS.AdExpressI.Insertions.DAL.Default\TNS.AdExpressI.Insertions.DAL.Default.csproj", "{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule", "..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj", "{23E7E071-0FB0-43D4-B19D-B964EC3082F6}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.Appm", "..\DLL\TNS.AdExpressI.MediaSchedule.Appm\TNS.AdExpressI.MediaSchedule.Appm.csproj", "{DF4CE6AB-ED48-4758-AE27-C7AB587B0B19}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.DAL.Appm", "..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Appm\TNS.AdExpressI.MediaSchedule.DAL.Appm.csproj", "{B29F06C7-452A-4754-A988-060F8EE0FCF6}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.DAL.Default", "..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Default\TNS.AdExpressI.MediaSchedule.DAL.Default.csproj", "{8368962F-842E-481B-9C86-5E5609ABCCC9}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.DAL.Finland", "..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Finland\TNS.AdExpressI.MediaSchedule.DAL.Finland.csproj", "{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.DAL", "..\DLL\TNS.AdExpressI.MediaSchedule.DAL\TNS.AdExpressI.MediaSchedule.DAL.csproj", "{39325692-D25F-400C-8E46-080BCB3B3524}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.Default", "..\DLL\TNS.AdExpressI.MediaSchedule.Default\TNS.AdExpressI.MediaSchedule.Default.csproj", "{218C0E5B-6602-4E4E-B469-1D8479223288}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassIndicators", "..\DLL\TNS.AdExpressI.ProductClassIndicators\TNS.AdExpressI.ProductClassIndicators.csproj", "{F0E136B5-AA9D-468D-BAE4-3599B11D854F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassIndicators.DAL", "..\DLL\TNS.AdExpressI.ProductClassIndicators.DAL\TNS.AdExpressI.ProductClassIndicators.DAL.csproj", "{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassIndicators.DAL.Default", "..\DLL\TNS.AdExpressI.ProductClassIndicators.DAL.Default\TNS.AdExpressI.ProductClassIndicators.DAL.Default.csproj", "{F57A3E4F-A152-4815-AF94-DC94A885FC52}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassIndicators.Default", "..\DLL\TNS.AdExpressI.ProductClassIndicators.Default\TNS.AdExpressI.ProductClassIndicators.Default.csproj", "{8EFDFB61-D41D-42C3-A887-898CAB250258}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 22
+		SccNumberOfProjects = 39
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://frmitch-teamsui:8080/
+		SccTeamFoundationServer = http://frmitch-tfs:8080/
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = Anubis.csproj
 		SccLocalPath1 = .
@@ -195,6 +297,57 @@ Global
 		SccProjectUniqueName21 = ..\\DLL\\TNS.AdExpress.Anubis.HermesRadioTv\\TNS.AdExpress.Anubis.HermesRadioTv.csproj
 		SccProjectName21 = ../DLL/TNS.AdExpress.Anubis.HermesRadioTv
 		SccLocalPath21 = ..\\DLL\\TNS.AdExpress.Anubis.HermesRadioTv
+		SccProjectUniqueName22 = ..\\DLL\\TNS.AdExpress.DataAccess\\TNS.AdExpress.DataAccess.csproj
+		SccProjectName22 = ../DLL/TNS.AdExpress.DataAccess
+		SccLocalPath22 = ..\\DLL\\TNS.AdExpress.DataAccess
+		SccProjectUniqueName23 = ..\\DLL\\TNS.AdExpress.Domain\\TNS.AdExpress.Domain.csproj
+		SccProjectName23 = ../DLL/TNS.AdExpress.Domain
+		SccLocalPath23 = ..\\DLL\\TNS.AdExpress.Domain
+		SccProjectUniqueName24 = ..\\DLL\\TNS.AdExpressI.Insertions\\TNS.AdExpressI.Insertions.csproj
+		SccProjectName24 = ../DLL/TNS.AdExpressI.Insertions
+		SccLocalPath24 = ..\\DLL\\TNS.AdExpressI.Insertions
+		SccProjectUniqueName25 = ..\\DLL\\TNS.AdExpressI.Insertions.DAL\\TNS.AdExpressI.Insertions.DAL.csproj
+		SccProjectName25 = ../DLL/TNS.AdExpressI.Insertions.DAL
+		SccLocalPath25 = ..\\DLL\\TNS.AdExpressI.Insertions.DAL
+		SccProjectUniqueName26 = ..\\DLL\\TNS.AdExpressI.Insertions.Default\\TNS.AdExpressI.Insertions.Default.csproj
+		SccProjectName26 = ../DLL/TNS.AdExpressI.Insertions.Default
+		SccLocalPath26 = ..\\DLL\\TNS.AdExpressI.Insertions.Default
+		SccProjectUniqueName27 = ..\\DLL\\TNS.AdExpressI.Insertions.DAL.Default\\TNS.AdExpressI.Insertions.DAL.Default.csproj
+		SccProjectName27 = ../DLL/TNS.AdExpressI.Insertions.DAL.Default
+		SccLocalPath27 = ..\\DLL\\TNS.AdExpressI.Insertions.DAL.Default
+		SccProjectUniqueName28 = ..\\DLL\\TNS.AdExpressI.MediaSchedule\\TNS.AdExpressI.MediaSchedule.csproj
+		SccProjectName28 = ../DLL/TNS.AdExpressI.MediaSchedule
+		SccLocalPath28 = ..\\DLL\\TNS.AdExpressI.MediaSchedule
+		SccProjectUniqueName29 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.Appm\\TNS.AdExpressI.MediaSchedule.Appm.csproj
+		SccProjectName29 = ../DLL/TNS.AdExpressI.MediaSchedule.Appm
+		SccLocalPath29 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.Appm
+		SccProjectUniqueName30 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.DAL.Appm\\TNS.AdExpressI.MediaSchedule.DAL.Appm.csproj
+		SccProjectName30 = ../DLL/TNS.AdExpressI.MediaSchedule.DAL.Appm
+		SccLocalPath30 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.DAL.Appm
+		SccProjectUniqueName31 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.DAL.Default\\TNS.AdExpressI.MediaSchedule.DAL.Default.csproj
+		SccProjectName31 = ../DLL/TNS.AdExpressI.MediaSchedule.DAL.Default
+		SccLocalPath31 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.DAL.Default
+		SccProjectUniqueName32 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.DAL.Finland\\TNS.AdExpressI.MediaSchedule.DAL.Finland.csproj
+		SccProjectName32 = ../DLL/TNS.AdExpressI.MediaSchedule.DAL.Finland
+		SccLocalPath32 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.DAL.Finland
+		SccProjectUniqueName33 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.DAL\\TNS.AdExpressI.MediaSchedule.DAL.csproj
+		SccProjectName33 = ../DLL/TNS.AdExpressI.MediaSchedule.DAL
+		SccLocalPath33 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.DAL
+		SccProjectUniqueName34 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.Default\\TNS.AdExpressI.MediaSchedule.Default.csproj
+		SccProjectName34 = ../DLL/TNS.AdExpressI.MediaSchedule.Default
+		SccLocalPath34 = ..\\DLL\\TNS.AdExpressI.MediaSchedule.Default
+		SccProjectUniqueName35 = ..\\DLL\\TNS.AdExpressI.ProductClassIndicators\\TNS.AdExpressI.ProductClassIndicators.csproj
+		SccProjectName35 = ../DLL/TNS.AdExpressI.ProductClassIndicators
+		SccLocalPath35 = ..\\DLL\\TNS.AdExpressI.ProductClassIndicators
+		SccProjectUniqueName36 = ..\\DLL\\TNS.AdExpressI.ProductClassIndicators.DAL\\TNS.AdExpressI.ProductClassIndicators.DAL.csproj
+		SccProjectName36 = ../DLL/TNS.AdExpressI.ProductClassIndicators.DAL
+		SccLocalPath36 = ..\\DLL\\TNS.AdExpressI.ProductClassIndicators.DAL
+		SccProjectUniqueName37 = ..\\DLL\\TNS.AdExpressI.ProductClassIndicators.DAL.Default\\TNS.AdExpressI.ProductClassIndicators.DAL.Default.csproj
+		SccProjectName37 = ../DLL/TNS.AdExpressI.ProductClassIndicators.DAL.Default
+		SccLocalPath37 = ..\\DLL\\TNS.AdExpressI.ProductClassIndicators.DAL.Default
+		SccProjectUniqueName38 = ..\\DLL\\TNS.AdExpressI.ProductClassIndicators.Default\\TNS.AdExpressI.ProductClassIndicators.Default.csproj
+		SccProjectName38 = ../DLL/TNS.AdExpressI.ProductClassIndicators.Default
+		SccLocalPath38 = ..\\DLL\\TNS.AdExpressI.ProductClassIndicators.Default
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug [AdExpress]|Any CPU = Debug [AdExpress]|Any CPU
@@ -371,6 +524,142 @@ Global
 		{DE3960EC-5D01-4C00-8FBD-F0C91A3009D9}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
 		{DE3960EC-5D01-4C00-8FBD-F0C91A3009D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE3960EC-5D01-4C00-8FBD-F0C91A3009D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4DEDE88-C99E-495F-98F2-E2762520F4BE}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4DEDE88-C99E-495F-98F2-E2762520F4BE}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{A4DEDE88-C99E-495F-98F2-E2762520F4BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4DEDE88-C99E-495F-98F2-E2762520F4BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4DEDE88-C99E-495F-98F2-E2762520F4BE}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{A4DEDE88-C99E-495F-98F2-E2762520F4BE}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{A4DEDE88-C99E-495F-98F2-E2762520F4BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4DEDE88-C99E-495F-98F2-E2762520F4BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A418FC-6512-46D5-99CF-374682F0C792}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A418FC-6512-46D5-99CF-374682F0C792}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{E1A418FC-6512-46D5-99CF-374682F0C792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A418FC-6512-46D5-99CF-374682F0C792}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A418FC-6512-46D5-99CF-374682F0C792}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A418FC-6512-46D5-99CF-374682F0C792}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{E1A418FC-6512-46D5-99CF-374682F0C792}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A418FC-6512-46D5-99CF-374682F0C792}.Release|Any CPU.Build.0 = Release|Any CPU
+		{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEA1A6A0-32D0-4624-B216-A95B13070078}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEA1A6A0-32D0-4624-B216-A95B13070078}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{DEA1A6A0-32D0-4624-B216-A95B13070078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEA1A6A0-32D0-4624-B216-A95B13070078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEA1A6A0-32D0-4624-B216-A95B13070078}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA1A6A0-32D0-4624-B216-A95B13070078}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{DEA1A6A0-32D0-4624-B216-A95B13070078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA1A6A0-32D0-4624-B216-A95B13070078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E7E071-0FB0-43D4-B19D-B964EC3082F6}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E7E071-0FB0-43D4-B19D-B964EC3082F6}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{23E7E071-0FB0-43D4-B19D-B964EC3082F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E7E071-0FB0-43D4-B19D-B964EC3082F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E7E071-0FB0-43D4-B19D-B964EC3082F6}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{23E7E071-0FB0-43D4-B19D-B964EC3082F6}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{23E7E071-0FB0-43D4-B19D-B964EC3082F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E7E071-0FB0-43D4-B19D-B964EC3082F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF4CE6AB-ED48-4758-AE27-C7AB587B0B19}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4CE6AB-ED48-4758-AE27-C7AB587B0B19}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{DF4CE6AB-ED48-4758-AE27-C7AB587B0B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4CE6AB-ED48-4758-AE27-C7AB587B0B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF4CE6AB-ED48-4758-AE27-C7AB587B0B19}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4CE6AB-ED48-4758-AE27-C7AB587B0B19}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{DF4CE6AB-ED48-4758-AE27-C7AB587B0B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4CE6AB-ED48-4758-AE27-C7AB587B0B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B29F06C7-452A-4754-A988-060F8EE0FCF6}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29F06C7-452A-4754-A988-060F8EE0FCF6}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{B29F06C7-452A-4754-A988-060F8EE0FCF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29F06C7-452A-4754-A988-060F8EE0FCF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B29F06C7-452A-4754-A988-060F8EE0FCF6}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{B29F06C7-452A-4754-A988-060F8EE0FCF6}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{B29F06C7-452A-4754-A988-060F8EE0FCF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B29F06C7-452A-4754-A988-060F8EE0FCF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8368962F-842E-481B-9C86-5E5609ABCCC9}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{8368962F-842E-481B-9C86-5E5609ABCCC9}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{8368962F-842E-481B-9C86-5E5609ABCCC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8368962F-842E-481B-9C86-5E5609ABCCC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8368962F-842E-481B-9C86-5E5609ABCCC9}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{8368962F-842E-481B-9C86-5E5609ABCCC9}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{8368962F-842E-481B-9C86-5E5609ABCCC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8368962F-842E-481B-9C86-5E5609ABCCC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86FBED0B-CD32-4A72-BDB8-D323558AC6DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39325692-D25F-400C-8E46-080BCB3B3524}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{39325692-D25F-400C-8E46-080BCB3B3524}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{39325692-D25F-400C-8E46-080BCB3B3524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39325692-D25F-400C-8E46-080BCB3B3524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39325692-D25F-400C-8E46-080BCB3B3524}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{39325692-D25F-400C-8E46-080BCB3B3524}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{39325692-D25F-400C-8E46-080BCB3B3524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39325692-D25F-400C-8E46-080BCB3B3524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{218C0E5B-6602-4E4E-B469-1D8479223288}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{218C0E5B-6602-4E4E-B469-1D8479223288}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{218C0E5B-6602-4E4E-B469-1D8479223288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{218C0E5B-6602-4E4E-B469-1D8479223288}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{218C0E5B-6602-4E4E-B469-1D8479223288}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{218C0E5B-6602-4E4E-B469-1D8479223288}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{218C0E5B-6602-4E4E-B469-1D8479223288}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{218C0E5B-6602-4E4E-B469-1D8479223288}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E136B5-AA9D-468D-BAE4-3599B11D854F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F57A3E4F-A152-4815-AF94-DC94A885FC52}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57A3E4F-A152-4815-AF94-DC94A885FC52}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{F57A3E4F-A152-4815-AF94-DC94A885FC52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57A3E4F-A152-4815-AF94-DC94A885FC52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F57A3E4F-A152-4815-AF94-DC94A885FC52}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{F57A3E4F-A152-4815-AF94-DC94A885FC52}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{F57A3E4F-A152-4815-AF94-DC94A885FC52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F57A3E4F-A152-4815-AF94-DC94A885FC52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Debug [AdExpress]|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Debug [AdExpress]|Any CPU.Build.0 = Debug|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Release [AdExpress]|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Release [AdExpress]|Any CPU.Build.0 = Release|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFDFB61-D41D-42C3-A887-898CAB250258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
