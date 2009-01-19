@@ -130,7 +130,7 @@ namespace TNS.AdExpress.Anubis.Amset{
                 _theme = new Theme(new XmlReaderDataSource(_amsetConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)ParameterSystem.Load(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
             }
             catch (System.Exception err) {
-                throw new Exception("File of theme not found ! (in Plugin Satet in TreatmentSystem class)");
+                OnError(_navSessionId, "File of theme not found ! (in Plugin Satet in TreatmentSystem class)",err);
             }
 			#endregion
 

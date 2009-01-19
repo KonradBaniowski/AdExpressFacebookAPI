@@ -122,7 +122,7 @@ namespace TNS.AdExpress.Anubis.Aton{
                 _theme = new Theme(new XmlReaderDataSource(_atonConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)ParameterSystem.Load(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
             }
             catch (System.Exception err) {
-                throw new Exception("File of theme not found ! (in Plugin Aton in TreatmentSystem class)");
+                OnError(_navSessionId, "File of theme not found ! (in Plugin Aton in TreatmentSystem class)",err);
             }
 			#endregion
 

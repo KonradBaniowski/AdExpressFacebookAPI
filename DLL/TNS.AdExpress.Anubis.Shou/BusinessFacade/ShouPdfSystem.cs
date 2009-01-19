@@ -488,6 +488,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 			#region GetData
 			DataTable dtResult = TNS.AdExpress.Web.Rules.Results.ProofRules.GetProofFileData(_webSession, _proofDetail.IdMedia, _proofDetail.IdProduct, _proofDetail.DateCover, _proofDetail.MediaPaging, _proofDetail.DateParution);
+
 			#endregion
 
 			try {
@@ -500,7 +501,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				sw.WriteLine("<TABLE align=center WIDTH=100%><tr align=center>");
 
 				#region Debut Tableau général
-				sw.WriteLine("<table  " + tableCss + " align=\"center\">");
+				sw.WriteLine("<table  " + tableCss + " align=\"center\" cellSpacing=\"0\" cellSpacing=\"0\">");
 
 				//Titre
 				sw.WriteLine("<TR  align=\"center\" height=\"10\" ><TD class=\"jus\" align=\"center\"  colspan=2>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1766, _webSession.SiteLanguage)) + "</TD></TR>");
@@ -628,10 +629,10 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				#region Html file loading
 				Functions.CloseHtmlFile(sw);
 				HTML2PDF2Class html = new HTML2PDF2Class();
-				html.MarginLeft = 170;	//Convert.ToInt32(this.LeftMargin);		
+                html.MarginLeft = 170;	//Convert.ToInt32(this.LeftMargin);		
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1); ;//Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-                html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
+                html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
+                html.MinimalWidth = this.PDFPAGE_Width - 170 - 170;
 				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);				
 				html.ConnectToPDFLibrary(this);
 				//html.SetLogFile("LodsHtmlToPdf.txt");

@@ -126,10 +126,10 @@ namespace TNS.AdExpress.Anubis.Shou
 				return;
 			}
             try {
-                _theme = new Theme(new XmlReaderDataSource(_shouConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)ParameterSystem.Load(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
+                _theme = new Theme(new XmlReaderDataSource(_shouConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((ProofDetail)ParameterSystem.LoadProofDetail(_navSessionId)).CustomerWebSession.SiteLanguage].Name + @"\" + "Styles.xml"));
             }
             catch (System.Exception err) {
-                throw new Exception("File of theme not found ! (in Plugin APPM in TreatmentSystem class)");
+                OnError(_navSessionId, "File of theme not found ! (in Plugin APPM in TreatmentSystem class)",err);
             }
 			#endregion			
 
@@ -166,6 +166,7 @@ namespace TNS.AdExpress.Anubis.Shou
 				
 				pdf = new ShouPdfSystem(_dataSource, _shouConfig,rqDetails,(ProofDetail)ParameterSystem.LoadProofDetail(_navSessionId),_theme);
 				string fileName = pdf.Init();
+                pdf.AutoLaunch = false;
 				pdf.Fill();
 		
 				pdf.EndDoc();
