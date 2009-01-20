@@ -198,11 +198,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
 								break;
 							case GenericColumnItemInformation.Columns.product:
-								if (Column.Visible && showProduct)
+                                if (showProduct && WebApplicationParameters.GenericColumnsInformation.IsVisible(vehicle.DetailColumnId, Column.Id))
 									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
 								break;
 							default:
-								if (Column.Visible)
+                                if (WebApplicationParameters.GenericColumnsInformation.IsVisible(vehicle.DetailColumnId, Column.Id))
 									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
 								break;
 						}
@@ -330,7 +330,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 										}
 										break;
 									case GenericColumnItemInformation.Columns.product:
-										if (Column.Visible && showProduct) {
+                                        if (showProduct && WebApplicationParameters.GenericColumnsInformation.IsVisible(vehicle.DetailColumnId, Column.Id))
+                                        {
 											type = assembly.GetType(Column.CellType);
 											curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                             curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
@@ -339,7 +340,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 										}
 										break;
 									default:
-										if (Column.Visible) {
+                                        if (WebApplicationParameters.GenericColumnsInformation.IsVisible(vehicle.DetailColumnId, Column.Id))
+                                        {
 											type = assembly.GetType(Column.CellType);
 											curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                             curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
