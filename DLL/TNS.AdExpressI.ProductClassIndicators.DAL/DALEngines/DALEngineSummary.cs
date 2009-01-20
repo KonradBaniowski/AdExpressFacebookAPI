@@ -93,7 +93,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, false));
                 }
                 //product rights
-                sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, false));
+                sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
                 and = true;
             }
             if (type == CstComparaisonCriterion.sectorTotal)
