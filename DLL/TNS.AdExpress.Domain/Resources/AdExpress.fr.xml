@@ -80,7 +80,7 @@
     <item mnemonic="w644" type="System.String">Radio</item>
     <item mnemonic="w646" type="System.String">Presse internationale</item>
     <item mnemonic="w647" type="System.String">Autres</item>
-    <item mnemonic="w648" type="System.String">AdNetTrack</item>
+    <item mnemonic="w648" type="System.String">Evaliant</item>
     <item mnemonic="w654" type="System.String">LUNDI</item>
     <item mnemonic="w655" type="System.String">MARDI</item>
     <item mnemonic="w656" type="System.String">MERCREDI</item>
@@ -1361,9 +1361,9 @@
     <item mnemonic="w2151" type="System.String">Types d'émissions :</item>
     <item mnemonic="w2152" type="System.String">Formes de parrainage :</item>
     <item mnemonic="w2153" type="System.String">Pourcentage :</item>
-    <item mnemonic="w2154" type="System.String">Produit AdNetTrack</item>
+    <item mnemonic="w2154" type="System.String">Produit Evaliant</item>
     <item mnemonic="w2155" type="System.String">Format</item>
-    <item mnemonic="w2156" type="System.String">Plan média AdNetTrack</item>
+    <item mnemonic="w2156" type="System.String">Plan média Evaliant</item>
     <item mnemonic="w2157" type="System.String">Les données ne sont pas disponibles pour cette période.</item>
     <item mnemonic="w2158" type="System.String">Aucun résultats : vous n'avez pas les droits suffisants pour afficher le détail des créations.</item>
     <item mnemonic="w2159" type="System.String">Retour à la liste des bannières</item>
