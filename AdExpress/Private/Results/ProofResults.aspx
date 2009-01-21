@@ -130,7 +130,7 @@
 								<tr>
 									<td align="center" class="whiteBackGround">
 										<!--RESULTAT -->
-										<cc5:resultwebcontrol id="_resultWebControl" runat="server" JavascriptFilePath="/scripts/WebResult.js" SkinID="resultwebcontrol1"></cc5:resultwebcontrol>
+										<cc5:resultwebcontrol id="_resultWebControl" runat="server" JavascriptFilePath="/scripts/WebResult4.js" SkinID="resultwebcontrol1"></cc5:resultwebcontrol>
 									</td>
 								</tr>
 								<tr>

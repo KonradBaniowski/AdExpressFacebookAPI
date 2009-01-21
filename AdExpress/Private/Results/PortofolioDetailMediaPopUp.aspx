@@ -29,7 +29,7 @@
 				<tr>
 					<td>
 					    <!--<%=result%>-->
-					    <cc3:PortofolioDetailMediaResultWebControl id="PortofolioDetailMediaResultWebControl1" runat="server" JavascriptFilePath="/scripts/WebResult.js" AjaxProTimeOut="120" AllowPaging="True" IdTitleText="0" SkinID="PortofolioPopUpResult"></cc3:PortofolioDetailMediaResultWebControl> 
+					    <cc3:PortofolioDetailMediaResultWebControl id="PortofolioDetailMediaResultWebControl1" runat="server" JavascriptFilePath="/scripts/WebResult4.js" AjaxProTimeOut="120" AllowPaging="True" IdTitleText="0" SkinID="PortofolioPopUpResult"></cc3:PortofolioDetailMediaResultWebControl> 
 					</td>
 				</tr>
 			</table>

@@ -14,7 +14,7 @@
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<script language="javascript" type="text/javascript" src="/scripts/WebResult.js"></script>
+		<script language="javascript" type="text/javascript" src="/scripts/WebResult4.js"></script>
 		<script type="text/javascript" src="/scripts/dom-drag.js"></script>
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT">
 		<meta http-equiv="expires" content="0">

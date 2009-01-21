@@ -20,7 +20,7 @@
 		<meta http-equiv="expires" content="0" />
 		<meta http-equiv="pragma" content="no-cache" />
 		<meta name="Cache-control" content="no-cache" />
-		<script language="javascript" type="text/javascript" src="/scripts/WebResult.js"></script>
+		<script language="javascript" type="text/javascript" src="/scripts/WebResult4.js"></script>
 		<script type="text/javascript" src="/scripts/dom-drag.js"></script>
 	</head>
 	<body class="bodyStyle" onload="javascript:activateActiveX();">

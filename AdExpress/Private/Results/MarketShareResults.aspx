@@ -163,7 +163,7 @@
 									<!-- Tableau de Résultat -->
 									<td bgColor="#ffffff" style="HEIGHT: 37px">
 										<cc5:ResultWebControl id="_resultWebControl" runat="server" CssL1="lv1" CssL2="lv2" CssL3="lv3" CssLHeader="h2"
-											CssLTotal="lv0" CssCHeader="h2" JavascriptFilePath='/scripts/WebResult.js' BackgroudColorL1="#B1A3C1"
+											CssLTotal="lv0" CssCHeader="h2" JavascriptFilePath='/scripts/WebResult4.js' BackgroudColorL1="#B1A3C1"
 											HighlightBackgroundColorL1="#FFFFFF" HighlightBackgroundColorL2="#FFFFFF" HighlightBackgroundColorL3="#FFFFFF"
 											BackgroudColorL2="#D0C8DA" BackgroudColorL3="#E1E0DA" ImgBtnCroiOverPath="/Images/Common/fl_tri_croi3_in.gif"
 											ImgBtnCroiPath="/Images/Common/fl_tri_croi3.gif" ImgBtnDeCroiOverPath="/Images/Common/fl_tri_decroi3_in.gif"

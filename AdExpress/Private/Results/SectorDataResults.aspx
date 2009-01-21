@@ -139,7 +139,7 @@
 								</tr>
 								<tr>
 									<td align="center" class="whiteBackGround" style="HEIGHT: 19px">
-										<cc6:SectorDataContainerWebControl SkinID="SectorData" id="SectorDataContainerWebControl1" runat="server"  JavascriptFilePath="&quot;'/scripts/WebResult.js'&quot;"></cc6:SectorDataContainerWebControl>
+										<cc6:SectorDataContainerWebControl SkinID="SectorData" id="SectorDataContainerWebControl1" runat="server"  JavascriptFilePath="&quot;'/scripts/WebResult4.js'&quot;"></cc6:SectorDataContainerWebControl>
 									</td>
 								</tr>
 								<tr>

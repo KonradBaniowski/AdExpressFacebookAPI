@@ -152,7 +152,7 @@
 								<tr class="whiteBackGround">
 									<!-- Test Tableau de Résultat -->
 									<td style="HEIGHT: 37px" class="whiteBackGround"><br>
-										<cc5:resultwebcontrol id="resultwebcontrol1" runat="server" SkinID="resultwebcontrol1" JavascriptFilePath="/scripts/WebResult.js" ></cc5:resultwebcontrol></td>
+										<cc5:resultwebcontrol id="resultwebcontrol1" runat="server" SkinID="resultwebcontrol1" JavascriptFilePath="/scripts/WebResult4.js" ></cc5:resultwebcontrol></td>
 								</tr>
 								<tr>
 									<td class="whiteBackGround" height="5"></td>

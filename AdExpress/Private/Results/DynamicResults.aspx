@@ -133,7 +133,7 @@
 								<tr class="whiteBackGround">
 									<!-- Test Tableau de Résultat -->
 									<td class="whiteBackGround" style="HEIGHT: 37px"><br>
-										<cc5:resultwebcontrol id="resultwebcontrol1" runat="server" JavascriptFilePath='/scripts/WebResult.js' 
+										<cc5:resultwebcontrol id="resultwebcontrol1" runat="server" JavascriptFilePath='/scripts/WebResult4.js' 
 											PageSizeOptions="100,200,500,1000" AllowPaging="True" SkinID="portofolioResultTable"></cc5:resultwebcontrol></td>
 								</tr>
 								<tr>

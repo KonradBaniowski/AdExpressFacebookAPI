@@ -141,7 +141,7 @@
 								<tr>
 									<td align="center" class="whiteBackGround" height="5">
 									<cc5:PortofolioChartWebControl id="portofolioChartWebControl1" runat="server"></cc5:PortofolioChartWebControl>
-									<cc5:resultwebcontrol id="_ResultWebControl" runat="server" JavascriptFilePath="/scripts/WebResult.js"
+									<cc5:resultwebcontrol id="_ResultWebControl" runat="server" JavascriptFilePath="/scripts/WebResult4.js"
 											AllowPaging="True" SkinID="portofolioResultTable"></cc5:resultwebcontrol>
 										<%=result%>
 									</td>
