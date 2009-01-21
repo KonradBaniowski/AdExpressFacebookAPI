@@ -656,7 +656,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             sql.Append(SQLGenerator.getAnalyseCustomerProductRight(_session, tData.Prefix, true));
 
             //Media classification rights
-            if (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack){
+            if (vehicle.Id == CstDBClassif.Vehicles.names.internet){
                 sql.Append(SQLGenerator.GetAdNetTrackMediaRight(_session, tData.Prefix, true));
             }
             else{
