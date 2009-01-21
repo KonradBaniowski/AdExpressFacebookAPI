@@ -3217,7 +3217,23 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                     Int64 Vehicle = ((LevelInformation)SelectionUniversMedia.FirstNode.Tag).ID;
                     vehicleList.Add(VehiclesInformation.DatabaseIdToEnum(Vehicle));
                 }
-                return resultPageInformation.GetValidUnits(vehicleList);
+                List<UnitInformation> units = resultPageInformation.GetValidUnits(vehicleList);
+                for (int i = units.Count-1; i >= 0; i--)
+                {
+                    switch (units[i].Id)
+                    {
+                        case TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.volume:
+                            if (!this.CustomerLogin.CustormerFlagAccess(Flags.ID_VOLUME_MARKETING_DIRECT))
+                            {
+                                units.RemoveAt(i);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                return units;
             }
             catch {
                 throw (new UnitException("Unit selection is not managed"));
