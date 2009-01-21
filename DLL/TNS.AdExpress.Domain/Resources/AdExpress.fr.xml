@@ -1387,11 +1387,11 @@
     <item mnemonic="w2181" type="System.String">Chronopresse</item>
     <item mnemonic="w2182" type="System.String">Données de cadrage sectorielles</item>
     <item mnemonic="w2183" type="System.String">L'actualité du marché publicitaire des 4 derniers mois</item>
-    <item mnemonic="w2184" type="System.String">L'analyse du marché publicitaire sur plusieurs années</item>
+    <item mnemonic="w2184" type="System.String">L’analyse du marché publicitaire</item>
     <item mnemonic="w2185" type="System.String">Les opérations de parrainage TV</item>
     <item mnemonic="w2186" type="System.String">La synthèse des performances media</item>
     <item mnemonic="w2187" type="System.String">Vous travaillez sur les données les plus récentes, bénéficiez ici des dernières mises à jour et d'un accès direct aux données les plus détaillées (insertion).</item>
-    <item mnemonic="w2188" type="System.String">Vous travaillez sur un historique long, sur un media ou en plurimedia, jusqu'au niveau le plus fin de notre nomenclature produits, vous comparez les stratégies media et disposez d'analyses synthétiques.</item>
+    <item mnemonic="w2188" type="System.String">Sur un média ou en plurimédia, jusqu’au niveau le plus fin de notre nomenclature produits, vous comparez les stratégies media et disposez de données détaillées sur les derniers mois ou d’analyses synthétiques sur un historique long.</item>
     <item mnemonic="w2189" type="System.String">Toutes les interventions publicitaires hors écran par émission ou par forme de parrainage sur les 7 chaînes hertziennes sont ici recensées.</item>
     <item mnemonic="w2190" type="System.String">Lancé en partenariat avec l'APPM, Chronopresse est le premier outil en ligne mixant la pige presse de TNS Media Intelligence avec les audiences des magazines et des quotidiens nationaux mesurés par les enquêtes AEPM et EPIQ.</item>
     <item mnemonic="w2193" type="System.String">Analyser la constitution du portefeuille d'un support concurrent en temps réel</item>
@@ -1740,5 +1740,9 @@
     <item mnemonic="w2552" type="System.String">Auto-promo</item>
     <item mnemonic="w2553" type="System.String">L’option "personnaliser les supports" vous permet dans un Plan media au niveau du tableau de résultat final, d’effectuer une sélection sur certains supports uniquement et non de travailler sur l’ensemble de la presse sélectionné par défaut.</item>
     <item mnemonic="w2554" type="System.String">En presse, vous avez la possibilité de travailler en Encart ou Hors encart</item>
+    <item mnemonic="w2555" type="System.String">Evaliant</item>
+    <item mnemonic="w2556" type="System.String">Vous travaillez sur les données les plus récentes, bénéficiez ici des dernières mises à jour et d'un accès direct aux données les plus détaillées.</item>
+    <item mnemonic="w2557" type="System.String">Les nouvelles créations</item>
+    <item mnemonic="w2558" type="System.String">Analyser Les nouvelles créations en temps réel</item>
   </items>
 </localization>
