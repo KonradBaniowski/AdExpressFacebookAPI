@@ -196,8 +196,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if(_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.duration) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString())) totalDuration = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString();
             if(_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.volume) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString())) {
                 if(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString().Length > 0) {
-                    volume = Convert.ToString(Math.Round(decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString())));
-                    volume = WebFunctions.Units.ConvertUnitValueAndPdmToString(volume, WebCst.CustomerSessions.Unit.volume, false,fp);
+                    volume = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString();
                 }
                 else volume = "0";
             }
