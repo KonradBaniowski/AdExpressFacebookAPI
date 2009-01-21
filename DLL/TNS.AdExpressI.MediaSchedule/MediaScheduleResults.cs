@@ -981,7 +981,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                         }
                     }
                     catch(System.Exception e) {
-                        Console.Write(e.Message);
+						throw (new MediaScheduleException(" Avant il avait un Console.Write(e.Message)et maintenant on lève l'exception suivante (Dédé) : ", e));
+                       // Console.Write(e.Message);
                     }
                     // Set periodicity
                     if(selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
@@ -1823,7 +1824,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 }
             }
             catch(System.Exception err) {
-                throw (new MediaScheduleException("Error i=" + i));
+                throw (new MediaScheduleException("Error i=" + i,err));
             }
             t.Append("</table>");
             #endregion
@@ -2567,7 +2568,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                     }
                 }
                 catch(System.Exception err) {
-                    throw (new MediaScheduleException("Error i=" + i));
+                    throw (new MediaScheduleException("Error i=" + i,err));
                 }
                 #endregion
 

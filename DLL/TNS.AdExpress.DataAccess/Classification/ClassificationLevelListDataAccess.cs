@@ -138,7 +138,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
 				}
 			}
 			catch(System.Exception ext){
-				throw(new ClassificationDALException("Impossible de transférer les données dans la liste"+ext));
+				throw(new ClassificationDALException("Impossible de transférer les données dans la liste",ext));
 			}
 			#endregion
 			
@@ -186,7 +186,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
 				}
 			}
 			catch (System.Exception ext) {
-				throw (new ClassificationDALException("Impossible de transférer les données dans la liste" + ext));
+				throw (new ClassificationDALException("Impossible de transférer les données dans la liste" , ext));
 			}
 			#endregion
 		}
@@ -232,7 +232,7 @@ namespace TNS.AdExpress.DataAccess.Classification {
 				}
 			}
 			catch (System.Exception ext) {
-				throw (new ClassificationDALException("Impossible de transférer les données dans la liste" + ext));
+				throw (new ClassificationDALException("Impossible de transférer les données dans la liste" ,ext));
 			}
 			#endregion
 

@@ -1743,7 +1743,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             }
             catch (System.Exception e)
             {
-                throw (new SQLGeneratorException("Impossible de déterminer les conditions d'univers AdExpress: " + e.Message));
+                throw (new SQLGeneratorException("Impossible de déterminer les conditions d'univers AdExpress: ", e));
             }
         }
 
@@ -1786,7 +1786,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             }
             catch (System.Exception e)
             {
-                throw (new SQLGeneratorException("Impossible de déterminer les conditions d'univers AdExpress: " + e.Message));
+                throw (new SQLGeneratorException("Impossible de déterminer les conditions d'univers AdExpress: " , e));
             }
         }
         #endregion
@@ -1926,7 +1926,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             }
             catch (System.Exception e)
             {
-                throw (new SQLGeneratorException("Impossible de déterminer les conditions d'univers AdExpress: " + e.Message));
+                throw (new SQLGeneratorException("Impossible de déterminer les conditions d'univers AdExpress: " , e));
             }
         }
 

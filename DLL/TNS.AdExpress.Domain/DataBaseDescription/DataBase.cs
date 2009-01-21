@@ -841,7 +841,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
                 return (_schemas[schemaId]);
             }
             catch(System.Exception err) {
-                throw (new DataBaseException("Impossible to retreive schema label"));
+                throw (new DataBaseException("Impossible to retreive schema label",err));
             }
         }
 

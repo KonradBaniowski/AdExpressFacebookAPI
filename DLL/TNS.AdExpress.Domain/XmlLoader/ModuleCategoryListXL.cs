@@ -45,7 +45,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 				}
 			}
 			catch(System.Exception e){
-				throw(new ModuleCategoryListXLException("Error : "+e.Message)); 
+				throw(new ModuleCategoryListXLException("Error : ",e)); 
 			}
 			finally{
 				#region Close the file

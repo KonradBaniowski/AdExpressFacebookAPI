@@ -299,7 +299,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                 }
 			}
 			catch(System.Exception e){
-				throw(new ModuleException("Erreur : "+e.Message)); 
+				throw(new ModuleException("Erreur : ",e)); 
 			}
 			finally{
 				#region Close the file

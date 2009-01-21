@@ -597,7 +597,7 @@ namespace TNS.AdExpress {
                 }
             }
             catch(System.Exception err) {
-                throw (new RightException("Impossible to retreive module rights"));
+				throw (new RightException("Impossible to retreive module rights", err));
             }
         }
         /// <summary>
@@ -618,7 +618,7 @@ namespace TNS.AdExpress {
                 else throw (new RightException("Impossible to load module classification"));
             }
             catch(System.Exception err) {
-                throw (new RightException("Impossible to build DataTable module hierarchy"));
+				throw (new RightException("Impossible to build DataTable module hierarchy", err));
             }
             return (ds.Tables[0]);
         }
@@ -635,7 +635,7 @@ namespace TNS.AdExpress {
                 return (null);
             }
             catch(System.Exception err) {
-                throw (new RightException("Impossible to build DataTable module hierarchy"));
+                throw (new RightException("Impossible to build DataTable module hierarchy",err));
             }
         }
         #endregion
@@ -656,7 +656,7 @@ namespace TNS.AdExpress {
                 }
             }
             catch(System.Exception err) {
-                throw (new RightException("Impossible to retreive module frequencies"));
+				throw (new RightException("Impossible to retreive module frequencies", err));
             }
         }
 
@@ -697,7 +697,7 @@ namespace TNS.AdExpress {
 				}
 			}
 			catch (System.Exception err) {
-				throw (new RightException("Impossible to retreive flags rights"));
+				throw (new RightException("Impossible to retreive flags rights", err));
 			}
 		}
 		///// <summary>
@@ -735,7 +735,7 @@ namespace TNS.AdExpress {
 				return (false);
 			}
 			catch (System.Exception err) {
-				throw (new RightException("Impossible to retreive flags rights"));
+				throw (new RightException("Impossible to retreive flags rights",err));
 			}
 		}
 

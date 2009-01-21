@@ -695,7 +695,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 		
 			}
 			catch(System.Exception err){
-				throw(new System.Exception(err.Message+" Impossible de rendre le résultat"));
+				throw(new System.Exception(err.Message+" Impossible de rendre le résultat",err));
 			}
 			
 			return (result); 

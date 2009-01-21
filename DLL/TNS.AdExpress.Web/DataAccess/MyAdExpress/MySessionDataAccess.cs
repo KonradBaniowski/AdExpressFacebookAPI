@@ -115,7 +115,7 @@ namespace TNS.AdExpress.Web.DataAccess.MyAdExpress{
 					connection.Open();
 				}
 				catch(System.Exception e){
-					throw(new MySessionDataAccessException("Impossible d'ouvrir la base de données :"+e.Message));
+					throw(new MySessionDataAccessException("Impossible d'ouvrir la base de données :",e));
 				}
 			}
 			#endregion

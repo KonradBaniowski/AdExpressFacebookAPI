@@ -51,7 +51,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 
             }
             catch (System.Exception e) {
-                throw (new System.Exception(" Erreur : " + e.Message));
+                throw (new System.Exception(" Erreur : " , e));
             }
 
         }
