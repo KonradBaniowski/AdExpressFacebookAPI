@@ -1741,8 +1741,8 @@
     <item mnemonic="w2553" type="System.String">L’option "personnaliser les supports" vous permet dans un Plan media au niveau du tableau de résultat final, d’effectuer une sélection sur certains supports uniquement et non de travailler sur l’ensemble de la presse sélectionné par défaut.</item>
     <item mnemonic="w2554" type="System.String">En presse, vous avez la possibilité de travailler en Encart ou Hors encart</item>
     <item mnemonic="w2555" type="System.String">Evaliant</item>
-    <item mnemonic="w2556" type="System.String">Vous travaillez sur les données les plus récentes, bénéficiez ici des dernières mises à jour et d'un accès direct aux données les plus détaillées.</item>
+    <item mnemonic="w2556" type="System.String">Evaliant est l’outil de tracking des bannières publicitaires en temps réel de TNS media intelligence.</item>
     <item mnemonic="w2557" type="System.String">Les nouvelles créations</item>
-    <item mnemonic="w2558" type="System.String">Analyser Les nouvelles créations en temps réel</item>
+    <item mnemonic="w2558" type="System.String">Visualisez les bannières publicitaires d’un secteur ou d’un annonceur en temps réel.</item>
   </items>
 </localization>
