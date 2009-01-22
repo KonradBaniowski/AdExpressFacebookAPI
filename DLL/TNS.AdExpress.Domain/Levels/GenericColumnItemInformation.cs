@@ -373,7 +373,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Banner first parution
             /// </summary>
-            bannerFirstParution = 88
+            bannerFirstParution = 88,
+            /// <summary>
+            /// Cetgory Identifiant
+            /// </summary>
+            idCategory = 89
 }
 		#endregion
 

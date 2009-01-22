@@ -151,6 +151,7 @@
     <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
     <column id="87" name="Gad" webTextId="2222" dbId="id_advertiser" dbLabel="id_address" dbTable="gad" dbTablePrefixe="gd"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false"/>
     <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="89" name="Id Category" webTextId="860" dbLabel="id_category" dbTablePrefixe="wp" dbLabelAlias="idCategory"/>
 
   </columnItems>
 
@@ -216,6 +217,7 @@
       <columnItem id="21" name="Durée écran"/>
       <columnItem id="22" name="Nombre Spots écran"/>
       <columnItem id="14" name="Prix"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
@@ -255,6 +257,7 @@
       <columnItem id="37" name="Genre d'émission" idDetailLevelMatching="23"/>
       <columnItem id="38" name="Emission" idDetailLevelMatching="24"/>
       <columnItem id="14" name="Prix"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
     </detailColumn>
     <!--Presse-->
     <detailColumn id="6" name="Visuel\Date du Support\Annonceurs\Agence média\Produit\Famille\Groupe\Page\Surface en page\Surface en mmc\Prix\Descriptifs\Format\Couleur\Rang famille\Rang groupe\Rang support">
@@ -320,6 +323,7 @@
       <columnItem id="22" name="Nombre Spots écran télévision"/>
       <columnItem id="14" name="Prix"/>
       <columnItem id="51" name="Prix du 30 sec"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
     </detailColumn>
     <!--Presse-->
     <detailColumn id="9" name="Page\Visuel\Annonceur\Groupe\Produit\Format\Surface\Couleur\Prix\Descriptif">
@@ -536,6 +540,7 @@
       <columnItem id="21" name="Durée écran"/>
       <columnItem id="22" name="Nombre Spots écran"/>
       <columnItem id="14" name="Prix"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
     </detailColumn>
     <!--Radio-->
     <detailColumn id="23" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif">
