@@ -165,6 +165,10 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.cinema:
                     tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).Sql;
+                    break;
+
             }
 
             switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
@@ -183,6 +187,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.radio:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                 case DBClassificationConstantes.Vehicles.names.cinema:
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
                     sql += " select min(last_date) as last_date ";
                     sql += " from (";
                     sql += " select id_media, max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
