@@ -101,6 +101,20 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             MissingFlashUrl="/App_Themes/FinlandAdExpressUk/Images/Common/FlashReplacement/HeaderStrip.gif" 
 />
 
+<%-- Flash web control : used to show AdExpress Demo --%>
+<ctrHeader:FlashWebControl  
+                           runat="server" 
+                           FlashUrl="/App_Themes/FinlandAdExpressUk/Flash/Common/Demo_AdExpress3_FI_01.swf" 
+                           MissingFlashUrl=""
+                           SkinID="AdExpressDemo"
+/>
+<%-- Flash web control : used to show AdExpress Presentation --%>
+<ctrHeader:FlashWebControl  
+                           runat="server" 
+                           FlashUrl="/App_Themes/FinlandAdExpressUk/Flash/Common/AdExpress_FinalVersion_w_Navi.swf" 
+                           MissingFlashUrl=""
+                           SkinID="AdExpressPresentation"
+/>
 <%-- Flash web control : used to show a flash animation --%>
 <ctrHeader:FlashWebControl  
                            runat="server" 

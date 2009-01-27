@@ -48,7 +48,24 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         }
         #endregion
 
+
         #region Events
+
+        #region PréRendu
+        /// <summary>
+        /// PréRendu
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnPreRender(EventArgs e) {
+            
+            if(!Page.ClientScript.IsClientScriptBlockRegistered("detectFlash")) {
+                string tmp = "\n<SCRIPT LANGUAGE=\"JavaScript\" type=\"text/javascript\" src=\"/scripts/FlashChecking.js\"></SCRIPT>";
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"detectFlash",tmp);
+            }
+
+            base.OnPreRender(e);
+        }
+        #endregion
 
         #region Render
         /// <summary>
@@ -60,7 +77,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             output.Write("<script  type=\"text/javascript\" language=\"javascript\">");
             output.Write("if(hasRightFlashVersion){");
 			output.Write("document.writeln('<OBJECT id=\"Object1\" codeBase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\"');");
-            output.Write("document.writeln('height=\"484\" width=\"733\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" VIEWASTEXT>');");
+            output.Write("document.writeln('height=\""+this.Height+"\" width=\""+this.Width+"\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" VIEWASTEXT>');");
 			output.Write("document.writeln('<PARAM NAME=\"_cx\" VALUE=\"19394\">');");
             output.Write("document.writeln('<PARAM NAME=\"_cy\" VALUE=\"12806\">');");
 			output.Write("document.writeln('<PARAM NAME=\"FlashVars\" VALUE=\"\">');");										
@@ -82,11 +99,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             output.Write("document.writeln('<PARAM NAME=\"MovieData\" VALUE=\"\">');");
             output.Write("document.writeln('<PARAM NAME=\"SeamlessTabbing\" VALUE=\"1\">');");
             output.Write("document.writeln('<embed src=\""+flashUrl+"\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\"');");
-            output.Write("document.writeln('type=\"application/x-shockwave-flash\" width=\"733\" height=\"484\"> </embed>');");
+            output.Write("document.writeln('type=\"application/x-shockwave-flash\" width=\""+this.Width+"\" height=\""+this.Height+"\"> </embed>');");
             output.Write("document.writeln('</OBJECT>');");
             output.Write("}");
             output.Write("else{");
-            output.Write("document.writeln('<img src=\""+missingFlashUrl+"\" width=\"733\" height=\"484\">');");
+            output.Write("document.writeln('<img src=\""+missingFlashUrl+"\" width=\""+this.Width+"\" height=\""+this.Height+"\">');");
 			output.Write("}");
             output.Write("</script>");
 
