@@ -1744,5 +1744,6 @@
     <item mnemonic="w2556" type="System.String">Evaliant est l’outil de tracking des bannières publicitaires en temps réel de TNS media intelligence.</item>
     <item mnemonic="w2557" type="System.String">Les nouvelles créations</item>
     <item mnemonic="w2558" type="System.String">Visualisez les bannières publicitaires d’un secteur ou d’un annonceur en temps réel.</item>
+    <item mnemonic="w2559" type="System.String">Démo</item>
   </items>
 </localization>
