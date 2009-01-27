@@ -159,10 +159,10 @@
 																				
 																					<tr>
 																						<td>
-																							<p id="dateBegin" onclick="javascript:selectedItem(6)"><cc3:monthcalendarwebcontrol language="33" id="monthCalendarBeginWebControl" runat="server" CalendarType="dateBegin"></cc3:monthcalendarwebcontrol></p>
+																							<p id="dateBegin" onclick="javascript:selectedItem(6)"><cc3:monthcalendarwebcontrol language="33" id="monthCalendarBeginWebControl" runat="server" CalendarType="dateBegin" SkinID="monthcalendarwebcontrol1"></cc3:monthcalendarwebcontrol></p>
 																						</td>
 																						<td>
-																							<p id="dateEnd" onclick="javascript:selectedItem(7)"><cc3:monthcalendarwebcontrol language="33" id="monthCalendarEndWebControl" runat="server" CalendarType="dateEnd"></cc3:monthcalendarwebcontrol></p>
+																							<p id="dateEnd" onclick="javascript:selectedItem(7)"><cc3:monthcalendarwebcontrol language="33" id="monthCalendarEndWebControl" runat="server" CalendarType="dateEnd" SkinID="monthcalendarwebcontrol1"></cc3:monthcalendarwebcontrol></p>
 																						</td>
 																					</tr>
 																				
