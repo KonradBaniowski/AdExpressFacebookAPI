@@ -11,7 +11,7 @@
         <table cellpadding="0" cellspacing="0" align="center">
         <tr>
 	        <td>
-			    <cc3:FlashWebControl ID="flashWebControl1" SkinID="AdexpressPresentation" runat="server" Width="1024" Height="768"></cc3:FlashWebControl>
+			    <cc3:FlashWebControl ID="flashWebControl1" SkinID="AdexpressPresentation" runat="server" Width="800" Height="600"></cc3:FlashWebControl>
 		    </td>
 		</tr>
 	</table>

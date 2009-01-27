@@ -3,7 +3,7 @@
 	<header name="homepage" imgUrl="/Images/Common/dupli_2.gif" flashUrl="/Flash/Common/HeaderStrip.swf" missingFlashUrl="/Images/Common/FlashReplacement/HeaderStrip.gif">
 		<!--<menuItem name="info" headerType="homepage" idWebText="756" href="/Public/Contact.aspx" language="true" idSession="false"/>-->
     <menuItem name="presentation" headerType="homepage" idWebText="757" href="/Finland/Presentation.aspx" target="blank" language="false" idSession="false"/>
-    <menuItem name="Demo" headerType="homepage" idWebText="757" href="/Finland/Demo.aspx" target="blank" language="false" idSession="false"/>
+    <menuItem name="Demo" headerType="homepage" idWebText="2559" href="/Finland/Demo.aspx" target="blank" language="false" idSession="false"/>
 		<menuItem name="configuration" headerType="homepage" idWebText="990" href="/Public/Configuration.aspx" language="true" idSession="false"/>
 		<!--<menuItem name="TNS" headerType="homepage" idWebText="758" href="http://www.TnsMediaIntelligence.fr" target="blank" language="false" idSession="false"/>-->
 	</header>
