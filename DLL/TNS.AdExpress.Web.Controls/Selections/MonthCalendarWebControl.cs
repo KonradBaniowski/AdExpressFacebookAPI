@@ -436,7 +436,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				if(display==MonthCalendarWebControl.Display.month) htmlBuilder.Append("<td colspan=6 bgcolor="+_tdBgcolor+"><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Culture/Calendar/Month_"+(i+1).ToString()+".gif\"></a></td>");				
 				htmlBuilder.Append("</tr>");
 			}
-			htmlBuilder.Append("<tr><td colspan=6  bgcolor="+_tableColorSelectedDate+"><font size=1 color="+_tableColorSelectedDate+" face=\"Arial\">"+dateSelectedString+"</font></td></tr>");
+			htmlBuilder.Append("<tr><td colspan=6  bgcolor="+_tableColorSelectedDate+"><font size=1 color="+_fontColorSelectedDate+" face=\"Arial\">"+dateSelectedString+"</font></td></tr>");
 			htmlBuilder.Append("</table>");
 			output.Write(htmlBuilder.ToString());
 		}
