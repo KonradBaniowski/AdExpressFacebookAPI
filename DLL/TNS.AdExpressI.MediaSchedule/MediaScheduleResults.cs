@@ -1860,7 +1860,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 {
                     s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, tmpCol])).Trim();
                 }
-                if (Convert.ToDouble(data[line, tmpCol]) == 0 || s.Length <= 0)
+                if (Convert.ToDouble(data[line, tmpCol].ToString()) == 0 || s.Length <= 0)
                 {
                     s = "&nbsp;";
                 }
