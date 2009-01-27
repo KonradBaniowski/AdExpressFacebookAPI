@@ -213,11 +213,18 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 							t.Append("<tr><td class=\"portofolioSynthesis\" align=center >" + day + "</td><tr>");
 							t.Append("<tr><td align=\"center\" class=\"portofolioSynthesis\" >");
 							if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
-								if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-									t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
-								else t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
+
+                                if (resultType == FrameWorkResultsConstantes.Portofolio.SYNTHESIS) {
+                                    if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
+                                        t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
+                                    else t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
+                                    t.Append(" <img alt=\"" + GestionWeb.GetWebWord(1409, _webSession.SiteLanguage) + "\" src='" + pathWeb + "' border=\"0\" width=180 height=220>");
+                                }
+                                else if (resultType == FrameWorkResultsConstantes.Portofolio.DETAIL_MEDIA) {
+                                    t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','');\" >");
+                                    t.Append(" <img alt=\"\" src='" + pathWeb + "' border=\"0\" width=180 height=220>");
+                                }
 							}
-							t.Append(" <img alt=\"" + GestionWeb.GetWebWord(1409, _webSession.SiteLanguage) + "\" src='" + pathWeb + "' border=\"0\" width=180 height=220>");
 							if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
 								t.Append("</a>");
 							}

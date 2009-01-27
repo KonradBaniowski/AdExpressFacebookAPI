@@ -99,7 +99,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			parameters[3] = _periodBeginning;
 			parameters[4] = _periodEnd;
 			parameters[5] = _adBreak;
-			if (_adBreak != null && _adBreak.Length > 0) allPeriod = false;
+            if ((_adBreak != null && _adBreak.Length > 0) || (_dayOfWeek != null && _dayOfWeek.Length > 0)) allPeriod = false;
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.digitalTv);
 			if (idTNTCategory != null && idTNTCategory.Length > 0)
