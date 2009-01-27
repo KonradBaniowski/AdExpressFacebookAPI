@@ -251,7 +251,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			//return (portofolioResult.GetPortofolioDetailMediaResultTable());
             ResultTable r = portofolioResult.GetInsertionDetailResultTable();
-            r.CultureInfo = WebApplicationParameters.AllowedLanguages[customerWebSession.SiteLanguage].CultureInfo;
+            if(r != null)r.CultureInfo = WebApplicationParameters.AllowedLanguages[customerWebSession.SiteLanguage].CultureInfo;
 			return r;
         }
         #endregion
