@@ -1537,7 +1537,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
                         listSeriesNameTemp = new Dictionary<int, string>();
 
                         for (int nbPie = 0; nbPie < 2 && j < listSeriesMedia.Count; nbPie++, j++) {
-                            while (listSeriesMedia[(string)listSeriesName[j]].Points.Count < 1 && j < listSeriesMedia.Count) { j++; }
+                            while (listSeriesMedia[(string)listSeriesName[j]].Points.Count < 1 && j < listSeriesMedia.Count-1) { j++; }
                             if (listSeriesMedia[(string)listSeriesName[j]].Points.Count > 0) {
                                 listSeriesMediaTemp.Add((string)listSeriesName[j], listSeriesMedia[(string)listSeriesName[j]]);
                                 listSeriesNameTemp.Add(j, listSeriesName[j]);
