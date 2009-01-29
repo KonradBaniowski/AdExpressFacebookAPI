@@ -507,7 +507,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             //ds = GenericMediaScheduleDataAccess.GetData(_session, _period);
             object[] param = null;
             if(_module.CountryDataAccessLayer == null) throw (new NullReferenceException("Data access layer is null for the Media Schedule result"));
-            if (VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet))
+            if (!_isPDFReport && VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet))
             {
                 param = new object[3];
                 param[0] = _session;
@@ -1610,7 +1610,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 string cssClasse = string.Empty;
                 string cssClasseNb = string.Empty;
                 GenericDetailLevel detailLevel = null;
-                if (VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.DatabaseIdToEnum(_vehicleId) == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.DatabaseIdToEnum(_vehicleId) == CstDBClassif.Vehicles.names.internet))
+                if (!_isPDFReport && VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.DatabaseIdToEnum(_vehicleId) == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.DatabaseIdToEnum(_vehicleId) == CstDBClassif.Vehicles.names.internet))
                 {
                     detailLevel = _session.GenericAdNetTrackDetailLevel;
                 }

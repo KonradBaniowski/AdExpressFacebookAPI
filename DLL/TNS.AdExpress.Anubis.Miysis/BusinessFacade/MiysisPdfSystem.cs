@@ -406,7 +406,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		sw.WriteLine("</TR>");
 		sw.WriteLine("<TR height=\"20\">");
 		sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;"
-			+GestionWeb.GetWebWord((int)TNS.AdExpress.Constantes.Web.CustomerSessions.UnitsTraductionCodes[_webSession.Unit],_webSession.SiteLanguage)
+            + GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId, _webSession.SiteLanguage)
 			+ "</TD>");
 		sw.WriteLine("</TR>");
 		#endregion
