@@ -663,6 +663,14 @@ namespace TNS.AdExpressI.Insertions.DAL
                 sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, tData.Prefix, true));
             }
 
+            //Rights detail spot to spot TNT
+            if (vehicle.Id == CstDBClassif.Vehicles.names.tv
+                && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG)) {
+                string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.digitalTv);
+                if (idTNTCategory != null && idTNTCategory.Length > 0) {
+                    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_category not in (" + idTNTCategory + ")  ");
+                }
+            }
             #endregion
 
             #region Sponsorship univers
@@ -697,7 +705,6 @@ namespace TNS.AdExpressI.Insertions.DAL
                     sql.Append(SQLGenerator.getLevelProduct(_session, tData.Prefix, true));
                     break;
             }
-
 
             // Radio rules
             if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship){
