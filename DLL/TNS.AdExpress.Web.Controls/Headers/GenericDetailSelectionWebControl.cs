@@ -577,8 +577,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
                                     output.Write("<tr>");
                                         if (Page.IsPostBack && _columnSetId==_oldColumnSetId){
 					                        foreach(GenericColumnItemInformation Column in _columnItemSelectedList){
-						                        output.Write("\n<td id=\"zone"+(int)Column.Id+"\" height=\"27\" class=\"simpleDroptd\" noWrap align=\"left\">");
-    						                        output.Write("\n<div align=\"center\" class=\"simpleColumn\" id=\""+(int)Column.Id+"\">");
+                                                output.Write("\n<td id=\"zone" + (int)Column.Id + "\" width=\"45px\" height=\"27\" class=\"simpleDroptd\" noWrap align=\"left\">");
+    						                        output.Write("\n<div class=\"simpleColumn\" id=\""+(int)Column.Id+"\">");
 						                                output.Write("\n"+GestionWeb.GetWebWord(Column.WebTextId,_customerWebSession.SiteLanguage)+"");
 						                            output.Write("\n</div>");
 						                        output.Write("\n</td>");
@@ -663,7 +663,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				    
 
 				    if (Page.IsPostBack && _columnSetId==_oldColumnSetId){
-					    output.Write("<TD valign=top>");
+					    output.Write("<TD>");
                         output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
 					    output.Write("<DIV class=\"title\">Corbeille</DIV>");
     				
