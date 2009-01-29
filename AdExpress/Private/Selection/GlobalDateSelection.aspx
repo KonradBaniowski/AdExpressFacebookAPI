@@ -9,7 +9,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html>
-	<head runat="server">
+	<head id="Head1" runat="server">
 		<title>AdExpress</title>
 		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
 		<meta content="C#" name="CODE_LANGUAGE"/>
@@ -134,10 +134,10 @@
 					<td valign="top" width="10">
 						<table id="Table3" cellspacing="0" cellpadding="0" border="0">
 							<tr>
-								<td><asp:Image runat="server" height="100" SkinID="logo_cote_gauche" /></td>
+								<td><asp:Image ID="Image1" runat="server" height="100" SkinID="logo_cote_gauche" /></td>
 							</tr>
 							<tr>
-								<td class="whiteBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
+								<td class="whiteBackGround"><asp:Image ID="Image2" runat="server" height="1" width="1" SkinID="pixel" /></td>
 							</tr>
 						</table>
 					</td>
@@ -146,13 +146,13 @@
 						<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
 							<tr valign="top" class="whiteBackGround">
 								<!-- Logo -->
-								<td><asp:Image runat="server" height=90 SkinID="logo" /></td>
+								<td><asp:Image ID="Image3" runat="server" height=90 SkinID="logo" /></td>
 							</tr>
 							<tr>
-								<td><asp:Image runat="server" height="5" SkinID="plus_sous_logo" /></td>
+								<td><asp:Image ID="Image4" runat="server" height="5" SkinID="plus_sous_logo" /></td>
 							</tr>
 							<tr>
-								<td><asp:Image runat="server" height="10" width="1" SkinID="pixel" /></td>
+								<td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
 							</tr>
 							<!-- éléments variables du menus de gauche -->
 							<tr valign="top">
@@ -160,7 +160,7 @@
 							</tr>
 							<!-- Info bt droit -->
 							<tr>
-								<td><asp:Image runat="server" height="5" width="1" SkinID="pixel" /></td>
+								<td><asp:Image ID="Image6" runat="server" height="5" width="1" SkinID="pixel" /></td>
 							</tr>
 							<tr>
 								<td>
@@ -172,14 +172,14 @@
 					<td valign="top">
 						<table id="Table5" cellspacing="0" cellpadding="0" border="0">
 							<tr>
-								<td><asp:Image runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>
+								<td><asp:Image ID="Image7" runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>
 							</tr>
 							<tr>
-								<td class="whiteBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
+								<td class="whiteBackGround"><asp:Image ID="Image8" runat="server" height="1" width="1" SkinID="pixel" /></td>
 							</tr>
 						</table>
 					</td>
-					<td class="violetBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
+					<td class="violetBackGround"><asp:Image ID="Image9" runat="server" height="1" width="1" SkinID="pixel" /></td>
 					<td width="10" class="imageBackGround">&nbsp;</td>
 					<td width="10" class="whiteBackGround">&nbsp;</td>
 					<!-- droite-->
@@ -195,9 +195,9 @@
 									<td id="lineAVIrer" valign="top" class="imageBackGround" height="1%">
 										<table id="Table2" cellspacing="0" cellpadding="0" width="100%" border="0">
 											<tr>
-												<td valign="top" align="left" height="1%"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
-												<td height="1%"><asp:Image runat="server" height="17" width="1" SkinID="pixel" /></td>
-												<td valign="top" align="right" height="1%"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+												<td valign="top" align="left" height="1%"><asp:Image ID="Image10" runat="server" height="5" width="5" SkinID="croix" /></td>
+												<td height="1%"><asp:Image ID="Image11" runat="server" height="17" width="1" SkinID="pixel" /></td>
+												<td valign="top" align="right" height="1%"><asp:Image ID="Image12" runat="server" height="5" width="5" SkinID="croix" /></td>
 											</tr>
 										</table>
 									</td>
@@ -215,10 +215,16 @@
 															<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
 														</tr>
 														<tr>
-															<td width="6px"></td>
-															<td width="6px"></td>
-															<td width="100%">
-                                                                 <cc5:GlobalCalendarWebControl ID="GlobalCalendarWebControl1" runat="server"/>
+															<td></td>
+															<td width="15"></td>
+															<td>
+															    <table cellpadding="0" cellspacing="0" border="0">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <cc5:GlobalCalendarWebControl ID="GlobalCalendarWebControl1" runat="server"/>
+                                                                        </td>    
+                                                                    </tr>
+                                                                 </table>
 															</td>
 														</tr>
 														<tr height="5">
@@ -373,9 +379,9 @@
 					<td valign="top" class="imageBackGround">
 						<table id="Table7" cellspacing="0" cellpadding="0" width="100%" border="0">
 							<tr>
-								<td valign="bottom"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+								<td valign="bottom"><asp:Image ID="Image13" runat="server" height="5" width="5" SkinID="croix" /></td>
 								<td></td>
-								<td valign="bottom" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+								<td valign="bottom" align="right"><asp:Image ID="Image14" runat="server" height="5" width="5" SkinID="croix" /></td>
 								<td>
 			                    </td>
 							</tr>
@@ -388,9 +394,9 @@
 					<td id="dellCel" valign="top" class="imageBackGround">
 						<table id="Table8" cellspacing="0" cellpadding="0" width="100%" border="0">
 							<tr>
-								<td valign="bottom"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+								<td valign="bottom"><asp:Image ID="Image15" runat="server" height="5" width="5" SkinID="croix" /></td>
 								<td><cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td>
-								<td valign="bottom" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
+								<td valign="bottom" align="right"><asp:Image ID="Image16" runat="server" height="5" width="5" SkinID="croix" /></td>
 							</tr>
 						</table>
 					</td>
@@ -490,3 +496,4 @@
 
 	</body>
 </html>
+
