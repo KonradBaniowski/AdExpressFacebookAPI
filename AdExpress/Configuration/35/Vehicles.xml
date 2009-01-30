@@ -14,6 +14,7 @@
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                      <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                     <!-- Categorie -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>               <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>                  <!-- Régie -->
         <allowedMediaLevelItem>media</allowedMediaLevelItem>                        <!-- Support -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>               <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>                   <!-- Annonceur -->
@@ -23,6 +24,7 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                    <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                        <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                      <!-- Variété -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>                        <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>    
     <!-- Selection hierarchy-->
@@ -40,6 +42,7 @@
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="5"/><!--Régie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
@@ -65,6 +68,7 @@
       <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
       <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
       <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
+      <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>              <!-- Régie -->
       <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
       <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
       <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -73,6 +77,7 @@
       <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                <!-- Classe -->
       <allowedMediaLevelItem>group</allowedMediaLevelItem>                    <!-- Groupe -->
       <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
+      <allowedMediaLevelItem>title</allowedMediaLevelItem>                    <!-- Titre -->
     </allowedMediaLevelItems>
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
@@ -89,6 +94,7 @@
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="5"/><!--Régie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
@@ -114,6 +120,7 @@
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>              <!-- Régie -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -122,6 +129,7 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                    <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>                    <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -139,6 +147,7 @@
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="5"/><!--Régie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
@@ -155,6 +164,7 @@
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -162,6 +172,7 @@
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>              <!-- Régie -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -170,6 +181,7 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                    <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>                    <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -188,6 +200,7 @@
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="5"/><!--Régie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
      <!--Media detail level allowed in recap's modules-->
@@ -211,6 +224,7 @@
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>              <!-- Régie -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -219,6 +233,7 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                    <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>                    <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -236,6 +251,7 @@
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/> <!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="2"/> <!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="5"/><!--Régie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
@@ -291,6 +307,8 @@
         <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
         <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
         <allowedMediaSelectionLevelItem id="27"/><!-- Basic Media -->
+        <allowedMediaSelectionLevelItem id="17"/><!-- Title -->
+        <allowedMediaSelectionLevelItem id="5"/><!--Régie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
