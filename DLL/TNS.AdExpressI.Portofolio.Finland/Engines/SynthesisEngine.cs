@@ -80,12 +80,14 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             string interestCenter = "";
             string adNumber = "";
             string adNumberIncludingInsets = "", adNumberExcludingInsets = "";
+            string pageNumber = "";
             string nbrSpot = "";
             string totalDuration = "";
             string numberBoard = "";
             string numberProduct = "", numberAdvertiser = "";
             ResultTable resultTable = null;
             LineType lineType = LineType.level1;
+            string unitFormat = "{0:max0}";
             string typeReseauStr = string.Empty;
             #endregion
 
@@ -146,6 +148,15 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
 			}
             #endregion
 
+            #region Periodicity
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press ||
+                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.periodicity);
+                dt = ds.Tables[0];
+                periodicity = dt.Rows[0]["periodicity"].ToString();
+            }
+            #endregion
+
             #region investment
             ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.investment);
             dt = ds.Tables[0];
@@ -156,6 +167,7 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 investment = "0";
 
             if (dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString())) totalDuration = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString();
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString())) adNumber = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
             #endregion
 
             #region Period selected
@@ -164,6 +176,16 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 dt = ds.Tables[0];
                 if (dt.Columns.Contains("first_date")) firstDate = dt.Rows[0]["first_date"].ToString();
                 if (dt.Columns.Contains("last_date")) lastDate = dt.Rows[0]["last_date"].ToString();
+            }
+            #endregion
+
+            #region Page number
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages)) {
+                ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.pageNumber);
+                dt = ds.Tables[0];
+                pageNumber = dt.Rows[0]["page"].ToString();
+                if (pageNumber.Length == 0)
+                    pageNumber = "0";
             }
             #endregion
 
@@ -231,6 +253,9 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
 					if (category != null && category.Length > 0 ) nbLines++;
 					if (regie != null && regie.Length > 0 ) nbLines++;
 					if (interestCenter != null && interestCenter.Length > 0 ) nbLines++;
+                    if (periodicity != null && periodicity.Length > 0) nbLines++;
+                    if (pageNumber != null && pageNumber.Length > 0) nbLines++;
+                    if (adNumber != null && adNumber.Length > 0) nbLines = nbLines + 2;
 					break;
                 default:
                     throw (new PortofolioException("Vehicle unknown"));
@@ -267,6 +292,14 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 ChangeLineType(ref lineType);
             }
 
+            // Periodicity
+            if (periodicity.Length > 0) {
+                lineIndex = resultTable.AddNewLine(lineType);
+                resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1450, _webSession.SiteLanguage));
+                resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(periodicity);
+                ChangeLineType(ref lineType);
+            }
+
             // Category
             if (category.Length > 0) {
                 lineIndex = resultTable.AddNewLine(lineType);
@@ -275,7 +308,7 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 ChangeLineType(ref lineType);
             }
 
-            // Media seller
+            // Media Owner
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && regie.Length > 0) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1417, _webSession.SiteLanguage));
@@ -289,6 +322,42 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1411, _webSession.SiteLanguage));
                 resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel(interestCenter);
                 ChangeLineType(ref lineType);
+            }
+
+            // Case vehicle press
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press) {
+                if (pageNumber != null && pageNumber.Length > 0) {
+                    // Nombre de page
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage));
+                    CellNumber cN2 = new CellNumber(double.Parse(pageNumber));
+                    cN2.StringFormat = unitFormat;
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN2;
+                    ChangeLineType(ref lineType);
+                }
+
+                if (adNumber != null && adNumber.Length > 0) {
+                    // Nb de page pub		
+                    lineIndex = resultTable.AddNewLine(lineType);
+                    resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1386, _webSession.SiteLanguage));
+                    CellPage cP = new CellPage(double.Parse(adNumber));
+                    cP.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat;
+                    resultTable[lineIndex, SECOND_COLUMN_INDEX] = cP;
+                    ChangeLineType(ref lineType);
+
+                    // Ratio
+                    if (pageNumber != null && pageNumber.Length > 0) {
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage));
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellPercent(((double.Parse(adNumber) / double.Parse(pageNumber) * 100) / (double)1000));
+                    }
+                    else {
+                        lineIndex = resultTable.AddNewLine(lineType);
+                        resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1387, _webSession.SiteLanguage));
+                        resultTable[lineIndex, SECOND_COLUMN_INDEX] = new CellLabel("&nbsp;&nbsp;&nbsp;&nbsp;");
+                    }
+                    ChangeLineType(ref lineType);
+                }
             }
 
             // Cas tv, radio

@@ -458,7 +458,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 ChangeLineType(ref lineType);
             }
 
-            // Media seller
+            // Media Owner
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && regie.Length>0) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1417, _webSession.SiteLanguage));

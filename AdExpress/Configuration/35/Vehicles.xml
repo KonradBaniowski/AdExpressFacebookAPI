@@ -269,6 +269,7 @@
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
       <allowedUnit>mmPerCol</allowedUnit>
+      <allowedUnit>pages</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results -->
     <allowedMediaDetailLevels>
