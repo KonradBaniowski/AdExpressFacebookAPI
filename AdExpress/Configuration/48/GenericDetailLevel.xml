@@ -22,7 +22,7 @@
 		<level id="19" name="Durée" webTextId="1933"  dbId="duration" dbIdAlias="id_duration" dbLabel="duration" dbLabelAlias="duration"/>
 		<level id="20" name="Format" webTextId="1420"  dbId="id_format" dbLabel="format"   dbTable="format" dbTablePrefixe="fo" dbExternalJoin="true"/>
 		<level id="21" name="Code écran" webTextId="1934"  dbId="id_commercial_break" dbIdAlias="commercial_break" dbLabel="id_commercial_break" dbLabelAlias="id_commercial_break"/>
-		<!--<level id="22" name="Format affiche" webTextId="1420"  dbId="type_board" dbIdAlias="id_type_board" dbLabel="type_board" dbLabelAlias="type_board"/>-->
+		<level id="22" name="Format affiche" webTextId="1420"  dbId="type_board" dbIdAlias="id_type_board" dbLabel="type_board" dbLabelAlias="type_board"/>
 		<!--<level id="23" name="Genre d'émissions" webTextId="2122" dbId="id_program_type" dbLabel="program_type" dbTable="program_type" dbTablePrefixe="pt"/>-->
 		<!--<level id="24" name="Emissions" webTextId="2051" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg"/>-->
 		<!--<level id="25" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>-->

@@ -214,23 +214,23 @@
       <columnItem id="14" name="Prix"/>
     </detailColumn>
     <!--Outdoor-->
-    <!--<detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
+    <detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>
-      <columnItem id="41" name="Affiche" notInExcelExport="true"/>
+     <!-- <columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>-->
+     <!-- <columnItem id="41" name="Affiche" notInExcelExport="true"/>-->
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
-      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <!--<columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>-->
       <columnItem id="5" name="Régie"/>
       <columnItem id="28" name="Nombre de panneaux"/>
       <columnItem id="29" name="Format du panneau" idDetailLevelMatching="22"/>
-      <columnItem id="30" name="Type de réseau"/>
-      <columnItem id="31" name="Réseau afficheur"/>
+      <!--<columnItem id="30" name="Type de réseau"/>-->
+      <!--<columnItem id="31" name="Réseau afficheur"/>-->
       <columnItem id="32" name="Agglomeration"/>
       <columnItem id="14" name="Prix"/>
-    </detailColumn>-->
+    </detailColumn>
     <!--TV Parrainage-->
     <!--<detailColumn id="5" name="Spot\Jour semaine\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Code écran\Durée\Position\Forme de parrainage\Genre d'émission\Emission\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
@@ -382,8 +382,8 @@
       <columnItem id="70" name="nb Support"/>
     </detailColumn>
     <!--Outdoor-->
-    <!--<detailColumn id="14" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
-      <columnItem id="6" name="Version" isKey="true"/>
+    <detailColumn id="14" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
+      <!--<columnItem id="6" name="Version" isKey="true"/>-->
       <columnItem id="41" name="Affiche"/>
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
@@ -391,7 +391,7 @@
       <columnItem id="67" name="Budget"/>
       <columnItem id="76" name="Nb panneaux"/>
       <columnItem id="70" name=" Nb Supports"/>
-    </detailColumn>-->
+    </detailColumn>
     <!--TV Parrainage-->
     <!--<detailColumn id="15" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
       <columnItem id="6" name="Version" isKey="true"/>
@@ -469,7 +469,7 @@
       <columnItem id="70" name="nb Support"/>
     </detailColumn>
     <!--Outdoor-->
-    <!--<detailColumn id="20" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
+    <detailColumn id="20" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
       <columnItem id="6" name="Version" isKey="true"/>
       <columnItem id="41" name="Affiche"/>
       <columnItem id="7" name="Annonceur"/>
@@ -480,7 +480,7 @@
       <columnItem id="67" name="Budget"/>
       <columnItem id="76" name="Nb panneaux"/>
       <columnItem id="70" name=" Nb Supports"/>
-    </detailColumn>-->
+    </detailColumn>
     <!-- VMC-->
     <!--<detailColumn id="21" name="Visuel\Annonceur\Groupe\Produit\supports\Version\Budget\Volume\Poid\Items\Format\Format enveloppe\Format contenant\Type de doc\Contenu">
       <columnItem id="6" name="slogan" isKey="true"/>
@@ -539,21 +539,21 @@
       <columnItem id="55" name="Id Cobranding" visible="false" isKey="true"/>
     </detailColumn>
     <!--Outdoor-->
-    <!--<detailColumn id="24" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
+    <detailColumn id="24" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>
-      <columnItem id="41" name="Affiche" notInExcelExport="true"/>
+      <!--<columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>-->
+      <!--<columnItem id="41" name="Affiche" notInExcelExport="true"/>-->
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="28" name="Nombre de panneaux"/>
       <columnItem id="29" name="Format du panneau" idDetailLevelMatching="22"/>
-      <columnItem id="30" name="Type de réseau"/>
-      <columnItem id="31" name="Réseau afficheur"/>
+      <!--<columnItem id="30" name="Type de réseau"/>-->
+      <!--<columnItem id="31" name="Réseau afficheur"/>-->
       <columnItem id="32" name="Agglomeration"/>
       <columnItem id="14" name="Prix"/>
-    </detailColumn>-->>
+    </detailColumn>
     <!--Créations Internet-->
     <!--<detailColumn id="25" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
       <columnItem id="81" name="hashcode" visible="false"  isKey="true"/>

@@ -260,6 +260,11 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines {
                     if (isAlertModule) nbLines = nbLines + 5;
                     if (investment != null && investment.Length > 0) nbLines++; // nbLines = 16;
                     break;
+
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+					nbLines = 9;					
+					if (investment != null && investment.Length > 0) nbLines++;
+					break;
                 default:
                     throw (new PortofolioException("Vehicle unknown"));
             }

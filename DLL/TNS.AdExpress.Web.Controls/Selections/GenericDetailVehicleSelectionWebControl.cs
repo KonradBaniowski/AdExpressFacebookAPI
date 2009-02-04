@@ -211,12 +211,14 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			//limit max number of items to selected 
 			nbAllSelectedItems = ((_currentSelectedMediaList != null && _currentSelectedMediaList.Count > 0) ? _currentSelectedMediaList.Count : 0)
 				+ ((_oldSelectedMediaList != null && _oldSelectedMediaList.Count > 0) ? _oldSelectedMediaList.Count : 0);
-			
-			if (nbAllSelectedItems >= MAX_SELECTABLE_ELEMENTS 
+
+			if (nbAllSelectedItems >= MAX_SELECTABLE_ELEMENTS
 				&& (_eventButton == constEvent.eventSelection.OK_EVENT
 				|| _eventButton == constEvent.eventSelection.VALID_EVENT
-				|| _eventButton == constEvent.eventSelection.NEXT_EVENT))
+				|| _eventButton == constEvent.eventSelection.NEXT_EVENT)) {
 				_nbItemsValidity = constEvent.error.MAX_ELEMENTS;
+				canSaveMedias = false;
+			}
 			#endregion			
 
 			#region Verify if can load data from save universe (Pour Bouton CHARGEMENT UNIVERS)
@@ -252,12 +254,30 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
 			#endregion
 
+			#region  Keep current items selected during search
+			if ( _eventButton == constEvent.eventSelection.OK_EVENT) {								
+				if (_currentSelectedMediaList != null) {
+					_listAccessMedia = "";
+					for (int i = 0; i < _currentSelectedMediaList.Count; i++) {
+						_listAccessMedia += _currentSelectedMediaList[i].ToString() + ",";
+					}
+				}
+				List<Int64> alreadySelectedMedia = GetAlreadySelectedMedia();
+				if (alreadySelectedMedia != null) {
+					for (int i = 0; i < alreadySelectedMedia.Count; i++) {
+						_listAccessMedia += alreadySelectedMedia[i].ToString() + ",";
+					}
+				}
+				if (_listAccessMedia!=null && _listAccessMedia.Length > 0) _listAccessMedia = _listAccessMedia.Substring(0, _listAccessMedia.Length - 1);
+			}
+			#endregion
+
 			//Load data from DB
 			if (_eventButton != constEvent.eventSelection.SAVE_EVENT) 
 			_dsListMedia = GetData(_eventButton, _keyWord, _listAccessMedia);
 		
 			#region Save selected items in WebSession
-			if (CanCreateTreeNode()) {
+			if (canSaveMedias && CanCreateTreeNode()) {
 				_webSession.CurrentUniversMedia = CreateTreeNode();
 				_webSession.Save();
 			}
@@ -349,6 +369,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 		/// </summary>
 		/// <param name="output"></param>
 		protected override void Render(HtmlTextWriter output) {
+			
 			#region Variables
 			System.Text.StringBuilder t = new System.Text.StringBuilder(10000);
 			string textOpenclose = "", checkBox = "", allDivIds = "", disabled = "", displayDiv = "none", cssTextItem = "txtViolet10",  cssL1="violetBackGroundV3"; 
