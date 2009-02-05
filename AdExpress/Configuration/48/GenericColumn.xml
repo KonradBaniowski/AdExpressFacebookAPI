@@ -147,7 +147,7 @@
     <column id="82" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="84" name="Dimension banner Internet" webTextId="1420" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-
+    <column id="90" name="Row number" webTextId="2560"  dbLabel="rownum" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
   </columnItems>
 
   <detailColumns>
@@ -230,6 +230,7 @@
       <!--<columnItem id="31" name="Réseau afficheur"/>-->
       <columnItem id="32" name="Agglomeration"/>
       <columnItem id="14" name="Prix"/>
+      <columnItem id="90" name="row number" visible="false" isKey="true"/>
     </detailColumn>
     <!--TV Parrainage-->
     <!--<detailColumn id="5" name="Spot\Jour semaine\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Code écran\Durée\Position\Forme de parrainage\Genre d'émission\Emission\Prix">
@@ -391,6 +392,7 @@
       <columnItem id="67" name="Budget"/>
       <columnItem id="76" name="Nb panneaux"/>
       <columnItem id="70" name=" Nb Supports"/>
+      <columnItem id="90" name="row number" visible="false" isKey="true"/>
     </detailColumn>
     <!--TV Parrainage-->
     <!--<detailColumn id="15" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
@@ -480,6 +482,7 @@
       <columnItem id="67" name="Budget"/>
       <columnItem id="76" name="Nb panneaux"/>
       <columnItem id="70" name=" Nb Supports"/>
+      <columnItem id="90" name="row number" visible="false" isKey="true"/>
     </detailColumn>
     <!-- VMC-->
     <!--<detailColumn id="21" name="Visuel\Annonceur\Groupe\Produit\supports\Version\Budget\Volume\Poid\Items\Format\Format enveloppe\Format contenant\Type de doc\Contenu">
@@ -553,6 +556,7 @@
       <!--<columnItem id="31" name="Réseau afficheur"/>-->
       <columnItem id="32" name="Agglomeration"/>
       <columnItem id="14" name="Prix"/>
+      <columnItem id="90" name="row number" visible="false" isKey="true"/>
     </detailColumn>
     <!--Créations Internet-->
     <!--<detailColumn id="25" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">

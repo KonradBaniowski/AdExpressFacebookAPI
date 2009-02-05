@@ -21,364 +21,368 @@ namespace TNS.AdExpress.Domain.Level
 		/// <summary>
 		/// Eléments compsant les Colonnes
 		/// </summary>
-		public enum Columns{
+		public enum Columns {
 			/// <summary>
 			/// Media
 			/// </summary>
-			vehicle=1,
+			vehicle = 1,
 			/// <summary>
 			/// Catégorie
 			/// </summary>
-			category=2,
+			category = 2,
 			/// <summary>
 			/// Support
 			/// </summary>
-			media=3,
+			media = 3,
 			/// <summary>
 			/// Centre d'interet
 			/// </summary>
-			interestCenter=4,
+			interestCenter = 4,
 			/// <summary>
 			/// Régie
 			/// </summary>
-			mediaSeller=5,
+			mediaSeller = 5,
 			/// <summary>
 			/// Version
 			/// </summary>
-			slogan=6,
+			slogan = 6,
 			/// <summary>
 			/// Annonceur
 			/// </summary>
-			advertiser=7,
+			advertiser = 7,
 			/// <summary>
 			/// Groupe
 			/// </summary>
-			group=8,
+			group = 8,
 			/// <summary>
 			/// Produit
 			/// </summary>
-			product=9,
+			product = 9,
 			/// <summary>
 			/// Spot
 			/// </summary>
-			associatedFile=10,
+			associatedFile = 10,
 			/// <summary>
 			/// Format
 			/// </summary>
-			format=11,
+			format = 11,
 			/// <summary>
 			/// Surface
 			/// </summary>
-			areaPage=12,
+			areaPage = 12,
 			/// <summary>
 			/// Couleur
 			/// </summary>
-			color=13,
+			color = 13,
 			/// <summary>
 			/// Prix
 			/// </summary>
-			expenditureEuro=14,
+			expenditureEuro = 14,
 			/// <summary>
 			/// Descriptif
 			/// </summary>
-			location=15,
+			location = 15,
 			/// <summary>
 			/// Top de diffusion radio
 			/// </summary>
-			idTopDiffusion=16,
+			idTopDiffusion = 16,
 			/// <summary>
 			/// Top de diffusion télévision
 			/// </summary>
-			topDiffusion=17,
+			topDiffusion = 17,
 			/// <summary>
 			/// Durée
 			/// </summary>
-			duration=18,
+			duration = 18,
 			/// <summary>
 			/// Position radio
 			/// </summary>
-			rank=19,
+			rank = 19,
 			/// <summary> 
 			/// Position télévision
 			/// </summary>
-			idRank=20,
+			idRank = 20,
 			/// <summary> 
 			/// Durée écran
 			/// </summary>
-			durationCommercialBreak=21,
+			durationCommercialBreak = 21,
 			/// <summary> 
 			/// Nombre Spots écran télévision
 			/// </summary>
-			numberMessageCommercialBrea=22,
+			numberMessageCommercialBrea = 22,
 			/// <summary> 
 			/// Nombre Spots écran radio
 			/// </summary>
-			numberSpotComBreak=23,
+			numberSpotComBreak = 23,
 			/// <summary> 
 			/// Position hap
 			/// </summary>
-			rankWap=24,
+			rankWap = 24,
 			/// <summary> 
 			/// Durée écran hap
 			/// </summary>
-			durationComBreakWap=25,
+			durationComBreakWap = 25,
 			/// <summary> 
 			/// Nombre spots hap
 			/// </summary>
-			numberSpotComBreakWap=26,
+			numberSpotComBreakWap = 26,
 			/// <summary> 
 			/// Code écran
 			/// </summary>
-			idCommercialBreak=27,
+			idCommercialBreak = 27,
 			/// <summary> 
 			/// Nombre de panneaux
 			/// </summary>
-			numberBoard=28,
+			numberBoard = 28,
 			/// <summary> 
 			/// Format du panneau
 			/// </summary>
-			typeBoard=29,
+			typeBoard = 29,
 			/// <summary> 
 			/// Type de réseau
 			/// </summary>
-			typeSale=30,
+			typeSale = 30,
 			/// <summary> 
 			/// Réseau afficheur
 			/// </summary>
-			posterNetwork=31,
+			posterNetwork = 31,
 			/// <summary> 
 			/// Agglomeration
 			/// </summary>
-			agglomeration=32,
+			agglomeration = 32,
 			/// <summary> 
 			/// Date
 			/// </summary>
-			dateMediaNum=33,
+			dateMediaNum = 33,
 			/// <summary> 
 			/// Page
 			/// </summary>
-			mediaPaging=34,
+			mediaPaging = 34,
 			/// <summary> 
 			/// Visuel
 			/// </summary>
-			visual=35,
+			visual = 35,
 			/// <summary>
 			/// Position Presse
 			/// </summary>
-			rankMedia=36,
+			rankMedia = 36,
 			/// <summary>
 			/// Genre d'émissions
 			/// </summary>
-			programType=37,
+			programType = 37,
 			/// <summary>
 			/// Emission
 			/// </summary>
-			program=38,
+			program = 38,
 			/// <summary>
 			/// Forme de parrainage
 			/// </summary>
-			formSponsorship=39,
+			formSponsorship = 39,
 			/// <summary>
 			/// Jour de la semaine
 			/// </summary>
-			dayOfWeek=40,
+			dayOfWeek = 40,
 			/// <summary>
 			/// Affiche
 			/// </summary>
-			poster=41,
-            /// <summary>
-            /// Date de Parution
-            /// </summary>
-            dateParution=42,
-            /// <summary>
-            /// Agence Media
-            /// </summary>
-            agenceMedia=43,
-            /// <summary>
-            /// Famille
-            /// </summary>
-            famille=44,
-            /// <summary>
-            /// Surface en mmc
-            /// </summary>
-            surfaceMMC=45,
-            /// <summary>
-            /// Rang famille
-            /// </summary>
-            rangFamille=46,
-            /// <summary>
-            /// Rang groupe
-            /// </summary>
-            rangGroupe=47,
-            /// <summary>
-            /// Rang support
-            /// </summary>
-            rangSupport=48,
-            /// <summary>
-            /// Date de diffusion
-            /// </summary>
-            dateDiffusion=49,
-            /// <summary>
-            /// Code écran
-            /// </summary>
-            codeEcran=50,
-            /// <summary>
-            /// Prix du 30 sec
-            /// </summary>
-            prix30Sec=51,
-            /// <summary>
-            /// Type page
-            /// </summary>
-            typePage=52,
-            /// <summary>
-            /// Plan Media
-            /// </summary>
-            planMedia=53,
-            /// <summary>
-            /// Id pub presse
-            /// </summary>
-            idPressAdvertisment=54,
-            /// <summary>
-            /// Id Cobranding
-            /// </summary>
-            idCobranding=55,
-            /// <summary>
-            /// Id Outdoor
-            /// </summary>            
-            idDataOutDoor=56,
-            /// <summary>
-            /// Cover date
-            /// </summary>
-            dateCoverNum=57,
-            /// <summary>
-            /// ID VMC data
-            /// </summary>
-            idVMC=58,
-            /// <summary>
-            /// Mailing rapidity
-            /// </summary>
-            rapidity=59,
-            /// <summary>
-            /// Type of document
-            /// </summary>
-            typeDoc=60,
-            /// <summary>
-            /// Volume
-            /// </summary>
-            volume=61,
-            /// <summary>
-            /// Weight
-            /// </summary>
-            weight=62,
-            /// <summary>
-            /// Item number
-            /// </summary>
-            itemNb=63,
-            /// <summary>
-            /// Mail format (standard or specific)
-            /// </summary>
-            mailFormat=64,
-            /// <summary>
-            /// Mail Content
-            /// </summary>
-            content=65,
-            /// <summary>
-            /// Type of mail (blister...)
-            /// </summary>
-            mailType=66,
-            /// <summary>
-            /// Expenditure as a sum
-            /// </summary>
-            sumExpenditure=67,
-            /// <summary>
-            /// Somme Surface page
-            /// </summary>
-            sumSurface=68,
-            /// <summary>
-            /// Somme Durée
-            /// </summary>
-            sumDuration=69,
-            /// <summary>
-            /// Nombre de supports
-            /// </summary>
-            countMedia=70,
-            /// <summary>
-            /// Nombre de supports press
-            /// </summary>
-            countMediaPress=71,
-            /// <summary>
-            /// Insertions
-            /// </summary>
-            sumInsert=72,
-            /// <summary>
-            /// Date kiosque (press)
-            /// </summary>
-            dateKiosque=73,
-            /// <summary>
-            /// Nb spots
-            /// </summary>
-            sumSpot=74,
-            /// <summary>
-            /// Max path (for unicity purpose)
-            /// </summary>
-            associatedFileMax=75,
-            /// <summary>
-            /// Max path (for unicity purpose)
-            /// </summary>
-            numberBoardSum=76,
-            /// <summary>
-            /// AdNetTrack product
-            /// </summary>
-            productAdNetTrack=77,
-            /// <summary>
-            /// Banner Format
-            /// </summary>
-            bannerFormat=78,
-            /// <summary>
-            /// Banner dimension
-            /// </summary>
-            bannerDimension=79,
-            /// <summary>
-            /// Banner url
-            /// </summary>
-            bannerUrl=80,
-            /// <summary>
-            /// Banner hashcode
-            /// </summary>
-            bannerHashcode=81,
-            /// <summary>
-            /// Sub Sector
-            /// </summary>
-            subSector=82,
-            /// <summary>
-            /// Banner Internet format
-            /// </summary>
-            bannerInternetFormat=83,
-            /// <summary>
-            /// Banner Internet DImension
-            /// </summary>
-            bannerInternetDimension=84,
-            /// <summary>
-            /// Euros
-            /// </summary>
-            euros=85,
-            /// <summary>
-            /// First date parution
-            /// </summary>
-            firstDateParution = 86,
-            /// <summary>
-            /// Advertiser address id
-            /// </summary>
-            addressId = 87,
-            /// <summary>
-            /// Banner first parution
-            /// </summary>
-            bannerFirstParution = 88,
-            /// <summary>
-            /// Cetgory Identifiant
-            /// </summary>
-            idCategory = 89
-}
+			poster = 41,
+			/// <summary>
+			/// Date de Parution
+			/// </summary>
+			dateParution = 42,
+			/// <summary>
+			/// Agence Media
+			/// </summary>
+			agenceMedia = 43,
+			/// <summary>
+			/// Famille
+			/// </summary>
+			famille = 44,
+			/// <summary>
+			/// Surface en mmc
+			/// </summary>
+			surfaceMMC = 45,
+			/// <summary>
+			/// Rang famille
+			/// </summary>
+			rangFamille = 46,
+			/// <summary>
+			/// Rang groupe
+			/// </summary>
+			rangGroupe = 47,
+			/// <summary>
+			/// Rang support
+			/// </summary>
+			rangSupport = 48,
+			/// <summary>
+			/// Date de diffusion
+			/// </summary>
+			dateDiffusion = 49,
+			/// <summary>
+			/// Code écran
+			/// </summary>
+			codeEcran = 50,
+			/// <summary>
+			/// Prix du 30 sec
+			/// </summary>
+			prix30Sec = 51,
+			/// <summary>
+			/// Type page
+			/// </summary>
+			typePage = 52,
+			/// <summary>
+			/// Plan Media
+			/// </summary>
+			planMedia = 53,
+			/// <summary>
+			/// Id pub presse
+			/// </summary>
+			idPressAdvertisment = 54,
+			/// <summary>
+			/// Id Cobranding
+			/// </summary>
+			idCobranding = 55,
+			/// <summary>
+			/// Id Outdoor
+			/// </summary>            
+			idDataOutDoor = 56,
+			/// <summary>
+			/// Cover date
+			/// </summary>
+			dateCoverNum = 57,
+			/// <summary>
+			/// ID VMC data
+			/// </summary>
+			idVMC = 58,
+			/// <summary>
+			/// Mailing rapidity
+			/// </summary>
+			rapidity = 59,
+			/// <summary>
+			/// Type of document
+			/// </summary>
+			typeDoc = 60,
+			/// <summary>
+			/// Volume
+			/// </summary>
+			volume = 61,
+			/// <summary>
+			/// Weight
+			/// </summary>
+			weight = 62,
+			/// <summary>
+			/// Item number
+			/// </summary>
+			itemNb = 63,
+			/// <summary>
+			/// Mail format (standard or specific)
+			/// </summary>
+			mailFormat = 64,
+			/// <summary>
+			/// Mail Content
+			/// </summary>
+			content = 65,
+			/// <summary>
+			/// Type of mail (blister...)
+			/// </summary>
+			mailType = 66,
+			/// <summary>
+			/// Expenditure as a sum
+			/// </summary>
+			sumExpenditure = 67,
+			/// <summary>
+			/// Somme Surface page
+			/// </summary>
+			sumSurface = 68,
+			/// <summary>
+			/// Somme Durée
+			/// </summary>
+			sumDuration = 69,
+			/// <summary>
+			/// Nombre de supports
+			/// </summary>
+			countMedia = 70,
+			/// <summary>
+			/// Nombre de supports press
+			/// </summary>
+			countMediaPress = 71,
+			/// <summary>
+			/// Insertions
+			/// </summary>
+			sumInsert = 72,
+			/// <summary>
+			/// Date kiosque (press)
+			/// </summary>
+			dateKiosque = 73,
+			/// <summary>
+			/// Nb spots
+			/// </summary>
+			sumSpot = 74,
+			/// <summary>
+			/// Max path (for unicity purpose)
+			/// </summary>
+			associatedFileMax = 75,
+			/// <summary>
+			/// Max path (for unicity purpose)
+			/// </summary>
+			numberBoardSum = 76,
+			/// <summary>
+			/// AdNetTrack product
+			/// </summary>
+			productAdNetTrack = 77,
+			/// <summary>
+			/// Banner Format
+			/// </summary>
+			bannerFormat = 78,
+			/// <summary>
+			/// Banner dimension
+			/// </summary>
+			bannerDimension = 79,
+			/// <summary>
+			/// Banner url
+			/// </summary>
+			bannerUrl = 80,
+			/// <summary>
+			/// Banner hashcode
+			/// </summary>
+			bannerHashcode = 81,
+			/// <summary>
+			/// Sub Sector
+			/// </summary>
+			subSector = 82,
+			/// <summary>
+			/// Banner Internet format
+			/// </summary>
+			bannerInternetFormat = 83,
+			/// <summary>
+			/// Banner Internet DImension
+			/// </summary>
+			bannerInternetDimension = 84,
+			/// <summary>
+			/// Euros
+			/// </summary>
+			euros = 85,
+			/// <summary>
+			/// First date parution
+			/// </summary>
+			firstDateParution = 86,
+			/// <summary>
+			/// Advertiser address id
+			/// </summary>
+			addressId = 87,
+			/// <summary>
+			/// Banner first parution
+			/// </summary>
+			bannerFirstParution = 88,
+			/// <summary>
+			/// Cetgory Identifiant
+			/// </summary>
+			idCategory = 89,
+			/// <summary>
+			/// Row number
+			/// </summary>
+			rowNum = 90
+		}
 		#endregion
 
 		#region Variables

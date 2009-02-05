@@ -529,7 +529,13 @@ namespace TNS.AdExpressI.Insertions
                             break;
                         case GenericColumnItemInformation.Columns.topDiffusion:
                             if(vehicle.Id == CstDBClassif.Vehicles.names.tv){
-                                string idCat = row[WebApplicationParameters.GenericColumnItemsInformation.Get((long)GenericColumnItemInformation.Columns.idCategory).DataBaseField].ToString();
+								string idCat = "";
+								try {
+									idCat = row[WebApplicationParameters.GenericColumnItemsInformation.Get((long)GenericColumnItemInformation.Columns.idCategory).DataBaseField].ToString();
+								}
+								catch (Exception e) {
+									idCat = "";
+								}
                                 if (Array.IndexOf(_topDiffCategory, idCat) >= 0)
                                 {
                                     val = 0;
