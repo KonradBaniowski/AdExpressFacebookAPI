@@ -190,23 +190,38 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     sql += " select min(last_date) as last_date ";
                     sql += " from (";
-                    sql += " select id_media, max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-                    sql += " from " + tableName;
-
 
                     #region Media selection
                     if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE)
-                        mediaList += webSession.GetSelection((TreeNode)webSession.ReferenceUniversMedia, CustormerConstantes.Right.type.mediaAccess)+",";
+                        mediaList += webSession.GetSelection((TreeNode)webSession.ReferenceUniversMedia, CustormerConstantes.Right.type.mediaAccess) + ",";
                     else {
                         while (webSession.CompetitorUniversMedia[positionUnivers] != null) {
                             mediaList += webSession.GetSelection((TreeNode)webSession.CompetitorUniversMedia[positionUnivers], CustormerConstantes.Right.type.mediaAccess) + ",";
                             positionUnivers++;
                         }
                     }
-		            if (mediaList.Length>0)sql+=" where id_media in ("+mediaList.Substring(0,mediaList.Length-1)+")";
-		            #endregion
+                    #endregion
 
-                    sql += " group by id_media )";
+                    if (mediaList.Length > 0) {
+
+                        string[] strs = mediaList.Substring(0, mediaList.Length - 1).Split(',');
+                        int i = 0;
+
+                        while (i < strs.Length) {
+                            if (i > 0) {
+                                sql += " UNION ";
+                            }
+
+                            sql += " select id_media, max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
+                            sql += " from " + tableName;
+                            sql += " where id_media = " + strs[i]+ "";
+                            sql += " group by id_media ";
+
+                            i += 1;
+                        }
+                    }
+
+                    sql += " )";
                     break;
             }
             #endregion

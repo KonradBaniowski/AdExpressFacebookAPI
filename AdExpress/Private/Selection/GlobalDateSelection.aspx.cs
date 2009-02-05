@@ -132,7 +132,14 @@ namespace AdExpress.Private.Selection {
                 else{
                     GlobalCalendarWebControl1.IsRestricted = true;
                     selectedVehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
-                    GlobalCalendarWebControl1.FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(_webSession, selectedVehicle, GlobalCalendarWebControl1.StartYear,_webSession.Source);
+                    if (IsPostBack) {
+                        if (this.ViewState["FirstDayNotEnabledVS"] != null)
+                            GlobalCalendarWebControl1.FirstDayNotEnable = (DateTime)this.ViewState["FirstDayNotEnabledVS"];
+                    }
+                    else {
+                        GlobalCalendarWebControl1.FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(_webSession, selectedVehicle, GlobalCalendarWebControl1.StartYear, _webSession.Source);
+                        ViewState.Add("FirstDayNotEnabledVS", GlobalCalendarWebControl1.FirstDayNotEnable);
+                    }
                 }
                 #region Script
                 //Gestion de la sélection comparative
