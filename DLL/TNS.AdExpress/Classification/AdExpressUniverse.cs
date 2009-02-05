@@ -46,46 +46,17 @@ namespace TNS.AdExpress.Classification  {
 		/// <param name="beginByAnd">Indicates if condition begin by and</param>
 		/// <returns>String sql conditions</returns>
 		public string GetSqlConditions(string dataTablePrefix,bool beginByAnd) {
-			//List<NomenclatureElementsGroup> listGroup = null;
-			//List<long> levelList = null;
-			StringBuilder sql = new StringBuilder(5000);
-			//bool first = true;
-			//string listIds = "";
 
-			
-			#region Old version
-			//listGroup = GetIncludes();
-			//if (listGroup != null && listGroup.Count > 0) {
-				
-			//    for (int i = 0; i < listGroup.Count; i++) {					
-			//        if (listGroup[i] != null && listGroup[i].Count() > 0) {
-			//            levelList = listGroup[i].GetLevelIdsList();
-			//            for (int j = 0; j < levelList.Count; j++) {
-			//                //For each level collection generate the sql condition
-			//                listIds = listGroup[j].GetAsString(levelList[i]);
-			//                if (first) {
-			//                    if (beginByAnd) sql.Append(" and ");
-			//                    sql.Append(" (( ");
-			//                }
-			//                else sql.Append(" or ");
-			//                sql.Append(" " + dataTablePrefix + "." + UniverseLevels.Get(levelList[j]).DataBaseIdField + " in (" + listIds + ") ");
-			//                first = false;
-			//            }
-			//            if (!first) sql.Append(" )");
-			//        }
-			//        //Change group
-			//        first = true;
-			//        beginByAnd = true;
-			//    }
-			//}
-			#endregion
+			string sql = "";			
+					
 			//Get include elements conditions
-			sql.Append(GetSqlConditions(dataTablePrefix,beginByAnd,AccessType.includes)) ;
+			sql = GetSqlConditions(dataTablePrefix,beginByAnd,AccessType.includes);
 
 			//Get excludes elements conditions
-			sql.Append(GetSqlConditions(dataTablePrefix, beginByAnd, AccessType.excludes));
+			if (sql.Length > 0) beginByAnd = true;
+			sql+=GetSqlConditions(dataTablePrefix, beginByAnd, AccessType.excludes);
 
-			return sql.ToString();
+			return sql;
 		}
 
 		/// <summary>
