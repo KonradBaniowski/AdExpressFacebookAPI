@@ -982,7 +982,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
                 || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
                 && !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
             {
-				string idSponsorShipCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category,WebConstantes.GroupList.Type.sponsorShipTv);
+				string idSponsorShipCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category,WebConstantes.GroupList.Type.productClassAnalysisSponsorShipTv);
 				if (idSponsorShipCategory != null && idSponsorShipCategory.Length > 0) {
 						sql += " and " + categoryTable.Prefix + ".id_category not in ("+idSponsorShipCategory+") ";					
 				}

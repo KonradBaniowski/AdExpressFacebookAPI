@@ -5,5 +5,5 @@
   <list group="inset" keyType="TTNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="Excart" listIds="999"/>
   <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="thematicTv" listIds ="35"/>
   <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="digitalTv" listIds ="78"/>
-  <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="sponsorShipTv" listIds ="68,44"/>  
+  <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="productClassAnalysisSponsorShipTv" listIds ="68,44"/>  
 </lists>

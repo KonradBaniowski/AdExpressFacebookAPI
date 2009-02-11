@@ -3163,9 +3163,9 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// </summary>
 			digitalTv = 4,
 			/// <summary>
-			/// Sponsor ship TV
+			/// product Class Analysis Sponsor ship TV
 			/// </summary>
-			sponsorShipTv = 5
+			productClassAnalysisSponsorShipTv = 5
 		}
 	}
 	#endregion

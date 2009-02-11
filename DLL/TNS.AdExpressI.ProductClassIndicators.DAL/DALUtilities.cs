@@ -57,7 +57,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
 			//TV Sponsorship rights
 			if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))
             {
-				 idSponsorShipCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category,WebConstantes.GroupList.Type.sponsorShipTv);
+				 idSponsorShipCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category,WebConstantes.GroupList.Type.productClassAnalysisSponsorShipTv);
 				 if (idSponsorShipCategory != null && idSponsorShipCategory.Length > 0) {
 					 sql.AppendFormat("  and  {0}.id_category not in ( {1}) ", prefix, idSponsorShipCategory);
 					 first = false;
