@@ -5,12 +5,12 @@
   <projects>
     <project id="Global">
       <files>
-        <file>d:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
-        <file>d:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+        <file>C:\Dev\Csharp2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
+        <file>C:\Dev\Csharp2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
       </files>
     </project>
   </projects>
   <outputs>
-    <dir>\\hera\Prog_Sources\Versionning\AdExpress PZL</dir>
+    <dir>\\172.17.236.10\Prog_Sources\Versionning\AdExpress PZL</dir>
   </outputs>
 </assembly>
