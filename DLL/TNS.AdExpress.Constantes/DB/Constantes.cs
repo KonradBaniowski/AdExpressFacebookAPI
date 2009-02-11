@@ -1651,7 +1651,7 @@ namespace TNS.AdExpress.Constantes.DB{
         /// </summary>
         public const Int64 ID_POIDS_MARKETING_DIRECT = 256;
 		/// <summary>
-		/// Identifiant du flag Accès au Parrainage TV
+		/// Identifiant du flag Accès aux (Parrainage TV) catégories panoramiques dans l'analyse sectorielle.
 		/// </summary>
 		public const Int64 ID_SPONSORSHIP_TV_ACCESS_FLAG = 261;
         /// <summary>
