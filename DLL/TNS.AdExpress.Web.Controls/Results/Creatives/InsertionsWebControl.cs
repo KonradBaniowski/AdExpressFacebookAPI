@@ -556,8 +556,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
 
             string message = string.Empty;
-            if (vehicle.Id == CstDBClassif.Vehicles.names.outdoor && !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))
-            {
+			if (vehicle.Id == CstDBClassif.Vehicles.names.outdoor
+				&& !this._isCreativeConfig
+				&& !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
+				) {
                 message = GestionWeb.GetWebWord(1882, _customerWebSession.SiteLanguage);
             }
             if (!this._isCreativeConfig && vehicle.Id == CstDBClassif.Vehicles.names.internet)
