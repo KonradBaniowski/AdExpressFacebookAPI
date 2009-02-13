@@ -809,7 +809,7 @@ namespace TNS.AdExpressI.LostWon {
                 idSubTotal = string.Format("{0}-{1}", N_UNIVERSE_ID, SUBTOTAL_ID);
             }
 
-            Double value = Convert.ToDouble(row[_session.GetSelectedUnit().Id.ToString()]);
+			Double value = (row[_session.GetSelectedUnit().Id.ToString()] != System.DBNull.Value) ? Convert.ToDouble(row[_session.GetSelectedUnit().Id.ToString()]) : 0;
             tab.AffectValueAndAddToHierarchy(1, cLine, tab.GetHeadersIndexInResultTable(idCol), value);
             if (tab.HeadersIndexInResultTable.ContainsKey(idSubTotal))
             {
