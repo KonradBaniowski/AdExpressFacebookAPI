@@ -548,7 +548,8 @@ namespace AdExpress.Private.MyAdExpress{
 
                         int oldYear = 2000;
                         long selectedVehicle = ((LevelInformation)webSessionSave.SelectionUniversMedia.FirstNode.Tag).ID;
-                        FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(webSessionSave, selectedVehicle, oldYear,_webSession.Source); 
+						if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+							FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(webSessionSave, selectedVehicle, oldYear,_webSession.Source); 
 
                         switch (webSessionSave.DetailPeriod) {
                             case CstCustomerSession.Period.DisplayLevel.monthly:
