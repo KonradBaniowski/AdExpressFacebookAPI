@@ -1746,5 +1746,6 @@
     <item mnemonic="w2558" type="System.String">Visualisez les bannières publicitaires d’un secteur ou d’un annonceur en temps réel.</item>
     <item mnemonic="w2559" type="System.String">Démo</item>
     <item mnemonic="w2560" type="System.String">Numéro de ligne</item>
+    <item mnemonic="w2561" type="System.String">Elements mixes</item>
   </items>
 </localization>
