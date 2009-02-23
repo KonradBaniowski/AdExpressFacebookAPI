@@ -3165,7 +3165,12 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <summary>
 			/// product Class Analysis Sponsor ship TV
 			/// </summary>
-			productClassAnalysisSponsorShipTv = 5
+			productClassAnalysisSponsorShipTv = 5,
+			/// <summary>
+			/// ID subscriber encart
+			/// </summary>			
+			subScriberEncart=6
+
 		}
 	}
 	#endregion
