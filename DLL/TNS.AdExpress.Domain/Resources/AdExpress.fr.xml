@@ -1747,5 +1747,14 @@
     <item mnemonic="w2559" type="System.String">Démo</item>
     <item mnemonic="w2560" type="System.String">Numéro de ligne</item>
     <item mnemonic="w2561" type="System.String">Elements mixes</item>
+    <item mnemonic="w2562" type="System.String">Univers de référence</item>
+    <item mnemonic="w2563" type="System.String">Univers concurrent</item>
+    <item mnemonic="w2564" type="System.String">Intersection</item>
+    <item mnemonic="w2565" type="System.String">Univers neutre</item>
+    <item mnemonic="w2566" type="System.String">Autres</item>
+    <item mnemonic="w2567" type="System.String">Attention</item>
+    <item mnemonic="w2568" type="System.String">Le tableau demandé comporte trop de lignes pour être affiché par votre navigateur. Vous pouvez :</item>
+    <item mnemonic="w2569" type="System.String">Affiner la sélection ou modifier les options du tableau.</item>
+    <item mnemonic="w2570" type="System.String">Essayer d'exporter le résultat au format Excel.</item>
   </items>
 </localization>
